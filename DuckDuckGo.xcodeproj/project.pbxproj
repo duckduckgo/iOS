@@ -314,6 +314,7 @@
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		9830A06325ED0DB900DB64DE /* BrowsingMenu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9830A06225ED0DB900DB64DE /* BrowsingMenu.xcassets */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
+		983930C726FF3F2C005EE3CD /* PrivacyConfigurationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983930C626FF3F2C005EE3CD /* PrivacyConfigurationDataTests.swift */; };
 		983B4D9A254B67F900467D62 /* BookmarksSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983B4D99254B67F900467D62 /* BookmarksSearch.swift */; };
 		983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EABB7236198F6003948D1 /* DatabaseMigration.swift */; };
 		983EABBB236199C2003948D1 /* DatabaseMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EABB923619986003948D1 /* DatabaseMigrationTests.swift */; };
@@ -352,6 +353,7 @@
 		986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986DA94924884B18004A7E39 /* WebViewTransition.swift */; };
 		98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98728E812417E3300033960E /* BrokenSiteInfo.swift */; };
 		9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */; };
+		98733E5D26FB354300521D94 /* TrackerAllowlistReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98733E5C26FB354300521D94 /* TrackerAllowlistReferenceTests.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
 		9875E00722316B8400B1373F /* Instruments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9875E00622316B8400B1373F /* Instruments.swift */; };
 		9876B75E2232B36900D81D9F /* TabInstrumentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9876B75D2232B36900D81D9F /* TabInstrumentation.swift */; };
@@ -405,6 +407,7 @@
 		98E888F2223FCC4A00B608A4 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B128B2220483A004781BC /* OnboardingViewController.swift */; };
 		98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */; };
 		98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */; };
+		98ECDD172707168C00FF141C /* ContentBlockerRulesSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98ECDD162707168C00FF141C /* ContentBlockerRulesSourceManager.swift */; };
 		98ED39E82506FAA000490915 /* PrivacyProtectionHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98ED39EA2506FAA000490915 /* PrivacyProtectionHeaderCell.xib */; };
 		98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 98EF177C21837E35006750C1 /* new_tab_dark.json */; };
 		98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */; };
@@ -1065,6 +1068,7 @@
 		982FBD08251EAC15004EAE67 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9830A06225ED0DB900DB64DE /* BrowsingMenu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = BrowsingMenu.xcassets; sourceTree = "<group>"; };
 		9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveFeedbackViewController.swift; sourceTree = "<group>"; };
+		983930C626FF3F2C005EE3CD /* PrivacyConfigurationDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationDataTests.swift; sourceTree = "<group>"; };
 		983A4B8C251EABEA00F3EDF1 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		983A4B8D251EABEA00F3EDF1 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		983A4B8F251EABEA00F3EDF1 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1584,6 +1588,7 @@
 		98710C7C24A518CA0049F515 /* HTTPSUpgrade 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "HTTPSUpgrade 2.xcdatamodel"; sourceTree = "<group>"; };
 		98728E812417E3300033960E /* BrokenSiteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteInfo.swift; sourceTree = "<group>"; };
 		9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPreviewsSource.swift; sourceTree = "<group>"; };
+		98733E5C26FB354300521D94 /* TrackerAllowlistReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerAllowlistReferenceTests.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
 		9875E00622316B8400B1373F /* Instruments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instruments.swift; sourceTree = "<group>"; };
 		98763201251EAC3400FE6FFA /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1719,6 +1724,7 @@
 		98E47764251EAC4200699DD3 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98EA2C3B218B9AAD0023E1DC /* ThemeManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManagerTests.swift; sourceTree = "<group>"; };
 		98EA2C40218BB5400023E1DC /* SettingsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerTests.swift; sourceTree = "<group>"; };
+		98ECDD162707168C00FF141C /* ContentBlockerRulesSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesSourceManager.swift; sourceTree = "<group>"; };
 		98ED39E92506FAA000490915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PrivacyProtectionHeaderCell.xib; sourceTree = "<group>"; };
 		98EF177C21837E35006750C1 /* new_tab_dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = new_tab_dark.json; sourceTree = "<group>"; };
 		98F02E81251EAC11002A6C60 /* lt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lt; path = lt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2010,6 +2016,7 @@
 			children = (
 				988A05B82672CE8000363C13 /* ContentBlockerRulesSource.swift */,
 				0254AC1F24ED8B82004855DF /* ContentBlockerRulesManager.swift */,
+				98ECDD162707168C00FF141C /* ContentBlockerRulesSourceManager.swift */,
 				0254AC2124EDAC41004855DF /* ContentBlockerRulesUserScript.swift */,
 				0254AC2324EDACDE004855DF /* contentblockerrules.js */,
 				98647993266A51EF00C36DFC /* ContentBlockerRulesIdentifier.swift */,
@@ -2074,6 +2081,7 @@
 				8521FDEF238DD78D00A44CC3 /* TrackerDataManagerTests.swift */,
 				987C7CB0269DE37F005DD82D /* TrackerResolverTests.swift */,
 				026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */,
+				983930C626FF3F2C005EE3CD /* PrivacyConfigurationDataTests.swift */,
 			);
 			name = Domain;
 			sourceTree = "<group>";
@@ -2781,6 +2789,7 @@
 				985CA1F326CD3D40001325DB /* ContentBlockerRulesUserScriptsTests.swift */,
 				98A69A7226D70D9600370512 /* SurrogatesUserScriptTests.swift */,
 				9877BDB226D3190000002D51 /* ContentBlockerReferenceTests.swift */,
+				98733E5C26FB354300521D94 /* TrackerAllowlistReferenceTests.swift */,
 			);
 			name = ContentBlocker;
 			sourceTree = "<group>";
@@ -4671,6 +4680,7 @@
 				859C5FBA2147E6E200E2A43D /* GradeTests.swift in Sources */,
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
+				98733E5D26FB354300521D94 /* TrackerAllowlistReferenceTests.swift in Sources */,
 				985CA1F426CD3D40001325DB /* ContentBlockerRulesUserScriptsTests.swift in Sources */,
 				4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */,
 				8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */,
@@ -4711,6 +4721,7 @@
 				22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */,
 				830C37671F6C4A6200E317A7 /* TermsOfServiceListParserTests.swift in Sources */,
 				8341D80A212D616F000514C2 /* HTTPSBloomFilterSpecificationTest.swift in Sources */,
+				983930C726FF3F2C005EE3CD /* PrivacyConfigurationDataTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */,
 				834DF992248FDE1A0075EA48 /* UserAgentTests.swift in Sources */,
@@ -4852,6 +4863,7 @@
 				98DA35C7268CDA3B00159906 /* TrackerResolver.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */,
+				98ECDD172707168C00FF141C /* ContentBlockerRulesSourceManager.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				83E2D2BE253CD772005605F5 /* HTTPSExcludedDomains.swift in Sources */,
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
@@ -6507,8 +6519,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/TrackerRadarKit.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.2;
+				branch = "bartek/tracker-exceptions";
+				kind = branch;
 			};
 		};
 		4BE86C5B2633DBD7001C0E77 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {

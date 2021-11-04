@@ -30,6 +30,10 @@ public class PrivacyConfigurationManager {
         case embeddedFallback
         case downloaded
     }
+
+    enum ParsingError: Error {
+        case dataMismatch
+    }
     
     public typealias ConfigurationData = (data: PrivacyConfigurationData, etag: String)
     
@@ -54,13 +58,16 @@ public class PrivacyConfigurationManager {
     private(set) public var embeddedConfigData: ConfigurationData {
         get {
             lock.lock()
+
             let data: ConfigurationData
             // List is loaded lazily when needed
             if let embedded = _embeddedConfigData {
                 data = embedded
             } else {
-                let configData = try? JSONDecoder().decode(PrivacyConfigurationData.self, from: Self.loadEmbeddedAsData())
-                _embeddedConfigData = (configData!, Constants.embeddedConfigETag)
+                let jsonData = Self.loadEmbeddedAsData()
+                let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+                let configData = PrivacyConfigurationData(json: json!)
+                _embeddedConfigData = (configData, Constants.embeddedConfigETag)
                 data = _embeddedConfigData
             }
             lock.unlock()
@@ -96,8 +103,12 @@ public class PrivacyConfigurationManager {
             
             do {
                 // This might fail if the downloaded data is corrupt or format has changed unexpectedly
-                let data = try JSONDecoder().decode(PrivacyConfigurationData.self, from: data)
-                fetchedConfigData = (data, etag)
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    let configData = PrivacyConfigurationData(json: json)
+                    fetchedConfigData = (configData, etag)
+                } else {
+                    throw ParsingError.dataMismatch
+                }
             } catch {
                 Pixel.fire(pixel: .privacyConfigurationParseFailed, error: error)
                 fetchedConfigData = nil

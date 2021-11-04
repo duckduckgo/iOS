@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {
           "branch": null,
-          "revision": "44450a8f564d7c0165f736ba2250649ff8d3e556",
-          "version": "6.3.0"
+          "revision": "d06df9adf50ed8cde5786d935836a5f445f780ba",
+          "version": "6.3.1"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/AliSoftware/OHHTTPStubs.git",
         "state": {
           "branch": null,
-          "revision": "e92b5a5746ef16add2a1424f1fc19529d9a75cde",
-          "version": "9.0.0"
+          "revision": "12f19662426d0434d6c330c6974d53e2eb10ecd9",
+          "version": "9.1.0"
         }
       },
       {
@@ -53,6 +53,15 @@
           "branch": "master",
           "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
           "version": null
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
+          "version": "0.5.0"
         }
       },
       {
@@ -68,9 +77,9 @@
         "package": "TrackerRadarKit",
         "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
-          "branch": null,
-          "revision": "a11e97e591273845519b6b06ddbb6ba88eab2195",
-          "version": "1.0.2"
+          "branch": "bartek/tracker-exceptions",
+          "revision": "2b6d2ed57b0a549de9ead29681b9197ac291d16a",
+          "version": null
         }
       }
     ]

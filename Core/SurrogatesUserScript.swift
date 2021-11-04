@@ -107,6 +107,7 @@ public class SurrogatesUserScript: NSObject, UserScript {
             "$IS_DEBUG$": isDebugBuild ? "true" : "false",
             "$TEMP_UNPROTECTED_DOMAINS$": remoteUnprotectedDomains,
             "$USER_UNPROTECTED_DOMAINS$": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n"),
+            "$TRACKER_ALLOWLIST_ENTRIES$": TrackerAllowlistInjection.prepareForInjection(allowlist: privacyConfiguration.trackerAllowlist),
             "$TRACKER_DATA$": trackerData,
             "$SURROGATES$": configurationSource.surrogates,
             "$BLOCKING_ENABLED$": privacyConfiguration.isEnabled(featureKey: .contentBlocking) ? "true" : "false"

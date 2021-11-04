@@ -42,11 +42,17 @@ public class FingerprintUserScript: NSObject, UserScript {
         let screenSizeExceptions = PrivacyConfigurationManager.shared.privacyConfig
             .exceptionsList(forFeature: .fingerprintingScreenSize).joined(separator: "\n")
         
+        let tempExceptions = PrivacyConfigurationManager.shared.privacyConfig
+            .tempUnprotectedDomains.joined(separator: "\n")
+        let userExceptions = PrivacyConfigurationManager.shared.privacyConfig.userUnprotectedDomains.joined(separator: "\n")
+        
         return Self.loadJS("fingerprint", from: Bundle.core, withReplacements: [
             "$FEATURE_SETTINGS$": featureSettings,
             "$TEMP_STORAGE_EXCEPTIONS$": tempStorageExceptions,
             "$BATTERY_EXCEPTIONS$": batteryExceptions,
-            "$SCREEN_SIZE_EXCEPTIONS$": screenSizeExceptions
+            "$SCREEN_SIZE_EXCEPTIONS$": screenSizeExceptions,
+            "$TEMP_UNPROTECTED_DOMAINS$": tempExceptions,
+            "$USER_UNPROTECTED_DOMAINS$": userExceptions
         ])
     }
     

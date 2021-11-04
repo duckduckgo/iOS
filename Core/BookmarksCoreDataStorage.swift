@@ -40,10 +40,46 @@ public class BookmarksCoreDataStorage {
         static let groupName = "\(Global.groupIdPrefix).bookmarks"
     }
     
-    private lazy var persistentContainer: NSPersistentContainer = {
+    private let storeLoadedCondition = RunLoop.ResumeCondition()
+        
+    private var persistentContainer: NSPersistentContainer?
+    
+    private lazy var privateContext: NSManagedObjectContext = {
+        RunLoop.current.run(until: storeLoadedCondition)
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        context.persistentStoreCoordinator = persistentContainer?.persistentStoreCoordinator
+        context.name = Constants.privateContextName
+        return context
+    }()
+    
+    private lazy var viewContext: NSManagedObjectContext = {
+        RunLoop.current.run(until: storeLoadedCondition)
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.mergePolicy = NSMergePolicy(merge: .rollbackMergePolicyType)
+        context.persistentStoreCoordinator = persistentContainer?.persistentStoreCoordinator
+        context.name = Constants.viewContextName
+        return context
+    }()
+    
+    private var cachedReadOnlyTopLevelBookmarksFolder: BookmarkFolderManagedObject?
+    private var cachedReadOnlyTopLevelFavoritesFolder: BookmarkFolderManagedObject?
+    
+    public init() {
+        loadStore()
+        
+        cacheReadOnlyTopLevelBookmarksFolder()
+        cacheReadOnlyTopLevelFavoritesFolder()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave), name: .NSManagedObjectContextDidSave, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(objectsDidChange), name: .NSManagedObjectContextObjectsDidChange, object: nil)
+    }
+    
+    private func loadStore() {
         let mainBundle = Bundle.main
         let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
-        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else { fatalError("No DB scheme found") }
+        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else {
+            fatalError("No DB scheme found")
+        }
         
         let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!
         let storeURL = containerURL.appendingPathComponent("\(Constants.databaseName).sqlite")
@@ -55,34 +91,10 @@ public class BookmarksCoreDataStorage {
             if let error = error {
                 fatalError("Unable to load persistent stores: \(error)")
             }
+            
+            self.storeLoadedCondition.resolve()
         }
-        return container
-    }()
-    
-    private lazy var privateContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
-        context.name = Constants.privateContextName
-        return context
-    }()
-    
-    private lazy var viewContext: NSManagedObjectContext = {
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.mergePolicy = NSMergePolicy(merge: .rollbackMergePolicyType)
-        context.persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
-        context.name = Constants.viewContextName
-        return context
-    }()
-    
-    private var cachedReadOnlyTopLevelBookmarksFolder: BookmarkFolderManagedObject?
-    private var cachedReadOnlyTopLevelFavoritesFolder: BookmarkFolderManagedObject?
-    
-    public init() {
-        cacheReadOnlyTopLevelBookmarksFolder()
-        cacheReadOnlyTopLevelFavoritesFolder()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave), name: .NSManagedObjectContextDidSave, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(objectsDidChange), name: .NSManagedObjectContextObjectsDidChange, object: nil)
+        persistentContainer = container
     }
 }
 
@@ -177,9 +189,6 @@ extension BookmarksCoreDataStorage {
             guard let results = try? self?.viewContext.fetch(fetchRequest) else {
                 fatalError("Error fetching Bookmarks")
             }
-    //        let bookmarks = results.map {
-    //            $0 as Bookmark
-    //        }
             
             completion(results)
         }

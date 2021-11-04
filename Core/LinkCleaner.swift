@@ -50,11 +50,10 @@ public class LinkCleaner {
     }
     
     public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?) -> URL? {
-        guard let url = url else { return nil }
-        guard let initiator = initiator else { return nil }
-        
-        // Check initiator and destination against exceptions
-        guard !isURLExcluded(url: initiator) && !isURLExcluded(url: url) else { return nil }
+        guard let url = url, !isURLExcluded(url: url) else { return nil }
+        if let initiator = initiator, isURLExcluded(url: initiator) {
+            return nil
+        }
         
         guard let ampFormat = urlIsExtractableAmpLink(url) else { return nil }
         

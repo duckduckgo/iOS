@@ -1083,6 +1083,30 @@ extension TabViewController: WKNavigationDelegate {
         }
         return nil
     }
+    
+    func requestTrackingLinkRewrite(navigationAction: WKNavigationAction,
+                                    decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) -> Bool {
+        if let newUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(initiator: webView.url,
+                                                                       destination: navigationAction.request.url) {
+            decisionHandler(.cancel)
+            load(url: newUrl)
+            return true
+        } else if AMPCanonicalExtractor.shared.urlContainsAmpKeyword(navigationAction.request.url) {
+            AMPCanonicalExtractor.shared.getCanonicalUrl(initiator: webView.url,
+                                                         url: navigationAction.request.url) { [weak self] canonical in
+                guard let canonical = canonical else {
+                    decisionHandler(.allow)
+                    return
+                }
+                
+                decisionHandler(.cancel)
+                self?.load(url: canonical)
+            }
+            return true
+        }
+        
+        return false
+    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
@@ -1100,22 +1124,8 @@ extension TabViewController: WKNavigationDelegate {
         
         if navigationAction.isTargetingMainFrame(),
            navigationAction.navigationType == .linkActivated {
-            if let newUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(initiator: webView.url,
-                                                                           destination: navigationAction.request.url) {
-                decisionHandler(.cancel)
-                load(url: newUrl)
-                return
-            } else if AMPCanonicalExtractor.shared.urlContainsAmpKeyword(navigationAction.request.url) {
-                AMPCanonicalExtractor.shared.getCanonicalUrl(initiator: webView.url,
-                                                             url: navigationAction.request.url) { [weak self] canonical in
-                    guard let canonical = canonical else {
-                        decisionHandler(.allow)
-                        return
-                    }
-                    
-                    decisionHandler(.cancel)
-                    self?.load(url: canonical)
-                }
+            if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
+                // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
                 return
             }
         }

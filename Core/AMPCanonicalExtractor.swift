@@ -54,8 +54,10 @@ public class AMPCanonicalExtractor: NSObject {
         let source = """
 (function() {
     document.addEventListener('DOMContentLoaded', (event) => {
-        const canonicalLink = document.querySelectorAll('[rel="canonical"]')[0].href
-        window.webkit.messageHandlers.\(Constants.sendCanonical).postMessage({ \(Constants.canonicalKey): canonicalLink })
+        const canonicalLinks = document.querySelectorAll('[rel="canonical"]')
+        window.webkit.messageHandlers.\(Constants.sendCanonical).postMessage({
+            \(Constants.canonicalKey): canonicalLinks.length > 0 ? canonicalLinks[0].href : undefined
+        })
     })
 })()
 """
@@ -64,12 +66,12 @@ public class AMPCanonicalExtractor: NSObject {
     }
     
     public func getCanonicalUrl(initiator: URL?, url: URL?, completion: @escaping ((URL?) -> Void)) {
-        guard let initiator = initiator, let url = url else {
+        guard let url = url, !LinkCleaner.shared.isURLExcluded(url: url) else {
             completion(nil)
             return
         }
         
-        guard !LinkCleaner.shared.isURLExcluded(url: initiator) && !LinkCleaner.shared.isURLExcluded(url: url) else {
+        if let initiator = initiator, LinkCleaner.shared.isURLExcluded(url: initiator) {
             completion(nil)
             return
         }
@@ -94,15 +96,18 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard message.name == Constants.sendCanonical else { return }
         
+        webView = nil
+        
         if let dict = message.body as? [String: AnyObject],
            let canonical = dict[Constants.canonicalKey] as? String {
-            webView = nil
             if let canonicalUrl = URL(string: canonical),
                !LinkCleaner.shared.isURLExcluded(url: canonicalUrl) {
                 completion?(canonicalUrl)
             } else {
                 completion?(nil)
             }
+        } else {
+            completion?(nil)
         }
     }
 }

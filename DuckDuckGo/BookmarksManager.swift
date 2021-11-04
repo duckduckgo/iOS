@@ -30,14 +30,10 @@ class BookmarksManager {
     private(set) var dataStore: BookmarkStore
     private(set) var coreDataStorage: BookmarksCoreDataStorage
     
-    //todo delete this pls
-    static let tempCoreDataStorageRetentionDevice = BookmarksCoreDataStorage()
 
-    init(dataStore: BookmarkStore = BookmarkUserDefaults()) {
-    //init(dataStore: BookmarkStore = BookmarkUserDefaults(), coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage()) {
+    init(dataStore: BookmarkStore = BookmarkUserDefaults(), coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
         self.dataStore = dataStore
-        //self.coreDataStorage = coreDataStore
-        self.coreDataStorage = BookmarksManager.tempCoreDataStorageRetentionDevice
+        self.coreDataStorage = coreDataStore
         NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
     }
     

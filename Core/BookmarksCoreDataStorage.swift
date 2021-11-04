@@ -22,6 +22,8 @@ import CoreData
 
 public class BookmarksCoreDataStorage {
     
+    public static let shared = BookmarksCoreDataStorage()
+    
     public struct Notifications {
         public static let dataDidChange = Notification.Name("com.duckduckgo.app.BookmarksCoreDataDidChange")
     }

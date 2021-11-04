@@ -74,6 +74,8 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    
+    lazy var bookmarksManager = BookmarksManager()
 
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab

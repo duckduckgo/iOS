@@ -39,7 +39,7 @@ class BookmarksSearch {
     
     init(bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
         self.bookmarksStore = bookmarksStore
-        self.bookmarksCoreDataStorage = BookmarksCoreDataStorage()
+        self.bookmarksCoreDataStorage = BookmarksCoreDataStorage.shared
     }
     
     var hasData: Bool {

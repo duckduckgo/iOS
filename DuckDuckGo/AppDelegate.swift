@@ -45,8 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
-    private lazy var bookmarksManager = BookmarksManager()
-    private lazy var thing = BookmarksCoreDataStorage()
     private lazy var privacyStore = PrivacyUserDefaults()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
@@ -89,14 +87,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
-        }
-        
-        let _ = bookmarksManager
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-//            thing.createTestData()
-//            self.thing.createTestFavourites()
-//            self.thing.createTestFavourites()
-//            self.thing.createTestFavourites()
         }
         
         HTTPSUpgrade.shared.loadDataAsync()

@@ -76,7 +76,7 @@ public enum PrivacyFeature: String {
     case fingerprintingBattery
     case fingerprintingScreenSize
     case gpc
-    case https
+    case httpsUpgrade = "https"
 }
 
 public struct AppPrivacyConfiguration: PrivacyConfiguration {

@@ -38,7 +38,7 @@ public class LinkCleaner {
         return nil
     }
     
-    private func isURLExcluded(url: URL) -> Bool {
+    public func isURLExcluded(url: URL) -> Bool {
         guard let host = url.host else { return true }
         
         let config = PrivacyConfigurationManager.shared.privacyConfig

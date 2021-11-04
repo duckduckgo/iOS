@@ -1099,12 +1099,25 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if navigationAction.isTargetingMainFrame(),
-           navigationAction.navigationType == .linkActivated,
-           let newUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(initiator: webView.url,
-                                                                       destination: navigationAction.request.url) {
-            decisionHandler(.cancel)
-            load(url: newUrl)
-            return
+           navigationAction.navigationType == .linkActivated {
+            if let newUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(initiator: webView.url,
+                                                                           destination: navigationAction.request.url) {
+                decisionHandler(.cancel)
+                load(url: newUrl)
+                return
+            } else if AMPCanonicalExtractor.shared.urlContainsAmpKeyword(navigationAction.request.url) {
+                AMPCanonicalExtractor.shared.getCanonicalUrl(initiator: webView.url,
+                                                             url: navigationAction.request.url) { [weak self] canonical in
+                    guard let canonical = canonical else {
+                        decisionHandler(.allow)
+                        return
+                    }
+                    
+                    decisionHandler(.cancel)
+                    self?.load(url: canonical)
+                }
+                return
+            }
         }
             
         if navigationAction.navigationType == .linkActivated,

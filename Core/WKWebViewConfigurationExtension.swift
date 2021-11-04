@@ -42,6 +42,7 @@ extension WKWebViewConfiguration {
         configuration.allowsInlineMediaPlayback = true
         configuration.allowsPictureInPictureMediaPlayback = true
         configuration.ignoresViewportScaleLimits = true
+        configuration.preferences.isFraudulentWebsiteWarningEnabled = false
 
         return configuration
     }

@@ -123,11 +123,14 @@ class WebKitTestHelper {
     static func preparePrivacyConfig(locallyUnprotected: [String],
                                      tempUnprotected: [String],
                                      contentBlockingEnabled: Bool,
-                                     exceptions: [String]) -> PrivacyConfiguration {
+                                     exceptions: [String],
+                                     httpsUpgradesEnabled: Bool = false) -> PrivacyConfiguration {
         let contentBlockingExceptions = exceptions.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
         let contentBlockingStatus = contentBlockingEnabled ? "enabled" : "disabled"
+        let httpsStatus = httpsUpgradesEnabled ? "enabled" : "disabled"
         let features = [PrivacyFeature.contentBlocking.rawValue: PrivacyConfigurationData.PrivacyFeature(state: contentBlockingStatus,
-                                                                                                         exceptions: contentBlockingExceptions)]
+                                                                                                         exceptions: contentBlockingExceptions),
+                        PrivacyFeature.httpsUpgrade.rawValue: PrivacyConfigurationData.PrivacyFeature(state: httpsStatus, exceptions: [])]
         let unprotectedTemporary = tempUnprotected.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
         let privacyData = PrivacyConfigurationData(features: features,
                                                    unprotectedTemporary: unprotectedTemporary)

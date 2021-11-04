@@ -76,8 +76,8 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             + (privacyConfiguration.exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
         
         return Self.loadJS("contentblockerrules", from: Bundle.core, withReplacements: [
-            "${tempUnprotectedDomains}": remoteUnprotectedDomains,
-            "${userUnprotectedDomains}": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n")
+            "$TEMP_UNPROTECTED_DOMAINS$": remoteUnprotectedDomains,
+            "$USER_UNPROTECTED_DOMAINS$": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n")
         ])
     }
 

@@ -18,22 +18,58 @@
 //
 
 (function () {
-    const gpcEnabled = $GPC_ENABLED$
+    function getTopLevelURL () {
+        try {
+            // FROM: https://stackoverflow.com/a/7739035/73479
+            // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
+            return new URL(window.location !== window.parent.location ? document.referrer : document.location.href)
+        } catch (error) {
+            return new URL(location.href)
+        }
+    }
+
+    let gpcEnabled = $GPC_ENABLED$
+
+    const topLevelUrl = getTopLevelURL()
+    const domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split('.') : []
+        
+    const userExcluded = `$USER_UNPROTECTED_DOMAINS$`.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0
+    if (userExcluded) {
+        return;
+    }
+        
+    while (domainParts.length > 1 && gpcEnabled) {
+        const partialDomain = domainParts.join('.')
+        const gpcExcluded = `$TEMP_UNPROTECTED_DOMAINS$`.split('\n').filter(domain => domain.trim() === partialDomain).length > 0
+        console.log(partialDomain, gpcExcluded)
+        if (gpcExcluded) {
+            gpcEnabled = false
+            break
+        }
+        domainParts.shift()
+    }
     if (!gpcEnabled) {
         return
     }
-
-    if (navigator.globalPrivacyControl === undefined) {
-        Object.defineProperty(Navigator.prototype, 'globalPrivacyControl', {
-            get: () => true,
-            configurable: true,
-            enumerable: true
-        })
-    } else {
-        try {
-            navigator.globalPrivacyControl = true
-        } catch (e) {
-            console.error('globalPrivacyControl is not writable: ', e)
+    
+    const scriptContent = `
+        if (navigator.globalPrivacyControl === undefined) {
+            Object.defineProperty(Navigator.prototype, 'globalPrivacyControl', {
+                get: () => true,
+                configurable: true,
+                enumerable: true
+            });
+        } else {
+            try {
+                navigator.globalPrivacyControl = true;
+            } catch (e) {
+                console.error('globalPrivacyControl is not writable: ', e);
+            }
         }
-    }
+    `
+
+    const e = document.createElement('script')
+    e.textContent = scriptContent;
+    (document.head || document.documentElement).appendChild(e)
+    e.remove()
 })()

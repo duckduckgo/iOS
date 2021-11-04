@@ -28,11 +28,14 @@ public class HTTPSUpgrade {
     private let dataReloadLock = NSLock()
     private let store: HTTPSUpgradeStore
     private let appUrls: AppUrls
+    private let privacyConfig: PrivacyConfiguration
     private var bloomFilter: BloomFilterWrapper?
     
-    init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence(), appUrls: AppUrls = AppUrls()) {
+    init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence(), appUrls: AppUrls = AppUrls(),
+         privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) {
         self.store = store
         self.appUrls = appUrls
+        self.privacyConfig = privacyConfig
     }
 
     public func isUgradeable(url: URL, completion: @escaping UpgradeCheckCompletion) {
@@ -48,6 +51,25 @@ public class HTTPSUpgrade {
         }
         
         if store.shouldExcludeDomain(host) {
+            completion(false)
+            return
+        }
+        
+        if privacyConfig.isEnabled(featureKey: .httpsUpgrade) {
+            // Check exception lists before upgrading
+            if privacyConfig.isTempUnprotected(domain: host) {
+                completion(false)
+                return
+            }
+            if privacyConfig.isUserUnprotected(domain: host) {
+                completion(false)
+                return
+            }
+            if privacyConfig.isInExceptionList(domain: host, forFeature: .httpsUpgrade) {
+                completion(false)
+                return
+            }
+        } else {
             completion(false)
             return
         }

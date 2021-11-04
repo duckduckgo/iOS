@@ -258,7 +258,7 @@ extension TabViewController {
             }
             
             //TODO we arguably need a call back here
-            bookmarksManager.delete(bookmark.objectID)
+            bookmarksManager.delete(bookmark)
 
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {

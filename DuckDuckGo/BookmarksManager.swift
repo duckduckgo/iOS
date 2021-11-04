@@ -53,6 +53,7 @@ class BookmarksManager {
         return coreDataStorage.topLevelBookmarksItems
     }
     
+    //TODO not really sure if I want this exposed publically
     var topLevelBookmarksFolder: BookmarkFolder? {
         return coreDataStorage.topLevelBookmarksFolder
     }
@@ -71,23 +72,6 @@ class BookmarksManager {
         }
         return favorites[index]
     }
-    
-    //TODO fix favicons
-    func removeFavicon(forBookmark bookmark: Bookmark?) {
-        guard let domain = bookmark?.url?.host else { return }
-        
-        coreDataStorage.allBookmarksAndFavoritesShallow() { bookmarks in
-            DispatchQueue.global(qos: .background).async {
-                let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
-                if !bookmarks.contains(where: matchesDomain) {
-                    Favicons.shared.removeBookmarkFavicon(forDomain: domain)
-                }
-            }
-        }
-    }
-    
-    //TODO also update favicons method?
-    
     
     func contains(url: URL, completion: @escaping (Bool) -> Void) {
         coreDataStorage.contains(url: url, completion: completion)
@@ -115,199 +99,76 @@ class BookmarksManager {
     
     func saveNewFavorite(withTitle title: String, url: URL) {
         coreDataStorage.saveNewFavorite(withTitle: title, url: url)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        reloadWidgets()
     }
     
     func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID?) {
         coreDataStorage.saveNewBookmark(withTitle: title, url: url, parentID: parentID)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
     }
     
     func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
         coreDataStorage.update(folderID: folderID, newTitle: newTitle, newParentID: newParentID)
     }
     
-    func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
-        coreDataStorage.update(favoriteID: favoriteID, newTitle: newTitle, newURL: newURL)
+    func update(favorite: Bookmark, newTitle: String, newURL: URL) {
+        coreDataStorage.update(favoriteID: favorite.objectID, newTitle: newTitle, newURL: newURL)
+        updateFaviconIfNeeded(favorite, newURL)
+        reloadWidgets()
     }
+    
 
-    //TODO not really sure if we should be using IDs at this level or not... we'll see
-    func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
-        coreDataStorage.update(bookmarkID: bookmarkID, newTitle: newTitle, newURL: newURL, newParentID: newParentID)
+    func update(bookmark: Bookmark, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
+        coreDataStorage.update(bookmarkID: bookmark.objectID, newTitle: newTitle, newURL: newURL, newParentID: newParentID)
+        updateFaviconIfNeeded(bookmark, newURL)
     }
     
     func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int) {
         coreDataStorage.updateIndex(of: bookmarkItemID, newIndex: newIndex)
+        reloadWidgets()
     }
     
     func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID, newIndex: Int) {
         coreDataStorage.convertFavoriteToBookmark(favoriteID, newIndex: newIndex)
+        reloadWidgets()
     }
     
     func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
         coreDataStorage.convertBookmarkToFavorite(bookmarkID, newIndex: newIndex)
+        reloadWidgets() // TODO this reload kind of isn't gonna work, really we should do it once we know the update has actually happened
+        //I think we have quite a few of these places where we shouldn't really do stuff until we know it's done.
+        //honestly all of these methods should have optional completions
     }
     
-    func delete(_ bookmarkItemID: NSManagedObjectID) {
-        coreDataStorage.delete(bookmarkItemID)
+    func delete(_ bookmarkItem: BookmarkItem) {
+        coreDataStorage.delete(bookmarkItem.objectID)
+        if let bookmark = bookmarkItem as? Bookmark {
+            removeFavicon(forBookmark: bookmark)
+            if bookmark.isFavorite {
+                reloadWidgets()
+            }
+        }
     }
     
-//    func bookmarkItem(atIndex index: Int) -> BookmarkItem? {
-//        return link(at: index, in: dataStore.bookmarks)
-//    }
-//
-//    func favoriteItem(atIndex index: Int) -> BookmarkItem? {
-//        return link(at: index, in: dataStore.favorites)
-//    }
-//
-//    private func link(at index: Int, in links: [Link]?) -> Link? {
-//        guard let links = links else { return nil }
-//        guard links.count > index else { return nil }
-//        return links[index]
-//    }
-//
-//    func save(bookmark: Link) {
-//        dataStore.addBookmark(bookmark)
-//        Favicons.shared.loadFavicon(forDomain: bookmark.url.host, intoCache: .bookmarks, fromCache: .tabs)
-//    }
-//
-//    func save(favorite: Link) {
-//        dataStore.addFavorite(favorite)
-//        Favicons.shared.loadFavicon(forDomain: favorite.url.host, intoCache: .bookmarks, fromCache: .tabs)
-//        reloadWidgets()
-//    }
-
-//    func moveFavorite(at favoriteIndex: Int, toBookmark bookmarkIndex: Int) {
-//        let link = dataStore.favorites[favoriteIndex]
-//        var favorites = dataStore.favorites
-//        var bookmarks = dataStore.bookmarks
-//
-//        if bookmarks.count < bookmarkIndex {
-//            bookmarks.append(link)
-//        } else {
-//            bookmarks.insert(link, at: bookmarkIndex)
-//        }
-//        favorites.remove(at: favoriteIndex)
-//
-//        dataStore.bookmarks = bookmarks
-//        dataStore.favorites = favorites
-//        reloadWidgets()
-//    }
-//
-//    func moveFavorite(at fromIndex: Int, to toIndex: Int) {
-//        var favorites = dataStore.favorites
-//        let link = favorites.remove(at: fromIndex)
-//        favorites.insert(link, at: toIndex)
-//        dataStore.favorites = favorites
-//        reloadWidgets()
-//    }
-//
-//    func moveBookmark(at bookmarkIndex: Int, toFavorite favoriteIndex: Int) {
-//        let link = dataStore.bookmarks[bookmarkIndex]
-//        var bookmarks = dataStore.bookmarks
-//        var favorites = dataStore.favorites
-//
-//        if favorites.count < favoriteIndex {
-//            favorites.append(link)
-//        } else {
-//            favorites.insert(link, at: favoriteIndex)
-//        }
-//        bookmarks.remove(at: bookmarkIndex)
-//
-//        dataStore.bookmarks = bookmarks
-//        dataStore.favorites = favorites
-//        reloadWidgets()
-//    }
-//
-//    func moveBookmark(at fromIndex: Int, to toIndex: Int) {
-//        var bookmarks = dataStore.bookmarks
-//        let link = bookmarks.remove(at: fromIndex)
-//        bookmarks.insert(link, at: toIndex)
-//        dataStore.bookmarks = bookmarks
-//    }
-//
-//    func deleteBookmark(at index: Int) {
-//        let link = bookmark(atIndex: index)
-//        var bookmarks = dataStore.bookmarks
-//        bookmarks.remove(at: index)
-//        dataStore.bookmarks = bookmarks
-//        removeFavicon(forLink: link)
-//    }
-//
-//    func deleteFavorite(at index: Int) {
-//        let link = favorite(atIndex: index)
-//        var favorites = dataStore.favorites
-//        favorites.remove(at: index)
-//        dataStore.favorites = favorites
-//        removeFavicon(forLink: link)
-//        reloadWidgets()
-//    }
-//
-//    func removeFavicon(forLink link: Link?) {
-//        guard let domain = link?.url.host else { return }
-//        let favorites = dataStore.favorites
-//        let bookmarks = dataStore.bookmarks
-//        DispatchQueue.global(qos: .background).async {
-//            let matchesDomain: ((Link) -> Bool) = { $0.url.host == domain }
-//            if !favorites.contains(where: matchesDomain) && !bookmarks.contains(where: matchesDomain) {
-//                Favicons.shared.removeBookmarkFavicon(forDomain: domain)
-//            }
-//        }
-//    }
-//
-//    func updateFavorite(at index: Int, with link: Link) {
-//        var favorites = dataStore.favorites
-//        let old = favorites.remove(at: index)
-//        favorites.insert(link, at: index)
-//        dataStore.favorites = favorites
-//        updateFaviconIfNeeded(old, link)
-//        reloadWidgets()
-//    }
-//
-//    func updateBookmark(at index: Int, with link: Link) {
-//        var bookmarks = dataStore.bookmarks
-//        let old = bookmarks.remove(at: index)
-//        bookmarks.insert(link, at: index)
-//        dataStore.bookmarks = bookmarks
-//        updateFaviconIfNeeded(old, link)
-//    }
-//
-//    private func updateFaviconIfNeeded(_ old: Link, _ new: Link) {
-//        guard old.url.host != new.url.host else { return }
-//        removeFavicon(forLink: old)
-//        Favicons.shared.loadFavicon(forDomain: new.url.host, intoCache: .bookmarks)
-//    }
-//
-//    func indexOfBookmark(url: URL) -> Int? {
-//        let bookmarks = dataStore.bookmarks
-//        return indexOf(url, in: bookmarks)
-//    }
-//
-//    func contains(url: URL) -> Bool {
-//        return containsBookmark(url: url) || containsFavorite(url: url)
-//    }
-//
-//    func containsFavorite(url: URL) -> Bool {
-//        return indexOfFavorite(url: url) != nil
-//    }
-//
-//    func containsBookmark(url: URL) -> Bool {
-//        return indexOfBookmark(url: url) != nil
-//    }
-//
-//    func indexOfFavorite(url: URL) -> Int? {
-//        let favorites = dataStore.favorites
-//        return indexOf(url, in: favorites)
-//    }
-//
-//    private func indexOf(_ url: URL, in links: [Link]) -> Int? {
-//        var index = 0
-//        for link in links {
-//            if link.url == url {
-//                return index
-//            }
-//            index += 1
-//        }
-//        return nil
-//    }
+    private func removeFavicon(forBookmark bookmark: Bookmark?) {
+        guard let domain = bookmark?.url?.host else { return }
+        
+        coreDataStorage.allBookmarksAndFavoritesShallow() { bookmarks in
+            DispatchQueue.global(qos: .background).async {
+                let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
+                if !bookmarks.contains(where: matchesDomain) {
+                    Favicons.shared.removeBookmarkFavicon(forDomain: domain)
+                }
+            }
+        }
+    }
+    
+    private func updateFaviconIfNeeded(_ old: Bookmark, _ newURL: URL) {
+        guard old.url?.host != newURL.host else { return }
+        removeFavicon(forBookmark: old)
+        Favicons.shared.loadFavicon(forDomain: newURL.host, intoCache: .bookmarks)
+    }
 
     func reloadWidgets() {
         if #available(iOS 14, *) {

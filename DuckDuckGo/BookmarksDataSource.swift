@@ -233,7 +233,7 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
         guard editingStyle == .delete else { return }
 
         guard let item = bookmarkItem(at: index)?.item else { return }
-        bookmarksManager.delete(item.objectID)
+        bookmarksManager.delete(item)
     }
 
 }
@@ -341,14 +341,14 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
             let message = String(format: messageString, count)
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alertController.addAction(title: NSLocalizedString("Delete", comment: "Delete bookmark folder alert delete button"), style: .default) {
-                self.bookmarksManager.delete(item.objectID)
+                self.bookmarksManager.delete(item)
             }
             alertController.addAction(title: UserText.actionCancel, style: .cancel)
             let viewController = delegate.bookmarksShallowSectionDataSourceDelegateDidRequestViewControllerForDeleteAlert()
             viewController.present(alertController, animated: true)
             
         } else {
-            bookmarksManager.delete(item.objectID)
+            bookmarksManager.delete(item)
         }
     }
 
@@ -751,7 +751,7 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         let manager = BookmarksManager()
         
         if let bookmark = existingBookmark {
-            manager.update(bookmarkID: bookmark.objectID, newTitle: title, newURL: url, newParentID: selectedParent.objectID)
+            manager.update(bookmark: bookmark, newTitle: title, newURL: url, newParentID: selectedParent.objectID)
         } else {
             manager.saveNewBookmark(withTitle: title, url: url, parentID: selectedParent.objectID)
         }
@@ -795,7 +795,7 @@ class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         let manager = BookmarksManager()
         
         if let bookmark = existingBookmark {
-            manager.update(favoriteID: bookmark.objectID, newTitle: title, newURL: url)
+            manager.update(favorite: bookmark, newTitle: title, newURL: url)
         } else {
             manager.saveNewFavorite(withTitle: title, url: url)
         }

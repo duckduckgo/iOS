@@ -43,7 +43,7 @@ class PrivacyConfigurationManagerTests: XCTestCase {
         XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .fingerprintingBattery))
         XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .fingerprintingScreenSize))
         XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .fingerprintingTemporaryStorage))
-        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .https))
+        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .httpsUpgrade))
     }
     
     private func calculateHash(for fileURL: URL) -> String {

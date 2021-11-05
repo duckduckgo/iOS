@@ -49,7 +49,6 @@ class BookmarksManager {
         return coreDataStorage.topLevelBookmarksItems
     }
     
-    //TODO not really sure if I want this exposed publically
     var topLevelBookmarksFolder: BookmarkFolder? {
         return coreDataStorage.topLevelBookmarksFolder
     }
@@ -91,6 +90,7 @@ class BookmarksManager {
     
     func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
         coreDataStorage.saveNewFolder(withTitle: title, parentID: parentID)
+        Pixel.fire(pixel: .bookmarksFolderCreated)
     }
     
     func saveNewFavorite(withTitle title: String, url: URL) {
@@ -102,6 +102,11 @@ class BookmarksManager {
     func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID?) {
         coreDataStorage.saveNewBookmark(withTitle: title, url: url, parentID: parentID)
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        if parentID != nil {
+            Pixel.fire(pixel: .bookmarkCreatedInSubfolder)
+        } else {
+            Pixel.fire(pixel: .bookmarkCreatedAtTopLevel)
+        }
     }
     
     func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
@@ -118,6 +123,11 @@ class BookmarksManager {
     func update(bookmark: Bookmark, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
         coreDataStorage.update(bookmarkID: bookmark.objectID, newTitle: newTitle, newURL: newURL, newParentID: newParentID)
         updateFaviconIfNeeded(bookmark, newURL)
+        if newParentID == topLevelBookmarksFolder?.objectID {
+            Pixel.fire(pixel: .bookmarkEditedAtTopLevel)
+        } else {
+            Pixel.fire(pixel: .bookmarkEditedInSubfolder)
+        }
     }
     
     func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int) {

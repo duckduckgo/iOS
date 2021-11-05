@@ -41,22 +41,19 @@ public class BookmarksCoreDataStorage {
     }
     
     private let storeLoadedCondition = RunLoop.ResumeCondition()
-        
-    private var persistentContainer: NSPersistentContainer?
+    private var persistentContainer: NSPersistentContainer
     
     private lazy var privateContext: NSManagedObjectContext = {
         RunLoop.current.run(until: storeLoadedCondition)
-        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        context.persistentStoreCoordinator = persistentContainer?.persistentStoreCoordinator
+        let context = persistentContainer.newBackgroundContext()
         context.name = Constants.privateContextName
         return context
     }()
     
     private lazy var viewContext: NSManagedObjectContext = {
         RunLoop.current.run(until: storeLoadedCondition)
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        let context = persistentContainer.viewContext
         context.mergePolicy = NSMergePolicy(merge: .rollbackMergePolicyType)
-        context.persistentStoreCoordinator = persistentContainer?.persistentStoreCoordinator
         context.name = Constants.viewContextName
         return context
     }()
@@ -64,9 +61,32 @@ public class BookmarksCoreDataStorage {
     private var cachedReadOnlyTopLevelBookmarksFolder: BookmarkFolderManagedObject?
     private var cachedReadOnlyTopLevelFavoritesFolder: BookmarkFolderManagedObject?
     
+    private static var managedObjectModel: NSManagedObjectModel {
+        let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
+        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [coreBundle]) else {
+            fatalError("No DB scheme found")
+        }
+        return managedObjectModel
+    }
+    
+    private static var storeDescription: NSPersistentStoreDescription {
+        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!
+        let storeURL = containerURL.appendingPathComponent("\(Constants.databaseName).sqlite")
+        return NSPersistentStoreDescription(url: storeURL)
+    }
+    
     public init() {
-        loadStore()
+        persistentContainer = NSPersistentContainer(name: Constants.databaseName, managedObjectModel: BookmarksCoreDataStorage.managedObjectModel)
+        persistentContainer.persistentStoreDescriptions = [BookmarksCoreDataStorage.storeDescription]
+    }
+    
+    public func loadStoreAndCaches(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
         
+        loadStore() { context in
+            handler(context)
+        }
+        
+        RunLoop.current.run(until: storeLoadedCondition)
         cacheReadOnlyTopLevelBookmarksFolder()
         cacheReadOnlyTopLevelFavoritesFolder()
         
@@ -74,27 +94,23 @@ public class BookmarksCoreDataStorage {
         NotificationCenter.default.addObserver(self, selector: #selector(objectsDidChange), name: .NSManagedObjectContextObjectsDidChange, object: nil)
     }
     
-    private func loadStore() {
-        let mainBundle = Bundle.main
-        let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
-        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else {
-            fatalError("No DB scheme found")
-        }
-        
-        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!
-        let storeURL = containerURL.appendingPathComponent("\(Constants.databaseName).sqlite")
-        let description = NSPersistentStoreDescription(url: storeURL)
+    private func loadStore(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
 
-        let container = NSPersistentContainer(name: Constants.databaseName, managedObjectModel: managedObjectModel)
-        container.persistentStoreDescriptions = [description]
-        container.loadPersistentStores { description, error in
+        persistentContainer = NSPersistentContainer(name: Constants.databaseName, managedObjectModel: BookmarksCoreDataStorage.managedObjectModel)
+        persistentContainer.persistentStoreDescriptions = [BookmarksCoreDataStorage.storeDescription]
+        persistentContainer.loadPersistentStores { description, error in
             if let error = error {
                 fatalError("Unable to load persistent stores: \(error)")
             }
             
-            self.storeLoadedCondition.resolve()
+            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+            context.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
+            context.name = "Migration"
+            context.perform {
+                handler(context)
+                self.storeLoadedCondition.resolve()
+            }            
         }
-        persistentContainer = container
     }
 }
 
@@ -122,26 +138,6 @@ extension BookmarksCoreDataStorage {
             } else {
                 fatalError("Favourites shouldn't contain folders")
             }
-        }
-    }
-    
-    //I don't love that I have a sync and an async version of these...
-    public func favorites(completion: @escaping ([Bookmark]) -> Void) {
-        getTopLevelFolder(isFavorite: true, readOnly: true) { folder in
-            
-            guard let folder = folder else {
-                completion([])
-                return
-            }
-            let children = folder.children?.array as? [BookmarkItem] ?? []
-            let favorites: [Bookmark] = children.map {
-                if let fav = $0 as? Bookmark {
-                    return fav
-                } else {
-                    fatalError("Favourites shouldn't contain folders")
-                }
-            }
-            completion(favorites)
         }
     }
     
@@ -179,7 +175,6 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    // Doesn't include parents
     // Just used for favicon deletion
     public func allBookmarksAndFavoritesShallow(completion: @escaping ([Bookmark]) -> Void) {
         viewContext.perform { [weak self] in
@@ -195,7 +190,7 @@ extension BookmarksCoreDataStorage {
     }
     
     public func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
-        createFolder(title: title, isFavorite: false, parentID: parentID) { _ in } //TODO no completion pls
+        createFolder(title: title, isFavorite: false, parentID: parentID)
     }
     
     public func saveNewFavorite(withTitle title: String, url: URL) {
@@ -343,12 +338,37 @@ extension BookmarksCoreDataStorage {
     }
 }
 
+// MARK: Public interface for widget
+extension BookmarksCoreDataStorage {
+    
+    // Widget doesn't need to care about caches
+    public func loadStoreOnlyForWidget() {
+        loadStore()
+    }
+    
+    public func favoritesUncachedForWidget(completion: @escaping ([Bookmark]) -> Void) {
+        getTopLevelFolder(isFavorite: true, readOnly: true) { folder in
+            
+            let children = folder.children?.array as? [BookmarkItem] ?? []
+            let favorites: [Bookmark] = children.map {
+                if let fav = $0 as? Bookmark {
+                    return fav
+                } else {
+                    fatalError("Favourites shouldn't contain folders")
+                }
+            }
+            completion(favorites)
+        }
+    }
+}
+
+
 // MARK: respond to data updates
 extension BookmarksCoreDataStorage {
             
     @objc func contextDidSave(notification: Notification) {
         guard let sender = notification.object as? NSManagedObjectContext else { return }
-
+        
         if sender == privateContext {
             viewContext.perform { [weak self] in
                 self?.viewContext.mergeChanges(fromContextDidSave: notification)
@@ -378,7 +398,7 @@ extension BookmarksCoreDataStorage {
                 return
             }
             
-            self.getOrCreateIfNecessaryTopLevelFolder(isFavorite: !bookmark.isFavorite, returnReadOnly: false) { newParent in
+            self.getTopLevelFolder(isFavorite: !bookmark.isFavorite, readOnly: false) { newParent in
                 
                 bookmark.parent?.removeFromChildren(bookmark)
                 bookmark.isFavorite = !bookmark.isFavorite
@@ -402,8 +422,7 @@ extension BookmarksCoreDataStorage {
     }
     
     private func containsBookmark(url: URL, searchType: SearchType, completion: @escaping (Bool) -> Void) {
-        privateContext.perform {
-            
+        viewContext.perform {
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
             
             switch searchType {
@@ -415,7 +434,7 @@ extension BookmarksCoreDataStorage {
                 fetchRequest.predicate = NSPredicate(format: "url == %@", url as CVarArg)
             }
             
-            guard let results = try? self.privateContext.fetch(fetchRequest) else {
+            guard let results = try? self.viewContext.fetch(fetchRequest) else {
                 completion(false)
                 return
             }
@@ -423,38 +442,7 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func getOrCreateIfNecessaryTopLevelFolder(isFavorite: Bool, returnReadOnly: Bool, completion: @escaping (BookmarkFolderManagedObject) -> Void) {
-        
-        getTopLevelFolder(isFavorite: isFavorite, readOnly: returnReadOnly) { folder in
-            if let folder = folder {
-                completion(folder)
-                return
-            }
-            
-            self.privateContext.perform { [weak self] in
-                guard let self = self else {
-                    fatalError("self nil when creating top level bookmark folder")
-                }
-                let folder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: self.privateContext) as? BookmarkFolderManagedObject
-                folder?.isFavorite = isFavorite
-                            
-                do {
-                    try self.privateContext.save()
-                } catch {
-                    fatalError("Error creating top level bookmark folder")
-                }
-                
-                self.getTopLevelFolder(isFavorite: isFavorite, readOnly: returnReadOnly) { folder in
-                    guard let folder = folder else {
-                        fatalError("Error getting newly created top level bookmark folder")
-                    }
-                    completion(folder)
-                }
-            }
-        }
-    }
-    
-    private func getTopLevelFolder(isFavorite: Bool, readOnly: Bool, completion: @escaping (BookmarkFolderManagedObject?) -> Void) {
+    private func getTopLevelFolder(isFavorite: Bool, readOnly: Bool, completion: @escaping (BookmarkFolderManagedObject) -> Void) {
         
         let context = readOnly ? viewContext : privateContext
         context.perform {
@@ -466,22 +454,48 @@ extension BookmarksCoreDataStorage {
             guard (results?.count ?? 0) <= 1 else {
                 fatalError("There shouldn't be an orphaned folder")
             }
-            let folder = results?.first
+            
+            guard let folder = results?.first else {
+                fatalError("Top level folder missing. isFavorite: \(isFavorite)")
+            }
             completion(folder)
         }
     }
     
     private func cacheReadOnlyTopLevelBookmarksFolder() {
-        getOrCreateIfNecessaryTopLevelFolder(isFavorite: false, returnReadOnly: true) { folder in
+        
+        viewContext.performAndWait {
+            let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
+            fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == false")
+            
+            let results = try? viewContext.fetch(fetchRequest)
+            guard (results?.count ?? 0) <= 1 else {
+                fatalError("There shouldn't be an orphaned folder")
+            }
+            
+            guard let folder = results?.first else {
+                fatalError("Top level folder missing")
+            }
+            
             self.cachedReadOnlyTopLevelBookmarksFolder = folder
-            NotificationCenter.default.post(name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
         }
     }
     
     private func cacheReadOnlyTopLevelFavoritesFolder() {
-        getOrCreateIfNecessaryTopLevelFolder(isFavorite: true, returnReadOnly: true) { folder in
+        viewContext.performAndWait {
+            let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
+            fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == true")
+            
+            let results = try? viewContext.fetch(fetchRequest)
+            guard (results?.count ?? 0) <= 1 else {
+                fatalError("There shouldn't be an orphaned folder")
+            }
+            
+            guard let folder = results?.first else {
+                fatalError("Top level folder missing")
+            }
+            
             self.cachedReadOnlyTopLevelFavoritesFolder = folder
-            NotificationCenter.default.post(name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
         }
     }
     
@@ -516,8 +530,7 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    //TODO get rid of completion probably
-    private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil, completion: (BookmarkFolderManagedObject?) -> Void) {
+    private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil) {
         
         privateContext.perform { [weak self] in
             guard let self = self else {
@@ -556,33 +569,39 @@ extension BookmarksCoreDataStorage {
             }
             updateParentAndSave(parent: newParentMO)
         } else {
-            self.getOrCreateIfNecessaryTopLevelFolder(isFavorite: item.isFavorite, returnReadOnly: false) { parent in
+            self.getTopLevelFolder(isFavorite: item.isFavorite, readOnly: false) { parent in
                 updateParentAndSave(parent: parent)
             }
         }
     }
-    
-    public func createTestData() {
-        createBookmark(url: URL(string: "http://example.com")!, title: "example 1.1", isFavorite: false)
-        createBookmark(url: URL(string: "http://fish.com")!, title: "fish 1.2", isFavorite: false)
-        
-        createFolder(title: "Test folder 1, 1.3", isFavorite: false) { topFolder in
-            
-            createBookmark(url: URL(string: "http://dogs.com")!, title: "dogs 1.4", isFavorite: false)
-            createBookmark(url: URL(string: "http://cnn.com")!, title: "cnn 2.1", isFavorite: false, parentID: topFolder?.objectID)
-            createFolder(title: "Test folder 2 2.2", isFavorite: false, parentID: topFolder?.objectID) { secondLevelFolder in
-                
-                createBookmark(url: URL(string: "httP://pig.com")!, title: "pig 3.1", isFavorite: false, parentID: secondLevelFolder?.objectID)
-            }
-        }
-    }
-    
-    public func createTestFavourites() {
-        createBookmark(url: URL(string: "http://example.com")!, title: "example fav", isFavorite: true)
-        createBookmark(url: URL(string: "http://fish.com")!, title: "fish fav", isFavorite: true)
-    }
 }
 
+public class BookmarksCoreDataStorageMigration {
+    
+    @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCoreData, defaultValue: false)
+    private static var migratedFromUserDefaults: Bool
+    
+    public static func migrateFromUserDefaults(context: NSManagedObjectContext) {
+        if migratedFromUserDefaults {
+            return
+        }
+        
+        context.performAndWait {
+            let favoritesFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject
+            favoritesFolder?.isFavorite = true
+            let bookmarksFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject
+            bookmarksFolder?.isFavorite = false
+                        
+            do {
+                try context.save()
+            } catch {
+                fatalError("Error creating top level bookmark folders")
+            }
+        }
+
+        migratedFromUserDefaults = true
+    }
+}
 
 
 //extension BookmarksCoreDataStorage: BookmarkStore {

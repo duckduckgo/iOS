@@ -20,24 +20,24 @@
 import Foundation
 import CoreData
 
+fileprivate struct Constants {
+    static let privateContextName = "EditBookmarksAndFolders"
+    static let viewContextName = "ViewBookmarksAndFolders"
+    
+    static let bookmarkClassName = "BookmarkManagedObject"
+    static let folderClassName = "BookmarkFolderManagedObject"
+    
+    static let databaseName = "BookmarksAndFolders"
+    
+    static let groupName = "\(Global.groupIdPrefix).bookmarks"
+}
+
 public class BookmarksCoreDataStorage {
     
     public static let shared = BookmarksCoreDataStorage()
     
     public struct Notifications {
         public static let dataDidChange = Notification.Name("com.duckduckgo.app.BookmarksCoreDataDidChange")
-    }
-    
-    private struct Constants {
-        static let privateContextName = "EditBookmarksAndFolders"
-        static let viewContextName = "ViewBookmarksAndFolders"
-        
-        static let bookmarkClassName = "BookmarkManagedObject"
-        static let folderClassName = "BookmarkFolderManagedObject"
-        
-        static let databaseName = "BookmarksAndFolders"
-        
-        static let groupName = "\(Global.groupIdPrefix).bookmarks"
     }
     
     private let storeLoadedCondition = RunLoop.ResumeCondition()
@@ -581,22 +581,54 @@ public class BookmarksCoreDataStorageMigration {
     @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCoreData, defaultValue: false)
     private static var migratedFromUserDefaults: Bool
     
-    public static func migrateFromUserDefaults(context: NSManagedObjectContext) {
+    public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) {
         if migratedFromUserDefaults {
             return
         }
         
         context.performAndWait {
-            let favoritesFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject
-            favoritesFolder?.isFavorite = true
-            let bookmarksFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject
-            bookmarksFolder?.isFavorite = false
+            guard let favoritesFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject else {
+                fatalError("Error creating top level favorites folder")
+            }
+            favoritesFolder.isFavorite = true
+            
+            guard let bookmarksFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject else {
+                fatalError("Error creating top level bookmarks folder")
+            }
+            bookmarksFolder.isFavorite = false
+            
+            func migrateLink(_ link: Link, isFavorite: Bool) {
+                let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: context)
+                guard let bookmark = managedObject as? BookmarkManagedObject else {
+                    assertionFailure("Inserting new bookmark failed")
+                    return
+                }
+                bookmark.url = link.url
+                bookmark.title = link.title
+                bookmark.isFavorite = isFavorite
+                
+                let folder = isFavorite ? favoritesFolder : bookmarksFolder
+                bookmark.parent = folder
+                folder.addToChildren(bookmark)
+            }
+            
+            let favorites = bookmarkStore.favorites
+            for favorite in favorites {
+                migrateLink(favorite, isFavorite: true)
+            }
+            
+            let bookmarks = bookmarkStore.bookmarks
+            for bookmark in bookmarks {
+                migrateLink(bookmark, isFavorite: false)
+            }
                         
             do {
                 try context.save()
             } catch {
                 fatalError("Error creating top level bookmark folders")
             }
+            
+            bookmarkStore.deleteAllData()
         }
 
         migratedFromUserDefaults = true

@@ -26,5 +26,6 @@ public protocol BookmarkStore: AnyObject {
     func addBookmark(_ bookmark: Link)
     func addFavorite(_ favorite: Link)
     func contains(domain: String) -> Bool
+    func deleteAllData()
 
 }

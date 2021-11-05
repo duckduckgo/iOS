@@ -12,6 +12,7 @@
 		0254AC2424EDACDE004855DF /* contentblockerrules.js in Resources */ = {isa = PBXBuildFile; fileRef = 0254AC2324EDACDE004855DF /* contentblockerrules.js */; };
 		025CD01025826035001CD5BB /* FingerprintUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */; };
 		0263FD24273430090099B71A /* AMPCanonicalExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263FD23273430090099B71A /* AMPCanonicalExtractor.swift */; };
+		0263FD262735803C0099B71A /* TrackingLinkSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263FD252735803C0099B71A /* TrackingLinkSettings.swift */; };
 		026ADE0E26B321E1002518EE /* PrivacyConfigurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */; };
 		02889BE22731C15A000F606F /* LinkCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02889BE12731C15A000F606F /* LinkCleaner.swift */; };
 		02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */; };
@@ -710,6 +711,7 @@
 		025CCFE22582601C001CD5BB /* FingerprintingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FingerprintingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		025CCFE62582601C001CD5BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0263FD23273430090099B71A /* AMPCanonicalExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMPCanonicalExtractor.swift; sourceTree = "<group>"; };
+		0263FD252735803C0099B71A /* TrackingLinkSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingLinkSettings.swift; sourceTree = "<group>"; };
 		026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationManagerTests.swift; sourceTree = "<group>"; };
 		02889BE12731C15A000F606F /* LinkCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCleaner.swift; sourceTree = "<group>"; };
 		02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationManager.swift; sourceTree = "<group>"; };
@@ -2043,6 +2045,7 @@
 			children = (
 				02889BE12731C15A000F606F /* LinkCleaner.swift */,
 				0263FD23273430090099B71A /* AMPCanonicalExtractor.swift */,
+				0263FD252735803C0099B71A /* TrackingLinkSettings.swift */,
 			);
 			name = LinkProtection;
 			sourceTree = "<group>";
@@ -4857,6 +4860,7 @@
 				F1134EB01F40AC6300B73467 /* AtbParser.swift in Sources */,
 				8521FDEE238DD1B500A44CC3 /* MockEntityMapping.swift in Sources */,
 				830C375E1F6C3A3B00E317A7 /* TermsOfServiceStore.swift in Sources */,
+				0263FD262735803C0099B71A /* TrackingLinkSettings.swift in Sources */,
 				85F1E9AE1FB49EA200A75AC1 /* ServerTrustCache.swift in Sources */,
 				857065701F6ABFA40044DCB1 /* APIRequest.swift in Sources */,
 				F14513571F46388F00710C46 /* SiteRating.swift in Sources */,

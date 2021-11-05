@@ -29,17 +29,14 @@ public class AMPCanonicalExtractor: NSObject {
         static let canonicalKey = "canonical"
     }
     
-    private let ampKeywords = [
-        "/amp", "amp/", ".amp", "amp.", "?amp", "amp?", "=amp",
-        "amp=", "&amp", "amp&", "%amp", "amp%", "_amp", "amp_"
-    ]
-    
     private var webView: WKWebView?
     private var completion: ((URL?) -> Void)?
     
     public func urlContainsAmpKeyword(_ url: URL?) -> Bool {
         guard let url = url else { return false }
         let urlStr = url.absoluteString
+        
+        let ampKeywords = TrackingLinkSettings(fromConfig: PrivacyConfigurationManager.shared.privacyConfig).ampKeywords
         
         for keyword in ampKeywords {
             if urlStr.contains(keyword) {

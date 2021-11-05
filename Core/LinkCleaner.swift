@@ -23,12 +23,8 @@ public class LinkCleaner {
     
     public static let shared = LinkCleaner()
     
-    private let ampFormats = [
-        "https?:\\/\\/(?:w{3}\\.)?google\\.\\w{2,}\\/amp\\/s\\/(\\S+)",
-        "https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)"
-    ]
-    
     public func urlIsExtractableAmpLink(_ url: URL) -> String? {
+        let ampFormats = TrackingLinkSettings(fromConfig: PrivacyConfigurationManager.shared.privacyConfig).ampLinkFormats
         for format in ampFormats {
             if url.absoluteString.matches(pattern: format) {
                 return format
@@ -42,7 +38,9 @@ public class LinkCleaner {
         guard let host = url.host else { return true }
         
         let config = PrivacyConfigurationManager.shared.privacyConfig
-        if config.isTempUnprotected(domain: host) || config.isUserUnprotected(domain: host) {
+        if config.isTempUnprotected(domain: host)
+            || config.isUserUnprotected(domain: host)
+            || config.isInExceptionList(domain: host, forFeature: .trackingLinks) {
             return true
         }
         

@@ -77,9 +77,9 @@
         "package": "TrackerRadarKit",
         "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
-          "branch": "bartek/tracker-exceptions",
-          "revision": "2b6d2ed57b0a549de9ead29681b9197ac291d16a",
-          "version": null
+          "branch": null,
+          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
+          "version": "1.0.3"
         }
       }
     ]

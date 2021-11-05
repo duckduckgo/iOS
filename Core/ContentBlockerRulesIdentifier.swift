@@ -19,10 +19,11 @@
 
 import Foundation
 
-public class ContentBlockerRulesIdentifier {
+public class ContentBlockerRulesIdentifier: Equatable {
     
     private let tdsEtag: String
     private let tempListEtag: String
+    private let allowListEtag: String
     private let unprotectedSitesHash: String
     
     public var stringValue: String {
@@ -38,26 +39,27 @@ public class ContentBlockerRulesIdentifier {
         
         public static let tdsEtag = Difference(rawValue: 1 << 0)
         public static let tempListEtag = Difference(rawValue: 1 << 1)
-        public static let unprotectedSites = Difference(rawValue: 1 << 2)
+        public static let allowListEtag = Difference(rawValue: 1 << 2)
+        public static let unprotectedSites = Difference(rawValue: 1 << 3)
         
-        public static let all: Difference = [.tdsEtag, .tempListEtag, .unprotectedSites]
+        public static let all: Difference = [.tdsEtag, .tempListEtag, .allowListEtag, .unprotectedSites]
     }
     
-    private class func normalize(etag: String?) -> String {
-        // Ensure etag is in double quotes
-        guard var etag = etag else {
+    private class func normalize(identifier: String?) -> String {
+        // Ensure identifier is in double quotes
+        guard var identifier = identifier else {
             return "\"\""
         }
         
-        if !etag.hasSuffix("\"") {
-            etag += "\""
+        if !identifier.hasSuffix("\"") {
+            identifier += "\""
         }
         
-        if !etag.hasPrefix("\"") || etag.count == 1 {
-            etag = "\"" + etag
+        if !identifier.hasPrefix("\"") || identifier.count == 1 {
+            identifier = "\"" + identifier
         }
         
-        return etag
+        return identifier
     }
     
     public class func hash(domains: [String]?) -> String {
@@ -69,21 +71,35 @@ public class ContentBlockerRulesIdentifier {
     }
     
     init?(identifier: String) {
-        guard let betweenEtags = identifier.range(of: "\"\""), let lastEtagChar = identifier.lastIndex(of: "\"") else {
+
+        var components = identifier.components(separatedBy: "\"\"")
+        if components.count == 2 {
+            // Legacy - migrate to new format
+            let tdsComponent = components[0]
+            let tmpListAndUnprotected = components[1].components(separatedBy: "\"")
+
+            components = [tdsComponent,
+                          tmpListAndUnprotected.first ?? "",
+                          "",
+                          (tmpListAndUnprotected.last ?? "").appending("\"")]
+
+        } else if components.count != 4 {
             Pixel.fire(pixel: .contentBlockingIdentifierError)
             return nil
         }
-        
-        tdsEtag = String(identifier[identifier.startIndex...betweenEtags.lowerBound])
-        tempListEtag = String(identifier[identifier.index(before: betweenEtags.upperBound)...lastEtagChar])
-        unprotectedSitesHash = String(identifier[identifier.index(after: lastEtagChar)..<identifier.endIndex])
+
+        tdsEtag = Self.normalize(identifier: components[0])
+        tempListEtag = Self.normalize(identifier: components[1])
+        allowListEtag = Self.normalize(identifier: components[2])
+        unprotectedSitesHash = Self.normalize(identifier: components[3])
     }
     
-    init(tdsEtag: String, tempListEtag: String?, unprotectedSites: [String]?) {
+    init(tdsEtag: String, tempListEtag: String?, allowListEtag: String?, unprotectedSitesHash: String?) {
         
-        self.tdsEtag = Self.normalize(etag: tdsEtag)
-        self.tempListEtag = Self.normalize(etag: tempListEtag)
-        self.unprotectedSitesHash = Self.hash(domains: unprotectedSites)
+        self.tdsEtag = Self.normalize(identifier: tdsEtag)
+        self.tempListEtag = Self.normalize(identifier: tempListEtag)
+        self.allowListEtag = Self.normalize(identifier: allowListEtag)
+        self.unprotectedSitesHash = Self.normalize(identifier: unprotectedSitesHash)
     }
     
     public func compare(with id: ContentBlockerRulesIdentifier) -> Difference {
@@ -95,10 +111,17 @@ public class ContentBlockerRulesIdentifier {
         if tempListEtag != id.tempListEtag {
             result.insert(.tempListEtag)
         }
+        if allowListEtag != id.allowListEtag {
+            result.insert(.allowListEtag)
+        }
         if unprotectedSitesHash != id.unprotectedSitesHash {
             result.insert(.unprotectedSites)
         }
         
         return result
+    }
+
+    public static func == (lhs: ContentBlockerRulesIdentifier, rhs: ContentBlockerRulesIdentifier) -> Bool {
+        return lhs.compare(with: rhs).isEmpty
     }
 }

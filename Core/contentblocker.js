@@ -493,6 +493,73 @@
           `.split('\n').filter(domain => domain.trim() === topLevelUrl.host).length > 0
     }
 
+    let trackerAllowlist = {}
+    const trackerAllowlistEntries = `
+            $TRACKER_ALLOWLIST_ENTRIES$
+          `
+
+    if (trackerAllowlistEntries) {
+        trackerAllowlist = JSON.parse(trackerAllowlistEntries)
+    }
+
+    function isTrackerAllowlisted (siteURL, request) {
+        // check that allowlist has entries
+        if (!Object.keys(trackerAllowlist).length) {
+            return false
+        }
+
+        const parsedRequest = tldjs.parse(request)
+        const requestDomainParts = Array.from(parsedRequest.domain.split('.'))
+
+        let allowListEntry = null
+        while (requestDomainParts.length > 1) {
+            const requestDomain = requestDomainParts.join('.')
+
+            allowListEntry = trackerAllowlist[requestDomain]
+            if (allowListEntry) {
+                break
+            }
+            requestDomainParts.shift()
+        }
+
+        if (allowListEntry) {
+            return _matchesRule(siteURL, request, allowListEntry)
+        } else {
+            return false
+        }
+    }
+
+    function _matchesRule (siteURL, request, allowListEntryList) {
+        let matchedEntry = null
+
+        if (allowListEntryList && allowListEntryList.length) {
+            for (const entryObj of allowListEntryList) {
+                if (request.match(entryObj.rule)) {
+                    matchedEntry = entryObj
+                    break
+                }
+            }
+        }
+
+        if (matchedEntry) {
+            if (matchedEntry.domains.includes('<all>')) {
+                return true
+            }
+
+            const siteDomainParts = Array.from(siteURL.host.split('.'))
+
+            while (siteDomainParts.length > 1) {
+                const siteDomain = siteDomainParts.join('.')
+                if (matchedEntry.domains.includes(siteDomain)) {
+                    return true
+                }
+                siteDomainParts.shift()
+            }
+        }
+
+        return false
+    }
+
     // private
     function getTopLevelURL () {
         try {
@@ -548,7 +615,7 @@
 
         // Tracker blocking is dealt with by content rules
         // Only handle surrogates here
-        if (blocked && isSurrogate) {
+        if (blocked && isSurrogate && !isTrackerAllowlisted(topLevelUrl, trackerUrl)) {
             if (!loadedSurrogates[result.matchedRule.surrogate]) {
                 loadSurrogate(result.matchedRule.surrogate)
                 loadedSurrogates[result.matchedRule.surrogate] = true

@@ -34,6 +34,9 @@ public protocol PrivacyConfiguration {
     /// Use `isTempUnprotected(domain:)` to check if given domain is unprotected.
     var tempUnprotectedDomains: [String] { get }
 
+    /// Trackers that has been allow listed because of site breakage
+    var trackerAllowlist: PrivacyConfigurationData.TrackerAllowlistData { get }
+
     func isEnabled(featureKey: PrivacyFeature) -> Bool
 
     /// Domains for which given PrivacyFeature is disabled.
@@ -102,11 +105,15 @@ public struct AppPrivacyConfiguration: PrivacyConfiguration {
     public var tempUnprotectedDomains: [String] {
         return data.unprotectedTemporary.map { $0.domain }
     }
+
+    public var trackerAllowlist: PrivacyConfigurationData.TrackerAllowlistData {
+        return data.trackerAllowlist.state == PrivacyConfigurationData.State.enabled ? data.trackerAllowlist.entries : [:]
+    }
     
     public func isEnabled(featureKey: PrivacyFeature) -> Bool {
         guard let feature = data.features[featureKey.rawValue] else { return false }
         
-        return feature.state == "enabled"
+        return feature.state == PrivacyConfigurationData.State.enabled
     }
     
     public func exceptionsList(forFeature featureKey: PrivacyFeature) -> [String] {

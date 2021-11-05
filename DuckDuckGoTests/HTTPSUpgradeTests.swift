@@ -68,6 +68,7 @@ class HTTPSUpgradeTests: XCTestCase {
                                   privacyConfig: WebKitTestHelper.preparePrivacyConfig(
                                     locallyUnprotected: [],
                                     tempUnprotected: [],
+                                    trackerAllowlist: [:],
                                     contentBlockingEnabled: true,
                                     exceptions: [],
                                     httpsUpgradesEnabled: true))
@@ -88,6 +89,7 @@ class HTTPSUpgradeTests: XCTestCase {
                                   privacyConfig: WebKitTestHelper.preparePrivacyConfig(
                                     locallyUnprotected: [],
                                     tempUnprotected: [],
+                                    trackerAllowlist: [:],
                                     contentBlockingEnabled: true,
                                     exceptions: [],
                                     httpsUpgradesEnabled: false))

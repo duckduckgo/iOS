@@ -3875,6 +3875,8 @@
 			buildConfigurationList = 84E341BA1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGo" */;
 			buildPhases = (
 				0A991F5B239418D100AA1F64 /* Prevent Version Override */,
+				7B17EA9C273614E200FF7B31 /* npm install */,
+				7B17EA9B273613C900FF7B31 /* ESLint */,
 				98B0CE69251C937D003FB601 /* Update Localizable.strings */,
 				84E3418E1E2F7EFB00BDBA6F /* Sources */,
 				8558AA7D20EE3CB200A346E9 /* Swift Lint */,
@@ -4407,6 +4409,42 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$SOURCE_ROOT/check_version.sh\"\n";
+		};
+		7B17EA9B273613C900FF7B31 /* ESLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = ESLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "npx eslint .\n";
+		};
+		7B17EA9C273614E200FF7B31 /* npm install */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "npm install";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "npm install\n";
 		};
 		8558AA7D20EE3CB200A346E9 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -14,6 +14,16 @@ We use submodules, so you will need to bring them into the project in order to b
 
 Run `git submodule update --init --recursive`
 
+### ESLint
+
+The app uses ESLint for checking JavaScript and is installed independently.
+
+To install the latest node: `brew install node`.
+
+Run `npm install` to install all the dependencies.
+
+To check the JavaScript run `npx eslint .` and `npx eslint . --fix` to run automated fixing.
+
 ### Developer details
 If you're not part of the DuckDuckGo team, you should provide your Apple developer account id, app id, and group id prefix in an `ExternalDeveloper.xcconfig` file. To do that:
 

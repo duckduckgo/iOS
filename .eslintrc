@@ -6,6 +6,7 @@
     "extends": [
         "standard"
     ],
+    "root": true,
     "globals": {
         "__firefox__": "readonly",
         "SECURITY_TOKEN": "readonly",
@@ -14,7 +15,9 @@
         "$BLOCKING_ENABLED$": "readonly",
         "$TRACKER_DATA$": "readonly",
         "$IS_DEBUG$": "readonly",
-        "webkit": "readonly"
+        "webkit": "readonly",
+        "$DYNAMIC_TYPE_SCALE_PERCENTAGE$": "readonly",
+        "$TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$": "readonly"
     },
     "parserOptions": {
         "ecmaVersion": 7

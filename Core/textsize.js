@@ -17,138 +17,142 @@
 //  limitations under the License.
 //
 
-(function() {
-    let hostname = getTopLevelURL().hostname;
-    
-    let knownDynamicTypeExceptions = `$KNOWN_DYNAMIC_TYPE_EXCEPTIONS$`.split("\n");
-    
-    let shouldAdjustForDynamicType = isURLMatchingAnyOfDomains(hostname, knownDynamicTypeExceptions);
-    let isDDG = isURLMatchingDomain(hostname, "duckduckgo.com");
-    
-    let currentTextSizeAdjustment = $TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$;
-    
-    if (document.readyState === "complete"
-        || document.readyState === "loaded"
-        || document.readyState === "interactive") {
+(function () {
+    const hostname = getTopLevelURL().hostname
+
+    const knownDynamicTypeExceptions = `
+        $KNOWN_DYNAMIC_TYPE_EXCEPTIONS$
+    `.split('\n').map((d) => d.trim())
+
+    const shouldAdjustForDynamicType = isURLMatchingAnyOfDomains(hostname, knownDynamicTypeExceptions)
+    const isDDG = isURLMatchingDomain(hostname, 'duckduckgo.com')
+
+    const currentTextSizeAdjustment = $TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$
+
+    if (document.readyState === 'complete' ||
+        document.readyState === 'loaded' ||
+        document.readyState === 'interactive') {
         // DOM should have been parsed
-        adjustTextSize(currentTextSizeAdjustment);
+        adjustTextSize(currentTextSizeAdjustment)
     } else {
         // DOM not yet ready, add a listener instead
-        if ((shouldAdjustForDynamicType) || (isDDG) || (currentTextSizeAdjustment != 100)) {
-            document.addEventListener("DOMContentLoaded", function(event) {
-                adjustTextSize(currentTextSizeAdjustment);
+        if ((shouldAdjustForDynamicType) || (isDDG) || (currentTextSizeAdjustment !== 100)) {
+            document.addEventListener('DOMContentLoaded', function (event) {
+                adjustTextSize(currentTextSizeAdjustment)
             }, false)
         }
     }
-    
-    function getTopLevelURL() {
+
+    function getTopLevelURL () {
         try {
             // FROM: https://stackoverflow.com/a/7739035/73479
             // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
-            return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
-        } catch(error) {
+            return new URL(window.location !== window.parent.location ? document.referrer : document.location.href)
+        } catch (error) {
             return new URL(location.href)
         }
     }
-    
-    function isURLMatchingDomain(url, domain) {
-        var urlParts = url.split('.');
-        
+
+    function isURLMatchingDomain (url, domain) {
+        const urlParts = url.split('.')
+
         while (urlParts.length > 1) {
             if (domain === urlParts.join('.')) {
-                return true;
+                return true
             }
-            
-            urlParts.shift();
+
+            urlParts.shift()
         }
-        
-        return false;
+
+        return false
     }
-    
-    function isURLMatchingAnyOfDomains(url, domains) {
+
+    function isURLMatchingAnyOfDomains (url, domains) {
         for (const domain of domains) {
             if (isURLMatchingDomain(url, domain)) {
                 return true
             }
         }
-        
+
         return false
     }
-    
-    function adjustTextSize(percentage) {
+
+    function adjustTextSize (percentage) {
         if (shouldAdjustForDynamicType) {
-            adjustTextSizeForDynamicType(percentage);
+            adjustTextSizeForDynamicType(percentage)
         } else if (isDDG && (typeof DDG !== 'undefined')) {
-            adjustTextSizeForDDG(percentage);
+            adjustTextSizeForDDG(percentage)
         } else {
-            document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=percentage+"%";
+            document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust = percentage + '%'
         }
     }
-    
-    function adjustTextSizeForDynamicType(percentage) {
-        let dynamicTypeAdjustment = $DYNAMIC_TYPE_SCALE_PERCENTAGE$;
-        var adjustedPercentage = percentage * 100/dynamicTypeAdjustment;
-        
-        document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=adjustedPercentage+"%";
+
+    function adjustTextSizeForDynamicType (percentage) {
+        const dynamicTypeAdjustment = $DYNAMIC_TYPE_SCALE_PERCENTAGE$
+        const adjustedPercentage = percentage * 100 / dynamicTypeAdjustment
+
+        document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust = adjustedPercentage + '%'
     }
-    
-    function adjustTextSizeForDDG(percentage) {
-        var adjustedPercentage = 100;
-        
+
+    function adjustTextSizeForDDG (percentage) {
+        let adjustedPercentage = 100
+
         // Fix for side menu sliding in when growing due to increased text
-        let menu = document.getElementsByClassName('nav-menu--slideout')[0];
-        let previousLeft = menu.style.left;
-        menu.style.left="-100%";
-        
+        const menu = document.getElementsByClassName('nav-menu--slideout')[0]
+        const previousLeft = menu.style.left
+        menu.style.left = '-100%'
+
         // Force re-painting of the menu: https://stackoverflow.com/a/3485654
-        menu.style.display='none';
-        menu.offsetHeight; // no need to store this anywhere, the reference is enough
-        menu.style.display='block';
-        
-        switch(percentage) {
-            case 80:
-                DDG.settings.set('ks', 's');
-                break;
-            case 90:
-                DDG.settings.set('ks', 'm');
-                break;
-            case 100:
-                DDG.settings.set('ks', 'n');
-                break;
-            case 110:
-                DDG.settings.set('ks', 'n');
-                adjustedPercentage = 105;
-                break;
-            case 120:
-                DDG.settings.set('ks', 'l');
-                break;
-            case 130:
-                DDG.settings.set('ks', 'l');
-                adjustedPercentage = 105;
-                break;
-            case 140:
-                DDG.settings.set('ks', 'l');
-                adjustedPercentage = 110;
-                break;
-            case 150:
-                DDG.settings.set('ks', 't');
-                break;
-            case 160:
-                DDG.settings.set('ks', 't');
-                adjustedPercentage = 105;
-                break;
-            case 170:
-                DDG.settings.set('ks', 't');
-                adjustedPercentage = 110;
-                break;
-            default:
-                DDG.settings.set('ks', 'n');
-                break;
+        menu.style.display = 'none'
+        // eslint-disable-next-line no-unused-expressions
+        menu.offsetHeight // no need to store this anywhere, the reference is enough
+        menu.style.display = 'block'
+
+        /* global DDG */
+
+        switch (percentage) {
+        case 80:
+            DDG.settings.set('ks', 's')
+            break
+        case 90:
+            DDG.settings.set('ks', 'm')
+            break
+        case 100:
+            DDG.settings.set('ks', 'n')
+            break
+        case 110:
+            DDG.settings.set('ks', 'n')
+            adjustedPercentage = 105
+            break
+        case 120:
+            DDG.settings.set('ks', 'l')
+            break
+        case 130:
+            DDG.settings.set('ks', 'l')
+            adjustedPercentage = 105
+            break
+        case 140:
+            DDG.settings.set('ks', 'l')
+            adjustedPercentage = 110
+            break
+        case 150:
+            DDG.settings.set('ks', 't')
+            break
+        case 160:
+            DDG.settings.set('ks', 't')
+            adjustedPercentage = 105
+            break
+        case 170:
+            DDG.settings.set('ks', 't')
+            adjustedPercentage = 110
+            break
+        default:
+            DDG.settings.set('ks', 'n')
+            break
         }
-        
-        document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=adjustedPercentage+"%";
-        
-        menu.style.left = previousLeft;
+
+        document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust = adjustedPercentage + '%'
+
+        menu.style.left = previousLeft
     }
-    
-}) ();
+})()

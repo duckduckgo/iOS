@@ -179,25 +179,25 @@
     let excludeTempStorage = false
     let excludeBattery = false
     let excludeScreenSize = false
-    var excludeAll = false;
+    let excludeAll = false
     const domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split('.') : []
 
     const userExcluded = `
                     $USER_UNPROTECTED_DOMAINS$
-                    `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
+                    `.split('\n').filter(domain => domain.trim() === topLevelUrl.host).length > 0
     if (userExcluded) {
-        return;
+        return
     }
-    
+
     // walk up the domain to see if it's unprotected
     while (domainParts.length > 1) {
         const partialDomain = domainParts.join('.')
-        
+
         excludeAll = `
                 $TEMP_UNPROTECTED_DOMAINS$
-                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+                `.split('\n').filter(domain => domain.trim() === partialDomain).length > 0
         if (excludeAll) {
-            break;
+            break
         }
 
         if (!excludeTempStorage) {
@@ -218,10 +218,10 @@
 
         domainParts.shift()
     }
-    
+
     // Check if domain on temp exceptions
     if (excludeAll) {
-        return;
+        return
     }
 
     function getTopLevelURL () {

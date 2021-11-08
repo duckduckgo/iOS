@@ -30,7 +30,7 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
-        let showSearchLoupe = true
+        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -38,6 +38,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
+        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -47,7 +48,6 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return self }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeEmptyEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct HomeTextEditingState: OmniBarState {
@@ -58,7 +58,7 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
-        let showSearchLoupe = true
+        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -66,6 +66,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
+        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -75,7 +76,6 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeTextEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct HomeNonEditingState: OmniBarState {
@@ -94,6 +94,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
+        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return HomeEmptyEditingState() }
@@ -103,7 +104,6 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeNonEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct BrowsingEmptyEditingState: OmniBarState {
@@ -114,7 +114,7 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
-        let showSearchLoupe = true
+        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -122,6 +122,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
+        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -131,7 +132,6 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingEmptyEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct BrowsingTextEditingState: OmniBarState {
@@ -142,7 +142,7 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
-        let showSearchLoupe = true
+        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -150,6 +150,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
+        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -159,7 +160,6 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct BrowsingNonEditingState: OmniBarState {

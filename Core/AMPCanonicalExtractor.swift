@@ -32,11 +32,12 @@ public class AMPCanonicalExtractor: NSObject {
     private var webView: WKWebView?
     private var completion: ((URL?) -> Void)?
     
-    public func urlContainsAmpKeyword(_ url: URL?) -> Bool {
+    public func urlContainsAmpKeyword(_ url: URL?,
+                                      config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
         guard let url = url else { return false }
         let urlStr = url.absoluteString
         
-        let ampKeywords = TrackingLinkSettings(fromConfig: PrivacyConfigurationManager.shared.privacyConfig).ampKeywords
+        let ampKeywords = TrackingLinkSettings(fromConfig: config).ampKeywords
         
         for keyword in ampKeywords {
             if urlStr.contains(keyword) {

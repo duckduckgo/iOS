@@ -23,8 +23,9 @@ public class LinkCleaner {
     
     public static let shared = LinkCleaner()
     
-    public func urlIsExtractableAmpLink(_ url: URL) -> String? {
-        let ampFormats = TrackingLinkSettings(fromConfig: PrivacyConfigurationManager.shared.privacyConfig).ampLinkFormats
+    public func urlIsExtractableAmpLink(_ url: URL,
+                                        config: PrivacyConfiguration) -> String? {
+        let ampFormats = TrackingLinkSettings(fromConfig: config).ampLinkFormats
         for format in ampFormats {
             if url.absoluteString.matches(pattern: format) {
                 return format
@@ -47,13 +48,14 @@ public class LinkCleaner {
         return false
     }
     
-    public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?) -> URL? {
+    public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?,
+                                            config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
         guard let url = url, !isURLExcluded(url: url) else { return nil }
         if let initiator = initiator, isURLExcluded(url: initiator) {
             return nil
         }
         
-        guard let ampFormat = urlIsExtractableAmpLink(url) else { return nil }
+        guard let ampFormat = urlIsExtractableAmpLink(url, config: config) else { return nil }
         
         do {
             let ampStr = url.absoluteString

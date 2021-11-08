@@ -1170,10 +1170,12 @@ extension MainViewController: OmniBarDelegate {
     
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
-            if permission {
-                self.showVoiceSearch()
-            } else {
-                self.showNoMicrophonePermissionAlert()
+            DispatchQueue.main.async {
+                if permission {
+                    self.showVoiceSearch()
+                } else {
+                    self.showNoMicrophonePermissionAlert()
+                }
             }
         }
     }

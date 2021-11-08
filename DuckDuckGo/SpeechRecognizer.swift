@@ -30,13 +30,13 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     var isAvailable: Bool {
         //https://app.asana.com/0/1201011656765697/1201271104639596
         if #available(iOS 15.0, *) {
-            return speechRecognizer?.isAvailable ?? false
+            return (speechRecognizer?.isAvailable ?? false) && supportsOnDeviceRecognition
         } else {
             return false
         }
     }
     
-    var supportsOnDeviceRecognition: Bool {
+    private var supportsOnDeviceRecognition: Bool {
         return speechRecognizer?.supportsOnDeviceRecognition ?? false
     }
     
@@ -148,7 +148,6 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
 
 protocol SpeechRecognizerProtocol {
     var isAvailable: Bool { get }
-    var supportsOnDeviceRecognition: Bool { get }
     var isRunning: Bool { get }
     static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void)
     func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float

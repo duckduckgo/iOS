@@ -99,7 +99,6 @@ class SpeechFeedbackViewModel: ObservableObject {
 
 struct MockSpeechRecognizer: SpeechRecognizerProtocol {
     var isAvailable: Bool = false
-    var supportsOnDeviceRecognition: Bool = false
     var isRunning: Bool = false
     static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) { }
  

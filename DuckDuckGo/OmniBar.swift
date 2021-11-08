@@ -42,7 +42,8 @@ class OmniBar: UIView {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var refreshButton: UIButton!
- 
+    @IBOutlet weak var voiceSearchButton: UIButton!
+    
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
@@ -224,6 +225,7 @@ class OmniBar: UIView {
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)
+        setVisibility(voiceSearchButton, hidden: !state.showVoiceSearch)
 
         setVisibility(backButton, hidden: !state.showBackButton)
         setVisibility(forwardButton, hidden: !state.showForwardButton)
@@ -350,6 +352,10 @@ class OmniBar: UIView {
         }
     }
 
+    @IBAction func onVoiceSearchButtonPressed(_ sender: UIButton) {
+        omniDelegate?.onVoiceSearchPressed()
+    }
+    
     @IBAction func onClearButtonPressed(_ sender: Any) {
         refreshState(state.onTextClearedState)
     }
@@ -472,7 +478,8 @@ extension OmniBar: Themable {
         textField.tintColor = theme.searchBarTextColor
         textField.keyboardAppearance = theme.keyboardAppearance
         clearButton.tintColor = theme.searchBarClearTextIconColor
-
+        voiceSearchButton.tintColor = theme.searchBarVoiceSearchIconColor
+        
         searchLoupe.tintColor = theme.barTintColor
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
         

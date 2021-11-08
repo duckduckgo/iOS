@@ -175,32 +175,6 @@
     }
 
     function install () {
-        Object.defineProperty(window.__firefox__, 'TrackingProtectionStats', {
-            enumerable: false,
-            configurable: false,
-            writable: false,
-            value: { enabled: false }
-        })
-
-        Object.defineProperty(window.__firefox__.TrackingProtectionStats, 'setEnabled', {
-            enumerable: false,
-            configurable: false,
-            writable: false,
-            value: function (enabled, securityToken) {
-                if (securityToken !== SECURITY_TOKEN) {
-                    return
-                }
-
-                if (enabled === window.__firefox__.TrackingProtectionStats.enabled) {
-                    return
-                }
-
-                window.__firefox__.TrackingProtectionStats.enabled = enabled
-
-                injectStatsTracking(enabled)
-            }
-        })
-
         function sendMessage (url, resourceType) {
             if (url) {
                 webkit.messageHandlers.processRule.postMessage({
@@ -355,9 +329,6 @@
             })
         }
 
-        // Default to on because there is a delay in being able to enable/disable
-        // from native, and we don't want to miss events
-        window.__firefox__.TrackingProtectionStats.enabled = true
         injectStatsTracking(true)
     }
 })()

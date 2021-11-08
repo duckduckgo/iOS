@@ -31,13 +31,22 @@ class SpeechFeedbackViewModel: ObservableObject {
         case pulse(scale: Double)
     }
     
-    @Published private(set) var recognizedWords = " "
+    @Published private(set) var speechFeedback = " "
     @Published private(set) var animationType: AnimationType = .pulse(scale: 1)
     weak var delegate: SpeechFeedbackViewModelDelegate?
     private let speechRecognizer: SpeechRecognizerProtocol
-    private(set) var title = "DuckDuckGo Voice Search"
     private let maxScale: Double = 1.3
     private let pulseScale: Double = 0.7
+    private var recognizedWords: String? = nil {
+        didSet {
+            if let words = recognizedWords {
+                speechFeedback = "\"\(words)\""
+            } else {
+                speechFeedback = " "
+            }
+        }
+    }
+    
     private var isSilent = true {
         didSet {
             if isSilent {
@@ -55,10 +64,10 @@ class SpeechFeedbackViewModel: ObservableObject {
         speechRecognizer.startRecording { [weak self] text, _, speechDidFinished in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                self.recognizedWords = text ?? ""
+                self.recognizedWords = text
+                
                 if speechDidFinished {
-                    UINotificationFeedbackGenerator().notificationOccurred(.success)
-                    self.delegate?.speechFeedbackViewModelDidFinish(self, query: text)
+                    self.finish()
                 }
             }
             
@@ -90,6 +99,11 @@ class SpeechFeedbackViewModel: ObservableObject {
     
     func cancel() {
         delegate?.speechFeedbackViewModelDidFinish(self, query: nil)
+    }
+    
+    func finish() {
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        self.delegate?.speechFeedbackViewModelDidFinish(self, query: recognizedWords)
     }
     
     deinit {

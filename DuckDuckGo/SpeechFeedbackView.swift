@@ -21,24 +21,19 @@ import SwiftUI
 
 struct SpeechFeedbackView: View {
     @ObservedObject var speechModel: SpeechFeedbackViewModel
-    struct VisualEffectView: UIViewRepresentable {
-        var effect: UIVisualEffect?
-        func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView { UIVisualEffectView() }
-        func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) { uiView.effect = effect }
-    }
+
     var body: some View {
-        
         VStack {
            cancelButton
-            
             Spacer()
-            Text(speechModel.recognizedWords)
-            Spacer()
+            Text(speechModel.speechFeedback)
+                .font(Font.custom("ProximaNova-Regular", size: 16))
+                .padding(.bottom, Padding.recognizedTextBottom)
             ZStack {
                 outerCircle
                 innerCircle
                 micImage
-            }.padding()
+            }.padding(.bottom, Padding.microphoneCircleBotton)
         }
         .onAppear {
             if #available(iOS 15, *) {
@@ -90,6 +85,7 @@ extension SpeechFeedbackView {
                 speechModel.cancel()
             } label: {
                 Text("Cancel")
+                    .font(Font.custom("ProximaNova-Regular", size: 16))
                     .foregroundColor(.primary)
             }.alignmentGuide(.leading) { d in d[.leading] }
             .padding()
@@ -98,9 +94,13 @@ extension SpeechFeedbackView {
     }
     
     private var innerCircle: some View {
-        Circle()
-            .foregroundColor(Colors.innerCircle)
-            .frame(width: CircleSize.inner.width, height: CircleSize.inner.height, alignment: .center)
+        Button {
+            speechModel.finish()
+        } label: {
+            Circle()
+                .foregroundColor(Colors.innerCircle)
+                .frame(width: CircleSize.inner.width, height: CircleSize.inner.height, alignment: .center)
+        }
     }
     
     private var micImage: some View {
@@ -132,6 +132,11 @@ extension SpeechFeedbackView {
     
     private var micSize: CGSize {
         CGSize(width: 32, height: 32)
+    }
+    
+    private struct Padding {
+        static let microphoneCircleBotton: CGFloat = 100
+        static let recognizedTextBottom: CGFloat = 40
     }
     
     private struct CircleSize {

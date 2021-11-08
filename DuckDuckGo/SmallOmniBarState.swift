@@ -47,7 +47,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return self }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeEmptyEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return SpeechRecognizer().isAvailable }
+        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct HomeTextEditingState: OmniBarState {
@@ -75,7 +75,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeTextEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return SpeechRecognizer().isAvailable }
+        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct HomeNonEditingState: OmniBarState {
@@ -103,7 +103,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeNonEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return SpeechRecognizer().isAvailable }
+        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct BrowsingEmptyEditingState: OmniBarState {
@@ -131,7 +131,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingEmptyEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return SpeechRecognizer().isAvailable }
+        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct BrowsingTextEditingState: OmniBarState {
@@ -159,7 +159,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
-        var showVoiceSearch: Bool { return SpeechRecognizer().isAvailable }
+        var showVoiceSearch: Bool { return VoiceSearchHelper.shared.isSpeechRecognizerAvailable }
     }
 
     struct BrowsingNonEditingState: OmniBarState {

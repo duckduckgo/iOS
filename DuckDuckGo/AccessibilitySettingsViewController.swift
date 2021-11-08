@@ -37,7 +37,7 @@ class AccessibilitySettingsViewController: UITableViewController {
         super.viewDidLoad()
         
         print("leftBarButtonItem: nil")
-        navigationItem.setLeftBarButton(nil, animated: false)
+        navigationItem.leftBarButtonItem = nil
         
         configureCustomBackButtonTitle()
         configureSlider()
@@ -61,10 +61,8 @@ class AccessibilitySettingsViewController: UITableViewController {
                     sheetController.selectedDetentIdentifier = .medium
                 }
                 
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    print("leftBarButtonItem: custom")
-                    self.navigationItem.setLeftBarButton(self.customBackBarButtonItem, animated: false)
-//                }
+                print("leftBarButtonItem: custom")
+                navigationItem.leftBarButtonItem = customBackBarButtonItem
                 
                 hasAdjustedDetent = true
             }
@@ -78,9 +76,6 @@ class AccessibilitySettingsViewController: UITableViewController {
     
     @IBAction func customBackButtonTapped(_ sender: AnyObject) {
         var shouldPopViewController: Bool = true
-        
-//        print("leftBarButtonItem: nil")
-//        navigationItem.setLeftBarButton(nil, animated: false)
         
         if #available(iOS 15.0, *) {
             if let sheetController = navigationController?.presentationController as? UISheetPresentationController {
@@ -98,7 +93,7 @@ class AccessibilitySettingsViewController: UITableViewController {
                     // Second step is to actually pop the view controller
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                         print("leftBarButtonItem: nil")
-                        self.navigationItem.setLeftBarButton(nil, animated: false)
+                        self.navigationItem.leftBarButtonItem = nil
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
@@ -107,7 +102,7 @@ class AccessibilitySettingsViewController: UITableViewController {
         
         if shouldPopViewController {
             print("leftBarButtonItem: nil")
-            navigationItem.setLeftBarButton(nil, animated: false)
+            navigationItem.leftBarButtonItem = nil
             navigationController?.popViewController(animated: true)
         }
     }
@@ -244,7 +239,7 @@ extension AccessibilitySettingsViewController: UISheetPresentationControllerDele
           navigationItem.leftBarButtonItem = nil
       } else if sheetPresentationController.selectedDetentIdentifier == .medium {
           print("leftBarButtonItem: custom")
-          navigationItem.setLeftBarButton(customBackBarButtonItem, animated: false)
+          navigationItem.leftBarButtonItem = customBackBarButtonItem
       }
   }
 }

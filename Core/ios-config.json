@@ -1,53 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
     "features": {
-        "trackingLinks": {
-            "state": "enabled",
-            "exceptions": [],
-            "settings": {
-                "ampLinkFormats": [
-                    "https?:\\/\\/(?:w{3}\\.)?google\\.\\w{2,}\\/amp\\/s\\/(\\S+)",
-                    "https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)"
-                ],
-                "ampKeywords": [
-                    "=amp",
-                    "amp=",
-                    "&amp",
-                    "amp&",
-                    "/amp",
-                    "amp/",
-                    ".amp",
-                    "amp.",
-                    "%amp",
-                    "amp%",
-                    "_amp",
-                    "amp_"
-                ],
-                "trackingParameters": [
-                    "utm_[a-zA-Z]*",
-                    "gclid",
-                    "fbclid",
-                    "fb_action_ids",
-                    "fb_action_types",
-                    "fb_source",
-                    "fb_ref",
-                    "ga_source",
-                    "ga_medium",
-                    "ga_term",
-                    "ga_content",
-                    "ga_campaign",
-                    "ga_place",
-                    "action_object_map",
-                    "action_type_map",
-                    "action_ref_map",
-                    "gs_l",
-                    "mkt_tok",
-                    "hmb_campaign",
-                    "hmb_source",
-                    "hmb_medium"
-                ]
-            }
-        },
         "https": {
             "state": "enabled",
             "exceptions": []
@@ -56,7 +9,19 @@
             "state": "enabled",
             "exceptions": [
                 {
+                    "domain": "digitalocean.com",
+                    "reason": "Missing site content"
+                },
+                {
                     "domain": "bild.de",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "ah.nl",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "magicgameworld.com",
                     "reason": "Adblocker wall"
                 },
                 {
@@ -85,10 +50,6 @@
                 },
                 {
                     "domain": "53.com",
-                    "reason": "Broken sign in"
-                },
-                {
-                    "domain": "www.costco.com",
                     "reason": "Broken sign in"
                 },
                 {
@@ -331,7 +292,12 @@
         },
         "gpc": {
             "state": "enabled",
-            "exceptions": []
+            "exceptions": [
+                {
+                    "domain": "newyorker.com",
+                    "reason": "Cookie consent box hiding audio"
+                }
+            ]
         },
         "userAgentRotation": {
             "state": "disabled",
@@ -381,30 +347,57 @@
                     "reason": "Breaks images on deezer"
                 }
             ]
+        },
+        "trackingLinks": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "ampLinkFormats": [
+                    "https?:\\/\\/(?:w{3}\\.)?google\\.\\w{2,}\\/amp\\/s\\/(\\S+)",
+                    "https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)"
+                ],
+                "ampKeywords": [
+                    "=amp",
+                    "amp=",
+                    "&amp",
+                    "amp&",
+                    "/amp",
+                    "amp/",
+                    ".amp",
+                    "amp.",
+                    "%amp",
+                    "amp%",
+                    "_amp",
+                    "amp_"
+                ],
+                "trackingParameters": [
+                    "utm_[a-zA-Z]*",
+                    "gclid",
+                    "fbclid",
+                    "fb_action_ids",
+                    "fb_action_types",
+                    "fb_source",
+                    "fb_ref",
+                    "ga_source",
+                    "ga_medium",
+                    "ga_term",
+                    "ga_content",
+                    "ga_campaign",
+                    "ga_place",
+                    "action_object_map",
+                    "action_type_map",
+                    "action_ref_map",
+                    "gs_l",
+                    "mkt_tok",
+                    "hmb_campaign",
+                    "hmb_source",
+                    "hmb_medium"
+                ]
+            }
         }
     },
-    "version": 1635436272360,
+    "version": 1636391677315,
     "unprotectedTemporary": [
-        {
-            "domain": "sberbank.ru",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "td.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "ameritrade.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "santander.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "santander.co.uk",
-            "reason": "site breakage"
-        },
         {
             "domain": "usbank.com",
             "reason": "site breakage"

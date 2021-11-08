@@ -101,7 +101,7 @@ struct MockSpeechRecognizer: SpeechRecognizerProtocol {
     var isAvailable: Bool = false
     var supportsOnDeviceRecognition: Bool = false
     var isRunning: Bool = false
-    func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) { }
+    static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) { }
  
     func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float {
         return 10

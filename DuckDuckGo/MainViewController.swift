@@ -905,7 +905,32 @@ class MainViewController: UIViewController {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
     }
+    
+    private func showVoiceSearch() {
+        let speechController = SpeechRecognizerViewController()
+        speechController.delegate = self
+        speechController.modalTransitionStyle = .crossDissolve
+        speechController.modalPresentationStyle = .overFullScreen
+        present(speechController, animated: true, completion: nil)
+    }
+    
+    private func showNoMicrophonePermissionAlert() {
+        let alertController = UIAlertController(title: UserText.noVoicePermissionAlertTitle,
+                                                message: UserText.noVoicePermissionAlertMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let openSettinsAction = UIAlertAction(title: UserText.noVoicePermissionActionSettings, style: .default) { _ in
+            let url = URL(string: UIApplication.openSettingsURLString)!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: nil)
+
+        alertController.addAction(openSettinsAction)
+        alertController.addAction(cancelAction)
         
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -1143,6 +1168,16 @@ extension MainViewController: OmniBarDelegate {
         currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton, orginatedFromMenu: false)
     }
     
+    func onVoiceSearchPressed() {
+        SpeechRecognizer.requestMicAccess { permission in
+            if permission {
+                self.showVoiceSearch()
+            } else {
+                self.showNoMicrophonePermissionAlert()
+            }
+        }
+    }
+
 }
 
 extension MainViewController: FavoritesOverlayDelegate {
@@ -1684,6 +1719,16 @@ extension MainViewController: UIDropInteractionDelegate {
             
         }
         
+    }
+}
+
+extension MainViewController: SpeechRecognizerViewControllerDelegate {
+    
+    func speechFeedbackViewModelDidFinish(_ controller: SpeechRecognizerViewController, query: String?) {
+        controller.dismiss(animated: true, completion: nil)
+        if let query = query {
+            loadQuery(query)
+        }
     }
 }
 

@@ -988,6 +988,15 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "An unknown error occurred.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.action.settings" = "Settings";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.message" = "To use Voice Search in DuckDuckGo you need to enable Microphone access in the system settings.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.title" = "Microphone Access Required";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorite removed";
 

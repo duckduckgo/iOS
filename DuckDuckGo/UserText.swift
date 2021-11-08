@@ -395,4 +395,10 @@ public struct UserText {
     
     public static let webJSAlertOKButton = NSLocalizedString("webJSAlert.OK.button", value: "OK", comment: "OK button for JavaScript alerts")
     public static let webJSAlertCancelButton = NSLocalizedString("webJSAlert.cancel.button", value: "Cancel", comment: "Cancel button for JavaScript alerts")
+    
+    public static let noVoicePermissionAlertTitle = NSLocalizedString("voiceSearch.alert.title", value: "Microphone Access Required", comment: "Title for alert warning the user about missing microphone permission")
+    public static let noVoicePermissionAlertMessage = NSLocalizedString("voiceSearch.alert.message", value: "To use Voice Search in DuckDuckGo you need to enable Microphone access in the system settings.", comment: "Message for alert warning the user about missing microphone permission")
+    public static let noVoicePermissionActionSettings = NSLocalizedString("voiceSearch.alert.action.settings", value: "Settings", comment: "No microphone permission alert action button to open the settings app")
+
+    
 }

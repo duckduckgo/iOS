@@ -55,6 +55,8 @@ protocol OmniBarDelegate: AnyObject {
     func onTextFieldDidBeginEditing(_ omniBar: OmniBar) -> Bool
 
     func selectedSuggestion() -> Suggestion?
+    
+    func onVoiceSearchPressed()
 
 }
 

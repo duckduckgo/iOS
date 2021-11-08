@@ -44,7 +44,7 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
         return audioEngine.isRunning
     }
     
-    func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) {
+    static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) {
         AVAudioSession.sharedInstance().requestRecordPermission { authorized in
             handler(authorized)
         }
@@ -150,7 +150,7 @@ protocol SpeechRecognizerProtocol {
     var isAvailable: Bool { get }
     var supportsOnDeviceRecognition: Bool { get }
     var isRunning: Bool { get }
-    func requestMicAccess(withHandler handler: @escaping (Bool) -> Void)
+    static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void)
     func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float
     func stopRecording()
 

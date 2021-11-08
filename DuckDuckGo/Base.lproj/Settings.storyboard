@@ -870,7 +870,7 @@
                                                             <color key="minimumTrackTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="maximumTrackTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <connections>
-                                                                <action selector="onNewTabValueChanged:" destination="Z3c-9H-Usp" eventType="valueChanged" id="Yd0-md-Ry7"/>
+                                                                <action selector="onSliderValueChanged:" destination="Z3c-9H-Usp" eventType="valueChanged" id="fmG-o6-niz"/>
                                                             </connections>
                                                         </slider>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TextSizeLarger" translatesAutoresizingMaskIntoConstraints="NO" id="Hy3-O7-uZI">
@@ -911,14 +911,15 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="semibold"/>
                                 </state>
                                 <connections>
-                                    <action selector="backButtonTapped:" destination="Z3c-9H-Usp" eventType="touchUpInside" id="2LI-ko-ouf"/>
+                                    <action selector="customBackButtonTapped:" destination="Z3c-9H-Usp" eventType="touchUpInside" id="usW-pT-n0U"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="backButton" destination="8YG-7Q-Czd" id="fth-LM-z1l"/>
                         <outlet property="currentSelectedValueLabel" destination="A2R-HL-aY9" id="Jkc-0Y-3Rp"/>
+                        <outlet property="customBackBarButtonItem" destination="LmF-3v-OPI" id="9q1-Cp-5Au"/>
+                        <outlet property="customBackInnerButton" destination="8YG-7Q-Czd" id="Jjl-an-zhF"/>
                         <outlet property="textSizeSlider" destination="kaZ-4P-3gq" id="qdz-WS-gXa"/>
                     </connections>
                 </tableViewController>
@@ -2036,7 +2037,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="4WC-3q-ccD">
-                            <rect key="frame" x="0.0" y="149.33333206176758" width="414" height="120"/>
+                            <rect key="frame" x="0.0" y="149.33333206176755" width="414" height="120.00000000000003"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">

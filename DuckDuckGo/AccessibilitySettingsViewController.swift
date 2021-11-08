@@ -22,6 +22,8 @@ import UIKit
 
 class AccessibilitySettingsViewController: UITableViewController {
     
+    @IBOutlet var customBackBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var customBackInnerButton: UIButton!
     @IBOutlet weak var textSizeSlider: IntervalSlider!
     @IBOutlet weak var currentSelectedValueLabel: UILabel!
     
@@ -30,32 +32,41 @@ class AccessibilitySettingsViewController: UITableViewController {
     private var currentSelectedValue: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
     
     private var hasAdjustedDetent: Bool = false
-    
-    @IBOutlet weak var backButton: UIButton!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("leftBarButtonItem: nil")
+        navigationItem.setLeftBarButton(nil, animated: false)
+        
+        configureCustomBackButtonTitle()
         configureSlider()
         updateLabel()
         applyTheme(ThemeManager.shared.currentTheme)
     }
-    
+        
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        adjustDetentOnPresentation()
+    }
+    
+    private func adjustDetentOnPresentation() {
         if #available(iOS 15.0, *) {
             if !hasAdjustedDetent, let sheetController = navigationController?.presentationController as? UISheetPresentationController {
                 sheetController.detents = [.medium(), .large()]
                 sheetController.delegate = self
+                
                 sheetController.animateChanges {
                     sheetController.selectedDetentIdentifier = .medium
-                    hasAdjustedDetent = true
-                    
-                    let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain,
-                                                      target: self, action: #selector(backButtonTapped(_:)))
-                    navigationItem.setLeftBarButton(closeButton, animated: true)
                 }
+                
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    print("leftBarButtonItem: custom")
+                    self.navigationItem.setLeftBarButton(self.customBackBarButtonItem, animated: false)
+//                }
+                
+                hasAdjustedDetent = true
             }
         }
     }
@@ -65,12 +76,11 @@ class AccessibilitySettingsViewController: UITableViewController {
         cell.decorate(with: theme)
     }
     
-    @IBAction func backButtonTapped(_ sender: AnyObject) {
-// FADEOUT VERSION
-//        let fadeDuration = 0.1
-//        let targetAlpha = 0.1
-        
+    @IBAction func customBackButtonTapped(_ sender: AnyObject) {
         var shouldPopViewController: Bool = true
+        
+//        print("leftBarButtonItem: nil")
+//        navigationItem.setLeftBarButton(nil, animated: false)
         
         if #available(iOS 15.0, *) {
             if let sheetController = navigationController?.presentationController as? UISheetPresentationController {
@@ -85,15 +95,10 @@ class AccessibilitySettingsViewController: UITableViewController {
                         sheetController.selectedDetentIdentifier = .large
                     }
                     
-                    self.navigationItem.setLeftBarButton(nil, animated: true)
-// FADEOUT VERSION
-//                    UIView.animate(withDuration: fadeDuration, delay: 0.2, options: [.curveEaseOut]) {
-//                        self.backButton.alpha = targetAlpha
-//                    } completion: { _ in
-//                    }
-                    
                     // Second step is to actually pop the view controller
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                        print("leftBarButtonItem: nil")
+                        self.navigationItem.setLeftBarButton(nil, animated: false)
                         self.navigationController?.popViewController(animated: true)
                     }
                 }
@@ -101,19 +106,18 @@ class AccessibilitySettingsViewController: UITableViewController {
         }
         
         if shouldPopViewController {
-            
-// FADEOUT VERSION
-//            UIView.animate(withDuration: fadeDuration, delay: 0.0, options: [.curveEaseOut]) {
-//                self.backButton.alpha = targetAlpha
-//            } completion: { _ in
-//            }
-//
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-//                self.navigationController?.popViewController(animated: true)
-//            }
-            
+            print("leftBarButtonItem: nil")
+            navigationItem.setLeftBarButton(nil, animated: false)
             navigationController?.popViewController(animated: true)
         }
+    }
+    
+    private func configureCustomBackButtonTitle() {
+        let topViewController = navigationController?.topViewController
+        let previousViewController = navigationController?.viewControllers.last(where: { $0 != topViewController })
+        let backTitle = previousViewController?.navigationItem.title ?? ""
+
+        customBackInnerButton.setTitle(backTitle, for: .normal)
     }
     
     private func configureSlider() {
@@ -128,6 +132,7 @@ class AccessibilitySettingsViewController: UITableViewController {
     private func updateLabel() {
         let percentageString = "\(currentSelectedValue)%"
         currentSelectedValueLabel.text = UserText.textSizeFooter(for: percentageString)
+        
     }
 }
 
@@ -180,7 +185,7 @@ class IntervalSlider: UISlider {
             let xRounded = Darwin.round(x / 0.5) * 0.5
             
             let markRect = CGRect(x: xRounded, y: newTrackRect.midY - markHeight/2, width: markWidth, height: markHeight)
-            print("mark[\(i)]: \(markRect)")
+//            print("mark[\(i)]: \(markRect)")
             
             let markPath: UIBezierPath = UIBezierPath(roundedRect: markRect, cornerRadius: 5.0)
             color.set()
@@ -192,7 +197,7 @@ class IntervalSlider: UISlider {
 
 extension AccessibilitySettingsViewController {
     
-    @IBAction func onNewTabValueChanged(_ sender: Any) {
+    @IBAction func onSliderValueChanged(_ sender: Any) {
         let roundedValue = round(textSizeSlider.value)
         let index = Int(roundedValue)
 
@@ -233,14 +238,13 @@ extension AccessibilitySettingsViewController: Themable {
 extension AccessibilitySettingsViewController: UISheetPresentationControllerDelegate {
   @available(iOS 15.0, *)
   func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-    print("ID: \(sheetPresentationController.selectedDetentIdentifier)")
-      
+
       if sheetPresentationController.selectedDetentIdentifier == .large {
+          print("leftBarButtonItem: nil")
           navigationItem.leftBarButtonItem = nil
       } else if sheetPresentationController.selectedDetentIdentifier == .medium {
-          let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain,
-                                            target: self, action: #selector(backButtonTapped(_:)))
-          navigationItem.setLeftBarButton(closeButton, animated: true)
+          print("leftBarButtonItem: custom")
+          navigationItem.setLeftBarButton(customBackBarButtonItem, animated: false)
       }
   }
 }

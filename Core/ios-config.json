@@ -1,7 +1,20 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
+    "version": 1636458091249,
     "features": {
-        "https": {
+        "autofill": {
+            "exceptions": [
+                {
+                    "domain": "asana.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "fastmail.com",
+                    "reason": "site breakage"
+                }
+            ]
+        },
+        "clickToPlay": {
             "state": "enabled",
             "exceptions": []
         },
@@ -13,10 +26,6 @@
                     "reason": "Missing site content"
                 },
                 {
-                    "domain": "bild.de",
-                    "reason": "Adblocker wall"
-                },
-                {
                     "domain": "ah.nl",
                     "reason": "Missing site content"
                 },
@@ -26,10 +35,6 @@
                 },
                 {
                     "domain": "www.cbssports.com",
-                    "reason": "Video content missing"
-                },
-                {
-                    "domain": "nfl.com",
                     "reason": "Video content missing"
                 },
                 {
@@ -51,10 +56,6 @@
                 {
                     "domain": "53.com",
                     "reason": "Broken sign in"
-                },
-                {
-                    "domain": "line.biz",
-                    "reason": "Broken logins"
                 },
                 {
                     "domain": "www.livenewsnow.com",
@@ -94,6 +95,82 @@
                 }
             ]
         },
+        "fingerprintingAudio": {
+            "state": "disabled",
+            "exceptions": [
+                {
+                    "domain": "youtube.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "meet.google.com",
+                    "reason": "site breakage"
+                }
+            ]
+        },
+        "fingerprintingBattery": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingCanvas": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "krunker.io",
+                    "reason": "Broken game init"
+                },
+                {
+                    "domain": "usaa.com",
+                    "reason": "Broken login"
+                },
+                {
+                    "domain": "kroger.com",
+                    "reason": "Broken login"
+                }
+            ]
+        },
+        "fingerprintingHardware": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "play.geforcenow.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "stadia.google.com",
+                    "reason": "site breakage"
+                }
+            ]
+        },
+        "fingerprintingScreenSize": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingTemporaryStorage": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "floc": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "gpc": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "newyorker.com",
+                    "reason": "Cookie consent box hiding audio"
+                }
+            ]
+        },
+        "https": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "referrer": {
+            "state": "enabled",
+            "exceptions": []
+        },
         "trackerAllowlist": {
             "state": "enabled",
             "settings": {
@@ -101,9 +178,18 @@
             },
             "exceptions": []
         },
+        "trackingCookies1p": {
+            "state": "enabled",
+            "settings": {
+                "firstPartyTrackerCookiePolicy": {
+                    "threshold": 86400,
+                    "maxAge": 86400
+                }
+            },
+            "exceptions": []
+        },
         "trackingCookies3p": {
             "state": "enabled",
-            "exceptions": [],
             "settings": {
                 "excludedCookieDomains": [
                     {
@@ -211,93 +297,8 @@
                         "reason": "broken videos"
                     }
                 ]
-            }
-        },
-        "trackingCookies1p": {
-            "state": "enabled",
-            "settings": {
-                "firstPartyTrackerCookiePolicy": {
-                    "threshold": 86400,
-                    "maxAge": 86400
-                }
             },
             "exceptions": []
-        },
-        "clickToPlay": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "fingerprintingCanvas": {
-            "state": "enabled",
-            "exceptions": [
-                {
-                    "domain": "krunker.io",
-                    "reason": "Broken game init"
-                },
-                {
-                    "domain": "usaa.com",
-                    "reason": "Broken login"
-                },
-                {
-                    "domain": "kroger.com",
-                    "reason": "Broken login"
-                }
-            ]
-        },
-        "fingerprintingAudio": {
-            "state": "disabled",
-            "exceptions": [
-                {
-                    "domain": "youtube.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "meet.google.com",
-                    "reason": "site breakage"
-                }
-            ]
-        },
-        "fingerprintingTemporaryStorage": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "referrer": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "fingerprintingBattery": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "fingerprintingScreenSize": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "fingerprintingHardware": {
-            "state": "enabled",
-            "exceptions": [
-                {
-                    "domain": "play.geforcenow.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "stadia.google.com",
-                    "reason": "site breakage"
-                }
-            ]
-        },
-        "floc": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "gpc": {
-            "state": "enabled",
-            "exceptions": [
-                {
-                    "domain": "newyorker.com",
-                    "reason": "Cookie consent box hiding audio"
-                }
-            ]
         },
         "userAgentRotation": {
             "state": "disabled",
@@ -368,7 +369,8 @@
                     "%amp",
                     "amp%",
                     "_amp",
-                    "amp_"
+                    "amp_",
+                    "?amp"
                 ],
                 "trackingParameters": [
                     "utm_[a-zA-Z]*",
@@ -396,7 +398,6 @@
             }
         }
     },
-    "version": 1636391677315,
     "unprotectedTemporary": [
         {
             "domain": "usbank.com",

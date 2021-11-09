@@ -907,11 +907,11 @@ class MainViewController: UIViewController {
     }
     
     private func showVoiceSearch() {
-        let speechController = SpeechRecognizerViewController()
-        speechController.delegate = self
-        speechController.modalTransitionStyle = .crossDissolve
-        speechController.modalPresentationStyle = .overFullScreen
-        present(speechController, animated: true, completion: nil)
+        let voiceSearchController = VoiceSearchViewController()
+        voiceSearchController.delegate = self
+        voiceSearchController.modalTransitionStyle = .crossDissolve
+        voiceSearchController.modalPresentationStyle = .overFullScreen
+        present(voiceSearchController, animated: true, completion: nil)
     }
     
     private func showNoMicrophonePermissionAlert() {
@@ -1724,9 +1724,9 @@ extension MainViewController: UIDropInteractionDelegate {
     }
 }
 
-extension MainViewController: SpeechRecognizerViewControllerDelegate {
+extension MainViewController: VoiceSearchViewControllerDelegate {
     
-    func speechFeedbackViewModelDidFinish(_ controller: SpeechRecognizerViewController, query: String?) {
+    func voiceSearchViewControllerDidFinish(_ controller: VoiceSearchViewController, query: String?) {
         controller.dismiss(animated: true, completion: nil)
         if let query = query {
             loadQuery(query)

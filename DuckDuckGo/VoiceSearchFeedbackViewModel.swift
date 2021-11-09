@@ -1,5 +1,5 @@
 //
-//  SpeechFeedbackViewModel.swift
+//  VoiceSearchFeedbackViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -20,11 +20,11 @@
 import Foundation
 import UIKit
 
-protocol SpeechFeedbackViewModelDelegate: AnyObject {
-    func speechFeedbackViewModelDidFinish(_ model: SpeechFeedbackViewModel, query: String?)
+protocol VoiceSearchFeedbackViewModelDelegate: AnyObject {
+    func voiceSearchFeedbackViewModelDidFinish(_ model: VoiceSearchFeedbackViewModel, query: String?)
 }
 
-class SpeechFeedbackViewModel: ObservableObject {
+class VoiceSearchFeedbackViewModel: ObservableObject {
    
     enum AnimationType {
         case speech(volume: Double)
@@ -33,7 +33,7 @@ class SpeechFeedbackViewModel: ObservableObject {
     
     @Published private(set) var speechFeedback = " "
     @Published private(set) var animationType: AnimationType = .pulse(scale: 1)
-    weak var delegate: SpeechFeedbackViewModelDelegate?
+    weak var delegate: VoiceSearchFeedbackViewModelDelegate?
     private let speechRecognizer: SpeechRecognizerProtocol
     private let maxScale: Double = 1.3
     private let pulseScale: Double = 0.7
@@ -99,15 +99,15 @@ class SpeechFeedbackViewModel: ObservableObject {
     }
     
     func cancel() {
-        delegate?.speechFeedbackViewModelDidFinish(self, query: nil)
+        delegate?.voiceSearchFeedbackViewModelDidFinish(self, query: nil)
     }
     
     func finish() {
-        self.delegate?.speechFeedbackViewModelDidFinish(self, query: recognizedWords)
+        self.delegate?.voiceSearchFeedbackViewModelDidFinish(self, query: recognizedWords)
     }
     
     deinit {
-        print("\(SpeechFeedbackViewModel.self) deinit")
+        print("\(VoiceSearchFeedbackViewModel.self) deinit")
     }
 }
 

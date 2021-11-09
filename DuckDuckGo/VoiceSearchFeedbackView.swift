@@ -1,5 +1,5 @@
 //
-//  SpeechFeedbackView.swift
+//  VoiceSearchFeedbackView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -19,8 +19,8 @@
 
 import SwiftUI
 
-struct SpeechFeedbackView: View {
-    @ObservedObject var speechModel: SpeechFeedbackViewModel
+struct VoiceSearchFeedbackView: View {
+    @ObservedObject var speechModel: VoiceSearchFeedbackViewModel
 
     var body: some View {
         VStack {
@@ -49,13 +49,13 @@ struct SpeechFeedbackView: View {
 
 struct SpeechFeedbackView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeechFeedbackView(speechModel: SpeechFeedbackViewModel())
+        VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel())
     }
 }
 
 // MARK: - Animation
 
-extension SpeechFeedbackView {
+extension VoiceSearchFeedbackView {
     
     private var outerCircleScale: Double {
         switch speechModel.animationType {
@@ -78,7 +78,7 @@ extension SpeechFeedbackView {
 
 // MARK: - Views
 
-extension SpeechFeedbackView {
+extension VoiceSearchFeedbackView {
     
     private var cancelButton: some View {
         HStack {
@@ -126,7 +126,7 @@ extension SpeechFeedbackView {
 
 // MARK: - Constants
 
-extension SpeechFeedbackView {
+extension VoiceSearchFeedbackView {
     private var micIconName: String {
         "MicrophoneSolid"
     }

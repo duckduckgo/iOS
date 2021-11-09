@@ -1,5 +1,5 @@
 //
-//  SpeechRecognizerViewController.swift
+//  VoiceSearchViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -16,6 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+
 import UIKit
 import SwiftUI
 
@@ -30,12 +31,12 @@ extension UIViewController {
     }
 }
 
-protocol SpeechRecognizerViewControllerDelegate: AnyObject {
-    func speechFeedbackViewModelDidFinish(_ controller: SpeechRecognizerViewController, query: String?)
+protocol VoiceSearchViewControllerDelegate: AnyObject {
+    func voiceSearchViewControllerDidFinish(_ controller: VoiceSearchViewController, query: String?)
 }
 
-class SpeechRecognizerViewController: UIViewController {
-    weak var delegate: SpeechRecognizerViewControllerDelegate?
+class VoiceSearchViewController: UIViewController {
+    weak var delegate: VoiceSearchViewControllerDelegate?
     private let speechRecognizer = SpeechRecognizer()
     private lazy var blurView: UIVisualEffectView = {
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
@@ -43,7 +44,7 @@ class SpeechRecognizerViewController: UIViewController {
     }()
 
     deinit {
-        print("\(SpeechRecognizerViewController.self) deinit")
+        print("\(VoiceSearchViewController.self) deinit")
     }
     
     private func setupConstraints() {
@@ -66,18 +67,18 @@ class SpeechRecognizerViewController: UIViewController {
     }
     
     private func installSpeechView() {
-        let model = SpeechFeedbackViewModel(speechRecognizer: speechRecognizer)
+        let model = VoiceSearchFeedbackViewModel(speechRecognizer: speechRecognizer)
         model.delegate = self
-        let speechView = SpeechFeedbackView(speechModel: model)
+        let speechView = VoiceSearchFeedbackView(speechModel: model)
         let controller = UIHostingController(rootView: speechView)
         controller.view.backgroundColor = .clear
         installChildViewController(controller)
     }
 }
 
-extension SpeechRecognizerViewController: SpeechFeedbackViewModelDelegate {
+extension VoiceSearchViewController: VoiceSearchFeedbackViewModelDelegate {
     
-    func speechFeedbackViewModelDidFinish(_ model: SpeechFeedbackViewModel, query: String?) {
-        delegate?.speechFeedbackViewModelDidFinish(self, query: query)
+    func voiceSearchFeedbackViewModelDidFinish(_ model: VoiceSearchFeedbackViewModel, query: String?) {
+        delegate?.voiceSearchViewControllerDidFinish(self, query: query)
     }
 }

@@ -20,17 +20,6 @@
 import UIKit
 import SwiftUI
 
-extension UIViewController {
-    
-    func installChildViewController(_ childController: UIViewController) {
-        addChild(childController)
-        childController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        childController.view.frame = view.bounds
-        view.addSubview(childController.view)
-        childController.didMove(toParent: self)
-    }
-}
-
 protocol VoiceSearchViewControllerDelegate: AnyObject {
     func voiceSearchViewControllerDidFinish(_ controller: VoiceSearchViewController, query: String?)
 }

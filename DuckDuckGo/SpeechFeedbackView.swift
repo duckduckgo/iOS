@@ -27,7 +27,8 @@ struct SpeechFeedbackView: View {
            cancelButton
             Spacer()
             Text(speechModel.speechFeedback)
-                .font(Font.custom("ProximaNova-Regular", size: 16))
+                .customFont()
+                .padding()
                 .padding(.bottom, Padding.recognizedTextBottom)
             ZStack {
                 outerCircle
@@ -85,7 +86,7 @@ extension SpeechFeedbackView {
                 speechModel.cancel()
             } label: {
                 Text("Cancel")
-                    .font(Font.custom("ProximaNova-Regular", size: 16))
+                    .customFont()
                     .foregroundColor(.primary)
             }.alignmentGuide(.leading) { d in d[.leading] }
             .padding()

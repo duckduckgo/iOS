@@ -591,6 +591,8 @@ class MainViewController: UIViewController {
                     completion(url)
                 }
             }
+        } else if let cleanUrl = LinkCleaner.shared.cleanTrackingParameters(initiator: nil, url: url) {
+            completion(cleanUrl)
         } else {
             completion(url)
         }

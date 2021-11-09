@@ -1105,6 +1105,13 @@ extension TabViewController: WKNavigationDelegate {
             return true
         }
         
+        if let newUrl = LinkCleaner.shared.cleanTrackingParameters(initiator: webView.url,
+                                                                   url: navigationAction.request.url) {
+            decisionHandler(.cancel)
+            load(url: newUrl)
+            return true
+        }
+        
         return false
     }
             

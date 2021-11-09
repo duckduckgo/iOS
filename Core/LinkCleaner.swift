@@ -84,4 +84,42 @@ public class LinkCleaner {
         return nil
     }
     
+    public func cleanTrackingParameters(initiator: URL?, url: URL?,
+                                        config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
+        guard let url = url, !isURLExcluded(url: url) else { return nil }
+        if let initiator = initiator, isURLExcluded(url: initiator) {
+            return nil
+        }
+        
+        guard let urlsComps = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        guard let queryParams = urlsComps.queryItems, queryParams.count > 0 else {
+            return nil
+        }
+        
+        let trackingParams = TrackingLinkSettings(fromConfig: config).trackingParameters
+        
+        let preservedParams: [URLQueryItem] = queryParams.filter { param in
+            for trackingParam in trackingParams {
+                if param.name.matches(pattern: trackingParam) {
+                    return false
+                }
+            }
+            
+            return true
+        }
+        
+        var newComps = URLComponents()
+        newComps.scheme = urlsComps.scheme
+        newComps.host = urlsComps.host
+        newComps.port = urlsComps.port
+        newComps.path = urlsComps.path
+        if preservedParams.count > 0 {
+            newComps.queryItems = preservedParams
+        }
+        
+        return newComps.url
+    }
+    
 }

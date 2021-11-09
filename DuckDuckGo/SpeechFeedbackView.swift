@@ -85,7 +85,7 @@ extension SpeechFeedbackView {
             Button {
                 speechModel.cancel()
             } label: {
-                Text("Cancel")
+                Text(UserText.voiceSearchCancelButton)
                     .customFont()
                     .foregroundColor(.primary)
             }.alignmentGuide(.leading) { d in d[.leading] }

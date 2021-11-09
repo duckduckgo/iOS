@@ -399,6 +399,7 @@ public struct UserText {
     public static let noVoicePermissionAlertTitle = NSLocalizedString("voiceSearch.alert.title", value: "Microphone Access Required", comment: "Title for alert warning the user about missing microphone permission")
     public static let noVoicePermissionAlertMessage = NSLocalizedString("voiceSearch.alert.message", value: "To use Voice Search in DuckDuckGo you need to enable Microphone access in the system settings.", comment: "Message for alert warning the user about missing microphone permission")
     public static let noVoicePermissionActionSettings = NSLocalizedString("voiceSearch.alert.action.settings", value: "Settings", comment: "No microphone permission alert action button to open the settings app")
+    public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
 
     
 }

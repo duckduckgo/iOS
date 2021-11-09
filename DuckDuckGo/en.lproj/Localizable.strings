@@ -997,6 +997,9 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.title" = "Microphone Access Required";
 
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Cancel";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorite removed";
 

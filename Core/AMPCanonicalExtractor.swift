@@ -27,10 +27,50 @@ public class AMPCanonicalExtractor: NSObject {
     struct Constants {
         static let sendCanonical = "sendCanonical"
         static let canonicalKey = "canonical"
+        static let ruleListIdentifier = "blockImageRules"
     }
     
     private var webView: WKWebView?
     private var completion: ((URL?) -> Void)?
+    
+    private var imageBlockingRules: WKContentRuleList?
+    
+    override init() {
+        super.init()
+        
+        let ruleSource = """
+[
+    {
+        "trigger": {
+            "url-filter": ".*",
+            "resource-type": ["image"]
+        },
+        "action": {
+            "type": "block"
+        }
+    },
+    {
+        "trigger": {
+            "url-filter": ".*",
+            "resource-type": ["style-sheet"]
+        },
+        "action": {
+            "type": "block"
+        }
+    },
+]
+"""
+        
+        WKContentRuleListStore.default().compileContentRuleList(forIdentifier: Constants.ruleListIdentifier,
+                                                                encodedContentRuleList: ruleSource) { [weak self] ruleList, error  in
+            guard error != nil else {
+                print(error?.localizedDescription ?? "AMPCanonicalExtractor - Error compiling image blocking rules")
+                return
+            }
+            
+            self?.imageBlockingRules = ruleList
+        }
+    }
     
     public func urlContainsAmpKeyword(_ url: URL?,
                                       config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
@@ -82,6 +122,9 @@ public class AMPCanonicalExtractor: NSObject {
         configuration.userContentController.addUserScript(buildUserScript())
         if let rulesList = ContentBlockerRulesManager.shared.currentRules?.rulesList {
             configuration.userContentController.add(rulesList)
+        }
+        if let imageBlockingRules = imageBlockingRules {
+            configuration.userContentController.add(imageBlockingRules)
         }
         
         webView = WKWebView(frame: .zero, configuration: configuration)

@@ -31,21 +31,37 @@ public class TextSizeUserScript: NSObject, UserScript {
         let percentage = Int(textSizeAdjustment * 100)
         return """
         (function() {
+        
+            let topLevelUrl = getTopLevelURL();
 
             document.addEventListener("DOMContentLoaded", function(event) {
                 webkit.messageHandlers.log.postMessage(" -- TextSizeUserScript - event DOMContentLoaded");
-                document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust='\(percentage)%'
         
-                /*
-                var styles = `html {-webkit-text-size-adjust:\(percentage)%}`
-                var styleSheet = document.createElement("style")
-                styleSheet.type = "text/css"
-                styleSheet.innerText = styles
-                document.head.appendChild(styleSheet)
-                */
+                document.adjustTextSize = adjustTextSize;
+                
+                document.adjustTextSize(\(percentage));
+        
+                webkit.messageHandlers.log.postMessage(" -- TextSizeUserScript - " + topLevelUrl.hostname);
+                
             }, false)
-
+        
+            function getTopLevelURL() {
+                try {
+                    // FROM: https://stackoverflow.com/a/7739035/73479
+                    // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
+                    return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
+                } catch(error) {
+                    return new URL(location.href)
+                }
+            }
+            
+            function adjustTextSize(percentage) {
+                webkit.messageHandlers.log.postMessage(" -- TextSizeUserScript - setting:");
+                document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=percentage+"%";
+            };
+        
         }) ();
+        
         """
     }
 
@@ -59,12 +75,7 @@ public class TextSizeUserScript: NSObject, UserScript {
 public extension WKWebView {
     
     func adjustTextSize(_ percentage: Int) {
-        let jsString = "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust='\(percentage)%'"
-        evaluateJavaScript(jsString, completionHandler: nil)
-    }
-    
-    func doNotAdjustTextSize() {
-        let jsString = "document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust='none'"
+        let jsString = "document.adjustTextSize(\(percentage));"
         evaluateJavaScript(jsString, completionHandler: nil)
     }
 }

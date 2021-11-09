@@ -146,17 +146,3 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
         print("\(SpeechRecognizer.self) deinit")
     }
 }
-
-protocol SpeechRecognizerProtocol {
-    var isAvailable: Bool { get }
-    var isRunning: Bool { get }
-    static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void)
-    func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float
-    func stopRecording()
-
-    @available(iOS 15, *)
-    func startRecording(resultHandler: @escaping (_ text: String?,
-                                                  _ error: Error?, _
-                                                  speechDidFinished: Bool) -> Void,
-                        volumeCallback: @escaping (_ volume: Float) -> Void)
-}

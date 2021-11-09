@@ -28,7 +28,7 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     private let speechRecognizer = SFSpeechRecognizer()
     
     var isAvailable: Bool {
-        //https://app.asana.com/0/1201011656765697/1201271104639596
+        // https://app.asana.com/0/1201011656765697/1201271104639596
         if #available(iOS 15.0, *) {
             return (speechRecognizer?.isAvailable ?? false) && supportsOnDeviceRecognition
         } else {
@@ -72,6 +72,7 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
         return normalized
     }
     
+    // https://app.asana.com/0/1201011656765697/1201271104639596
     @available(iOS 15, *)
     func startRecording(resultHandler: @escaping (_ text: String?,
                                                   _ error: Error?,
@@ -112,6 +113,7 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
                 var isFinal = false
                 if let result = result {
                     // speechRecognitionMetadata is always returned when the system assumes the user stopped speaking
+                    // https://app.asana.com/0/0/1201278924898595
                     isFinal = result.isFinal || result.speechRecognitionMetadata != nil
                     resultHandler(result.bestTranscription.formattedString, error, isFinal)
                 }
@@ -123,7 +125,6 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
                 }
             }
         } catch {
-            print("Error transcibing audio: " + error.localizedDescription)
             self.reset()
             resultHandler(nil, error, true)
         }

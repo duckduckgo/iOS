@@ -61,12 +61,13 @@ class SpeechFeedbackViewModel: ObservableObject {
     
     @available(iOS 15, *)
     func startSpeechRecognizer() {
-        speechRecognizer.startRecording { [weak self] text, _, speechDidFinished in
+        speechRecognizer.startRecording { [weak self] text, error, speechDidFinished in
             DispatchQueue.main.async {
                 guard let self = self else { return }
+
                 self.recognizedWords = text
                 
-                if speechDidFinished {
+                if speechDidFinished || error != nil {
                     self.finish()
                 }
             }

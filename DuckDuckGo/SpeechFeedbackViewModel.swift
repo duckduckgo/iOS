@@ -102,7 +102,6 @@ class SpeechFeedbackViewModel: ObservableObject {
     }
     
     func finish() {
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
         self.delegate?.speechFeedbackViewModelDidFinish(self, query: recognizedWords)
     }
     

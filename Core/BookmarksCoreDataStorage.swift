@@ -43,13 +43,6 @@ public class BookmarksCoreDataStorage {
     private let storeLoadedCondition = RunLoop.ResumeCondition()
     private var persistentContainer: NSPersistentContainer
     
-    private lazy var privateContext: NSManagedObjectContext = {
-        RunLoop.current.run(until: storeLoadedCondition)
-        let context = persistentContainer.newBackgroundContext()
-        context.name = Constants.privateContextName
-        return context
-    }()
-    
     private lazy var viewContext: NSManagedObjectContext = {
         RunLoop.current.run(until: storeLoadedCondition)
         let context = persistentContainer.viewContext
@@ -57,6 +50,13 @@ public class BookmarksCoreDataStorage {
         context.name = Constants.viewContextName
         return context
     }()
+    
+    private func getTemporaryPrivateContext() -> NSManagedObjectContext {
+        RunLoop.current.run(until: storeLoadedCondition)
+        let context = persistentContainer.newBackgroundContext()
+        context.name = Constants.privateContextName
+        return context
+    }
     
     private var cachedReadOnlyTopLevelBookmarksFolder: BookmarkFolderManagedObject?
     private var cachedReadOnlyTopLevelFavoritesFolder: BookmarkFolderManagedObject?
@@ -203,17 +203,17 @@ extension BookmarksCoreDataStorage {
     
     // Since we'll never need to update children at the same time, we only support changing the title and parent
     public func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
-        privateContext.perform { [weak self] in
-            guard let self = self else { return }
+        let privateContext = getTemporaryPrivateContext()
+        privateContext.perform {
 
-            let mo = self.privateContext.object(with: folderID)
+            let mo = privateContext.object(with: folderID)
             guard let folder = mo as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get folder")
                 return
             }
             
             if folder.parent?.objectID != newParentID {
-                let parentMO = self.privateContext.object(with: newParentID)
+                let parentMO = privateContext.object(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
                     return
@@ -226,7 +226,7 @@ extension BookmarksCoreDataStorage {
             folder.title = newTitle
             
             do {
-                try self.privateContext.save()
+                try privateContext.save()
             } catch {
                 assertionFailure("Updating folder failed")
             }
@@ -234,10 +234,10 @@ extension BookmarksCoreDataStorage {
     }
     
     public func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
-        privateContext.perform { [weak self] in
-            guard let self = self else { return }
+        let privateContext = getTemporaryPrivateContext()
+        privateContext.perform {
 
-            let mo = self.privateContext.object(with: favoriteID)
+            let mo = privateContext.object(with: favoriteID)
             guard let favorite = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get favorite")
                 return
@@ -247,7 +247,7 @@ extension BookmarksCoreDataStorage {
             favorite.url = newURL
             
             do {
-                try self.privateContext.save()
+                try privateContext.save()
             } catch {
                 assertionFailure("Updating favorite failed")
             }
@@ -255,17 +255,17 @@ extension BookmarksCoreDataStorage {
     }
     
     public func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
-        privateContext.perform { [weak self] in
-            guard let self = self else { return }
+        let privateContext = getTemporaryPrivateContext()
+        privateContext.perform {
 
-            let mo = self.privateContext.object(with: bookmarkID)
+            let mo = privateContext.object(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get bookmark")
                 return
             }
             
             if bookmark.parent?.objectID != newParentID {
-                let parentMO = self.privateContext.object(with: newParentID)
+                let parentMO = privateContext.object(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
                     return
@@ -280,7 +280,7 @@ extension BookmarksCoreDataStorage {
             bookmark.url = newURL
             
             do {
-                try self.privateContext.save()
+                try privateContext.save()
             } catch {
                 assertionFailure("Updating bookmark failed")
             }
@@ -288,10 +288,10 @@ extension BookmarksCoreDataStorage {
     }
         
     public func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int) {
-        privateContext.perform { [weak self] in
-            guard let self = self else { return }
+        let privateContext = getTemporaryPrivateContext()
+        privateContext.perform {
 
-            let mo = self.privateContext.object(with: bookmarkItemID)
+            let mo = privateContext.object(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
                 return
@@ -302,7 +302,7 @@ extension BookmarksCoreDataStorage {
             parent?.insertIntoChildren(item, at: newIndex)
             
             do {
-                try self.privateContext.save()
+                try privateContext.save()
             } catch {
                 assertionFailure("Updating item failed")
             }
@@ -318,19 +318,19 @@ extension BookmarksCoreDataStorage {
     }
     
     public func delete(_ bookmarkItemID: NSManagedObjectID) {
-        privateContext.perform { [weak self] in
-            guard let self = self else { return }
+        let privateContext = getTemporaryPrivateContext()
+        privateContext.perform {
 
-            let mo = self.privateContext.object(with: bookmarkItemID)
+            let mo = privateContext.object(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
                 return
             }
             
-            self.privateContext.delete(item)
+            privateContext.delete(item)
             
             do {
-                try self.privateContext.save()
+                try privateContext.save()
             } catch {
                 assertionFailure("Updating item failed")
             }
@@ -347,7 +347,7 @@ extension BookmarksCoreDataStorage {
     }
     
     public func favoritesUncachedForWidget(completion: @escaping ([Bookmark]) -> Void) {
-        getTopLevelFolder(isFavorite: true, readOnly: true) { folder in
+        getTopLevelFolder(isFavorite: true, onContext: viewContext) { folder in
             
             let children = folder.children?.array as? [BookmarkItem] ?? []
             let favorites: [Bookmark] = children.map {
@@ -369,7 +369,7 @@ extension BookmarksCoreDataStorage {
     @objc func contextDidSave(notification: Notification) {
         guard let sender = notification.object as? NSManagedObjectContext else { return }
         
-        if sender == privateContext {
+        if sender.name == Constants.privateContextName {
             viewContext.perform { [weak self] in
                 self?.viewContext.mergeChanges(fromContextDidSave: notification)
             }
@@ -389,16 +389,17 @@ extension BookmarksCoreDataStorage {
 extension BookmarksCoreDataStorage {
     
     private func swapIsFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
+        let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
             guard let self = self else { return }
 
-            let mo = self.privateContext.object(with: bookmarkID)
+            let mo = privateContext.object(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get item")
                 return
             }
             
-            self.getTopLevelFolder(isFavorite: !bookmark.isFavorite, readOnly: false) { newParent in
+            self.getTopLevelFolder(isFavorite: !bookmark.isFavorite, onContext: privateContext) { newParent in
                 
                 bookmark.parent?.removeFromChildren(bookmark)
                 bookmark.isFavorite = !bookmark.isFavorite
@@ -406,7 +407,7 @@ extension BookmarksCoreDataStorage {
                 
                 
                 do {
-                    try self.privateContext.save()
+                    try privateContext.save()
                 } catch let error {
                     print(error)
                     assertionFailure("Updating item failed")
@@ -442,9 +443,8 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func getTopLevelFolder(isFavorite: Bool, readOnly: Bool, completion: @escaping (BookmarkFolderManagedObject) -> Void) {
+    private func getTopLevelFolder(isFavorite: Bool, onContext context: NSManagedObjectContext, completion: @escaping (BookmarkFolderManagedObject) -> Void) {
         
-        let context = readOnly ? viewContext : privateContext
         context.perform {
             
             let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
@@ -512,12 +512,13 @@ extension BookmarksCoreDataStorage {
 extension BookmarksCoreDataStorage {
     
     private func createBookmark(url: URL, title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil) {
+        let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
             guard let self = self else {
                 fatalError("self nil when creating bookmark")
             }
         
-            let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: self.privateContext)
+            let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: privateContext)
             guard let bookmark = managedObject as? BookmarkManagedObject else {
                 assertionFailure("Inserting new bookmark failed")
                 return
@@ -526,18 +527,19 @@ extension BookmarksCoreDataStorage {
             bookmark.title = title
             bookmark.isFavorite = isFavorite
             
-            self.updateParentAndSave(of: bookmark, parentID: parentID)
+            self.updateParentAndSave(of: bookmark, parentID: parentID, context: privateContext)
         }
     }
     
     private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil) {
         
+        let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
             guard let self = self else {
                 fatalError("self nil when creating folder")
             }
             
-            let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.folderClassName, into: self.privateContext)
+            let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.folderClassName, into: privateContext)
             guard let folder = managedObject as? BookmarkFolderManagedObject else {
                 assertionFailure("Inserting new folder failed")
                 return
@@ -545,31 +547,31 @@ extension BookmarksCoreDataStorage {
             folder.title = title
             folder.isFavorite = isFavorite
             
-            self.updateParentAndSave(of: folder, parentID: parentID)
+            self.updateParentAndSave(of: folder, parentID: parentID, context: privateContext)
         }
     }
     
-    private func updateParentAndSave(of item: BookmarkItemManagedObject, parentID: NSManagedObjectID?) {
+    private func updateParentAndSave(of item: BookmarkItemManagedObject, parentID: NSManagedObjectID?, context: NSManagedObjectContext) {
         func updateParentAndSave(parent: BookmarkFolderManagedObject) {
             item.parent = parent
             parent.addToChildren(item)
             
             do {
-                try self.privateContext.save()
+                try context.save()
             } catch {
                 assertionFailure("Saving item failed")
             }
         }
         
         if let parentID = parentID {
-            let parentMO = self.privateContext.object(with: parentID)
+            let parentMO = context.object(with: parentID)
             guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get new parent")
                 return
             }
             updateParentAndSave(parent: newParentMO)
         } else {
-            self.getTopLevelFolder(isFavorite: item.isFavorite, readOnly: false) { parent in
+            self.getTopLevelFolder(isFavorite: item.isFavorite, onContext: context) { parent in
                 updateParentAndSave(parent: parent)
             }
         }

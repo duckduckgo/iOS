@@ -68,12 +68,19 @@ public class WebCacheManager {
         
         let group = DispatchGroup()
         
+        var consumedCookiesCount = 0
+        
         for cookie in cookies {
             group.enter()
+            consumedCookiesCount += 1
             httpCookieStore.setCookie(cookie) {
                 group.leave()
             }
         }
+        
+        Pixel.fire(pixel: .legacyCookieMigration, withAdditionalParameters: [
+            PixelParameters.count: "\(consumedCookiesCount)"
+        ])
         
         DispatchQueue.global(qos: .userInitiated).async {
             group.wait()
@@ -81,6 +88,15 @@ public class WebCacheManager {
             DispatchQueue.main.async {
                 cookieStorage.clear()
                 completion()
+                
+                if cookieStorage.cookies.count > 0 {
+                    os_log("Error removing cookies: %d cookies left in legacy CookieStorage",
+                           log: generalLog, type: .debug, cookieStorage.cookies.count)
+                    
+                    Pixel.fire(pixel: .legacyCookieCleanupError, withAdditionalParameters: [
+                        PixelParameters.count: "\(cookieStorage.cookies.count)"
+                    ])
+                }
             }
         }
     }

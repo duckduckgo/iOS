@@ -194,6 +194,8 @@ public enum PixelName: String {
 
     case cookieDeletionTimedOut = "m_d_csto"
     case cookieDeletionLeftovers = "cookie_deletion_leftovers"
+    case legacyCookieMigration = "legacy_cookie_migration"
+    case legacyCookieCleanupError = "legacy_cookie_cleanup_error"
 
     case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
     case cachedTabPreviewRemovalError = "m_d_tpre"
@@ -243,6 +245,8 @@ public struct PixelParameters {
     
     public static let cookieStoreDiff = "cookie_store_diff"
     public static let cookieStorageDiff = "cookie_storage_diff"
+    
+    public static let count = "count"
 }
 
 public struct PixelValues {

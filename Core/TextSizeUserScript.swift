@@ -29,20 +29,23 @@ public class TextSizeUserScript: NSObject, UserScript {
 
     public var source: String {
         let percentage = Int(textSizeAdjustment * 100)
+        let dynamicTypeScaleFactor = UIFontMetrics.default.scaledValue(for: 100)
+        
         return """
         (function() {
-        
             let topLevelUrl = getTopLevelURL();
+            let shouldAdjustForDynamicType = topLevelUrl.hostname.endsWith("wikipedia.org");
+        
+            document.adjustTextSize = adjustTextSize;
 
             document.addEventListener("DOMContentLoaded", function(event) {
                 webkit.messageHandlers.log.postMessage(" -- TextSizeUserScript - event DOMContentLoaded");
-        
-                document.adjustTextSize = adjustTextSize;
-                
-                document.adjustTextSize(\(percentage));
-        
-                webkit.messageHandlers.log.postMessage(" -- TextSizeUserScript - " + topLevelUrl.hostname);
-                
+
+                let currentTextSizeAdjustment = \(percentage);
+                    
+                if ((shouldAdjustForDynamicType) || (currentTextSizeAdjustment != 100)) {
+                    document.adjustTextSize(currentTextSizeAdjustment);
+                }
             }, false)
         
             function getTopLevelURL() {
@@ -56,12 +59,17 @@ public class TextSizeUserScript: NSObject, UserScript {
             }
             
             function adjustTextSize(percentage) {
-                webkit.messageHandlers.log.postMessage(" -- TextSizeUserScript - setting:");
-                document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=percentage+"%";
-            };
+                if (shouldAdjustForDynamicType) {
+                    let dynamicTypeAdjustment = \(dynamicTypeScaleFactor);
+                    var adjustedPercentage = percentage * 100/dynamicTypeAdjustment;
+                    
+                    document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=adjustedPercentage+"%";
+                } else {
+                    document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=percentage+"%";
+                }
+            }
         
         }) ();
-        
         """
     }
 

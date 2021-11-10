@@ -23,13 +23,12 @@ import WebKit
 
 public class TextSizeUserScript: NSObject, UserScript {
 
-    public var textSizeAdjustment: Float = 1.0
+    public var textSizeAdjustmentInPercents: Int = 100
     
     public weak var delegate: PrintingUserScriptDelegate?
 
     public var source: String {
-        let percentage = Int(textSizeAdjustment * 100)
-        let dynamicTypeScaleFactor = UIFontMetrics.default.scaledValue(for: 100)
+        let dynamicTypeScalePercentage = UIFontMetrics.default.scaledValue(for: 100)
         
         return """
         (function() {
@@ -41,7 +40,7 @@ public class TextSizeUserScript: NSObject, UserScript {
             document.addEventListener("DOMContentLoaded", function(event) {
                 webkit.messageHandlers.log.postMessage(" -- TextSizeUserScript - event DOMContentLoaded");
 
-                let currentTextSizeAdjustment = \(percentage);
+                let currentTextSizeAdjustment = \(textSizeAdjustmentInPercents);
                     
                 if ((shouldAdjustForDynamicType) || (currentTextSizeAdjustment != 100)) {
                     document.adjustTextSize(currentTextSizeAdjustment);
@@ -60,7 +59,7 @@ public class TextSizeUserScript: NSObject, UserScript {
             
             function adjustTextSize(percentage) {
                 if (shouldAdjustForDynamicType) {
-                    let dynamicTypeAdjustment = \(dynamicTypeScaleFactor);
+                    let dynamicTypeAdjustment = \(dynamicTypeScalePercentage);
                     var adjustedPercentage = percentage * 100/dynamicTypeAdjustment;
                     
                     document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=adjustedPercentage+"%";

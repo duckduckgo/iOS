@@ -138,7 +138,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureTextSizeCellAccessory() {
-        textSizeAccessoryText.text = "\(Int(appSettings.textSizeAdjustment * 100))%"
+        textSizeAccessoryText.text = "\(appSettings.textSize)%"
     }
 
     private func configureIconViews() {

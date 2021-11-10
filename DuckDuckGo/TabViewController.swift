@@ -208,7 +208,7 @@ class TabViewController: UIViewController {
         addStorageCacheProviderObserver()
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
-        addTextSizeAdjustmentObserver()
+        addTextSizeObserver()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -264,7 +264,7 @@ class TabViewController: UIViewController {
         contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
         printingUserScript.delegate = self
-        textSizeUserScript.textSizeAdjustment = appSettings.textSizeAdjustment
+        textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }
     
     func updateTabModel() {
@@ -621,10 +621,10 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
     
-    private func addTextSizeAdjustmentObserver() {
+    private func addTextSizeObserver() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onTextSizeAdjustmentChange),
-                                               name: AppUserDefaults.Notifications.textSizeAdjustmentChange,
+                                               selector: #selector(onTextSizeChange),
+                                               name: AppUserDefaults.Notifications.textSizeChange,
                                                object: nil)
     }
     
@@ -661,9 +661,8 @@ class TabViewController: UIViewController {
         reload(scripts: true)
     }
     
-    @objc func onTextSizeAdjustmentChange() {
-        let percentage = Int(appSettings.textSizeAdjustment * 100)
-        webView.adjustTextSize(percentage)        
+    @objc func onTextSizeChange() {
+        webView.adjustTextSize(appSettings.textSize)
         reloadUserScripts()
     }
 

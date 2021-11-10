@@ -29,6 +29,6 @@ class MockAppSettings: AppSettings {
     var longPressPreviews: Bool = true
     var sendDoNotSell: Bool = true
     var currentFireButtonAnimation: FireButtonAnimationType = FireButtonAnimationType.fireRising
-    var textSizeAdjustment: Float = 1.0
+    var textSize: Int = 100
     
 }

@@ -32,7 +32,7 @@ class TextSizeSettingsViewController: UITableViewController {
     
     private let predefinedPercentages = [80, 90, 100, 110, 120, 130, 140, 150, 160, 170]
     
-    private var currentTextSizePercentage: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
+    private var currentTextSizePercentage: Int = AppDependencyProvider.shared.appSettings.textSize
     
     private var hasAdjustedDetent: Bool = false
         
@@ -149,16 +149,14 @@ class TextSizeSettingsViewController: UITableViewController {
 
             updateTextSizeFooterLabel()
             storeTextSizeInAppSettings(currentTextSizePercentage)
-            
-            NotificationCenter.default.post(name: AppUserDefaults.Notifications.textSizeAdjustmentChange, object: self)
         }
     }
     
     private func storeTextSizeInAppSettings(_ percentage: Int) {
-        // TODO: Adjust scale from float to percents
         let appSettings = AppDependencyProvider.shared.appSettings
-        appSettings.textSizeAdjustment = Float(percentage)/100
-        Swift.print("appSettings: \(appSettings.textSizeAdjustment) based on  \(percentage)%")
+        appSettings.textSize = percentage
+        
+        NotificationCenter.default.post(name: AppUserDefaults.Notifications.textSizeChange, object: self)
     }
 }
 

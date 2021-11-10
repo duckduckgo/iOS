@@ -25,7 +25,7 @@ public class AppUserDefaults: AppSettings {
     public struct Notifications {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
-        public static let textSizeAdjustmentChange = Notification.Name("com.duckduckgo.app.TextSizeAdjustmentChange")
+        public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
     }
 
     private let groupName: String
@@ -166,8 +166,8 @@ public class AppUserDefaults: AppSettings {
         }
     }
     
-    @UserDefaultsWrapper(key: .textSizeAdjustment, defaultValue: 1.0)
-    var textSizeAdjustment: Float
+    @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
+    var textSize: Int
     
 }
 

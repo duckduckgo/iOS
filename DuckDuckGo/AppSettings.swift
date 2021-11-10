@@ -32,5 +32,5 @@ protocol AppSettings: AnyObject {
     
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
     
-    var textSizeAdjustment: Float { get set }
+    var textSize: Int { get set }
 }

@@ -34,12 +34,7 @@ class IntervalSlider: UISlider {
             setNeedsDisplay()
         }
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.setNeedsDisplay()
-    }
-    
+
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -56,8 +51,8 @@ class IntervalSlider: UISlider {
         color.set()
         bpath.fill()
         
-        for i in 0...steps {
-            let x = newTrackRect.minX + newTrackRect.width/CGFloat(steps) * CGFloat(i) - Constants.markWidth/2
+        for i in 0...steps-1 {
+            let x = newTrackRect.minX + newTrackRect.width/CGFloat(steps-1) * CGFloat(i) - Constants.markWidth/2
             let xRounded = Darwin.round(x / 0.5) * 0.5
             
             let markRect = CGRect(x: xRounded, y: newTrackRect.midY - Constants.markHeight/2,

@@ -31,12 +31,15 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
         case pulse(scale: Double)
     }
     
+    private struct AnimationScale {
+        static let max: Double = 1.3
+        static let pulse: Double = 0.7
+    }
+    
     @Published private(set) var speechFeedback = " "
     @Published private(set) var animationType: AnimationType = .pulse(scale: 1)
     weak var delegate: VoiceSearchFeedbackViewModelDelegate?
     private let speechRecognizer: SpeechRecognizerProtocol
-    private let maxScale: Double = 1.3
-    private let pulseScale: Double = 0.7
     private var recognizedWords: String? = nil {
         didSet {
             if let words = recognizedWords {
@@ -77,7 +80,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
                 guard let self = self else { return }
                 
                 if volume != 0 {
-                    let scaleValue = min(Double(volume) + 1, self.maxScale)
+                    let scaleValue = min(Double(volume) + 1, AnimationScale.max)
                     self.animationType = .speech(volume: scaleValue)
                 }
                 
@@ -95,7 +98,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     }
     
     func startSilenceAnimation() {
-        self.animationType = .pulse(scale: pulseScale)
+        self.animationType = .pulse(scale: AnimationScale.pulse)
     }
     
     func cancel() {

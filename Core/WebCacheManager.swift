@@ -18,6 +18,7 @@
 //
 
 import WebKit
+import os.log
 
 public protocol WebCacheManagerCookieStore {
     
@@ -134,7 +135,8 @@ public class WebCacheManager {
             cookieStore.getAllCookies { cookies in
                 let group = DispatchGroup()
                 let cookiesToRemove = cookies.filter { !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain }
-
+                let protectedCookiesCount = cookies.count - cookiesToRemove.count
+                
                 for cookie in cookiesToRemove {
                     group.enter()
                     cookieStore.delete(cookie) {
@@ -150,7 +152,37 @@ public class WebCacheManager {
                             PixelParameters.clearWebDataTimedOut: "1"
                         ])
                     }
+                    
+                    // Remove legacy HTTPCookieStorage cookies
+                    let storageCookies = HTTPCookieStorage.shared.cookies ?? []
+                    let storageCookiesToRemove = storageCookies.filter {
+                        !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain
+                    }
+                    
+                    let protectedStorageCookiesCount = storageCookies.count - storageCookiesToRemove.count
+                    
+                    for storageCookie in storageCookiesToRemove {
+                        HTTPCookieStorage.shared.deleteCookie(storageCookie)
+                    }
+    
+                    // Sanity check
+                    cookieStore.getAllCookies { cookiesAfterCleaning in
+                        let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
+                        
+                        let cookieStoreDiff = cookiesAfterCleaning.count - protectedCookiesCount
+                        let cookieStorageDiff = storageCookiesAfterCleaning.count - protectedStorageCookiesCount
 
+                        if cookieStoreDiff + cookieStorageDiff > 0 {
+                            os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
+                                   log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
+                            
+                            Pixel.fire(pixel: .cookieDeletionLeftovers, withAdditionalParameters: [
+                                PixelParameters.cookieStoreDiff: "\(cookieStoreDiff)",
+                                PixelParameters.cookieStorageDiff: "\(cookieStorageDiff)"
+                            ])
+                        }
+                    }
+                    
                     DispatchQueue.main.async {
                         completion()
                     }

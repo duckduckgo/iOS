@@ -193,6 +193,7 @@ public enum PixelName: String {
     case blankOverlayNotDismissed = "m_d_ovs"
 
     case cookieDeletionTimedOut = "m_d_csto"
+    case cookieDeletionLeftovers = "cookie_deletion_leftovers"
 
     case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
     case cachedTabPreviewRemovalError = "m_d_tpre"
@@ -239,6 +240,9 @@ public struct PixelParameters {
 
     public static let emailCohort = "cohort"
     public static let emailLastUsed = "duck_address_last_used"
+    
+    public static let cookieStoreDiff = "cookie_store_diff"
+    public static let cookieStorageDiff = "cookie_storage_diff"
 }
 
 public struct PixelValues {

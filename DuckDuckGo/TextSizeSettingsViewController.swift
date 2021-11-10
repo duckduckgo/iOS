@@ -131,65 +131,6 @@ class TextSizeSettingsViewController: UITableViewController {
     }
 }
 
-class IntervalSlider: UISlider {
-    
-    var steps: Int = 1 {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.setNeedsDisplay()
-    }
-    
-    override func draw(_ rect: CGRect) {
-        
-        let trackRect = trackRect(forBounds: rect)
-        let thumbRect = thumbRect(forBounds: rect, trackRect: trackRect, value: 1.0)
-        
-        print("track: \(trackRect)")
-        print("thumb: \(thumbRect)")
-        
-        let thumbWidth = thumbRect.width
-        print("thumbWidth: \(thumbWidth)")
-        
-//        let thumbOffset = thumbRect.width/2 - 2
-        let thumbOffset = Darwin.round(thumbRect.width/2) - 3
-        print("thumbOffset: \(thumbOffset)")
-        
-        let newTrackRect = trackRect.inset(by: UIEdgeInsets(top: 0.0, left: thumbOffset, bottom: 0.0, right: thumbOffset))
-                
-        print("  new: \(newTrackRect)")
-        
-        let color: UIColor = UIColor.cornflowerBlue
-        let bpath: UIBezierPath = UIBezierPath(rect: newTrackRect)
-
-        color.set()
-        bpath.fill()
-        
-        for i in 0...steps {
-//            let trackWidth = newTrackRect.width
-//            let height = rect.height
-            let markWidth = 3.0
-            let markHeight = 9.0
-            
-//            let x = Darwin.round(newTrackRect.minX + newTrackRect.width/CGFloat(count) * CGFloat(i) - markWidth/2)
-            let x = newTrackRect.minX + newTrackRect.width/CGFloat(steps) * CGFloat(i) - markWidth/2
-            let xRounded = Darwin.round(x / 0.5) * 0.5
-            
-            let markRect = CGRect(x: xRounded, y: newTrackRect.midY - markHeight/2, width: markWidth, height: markHeight)
-//            print("mark[\(i)]: \(markRect)")
-            
-            let markPath: UIBezierPath = UIBezierPath(roundedRect: markRect, cornerRadius: 5.0)
-            color.set()
-        
-            markPath.fill()
-        }
-    }
-}
-
 extension TextSizeSettingsViewController {
     
     @IBAction func onSliderValueChanged(_ sender: Any) {

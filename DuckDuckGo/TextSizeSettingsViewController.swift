@@ -1,5 +1,5 @@
 //
-//  AccessibilitySettingsViewController.swift
+//  TextSizeSettingsViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2021 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import Foundation
 import UIKit
 
-class AccessibilitySettingsViewController: UITableViewController {
+class TextSizeSettingsViewController: UITableViewController {
     
     @IBOutlet var customBackBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var customBackInnerButton: UIButton!
@@ -190,7 +190,7 @@ class IntervalSlider: UISlider {
     }
 }
 
-extension AccessibilitySettingsViewController {
+extension TextSizeSettingsViewController {
     
     @IBAction func onSliderValueChanged(_ sender: Any) {
         let roundedValue = round(textSizeSlider.value)
@@ -217,7 +217,7 @@ extension AccessibilitySettingsViewController {
     }
 }
 
-extension AccessibilitySettingsViewController: Themable {
+extension TextSizeSettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
         
@@ -230,7 +230,7 @@ extension AccessibilitySettingsViewController: Themable {
     }
 }
 
-extension AccessibilitySettingsViewController: UISheetPresentationControllerDelegate {
+extension TextSizeSettingsViewController: UISheetPresentationControllerDelegate {
   @available(iOS 15.0, *)
   func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
 

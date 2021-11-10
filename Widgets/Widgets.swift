@@ -77,7 +77,7 @@ struct Provider: TimelineProvider {
     
     private func getCoreDataFavorites(completion: @escaping ([Bookmark]) -> Void) {
         
-        let coreData = BookmarksCoreDataStorage.shared
+        let coreData = BookmarksCoreDataStorage()
         coreData.loadStoreOnlyForWidget()
         coreData.favoritesUncachedForWidget() { favorites in
             completion(favorites)

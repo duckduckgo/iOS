@@ -42,6 +42,7 @@ class TextSizeSettingsViewController: UITableViewController {
         navigationItem.leftBarButtonItem = nil
         
         configureCustomBackButtonTitle()
+        configureDescriptionLabel()
         configureSlider()
         updateTextSizeFooterLabel()
         
@@ -82,6 +83,10 @@ class TextSizeSettingsViewController: UITableViewController {
         let backTitle = previousViewController?.navigationItem.title ?? ""
 
         customBackInnerButton.setTitle(backTitle, for: .normal)
+    }
+    
+    private func configureDescriptionLabel() {
+        descriptionLabel.text = UserText.textSizeDescription
     }
     
     private func configureSlider() {

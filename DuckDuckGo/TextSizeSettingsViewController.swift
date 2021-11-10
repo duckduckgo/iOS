@@ -24,7 +24,10 @@ class TextSizeSettingsViewController: UITableViewController {
     
     @IBOutlet var customBackBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var customBackInnerButton: UIButton!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var textSizeSlider: IntervalSlider!
+    @IBOutlet weak var smallerTextIcon: UIImageView!
+    @IBOutlet weak var largerTextIcon: UIImageView!
     @IBOutlet weak var currentSelectedValueLabel: UILabel!
     
     private let predefinedPercentages = [80, 90, 100, 110, 120, 130, 140, 150, 160, 170]
@@ -161,8 +164,10 @@ extension TextSizeSettingsViewController {
 extension TextSizeSettingsViewController: Themable {
     
     func decorate(with theme: Theme) {
-        
-        // TODO: Tweak style of othre elements too
+        descriptionLabel.textColor = theme.tableCellTextColor
+        smallerTextIcon.tintColor = theme.tableCellTextColor
+        largerTextIcon.tintColor = theme.tableCellTextColor
+        currentSelectedValueLabel.textColor = theme.tableHeaderTextColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

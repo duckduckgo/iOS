@@ -61,14 +61,14 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
         guard channelDataArray.count != 0 else { return 0 }
         
         let silenceThreshold: Float = 0.0010
-        let shoutingThreshold: Float = 0.06
+        let loudThreshold: Float = 0.2
         
         let sumChannelData = channelDataArray.reduce(0) {$0 + abs($1)}
         var channelAverage = sumChannelData / Float(channelDataArray.count)
-        channelAverage = min(channelAverage, shoutingThreshold)
+        channelAverage = min(channelAverage, loudThreshold)
         channelAverage = max(channelAverage, silenceThreshold)
 
-        let normalized = (channelAverage - silenceThreshold) / (shoutingThreshold - silenceThreshold)
+        let normalized = (channelAverage - silenceThreshold) / (loudThreshold - silenceThreshold)
         return normalized
     }
     

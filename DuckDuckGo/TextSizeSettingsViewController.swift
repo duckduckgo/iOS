@@ -32,19 +32,19 @@ class TextSizeSettingsViewController: UITableViewController {
     
     private let predefinedPercentages = [80, 90, 100, 110, 120, 130, 140, 150, 160, 170]
     
-    private var currentSelectedValue: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
+    private var currentTextSizePercentage: Int = Int(AppDependencyProvider.shared.appSettings.textSizeAdjustment * 100)
     
     private var hasAdjustedDetent: Bool = false
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("leftBarButtonItem: nil")
         navigationItem.leftBarButtonItem = nil
         
         configureCustomBackButtonTitle()
         configureSlider()
-        updateLabel()
+        updateTextSizeFooterLabel()
+        
         applyTheme(ThemeManager.shared.currentTheme)
     }
         
@@ -64,7 +64,6 @@ class TextSizeSettingsViewController: UITableViewController {
                     sheetController.selectedDetentIdentifier = .medium
                 }
                 
-                print("leftBarButtonItem: custom")
                 navigationItem.leftBarButtonItem = customBackBarButtonItem
                 
                 hasAdjustedDetent = true
@@ -75,6 +74,34 @@ class TextSizeSettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let theme = ThemeManager.shared.currentTheme
         cell.decorate(with: theme)
+    }
+    
+    private func configureCustomBackButtonTitle() {
+        let topViewController = navigationController?.topViewController
+        let previousViewController = navigationController?.viewControllers.last(where: { $0 != topViewController })
+        let backTitle = previousViewController?.navigationItem.title ?? ""
+
+        customBackInnerButton.setTitle(backTitle, for: .normal)
+    }
+    
+    private func configureSlider() {
+        textSizeSlider.minimumValue = 0
+        textSizeSlider.maximumValue = Float(predefinedPercentages.count - 1)
+        
+        textSizeSlider.steps = predefinedPercentages.count
+        
+        configureSliderCurrentSelection()
+    }
+    
+    private func configureSliderCurrentSelection() {
+        let currentSelectionIndex = predefinedPercentages.firstIndex(of: currentTextSizePercentage) ?? 0
+        textSizeSlider.value = Float(currentSelectionIndex)
+    }
+    
+    private func updateTextSizeFooterLabel() {
+        let percentageString = "\(currentTextSizePercentage)%"
+        currentSelectedValueLabel.text = UserText.textSizeFooter(for: percentageString)
+        
     }
     
     @IBAction func customBackButtonTapped(_ sender: AnyObject) {
@@ -95,7 +122,6 @@ class TextSizeSettingsViewController: UITableViewController {
                     
                     // Second step is to actually pop the view controller
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                        print("leftBarButtonItem: nil")
                         self.navigationItem.leftBarButtonItem = nil
                         self.navigationController?.popViewController(animated: true)
                     }
@@ -104,61 +130,44 @@ class TextSizeSettingsViewController: UITableViewController {
         }
         
         if shouldPopViewController {
-            print("leftBarButtonItem: nil")
             navigationItem.leftBarButtonItem = nil
             navigationController?.popViewController(animated: true)
         }
     }
     
-    private func configureCustomBackButtonTitle() {
-        let topViewController = navigationController?.topViewController
-        let previousViewController = navigationController?.viewControllers.last(where: { $0 != topViewController })
-        let backTitle = previousViewController?.navigationItem.title ?? ""
-
-        customBackInnerButton.setTitle(backTitle, for: .normal)
-    }
-    
-    private func configureSlider() {
-        textSizeSlider.minimumValue = 0
-        textSizeSlider.maximumValue = Float(predefinedPercentages.count - 1)
-        textSizeSlider.steps = predefinedPercentages.count - 1
-        
-        let currentSelectionIndex = predefinedPercentages.firstIndex(of: currentSelectedValue) ?? 0
-        textSizeSlider.value = Float(currentSelectionIndex)
-    }
-    
-    private func updateLabel() {
-        let percentageString = "\(currentSelectedValue)%"
-        currentSelectedValueLabel.text = UserText.textSizeFooter(for: percentageString)
-        
-    }
-}
-
-extension TextSizeSettingsViewController {
-    
     @IBAction func onSliderValueChanged(_ sender: Any) {
         let roundedValue = round(textSizeSlider.value)
-        let index = Int(roundedValue)
-
-        print("slider: \(textSizeSlider.value) rounded:\(roundedValue) - [\(index) = \(predefinedPercentages[index])]")
-
-        // snap the slider
+    
+        // make the slider snap
         textSizeSlider.value = roundedValue
+    
+        let index = Int(roundedValue)
+        let newTextSizePercentage = predefinedPercentages[index]
         
-        let newValue = predefinedPercentages[index]
-        if newValue != currentSelectedValue {
-            currentSelectedValue = newValue
-            // update UI
-            updateLabel()
-            
-            let appSettings = AppDependencyProvider.shared.appSettings
-            appSettings.textSizeAdjustment = Float(newValue)/100
-            
-            Swift.print("appSettings: \(appSettings.textSizeAdjustment) based on  \(newValue)%")
+        if newTextSizePercentage != currentTextSizePercentage {
+            currentTextSizePercentage = newTextSizePercentage
+
+            updateTextSizeFooterLabel()
+            storeTextSizeInAppSettings(currentTextSizePercentage)
             
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.textSizeAdjustmentChange, object: self)
         }
     }
+    
+    private func storeTextSizeInAppSettings(_ percentage: Int) {
+        // TODO: Adjust scale from float to percents
+        let appSettings = AppDependencyProvider.shared.appSettings
+        appSettings.textSizeAdjustment = Float(percentage)/100
+        Swift.print("appSettings: \(appSettings.textSizeAdjustment) based on  \(percentage)%")
+    }
+}
+
+@available(iOS 15.0, *)
+extension TextSizeSettingsViewController: UISheetPresentationControllerDelegate {
+
+  func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+      navigationItem.leftBarButtonItem = sheetPresentationController.selectedDetentIdentifier == .medium ? customBackBarButtonItem : nil
+  }
 }
 
 extension TextSizeSettingsViewController: Themable {
@@ -174,18 +183,4 @@ extension TextSizeSettingsViewController: Themable {
         
         tableView.reloadData()
     }
-}
-
-extension TextSizeSettingsViewController: UISheetPresentationControllerDelegate {
-  @available(iOS 15.0, *)
-  func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-
-      if sheetPresentationController.selectedDetentIdentifier == .large {
-          print("leftBarButtonItem: nil")
-          navigationItem.leftBarButtonItem = nil
-      } else if sheetPresentationController.selectedDetentIdentifier == .medium {
-          print("leftBarButtonItem: custom")
-          navigationItem.leftBarButtonItem = customBackBarButtonItem
-      }
-  }
 }

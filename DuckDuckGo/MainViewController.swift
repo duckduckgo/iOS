@@ -920,13 +920,38 @@ class MainViewController: UIViewController {
                                                 preferredStyle: .alert)
         alertController.overrideUserInterfaceStyle()
 
-        let openSettinsAction = UIAlertAction(title: UserText.noVoicePermissionActionSettings, style: .default) { _ in
+        let openSettingsButton = UIAlertAction(title: UserText.noVoicePermissionActionSettings, style: .default) { _ in
             let url = URL(string: UIApplication.openSettingsURLString)!
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
         let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: nil)
 
-        alertController.addAction(openSettinsAction)
+        alertController.addAction(openSettingsButton)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func displayVoiceSearchAlertIfNecessary(completion: @escaping(Bool) -> Void) {
+        if VoiceSearchHelper.shared.voiceSearchPrivacyAlertWasConfirmed {
+            completion(true)
+            return
+        }
+        
+        let alertController = UIAlertController(title: UserText.voiceSearchPrivacyAcknowledgmentTitle,
+                                                message: UserText.voiceSearchPrivacyAcknowledgmentMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentConfirmButton, style: .default) { _ in
+            VoiceSearchHelper.shared.voiceSearchPrivacyAlertWasConfirmed = true
+            completion(true)
+        }
+        let cancelAction = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentDenyButton, style: .cancel) { _ in
+            completion(false)
+        }
+
+        alertController.addAction(confirmButton)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
@@ -1169,17 +1194,21 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onVoiceSearchPressed() {
-        SpeechRecognizer.requestMicAccess { permission in
-            DispatchQueue.main.async {
-                if permission {
-                    self.showVoiceSearch()
-                } else {
-                    self.showNoMicrophonePermissionAlert()
+
+        displayVoiceSearchAlertIfNecessary { result in
+            guard result else { return }
+            
+            SpeechRecognizer.requestMicAccess { permission in
+                DispatchQueue.main.async {
+                    if permission {
+                        self.showVoiceSearch()
+                    } else {
+                        self.showNoMicrophonePermissionAlert()
+                    }
                 }
             }
         }
     }
-
 }
 
 extension MainViewController: FavoritesOverlayDelegate {

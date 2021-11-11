@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 /*
  Instead of initializing SpeechRecognizer to check its availability
@@ -27,6 +28,9 @@ class VoiceSearchHelper {
     static let shared = VoiceSearchHelper()
     var isSpeechRecognizerAvailable: Bool = false
     
+    @UserDefaultsWrapper(key: .voiceSearchPrivacyAlertWasConfirmed, defaultValue: false)
+    var voiceSearchPrivacyAlertWasConfirmed: Bool
+
     private init() {
         updateFlag()
         

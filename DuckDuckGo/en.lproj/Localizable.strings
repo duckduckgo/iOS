@@ -989,13 +989,25 @@
 "unknown.error.occurred" = "An unknown error occurred.";
 
 /* No microphone permission alert action button to open the settings app */
-"voiceSearch.alert.action.settings" = "Settings";
+"voiceSearch.alert.no-permission.action.settings" = "Settings";
 
 /* Message for alert warning the user about missing microphone permission */
-"voiceSearch.alert.message" = "To use Voice Search in DuckDuckGo you need to enable Microphone access in the system settings.";
+"voiceSearch.alert.no-permission.message" = "To use Voice Search in DuckDuckGo you need to enable Microphone access in the system settings.";
 
 /* Title for alert warning the user about missing microphone permission */
-"voiceSearch.alert.title" = "Microphone Access Required";
+"voiceSearch.alert.no-permission.title" = "Microphone Access Required";
+
+/* Voice-search privacy confirmation alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.confirm" = "OK";
+
+/* Voice-search privacy denial alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.deny" = "Cancel";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "TBD";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Private Voice Search";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Cancel";

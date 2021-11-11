@@ -4408,7 +4408,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n[ -z \"$TRAVIS\" ]\n\nif env | grep -q ^TRAVIS=\nthen\n    echo Skipping fonts on TRAVIS build\nelif [ -d ~/DuckDuckGo/Fonts/proximanova ]\nthen\n\n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf \"$SRCROOT/fonts/licensed\"\n\nelif [ ! -d ~/DuckDuckGo/Fonts/proximanova ]\nthen\n                                      \n    echo \"warning: Correct fonts not found, install proximanova fonts at ~/DuckDuckGo/Fonts/proximanova\"\n                                      \nfi\n";
+			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  [ -z \"$TRAVIS\" ]\n\n  if env | grep -q ^TRAVIS=\n  then\n    echo Skipping fonts on TRAVIS build\n  elif [ -d ~/DuckDuckGo/Fonts/proximanova ]\n  then\n  \n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf \"$SRCROOT/fonts/licensed\"\n\n  elif [ ! -d ~/DuckDuckGo/Fonts/proximanova ]\n  then\n                                        \n      echo \"warning: Correct fonts not found, install proximanova fonts at ~/DuckDuckGo/Fonts/proximanova\"\n                                        \n  fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		98B0CE69251C937D003FB601 /* Update Localizable.strings */ = {
@@ -4427,7 +4427,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SOURCE_ROOT/loc_update.sh\"\n";
+			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  \"$SOURCE_ROOT/loc_update.sh\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

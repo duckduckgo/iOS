@@ -402,7 +402,7 @@ public struct UserText {
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
     public static let voiceSearchPrivacyAcknowledgmentTitle = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.title", value: "Private Voice Search", comment: "Title for alert explaining voice-search privacy")
     public static let voiceSearchPrivacyAcknowledgmentMessage = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.message", value: "TBD", comment: "Message for alert explaining voice-search privacy")
-    public static let voiceSearchPrivacyAcknowledgmentConfirmButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.confirm", value: "OK", comment: "Voice-search privacy confirmation alert action")
-    public static let voiceSearchPrivacyAcknowledgmentDenyButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.deny", value: "Cancel", comment: "Voice-search privacy denial alert action")
+    public static let voiceSearchPrivacyAcknowledgmentAcceptButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.accept", value: "OK", comment: "Voice-search privacy accept alert action")
+    public static let voiceSearchPrivacyAcknowledgmentRejectButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.reject", value: "Cancel", comment: "Voice-search privacy reject alert action")
     
 }

@@ -997,11 +997,11 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Microphone Access Required";
 
-/* Voice-search privacy confirmation alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.confirm" = "OK";
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
 
-/* Voice-search privacy denial alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.deny" = "Cancel";
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Cancel";
 
 /* Message for alert explaining voice-search privacy */
 "voiceSearch.alert.privacy-acknowledgment.message" = "TBD";

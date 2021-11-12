@@ -932,7 +932,7 @@ class MainViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    func displayVoiceSearchAlertIfNecessary(completion: @escaping(Bool) -> Void) {
+    func displayVoiceSearchPrivacyAlertIfNecessary(completion: @escaping(Bool) -> Void) {
         if VoiceSearchHelper.shared.voiceSearchPrivacyAlertWasConfirmed {
             completion(true)
             return
@@ -943,11 +943,13 @@ class MainViewController: UIViewController {
                                                 preferredStyle: .alert)
         alertController.overrideUserInterfaceStyle()
 
-        let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentConfirmButton, style: .default) { _ in
+        let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentAcceptButton, style: .default) { _ in
             VoiceSearchHelper.shared.voiceSearchPrivacyAlertWasConfirmed = true
+            Pixel.fire(pixel: .voiceSearchPrivacyDialogAccepted)
             completion(true)
         }
-        let cancelAction = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentDenyButton, style: .cancel) { _ in
+        let cancelAction = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentRejectButton, style: .cancel) { _ in
+            Pixel.fire(pixel: .voiceSearchPrivacyDialogRejected)
             completion(false)
         }
 
@@ -1195,7 +1197,7 @@ extension MainViewController: OmniBarDelegate {
     
     func onVoiceSearchPressed() {
 
-        displayVoiceSearchAlertIfNecessary { result in
+        displayVoiceSearchPrivacyAlertIfNecessary { result in
             guard result else { return }
             
             SpeechRecognizer.requestMicAccess { permission in
@@ -1758,6 +1760,7 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
     func voiceSearchViewControllerDidFinish(_ controller: VoiceSearchViewController, query: String?) {
         controller.dismiss(animated: true, completion: nil)
         if let query = query {
+            Pixel.fire(pixel: .voiceSearchDone)
             loadQuery(query)
         }
     }

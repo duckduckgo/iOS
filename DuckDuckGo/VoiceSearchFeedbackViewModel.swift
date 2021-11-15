@@ -40,20 +40,13 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     @Published private(set) var animationType: AnimationType = .pulse(scale: 1)
     weak var delegate: VoiceSearchFeedbackViewModelDelegate?
     private let speechRecognizer: SpeechRecognizerProtocol
+    private var isSilent = true
     private var recognizedWords: String? = nil {
         didSet {
             if let words = recognizedWords {
                 speechFeedback = "\"\(words)\""
             } else {
                 speechFeedback = " "
-            }
-        }
-    }
-    
-    private var isSilent = true {
-        didSet {
-            if isSilent {
-                startSilenceAnimation()
             }
         }
     }
@@ -77,20 +70,24 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
             
         } volumeCallback: { [weak self] volume in
             DispatchQueue.main.async {
-                guard let self = self else { return }
-                
-                if volume != 0 {
-                    let scaleValue = min(Double(volume) + 1, AnimationScale.max)
-                    self.animationType = .speech(volume: scaleValue)
-                }
-                
-                // Prevent isSilent from being set multiple times
-                let hasVolume = volume == 0
-                if self.isSilent != hasVolume {
-                    self.isSilent = hasVolume
-                }
+                self?.setupAnimationWithVolume(volume)
             }
         }
+    }
+    
+    private func setupAnimationWithVolume(_ volume: Float) {
+        let isCurrentlySilent = volume <= 0
+
+        if !isCurrentlySilent {
+            let scaleValue = min(Double(volume) + 1, AnimationScale.max)
+            self.startSpeechAnimation(scaleValue)
+        }
+        
+        if !self.isSilent && isCurrentlySilent {
+            self.startSilenceAnimation()
+        }
+        
+        self.isSilent = isCurrentlySilent
     }
     
     func stopSpeechRecognizer() {
@@ -99,6 +96,10 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     
     func startSilenceAnimation() {
         self.animationType = .pulse(scale: AnimationScale.pulse)
+    }
+    
+    func startSpeechAnimation(_ scale: Double) {
+        self.animationType = .speech(volume: scale)
     }
     
     func cancel() {

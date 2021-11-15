@@ -49,7 +49,12 @@ struct VoiceSearchFeedbackView: View {
 
 struct SpeechFeedbackView_Previews: PreviewProvider {
     static var previews: some View {
-        VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel())
+        Group {
+            ForEach(ColorScheme.allCases, id: \.self) {
+                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: MockSpeechRecognizer()))
+                    .preferredColorScheme($0)
+            }
+        }
     }
 }
 

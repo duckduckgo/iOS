@@ -41,7 +41,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     weak var delegate: VoiceSearchFeedbackViewModelDelegate?
     private let speechRecognizer: SpeechRecognizerProtocol
     private var isSilent = true
-    private var recognizedWords: String? = nil {
+    private var recognizedWords: String? {
         didSet {
             if let words = recognizedWords {
                 speechFeedback = "\"\(words)\""

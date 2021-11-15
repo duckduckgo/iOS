@@ -108,8 +108,4 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     func finish() {
         self.delegate?.voiceSearchFeedbackViewModelDidFinish(self, query: recognizedWords)
     }
-    
-    deinit {
-        print("\(VoiceSearchFeedbackViewModel.self) deinit")
-    }
 }

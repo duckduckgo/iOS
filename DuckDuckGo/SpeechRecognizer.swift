@@ -143,7 +143,6 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     
     deinit {
         reset()
-        print("\(SpeechRecognizer.self) deinit")
     }
 }
 

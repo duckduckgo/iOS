@@ -32,10 +32,6 @@ class VoiceSearchViewController: UIViewController {
         return effectView
     }()
 
-    deinit {
-        print("\(VoiceSearchViewController.self) deinit")
-    }
-    
     private func setupConstraints() {
         blurView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

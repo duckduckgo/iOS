@@ -58,7 +58,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
         }
     }
 
-    internal init(speechRecognizer: SpeechRecognizerProtocol = MockSpeechRecognizer()) {
+    internal init(speechRecognizer: SpeechRecognizerProtocol) {
         self.speechRecognizer = speechRecognizer
     }
     
@@ -112,17 +112,4 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     deinit {
         print("\(VoiceSearchFeedbackViewModel.self) deinit")
     }
-}
-
-struct MockSpeechRecognizer: SpeechRecognizerProtocol {
-    var isAvailable: Bool = false
-    var isRunning: Bool = false
-    static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) { }
- 
-    func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float {
-        return 10
-    }
-    
-    func startRecording(resultHandler: @escaping (String?, Error?, Bool) -> Void, volumeCallback: @escaping (Float) -> Void) { }
-    func stopRecording() { }
 }

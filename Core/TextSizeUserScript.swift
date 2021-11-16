@@ -43,7 +43,7 @@ public class TextSizeUserScript: NSObject, UserScript {
 
                 let currentTextSizeAdjustment = \(textSizeAdjustmentInPercents);
                     
-                if ((shouldAdjustForDynamicType) || (currentTextSizeAdjustment != 100)) {
+                if ((shouldAdjustForDynamicType) || (isDDG) || (currentTextSizeAdjustment != 100)) {
                     document.adjustTextSize(currentTextSizeAdjustment);
                 }
             }, false)

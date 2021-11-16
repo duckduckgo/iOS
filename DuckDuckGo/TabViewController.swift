@@ -1086,21 +1086,29 @@ extension TabViewController: WKNavigationDelegate {
     
     func requestTrackingLinkRewrite(navigationAction: WKNavigationAction,
                                     decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) -> Bool {
+        func load(newUrl: URL, forNavigationAction navigationAction: WKNavigationAction) {
+            if isNewTargetBlankRequest(navigationAction: navigationAction) {
+                delegate?.tab(self, didRequestNewTabForUrl: newUrl, openedByPage: true)
+            } else {
+                self.load(url: newUrl)
+            }
+        }
+        
         if let newUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(initiator: webView.url,
                                                                        destination: navigationAction.request.url) {
             decisionHandler(.cancel)
-            load(url: newUrl)
+            load(newUrl: newUrl, forNavigationAction: navigationAction)
             return true
         } else if AMPCanonicalExtractor.shared.urlContainsAmpKeyword(navigationAction.request.url) {
             AMPCanonicalExtractor.shared.getCanonicalUrl(initiator: webView.url,
-                                                         url: navigationAction.request.url) { [weak self] canonical in
+                                                         url: navigationAction.request.url) { canonical in
                 guard let canonical = canonical else {
                     decisionHandler(.allow)
                     return
                 }
                 
                 decisionHandler(.cancel)
-                self?.load(url: canonical)
+                load(newUrl: canonical, forNavigationAction: navigationAction)
             }
             return true
         }
@@ -1122,8 +1130,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        if navigationAction.isTargetingMainFrame(),
-           navigationAction.navigationType == .linkActivated {
+        if navigationAction.navigationType == .linkActivated {
             if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
                 // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
                 return

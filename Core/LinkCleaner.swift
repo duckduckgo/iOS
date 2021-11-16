@@ -23,6 +23,8 @@ public class LinkCleaner {
     
     public static let shared = LinkCleaner()
     
+    private var lastAmpUrl: String?
+    
     public func urlIsExtractableAmpLink(_ url: URL,
                                         config: PrivacyConfiguration) -> String? {
         let ampFormats = TrackingLinkSettings(fromConfig: config).ampLinkFormats
@@ -50,6 +52,7 @@ public class LinkCleaner {
     
     public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?,
                                             config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
+        lastAmpUrl = nil
         guard let url = url, !isURLExcluded(url: url) else { return nil }
         if let initiator = initiator, isURLExcluded(url: initiator) {
             return nil
@@ -74,6 +77,7 @@ public class LinkCleaner {
                 }
                 
                 if let cleanUrl = URL(string: urlStr), !isURLExcluded(url: cleanUrl) {
+                    lastAmpUrl = ampStr
                     return cleanUrl
                 }
             }
@@ -121,5 +125,21 @@ public class LinkCleaner {
         
         return newComps.url
     }
+
+    public func getLastAmpUrl() -> String? {
+        guard let lastAmpUrl = lastAmpUrl else { return nil }
+        
+        let returnVal = lastAmpUrl
+        self.lastAmpUrl = nil
+        
+        return returnVal
+    }
     
+    public func resetLastAmpUrl() {
+        lastAmpUrl = nil
+    }
+    
+    public func setLastAmpUrl(_ url: String?) {
+        lastAmpUrl = url
+    }
 }

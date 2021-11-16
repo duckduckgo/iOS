@@ -74,6 +74,7 @@ public class AMPCanonicalExtractor: NSObject {
     
     public func urlContainsAmpKeyword(_ url: URL?,
                                       config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
+        LinkCleaner.shared.resetLastAmpUrl()
         guard let url = url else { return false }
         let urlStr = url.absoluteString
         
@@ -143,6 +144,7 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
            let canonical = dict[Constants.canonicalKey] as? String {
             if let canonicalUrl = URL(string: canonical),
                !LinkCleaner.shared.isURLExcluded(url: canonicalUrl) {
+                LinkCleaner.shared.setLastAmpUrl(canonicalUrl.absoluteString)
                 completion?(canonicalUrl)
             } else {
                 completion?(nil)

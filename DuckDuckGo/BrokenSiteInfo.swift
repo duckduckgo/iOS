@@ -35,6 +35,7 @@ public struct BrokenSiteInfo {
         static let model = "model"
         static let siteType = "siteType"
         static let gpc = "gpc"
+        static let ampUrl = "ampUrl"
     }
     
     private let url: URL?
@@ -66,7 +67,8 @@ public struct BrokenSiteInfo {
                           Keys.os: UIDevice.current.systemVersion,
                           Keys.manufacturer: "Apple",
                           Keys.model: UIDevice.current.model,
-                          Keys.gpc: AppDependencyProvider.shared.appSettings.sendDoNotSell ? "true" : "false"]
+                          Keys.gpc: AppDependencyProvider.shared.appSettings.sendDoNotSell ? "true" : "false",
+                          Keys.ampUrl: LinkCleaner.shared.getLastAmpUrl() ?? ""]
         
         Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
     }

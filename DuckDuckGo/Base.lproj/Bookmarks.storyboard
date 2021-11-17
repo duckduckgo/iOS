@@ -346,6 +346,7 @@
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KiU-Wb-7jj">
                                             <rect key="frame" x="16" y="0.0" width="347" height="44.5"/>
+                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="XHp-zE-tVW"/>
                                             </constraints>
@@ -380,6 +381,7 @@
                                         </imageView>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-sP-hhb">
                                             <rect key="frame" x="88" y="44.5" width="275" height="44"/>
+                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="tZz-vQ-lla"/>
                                             </constraints>
@@ -388,6 +390,7 @@
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rT4-Yr-P8D">
                                             <rect key="frame" x="88" y="0.0" width="275" height="44.5"/>
+                                            <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="hfT-Mz-7EA"/>
                                             </constraints>

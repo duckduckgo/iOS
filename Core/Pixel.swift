@@ -153,6 +153,7 @@ public enum PixelName: String {
     case emailTooltipDismissed = "email_tooltip_dismissed"
     
     case textSizeSettingsShown = "m_text_size_settings_shown"
+    case textSizeSettingsChanged = "m_text_size_settings_changed"
 
     // MARK: SERP pixels
     
@@ -257,6 +258,9 @@ public struct PixelParameters {
     public static let storageAfterDeletionDiffCount = "storage_after_deletion_diff_count"
     
     public static let count = "count"
+
+    public static let textSizeInitial = "text_size_initial"
+    public static let textSizeUpdated = "text_size_updated"
 }
 
 public struct PixelValues {

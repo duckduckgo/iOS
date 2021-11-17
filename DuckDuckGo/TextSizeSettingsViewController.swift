@@ -19,6 +19,7 @@
 
 import Foundation
 import UIKit
+import Core
 
 class TextSizeSettingsViewController: UITableViewController {
     
@@ -32,6 +33,7 @@ class TextSizeSettingsViewController: UITableViewController {
     
     private let predefinedPercentages = [80, 90, 100, 110, 120, 130, 140, 150, 160, 170]
     
+    private let initialTextSizePercentage: Int = AppDependencyProvider.shared.appSettings.textSize
     private var currentTextSizePercentage: Int = AppDependencyProvider.shared.appSettings.textSize
     
     private var hasAdjustedDetent: Bool = false
@@ -69,6 +71,14 @@ class TextSizeSettingsViewController: UITableViewController {
                 
                 hasAdjustedDetent = true
             }
+        }
+    }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+    
+        if parent == nil {
+            firePixelForTextSizeChange()
         }
     }
 
@@ -163,14 +173,28 @@ class TextSizeSettingsViewController: UITableViewController {
         
         NotificationCenter.default.post(name: AppUserDefaults.Notifications.textSizeChange, object: self)
     }
+    
+    private func firePixelForTextSizeChange() {
+        guard initialTextSizePercentage != currentTextSizePercentage else { return }
+        
+        Pixel.fire(pixel: .textSizeSettingsChanged, withAdditionalParameters: [PixelParameters.textSizeInitial: "\(initialTextSizePercentage)",
+                                                                               PixelParameters.textSizeUpdated: "\(currentTextSizePercentage)"])
+    }
 }
 
 @available(iOS 15.0, *)
 extension TextSizeSettingsViewController: UISheetPresentationControllerDelegate {
+    
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        navigationItem.leftBarButtonItem = sheetPresentationController.selectedDetentIdentifier == .medium ? customBackBarButtonItem : nil
+    }
+}
 
-  func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-      navigationItem.leftBarButtonItem = sheetPresentationController.selectedDetentIdentifier == .medium ? customBackBarButtonItem : nil
-  }
+extension TextSizeSettingsViewController: UIAdaptivePresentationControllerDelegate {
+
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        firePixelForTextSizeChange()
+    }
 }
 
 extension TextSizeSettingsViewController: Themable {

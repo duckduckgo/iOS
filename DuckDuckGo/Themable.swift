@@ -42,6 +42,11 @@ extension Themable where Self: UIViewController {
         var titleAttrs = navigationController?.navigationBar.titleTextAttributes ?? [:]
         titleAttrs[NSAttributedString.Key.foregroundColor] = theme.navigationBarTitleColor
         navigationController?.navigationBar.titleTextAttributes = titleAttrs
+        
+        if #available(iOS 15.0, *) {
+            let appearance = navigationController?.navigationBar.standardAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
     }
     
     func decorateToolbar(with theme: Theme) {

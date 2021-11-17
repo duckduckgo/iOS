@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -49,7 +48,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V5q-dM-Log">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" id="hZu-lD-OW9" customClass="BookmarkCell" customModule="DuckDuckGo" customModuleProvider="target">
@@ -111,7 +110,7 @@
                                         <constraint firstAttribute="trailing" secondItem="GaQ-J4-STm" secondAttribute="trailing" constant="16" id="uFZ-Gc-TQI"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="BookmarksCellColor"/>
                                 <connections>
                                     <outlet property="disclosureEditView" destination="bPv-ax-jUl" id="JWf-AH-hX2"/>
                                     <outlet property="editSeperatorView" destination="GaQ-J4-STm" id="zdZ-AC-Lpg"/>
@@ -149,7 +148,7 @@
                                         <constraint firstItem="Buv-ez-2Lr" firstAttribute="top" secondItem="dVb-ES-9Wa" secondAttribute="top" constant="32" id="sQT-cU-3hz"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="BookmarksCellColor"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoBookmarskCell" id="WYR-Zy-nVI" userLabel="Empty" customClass="NoBookmarksCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="172" width="375" height="44.5"/>
@@ -177,7 +176,7 @@
                                         <constraint firstItem="N2X-jQ-cbU" firstAttribute="centerY" secondItem="WV9-kt-rsa" secondAttribute="centerY" id="qex-4w-dYc"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="BookmarksCellColor"/>
                                 <connections>
                                     <outlet property="label" destination="N2X-jQ-cbU" id="hyQ-8f-vFl"/>
                                 </connections>
@@ -214,13 +213,33 @@
                     <connections>
                         <outlet property="addFolderButton" destination="ToB-IA-MxG" id="cqd-PX-XKF"/>
                         <outlet property="editButton" destination="pwj-Ie-VbJ" id="XgF-gG-JUa"/>
-                        <segue destination="gvC-OM-VDO" kind="show" identifier="AddOrEditBookmarkFolder" id="Sc3-6b-3AP"/>
-                        <segue destination="lMj-DP-NIV" kind="show" identifier="AddOrEditBookmark" id="ZtW-76-sQp"/>
+                        <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddOrEditBookmarkFolder" id="sRH-zl-JOW"/>
+                        <segue destination="tP5-Vr-ZSr" kind="presentation" identifier="AddOrEditBookmark" id="0Pu-sx-KUz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVk-wm-1t5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2048.8000000000002" y="804.64767616191909"/>
+        </scene>
+        <!--Themable Navigation Controller-->
+        <scene sceneID="fE1-2G-ggP">
+            <objects>
+                <navigationController id="DPG-CO-7kQ" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="i4b-6A-etd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="BookmarksNavBarBackgroundColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" name="BookmarksNavBarTitleColor"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="gvC-OM-VDO" kind="relationship" relationship="rootViewController" id="9So-lE-9eZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cfL-jE-h6e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1177" y="1621"/>
         </scene>
         <!--Add Folder-->
         <scene sceneID="CJo-jI-HMh">
@@ -231,17 +250,17 @@
                         <viewControllerLayoutGuide type="bottom" id="bjg-95-sbS"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZKl-y5-8OG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63r-nO-tSp">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                                 <connections>
                                     <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="zyO-WQ-z92"/>
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="63r-nO-tSp" secondAttribute="bottom" id="7uU-MI-iq3"/>
                             <constraint firstItem="63r-nO-tSp" firstAttribute="leading" secondItem="ZKl-y5-8OG" secondAttribute="leading" id="8qg-Gp-0cE"/>
@@ -250,23 +269,28 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Folder" id="qaZ-4Z-o70" customClass="AddBoo">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="joc-V8-T3B">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="C1d-SD-0h1">
                             <connections>
-                                <action selector="onDonePressed:" destination="gvC-OM-VDO" id="Nqp-wg-b2j"/>
+                                <action selector="onCancelPressed:" destination="gvC-OM-VDO" id="8pi-gg-8dr"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="joc-V8-T3B">
+                            <connections>
+                                <action selector="onSavePressed:" destination="gvC-OM-VDO" id="qOB-Ho-cU2"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjy-HW-Gvk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2049" y="1623"/>
+            <point key="canvasLocation" x="2010" y="1621"/>
         </scene>
         <!--Bookmark Folders-->
         <scene sceneID="gmt-6C-Bi5">
             <objects>
                 <tableViewController storyboardIdentifier="BookmarkFoldersViewController" id="o1q-bZ-7v3" userLabel="Bookmark Folders" customClass="BookmarkFoldersViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V1z-bn-1Gk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
@@ -278,19 +302,19 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="8R7-gf-yWn">
-                                            <rect key="frame" x="16" y="12" width="343" height="20"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8R7-gf-yWn">
+                                            <rect key="frame" x="16" y="10" width="343" height="24"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder" translatesAutoresizingMaskIntoConstraints="NO" id="8qY-sA-7P1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="22" height="20"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                     <color key="tintColor" name="BookmarksFolderColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="r23-2J-lpn"/>
-                                                        <constraint firstAttribute="height" constant="20" id="ub2-8R-Fqz"/>
+                                                        <constraint firstAttribute="width" constant="24" id="r23-2J-lpn"/>
+                                                        <constraint firstAttribute="height" constant="24" id="ub2-8R-Fqz"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2O-E5-pyF">
-                                                    <rect key="frame" x="34" y="0.0" width="309" height="20"/>
+                                                    <rect key="frame" x="40" y="0.0" width="303" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" name="BookmarksCellLabelColor"/>
                                                     <nil key="highlightedColor"/>
@@ -307,6 +331,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" name="BookmarksCellColor"/>
                                 <connections>
+                                    <outlet property="folderImageView" destination="8qY-sA-7P1" id="neJ-nR-FKK"/>
                                     <outlet property="leadingPaddingConstraint" destination="7fS-iW-BEh" id="uZ7-wF-WMV"/>
                                     <outlet property="title" destination="K2O-E5-pyF" id="1j8-kf-ZCy"/>
                                 </connections>
@@ -423,17 +448,17 @@
                         <viewControllerLayoutGuide type="bottom" id="QdE-VD-rGM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="PHO-rE-hZ4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vS5-16-4wa">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                                 <connections>
                                     <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="Q6P-k0-1D4"/>
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vS5-16-4wa" firstAttribute="leading" secondItem="PHO-rE-hZ4" secondAttribute="leading" id="Dmg-w2-u4h"/>
                             <constraint firstAttribute="trailing" secondItem="vS5-16-4wa" secondAttribute="trailing" id="O8R-gq-yem"/>
@@ -442,24 +467,36 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Bookmark" id="qA0-bu-lRC">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cZ5-DS-6T0">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="BpN-gk-OEn">
                             <connections>
-                                <action selector="onDonePressed:" destination="lMj-DP-NIV" id="V52-ii-4WR"/>
+                                <action selector="onCancelPressed:" destination="lMj-DP-NIV" id="SwF-CD-FXm"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="cZ5-DS-6T0">
+                            <connections>
+                                <action selector="onSavePressed:" destination="lMj-DP-NIV" id="Vyd-e4-la7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddFolderFromBookmark" id="bDN-md-SJE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ofO-dp-I1e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2994" y="1591"/>
+            <point key="canvasLocation" x="2932" y="1622"/>
         </scene>
         <!--Themable Navigation Controller-->
         <scene sceneID="rok-j4-3Xm">
             <objects>
                 <navigationController storyboardIdentifier="AddOrEditBookmarkAlertViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tP5-Vr-ZSr" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k8L-C1-KwX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="k8L-C1-KwX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="BookmarksNavBarBackgroundColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" name="BookmarksNavBarTitleColor"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="lMj-DP-NIV" kind="relationship" relationship="rootViewController" id="1AY-d5-ZEP"/>
@@ -467,16 +504,16 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6eD-J9-o3x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3038" y="768"/>
+            <point key="canvasLocation" x="3646" y="1621"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ZtW-76-sQp"/>
-        <segue reference="Q6P-k0-1D4"/>
+        <segue reference="zyO-WQ-z92"/>
+        <segue reference="sRH-zl-JOW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="DisclosureIndicator" width="8" height="13"/>
-        <image name="Folder" width="22" height="20"/>
+        <image name="Folder" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
         <namedColor name="BookmarksCellColor">
             <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -493,6 +530,12 @@
         <namedColor name="BookmarksFolderColor">
             <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="BookmarksNavBarBackgroundColor">
+            <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BookmarksNavBarTitleColor">
+            <color red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="BookmarksTableViewBackgroundColor">
             <color red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -502,8 +545,5 @@
         <namedColor name="TableCellAccessoryTextColor">
             <color red="0.53333333333333333" green="0.53333333333333333" blue="0.53333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

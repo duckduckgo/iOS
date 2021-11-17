@@ -30,7 +30,9 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTitle()
-        setUpDoneButton()
+        setUpSaveButton()
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
     
     func setUpTitle() {
@@ -41,32 +43,36 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
         }
     }
     
-    func setUpDoneButton() {
-        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+    func setUpSaveButton() {
+        guard let saveButton = navigationItem.rightBarButtonItem else { return }
         if let title = existingFolder?.title, title.trimWhitespace().count > 0 {
-            doneButton.isEnabled = true
+            saveButton.isEnabled = true
         } else {
-            doneButton.isEnabled = false
+            saveButton.isEnabled = false
         }
     }
     
     func setExistingFolder(_ existingFolder: BookmarkFolder?, initialParentFolder: BookmarkFolder?) {
         self.existingFolder = existingFolder
         self.initialParentFolder = initialParentFolder
-        foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(delegate: self, existingFolder: existingFolder, initialParentFolder: initialParentFolder)
+        foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(delegate: self, addFolderDelegate: nil, existingFolder: existingFolder, initialParentFolder: initialParentFolder)
         setUpTitle()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
             foldersViewController = segue.destination as? BookmarkFoldersViewController
-            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(delegate: self, existingFolder: existingFolder, initialParentFolder: initialParentFolder)
+            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(delegate: self, addFolderDelegate: nil, existingFolder: existingFolder, initialParentFolder: initialParentFolder)
         }
     }
     
-    @IBAction func onDonePressed(_ sender: Any) {
+    @IBAction func onCancelPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func onSavePressed(_ sender: Any) {
         foldersViewController?.save()
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -74,18 +80,28 @@ extension AddOrEditBookmarkFolderViewController: BookmarksFolderDetailsSectionDa
     
     func bookmarksFolderDetailsSectionDataSource(_ dataSource: BookmarksFolderDetailsSectionDataSource, titleTextFieldDidChange textField: UITextField) {
         
-        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+        guard let saveButton = navigationItem.rightBarButtonItem else { return }
         let title = textField.text?.trimWhitespace() ?? ""
-        doneButton.isEnabled = !title.isEmpty
+        saveButton.isEnabled = !title.isEmpty
     }
     
     func bookmarksFolderDetailsSectionDataSourceTextFieldDidReturn(dataSource: BookmarksFolderDetailsSectionDataSource) {
         
-        guard let doneButton = navigationItem.rightBarButtonItem else { return }
-        if doneButton.isEnabled {
+        guard let saveButton = navigationItem.rightBarButtonItem else { return }
+        if saveButton.isEnabled {
             DispatchQueue.main.async {
-                self.onDonePressed(self)
+                self.onSavePressed(self)
             }
         }
+    }
+}
+
+extension AddOrEditBookmarkFolderViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        decorateNavigationBar(with: theme)
+        decorateToolbar(with: theme)
+        
+        overrideSystemTheme(with: theme)
     }
 }

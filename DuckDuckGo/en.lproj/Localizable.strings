@@ -91,7 +91,8 @@
 /* Add favorite screen title */
 "Add Favorite" = "Add Favorite";
 
-/* Add folder screen title */
+/* Add bookmark folder button text
+   Add folder screen title */
 "Add Folder" = "Add Folder";
 
 /* No comment provided by engineer. */

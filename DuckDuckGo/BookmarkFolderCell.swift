@@ -25,6 +25,7 @@ class BookmarkFolderCell: UITableViewCell {
     static let reuseIdentifier = "BookmarkFolderCell"
 
     @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var folderImageView: UIImageView!
     
     @IBOutlet weak var leadingPaddingConstraint: NSLayoutConstraint!
 
@@ -32,6 +33,7 @@ class BookmarkFolderCell: UITableViewCell {
         didSet {
             guard let folder = folder else { return }
             title.text = folder.title
+            folderImageView.image = UIImage(named: "Folder")
         }
     }
     
@@ -56,6 +58,12 @@ class BookmarkFolderCell: UITableViewCell {
         didSet {
             accessoryType = isSelected ? .checkmark : .none
         }
+    }
+    
+    func setUpAddFolderCell() {
+        depth = 0
+        title.text = NSLocalizedString("Add Folder", comment: "Add bookmark folder button text")
+        folderImageView.image = UIImage(named: "FolderWithPlus")
     }
     
 }

@@ -25,7 +25,6 @@ class AddOrEditBookmarkViewController: UIViewController {
     private var foldersViewController: BookmarkFoldersViewController?
     
     var isFavorite = false
-    var isAlertController = false
     
     private var existingBookmark: Bookmark?
     private var initialParentFolder: BookmarkFolder?
@@ -34,6 +33,10 @@ class AddOrEditBookmarkViewController: UIViewController {
         super.viewDidLoad()
         setUpTitle()
         setUpDoneButton()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
     
     private func setUpTitle() {
@@ -77,7 +80,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         if existingBookmark?.isFavorite ?? isFavorite {
             foldersViewController?.dataSource = FavoriteDetailsDataSource(delegate: self, existingBookmark: existingBookmark)
         } else {
-            foldersViewController?.dataSource = BookmarkDetailsDataSource(delegate: self, existingBookmark: existingBookmark)
+            foldersViewController?.dataSource = BookmarkDetailsDataSource(delegate: self, addFolderDelegate: self, existingBookmark: existingBookmark)
         }
     }
     
@@ -88,12 +91,20 @@ class AddOrEditBookmarkViewController: UIViewController {
         }
     }
     
-    @IBAction func onDonePressed(_ sender: Any) {
+    @IBAction func onCancelPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    //TODO alert controller stuff. I don't think this is ever not "an alert controller now"
+    @IBAction func onSavePressed(_ sender: Any) {
         foldersViewController?.save()
-        if isAlertController {
-            dismiss(animated: true, completion: nil)
-        } else {
-            navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func dataDidChange(notification: Notification) {
+        if let viewController = foldersViewController, let dataSource = viewController.dataSource as? BookmarkDetailsDataSource {
+            dataSource.refreshFolders(viewController.tableView, section: 0)
+            foldersViewController?.tableView.reloadData()
         }
     }
 }
@@ -113,8 +124,25 @@ extension AddOrEditBookmarkViewController: BookmarkDetailsSectionDataSourceDeleg
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
         if doneButton.isEnabled {
             DispatchQueue.main.async {
-                self.onDonePressed(self)
+                self.onSavePressed(self)
             }
         }
+    }
+}
+
+extension AddOrEditBookmarkViewController: BookmarkFoldersSectionDataSourceAddFolderDelegate {
+    
+    func bookmarkFoldersSectionDataSourceDidRequestAddNewFolder(_ bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource) {
+        performSegue(withIdentifier: "AddFolderFromBookmark", sender: nil)
+    }
+}
+
+extension AddOrEditBookmarkViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        decorateNavigationBar(with: theme)
+        decorateToolbar(with: theme)
+        
+        overrideSystemTheme(with: theme)
     }
 }

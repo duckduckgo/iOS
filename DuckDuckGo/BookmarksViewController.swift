@@ -56,16 +56,10 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
         refreshEditButton()
     }
-        
-    private struct AddOrEditBookmarkSegueInfo {
-        let bookmark: Bookmark
-        let presentAsAlert: Bool
-    }
     
     func openEditFormWhenPresented(bookmark: Bookmark) {
         onDidAppearAction = { [weak self] in
-            let info = AddOrEditBookmarkSegueInfo(bookmark: bookmark, presentAsAlert: true)
-            self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: info)
+            self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
         }
     }
     
@@ -73,8 +67,7 @@ class BookmarksViewController: UITableViewController {
         onDidAppearAction = { [weak self] in
             self?.dataSource.bookmarksManager.bookmark(forURL: link.url) { bookmark in
                 if let bookmark = bookmark {
-                    let info = AddOrEditBookmarkSegueInfo(bookmark: bookmark, presentAsAlert: true)
-                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: info)
+                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
                 }
             }
         }
@@ -84,9 +77,9 @@ class BookmarksViewController: UITableViewController {
         guard let item = currentDataSource.item(at: indexPath) else { return }
         
         if tableView.isEditing {
+            tableView.deselectRow(at: indexPath, animated: true)
             if let bookmark = item as? Bookmark {
-                let info = AddOrEditBookmarkSegueInfo(bookmark: bookmark, presentAsAlert: false)
-                performSegue(withIdentifier: "AddOrEditBookmark", sender: info)
+                performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
             } else if let folder = item as? BookmarkFolder {
                 performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: folder)
             }
@@ -292,14 +285,12 @@ class BookmarksViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination as? AddOrEditBookmarkFolderViewController {
+        if let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
             viewController.hidesBottomBarWhenPushed = true
             viewController.setExistingFolder(sender as? BookmarkFolder, initialParentFolder: dataSource.folder)
-        } else if let viewController = segue.destination as? AddOrEditBookmarkViewController {
+        } else if let viewController = segue.destination.children.first as? AddOrEditBookmarkViewController {
             viewController.hidesBottomBarWhenPushed = true
-            let info = sender as? AddOrEditBookmarkSegueInfo
-            viewController.setExistingBookmark(info?.bookmark, initialParentFolder: dataSource.folder)
-            viewController.isAlertController = info?.presentAsAlert ?? false
+            viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
         }
     }
     
@@ -365,7 +356,7 @@ extension BookmarksViewController: UISearchResultsUpdating {
 }
 
 extension BookmarksViewController: BookmarksShallowSectionDataSourceDelegate {
-    func bookmarksShallowSectionDataSourceDelegateDidRequestViewControllerForDeleteAlert() -> UIViewController {
+    func bookmarksShallowSectionDataSourceDidRequestViewControllerForDeleteAlert() -> UIViewController {
         return self
     }
 }
@@ -380,7 +371,6 @@ extension BookmarksViewController: Themable {
         searchController?.searchBar.searchTextField.textColor = theme.searchBarTextColor
                 
         tableView.separatorColor = theme.tableCellSeparatorColor
-        tableView.backgroundColor = theme.backgroundColor
         
         navigationController?.view.backgroundColor = tableView.backgroundColor
         

@@ -92,7 +92,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 enum BookmarksSection {
     case favourites
     case bookmarksShallow(parentFolder: BookmarkFolder?, delegate: BookmarksShallowSectionDataSourceDelegate?)
-    case folders(_ item: BookmarkItem?, parentFolder: BookmarkFolder?)
+    case folders(_ item: BookmarkItem?, parentFolder: BookmarkFolder?, delegate: BookmarkFoldersSectionDataSourceAddFolderDelegate?)
     case folderDetails(_ folder: BookmarkFolder?, delegate: BookmarksFolderDetailsSectionDataSourceDelegate)
     case bookmarkDetails(_ bookmark: Bookmark?, delegate: BookmarkDetailsSectionDataSourceDelegate)
     
@@ -102,8 +102,8 @@ enum BookmarksSection {
             return FavoritesSectionDataSource()
         case .bookmarksShallow(let parentFolder, let delegate):
             return BookmarksShallowSectionDataSource(parentFolder: parentFolder, delegate: delegate)
-        case .folders(let item, let parentFolder):
-            return BookmarkFoldersSectionDataSource(existingItem: item, initialParentFolder: parentFolder)
+        case .folders(let item, let parentFolder, let delegate):
+            return BookmarkFoldersSectionDataSource(existingItem: item, initialParentFolder: parentFolder, delegate: delegate)
         case .folderDetails(let folder, let delegate):
             return BookmarksFolderDetailsSectionDataSource(existingFolder: folder, delegate: delegate)
         case .bookmarkDetails(let bookmark, let delegate):
@@ -238,8 +238,9 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
 
 }
 
+//todo should be passing self into these delegate methods
 protocol BookmarksShallowSectionDataSourceDelegate: AnyObject {
-    func bookmarksShallowSectionDataSourceDelegateDidRequestViewControllerForDeleteAlert() ->
+    func bookmarksShallowSectionDataSourceDidRequestViewControllerForDeleteAlert() ->
     UIViewController
 }
 
@@ -344,7 +345,7 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
                 self.bookmarksManager.delete(item)
             }
             alertController.addAction(title: UserText.actionCancel, style: .cancel)
-            let viewController = delegate.bookmarksShallowSectionDataSourceDelegateDidRequestViewControllerForDeleteAlert()
+            let viewController = delegate.bookmarksShallowSectionDataSourceDidRequestViewControllerForDeleteAlert()
             viewController.present(alertController, animated: true)
             
         } else {
@@ -354,7 +355,13 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
 
 }
 
+protocol BookmarkFoldersSectionDataSourceAddFolderDelegate: AnyObject {
+    func bookmarkFoldersSectionDataSourceDidRequestAddNewFolder(_ bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource)
+}
+
 class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
+    
+    weak var delegate: BookmarkFoldersSectionDataSourceAddFolderDelegate?
 
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
 
@@ -368,15 +375,39 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     
     private var selectedRow = 0
     private let existingItem: BookmarkItem?
+    private let shouldShowAddFolderCell: Bool
     
-    init(existingItem: BookmarkItem?, initialParentFolder: BookmarkFolder?) {
+    init(existingItem: BookmarkItem?, initialParentFolder: BookmarkFolder?, delegate: BookmarkFoldersSectionDataSourceAddFolderDelegate?) {
         self.existingItem = existingItem
-        
+        self.delegate = delegate
+        self.shouldShowAddFolderCell = delegate != nil
+                
         if let parent = existingItem?.parentFolder ?? initialParentFolder {
             let parentIndex = presentableBookmarkItems.firstIndex {
                 $0.item.objectID == parent.objectID
             }
             selectedRow = parentIndex ?? 0
+        }
+
+    }
+    
+    func refreshFolders(_ tableView: UITableView, section: Int) {
+        // selected folder may have moved
+        let selectedFolderID = item(at: selectedRow)?.item.objectID
+        
+        guard let folder = bookmarksManager.topLevelBookmarksFolder else {
+            return
+        }
+        presentableBookmarkItems = visibleFolders(for: folder, depthOfFolder: 0)
+        
+        tableView.reloadData()
+        if let selectedID = selectedFolderID {
+            let newIndex = presentableBookmarkItems.firstIndex {
+                $0.item.objectID == selectedID
+            }
+            if let index = newIndex {
+                select(tableView, row: index, section: section)
+            }
         }
     }
     
@@ -394,7 +425,7 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
     }
     
     var numberOfRows: Int {
-        return presentableBookmarkItems.count
+        return presentableBookmarkItems.count + (shouldShowAddFolderCell ? 1 : 0)
     }
     
     func title() -> String? {
@@ -406,25 +437,34 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
             fatalError("Failed to dequeue \(BookmarkFolderCell.reuseIdentifier) as BookmarkFolderCell")
         }
         
-        let item = item(at: index)
-        cell.folder = item?.item as? BookmarkFolder
-        cell.depth = item?.depth ?? 0
-        cell.isSelected = index == selectedRow
-        
-        if index == 0 {
-            cell.titleString = NSLocalizedString("Bookmarks", comment: "Top level bookmarks folder title")
+        if let item = item(at: index) {
+            cell.folder = item.item as? BookmarkFolder
+            cell.depth = item.depth
+            cell.isSelected = index == selectedRow
+            
+            if index == 0 {
+                cell.titleString = NSLocalizedString("Bookmarks", comment: "Top level bookmarks folder title")
 
+            }
+        } else {
+            cell.setUpAddFolderCell()
+            cell.isSelected = false
         }
         
         return cell
     }
     
     func select(_ tableView: UITableView, row: Int, section: Int) {
-        let previousSelected = selectedRow
-        selectedRow = row
-        
-        let indexesToReload = [IndexPath(row: row, section: section), IndexPath(row: previousSelected, section: section)]
-        tableView.reloadRows(at: indexesToReload, with: .none)
+        if shouldShowAddFolderCell && row == numberOfRows - 1 {
+            tableView.deselectRow(at: IndexPath(row: row, section: section), animated: true)
+            delegate?.bookmarkFoldersSectionDataSourceDidRequestAddNewFolder(self)
+        } else {
+            let previousSelected = selectedRow
+            selectedRow = row
+            
+            let indexesToReload = [IndexPath(row: row, section: section), IndexPath(row: previousSelected, section: section)]
+            tableView.reloadRows(at: indexesToReload, with: .none)
+        }
     }
     
     func selected() -> BookmarkItem? {
@@ -666,10 +706,10 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
         
     private let existingFolder: BookmarkFolder?
     
-    init(delegate: BookmarksFolderDetailsSectionDataSourceDelegate, existingFolder: BookmarkFolder? = nil, initialParentFolder: BookmarkFolder? = nil) {
+    init(delegate: BookmarksFolderDetailsSectionDataSourceDelegate, addFolderDelegate: BookmarkFoldersSectionDataSourceAddFolderDelegate?, existingFolder: BookmarkFolder? = nil, initialParentFolder: BookmarkFolder? = nil) {
         self.existingFolder = existingFolder
         super.init()
-        self.sections = [.folderDetails(existingFolder, delegate: delegate), .folders(existingFolder, parentFolder: initialParentFolder)]
+        self.sections = [.folderDetails(existingFolder, delegate: delegate), .folders(existingFolder, parentFolder: initialParentFolder, delegate: addFolderDelegate)]
         //TODO seriously need to get rid of this sections stuff
         //I like having the seperate data sources, but we should at least keep references to the individual data sources
     }
@@ -706,11 +746,16 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         
     private let existingBookmark: Bookmark?
     
-    init(delegate: BookmarkDetailsSectionDataSourceDelegate, existingBookmark: Bookmark? = nil, initialParentFolder: BookmarkFolder? = nil) {
+    init(delegate: BookmarkDetailsSectionDataSourceDelegate, addFolderDelegate: BookmarkFoldersSectionDataSourceAddFolderDelegate, existingBookmark: Bookmark? = nil, initialParentFolder: BookmarkFolder? = nil) {
         self.existingBookmark = existingBookmark
         super.init()
 
-        self.sections = [.bookmarkDetails(existingBookmark, delegate: delegate), .folders(existingBookmark, parentFolder: initialParentFolder)]
+        self.sections = [.bookmarkDetails(existingBookmark, delegate: delegate), .folders(existingBookmark, parentFolder: initialParentFolder, delegate: addFolderDelegate)]
+    }
+    
+    func refreshFolders(_ tableView: UITableView, section: Int) {
+        let dataSource = dataSources[1] as! BookmarkFoldersSectionDataSource
+        dataSource.refreshFolders(tableView, section: section)
     }
     
     func select(_ tableView: UITableView, indexPath: IndexPath) {

@@ -24,8 +24,8 @@ import os.log
 class BookmarksViewController: UITableViewController {
 
     @IBOutlet weak var addFolderButton: UIBarButtonItem!
-
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     private var searchController: UISearchController?
     weak var delegate: BookmarksDelegate?
@@ -211,15 +211,15 @@ class BookmarksViewController: UITableViewController {
     }
     
     @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
-        startEditing()
-    }
-
-    @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
         if tableView.isEditing && !currentDataSource.isEmpty {
             finishEditing()
         } else {
-            dismiss()
+            startEditing()
         }
+    }
+
+    @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
+        dismiss()
     }
 
     private func startEditing() {
@@ -227,12 +227,13 @@ class BookmarksViewController: UITableViewController {
         tableView.isEditing = false
         
         tableView.isEditing = true
-        disableEditButton()
+        changeEditButtonToDone()
     }
 
     private func finishEditing() {
         tableView.isEditing = false
         refreshEditButton()
+        enableDoneButton()
     }
 
     private func enableEditButton() {
@@ -243,6 +244,17 @@ class BookmarksViewController: UITableViewController {
     private func disableEditButton() {
         editButton.title = ""
         editButton.isEnabled = false
+    }
+    
+    private func changeEditButtonToDone() {
+        editButton.title = UserText.navigationTitleDone
+        doneButton.title = ""
+        doneButton.isEnabled = false
+    }
+    
+    private func enableDoneButton() {
+        doneButton.title = UserText.navigationTitleDone
+        doneButton.isEnabled = true
     }
     
     private func prepareForSearching() {

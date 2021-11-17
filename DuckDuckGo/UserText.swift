@@ -78,6 +78,7 @@ public struct UserText {
     public static let authAlertLogInButtonTitle = NSLocalizedString("auth.alert.login.button", value: "Sign In", comment: "Authentication Alert Sign In Button")
     
     public static let navigationTitleEdit = NSLocalizedString("navigation.title.edit", value: "Edit", comment: "Edit button")
+    public static let navigationTitleDone = NSLocalizedString("navigation.title.done", value: "Done", comment: "Finish editing bookmarks button")
     
     public static let privacyProtectionProtectionDisabled = NSLocalizedString("privacy.protection.main.disabled", value: "SITE PROTECTION DISABLED", comment: "")
     public static let privacyProtectionPrivacyGrade = NSLocalizedString("privacy.protection.main.grade", value: "PRIVACY GRADE", comment: "")

@@ -200,7 +200,7 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Bookmarks" id="tVt-jc-YaY">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="1oZ-re-yKW">
+                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="1oZ-re-yKW">
                             <connections>
                                 <action selector="onDonePressed:" destination="aqL-Wl-TTD" id="6RA-yx-ZhQ"/>
                             </connections>
@@ -212,6 +212,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="addFolderButton" destination="ToB-IA-MxG" id="cqd-PX-XKF"/>
+                        <outlet property="doneButton" destination="1oZ-re-yKW" id="bf8-Mw-vOB"/>
                         <outlet property="editButton" destination="pwj-Ie-VbJ" id="XgF-gG-JUa"/>
                         <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddOrEditBookmarkFolder" id="sRH-zl-JOW"/>
                         <segue destination="tP5-Vr-ZSr" kind="presentation" identifier="AddOrEditBookmark" id="0Pu-sx-KUz"/>

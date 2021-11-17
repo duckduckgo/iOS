@@ -698,6 +698,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Done";
+
 /* Edit button */
 "navigation.title.edit" = "Edit";
 

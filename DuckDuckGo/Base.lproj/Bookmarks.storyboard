@@ -124,7 +124,7 @@
                                     <outlet property="title" destination="Lqe-Wh-Evj" id="3DO-GY-42U"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoBookmarksInSubfolderCell" rowHeight="79" id="6se-nF-A9L" customClass="NoBookmarksInSubfolderCell" customModule="DuckDuckGo" customModuleProvider="target">
+                            <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoBookmarksInSubfolderCell" rowHeight="79" id="6se-nF-A9L" customClass="NoBookmarksInSubfolderCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="93" width="375" height="79"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6se-nF-A9L" id="dVb-ES-9Wa">
@@ -148,7 +148,7 @@
                                         <constraint firstItem="Buv-ez-2Lr" firstAttribute="top" secondItem="dVb-ES-9Wa" secondAttribute="top" constant="32" id="sQT-cU-3hz"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoBookmarskCell" id="WYR-Zy-nVI" userLabel="Empty" customClass="NoBookmarksCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="172" width="375" height="44.5"/>

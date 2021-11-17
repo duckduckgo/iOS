@@ -75,7 +75,7 @@ public class AMPCanonicalExtractor: NSObject {
     public func urlContainsAmpKeyword(_ url: URL?,
                                       config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
         LinkCleaner.shared.resetLastAmpUrl()
-        guard let url = url else { return false }
+        guard let url = url, !LinkCleaner.shared.isURLExcluded(url: url, config: config) else { return false }
         let urlStr = url.absoluteString
         
         let ampKeywords = TrackingLinkSettings(fromConfig: config).ampKeywords
@@ -104,13 +104,15 @@ public class AMPCanonicalExtractor: NSObject {
         return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: true)
     }
     
-    public func getCanonicalUrl(initiator: URL?, url: URL?, completion: @escaping ((URL?) -> Void)) {
-        guard let url = url, !LinkCleaner.shared.isURLExcluded(url: url) else {
+    public func getCanonicalUrl(initiator: URL?, url: URL?,
+                                config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig,
+                                completion: @escaping ((URL?) -> Void)) {
+        guard let url = url, !LinkCleaner.shared.isURLExcluded(url: url, config: config) else {
             completion(nil)
             return
         }
         
-        if let initiator = initiator, LinkCleaner.shared.isURLExcluded(url: initiator) {
+        if let initiator = initiator, LinkCleaner.shared.isURLExcluded(url: initiator, config: config) {
             completion(nil)
             return
         }
@@ -143,7 +145,8 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
         if let dict = message.body as? [String: AnyObject],
            let canonical = dict[Constants.canonicalKey] as? String {
             if let canonicalUrl = URL(string: canonical),
-               !LinkCleaner.shared.isURLExcluded(url: canonicalUrl) {
+               !LinkCleaner.shared.isURLExcluded(url: canonicalUrl,
+                                                 config: PrivacyConfigurationManager.shared.privacyConfig) {
                 LinkCleaner.shared.setLastAmpUrl(canonicalUrl.absoluteString)
                 completion?(canonicalUrl)
             } else {

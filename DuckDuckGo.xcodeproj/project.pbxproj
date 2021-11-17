@@ -15,6 +15,7 @@
 		0263FD262735803C0099B71A /* TrackingLinkSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263FD252735803C0099B71A /* TrackingLinkSettings.swift */; };
 		0263FD292739AA280099B71A /* LinkProtectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263FD282739AA280099B71A /* LinkProtectionTests.swift */; };
 		026ADE0E26B321E1002518EE /* PrivacyConfigurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */; };
+		026D66C927453EB1001C6095 /* AmpMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D66C727444C99001C6095 /* AmpMatchingTests.swift */; };
 		02889BE22731C15A000F606F /* LinkCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02889BE12731C15A000F606F /* LinkCleaner.swift */; };
 		02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */; };
 		02BA15B126A89ECA00472DD7 /* ios-config.json in Resources */ = {isa = PBXBuildFile; fileRef = 02BA15B026A89ECA00472DD7 /* ios-config.json */; };
@@ -715,6 +716,7 @@
 		0263FD252735803C0099B71A /* TrackingLinkSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingLinkSettings.swift; sourceTree = "<group>"; };
 		0263FD282739AA280099B71A /* LinkProtectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkProtectionTests.swift; sourceTree = "<group>"; };
 		026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationManagerTests.swift; sourceTree = "<group>"; };
+		026D66C727444C99001C6095 /* AmpMatchingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpMatchingTests.swift; sourceTree = "<group>"; };
 		02889BE12731C15A000F606F /* LinkCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCleaner.swift; sourceTree = "<group>"; };
 		02BA15AE26A89E0800472DD7 /* PrivacyConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationManager.swift; sourceTree = "<group>"; };
 		02BA15B026A89ECA00472DD7 /* ios-config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ios-config.json"; sourceTree = "<group>"; };
@@ -2976,6 +2978,7 @@
 				EA39B7E1268A1A35000C62CD /* privacy-reference-tests */,
 				EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */,
 				98DA35C3268CC81E00159906 /* DomainMatchingReportTests.swift */,
+				026D66C727444C99001C6095 /* AmpMatchingTests.swift */,
 			);
 			name = PrivacyReferenceTests;
 			sourceTree = "<group>";
@@ -4717,6 +4720,7 @@
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
+				026D66C927453EB1001C6095 /* AmpMatchingTests.swift in Sources */,
 				0263FD292739AA280099B71A /* LinkProtectionTests.swift in Sources */,
 				85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,

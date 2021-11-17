@@ -151,6 +151,8 @@ public enum PixelName: String {
     case emailUserPressedUseAlias = "email_filled_random"
     case emailUserCreatedAlias = "email_generated_button"
     case emailTooltipDismissed = "email_tooltip_dismissed"
+    
+    case textSizeSettingsShown = "m_text_size_settings_shown"
 
     // MARK: SERP pixels
     

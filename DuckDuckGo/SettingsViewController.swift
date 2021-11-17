@@ -105,6 +105,9 @@ class SettingsViewController: UITableViewController {
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
             return
+        } else if segue.destination is TextSizeSettingsViewController {
+            Pixel.fire(pixel: .textSizeSettingsShown)
+            return
         }
                 
         if let navController = segue.destination as? UINavigationController, navController.topViewController is FeedbackViewController {

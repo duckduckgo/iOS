@@ -13,7 +13,6 @@
 		025CD01025826035001CD5BB /* FingerprintUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025CCF75257EAFAF001CD5BB /* FingerprintUITest.swift */; };
 		0263FD24273430090099B71A /* AMPCanonicalExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263FD23273430090099B71A /* AMPCanonicalExtractor.swift */; };
 		0263FD262735803C0099B71A /* TrackingLinkSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263FD252735803C0099B71A /* TrackingLinkSettings.swift */; };
-		0263FD292739AA280099B71A /* LinkProtectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0263FD282739AA280099B71A /* LinkProtectionTests.swift */; };
 		026ADE0E26B321E1002518EE /* PrivacyConfigurationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */; };
 		026D66C927453EB1001C6095 /* AmpMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026D66C727444C99001C6095 /* AmpMatchingTests.swift */; };
 		02889BE22731C15A000F606F /* LinkCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02889BE12731C15A000F606F /* LinkCleaner.swift */; };
@@ -714,7 +713,6 @@
 		025CCFE62582601C001CD5BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0263FD23273430090099B71A /* AMPCanonicalExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMPCanonicalExtractor.swift; sourceTree = "<group>"; };
 		0263FD252735803C0099B71A /* TrackingLinkSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingLinkSettings.swift; sourceTree = "<group>"; };
-		0263FD282739AA280099B71A /* LinkProtectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkProtectionTests.swift; sourceTree = "<group>"; };
 		026ADE0D26B321E1002518EE /* PrivacyConfigurationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyConfigurationManagerTests.swift; sourceTree = "<group>"; };
 		026D66C727444C99001C6095 /* AmpMatchingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmpMatchingTests.swift; sourceTree = "<group>"; };
 		02889BE12731C15A000F606F /* LinkCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkCleaner.swift; sourceTree = "<group>"; };
@@ -2044,14 +2042,6 @@
 			path = FingerprintingUITests;
 			sourceTree = "<group>";
 		};
-		0263FD272739AA020099B71A /* LinkProtection */ = {
-			isa = PBXGroup;
-			children = (
-				0263FD282739AA280099B71A /* LinkProtectionTests.swift */,
-			);
-			name = LinkProtection;
-			sourceTree = "<group>";
-		};
 		02889BE02731C129000F606F /* LinkProtection */ = {
 			isa = PBXGroup;
 			children = (
@@ -2084,7 +2074,6 @@
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
-				0263FD272739AA020099B71A /* LinkProtection */,
 				989DF82722C628DC0077AA55 /* API */,
 				830FA79D1F8E82C500FCE105 /* Domain */,
 				830FA79E1F8E82DB00FCE105 /* Store */,
@@ -4721,7 +4710,6 @@
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				026D66C927453EB1001C6095 /* AmpMatchingTests.swift in Sources */,
-				0263FD292739AA280099B71A /* LinkProtectionTests.swift in Sources */,
 				85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */,
 				85C271E41FD04ACD007216B4 /* HTTPSUpgradeParserTests.swift in Sources */,
 				98559FD226709A1900A83094 /* ContentBlockerRulesManagerTests.swift in Sources */,

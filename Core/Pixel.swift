@@ -193,9 +193,9 @@ public enum PixelName: String {
     case blankOverlayNotDismissed = "m_d_ovs"
 
     case cookieDeletionTimedOut = "m_d_csto"
-    case cookieDeletionLeftovers = "cookie_deletion_leftovers"
-    case legacyCookieMigration = "legacy_cookie_migration"
-    case legacyCookieCleanupError = "legacy_cookie_cleanup_error"
+    case cookieDeletionLeftovers = "m_cookie_deletion_leftovers"
+    case legacyCookieMigration = "m_legacy_cookie_migration"
+    case legacyCookieCleanupError = "m_legacy_cookie_cleanup_error"
 
     case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
     case cachedTabPreviewRemovalError = "m_d_tpre"

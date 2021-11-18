@@ -24,9 +24,9 @@ class SearchFieldContainerView: UIView {
     @IBOutlet var privacyViewWidth: NSLayoutConstraint!
     @IBOutlet var textFieldOffset: NSLayoutConstraint!
     
-    func hideSiteRatingView() {
+    func hideSiteRatingView(_ barState: OmniBarState) {
         privacyViewWidth.constant = 0
-        textFieldOffset.constant = 0
+        textFieldOffset.constant = barState.showSearchLoupe ? 0 : 0
     }
     
     func revealSiteRatingView() {

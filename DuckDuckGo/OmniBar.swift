@@ -216,7 +216,7 @@ class OmniBar: UIView {
         if state.showSiteRating {
             searchFieldContainer.revealSiteRatingView()
         } else {
-            searchFieldContainer.hideSiteRatingView()
+            searchFieldContainer.hideSiteRatingView(newState)
         }
 
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)

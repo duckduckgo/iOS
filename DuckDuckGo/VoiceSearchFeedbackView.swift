@@ -146,7 +146,7 @@ extension VoiceSearchFeedbackView {
     
     private struct CircleSize {
         static let inner = CGSize(width: 56, height: 56)
-        static let outer = CGSize(width: 120, height: 120)
+        static let outer = CGSize(width: 160, height: 160)
     }
     
     private struct Colors {

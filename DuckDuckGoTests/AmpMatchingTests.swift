@@ -79,26 +79,7 @@ class AmpMatchingTests: XCTestCase {
     func testAmpFormats() throws {
         let tests = ampTestSuite.ampFormats.tests
         
-        for test in tests {
-            let skip = test.exceptPlatforms?.contains("ios-browser")
-            if skip == true {
-                os_log("!!SKIPPING TEST: %s", test.name)
-                continue
-            }
-            
-            os_log("TEST: %s", test.name)
-            
-            let ampUrl = URL(string: test.ampUrl)
-            let resultUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(initiator: nil, destination: ampUrl, config: appConfig)
-            
-            // Empty exptectedUrl should be treated as nil
-            let expectedUrl = !test.expectUrl.isEmpty ? test.expectUrl : nil
-            XCTAssertEqual(resultUrl?.absoluteString, expectedUrl, "\(resultUrl!.absoluteString) not equal to expected: \(expectedUrl ?? "nil")")
-        }
-    }
-    
-    func testAmpKeywords() throws {
-        let tests = ampTestSuite.ampKeywords.tests
+        let linkCleaner = LinkCleaner()
         
         for test in tests {
             let skip = test.exceptPlatforms?.contains("ios-browser")
@@ -110,7 +91,31 @@ class AmpMatchingTests: XCTestCase {
             os_log("TEST: %s", test.name)
             
             let ampUrl = URL(string: test.ampUrl)
-            let result = AMPCanonicalExtractor.shared.urlContainsAmpKeyword(ampUrl, config: appConfig)
+            let resultUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: ampUrl, config: appConfig)
+            
+            // Empty exptectedUrl should be treated as nil
+            let expectedUrl = !test.expectUrl.isEmpty ? test.expectUrl : nil
+            XCTAssertEqual(resultUrl?.absoluteString, expectedUrl, "\(resultUrl!.absoluteString) not equal to expected: \(expectedUrl ?? "nil")")
+        }
+    }
+    
+    func testAmpKeywords() throws {
+        let tests = ampTestSuite.ampKeywords.tests
+        
+        let linkCleaner = LinkCleaner()
+        let ampExtractor = AMPCanonicalExtractor(linkCleaner: linkCleaner)
+        
+        for test in tests {
+            let skip = test.exceptPlatforms?.contains("ios-browser")
+            if skip == true {
+                os_log("!!SKIPPING TEST: %s", test.name)
+                continue
+            }
+            
+            os_log("TEST: %s", test.name)
+            
+            let ampUrl = URL(string: test.ampUrl)
+            let result = ampExtractor.urlContainsAmpKeyword(ampUrl, config: appConfig)
             XCTAssertEqual(result, test.expectAmpDetected, "\(test.ampUrl) not correctly identified. Expected: \(test.expectAmpDetected.description)")
         }
     }

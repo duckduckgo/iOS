@@ -21,9 +21,11 @@ import Foundation
 
 public class LinkCleaner {
     
-    public static let shared = LinkCleaner()
-    
     private var lastAmpUrl: String?
+    
+    public init() {
+        
+    }
     
     public func urlIsExtractableAmpLink(_ url: URL,
                                         config: PrivacyConfiguration) -> String? {

@@ -578,52 +578,20 @@ class MainViewController: UIViewController {
         let queryUrl = appUrls.url(forQuery: query, queryContext: currentTab?.url)
         loadUrl(queryUrl)
     }
-    
-    private func getCleanUrl(_ url: URL, completion: @escaping (URL) -> Void) {
-        // Rewrite tracking links
-        if let cleanUrl = LinkCleaner.shared.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
-            completion(cleanUrl)
-        } else if AMPCanonicalExtractor.shared.urlContainsAmpKeyword(url) {
-            AMPCanonicalExtractor.shared.getCanonicalUrl(initiator: nil, url: url) { canonical in
-                if let canonical = canonical {
-                    completion(canonical)
-                } else {
-                    completion(url)
-                }
-            }
-        } else {
-            completion(url)
-        }
-    }
 
     func loadUrl(_ url: URL) {
         customNavigationBar.alpha = 1
         allowContentUnderflow = false
-        
-        getCleanUrl(url) { [weak self] url in
-            self?.currentTab?.load(url: url)
-        }
-        
+        currentTab?.load(url: url)
         guard let tab = currentTab else { fatalError("no tab") }
         select(tab: tab)
         dismissOmniBar()
     }
 
     private func addTab(url: URL?) {
-        guard let url = url else {
-            let tab = tabManager.add(url: url)
-            dismissOmniBar()
-            addToView(tab: tab)
-            return
-        }
-
-        getCleanUrl(url) { [weak self] url in
-            guard let self = self else { return }
-            
-            let tab = self.tabManager.add(url: url)
-            self.dismissOmniBar()
-            self.addToView(tab: tab)
-        }
+        let tab = tabManager.add(url: url)
+        dismissOmniBar()
+        addToView(tab: tab)
     }
 
     func select(tabAt index: Int) {

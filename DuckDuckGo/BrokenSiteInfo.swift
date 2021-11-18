@@ -46,7 +46,10 @@ public struct BrokenSiteInfo {
     private let tdsETag: String?
     private let ampUrl: String?
     
-    public init(url: URL?, httpsUpgrade: Bool, blockedTrackerDomains: [String], installedSurrogates: [String], isDesktop: Bool, tdsETag: String?, ampUrl: String?) {
+    public init(url: URL?, httpsUpgrade: Bool,
+                blockedTrackerDomains: [String], installedSurrogates: [String],
+                isDesktop: Bool, tdsETag: String?,
+                ampUrl: String?) {
         self.url = url
         self.httpsUpgrade = httpsUpgrade
         self.blockedTrackerDomains = blockedTrackerDomains

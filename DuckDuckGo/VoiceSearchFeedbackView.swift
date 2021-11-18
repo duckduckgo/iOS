@@ -27,7 +27,7 @@ struct VoiceSearchFeedbackView: View {
            cancelButton
             Spacer()
             Text(speechModel.speechFeedback)
-                .customFont()
+                .foregroundColor(Colors.speechFeedback)
                 .padding()
                 .padding(.bottom, Padding.recognizedTextBottom)
             ZStack {
@@ -91,8 +91,7 @@ extension VoiceSearchFeedbackView {
                 speechModel.cancel()
             } label: {
                 Text(UserText.voiceSearchCancelButton)
-                    .customFont()
-                    .foregroundColor(.primary)
+                    .foregroundColor(Colors.cancelButton)
             }.alignmentGuide(.leading) { d in d[.leading] }
             .padding()
             Spacer()
@@ -153,6 +152,8 @@ extension VoiceSearchFeedbackView {
     private struct Colors {
         static let innerCircle = Color(UIColor(hex: "DE5833"))
         static let outerCircle = Color(UIColor(hex: "EB876C")).opacity(0.2)
+        static let cancelButton = Color("VoiceSearchCancelColor")
+        static let speechFeedback = Color("VoiceSearchSpeechFeedbackColor")
     }
     
     private struct AnimationDuration {

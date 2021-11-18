@@ -178,7 +178,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allows you to share your location</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allows you to share recordings</string>
+	<string>This is required to use voice features. What you say is never recorded by DuckDuckGo.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allows you to save images to your device</string>
 	<key>NSUserActivityTypes</key>

@@ -183,6 +183,8 @@ public enum PixelName: String {
     case contentBlockingUnpSitesCompilationFailed = "m_d_cb_cu"
     case contentBlockingFallbackCompilationFailed = "m_d_cb_cf"
     
+    case ampBlockingRulesCompilationFailed = "m_d_amp_rules_compilation_failed"
+    
     case contentBlockingIdentifierError = "m_d_cb_ie"
     
     case webKitDidTerminate = "m_d_wkt"

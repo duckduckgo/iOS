@@ -39,6 +39,16 @@ public class AMPCanonicalExtractor: NSObject {
         self.linkCleaner = linkCleaner
         super.init()
         
+        WKContentRuleListStore.default().lookUpContentRuleList(forIdentifier: Constants.ruleListIdentifier) { [weak self] ruleList, _ in
+            if let ruleList = ruleList {
+                self?.imageBlockingRules = ruleList
+            } else {
+                self?.compileImageRules()
+            }
+        }
+    }
+    
+    private func compileImageRules() {
         let ruleSource = """
 [
     {
@@ -66,6 +76,7 @@ public class AMPCanonicalExtractor: NSObject {
                                                                 encodedContentRuleList: ruleSource) { [weak self] ruleList, error  in
             guard error != nil else {
                 print(error?.localizedDescription ?? "AMPCanonicalExtractor - Error compiling image blocking rules")
+                Pixel.fire(pixel: .ampBlockingRulesCompilationFailed)
                 return
             }
             
@@ -132,6 +143,7 @@ public class AMPCanonicalExtractor: NSObject {
         }
         
         webView = WKWebView(frame: .zero, configuration: configuration)
+        webView?.navigationDelegate = self
         webView?.load(URLRequest(url: url))
     }
     
@@ -156,5 +168,15 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
         } else {
             completion?(nil)
         }
+    }
+}
+
+extension AMPCanonicalExtractor: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        completion?(nil)
+    }
+    
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        completion?(nil)
     }
 }

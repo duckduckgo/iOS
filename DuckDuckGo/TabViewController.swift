@@ -94,8 +94,8 @@ class TabViewController: UIViewController {
     
     private var trackersInfoWorkItem: DispatchWorkItem?
     
-    private var linkCleaner: LinkCleaner?
-    private var ampExtractor: AMPCanonicalExtractor?
+    private var linkCleaner: LinkCleaner!
+    private var ampExtractor: AMPCanonicalExtractor!
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -203,8 +203,7 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let linkCleaner = LinkCleaner()
-        self.linkCleaner = linkCleaner
+        self.linkCleaner = LinkCleaner()
         self.ampExtractor = AMPCanonicalExtractor(linkCleaner: linkCleaner)
         
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
@@ -352,10 +351,10 @@ class TabViewController: UIViewController {
     
     private func getCleanUrl(_ url: URL, completion: @escaping (URL) -> Void) {
         // Rewrite tracking links
-        if let cleanUrl = linkCleaner?.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
+        if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
             completion(cleanUrl)
-        } else if ampExtractor?.urlContainsAmpKeyword(url) ?? false {
-            ampExtractor?.getCanonicalUrl(initiator: nil, url: url) { canonical in
+        } else if ampExtractor.urlContainsAmpKeyword(url) {
+            ampExtractor.getCanonicalUrl(initiator: nil, url: url) { canonical in
                 if let canonical = canonical {
                     completion(canonical)
                 } else {
@@ -1122,13 +1121,13 @@ extension TabViewController: WKNavigationDelegate {
             }
         }
         
-        if let newUrl = linkCleaner?.extractCanonicalFromAmpLink(initiator: webView.url,
+        if let newUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: webView.url,
                                                                  destination: navigationAction.request.url) {
             decisionHandler(.cancel)
             load(newUrl: newUrl, forNavigationAction: navigationAction)
             return true
-        } else if ampExtractor?.urlContainsAmpKeyword(navigationAction.request.url) ?? false {
-            ampExtractor?.getCanonicalUrl(initiator: webView.url,
+        } else if ampExtractor.urlContainsAmpKeyword(navigationAction.request.url) {
+            ampExtractor.getCanonicalUrl(initiator: webView.url,
                                           url: navigationAction.request.url) { canonical in
                 guard let canonical = canonical else {
                     decisionHandler(.allow)

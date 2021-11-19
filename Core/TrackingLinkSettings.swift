@@ -23,25 +23,21 @@ struct TrackingLinkSettings {
     
     let ampLinkFormats: [String]
     let ampKeywords: [String]
-    let trackingParameters: [String]
     
     struct Constants {
-        static let ampLinkFormats = "ampLinkFormats"
-        static let ampKeywords = "ampKeywords"
-        static let trackingParameters = "trackingParameters"
+        static let ampLinkFormats = "linkFormats"
+        static let ampKeywords = "keywords"
     }
     
     init(fromConfig config: PrivacyConfiguration) {
-        guard let feature = config.feature(forKey: .trackingLinks) else {
+        guard let feature = config.feature(forKey: .ampLinks) else {
             ampLinkFormats = []
             ampKeywords = []
-            trackingParameters = []
             return
         }
         
         ampLinkFormats = feature.settings[Constants.ampLinkFormats] as? [String] ?? []
         ampKeywords = feature.settings[Constants.ampKeywords] as? [String] ?? []
-        trackingParameters = feature.settings[Constants.trackingParameters] as? [String] ?? []
     }
     
 }

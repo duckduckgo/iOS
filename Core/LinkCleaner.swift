@@ -44,7 +44,7 @@ public class LinkCleaner {
         
         if config.isTempUnprotected(domain: host)
             || config.isUserUnprotected(domain: host)
-            || config.isInExceptionList(domain: host, forFeature: .trackingLinks) {
+            || config.isInExceptionList(domain: host, forFeature: .ampLinks) {
             return true
         }
         

@@ -1,7 +1,19 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1636458091249,
+    "version": 1637339363875,
     "features": {
+        "autoconsent": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "spiegel.de",
+                    "reason": "Opt-out not possible"
+                }
+            ],
+            "settings": {
+                "disabledCMPs": []
+            }
+        },
         "autofill": {
             "exceptions": [
                 {
@@ -12,7 +24,8 @@
                     "domain": "fastmail.com",
                     "reason": "site breakage"
                 }
-            ]
+            ],
+            "state": "disabled"
         },
         "clickToPlay": {
             "state": "enabled",
@@ -22,11 +35,19 @@
             "state": "enabled",
             "exceptions": [
                 {
+                    "domain": "wp.pl",
+                    "reason": "Adblocker wall"
+                },
+                {
                     "domain": "digitalocean.com",
                     "reason": "Missing site content"
                 },
                 {
                     "domain": "ah.nl",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "toledoblade.com",
                     "reason": "Missing site content"
                 },
                 {
@@ -44,6 +65,10 @@
                 {
                     "domain": "pnc.com",
                     "reason": "Login issues"
+                },
+                {
+                    "domain": "ea.com",
+                    "reason": "Login not displaying"
                 },
                 {
                     "domain": "www.corsair.com",
@@ -80,10 +105,6 @@
                 {
                     "domain": "riteaid.com",
                     "reason": "Missing site content"
-                },
-                {
-                    "domain": "video.ibm.com",
-                    "reason": "Broken videos"
                 },
                 {
                     "domain": "virginmedia.com",
@@ -349,15 +370,15 @@
                 }
             ]
         },
-        "trackingLinks": {
+        "ampLinks": {
             "state": "enabled",
             "exceptions": [],
             "settings": {
-                "ampLinkFormats": [
+                "linkFormats": [
                     "https?:\\/\\/(?:w{3}\\.)?google\\.\\w{2,}\\/amp\\/s\\/(\\S+)",
                     "https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)"
                 ],
-                "ampKeywords": [
+                "keywords": [
                     "=amp",
                     "amp=",
                     "&amp",
@@ -371,8 +392,14 @@
                     "_amp",
                     "amp_",
                     "?amp"
-                ],
-                "trackingParameters": [
+                ]
+            }
+        },
+        "trackingParameters": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "parameters": [
                     "utm_[a-zA-Z]*",
                     "gclid",
                     "fbclid",
@@ -417,10 +444,6 @@
         },
         {
             "domain": "fidelity.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "www.sportskeeda.com",
             "reason": "site breakage"
         }
     ]

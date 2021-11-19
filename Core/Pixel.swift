@@ -243,8 +243,16 @@ public struct PixelParameters {
     public static let emailCohort = "cohort"
     public static let emailLastUsed = "duck_address_last_used"
     
-    public static let cookieStoreDiff = "cookie_store_diff"
-    public static let cookieStorageDiff = "cookie_storage_diff"
+    // Cookie clearing
+    public static let storeInitialCount = "store_initial_count"
+    public static let storeProtectedCount = "store_protected_count"
+    public static let didStoreDeletionTimeOut = "did_store_deletion_time_out"
+    public static let storageInitialCount = "storage_initial_count"
+    public static let storageProtectedCount = "storage_protected_count"
+    public static let storeAfterDeletionCount = "store_after_deletion_count"
+    public static let storageAfterDeletionCount = "storage_after_deletion_count"
+    public static let storeAfterDeletionDiffCount = "store_after_deletion_diff_count"
+    public static let storageAfterDeletionDiffCount = "storage_after_deletion_diff_count"
     
     public static let count = "count"
 }

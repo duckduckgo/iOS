@@ -189,34 +189,37 @@ public class WebCacheManager {
                     for storageCookie in storageCookiesToRemove {
                         HTTPCookieStorage.shared.deleteCookie(storageCookie)
                     }
-    
-                    // Sanity check
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        cookieStore.getAllCookies { cookiesAfterCleaning in
-                            let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
-                            
-                            cookieClearingSummary.storeAfterDeletionCount = cookiesAfterCleaning.count
-                            cookieClearingSummary.storageAfterDeletionCount = storageCookiesAfterCleaning.count
-                            
-                            let cookieStoreDiff = cookiesAfterCleaning.count - protectedCookiesCount
-                            let cookieStorageDiff = storageCookiesAfterCleaning.count - protectedStorageCookiesCount
-                            
-                            cookieClearingSummary.storeAfterDeletionDiffCount = cookieStoreDiff
-                            cookieClearingSummary.storageAfterDeletionDiffCount = cookieStorageDiff
-                            
-                            if cookieStoreDiff + cookieStorageDiff > 0 {
-                                os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
-                                       log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
-                                
-                                Pixel.fire(pixel: .cookieDeletionLeftovers,
-                                           withAdditionalParameters: cookieClearingSummary.makeDictionaryRepresentation())
-                            }
-                        }
-                    }
+                    
+                    self.performSanityCheck(for: cookieStore, summary: cookieClearingSummary)
                     
                     DispatchQueue.main.async {
                         completion()
                     }
+                }
+            }
+        }
+    }
+    
+    private func performSanityCheck(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            cookieStore.getAllCookies { cookiesAfterCleaning in
+                let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
+                
+                summary.storeAfterDeletionCount = cookiesAfterCleaning.count
+                summary.storageAfterDeletionCount = storageCookiesAfterCleaning.count
+                
+                let cookieStoreDiff = cookiesAfterCleaning.count - summary.storeProtectedCount
+                let cookieStorageDiff = storageCookiesAfterCleaning.count - summary.storageProtectedCount
+                
+                summary.storeAfterDeletionDiffCount = cookieStoreDiff
+                summary.storageAfterDeletionDiffCount = cookieStorageDiff
+                
+                if cookieStoreDiff + cookieStorageDiff > 0 {
+                    os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
+                           log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
+                    
+                    Pixel.fire(pixel: .cookieDeletionLeftovers,
+                               withAdditionalParameters: summary.makeDictionaryRepresentation())
                 }
             }
         }

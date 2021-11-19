@@ -182,22 +182,25 @@ public class WebCacheManager {
                     }
     
                     // Sanity check
-                    cookieStore.getAllCookies { cookiesAfterCleaning in
-                        let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
-                        
-                        let cookieStoreDiff = cookiesAfterCleaning.count - protectedCookiesCount
-                        let cookieStorageDiff = storageCookiesAfterCleaning.count - protectedStorageCookiesCount
-
-                        if cookieStoreDiff + cookieStorageDiff > 0 {
-                            os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
-                                   log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        cookieStore.getAllCookies { cookiesAfterCleaning in
+                            let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
                             
-                            Pixel.fire(pixel: .cookieDeletionLeftovers, withAdditionalParameters: [
-                                PixelParameters.cookieStoreDiff: "\(cookieStoreDiff)",
-                                PixelParameters.cookieStorageDiff: "\(cookieStorageDiff)"
-                            ])
+                            let cookieStoreDiff = cookiesAfterCleaning.count - protectedCookiesCount
+                            let cookieStorageDiff = storageCookiesAfterCleaning.count - protectedStorageCookiesCount
+
+                            if cookieStoreDiff + cookieStorageDiff > 0 {
+                                os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
+                                       log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
+                                
+                                Pixel.fire(pixel: .cookieDeletionLeftovers, withAdditionalParameters: [
+                                    PixelParameters.cookieStoreDiff: "\(cookieStoreDiff)",
+                                    PixelParameters.cookieStorageDiff: "\(cookieStorageDiff)"
+                                ])
+                            }
                         }
                     }
+                    
                     
                     DispatchQueue.main.async {
                         completion()

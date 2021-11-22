@@ -40,6 +40,10 @@ class VoiceSearchHelper {
     }
     
     private func updateFlag() {
+#if targetEnvironment(simulator)
+        isSpeechRecognizerAvailable = true
+#else
         isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
+#endif
     }
 }

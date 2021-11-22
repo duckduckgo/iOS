@@ -401,7 +401,7 @@ public struct UserText {
     public static let noVoicePermissionActionSettings = NSLocalizedString("voiceSearch.alert.no-permission.action.settings", value: "Settings", comment: "No microphone permission alert action button to open the settings app")
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
     public static let voiceSearchPrivacyAcknowledgmentTitle = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.title", value: "Microphone Access Required for Private Voice Search", comment: "Title for alert explaining voice-search privacy")
-    public static let voiceSearchPrivacyAcknowledgmentMessage = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.message", value: "What you say is never recorded by DuckDuckGo. All speech data processing for Private Voice Search happens on your device.", comment: "Message for alert explaining voice-search privacy")
+    public static let voiceSearchPrivacyAcknowledgmentMessage = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.message", value: "DuckDuckGo never listens to what you say. All speech data processing for Private Voice Search happens on your device.", comment: "Message for alert explaining voice-search privacy")
     public static let voiceSearchPrivacyAcknowledgmentAcceptButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.accept", value: "OK", comment: "Voice-search privacy accept alert action")
     public static let voiceSearchPrivacyAcknowledgmentRejectButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.reject", value: "Cancel", comment: "Voice-search privacy reject alert action")
     

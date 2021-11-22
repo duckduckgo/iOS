@@ -907,6 +907,10 @@ class MainViewController: UIViewController {
     }
     
     private func showVoiceSearch() {
+        // https://app.asana.com/0/0/1201408131067987
+        UIMenuController.shared.hideMenu()
+        omniBar.removeTextSelection()
+        
         let voiceSearchController = VoiceSearchViewController()
         voiceSearchController.delegate = self
         voiceSearchController.modalTransitionStyle = .crossDissolve
@@ -1754,6 +1758,8 @@ extension MainViewController: UIDropInteractionDelegate {
         
     }
 }
+
+// MARK: - VoiceSearchViewControllerDelegate
 
 extension MainViewController: VoiceSearchViewControllerDelegate {
     

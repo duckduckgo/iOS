@@ -182,6 +182,10 @@ class OmniBar: UIView {
         textField.becomeFirstResponder()
     }
     
+    func removeTextSelection() {
+        textField.selectedTextRange = nil
+    }
+    
     public func startLoadingAnimation(for url: URL?) {
         trackersAnimator.startLoadingAnimation(in: self, for: url)
     }

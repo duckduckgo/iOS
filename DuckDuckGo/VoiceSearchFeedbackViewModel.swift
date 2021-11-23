@@ -32,7 +32,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     }
     
     private struct AnimationScale {
-        static let max: Double = 1.3
+        static let max: Double = 1.5
         static let pulse: Double = 0.7
     }
     

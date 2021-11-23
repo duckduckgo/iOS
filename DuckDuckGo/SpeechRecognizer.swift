@@ -60,8 +60,8 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
         let channelDataArray = Array(UnsafeBufferPointer(start: channelData, count: 1024))
         guard channelDataArray.count != 0 else { return 0 }
         
-        let silenceThreshold: Float = 0.0010
-        let loudThreshold: Float = 0.2
+        let silenceThreshold: Float = 0.0030
+        let loudThreshold: Float = 0.07
         
         let sumChannelData = channelDataArray.reduce(0) {$0 + abs($1)}
         var channelAverage = sumChannelData / Float(channelDataArray.count)

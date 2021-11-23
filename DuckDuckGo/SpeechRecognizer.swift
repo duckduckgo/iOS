@@ -111,17 +111,20 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
             
             self.recognitionTask = self.speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] (result, error) in
                 var isFinal = false
+                var transcription: String?
+                
                 if let result = result {
                     // speechRecognitionMetadata is always returned when the system assumes the user stopped speaking
                     // https://app.asana.com/0/0/1201278924898595
                     isFinal = result.isFinal || result.speechRecognitionMetadata != nil
-                    resultHandler(result.bestTranscription.formattedString, error, isFinal)
+                    transcription = result.bestTranscription.formattedString
                 }
                 
+                resultHandler(transcription, error, isFinal)
+
                 if error != nil || isFinal {
                     inputNode.removeTap(onBus: 0)
                     self?.stopRecording()
-                    resultHandler(nil, error, isFinal)
                 }
             }
         } catch {

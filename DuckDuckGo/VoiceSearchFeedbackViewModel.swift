@@ -32,7 +32,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     }
     
     private struct AnimationScale {
-        static let max: Double = 1.5
+        static let max: Double = 1.65
         static let pulse: Double = 0.7
     }
     
@@ -77,9 +77,11 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     
     private func setupAnimationWithVolume(_ volume: Float) {
         let isCurrentlySilent = volume <= 0
-
+        // We want to make sure that every detected sound makes the outer circle bigger
+        let minScale = 1.2
+        
         if !isCurrentlySilent {
-            let scaleValue = min(Double(volume) + 1, AnimationScale.max)
+            let scaleValue = min(Double(volume) + minScale, AnimationScale.max)
             self.startSpeechAnimation(scaleValue)
         }
         

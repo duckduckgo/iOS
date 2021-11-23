@@ -27,6 +27,7 @@ struct VoiceSearchFeedbackView: View {
            cancelButton
             Spacer()
             Text(speechModel.speechFeedback)
+                .multilineTextAlignment(.center)
                 .foregroundColor(Colors.speechFeedback)
                 .padding()
                 .padding(.bottom, Padding.recognizedTextBottom)

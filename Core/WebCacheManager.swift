@@ -24,7 +24,6 @@ public extension Notification.Name {
     static let cookieLeftoversFound = Notification.Name("cookie.leftovers.found")
 }
 
-
 public protocol WebCacheManagerCookieStore {
     
     func getAllCookies(_ completionHandler: @escaping ([HTTPCookie]) -> Void)
@@ -292,10 +291,27 @@ public final class WebStoreCookieClearingSummary {
     }
     
     public var description: String {
-        var descriptionString = ""
-        makeDictionaryRepresentation().forEach { (key: String, value: String) in
-            descriptionString += "\(key): \(value)\n"
+        var description =
+        """
+        WKHTTPCookieStore:
+        - all cookies before: \(storeInitialCount)
+        - protected cookies: \(storeProtectedCount)
+        - all cookies after: \(storeAfterDeletionCount)
+        = leftovers: \(storeAfterDeletionCount - storeProtectedCount)
+        
+        HTTPCookieStorage:
+        - all cookies before: \(storageInitialCount)
+        - protected cookies: \(storageProtectedCount)
+        - all cookies after: \(storageAfterDeletionCount)
+        = leftovers: \(storageAfterDeletionCount - storageProtectedCount)
+        
+        """
+        
+        if didStoreDeletionTimeOut {
+            description.append(contentsOf: "\n\n")
+            description.append(contentsOf: "Timeout during clean up occured!")
         }
-        return descriptionString
+        
+        return description
     }
 }

@@ -198,7 +198,8 @@ class MainViewController: UIViewController {
 
         notificationView.setTitle(text: "Cookie Leftovers Found!")
         notificationView.setMessage(text: summary.description)
-        notificationView.setIcon(image: UIImage(systemName: "trash.slash.circle.fill")!)
+        notificationView.setIcon(image: UIImage(named: "cookie-white")!)
+        notificationView.backgroundColor = .destructive
         notificationView.clipsToBounds = true
         
         return notificationView

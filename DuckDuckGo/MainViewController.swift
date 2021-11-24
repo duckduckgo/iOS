@@ -191,6 +191,12 @@ class MainViewController: UIViewController {
         let notificationView = NotificationView.loadFromNib(dismissHandler: { [weak self] tapped in
             if tapped {
                 print("tap!")
+                
+                let storyboard = UIStoryboard(name: "Debug", bundle: nil)
+                if let cookieDebug = storyboard.instantiateViewController(withIdentifier: "CookieDebug") as? CookieDebugViewController {
+                    let navigationController = UINavigationController(rootViewController: cookieDebug)
+                    self?.present(navigationController, animated: true, completion: nil)
+                }
             } else {
                 self?.hideNotification()
             }

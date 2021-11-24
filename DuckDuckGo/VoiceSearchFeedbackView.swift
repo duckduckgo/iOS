@@ -35,7 +35,7 @@ struct VoiceSearchFeedbackView: View {
                 outerCircle
                 innerCircle
                 micImage
-            }.padding(.bottom, Padding.microphoneCircleBotton)
+            }.padding(.bottom, Padding.microphoneCircleBottom)
         }
         .onAppear {
             if #available(iOS 15, *) {
@@ -141,7 +141,7 @@ extension VoiceSearchFeedbackView {
     }
     
     private struct Padding {
-        static let microphoneCircleBotton: CGFloat = 100
+        static let microphoneCircleBottom: CGFloat = 125
         static let recognizedTextBottom: CGFloat = 40
     }
     
@@ -158,7 +158,7 @@ extension VoiceSearchFeedbackView {
     }
     
     private struct AnimationDuration {
-        static let pulse = 1.5
+        static let pulse = 2.5
         static let speech = 0.1
     }
 }

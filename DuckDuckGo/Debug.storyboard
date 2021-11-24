@@ -210,6 +210,13 @@
                                 <action selector="cookieSourceValueChanged:" destination="w2L-S8-y7a" eventType="valueChanged" id="xVs-hs-Uzu"/>
                             </connections>
                         </segmentedControl>
+                        <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qdu-fq-3tg">
+                            <rect key="frame" x="0.0" y="186" width="414" height="78"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Info" textLabel="7IK-He-gTN" style="IBUITableViewCellStyleDefault" id="8PX-Ou-xNc">
                                 <rect key="frame" x="0.0" y="76.5" width="414" height="43.5"/>
@@ -261,11 +268,12 @@
                     <navigationItem key="navigationItem" title="Cookies" id="iIO-Nl-QJP"/>
                     <connections>
                         <outlet property="cookieSourceSegmentedControl" destination="ugf-At-jel" id="mqb-dj-MLl"/>
+                        <outlet property="cookieSummaryLabel" destination="qdu-fq-3tg" id="PKV-67-0zs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VJc-oW-O4o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="254" y="968"/>
+            <point key="canvasLocation" x="253.62318840579712" y="967.63392857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dQg-xB-ccu">

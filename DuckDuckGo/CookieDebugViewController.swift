@@ -23,17 +23,14 @@ import Core
 
 class CookieDebugViewController: UITableViewController {
 
-    enum CookieSource: Int {
-        case store = 0 // WKHTTPCookieStore
-        case storage = 1 // HTTPCookieStorage
-    }
-    
     struct DomainCookies {
         let domain: String
         let cookies: [HTTPCookie]
+        let isProtected: Bool
     }
 
     @IBOutlet var cookieSourceSegmentedControl: UISegmentedControl!
+    @IBOutlet var cookieSummaryLabel: UILabel!
 
     var cookies = [DomainCookies]() {
         didSet {
@@ -58,18 +55,24 @@ class CookieDebugViewController: UITableViewController {
         loaded = false
         cookies = []
         tableView.reloadData()
+        cookieSummaryLabel.text = ""
         
         switch cookieSourceSegmentedControl.selectedSegmentIndex {
-            case 0: fetchCookiesFromStore()
-            case 1: fetchCookiesFromStorage()
-            default: break
+        case 0: fetchCookiesFromStore() // WKHTTPCookieStore
+        case 1: fetchCookiesFromStorage() // HTTPCookieStorage
+        default: break
         }
     }
     
     private func fetchCookiesFromStore() {
         WKWebsiteDataStore.default().cookieStore?.getAllCookies(displayCookies)
     }
-
+    
+    private func fetchCookiesFromStorage() {
+        let cookies = HTTPCookieStorage.shared.cookies ?? []
+        displayCookies(cookies: cookies)
+    }
+    
     private func displayCookies(cookies: [HTTPCookie]) {
         self.loaded = true
 
@@ -83,22 +86,31 @@ class CookieDebugViewController: UITableViewController {
                 .reversed())
 
             var domainName = domain
+            var isProtected = false
             
             if PreserveLogins.shared.isAllowed(cookieDomain: domain) {
                 domainName += " 👩‍🚒"
+                isProtected = true
             }
             if domain == "duckduckgo.com" {
                 domainName += " 🦆"
+                isProtected = true
             }
 
-            tmp.append(DomainCookies(domain: domainName, cookies: domainCookies))
+            tmp.append(DomainCookies(domain: domainName, cookies: domainCookies, isProtected: isProtected))
         }
         self.cookies = tmp
+        self.displayCookieSummary()
     }
     
-    private func fetchCookiesFromStorage() {
-        let cookies = HTTPCookieStorage.shared.cookies ?? []
-        displayCookies(cookies: cookies)
+    private func displayCookieSummary() {
+        let summary =
+        """
+        All 🍪 count: \(cookies.reduce(0) { $0 + $1.cookies.count })
+        Protected 🍪 count: \(cookies.filter { $0.isProtected }.reduce(0) { $0 + $1.cookies.count })
+        """
+        
+        cookieSummaryLabel.text = summary
     }
     
     // MARK: Table view

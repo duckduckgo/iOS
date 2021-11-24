@@ -217,15 +217,15 @@ public class WebCacheManager {
                 
                 summary.storeAfterDeletionDiffCount = cookieStoreDiff
                 summary.storageAfterDeletionDiffCount = cookieStorageDiff
-                
-                NotificationCenter.default.post(name: .cookieLeftoversFound, object: summary)
-                
+
                 if cookieStoreDiff + cookieStorageDiff > 0 {
                     os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
                            log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
                     
                     Pixel.fire(pixel: .cookieDeletionLeftovers,
                                withAdditionalParameters: summary.makeDictionaryRepresentation())
+                    
+                    NotificationCenter.default.post(name: .cookieLeftoversFound, object: summary)
                 }
             }
         }

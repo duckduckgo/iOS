@@ -57,6 +57,7 @@ class NotificationView: UIView {
 
     func setMessage(text: String) {
         messageLabel.text = text
+        messageLabel.sizeToFit()
         update()
     }
 

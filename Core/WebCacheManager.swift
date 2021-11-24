@@ -20,6 +20,11 @@
 import WebKit
 import os.log
 
+public extension Notification.Name {
+    static let cookieLeftoversFound = Notification.Name("cookie.leftovers.found")
+}
+
+
 public protocol WebCacheManagerCookieStore {
     
     func getAllCookies(_ completionHandler: @escaping ([HTTPCookie]) -> Void)
@@ -214,6 +219,8 @@ public class WebCacheManager {
                 summary.storeAfterDeletionDiffCount = cookieStoreDiff
                 summary.storageAfterDeletionDiffCount = cookieStorageDiff
                 
+                NotificationCenter.default.post(name: .cookieLeftoversFound, object: summary)
+                
                 if cookieStoreDiff + cookieStorageDiff > 0 {
                     os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
                            log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
@@ -260,7 +267,7 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
     
 }
 
-final class WebStoreCookieClearingSummary {
+public final class WebStoreCookieClearingSummary {
     var storeInitialCount: Int = 0
     var storeProtectedCount: Int = 0
     var didStoreDeletionTimeOut: Bool = false
@@ -282,5 +289,13 @@ final class WebStoreCookieClearingSummary {
          PixelParameters.storageAfterDeletionCount: "\(storageAfterDeletionCount)",
          PixelParameters.storeAfterDeletionDiffCount: "\(storeAfterDeletionDiffCount)",
          PixelParameters.storageAfterDeletionDiffCount: "\(storageAfterDeletionDiffCount)"]
+    }
+    
+    public var description: String {
+        var descriptionString = ""
+        makeDictionaryRepresentation().forEach { (key: String, value: String) in
+            descriptionString += "\(key): \(value)\n"
+        }
+        return descriptionString
     }
 }

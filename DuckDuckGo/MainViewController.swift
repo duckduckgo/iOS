@@ -152,6 +152,56 @@ class MainViewController: UIViewController {
         applyWidth()
         
         registerForApplicationEvents()
+        
+        listenForCookieLeftoversFound()
+    }
+    
+    func listenForCookieLeftoversFound() {
+        _ = NotificationCenter.default.addObserver(forName: .cookieLeftoversFound,
+                                                   object: nil,
+                                                   queue: .main) { [weak self] notification in
+            
+            if let summary = notification.object as? WebStoreCookieClearingSummary {
+                self?.showCookieNotification(summary: summary)
+            }
+        }
+    }
+    
+    func showCookieNotification(summary: WebStoreCookieClearingSummary) {
+        if let previousNotificationView = self.notificationView {
+            previousNotificationView.removeFromSuperview()
+        }
+        
+        let cookieNotificationView = makeCookieNotification(for: summary)
+        notificationContainer.addSubview(cookieNotificationView)
+        self.notificationView = cookieNotificationView
+    
+        notificationContainerTop.constant = -cookieNotificationView.frame.size.height
+                        
+        DispatchQueue.main.asyncAfter(deadline: (.now() + 0.1)) {
+            self.notificationContainerTop.constant = 0
+            self.notificationContainerHeight.constant = cookieNotificationView.frame.size.height
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+    
+    private func makeCookieNotification(for summary: WebStoreCookieClearingSummary) -> NotificationView {
+        let notificationView = NotificationView.loadFromNib(dismissHandler: { [weak self] tapped in
+            if tapped {
+                print("tap!")
+            } else {
+                self?.hideNotification()
+            }
+        })
+
+        notificationView.setTitle(text: "Cookie Leftovers Found!")
+        notificationView.setMessage(text: summary.description)
+        notificationView.setIcon(image: UIImage(systemName: "trash.slash.circle.fill")!)
+        notificationView.clipsToBounds = true
+        
+        return notificationView
     }
 
     override func viewDidAppear(_ animated: Bool) {

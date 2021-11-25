@@ -25,16 +25,17 @@ protocol DependencyProvider {
     var variantManager: VariantManager { get }
     var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCacheProvider { get }
+    var voiceSearchHelper: VoiceSearchHelperProtocol { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
 /// through `init` call (e.g. ViewControllers created from Storyboards).
 class AppDependencyProvider: DependencyProvider {
-    
     static var shared: DependencyProvider = AppDependencyProvider()
     
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
     let homePageConfiguration: HomePageConfiguration = HomePageConfiguration()
     let storageCache = StorageCacheProvider()
+    let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
 }

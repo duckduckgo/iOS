@@ -937,7 +937,7 @@ class MainViewController: UIViewController {
     }
     
     func displayVoiceSearchPrivacyAlertIfNecessary(completion: @escaping(Bool) -> Void) {
-        if VoiceSearchHelper.shared.voiceSearchPrivacyAlertWasConfirmed {
+        if AppDependencyProvider.shared.voiceSearchHelper.privacyAlertWasConfirmed {
             completion(true)
             return
         }
@@ -948,7 +948,7 @@ class MainViewController: UIViewController {
         alertController.overrideUserInterfaceStyle()
 
         let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentAcceptButton, style: .default) { _ in
-            VoiceSearchHelper.shared.voiceSearchPrivacyAlertWasConfirmed = true
+            AppDependencyProvider.shared.voiceSearchHelper.markPrivacyAlertAsConfirmed()
             Pixel.fire(pixel: .voiceSearchPrivacyDialogAccepted)
             completion(true)
         }

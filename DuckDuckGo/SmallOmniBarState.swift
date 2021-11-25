@@ -30,7 +30,7 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -38,7 +38,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -58,7 +58,7 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -66,7 +66,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -94,7 +94,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return HomeEmptyEditingState() }
@@ -114,7 +114,7 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -122,7 +122,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -142,7 +142,7 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -150,7 +150,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }

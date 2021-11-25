@@ -20,23 +20,28 @@
 import Foundation
 import Core
 
-/*
- Instead of initializing SpeechRecognizer to check its availability
- use VoiceSearchHelper instead since it keeps track of the current availability without extra initializations
- */
-class VoiceSearchHelper {
-    static let shared = VoiceSearchHelper()
+protocol VoiceSearchHelperProtocol {
+    var isSpeechRecognizerAvailable: Bool { get }
+    var privacyAlertWasConfirmed: Bool { get }
+    func markPrivacyAlertAsConfirmed()
+}
+
+class VoiceSearchHelper: VoiceSearchHelperProtocol {
     private(set) var isSpeechRecognizerAvailable: Bool = false
     
     @UserDefaultsWrapper(key: .voiceSearchPrivacyAlertWasConfirmed, defaultValue: false)
-    var voiceSearchPrivacyAlertWasConfirmed: Bool
+    private(set) var privacyAlertWasConfirmed: Bool
 
-    private init() {
+    init() {
         updateFlag()
         
         NotificationCenter.default.addObserver(forName: NSLocale.currentLocaleDidChangeNotification, object: nil, queue: nil) { [weak self] _ in
             self?.updateFlag()
         }
+    }
+    
+    func markPrivacyAlertAsConfirmed() {
+        privacyAlertWasConfirmed = true
     }
     
     private func updateFlag() {
@@ -46,9 +51,10 @@ class VoiceSearchHelper {
         isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
         
         // We don't want to override the flag in case there's no SpeechRecognizer available for this device
-        if isSpeechRecognizerAvailable {
-            isSpeechRecognizerAvailable = AppDependencyProvider.shared.variantManager.isSupported(feature: .voiceSearch)
-        }
+        #warning("Enable before release")
+//        if isSpeechRecognizerAvailable {
+//            isSpeechRecognizerAvailable = AppDependencyProvider.shared.variantManager.isSupported(feature: .voiceSearch)
+//        }
 #endif
     }
 }

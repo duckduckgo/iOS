@@ -23,6 +23,12 @@ import Core
 struct LargeOmniBarState {
     
     struct HomeEmptyEditingState: OmniBarState {
+        private let isVoiceSearchOn: Bool
+        
+        init(isVoiceSearchOn: Bool = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable) {
+            self.isVoiceSearchOn = isVoiceSearchOn
+        }
+        
         let hasLargeWidth: Bool = true
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
@@ -30,7 +36,7 @@ struct LargeOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -38,7 +44,7 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -58,7 +64,7 @@ struct LargeOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -66,7 +72,7 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -94,7 +100,7 @@ struct LargeOmniBarState {
         let showMenu = false
         let showSettings = true
         let showCancel: Bool = false
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
         var onEditingStartedState: OmniBarState { return HomeEmptyEditingState() }
@@ -114,7 +120,7 @@ struct LargeOmniBarState {
         let showShareButton: Bool = true
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = false
@@ -122,7 +128,7 @@ struct LargeOmniBarState {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -142,7 +148,7 @@ struct LargeOmniBarState {
         let showShareButton: Bool = true
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         let showSiteRating = false
         let showBackground = false
         let showClear = true
@@ -150,7 +156,7 @@ struct LargeOmniBarState {
         let showMenu = true
         let showSettings = false
         let showCancel: Bool = false
-        let showVoiceSearch = VoiceSearchHelper.shared.isSpeechRecognizerAvailable
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
         var name: String { return "Pad" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }

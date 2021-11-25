@@ -21,7 +21,6 @@ import Foundation
 
 protocol SpeechRecognizerProtocol {
     var isAvailable: Bool { get }
-    var isRunning: Bool { get }
     static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void)
     func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float
     func stopRecording()

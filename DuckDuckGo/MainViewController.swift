@@ -1552,7 +1552,6 @@ extension MainViewController: AutoClearWorker {
     func forgetData() {
         findInPageView?.done()
         
-        tabManager.stopLoadingInAllTabs()
         ServerTrustCache.shared.clear()
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
@@ -1567,6 +1566,7 @@ extension MainViewController: AutoClearWorker {
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
+            self.tabManager.stopLoadingInAllTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()

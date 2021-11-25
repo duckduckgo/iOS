@@ -44,6 +44,11 @@ class VoiceSearchHelper {
         isSpeechRecognizerAvailable = true
 #else
         isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
+        
+        // We don't want to override the flag in case there's no SpeechRecognizer available for this device
+        if isSpeechRecognizerAvailable {
+            isSpeechRecognizerAvailable = AppDependencyProvider.shared.variantManager.isSupported(feature: .voiceSearch)
+        }
 #endif
     }
 }

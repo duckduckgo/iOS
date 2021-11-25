@@ -61,7 +61,7 @@ public struct Variant {
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
         
         Variant(name: "ma", weight: 1, isIncluded: When.inEnglishAndIOS15, features: [.voiceSearch]),
-        Variant(name: "mb", weight: 1, isIncluded: When.inEnglishAndIOS15, features: [.voiceSearch])
+        Variant(name: "mb", weight: 1, isIncluded: When.inEnglishAndIOS15, features: [])
     ]
     
     public let name: String

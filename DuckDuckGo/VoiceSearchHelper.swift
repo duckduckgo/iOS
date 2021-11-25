@@ -26,7 +26,7 @@ import Core
  */
 class VoiceSearchHelper {
     static let shared = VoiceSearchHelper()
-    var isSpeechRecognizerAvailable: Bool = false
+    private(set) var isSpeechRecognizerAvailable: Bool = false
     
     @UserDefaultsWrapper(key: .voiceSearchPrivacyAlertWasConfirmed, defaultValue: false)
     var voiceSearchPrivacyAlertWasConfirmed: Bool

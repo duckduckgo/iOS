@@ -353,6 +353,10 @@ class TabViewController: UIViewController {
         load(urlRequest: URLRequest(url: url))
     }
     
+    func stopLoading() {
+        webView.stopLoading()
+    }
+    
     private func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
         

@@ -1552,6 +1552,7 @@ extension MainViewController: AutoClearWorker {
     func forgetData() {
         findInPageView?.done()
         
+        tabManager.stopLoadingInAllTabs()
         ServerTrustCache.shared.clear()
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 

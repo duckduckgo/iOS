@@ -19,6 +19,7 @@
 
 import Foundation
 import XCTest
+@testable import Core
 @testable import DuckDuckGo
 
 // swiftlint:disable type_body_length

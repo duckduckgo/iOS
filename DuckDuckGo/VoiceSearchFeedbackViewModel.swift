@@ -27,13 +27,13 @@ protocol VoiceSearchFeedbackViewModelDelegate: AnyObject {
 class VoiceSearchFeedbackViewModel: ObservableObject {
    
     enum AnimationType {
-        case speech(volume: Double)
-        case pulse(scale: Double)
+        case speech(volume: CGFloat)
+        case pulse(scale: CGFloat)
     }
     
     private struct AnimationScale {
-        static let max: Double = 1.90
-        static let pulse: Double = 0.7
+        static let max: CGFloat = 1.90
+        static let pulse: CGFloat = 0.7
     }
     
     @Published private(set) var speechFeedback = " "
@@ -78,10 +78,10 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     private func setupAnimationWithVolume(_ volume: Float) {
         let isCurrentlySilent = volume <= 0
         // We want to make sure that every detected sound makes the outer circle bigger
-        let minScale = 1.2
+        let minScale: CGFloat = 1.2
         
         if !isCurrentlySilent {
-            let scaleValue = min(Double(volume) + minScale, AnimationScale.max)
+            let scaleValue = min(CGFloat(volume) + minScale, AnimationScale.max)
             self.startSpeechAnimation(scaleValue)
         }
         
@@ -100,7 +100,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
         self.animationType = .pulse(scale: AnimationScale.pulse)
     }
     
-    func startSpeechAnimation(_ scale: Double) {
+    func startSpeechAnimation(_ scale: CGFloat) {
         self.animationType = .speech(volume: scale)
     }
     

@@ -1557,7 +1557,7 @@ extension MainViewController: AutoClearWorker {
 
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear {
-            pixel.fire(withAdditionalParmaeters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+            pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
     }
     
@@ -1566,6 +1566,7 @@ extension MainViewController: AutoClearWorker {
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
+            self.tabManager.stopLoadingInAllTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()

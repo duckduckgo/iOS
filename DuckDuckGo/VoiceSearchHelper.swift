@@ -28,11 +28,14 @@ protocol VoiceSearchHelperProtocol {
 
 class VoiceSearchHelper: VoiceSearchHelperProtocol {
     private(set) var isSpeechRecognizerAvailable: Bool = false
-    
+    private var variantManager: VariantManager?
+
     @UserDefaultsWrapper(key: .voiceSearchPrivacyAlertWasConfirmed, defaultValue: false)
     private(set) var privacyAlertWasConfirmed: Bool
-
-    init() {
+    
+    init(_ variantManager: VariantManager? = nil) {
+        self.variantManager = variantManager
+        
         updateFlag()
         
         NotificationCenter.default.addObserver(forName: NSLocale.currentLocaleDidChangeNotification, object: nil, queue: nil) { [weak self] _ in
@@ -50,10 +53,10 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
 #else
         isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
         
-        // We don't want to override the flag in case there's no SpeechRecognizer available for this device
         #warning("Enable before release")
-//        if isSpeechRecognizerAvailable {
-//            isSpeechRecognizerAvailable = AppDependencyProvider.shared.variantManager.isSupported(feature: .voiceSearch)
+        // We don't want to override the flag in case there's no SpeechRecognizer available for this device
+//        if let variantManager = variantManager, isSpeechRecognizerAvailable {
+//            isSpeechRecognizerAvailable = variantManager.isSupported(feature: .voiceSearch)
 //        }
 #endif
     }

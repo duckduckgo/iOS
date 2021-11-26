@@ -63,7 +63,7 @@ struct SpeechFeedbackView_Previews: PreviewProvider {
 
 extension VoiceSearchFeedbackView {
     
-    private var outerCircleScale: Double {
+    private var outerCircleScale: CGFloat {
         switch speechModel.animationType {
         case .pulse(let scale):
             return scale

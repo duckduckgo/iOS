@@ -226,6 +226,10 @@ class TabManager {
     func save() {
         model.save()
     }
+    
+    func stopLoadingInAllTabs() {
+        tabControllerCache.forEach { $0.stopLoading() }
+    }
 
 }
 

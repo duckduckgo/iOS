@@ -17,83 +17,71 @@
 //  limitations under the License.
 //
 
-(function() {
-    
-    if (${isDebug}) {
-        var duckduckgoDebugMessaging = function() {
-            
-            function signpostEvent(data) {
+(function () {
+    const duckduckgoDebugMessaging = (function () {
+        let log = () => {}
+        let signpostEvent = () => {}
+
+        if ($IS_DEBUG$) {
+            signpostEvent = function signpostEvent (data) {
                 try {
-                    webkit.messageHandlers.signpostMessage.postMessage(data);
-                } catch(error) {}
+                    webkit.messageHandlers.signpostMessage.postMessage(data)
+                } catch (error) {}
             }
-            
-            function log() {
+
+            log = function log () {
                 try {
-                    webkit.messageHandlers.log.postMessage(JSON.stringify(arguments));
-                } catch(error) {}
+                    webkit.messageHandlers.log.postMessage(JSON.stringify(arguments))
+                } catch (error) {}
             }
-            
-            return {
-                signpostEvent: signpostEvent,
-                log: log
-            }
-        }()
-    } else {
-        var duckduckgoDebugMessaging = function() {
-            
-            function signpostEvent(data) {}
-            
-            function log() {}
-            
-            return {
-                signpostEvent: signpostEvent,
-                log: log
-            }
-        }()
+        }
+
+        return {
+            signpostEvent,
+            log
+        }
+    }())
+
+    function surrogateInjected (data) {
+        try {
+            webkit.messageHandlers.trackerDetectedMessage.postMessage(data)
+        } catch (error) {
+            // webkit might not be defined
+        }
     }
 
-   function surrogateInjected(data) {
-       try {
-           webkit.messageHandlers.trackerDetectedMessage.postMessage(data);
-       } catch(error) {
-           // webkit might not be defined
-       }
-   }
-
     // tld.js
-    var tldjs = {
+    const tldjs = {
 
-        parse: function(url) {
-
-            if (url.startsWith("//")) {
-                url = "http:" + url;
+        parse: function (url) {
+            if (url.startsWith('//')) {
+                url = 'http:' + url
             }
 
             try {
-                var parsed = new URL(url);
+                const parsed = new URL(url)
                 return {
                     domain: parsed.hostname,
                     hostname: parsed.hostname
                 }
-            } catch(error) {
+            } catch (error) {
                 return {
-                    domain: "",
-                    hostname: ""
+                    domain: '',
+                    hostname: ''
                 }
             }
         }
 
-    };
+    }
     // tld.js
 
     // util.js
-    var utils = {
+    const utils = {
 
-        extractHostFromURL: function(url, shouldKeepWWW) {
+        extractHostFromURL: function (url, shouldKeepWWW) {
             if (!url) return ''
 
-            let urlObj = tldjs.parse(url)
+            const urlObj = tldjs.parse(url)
             let hostname = urlObj.hostname || ''
 
             if (!shouldKeepWWW) {
@@ -103,97 +91,90 @@
             return hostname
         }
 
-    };
+    }
     // util.js
 
     // Base64
-/**
+    /**
 *
 *  Base64 encode / decode
 *  http://www.webtoolkit.info/
 *
 **/
-var Base64 = {
+    const Base64 = {
 
-// private property
-_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+        // private property
+        _keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
 
-// public method for encoding
-encode : function (input) {
-    var output = "";
-    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-    var i = 0;
+        // public method for encoding
+        encode: function (input) {
+            let output = ''
+            let chr1, chr2, chr3, enc1, enc2, enc3, enc4
+            let i = 0
 
-    input = Base64._utf8_encode(input);
+            input = Base64._utf8_encode(input)
 
-    while (i < input.length) {
+            while (i < input.length) {
+                chr1 = input.charCodeAt(i++)
+                chr2 = input.charCodeAt(i++)
+                chr3 = input.charCodeAt(i++)
 
-        chr1 = input.charCodeAt(i++);
-        chr2 = input.charCodeAt(i++);
-        chr3 = input.charCodeAt(i++);
+                enc1 = chr1 >> 2
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4)
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6)
+                enc4 = chr3 & 63
 
-        enc1 = chr1 >> 2;
-        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-        enc4 = chr3 & 63;
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64
+                } else if (isNaN(chr3)) {
+                    enc4 = 64
+                }
 
-        if (isNaN(chr2)) {
-            enc3 = enc4 = 64;
-        } else if (isNaN(chr3)) {
-            enc4 = 64;
-        }
-
-        output = output +
+                output = output +
         this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
-        this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
+        this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4)
+            }
+
+            return output
+        },
+
+        // private method for UTF-8 encoding
+        _utf8_encode: function (string) {
+            string = string.replace(/\r\n/g, '\n')
+            let utftext = ''
+
+            for (let n = 0; n < string.length; n++) {
+                const c = string.charCodeAt(n)
+
+                if (c < 128) {
+                    utftext += String.fromCharCode(c)
+                } else if ((c > 127) && (c < 2048)) {
+                    utftext += String.fromCharCode((c >> 6) | 192)
+                    utftext += String.fromCharCode((c & 63) | 128)
+                } else {
+                    utftext += String.fromCharCode((c >> 12) | 224)
+                    utftext += String.fromCharCode(((c >> 6) & 63) | 128)
+                    utftext += String.fromCharCode((c & 63) | 128)
+                }
+            }
+
+            return utftext
+        }
 
     }
-
-    return output;
-},
-
-// private method for UTF-8 encoding
-_utf8_encode : function (string) {
-    string = string.replace(/\r\n/g,"\n");
-    var utftext = "";
-
-    for (var n = 0; n < string.length; n++) {
-
-        var c = string.charCodeAt(n);
-
-        if (c < 128) {
-            utftext += String.fromCharCode(c);
-        }
-        else if((c > 127) && (c < 2048)) {
-            utftext += String.fromCharCode((c >> 6) | 192);
-            utftext += String.fromCharCode((c & 63) | 128);
-        }
-        else {
-            utftext += String.fromCharCode((c >> 12) | 224);
-            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-            utftext += String.fromCharCode((c & 63) | 128);
-        }
-
-    }
-
-    return utftext;
-},
-
-}
-// Base64
+    // Base64
 
     // Buffer
     class Buffer {
-
-        static from(string, type) {
-            return new Buffer(string);
+        static from (string, type) {
+            return new Buffer(string)
         }
 
-        constructor(string) {
-            this.string = string;
+        constructor (string) {
+            this.string = string
         }
 
-        toString(type) {
+        toString (type) {
             return Base64.encode(this.string)
         }
     }
@@ -219,9 +200,9 @@ _utf8_encode : function (string) {
         }
 
         processTrackerList (data) {
-            for (let name in data) {
+            for (const name in data) {
                 if (data[name].rules) {
-                    for (let i in data[name].rules) {
+                    for (const i in data[name].rules) {
                         data[name].rules[i].rule = new RegExp(data[name].rules[i].rule, 'ig')
                     }
                 }
@@ -231,7 +212,7 @@ _utf8_encode : function (string) {
 
         processEntityList (data) {
             const processed = {}
-            for (let entity in data) {
+            for (const entity in data) {
                 data[entity].domains.forEach(domain => {
                     processed[domain] = entity
                 })
@@ -305,7 +286,7 @@ _utf8_encode : function (string) {
 
             const fullTrackerDomain = requestData.urlToCheckSplit.join('.')
 
-            const {action, reason} = this.getAction({
+            const { action, reason } = this.getAction({
                 firstParty,
                 matchedRule,
                 matchedRuleException,
@@ -329,10 +310,10 @@ _utf8_encode : function (string) {
          * Pull subdomains off of the reqeust rule and look for a matching tracker object in our data
          */
         findTracker (requestData) {
-            let urlList = Array.from(requestData.urlToCheckSplit)
+            const urlList = Array.from(requestData.urlToCheckSplit)
 
             while (urlList.length > 1) {
-                let trackerDomain = urlList.join('.')
+                const trackerDomain = urlList.join('.')
                 urlList.shift()
 
                 const matchedTracker = this.trackerList[trackerDomain]
@@ -351,10 +332,10 @@ _utf8_encode : function (string) {
         */
         findWebsiteOwner (requestData) {
             // find the site owner
-            let siteUrlList = Array.from(requestData.siteUrlSplit)
+            const siteUrlList = Array.from(requestData.siteUrlSplit)
 
             while (siteUrlList.length > 1) {
-                let siteToCheck = siteUrlList.join('.')
+                const siteToCheck = siteUrlList.join('.')
                 siteUrlList.shift()
 
                 if (this.entityList[siteToCheck]) {
@@ -370,11 +351,11 @@ _utf8_encode : function (string) {
             let matchedRule = null
             // Find a matching rule from this tracker
             if (tracker.rules && tracker.rules.length) {
-                tracker.rules.some(ruleObj => {
+                matchedRule = tracker.rules.find(ruleObj => {
                     if (this.requestMatchesRule(requestData, ruleObj)) {
-                        matchedRule = ruleObj
                         return true
                     }
+                    return false
                 })
             }
             return matchedRule
@@ -403,10 +384,12 @@ _utf8_encode : function (string) {
             const ruleDefinition = rule[type]
 
             const matchTypes = (ruleDefinition.types && ruleDefinition.types.length)
-                ? ruleDefinition.types.includes(requestData.request.type) : true
+                ? ruleDefinition.types.includes(requestData.request.type)
+                : true
 
             const matchDomains = (ruleDefinition.domains && ruleDefinition.domains.length)
-                ? ruleDefinition.domains.some(domain => domain.match(requestData.siteDomain)) : true
+                ? ruleDefinition.domains.some(domain => domain.match(requestData.siteDomain))
+                : true
 
             return (matchTypes && matchDomains)
         }
@@ -439,137 +422,205 @@ _utf8_encode : function (string) {
                 }
             }
 
-            return {action, reason}
+            return { action, reason }
         }
     }
 
     // trackers.js
 
     // surrogates
-    let surrogates = `
-    ${surrogates}
+    const surrogates = `
+    $SURROGATES$
     `
     // surrogates
 
     // tracker data set
-    let trackerData = ${trackerData}
+    const trackerData = $TRACKER_DATA$
     // tracker data set
 
-    let blockingEnabled = ${blockingEnabled}
-    
+    const blockingEnabled = $BLOCKING_ENABLED$
+
     // overrides
-    Trackers.prototype.findTrackerOwner = function(domain) {
-        var parts = domain.split(".")
+    Trackers.prototype.findTrackerOwner = function (domain) {
+        let parts = domain.split('.')
         while (parts.length > 1) {
-            let entityName = trackerData.domains[parts.join(".")]
+            const entityName = trackerData.domains[parts.join('.')]
             if (entityName) {
                 return entityName
             }
             parts = parts.slice(1)
         }
-        return null;
+        return null
     }
     Object.freeze(Trackers.prototype)
 
     // create an instance to use
-    let trackers = new Trackers({
+    const trackers = new Trackers({
         tldjs: tldjs,
         utils: utils
-    });
+    })
 
     // update algorithm with the data it needs
     trackers.setLists([{
-            name: "tds",
-            data: trackerData
-        },
-        {
-            name: "surrogates",
-            data: surrogates
-        }
-    ]);
+        name: 'tds',
+        data: trackerData
+    },
+    {
+        name: 'surrogates',
+        data: surrogates
+    }
+    ])
 
-    let topLevelUrl = getTopLevelURL();
+    const topLevelUrl = getTopLevelURL()
 
-    var unprotectedDomain = false;
-    var domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split(".") : [];
+    let unprotectedDomain = false
+    const domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split('.') : []
 
     // walk up the domain to see if it's unprotected
-    while (domainParts && domainParts.length > 1 && !unprotectedDomain) {
-      let partialDomain = domainParts.join(".")
+    while (domainParts.length > 1 && !unprotectedDomain) {
+        const partialDomain = domainParts.join('.')
 
-      unprotectedDomain = `
-          ${tempUnprotectedDomains}
-          `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        unprotectedDomain = `
+          $TEMP_UNPROTECTED_DOMAINS$
+          `.split('\n').filter(domain => domain.trim() === partialDomain).length > 0
 
-      domainParts.shift()
+        domainParts.shift()
     }
 
     if (!unprotectedDomain && topLevelUrl.host != null) {
-      unprotectedDomain = `
-          ${userUnprotectedDomains}
-          `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
+        unprotectedDomain = `
+          $USER_UNPROTECTED_DOMAINS$
+          `.split('\n').filter(domain => domain.trim() === topLevelUrl.host).length > 0
+    }
+
+    let trackerAllowlist = {}
+    const trackerAllowlistEntries = `
+            $TRACKER_ALLOWLIST_ENTRIES$
+          `
+
+    if (trackerAllowlistEntries) {
+        trackerAllowlist = JSON.parse(trackerAllowlistEntries)
+    }
+
+    function isTrackerAllowlisted (siteURL, request) {
+        // check that allowlist has entries
+        if (!Object.keys(trackerAllowlist).length) {
+            return false
+        }
+
+        const parsedRequest = tldjs.parse(request)
+        const requestDomainParts = Array.from(parsedRequest.domain.split('.'))
+
+        let allowListEntry = null
+        while (requestDomainParts.length > 1) {
+            const requestDomain = requestDomainParts.join('.')
+
+            allowListEntry = trackerAllowlist[requestDomain]
+            if (allowListEntry) {
+                break
+            }
+            requestDomainParts.shift()
+        }
+
+        if (allowListEntry) {
+            return _matchesRule(siteURL, request, allowListEntry)
+        } else {
+            return false
+        }
+    }
+
+    function _matchesRule (siteURL, request, allowListEntryList) {
+        let matchedEntry = null
+
+        if (allowListEntryList && allowListEntryList.length) {
+            for (const entryObj of allowListEntryList) {
+                if (request.match(entryObj.rule)) {
+                    matchedEntry = entryObj
+                    break
+                }
+            }
+        }
+
+        if (matchedEntry) {
+            if (matchedEntry.domains.includes('<all>')) {
+                return true
+            }
+
+            const siteDomainParts = Array.from(siteURL.host.split('.'))
+
+            while (siteDomainParts.length > 1) {
+                const siteDomain = siteDomainParts.join('.')
+                if (matchedEntry.domains.includes(siteDomain)) {
+                    return true
+                }
+                siteDomainParts.shift()
+            }
+        }
+
+        return false
     }
 
     // private
-    function getTopLevelURL() {
+    function getTopLevelURL () {
         try {
             // FROM: https://stackoverflow.com/a/7739035/73479
             // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
-            return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
-        } catch(error) {
+            return new URL(window.location !== window.parent.location ? document.referrer : document.location.href)
+        } catch (error) {
             return new URL(location.href)
         }
     }
-    
-    var loadedSurrogates = {}
+
+    const loadedSurrogates = {}
 
     // private
-    function loadSurrogate(surrogatePattern) {
-        var s = document.createElement("script")
-        s.type = "application/javascript"
+    function loadSurrogate (surrogatePattern) {
+        const s = document.createElement('script')
+        s.type = 'application/javascript'
         s.async = true
         s.src = trackers.surrogateList[surrogatePattern]
-        var scripts = document.getElementsByTagName("script")
+        const scripts = document.getElementsByTagName('script')
         if (scripts && scripts.length > 0) {
             scripts[0].parentNode.insertBefore(s, scripts[0])
         }
     }
 
     // public
-    function shouldBlock(trackerUrl, type) {
-        let startTime = performance.now()
-        
+    function shouldBlock (trackerUrl, type) {
+        seenUrls.add(trackerUrl)
+        const startTime = performance.now()
+
         if (!blockingEnabled) {
-            return false;
+            return false
         }
 
-        let result = trackers.getTrackerData(trackerUrl.toString(), topLevelUrl.toString(), {
+        const result = trackers.getTrackerData(trackerUrl.toString(), topLevelUrl.toString(), {
             type: type
-        }, null);
+        }, null)
 
         if (result == null) {
-            return false;
+            return false
         }
 
-        var blocked = false;
+        let blocked = false
         if (unprotectedDomain) {
-            result.reason = "unprotectedDomain";
+            result.reason = 'unprotectedDomain'
         } else if (result.action !== 'ignore') {
             // other actions are "block" or "redirect" - anything that is not ignored should be blocked. Surrogates are handled below since
             //  we can't do a redirect.
-            blocked = true;
+            blocked = true
         }
-        
-        var isSurrogate = !!(result.matchedRule && result.matchedRule.surrogate)
+
+        const isSurrogate = !!(result.matchedRule && result.matchedRule.surrogate)
 
         // Tracker blocking is dealt with by content rules
         // Only handle surrogates here
-        if (blocked && isSurrogate) {
+        if (blocked && isSurrogate && !isTrackerAllowlisted(topLevelUrl, trackerUrl)) {
             if (!loadedSurrogates[result.matchedRule.surrogate]) {
                 loadSurrogate(result.matchedRule.surrogate)
                 loadedSurrogates[result.matchedRule.surrogate] = true
             }
-            
+
             const pageUrl = window.location.href
             surrogateInjected({
                 url: trackerUrl,
@@ -579,106 +630,115 @@ _utf8_encode : function (string) {
                 pageUrl: pageUrl
             })
 
-            duckduckgoDebugMessaging.signpostEvent({event: "Surrogate Injected",
-                                                   url: trackerUrl,
-                                                   time: performance.now() - startTime})
+            duckduckgoDebugMessaging.signpostEvent({
+                event: 'Surrogate Injected',
+                url: trackerUrl,
+                time: performance.now() - startTime
+            })
 
             return true
         }
-        
+
         return false
     }
-    
-    function processPage() {
-        [].slice.apply(document.scripts).forEach(function(el) {
-            if (shouldBlock(el.src, 'SCRIPT')) {
-                duckduckgoDebugMessaging.log("blocking load")
-            }
-            
-        });
-        [].slice.apply(document.images).forEach(function(el) {
-          // If the image's natural width is zero, then it has not loaded so we
-          // can assume that it may have been blocked.
-          if (el.naturalWidth === 0) {
-              if (shouldBlock(el.src, 'IMG')) {
-                  duckduckgoDebugMessaging.log("blocking load")
-              }
-          }
-        });
-        [].slice.apply(document.querySelectorAll('link')).forEach(function(el) {
-            if (shouldBlock(el.href, 'LINK')) {
-                duckduckgoDebugMessaging.log("blocking load")
-            }
-        });
-        [].slice.apply(document.querySelectorAll('iframe')).forEach(function(el) {
-          if (shouldBlock(el.src, 'IFRAME')) {
-              duckduckgoDebugMessaging.log("blocking load")
-          }
-        });
-        scheduleProcessPage()
-    }
-    
-    var interval = 1
-    function scheduleProcessPage() {
-        interval *= 2
-        setTimeout(processPage, interval * 1000)
+
+    const seenUrls = new Set()
+    function hasNotSeen (url) {
+        return !seenUrls.has(url)
     }
 
+    function processPage () {
+        [...document.scripts].filter(hasNotSeen).forEach((el) => {
+            if (shouldBlock(el.src, 'SCRIPT')) {
+                duckduckgoDebugMessaging.log('blocking load')
+            }
+        });
+        [...document.images].filter(hasNotSeen).forEach((el) => {
+            // If the image's natural width is zero, then it has not loaded so we
+            // can assume that it may have been blocked.
+            if (el.naturalWidth === 0) {
+                if (shouldBlock(el.src, 'IMG')) {
+                    duckduckgoDebugMessaging.log('blocking load')
+                }
+            }
+        });
+        [...document.querySelectorAll('link')].filter(hasNotSeen).forEach((el) => {
+            if (shouldBlock(el.href, 'LINK')) {
+                duckduckgoDebugMessaging.log('blocking load')
+            }
+        });
+        [...document.querySelectorAll('iframe')].filter(hasNotSeen).forEach((el) => {
+            if (shouldBlock(el.src, 'IFRAME')) {
+                duckduckgoDebugMessaging.log('blocking load')
+            }
+        })
+    }
+
+    function debounce (func, wait) {
+        let timeout
+        return function () {
+            clearTimeout(timeout)
+            timeout = setTimeout(() => {
+                func.apply(this, arguments)
+            }, wait)
+        }
+    }
+
+    const observer = new MutationObserver(debounce((mutations, o) => {
+        processPage()
+    }, 100))
+    const rootElement = document.body || document.documentElement
+    observer.observe(rootElement, { childList: true, subtree: true });
+
     // Init
-    (function() {
-        
-        duckduckgoDebugMessaging.log("installing load detection")
-        window.addEventListener("load", function(event) {
+    (function () {
+        duckduckgoDebugMessaging.log('installing load detection')
+        window.addEventListener('load', function (event) {
             processPage()
         }, false)
 
-
         try {
-            duckduckgoDebugMessaging.log("installing image src detection")
+            duckduckgoDebugMessaging.log('installing image src detection')
 
-            var originalImageSrc = Object.getOwnPropertyDescriptor(Image.prototype, 'src')
+            const originalImageSrc = Object.getOwnPropertyDescriptor(Image.prototype, 'src')
             Object.defineProperty(Image.prototype, 'src', {
                 writable: true, // Needs to be writable for the content blocking rules script. Will be locked down in that script
-                get: function() {
+                get: function () {
                     return originalImageSrc.get.call(this)
                 },
-                set: function(value) {
-
-                    var instance = this
-                    if (shouldBlock(value, "image")) {
-                        duckduckgoDebugMessaging.log("blocking image src: " + value)
+                set: function (value) {
+                    const instance = this
+                    if (shouldBlock(value, 'image')) {
+                        duckduckgoDebugMessaging.log('blocking image src: ' + value)
                     } else {
-                        originalImageSrc.set.call(instance, value);
+                        originalImageSrc.set.call(instance, value)
                     }
-                    
                 }
             })
-
-        } catch(error) {
-            duckduckgoDebugMessaging.log("failed to install image src detection")
+        } catch (error) {
+            duckduckgoDebugMessaging.log('failed to install image src detection')
         }
 
         try {
-            duckduckgoDebugMessaging.log("installing xhr detection")
+            duckduckgoDebugMessaging.log('installing xhr detection')
 
-            var xhr = XMLHttpRequest.prototype
-            var originalOpen = xhr.open
+            const xhr = XMLHttpRequest.prototype
+            const originalOpen = xhr.open
 
-            xhr.open = function() {
-                var args = arguments
-                var url = arguments[1]
-                if (shouldBlock(url, "xmlhttprequest")) {
-                    args[1] = "about:blank"
+            xhr.open = function () {
+                const args = arguments
+                const url = arguments[1]
+                if (shouldBlock(url, 'xmlhttprequest')) {
+                    args[1] = 'about:blank'
                 }
-                duckduckgoDebugMessaging.log("sending xhr " + url + " to " + args[1])
-                return originalOpen.apply(this, args);
+                duckduckgoDebugMessaging.log('sending xhr ' + url + ' to ' + args[1])
+                return originalOpen.apply(this, args)
             }
-
-        } catch(error) {
-            duckduckgoDebugMessaging.log("failed to install xhr detection")
+        } catch (error) {
+            duckduckgoDebugMessaging.log('failed to install xhr detection')
         }
-        
-        duckduckgoDebugMessaging.log("content blocking initialised")
+
+        duckduckgoDebugMessaging.log('content blocking initialised')
     })()
 
     return {

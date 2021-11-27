@@ -353,6 +353,10 @@ class TabViewController: UIViewController {
         load(urlRequest: URLRequest.userInitiated(url))
     }
     
+    func stopLoading() {
+        webView.stopLoading()
+    }
+    
     private func load(urlRequest: URLRequest) {
         loadViewIfNeeded()
         
@@ -1065,7 +1069,15 @@ extension TabViewController: WKNavigationDelegate {
         
         var request = incomingRequest
         // Add Do Not sell header if needed
-        if appSettings.sendDoNotSell && PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .gpc) {
+        let config = PrivacyConfigurationManager.shared.privacyConfig
+        let domain = incomingRequest.url?.host
+        let urlAllowed = !config.isInExceptionList(domain: domain, forFeature: .gpc)
+                            && !config.isUserUnprotected(domain: domain)
+                            && !config.isTempUnprotected(domain: domain)
+        
+        if appSettings.sendDoNotSell
+            && PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .gpc)
+            && urlAllowed {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)

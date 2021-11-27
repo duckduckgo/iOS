@@ -76,8 +76,9 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             + (privacyConfiguration.exceptionsList(forFeature: .contentBlocking).joined(separator: "\n"))
         
         return Self.loadJS("contentblockerrules", from: Bundle.core, withReplacements: [
-            "${tempUnprotectedDomains}": remoteUnprotectedDomains,
-            "${userUnprotectedDomains}": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n")
+            "$TEMP_UNPROTECTED_DOMAINS$": remoteUnprotectedDomains,
+            "$USER_UNPROTECTED_DOMAINS$": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n"),
+            "$TRACKER_ALLOWLIST_ENTRIES$": TrackerAllowlistInjection.prepareForInjection(allowlist: privacyConfiguration.trackerAllowlist)
         ])
     }
 
@@ -127,4 +128,23 @@ public class ContentBlockerRulesUserScript: NSObject, UserScript {
             delegate.contentBlockerUserScript(self, detectedTracker: tracker)
         }
     }
+}
+
+public class TrackerAllowlistInjection {
+
+    static func prepareForInjection(allowlist: PrivacyConfigurationData.TrackerAllowlistData) -> String {
+        // Transform rules into regular expresions
+        var output = PrivacyConfigurationData.TrackerAllowlistData()
+        for dictEntry in allowlist {
+            let newValue = dictEntry.value.map { entry -> PrivacyConfigurationData.TrackerAllowlist.Entry in
+                let regexp = ContentBlockerRulesBuilder.makeRegexpFilter(fromAllowlistRule: entry.rule)
+                let escapedRegexp = regexp.replacingOccurrences(of: "\\", with: "\\\\")
+                return PrivacyConfigurationData.TrackerAllowlist.Entry(rule: escapedRegexp, domains: entry.domains)
+            }
+            output[dictEntry.key] = newValue
+        }
+
+        return (try? String(data: JSONEncoder().encode(output), encoding: .utf8)) ?? ""
+    }
+
 }

@@ -1,0 +1,162 @@
+{
+    "version": "2021.6.7",
+    "readme": "https://github.com/duckduckgo/privacy-configuration",
+    "features": {
+        "contentBlocking": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "example.com",
+                    "reason": "Adblocker wall"
+                }
+            ]
+        },
+        "trackingCookies3p": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "example.com",
+                    "reason": "site breakage"
+                }
+            ],
+            "settings": {
+                "excludedCookieDomains": [
+                    {
+                        "domain": "example.com",
+                        "reason": "Site breakage"
+                    }
+                ]
+            }
+        },
+        "trackingCookies1p": {
+            "state": "enabled",
+            "settings": {
+                "firstPartyTrackerCookiePolicy": {
+                    "threshold": 86400,
+                    "maxAge": 86400
+                }
+            },
+            "exceptions": []
+        },
+        "clickToPlay": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingCanvas": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "example.com",
+                    "reason": "site breakage"
+                }
+            ]
+        },
+        "fingerprintingAudio": {
+            "state": "disabled",
+            "exceptions": [
+                {
+                    "domain": "example.com"
+                }
+            ]
+        },
+        "fingerprintingTemporaryStorage": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "referrer": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingBattery": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingScreenSize": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingHardware": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "example.com"
+                }
+            ]
+        },
+        "floc": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "gpc": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "userAgentRotation": {
+            "state": "disabled",
+            "settings": {
+                "agentExcludePatterns": [
+                    {
+                        "agent": "Brave Chrome",
+                        "reason": "Uncommon UA"
+                    }
+                ]
+            },
+            "exceptions": [
+                {
+                    "domain": "example.com",
+                    "reason": "Two factor auth that verifies device pathes using user agent"
+                }
+            ]
+        },
+        "trackerAllowlist": {
+            "state": "enabled",
+            "settings": {
+              "allowlistedTrackers": {
+                "example.com": {
+                  "rules" : [
+                    {
+                        "rule": "example.com/tracker.js",
+                        "domains": ["test.com"],
+                        "reason": "broken"
+                    }
+                  ]
+                },
+                "example2.com": {
+                  "rules" : [
+                    {
+                        "rule": "example2.com/path/",
+                        "domains": ["<all>"],
+                        "reason": "broken"
+                    },
+                    {
+                        "rule": "example2.com/resource.json",
+                        "domains": ["<all>"],
+                        "reason": "broken"
+                    }
+                  ]
+                }
+              }
+            }
+        },
+        "exampleFeature": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "dictValue": {
+                        "key": "value"
+                },
+                "arrayValue": [
+                  "value"
+                ],
+                "stringValue": "value",
+                "numericalValue": 1
+            },
+        }
+    },
+    "unprotectedTemporary": [
+        {
+            "domain": "example.com",
+            "reason": "site breakage"
+        }
+    ]
+}

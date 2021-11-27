@@ -131,9 +131,12 @@ class SurrogatesUserScriptsTests: XCTestCase {
         var tempUnprotected = privacyConfig.tempUnprotectedDomains.filter { !$0.trimWhitespace().isEmpty }
         tempUnprotected.append(contentsOf: privacyConfig.exceptionsList(forFeature: .contentBlocking))
 
+        let exceptions = DefaultContentBlockerRulesSource.transform(allowList: privacyConfig.trackerAllowlist)
+
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
                                                      exceptions: privacyConfig.userUnprotectedDomains,
-                                                     tempUnprotected: tempUnprotected) { rules in
+                                                     tempUnprotected: tempUnprotected,
+                                                     trackerExceptions: exceptions) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
                 return
@@ -150,8 +153,13 @@ class SurrogatesUserScriptsTests: XCTestCase {
             mockUserScriptConfig.encodedTrackerData = encodedTrackerData
             mockUserScriptConfig.surrogates = Self.exampleSurrogates
 
-            let userScript = SurrogatesUserScript(configurationSource: mockUserScriptConfig)
+            let userScript = CustomSurrogatesUserScript(configurationSource: mockUserScriptConfig)
             userScript.delegate = self.userScriptDelegateMock
+
+            // UserScripts contain TrackerAllowlist rules in form of regular expressions - we need to ensure test scheme is matched instead of http/https
+            userScript.onSourceInjection = { inputScript -> String in
+                return inputScript.replacingOccurrences(of: "http", with: "test")
+            }
 
             for messageName in userScript.messageNames {
                 configuration.userContentController.add(userScript, name: messageName)
@@ -186,7 +194,12 @@ class SurrogatesUserScriptsTests: XCTestCase {
             }
 
             let request = URLRequest(url: websiteURL)
-            webView.load(request)
+            WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache,
+                                                              WKWebsiteDataTypeMemoryCache],
+                                                    modifiedSince: Date(timeIntervalSince1970: 0),
+                                                    completionHandler: {
+                webView.load(request)
+            })
         }
     }
 
@@ -194,6 +207,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
         let websiteURL = URL(string: "test://example.com")!
@@ -230,6 +244,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -259,6 +274,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: ["example.com"],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -296,6 +312,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: ["example.com"],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -327,6 +344,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: ["example.com"],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: [])
 
@@ -356,8 +374,77 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let websiteURL = URL(string: "test://example.com")!
 
+        let allowlist = ["tracker.com": [PrivacyConfigurationData.TrackerAllowlist.Entry(rule: "tracker.com/", domains: ["example.com"])]]
+
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: allowlist,
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 0)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNotNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL, self.trackerURL, self.nonSurrogateScriptURL, self.surrogateScriptURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenSiteIsNotInExceptionListThenSurrogatesAreInjected() {
+
+        let websiteURL = URL(string: "test://example.com")!
+
+        let allowlist = ["tracker.com": [PrivacyConfigurationData.TrackerAllowlist.Entry(rule: "tracker.com/", domains: ["test.com"])]]
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  trackerAllowlist: allowlist,
+                                                                  contentBlockingEnabled: true,
+                                                                  exceptions: [])
+
+        let websiteLoaded = self.expectation(description: "Website Loaded")
+        let surrogateValidated = self.expectation(description: "Validated surrogate injection")
+
+        navigationDelegateMock.onDidFinishNavigation = {
+            websiteLoaded.fulfill()
+
+            XCTAssertEqual(self.userScriptDelegateMock.detectedSurrogates.count, 1)
+
+            self.webView?.evaluateJavaScript("window.surrT.ping()", completionHandler: { _, err in
+                XCTAssertNil(err)
+                surrogateValidated.fulfill()
+            })
+
+            let expectedRequests: Set<URL> = [websiteURL, self.nonTrackerURL]
+            XCTAssertEqual(Set(self.schemeHandler.handledRequests), expectedRequests)
+        }
+
+        performTestFor(privacyConfig: privacyConfig, websiteURL: websiteURL)
+
+        self.wait(for: [websiteLoaded, surrogateValidated], timeout: 15)
+    }
+
+    func testWhenTrackerIsInAllowListThenSurrogatesAreNotInjected() {
+
+        let websiteURL = URL(string: "test://example.com")!
+
+        let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
+                                                                  tempUnprotected: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: ["example.com"])
 
@@ -389,6 +476,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: true,
                                                                   exceptions: ["example.com"])
 
@@ -420,6 +508,7 @@ class SurrogatesUserScriptsTests: XCTestCase {
 
         let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                   tempUnprotected: [],
+                                                                  trackerAllowlist: [:],
                                                                   contentBlockingEnabled: false,
                                                                   exceptions: [])
 

@@ -18,6 +18,7 @@
 //
 
 import WebKit
+import os.log
 
 public protocol WebCacheManagerCookieStore {
     
@@ -67,12 +68,19 @@ public class WebCacheManager {
         
         let group = DispatchGroup()
         
+        var consumedCookiesCount = 0
+        
         for cookie in cookies {
             group.enter()
+            consumedCookiesCount += 1
             httpCookieStore.setCookie(cookie) {
                 group.leave()
             }
         }
+        
+        Pixel.fire(pixel: .legacyCookieMigration, withAdditionalParameters: [
+            PixelParameters.count: "\(consumedCookiesCount)"
+        ])
         
         DispatchQueue.global(qos: .userInitiated).async {
             group.wait()
@@ -80,6 +88,15 @@ public class WebCacheManager {
             DispatchQueue.main.async {
                 cookieStorage.clear()
                 completion()
+                
+                if cookieStorage.cookies.count > 0 {
+                    os_log("Error removing cookies: %d cookies left in legacy CookieStorage",
+                           log: generalLog, type: .debug, cookieStorage.cookies.count)
+                    
+                    Pixel.fire(pixel: .legacyCookieCleanupError, withAdditionalParameters: [
+                        PixelParameters.count: "\(cookieStorage.cookies.count)"
+                    ])
+                }
             }
         }
     }
@@ -130,11 +147,17 @@ public class WebCacheManager {
                 completion()
                 return
             }
+            
+            let cookieClearingSummary = WebStoreCookieClearingSummary()
 
             cookieStore.getAllCookies { cookies in
                 let group = DispatchGroup()
                 let cookiesToRemove = cookies.filter { !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain }
-
+                let protectedCookiesCount = cookies.count - cookiesToRemove.count
+                
+                cookieClearingSummary.storeInitialCount = cookies.count
+                cookieClearingSummary.storeProtectedCount = protectedCookiesCount
+                
                 for cookie in cookiesToRemove {
                     group.enter()
                     cookieStore.delete(cookie) {
@@ -146,14 +169,57 @@ public class WebCacheManager {
                     let result = group.wait(timeout: .now() + 5)
 
                     if result == .timedOut {
+                        cookieClearingSummary.didStoreDeletionTimeOut = true
                         Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
                             PixelParameters.clearWebDataTimedOut: "1"
                         ])
                     }
-
+                    
+                    // Remove legacy HTTPCookieStorage cookies
+                    let storageCookies = HTTPCookieStorage.shared.cookies ?? []
+                    let storageCookiesToRemove = storageCookies.filter {
+                        !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain
+                    }
+                    
+                    let protectedStorageCookiesCount = storageCookies.count - storageCookiesToRemove.count
+                    
+                    cookieClearingSummary.storageInitialCount = storageCookies.count
+                    cookieClearingSummary.storageProtectedCount = protectedStorageCookiesCount
+                    
+                    for storageCookie in storageCookiesToRemove {
+                        HTTPCookieStorage.shared.deleteCookie(storageCookie)
+                    }
+                    
+                    self.performSanityCheck(for: cookieStore, summary: cookieClearingSummary)
+                    
                     DispatchQueue.main.async {
                         completion()
                     }
+                }
+            }
+        }
+    }
+    
+    private func performSanityCheck(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            cookieStore.getAllCookies { cookiesAfterCleaning in
+                let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
+                
+                summary.storeAfterDeletionCount = cookiesAfterCleaning.count
+                summary.storageAfterDeletionCount = storageCookiesAfterCleaning.count
+                
+                let cookieStoreDiff = cookiesAfterCleaning.count - summary.storeProtectedCount
+                let cookieStorageDiff = storageCookiesAfterCleaning.count - summary.storageProtectedCount
+                
+                summary.storeAfterDeletionDiffCount = cookieStoreDiff
+                summary.storageAfterDeletionDiffCount = cookieStorageDiff
+                
+                if cookieStoreDiff + cookieStorageDiff > 0 {
+                    os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
+                           log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
+                    
+                    Pixel.fire(pixel: .cookieDeletionLeftovers,
+                               withAdditionalParameters: summary.makeDictionaryRepresentation())
                 }
             }
         }
@@ -192,4 +258,29 @@ extension WKWebsiteDataStore: WebCacheManagerDataStore {
                    completionHandler: completion)
     }
     
+}
+
+final class WebStoreCookieClearingSummary {
+    var storeInitialCount: Int = 0
+    var storeProtectedCount: Int = 0
+    var didStoreDeletionTimeOut: Bool = false
+    var storageInitialCount: Int = 0
+    var storageProtectedCount: Int = 0
+    
+    var storeAfterDeletionCount: Int = 0
+    var storageAfterDeletionCount: Int = 0
+    var storeAfterDeletionDiffCount: Int = 0
+    var storageAfterDeletionDiffCount: Int = 0
+    
+    func makeDictionaryRepresentation() -> [String: String] {
+        [PixelParameters.storeInitialCount: "\(storeInitialCount)",
+         PixelParameters.storeProtectedCount: "\(storeProtectedCount)",
+         PixelParameters.didStoreDeletionTimeOut: didStoreDeletionTimeOut ? "true" : "false",
+         PixelParameters.storageInitialCount: "\(storageInitialCount)",
+         PixelParameters.storageProtectedCount: "\(storageProtectedCount)",
+         PixelParameters.storeAfterDeletionCount: "\(storeAfterDeletionCount)",
+         PixelParameters.storageAfterDeletionCount: "\(storageAfterDeletionCount)",
+         PixelParameters.storeAfterDeletionDiffCount: "\(storeAfterDeletionDiffCount)",
+         PixelParameters.storageAfterDeletionDiffCount: "\(storageAfterDeletionDiffCount)"]
+    }
 }

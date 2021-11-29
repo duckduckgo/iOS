@@ -21,7 +21,7 @@ import Foundation
 
 public class LinkCleaner {
     
-    private var lastAmpUrl: String?
+    public var lastAmpUrl: String?
     
     public init() {
         
@@ -87,22 +87,5 @@ public class LinkCleaner {
         }
         
         return nil
-    }
-    
-    public func getLastAmpUrl() -> String? {
-        guard let lastAmpUrl = lastAmpUrl else { return nil }
-        
-        let returnVal = lastAmpUrl
-        self.lastAmpUrl = nil
-        
-        return returnVal
-    }
-    
-    public func resetLastAmpUrl() {
-        lastAmpUrl = nil
-    }
-    
-    public func setLastAmpUrl(_ url: String?) {
-        lastAmpUrl = url
     }
 }

@@ -312,7 +312,13 @@ class TabViewController: UIViewController {
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
         } else if let request = request {
-            load(urlRequest: request)
+            if let url = request.url {
+                getCleanUrl(url) { [weak self] cleanUrl in
+                    self?.load(urlRequest: URLRequest(url: cleanUrl))
+                }
+            } else {
+                load(urlRequest: request)
+            }
         }
     }
 
@@ -354,6 +360,7 @@ class TabViewController: UIViewController {
         if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
             completion(cleanUrl)
         } else if ampExtractor.urlContainsAmpKeyword(url) {
+            showProgressIndicator()
             ampExtractor.getCanonicalUrl(initiator: nil, url: url) { canonical in
                 if let canonical = canonical {
                     completion(canonical)
@@ -804,7 +811,7 @@ class TabViewController: UIViewController {
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlockerRulesManager.shared.currentRules?.etag ?? "",
-                              ampUrl: linkCleaner?.getLastAmpUrl())
+                              ampUrl: linkCleaner?.lastAmpUrl)
     }
     
     public func print() {
@@ -928,6 +935,7 @@ extension TabViewController: WKNavigationDelegate {
         hideErrorMessage()
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
+        ampExtractor.cancelOngoingExtraction()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1127,6 +1135,7 @@ extension TabViewController: WKNavigationDelegate {
             load(newUrl: newUrl, forNavigationAction: navigationAction)
             return true
         } else if ampExtractor.urlContainsAmpKeyword(navigationAction.request.url) {
+            showProgressIndicator()
             ampExtractor.getCanonicalUrl(initiator: webView.url,
                                           url: navigationAction.request.url) { canonical in
                 guard let canonical = canonical else {

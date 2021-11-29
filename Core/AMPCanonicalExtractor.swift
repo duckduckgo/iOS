@@ -86,7 +86,7 @@ public class AMPCanonicalExtractor: NSObject {
     
     public func urlContainsAmpKeyword(_ url: URL?,
                                       config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
-        linkCleaner.resetLastAmpUrl()
+        linkCleaner.lastAmpUrl = nil
         guard let url = url, !linkCleaner.isURLExcluded(url: url, config: config) else { return false }
         let urlStr = url.absoluteString
         
@@ -116,9 +116,16 @@ public class AMPCanonicalExtractor: NSObject {
         return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: true)
     }
     
+    public func cancelOngoingExtraction() {
+        webView?.stopLoading()
+        webView = nil
+        completion = nil
+    }
+    
     public func getCanonicalUrl(initiator: URL?, url: URL?,
                                 config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig,
                                 completion: @escaping ((URL?) -> Void)) {
+        cancelOngoingExtraction()
         guard let url = url, !linkCleaner.isURLExcluded(url: url, config: config) else {
             completion(nil)
             return
@@ -160,7 +167,7 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
             if let canonicalUrl = URL(string: canonical),
                !linkCleaner.isURLExcluded(url: canonicalUrl,
                                             config: PrivacyConfigurationManager.shared.privacyConfig) {
-                linkCleaner.setLastAmpUrl(canonicalUrl.absoluteString)
+                linkCleaner.lastAmpUrl = canonicalUrl.absoluteString
                 completion?(canonicalUrl)
             } else {
                 completion?(nil)

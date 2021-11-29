@@ -88,8 +88,8 @@ class BookmarksManager {
         coreDataStorage.favorite(forURL: url, completion: completion)
     }
     
-    func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
-        coreDataStorage.saveNewFolder(withTitle: title, parentID: parentID)
+    func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID, completion: ((NSManagedObjectID) -> Void)? = nil) {
+        coreDataStorage.saveNewFolder(withTitle: title, parentID: parentID, completion: completion)
         Pixel.fire(pixel: .bookmarksFolderCreated)
     }
     

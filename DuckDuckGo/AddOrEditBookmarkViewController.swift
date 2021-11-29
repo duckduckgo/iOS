@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import CoreData
 
 class AddOrEditBookmarkViewController: UIViewController {
     
@@ -33,9 +34,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         super.viewDidLoad()
         setUpTitle()
         setUpDoneButton()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
-        
+                
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -89,6 +88,11 @@ class AddOrEditBookmarkViewController: UIViewController {
             foldersViewController = segue.destination as? BookmarkFoldersViewController
             setUpDataSource()
         }
+        if segue.identifier == "AddFolderFromBookmark",
+           let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
+            
+            viewController.createdNewFolderDelegate = self
+        }
     }
     
     @IBAction func onCancelPressed(_ sender: Any) {
@@ -99,13 +103,6 @@ class AddOrEditBookmarkViewController: UIViewController {
     @IBAction func onSavePressed(_ sender: Any) {
         foldersViewController?.save()
         dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func dataDidChange(notification: Notification) {
-        if let viewController = foldersViewController, let dataSource = viewController.dataSource as? BookmarkDetailsDataSource {
-            dataSource.refreshFolders(viewController.tableView, section: 0)
-            foldersViewController?.tableView.reloadData()
-        }
     }
 }
 
@@ -126,6 +123,16 @@ extension AddOrEditBookmarkViewController: BookmarkDetailsSectionDataSourceDeleg
             DispatchQueue.main.async {
                 self.onSavePressed(self)
             }
+        }
+    }
+}
+
+extension AddOrEditBookmarkViewController: BookmarkItemDetailsDataSourceDidSaveDelegate {
+    
+    func bookmarkItemDetailsDataSource(_ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource, createdNewFolderWithObjectID objectID: NSManagedObjectID) {
+        
+        if let viewController = foldersViewController, let dataSource = viewController.dataSource as? BookmarkDetailsDataSource {
+            dataSource.refreshFolders(viewController.tableView, section: 0, andSelectFolderWithObjectID: objectID)
         }
     }
 }

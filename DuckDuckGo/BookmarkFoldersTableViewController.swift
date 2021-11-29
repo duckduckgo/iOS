@@ -42,7 +42,7 @@ class BookmarkFoldersViewController: UITableViewController {
         dataSource?.select(tableView, indexPath: indexPath)
     }
     
-    func save() {
-        dataSource?.save(tableView)
+    func save(delegate: BookmarkItemDetailsDataSourceDidSaveDelegate? = nil) {
+        dataSource?.save(tableView, delegate: delegate)
     }
 }

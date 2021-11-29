@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import CoreData
 
 //TODO I think this would have been waaaay easier if I'd made any none UITableViewDataSource methods part of a seperate protocol.
 //let's do it
@@ -53,7 +54,11 @@ extension MainBookmarksViewDataSource {
 
 protocol BookmarkItemDetailsDataSource: UITableViewDataSource {
     func select(_ tableView: UITableView, indexPath: IndexPath)
-    func save(_ tableView: UITableView)
+    func save(_ tableView: UITableView, delegate: BookmarkItemDetailsDataSourceDidSaveDelegate?)
+}
+
+protocol BookmarkItemDetailsDataSourceDidSaveDelegate: AnyObject {
+    func bookmarkItemDetailsDataSource(_ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource, createdNewFolderWithObjectID objectID: NSManagedObjectID)
 }
 
 //Todo I should just not have this? It's sort of stupid...
@@ -391,9 +396,7 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
 
     }
     
-    func refreshFolders(_ tableView: UITableView, section: Int) {
-        // selected folder may have moved
-        let selectedFolderID = item(at: selectedRow)?.item.objectID
+    func refreshFolders(_ tableView: UITableView, section: Int, andSelectFolderWithObjectID objectID: NSManagedObjectID) {
         
         guard let folder = bookmarksManager.topLevelBookmarksFolder else {
             return
@@ -401,13 +404,11 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
         presentableBookmarkItems = visibleFolders(for: folder, depthOfFolder: 0)
         
         tableView.reloadData()
-        if let selectedID = selectedFolderID {
-            let newIndex = presentableBookmarkItems.firstIndex {
-                $0.item.objectID == selectedID
-            }
-            if let index = newIndex {
-                select(tableView, row: index, section: section)
-            }
+        let newIndex = presentableBookmarkItems.firstIndex {
+            $0.item.objectID == objectID
+        }
+        if let index = newIndex {
+            select(tableView, row: index, section: section)
         }
     }
     
@@ -722,7 +723,8 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
         dataSource.select(tableView, row: indexPath.row, section: indexPath.section)
     }
     
-    func save(_ tableView: UITableView) {
+    func save(_ tableView: UITableView, delegate: BookmarkItemDetailsDataSourceDidSaveDelegate?) {
+        
         let dataSource = dataSources[1] as! BookmarkFoldersSectionDataSource
         //TODO if this is nil, something has gone really wrong
         guard let selectedParent = dataSource.selected() as? BookmarkFolder else {
@@ -737,7 +739,11 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
         if let folder = existingFolder {
             manager.update(folderID: folder.objectID, newTitle: title, newParentID: selectedParent.objectID)
         } else {
-            manager.saveNewFolder(withTitle: title, parentID: selectedParent.objectID)
+            manager.saveNewFolder(withTitle: title, parentID: selectedParent.objectID) { folderID in
+                DispatchQueue.main.async {
+                    delegate?.bookmarkItemDetailsDataSource(self, createdNewFolderWithObjectID: folderID)
+                }
+            }
         }
     }
 }
@@ -753,9 +759,9 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         self.sections = [.bookmarkDetails(existingBookmark, delegate: delegate), .folders(existingBookmark, parentFolder: initialParentFolder, delegate: addFolderDelegate)]
     }
     
-    func refreshFolders(_ tableView: UITableView, section: Int) {
+    func refreshFolders(_ tableView: UITableView, section: Int, andSelectFolderWithObjectID objectID: NSManagedObjectID) {
         let dataSource = dataSources[1] as! BookmarkFoldersSectionDataSource
-        dataSource.refreshFolders(tableView, section: section)
+        dataSource.refreshFolders(tableView, section: section, andSelectFolderWithObjectID: objectID)
     }
     
     func select(_ tableView: UITableView, indexPath: IndexPath) {
@@ -767,7 +773,7 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
     }
     
     //TODO some logic here is duplicated
-    func save(_ tableView: UITableView) {
+    func save(_ tableView: UITableView, delegate: BookmarkItemDetailsDataSourceDidSaveDelegate?) {
         let dataSource = dataSources[1] as! BookmarkFoldersSectionDataSource
         //TODO if this is nil, something has gone really wrong
         guard let selectedParent = dataSource.selected() as? BookmarkFolder else {
@@ -817,7 +823,7 @@ class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
         
     }
     
-    func save(_ tableView: UITableView) {
+    func save(_ tableView: UITableView, delegate: BookmarkItemDetailsDataSourceDidSaveDelegate?) {
         let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
         let title = detailsDataSource.bookmarkTitle(tableView, section: 0) ?? ""
         var urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0) ?? ""

@@ -361,6 +361,7 @@
                                         <constraint firstItem="KiU-Wb-7jj" firstAttribute="leading" secondItem="MfZ-X5-f9l" secondAttribute="leading" constant="16" id="lbc-To-k5Z"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="BookmarksCellColor"/>
                                 <connections>
                                     <outlet property="textField" destination="KiU-Wb-7jj" id="hO7-0f-faW"/>
                                 </connections>
@@ -421,6 +422,7 @@
                                         <constraint firstItem="fVp-1a-TkJ" firstAttribute="centerY" secondItem="rT4-Yr-P8D" secondAttribute="bottom" id="xK7-H0-w8K"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="BookmarksCellColor"/>
                                 <connections>
                                     <outlet property="faviconImageView" destination="gf7-Lt-ftk" id="kIT-Vf-ZxY"/>
                                     <outlet property="seperatorViewHeight" destination="RDj-dx-Yf1" id="f1A-nY-fdp"/>

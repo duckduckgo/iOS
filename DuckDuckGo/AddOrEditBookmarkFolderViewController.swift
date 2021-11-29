@@ -21,6 +21,8 @@ import UIKit
 import Core
 
 class AddOrEditBookmarkFolderViewController: UIViewController {
+    
+    weak var createdNewFolderDelegate: BookmarkItemDetailsDataSourceDidSaveDelegate?
         
     private var foldersViewController: BookmarkFoldersViewController?
     
@@ -71,7 +73,7 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     }
     
     @IBAction func onSavePressed(_ sender: Any) {
-        foldersViewController?.save()
+        foldersViewController?.save(delegate: createdNewFolderDelegate)
         dismiss(animated: true, completion: nil)
     }
 }

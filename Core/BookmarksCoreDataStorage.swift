@@ -189,8 +189,8 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    public func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID) {
-        createFolder(title: title, isFavorite: false, parentID: parentID)
+    public func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID, completion: ((NSManagedObjectID) -> Void)? = nil) {
+        createFolder(title: title, isFavorite: false, parentID: parentID, completion: completion)
     }
     
     public func saveNewFavorite(withTitle title: String, url: URL) {
@@ -531,7 +531,7 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil) {
+    private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil, completion: ((NSManagedObjectID) -> Void)? = nil) {
         
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
@@ -547,17 +547,18 @@ extension BookmarksCoreDataStorage {
             folder.title = title
             folder.isFavorite = isFavorite
             
-            self.updateParentAndSave(of: folder, parentID: parentID, context: privateContext)
+            self.updateParentAndSave(of: folder, parentID: parentID, context: privateContext, completion: completion)
         }
     }
     
-    private func updateParentAndSave(of item: BookmarkItemManagedObject, parentID: NSManagedObjectID?, context: NSManagedObjectContext) {
+    private func updateParentAndSave(of item: BookmarkItemManagedObject, parentID: NSManagedObjectID?, context: NSManagedObjectContext, completion: ((NSManagedObjectID) -> Void)? = nil) {
         func updateParentAndSave(parent: BookmarkFolderManagedObject) {
             item.parent = parent
             parent.addToChildren(item)
             
             do {
                 try context.save()
+                completion?(item.objectID)
             } catch {
                 assertionFailure("Saving item failed")
             }

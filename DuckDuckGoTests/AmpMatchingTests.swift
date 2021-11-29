@@ -32,8 +32,8 @@ struct AmpRefTests: Decodable {
     
     struct AmpFormatTest: Decodable {
         let name: String
-        let ampUrl: String
-        let expectUrl: String
+        let ampURL: String
+        let expectURL: String
         let exceptPlatforms: [String]?
     }
     
@@ -45,7 +45,7 @@ struct AmpRefTests: Decodable {
     
     struct AmpKeywordTest: Decodable {
         let name: String
-        let ampUrl: String
+        let ampURL: String
         let expectAmpDetected: Bool
         let exceptPlatforms: [String]?
     }
@@ -62,8 +62,8 @@ class AmpMatchingTests: XCTestCase {
     private var ampTestSuite: AmpRefTests!
     
     override func setUpWithError() throws {
-        let configJSON = data.fromJsonFile("privacy-reference-tests/privacy-configuration/config4_reference.json")
-        let testJSON = data.fromJsonFile("privacy-reference-tests/privacy-configuration/tests.json")
+        let configJSON = data.fromJsonFile("privacy-reference-tests/url-modifications/config_reference.json")
+        let testJSON = data.fromJsonFile("privacy-reference-tests/url-modifications/tests.json")
         
         ampTestSuite = try JSONDecoder().decode(AmpRefTests.self, from: testJSON)
         
@@ -90,11 +90,11 @@ class AmpMatchingTests: XCTestCase {
             
             os_log("TEST: %s", test.name)
             
-            let ampUrl = URL(string: test.ampUrl)
+            let ampUrl = URL(string: test.ampURL)
             let resultUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: ampUrl, config: appConfig)
             
             // Empty exptectedUrl should be treated as nil
-            let expectedUrl = !test.expectUrl.isEmpty ? test.expectUrl : nil
+            let expectedUrl = !test.expectURL.isEmpty ? test.expectURL : nil
             XCTAssertEqual(resultUrl?.absoluteString, expectedUrl, "\(resultUrl!.absoluteString) not equal to expected: \(expectedUrl ?? "nil")")
         }
     }
@@ -114,9 +114,9 @@ class AmpMatchingTests: XCTestCase {
             
             os_log("TEST: %s", test.name)
             
-            let ampUrl = URL(string: test.ampUrl)
+            let ampUrl = URL(string: test.ampURL)
             let result = ampExtractor.urlContainsAmpKeyword(ampUrl, config: appConfig)
-            XCTAssertEqual(result, test.expectAmpDetected, "\(test.ampUrl) not correctly identified. Expected: \(test.expectAmpDetected.description)")
+            XCTAssertEqual(result, test.expectAmpDetected, "\(test.ampURL) not correctly identified. Expected: \(test.expectAmpDetected.description)")
         }
     }
 

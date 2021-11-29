@@ -241,13 +241,9 @@ class TabViewController: UIViewController {
             printingUserScript
         ]
         
-        if #available(iOS 13, *) {
-            if PreserveLogins.shared.loginDetectionEnabled {
-                loginFormDetectionScript.delegate = self
-                userScripts.append(loginFormDetectionScript)
-            }
-        } else {
-            userScripts.append(documentScript)
+        if PreserveLogins.shared.loginDetectionEnabled {
+            loginFormDetectionScript.delegate = self
+            userScripts.append(loginFormDetectionScript)
         }
         
         if appSettings.sendDoNotSell {
@@ -282,14 +278,7 @@ class TabViewController: UIViewController {
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        if #available(iOS 13, *) {
-            webView.allowsLinkPreview = true
-        } else {
-            attachLongPressHandler(webView: webView)
-            webView.allowsLinkPreview = false
-            documentScript.webView = webView
-        }
-        
+        webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
         
         addObservers()
@@ -317,13 +306,6 @@ class TabViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
-    }
-    
-    private func attachLongPressHandler(webView: WKWebView) {
-        let gestrueRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
-        gestrueRecognizer.delegate = self
-        webView.scrollView.addGestureRecognizer(gestrueRecognizer)
-        longPressGestureRecognizer = gestrueRecognizer
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
@@ -468,15 +450,7 @@ class TabViewController: UIViewController {
     }
     
     func updateContentMode() {
-        if #available(iOS 13, *) {
-            webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
-        }
-
-        // Prior to iOS12 we cannot set the UA dynamically on time and so we set it statically here
-        guard #available(iOS 12.0, *) else {
-            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: nil)
-            return
-        }
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
     }
     
     func goBack() {
@@ -1205,12 +1179,9 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
             return
         }
-
-        // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
-        if #available(iOS 12, *) {
-            if allowPolicy != WKNavigationActionPolicy.cancel {
-                UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
-            }
+        
+        if allowPolicy != WKNavigationActionPolicy.cancel {
+            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
         }
         
         if !PrivacyConfigurationManager.shared.privacyConfig.isProtected(domain: url.host) {

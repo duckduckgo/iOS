@@ -419,7 +419,6 @@
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
 		98FA4BB52440AA1A00894CD8 /* TrackersAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */; };
 		98FA4BB72440D0A800894CD8 /* PrivacyProtectionIconSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */; };
-		98FD3E2823A3010C005ABD42 /* ios12-home-row.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 98FD3E2723A3010C005ABD42 /* ios12-home-row.mp4 */; };
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
 		AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */; };
 		AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854823DA1DFB00788410 /* AppIcon.swift */; };
@@ -1743,7 +1742,6 @@
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
 		98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAnimator.swift; sourceTree = "<group>"; };
 		98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionIconSource.swift; sourceTree = "<group>"; };
-		98FD3E2723A3010C005ABD42 /* ios12-home-row.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ios12-home-row.mp4"; sourceTree = "<group>"; };
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
 		AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsCell.swift; sourceTree = "<group>"; };
 		AA3D854823DA1DFB00788410 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
@@ -2355,7 +2353,6 @@
 				F143C2B11E49D78C00CFDE3A /* Assets.xcassets */,
 				F1A169F21F3B2A8A00BE3E3B /* FlamesAnimation.xcassets */,
 				F18641FF1E949E1900B2A911 /* Fonts */,
-				98FD3E2723A3010C005ABD42 /* ios12-home-row.mp4 */,
 				85514FFC2372DA0000DBC528 /* ios13-home-row.mp4 */,
 				84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */,
 				F1F533861F26ABAC00D80D4F /* Localizable.strings */,
@@ -4114,7 +4111,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98FD3E2823A3010C005ABD42 /* ios12-home-row.mp4 in Resources */,
 				F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */,
 				AA4D6A8D23DE49A5007E8790 /* AppIconBlack40x40@3x.png in Resources */,
 				F47E53DB250A9A1C0037C686 /* Onboarding.xcassets in Resources */,

@@ -4345,7 +4345,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n   if [ ! -z \"$BITRISE_PROJECT_PATH\" ] || [ \"$CONFIGURATION\" = \"Release\" ]; then\n       swiftlint lint --strict\n       if [ $? -ne 0 ]; then\n           echo \"error: SwiftLint validation failed.\"\n           exit 1\n       fi\n   else\n       swiftlint lint\n   fi\nelse\n   echo \"error: SwiftLint not installed. Install using \\`brew install swiftlint\\`\"\n   exit 1\nfi\n";
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n    PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n   if [ ! -z \"$BITRISE_PROJECT_PATH\" ] || [ \"$CONFIGURATION\" = \"Release\" ]; then\n       swiftlint lint --strict\n       if [ $? -ne 0 ]; then\n           echo \"error: SwiftLint validation failed.\"\n           exit 1\n       fi\n   else\n       swiftlint lint\n   fi\nelse\n   echo \"error: SwiftLint not installed. Install using \\`brew install swiftlint\\`\"\n   exit 1\nfi\n";
 		};
 		85CA9A212644081300145393 /* Check Filename Headers */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -344,7 +344,7 @@ public class TimedPixel {
         self.date = date
     }
     
-    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String] = [:]) {
+    public func fire(_ fireDate: Date = Date(), withAdditionalParameters params: [String: String] = [:]) {
         let duration = String(fireDate.timeIntervalSince(date))
         var newParams = params
         newParams[PixelParameters.duration] = duration

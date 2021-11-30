@@ -109,18 +109,20 @@ extension TabViewController {
             return
         }
 
-        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
-            return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: url) : nil
-        }, actionProvider: { elements in
+        getCleanUrl(url) { cleanUrl in
+            let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
+                return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: cleanUrl) : nil
+            }, actionProvider: { elements in
 
-            let provided = elements.filter({
-                !TabViewController.excludedLongPressItems.contains($0.image)
+                let provided = elements.filter({
+                    !TabViewController.excludedLongPressItems.contains($0.image)
+                })
+
+                return self.buildLinkPreviewMenu(for: cleanUrl, withProvided: provided)
             })
 
-            return self.buildLinkPreviewMenu(for: url, withProvided: provided)
-        })
-
-        completionHandler(config)
+            completionHandler(config)
+        }
     }
 
     func webView(_ webView: WKWebView, contextMenuForElement elementInfo: WKContextMenuElementInfo,

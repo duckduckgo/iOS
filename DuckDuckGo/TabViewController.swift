@@ -355,7 +355,7 @@ class TabViewController: UIViewController {
         }
     }
     
-    private func getCleanUrl(_ url: URL, completion: @escaping (URL) -> Void) {
+    public func getCleanUrl(_ url: URL, completion: @escaping (URL) -> Void) {
         // Rewrite tracking links
         if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
             completion(cleanUrl)

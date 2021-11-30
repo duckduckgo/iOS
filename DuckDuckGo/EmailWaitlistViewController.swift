@@ -243,7 +243,7 @@ class EmailWaitlistViewController: UIViewController {
         }
 
         let signUpURL = AppUrls().signUpWithCodeQuickLink(code: code)
-        showEmailWaitlistWebViewController(url: signUpURL)
+        openInNewTab(url: signUpURL)
     }
 
     private func createAttributedWaitlistSummary() -> NSAttributedString {

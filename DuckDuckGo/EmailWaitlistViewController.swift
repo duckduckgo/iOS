@@ -326,7 +326,13 @@ class EmailWaitlistViewController: UIViewController {
 
         navigationController?.pushViewController(view, animated: true)
     }
-
+    
+    private func openInNewTab(url: URL) {
+        dismiss(animated: true) {
+            let quickLinkURL = URL(string: "\(AppDeepLinks.quickLink)\(url)")!
+            UIApplication.shared.open(quickLinkURL, options: [:])
+        }
+    }
 }
 
 extension EmailWaitlistViewController: Themable {

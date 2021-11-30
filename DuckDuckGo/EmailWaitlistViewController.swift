@@ -81,7 +81,7 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     @IBAction func existingInviteCodeButtonTapped(_ sender: UIButton) {
-        showEmailWaitlistWebViewController(url: AppUrls().signUpQuickLink)
+        openInNewTab(url: AppUrls().signUpQuickLink)
     }
 
     @IBAction func existingDuckAddressButtonTapped(_ sender: UIButton) {

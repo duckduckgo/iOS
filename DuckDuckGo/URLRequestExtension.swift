@@ -21,6 +21,16 @@ import Foundation
 
 extension URLRequest {
 
+    public static func developerInitiated(_ url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+
+        if #available(iOS 15.0, *) {
+            request.attribution = .developer
+        }
+
+        return request
+    }
+    
     public static func userInitiated(_ url: URL) -> URLRequest {
         var request = URLRequest(url: url)
 

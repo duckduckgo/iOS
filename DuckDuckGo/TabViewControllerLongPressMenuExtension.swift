@@ -111,7 +111,7 @@ extension TabViewController {
             return
         }
 
-        getCleanUrl(url) { cleanUrl in
+        getCleanUrl(url, showLoadingIndicator: false) { cleanUrl in
             let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
                 return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: cleanUrl) : nil
             }, actionProvider: { _ in

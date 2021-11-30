@@ -355,12 +355,14 @@ class TabViewController: UIViewController {
         }
     }
     
-    public func getCleanUrl(_ url: URL, completion: @escaping (URL) -> Void) {
+    public func getCleanUrl(_ url: URL, showLoadingIndicator: Bool = true, completion: @escaping (URL) -> Void) {
         // Rewrite tracking links
         if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
             completion(cleanUrl)
         } else if ampExtractor.urlContainsAmpKeyword(url) {
-            showProgressIndicator()
+            if showLoadingIndicator {
+                showProgressIndicator()
+            }
             ampExtractor.getCanonicalUrl(initiator: nil, url: url) { canonical in
                 if let canonical = canonical {
                     completion(canonical)

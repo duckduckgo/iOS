@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1637339363875,
+    "version": 1638282217816,
     "features": {
         "autoconsent": {
             "state": "enabled",
@@ -34,6 +34,10 @@
         "contentBlocking": {
             "state": "enabled",
             "exceptions": [
+                {
+                    "domain": "agame.com",
+                    "reason": "Site not loading"
+                },
                 {
                     "domain": "wp.pl",
                     "reason": "Adblocker wall"
@@ -137,11 +141,19 @@
             "state": "enabled",
             "exceptions": [
                 {
+                    "domain": "walgreens.com",
+                    "reason": "Broken login"
+                },
+                {
                     "domain": "krunker.io",
                     "reason": "Broken game init"
                 },
                 {
                     "domain": "usaa.com",
+                    "reason": "Broken login"
+                },
+                {
+                    "domain": "academy.com",
                     "reason": "Broken login"
                 },
                 {
@@ -195,7 +207,19 @@
         "trackerAllowlist": {
             "state": "enabled",
             "settings": {
-                "allowlistedTrackers": {}
+                "allowlistedTrackers": {
+                    "dynamicyield.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn-eu.dynamicyield.com/9878090/api_static.js",
+                                "domains": [
+                                    "decathlon.co.uk"
+                                ],
+                                "reason": "checkout broken"
+                            }
+                        ]
+                    }
+                }
             },
             "exceptions": []
         },
@@ -375,8 +399,8 @@
             "exceptions": [],
             "settings": {
                 "linkFormats": [
-                    "https?:\\/\\/(?:w{3}\\.)?google\\.\\w{2,}\\/amp\\/s\\/(\\S+)",
-                    "https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)"
+                    "^https?:\\/\\/(?:w{3}\\.)?google\\.\\S{2,}\\/amp\\/s\\/(\\S+)$",
+                    "^https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)$"
                 ],
                 "keywords": [
                     "=amp",

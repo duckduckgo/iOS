@@ -29,14 +29,9 @@ class ThemeSettingsViewController: UITableViewController {
     private let previousTheme = AppDependencyProvider.shared.appSettings.currentThemeName
     
     private lazy var availableThemes: [ThemeEntry] = {
-        if #available(iOS 13.0, *) {
-            return [(ThemeName.systemDefault, UserText.themeNameDefault),
-                    (ThemeName.light, UserText.themeNameLight),
-                    (ThemeName.dark, UserText.themeNameDark)]
-        } else {
-            return [(ThemeName.light, UserText.themeNameLight),
-                    (ThemeName.dark, UserText.themeNameDark)]
-        }
+        return [(ThemeName.systemDefault, UserText.themeNameDefault),
+                (ThemeName.light, UserText.themeNameLight),
+                (ThemeName.dark, UserText.themeNameDark)]
     }()
 
     override func viewDidLoad() {

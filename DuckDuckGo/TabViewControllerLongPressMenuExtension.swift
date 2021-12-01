@@ -24,7 +24,6 @@ import WebKit
 
 extension TabViewController {
 
-    @available(iOS 13.0, *)
     func buildLinkPreviewMenu(for url: URL, withProvided providedElements: [UIMenuElement]) -> UIMenu {
         var items = [UIMenuElement]()
 
@@ -100,7 +99,6 @@ extension TabViewController {
     }
 }
 
-@available(iOS 13.0, *)
 extension TabViewController {
 
         func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,

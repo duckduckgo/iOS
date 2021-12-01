@@ -473,20 +473,6 @@ class TabViewController: UIViewController {
         }
     }
     
-    @objc func onLongPress(sender: UILongPressGestureRecognizer) {
-        guard sender.state == .began else { return }
-        
-        let x = Int(sender.location(in: webView).x)
-        let y = Int(sender.location(in: webView).y)
-        let offsetY = y
-        
-        documentScript.getUrlAtPoint(x: x, y: offsetY) { [weak self] (url) in
-            guard let url = url else { return }
-            let point = Point(x: x, y: y)
-            self?.launchLongPressMenu(atPoint: point, forUrl: url)
-        }
-    }
-    
     private func showError(message: String) {
         webView.isHidden = true
         error.isHidden = false

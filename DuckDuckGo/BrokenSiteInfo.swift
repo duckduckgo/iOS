@@ -35,6 +35,7 @@ public struct BrokenSiteInfo {
         static let model = "model"
         static let siteType = "siteType"
         static let gpc = "gpc"
+        static let ampUrl = "ampUrl"
     }
     
     private let url: URL?
@@ -43,14 +44,19 @@ public struct BrokenSiteInfo {
     private let installedSurrogates: [String]
     private let isDesktop: Bool
     private let tdsETag: String?
+    private let ampUrl: String?
     
-    public init(url: URL?, httpsUpgrade: Bool, blockedTrackerDomains: [String], installedSurrogates: [String], isDesktop: Bool, tdsETag: String?) {
+    public init(url: URL?, httpsUpgrade: Bool,
+                blockedTrackerDomains: [String], installedSurrogates: [String],
+                isDesktop: Bool, tdsETag: String?,
+                ampUrl: String?) {
         self.url = url
         self.httpsUpgrade = httpsUpgrade
         self.blockedTrackerDomains = blockedTrackerDomains
         self.installedSurrogates = installedSurrogates
         self.isDesktop = isDesktop
         self.tdsETag = tdsETag
+        self.ampUrl = ampUrl
     }
     
     func send(with category: String) {
@@ -66,7 +72,8 @@ public struct BrokenSiteInfo {
                           Keys.os: UIDevice.current.systemVersion,
                           Keys.manufacturer: "Apple",
                           Keys.model: UIDevice.current.model,
-                          Keys.gpc: AppDependencyProvider.shared.appSettings.sendDoNotSell ? "true" : "false"]
+                          Keys.gpc: AppDependencyProvider.shared.appSettings.sendDoNotSell ? "true" : "false",
+                          Keys.ampUrl: ampUrl ?? ""]
         
         Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
     }

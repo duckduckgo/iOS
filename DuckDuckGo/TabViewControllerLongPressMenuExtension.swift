@@ -35,6 +35,15 @@ extension TabViewController {
                               image: UIImage(systemName: "arrow.up.right.square")) { [weak self] _ in
             self?.onBackgroundTabAction(url: url)
         })
+        items.append(UIAction(title: UserText.actionCopy,
+                              image: UIImage(systemName: "doc.on.doc")) { [weak self] _ in
+            self?.onCopyAction(forUrl: url)
+        })
+        items.append(UIAction(title: UserText.actionShare,
+                              image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+            self?.onShareAction(forUrl: url, atPoint: nil)
+        })
+
         return UIMenu(title: url.host?.dropPrefix(prefix: "www.") ?? "", children: items + providedElements)
     }
     
@@ -94,13 +103,6 @@ extension TabViewController {
 @available(iOS 13.0, *)
 extension TabViewController {
 
-    static let excludedLongPressItems = [
-        UIImage(systemName: "safari"),
-        UIImage(systemName: "eyeglasses"),
-        UIImage(systemName: "eye.fill"), //  hide/show link previews on some versions of ios
-        nil // hide/show link previews on some versions of ios
-    ]
-
         func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
                      completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
 
@@ -109,18 +111,17 @@ extension TabViewController {
             return
         }
 
-        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
-            return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: url) : nil
-        }, actionProvider: { elements in
+        getCleanUrl(url, showLoadingIndicator: false) { cleanUrl in
+            let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
+                return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: cleanUrl) : nil
+            }, actionProvider: { _ in
+                // We don't use provided elements as they are not built with correct URL in case of AMP links
 
-            let provided = elements.filter({
-                !TabViewController.excludedLongPressItems.contains($0.image)
+                return self.buildLinkPreviewMenu(for: cleanUrl, withProvided: [])
             })
 
-            return self.buildLinkPreviewMenu(for: url, withProvided: provided)
-        })
-
-        completionHandler(config)
+            completionHandler(config)
+        }
     }
 
     func webView(_ webView: WKWebView, contextMenuForElement elementInfo: WKContextMenuElementInfo,

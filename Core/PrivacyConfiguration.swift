@@ -71,6 +71,9 @@ public protocol PrivacyConfiguration {
     func userEnabledProtection(forDomain: String)
     /// Adds given domain to locally unprotected list.
     func userDisabledProtection(forDomain: String)
+    
+    /// Returns the data object of the given feature key
+    func feature(forKey: PrivacyFeature) -> PrivacyConfigurationData.PrivacyFeature?
 }
 
 public enum PrivacyFeature: String {
@@ -80,6 +83,7 @@ public enum PrivacyFeature: String {
     case fingerprintingScreenSize
     case gpc
     case httpsUpgrade = "https"
+    case ampLinks
 }
 
 public struct AppPrivacyConfiguration: PrivacyConfiguration {
@@ -167,6 +171,10 @@ public struct AppPrivacyConfiguration: PrivacyConfiguration {
 
     public func userDisabledProtection(forDomain domain: String) {
         locallyUnprotected.disableProtection(forDomain: domain)
+    }
+    
+    public func feature(forKey key: PrivacyFeature) -> PrivacyConfigurationData.PrivacyFeature? {
+        return data.features[key.rawValue]
     }
     
 }

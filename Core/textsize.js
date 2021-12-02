@@ -20,7 +20,9 @@
 (function() {
     let hostname = getTopLevelURL().hostname;
     
-    let shouldAdjustForDynamicType = hostname.endsWith("wikipedia.org");
+    let knownDynamicTypeExceptions = ["wikipedia.org"];
+    
+    let shouldAdjustForDynamicType = isURLMatchingAnyOfDomains(hostname, knownDynamicTypeExceptions);
     let isDDG = isURLMatchingDomain(hostname, "duckduckgo.com");
     
     let currentTextSizeAdjustment = $TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$;
@@ -61,6 +63,16 @@
         }
         
         return false;
+    }
+    
+    function isURLMatchingAnyOfDomains(url, domains) {
+        for (const domain of domains) {
+            if (isURLMatchingDomain(url, domain)) {
+                return true
+            }
+        }
+        
+        return false
     }
     
     function adjustTextSize(percentage) {

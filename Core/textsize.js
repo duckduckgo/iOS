@@ -77,6 +77,16 @@
 
     function adjustTextSizeForDDG(percentage) {
         var adjustedPercentage = 100;
+        
+        // Fix for side menu sliding in when growing due to increased text
+        let menu = document.getElementsByClassName('nav-menu--slideout')[0];
+        let previousLeft = menu.style.left;
+        menu.style.left="-100%";
+        
+        // Force re-painting of the menu: https://stackoverflow.com/a/3485654
+        menu.style.display='none';
+        menu.offsetHeight; // no need to store this anywhere, the reference is enough
+        menu.style.display='block';
 
         switch(percentage) {
         case 80:
@@ -119,27 +129,9 @@
             break;
         }
 
-        fixForSlideoutMenu()
         document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=adjustedPercentage+"%";
-    }
-
-    function fixForSlideoutMenu() {
-        let menu = document.getElementsByClassName('nav-menu--slideout')[0];
         
-        if(typeof menu !== 'undefined'){
-            StaticCounter.count++;
-            menu.style.opacity = 0;
-
-            setTimeout(function() {
-                if (--StaticCounter.count == 0) {
-                    menu.style.opacity = 1;
-                }
-            }, 500);
-        }
-    }
-
-    class StaticCounter {
-        static count = 0;
+        menu.style.left = previousLeft;
     }
 
 }) ();

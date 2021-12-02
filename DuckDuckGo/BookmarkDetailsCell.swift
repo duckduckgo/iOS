@@ -55,6 +55,8 @@ class BookmarkDetailsCell: UITableViewCell {
     @IBOutlet weak var seperatorViewHeight: NSLayoutConstraint!
     
     func setUp() {
+        selectionStyle = .none
+        
         seperatorViewHeight.constant = 1.0 / UIScreen.main.scale
         titleTextField.becomeFirstResponder()
         

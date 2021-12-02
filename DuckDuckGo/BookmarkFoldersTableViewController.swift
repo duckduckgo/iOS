@@ -20,7 +20,6 @@
 import UIKit
 import Core
 
-//TODO this should be renamed...
 class BookmarkFoldersViewController: UITableViewController {
 
     //TODO This should be purely injected I reckon?

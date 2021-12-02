@@ -99,7 +99,6 @@ class AddOrEditBookmarkViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    //TODO alert controller stuff. I don't think this is ever not "an alert controller now"
     @IBAction func onSavePressed(_ sender: Any) {
         foldersViewController?.save()
         dismiss(animated: true, completion: nil)

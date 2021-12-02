@@ -530,6 +530,7 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
         cell.textField.becomeFirstResponder()
         cell.textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         cell.textField.addTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
+        cell.selectionStyle = .none
 
         return cell
     }

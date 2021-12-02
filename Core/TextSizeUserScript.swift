@@ -44,7 +44,12 @@ public class TextSizeUserScript: NSObject, UserScript {
 public extension WKWebView {
     
     func adjustTextSize(_ percentage: Int) {
-        let jsString = "document.adjustTextSize(\(percentage));"
+        let dynamicTypeScalePercentage = UIFontMetrics.default.scaledValue(for: 100)
+        let jsString = TextSizeUserScript.loadJS("textsize", from: Bundle.core, withReplacements: [
+            "$TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$": "\(percentage)",
+            "$DYNAMIC_TYPE_SCALE_PERCENTAGE$": "\(dynamicTypeScalePercentage)"
+        ])
+        
         evaluateJavaScript(jsString, completionHandler: nil)
     }
 }

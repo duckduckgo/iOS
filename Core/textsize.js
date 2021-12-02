@@ -21,18 +21,30 @@
     let topLevelUrl = getTopLevelURL();
     let shouldAdjustForDynamicType = topLevelUrl.hostname.endsWith("wikipedia.org");
     let isDDG = topLevelUrl.hostname.endsWith("duckduckgo.com");
+
+    webkit.messageHandlers.log.postMessage(" -- textsize.js - Init");
+    let currentTextSizeAdjustment = $TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$;
+    
+    if (document.readyState === "complete"
+        || document.readyState === "loaded"
+        || document.readyState === "interactive") {
+        // DOM should have been parsed
+        adjustTextSize(currentTextSizeAdjustment);
+    } else {
+        // DOM not yet ready, add a listener instead
         
-    document.adjustTextSize = adjustTextSize;
-
-    document.addEventListener("DOMContentLoaded", function(event) {
-        webkit.messageHandlers.log.postMessage(" -- TextSizeUserScript - event DOMContentLoaded");
-
-        let currentTextSizeAdjustment = $TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$;
-            
+        webkit.messageHandlers.log.postMessage(" -- textsize.js - DOMContentLoaded probably NOT yet fired!.. adding listener");
+        
         if ((shouldAdjustForDynamicType) || (isDDG) || (currentTextSizeAdjustment != 100)) {
-            document.adjustTextSize(currentTextSizeAdjustment);
+            webkit.messageHandlers.log.postMessage(" -- textsize.js - listener added");
+            document.addEventListener("DOMContentLoaded", function(event) {
+                webkit.messageHandlers.log.postMessage(" -- textsize.js - event DOMContentLoaded");
+                adjustTextSize(currentTextSizeAdjustment);
+            }, false)
+        } else {
+            webkit.messageHandlers.log.postMessage(" -- textsize.js - listener not necessary");
         }
-    }, false)
+    }
 
     function getTopLevelURL() {
         try {
@@ -45,6 +57,8 @@
     }
     
     function adjustTextSize(percentage) {
+        webkit.messageHandlers.log.postMessage(" -- textsize.js - adjustTextSize called: " + percentage + "%");
+        
         if (shouldAdjustForDynamicType) {
             adjustTextSizeForDynamicType(percentage);
         } else if (isDDG && (typeof DDG !== 'undefined')) {

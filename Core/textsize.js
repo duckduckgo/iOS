@@ -22,7 +22,6 @@
     let shouldAdjustForDynamicType = topLevelUrl.hostname.endsWith("wikipedia.org");
     let isDDG = topLevelUrl.hostname.endsWith("duckduckgo.com");
 
-    webkit.messageHandlers.log.postMessage(" -- textsize.js - Init");
     let currentTextSizeAdjustment = $TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$;
     
     if (document.readyState === "complete"
@@ -32,17 +31,10 @@
         adjustTextSize(currentTextSizeAdjustment);
     } else {
         // DOM not yet ready, add a listener instead
-        
-        webkit.messageHandlers.log.postMessage(" -- textsize.js - DOMContentLoaded probably NOT yet fired!.. adding listener");
-        
         if ((shouldAdjustForDynamicType) || (isDDG) || (currentTextSizeAdjustment != 100)) {
-            webkit.messageHandlers.log.postMessage(" -- textsize.js - listener added");
             document.addEventListener("DOMContentLoaded", function(event) {
-                webkit.messageHandlers.log.postMessage(" -- textsize.js - event DOMContentLoaded");
                 adjustTextSize(currentTextSizeAdjustment);
             }, false)
-        } else {
-            webkit.messageHandlers.log.postMessage(" -- textsize.js - listener not necessary");
         }
     }
 
@@ -57,8 +49,6 @@
     }
     
     function adjustTextSize(percentage) {
-        webkit.messageHandlers.log.postMessage(" -- textsize.js - adjustTextSize called: " + percentage + "%");
-        
         if (shouldAdjustForDynamicType) {
             adjustTextSizeForDynamicType(percentage);
         } else if (isDDG && (typeof DDG !== 'undefined')) {

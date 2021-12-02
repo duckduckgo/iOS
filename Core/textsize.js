@@ -21,7 +21,7 @@
     let topLevelUrl = getTopLevelURL();
     let shouldAdjustForDynamicType = topLevelUrl.hostname.endsWith("wikipedia.org");
     let isDDG = topLevelUrl.hostname.endsWith("duckduckgo.com");
-
+    
     let currentTextSizeAdjustment = $TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$;
     
     if (document.readyState === "complete"
@@ -37,7 +37,7 @@
             }, false)
         }
     }
-
+    
     function getTopLevelURL() {
         try {
             // FROM: https://stackoverflow.com/a/7739035/73479
@@ -57,14 +57,14 @@
             document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=percentage+"%";
         }
     }
-
+    
     function adjustTextSizeForDynamicType(percentage) {
         let dynamicTypeAdjustment = $DYNAMIC_TYPE_SCALE_PERCENTAGE$;
         var adjustedPercentage = percentage * 100/dynamicTypeAdjustment;
-
+        
         document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=adjustedPercentage+"%";
     }
-
+    
     function adjustTextSizeForDDG(percentage) {
         var adjustedPercentage = 100;
         
@@ -77,51 +77,51 @@
         menu.style.display='none';
         menu.offsetHeight; // no need to store this anywhere, the reference is enough
         menu.style.display='block';
-
+        
         switch(percentage) {
-        case 80:
-            DDG.settings.set('ks', 's');
-            break;
-        case 90:
-            DDG.settings.set('ks', 'm');
-            break;
-        case 100:
-            DDG.settings.set('ks', 'n');
-            break;
-        case 110:
-            DDG.settings.set('ks', 'n');
-            adjustedPercentage = 105;
-            break;
-        case 120:
-            DDG.settings.set('ks', 'l');
-            break;
-        case 130:
-            DDG.settings.set('ks', 'l');
-            adjustedPercentage = 105;
-            break;
-        case 140:
-            DDG.settings.set('ks', 'l');
-            adjustedPercentage = 110;
-            break;
-        case 150:
-            DDG.settings.set('ks', 't');
-            break;
-        case 160:
-            DDG.settings.set('ks', 't');
-            adjustedPercentage = 105;
-            break;
-        case 170:
-            DDG.settings.set('ks', 't');
-            adjustedPercentage = 110;
-            break;
-        default:
-            DDG.settings.set('ks', 'n');
-            break;
+            case 80:
+                DDG.settings.set('ks', 's');
+                break;
+            case 90:
+                DDG.settings.set('ks', 'm');
+                break;
+            case 100:
+                DDG.settings.set('ks', 'n');
+                break;
+            case 110:
+                DDG.settings.set('ks', 'n');
+                adjustedPercentage = 105;
+                break;
+            case 120:
+                DDG.settings.set('ks', 'l');
+                break;
+            case 130:
+                DDG.settings.set('ks', 'l');
+                adjustedPercentage = 105;
+                break;
+            case 140:
+                DDG.settings.set('ks', 'l');
+                adjustedPercentage = 110;
+                break;
+            case 150:
+                DDG.settings.set('ks', 't');
+                break;
+            case 160:
+                DDG.settings.set('ks', 't');
+                adjustedPercentage = 105;
+                break;
+            case 170:
+                DDG.settings.set('ks', 't');
+                adjustedPercentage = 110;
+                break;
+            default:
+                DDG.settings.set('ks', 'n');
+                break;
         }
-
+        
         document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust=adjustedPercentage+"%";
         
         menu.style.left = previousLeft;
     }
-
+    
 }) ();

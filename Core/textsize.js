@@ -18,9 +18,10 @@
 //
 
 (function() {
-    let topLevelUrl = getTopLevelURL();
-    let shouldAdjustForDynamicType = topLevelUrl.hostname.endsWith("wikipedia.org");
-    let isDDG = topLevelUrl.hostname.endsWith("duckduckgo.com");
+    let hostname = getTopLevelURL().hostname;
+    
+    let shouldAdjustForDynamicType = hostname.endsWith("wikipedia.org");
+    let isDDG = isURLMatchingDomain(hostname, "duckduckgo.com");
     
     let currentTextSizeAdjustment = $TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$;
     
@@ -46,6 +47,20 @@
         } catch(error) {
             return new URL(location.href)
         }
+    }
+    
+    function isURLMatchingDomain(url, domain) {
+        var urlParts = url.split('.');
+        
+        while (urlParts.length > 1) {
+            if (domain === urlParts.join('.')) {
+                return true;
+            }
+            
+            urlParts.shift();
+        }
+        
+        return false;
     }
     
     function adjustTextSize(percentage) {

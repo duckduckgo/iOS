@@ -71,9 +71,10 @@ class BookmarkDetailsCell: UITableViewCell {
         urlTextField.addTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
     }
     
-    func setUrl(_ url: URL?) {
+    func setUrlString(_ urlString: String?) {
+        let url = URL(string: urlString ?? "")
         faviconImageView.loadFavicon(forDomain: url?.host, usingCache: .bookmarks)
-        urlString = url?.absoluteString
+        self.urlString = urlString
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {

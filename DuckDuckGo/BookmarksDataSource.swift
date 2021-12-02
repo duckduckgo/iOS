@@ -502,12 +502,12 @@ protocol BookmarksFolderDetailsSectionDataSourceDelegate: AnyObject {
 // TODO can currently select the cell in screwy way if you press the right bit
 class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
     
-    let initialTitle: String?
+    var currentTitle: String?
     weak var delegate: BookmarksFolderDetailsSectionDataSourceDelegate?
 
     init(existingFolder: BookmarkFolder?, delegate: BookmarksFolderDetailsSectionDataSourceDelegate) {
-        self.initialTitle = existingFolder?.title
         self.delegate = delegate
+        self.currentTitle = existingFolder?.title
     }
     
     func containsBookmarkItems() -> Bool {
@@ -526,7 +526,7 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
         cell.textField.removeTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
 
         
-        cell.title = initialTitle
+        cell.title = currentTitle
         cell.textField.becomeFirstResponder()
         cell.textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         cell.textField.addTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
@@ -536,6 +536,7 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+        currentTitle = textField.text
         delegate?.bookmarksFolderDetailsSectionDataSource(self, titleTextFieldDidChange: textField)
     }
     
@@ -559,13 +560,13 @@ protocol BookmarkDetailsSectionDataSourceDelegate: AnyObject {
 
 class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
     
-    let initialTitle: String?
-    let initialUrl: URL?
+    var currentTitle: String?
+    var currentURLString: String?
     weak var delegate: BookmarkDetailsSectionDataSourceDelegate?
 
     init(existingBookmark: Bookmark?, delegate: BookmarkDetailsSectionDataSourceDelegate) {
-        self.initialTitle = existingBookmark?.title
-        self.initialUrl = existingBookmark?.url
+        self.currentTitle = existingBookmark?.title
+        self.currentURLString = existingBookmark?.url?.absoluteString
         self.delegate = delegate
     }
     
@@ -582,8 +583,8 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
             fatalError("Failed to dequeue \(BookmarkDetailsCell.reuseIdentifier) as BookmarkDetailsCell")
         }
         
-        cell.title = initialTitle
-        cell.setUrl(initialUrl)
+        cell.title = currentTitle
+        cell.setUrlString(currentURLString)
         cell.setUp()
         cell.delegate = self
         return cell
@@ -609,6 +610,8 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
 extension BookmarkDetailsSectionDataSource: BookmarkDetailsCellDelegate {
     
     func bookmarkDetailsCellDelegate(_ cell: BookmarkDetailsCell, textFieldDidChangeWithTitleText titleText: String?, urlText: String?) {
+        currentTitle = titleText
+        currentURLString = urlText
         delegate?.bookmarkDetailsSectionDataSource(self, textFieldDidChangeWithTitleText: titleText, urlText: urlText)
     }
     
@@ -733,7 +736,7 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
             return
         }
         let detailsDataSource = dataSources[0] as! BookmarksFolderDetailsSectionDataSource
-        let title = detailsDataSource.folderTitle(tableView, section: 0)! //TODO !
+        let title = detailsDataSource.folderTitle(tableView, section: 0) ?? ""
         // TODO inject bookmarks manager properly
         let manager = BookmarksManager()
         

@@ -25,14 +25,12 @@ public class TextSizeUserScript: NSObject, UserScript {
 
     public var textSizeAdjustmentInPercents: Int = 100
     
-    public weak var delegate: PrintingUserScriptDelegate?
-
     public var source: String {
         let dynamicTypeScalePercentage = UIFontMetrics.default.scaledValue(for: 100)
         
         return Self.loadJS("textsize", from: Bundle.core, withReplacements: [
             "$TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$": "\(textSizeAdjustmentInPercents)",
-            "$DYNAMIC_TYPE_SCALE_PERCENTAGE$": "\(dynamicTypeScalePercentage)",
+            "$DYNAMIC_TYPE_SCALE_PERCENTAGE$": "\(dynamicTypeScalePercentage)"
         ])
     }
 

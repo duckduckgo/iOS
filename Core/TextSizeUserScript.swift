@@ -22,13 +22,15 @@ import BrowserServicesKit
 import WebKit
 
 public class TextSizeUserScript: NSObject, UserScript {
-
+    
+    public static let knownDynamicTypeExceptions: [String] = ["wikipedia.org"]
     public var textSizeAdjustmentInPercents: Int = 100
     
     public var source: String {
         let dynamicTypeScalePercentage = UIFontMetrics.default.scaledValue(for: 100)
         
         return Self.loadJS("textsize", from: Bundle.core, withReplacements: [
+            "$KNOWN_DYNAMIC_TYPE_EXCEPTIONS$": TextSizeUserScript.knownDynamicTypeExceptions.joined(separator: "\n"),
             "$TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$": "\(textSizeAdjustmentInPercents)",
             "$DYNAMIC_TYPE_SCALE_PERCENTAGE$": "\(dynamicTypeScalePercentage)"
         ])
@@ -46,6 +48,7 @@ public extension WKWebView {
     func adjustTextSize(_ percentage: Int) {
         let dynamicTypeScalePercentage = UIFontMetrics.default.scaledValue(for: 100)
         let jsString = TextSizeUserScript.loadJS("textsize", from: Bundle.core, withReplacements: [
+            "$KNOWN_DYNAMIC_TYPE_EXCEPTIONS$": TextSizeUserScript.knownDynamicTypeExceptions.joined(separator: "\n"),
             "$TEXT_SIZE_ADJUSTMENT_IN_PERCENTS$": "\(percentage)",
             "$DYNAMIC_TYPE_SCALE_PERCENTAGE$": "\(dynamicTypeScalePercentage)"
         ])

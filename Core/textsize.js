@@ -20,7 +20,7 @@
 (function() {
     let hostname = getTopLevelURL().hostname;
     
-    let knownDynamicTypeExceptions = ["wikipedia.org"];
+    let knownDynamicTypeExceptions = `$KNOWN_DYNAMIC_TYPE_EXCEPTIONS$`.split("\n");
     
     let shouldAdjustForDynamicType = isURLMatchingAnyOfDomains(hostname, knownDynamicTypeExceptions);
     let isDDG = isURLMatchingDomain(hostname, "duckduckgo.com");

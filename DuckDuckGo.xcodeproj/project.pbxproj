@@ -29,7 +29,11 @@
 		0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CC0EE23904D5400E4F627 /* Settings.bundle */; };
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
+		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
+		1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
+		1EEFD2D52758E31600B1393B /* textsize.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFD2D42758E31600B1393B /* textsize.js */; };
+		1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
@@ -731,7 +735,11 @@
 		0A6CC0EE23904D5400E4F627 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		1CB7B82023CEA1F800AA24EA /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
+		1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeUserScript.swift; sourceTree = "<group>"; };
+		1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeSettingsViewController.swift; sourceTree = "<group>"; };
 		1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeDebugViewController.swift; sourceTree = "<group>"; };
+		1EEFD2D42758E31600B1393B /* textsize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = textsize.js; sourceTree = "<group>"; };
+		1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalSlider.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
@@ -2481,6 +2489,7 @@
 			isa = PBXGroup;
 			children = (
 				F1CDD3F11F16911700BE0581 /* AboutViewController.swift */,
+				1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */,
 				AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */,
 				AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */,
 				98F0FC1F21FF18E700CE77AB /* AutoClearSettingsViewController.swift */,
@@ -2566,6 +2575,7 @@
 				85F2FFFC2215C020006BB258 /* findinpage.js */,
 				02C57C5E251533CE009E5129 /* donotsell.js */,
 				4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */,
+				1EEFD2D42758E31600B1393B /* textsize.js */,
 			);
 			name = "ios-js-support";
 			sourceTree = "<group>";
@@ -3296,6 +3306,7 @@
 				850559CF23CF647C0055C0D5 /* PreserveLogins.swift */,
 				4B75EA9126A266CB00018634 /* PrintingUserScript.swift */,
 				988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */,
+				1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */,
 				836A941C247F23C600BF8EF5 /* UserAgentManager.swift */,
 				F1A886771F29394E0096251E /* WebCacheManager.swift */,
 				F159BDA61F0C073D00B4A01D /* WebCacheSummary.swift */,
@@ -3681,6 +3692,7 @@
 				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
 				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
 				982686B82600C0960011A8D6 /* ActionMessageView.xib */,
+				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -4290,6 +4302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EEFD2D52758E31600B1393B /* textsize.js in Resources */,
 				83E2D2B4253CC16B005605F5 /* httpsMobileV2BloomSpec.json in Resources */,
 				02DC6A52255D8C0A00B03BC2 /* fingerprint.js in Resources */,
 				98B001B0251EABB40090EC07 /* InfoPlist.strings in Resources */,
@@ -4616,6 +4629,7 @@
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
+				1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
 				853273B224FF114700E3C778 /* DeepLinks.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
@@ -4639,6 +4653,7 @@
 				8586A11024CCCD040049720E /* TabsBarViewController.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
+				1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */,
 				8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,
 				984D60B2222A1284003B9E3B /* FeedbackFormViewController.swift in Sources */,
@@ -4889,6 +4904,7 @@
 				85CA53A824BB343700A6288C /* Favicons.swift in Sources */,
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				98DA35C7268CDA3B00159906 /* TrackerResolver.swift in Sources */,
+				1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
 				02BA15AF26A89E0800472DD7 /* PrivacyConfigurationManager.swift in Sources */,
 				98ECDD172707168C00FF141C /* ContentBlockerRulesSourceManager.swift in Sources */,

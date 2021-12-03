@@ -25,6 +25,7 @@ public class AppUserDefaults: AppSettings {
     public struct Notifications {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
+        public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
     }
 
     private let groupName: String
@@ -162,6 +163,9 @@ public class AppUserDefaults: AppSettings {
             userDefaults?.setValue(newValue.rawValue, forKey: Keys.currentFireButtonAnimationKey)
         }
     }
+    
+    @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
+    var textSize: Int
     
 }
 

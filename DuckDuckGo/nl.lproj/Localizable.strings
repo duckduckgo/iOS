@@ -263,19 +263,97 @@
 "email.aliasAlert.decline" = "Annuleren";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Een privéadres genereren";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "E-mailtrackers met een Duck-adres blokkeren";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Gebruik %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Nieuw adres gekopieerd naar je klembord";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Duck-adres aanmaken";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Ingeschakeld";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Als je E-mailbescherming van dit apparaat verwijdert, kun je je persoonlijke Duck-adres niet meer invullen en geen nieuwe privé-Duck-adressen genereren in e-mailvelden terwijl je op het internet surft.<br/><br/>Als je je Duck-adressen volledig wilt verwijderen of als je andere vragen of feedback hebt, kun je contact met ons opnemen via support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Uit";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Annuleren";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Let op: als je E-mailbescherming van dit apparaat verwijdert, wordt je Duck-adres niet verwijderd.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Verwijderen";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "E-mailbescherming verwijderen?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Er is een fout opgetreden bij het inschrijven op de wachtlijst. Probeer het later opnieuw.";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Aan de slag";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Ik heb een uitnodigingscode";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Je bent uitgenodigd!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Schrijf je in voor de privéwachtlijst";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Je staat op de wachtlijst!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Je uitnodiging wordt hier weergegeven als je aan de beurt bent. Wil je %1$@ wanneer het toekomt? %2$@ over E-mailbescherming.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "krijg een melding";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "We sturen je een melding wanneer<br/> E-mailbescherming voor je klaar staat. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Meer informatie";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "We sturen je een melding wanneer je E-mailbescherming kunt gaan gebruiken.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Wil je dat we je een melding sturen als je aan de beurt bent?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Je hebt je ingeschreven voor de wachtlijst en ons gevraagd je te laten weten wanneer je aan de beurt bent om onze E-mailbescherming te proberen.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Nee, bedankt";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "MELDING STUREN";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Je hebt een uitnodiging voor E-mailbescherming ontvangen!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "We bewaren je e-mails niet. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "E-mailprivacy, vereenvoudigd.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Blokkeer e-mailtrackers en verberg je adres, zonder van e-mailprovider te wisselen. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nog geen bladwijzers toegevoegd";
@@ -769,12 +847,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "PRIVACYKLASSE";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Privacybescherming van de site";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +961,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Wisselen tussen tabbladen";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Kies de gewenste tekstgrootte. Websites die je in DuckDuckGo bekijkt, worden aan de tekstgrootte aangepast.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Lettergrootte - %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Donker";
 
@@ -930,4 +1008,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favoriet toegevoegd";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Annuleren";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "OK";
 

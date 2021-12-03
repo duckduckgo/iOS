@@ -182,9 +182,7 @@ extension PrivacyProtectionErrorController: Themable {
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
         
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .light
-        }
+        overrideUserInterfaceStyle = .light
     }
 
 }

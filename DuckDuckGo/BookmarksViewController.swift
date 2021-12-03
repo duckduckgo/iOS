@@ -104,21 +104,19 @@ class BookmarksViewController: UITableViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
-        if #available(iOS 13.0, *) {
-            searchController.automaticallyShowsScopeBar = false
-            searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
-            
-            // Add separator
-            if let nv = navigationController?.navigationBar {
-                let separator = UIView()
-                separator.backgroundColor = .greyish
-                nv.addSubview(separator)
-                separator.translatesAutoresizingMaskIntoConstraints = false
-                separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
-                separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
-                separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
-                separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
-            }
+        searchController.automaticallyShowsScopeBar = false
+        searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
+        
+        // Add separator
+        if let nv = navigationController?.navigationBar {
+            let separator = UIView()
+            separator.backgroundColor = .greyish
+            nv.addSubview(separator)
+            separator.translatesAutoresizingMaskIntoConstraints = false
+            separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
+            separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
+            separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
+            separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
         }
         
         // Initially puling down the table to reveal search bar will result in a glitch if content offset is 0 and we are using `isModalInPresentation` set to true
@@ -235,21 +233,21 @@ class BookmarksViewController: UITableViewController {
     }
     
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if #available(iOS 13.0, *), searchController.searchBar.bounds.height == 0 {
+        if searchController.searchBar.bounds.height == 0 {
             // Disable drag-to-dismiss if we start scrolling and search bar is still hidden
             isModalInPresentation = true
         }
     }
 
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
             // Re-enable drag-to-dismiss if needed
             isModalInPresentation = false
         }
     }
 
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
             // Re-enable drag-to-dismiss if needed
             isModalInPresentation = false
         }
@@ -291,36 +289,9 @@ extension BookmarksViewController: Themable {
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
         
-        if #available(iOS 13.0, *) {
-            overrideSystemTheme(with: theme)
-            searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
-        } else {
-            
-            switch theme.currentImageSet {
-            case .dark:
-                searchController.searchBar.barStyle = .black
-            case .light:
-                searchController.searchBar.barStyle = .default
-            }
-            
-            searchController.searchBar.tintColor = theme.searchBarTextColor
-            if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-                searchField.layer.backgroundColor = theme.searchBarBackgroundColor.cgColor
-                searchField.layer.cornerRadius = 8
-                
-                // Hide default background view.
-                for view in searchField.subviews {
-                    // Background has same size as search field
-                    guard view.bounds == searchField.bounds else {
-                        continue
-                    }
+        overrideSystemTheme(with: theme)
+        searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
 
-                    view.alpha = 0.0
-                    break
-                }
-            }
-        }
-        
         tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.backgroundColor = theme.backgroundColor
         

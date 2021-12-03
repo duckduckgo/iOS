@@ -93,6 +93,9 @@ class TabViewController: UIViewController {
     private var preserveLoginsWorker: PreserveLoginsWorker?
     
     private var trackersInfoWorkItem: DispatchWorkItem?
+    
+    private var linkCleaner: LinkCleaner!
+    private var ampExtractor: AMPCanonicalExtractor!
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -201,6 +204,9 @@ class TabViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.linkCleaner = LinkCleaner()
+        self.ampExtractor = AMPCanonicalExtractor(linkCleaner: linkCleaner)
+        
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
         initUserScripts()
         applyTheme(ThemeManager.shared.currentTheme)
@@ -244,13 +250,9 @@ class TabViewController: UIViewController {
             printingUserScript
         ]
         
-        if #available(iOS 13, *) {
-            if PreserveLogins.shared.loginDetectionEnabled {
-                loginFormDetectionScript.delegate = self
-                userScripts.append(loginFormDetectionScript)
-            }
-        } else {
-            userScripts.append(documentScript)
+        if PreserveLogins.shared.loginDetectionEnabled {
+            loginFormDetectionScript.delegate = self
+            userScripts.append(loginFormDetectionScript)
         }
         
         if appSettings.sendDoNotSell {
@@ -286,14 +288,7 @@ class TabViewController: UIViewController {
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        if #available(iOS 13, *) {
-            webView.allowsLinkPreview = true
-        } else {
-            attachLongPressHandler(webView: webView)
-            webView.allowsLinkPreview = false
-            documentScript.webView = webView
-        }
-        
+        webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
         
         addObservers()
@@ -310,7 +305,13 @@ class TabViewController: UIViewController {
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
         } else if let request = request {
-            load(urlRequest: request)
+            if let url = request.url {
+                getCleanUrl(url) { [weak self] cleanUrl in
+                    self?.load(urlRequest: URLRequest(url: cleanUrl))
+                }
+            } else {
+                load(urlRequest: request)
+            }
         }
     }
 
@@ -321,13 +322,6 @@ class TabViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
-    }
-    
-    private func attachLongPressHandler(webView: WKWebView) {
-        let gestrueRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(onLongPress(sender:)))
-        gestrueRecognizer.delegate = self
-        webView.scrollView.addGestureRecognizer(gestrueRecognizer)
-        longPressGestureRecognizer = gestrueRecognizer
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
@@ -347,14 +341,37 @@ class TabViewController: UIViewController {
         }
     }
     
+    public func getCleanUrl(_ url: URL, showLoadingIndicator: Bool = true, completion: @escaping (URL) -> Void) {
+        // Rewrite tracking links
+        if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
+            completion(cleanUrl)
+        } else if ampExtractor.urlContainsAmpKeyword(url) {
+            if showLoadingIndicator {
+                showProgressIndicator()
+            }
+            ampExtractor.getCanonicalUrl(initiator: nil, url: url) { canonical in
+                if let canonical = canonical {
+                    completion(canonical)
+                } else {
+                    completion(url)
+                }
+            }
+        } else {
+            completion(url)
+        }
+    }
+    
     public func load(url: URL) {
         lastUpgradedURL = nil
         if !url.isBookmarklet() {
             self.url = url
         }
+        
         lastError = nil
         updateContentMode()
-        load(urlRequest: URLRequest(url: url))
+        getCleanUrl(url) { [weak self] url in
+            self?.load(urlRequest: URLRequest(url: url))
+        }
     }
     
     func stopLoading() {
@@ -472,15 +489,7 @@ class TabViewController: UIViewController {
     }
     
     func updateContentMode() {
-        if #available(iOS 13, *) {
-            webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
-        }
-
-        // Prior to iOS12 we cannot set the UA dynamically on time and so we set it statically here
-        guard #available(iOS 12.0, *) else {
-            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: nil)
-            return
-        }
+        webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
     }
     
     func goBack() {
@@ -500,20 +509,6 @@ class TabViewController: UIViewController {
     func goForward() {
         if webView.goForward() != nil {
             chromeDelegate?.omniBar.resignFirstResponder()
-        }
-    }
-    
-    @objc func onLongPress(sender: UILongPressGestureRecognizer) {
-        guard sender.state == .began else { return }
-        
-        let x = Int(sender.location(in: webView).x)
-        let y = Int(sender.location(in: webView).y)
-        let offsetY = y
-        
-        documentScript.getUrlAtPoint(x: x, y: offsetY) { [weak self] (url) in
-            guard let url = url else { return }
-            let point = Point(x: x, y: y)
-            self?.launchLongPressMenu(atPoint: point, forUrl: url)
         }
     }
     
@@ -797,7 +792,8 @@ class TabViewController: UIViewController {
                               blockedTrackerDomains: blockedTrackerDomains,
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
-                              tdsETag: ContentBlockerRulesManager.shared.currentRules?.etag ?? "")
+                              tdsETag: ContentBlockerRulesManager.shared.currentRules?.etag ?? "",
+                              ampUrl: linkCleaner?.lastAmpUrl)
     }
     
     public func print() {
@@ -921,6 +917,7 @@ extension TabViewController: WKNavigationDelegate {
         hideErrorMessage()
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
+        ampExtractor.cancelOngoingExtraction()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1103,6 +1100,39 @@ extension TabViewController: WKNavigationDelegate {
         }
         return nil
     }
+    
+    func requestTrackingLinkRewrite(navigationAction: WKNavigationAction,
+                                    decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) -> Bool {
+        func load(newUrl: URL, forNavigationAction navigationAction: WKNavigationAction) {
+            if isNewTargetBlankRequest(navigationAction: navigationAction) {
+                delegate?.tab(self, didRequestNewTabForUrl: newUrl, openedByPage: true)
+            } else {
+                self.load(url: newUrl)
+            }
+        }
+        
+        if let newUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: webView.url,
+                                                                 destination: navigationAction.request.url) {
+            decisionHandler(.cancel)
+            load(newUrl: newUrl, forNavigationAction: navigationAction)
+            return true
+        } else if ampExtractor.urlContainsAmpKeyword(navigationAction.request.url) {
+            showProgressIndicator()
+            ampExtractor.getCanonicalUrl(initiator: webView.url,
+                                          url: navigationAction.request.url) { canonical in
+                guard let canonical = canonical else {
+                    decisionHandler(.allow)
+                    return
+                }
+                
+                decisionHandler(.cancel)
+                load(newUrl: canonical, forNavigationAction: navigationAction)
+            }
+            return true
+        }
+        
+        return false
+    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
@@ -1117,7 +1147,14 @@ extension TabViewController: WKNavigationDelegate {
             load(urlRequest: request)
             return
         }
-
+        
+        if navigationAction.navigationType == .linkActivated {
+            if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
+                // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
+                return
+            }
+        }
+            
         if navigationAction.navigationType == .linkActivated,
            let url = navigationAction.request.url,
            let modifierFlags = delegate?.tabWillRequestNewTab(self) {
@@ -1221,12 +1258,9 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
             return
         }
-
-        // From iOS 12 we can set the UA dynamically, this lets us update it as needed for specific sites
-        if #available(iOS 12, *) {
-            if allowPolicy != WKNavigationActionPolicy.cancel {
-                UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
-            }
+        
+        if allowPolicy != WKNavigationActionPolicy.cancel {
+            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
         }
         
         if !PrivacyConfigurationManager.shared.privacyConfig.isProtected(domain: url.host) {

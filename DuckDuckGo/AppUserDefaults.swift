@@ -86,10 +86,8 @@ public class AppUserDefaults: AppSettings {
             
             if let themeName = currentThemeName {
                 return themeName
-            } else if #available(iOS 13.0, *) {
-                return .systemDefault
             } else {
-                return .dark
+                return .systemDefault
             }
         }
         

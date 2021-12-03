@@ -35,12 +35,10 @@ extension UIViewController {
     }
 
     func overrideUserInterfaceStyle() {
-        if #available(iOS 13.0, *) {
-            if ThemeManager.shared.currentTheme.currentImageSet == .dark {
-                overrideUserInterfaceStyle = .dark
-            } else {
-                overrideUserInterfaceStyle = .light
-            }
+        if ThemeManager.shared.currentTheme.currentImageSet == .dark {
+            overrideUserInterfaceStyle = .dark
+        } else {
+            overrideUserInterfaceStyle = .light
         }
     }
 

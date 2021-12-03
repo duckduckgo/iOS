@@ -186,6 +186,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureLinkPreviewsToggle() {
+        longPressCell.isHidden = false
         longPressPreviewsToggle.isOn = appSettings.longPressPreviews
     }
 

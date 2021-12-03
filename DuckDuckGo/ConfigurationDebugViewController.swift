@@ -21,7 +21,6 @@ import UIKit
 import BackgroundTasks
 import Core
 
-@available(iOS 13.0, *)
 class ConfigurationDebugViewController: UITableViewController {
 
     private let titles = [

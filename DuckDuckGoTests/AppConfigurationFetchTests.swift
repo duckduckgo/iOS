@@ -37,77 +37,59 @@ class AppConfigurationFetchTests: XCTestCase {
 
     // MARK: - Test Expired
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenExpiredWithNoPreviousStatus() {
         assert(current: .expired, previous: nil)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenExpiredWithPreviousExpiration() {
         assert(current: .expired, previous: .expired)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenExpiredWithPreviousNoDataSuccess() {
         assert(current: .expired, previous: .noData)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenExpiredWithPreviousNewDataSuccess() {
         assert(current: .expired, previous: .newData)
     }
 
     // MARK: - Test Success With No Data
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenSucceededWithNoDataAndNoPreviousStatus() {
         assert(current: .noData, previous: nil)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenSucceededWithNoDataAndPreviousExpiration() {
         assert(current: .noData, previous: .expired)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenSucceededWithNoDataAndPreviousNoData() {
         assert(current: .noData, previous: .noData)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenSucceededWithNoDataAndPreviousNewData() {
         assert(current: .noData, previous: .newData)
     }
 
     // MARK: - Test Success With New Data
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenSucceededWithNewDataAndNoPreviousStatus() {
         assert(current: .newData, previous: nil)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenSucceededWithNewDataAndPreviousExpiration() {
         assert(current: .newData, previous: .expired)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenSucceededWithNewDataAndPreviousNoData() {
         assert(current: .newData, previous: .noData)
     }
 
-    @available(iOS 13.0, *)
     func testBackgroundRefreshCompletionHandlerWhenSucceededWithNewDataAndPreviousNewData() {
         assert(current: .newData, previous: .newData)
     }
 
     func testWhenTheCompletionHandlerTriesToUpdateStatisticsThenTheCountCannotBeNegative() {
-
-        // Using @available at the function/class level still allowed these unit tests to run pre iOS 13, so a guard statement is used.
-        guard #available(iOS 13.0, *) else {
-            return
-        }
-
         let store = AppUserDefaults(groupName: testGroupName)
         let task = MockBackgroundTask()
 
@@ -135,11 +117,6 @@ class AppConfigurationFetchTests: XCTestCase {
     // - `backgroundNoDataCount` and `backgroundNewDataCount` will be incremented even if there is a previous status
     private func assert(current: AppConfigurationFetch.BackgroundRefreshCompletionStatus,
                         previous: AppConfigurationFetch.BackgroundRefreshCompletionStatus?) {
-
-        // Using @available at the function/class level still allowed these unit tests to run pre iOS 13, so a guard statement is used.
-        guard #available(iOS 13.0, *) else {
-            return
-        }
 
         let store = AppUserDefaults(groupName: testGroupName)
         let task = MockBackgroundTask()
@@ -182,7 +159,6 @@ private class MockAppConfigurationFetch: AppConfigurationFetch {
 
 }
 
-@available(iOS 13.0, *)
 private class MockBackgroundTask: CompletableTask {
 
     func setTaskCompleted(success: Bool) {

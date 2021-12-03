@@ -97,6 +97,17 @@ class TextSizeSettingsViewController: UITableViewController {
     
     private func configureDescriptionLabel() {
         descriptionLabel.text = UserText.textSizeDescription
+        adjustDescriptionLabelHeight()
+    }
+    
+    private func adjustDescriptionLabelHeight() {
+        guard let headerView = tableView.tableHeaderView else { return }
+            
+        let adjustedSize = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+        
+        if headerView.frame.size.height != adjustedSize.height {
+            headerView.frame.size.height = adjustedSize.height
+        }
     }
     
     private func configureSlider() {

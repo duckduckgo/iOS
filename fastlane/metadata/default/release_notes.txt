@@ -1,4 +1,4 @@
-• You can now adjust the text size of websites for better legibility.
+• On iPhone you can now adjust the text size of websites for better legibility.
 • Tired of AMP links? Now we automatically change them to the original publisher's web address. 
 • Bug fixes and other improvements.
 

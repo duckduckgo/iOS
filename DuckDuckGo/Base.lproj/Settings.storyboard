@@ -718,6 +718,7 @@
                         <outlet property="rememberLoginsAccessoryText" destination="1SP-ku-vDO" id="0Ru-gZ-Ump"/>
                         <outlet property="rememberLoginsCell" destination="EqN-m3-s4f" id="FAK-d0-jpX"/>
                         <outlet property="textSizeAccessoryText" destination="EB8-09-gt2" id="DXw-t7-Fm1"/>
+                        <outlet property="textSizeCell" destination="S20-Qg-xka" id="Son-JH-8EM"/>
                         <outlet property="themeAccessoryText" destination="Gbx-kl-uOO" id="h6S-um-CfT"/>
                         <outlet property="versionCell" destination="TYF-GX-a3j" id="KDT-RF-urU"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>

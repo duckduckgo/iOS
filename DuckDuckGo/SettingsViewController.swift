@@ -44,6 +44,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
+    @IBOutlet weak var textSizeCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
 
     @IBOutlet var labels: [UILabel]!
@@ -76,7 +77,7 @@ class SettingsViewController: UITableViewController {
         configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
-        configureTextSizeCellAccessory()
+        configureTextSizeCell()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
@@ -90,7 +91,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureFireButtonAnimationCellAccessory()
-        configureTextSizeCellAccessory()
+        configureTextSizeCell()
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
@@ -142,7 +143,8 @@ class SettingsViewController: UITableViewController {
         fireButtonAnimationAccessoryText.text = appSettings.currentFireButtonAnimation.descriptionText
     }
     
-    private func configureTextSizeCellAccessory() {
+    private func configureTextSizeCell() {
+        textSizeCell.isHidden = UIDevice.current.userInterfaceIdiom == .pad
         textSizeAccessoryText.text = "\(appSettings.textSize)%"
     }
 

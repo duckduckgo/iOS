@@ -343,21 +343,26 @@ class TabViewController: UIViewController {
     
     public func getCleanUrl(_ url: URL, showLoadingIndicator: Bool = true, completion: @escaping (URL) -> Void) {
         // Rewrite tracking links
-        if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
+        var urlToLoad = url
+        if let cleanUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: urlToLoad) {
+            urlToLoad = cleanUrl
+        }
+        
+        if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: urlToLoad) {
             completion(cleanUrl)
-        } else if ampExtractor.urlContainsAmpKeyword(url) {
+        } else if ampExtractor.urlContainsAmpKeyword(urlToLoad) {
             if showLoadingIndicator {
                 showProgressIndicator()
             }
-            ampExtractor.getCanonicalUrl(initiator: nil, url: url) { canonical in
+            ampExtractor.getCanonicalUrl(initiator: nil, url: urlToLoad) { canonical in
                 if let canonical = canonical {
                     completion(canonical)
                 } else {
-                    completion(url)
+                    completion(urlToLoad)
                 }
             }
         } else {
-            completion(url)
+            completion(urlToLoad)
         }
     }
     
@@ -1131,7 +1136,7 @@ extension TabViewController: WKNavigationDelegate {
             return true
         }
         
-        if let newUrl = LinkCleaner.shared.cleanTrackingParameters(initiator: webView.url,
+        if let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
                                                                    url: navigationAction.request.url) {
             decisionHandler(.cancel)
             load(newUrl: newUrl, forNavigationAction: navigationAction)

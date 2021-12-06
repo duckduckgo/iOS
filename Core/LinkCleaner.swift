@@ -91,8 +91,8 @@ public class LinkCleaner {
     
     public func cleanTrackingParameters(initiator: URL?, url: URL?,
                                         config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
-        guard let url = url, !isURLExcluded(url: url) else { return nil }
-        if let initiator = initiator, isURLExcluded(url: initiator) {
+        guard let url = url, !isURLExcluded(url: url, config: config) else { return nil }
+        if let initiator = initiator, isURLExcluded(url: initiator, config: config) {
             return nil
         }
         

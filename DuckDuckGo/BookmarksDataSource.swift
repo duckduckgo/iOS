@@ -544,12 +544,8 @@ class BookmarksFolderDetailsSectionDataSource: BookmarksSectionDataSource {
         delegate?.bookmarksFolderDetailsSectionDataSourceTextFieldDidReturn(dataSource: self)
     }
     
-    func folderTitle(_ tableView: UITableView, section: Int) -> String? {
-        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? BookmarksTextFieldCell else {
-            assertionFailure("Could not get folder details cell")
-            return nil
-        }
-        return cell.title
+    func folderTitle() -> String? {
+        return currentTitle
     }
 }
 
@@ -590,20 +586,12 @@ class BookmarkDetailsSectionDataSource: BookmarksSectionDataSource {
         return cell
     }
     
-    func bookmarkTitle(_ tableView: UITableView, section: Int) -> String? {
-        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? BookmarkDetailsCell else {
-            assertionFailure("Could not get bookmark details cell")
-            return nil
-        }
-        return cell.title
+    func bookmarkTitle() -> String? {
+        return currentTitle
     }
     
-    func bookmarkUrlString(_ tableView: UITableView, section: Int) -> String? {
-       guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: section)) as? BookmarkDetailsCell else {
-           assertionFailure("Could not get bookmark details cell")
-           return nil
-       }
-       return cell.urlString
+    func bookmarkUrlString() -> String? {
+       return currentURLString
    }
 }
 
@@ -736,7 +724,7 @@ class BookmarkFolderDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsD
             return
         }
         let detailsDataSource = dataSources[0] as! BookmarksFolderDetailsSectionDataSource
-        let title = detailsDataSource.folderTitle(tableView, section: 0) ?? ""
+        let title = detailsDataSource.folderTitle() ?? ""
         // TODO inject bookmarks manager properly
         let manager = BookmarksManager()
         
@@ -785,8 +773,8 @@ class BookmarkDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
             return
         }
         let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
-        let title = detailsDataSource.bookmarkTitle(tableView, section: 0) ?? ""
-        var urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0) ?? ""
+        let title = detailsDataSource.bookmarkTitle() ?? ""
+        var urlString = detailsDataSource.bookmarkUrlString() ?? ""
         
         if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") && !urlString.isBookmarklet() {
             urlString = "http://\(urlString)"
@@ -829,8 +817,8 @@ class FavoriteDetailsDataSource: BookmarksDataSource, BookmarkItemDetailsDataSou
     
     func save(_ tableView: UITableView, delegate: BookmarkItemDetailsDataSourceDidSaveDelegate?) {
         let detailsDataSource = dataSources[0] as! BookmarkDetailsSectionDataSource
-        let title = detailsDataSource.bookmarkTitle(tableView, section: 0) ?? ""
-        var urlString = detailsDataSource.bookmarkUrlString(tableView, section: 0) ?? ""
+        let title = detailsDataSource.bookmarkTitle() ?? ""
+        var urlString = detailsDataSource.bookmarkUrlString() ?? ""
         
         if !urlString.hasPrefix("http://") && !urlString.hasPrefix("https://") && !urlString.isBookmarklet() {
             urlString = "http://\(urlString)"

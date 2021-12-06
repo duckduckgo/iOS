@@ -401,4 +401,16 @@ public struct UserText {
         let message = NSLocalizedString("textSize.footer", value: "Text Size - %@", comment: "Replacement string is a current percent value e.g. '120%'")
         return message.format(arguments: percentage)
     }
+
+}
+
+extension UserText {
+    
+    public static let macBrowserWaitlistTitle = NSLocalizedString("mac-browser.waitlist.title", value: "macOS Browser Beta", comment: "Header text for the macOS browser waitlist")
+    
+    public static func macBrowserWaitlistSummary(learnMoreString: String) -> String {
+        let message = NSLocalizedString("mac-browser.waitlist.summary", value: "Sign up to try the DuckDuckGo Privacy Browser on macOS. %@.", comment: "Description text for the macOS waitlist. Parameter is 'Learn more'.")
+        return message.format(arguments: learnMoreString)
+    }
+    
 }

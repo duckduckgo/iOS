@@ -42,6 +42,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
     @IBOutlet weak var emailProtectionCell: UITableViewCell!
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
+    @IBOutlet weak var macBrowserWaitlistCell: UITableViewCell!
+    @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
@@ -210,6 +212,10 @@ class SettingsViewController: UITableViewController {
     private func showEmailWaitlistViewController() {
         navigationController?.pushViewController(EmailWaitlistViewController.loadFromStoryboard(), animated: true)
     }
+    
+    private func showDesktopBrowserWaitlistViewController() {
+        navigationController?.pushViewController(MacBrowserWaitlistViewController.loadFromStoryboard(), animated: true)
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -229,6 +235,9 @@ class SettingsViewController: UITableViewController {
             } else {
                 showEmailWaitlistViewController()
             }
+            
+        case macBrowserWaitlistCell:
+            showDesktopBrowserWaitlistViewController()
 
         case versionCell:
             showDebug()

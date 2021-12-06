@@ -658,6 +658,12 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
 
+/* Description text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.summary" = "Sign up to try the DuckDuckGo Privacy Browser on macOS. %@.";
+
+/* Header text for the macOS browser waitlist */
+"mac-browser.waitlist.title" = "macOS Browser Beta";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";
 

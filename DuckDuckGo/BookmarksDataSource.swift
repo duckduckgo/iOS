@@ -402,14 +402,14 @@ class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
             return
         }
         presentableBookmarkItems = visibleFolders(for: folder, depthOfFolder: 0)
-        
-        tableView.reloadData()
         let newIndex = presentableBookmarkItems.firstIndex {
             $0.item.objectID == objectID
         }
         if let index = newIndex {
-            select(tableView, row: index, section: section)
+            selectedRow = index
         }
+        
+        tableView.reloadData()
     }
     
     //TODO should this actually be optional?

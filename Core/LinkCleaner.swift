@@ -39,12 +39,12 @@ public class LinkCleaner {
         return nil
     }
     
-    public func isURLExcluded(url: URL, config: PrivacyConfiguration) -> Bool {
+    public func isURLExcluded(url: URL, config: PrivacyConfiguration, feature: PrivacyFeature = .ampLinks) -> Bool {
         guard let host = url.host else { return true }
         
         if config.isTempUnprotected(domain: host)
             || config.isUserUnprotected(domain: host)
-            || config.isInExceptionList(domain: host, forFeature: .ampLinks) {
+            || config.isInExceptionList(domain: host, forFeature: feature) {
             return true
         }
         
@@ -91,8 +91,8 @@ public class LinkCleaner {
     
     public func cleanTrackingParameters(initiator: URL?, url: URL?,
                                         config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
-        guard let url = url, !isURLExcluded(url: url, config: config) else { return nil }
-        if let initiator = initiator, isURLExcluded(url: initiator, config: config) {
+        guard let url = url, !isURLExcluded(url: url, config: config, feature: .trackingParameters) else { return nil }
+        if let initiator = initiator, isURLExcluded(url: initiator, config: config, feature: .trackingParameters) {
             return nil
         }
         

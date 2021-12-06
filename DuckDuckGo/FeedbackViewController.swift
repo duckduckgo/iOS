@@ -80,10 +80,8 @@ extension FeedbackViewController: Themable {
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
         
-        if #available(iOS 13.0, *) {
-            overrideSystemTheme(with: theme)
-        }
-        
+        overrideSystemTheme(with: theme)
+
         view.backgroundColor = theme.backgroundColor
         
         postitiveFeedbackButton.backgroundColor = theme.feedbackSentimentButtonBackgroundColor

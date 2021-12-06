@@ -70,6 +70,8 @@ public struct UserDefaultsWrapper<T> {
         case downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
+        
+        case textSize = "com.duckduckgo.ios.textSize"
     }
 
     private let key: Key

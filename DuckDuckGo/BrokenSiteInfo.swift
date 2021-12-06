@@ -44,14 +44,19 @@ public struct BrokenSiteInfo {
     private let installedSurrogates: [String]
     private let isDesktop: Bool
     private let tdsETag: String?
+    private let ampUrl: String?
     
-    public init(url: URL?, httpsUpgrade: Bool, blockedTrackerDomains: [String], installedSurrogates: [String], isDesktop: Bool, tdsETag: String?) {
+    public init(url: URL?, httpsUpgrade: Bool,
+                blockedTrackerDomains: [String], installedSurrogates: [String],
+                isDesktop: Bool, tdsETag: String?,
+                ampUrl: String?) {
         self.url = url
         self.httpsUpgrade = httpsUpgrade
         self.blockedTrackerDomains = blockedTrackerDomains
         self.installedSurrogates = installedSurrogates
         self.isDesktop = isDesktop
         self.tdsETag = tdsETag
+        self.ampUrl = ampUrl
     }
     
     func send(with category: String) {
@@ -68,7 +73,7 @@ public struct BrokenSiteInfo {
                           Keys.manufacturer: "Apple",
                           Keys.model: UIDevice.current.model,
                           Keys.gpc: AppDependencyProvider.shared.appSettings.sendDoNotSell ? "true" : "false",
-                          Keys.ampUrl: LinkCleaner.shared.getLastAmpUrl() ?? ""]
+                          Keys.ampUrl: ampUrl ?? ""]
         
         Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
     }

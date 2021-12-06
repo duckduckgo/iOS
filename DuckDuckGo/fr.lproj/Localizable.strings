@@ -263,19 +263,97 @@
 "email.aliasAlert.decline" = "Annuler";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Générer une adresse privée";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Bloquer les traqueurs d'e-mails avec une adresse Duck";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Utiliser %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Nouvelle adresse copiée dans le presse-papiers";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Créer une adresse Duck";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Activé";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "En supprimant la protection des e-mails de cet appareil, vous ne pourrez plus renseigner d'adresse Duck personnelle ni de nouvelle adresse privée Duck dans les champs Adresse e-mail lorsque vous naviguez sur le Web.<br/><br/>Pour supprimer intégralement vos adresses Duck ou pour toute autre question ou commentaire, contactez-nous à l'adresse support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Désactivé";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Annuler";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Remarque : la suppression de la protection des e-mails sur cet appareil ne supprimera pas votre adresse Duck.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Supprimer";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Supprimer la protection des e-mails ?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Une erreur s'est produite lors de l'inscription sur la liste d'attente. Veuillez réessayer plus tard.";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Commencer";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "J'ai un code d'invitation";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Vous avez été invité(e) !";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Rejoindre la liste d'attente privée";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Vous êtes sur liste d'attente !";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Votre invitation s'affichera ici lorsque vous aurez accès à la fonctionnalité. Vous souhaitez %1$@ de son lancement ? %2$@ sur la protection des e-mails.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "être prévenu(e)";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Nous vous contacterons lorsque la protection des e-mails sera disponible pour vous. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "En savoir plus";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Nous vous enverrons une notification dès que vous pourrez commencer à utiliser la protection des e-mails.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Souhaitez-vous être prévenu(e) lorsque vous aurez accès à notre nouvelle fonctionnalité ?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Vous vous êtes inscrit(e) sur la liste d'attente et nous avez demandé de vous informer lorsque vous pourrez tester notre fonctionnalité de protection des e-mails.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Non merci";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "ME PRÉVENIR";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Vous avez reçu votre invitation pour tester la protection des e-mails !";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Nous n'enregistrons pas vos adresses e-mail. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "La confidentialité des e-mails, simplifiée.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Bloquez les traqueurs d'e-mails et masquez votre adresse, sans changer de fournisseur de messagerie. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Aucun signet ajouté pour le moment";
@@ -769,12 +847,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "DEGRÉ DE CONFIDENTIALITÉ";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Protection de la confidentialité du site";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +961,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Outil de changement d'onglet";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Choisissez la taille du texte par défaut. La taille des polices des sites Web que vous consultez à partir de Duckduckgo sera ajustée en conséquence.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Taille du texte – %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Sombre";
 
@@ -930,4 +1008,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori ajouté";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Annuler";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "OK";
 

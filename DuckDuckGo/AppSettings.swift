@@ -31,5 +31,6 @@ protocol AppSettings: AnyObject {
     var sendDoNotSell: Bool { get set }
     
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
-
+    
+    var textSize: Int { get set }
 }

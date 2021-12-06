@@ -263,19 +263,97 @@
 "email.aliasAlert.decline" = "Peruuta";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Luo yksityinen osoite";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Estä sähköpostiseuranta Duck-osoitteella";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Käytä %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Uusi osoite on kopioitu leikepöydälle";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Luo Duck-osoite";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Käytössä";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Sähköpostisuojauksen poistaminen tältä laitteelta poistaa mahdollisuuden kirjoittaa yksityinen Duck-osoitteesi tai juuri luotu yksityinen Duck-osoite sähköpostikenttään verkkoa selatessasi.<br/><br/>Ota yhteyttä osoitteeseen support@duck.com, jos haluat poistaa Duck-osoitteesi kokonaan tai jos sinulla on kysymyksiä tai palautetta.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Pois";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Peruuta";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Huomaa: sähköpostisuojauksen poistaminen tältä laitteelta ei poista Duck-osoitettasi.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Poista";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Poistetaanko sähköpostisuojaus?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Virhe liittyessä odotuslistalle, yritä myöhemmin uudelleen";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Aloita";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Minulla on kutsukoodi";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Sinut on kutsuttu!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Liity yksityiselle odotuslistalle";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Olet odotuslistalla!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Kutsusi näkyy täällä, kun olemme valmiita. Haluatko, että sinulle tulee %1$@, kun kutsusi saapuu? %2$@ sähköpostisuojauksesta.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "ilmoitus";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Lähetämme sinulle ilmoituksen, kun sähköpostisuojaus on valmis käytettäväksi. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Lue lisää";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Lähetämme sinulle ilmoituksen, kun voit aloittaa sähköpostisuojauksen käytön.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Haluatko, että ilmoitamme sinulle, kun on sinun vuorosi?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Liityit odotuslistalle ja pyysit meitä ilmoittamaan sinulle, kun on sinun vuorosi kokeilla sähköpostisuojaustamme.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Ei kiitos";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "HALUAN ILMOITUKSEN";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Kutsusi sähköpostin suojaamiseen on täällä!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Emme tallenna sähköpostejasi. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Sähköpostin tietosuoja, yksinkertaisesti.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Estä sähköpostiseuranta ja piilota osoitteesi vaihtamatta sähköpostintarjoajaa. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Kirjanmerkkejä ei ole vielä lisätty";
@@ -769,12 +847,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "TIETOSUOJA-ARVOSANA";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Sivuston yksityisyydensuoja";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +961,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Välilehtien vaihtotyökalu";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Valitse tekstin koko. DuckDuckGossa tarkastelemasi verkkosivustot käyttävät sitä.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Tekstin koko - %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Tumma";
 
@@ -930,4 +1008,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Suosikki lisätty";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Peruuta";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "OK";
 

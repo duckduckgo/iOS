@@ -21,9 +21,11 @@ import Foundation
 
 public class LinkCleaner {
     
-    public static let shared = LinkCleaner()
+    public var lastAmpUrl: String?
     
-    private var lastAmpUrl: String?
+    public init() {
+        
+    }
     
     public func urlIsExtractableAmpLink(_ url: URL,
                                         config: PrivacyConfiguration) -> String? {
@@ -37,13 +39,12 @@ public class LinkCleaner {
         return nil
     }
     
-    public func isURLExcluded(url: URL) -> Bool {
+    public func isURLExcluded(url: URL, config: PrivacyConfiguration) -> Bool {
         guard let host = url.host else { return true }
         
-        let config = PrivacyConfigurationManager.shared.privacyConfig
         if config.isTempUnprotected(domain: host)
             || config.isUserUnprotected(domain: host)
-            || config.isInExceptionList(domain: host, forFeature: .trackingLinks) {
+            || config.isInExceptionList(domain: host, forFeature: .ampLinks) {
             return true
         }
         
@@ -53,8 +54,8 @@ public class LinkCleaner {
     public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?,
                                             config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
         lastAmpUrl = nil
-        guard let url = url, !isURLExcluded(url: url) else { return nil }
-        if let initiator = initiator, isURLExcluded(url: initiator) {
+        guard let url = url, !isURLExcluded(url: url, config: config) else { return nil }
+        if let initiator = initiator, isURLExcluded(url: initiator, config: config) {
             return nil
         }
         
@@ -76,7 +77,7 @@ public class LinkCleaner {
                     urlStr = "https://\(urlStr)"
                 }
                 
-                if let cleanUrl = URL(string: urlStr), !isURLExcluded(url: cleanUrl) {
+                if let cleanUrl = URL(string: urlStr), !isURLExcluded(url: cleanUrl, config: config) {
                     lastAmpUrl = ampStr
                     return cleanUrl
                 }
@@ -124,22 +125,5 @@ public class LinkCleaner {
         }
         
         return newComps.url
-    }
-
-    public func getLastAmpUrl() -> String? {
-        guard let lastAmpUrl = lastAmpUrl else { return nil }
-        
-        let returnVal = lastAmpUrl
-        self.lastAmpUrl = nil
-        
-        return returnVal
-    }
-    
-    public func resetLastAmpUrl() {
-        lastAmpUrl = nil
-    }
-    
-    public func setLastAmpUrl(_ url: String?) {
-        lastAmpUrl = url
     }
 }

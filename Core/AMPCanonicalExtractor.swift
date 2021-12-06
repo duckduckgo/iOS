@@ -22,8 +22,6 @@ import WebKit
 
 public class AMPCanonicalExtractor: NSObject {
     
-    public static let shared = AMPCanonicalExtractor()
-    
     struct Constants {
         static let sendCanonical = "sendCanonical"
         static let canonicalKey = "canonical"
@@ -35,9 +33,22 @@ public class AMPCanonicalExtractor: NSObject {
     
     private var imageBlockingRules: WKContentRuleList?
     
-    override init() {
+    private var linkCleaner: LinkCleaner
+    
+    public init(linkCleaner: LinkCleaner) {
+        self.linkCleaner = linkCleaner
         super.init()
         
+        WKContentRuleListStore.default().lookUpContentRuleList(forIdentifier: Constants.ruleListIdentifier) { [weak self] ruleList, _ in
+            if let ruleList = ruleList {
+                self?.imageBlockingRules = ruleList
+            } else {
+                self?.compileImageRules()
+            }
+        }
+    }
+    
+    private func compileImageRules() {
         let ruleSource = """
 [
     {
@@ -65,6 +76,7 @@ public class AMPCanonicalExtractor: NSObject {
                                                                 encodedContentRuleList: ruleSource) { [weak self] ruleList, error  in
             guard error != nil else {
                 print(error?.localizedDescription ?? "AMPCanonicalExtractor - Error compiling image blocking rules")
+                Pixel.fire(pixel: .ampBlockingRulesCompilationFailed)
                 return
             }
             
@@ -74,8 +86,8 @@ public class AMPCanonicalExtractor: NSObject {
     
     public func urlContainsAmpKeyword(_ url: URL?,
                                       config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
-        LinkCleaner.shared.resetLastAmpUrl()
-        guard let url = url else { return false }
+        linkCleaner.lastAmpUrl = nil
+        guard let url = url, !linkCleaner.isURLExcluded(url: url, config: config) else { return false }
         let urlStr = url.absoluteString
         
         let ampKeywords = TrackingLinkSettings(fromConfig: config).ampKeywords
@@ -104,13 +116,22 @@ public class AMPCanonicalExtractor: NSObject {
         return WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: true)
     }
     
-    public func getCanonicalUrl(initiator: URL?, url: URL?, completion: @escaping ((URL?) -> Void)) {
-        guard let url = url, !LinkCleaner.shared.isURLExcluded(url: url) else {
+    public func cancelOngoingExtraction() {
+        webView?.stopLoading()
+        webView = nil
+        completion = nil
+    }
+    
+    public func getCanonicalUrl(initiator: URL?, url: URL?,
+                                config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig,
+                                completion: @escaping ((URL?) -> Void)) {
+        cancelOngoingExtraction()
+        guard let url = url, !linkCleaner.isURLExcluded(url: url, config: config) else {
             completion(nil)
             return
         }
         
-        if let initiator = initiator, LinkCleaner.shared.isURLExcluded(url: initiator) {
+        if let initiator = initiator, linkCleaner.isURLExcluded(url: initiator, config: config) {
             completion(nil)
             return
         }
@@ -129,6 +150,7 @@ public class AMPCanonicalExtractor: NSObject {
         }
         
         webView = WKWebView(frame: .zero, configuration: configuration)
+        webView?.navigationDelegate = self
         webView?.load(URLRequest(url: url))
     }
     
@@ -143,8 +165,9 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
         if let dict = message.body as? [String: AnyObject],
            let canonical = dict[Constants.canonicalKey] as? String {
             if let canonicalUrl = URL(string: canonical),
-               !LinkCleaner.shared.isURLExcluded(url: canonicalUrl) {
-                LinkCleaner.shared.setLastAmpUrl(canonicalUrl.absoluteString)
+               !linkCleaner.isURLExcluded(url: canonicalUrl,
+                                            config: PrivacyConfigurationManager.shared.privacyConfig) {
+                linkCleaner.lastAmpUrl = canonicalUrl.absoluteString
                 completion?(canonicalUrl)
             } else {
                 completion?(nil)
@@ -152,5 +175,15 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
         } else {
             completion?(nil)
         }
+    }
+}
+
+extension AMPCanonicalExtractor: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        completion?(nil)
+    }
+    
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        completion?(nil)
     }
 }

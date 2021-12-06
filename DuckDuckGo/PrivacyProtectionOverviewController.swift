@@ -316,9 +316,7 @@ extension PrivacyProtectionOverviewController: Themable {
         setNeedsStatusBarAppearanceUpdate()
         decorateNavigationBar(with: theme)
         
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .light
-        }
+        overrideUserInterfaceStyle = .light
     }
 }
 

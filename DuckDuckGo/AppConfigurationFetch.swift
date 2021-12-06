@@ -30,7 +30,6 @@ protocol CompletableTask {
 
 }
 
-@available(iOS 13.0, *)
 extension BGTask: CompletableTask { }
 
 protocol AppConfigurationFetchStatistics {
@@ -56,7 +55,6 @@ class AppConfigurationFetch {
     private struct Keys {
         static let bgFetchType = "bgft"
         static let bgFetchTypeBackgroundTasks = "bgbt"
-        static let bgFetchTypeLegacy = "bgl"
         static let bgFetchTaskExpiration = "bgte"
         static let bgFetchTaskDuration = "bgtd"
         static let bgFetchStart = "bgfs"
@@ -146,7 +144,6 @@ class AppConfigurationFetch {
         }
     }
 
-    @available(iOS 13.0, *)
     static func registerBackgroundRefreshTaskHandler() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundProcessingTaskIdentifier, using: nil) { (task) in
             guard shouldRefresh else {
@@ -161,7 +158,6 @@ class AppConfigurationFetch {
         }
     }
 
-    @available(iOS 13.0, *)
     static func scheduleBackgroundRefreshTask() {
         let task = BGProcessingTaskRequest(identifier: AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier)
         task.requiresNetworkConnectivity = true
@@ -250,14 +246,8 @@ class AppConfigurationFetch {
             return
         }
 
-        let backgroundFetchType: String
+        let backgroundFetchType = Keys.bgFetchTypeBackgroundTasks
 
-        if #available(iOS 13.0, *) {
-            backgroundFetchType = Keys.bgFetchTypeBackgroundTasks
-        } else {
-            backgroundFetchType = Keys.bgFetchTypeLegacy
-        }
-        
         let parameters = [Keys.bgFetchStart: String(store.backgroundStartCount),
                           Keys.bgFetchNoData: String(store.backgroundNoDataCount),
                           Keys.bgFetchWithData: String(store.backgroundNewDataCount),
@@ -314,7 +304,6 @@ class AppConfigurationFetch {
 
 extension AppConfigurationFetch {
 
-    @available(iOS 13.0, *)
     static func backgroundRefreshTaskHandler(store: AppConfigurationFetchStatistics,
                                              configurationFetcher: AppConfigurationFetch,
                                              queue: DispatchQueue,
@@ -354,7 +343,6 @@ extension AppConfigurationFetch {
 
     // Gets called at the end of the refresh process, either by the task being expired by the OS or by the refresh process completing successfully.
     // It checks whether it has been called earlier in the same refresh run and self-corrects the completion statistics if necessary.
-    @available(iOS 13.0, *)
     static func backgroundRefreshTaskCompletionHandler(store: AppConfigurationFetchStatistics,
                                                        refreshStartDate: Date,
                                                        task: CompletableTask,

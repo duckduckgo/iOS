@@ -37,11 +37,12 @@ enum WaitlistResponse {
     // MARK: Status
     
     struct Status: Decodable {
-        let currentTimestamp: Int
+        let timestamp: Int
     }
     
     enum StatusError: Error {
         case failed
+        case noData
     }
     
     // MARK: Invite Code
@@ -52,6 +53,7 @@ enum WaitlistResponse {
     
     enum InviteCodeError: Error {
         case failed
+        case noData
     }
 
 }
@@ -61,8 +63,8 @@ typealias WaitlistJoinCompletion = (Result<WaitlistResponse.Join, WaitlistRespon
 protocol WaitlistRequesting {
     
     func joinWaitlist(completionHandler: @escaping WaitlistJoinCompletion)
-    func getWaitlistStatus(completion: @escaping (Result<WaitlistResponse.Status, WaitlistResponse.StatusError>) -> Void)
-    func getInviteCode(token: String, completion: @escaping (Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>) -> Void)
+    func getWaitlistStatus(completionHandler: @escaping (Result<WaitlistResponse.Status, WaitlistResponse.StatusError>) -> Void)
+    func getInviteCode(token: String, completionHandler: @escaping (Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>) -> Void)
     
 }
 
@@ -85,9 +87,7 @@ class WaitlistRequest: WaitlistRequesting {
     func joinWaitlist(completionHandler: @escaping (Result<WaitlistResponse.Join, WaitlistResponse.JoinError>) -> Void) {
         let url = Self.developmentEndpoint.appendingPathComponent(product.rawValue).appendingPathComponent("join")
         
-        APIRequest.request(url: url, method: .post) { [weak self] response, error in
-            guard let self = self else { return }
-
+        APIRequest.request(url: url, method: .post) { response, error in
             guard let data = response?.data, error == nil else {
                 DispatchQueue.main.async {
                     completionHandler(.failure(.noData))
@@ -111,12 +111,62 @@ class WaitlistRequest: WaitlistRequesting {
         }
     }
     
-    func getWaitlistStatus(completion: @escaping (Result<WaitlistResponse.Status, WaitlistResponse.StatusError>) -> Void) {
-        completion(.failure(.failed))
+    func getWaitlistStatus(completionHandler: @escaping (Result<WaitlistResponse.Status, WaitlistResponse.StatusError>) -> Void) {
+        let url = Self.developmentEndpoint.appendingPathComponent(product.rawValue).appendingPathComponent("status")
+        
+        APIRequest.request(url: url, method: .get) { response, error in
+            guard let data = response?.data, error == nil else {
+                DispatchQueue.main.async {
+                    completionHandler(.failure(.noData))
+                }
+
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(WaitlistResponse.Status.self, from: data)
+
+                DispatchQueue.main.async {
+                    completionHandler(.success(response))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completionHandler(.failure(.noData))
+                }
+            }
+        }
     }
     
-    func getInviteCode(token: String, completion: @escaping (Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>) -> Void) {
-        completion(.failure(.failed))
+    func getInviteCode(token: String, completionHandler: @escaping (Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>) -> Void) {
+        let url = Self.developmentEndpoint.appendingPathComponent(product.rawValue).appendingPathComponent("code")
+        
+        var components = URLComponents()
+        components.queryItems = [URLQueryItem(name: "token", value: token)]
+        let componentData = components.query?.data(using: .utf8)
+
+        APIRequest.request(url: url, method: .post, httpBody: componentData) { response, error in
+            guard let data = response?.data, error == nil else {
+                DispatchQueue.main.async {
+                    completionHandler(.failure(.noData))
+                }
+
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(WaitlistResponse.InviteCode.self, from: data)
+
+                DispatchQueue.main.async {
+                    completionHandler(.success(response))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    completionHandler(.failure(.noData))
+                }
+            }
+        }
     }
     
 }

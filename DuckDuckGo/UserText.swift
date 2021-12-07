@@ -406,11 +406,31 @@ public struct UserText {
 
 extension UserText {
     
+    public static let macBrowserWaitlistAvailableNotificationTitle = NSLocalizedString("mac-browser.waitlist.notification.title", value: "Your Desktop Browser Invitation is Here!", comment: "Title for the macOS waitlist notification")
+    public static let macBrowserWaitlistAvailableNotificationBody = NSLocalizedString("mac-browser.waitlist.notification.body", value: "You asked us to notify you when it’s your turn to try our new macOS browser.", comment: "Body text for the macOS waitlist notification")
+    
     public static let macBrowserWaitlistTitle = NSLocalizedString("mac-browser.waitlist.title", value: "macOS Browser Beta", comment: "Header text for the macOS browser waitlist")
     
     public static func macBrowserWaitlistSummary(learnMoreString: String) -> String {
         let message = NSLocalizedString("mac-browser.waitlist.summary", value: "Sign up to try the DuckDuckGo Privacy Browser on macOS. %@.", comment: "Description text for the macOS waitlist. Parameter is 'Learn more'.")
         return message.format(arguments: learnMoreString)
+    }
+    
+    public static func macBrowserWaitlistLearnMore(learnMoreString: String) -> String {
+        let message = NSLocalizedString("mac-browser.waitlist.learn-more", value: "%@ about the beta.", comment: "Footer text for the macOS waitlist. Parameter is 'Learn more'.")
+        return message.format(arguments: learnMoreString)
+    }
+    
+    public static func macBrowserWaitlistJoinedWithNotificationSummary(learnMoreString: String) -> String {
+        let message = NSLocalizedString("mac-browser.waitlist.joined.notification", value: "We’ll send you a notification when we're ready for you. %@.", comment: "Description text for the macOS waitlist. Parameter is 'Learn more.'")
+        return message.format(arguments: learnMoreString)
+    }
+
+    public static let macBrowserWaitlistGetANotification = NSLocalizedString("mac-browser.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the macOS waitlist")
+    
+    public static func  macBrowserWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
+        let message =  NSLocalizedString("mac-browser.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about the macOS browser beta.", comment: "First parameter is 'get a notification', second is 'Learn more'.")
+        return message.format(arguments: getNotifiedString, learnMoreString)
     }
     
 }

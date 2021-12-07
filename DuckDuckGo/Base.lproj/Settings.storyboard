@@ -678,11 +678,11 @@
                                         <rect key="frame" x="0.0" y="1113.6666584014893" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="394.66666666666669" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="396.33333333333331" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="8" y="0.0" width="378.66666666666669" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="380.33333333333331" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -2086,7 +2086,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="4WC-3q-ccD">
-                            <rect key="frame" x="0.0" y="149.33333206176758" width="414" height="120"/>
+                            <rect key="frame" x="0.0" y="149.33333206176755" width="414" height="120.00000000000003"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">
@@ -2324,7 +2324,7 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="h3E-h1-cmI">
-                                <rect key="frame" x="20" y="232" width="374" height="90"/>
+                                <rect key="frame" x="20" y="232" width="374" height="135"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYb-Wi-Mne">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
@@ -2338,8 +2338,14 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                                             <action selector="waitlistActionButtonTapped:" destination="dnr-SI-BaR" eventType="touchUpInside" id="q0u-Vd-h1J"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INVITECODE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mua-n6-Yp1">
+                                        <rect key="frame" x="0.0" y="50" width="374" height="35"/>
+                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="30"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTk-bk-Fjg">
-                                        <rect key="frame" x="0.0" y="50" width="374" height="40"/>
+                                        <rect key="frame" x="0.0" y="95" width="374" height="40"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                         <state key="normal" title="I have an Invite Code">
@@ -2355,6 +2361,14 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npe-k3-nz8">
+                                <rect key="frame" x="132.33333333333337" y="695" width="149.66666666666663" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Reset Waitlist State"/>
+                                <connections>
+                                    <action selector="resetWaitlistState:" destination="dnr-SI-BaR" eventType="touchUpInside" id="d5d-tk-8mX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
@@ -2372,7 +2386,9 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                             <constraint firstItem="t9G-Vb-i3k" firstAttribute="top" secondItem="zcE-oZ-Wru" secondAttribute="bottom" priority="750" constant="32" id="aFO-rg-EnP"/>
                             <constraint firstItem="gHQ-hS-n5T" firstAttribute="top" secondItem="Sjr-In-mMv" secondAttribute="bottom" constant="8" symbolic="YES" id="adX-bX-Xtt"/>
                             <constraint firstItem="R2V-M0-XfW" firstAttribute="leading" secondItem="5Mu-ae-kPb" secondAttribute="leadingMargin" id="iO7-Y4-qOk"/>
+                            <constraint firstItem="Npe-k3-nz8" firstAttribute="centerX" secondItem="5Mu-ae-kPb" secondAttribute="centerX" id="ny0-HL-UF7"/>
                             <constraint firstItem="h3E-h1-cmI" firstAttribute="top" secondItem="hYG-SA-Pyk" secondAttribute="bottom" priority="750" constant="32" id="r8g-9a-miG"/>
+                            <constraint firstItem="Sjr-In-mMv" firstAttribute="top" secondItem="Npe-k3-nz8" secondAttribute="bottom" constant="8" symbolic="YES" id="v1h-wb-Su4"/>
                             <constraint firstItem="Sjr-In-mMv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="h3E-h1-cmI" secondAttribute="bottom" id="vtC-PM-ncp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hYG-SA-Pyk" secondAttribute="trailing" id="x7o-rP-xRT"/>
                             <constraint firstItem="Sjr-In-mMv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="h3E-h1-cmI" secondAttribute="bottom" priority="750" constant="24" id="yAt-Xh-aBA"/>
@@ -2381,10 +2397,12 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                     <navigationItem key="navigationItem" title="Desktop Browser Waitlist" id="0ac-IP-1TD"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
+                        <outlet property="existingInviteCodeButton" destination="MTk-bk-Fjg" id="nvR-kf-vtI"/>
                         <outlet property="footerTextView" destination="Sjr-In-mMv" id="bAq-zf-G18"/>
                         <outlet property="headerDescriptionTextView" destination="hYG-SA-Pyk" id="UoN-nt-zSh"/>
                         <outlet property="headerImageView" destination="t9G-Vb-i3k" id="FUM-yI-8F1"/>
                         <outlet property="headerTitleLabel" destination="R2V-M0-XfW" id="bLj-oW-nLj"/>
+                        <outlet property="inviteCodeLabel" destination="Mua-n6-Yp1" id="wAD-I7-6Xl"/>
                         <outlet property="waitlistActionButton" destination="XYb-Wi-Mne" id="DoH-wj-P4n"/>
                     </connections>
                 </viewController>

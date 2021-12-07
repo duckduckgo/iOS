@@ -173,6 +173,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             case .failure: break
             }
         }
+        
+        MacBrowserWaitlistViewModel.shared.getInviteCodeIfAvailable { error in
+            if error == nil {
+                MacBrowserWaitlistViewModel.sendInviteCodeAvailableNotification()
+            }
+        }
     }
 
     private func fireAppLaunchPixel() {
@@ -452,13 +458,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            presentWaitlistSettingsModal()
+            if response.notification.request.identifier == "com.duckduckgo.ios.mac-browser.invite-code-available" {
+                presentMacBrowserWaitlistSettingsModal()
+            } else {
+                presentEmailWaitlistSettingsModal()
+            }
         }
 
         completionHandler()
     }
 
-    private func presentWaitlistSettingsModal() {
+    private func presentEmailWaitlistSettingsModal() {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
         rootViewController.clearNavigationStack()
@@ -468,6 +478,22 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
             let navigationController = rootViewController.presentedViewController as? UINavigationController
             let waitlist = EmailWaitlistViewController.loadFromStoryboard()
+
+            navigationController?.popToRootViewController(animated: false)
+            navigationController?.pushViewController(waitlist, animated: true)
+        }
+    }
+    
+    private func presentMacBrowserWaitlistSettingsModal() {
+        guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
+
+        rootViewController.clearNavigationStack()
+
+        // Give the `clearNavigationStack` call time to complete.
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
+            let navigationController = rootViewController.presentedViewController as? UINavigationController
+            let waitlist = MacBrowserWaitlistViewController.loadFromStoryboard()
 
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(waitlist, animated: true)

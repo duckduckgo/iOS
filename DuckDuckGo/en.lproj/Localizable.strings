@@ -658,6 +658,24 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
 
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to %1$@ when it arrives? %2$@ about the macOS browser beta.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "get a notification";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "We’ll send you a notification when we're ready for you. %@.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ about the beta.";
+
+/* Body text for the macOS waitlist notification */
+"mac-browser.waitlist.notification.body" = "You asked us to notify you when it’s your turn to try our new macOS browser.";
+
+/* Title for the macOS waitlist notification */
+"mac-browser.waitlist.notification.title" = "Your Desktop Browser Invitation is Here!";
+
 /* Description text for the macOS waitlist. Parameter is 'Learn more'. */
 "mac-browser.waitlist.summary" = "Sign up to try the DuckDuckGo Privacy Browser on macOS. %@.";
 

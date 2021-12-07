@@ -22,6 +22,7 @@ import MessageUI
 import Core
 import BrowserServicesKit
 
+// swiftlint:disable file_length
 class SettingsViewController: UITableViewController {
 
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
@@ -43,6 +44,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
+    @IBOutlet weak var textSizeAccessoryText: UILabel!
 
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -74,6 +76,7 @@ class SettingsViewController: UITableViewController {
         configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
+        configureTextSizeCellAccessory()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
@@ -87,6 +90,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureFireButtonAnimationCellAccessory()
+        configureTextSizeCellAccessory()
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
@@ -101,6 +105,10 @@ class SettingsViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
+            return
+        } else if let textSizeSettings = segue.destination as? TextSizeSettingsViewController {
+            Pixel.fire(pixel: .textSizeSettingsShown)
+            presentationController?.delegate = textSizeSettings
             return
         }
                 
@@ -132,6 +140,10 @@ class SettingsViewController: UITableViewController {
     
     private func configureFireButtonAnimationCellAccessory() {
         fireButtonAnimationAccessoryText.text = appSettings.currentFireButtonAnimation.descriptionText
+    }
+    
+    private func configureTextSizeCellAccessory() {
+        textSizeAccessoryText.text = "\(appSettings.textSize)%"
     }
 
     private func configureIconViews() {
@@ -388,3 +400,4 @@ extension SettingsViewController {
         }
     }
 }
+// swiftlint:enable file_length

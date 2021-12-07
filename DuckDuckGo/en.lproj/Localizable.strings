@@ -961,6 +961,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Tab Switcher";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Text Size - %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Dark";
 

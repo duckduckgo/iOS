@@ -170,6 +170,7 @@ class TabViewController: UIViewController {
     private var findInPageScript = FindInPageUserScript()
     private var fullScreenVideoScript = FullScreenVideoUserScript()
     private var printingUserScript = PrintingUserScript()
+    private var textSizeUserScript = TextSizeUserScript()
     private var autofillUserScript = AutofillUserScript()
     private var debugScript = DebugUserScript()
 
@@ -213,6 +214,7 @@ class TabViewController: UIViewController {
         addStorageCacheProviderObserver()
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
+        addTextSizeObserver()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -236,6 +238,7 @@ class TabViewController: UIViewController {
         
         userScripts = [
             debugScript,
+            textSizeUserScript,
             findInPageScript,
             navigatorPatchScript,
             surrogatesScript,
@@ -263,6 +266,7 @@ class TabViewController: UIViewController {
         contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
         printingUserScript.delegate = self
+        textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }
     
     func updateTabModel() {
@@ -617,6 +621,13 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
     
+    private func addTextSizeObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onTextSizeChange),
+                                               name: AppUserDefaults.Notifications.textSizeChange,
+                                               object: nil)
+    }
+    
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
     }
@@ -648,6 +659,11 @@ class TabViewController: UIViewController {
     
     @objc func onDoNotSellChange() {
         reload(scripts: true)
+    }
+    
+    @objc func onTextSizeChange() {
+        webView.adjustTextSize(appSettings.textSize)
+        reloadUserScripts()
     }
 
     private func resetNavigationBar() {

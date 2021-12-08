@@ -318,17 +318,17 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
         if let delegate = delegate,
             let folder = item as? BookmarkFolder,
             (folder.children?.count ?? 0) > 0 {
-            let title = String(format: NSLocalizedString("Delete %@?", comment: "Delete bookmark folder alert title"), folder.title ?? "")
+            let title = String(format: UserText.deleteBookmarkFolderAlertTitle, folder.title ?? "")
             let count = folder.children?.count ?? 0
             let messageString: String
             if count == 1 {
-                messageString = NSLocalizedString("Are you sure you want to delete this folder and %i item?", comment: "Delete bookmark folder alert message")
+                messageString = UserText.deleteBookmarkFolderAlertMessageSingular
             } else {
-                messageString = NSLocalizedString("Are you sure you want to delete this folder and %i items?", comment: "Delete bookmark folder alert message plural")
+                messageString = UserText.deleteBookmarkFolderAlertMessagePlural
             }
             let message = String(format: messageString, count)
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.addAction(title: NSLocalizedString("Delete", comment: "Delete bookmark folder alert delete button"), style: .default) {
+            alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
                 self.bookmarksManager.delete(item)
             }
             alertController.addAction(title: UserText.actionCancel, style: .cancel)

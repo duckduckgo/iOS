@@ -89,8 +89,7 @@ extension BookmarkItemsSectionDataSource {
 
 class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
     
-    //TODO INJECT
-    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    let bookmarksManager: BookmarksManager
     
     var numberOfRows: Int {
         return max(1, bookmarksManager.favoritesCount)
@@ -98,6 +97,10 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
     
     var isEmpty: Bool {
         bookmarksManager.favoritesCount == 0
+    }
+    
+    init(bookmarksManager: BookmarksManager) {
+        self.bookmarksManager = bookmarksManager
     }
     
     func bookmarkItem(at index: Int) -> BookmarkItem? {
@@ -140,7 +143,8 @@ protocol BookmarksSectionDataSourceDelegate: AnyObject {
 class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
     
     //TODO inject
-    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    let bookmarksManager: BookmarksManager
+    
     private let parentFolder: BookmarkFolder?
     weak var delegate: BookmarksSectionDataSourceDelegate?
     
@@ -160,9 +164,10 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
         bookmarkItems().count == 0
     }
     
-    init(parentFolder: BookmarkFolder?, delegate: BookmarksSectionDataSourceDelegate?) {
+    init(parentFolder: BookmarkFolder?, delegate: BookmarksSectionDataSourceDelegate?, bookmarksManager: BookmarksManager) {
         self.parentFolder = parentFolder
         self.delegate = delegate
+        self.bookmarksManager = bookmarksManager
     }
     
     func bookmarkItem(at index: Int) -> BookmarkItem? {

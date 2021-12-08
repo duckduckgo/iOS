@@ -63,26 +63,25 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
 class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
     
-    var favoritesSectionIndex: Int? {
-        return parentFolder == nil ? 0 : nil
-    }
-    
-    
-    //TODO proper injection
-    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    let bookmarksManager: BookmarksManager
+
     var parentFolder: BookmarkFolder?
-    
         
-    init(alertDelegate: BookmarksSectionDataSourceDelegate?, parentFolder: BookmarkFolder? = nil) {
+    init(alertDelegate: BookmarksSectionDataSourceDelegate?, parentFolder: BookmarkFolder? = nil, bookmarksManager: BookmarksManager = BookmarksManager()) {
         self.parentFolder = parentFolder
+        self.bookmarksManager = bookmarksManager
         super.init()
-        let bookmarksDataSource = BookmarksSectionDataSource(parentFolder: parentFolder, delegate: alertDelegate)
+        let bookmarksDataSource = BookmarksSectionDataSource(parentFolder: parentFolder, delegate: alertDelegate, bookmarksManager: bookmarksManager)
         if parentFolder != nil {
             self.sectionDataSources = [bookmarksDataSource]
         } else {
-            let favoritesDataSource = FavoritesSectionDataSource()
+            let favoritesDataSource = FavoritesSectionDataSource(bookmarksManager: bookmarksManager)
             self.sectionDataSources = [favoritesDataSource, bookmarksDataSource]
         }
+    }
+    
+    var favoritesSectionIndex: Int? {
+        return parentFolder == nil ? 0 : nil
     }
     
     var folder: BookmarkFolder? {
@@ -148,22 +147,18 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
 
 
 class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
-    var favoritesSectionIndex: Int? {
-        return nil
-    }
     
-    //TODO injection here
-    lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    let bookmarksManager: BookmarksManager
+    
+    init(bookmarksManager: BookmarksManager = BookmarksManager()) {
+        self.bookmarksManager = bookmarksManager
+    }
     
     var searchResults = [Bookmark]()
     private let searchEngine = BookmarksSearch()
     
-    func performSearch(query: String, completion: @escaping () -> Void) {
-        let query = query.lowercased()
-        searchEngine.search(query: query, sortByRelevance: false) { results in
-            self.searchResults = results
-            completion()
-        }
+    var favoritesSectionIndex: Int? {
+        return nil
     }
     
     var isEmpty: Bool {
@@ -175,6 +170,14 @@ class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSourc
     }
     
     var navigationTitle: String?
+    
+    func performSearch(query: String, completion: @escaping () -> Void) {
+        let query = query.lowercased()
+        searchEngine.search(query: query, sortByRelevance: false) { results in
+            self.searchResults = results
+            completion()
+        }
+    }
     
     func item(at indexPath: IndexPath) -> BookmarkItem? {
         return item(at: indexPath.row)

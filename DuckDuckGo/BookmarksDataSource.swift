@@ -215,33 +215,12 @@ class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSourc
         }
     }
     
-    //TODO copied from section data source, should make this use section datasource.
     func createCell(_ tableView: UITableView, withItem item: Bookmark?) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
-            fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
-        }
-
-        cell.bookmarkItem = item
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.title.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        
-        return cell
+        BookmarkCellCreator.createCell(tableView, withItem: item)
     }
     
-    //TODO copied from section data source, should make this use section datasource.
     func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
-            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
-        }
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.label.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-
+        let cell = BookmarkCellCreator.createEmptyCell(tableView, forIndex: index)
         cell.label.text = UserText.noMatchesFound
         return cell
     }

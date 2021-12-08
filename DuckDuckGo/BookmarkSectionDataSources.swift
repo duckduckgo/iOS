@@ -59,31 +59,11 @@ extension BookmarkItemsSectionDataSource {
     }
     
     func createCell(_ tableView: UITableView, withItem item: BookmarkItem?) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
-            fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
-        }
-
-        cell.bookmarkItem = item
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.title.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        
-        return cell
+        BookmarkCellCreator.createCell(tableView, withItem: item)
     }
     
     func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
-            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
-        }
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.label.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-
-        return cell
+        BookmarkCellCreator.createEmptyCell(tableView, forIndex: index)
     }
 }
 
@@ -234,5 +214,36 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
         } else {
             return (self as BookmarkItemsSectionDataSource).createEmptyCell(tableView, forIndex: index)
         }
+    }
+}
+
+class BookmarkCellCreator {
+    
+    static func createCell(_ tableView: UITableView, withItem item: BookmarkItem?) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
+            fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
+        }
+
+        cell.bookmarkItem = item
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.title.textColor = theme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        
+        return cell
+    }
+    
+    static func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
+            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
+        }
+        
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.label.textColor = theme.tableCellTextColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+
+        return cell
     }
 }

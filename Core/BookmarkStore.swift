@@ -19,6 +19,11 @@
 
 import Foundation
 
+/*
+ This is no longer used since the switch to core data for bookmark storage
+ It is kept for migration from the old store
+ */
+
 public protocol BookmarkStore: AnyObject {
 
     var bookmarks: [Link] { get set }

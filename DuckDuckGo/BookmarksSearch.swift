@@ -31,7 +31,6 @@ class BookmarksSearch {
         }
     }
     
-    
     private let bookmarksCoreDataStorage: BookmarksCoreDataStorage
     
     init(bookmarksStorage: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {

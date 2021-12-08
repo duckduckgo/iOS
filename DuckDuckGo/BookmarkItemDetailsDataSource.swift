@@ -41,7 +41,7 @@ class BookmarkFolderDetailsDataSource: NSObject, BookmarkItemDetailsDataSource {
     
     weak var delegate: BookmarkFolderDetailsDataSourceDelegate?
     
-    let bookmarksManager: BookmarksManager
+    private let bookmarksManager: BookmarksManager
         
     private let existingFolder: BookmarkFolder?
     private let bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource
@@ -196,7 +196,7 @@ class BookmarkOrFavoriteDetailsDataSource: NSObject, BookmarkDetailsCellDelegate
 
 class BookmarkDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkItemDetailsDataSource {
         
-    let bookmarksManager: BookmarksManager
+    private let bookmarksManager: BookmarksManager
         
     private let bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource
         
@@ -262,7 +262,7 @@ class BookmarkDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkIt
 
 class FavoriteDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkItemDetailsDataSource {
     
-    let bookmarksManager: BookmarksManager
+    private let bookmarksManager: BookmarksManager
     
     init(delegate: BookmarkOrFavoriteDetailsDataSourceDelegate,
          bookmarksManager: BookmarksManager = BookmarksManager(),

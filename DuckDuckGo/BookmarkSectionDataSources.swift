@@ -89,7 +89,7 @@ extension BookmarkItemsSectionDataSource {
 
 class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
     
-    let bookmarksManager: BookmarksManager
+    private let bookmarksManager: BookmarksManager
     
     var numberOfRows: Int {
         return max(1, bookmarksManager.favoritesCount)
@@ -142,8 +142,7 @@ protocol BookmarksSectionDataSourceDelegate: AnyObject {
 
 class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
     
-    //TODO inject
-    let bookmarksManager: BookmarksManager
+    private let bookmarksManager: BookmarksManager
     
     private let parentFolder: BookmarkFolder?
     weak var delegate: BookmarksSectionDataSourceDelegate?

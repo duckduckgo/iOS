@@ -149,17 +149,20 @@
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Location";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Website title";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Bookmarks";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Added new bookmarks for all tabs";
 
 /* Confirmation message after selecting Bookmark All button */
 "bookmarkAll.tabs.saved" = "All tabs bookmarked";
-
-/* Top level bookmarks folder title */
-"Bookmarks" = "Bookmarks";
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Bookmarks";
@@ -691,9 +694,6 @@
 
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
-
-/* Header for folder selection for bookmarks */
-"Location" = "Location";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";

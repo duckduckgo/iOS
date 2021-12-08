@@ -78,16 +78,16 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     }
 }
 
-extension AddOrEditBookmarkFolderViewController: BookmarksFolderDetailsSectionDataSourceDelegate {
+extension AddOrEditBookmarkFolderViewController: BookmarkFolderDetailsDataSourceDelegate {
     
-    func bookmarksFolderDetailsSectionDataSource(_ dataSource: BookmarksFolderDetailsSectionDataSource, titleTextFieldDidChange textField: UITextField) {
+    func bookmarkFolderDetailsDataSource(_ dataSource: BookmarkFolderDetailsDataSource, titleTextFieldDidChange textField: UITextField) {
         
         guard let saveButton = navigationItem.rightBarButtonItem else { return }
         let title = textField.text?.trimWhitespace() ?? ""
         saveButton.isEnabled = !title.isEmpty
     }
     
-    func bookmarksFolderDetailsSectionDataSourceTextFieldDidReturn(dataSource: BookmarksFolderDetailsSectionDataSource) {
+    func bookmarkFolderDetailsDataSourceTextFieldDidReturn(dataSource: BookmarkFolderDetailsDataSource) {
         
         guard let saveButton = navigationItem.rightBarButtonItem else { return }
         if saveButton.isEnabled {

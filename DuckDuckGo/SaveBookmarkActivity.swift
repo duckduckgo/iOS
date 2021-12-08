@@ -56,7 +56,6 @@ class SaveBookmarkActivity: UIActivity {
         bookmark = activityItems.first(where: { $0 is Link }) as? Link
     }
 
-    //TOdo this still uses links. Maybe that's fine...
     override var activityViewController: UIViewController? {
         guard !activityViewControllerAccessed else { return nil }
         activityViewControllerAccessed = true

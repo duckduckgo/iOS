@@ -105,9 +105,9 @@ class AddOrEditBookmarkViewController: UIViewController {
     }
 }
 
-extension AddOrEditBookmarkViewController: BookmarkDetailsSectionDataSourceDelegate {
+extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDelegate {    
     
-    func bookmarkDetailsSectionDataSource(_ dataSource: BookmarkDetailsSectionDataSource, textFieldDidChangeWithTitleText titleText: String?, urlText: String?) {
+    func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource, textFieldDidChangeWithTitleText titleText: String?, urlText: String?) {
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
         let title = titleText?.trimWhitespace() ?? ""
         let url = urlText?.trimWhitespace() ?? ""
@@ -115,7 +115,7 @@ extension AddOrEditBookmarkViewController: BookmarkDetailsSectionDataSourceDeleg
         doneButton.isEnabled = !title.isEmpty && !url.isEmpty
     }
     
-    func bookmarkDetailsSectionDataSourceTextFieldDidReturn(dataSource: BookmarkDetailsSectionDataSource) {
+    func bookmarkOrFavoriteDetailsDataSourceTextFieldDidReturn(dataSource: BookmarkOrFavoriteDetailsDataSource) {
         
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
         if doneButton.isEnabled {

@@ -22,10 +22,6 @@ import Core
 
 class BookmarkFoldersViewController: UITableViewController {
 
-    //TODO This should be purely injected I reckon?
-    //now I'm just wondering if this should be one view controller again...
-    //let's worry about it after the design review
-    //if we do we should probs unify the datasources
     var dataSource: BookmarkItemDetailsDataSource? {
         didSet {
             tableView.dataSource = dataSource

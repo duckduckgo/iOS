@@ -41,8 +41,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
-    //TODO this needs injecting properly
-    private var bookmarksManager = BookmarksManager()
+    let bookmarksManager: BookmarksManager
 
     private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)?
     
@@ -56,12 +55,13 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
 
-    init(allowsEditing: Bool = true) {
+    init(allowsEditing: Bool = true, bookmarksManager: BookmarksManager = BookmarksManager()) {
         guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
             fatalError("Failed to load FavoriteHomeCell")
         }
         
         self.allowsEditing = allowsEditing
+        self.bookmarksManager = bookmarksManager
         self.cellHeight = cell.frame.height
         self.cellWidth = cell.frame.width
     }

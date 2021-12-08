@@ -307,7 +307,7 @@ class TabViewController: UIViewController {
         } else if let request = request {
             if let url = request.url {
                 getCleanUrl(url) { [weak self] cleanUrl in
-                    self?.load(urlRequest: URLRequest(url: cleanUrl))
+                    self?.load(urlRequest: URLRequest.userInitiated(cleanUrl))
                 }
             } else {
                 load(urlRequest: request)

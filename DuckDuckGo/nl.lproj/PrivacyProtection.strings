@@ -103,6 +103,9 @@
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Gecodeerde verbinding";
 
+/* Class = "UILabel"; text = "We temporarily disabled Privacy Protection as it appears to be breaking this site."; ObjectID = "wwe-ee-up0"; */
+"wwe-ee-up0.text" = "We hebben privacybescherming tijdelijk uitgeschakeld, omdat het erop lijkt dat deze site hierdoor niet goed meer werkt.";
+
 /* Class = "UILabel"; text = "Major Networks Blocked"; ObjectID = "XzQ-fW-tzk"; */
 "XzQ-fW-tzk.text" = "Grote netwerken geblokkeerd";
 

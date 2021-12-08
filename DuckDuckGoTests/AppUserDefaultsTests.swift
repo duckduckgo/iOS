@@ -85,11 +85,7 @@ class AppUserDefaultsTests: XCTestCase {
         
         let appUserDefaults = AppUserDefaults(groupName: testGroupName)
         
-        if #available(iOS 13.0, *) {
-            XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
-        } else {
-            XCTAssertEqual(appUserDefaults.currentThemeName, .dark)
-        }
+        XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
     }
     
 }

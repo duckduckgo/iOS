@@ -311,7 +311,7 @@ public class Favicons {
         }
 
         let metadataFetcher = LPMetadataProvider()
-        metadataFetcher.startFetchingMetadata(for: url) { metadata, metadataError in
+        let completion: (LPLinkMetadata?, Error?) -> Void = { metadata, metadataError in
             guard let iconProvider = metadata?.iconProvider, metadataError == nil else {
                 completion(nil)
                 return
@@ -320,6 +320,13 @@ public class Favicons {
             iconProvider.loadObject(ofClass: UIImage.self) { potentialImage, _ in
                 completion(potentialImage as? UIImage)
             }
+        }
+
+        if #available(iOS 15.0, *) {
+            let request = URLRequest.userInitiated(url)
+            metadataFetcher.startFetchingMetadata(for: request, completionHandler: completion)
+        } else {
+            metadataFetcher.startFetchingMetadata(for: url, completionHandler: completion)
         }
     }
 
@@ -342,7 +349,7 @@ public class Favicons {
 
     private func loadImage(url: URL) -> UIImage? {
         var image: UIImage?
-        var request = URLRequest(url: url)
+        var request = URLRequest.userInitiated(url)
         UserAgentManager.shared.update(request: &request, isDesktop: false)
 
         let group = DispatchGroup()

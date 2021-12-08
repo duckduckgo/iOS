@@ -718,6 +718,7 @@
                         <outlet property="rememberLoginsAccessoryText" destination="1SP-ku-vDO" id="0Ru-gZ-Ump"/>
                         <outlet property="rememberLoginsCell" destination="EqN-m3-s4f" id="FAK-d0-jpX"/>
                         <outlet property="textSizeAccessoryText" destination="EB8-09-gt2" id="DXw-t7-Fm1"/>
+                        <outlet property="textSizeCell" destination="S20-Qg-xka" id="Son-JH-8EM"/>
                         <outlet property="themeAccessoryText" destination="Gbx-kl-uOO" id="h6S-um-CfT"/>
                         <outlet property="versionCell" destination="TYF-GX-a3j" id="KDT-RF-urU"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
@@ -795,7 +796,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Na-Nh-zIU">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="382" translatesAutoresizingMaskIntoConstraints="NO" id="9Na-Nh-zIU">
                                     <rect key="frame" x="16" y="39" width="382" height="44"/>
                                     <attributedString key="attributedText">
                                         <fragment content="Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.">
@@ -817,6 +818,7 @@
                                 <constraint firstItem="9Na-Nh-zIU" firstAttribute="leading" secondItem="Wtd-gR-e0S" secondAttribute="leading" constant="16" id="7Ee-xM-9Xa">
                                     <variation key="heightClass=regular-widthClass=regular" constant="180"/>
                                 </constraint>
+                                <constraint firstAttribute="bottom" secondItem="9Na-Nh-zIU" secondAttribute="bottom" constant="21" id="XdQ-Rx-ID5"/>
                                 <constraint firstItem="9Na-Nh-zIU" firstAttribute="top" secondItem="Wtd-gR-e0S" secondAttribute="top" constant="39" id="o8M-hg-q8p"/>
                             </constraints>
                         </view>

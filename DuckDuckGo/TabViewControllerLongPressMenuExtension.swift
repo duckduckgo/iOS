@@ -89,7 +89,7 @@ extension TabViewController {
     
     private func onOpenAction(forUrl url: URL) {
         if let webView = webView {
-            webView.load(URLRequest(url: url))
+            webView.load(URLRequest.userInitiated(url))
         }
     }
     
@@ -134,7 +134,7 @@ extension TabViewController {
         tabController.isLinkPreview = true
         tabController.decorate(with: ThemeManager.shared.currentTheme)
         let configuration = WKWebViewConfiguration.nonPersistent()
-        tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest(url: url), consumeCookies: false)
+        tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest.userInitiated(url), consumeCookies: false)
         tabController.loadViewIfNeeded()
         return tabController
     }

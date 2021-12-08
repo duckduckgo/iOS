@@ -367,8 +367,9 @@ extension BookmarksViewController: UISearchResultsUpdating {
     }
 }
 
-extension BookmarksViewController: BookmarksShallowSectionDataSourceDelegate {
-    func bookmarksShallowSectionDataSourceDidRequestViewControllerForDeleteAlert() -> UIViewController {
+extension BookmarksViewController: BookmarksSectionDataSourceDelegate {
+    func bookmarksSectionDataSourceDidRequestViewControllerForDeleteAlert(_ bookmarksSectionDataSource: BookmarksSectionDataSource) -> UIViewController {
+       
         return self
     }
 }

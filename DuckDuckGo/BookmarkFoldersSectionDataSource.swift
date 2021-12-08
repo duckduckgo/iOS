@@ -25,7 +25,7 @@ protocol BookmarkFoldersSectionDataSourceAddFolderDelegate: AnyObject {
     func bookmarkFoldersSectionDataSourceDidRequestAddNewFolder(_ bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource)
 }
 
-class BookmarkFoldersSectionDataSource: BookmarksSectionDataSource {
+class BookmarkFoldersSectionDataSource {
     
     typealias PresentableFolder = (folder: BookmarkFolder, depth: Int)
     

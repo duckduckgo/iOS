@@ -27,9 +27,12 @@ class BookmarksManager {
         public static let bookmarksDidChange = Notification.Name("com.duckduckgo.app.BookmarksDidChange")
     }
 
+    private(set) var dataStore: BookmarkStore
     private(set) var coreDataStorage: BookmarksCoreDataStorage
+    
 
-    init(coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
+    init(dataStore: BookmarkStore = BookmarkUserDefaults(), coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
+        self.dataStore = dataStore
         self.coreDataStorage = coreDataStore
         NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
     }

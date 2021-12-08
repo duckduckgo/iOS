@@ -200,7 +200,6 @@ class BookmarkDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkIt
         
     private let bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource
         
-    //TODO do I want these default args here?
     init(delegate: BookmarkOrFavoriteDetailsDataSourceDelegate,
          addFolderDelegate: BookmarkFoldersSectionDataSourceAddFolderDelegate,
          bookmarksManager: BookmarksManager = BookmarksManager(),

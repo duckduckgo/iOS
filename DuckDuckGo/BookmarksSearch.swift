@@ -31,48 +31,17 @@ class BookmarksSearch {
         }
     }
     
-    private let bookmarksStore: BookmarkStore
     
-    //TODO inject properly, don't like this duplication at all
-    //honestly why is this not using bookmarksmanager?
     private let bookmarksCoreDataStorage: BookmarksCoreDataStorage
     
-    init(bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
-        self.bookmarksStore = bookmarksStore
-        self.bookmarksCoreDataStorage = BookmarksCoreDataStorage.shared
+    init(bookmarksStorage: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
+        self.bookmarksCoreDataStorage = bookmarksStorage
     }
     
     var hasData: Bool {
         return !bookmarksCoreDataStorage.topLevelBookmarksItems.isEmpty || !bookmarksCoreDataStorage.favorites.isEmpty
-        //return !bookmarksStore.bookmarks.isEmpty || !bookmarksStore.favorites.isEmpty
     }
     
-    /*
-     bookmarks start with -1 (favs 0)
-     breakdown search query into lowercase words
-     lowercase title
-        if starts with query, +200 points
-        if contains " query" (strategic use of space to ensure full word match?) , + 100 points
-     
-     url.host with www. dropped
-        if query only has one word, and domain starts with that word, +300 points
-        
-        If query more than one word, for each word
-            check if title starts with the word or containts it (" query"), or if domain starts with it.
-        if all have some kind of match, score +10
-        if domain starts with first query word, +300
-        if title starts with first query word, +50
-     
-     I assume this original is diacritic sensative
-     
-     case insensitivity keywords.name CONTAINS[cd] %@
-     also BEGINSWITH, instead of contains is a thing
-     
-     I think we're just gonna have to do this with several core data calls, and then aggrigate them, otherwise we can't score them appropriately
-     I suppose the alternatiev is grab everything, and score as is. Hmm, may as well try that first, it'll be easier.
-     
-     also need to remember to exlude folders (just search BookmarkManagedObject)
-     */
     
     // swiftlint:disable cyclomatic_complexity
     private func score(query: String, results: [ScoredBookmark]) {
@@ -136,9 +105,7 @@ class BookmarksSearch {
                 let score = $0.isFavorite ? 0 : -1
                 return ScoredBookmark(bookmark: $0, score: score)
             }
-            
-            //let results = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
-            
+                        
             let trimmed = query.trimWhitespace()
             self.score(query: trimmed, results: results)
             

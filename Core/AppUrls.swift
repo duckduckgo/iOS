@@ -210,8 +210,9 @@ public struct AppUrls {
         return true
     }
     
-    public func isGPCEnabled(url: URL) -> Bool {
-        guard let gpcFeature = PrivacyConfigurationManager.shared.privacyConfig.feature(forKey: .gpc),
+    public func isGPCEnabled(url: URL,
+                             config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
+        guard let gpcFeature = config.feature(forKey: .gpc),
               let gpcUrls = gpcFeature.settings["gpcHeaderEnabledSites"] as? [String] else {
             return false
         }

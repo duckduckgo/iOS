@@ -52,9 +52,7 @@ extension MainBookmarksViewDataSource {
     }
 }
 
-//Todo I should just not have this? It's sort of stupid...
-//yeah, only the actual bookmark data source (favourites, bookmarks, folders) should share a common source and maybe some kind of view controller mechanism (but even then probably get rid of the shared view controller at least for now?)
-//e.g. edit folder view should defo have a different view controller chain
+
 class BookmarksDataSource: NSObject, UITableViewDataSource {
     
     //TODO should inject bookmarksManager properly
@@ -84,7 +82,6 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 }
 
-//TODO how would search fit into this?
 enum BookmarksSection {
     case favourites
     case bookmarksShallow(parentFolder: BookmarkFolder?, delegate: BookmarksShallowSectionDataSourceDelegate?)
@@ -117,14 +114,12 @@ extension BookmarksSectionDataSource {
     
 }
 
-typealias PresentableBookmarkItem = (item: BookmarkItem, depth: Int)
-
 //maybe keep this one? idk...
 protocol BookmarkItemsSectionDataSource: BookmarksSectionDataSource {
         
     var isEmpty: Bool { get }
     
-    func bookmarkItem(at index: Int) -> PresentableBookmarkItem?
+    func bookmarkItem(at index: Int) -> BookmarkItem?
     
     func canEditRow(_ tableView: UITableView, at index: Int) -> Bool
     func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool
@@ -151,12 +146,12 @@ extension BookmarkItemsSectionDataSource {
         }
     }
     
-    func createCell(_ tableView: UITableView, withItem item: PresentableBookmarkItem?) -> UITableViewCell {
+    func createCell(_ tableView: UITableView, withItem item: BookmarkItem?) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
             fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
         }
 
-        cell.bookmarkItem = item?.item
+        cell.bookmarkItem = item
         
         let theme = ThemeManager.shared.currentTheme
         cell.backgroundColor = theme.tableCellBackgroundColor
@@ -182,11 +177,11 @@ extension BookmarkItemsSectionDataSource {
 
 class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
     
+    //TODO INJECT
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()
     
-    func bookmarkItem(at index: Int) -> PresentableBookmarkItem? {
-        guard let favorite = bookmarksManager.favorite(atIndex: index) else { return nil }
-        return PresentableBookmarkItem(favorite, 0)
+    func bookmarkItem(at index: Int) -> BookmarkItem? {
+        bookmarksManager.favorite(atIndex: index)
     }
     
     var isEmpty: Bool {
@@ -219,7 +214,7 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
         
         guard editingStyle == .delete else { return }
 
-        guard let item = bookmarkItem(at: index)?.item else { return }
+        guard let item = bookmarkItem(at: index) else { return }
         bookmarksManager.delete(item)
     }
 
@@ -237,16 +232,11 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
     private let parentFolder: BookmarkFolder?
     weak var delegate: BookmarksShallowSectionDataSourceDelegate?
     
-    private func bookmarkItems() -> [PresentableBookmarkItem] {
+    private func bookmarkItems() -> [BookmarkItem] {
         if let folder = parentFolder {
-            let array = folder.children?.array as? [BookmarkItem] ?? []
-            return array.map {
-                PresentableBookmarkItem($0, 0)
-            }
+            return folder.children?.array as? [BookmarkItem] ?? []
         } else {
-            return bookmarksManager.topLevelBookmarkItems.map {
-                PresentableBookmarkItem($0, 0)
-            }
+            return bookmarksManager.topLevelBookmarkItems
         }
     }
     
@@ -295,7 +285,7 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
         return parentFolder?.title
     }
     
-    func bookmarkItem(at index: Int) -> PresentableBookmarkItem? {
+    func bookmarkItem(at index: Int) -> BookmarkItem? {
         let items = bookmarkItems()
         if items.count <= index {
             return nil
@@ -314,7 +304,7 @@ class BookmarksShallowSectionDataSource: BookmarkItemsSectionDataSource {
     func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
         guard editingStyle == .delete else { return }
 
-        guard let item = bookmarkItem(at: index)?.item else { return }
+        guard let item = bookmarkItem(at: index) else { return }
         if let delegate = delegate,
             let folder = item as? BookmarkFolder,
             (folder.children?.count ?? 0) > 0 {
@@ -392,7 +382,7 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
         if dataSources.count <= indexPath.section {
             return nil
         }
-        return itemsDataSources[indexPath.section].bookmarkItem(at: indexPath.row)?.item
+        return itemsDataSources[indexPath.section].bookmarkItem(at: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -435,7 +425,6 @@ class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSourc
     var favoritesSectionIndex: Int? {
         return nil
     }
-    
     
     //TODO injection here
     lazy var bookmarksManager: BookmarksManager = BookmarksManager()

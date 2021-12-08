@@ -116,12 +116,6 @@
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Unlock DuckDuckGo.";
 
-/* Delete bookmark folder alert message */
-"Are you sure you want to delete this folder and %i item?" = "Are you sure you want to delete this folder and %i item?";
-
-/* Delete bookmark folder alert message plural */
-"Are you sure you want to delete this folder and %i items?" = "Are you sure you want to delete this folder and %i items?";
-
 /* Authentication Alert Sign In Button */
 "auth.alert.login.button" = "Sign In";
 
@@ -148,6 +142,18 @@
 
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
+
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Delete";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Are you sure you want to delete this folder and %i items?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Are you sure you want to delete this folder and %i item?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Delete %@?";
 
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Location";
@@ -268,12 +274,6 @@
 
 /* No comment provided by engineer. */
 "dax.onboarding.message" = "The Internet can be kinda creepy.\n\nNot to worry! Searching and browsing privately is easier than you think.";
-
-/* Delete bookmark folder alert delete button */
-"Delete" = "Delete";
-
-/* Delete bookmark folder alert title */
-"Delete %@?" = "Delete %@?";
 
 /* GPC Setting state */
 "donotsell.disabled" = "Disabled";

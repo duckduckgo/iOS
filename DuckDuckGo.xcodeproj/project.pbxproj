@@ -521,7 +521,6 @@
 		F16393FF1ECCB9CC00DDD653 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */; };
 		F1668BCE1E798081008CBA04 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */; };
 		F16956401ECC9C66009C35C9 /* DomainsProtectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F169563F1ECC9C66009C35C9 /* DomainsProtectionStore.swift */; };
-		F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1722BC81E8BE2AB0058AAA5 /* BookmarkStore.swift */; };
 		F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F176699D1E40BC86003D3222 /* Settings.storyboard */; };
 		F17669D71E43401C003D3222 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17669D61E43401C003D3222 /* MainViewController.swift */; };
 		F17843E91F36226700390DCD /* MockFiles in Resources */ = {isa = PBXBuildFile; fileRef = F17843E81F36226700390DCD /* MockFiles */; };
@@ -1855,7 +1854,6 @@
 		F16393FE1ECCB9CC00DDD653 /* FileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		F169563F1ECC9C66009C35C9 /* DomainsProtectionStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainsProtectionStore.swift; sourceTree = "<group>"; };
-		F1722BC81E8BE2AB0058AAA5 /* BookmarkStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
 		F176699E1E40BC86003D3222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		F17669A71E412A12003D3222 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBundle.swift; sourceTree = "<group>"; };
 		F17669D61E43401C003D3222 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -3636,7 +3634,6 @@
 		F1CE42A81ECA0A660074A8DF /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				F1722BC81E8BE2AB0058AAA5 /* BookmarkStore.swift */,
 				F1CE42A51ECA0A460074A8DF /* BookmarkUserDefaults.swift */,
 				F41C2DA126C1925600F9A760 /* BookmarksAndFolders.xcdatamodeld */,
 				F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */,
@@ -4912,7 +4909,6 @@
 				85F1C3CA1F7A4E8000161346 /* ContentBlockerStringCache.swift in Sources */,
 				85D2187624BF6164004373D2 /* FaviconSourcesProvider.swift in Sources */,
 				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,
-				F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */,
 				830C37631F6C482E00E317A7 /* TermsOfServiceListParser.swift in Sources */,
 				985CA1F026C6C972001325DB /* PrivacyConfigurationData.swift in Sources */,
 				85F45B2A1F875DFF00DB1978 /* ContentBlockerRequest.swift in Sources */,

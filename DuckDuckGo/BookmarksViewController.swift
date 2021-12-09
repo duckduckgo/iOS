@@ -121,7 +121,6 @@ class BookmarksViewController: UITableViewController {
             return sourceIndexPath
         }
         
-        //TODO maybe this will be nicer with a way to explictiyl check the section is empty
         //Check if the proposed section is empty, if so we need to make sure the proposed row is 0, not 1
         let sectionIndexPath = IndexPath(row: 0, section: proposedDestinationIndexPath.section)
         if currentDataSource.item(at: sectionIndexPath) == nil {

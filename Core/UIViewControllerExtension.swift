@@ -79,7 +79,7 @@ extension Core.Bookmark {
 
     public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
         guard let url = url else {
-            return "" //TODO, should url ever be nil?
+            return ""
         }
         return AppUrls().removeInternalSearchParameters(fromUrl: url)
     }

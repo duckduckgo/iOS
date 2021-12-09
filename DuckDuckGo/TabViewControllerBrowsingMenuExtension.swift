@@ -234,11 +234,12 @@ extension TabViewController {
     }
     
     private func performSaveFavoriteAction(for link: Link) {
-        //TODO okay, this might need a completion to actually return when it's done
-        bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url)
-
-        ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
-            self.performRemoveFavoriteAction(for: link)
+        bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url) { _ in
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
+                    self.performRemoveFavoriteAction(for: link)
+                }
+            }
         }
     }
     
@@ -249,12 +250,12 @@ extension TabViewController {
                 return
             }
             
-            //TODO we arguably need a call back here
-            bookmarksManager.delete(bookmark)
+            bookmarksManager.delete(bookmark) { _ in
 
-            DispatchQueue.main.async {
-                ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
-                    self.performSaveFavoriteAction(for: link)
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
+                        self.performSaveFavoriteAction(for: link)
+                    }
                 }
             }
         }

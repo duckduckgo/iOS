@@ -32,6 +32,12 @@ fileprivate struct Constants {
     static let groupName = "\(Global.groupIdPrefix).bookmarks"
 }
 
+public typealias BookmarkItemSavedCompletion = ((NSManagedObjectID?) -> Void)
+public typealias BookmarkItemDeletedCompletion = ((Bool) -> Void)
+public typealias BookmarkItemUpdatedCompletion = ((Bool) -> Void)
+public typealias BookmarkItemIndexUpdatedCompletion = ((Bool) -> Void)
+public typealias BookmarkConvertedCompletion = ((Bool) -> Void)
+
 public class BookmarksCoreDataStorage {
     
     public static let shared = BookmarksCoreDataStorage()
@@ -189,26 +195,27 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    public func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID, completion: ((NSManagedObjectID) -> Void)? = nil) {
+    public func saveNewFolder(withTitle title: String, parentID: NSManagedObjectID, completion: BookmarkItemSavedCompletion? = nil) {
         createFolder(title: title, isFavorite: false, parentID: parentID, completion: completion)
     }
     
-    public func saveNewFavorite(withTitle title: String, url: URL) {
-        createBookmark(url: url, title: title, isFavorite: true)
+    public func saveNewFavorite(withTitle title: String, url: URL, completion: BookmarkItemSavedCompletion? = nil) {
+        createBookmark(url: url, title: title, isFavorite: true, completion: completion)
     }
     
-    public func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID?) {
-        createBookmark(url: url, title: title, isFavorite: false, parentID: parentID)
+    public func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID?, completion: BookmarkItemSavedCompletion? = nil) {
+        createBookmark(url: url, title: title, isFavorite: false, parentID: parentID, completion: completion)
     }
     
     // Since we'll never need to update children at the same time, we only support changing the title and parent
-    public func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID) {
+    public func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID, completion: BookmarkItemUpdatedCompletion? = nil) {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
             let mo = privateContext.object(with: folderID)
             guard let folder = mo as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get folder")
+                completion?(false)
                 return
             }
             
@@ -216,6 +223,7 @@ extension BookmarksCoreDataStorage {
                 let parentMO = privateContext.object(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
+                    completion?(false)
                     return
                 }
                 
@@ -229,17 +237,21 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating folder failed")
+                completion?(false)
+                return
             }
+            completion?(true)
         }
     }
     
-    public func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL) {
+    public func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL, completion: BookmarkItemUpdatedCompletion? = nil) {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
             let mo = privateContext.object(with: favoriteID)
             guard let favorite = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get favorite")
+                completion?(false)
                 return
             }
 
@@ -250,17 +262,21 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating favorite failed")
+                completion?(false)
+                return
             }
+            completion?(true)
         }
     }
     
-    public func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID) {
+    public func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID, completion: BookmarkItemUpdatedCompletion? = nil) {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
             let mo = privateContext.object(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get bookmark")
+                completion?(false)
                 return
             }
             
@@ -268,6 +284,7 @@ extension BookmarksCoreDataStorage {
                 let parentMO = privateContext.object(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
+                    completion?(false)
                     return
                 }
                 
@@ -283,17 +300,21 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating bookmark failed")
+                completion?(false)
+                return
             }
+            completion?(true)
         }
     }
         
-    public func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int) {
+    public func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int, completion: BookmarkItemIndexUpdatedCompletion? = nil) {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
             let mo = privateContext.object(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
+                completion?(false)
                 return
             }
             
@@ -305,25 +326,29 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating item failed")
+                completion?(false)
+                return
             }
+            completion?(true)
         }
     }
     
-    public func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID, newIndex: Int) {
-        swapIsFavorite(favoriteID, newIndex: newIndex)
+    public func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID, newIndex: Int, completion: BookmarkConvertedCompletion? = nil) {
+        swapIsFavorite(favoriteID, newIndex: newIndex, completion: completion)
     }
     
-    public func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
-        swapIsFavorite(bookmarkID, newIndex: newIndex)
+    public func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int, completion: BookmarkConvertedCompletion? = nil) {
+        swapIsFavorite(bookmarkID, newIndex: newIndex, completion: completion)
     }
     
-    public func delete(_ bookmarkItemID: NSManagedObjectID) {
+    public func delete(_ bookmarkItemID: NSManagedObjectID, completion: BookmarkItemDeletedCompletion? = nil) {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
             let mo = privateContext.object(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
+                completion?(false)
                 return
             }
             
@@ -333,7 +358,11 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating item failed")
+                completion?(false)
+                return
             }
+            
+            completion?(true)
         }
     }
 }
@@ -388,14 +417,18 @@ extension BookmarksCoreDataStorage {
 // MARK: private
 extension BookmarksCoreDataStorage {
     
-    private func swapIsFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int) {
+    private func swapIsFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int, completion: BookmarkConvertedCompletion? = nil) {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
-            guard let self = self else { return }
+            guard let self = self else {
+                completion?(false)
+                return
+            }
 
             let mo = privateContext.object(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get item")
+                completion?(false)
                 return
             }
             
@@ -405,13 +438,14 @@ extension BookmarksCoreDataStorage {
                 bookmark.isFavorite = !bookmark.isFavorite
                 newParent.insertIntoChildren(bookmark, at: newIndex)
                 
-                
                 do {
                     try privateContext.save()
-                } catch let error {
-                    print(error)
+                } catch {
                     assertionFailure("Updating item failed")
+                    completion?(false)
+                    return
                 }
+                completion?(true)
             }
         }
     }
@@ -511,7 +545,7 @@ extension BookmarksCoreDataStorage {
 // MARK: creation
 extension BookmarksCoreDataStorage {
     
-    private func createBookmark(url: URL, title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil) {
+    private func createBookmark(url: URL, title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil, completion: BookmarkItemSavedCompletion? = nil) {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
             guard let self = self else {
@@ -527,11 +561,11 @@ extension BookmarksCoreDataStorage {
             bookmark.title = title
             bookmark.isFavorite = isFavorite
             
-            self.updateParentAndSave(of: bookmark, parentID: parentID, context: privateContext)
+            self.updateParentAndSave(of: bookmark, parentID: parentID, context: privateContext, completion: completion)
         }
     }
     
-    private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil, completion: ((NSManagedObjectID) -> Void)? = nil) {
+    private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil, completion: BookmarkItemSavedCompletion? = nil) {
         
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
@@ -551,7 +585,7 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func updateParentAndSave(of item: BookmarkItemManagedObject, parentID: NSManagedObjectID?, context: NSManagedObjectContext, completion: ((NSManagedObjectID) -> Void)? = nil) {
+    private func updateParentAndSave(of item: BookmarkItemManagedObject, parentID: NSManagedObjectID?, context: NSManagedObjectContext, completion: BookmarkItemSavedCompletion? = nil) {
         func updateParentAndSave(parent: BookmarkFolderManagedObject) {
             item.parent = parent
             parent.addToChildren(item)
@@ -561,13 +595,18 @@ extension BookmarksCoreDataStorage {
                 completion?(item.objectID)
             } catch {
                 assertionFailure("Saving item failed")
+                completion?(nil)
+                return
             }
+            
+            completion?(item.objectID)
         }
         
         if let parentID = parentID {
             let parentMO = context.object(with: parentID)
             guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get new parent")
+                completion?(nil)
                 return
             }
             updateParentAndSave(parent: newParentMO)

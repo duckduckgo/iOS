@@ -39,9 +39,9 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     
     func setUpTitle() {
         if existingFolder != nil {
-            title = NSLocalizedString("Edit Folder", comment: "Edit folder screen title")
+            title = UserText.editFolderScreenTitle
         } else {
-            title = NSLocalizedString("Add Folder", comment: "Add folder screen title")
+            title = UserText.addFolderScreenTitle
         }
     }
     

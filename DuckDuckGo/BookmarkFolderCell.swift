@@ -62,7 +62,7 @@ class BookmarkFolderCell: UITableViewCell {
     
     func setUpAddFolderCell() {
         depth = 0
-        title.text = NSLocalizedString("Add Folder", comment: "Add bookmark folder button text")
+        title.text = UserText.addbookmarkFolderButton
         folderImageView.image = UIImage(named: "FolderWithPlus")
     }
     

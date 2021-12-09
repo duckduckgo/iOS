@@ -41,15 +41,15 @@ class AddOrEditBookmarkViewController: UIViewController {
     private func setUpTitle() {
         if let bookmark = existingBookmark {
             if bookmark.isFavorite {
-                title = NSLocalizedString("Edit Favorite", comment: "Edit favorite screen title")
+                title = UserText.editFavoriteScreenTitle
             } else {
-                title = NSLocalizedString("Edit Bookmark", comment: "Edit bookmark screen title")
+                title = UserText.editBookmarkScreenTitle
             }
         } else {
             if isFavorite {
-                title = NSLocalizedString("Add Favorite", comment: "Add favorite screen title")
+                title = UserText.addFavoriteScreenTitle
             } else {
-                title = NSLocalizedString("Add Bookmark", comment: "Add bookmark screen title")
+                title = UserText.addBookmarkScreenTitle
             }
         }
     }

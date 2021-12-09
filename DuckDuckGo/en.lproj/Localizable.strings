@@ -85,16 +85,6 @@
 /* Share action */
 "action.title.share" = "Share";
 
-/* Add bookmark screen title */
-"Add Bookmark" = "Add Bookmark";
-
-/* Add favorite screen title */
-"Add Favorite" = "Add Favorite";
-
-/* Add bookmark folder button text
-   Add folder screen title */
-"Add Folder" = "Add Folder";
-
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
@@ -140,6 +130,18 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Add Bookmark";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Add Favorite";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Add Folder";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Add Folder";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
@@ -154,6 +156,15 @@
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Delete %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Edit Bookmark";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Edit Favorite";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Edit Folder";
 
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Location";
@@ -286,15 +297,6 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo automatically blocks many trackers. With Global Privacy Control (GPC), you can also ask participating websites to restrict selling or sharing your personal data with other companies.";
-
-/* Edit bookmark screen title */
-"Edit Bookmark" = "Edit Bookmark";
-
-/* Edit favorite screen title */
-"Edit Favorite" = "Edit Favorite";
-
-/* Edit folder screen title */
-"Edit Folder" = "Edit Folder";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Cancel";

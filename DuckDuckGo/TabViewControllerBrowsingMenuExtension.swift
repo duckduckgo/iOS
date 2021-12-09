@@ -242,8 +242,6 @@ extension TabViewController {
         }
     }
     
-    //TODO this is an unnecessaryily long way around of doing things
-    //we might be able to get rid of some core data methods if we do this sensibly
     private func performRemoveFavoriteAction(for link: Link) {
         let bookmarksManager = BookmarksManager()
         bookmarksManager.favorite(forURL: link.url) { bookmark in

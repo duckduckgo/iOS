@@ -22,7 +22,7 @@ import Core
 
 class SaveBookmarkActivity: UIActivity {
 
-    private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
+    private let bookmarksManager: BookmarksManager
     private var bookmark: Link?
     
     private weak var controller: UIViewController?
@@ -30,7 +30,8 @@ class SaveBookmarkActivity: UIActivity {
     
     private var activityViewControllerAccessed = false
 
-    init(controller: UIViewController, isFavorite: Bool = false) {
+    init(controller: UIViewController, isFavorite: Bool = false, bookmarksManager: BookmarksManager = BookmarksManager()) {
+        self.bookmarksManager = bookmarksManager
         self.controller = controller
         self.isFavorite = isFavorite
         super.init()

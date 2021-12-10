@@ -1952,10 +1952,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 </connections>
                                             </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
-                                                <rect key="frame" x="16" y="247.33333333333331" width="382" height="149"/>
+                                                <rect key="frame" x="24" y="247.33333333333331" width="366" height="149"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvN-QG-WsD">
-                                                        <rect key="frame" x="0.0" y="0.0" width="382" height="43"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="366" height="43"/>
                                                         <color key="backgroundColor" name="AccentColor"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
@@ -1967,7 +1967,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMC-7O-hSw">
-                                                        <rect key="frame" x="0.0" y="53" width="382" height="43"/>
+                                                        <rect key="frame" x="0.0" y="53" width="366" height="43"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                                         <state key="normal" title="I have an Invite Code">
@@ -1978,7 +1978,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-NI-TIu">
-                                                        <rect key="frame" x="0.0" y="106" width="382" height="43"/>
+                                                        <rect key="frame" x="0.0" y="106" width="366" height="43"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                                         <state key="normal" title="I already have a Duck Address">
@@ -2009,9 +2009,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             <constraint firstItem="9vn-oO-SSD" firstAttribute="centerX" secondItem="pXf-kv-UlJ" secondAttribute="centerX" id="6Po-Oy-8Gi"/>
                                             <constraint firstItem="rOy-6J-i8L" firstAttribute="leading" secondItem="pXf-kv-UlJ" secondAttribute="leadingMargin" constant="20" id="9yl-Qa-gFJ"/>
                                             <constraint firstItem="ghI-g4-R9Q" firstAttribute="leading" secondItem="pXf-kv-UlJ" secondAttribute="leadingMargin" constant="20" id="CAl-IB-XEl"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9vn-oO-SSD" secondAttribute="trailing" constant="16" id="Qmq-MM-mFT"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9vn-oO-SSD" secondAttribute="trailing" constant="24" id="Qmq-MM-mFT"/>
                                             <constraint firstAttribute="bottom" secondItem="XvR-D4-LMg" secondAttribute="bottom" constant="8" id="XWl-bv-FjB"/>
-                                            <constraint firstItem="9vn-oO-SSD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pXf-kv-UlJ" secondAttribute="leading" constant="16" id="bmh-hJ-Qej"/>
+                                            <constraint firstItem="9vn-oO-SSD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pXf-kv-UlJ" secondAttribute="leading" constant="24" id="bmh-hJ-Qej"/>
                                             <constraint firstItem="ghI-g4-R9Q" firstAttribute="top" secondItem="vCK-Tn-TH4" secondAttribute="bottom" constant="8" symbolic="YES" id="d3k-sn-0uR"/>
                                             <constraint firstItem="vCK-Tn-TH4" firstAttribute="centerX" secondItem="pXf-kv-UlJ" secondAttribute="centerX" id="i0E-XN-NVf"/>
                                             <constraint firstItem="XvR-D4-LMg" firstAttribute="top" secondItem="9vn-oO-SSD" secondAttribute="bottom" constant="24" id="nCB-6Q-6z3"/>
@@ -2097,7 +2097,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="4WC-3q-ccD">
-                            <rect key="frame" x="0.0" y="154.66666793823242" width="414" height="120.00000000000006"/>
+                            <rect key="frame" x="0.0" y="154.66666793823248" width="414" height="120.00000000000006"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">

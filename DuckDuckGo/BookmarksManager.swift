@@ -91,9 +91,9 @@ class BookmarksManager {
     }
     
     func saveNewFavorite(withTitle title: String, url: URL, completion: BookmarkItemSavedCompletion? = nil) {
-        coreDataStorage.saveNewFavorite(withTitle: title, url: url) { objectID in
+        coreDataStorage.saveNewFavorite(withTitle: title, url: url) { objectID, error in
             self.reloadWidgets()
-            completion?(objectID)
+            completion?(objectID, error)
         }
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
     }
@@ -114,9 +114,9 @@ class BookmarksManager {
     
     func update(favorite: Bookmark, newTitle: String, newURL: URL, completion: BookmarkItemUpdatedCompletion? = nil) {
         updateFaviconIfNeeded(favorite, newURL)
-        coreDataStorage.update(favoriteID: favorite.objectID, newTitle: newTitle, newURL: newURL) { success in
+        coreDataStorage.update(favoriteID: favorite.objectID, newTitle: newTitle, newURL: newURL) { success, error in
             self.reloadWidgets()
-            completion?(success)
+            completion?(success, error)
         }
     }
 
@@ -131,23 +131,23 @@ class BookmarksManager {
     }
     
     func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int, completion: BookmarkItemIndexUpdatedCompletion? = nil) {
-        coreDataStorage.updateIndex(of: bookmarkItemID, newIndex: newIndex) { success in
+        coreDataStorage.updateIndex(of: bookmarkItemID, newIndex: newIndex) { success, error in
             self.reloadWidgets()
-            completion?(success)
+            completion?(success, error)
         }
     }
     
     func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID, newIndex: Int, completion: BookmarkConvertedCompletion? = nil) {
-        coreDataStorage.convertFavoriteToBookmark(favoriteID, newIndex: newIndex) { success in
+        coreDataStorage.convertFavoriteToBookmark(favoriteID, newIndex: newIndex) { success, error in
             self.reloadWidgets()
-            completion?(success)
+            completion?(success, error)
         }
     }
     
     func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int, completion: BookmarkConvertedCompletion? = nil) {
-        coreDataStorage.convertBookmarkToFavorite(bookmarkID, newIndex: newIndex) { success in
+        coreDataStorage.convertBookmarkToFavorite(bookmarkID, newIndex: newIndex) { success, error in
             self.reloadWidgets()
-            completion?(success)
+            completion?(success, error)
         }
     }
     
@@ -159,11 +159,11 @@ class BookmarksManager {
                 reloadWidget = true
             }
         }
-        coreDataStorage.delete(bookmarkItem.objectID) { success in
+        coreDataStorage.delete(bookmarkItem.objectID) { success, error in
             if reloadWidget {
                 self.reloadWidgets()
             }
-            completion?(success)
+            completion?(success, error)
         }
     }
     

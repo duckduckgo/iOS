@@ -32,11 +32,19 @@ fileprivate struct Constants {
     static let groupName = "\(Global.groupIdPrefix).bookmarks"
 }
 
-public typealias BookmarkItemSavedCompletion = ((NSManagedObjectID?) -> Void)
-public typealias BookmarkItemDeletedCompletion = ((Bool) -> Void)
-public typealias BookmarkItemUpdatedCompletion = ((Bool) -> Void)
-public typealias BookmarkItemIndexUpdatedCompletion = ((Bool) -> Void)
-public typealias BookmarkConvertedCompletion = ((Bool) -> Void)
+public enum BookmarksCoreDataStorageError: Error {
+    case storeDeallocated
+    case fetchingExistingItemFailed
+    case fetchingParentFailed
+    case insertObjectFailed
+    case contextSaveError
+}
+
+public typealias BookmarkItemSavedCompletion = ((NSManagedObjectID?, BookmarksCoreDataStorageError?) -> Void)
+public typealias BookmarkItemDeletedCompletion = ((Bool, BookmarksCoreDataStorageError?) -> Void)
+public typealias BookmarkItemUpdatedCompletion = ((Bool, BookmarksCoreDataStorageError?) -> Void)
+public typealias BookmarkItemIndexUpdatedCompletion = ((Bool, BookmarksCoreDataStorageError?) -> Void)
+public typealias BookmarkConvertedCompletion = ((Bool, BookmarksCoreDataStorageError?) -> Void)
 
 public class BookmarksCoreDataStorage {
     
@@ -188,7 +196,8 @@ extension BookmarksCoreDataStorage {
             let fetchRequest: NSFetchRequest<BookmarkManagedObject> = BookmarkManagedObject.fetchRequest()
 
             guard let results = try? self?.viewContext.fetch(fetchRequest) else {
-                fatalError("Error fetching Bookmarks")
+                assertionFailure("Error fetching Bookmarks")
+                return
             }
             
             completion(results)
@@ -215,7 +224,7 @@ extension BookmarksCoreDataStorage {
             let mo = privateContext.object(with: folderID)
             guard let folder = mo as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get folder")
-                completion?(false)
+                completion?(false, .fetchingExistingItemFailed)
                 return
             }
             
@@ -223,7 +232,7 @@ extension BookmarksCoreDataStorage {
                 let parentMO = privateContext.object(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
-                    completion?(false)
+                    completion?(false, .fetchingParentFailed)
                     return
                 }
                 
@@ -237,10 +246,10 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating folder failed")
-                completion?(false)
+                completion?(false, .contextSaveError)
                 return
             }
-            completion?(true)
+            completion?(true, nil)
         }
     }
     
@@ -251,7 +260,7 @@ extension BookmarksCoreDataStorage {
             let mo = privateContext.object(with: favoriteID)
             guard let favorite = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get favorite")
-                completion?(false)
+                completion?(false, .fetchingExistingItemFailed)
                 return
             }
 
@@ -262,10 +271,10 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating favorite failed")
-                completion?(false)
+                completion?(false, .contextSaveError)
                 return
             }
-            completion?(true)
+            completion?(true, nil)
         }
     }
     
@@ -276,7 +285,7 @@ extension BookmarksCoreDataStorage {
             let mo = privateContext.object(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get bookmark")
-                completion?(false)
+                completion?(false, .fetchingExistingItemFailed)
                 return
             }
             
@@ -284,7 +293,7 @@ extension BookmarksCoreDataStorage {
                 let parentMO = privateContext.object(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
-                    completion?(false)
+                    completion?(false, .fetchingParentFailed)
                     return
                 }
                 
@@ -300,10 +309,10 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating bookmark failed")
-                completion?(false)
+                completion?(false, .contextSaveError)
                 return
             }
-            completion?(true)
+            completion?(true, nil)
         }
     }
         
@@ -314,7 +323,7 @@ extension BookmarksCoreDataStorage {
             let mo = privateContext.object(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
-                completion?(false)
+                completion?(false, .fetchingExistingItemFailed)
                 return
             }
             
@@ -326,10 +335,10 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating item failed")
-                completion?(false)
+                completion?(false, .contextSaveError)
                 return
             }
-            completion?(true)
+            completion?(true, nil)
         }
     }
     
@@ -348,7 +357,7 @@ extension BookmarksCoreDataStorage {
             let mo = privateContext.object(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
-                completion?(false)
+                completion?(false, .fetchingExistingItemFailed)
                 return
             }
             
@@ -358,11 +367,11 @@ extension BookmarksCoreDataStorage {
                 try privateContext.save()
             } catch {
                 assertionFailure("Updating item failed")
-                completion?(false)
+                completion?(false, .contextSaveError)
                 return
             }
             
-            completion?(true)
+            completion?(true, nil)
         }
     }
 }
@@ -421,14 +430,14 @@ extension BookmarksCoreDataStorage {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
             guard let self = self else {
-                completion?(false)
+                completion?(false, .storeDeallocated)
                 return
             }
 
             let mo = privateContext.object(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get item")
-                completion?(false)
+                completion?(false, .fetchingExistingItemFailed)
                 return
             }
             
@@ -442,10 +451,10 @@ extension BookmarksCoreDataStorage {
                     try privateContext.save()
                 } catch {
                     assertionFailure("Updating item failed")
-                    completion?(false)
+                    completion?(false, .contextSaveError)
                     return
                 }
-                completion?(true)
+                completion?(true, nil)
             }
         }
     }
@@ -549,12 +558,15 @@ extension BookmarksCoreDataStorage {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
             guard let self = self else {
-                fatalError("self nil when creating bookmark")
+                assertionFailure("self nil when creating bookmark")
+                completion?(nil, .storeDeallocated)
+                return
             }
         
             let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: privateContext)
             guard let bookmark = managedObject as? BookmarkManagedObject else {
                 assertionFailure("Inserting new bookmark failed")
+                completion?(nil, .contextSaveError)
                 return
             }
             bookmark.url = url
@@ -570,12 +582,15 @@ extension BookmarksCoreDataStorage {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
             guard let self = self else {
-                fatalError("self nil when creating folder")
+                assertionFailure("self nil when creating folder")
+                completion?(nil, .storeDeallocated)
+                return
             }
             
             let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.folderClassName, into: privateContext)
             guard let folder = managedObject as? BookmarkFolderManagedObject else {
                 assertionFailure("Inserting new folder failed")
+                completion?(nil, .insertObjectFailed)
                 return
             }
             folder.title = title
@@ -592,21 +607,20 @@ extension BookmarksCoreDataStorage {
             
             do {
                 try context.save()
-                completion?(item.objectID)
             } catch {
                 assertionFailure("Saving item failed")
-                completion?(nil)
+                completion?(nil, .contextSaveError)
                 return
             }
             
-            completion?(item.objectID)
+            completion?(item.objectID, nil)
         }
         
         if let parentID = parentID {
             let parentMO = context.object(with: parentID)
             guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get new parent")
-                completion?(nil)
+                completion?(nil, .fetchingParentFailed)
                 return
             }
             updateParentAndSave(parent: newParentMO)

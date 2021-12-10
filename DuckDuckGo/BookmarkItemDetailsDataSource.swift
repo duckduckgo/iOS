@@ -94,7 +94,7 @@ class BookmarkFolderDetailsDataSource: NSObject, BookmarkItemDetailsDataSource {
         if let folder = existingFolder {
             bookmarksManager.update(folderID: folder.objectID, newTitle: title, newParentID: selectedParent.objectID)
         } else {
-            bookmarksManager.saveNewFolder(withTitle: title, parentID: selectedParent.objectID) { folderID in
+            bookmarksManager.saveNewFolder(withTitle: title, parentID: selectedParent.objectID) { folderID, _ in
                 guard let folderID = folderID else { return }
                 DispatchQueue.main.async {
                     delegate?.bookmarkItemDetailsDataSource(self, createdNewFolderWithObjectID: folderID)

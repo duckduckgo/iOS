@@ -234,7 +234,7 @@ extension TabViewController {
     }
     
     private func performSaveFavoriteAction(for link: Link) {
-        bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url) { _ in
+        bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url) { _, _ in
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
                     self.performRemoveFavoriteAction(for: link)
@@ -250,7 +250,7 @@ extension TabViewController {
                 return
             }
             
-            bookmarksManager.delete(bookmark) { _ in
+            bookmarksManager.delete(bookmark) { _, _ in
 
                 DispatchQueue.main.async {
                     ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {

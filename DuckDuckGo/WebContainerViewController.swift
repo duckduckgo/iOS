@@ -66,7 +66,7 @@ class WebContainerViewController: UIViewController {
     }
 
     private func load(url: URL) {
-        var request = URLRequest(url: url)
+        var request = URLRequest.userInitiated(url)
         APIHeaders().addHeaders(to: &request)
         webView?.load(request)
     }

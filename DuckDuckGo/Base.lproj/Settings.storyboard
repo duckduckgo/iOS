@@ -584,11 +584,11 @@
                                         <rect key="frame" x="0.0" y="924.66665840148926" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pfh-oL-Cic" id="Ikg-ak-nRy">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="896" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yvj-LL-MiR">
-                                                    <rect key="frame" x="8" y="0.0" width="398" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="880" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -608,11 +608,11 @@
                                         <rect key="frame" x="0.0" y="968.66665840148926" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aJ8-VX-XrI" id="9Mf-ZL-aUg">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="896" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
-                                                    <rect key="frame" x="8" y="0.0" width="398" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="880" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -636,11 +636,11 @@
                                         <rect key="frame" x="0.0" y="1069.6666584014893" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="396.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="878.33333333333337" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="8" y="0.0" width="380.33333333333331" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="862.33333333333337" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -663,7 +663,7 @@
                                         <rect key="frame" x="0.0" y="1113.6666584014893" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TYF-GX-a3j" id="XV6-jV-uNS">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="896" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" ambiguous="YES" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
@@ -827,7 +827,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A2R-HL-aY9">
-                                    <rect key="frame" x="153.66666666666666" y="7.9999999999999982" width="106.66666666666666" height="16.333333333333329"/>
+                                    <rect key="frame" x="158" y="8" width="98.333333333333314" height="14"/>
                                     <attributedString key="attributedText">
                                         <fragment content="Text Size - 100%">
                                             <attributes>
@@ -966,7 +966,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="774"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfd-Kx-0gx" userLabel="About Details View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="635.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="632"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoLightText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
                                                 <rect key="frame" x="127" y="32" width="160" height="160"/>
@@ -977,7 +977,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy, simplified. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gji-Fs-EET">
-                                                <rect key="frame" x="40" y="224" width="334" height="23.333333333333343"/>
+                                                <rect key="frame" x="40" y="224" width="334" height="20"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="20"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -986,7 +986,7 @@
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odm-6J-APs">
-                                                <rect key="frame" x="40" y="279.33333333333337" width="334" height="288.33333333333337"/>
+                                                <rect key="frame" x="40" y="276" width="334" height="288.33333333333326"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="480" id="nip-EV-w1g"/>
                                                 </constraints>
@@ -1007,7 +1007,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="7nt-uS-sOh">
-                                                <rect key="frame" x="40" y="583.66666666666663" width="334" height="31"/>
+                                                <rect key="frame" x="40" y="580.33333333333337" width="334" height="31"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="aboutPage"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="31" id="AIi-4Y-OcU"/>
@@ -1411,10 +1411,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2O5-p6-aW3">
-                                            <rect key="frame" x="36" y="12.666666666666666" width="342" height="18.666666666666671"/>
+                                            <rect key="frame" x="36" y="14" width="342" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIq-Ev-nfj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="18.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="342" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1442,7 +1442,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Privacy Protection enabled for all sites" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hu1-5i-vjL">
-                                            <rect key="frame" x="36" y="12.666666666666666" width="342" height="18.666666666666671"/>
+                                            <rect key="frame" x="36" y="14" width="342" height="16"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1518,10 +1518,10 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vtB-4n-8Qi">
-                                            <rect key="frame" x="20" y="12.666666666666666" width="374" height="18.666666666666671"/>
+                                            <rect key="frame" x="20" y="14" width="374" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qeN-SV-zy7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="18.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1926,7 +1926,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="786"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXf-kv-UlJ" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="770"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="836"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EmailWaitlistContactUs" translatesAutoresizingMaskIntoConstraints="NO" id="vCK-Tn-TH4">
                                                 <rect key="frame" x="157" y="32" width="100" height="100"/>
@@ -1935,15 +1935,21 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                     <constraint firstAttribute="width" secondItem="vCK-Tn-TH4" secondAttribute="height" multiplier="1:1" id="m5Y-z4-NG7"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Header Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghI-g4-R9Q">
-                                                <rect key="frame" x="28" y="140" width="358" height="28"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Header Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghI-g4-R9Q">
+                                                <rect key="frame" x="24" y="156" width="366" height="28"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" priority="750" constant="500" id="Mnx-1e-XHM"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="24"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rOy-6J-i8L">
-                                                <rect key="frame" x="28" y="180" width="358" height="35.333333333333343"/>
+                                                <rect key="frame" x="24" y="192" width="366" height="35.333333333333343"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" priority="750" constant="500" id="K11-Fv-cdu"/>
+                                                </constraints>
                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1951,8 +1957,8 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                     <outlet property="delegate" destination="nB1-eu-sN0" id="HJY-yz-rgv"/>
                                                 </connections>
                                             </textView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
-                                                <rect key="frame" x="24" y="247.33333333333331" width="366" height="149"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9vn-oO-SSD">
+                                                <rect key="frame" x="24" y="259.33333333333331" width="366" height="145"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvN-QG-WsD">
                                                         <rect key="frame" x="0.0" y="0.0" width="366" height="43"/>
@@ -1967,7 +1973,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMC-7O-hSw">
-                                                        <rect key="frame" x="0.0" y="53" width="366" height="43"/>
+                                                        <rect key="frame" x="0.0" y="51" width="366" height="43"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                                         <state key="normal" title="I have an Invite Code">
@@ -1978,7 +1984,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehC-NI-TIu">
-                                                        <rect key="frame" x="0.0" y="106" width="366" height="43"/>
+                                                        <rect key="frame" x="0.0" y="102" width="366" height="43"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
                                                         <state key="normal" title="I already have a Duck Address">
@@ -1989,12 +1995,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                                         </connections>
                                                     </button>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" priority="750" constant="500" id="rQV-yX-RKs"/>
-                                                </constraints>
                                             </stackView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Footer Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XvR-D4-LMg">
-                                                <rect key="frame" x="28" y="726.66666666666663" width="358" height="35.333333333333371"/>
+                                                <rect key="frame" x="24" y="792.66666666666663" width="366" height="35.333333333333371"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
@@ -2006,25 +2009,28 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="rOy-6J-i8L" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pXf-kv-UlJ" secondAttribute="leading" constant="24" id="25B-1e-ehv"/>
+                                            <constraint firstItem="XvR-D4-LMg" firstAttribute="centerX" secondItem="pXf-kv-UlJ" secondAttribute="centerX" id="4aE-UM-WzY"/>
                                             <constraint firstItem="9vn-oO-SSD" firstAttribute="centerX" secondItem="pXf-kv-UlJ" secondAttribute="centerX" id="6Po-Oy-8Gi"/>
-                                            <constraint firstItem="rOy-6J-i8L" firstAttribute="leading" secondItem="pXf-kv-UlJ" secondAttribute="leadingMargin" constant="20" id="9yl-Qa-gFJ"/>
-                                            <constraint firstItem="ghI-g4-R9Q" firstAttribute="leading" secondItem="pXf-kv-UlJ" secondAttribute="leadingMargin" constant="20" id="CAl-IB-XEl"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9vn-oO-SSD" secondAttribute="trailing" constant="24" id="Qmq-MM-mFT"/>
+                                            <constraint firstItem="ghI-g4-R9Q" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pXf-kv-UlJ" secondAttribute="leading" constant="24" id="Kx5-Am-2WL"/>
+                                            <constraint firstItem="rOy-6J-i8L" firstAttribute="centerX" secondItem="pXf-kv-UlJ" secondAttribute="centerX" id="RmU-jm-HOs"/>
+                                            <constraint firstItem="9vn-oO-SSD" firstAttribute="width" secondItem="rOy-6J-i8L" secondAttribute="width" id="W8h-jf-YKX"/>
                                             <constraint firstAttribute="bottom" secondItem="XvR-D4-LMg" secondAttribute="bottom" constant="8" id="XWl-bv-FjB"/>
-                                            <constraint firstItem="9vn-oO-SSD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pXf-kv-UlJ" secondAttribute="leading" constant="24" id="bmh-hJ-Qej"/>
-                                            <constraint firstItem="ghI-g4-R9Q" firstAttribute="top" secondItem="vCK-Tn-TH4" secondAttribute="bottom" constant="8" symbolic="YES" id="d3k-sn-0uR"/>
-                                            <constraint firstItem="vCK-Tn-TH4" firstAttribute="centerX" secondItem="pXf-kv-UlJ" secondAttribute="centerX" id="i0E-XN-NVf"/>
-                                            <constraint firstItem="XvR-D4-LMg" firstAttribute="top" secondItem="9vn-oO-SSD" secondAttribute="bottom" constant="24" id="nCB-6Q-6z3"/>
-                                            <constraint firstItem="XvR-D4-LMg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9vn-oO-SSD" secondAttribute="bottom" constant="24" id="o2K-Px-i7e"/>
-                                            <constraint firstItem="rOy-6J-i8L" firstAttribute="top" secondItem="ghI-g4-R9Q" secondAttribute="bottom" constant="12" id="pT2-zS-i09"/>
-                                            <constraint firstItem="9vn-oO-SSD" firstAttribute="top" secondItem="rOy-6J-i8L" secondAttribute="bottom" constant="32" id="qXX-W7-D3F"/>
-                                            <constraint firstItem="vCK-Tn-TH4" firstAttribute="top" secondItem="pXf-kv-UlJ" secondAttribute="top" constant="32" id="rG8-yy-yHt">
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rOy-6J-i8L" secondAttribute="trailing" constant="24" id="YgU-Ct-Eqj"/>
+                                            <constraint firstItem="XvR-D4-LMg" firstAttribute="width" secondItem="rOy-6J-i8L" secondAttribute="width" id="afx-B9-O0I"/>
+                                            <constraint firstItem="ghI-g4-R9Q" firstAttribute="top" secondItem="vCK-Tn-TH4" secondAttribute="bottom" constant="24" id="d3k-sn-0uR">
                                                 <variation key="heightClass=compact" constant="8"/>
                                             </constraint>
-                                            <constraint firstItem="XvR-D4-LMg" firstAttribute="leading" secondItem="pXf-kv-UlJ" secondAttribute="leadingMargin" constant="20" id="saQ-GR-2KQ"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="rOy-6J-i8L" secondAttribute="trailing" constant="20" id="xgn-7E-Dba"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="ghI-g4-R9Q" secondAttribute="trailing" constant="20" id="yQs-1R-Urv"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="XvR-D4-LMg" secondAttribute="trailing" constant="20" id="yzP-hz-WW0"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ghI-g4-R9Q" secondAttribute="trailing" constant="24" id="dgJ-Ax-nhG"/>
+                                            <constraint firstItem="vCK-Tn-TH4" firstAttribute="centerX" secondItem="pXf-kv-UlJ" secondAttribute="centerX" id="i0E-XN-NVf"/>
+                                            <constraint firstItem="ghI-g4-R9Q" firstAttribute="centerX" secondItem="pXf-kv-UlJ" secondAttribute="centerX" id="lzf-9j-ubE"/>
+                                            <constraint firstItem="XvR-D4-LMg" firstAttribute="top" secondItem="9vn-oO-SSD" secondAttribute="bottom" constant="24" id="nCB-6Q-6z3"/>
+                                            <constraint firstItem="XvR-D4-LMg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9vn-oO-SSD" secondAttribute="bottom" constant="32" id="o2K-Px-i7e"/>
+                                            <constraint firstItem="rOy-6J-i8L" firstAttribute="top" secondItem="ghI-g4-R9Q" secondAttribute="bottom" constant="8" id="pT2-zS-i09"/>
+                                            <constraint firstItem="9vn-oO-SSD" firstAttribute="top" secondItem="rOy-6J-i8L" secondAttribute="bottom" constant="32" id="qXX-W7-D3F"/>
+                                            <constraint firstItem="vCK-Tn-TH4" firstAttribute="top" secondItem="pXf-kv-UlJ" secondAttribute="top" constant="32" id="rG8-yy-yHt">
+                                                <variation key="heightClass=compact" constant="24"/>
+                                            </constraint>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -2043,7 +2049,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <constraint firstItem="pXf-kv-UlJ" firstAttribute="bottom" secondItem="iJZ-ab-cxU" secondAttribute="bottom" id="7q2-VH-Aa0"/>
                                     <constraint firstItem="pXf-kv-UlJ" firstAttribute="leading" secondItem="kTF-02-i6M" secondAttribute="leading" id="8Hr-e0-O86"/>
                                     <constraint firstItem="pXf-kv-UlJ" firstAttribute="top" secondItem="iJZ-ab-cxU" secondAttribute="top" id="MYQ-7G-upg"/>
-                                    <constraint firstItem="X5K-lL-i5G" firstAttribute="bottom" secondItem="XvR-D4-LMg" secondAttribute="bottom" priority="750" constant="24" id="NUj-QT-Hrp"/>
+                                    <constraint firstItem="X5K-lL-i5G" firstAttribute="bottom" secondItem="XvR-D4-LMg" secondAttribute="bottom" priority="750" constant="32" id="NUj-QT-Hrp"/>
                                     <constraint firstAttribute="trailing" secondItem="pXf-kv-UlJ" secondAttribute="trailing" id="a5A-os-2mh"/>
                                     <constraint firstItem="pXf-kv-UlJ" firstAttribute="leading" secondItem="iJZ-ab-cxU" secondAttribute="leading" id="eax-1i-fvO">
                                         <variation key="heightClass=compact" constant="0.0"/>
@@ -2097,7 +2103,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="4WC-3q-ccD">
-                            <rect key="frame" x="0.0" y="154.66666793823248" width="414" height="120.00000000000006"/>
+                            <rect key="frame" x="0.0" y="149.33333206176763" width="414" height="120"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">
@@ -2128,19 +2134,19 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                             <tableViewSection id="Qyq-nQ-LoP">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="hAx-0b-BaR">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="41.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="18" width="414" height="39"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hAx-0b-BaR" id="1u9-NP-PGn">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="39"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Personal Duck Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4Y-CX-8b6">
-                                                    <rect key="frame" x="20" y="0.0" width="167.66666666666666" height="41.666666666666664"/>
+                                                    <rect key="frame" x="20" y="0.0" width="166.33333333333334" height="39"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dax@duck.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25v-n4-wJD">
-                                                    <rect key="frame" x="283.66666666666669" y="11" width="110.33333333333331" height="19"/>
+                                                    <rect key="frame" x="288.33333333333331" y="10.999999999999998" width="105.66666666666669" height="16.333333333333329"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2162,14 +2168,14 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                             <tableViewSection id="JKJ-hO-TaH">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="NR2-0i-W2V">
-                                        <rect key="frame" x="0.0" y="95.666667938232422" width="414" height="41"/>
+                                        <rect key="frame" x="0.0" y="93" width="414" height="38.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NR2-0i-W2V" id="k3G-bL-YVw">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="38.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remove from Device" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEh-V1-QaM">
-                                                    <rect key="frame" x="20" y="11" width="374" height="19"/>
+                                                    <rect key="frame" x="20" y="10.999999999999998" width="374" height="16.333333333333329"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" systemColor="systemPinkColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2263,10 +2269,10 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Q28-3X-vN4">
-                                            <rect key="frame" x="20" y="12.666666666666666" width="374" height="18.666666666666671"/>
+                                            <rect key="frame" x="20" y="14" width="374" height="16"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR5-Al-WIW">
-                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="18.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="16"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>

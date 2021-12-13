@@ -23,14 +23,12 @@ import Core
 class ImageCacheDebugViewController: UITableViewController {
 
     private let titles = [
-        Sections.favorites: "Favorites (Bookmark Cache)",
         Sections.bookmarks: "Bookmarks (Bookmark Cache)",
         Sections.tabs: "Tabs (Tabs Cache)"
     ]
 
     enum Sections: Int, CaseIterable {
 
-        case favorites
         case bookmarks
         case tabs
 
@@ -40,6 +38,8 @@ class ImageCacheDebugViewController: UITableViewController {
     let imageError = UIImage(systemName: "exclamationmark.triangle")
     let bookmarksManager = BookmarksManager()
     let tabsModel = TabsModel.get() ?? TabsModel(desktop: false)
+    
+    private var bookmarksAndFavorites = [Bookmark]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +50,11 @@ class ImageCacheDebugViewController: UITableViewController {
                                              action: #selector(presentClearCachePrompt(_:)))
         clearCacheItem.tintColor = .systemRed
         navigationItem.rightBarButtonItem = clearCacheItem
+        
+        bookmarksManager.allBookmarksAndFavoritesShallow() { bookmarks in
+            self.bookmarksAndFavorites = bookmarks
+            self.tableView.reloadData()
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -65,16 +70,10 @@ class ImageCacheDebugViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         switch Sections(rawValue: indexPath.section) {
 
-        case .favorites:
-            cell.textLabel?.text = bookmarksManager.favorite(atIndex: indexPath.row)?.url.host
-            cell.imageView?.loadFavicon(forDomain: bookmarksManager.favorite(atIndex: indexPath.row)?.url.host, usingCache: .bookmarks) {
-                cell.imageView?.image = $1 ? self.imageNotFound : $0 ?? self.imageError
-                cell.detailTextLabel?.text = self.describe($1 ? nil : $0)
-            }
-
         case .bookmarks:
-            cell.textLabel?.text = bookmarksManager.bookmark(atIndex: indexPath.row)?.url.host
-            cell.imageView?.loadFavicon(forDomain: bookmarksManager.bookmark(atIndex: indexPath.row)?.url.host, usingCache: .bookmarks) {
+            let bookmark = bookmarksAndFavorites[indexPath.row]
+            cell.textLabel?.text = bookmark.url?.host
+            cell.imageView?.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks) {
                 cell.imageView?.image = $1 ? self.imageNotFound : $0 ?? self.imageError
                 cell.detailTextLabel?.text = self.describe($1 ? nil : $0)
             }
@@ -100,8 +99,7 @@ class ImageCacheDebugViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch Sections(rawValue: section) {
-        case .favorites: return bookmarksManager.favoritesCount
-        case .bookmarks: return bookmarksManager.bookmarksCount
+        case .bookmarks: return bookmarksAndFavorites.count
         case .tabs: return tabsModel.count
         default: return 0
         }
@@ -109,10 +107,12 @@ class ImageCacheDebugViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+        //TODO what is this even supposed to do?
+        //and how do we translate it to new method? Flat struture?
+        //yeah...that's probably it, we'll need a way of getting just bookmarks flat
         let host: String?
         switch Sections(rawValue: indexPath.section) {
-        case .favorites: host = bookmarksManager.favorite(atIndex: indexPath.row)?.url.host
-        case .bookmarks: host = bookmarksManager.bookmark(atIndex: indexPath.row)?.url.host
+        case .bookmarks: host = bookmarksAndFavorites[indexPath.row].url?.host
         case .tabs: host = tabsModel.get(tabAt: indexPath.row).link?.url.host
         default: host = nil
         }

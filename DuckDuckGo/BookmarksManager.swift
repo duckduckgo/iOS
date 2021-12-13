@@ -192,3 +192,12 @@ class BookmarksManager {
     }
 
 }
+
+// MARK: Debug menu methods (used in ImageCacheDebugViewController)
+
+extension BookmarksManager {
+
+    func allBookmarksAndFavoritesShallow(completion: @escaping ([Bookmark]) -> Void)  {
+        coreDataStorage.allBookmarksAndFavoritesShallow(completion: completion)
+    }
+}

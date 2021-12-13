@@ -690,10 +690,3 @@ public class BookmarksCoreDataStorageMigration {
         migratedFromUserDefaults = true
     }
 }
-
-
-//extension BookmarksCoreDataStorage: BookmarkStore {
-//
-//    
-//}
-

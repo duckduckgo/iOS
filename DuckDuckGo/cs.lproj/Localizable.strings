@@ -263,19 +263,97 @@
 "email.aliasAlert.decline" = "Zrušit";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Vygenerovat soukromou adresu";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Blokování e-mailových trackerů pomocí adresy Duck";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Použit %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Nová adresa zkopírovaná do vaší schránky";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Vytvořit adresu Duck";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Povoleno";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Odebráním ochrany e-mailů z tohoto zařízení se při procházení webu odstraní možnost vyplnit osobní adresu Duck nebo nově vygenerovanou soukromou adresu Duck do e-mailových polí.\n\nPokud chcete úplně vymazat vaše adresy Duck nebo máte jakékoli další dotazy nebo zpětnou vazbu, obraťte se na nás na adrese support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Vypnout";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Zrušit";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Poznámka: Když odeberete ochranu e-mailů z tohoto zařízení, vaše adresa Duck zůstane zachovaná.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Odstranit";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Odebrat ochranu e-mailů?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Při zařazování do pořadníku došlo k chybě, zkuste to znovu později";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Začínáme";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Mám zvací kód";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Přišla vám pozvánka";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Připojte se k soukromému pořadníku";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Jste v pořadníku";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Vaše pozvánka se tu objeví, až na vás budeme připravení. Chcete %1$@, až dorazí? %2$@ o ochraně e-mailů.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "dostat oznámení";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Pošleme vám oznámení, až pro vás bude ochrana e-mailů připravená. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Více informací";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Pošleme vám oznámení, až budete moct začít používat ochrana e-mailů.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Máme vás upozornit, až budete na řadě?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Zapsali jste se do pořadníku a požádali nás, abychom vás upozornili, až budete moct vyzkoušet naši ochranu e-mailů.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Ne, děkuji";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "UPOZORNĚTE MĚ";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Vaše pozvánka k ochraně e-mailů je zde!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Vaše e-maily neukládáme. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "E-mailové soukromí, zjednodušené.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Blokujte e-mailové trackery a skryjte svou adresu bez nutnosti měnit poskytovatele e-mailu. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
@@ -769,12 +847,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "HODNOCENÍ OCHRANY SOUKROMÍ";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Ochrana osobních údajů na webových stránkách";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +961,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Přepínač karet";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Vyberte preferovanou velikost textu. Webové stránky, které zobrazíte v DuckDuckGo, se tomu přizpůsobí.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Velikost textu – %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Tmavé";
 
@@ -930,4 +1008,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Oblíbené položky uloženy";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Zrušit";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "DOBŘE";
 

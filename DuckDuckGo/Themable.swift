@@ -28,10 +28,7 @@ extension Themable where Self: UIViewController {
     
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
-        
-        if #available(iOS 13.0, *) {
-            overrideSystemTheme(with: theme)
-        }
+        overrideSystemTheme(with: theme)
     }
     
     func decorateNavigationBar(with theme: Theme) {
@@ -60,7 +57,6 @@ extension Themable where Self: UIViewController {
         }
     }
     
-    @available(iOS 13.0, *)
     func overrideSystemTheme(with theme: Theme) {
         if theme.currentImageSet == .dark {
             overrideUserInterfaceStyle = .dark

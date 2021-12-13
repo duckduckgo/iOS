@@ -20,12 +20,17 @@
 import Foundation
 import TrackerRadarKit
 
+/**
+ Represents all sources used to build Content Blocking Rules along with their state information.
+ */
 protocol ContentBlockerRulesSource {
 
     var trackerData: TrackerDataManager.DataSet? { get }
     var embeddedTrackerData: TrackerDataManager.DataSet { get }
     var tempListEtag: String { get }
     var tempList: [String] { get }
+    var allowListEtag: String { get }
+    var allowList: [TrackerException] { get }
     var unprotectedSites: [String] { get }
 
 }
@@ -51,8 +56,31 @@ class DefaultContentBlockerRulesSource: ContentBlockerRulesSource {
         return tempUnprotected
     }
 
+    var allowListEtag: String {
+        return PrivacyConfigurationManager.shared.privacyConfig.identifier
+    }
+
+    var allowList: [TrackerException] {
+        return Self.transform(allowList: PrivacyConfigurationManager.shared.privacyConfig.trackerAllowlist)
+    }
+
     var unprotectedSites: [String] {
         return PrivacyConfigurationManager.shared.privacyConfig.userUnprotectedDomains
+    }
+
+    class func transform(allowList: PrivacyConfigurationData.TrackerAllowlistData) -> [TrackerException] {
+
+        let trackerRules = allowList.values.reduce(into: []) { partialResult, next in
+            partialResult.append(contentsOf: next)
+        }
+
+        return trackerRules.map { entry in
+            if entry.domains.contains("<all>") {
+                return TrackerException(rule: entry.rule, matching: .all)
+            } else {
+                return TrackerException(rule: entry.rule, matching: .domains(entry.domains))
+            }
+        }
     }
 
 }

@@ -18,58 +18,57 @@
 //
 
 (function protect () {
-    
-    const featureSettings = ${featureSettings}
-    
+    const featureSettings = $FEATURE_SETTINGS$
+
     // Property values to be set and their original values.
     const fingerprintPropertyValues = {
-        'screen': {
-            'availTop': {
-                'object': 'screen',
-                'origValue': screen.availTop,
-                'targetValue': 0
+        screen: {
+            availTop: {
+                object: 'screen',
+                origValue: screen.availTop,
+                targetValue: 0
             },
-            'availLeft': {
-                'object': 'screen',
-                'origValue': screen.availLeft,
-                'targetValue': 0
+            availLeft: {
+                object: 'screen',
+                origValue: screen.availLeft,
+                targetValue: 0
             },
-            'availWidth': {
-                'object': 'screen',
-                'origValue': screen.availWidth,
-                'targetValue': screen.width
+            availWidth: {
+                object: 'screen',
+                origValue: screen.availWidth,
+                targetValue: screen.width
             },
-            'availHeight': {
-                'object': 'screen',
-                'origValue': screen.availHeight,
-                'targetValue': screen.height
+            availHeight: {
+                object: 'screen',
+                origValue: screen.availHeight,
+                targetValue: screen.height
             },
-            'screenY': {
-                'object': 'window',
-                'origValue': window.screenY,
-                'targetValue': 0
+            screenY: {
+                object: 'window',
+                origValue: window.screenY,
+                targetValue: 0
             },
-            'screenLeft': {
-                'object': 'window',
-                'origValue': window.screenLeft,
-                'targetValue': 0
+            screenLeft: {
+                object: 'window',
+                origValue: window.screenLeft,
+                targetValue: 0
             },
-            'colorDepth': {
-                'object': 'screen',
-                'origValue': screen.colorDepth,
-                'targetValue': 24
+            colorDepth: {
+                object: 'screen',
+                origValue: screen.colorDepth,
+                targetValue: 24
             },
-            'pixelDepth': {
-                'object': 'screen',
-                'origValue': screen.pixelDepth,
-                'targetValue': 24
+            pixelDepth: {
+                object: 'screen',
+                origValue: screen.pixelDepth,
+                targetValue: 24
             }
         },
-        'options': {
-            'doNotTrack': {
-                'object': 'navigator',
-                'origValue': navigator.doNotTrack,
-                'targetValue': false
+        options: {
+            doNotTrack: {
+                object: 'navigator',
+                origValue: navigator.doNotTrack,
+                targetValue: false
             }
         }
     }
@@ -81,7 +80,7 @@
      * Property event functions are also defined, for setting later.
      */
     function getBattery () {
-        let battery = {}
+        const battery = {}
         battery.value = {
             charging: true,
             chargingTime: 0,
@@ -149,7 +148,7 @@
             return ''
         }
     }
-    
+
     /**
      * Temporary storage can be used to determine hard disk usage and size.
      * This will limit the max storage to 4GB without completely disabling the
@@ -174,43 +173,63 @@
         `
         return script
     }
+
+    const topLevelUrl = getTopLevelURL()
+
+    let excludeTempStorage = false
+    let excludeBattery = false
+    let excludeScreenSize = false
+    var excludeAll = false;
+    const domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split('.') : []
+
+    const userExcluded = `
+                    $USER_UNPROTECTED_DOMAINS$
+                    `.split("\n").filter(domain => domain.trim() == topLevelUrl.host).length > 0;
+    if (userExcluded) {
+        return;
+    }
     
-    let topLevelUrl = getTopLevelURL();
-
-    var excludeTempStorage = false;
-    var excludeBattery = false;
-    var excludeScreenSize = false;
-    var domainParts = topLevelUrl && topLevelUrl.host ? topLevelUrl.host.split(".") : [];
-
     // walk up the domain to see if it's unprotected
-    while (domainParts && domainParts.length > 1) {
-        let partialDomain = domainParts.join(".")
+    while (domainParts.length > 1) {
+        const partialDomain = domainParts.join('.')
+        
+        excludeAll = `
+                $TEMP_UNPROTECTED_DOMAINS$
+                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+        if (excludeAll) {
+            break;
+        }
 
         if (!excludeTempStorage) {
             excludeTempStorage = `
-                ${tempStorageExceptions}
-                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+                $TEMP_STORAGE_EXCEPTIONS$
+                `.split('\n').filter(domain => domain.trim() === partialDomain).length > 0
         }
         if (!excludeBattery) {
             excludeBattery = `
-                ${batteryExceptions}
-                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+                $BATTERY_EXCEPTIONS$
+                `.split('\n').filter(domain => domain.trim() === partialDomain).length > 0
         }
         if (!excludeScreenSize) {
             excludeScreenSize = `
-                ${screenSizeExceptions}
-                `.split("\n").filter(domain => domain.trim() == partialDomain).length > 0;
+                $SCREEN_SIZE_EXCEPTIONS$
+                `.split('\n').filter(domain => domain.trim() === partialDomain).length > 0
         }
 
         domainParts.shift()
     }
     
-    function getTopLevelURL() {
+    // Check if domain on temp exceptions
+    if (excludeAll) {
+        return;
+    }
+
+    function getTopLevelURL () {
         try {
             // FROM: https://stackoverflow.com/a/7739035/73479
             // FIX: Better capturing of top level URL so that trackers in embedded documents are not considered first party
-            return new URL(window.location != window.parent.location ? document.referrer : document.location.href)
-        } catch(error) {
+            return new URL(window.location !== window.parent.location ? document.referrer : document.location.href)
+        } catch (error) {
             return new URL(location.href)
         }
     }
@@ -236,8 +255,8 @@
      * Inject all the overwrites into the page.
      */
     function inject (scriptToInject, removeAfterExec) {
-        // Inject into main page
-        let e = document.createElement('script')
+    // Inject into main page
+        const e = document.createElement('script')
         e.textContent = scriptToInject;
         (document.head || document.documentElement).appendChild(e)
 

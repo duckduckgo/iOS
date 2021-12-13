@@ -28,7 +28,9 @@ public struct ContentBlockerProtectionChangedNotification {
     public static let diffKey = "ContentBlockingDiff"
 }
 
-// swiftlint:disable type_body_length
+/**
+ Manages creation of Content Blocker rules from `ContentBlockerRulesSource`.
+ */
 public class ContentBlockerRulesManager {
     
     public typealias CompletionBlock = (WKContentRuleList?) -> Void
@@ -38,7 +40,10 @@ public class ContentBlockerRulesManager {
         case recompiling // Executing work
         case recompilingAndScheduled // New work has been requested while one is currently being executed
     }
-    
+
+    /**
+     Encapsulates information about the result of the compilation.
+     */
     public struct CurrentRules {
         public let rulesList: WKContentRuleList
         public let trackerData: TrackerData
@@ -48,6 +53,7 @@ public class ContentBlockerRulesManager {
     }
 
     private let dataSource: ContentBlockerRulesSource
+    let sourceManager: ContentBlockerRulesSourceManager
 
     fileprivate(set) public static var shared = ContentBlockerRulesManager()
     private let workQueue = DispatchQueue(label: "ContentBlockerManagerQueue", qos: .userInitiated)
@@ -55,6 +61,7 @@ public class ContentBlockerRulesManager {
     private init(source: ContentBlockerRulesSource = DefaultContentBlockerRulesSource(),
                  skipInitialSetup: Bool = false) {
         dataSource = source
+        sourceManager = ContentBlockerRulesSourceManager(dataSource: source)
         
         if !skipInitialSetup {
             requestCompilation()
@@ -82,10 +89,6 @@ public class ContentBlockerRulesManager {
             lock.unlock()
         }
     }
-    
-    private(set) public var etagForFailedTDSCompilation: String?
-    private(set) public var etagForFailedTempListCompilation: String?
-    private(set) public var hashForFailedUnprotectedSitesCompilation: String?
 
     public func recompile() {
         workQueue.async {
@@ -112,112 +115,54 @@ public class ContentBlockerRulesManager {
         
         performCompilation(isInitial: isInitial)
     }
-    
-    // swiftlint:disable function_body_length
+
     private func performCompilation(isInitial: Bool = false) {
-        // Get ETags first, as these change only after underlying data is being updated.
-        // Even if underlying file is chnged by other thread, so will the etag and in the end rules will be refreshed.
-        let tempSitesEtag = dataSource.tempListEtag
-        
-        // Check which Tracker Data Set to use
-        let tds: TrackerDataManager.DataSet
-        if let trackerData = dataSource.trackerData,
-           trackerData.etag != etagForFailedTDSCompilation {
-            tds = trackerData
-            etagForFailedTDSCompilation = nil
-        } else {
-            tds = dataSource.embeddedTrackerData
-        }
-        
-        var tempSites: (sites: [String]?, etag: String)?
-        if tempSitesEtag != etagForFailedTempListCompilation {
-            let tempUnprotectedDomains = dataSource.tempList
-            if !tempUnprotectedDomains.isEmpty {
-                tempSites = (tempUnprotectedDomains, tempSitesEtag)
-                
-                // In case we had an error last time, clear it and retry to re-fetch TDS
-                if etagForFailedTempListCompilation != nil {
-                    etagForFailedTDSCompilation = nil
-                    etagForFailedTempListCompilation = nil
-                    performCompilation(isInitial: isInitial)
-                    return
-                }
-            }
-        }
-        
-        var unprotectedSites = dataSource.unprotectedSites
-        if ContentBlockerRulesIdentifier.hash(domains: unprotectedSites) == hashForFailedUnprotectedSitesCompilation {
-            unprotectedSites = []
-        } else if hashForFailedUnprotectedSitesCompilation != nil {
-            etagForFailedTDSCompilation = nil
-            etagForFailedTempListCompilation = nil
-            hashForFailedUnprotectedSitesCompilation = nil
-            // Retry to re-fetch TDS & TempList
-            performCompilation(isInitial: isInitial)
-            return
-        }
-        
-        let identifier = ContentBlockerRulesIdentifier(tdsEtag: tds.etag,
-                                                       tempListEtag: tempSites?.etag,
-                                                       unprotectedSites: unprotectedSites)
+        let input = sourceManager.makeModel()
         
         if isInitial {
             // Delegate querying to main thread - crashes were observed in background.
             DispatchQueue.main.async {
-                WKContentRuleListStore.default()?.lookUpContentRuleList(forIdentifier: identifier.stringValue, completionHandler: { ruleList, _ in
+                WKContentRuleListStore.default()?.lookUpContentRuleList(forIdentifier: input.rulesIdentifier.stringValue,
+                                                                        completionHandler: { ruleList, _ in
                     if let ruleList = ruleList {
-                        self.compilationSucceeded(with: ruleList, trackerData: tds.tds, etag: tds.etag, identifier: identifier)
+                        self.compilationSucceeded(with: ruleList, for: input)
                     } else {
                         self.workQueue.async {
-                            self.compile(tds: tds.tds, tdsEtag: tds.etag,
-                                         tempList: tempSites?.sites, tempListEtag: tempSites?.etag,
-                                         unprotectedSites: unprotectedSites, identifier: identifier)
+                            self.compile(input: input)
                         }
                     }
                 })
             }
         } else {
-            compile(tds: tds.tds, tdsEtag: tds.etag,
-                    tempList: tempSites?.sites, tempListEtag: tempSites?.etag,
-                    unprotectedSites: unprotectedSites, identifier: identifier)
+            compile(input: input)
         }
     }
-    // swiftlint:enable function_body_length
-    
-    // swiftlint:disable function_parameter_count
-    fileprivate func compile(tds: TrackerData, tdsEtag: String,
-                             tempList: [String]?, tempListEtag: String?,
-                             unprotectedSites: [String]?,
-                             identifier: ContentBlockerRulesIdentifier) {
+
+    fileprivate func compile(input: ContentBlockerRulesSourceModel) {
         os_log("Starting CBR compilation", log: generalLog, type: .default)
 
-        let rules = ContentBlockerRulesBuilder(trackerData: tds).buildRules(withExceptions: unprotectedSites,
-            
-                                                                            andTemporaryUnprotectedDomains: tempList)
-        let unprotectedSitesHash = ContentBlockerRulesIdentifier.hash(domains: unprotectedSites)
+        let builder = ContentBlockerRulesBuilder(trackerData: input.tds)
+        let rules = builder.buildRules(withExceptions: input.unprotectedSites,
+                                       andTemporaryUnprotectedDomains: input.tempList,
+                                       andTrackerAllowlist: input.allowList)
+
         let data: Data
         do {
             data = try JSONEncoder().encode(rules)
         } catch {
             os_log("Failed to encode content blocking rules", log: generalLog, type: .error)
-            compilationFailed(with: error,
-                              tdsEtag: tdsEtag,
-                              tempListEtag: tempListEtag,
-                              unprotectedSitesHash: unprotectedSitesHash)
+            compilationFailed(for: input, with: error)
             return
         }
 
         let ruleList = String(data: data, encoding: .utf8)!
-        WKContentRuleListStore.default().compileContentRuleList(forIdentifier: identifier.stringValue,
+        WKContentRuleListStore.default().compileContentRuleList(forIdentifier: input.rulesIdentifier.stringValue,
                                      encodedContentRuleList: ruleList) { ruleList, error in
             
             if let ruleList = ruleList {
-                self.compilationSucceeded(with: ruleList, trackerData: tds, etag: tdsEtag, identifier: identifier)
+                self.compilationSucceeded(with: ruleList, for: input)
             } else if let error = error {
-                self.compilationFailed(with: error,
-                                       tdsEtag: tdsEtag,
-                                       tempListEtag: tempListEtag,
-                                       unprotectedSitesHash: unprotectedSitesHash)
+                self.compilationFailed(for: input, with: error)
             } else {
                 assertionFailure("Rule list has not been returned properly by the engine")
             }
@@ -225,7 +170,7 @@ public class ContentBlockerRulesManager {
 
     }
     
-    private func compilationFailed(with error: Error, tdsEtag: String, tempListEtag: String?, unprotectedSitesHash: String) {
+    private func compilationFailed(for input: ContentBlockerRulesSourceModel, with error: Error) {
         os_log("Failed to compile rules %{public}s", log: generalLog, type: .error, error.localizedDescription)
         
         lock.lock()
@@ -233,31 +178,7 @@ public class ContentBlockerRulesManager {
         if self.state == .recompilingAndScheduled {
             // Recompilation is scheduled - it may fix the problem
         } else {
-            if tdsEtag != dataSource.embeddedTrackerData.etag {
-                // We failed compilation for non-embedded TDS, marking as broken.
-                etagForFailedTDSCompilation = tdsEtag
-                Pixel.fire(pixel: .contentBlockingTDSCompilationFailed,
-                           error: error,
-                           withAdditionalParameters: [PixelParameters.etag: tdsEtag])
-            } else if tempListEtag != nil {
-                etagForFailedTempListCompilation = tempListEtag
-                Pixel.fire(pixel: .contentBlockingTempListCompilationFailed,
-                           error: error,
-                           withAdditionalParameters: [PixelParameters.etag: tempListEtag ?? "empty"])
-            } else if !unprotectedSitesHash.isEmpty {
-                hashForFailedUnprotectedSitesCompilation = unprotectedSitesHash
-                Pixel.fire(pixel: .contentBlockingUnpSitesCompilationFailed,
-                           error: error)
-            } else {
-                // We failed for embedded data, this is unlikely.
-                // Include description - why built-in version of the TDS has failed to compile?
-                let error = error as NSError
-                let errorDesc = (error.userInfo[NSHelpAnchorErrorKey] as? String) ?? "missing"
-                let params = [PixelParameters.errorDescription: errorDesc.isEmpty ? "empty" : errorDesc]
-                Pixel.fire(pixel: .contentBlockingFallbackCompilationFailed, error: error, withAdditionalParameters: params) { _ in
-                    fatalError("Could not compile embedded rules list")
-                }
-            }
+            sourceManager.compilationFailed(for: input, with: error)
         }
         
         workQueue.async {
@@ -267,7 +188,6 @@ public class ContentBlockerRulesManager {
         state = .recompiling
         lock.unlock()
     }
-    // swiftlint:enable function_parameter_count
     
     static func extractSurrogates(from tds: TrackerData) -> TrackerData {
         
@@ -302,12 +222,10 @@ public class ContentBlockerRulesManager {
     }
     
     private func compilationSucceeded(with ruleList: WKContentRuleList,
-                                      trackerData: TrackerData,
-                                      etag: String,
-                                      identifier: ContentBlockerRulesIdentifier) {
+                                      for input: ContentBlockerRulesSourceModel) {
         os_log("Rules compiled", log: generalLog, type: .default)
         
-        let surrogateTDS = Self.extractSurrogates(from: trackerData)
+        let surrogateTDS = Self.extractSurrogates(from: input.tds)
         let encodedData = try? JSONEncoder().encode(surrogateTDS)
         let encodedTrackerData = String(data: encodedData!, encoding: .utf8)!
         
@@ -315,18 +233,19 @@ public class ContentBlockerRulesManager {
         
         let diff: ContentBlockerRulesIdentifier.Difference
         if let id = _currentRules?.identifier {
-            diff = id.compare(with: identifier)
+            diff = id.compare(with: input.rulesIdentifier)
         } else {
-            diff = identifier.compare(with: ContentBlockerRulesIdentifier(tdsEtag: "",
-                                                                          tempListEtag: nil,
-                                                                          unprotectedSites: nil))
+            diff = input.rulesIdentifier.compare(with: ContentBlockerRulesIdentifier(tdsEtag: "",
+                                                                                     tempListEtag: nil,
+                                                                                     allowListEtag: nil,
+                                                                                     unprotectedSitesHash: nil))
         }
         
         _currentRules = CurrentRules(rulesList: ruleList,
-                                     trackerData: trackerData,
+                                     trackerData: input.tds,
                                      encodedTrackerData: encodedTrackerData,
-                                     etag: etag,
-                                     identifier: identifier)
+                                     etag: input.tdsIdentifier,
+                                     identifier: input.rulesIdentifier)
         
         if self.state == .recompilingAndScheduled {
             // New work has been scheduled - prepare for execution.
@@ -360,18 +279,14 @@ public class ContentBlockerRulesManager {
     }
 
 }
-// swiftlint:enable type_body_length
 
 extension ContentBlockerRulesManager {
     
     class func test_prepareEmbeddedInstance() -> ContentBlockerRulesManager {
         let cbrm = ContentBlockerRulesManager(skipInitialSetup: true)
-        
-        let embedded = TrackerDataManager.shared.embeddedData
-        let id = ContentBlockerRulesIdentifier(identifier: "\"\(UUID().uuidString)\"\"\"")!
-        cbrm.compile(tds: embedded.tds, tdsEtag: embedded.etag,
-                     tempList: nil, tempListEtag: nil,
-                     unprotectedSites: nil, identifier: id)
+
+        let input = ContentBlockerRulesSourceModel(tdsIdentfier: UUID().uuidString, tds: TrackerDataManager.shared.embeddedData.tds)
+        cbrm.compile(input: input)
         
         return cbrm
     }

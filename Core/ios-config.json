@@ -1,32 +1,240 @@
 {
-    "version": "2021.6.7",
     "readme": "https://github.com/duckduckgo/privacy-configuration",
+    "version": 1638282217816,
     "features": {
+        "autoconsent": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "spiegel.de",
+                    "reason": "Opt-out not possible"
+                }
+            ],
+            "settings": {
+                "disabledCMPs": []
+            }
+        },
+        "autofill": {
+            "exceptions": [
+                {
+                    "domain": "asana.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "fastmail.com",
+                    "reason": "site breakage"
+                }
+            ],
+            "state": "disabled"
+        },
+        "clickToPlay": {
+            "state": "enabled",
+            "exceptions": []
+        },
         "contentBlocking": {
             "state": "enabled",
             "exceptions": [
+                {
+                    "domain": "agame.com",
+                    "reason": "Site not loading"
+                },
+                {
+                    "domain": "wp.pl",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "digitalocean.com",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "ah.nl",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "toledoblade.com",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "magicgameworld.com",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "www.cbssports.com",
+                    "reason": "Video content missing"
+                },
+                {
+                    "domain": "www.nhl.com",
+                    "reason": "Video content missing"
+                },
+                {
+                    "domain": "pnc.com",
+                    "reason": "Login issues"
+                },
+                {
+                    "domain": "ea.com",
+                    "reason": "Login not displaying"
+                },
+                {
+                    "domain": "www.corsair.com",
+                    "reason": "Missing content"
+                },
+                {
+                    "domain": "www.eurogamer.net",
+                    "reason": "Hard adwall"
+                },
+                {
+                    "domain": "53.com",
+                    "reason": "Broken sign in"
+                },
                 {
                     "domain": "www.livenewsnow.com",
                     "reason": "Adblocker wall"
                 },
                 {
-                    "domain": "weather.com",
-                    "reason": "Broken videos"
+                    "domain": "rp5.ru",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "easyjet.com",
+                    "reason": "Broken site content"
+                },
+                {
+                    "domain": "id.me",
+                    "reason": "Broken logins"
+                },
+                {
+                    "domain": "stubhub.com",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "riteaid.com",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "virginmedia.com",
+                    "reason": "Chat widget blocked"
+                },
+                {
+                    "domain": "zoosk.com",
+                    "reason": "Mobile site banner breakage"
                 }
             ]
         },
-        "trackingCookies3p": {
-            "state": "enabled",
+        "fingerprintingAudio": {
+            "state": "disabled",
             "exceptions": [
                 {
-                    "domain": "hangouts.google.com",
+                    "domain": "youtube.com",
                     "reason": "site breakage"
                 },
                 {
-                    "domain": "docs.google.com",
+                    "domain": "meet.google.com",
                     "reason": "site breakage"
                 }
-            ],
+            ]
+        },
+        "fingerprintingBattery": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingCanvas": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "walgreens.com",
+                    "reason": "Broken login"
+                },
+                {
+                    "domain": "krunker.io",
+                    "reason": "Broken game init"
+                },
+                {
+                    "domain": "usaa.com",
+                    "reason": "Broken login"
+                },
+                {
+                    "domain": "academy.com",
+                    "reason": "Broken login"
+                },
+                {
+                    "domain": "kroger.com",
+                    "reason": "Broken login"
+                }
+            ]
+        },
+        "fingerprintingHardware": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "play.geforcenow.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "stadia.google.com",
+                    "reason": "site breakage"
+                }
+            ]
+        },
+        "fingerprintingScreenSize": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingTemporaryStorage": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "floc": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "gpc": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "newyorker.com",
+                    "reason": "Cookie consent box hiding audio"
+                }
+            ]
+        },
+        "https": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "referrer": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "trackerAllowlist": {
+            "state": "enabled",
+            "settings": {
+                "allowlistedTrackers": {
+                    "dynamicyield.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn-eu.dynamicyield.com/9878090/api_static.js",
+                                "domains": [
+                                    "decathlon.co.uk"
+                                ],
+                                "reason": "checkout broken"
+                            }
+                        ]
+                    }
+                }
+            },
+            "exceptions": []
+        },
+        "trackingCookies1p": {
+            "state": "enabled",
+            "settings": {
+                "firstPartyTrackerCookiePolicy": {
+                    "threshold": 86400,
+                    "maxAge": 86400
+                }
+            },
+            "exceptions": []
+        },
+        "trackingCookies3p": {
+            "state": "enabled",
             "settings": {
                 "excludedCookieDomains": [
                     {
@@ -128,177 +336,13 @@
                     {
                         "domain": "docs.google.com",
                         "reason": "site breakage"
+                    },
+                    {
+                        "domain": "btsport-utils-prod.akamaized.net",
+                        "reason": "broken videos"
                     }
                 ]
-            }
-        },
-        "trackingCookies1p": {
-            "state": "enabled",
-            "settings": {
-                "firstPartyTrackerCookiePolicy": {
-                    "threshold": 86400,
-                    "maxAge": 86400
-                }
             },
-            "exceptions": []
-        },
-        "clickToPlay": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "fingerprintingCanvas": {
-            "state": "enabled",
-            "exceptions": [
-                {
-                    "domain": "www.delta.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "www.johnlewis.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "warzone.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "skribbl.io",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "kroger.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "bakersplus.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "citymarket.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "dillons.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "food4less.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "foodsco.net",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "fredmeyer.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "frysfood.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "gerbes.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "jaycfoods.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "kingsoopers.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "marianos.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "metromarket.net",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "pay-less.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "picknsave.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "qfc.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "ralphs.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "smithsfoodanddrug.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "pnc.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "www.coolmathgames.com",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "textfree.us",
-                    "reason": "site breakage"
-                },
-                {
-                    "domain": "www.academy.com",
-                    "reason": "site breakage"
-                }
-            ]
-        },
-        "fingerprintingAudio": {
-            "state": "disabled",
-            "exceptions": [
-                {
-                    "domain": "youtube.com"
-                },
-                {
-                    "domain": "meet.google.com"
-                }
-            ]
-        },
-        "fingerprintingTemporaryStorage": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "referrer": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "fingerprintingBattery": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "fingerprintingScreenSize": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "fingerprintingHardware": {
-            "state": "enabled",
-            "exceptions": [
-                {
-                    "domain": "play.geforcenow.com"
-                },
-                {
-                    "domain": "stadia.google.com"
-                }
-            ]
-        },
-        "floc": {
-            "state": "enabled",
-            "exceptions": []
-        },
-        "gpc": {
-            "state": "enabled",
             "exceptions": []
         },
         "userAgentRotation": {
@@ -349,49 +393,63 @@
                     "reason": "Breaks images on deezer"
                 }
             ]
+        },
+        "ampLinks": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "linkFormats": [
+                    "^https?:\\/\\/(?:w{3}\\.)?google\\.\\S{2,}\\/amp\\/s\\/(\\S+)$",
+                    "^https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)$"
+                ],
+                "keywords": [
+                    "=amp",
+                    "amp=",
+                    "&amp",
+                    "amp&",
+                    "/amp",
+                    "amp/",
+                    ".amp",
+                    "amp.",
+                    "%amp",
+                    "amp%",
+                    "_amp",
+                    "amp_",
+                    "?amp"
+                ]
+            }
+        },
+        "trackingParameters": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "parameters": [
+                    "utm_[a-zA-Z]*",
+                    "gclid",
+                    "fbclid",
+                    "fb_action_ids",
+                    "fb_action_types",
+                    "fb_source",
+                    "fb_ref",
+                    "ga_source",
+                    "ga_medium",
+                    "ga_term",
+                    "ga_content",
+                    "ga_campaign",
+                    "ga_place",
+                    "action_object_map",
+                    "action_type_map",
+                    "action_ref_map",
+                    "gs_l",
+                    "mkt_tok",
+                    "hmb_campaign",
+                    "hmb_source",
+                    "hmb_medium"
+                ]
+            }
         }
     },
     "unprotectedTemporary": [
-        {
-            "domain": "inlandbank.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "bank.barclays.co.uk",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "capitalone.ca",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "capitalone.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "nbarizona.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "sberbank.ru",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "td.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "ameritrade.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "santander.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "santander.co.uk",
-            "reason": "site breakage"
-        },
         {
             "domain": "usbank.com",
             "reason": "site breakage"
@@ -401,15 +459,7 @@
             "reason": "site breakage"
         },
         {
-            "domain": "www.sportskeeda.com",
-            "reason": "site breakage"
-        },
-        {
             "domain": "www.merriam-webster.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "rp5.ru",
             "reason": "site breakage"
         },
         {
@@ -417,15 +467,7 @@
             "reason": "site breakage"
         },
         {
-            "domain": "53.com",
-            "reason": "site breakage"
-        },
-        {
             "domain": "fidelity.com",
-            "reason": "site breakage"
-        },
-        {
-            "domain": "www.bandsintown.com",
             "reason": "site breakage"
         }
     ]

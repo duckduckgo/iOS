@@ -34,6 +34,9 @@ public protocol PrivacyConfiguration {
     /// Use `isTempUnprotected(domain:)` to check if given domain is unprotected.
     var tempUnprotectedDomains: [String] { get }
 
+    /// Trackers that has been allow listed because of site breakage
+    var trackerAllowlist: PrivacyConfigurationData.TrackerAllowlistData { get }
+
     func isEnabled(featureKey: PrivacyFeature) -> Bool
 
     /// Domains for which given PrivacyFeature is disabled.
@@ -68,6 +71,9 @@ public protocol PrivacyConfiguration {
     func userEnabledProtection(forDomain: String)
     /// Adds given domain to locally unprotected list.
     func userDisabledProtection(forDomain: String)
+    
+    /// Returns the data object of the given feature key
+    func feature(forKey: PrivacyFeature) -> PrivacyConfigurationData.PrivacyFeature?
 }
 
 public enum PrivacyFeature: String {
@@ -76,6 +82,8 @@ public enum PrivacyFeature: String {
     case fingerprintingBattery
     case fingerprintingScreenSize
     case gpc
+    case httpsUpgrade = "https"
+    case ampLinks
 }
 
 public struct AppPrivacyConfiguration: PrivacyConfiguration {
@@ -100,11 +108,15 @@ public struct AppPrivacyConfiguration: PrivacyConfiguration {
     public var tempUnprotectedDomains: [String] {
         return data.unprotectedTemporary.map { $0.domain }
     }
+
+    public var trackerAllowlist: PrivacyConfigurationData.TrackerAllowlistData {
+        return data.trackerAllowlist.state == PrivacyConfigurationData.State.enabled ? data.trackerAllowlist.entries : [:]
+    }
     
     public func isEnabled(featureKey: PrivacyFeature) -> Bool {
         guard let feature = data.features[featureKey.rawValue] else { return false }
         
-        return feature.state == "enabled"
+        return feature.state == PrivacyConfigurationData.State.enabled
     }
     
     public func exceptionsList(forFeature featureKey: PrivacyFeature) -> [String] {
@@ -159,6 +171,10 @@ public struct AppPrivacyConfiguration: PrivacyConfiguration {
 
     public func userDisabledProtection(forDomain domain: String) {
         locallyUnprotected.disableProtection(forDomain: domain)
+    }
+    
+    public func feature(forKey key: PrivacyFeature) -> PrivacyConfigurationData.PrivacyFeature? {
+        return data.features[key.rawValue]
     }
     
 }

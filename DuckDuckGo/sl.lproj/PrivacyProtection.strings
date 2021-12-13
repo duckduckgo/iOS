@@ -103,6 +103,9 @@
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Šifrirana povezava";
 
+/* Class = "UILabel"; text = "We temporarily disabled Privacy Protection as it appears to be breaking this site."; ObjectID = "wwe-ee-up0"; */
+"wwe-ee-up0.text" = "Začasno smo onemogočili zaščito zasebnosti, saj se zdi, da zato pride do napak na tem spletnem mestu.";
+
 /* Class = "UILabel"; text = "Major Networks Blocked"; ObjectID = "XzQ-fW-tzk"; */
 "XzQ-fW-tzk.text" = "Glavna blokirana omrežja";
 

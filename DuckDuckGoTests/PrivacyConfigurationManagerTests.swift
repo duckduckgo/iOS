@@ -40,6 +40,11 @@ class PrivacyConfigurationManagerTests: XCTestCase {
         let embeddedConfig = AppPrivacyConfiguration(data: PrivacyConfigurationManager.shared.embeddedConfigData.data, identifier: "")
         XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .contentBlocking))
         XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .gpc))
+        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .fingerprintingBattery))
+        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .fingerprintingScreenSize))
+        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .fingerprintingTemporaryStorage))
+        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .httpsUpgrade))
+        XCTAssertTrue(embeddedConfig.isEnabled(featureKey: .ampLinks))
     }
     
     private func calculateHash(for fileURL: URL) -> String {

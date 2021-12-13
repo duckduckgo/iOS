@@ -103,6 +103,9 @@
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "wf1-HZ-e7d"; */
 "wf1-HZ-e7d.text" = "Šifrēts savienojums";
 
+/* Class = "UILabel"; text = "We temporarily disabled Privacy Protection as it appears to be breaking this site."; ObjectID = "wwe-ee-up0"; */
+"wwe-ee-up0.text" = "Mēs īslaicīgi atspējojām privātuma aizsardzību, jo šķiet, ka tā traucē šīs vietnes darbību.";
+
 /* Class = "UILabel"; text = "Major Networks Blocked"; ObjectID = "XzQ-fW-tzk"; */
 "XzQ-fW-tzk.text" = "Lielākie tīkli ir bloķēti";
 

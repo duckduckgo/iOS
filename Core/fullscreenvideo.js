@@ -21,27 +21,27 @@
 // The workaround is to override fullscreenEnabled (if it isn't already defined), and add a custom implementation of the requestFullscreen function.
 // The implementation calls through to webkitEnterFullscreen, which is defined on HTMLVideoElement.
 
-(function() {
-    let canEnterFullscreen = HTMLVideoElement.prototype.webkitEnterFullscreen !== undefined;
-    let browserHasExistingFullScreenSupport = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+(function () {
+    const canEnterFullscreen = HTMLVideoElement.prototype.webkitEnterFullscreen !== undefined
+    const browserHasExistingFullScreenSupport = document.fullscreenEnabled || document.webkitFullscreenEnabled
 
     // YouTube Mobile won't exit fullscreen correctly if requestFullscreen is overridden. Reference: https://github.com/brave/brave-ios/pull/2002
-    let isMobile = /mobile/i.test(navigator.userAgent);
+    const isMobile = /mobile/i.test(navigator.userAgent)
 
     if (!browserHasExistingFullScreenSupport && canEnterFullscreen && !isMobile) {
-        Object.defineProperty(document, "fullscreenEnabled", {
+        Object.defineProperty(document, 'fullscreenEnabled', {
             value: true
-        });
+        })
 
-        HTMLElement.prototype.requestFullscreen = function() {
-            let video = this.querySelector("video");
+        HTMLElement.prototype.requestFullscreen = function () {
+            const video = this.querySelector('video')
 
             if (video) {
-                video.webkitEnterFullscreen();
-                return true;
+                video.webkitEnterFullscreen()
+                return true
             }
 
-            return false;
-        };
+            return false
+        }
     }
-})();
+})()

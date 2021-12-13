@@ -24,13 +24,7 @@ import os.log
 class AutocompleteViewController: UIViewController {
     
     struct Constants {
-        static let debounceDelay: TimeInterval = {
-            if #available(iOS 13.0, *) {
-                return 0.1
-            }
-            return 0.3
-        }()
-        
+        static let debounceDelay: TimeInterval = 0.1
         static let minItems = 1
         static let maxLocalItems = 2
     }

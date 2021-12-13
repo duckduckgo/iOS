@@ -50,7 +50,8 @@ class ContentBlockerReferenceTests: XCTestCase {
 
         WebKitTestHelper.prepareContentBlockingRules(trackerData: trackerData,
                                                      exceptions: [],
-                                                     tempUnprotected: []) { rules in
+                                                     tempUnprotected: [],
+                                                     trackerExceptions: []) { rules in
             guard let rules = rules else {
                 XCTFail("Rules were not compiled properly")
                 return
@@ -65,6 +66,7 @@ class ContentBlockerReferenceTests: XCTestCase {
 
             let privacyConfig = WebKitTestHelper.preparePrivacyConfig(locallyUnprotected: [],
                                                                       tempUnprotected: [],
+                                                                      trackerAllowlist: [:],
                                                                       contentBlockingEnabled: true,
                                                                       exceptions: [])
 
@@ -109,7 +111,7 @@ class ContentBlockerReferenceTests: XCTestCase {
             self.popTestAndExecute(onTestExecuted: testsExecuted)
         }
 
-        waitForExpectations(timeout: 60, handler: nil)
+        waitForExpectations(timeout: 30, handler: nil)
     }
 
     // swiftlint:disable function_body_length
@@ -126,6 +128,7 @@ class ContentBlockerReferenceTests: XCTestCase {
             DispatchQueue.main.async {
                 self.popTestAndExecute(onTestExecuted: onTestExecuted)
             }
+            return
         }
 
         os_log("TEST: %s", test.name)
@@ -156,7 +159,12 @@ class ContentBlockerReferenceTests: XCTestCase {
 
         os_log("Loading %s ...", siteURL.absoluteString)
         let request = URLRequest(url: siteURL)
-        webView.load(request)
+        WKWebsiteDataStore.default().removeData(ofTypes: [WKWebsiteDataTypeDiskCache,
+                                                          WKWebsiteDataTypeMemoryCache],
+                                                modifiedSince: Date(timeIntervalSince1970: 0),
+                                                completionHandler: {
+            self.webView.load(request)
+        })
 
         navigationDelegateMock.onDidFinishNavigation = {
             os_log("Website loaded")

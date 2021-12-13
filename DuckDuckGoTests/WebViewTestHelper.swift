@@ -118,19 +118,42 @@ class MockDomainsProtectionStore: DomainsProtectionStore {
     }
 }
 
+class CustomContentBlockerRulesUserScript: ContentBlockerRulesUserScript {
+
+    var onSourceInjection: (String) -> String = { $0 }
+
+    override var source: String {
+        return onSourceInjection(super.source)
+    }
+}
+
+class CustomSurrogatesUserScript: SurrogatesUserScript {
+
+    var onSourceInjection: (String) -> String = { $0 }
+
+    override var source: String {
+        return onSourceInjection(super.source)
+    }
+}
+
 class WebKitTestHelper {
 
     static func preparePrivacyConfig(locallyUnprotected: [String],
                                      tempUnprotected: [String],
+                                     trackerAllowlist: [String: [PrivacyConfigurationData.TrackerAllowlist.Entry]],
                                      contentBlockingEnabled: Bool,
-                                     exceptions: [String]) -> PrivacyConfiguration {
+                                     exceptions: [String],
+                                     httpsUpgradesEnabled: Bool = false) -> PrivacyConfiguration {
         let contentBlockingExceptions = exceptions.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
         let contentBlockingStatus = contentBlockingEnabled ? "enabled" : "disabled"
+        let httpsStatus = httpsUpgradesEnabled ? "enabled" : "disabled"
         let features = [PrivacyFeature.contentBlocking.rawValue: PrivacyConfigurationData.PrivacyFeature(state: contentBlockingStatus,
-                                                                                                         exceptions: contentBlockingExceptions)]
+                                                                                                         exceptions: contentBlockingExceptions),
+                        PrivacyFeature.httpsUpgrade.rawValue: PrivacyConfigurationData.PrivacyFeature(state: httpsStatus, exceptions: [])]
         let unprotectedTemporary = tempUnprotected.map { PrivacyConfigurationData.ExceptionEntry(domain: $0, reason: nil) }
         let privacyData = PrivacyConfigurationData(features: features,
-                                                   unprotectedTemporary: unprotectedTemporary)
+                                                   unprotectedTemporary: unprotectedTemporary,
+                                                   trackerAllowlist: trackerAllowlist)
 
         let localProtection = MockDomainsProtectionStore()
         localProtection.unprotectedDomains = Set(locallyUnprotected)
@@ -143,10 +166,12 @@ class WebKitTestHelper {
     static func prepareContentBlockingRules(trackerData: TrackerData,
                                             exceptions: [String],
                                             tempUnprotected: [String],
+                                            trackerExceptions: [TrackerException],
                                             completion: @escaping (WKContentRuleList?) -> Void) {
 
         let rules = ContentBlockerRulesBuilder(trackerData: trackerData).buildRules(withExceptions: exceptions,
-                                                                                    andTemporaryUnprotectedDomains: tempUnprotected)
+                                                                                    andTemporaryUnprotectedDomains: tempUnprotected,
+                                                                                    andTrackerAllowlist: trackerExceptions)
 
         let data = (try? JSONEncoder().encode(rules))!
         var ruleList = String(data: data, encoding: .utf8)!

@@ -17,35 +17,34 @@
 //  limitations under the License.
 //
 
-(function() {
+(function () {
     if (!window.__ddg__) {
-        Object.defineProperty(window, "__ddg__", {
+        Object.defineProperty(window, '__ddg__', {
             enumerable: false,
             configurable: false,
             writable: false,
             value: {
             }
-        });
+        })
     }
-    
-    var getHrefFromPoint = function(x, y) {
-        var element = document.elementFromPoint(x, y);
+
+    const getHrefFromPoint = function (x, y) {
+        let element = document.elementFromPoint(x, y)
         while (element && !element.href) {
             element = element.parentNode
         }
-        
+
         if (element) {
-            return element.href;
+            return element.href
         }
-        
-        return null;
-    };
-    
-    Object.defineProperty(window.__ddg__, "getHrefFromPoint", {
+
+        return null
+    }
+
+    Object.defineProperty(window.__ddg__, 'getHrefFromPoint', {
         enumerable: false,
         configurable: false,
         writable: false,
         value: getHrefFromPoint
     })
-    
-})();
+})()

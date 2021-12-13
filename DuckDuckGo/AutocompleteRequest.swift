@@ -32,7 +32,7 @@ class AutocompleteRequest {
     }
 
     func execute(completion: @escaping Completion) {
-        var request = URLRequest(url: url)
+        var request = URLRequest.developerInitiated(url)
         request.allHTTPHeaderFields = APIHeaders().defaultHeaders
 
         task = URLSession.shared.dataTask(with: request) { [weak self] (data, _, error) -> Void in

@@ -23,19 +23,9 @@ struct VoiceSearchFeedbackView: View {
     @ObservedObject var speechModel: VoiceSearchFeedbackViewModel
 
     var body: some View {
-        VStack {
-           cancelButton
-            Spacer()
-            Text(speechModel.speechFeedback)
-                .multilineTextAlignment(.center)
-                .foregroundColor(Colors.speechFeedback)
-                .padding()
-                .padding(.bottom, Padding.recognizedTextBottom)
-            ZStack {
-                outerCircle
-                innerCircle
-                micImage
-            }.padding(.bottom, Padding.microphoneCircleBottom)
+        ZStack {
+            voiceFeedbackView
+            cancelButton
         }
         .onAppear {
             if #available(iOS 15, *) {
@@ -86,17 +76,40 @@ extension VoiceSearchFeedbackView {
 
 extension VoiceSearchFeedbackView {
     
-    private var cancelButton: some View {
-        HStack {
-            Button {
-                speechModel.cancel()
-            } label: {
-                Text(UserText.voiceSearchCancelButton)
-                    .foregroundColor(Colors.cancelButton)
-            }.alignmentGuide(.leading) { d in d[.leading] }
-            .padding()
+    private var voiceFeedbackView: some View {
+        VStack {
             Spacer()
-        }
+            Text(speechModel.speechFeedback)
+                .multilineTextAlignment(.center)
+                .foregroundColor(Colors.speechFeedback)
+                .padding(.bottom, Padding.recognizedTextBottom)
+            ZStack {
+                outerCircle
+                innerCircle
+                micImage
+            }.padding(.bottom, Padding.microphoneCircleBottom)
+            Text(UserText.voiceSearchFooter)
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color.secondary)
+                .padding(.horizontal, Padding.footerTextHorizontal)
+        }.padding(.bottom, Padding.footerTextHorizontal)
+
+    }
+    
+    private var cancelButton: some View {
+        VStack {
+            HStack {
+                Button {
+                    speechModel.cancel()
+                } label: {
+                    Text(UserText.voiceSearchCancelButton)
+                        .foregroundColor(Colors.cancelButton)
+                }.alignmentGuide(.leading) { d in d[.leading] }
+                Spacer()
+            }
+            Spacer()
+        }.padding()
     }
     
     private var innerCircle: some View {
@@ -141,8 +154,9 @@ extension VoiceSearchFeedbackView {
     }
     
     private struct Padding {
-        static let microphoneCircleBottom: CGFloat = 125
-        static let recognizedTextBottom: CGFloat = 40
+        static let microphoneCircleBottom: CGFloat = 60
+        static let recognizedTextBottom: CGFloat = 60
+        static let footerTextHorizontal: CGFloat = 43
     }
     
     private struct CircleSize {

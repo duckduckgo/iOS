@@ -1012,6 +1012,9 @@
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Cancel";
 
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorite removed";
 

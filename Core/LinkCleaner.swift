@@ -107,7 +107,7 @@ public class LinkCleaner {
         
         let preservedParams: [URLQueryItem] = queryParams.filter { param in
             for trackingParam in trackingParams {
-                if param.name.matches(pattern: trackingParam) {
+                if param.name.matches(pattern: "^\(trackingParam)$") {
                     return false
                 }
             }

@@ -48,7 +48,7 @@ struct VoiceSearchFeedbackView: View {
     }
 }
 
-struct SpeechFeedbackView_Previews: PreviewProvider {
+struct VoiceSearchFeedbackView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ForEach(ColorScheme.allCases, id: \.self) {
@@ -151,8 +151,8 @@ extension VoiceSearchFeedbackView {
     }
     
     private struct Colors {
-        static let innerCircle = Color(UIColor(hex: "DE5833"))
-        static let outerCircle = Color(UIColor(hex: "EB876C")).opacity(0.2)
+        static let innerCircle = Color(UIColor(hex: "3969EF"))
+        static let outerCircle = Color(UIColor(hex: "7295F6")).opacity(0.2)
         static let cancelButton = Color("VoiceSearchCancelColor")
         static let speechFeedback = Color("VoiceSearchSpeechFeedbackColor")
     }

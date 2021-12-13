@@ -104,8 +104,9 @@ class FingerprintUITest: XCTestCase {
         } else {
             XCTFail("Could not find bookmark")
         }
-        app.alerts["Edit Bookmark"].scrollViews.otherElements.collectionViews.textFields["www.example.com"].tap(withNumberOfTaps: 3, numberOfTouches: 1)
-        app.alerts["Edit Bookmark"].scrollViews.otherElements.collectionViews.textFields["www.example.com"]
+        
+        app.alerts["Edit Bookmark"].textFields["Bookmark Address"].clear()
+        app.alerts["Edit Bookmark"].textFields["Bookmark Address"]
             .typeText("javascript:(function(){const values = {'screen.availTop': 0,'screen.availLeft': 0,'screen.availWidth': screen.width,'screen.availHeight': screen.height,'screen.colorDepth': 24,'screen.pixelDepth': 24,'window.screenY': 0,'window.screenLeft': 0,'navigator.doNotTrack': undefined};var passed = true;var reason = null;for (const test of results.results) {if (values[test.id] !== undefined) {if (values[test.id] !== test.value) {console.log(test.id, values[test.id]);reason = test.id;passed = false;break;}}}var elem = document.createElement('p');elem.innerHTML = (passed) ? 'TEST PASSED' : 'TEST FAILED: ' + reason;document.body.insertBefore(elem, document.body.childNodes[0]);}());")
         app.alerts["Edit Bookmark"].scrollViews.otherElements.buttons["Save"].tap()
         bookmarksNavigationBar.buttons["Done"].tap()
@@ -138,6 +139,24 @@ class FingerprintUITest: XCTestCase {
         
         // Verify the test passed
         XCTAssertTrue(webview.staticTexts["TEST PASSED"].waitForExistence(timeout: 25), "Test not run")
+    }
+
+}
+
+extension XCUIElement {
+    
+    // https://stackoverflow.com/a/38523252
+    public func clear() {
+        guard let stringValue = self.value as? String else {
+            XCTFail("Tried to clear and enter text into a non string value")
+            return
+        }
+
+        let lowerRightCorner = self.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.9))
+        lowerRightCorner.tap()
+
+        let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: stringValue.count)
+        self.typeText(deleteString)
     }
 
 }

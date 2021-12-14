@@ -66,7 +66,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
+        let showVoiceSearch = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -150,7 +150,7 @@ struct SmallOmniBarState {
         let showMenu = false
         let showSettings = false
         let showCancel: Bool = true
-        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
+        let showVoiceSearch = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
         var onEditingStartedState: OmniBarState { return self }
@@ -181,7 +181,7 @@ struct SmallOmniBarState {
         let showVoiceSearch = false
         var name: String { return "Phone" + Type.name(self) }
         var onEditingStoppedState: OmniBarState { return self }
-        var onEditingStartedState: OmniBarState { return BrowsingTextEditingState() }
+        var onEditingStartedState: OmniBarState { return BrowsingTextEditingStartedState() }
         var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
         var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
         var onBrowsingStartedState: OmniBarState { return self }
@@ -189,5 +189,32 @@ struct SmallOmniBarState {
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingNonEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
     }
-
+    
+    struct BrowsingTextEditingStartedState: OmniBarState {
+        let hasLargeWidth: Bool = false
+        let showBackButton: Bool = false
+        let showForwardButton: Bool = false
+        let showBookmarksButton: Bool = false
+        let showShareButton: Bool = false
+        let clearTextOnStart = false
+        let allowsTrackersAnimation = false
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
+        let showSiteRating = false
+        let showBackground = false
+        let showClear = true
+        let showRefresh = false
+        let showMenu = false
+        let showSettings = false
+        let showCancel: Bool = true
+        let showVoiceSearch = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
+        var name: String { return "Phone" + Type.name(self) }
+        var onEditingStoppedState: OmniBarState { return BrowsingNonEditingState() }
+        var onEditingStartedState: OmniBarState { return self }
+        var onTextClearedState: OmniBarState { return BrowsingEmptyEditingState() }
+        var onTextEnteredState: OmniBarState { return BrowsingTextEditingState() }
+        var onBrowsingStartedState: OmniBarState { return self }
+        var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
+        var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState() }
+        var onEnterPhoneState: OmniBarState { return self }
+    }
 }

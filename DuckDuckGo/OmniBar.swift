@@ -430,6 +430,10 @@ class OmniBar: UIView {
 // swiftlint:enable type_body_length
 
 extension OmniBar: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.refreshState(self.state.onEditingStartedState)
+        return true
+    }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         omniDelegate?.onTextFieldWillBeginEditing(self)

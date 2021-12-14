@@ -92,7 +92,7 @@ extension VoiceSearchFeedbackView {
             Text(UserText.voiceSearchFooter)
                 .font(.footnote)
                 .multilineTextAlignment(.center)
-                .foregroundColor(Color.secondary)
+                .foregroundColor(Colors.footerText)
                 .padding(.horizontal, Padding.footerTextHorizontal)
         }.padding(.bottom, Padding.footerTextHorizontal)
     }
@@ -139,7 +139,6 @@ extension VoiceSearchFeedbackView {
             .scaleEffect(outerCircleScale)
             .animation(outerCircleAnimation, value: outerCircleScale)
     }
-    
 }
 
 // MARK: - Constants
@@ -166,6 +165,7 @@ extension VoiceSearchFeedbackView {
     
     private struct Colors {
         static let innerCircle = Color(UIColor(hex: "3969EF"))
+        static let footerText = Color(UIColor(hex: "888888"))
         static let outerCircle = Color(UIColor(hex: "7295F6")).opacity(0.2)
         static let cancelButton = Color("VoiceSearchCancelColor")
         static let speechFeedback = Color("VoiceSearchSpeechFeedbackColor")

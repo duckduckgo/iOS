@@ -96,9 +96,7 @@ public class BookmarksCoreDataStorage {
     
     public func loadStoreAndCaches(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
         
-        loadStore() { context in
-            handler(context)
-        }
+        loadStore(andMigrate: handler)
         
         RunLoop.current.run(until: storeLoadedCondition)
         cacheReadOnlyTopLevelBookmarksFolder()

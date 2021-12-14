@@ -57,7 +57,11 @@ class BookmarkFolderDetailsDataSource: NSObject, BookmarkItemDetailsDataSource {
         self.bookmarksManager = bookmarksManager
         self.existingFolder = existingFolder
         self.currentTitle = existingFolder?.title
-        self.bookmarkFoldersSectionDataSource = BookmarkFoldersSectionDataSource(existingItem: existingFolder, initialParentFolder: initialParentFolder, delegate: addFolderDelegate, bookmarksManager: bookmarksManager)
+        self.bookmarkFoldersSectionDataSource = BookmarkFoldersSectionDataSource(
+            existingItem: existingFolder,
+            initialParentFolder: initialParentFolder,
+            delegate: addFolderDelegate,
+            bookmarksManager: bookmarksManager)
         super.init()
     }
     
@@ -208,7 +212,11 @@ class BookmarkDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkIt
          initialParentFolder: BookmarkFolder? = nil) {
         
         self.bookmarksManager = bookmarksManager
-        self.bookmarkFoldersSectionDataSource = BookmarkFoldersSectionDataSource(existingItem: existingBookmark, initialParentFolder: initialParentFolder, delegate: addFolderDelegate, bookmarksManager: bookmarksManager)
+        self.bookmarkFoldersSectionDataSource = BookmarkFoldersSectionDataSource(
+            existingItem: existingBookmark,
+            initialParentFolder: initialParentFolder,
+            delegate: addFolderDelegate,
+            bookmarksManager: bookmarksManager)
         super.init()
         self.existingBookmark = existingBookmark
         self.delegate = delegate

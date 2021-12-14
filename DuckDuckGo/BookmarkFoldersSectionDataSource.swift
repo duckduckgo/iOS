@@ -33,7 +33,7 @@ class BookmarkFoldersSectionDataSource {
 
     private let bookmarksManager: BookmarksManager
 
-    private lazy var PresentableFolders: [PresentableFolder] = {
+    private lazy var presentableFolders: [PresentableFolder] = {
         guard let folder = bookmarksManager.topLevelBookmarksFolder else {
             return []
         }
@@ -51,7 +51,7 @@ class BookmarkFoldersSectionDataSource {
         self.shouldShowAddFolderCell = delegate != nil
                 
         if let parent = existingItem?.parentFolder ?? initialParentFolder {
-            let parentIndex = PresentableFolders.firstIndex {
+            let parentIndex = presentableFolders.firstIndex {
                 $0.folder.objectID == parent.objectID
             }
             selectedRow = parentIndex ?? 0
@@ -59,7 +59,7 @@ class BookmarkFoldersSectionDataSource {
     }
     
     var numberOfRows: Int {
-        return PresentableFolders.count + (shouldShowAddFolderCell ? 1 : 0)
+        return presentableFolders.count + (shouldShowAddFolderCell ? 1 : 0)
     }
     
     func title() -> String? {
@@ -110,8 +110,8 @@ class BookmarkFoldersSectionDataSource {
         guard let folder = bookmarksManager.topLevelBookmarksFolder else {
             return
         }
-        PresentableFolders = visibleFolders(for: folder, depthOfFolder: 0)
-        let newIndex = PresentableFolders.firstIndex {
+        presentableFolders = visibleFolders(for: folder, depthOfFolder: 0)
+        let newIndex = presentableFolders.firstIndex {
             $0.folder.objectID == objectID
         }
         if let index = newIndex {
@@ -125,10 +125,10 @@ class BookmarkFoldersSectionDataSource {
 private extension BookmarkFoldersSectionDataSource {
     
     func folder(at index: Int) -> PresentableFolder? {
-        if PresentableFolders.count <= index {
+        if presentableFolders.count <= index {
             return nil
         }
-        return PresentableFolders[index]
+        return presentableFolders[index]
     }
     
     func visibleFolders(for folder: BookmarkFolder, depthOfFolder: Int) -> [PresentableFolder] {

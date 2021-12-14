@@ -19,6 +19,21 @@
 
 import Core
 
+protocol BookmarksSearchStore {
+    var hasData: Bool { get }
+    func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void)
+}
+
+extension BookmarksCoreDataStorage: BookmarksSearchStore {
+    var hasData: Bool {
+        !topLevelBookmarksItems.isEmpty || !favorites.isEmpty
+    }
+    
+    func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
+        allBookmarksAndFavoritesShallow(completion: completion)
+    }
+}
+
 class BookmarksSearch {
     
     private class ScoredBookmark {
@@ -31,14 +46,14 @@ class BookmarksSearch {
         }
     }
     
-    private let bookmarksCoreDataStorage: BookmarksCoreDataStorage
+    private let bookmarksStore: BookmarksSearchStore
     
-    init(bookmarksStorage: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
-        self.bookmarksCoreDataStorage = bookmarksStorage
+    init(bookmarksStore: BookmarksSearchStore = BookmarksCoreDataStorage.shared) {
+        self.bookmarksStore = bookmarksStore
     }
     
     var hasData: Bool {
-        return !bookmarksCoreDataStorage.topLevelBookmarksItems.isEmpty || !bookmarksCoreDataStorage.favorites.isEmpty
+        return bookmarksStore.hasData
     }
     
     // swiftlint:disable cyclomatic_complexity
@@ -98,7 +113,7 @@ class BookmarksSearch {
             return
         }
         
-        bookmarksCoreDataStorage.allBookmarksAndFavoritesShallow { bookmarks in
+        bookmarksStore.bookmarksAndFavorites { bookmarks in
             let results: [ScoredBookmark] = bookmarks.map {
                 let score = $0.isFavorite ? 0 : -1
                 return ScoredBookmark(bookmark: $0, score: score)

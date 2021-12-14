@@ -106,12 +106,12 @@ extension Core.BookmarkManagedObject: UIActivityItemSource {
     }
 
     @objc public func activityViewController(_ activityViewController: UIActivityViewController,
-                                       itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+                                             itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         (self as Bookmark).activityViewController(activityViewController, itemForActivityType: activityType)
     }
 
     @objc public func activityViewController(_ activityViewController: UIActivityViewController,
-                                       subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+                                             subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
         (self as Bookmark).activityViewController(activityViewController, subjectForActivityType: activityType)
     }
 }

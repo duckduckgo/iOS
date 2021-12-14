@@ -60,14 +60,16 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 }
 
-
 class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
     
     let bookmarksManager: BookmarksManager
 
     var parentFolder: BookmarkFolder?
         
-    init(alertDelegate: BookmarksSectionDataSourceDelegate?, parentFolder: BookmarkFolder? = nil, bookmarksManager: BookmarksManager = BookmarksManager()) {
+    init(alertDelegate: BookmarksSectionDataSourceDelegate?,
+         parentFolder: BookmarkFolder? = nil,
+         bookmarksManager: BookmarksManager = BookmarksManager()) {
+        
         self.parentFolder = parentFolder
         self.bookmarksManager = bookmarksManager
         super.init()
@@ -144,7 +146,6 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
         }
     }
 }
-
 
 class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
     

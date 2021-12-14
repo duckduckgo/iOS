@@ -206,7 +206,9 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
 
     private func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell {
         if parentFolder != nil {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksInSubfolderCell.reuseIdentifier) as? NoBookmarksInSubfolderCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksInSubfolderCell.reuseIdentifier)
+                    as? NoBookmarksInSubfolderCell else {
+                        
                 fatalError("Failed to dequeue \(NoBookmarksInSubfolderCell.reuseIdentifier) as NoBookmarksInSubfolderCell")
             }
             cell.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)

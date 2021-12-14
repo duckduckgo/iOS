@@ -64,7 +64,7 @@ extension TabViewController {
         
         var entries = [BrowsingMenuEntry]()
         
-        buildLinkEntries() { linkEntries in
+        buildLinkEntries { linkEntries in
             entries.append(contentsOf: linkEntries)
             
             if let domain = self.siteRating?.domain {
@@ -169,7 +169,6 @@ extension TabViewController {
         })
     }
     
-    //omg so much to do here
     private func buildBookmarkEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
         bookmarksManager.containsBookmark(url: link.url) { contains in
             if contains {
@@ -224,7 +223,9 @@ extension TabViewController {
                 // Capture flow state here as will be reset after menu is shown
                 let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
 
-                let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite, image: UIImage(named: "MenuFavorite")!, action: { [weak self] in
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite,
+                                                      image: UIImage(named: "MenuFavorite")!,
+                                                      action: { [weak self] in
                     Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
                     self?.performSaveFavoriteAction(for: link)
                 })

@@ -89,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
         
-        BookmarksCoreDataStorage.shared.loadStoreAndCaches() { context in
+        BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
             BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
         }
         

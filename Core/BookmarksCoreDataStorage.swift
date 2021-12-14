@@ -20,7 +20,9 @@
 import Foundation
 import CoreData
 
-fileprivate struct Constants {
+// swiftlint:disable file_length
+
+private struct Constants {
     static let privateContextName = "EditBookmarksAndFolders"
     static let viewContextName = "ViewBookmarksAndFolders"
     
@@ -102,15 +104,21 @@ public class BookmarksCoreDataStorage {
         cacheReadOnlyTopLevelBookmarksFolder()
         cacheReadOnlyTopLevelFavoritesFolder()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave), name: .NSManagedObjectContextDidSave, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(objectsDidChange), name: .NSManagedObjectContextObjectsDidChange, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(contextDidSave),
+                                               name: .NSManagedObjectContextDidSave,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(objectsDidChange),
+                                               name: .NSManagedObjectContextObjectsDidChange,
+                                               object: nil)
     }
     
     private func loadStore(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
 
         persistentContainer = NSPersistentContainer(name: Constants.databaseName, managedObjectModel: BookmarksCoreDataStorage.managedObjectModel)
         persistentContainer.persistentStoreDescriptions = [BookmarksCoreDataStorage.storeDescription]
-        persistentContainer.loadPersistentStores { description, error in
+        persistentContainer.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Unable to load persistent stores: \(error)")
             }
@@ -215,7 +223,11 @@ extension BookmarksCoreDataStorage {
     }
     
     // Since we'll never need to update children at the same time, we only support changing the title and parent
-    public func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID, completion: BookmarkItemUpdatedCompletion? = nil) {
+    public func update(folderID: NSManagedObjectID,
+                       newTitle: String,
+                       newParentID: NSManagedObjectID,
+                       completion: BookmarkItemUpdatedCompletion? = nil) {
+        
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
@@ -276,7 +288,12 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    public func update(bookmarkID: NSManagedObjectID, newTitle: String, newURL: URL, newParentID: NSManagedObjectID, completion: BookmarkItemUpdatedCompletion? = nil) {
+    public func update(bookmarkID: NSManagedObjectID,
+                       newTitle: String,
+                       newURL: URL,
+                       newParentID: NSManagedObjectID,
+                       completion: BookmarkItemUpdatedCompletion? = nil) {
+        
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
@@ -398,7 +415,6 @@ extension BookmarksCoreDataStorage {
     }
 }
 
-
 // MARK: respond to data updates
 extension BookmarksCoreDataStorage {
             
@@ -484,7 +500,9 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func getTopLevelFolder(isFavorite: Bool, onContext context: NSManagedObjectContext, completion: @escaping (BookmarkFolderManagedObject) -> Void) {
+    private func getTopLevelFolder(isFavorite: Bool,
+                                   onContext context: NSManagedObjectContext,
+                                   completion: @escaping (BookmarkFolderManagedObject) -> Void) {
         
         context.perform {
             
@@ -548,11 +566,15 @@ extension BookmarksCoreDataStorage {
     }
 }
 
-
 // MARK: creation
 extension BookmarksCoreDataStorage {
     
-    private func createBookmark(url: URL, title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil, completion: BookmarkItemSavedCompletion? = nil) {
+    private func createBookmark(url: URL,
+                                title: String,
+                                isFavorite: Bool,
+                                parentID: NSManagedObjectID? = nil,
+                                completion: BookmarkItemSavedCompletion? = nil) {
+        
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in
             guard let self = self else {
@@ -598,7 +620,11 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func updateParentAndSave(of item: BookmarkItemManagedObject, parentID: NSManagedObjectID?, context: NSManagedObjectContext, completion: BookmarkItemSavedCompletion? = nil) {
+    private func updateParentAndSave(of item: BookmarkItemManagedObject,
+                                     parentID: NSManagedObjectID?,
+                                     context: NSManagedObjectContext,
+                                     completion: BookmarkItemSavedCompletion? = nil) {
+        
         func updateParentAndSave(parent: BookmarkFolderManagedObject) {
             item.parent = parent
             parent.addToChildren(item)
@@ -632,7 +658,7 @@ extension BookmarksCoreDataStorage {
 
 public class BookmarksCoreDataStorageMigration {
     
-    @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCoreData, defaultValue: false)
+    @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCD, defaultValue: false)
     private static var migratedFromUserDefaults: Bool
     
     public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) {
@@ -641,12 +667,16 @@ public class BookmarksCoreDataStorageMigration {
         }
         
         context.performAndWait {
-            guard let favoritesFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject else {
+            guard let favoritesFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context)
+                    as? BookmarkFolderManagedObject else {
+                        
                 fatalError("Error creating top level favorites folder")
             }
             favoritesFolder.isFavorite = true
             
-            guard let bookmarksFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context) as? BookmarkFolderManagedObject else {
+            guard let bookmarksFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context)
+                    as? BookmarkFolderManagedObject else {
+                        
                 fatalError("Error creating top level bookmarks folder")
             }
             bookmarksFolder.isFavorite = false
@@ -688,3 +718,5 @@ public class BookmarksCoreDataStorageMigration {
         migratedFromUserDefaults = true
     }
 }
+
+// swiftlint:enable file_length

@@ -27,10 +27,10 @@ protocol BookmarkItemDetailsDataSource: UITableViewDataSource {
 }
 
 protocol BookmarkItemDetailsDataSourceDidSaveDelegate: AnyObject {
-    func bookmarkItemDetailsDataSource(_ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource, createdNewFolderWithObjectID objectID: NSManagedObjectID)
+    func bookmarkItemDetailsDataSource(
+        _ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource,
+        createdNewFolderWithObjectID objectID: NSManagedObjectID)
 }
-
-
 
 protocol BookmarkFolderDetailsDataSourceDelegate: AnyObject {
     func bookmarkFolderDetailsDataSource(_ dataSource: BookmarkFolderDetailsDataSource, titleTextFieldDidChange textField: UITextField)
@@ -126,7 +126,6 @@ private extension BookmarkFolderDetailsDataSource {
         cell.textField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         cell.textField.removeTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
 
-        
         cell.title = currentTitle
         cell.textField.becomeFirstResponder()
         cell.textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
@@ -137,10 +136,10 @@ private extension BookmarkFolderDetailsDataSource {
     }
 }
 
-
-
 protocol BookmarkOrFavoriteDetailsDataSourceDelegate: AnyObject {
-    func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource, textFieldDidChangeWithTitleText titleText: String?, urlText: String?)
+    func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource,
+                                             textFieldDidChangeWithTitleText titleText: String?,
+                                             urlText: String?)
     func bookmarkOrFavoriteDetailsDataSourceTextFieldDidReturn(dataSource: BookmarkOrFavoriteDetailsDataSource)
 }
 
@@ -267,7 +266,6 @@ class BookmarkDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkIt
     }
 }
 
-
 class FavoriteDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkItemDetailsDataSource {
     
     private let bookmarksManager: BookmarksManager
@@ -292,7 +290,6 @@ class FavoriteDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkIt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return detailsCell(tableView)
     }
-    
     
     func select(_ tableView: UITableView, indexPath: IndexPath) {
         

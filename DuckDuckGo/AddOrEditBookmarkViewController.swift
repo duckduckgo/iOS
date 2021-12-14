@@ -107,7 +107,10 @@ class AddOrEditBookmarkViewController: UIViewController {
 
 extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDelegate {    
     
-    func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource, textFieldDidChangeWithTitleText titleText: String?, urlText: String?) {
+    func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource,
+                                             textFieldDidChangeWithTitleText titleText: String?,
+                                             urlText: String?) {
+        
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
         let title = titleText?.trimWhitespace() ?? ""
         let url = urlText?.trimWhitespace() ?? ""
@@ -128,7 +131,8 @@ extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDe
 
 extension AddOrEditBookmarkViewController: BookmarkItemDetailsDataSourceDidSaveDelegate {
     
-    func bookmarkItemDetailsDataSource(_ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource, createdNewFolderWithObjectID objectID: NSManagedObjectID) {
+    func bookmarkItemDetailsDataSource(_ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource,
+                                       createdNewFolderWithObjectID objectID: NSManagedObjectID) {
         
         if let viewController = foldersViewController, let dataSource = viewController.dataSource as? BookmarkDetailsDataSource {
             dataSource.refreshFolders(viewController.tableView, section: 0, andSelectFolderWithObjectID: objectID)

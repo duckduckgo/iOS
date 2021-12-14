@@ -36,4 +36,3 @@ class BookmarksTextFieldCell: UITableViewCell {
     @IBOutlet weak var textField: UITextField!
     
 }
-

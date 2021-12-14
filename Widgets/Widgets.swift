@@ -79,7 +79,7 @@ struct Provider: TimelineProvider {
         
         let coreData = BookmarksCoreDataStorage()
         coreData.loadStoreOnlyForWidget()
-        coreData.favoritesUncachedForWidget() { favorites in
+        coreData.favoritesUncachedForWidget { favorites in
             completion(favorites)
         }
     }
@@ -99,7 +99,7 @@ struct Provider: TimelineProvider {
         }
         
         if maxFavorites > 0 {
-            getCoreDataFavorites() { coreDataFavorites in
+            getCoreDataFavorites { coreDataFavorites in
                 let favorites = coreDataFavoritesToFavories(coreDataFavorites, returningNoMoreThan: maxFavorites)
                 
                 let entry = FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)

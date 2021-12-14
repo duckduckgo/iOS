@@ -24,7 +24,7 @@ extension MainViewController {
     func launchBrowsingMenu() {
         guard let tab = currentTab, browsingMenu == nil else { return }
         
-        tab.buildBrowsingMenu() { [weak self] entries in
+        tab.buildBrowsingMenu { [weak self] entries in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 

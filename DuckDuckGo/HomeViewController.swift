@@ -81,7 +81,10 @@ class HomeViewController: UIViewController {
 
         configureCollectionView()
         applyTheme(ThemeManager.shared.currentTheme)
-        NotificationCenter.default.addObserver(self, selector: #selector(bookmarksDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(bookmarksDidChange),
+                                               name: BookmarksManager.Notifications.bookmarksDidChange,
+                                               object: nil)
     }
     
     @objc func bookmarksDidChange() {

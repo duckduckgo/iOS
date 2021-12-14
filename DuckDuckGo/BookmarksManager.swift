@@ -31,7 +31,10 @@ class BookmarksManager {
 
     init(coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
         self.coreDataStorage = coreDataStore
-        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksCoreDataStorage.Notifications.dataDidChange, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(dataDidChange),
+                                               name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                               object: nil)
     }
     
     @objc func dataDidChange(notification: Notification) {
@@ -170,7 +173,7 @@ class BookmarksManager {
     private func removeFavicon(forBookmark bookmark: Bookmark?) {
         guard let domain = bookmark?.url?.host else { return }
         
-        coreDataStorage.allBookmarksAndFavoritesShallow() { bookmarks in
+        coreDataStorage.allBookmarksAndFavoritesShallow { bookmarks in
             let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
             if !bookmarks.contains(where: matchesDomain) {
                 print("culprit?")
@@ -197,7 +200,7 @@ class BookmarksManager {
 
 extension BookmarksManager {
 
-    func allBookmarksAndFavoritesShallow(completion: @escaping ([Bookmark]) -> Void)  {
+    func allBookmarksAndFavoritesShallow(completion: @escaping ([Bookmark]) -> Void) {
         coreDataStorage.allBookmarksAndFavoritesShallow(completion: completion)
     }
 }

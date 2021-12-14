@@ -88,7 +88,9 @@ class BookmarksViewController: UITableViewController {
                 select(bookmark: bookmark)
             } else if let folder = item as? BookmarkFolder {
                 let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
-                guard let viewController = storyboard.instantiateViewController(withIdentifier: "BookmarksViewController") as? BookmarksViewController else {
+                guard let viewController = storyboard.instantiateViewController(withIdentifier: "BookmarksViewController")
+                        as? BookmarksViewController else {
+                            
                     return
                 }
                 viewController.dataSource = DefaultBookmarksDataSource(alertDelegate: viewController, parentFolder: folder)
@@ -112,7 +114,9 @@ class BookmarksViewController: UITableViewController {
         return UISwipeActionsConfiguration(actions: [shareContextualAction])
     }
     
-    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+    override func tableView(_ tableView: UITableView,
+                            targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath,
+                            toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         
         // Can't move folders into favorites
         if let item = currentDataSource.item(at: sourceIndexPath),
@@ -121,7 +125,7 @@ class BookmarksViewController: UITableViewController {
             return sourceIndexPath
         }
         
-        //Check if the proposed section is empty, if so we need to make sure the proposed row is 0, not 1
+        // Check if the proposed section is empty, if so we need to make sure the proposed row is 0, not 1
         let sectionIndexPath = IndexPath(row: 0, section: proposedDestinationIndexPath.section)
         if currentDataSource.item(at: sectionIndexPath) == nil {
             return sectionIndexPath
@@ -135,7 +139,10 @@ class BookmarksViewController: UITableViewController {
                                                selector: #selector(onApplicationBecameActive),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(dataDidChange), name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(dataDidChange),
+                                               name: BookmarksManager.Notifications.bookmarksDidChange,
+                                               object: nil)
     }
 
     private func configureTableView() {
@@ -222,7 +229,7 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func startEditing() {
-        //necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
+        // necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
         tableView.isEditing = false
         
         tableView.isEditing = true
@@ -367,7 +374,8 @@ extension BookmarksViewController: UISearchResultsUpdating {
 }
 
 extension BookmarksViewController: BookmarksSectionDataSourceDelegate {
-    func bookmarksSectionDataSourceDidRequestViewControllerForDeleteAlert(_ bookmarksSectionDataSource: BookmarksSectionDataSource) -> UIViewController {
+    func bookmarksSectionDataSourceDidRequestViewControllerForDeleteAlert(
+        _ bookmarksSectionDataSource: BookmarksSectionDataSource) -> UIViewController {
        
         return self
     }

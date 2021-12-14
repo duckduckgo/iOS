@@ -27,7 +27,7 @@ public protocol BookmarkItem {
     var parentFolder: BookmarkFolder? { get set }
 }
 
-fileprivate struct Constants {
+private struct Constants {
     static let ddgSuffix = " at DuckDuckGo"
 }
 

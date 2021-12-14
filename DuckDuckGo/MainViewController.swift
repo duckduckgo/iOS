@@ -313,6 +313,7 @@ class MainViewController: UIViewController {
     }
     
     // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable function_body_length
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
@@ -380,6 +381,7 @@ class MainViewController: UIViewController {
 
     }
     // swiftlint:enable cyclomatic_complexity
+    // swiftlint:enable function_body_length
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

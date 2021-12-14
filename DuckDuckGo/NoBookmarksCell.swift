@@ -26,7 +26,6 @@ class NoBookmarksCell: UITableViewCell {
     static let reuseIdentifier = "NoBookmarskCell"
 }
 
-
 class NoBookmarksInSubfolderCell: UITableViewCell {
     
     static let reuseIdentifier = "NoBookmarksInSubfolderCell"

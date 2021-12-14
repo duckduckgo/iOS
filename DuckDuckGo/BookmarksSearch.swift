@@ -41,7 +41,6 @@ class BookmarksSearch {
         return !bookmarksCoreDataStorage.topLevelBookmarksItems.isEmpty || !bookmarksCoreDataStorage.favorites.isEmpty
     }
     
-    
     // swiftlint:disable cyclomatic_complexity
     private func score(query: String, results: [ScoredBookmark]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
@@ -99,7 +98,7 @@ class BookmarksSearch {
             return
         }
         
-        bookmarksCoreDataStorage.allBookmarksAndFavoritesShallow() { bookmarks in
+        bookmarksCoreDataStorage.allBookmarksAndFavoritesShallow { bookmarks in
             let results: [ScoredBookmark] = bookmarks.map {
                 let score = $0.isFavorite ? 0 : -1
                 return ScoredBookmark(bookmark: $0, score: score)

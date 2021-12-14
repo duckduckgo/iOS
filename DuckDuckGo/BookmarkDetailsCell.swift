@@ -85,4 +85,3 @@ class BookmarkDetailsCell: UITableViewCell {
         delegate?.bookmarkDetailsCellDelegateTextFieldDidReturn(cell: self)
     }
 }
-

@@ -51,7 +51,7 @@ class ImageCacheDebugViewController: UITableViewController {
         clearCacheItem.tintColor = .systemRed
         navigationItem.rightBarButtonItem = clearCacheItem
         
-        bookmarksManager.allBookmarksAndFavoritesShallow() { bookmarks in
+        bookmarksManager.allBookmarksAndFavoritesShallow { bookmarks in
             self.bookmarksAndFavorites = bookmarks
             self.tableView.reloadData()
         }
@@ -107,9 +107,6 @@ class ImageCacheDebugViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        //TODO what is this even supposed to do?
-        //and how do we translate it to new method? Flat struture?
-        //yeah...that's probably it, we'll need a way of getting just bookmarks flat
         let host: String?
         switch Sections(rawValue: indexPath.section) {
         case .bookmarks: host = bookmarksAndFavorites[indexPath.row].url?.host

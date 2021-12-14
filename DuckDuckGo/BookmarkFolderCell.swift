@@ -67,4 +67,3 @@ class BookmarkFolderCell: UITableViewCell {
     }
     
 }
-

@@ -44,7 +44,11 @@ class BookmarkFoldersSectionDataSource {
     private let existingItem: BookmarkItem?
     private let shouldShowAddFolderCell: Bool
     
-    init(existingItem: BookmarkItem?, initialParentFolder: BookmarkFolder?, delegate: BookmarkFoldersSectionDataSourceAddFolderDelegate?, bookmarksManager: BookmarksManager) {
+    init(existingItem: BookmarkItem?,
+         initialParentFolder: BookmarkFolder?,
+         delegate: BookmarkFoldersSectionDataSourceAddFolderDelegate?,
+         bookmarksManager: BookmarksManager) {
+        
         self.existingItem = existingItem
         self.delegate = delegate
         self.bookmarksManager = bookmarksManager

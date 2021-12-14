@@ -34,23 +34,17 @@ fileprivate struct Constants {
 public protocol Bookmark: BookmarkItem {
     var url: URL? { get set }
     
-    var displayTitle: String? { get }
-    
-    static var appUrls: AppUrls { get }
+    var displayTitle: String? { get }    
 }
 
 public extension Bookmark {
-    
-    static var appUrls: AppUrls {
-        return AppUrls()
-    }
     
     var displayTitle: String? {
         let host = url?.host?.dropPrefix(prefix: "www.") ?? url?.absoluteString
         
         var displayTitle = (title?.isEmpty ?? true) ? host : title
         
-        if let url = url, Self.appUrls.isDuckDuckGo(url: url),
+        if let url = url, AppUrls().isDuckDuckGo(url: url),
             let title = displayTitle, title.hasSuffix(Constants.ddgSuffix) {
             displayTitle = String(title.dropLast(Constants.ddgSuffix.count))
         }

@@ -210,17 +210,21 @@ class EmailWaitlistViewController: UIViewController {
                                                         preferredStyle: .alert)
 
                 alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNoThanks, style: .cancel) {
+                    Pixel.fire(pixel: .emailDidPressWaitlistDialogDismiss)
                     EmailWaitlist.shared.showWaitlistNotification = false
                     self.renderCurrentWaitlistState()
                 }
 
                 alertController.addAction(title: UserText.emailWaitlistNotificationPermissionNotifyMe, style: .default) {
+                    Pixel.fire(pixel: .emailDidPressWaitlistDialogNotifyMe)
                     EmailWaitlist.shared.showWaitlistNotification = true
                     self.renderCurrentWaitlistState()
                     self.promptForUserNotificationAuthorization()
                 }
-
-                self.present(alertController, animated: true)
+                
+                self.present(alertController, animated: true) {
+                    Pixel.fire(pixel: .emailDidShowWaitlistDialog)
+                }
             }
         }
 

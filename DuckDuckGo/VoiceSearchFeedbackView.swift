@@ -82,6 +82,7 @@ extension VoiceSearchFeedbackView {
             Text(speechModel.speechFeedback)
                 .multilineTextAlignment(.center)
                 .foregroundColor(Colors.speechFeedback)
+                .padding(.horizontal)
                 .padding(.bottom, Padding.recognizedTextBottom)
             ZStack {
                 outerCircle
@@ -94,7 +95,6 @@ extension VoiceSearchFeedbackView {
                 .foregroundColor(Color.secondary)
                 .padding(.horizontal, Padding.footerTextHorizontal)
         }.padding(.bottom, Padding.footerTextHorizontal)
-
     }
     
     private var cancelButton: some View {

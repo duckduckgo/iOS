@@ -41,6 +41,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     weak var delegate: VoiceSearchFeedbackViewModelDelegate?
     private let speechRecognizer: SpeechRecognizerProtocol
     private var isSilent = true
+    private let maxWordsCount = 30
     private var recognizedWords: String? {
         didSet {
             if let words = recognizedWords {
@@ -63,7 +64,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
 
                 self.recognizedWords = text
                 
-                if speechDidFinished || error != nil {
+                if speechDidFinished || error != nil || self.hasReachedWordLimit(text) {
                     self.finish()
                 }
             }
@@ -73,6 +74,11 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
                 self?.setupAnimationWithVolume(volume)
             }
         }
+    }
+    
+    private func hasReachedWordLimit(_ recognizedText: String?) -> Bool {
+        guard let text = recognizedText else { return false }
+        return text.split(separator: " ").count >= maxWordsCount
     }
     
     private func setupAnimationWithVolume(_ volume: Float) {

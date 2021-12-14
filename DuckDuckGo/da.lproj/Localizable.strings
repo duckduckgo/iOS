@@ -74,10 +74,10 @@
 "action.title.save" = "Gem";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Bogmærk denne side";
+"action.title.save.bookmark" = "Tilføj bogmærke";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Gem denne side som favorit";
+"action.title.save.favorite" = "Tilføj til favorit";
 
 /* Settings action */
 "action.title.settings" = "Indstillinger";

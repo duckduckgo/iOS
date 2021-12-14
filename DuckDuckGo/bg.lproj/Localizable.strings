@@ -74,10 +74,10 @@
 "action.title.save" = "Запази";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Отметка за тази страница";
+"action.title.save.bookmark" = "Добави отметка";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Направи тази страница любима";
+"action.title.save.favorite" = "Добавяне в любими";
 
 /* Settings action */
 "action.title.settings" = "Настройки";

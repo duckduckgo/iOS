@@ -74,10 +74,10 @@
 "action.title.save" = "Salva";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Crea un segnalibro per questa pagina";
+"action.title.save.bookmark" = "Aggiungi ai segnalibri";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Aggiungi questa pagina ai Preferiti";
+"action.title.save.favorite" = "Aggiungi preferito";
 
 /* Settings action */
 "action.title.settings" = "Impostazioni";

@@ -74,10 +74,10 @@
 "action.title.save" = "Uložit";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Přidejte si tuto stránku do záložek";
+"action.title.save.bookmark" = "Přidat záložku";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Označit tuto stránku jako oblíbenou";
+"action.title.save.favorite" = "Přidat oblíbené";
 
 /* Settings action */
 "action.title.settings" = "Nastavení";

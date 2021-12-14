@@ -74,10 +74,10 @@
 "action.title.save" = "Kaydet";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Bu Sayfaya Yer İşareti Koy";
+"action.title.save.bookmark" = "Yer İmi ekle";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Bu Sayfayı Favorilere Ekle";
+"action.title.save.favorite" = "Favori Ekle";
 
 /* Settings action */
 "action.title.settings" = "Ayarlar";

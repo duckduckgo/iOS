@@ -74,10 +74,10 @@
 "action.title.save" = "Lagre";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Bokmerk denne siden";
+"action.title.save.bookmark" = "Legg til bokmerke";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Merk denne siden som favoritt";
+"action.title.save.favorite" = "Legg til favoritt";
 
 /* Settings action */
 "action.title.settings" = "Innstillinger";

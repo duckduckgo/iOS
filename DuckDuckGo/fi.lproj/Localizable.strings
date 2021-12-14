@@ -74,10 +74,10 @@
 "action.title.save" = "Tallenna";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Lisää sivu kirjanmerkkeihin";
+"action.title.save.bookmark" = "Lisää kirjanmerkki";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Lisää sivu suosikkeihin";
+"action.title.save.favorite" = "Lisää suosikki";
 
 /* Settings action */
 "action.title.settings" = "Asetukset";

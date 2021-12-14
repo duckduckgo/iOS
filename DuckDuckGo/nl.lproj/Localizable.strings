@@ -74,10 +74,10 @@
 "action.title.save" = "Opslaan";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Bladwijzer toevoegen aan deze pagina";
+"action.title.save.bookmark" = "Bladwijzer toevoegen";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Deze pagina markeren als favoriet";
+"action.title.save.favorite" = "Favoriet toevoegen";
 
 /* Settings action */
 "action.title.settings" = "Instellingen";

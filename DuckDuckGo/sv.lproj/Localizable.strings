@@ -74,10 +74,10 @@
 "action.title.save" = "Spara";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Lägg till bokmärke för den här sidan";
+"action.title.save.bookmark" = "Lägg till bokmärke";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Lägg till den här sidan som favorit";
+"action.title.save.favorite" = "Lägg till favorit";
 
 /* Settings action */
 "action.title.settings" = "Inställningar";

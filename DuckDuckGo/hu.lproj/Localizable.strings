@@ -74,10 +74,10 @@
 "action.title.save" = "Mentés";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Oldal felvétele a könyvjelzők közé";
+"action.title.save.bookmark" = "Könyvjelző mentése";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Oldal felvétele a kedvencek közé";
+"action.title.save.favorite" = "Kedvenc hozzáadása";
 
 /* Settings action */
 "action.title.settings" = "Beállítások";

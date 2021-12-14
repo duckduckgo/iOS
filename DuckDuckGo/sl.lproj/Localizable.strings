@@ -74,10 +74,10 @@
 "action.title.save" = "Shrani";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Označi to stran";
+"action.title.save.bookmark" = "Dodaj zaznamek";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Označi to stran kot priljubljeno";
+"action.title.save.favorite" = "Dodaj priljubljene";
 
 /* Settings action */
 "action.title.settings" = "Nastavitve";

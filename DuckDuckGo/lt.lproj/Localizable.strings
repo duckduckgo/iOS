@@ -74,10 +74,10 @@
 "action.title.save" = "Išsaugoti";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Pažymėti šį puslapį";
+"action.title.save.bookmark" = "Pridėti žymę";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Mėgti šį puslapį";
+"action.title.save.favorite" = "Pridėti mėgstamą";
 
 /* Settings action */
 "action.title.settings" = "Nustatymai";

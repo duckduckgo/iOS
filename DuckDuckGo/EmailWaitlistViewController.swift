@@ -81,7 +81,7 @@ class EmailWaitlistViewController: UIViewController {
     }
 
     @IBAction func existingInviteCodeButtonTapped(_ sender: UIButton) {
-        showEmailWaitlistWebViewController(url: AppUrls().signUpQuickLink)
+        openInNewTab(url: AppUrls().signUpQuickLink)
     }
 
     @IBAction func existingDuckAddressButtonTapped(_ sender: UIButton) {
@@ -247,7 +247,7 @@ class EmailWaitlistViewController: UIViewController {
         }
 
         let signUpURL = AppUrls().signUpWithCodeQuickLink(code: code)
-        showEmailWaitlistWebViewController(url: signUpURL)
+        openInNewTab(url: signUpURL)
     }
 
     private func createAttributedWaitlistSummary() -> NSAttributedString {
@@ -330,7 +330,13 @@ class EmailWaitlistViewController: UIViewController {
 
         navigationController?.pushViewController(view, animated: true)
     }
-
+    
+    private func openInNewTab(url: URL) {
+        dismiss(animated: true) {
+            let quickLinkURL = URL(string: "\(AppDeepLinks.quickLink)\(url)")!
+            UIApplication.shared.open(quickLinkURL, options: [:])
+        }
+    }
 }
 
 extension EmailWaitlistViewController: Themable {

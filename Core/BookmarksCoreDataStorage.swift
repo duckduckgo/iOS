@@ -564,7 +564,7 @@ extension BookmarksCoreDataStorage {
             let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.bookmarkClassName, into: privateContext)
             guard let bookmark = managedObject as? BookmarkManagedObject else {
                 assertionFailure("Inserting new bookmark failed")
-                completion?(nil, .contextSaveError)
+                completion?(nil, .insertObjectFailed)
                 return
             }
             bookmark.url = url

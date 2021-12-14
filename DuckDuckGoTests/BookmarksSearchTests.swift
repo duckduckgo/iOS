@@ -132,9 +132,7 @@ class BookmarksSearchTests: XCTestCase {
             expectations[5].fulfill()
         }
         
-        waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
+        waitForExpectations(timeout: 5)
     }
     
     func testWhenSearchingThenBeginingOfTitlesArePromoted() throws {
@@ -198,9 +196,7 @@ class BookmarksSearchTests: XCTestCase {
             expectation4.fulfill()
         }
         
-        waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
+        waitForExpectations(timeout: 5)
     }
     
     func testWhenSearchingFullStringThenExactMatchesAreFirst() throws {
@@ -218,9 +214,7 @@ class BookmarksSearchTests: XCTestCase {
             expectation1.fulfill()
         }
         
-        waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
+        waitForExpectations(timeout: 5)
     }
     
     func testWhenSearchingThenFavoritesAreFirst() throws {
@@ -240,9 +234,7 @@ class BookmarksSearchTests: XCTestCase {
             expectation1.fulfill()
         }
         
-        waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
+        waitForExpectations(timeout: 5)
     }
 
     func testWhenSearchingMultipleWordsThenAllMustBeFound() throws {
@@ -261,9 +253,7 @@ class BookmarksSearchTests: XCTestCase {
             expectation1.fulfill()
         }
         
-        waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
+        waitForExpectations(timeout: 5)
     }
     
     func testWhenSearchingThenNotFindingAnythingIsAlsoValid() throws {
@@ -277,9 +267,7 @@ class BookmarksSearchTests: XCTestCase {
             expectation1.fulfill()
         }
         
-        waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
+        waitForExpectations(timeout: 5)
     }
     
     func testWhenMatchingURLThenDomainMatchesArePromoted() throws {
@@ -322,8 +310,6 @@ class BookmarksSearchTests: XCTestCase {
             expectation4.fulfill()
         }
         
-        waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
+        waitForExpectations(timeout: 5) 
     }
 }

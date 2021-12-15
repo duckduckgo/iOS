@@ -983,6 +983,11 @@ extension TabViewController: WKNavigationDelegate {
                 return
         }
         
+        if let url = link?.url, AppUrls().isDuckDuckGoEmailProtection(url: url) {
+            scheduleTrackerNetworksAnimation(collapsing: true)
+            return
+        }
+        
         guard let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
             
             if DaxDialogs.shared.shouldShowFireButtonPulse {

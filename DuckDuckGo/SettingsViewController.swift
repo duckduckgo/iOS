@@ -22,6 +22,7 @@ import MessageUI
 import Core
 import BrowserServicesKit
 
+// swiftlint:disable file_length
 class SettingsViewController: UITableViewController {
 
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
@@ -43,6 +44,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
+    @IBOutlet weak var textSizeCell: UITableViewCell!
+    @IBOutlet weak var textSizeAccessoryText: UILabel!
 
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -74,6 +77,7 @@ class SettingsViewController: UITableViewController {
         configureDefaultBroswerCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
+        configureTextSizeCell()
         configureDisableAutocompleteToggle()
         configureSecurityToggles()
         configureVersionText()
@@ -87,6 +91,7 @@ class SettingsViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         configureFireButtonAnimationCellAccessory()
+        configureTextSizeCell()
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
@@ -101,6 +106,10 @@ class SettingsViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
+            return
+        } else if let textSizeSettings = segue.destination as? TextSizeSettingsViewController {
+            Pixel.fire(pixel: .textSizeSettingsShown)
+            presentationController?.delegate = textSizeSettings
             return
         }
                 
@@ -133,6 +142,11 @@ class SettingsViewController: UITableViewController {
     private func configureFireButtonAnimationCellAccessory() {
         fireButtonAnimationAccessoryText.text = appSettings.currentFireButtonAnimation.descriptionText
     }
+    
+    private func configureTextSizeCell() {
+        textSizeCell.isHidden = UIDevice.current.userInterfaceIdiom == .pad
+        textSizeAccessoryText.text = "\(appSettings.textSize)%"
+    }
 
     private func configureIconViews() {
         if AppIconManager.shared.isAppIconChangeSupported {
@@ -163,11 +177,7 @@ class SettingsViewController: UITableViewController {
     }
      
     private func configureRememberLogins() {
-        if #available(iOS 13, *) {
-            rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
-        } else {
-            rememberLoginsCell.isHidden = true
-        }
+        rememberLoginsAccessoryText.text = PreserveLogins.shared.allowedDomains.isEmpty ? "" : "\(PreserveLogins.shared.allowedDomains.count)"
     }
 
     private func configureVersionText() {
@@ -179,9 +189,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureLinkPreviewsToggle() {
-        if #available(iOS 13, *) {
-            longPressCell.isHidden = false
-        }
+        longPressCell.isHidden = false
         longPressPreviewsToggle.isOn = appSettings.longPressPreviews
     }
 
@@ -394,3 +402,4 @@ extension SettingsViewController {
         }
     }
 }
+// swiftlint:enable file_length

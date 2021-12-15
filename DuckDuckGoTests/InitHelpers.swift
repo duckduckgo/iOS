@@ -83,7 +83,7 @@ extension HTTPCookie {
             .path: path
         ]
         
-        if #available(iOS 13, *), policy != nil {
+        if policy != nil {
             properties[HTTPCookiePropertyKey.sameSitePolicy] = policy
         }
         

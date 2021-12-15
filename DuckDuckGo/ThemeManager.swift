@@ -52,11 +52,7 @@ class ThemeManager {
     private static func makeTheme(name: ThemeName) -> Theme {
         switch name {
         case .systemDefault:
-            if #available(iOS 13.0, *) {
-                return obtainSystemTheme()
-            } else {
-                return DarkTheme()
-            }
+            return obtainSystemTheme()
         case .dark:
             return DarkTheme()
         case .light:
@@ -65,7 +61,6 @@ class ThemeManager {
         }
     }
     
-    @available(iOS 13.0, *)
     private static func obtainSystemTheme() -> Theme {
         switch UIScreen.main.traitCollection.userInterfaceStyle {
         case .dark:
@@ -90,7 +85,6 @@ class ThemeManager {
         currentTheme = ThemeManager.makeTheme(name: name)
     }
     
-    @available(iOS 13.0, *)
     public func refreshSystemTheme() {
         guard appSettings.currentThemeName == .systemDefault else { return }
         
@@ -102,7 +96,6 @@ class ThemeManager {
     }
 
     func updateUserInterfaceStyle(window: UIWindow? = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first) {
-        guard #available(iOS 13.0, *) else { return }
         switch appSettings.currentThemeName {
 
         case .dark:

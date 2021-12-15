@@ -44,9 +44,7 @@ class PrivacyProtectionController: ThemableNavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .light
-        }
+        overrideUserInterfaceStyle = .light
 
         navigationBar.isHidden = AppWidthObserver.shared.isLargeWidth
         

@@ -22,14 +22,23 @@
 /* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
 "7nt-uS-sOh.normalTitle" = "Scopri di più su duckduckgo.com/about";
 
+/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
+"8YG-7Q-Czd.normalTitle" = "Impostazioni";
+
 /* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
 "9EC-lx-77p.text" = "Uscita dall'app, inattività di 1 ora";
 
 /* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
 "9fc-9r-4aA.text" = "Cancella tutte le schede e i dati";
 
+/* Class = "UILabel"; text = "Text Size"; ObjectID = "9Ko-0g-T3h"; */
+"9Ko-0g-T3h.text" = "Dimensione testo";
+
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Avvio dell'app";
+
+/* Class = "UILabel"; text = "dax@duck.com"; ObjectID = "25v-n4-wJD"; */
+"25v-n4-wJD.text" = "dax@duck.com";
 
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Apri i collegamenti nelle loro app associate";
@@ -37,14 +46,23 @@
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animazione";
 
-/* Class = "UILabel"; text = "Email Autofill"; ObjectID = "bAK-LL-HUH"; */
-"bAK-LL-HUH.text" = "Email Autofill";
+/* Class = "UIViewController"; title = "Email Protection (Beta)"; ObjectID = "b9u-ZD-F95"; */
+"b9u-ZD-F95.title" = "Protezione e-mail (beta)";
+
+/* Class = "UILabel"; text = "Email Protection"; ObjectID = "bAK-LL-HUH"; */
+"bAK-LL-HUH.text" = "Protezione email";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "I dati e/o le schede saranno cancellati al riavvio dell'app.";
 
 /* Class = "UILabel"; text = "When Signing In"; ObjectID = "bIg-0T-UWq"; */
 "bIg-0T-UWq.text" = "Al momento dell'accesso";
+
+/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
+"bJo-qn-f57.title" = "Protezione e-mail (beta)";
+
+/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "Br7-C6-EmT"; */
+"Br7-C6-EmT.title" = "Protezione e-mail (beta)";
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "Icona dell'app";
@@ -78,6 +96,12 @@
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
 "Dyd-bm-goj.title" = "Impostazioni";
+
+/* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
+"EB8-09-gt2.text" = "100%";
+
+/* Class = "UIButton"; normalTitle = "I already have a Duck Address"; ObjectID = "ehC-NI-TIu"; */
+"ehC-NI-TIu.normalTitle" = "Ho già un indirizzo Duck";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Etichetta";
@@ -115,6 +139,9 @@
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Predefinito";
 
+/* Class = "UILabel"; text = "Header Title"; ObjectID = "ghI-g4-R9Q"; */
+"ghI-g4-R9Q.text" = "Titolo intestazione";
+
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
 "gji-Fs-EET.text" = "La privacy semplificata. ";
 
@@ -127,11 +154,17 @@
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Tutela della privacy attivata per tutti i siti";
 
+/* Class = "UILabel"; text = "Personal Duck Address"; ObjectID = "i4Y-CX-8b6"; */
+"i4Y-CX-8b6.text" = "Crea indirizzo Duck";
+
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Icona";
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Condividi feedback";
+
+/* Class = "UIViewController"; title = "Email Autofill"; ObjectID = "nB1-eu-sN0"; */
+"nB1-eu-sN0.title" = "Riempimento automatico e-mail";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Quando l'opzione è attivata, i siti web verranno aperti automaticamente in DuckDuckGo.";
@@ -145,11 +178,23 @@
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
 "oM7-1o-9oY.text" = "Info su DuckDuckGo";
 
+/* Class = "UITextView"; text = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com."; ObjectID = "pT6-FQ-9d9"; */
+"pT6-FQ-9d9.text" = "Rimuovendo la funzione Protezione e-mail da questo dispositivo rimuoverai l'opzione di compilazione automatica del tuo indirizzo Duck personale o di un indirizzo Duck privato appena generato nei campi e-mail mentre navighi sul web.\n\nPer eliminare completamente i tuoi indirizzi Duck o per qualsiasi altra domanda o feedback, contattaci all'indirizzo support@duck.com.";
+
+/* Class = "UILabel"; text = "Remove from Device"; ObjectID = "qEh-V1-QaM"; */
+"qEh-V1-QaM.text" = "Rimuovi dal dispositivo";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Etichetta";
 
-/* Class = "UILabel"; text = "Disable"; ObjectID = "RBZ-pi-KsT"; */
-"RBZ-pi-KsT.text" = "Disabilita";
+/* Class = "UITextView"; text = "Description Text"; ObjectID = "rOy-6J-i8L"; */
+"rOy-6J-i8L.text" = "Testo descrizione";
+
+/* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
+"ssa-zd-L3T.title" = "Dimensione testo";
+
+/* Class = "UITableViewController"; title = "Email Protection"; ObjectID = "TC3-Kg-XJt"; */
+"TC3-Kg-XJt.title" = "Protezione email";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Visualizza tastiera su";
@@ -178,14 +223,20 @@
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Intervallo desiderato";
 
-/* Class = "UINavigationItem"; title = "Email Autofill"; ObjectID = "xMC-Sf-t5x"; */
-"xMC-Sf-t5x.title" = "Email Autofill";
+/* Class = "UIButton"; normalTitle = "Action button"; ObjectID = "VvN-QG-WsD"; */
+"VvN-QG-WsD.normalTitle" = "Pulsante azione";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
 "xof-5k-PkI.text" = "Imposta come browser predefinito";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Siti protetti";
+
+/* Class = "UITextView"; text = "Footer Text"; ObjectID = "XvR-D4-LMg"; */
+"XvR-D4-LMg.text" = "Testo piè di pagina";
+
+/* Class = "UIButton"; normalTitle = "I have an Invite Code"; ObjectID = "yMC-7O-hSw"; */
+"yMC-7O-hSw.normalTitle" = "Ho un codice invito";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Tastiera";

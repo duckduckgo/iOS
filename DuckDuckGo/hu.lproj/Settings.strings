@@ -22,14 +22,23 @@
 /* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
 "7nt-uS-sOh.normalTitle" = "További információk a duckduckgo.com/about oldalon";
 
+/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
+"8YG-7Q-Czd.normalTitle" = "Beállítások";
+
 /* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
 "9EC-lx-77p.text" = "Kilépés az alkalmazásból 1 óra inaktivitás után";
 
 /* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
 "9fc-9r-4aA.text" = "Lapok és adatok törlése";
 
+/* Class = "UILabel"; text = "Text Size"; ObjectID = "9Ko-0g-T3h"; */
+"9Ko-0g-T3h.text" = "Szövegméret";
+
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Alkalmazás indítása";
+
+/* Class = "UILabel"; text = "dax@duck.com"; ObjectID = "25v-n4-wJD"; */
+"25v-n4-wJD.text" = "dax@duck.com";
 
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Hivatkozások megnyitása társított alkalmazásokban";
@@ -37,14 +46,23 @@
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animáció";
 
-/* Class = "UILabel"; text = "Email Autofill"; ObjectID = "bAK-LL-HUH"; */
-"bAK-LL-HUH.text" = "Email Autofill";
+/* Class = "UIViewController"; title = "Email Protection (Beta)"; ObjectID = "b9u-ZD-F95"; */
+"b9u-ZD-F95.title" = "E-mail védelem (béta)";
+
+/* Class = "UILabel"; text = "Email Protection"; ObjectID = "bAK-LL-HUH"; */
+"bAK-LL-HUH.text" = "E-mail védelem";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Az adatok és/vagy lapok az alkalmazás újraindításakor törlődnek.";
 
 /* Class = "UILabel"; text = "When Signing In"; ObjectID = "bIg-0T-UWq"; */
 "bIg-0T-UWq.text" = "Bejelentkezéskor";
+
+/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
+"bJo-qn-f57.title" = "E-mail védelem (béta)";
+
+/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "Br7-C6-EmT"; */
+"Br7-C6-EmT.title" = "E-mail védelem (béta)";
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "Alkalmazásikon";
@@ -78,6 +96,12 @@
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
 "Dyd-bm-goj.title" = "Beállítások";
+
+/* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
+"EB8-09-gt2.text" = "100%";
+
+/* Class = "UIButton"; normalTitle = "I already have a Duck Address"; ObjectID = "ehC-NI-TIu"; */
+"ehC-NI-TIu.normalTitle" = "Már van Duck címem";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Címke";
@@ -115,6 +139,9 @@
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Alapértelmezett";
 
+/* Class = "UILabel"; text = "Header Title"; ObjectID = "ghI-g4-R9Q"; */
+"ghI-g4-R9Q.text" = "Fejléc címe";
+
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
 "gji-Fs-EET.text" = "Adatvédelem, leegyszerűsítve. ";
 
@@ -127,11 +154,17 @@
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Adatvédelem engedélyezve minden weboldalhoz";
 
+/* Class = "UILabel"; text = "Personal Duck Address"; ObjectID = "i4Y-CX-8b6"; */
+"i4Y-CX-8b6.text" = "Személyes Duck cím";
+
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikon";
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Visszajelzés megosztása";
+
+/* Class = "UIViewController"; title = "Email Autofill"; ObjectID = "nB1-eu-sN0"; */
+"nB1-eu-sN0.title" = "E-mail automatikus kitöltése";
 
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Engedélyezése esetén a weboldalak automatikusan a DuckDuckGóban nyílnak meg.";
@@ -145,11 +178,23 @@
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
 "oM7-1o-9oY.text" = "A DuckDuckGóról";
 
+/* Class = "UITextView"; text = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com."; ObjectID = "pT6-FQ-9d9"; */
+"pT6-FQ-9d9.text" = "Az e-mail-védelem eltávolítása erről az eszközről megszünteti azt a lehetőséget, hogy a webböngészés során a rendszer automatikusan beírja a személyes Duck-címedet vagy egy újonnan létrehozott privát Duck-címet az e-mail-cím mezőkbe.\n\nA Duck-címeid teljes törléséhez, vagy bármilyen más kérdés vagy visszajelzés esetén fordulj hozzánk a support@duck.com címen.";
+
+/* Class = "UILabel"; text = "Remove from Device"; ObjectID = "qEh-V1-QaM"; */
+"qEh-V1-QaM.text" = "Eltávolítás az eszközről";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Címke";
 
-/* Class = "UILabel"; text = "Disable"; ObjectID = "RBZ-pi-KsT"; */
-"RBZ-pi-KsT.text" = "Letilt";
+/* Class = "UITextView"; text = "Description Text"; ObjectID = "rOy-6J-i8L"; */
+"rOy-6J-i8L.text" = "Leíró szöveg";
+
+/* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
+"ssa-zd-L3T.title" = "Szövegméret";
+
+/* Class = "UITableViewController"; title = "Email Protection"; ObjectID = "TC3-Kg-XJt"; */
+"TC3-Kg-XJt.title" = "E-mail védelem";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Billentyűzet megjelenítése bekapcsolva";
@@ -178,14 +223,20 @@
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Kívánt időzítés";
 
-/* Class = "UINavigationItem"; title = "Email Autofill"; ObjectID = "xMC-Sf-t5x"; */
-"xMC-Sf-t5x.title" = "Email Autofill";
+/* Class = "UIButton"; normalTitle = "Action button"; ObjectID = "VvN-QG-WsD"; */
+"VvN-QG-WsD.normalTitle" = "Akciógomb";
 
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
 "xof-5k-PkI.text" = "Beállítás alapértelmezett böngészőként";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Tűzálló weboldalak";
+
+/* Class = "UITextView"; text = "Footer Text"; ObjectID = "XvR-D4-LMg"; */
+"XvR-D4-LMg.text" = "Lábléc szövege";
+
+/* Class = "UIButton"; normalTitle = "I have an Invite Code"; ObjectID = "yMC-7O-hSw"; */
+"yMC-7O-hSw.normalTitle" = "Van meghívókódom";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Billentyűzet";

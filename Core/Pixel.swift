@@ -155,6 +155,13 @@ public enum PixelName: String {
     case voiceSearchPrivacyDialogAccepted = "m_voice_search_privacy_dialog_accepted"
     case voiceSearchPrivacyDialogRejected = "m_voice_search_privacy_dialog_rejected"
     case voiceSearchDone = "m_voice_search_done"
+    
+    case emailDidShowWaitlistDialog = "email_did_show_waitlist_dialog"
+    case emailDidPressWaitlistDialogDismiss = "email_did_press_waitlist_dialog_dismiss"
+    case emailDidPressWaitlistDialogNotifyMe = "email_did_press_waitlist_dialog_notify_me"
+    
+    case textSizeSettingsShown = "m_text_size_settings_shown"
+    case textSizeSettingsChanged = "m_text_size_settings_changed"
 
     // MARK: SERP pixels
     
@@ -187,6 +194,8 @@ public enum PixelName: String {
     case contentBlockingUnpSitesCompilationFailed = "m_d_cb_cu"
     case contentBlockingFallbackCompilationFailed = "m_d_cb_cf"
     
+    case ampBlockingRulesCompilationFailed = "m_debug_amp_rules_compilation_failed"
+    
     case contentBlockingIdentifierError = "m_d_cb_ie"
     
     case webKitDidTerminate = "m_d_wkt"
@@ -197,6 +206,9 @@ public enum PixelName: String {
     case blankOverlayNotDismissed = "m_d_ovs"
 
     case cookieDeletionTimedOut = "m_d_csto"
+    case cookieDeletionLeftovers = "m_cookie_deletion_leftovers"
+    case legacyCookieMigration = "m_legacy_cookie_migration"
+    case legacyCookieCleanupError = "m_legacy_cookie_cleanup_error"
 
     case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
     case cachedTabPreviewRemovalError = "m_d_tpre"
@@ -243,6 +255,22 @@ public struct PixelParameters {
 
     public static let emailCohort = "cohort"
     public static let emailLastUsed = "duck_address_last_used"
+    
+    // Cookie clearing
+    public static let storeInitialCount = "store_initial_count"
+    public static let storeProtectedCount = "store_protected_count"
+    public static let didStoreDeletionTimeOut = "did_store_deletion_time_out"
+    public static let storageInitialCount = "storage_initial_count"
+    public static let storageProtectedCount = "storage_protected_count"
+    public static let storeAfterDeletionCount = "store_after_deletion_count"
+    public static let storageAfterDeletionCount = "storage_after_deletion_count"
+    public static let storeAfterDeletionDiffCount = "store_after_deletion_diff_count"
+    public static let storageAfterDeletionDiffCount = "storage_after_deletion_diff_count"
+    
+    public static let count = "count"
+
+    public static let textSizeInitial = "text_size_initial"
+    public static let textSizeUpdated = "text_size_updated"
 }
 
 public struct PixelValues {
@@ -332,7 +360,7 @@ public class TimedPixel {
         self.date = date
     }
     
-    public func fire(_ fireDate: Date = Date(), withAdditionalParmaeters params: [String: String] = [:]) {
+    public func fire(_ fireDate: Date = Date(), withAdditionalParameters params: [String: String] = [:]) {
         let duration = String(fireDate.timeIntervalSince(date))
         var newParams = params
         newParams[PixelParameters.duration] = duration

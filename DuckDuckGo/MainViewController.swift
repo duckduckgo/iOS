@@ -381,8 +381,7 @@ class MainViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if #available(iOS 13.0, *),
-            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
         }
         
@@ -1629,7 +1628,7 @@ extension MainViewController: AutoClearWorker {
 
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear {
-            pixel.fire(withAdditionalParmaeters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+            pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
     }
     
@@ -1638,6 +1637,7 @@ extension MainViewController: AutoClearWorker {
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
+            self.tabManager.stopLoadingInAllTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()

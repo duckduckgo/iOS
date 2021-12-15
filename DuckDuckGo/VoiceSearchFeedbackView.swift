@@ -21,11 +21,12 @@ import SwiftUI
 
 struct VoiceSearchFeedbackView: View {
     @ObservedObject var speechModel: VoiceSearchFeedbackViewModel
+    @Environment(\.verticalSizeClass) var sizeClass
 
     var body: some View {
-        ZStack {
-            voiceFeedbackView
+        VStack {
             cancelButton
+            voiceFeedbackView
         }
         .onAppear {
             if #available(iOS 15, *) {
@@ -34,17 +35,6 @@ struct VoiceSearchFeedbackView: View {
             speechModel.startSilenceAnimation()
         }.onDisappear {
             speechModel.stopSpeechRecognizer()
-        }
-    }
-}
-
-struct VoiceSearchFeedbackView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ForEach(ColorScheme.allCases, id: \.self) {
-                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: MockSpeechRecognizer()))
-                    .preferredColorScheme($0)
-            }
         }
     }
 }
@@ -83,33 +73,37 @@ extension VoiceSearchFeedbackView {
                 .multilineTextAlignment(.center)
                 .foregroundColor(Colors.speechFeedback)
                 .padding(.horizontal)
-                .padding(.bottom, Padding.recognizedTextBottom)
+            
             ZStack {
                 outerCircle
                 innerCircle
                 micImage
-            }.padding(.bottom, Padding.microphoneCircleBottom)
+            }
+            .padding(.bottom, voiceCircleVerticalPadding)
+            .padding(.top, voiceCircleVerticalPadding)
+            
             Text(UserText.voiceSearchFooter)
                 .font(.footnote)
                 .multilineTextAlignment(.center)
                 .foregroundColor(Colors.footerText)
-                .padding(.horizontal, Padding.footerTextHorizontal)
-        }.padding(.bottom, Padding.footerTextHorizontal)
+                .frame(width: footerWidth)
+            
+        } .padding(.bottom, footerTextPadding)
     }
     
     private var cancelButton: some View {
-        VStack {
-            HStack {
-                Button {
-                    speechModel.cancel()
-                } label: {
-                    Text(UserText.voiceSearchCancelButton)
-                        .foregroundColor(Colors.cancelButton)
-                }.alignmentGuide(.leading) { d in d[.leading] }
-                Spacer()
+        HStack {
+            Button {
+                speechModel.cancel()
+            } label: {
+                Text(UserText.voiceSearchCancelButton)
+                    .foregroundColor(Colors.cancelButton)
             }
+            .alignmentGuide(.leading) { d in d[.leading] }
             Spacer()
-        }.padding()
+        }
+        .padding(.horizontal)
+        .padding(.top)
     }
     
     private var innerCircle: some View {
@@ -144,18 +138,17 @@ extension VoiceSearchFeedbackView {
 // MARK: - Constants
 
 extension VoiceSearchFeedbackView {
-    private var micIconName: String {
-        "MicrophoneSolid"
+    private var footerWidth: CGFloat { 285 }
+    private var micIconName: String { "MicrophoneSolid" }
+    private var voiceCircleVerticalPadding: CGFloat {
+        sizeClass == .regular ? 60 : 43
+    }
+    private var footerTextPadding: CGFloat {
+        sizeClass == .regular ? 43 : 8
     }
     
     private var micSize: CGSize {
         CGSize(width: 32, height: 32)
-    }
-    
-    private struct Padding {
-        static let microphoneCircleBottom: CGFloat = 60
-        static let recognizedTextBottom: CGFloat = 60
-        static let footerTextHorizontal: CGFloat = 43
     }
     
     private struct CircleSize {
@@ -174,5 +167,22 @@ extension VoiceSearchFeedbackView {
     private struct AnimationDuration {
         static let pulse = 2.5
         static let speech = 0.1
+    }
+}
+
+// MARK: - Preview
+
+struct VoiceSearchFeedbackView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            ForEach(ColorScheme.allCases, id: \.self) {
+                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: MockSpeechRecognizer()))
+                    .preferredColorScheme($0)
+            }
+            if #available(iOS 15.0, *) {
+                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: MockSpeechRecognizer()))
+                    .previewInterfaceOrientation(.landscapeRight)
+            }
+        }
     }
 }

@@ -231,7 +231,7 @@ extension BookmarksCoreDataStorage {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
-            let mo = privateContext.object(with: folderID)
+            let mo = try? privateContext.existingObject(with: folderID)
             guard let folder = mo as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get folder")
                 completion?(false, .fetchingExistingItemFailed)
@@ -239,7 +239,7 @@ extension BookmarksCoreDataStorage {
             }
             
             if folder.parent?.objectID != newParentID {
-                let parentMO = privateContext.object(with: newParentID)
+                let parentMO = try? privateContext.existingObject(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
                     completion?(false, .fetchingParentFailed)
@@ -265,7 +265,7 @@ extension BookmarksCoreDataStorage {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
-            let mo = privateContext.object(with: favoriteID)
+            let mo = try? privateContext.existingObject(with: favoriteID)
             guard let favorite = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get favorite")
                 completion?(false, .fetchingExistingItemFailed)
@@ -295,7 +295,7 @@ extension BookmarksCoreDataStorage {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
-            let mo = privateContext.object(with: bookmarkID)
+            let mo = try? privateContext.existingObject(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get bookmark")
                 completion?(false, .fetchingExistingItemFailed)
@@ -303,7 +303,7 @@ extension BookmarksCoreDataStorage {
             }
             
             if bookmark.parent?.objectID != newParentID {
-                let parentMO = privateContext.object(with: newParentID)
+                let parentMO = try? privateContext.existingObject(with: newParentID)
                 guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                     assertionFailure("Failed to get new parent")
                     completion?(false, .fetchingParentFailed)
@@ -331,7 +331,7 @@ extension BookmarksCoreDataStorage {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
-            let mo = privateContext.object(with: bookmarkItemID)
+            let mo = try? privateContext.existingObject(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
                 completion?(false, .fetchingExistingItemFailed)
@@ -365,7 +365,7 @@ extension BookmarksCoreDataStorage {
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
-            let mo = privateContext.object(with: bookmarkItemID)
+            let mo = try? privateContext.existingObject(with: bookmarkItemID)
             guard let item = mo as? BookmarkItemManagedObject else {
                 assertionFailure("Failed to get item")
                 completion?(false, .fetchingExistingItemFailed)
@@ -444,7 +444,7 @@ extension BookmarksCoreDataStorage {
                 return
             }
 
-            let mo = privateContext.object(with: bookmarkID)
+            let mo = try? privateContext.existingObject(with: bookmarkID)
             guard let bookmark = mo as? BookmarkManagedObject else {
                 assertionFailure("Failed to get item")
                 completion?(false, .fetchingExistingItemFailed)
@@ -635,7 +635,7 @@ extension BookmarksCoreDataStorage {
         }
         
         if let parentID = parentID {
-            let parentMO = context.object(with: parentID)
+            let parentMO = try? context.existingObject(with: parentID)
             guard let newParentMO = parentMO as? BookmarkFolderManagedObject else {
                 assertionFailure("Failed to get new parent")
                 completion?(nil, .fetchingParentFailed)

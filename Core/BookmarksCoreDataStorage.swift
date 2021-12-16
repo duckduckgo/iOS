@@ -246,9 +246,7 @@ extension BookmarksCoreDataStorage {
                     return
                 }
                 
-                folder.parent?.removeFromChildren(folder)
                 folder.parent = newParentMO
-                newParentMO.addToChildren(folder)
             }
             folder.title = newTitle
             
@@ -312,9 +310,7 @@ extension BookmarksCoreDataStorage {
                     return
                 }
                 
-                bookmark.parent?.removeFromChildren(bookmark)
                 bookmark.parent = newParentMO
-                newParentMO.addToChildren(bookmark)
             }
             
             bookmark.title = newTitle
@@ -457,7 +453,6 @@ extension BookmarksCoreDataStorage {
             
             self.getTopLevelFolder(isFavorite: !bookmark.isFavorite, onContext: privateContext) { newParent in
                 
-                bookmark.parent?.removeFromChildren(bookmark)
                 bookmark.isFavorite = !bookmark.isFavorite
                 newParent.insertIntoChildren(bookmark, at: newIndex)
                 
@@ -627,7 +622,6 @@ extension BookmarksCoreDataStorage {
         
         func updateParentAndSave(parent: BookmarkFolderManagedObject) {
             item.parent = parent
-            parent.addToChildren(item)
             
             do {
                 try context.save()
@@ -693,7 +687,6 @@ public class BookmarksCoreDataStorageMigration {
                 
                 let folder = isFavorite ? favoritesFolder : bookmarksFolder
                 bookmark.parent = folder
-                folder.addToChildren(bookmark)
             }
             
             let favorites = bookmarkStore.favorites

@@ -483,6 +483,7 @@ extension BookmarksCoreDataStorage {
     private func containsBookmark(url: URL, searchType: SearchType, completion: @escaping (Bool) -> Void) {
         viewContext.perform {
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
+            fetchRequest.fetchLimit = 1
             
             switch searchType {
             case .bookmarksOnly:
@@ -501,11 +502,11 @@ extension BookmarksCoreDataStorage {
                                                      url as NSURL)
             }
             
-            guard let results = try? self.viewContext.fetch(fetchRequest) else {
+            guard let result = try? self.viewContext.count(for: fetchRequest) else {
                 completion(false)
                 return
             }
-            completion(results.count > 0)
+            completion(result > 0)
         }
     }
     

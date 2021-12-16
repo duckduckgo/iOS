@@ -142,7 +142,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertTrue(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
-        XCTAssertTrue(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showVoiceSearch)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -361,7 +361,7 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertTrue(testee.showCancel)
         XCTAssertFalse(testee.showSearchLoupe)
-        XCTAssertTrue(testee.showVoiceSearch)
+        XCTAssertFalse(testee.showVoiceSearch)
 
         XCTAssertFalse(testee.hasLargeWidth)
         XCTAssertFalse(testee.showBackButton)
@@ -427,9 +427,14 @@ class SmallOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.clearTextOnStart)
     }
 
-    func testWhenInBrowsingNonEditingStateThenEditingStartedTransitionsToTextEditingState() {
+    func testWhenInBrowsingNonEditingStateThenToBrowsingTextEditingStartedState() {
         let testee = SmallOmniBarState.BrowsingNonEditingState()
-        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.BrowsingTextEditingState().name)
+        XCTAssertEqual(testee.onEditingStartedState.name, SmallOmniBarState.BrowsingTextEditingStartedState().name)
+    }
+    
+    func testWhenInBrowsingEditingStartedStateThenEnteringTextTransitionsToTextEditingState() {
+        let testee = SmallOmniBarState.BrowsingTextEditingStartedState()
+        XCTAssertEqual(testee.onTextEnteredState.name, SmallOmniBarState.BrowsingTextEditingState().name)
     }
 
     func testWhenInBrowsingNonEditingStateThenEditingStoppedMaintainsState() {

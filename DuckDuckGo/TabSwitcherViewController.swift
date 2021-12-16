@@ -260,8 +260,10 @@ class TabSwitcherViewController: UIViewController {
         alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let savedState = self.bookmarkAll(self.tabsModel.tabs)
-            self.displayBookmarkAllStatusMessage(with: savedState, openTabsCount: self.tabsModel.tabs.count)
+            self.bookmarkAll(tabsToBookmark: self.tabsModel.tabs, bookmarksManager: BookmarksManager()) { bookmarkAllResult in
+                
+                self.displayBookmarkAllStatusMessage(with: bookmarkAllResult, openTabsCount: self.tabsModel.tabs.count)
+            }
         }
         
         present(alert, animated: true, completion: nil)

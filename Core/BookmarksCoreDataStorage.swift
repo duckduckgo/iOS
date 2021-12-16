@@ -653,7 +653,9 @@ extension BookmarksCoreDataStorage {
                 return
             }
             
-            completion?(item.objectID, nil)
+            DispatchQueue.main.async {
+                completion?(item.objectID, nil)
+            }
         }
         
         if let parentID = parentID {

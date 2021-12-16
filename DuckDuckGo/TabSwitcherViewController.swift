@@ -239,12 +239,13 @@ class TabSwitcherViewController: UIViewController {
                                      bookmarksManager: bookmarksManager,
                                      completion: completion)
                 } else {
-                    bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
-                    self.bookmarkAll(tabsToBookmark: Array(tabsToBookmark.dropFirst()),
-                                     newBookmarksCount: newBookmarksCount + 1,
-                                     existingBookmarksCount: existingBookmarksCount,
-                                     bookmarksManager: bookmarksManager,
-                                     completion: completion)
+                    bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil) { _, _ in
+                        self.bookmarkAll(tabsToBookmark: Array(tabsToBookmark.dropFirst()),
+                                         newBookmarksCount: newBookmarksCount + 1,
+                                         existingBookmarksCount: existingBookmarksCount,
+                                         bookmarksManager: bookmarksManager,
+                                         completion: completion)
+                    }
                 }
             }
         } else {

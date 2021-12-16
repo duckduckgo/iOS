@@ -195,8 +195,8 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    // Just used for favicon deletion
-    public func allBookmarksAndFavoritesShallow(completion: @escaping ([Bookmark]) -> Void) {
+    // Just used for favicon deletion and search
+    public func allBookmarksAndFavoritesFlat(completion: @escaping ([Bookmark]) -> Void) {
         viewContext.perform { [weak self] in
         
             let fetchRequest: NSFetchRequest<BookmarkManagedObject> = BookmarkManagedObject.fetchRequest()

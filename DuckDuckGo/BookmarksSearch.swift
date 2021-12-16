@@ -30,7 +30,7 @@ extension BookmarksCoreDataStorage: BookmarksSearchStore {
     }
     
     func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
-        allBookmarksAndFavoritesShallow(completion: completion)
+        allBookmarksAndFavoritesFlat(completion: completion)
     }
 }
 

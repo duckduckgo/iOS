@@ -51,7 +51,7 @@ class ImageCacheDebugViewController: UITableViewController {
         clearCacheItem.tintColor = .systemRed
         navigationItem.rightBarButtonItem = clearCacheItem
         
-        bookmarksManager.allBookmarksAndFavoritesShallow { bookmarks in
+        bookmarksManager.allBookmarksAndFavoritesFlat { bookmarks in
             self.bookmarksAndFavorites = bookmarks
             self.tableView.reloadData()
         }

@@ -173,7 +173,7 @@ class BookmarksManager {
     private func removeFavicon(forBookmark bookmark: Bookmark?) {
         guard let domain = bookmark?.url?.host else { return }
         
-        coreDataStorage.allBookmarksAndFavoritesShallow { bookmarks in
+        coreDataStorage.allBookmarksAndFavoritesFlat { bookmarks in
             let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
             if !bookmarks.contains(where: matchesDomain) {
                 print("culprit?")
@@ -200,7 +200,7 @@ class BookmarksManager {
 
 extension BookmarksManager {
 
-    func allBookmarksAndFavoritesShallow(completion: @escaping ([Bookmark]) -> Void) {
-        coreDataStorage.allBookmarksAndFavoritesShallow(completion: completion)
+    func allBookmarksAndFavoritesFlat(completion: @escaping ([Bookmark]) -> Void) {
+        coreDataStorage.allBookmarksAndFavoritesFlat(completion: completion)
     }
 }

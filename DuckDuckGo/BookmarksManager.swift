@@ -111,7 +111,11 @@ class BookmarksManager {
         }
     }
     
-    func update(folderID: NSManagedObjectID, newTitle: String, newParentID: NSManagedObjectID, completion: BookmarkItemUpdatedBackgroundThreadCompletion? = nil) {
+    func update(folderID: NSManagedObjectID,
+                newTitle: String,
+                newParentID: NSManagedObjectID,
+                completion: BookmarkItemUpdatedBackgroundThreadCompletion? = nil) {
+        
         coreDataStorage.update(folderID: folderID, newTitle: newTitle, newParentID: newParentID, completion: completion)
     }
     
@@ -123,7 +127,12 @@ class BookmarksManager {
         }
     }
 
-    func update(bookmark: Bookmark, newTitle: String, newURL: URL, newParentID: NSManagedObjectID, completion: BookmarkItemUpdatedBackgroundThreadCompletion? = nil) {
+    func update(bookmark: Bookmark,
+                newTitle: String,
+                newURL: URL,
+                newParentID: NSManagedObjectID,
+                completion: BookmarkItemUpdatedBackgroundThreadCompletion? = nil) {
+        
         coreDataStorage.update(bookmarkID: bookmark.objectID, newTitle: newTitle, newURL: newURL, newParentID: newParentID, completion: completion)
         updateFaviconIfNeeded(bookmark, newURL)
         if newParentID == topLevelBookmarksFolder?.objectID {

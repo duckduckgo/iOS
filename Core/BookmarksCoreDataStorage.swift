@@ -226,7 +226,11 @@ extension BookmarksCoreDataStorage {
         createBookmark(url: url, title: title, isFavorite: true, completion: completion)
     }
     
-    public func saveNewBookmark(withTitle title: String, url: URL, parentID: NSManagedObjectID?, completion: BookmarkItemSavedMainThreadCompletion? = nil) {
+    public func saveNewBookmark(withTitle title: String,
+                                url: URL,
+                                parentID: NSManagedObjectID?,
+                                completion: BookmarkItemSavedMainThreadCompletion? = nil) {
+        
         createBookmark(url: url, title: title, isFavorite: false, parentID: parentID, completion: completion)
     }
     
@@ -269,7 +273,11 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    public func update(favoriteID: NSManagedObjectID, newTitle: String, newURL: URL, completion: BookmarkItemUpdatedBackgroundThreadCompletion? = nil) {
+    public func update(favoriteID: NSManagedObjectID,
+                       newTitle: String,
+                       newURL: URL,
+                       completion: BookmarkItemUpdatedBackgroundThreadCompletion? = nil) {
+        
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
@@ -335,7 +343,10 @@ extension BookmarksCoreDataStorage {
         }
     }
         
-    public func updateIndex(of bookmarkItemID: NSManagedObjectID, newIndex: Int, completion: BookmarkItemIndexUpdatedBackgroundThreadCompletion? = nil) {
+    public func updateIndex(of bookmarkItemID: NSManagedObjectID,
+                            newIndex: Int,
+                            completion: BookmarkItemIndexUpdatedBackgroundThreadCompletion? = nil) {
+        
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform {
 
@@ -361,11 +372,17 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    public func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID, newIndex: Int, completion: BookmarkConvertedBackgroundThreadCompletion? = nil) {
+    public func convertFavoriteToBookmark(_ favoriteID: NSManagedObjectID,
+                                          newIndex: Int,
+                                          completion: BookmarkConvertedBackgroundThreadCompletion? = nil) {
+        
         swapIsFavorite(favoriteID, newIndex: newIndex, completion: completion)
     }
     
-    public func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID, newIndex: Int, completion: BookmarkConvertedBackgroundThreadCompletion? = nil) {
+    public func convertBookmarkToFavorite(_ bookmarkID: NSManagedObjectID,
+                                          newIndex: Int,
+                                          completion: BookmarkConvertedBackgroundThreadCompletion? = nil) {
+        
         swapIsFavorite(bookmarkID, newIndex: newIndex, completion: completion)
     }
     
@@ -616,7 +633,10 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func createFolder(title: String, isFavorite: Bool, parentID: NSManagedObjectID? = nil, completion: BookmarkItemSavedMainThreadCompletion? = nil) {
+    private func createFolder(title: String,
+                              isFavorite: Bool,
+                              parentID: NSManagedObjectID? = nil,
+                              completion: BookmarkItemSavedMainThreadCompletion? = nil) {
         
         let privateContext = getTemporaryPrivateContext()
         privateContext.perform { [weak self] in

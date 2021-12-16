@@ -137,23 +137,23 @@ public class BookmarksCoreDataStorage {
 // MARK: public interface
 extension BookmarksCoreDataStorage {
     
-    public var topLevelBookmarksFolder: BookmarkFolder? {
+    public var topLevelBookmarksFolder: BookmarkFolderManagedObject? {
         guard let folder = cachedReadOnlyTopLevelBookmarksFolder else {
             return nil
         }
         return folder
     }
     
-    public var topLevelBookmarksItems: [BookmarkItem] {
+    public var topLevelBookmarksItems: [BookmarkItemManagedObject] {
         guard let folder = cachedReadOnlyTopLevelBookmarksFolder else {
             return []
         }
-        return folder.children?.array as? [BookmarkItem] ?? []
+        return folder.children?.array as? [BookmarkItemManagedObject] ?? []
     }
     
-    public var favorites: [Bookmark] {
+    public var favorites: [BookmarkManagedObject] {
         return readOnlyTopLevelFavoritesItems().map {
-            if let fav = $0 as? Bookmark {
+            if let fav = $0 as? BookmarkManagedObject {
                 return fav
             } else {
                 fatalError("Favourites shouldn't contain folders")
@@ -173,7 +173,7 @@ extension BookmarksCoreDataStorage {
         containsBookmark(url: url, searchType: .favoritesOnly, completion: completion)
     }
     
-    public func bookmark(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
+    public func bookmark(forURL url: URL, completion: @escaping (BookmarkManagedObject?) -> Void) {
         viewContext.perform {
     
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
@@ -187,7 +187,7 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    public func favorite(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
+    public func favorite(forURL url: URL, completion: @escaping (BookmarkManagedObject?) -> Void) {
         viewContext.perform {
     
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
@@ -202,7 +202,7 @@ extension BookmarksCoreDataStorage {
     }
     
     // Just used for favicon deletion and search
-    public func allBookmarksAndFavoritesFlat(completion: @escaping ([Bookmark]) -> Void) {
+    public func allBookmarksAndFavoritesFlat(completion: @escaping ([BookmarkManagedObject]) -> Void) {
         viewContext.perform { [weak self] in
         
             let fetchRequest: NSFetchRequest<BookmarkManagedObject> = BookmarkManagedObject.fetchRequest()
@@ -401,12 +401,12 @@ extension BookmarksCoreDataStorage {
         loadStore()
     }
     
-    public func favoritesUncachedForWidget(completion: @escaping ([Bookmark]) -> Void) {
+    public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {
         getTopLevelFolder(isFavorite: true, onContext: viewContext) { folder in
             
-            let children = folder.children?.array as? [BookmarkItem] ?? []
-            let favorites: [Bookmark] = children.map {
-                if let fav = $0 as? Bookmark {
+            let children = folder.children?.array as? [BookmarkItemManagedObject] ?? []
+            let favorites: [BookmarkManagedObject] = children.map {
+                if let fav = $0 as? BookmarkManagedObject {
                     return fav
                 } else {
                     fatalError("Favourites shouldn't contain folders")

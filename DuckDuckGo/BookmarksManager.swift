@@ -45,15 +45,15 @@ class BookmarksManager {
         return coreDataStorage.topLevelBookmarksItems.count
     }
     
-    var topLevelBookmarkItems: [BookmarkItem] {
+    var topLevelBookmarkItems: [BookmarkItemManagedObject] {
         return coreDataStorage.topLevelBookmarksItems
     }
     
-    var topLevelBookmarksFolder: BookmarkFolder? {
+    var topLevelBookmarksFolder: BookmarkFolderManagedObject? {
         return coreDataStorage.topLevelBookmarksFolder
     }
     
-    var favorites: [Bookmark] {
+    var favorites: [BookmarkManagedObject] {
         return coreDataStorage.favorites
     }
         
@@ -61,7 +61,7 @@ class BookmarksManager {
         return favorites.count
     }
     
-    func favorite(atIndex index: Int) -> Bookmark? {
+    func favorite(atIndex index: Int) -> BookmarkManagedObject? {
         if favorites.count <= index {
             return nil
         }
@@ -80,11 +80,11 @@ class BookmarksManager {
         coreDataStorage.containsFavorite(url: url, completion: completion)
     }
     
-    func bookmark(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
+    func bookmark(forURL url: URL, completion: @escaping (BookmarkManagedObject?) -> Void) {
         coreDataStorage.bookmark(forURL: url, completion: completion)
     }
     
-    func favorite(forURL url: URL, completion: @escaping (Bookmark?) -> Void) {
+    func favorite(forURL url: URL, completion: @escaping (BookmarkManagedObject?) -> Void) {
         coreDataStorage.favorite(forURL: url, completion: completion)
     }
     
@@ -200,7 +200,7 @@ class BookmarksManager {
 
 extension BookmarksManager {
 
-    func allBookmarksAndFavoritesFlat(completion: @escaping ([Bookmark]) -> Void) {
+    func allBookmarksAndFavoritesFlat(completion: @escaping ([BookmarkManagedObject]) -> Void) {
         coreDataStorage.allBookmarksAndFavoritesFlat(completion: completion)
     }
 }

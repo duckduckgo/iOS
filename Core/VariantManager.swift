@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import Speech
 
 public enum FeatureName: String {
 
@@ -47,7 +48,11 @@ public struct Variant {
             }
         }
         
-        static let inEnglishAndIOS15 = { return inEnglish() && iOS15() }
+        static let supportsOnDeviceRecognizer = { SFSpeechRecognizer()?.supportsOnDeviceRecognition ?? false }
+        
+        static let isIOS15EnglishWithOnDeviceSpeech = {
+            return inEnglish() && iOS15() && supportsOnDeviceRecognizer()
+        }
     }
     
     static let doNotAllocate = 0
@@ -60,8 +65,8 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
         
-        Variant(name: "ma", weight: 1, isIncluded: When.inEnglishAndIOS15, features: [.voiceSearch]),
-        Variant(name: "mb", weight: 1, isIncluded: When.inEnglishAndIOS15, features: [])
+        Variant(name: "ma", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [.voiceSearch]),
+        Variant(name: "mb", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [])
     ]
     
     public let name: String

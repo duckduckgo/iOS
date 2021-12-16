@@ -177,7 +177,10 @@ extension BookmarksCoreDataStorage {
         viewContext.perform {
     
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
-            fetchRequest.predicate = NSPredicate(format: "url == %@ AND isFavorite == false", url as CVarArg)
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == false",
+                                                 #keyPath(BookmarkManagedObject.url),
+                                                 url as NSURL,
+                                                 #keyPath(BookmarkManagedObject.isFavorite))
             
             let results = try? self.viewContext.fetch(fetchRequest)
             completion(results?.first)
@@ -188,7 +191,10 @@ extension BookmarksCoreDataStorage {
         viewContext.perform {
     
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
-            fetchRequest.predicate = NSPredicate(format: "url == %@ AND isFavorite == true", url as CVarArg)
+            fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == true",
+                                                 #keyPath(BookmarkManagedObject.url),
+                                                 url as NSURL,
+                                                 #keyPath(BookmarkManagedObject.isFavorite))
             
             let results = try? self.viewContext.fetch(fetchRequest)
             completion(results?.first)
@@ -480,11 +486,19 @@ extension BookmarksCoreDataStorage {
             
             switch searchType {
             case .bookmarksOnly:
-                fetchRequest.predicate = NSPredicate(format: "url == %@ AND isFavorite == false", url as CVarArg)
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == false",
+                                                     #keyPath(BookmarkManagedObject.url),
+                                                     url as NSURL,
+                                                     #keyPath(BookmarkManagedObject.isFavorite))
             case .favoritesOnly:
-                fetchRequest.predicate = NSPredicate(format: "url == %@ AND isFavorite == true", url as CVarArg)
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == true",
+                                                     #keyPath(BookmarkManagedObject.url),
+                                                     url as NSURL,
+                                                     #keyPath(BookmarkManagedObject.isFavorite))
             case .bookmarksAndFavorites:
-                fetchRequest.predicate = NSPredicate(format: "url == %@", url as CVarArg)
+                fetchRequest.predicate = NSPredicate(format: "%K == %@",
+                                                     #keyPath(BookmarkManagedObject.url),
+                                                     url as NSURL)
             }
             
             guard let results = try? self.viewContext.fetch(fetchRequest) else {
@@ -502,7 +516,10 @@ extension BookmarksCoreDataStorage {
         context.perform {
             
             let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
-            fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == %@", NSNumber(value: isFavorite))
+            fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == %@",
+                                                 #keyPath(BookmarkManagedObject.parent),
+                                                 #keyPath(BookmarkManagedObject.isFavorite),
+                                                 NSNumber(value: isFavorite))
             
             let results = try? context.fetch(fetchRequest)
             guard (results?.count ?? 0) <= 1 else {
@@ -520,7 +537,9 @@ extension BookmarksCoreDataStorage {
         
         viewContext.performAndWait {
             let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
-            fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == false")
+            fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == false",
+                                                 #keyPath(BookmarkManagedObject.parent),
+                                                 #keyPath(BookmarkManagedObject.isFavorite))
             
             let results = try? viewContext.fetch(fetchRequest)
             guard (results?.count ?? 0) <= 1 else {
@@ -538,7 +557,9 @@ extension BookmarksCoreDataStorage {
     private func cacheReadOnlyTopLevelFavoritesFolder() {
         viewContext.performAndWait {
             let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
-            fetchRequest.predicate = NSPredicate(format: "parent == nil AND isFavorite == true")
+            fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == true",
+                                                 #keyPath(BookmarkManagedObject.parent),
+                                                 #keyPath(BookmarkManagedObject.isFavorite))
             
             let results = try? viewContext.fetch(fetchRequest)
             guard (results?.count ?? 0) <= 1 else {

@@ -43,6 +43,8 @@ public enum BookmarksCoreDataStorageError: Error {
 }
 
 public typealias BookmarkItemSavedMainThreadCompletion = ((NSManagedObjectID?, BookmarksCoreDataStorageError?) -> Void)
+public typealias BookmarkExistsMainThreadCompletion = ((Bool) -> Void)
+
 public typealias BookmarkItemDeletedBackgroundThreadCompletion = ((Bool, BookmarksCoreDataStorageError?) -> Void)
 public typealias BookmarkItemUpdatedBackgroundThreadCompletion = ((Bool, BookmarksCoreDataStorageError?) -> Void)
 public typealias BookmarkItemIndexUpdatedBackgroundThreadCompletion = ((Bool, BookmarksCoreDataStorageError?) -> Void)
@@ -161,15 +163,15 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    public func contains(url: URL, completion: @escaping (Bool) -> Void) {
+    public func contains(url: URL, completion: @escaping BookmarkExistsMainThreadCompletion) {
         containsBookmark(url: url, searchType: .bookmarksAndFavorites, completion: completion)
     }
     
-    public func containsBookmark(url: URL, completion: @escaping (Bool) -> Void) {
+    public func containsBookmark(url: URL, completion: @escaping BookmarkExistsMainThreadCompletion) {
         containsBookmark(url: url, searchType: .bookmarksOnly, completion: completion)
     }
     
-    public func containsFavorite(url: URL, completion: @escaping (Bool) -> Void) {
+    public func containsFavorite(url: URL, completion: @escaping BookmarkExistsMainThreadCompletion) {
         containsBookmark(url: url, searchType: .favoritesOnly, completion: completion)
     }
     
@@ -480,7 +482,7 @@ extension BookmarksCoreDataStorage {
         case bookmarksAndFavorites
     }
     
-    private func containsBookmark(url: URL, searchType: SearchType, completion: @escaping (Bool) -> Void) {
+    private func containsBookmark(url: URL, searchType: SearchType, completion: @escaping BookmarkExistsMainThreadCompletion) {
         viewContext.perform {
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
             fetchRequest.fetchLimit = 1

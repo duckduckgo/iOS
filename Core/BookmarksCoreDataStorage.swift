@@ -72,6 +72,7 @@ public class BookmarksCoreDataStorage {
     private func getTemporaryPrivateContext() -> NSManagedObjectContext {
         RunLoop.current.run(until: storeLoadedCondition)
         let context = persistentContainer.newBackgroundContext()
+        context.mergePolicy = NSMergePolicy(merge: .mergeByPropertyObjectTrumpMergePolicyType)
         context.name = Constants.privateContextName
         return context
     }

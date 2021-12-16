@@ -218,32 +218,38 @@ class TabSwitcherViewController: UIViewController {
         }
     }
     
-    fileprivate func bookmarkAll(_ tabs: [Tab] ) -> BookmarkAllResult {
+    fileprivate func bookmarkAll(tabsToBookmark: [Tab],
+                                 newBookmarksCount: Int = 0,
+                                 existingBookmarksCount: Int = 0,
+                                 bookmarksManager: BookmarksManager,
+                                 completion: @escaping (BookmarkAllResult) -> Void) {
         
-        let bookmarksManager = BookmarksManager()
-        var newBookmarksCount: Int = 0
-        var existingBookmarksCount: Int = 0
-        
-        let group = DispatchGroup()
-        tabs.forEach { tab in
-            if let link = tab.link {
-                group.enter()
-                bookmarksManager.contains(url: link.url) { contains in
-                    if contains {
-                        existingBookmarksCount += 1
-                    } else {
-                        bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
-                        newBookmarksCount += 1
-                    }
-                    group.leave()
-                }
-            } else {
-                os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
-            }
+        if tabsToBookmark.count == 0 {
+            completion((newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount))
+            return
         }
         
-        group.wait()
-        return (newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount)
+        let tab = tabsToBookmark[0]
+        if let link = tab.link {
+            bookmarksManager.contains(url: link.url) { contains in
+                if contains {
+                    self.bookmarkAll(tabsToBookmark: Array(tabsToBookmark.dropFirst()),
+                                     newBookmarksCount: newBookmarksCount,
+                                     existingBookmarksCount: existingBookmarksCount + 1,
+                                     bookmarksManager: bookmarksManager,
+                                     completion: completion)
+                } else {
+                    bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
+                    self.bookmarkAll(tabsToBookmark: Array(tabsToBookmark.dropFirst()),
+                                     newBookmarksCount: newBookmarksCount + 1,
+                                     existingBookmarksCount: existingBookmarksCount,
+                                     bookmarksManager: bookmarksManager,
+                                     completion: completion)
+                }
+            }
+        } else {
+            os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
+        }
     }
     
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {

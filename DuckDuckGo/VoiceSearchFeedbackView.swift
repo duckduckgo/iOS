@@ -140,16 +140,9 @@ extension VoiceSearchFeedbackView {
 extension VoiceSearchFeedbackView {
     private var footerWidth: CGFloat { 285 }
     private var micIconName: String { "MicrophoneSolid" }
-    private var voiceCircleVerticalPadding: CGFloat {
-        sizeClass == .regular ? 60 : 43
-    }
-    private var footerTextPadding: CGFloat {
-        sizeClass == .regular ? 43 : 8
-    }
-    
-    private var micSize: CGSize {
-        CGSize(width: 32, height: 32)
-    }
+    private var voiceCircleVerticalPadding: CGFloat { sizeClass == .regular ? 60 : 43 }
+    private var footerTextPadding: CGFloat { sizeClass == .regular ? 43 : 8 }
+    private var micSize: CGSize { CGSize(width: 32, height: 32) }
     
     private struct CircleSize {
         static let inner = CGSize(width: 56, height: 56)
@@ -185,4 +178,16 @@ struct VoiceSearchFeedbackView_Previews: PreviewProvider {
             }
         }
     }
+}
+
+struct MockSpeechRecognizer: SpeechRecognizerProtocol {
+    var isAvailable: Bool = false
+    
+    static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) { }
+    
+    func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float { 10 }
+    
+    func startRecording(resultHandler: @escaping (String?, Error?, Bool) -> Void, volumeCallback: @escaping (Float) -> Void) { }
+    
+    func stopRecording() { }
 }

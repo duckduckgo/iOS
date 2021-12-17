@@ -144,15 +144,3 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
         reset()
     }
 }
-
-struct MockSpeechRecognizer: SpeechRecognizerProtocol {
-    var isAvailable: Bool = false
-    static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) { }
- 
-    func getVolumeLevel(from channelData: UnsafeMutablePointer<Float>) -> Float {
-        return 10
-    }
-    
-    func startRecording(resultHandler: @escaping (String?, Error?, Bool) -> Void, volumeCallback: @escaping (Float) -> Void) { }
-    func stopRecording() { }
-}

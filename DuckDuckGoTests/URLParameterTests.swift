@@ -77,12 +77,15 @@ class URLParameterTests: XCTestCase {
             os_log("TEST: %s", test.name)
             
             let testUrl = URL(string: test.testURL)
-            let resultUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: testUrl, config: appConfig)
+            var resultUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: testUrl, config: appConfig)
             
-            // Empty exptectedUrl should be treated as nil
-            let expectedUrl = !test.expectURL.isEmpty ? test.expectURL : nil
-            XCTAssertEqual(resultUrl?.absoluteString, expectedUrl,
-                           "\(resultUrl?.absoluteString ?? "(nil)") not equal to expected: \(expectedUrl ?? "nil")")
+            if resultUrl == nil {
+                // Tests expect unchanged URLs to match testURL
+                resultUrl = testUrl
+            }
+            
+            XCTAssertEqual(resultUrl?.absoluteString, test.expectURL,
+                           "\(resultUrl?.absoluteString ?? "(nil)") not equal to expected: \(test.expectURL)")
         }
     }
 

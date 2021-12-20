@@ -156,7 +156,6 @@ class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSourc
     }
     
     var searchResults = [Bookmark]()
-    private let searchEngine = BookmarksCachingSearch()
     
     var favoritesSectionIndex: Int? {
         return nil
@@ -172,7 +171,7 @@ class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSourc
     
     var navigationTitle: String?
     
-    func performSearch(query: String, completion: @escaping () -> Void) {
+    func performSearch(query: String, searchEngine: BookmarksCachingSearch, completion: @escaping () -> Void) {
         let query = query.lowercased()
         searchEngine.search(query: query, sortByRelevance: false) { results in
             self.searchResults = results

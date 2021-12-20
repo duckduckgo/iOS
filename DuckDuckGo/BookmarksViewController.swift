@@ -32,6 +32,7 @@ class BookmarksViewController: UITableViewController {
     
     fileprivate lazy var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource(alertDelegate: self)
     fileprivate var searchDataSource = SearchBookmarksDataSource()
+    private var bookmarksCachingSearch: BookmarksCachingSearch?
     
     fileprivate var onDidAppearAction: () -> Void = {}
         
@@ -344,6 +345,12 @@ class BookmarksViewController: UITableViewController {
 
 extension BookmarksViewController: UISearchBarDelegate {
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if bookmarksCachingSearch == nil {
+            bookmarksCachingSearch = BookmarksCachingSearch()
+        }
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             if tableView.dataSource !== dataSource {
@@ -356,8 +363,9 @@ extension BookmarksViewController: UISearchBarDelegate {
             prepareForSearching()
             tableView.dataSource = searchDataSource
         }
-        
-        searchDataSource.performSearch(query: searchText) {
+
+        let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
+        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksSearch) {
             self.tableView.reloadData()
         }
     }

@@ -1039,7 +1039,7 @@ extension MainViewController: OmniBarDelegate {
                 showSuggestionTray(.favorites)
             }
         } else {
-            let bookmarksSearch = bookmarksCachingSearch! //TODO ?? BookmarksCachingSearch()
+            let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
             showSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
         }
         

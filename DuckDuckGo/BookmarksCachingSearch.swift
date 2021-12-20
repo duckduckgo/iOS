@@ -18,6 +18,7 @@
 //
 
 import Core
+import Foundation
 
 protocol BookmarksSearchStore {
     var hasData: Bool { get }
@@ -34,7 +35,7 @@ extension BookmarksCoreDataStorage: BookmarksSearchStore {
     }
 }
 
-class BookmarksSearch {
+class BookmarksCachingSearch {
     
     private class ScoredBookmark {
         let bookmark: Bookmark
@@ -50,10 +51,26 @@ class BookmarksSearch {
     
     init(bookmarksStore: BookmarksSearchStore = BookmarksCoreDataStorage.shared) {
         self.bookmarksStore = bookmarksStore
+        loadCache()
     }
     
     var hasData: Bool {
         return bookmarksStore.hasData
+    }
+    
+    private var cachedBookmarksAndFavorites: [Bookmark]?
+    private let cacheLoadedCondition = RunLoop.ResumeCondition()
+    
+    private func loadCache() {
+        bookmarksStore.bookmarksAndFavorites { bookmarks in
+            self.cachedBookmarksAndFavorites = bookmarks
+            self.cacheLoadedCondition.resolve()
+        }
+    }
+    
+    private var bookmarksAndFavorites: [Bookmark] {
+        RunLoop.current.run(until: cacheLoadedCondition)
+        return cachedBookmarksAndFavorites ?? []
     }
     
     // swiftlint:disable cyclomatic_complexity
@@ -113,23 +130,22 @@ class BookmarksSearch {
             return
         }
         
-        bookmarksStore.bookmarksAndFavorites { bookmarks in
-            let results: [ScoredBookmark] = bookmarks.map {
-                let score = $0.isFavorite ? 0 : -1
-                return ScoredBookmark(bookmark: $0, score: score)
-            }
-                        
-            let trimmed = query.trimWhitespace()
-            self.score(query: trimmed, results: results)
-            
-            var finalResult = results.filter { $0.score > 0 }
-            if sortByRelevance {
-                finalResult = finalResult.sorted { $0.score > $1.score }
-            }
-            
-            DispatchQueue.main.async {
-                completion(finalResult.map { $0.bookmark })
-            }
+        let bookmarks = bookmarksAndFavorites
+        let results: [ScoredBookmark] = bookmarks.map {
+            let score = $0.isFavorite ? 0 : -1
+            return ScoredBookmark(bookmark: $0, score: score)
+        }
+                    
+        let trimmed = query.trimWhitespace()
+        self.score(query: trimmed, results: results)
+        
+        var finalResult = results.filter { $0.score > 0 }
+        if sortByRelevance {
+            finalResult = finalResult.sorted { $0.score > $1.score }
+        }
+        
+        DispatchQueue.main.async {
+            completion(finalResult.map { $0.bookmark })
         }
     }
 }

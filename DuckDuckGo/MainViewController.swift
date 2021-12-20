@@ -104,6 +104,8 @@ class MainViewController: UIViewController {
     let gestureBookmarksButton = GestureToolbarButton()
     
     private var fireButtonAnimator: FireButtonAnimator?
+    
+    private var bookmarksCachingSearch: BookmarksCachingSearch?
 
     fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
@@ -688,6 +690,7 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         hideSuggestionTray()
         refreshOmniBar()
+        bookmarksCachingSearch = nil
     }
 
     fileprivate func refreshBackForwardButtons() {
@@ -1036,7 +1039,8 @@ extension MainViewController: OmniBarDelegate {
                 showSuggestionTray(.favorites)
             }
         } else {
-            showSuggestionTray(.autocomplete(query: updatedQuery))
+            let bookmarksSearch = bookmarksCachingSearch! //TODO ?? BookmarksCachingSearch()
+            showSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
         }
         
     }
@@ -1113,10 +1117,14 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+        if bookmarksCachingSearch == nil {
+            bookmarksCachingSearch = BookmarksCachingSearch()
+        }
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
-            showSuggestionTray(.autocomplete(query: query))
+            let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
+            showSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksSearch))
         } else {
             showSuggestionTray(.favorites)
         }

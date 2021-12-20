@@ -40,7 +40,7 @@ class AutocompleteViewController: UIViewController {
     fileprivate var suggestions = [Suggestion]()
     fileprivate var selectedItem = -1
     
-    private let bookmarksSearch = BookmarksSearch()
+    private var bookmarksSearch: BookmarksCachingSearch!
 
     var showBackground = true {
         didSet {
@@ -60,11 +60,12 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
     
-    static func loadFromStoryboard() -> AutocompleteViewController {
+    static func loadFromStoryboard(bookmarksCachingSearch: BookmarksCachingSearch) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
+        controller.bookmarksSearch = bookmarksCachingSearch
         return controller
     }
 

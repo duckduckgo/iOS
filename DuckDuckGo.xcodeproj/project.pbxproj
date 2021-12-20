@@ -324,7 +324,7 @@
 		9830A06325ED0DB900DB64DE /* BrowsingMenu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9830A06225ED0DB900DB64DE /* BrowsingMenu.xcassets */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
 		983930C726FF3F2C005EE3CD /* PrivacyConfigurationDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983930C626FF3F2C005EE3CD /* PrivacyConfigurationDataTests.swift */; };
-		983B4D9A254B67F900467D62 /* BookmarksSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983B4D99254B67F900467D62 /* BookmarksSearch.swift */; };
+		983B4D9A254B67F900467D62 /* BookmarksCachingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983B4D99254B67F900467D62 /* BookmarksCachingSearch.swift */; };
 		983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EABB7236198F6003948D1 /* DatabaseMigration.swift */; };
 		983EABBB236199C2003948D1 /* DatabaseMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EABB923619986003948D1 /* DatabaseMigrationTests.swift */; };
 		984147A824F0259000362052 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 984147AA24F0259000362052 /* Onboarding.storyboard */; };
@@ -1102,7 +1102,7 @@
 		983A4B8F251EABEA00F3EDF1 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		983A4B90251EABEA00F3EDF1 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/Localizable.strings; sourceTree = "<group>"; };
 		983A4B91251EABEA00F3EDF1 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		983B4D99254B67F900467D62 /* BookmarksSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksSearch.swift; sourceTree = "<group>"; };
+		983B4D99254B67F900467D62 /* BookmarksCachingSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCachingSearch.swift; sourceTree = "<group>"; };
 		983E1349251EABF200149BD9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		983E134A251EABF200149BD9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		983E134C251EABF200149BD9 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3402,7 +3402,7 @@
 				F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */,
 				F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */,
 				F1D796EB1E7AB8930019D451 /* SaveBookmarkActivity.swift */,
-				983B4D99254B67F900467D62 /* BookmarksSearch.swift */,
+				983B4D99254B67F900467D62 /* BookmarksCachingSearch.swift */,
 			);
 			name = Bookmarks;
 			sourceTree = "<group>";
@@ -4590,7 +4590,7 @@
 				9880722A25FA497B0039EF4B /* MenuButton.swift in Sources */,
 				850365F323DE087800D0F787 /* UIImageViewExtension.swift in Sources */,
 				F4CE6D1B257EA33C00D0A6AA /* FireButtonAnimator.swift in Sources */,
-				983B4D9A254B67F900467D62 /* BookmarksSearch.swift in Sources */,
+				983B4D9A254B67F900467D62 /* BookmarksCachingSearch.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
 				982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */,
 				4BDCECB92680333100F5C244 /* EmailWaitlistWebViewController.swift in Sources */,

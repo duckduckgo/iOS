@@ -156,7 +156,7 @@ class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSourc
     }
     
     var searchResults = [Bookmark]()
-    private let searchEngine = BookmarksSearch()
+    private let searchEngine = BookmarksCachingSearch()
     
     var favoritesSectionIndex: Int? {
         return nil

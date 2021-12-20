@@ -1,5 +1,5 @@
 //
-//  BookmarksSearchTests.swift
+//  BookmarksCachingSearchTests.swift
 //  UnitTests
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -55,7 +55,7 @@ class MockBookmark: Bookmark {
     var parentFolder: BookmarkFolder?
 }
 
-class BookmarksSearchTests: XCTestCase {
+class BookmarksCachingSearchTests: XCTestCase {
 
     let url = URL(string: "http://duckduckgo.com")!
     let simpleStore = MockBookmarkSearchStore()
@@ -98,7 +98,7 @@ class BookmarksSearchTests: XCTestCase {
 
     func testWhenSearchingThenOnlyBeginingsOfWordsAreMatched() throws {
         
-        let engine = BookmarksSearch(bookmarksStore: simpleStore)
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         let expectations = [
             expectation(description: "test for correct number of search results"),
             expectation(description: "test for correct number of search results"),
@@ -137,7 +137,7 @@ class BookmarksSearchTests: XCTestCase {
     
     func testWhenSearchingThenBeginingOfTitlesArePromoted() throws {
         
-        let engine = BookmarksSearch(bookmarksStore: simpleStore)
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
         let expectation1 = expectation(description: "t")
         engine.search(query: "t") { resultSingleLetter in
@@ -201,7 +201,7 @@ class BookmarksSearchTests: XCTestCase {
     
     func testWhenSearchingFullStringThenExactMatchesAreFirst() throws {
         
-        let engine = BookmarksSearch(bookmarksStore: simpleStore)
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
         let expectation1 = expectation(description: "fav 1")
         engine.search(query: "fav 1") { result in
@@ -219,7 +219,7 @@ class BookmarksSearchTests: XCTestCase {
     
     func testWhenSearchingThenFavoritesAreFirst() throws {
         
-        let engine = BookmarksSearch(bookmarksStore: simpleStore)
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
         let expectation1 = expectation(description: "1")
         engine.search(query: "1") { result in
@@ -239,7 +239,7 @@ class BookmarksSearchTests: XCTestCase {
 
     func testWhenSearchingMultipleWordsThenAllMustBeFound() throws {
         
-        let engine = BookmarksSearch(bookmarksStore: simpleStore)
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
         let expectation1 = expectation(description: "te bo")
         engine.search(query: "te bo") { result in
@@ -258,7 +258,7 @@ class BookmarksSearchTests: XCTestCase {
     
     func testWhenSearchingThenNotFindingAnythingIsAlsoValid() throws {
         
-        let engine = BookmarksSearch(bookmarksStore: simpleStore)
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
         let expectation1 = expectation(description: "testing")
         engine.search(query: "testing") { result in
@@ -272,7 +272,7 @@ class BookmarksSearchTests: XCTestCase {
     
     func testWhenMatchingURLThenDomainMatchesArePromoted() throws {
         
-        let engine = BookmarksSearch(bookmarksStore: urlStore)
+        let engine = BookmarksCachingSearch(bookmarksStore: urlStore)
         
         let expectation1 = expectation(description: "exam")
         engine.search(query: "exam") { result in

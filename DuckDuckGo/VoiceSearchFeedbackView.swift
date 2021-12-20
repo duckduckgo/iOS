@@ -169,18 +169,18 @@ struct VoiceSearchFeedbackView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ForEach(ColorScheme.allCases, id: \.self) {
-                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: MockSpeechRecognizer()))
+                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: PreviewMockSpeechRecognizer()))
                     .preferredColorScheme($0)
             }
             if #available(iOS 15.0, *) {
-                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: MockSpeechRecognizer()))
+                VoiceSearchFeedbackView(speechModel: VoiceSearchFeedbackViewModel(speechRecognizer: PreviewMockSpeechRecognizer()))
                     .previewInterfaceOrientation(.landscapeRight)
             }
         }
     }
 }
 
-struct MockSpeechRecognizer: SpeechRecognizerProtocol {
+private struct PreviewMockSpeechRecognizer: SpeechRecognizerProtocol {
     var isAvailable: Bool = false
     
     static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) { }

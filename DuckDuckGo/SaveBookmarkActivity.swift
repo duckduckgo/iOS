@@ -74,6 +74,7 @@ class SaveBookmarkActivity: UIActivity {
                 }
             } else {
                 let linkForTitle: Link
+                // Get the proper title from the webview if we can
                 if let link = self.controller?.link, link.url == bookmarkURL {
                     linkForTitle = link
                 } else {

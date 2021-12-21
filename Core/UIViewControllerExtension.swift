@@ -115,3 +115,24 @@ extension Core.BookmarkManagedObject: UIActivityItemSource {
         (self as Bookmark).activityViewController(activityViewController, subjectForActivityType: activityType)
     }
 }
+
+extension Core.Link: UIActivityItemSource {
+
+    public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return AppUrls().removeInternalSearchParameters(fromUrl: url)
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        return AppUrls().removeInternalSearchParameters(fromUrl: url)
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        if let title = title, activityType == .mail {
+            return title
+        } else {
+            return ""
+        }
+    }
+}

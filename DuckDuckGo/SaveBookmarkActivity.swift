@@ -23,14 +23,14 @@ import Core
 class SaveBookmarkActivity: UIActivity {
 
     private let bookmarksManager: BookmarksManager
-    private var bookmark: Link?
+    private var bookmarkURL: URL?
     
-    private weak var controller: UIViewController?
+    private weak var controller: TabViewController?
     private var isFavorite: Bool
     
     private var activityViewControllerAccessed = false
 
-    init(controller: UIViewController, isFavorite: Bool = false, bookmarksManager: BookmarksManager = BookmarksManager()) {
+    init(controller: TabViewController, isFavorite: Bool = false, bookmarksManager: BookmarksManager = BookmarksManager()) {
         self.bookmarksManager = bookmarksManager
         self.controller = controller
         self.isFavorite = isFavorite
@@ -50,37 +50,44 @@ class SaveBookmarkActivity: UIActivity {
     }
 
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
-        return activityItems.contains(where: { $0 is Link })
+        return activityItems.contains(where: { $0 is URL })
     }
 
     override func prepare(withActivityItems activityItems: [Any]) {
-        bookmark = activityItems.first(where: { $0 is Link }) as? Link
+        bookmarkURL = activityItems.first(where: { $0 is URL }) as? URL
     }
 
     override var activityViewController: UIViewController? {
         guard !activityViewControllerAccessed else { return nil }
         activityViewControllerAccessed = true
 
-        guard let bookmark = bookmark else {
+        guard let bookmarkURL = bookmarkURL else {
             activityDidFinish(true)
             return nil
         }
 
-        bookmarksManager.contains(url: bookmark.url) { contains in
+        bookmarksManager.contains(url: bookmarkURL) { contains in
             if contains {
                 DispatchQueue.main.async {
                     ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
                     self.activityDidFinish(true)
                 }
             } else {
+                let linkForTitle: Link
+                if let link = self.controller?.link, link.url == bookmarkURL {
+                    linkForTitle = link
+                } else {
+                    linkForTitle = Link(title: nil, url: bookmarkURL)
+                }
+                let title = linkForTitle.displayTitle ?? bookmarkURL.absoluteString
                 if self.isFavorite {
-                    self.bookmarksManager.saveNewFavorite(withTitle: bookmark.title ?? "", url: bookmark.url)
+                    self.bookmarksManager.saveNewFavorite(withTitle: title, url: bookmarkURL)
                     DispatchQueue.main.async {
                         ActionMessageView.present(message: UserText.webSaveFavoriteDone)
                         self.activityDidFinish(true)
                     }
                 } else {
-                    self.bookmarksManager.saveNewBookmark(withTitle: bookmark.title ?? "", url: bookmark.url, parentID: nil)
+                    self.bookmarksManager.saveNewBookmark(withTitle: title, url: bookmarkURL, parentID: nil)
                     DispatchQueue.main.async {
                         ActionMessageView.present(message: UserText.webSaveBookmarkDone)
                         self.activityDidFinish(true)

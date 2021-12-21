@@ -21,6 +21,8 @@ import UIKit
 import Core
 import os.log
 
+// swiftlint:disable file_length
+
 class BookmarksViewController: UITableViewController {
 
     @IBOutlet weak var addFolderButton: UIBarButtonItem!
@@ -405,3 +407,5 @@ extension BookmarksViewController: Themable {
         tableView.reloadData()
     }
 }
+
+// swiftlint:enable file_length

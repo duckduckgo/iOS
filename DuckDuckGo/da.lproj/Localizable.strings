@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Til";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Tilføj bogmærke";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Tilføj til favorit";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Tilføj mappe";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Tilføj mappe";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Slet";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Er du sikker på, at du vil slette denne mappe og %i elementer?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Er du sikker på, at du vil slette denne mappe og %i element?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "Vil du slette %@?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Rediger bogmærke";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Rediger favorit";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Rediger mappe";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Placering";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Webstedets titel";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Bogmærker";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Tilføjede nye bogmærker for alle faner";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsingmenu";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Færdig";
 
 /* Edit button */
 "navigation.title.edit" = "Rediger";

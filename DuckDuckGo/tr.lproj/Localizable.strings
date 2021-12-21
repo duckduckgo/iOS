@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Açık";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Yer İmi ekle";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Favori Ekle";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Klasör Ekle";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Klasör Ekle";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Sil";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Bu klasörü ve %i ögeyi silmek istediğinizden emin misiniz?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Bu klasörü ve %i ögeyi silmek istediğinizden emin misiniz?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "%@ silinsin mi?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Yer İşaretini Düzenle";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Favoriyi Düzenle";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Klasörü Düzenle";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Konum";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Web sitesi başlığı";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Yer İmleri";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Tüm sekmeler için yeni yer işaretleri eklendi";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Göz Atma Menüsü";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Bitti";
 
 /* Edit button */
 "navigation.title.edit" = "Düzenle";

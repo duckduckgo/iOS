@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Päällä";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Lisää kirjanmerkki";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Lisää suosikki";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Lisää kansio";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Lisää kansio";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.esimerkki.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Poista";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Haluatko varmasti poistaa tämän kansion ja %i kohdetta?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Haluatko varmasti poistaa tämän kansion ja %i kohteen?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "Poistetaanko %@?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Muokkaa kirjanmerkkiä";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Muokkaa suosikkia";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Muokkaa kansiota";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Sijainti";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Verkkosivuston nimi";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Kirjanmerkit";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Kaikki välilehdet lisättiin kirjanmerkkeihin";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Selausvalikko";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Valmis";
 
 /* Edit button */
 "navigation.title.edit" = "Muokkaa";

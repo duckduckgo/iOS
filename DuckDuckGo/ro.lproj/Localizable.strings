@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activat";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Adăugare semn de carte";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Adaugă preferință";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Adaugă folder";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Adaugă folder";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Ștergere";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Sigur dorești să ștergi aceste folder și %i elemente?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Sigur dorești să ștergi aceste folder și %i element?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "Ștergi %@?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Editare semn de carte";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Editează preferința";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Editează folderul";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Locație";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titlul site-ului web";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Semne de carte";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "S-au adăugat marcaje noi pentru toate filele";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Meniul de navigare";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Terminat";
 
 /* Edit button */
 "navigation.title.edit" = "Editați";

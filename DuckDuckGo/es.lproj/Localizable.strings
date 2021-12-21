@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activado";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Añadir marcador";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Añadir favorito";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Añadir carpeta";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Añadir carpeta";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.ejemplo.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Eliminar";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "¿Seguro que deseas eliminar esta carpeta y %i elementos?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "¿Seguro que deseas eliminar esta carpeta y %i elemento?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "¿Eliminar %@?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Editar marcador";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Editar favorito";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Editar carpeta";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Ubicación";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Título del sitio web";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Marcadores";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Marcadores añadidos para todas las pestañas";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menú de navegación";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Hecho";
 
 /* Edit button */
 "navigation.title.edit" = "Editar";

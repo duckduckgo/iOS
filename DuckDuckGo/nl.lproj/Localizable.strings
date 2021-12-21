@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aan";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Bladwijzer toevoegen";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Favoriet toevoegen";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Map toevoegen";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Map toevoegen";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.voorbeeld.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Verwijderen";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Weet u zeker dat u deze map en %i items wilt verwijderen?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Weet u zeker dat u deze map en %i item wilt verwijderen?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "%@ verwijderen?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Bladwijzer bewerken";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Favoriet bewerken";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Map bewerken";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Locatie";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Websitetitel";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Bladwijzers";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Nieuwe bladwijzers toegevoegd voor alle tabbladen";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Optiemenu";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Klaar";
 
 /* Edit button */
 "navigation.title.edit" = "Bewerken";

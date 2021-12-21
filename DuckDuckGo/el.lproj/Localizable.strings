@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ενεργό";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Προσθήκη σελιδοδείκτη";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Προσθήκη Αγαπημένου";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Προσθήκη φακέλου";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Προσθήκη φακέλου";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Διαγραφή";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Θέλετε σίγουρα να διαγράψετε αυτόν τον φάκελο και %i αντικείμενα;";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Θέλετε σίγουρα να διαγράψετε αυτόν τον φάκελο και %i αντικείμενο;";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "Διαγραφή %@;";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Επεξεργασία σελιδοδείκτη";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Επεξεργασία αγαπημένων";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Επεξεργασία φακέλου";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Τοποθεσία";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Τίτλος ιστότοπου";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Σελιδοδείκτες";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Προστέθηκαν νέοι σελιδοδείκτες για όλες τις καρτέλες";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Μενού περιήγησης";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Ολοκληρώθηκε";
 
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";

@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "An";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Lesezeichen hinzufügen";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Favorit hinzufügen";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Ordner hinzufügen";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Ordner hinzufügen";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Löschen";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Möchtest du diesen Ordner mit %i Elementen wirklich löschen?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Möchtest du diesen Ordner mit %i Element wirklich löschen?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "%@ löschen?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Lesezeichen bearbeiten";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Favorit bearbeiten";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Ordner bearbeiten";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Standort";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titel der Website";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Lesezeichen";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Es wurden neue Lesezeichen für alle Registerkarten hinzugefügt";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing-Optionen";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Fertig";
 
 /* Edit button */
 "navigation.title.edit" = "Bearbeiten";

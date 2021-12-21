@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ieslēgts";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Pievienot grāmatzīmi";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Pievienot izlases vienumu";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Pievienot mapi";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Pievienot mapi";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.piemērs.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Dzēst";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Vai tiešām vēlies dzēst šo mapi un %i vienumus?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Vai tiešām vēlies dzēst šo mapi un %i vienumu?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "Vai dzēst %@?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Rediģēt grāmatzīmi";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Rediģēt izlasi";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Rediģēt mapi";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Atrašanās vieta";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Vietnes nosaukums";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Grāmatzīmes";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Pievienotas jaunas grāmatzīmes visām cilnēm";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Pārlūkošanas izvēlne";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Gatavs";
 
 /* Edit button */
 "navigation.title.edit" = "Rediģēt";

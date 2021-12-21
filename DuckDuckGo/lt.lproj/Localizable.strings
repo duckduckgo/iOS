@@ -130,50 +130,11 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Įjungti";
 
-/* Add bookmark screen title */
-"bookmark.addBookmark.title" = "Pridėti žymę";
-
-/* Add favorite screen title */
-"bookmark.addFavorite.title" = "Pridėti mėgstamą";
-
-/* Add folder screen title */
-"bookmark.addFolder.title" = "Pridėti aplanką";
-
-/* Add bookmark folder button text */
-"bookmark.addFolderButton" = "Pridėti aplanką";
-
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
-/* Delete bookmark folder alert delete button */
-"bookmark.deleteFolderAlert.deleteButton" = "Trinti";
-
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Ar tikrai norite ištrinti šį aplanką ir %i elementus (-ų)?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Ar tikrai norite ištrinti šį aplanką ir %i elementą?";
-
-/* Delete bookmark folder alert title */
-"bookmark.deleteFolderAlert.title" = "Ištrinti %@?";
-
-/* Edit bookmark screen title */
-"bookmark.editBookmark.title" = "Redaguoti žymę";
-
-/* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Redaguoti mėgstamiausią";
-
-/* Edit folder screen title */
-"bookmark.editFolder.title" = "Redaguoti aplanką";
-
-/* Header for folder selection for bookmarks */
-"bookmark.folderSelect.title" = "Vieta";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Svetainės pavadinimas";
-
-/* Top level bookmarks folder title */
-"bookmark.topLevelFolder.title" = "Žymės";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Pridėta naujų žymių visiems skirtukams";
@@ -699,9 +660,6 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Naršymo meniu";
-
-/* Finish editing bookmarks button */
-"navigation.title.done" = "Atlikta";
 
 /* Edit button */
 "navigation.title.edit" = "Redaguoti";

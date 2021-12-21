@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aktivní";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Přidat záložku";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Přidat oblíbené";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Přidat složku";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Přidat složku";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Smazat";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Opravdu chceš odstranit tuto složku a položky (%i)?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Opravdu chceš odstranit tuto složku a %i položku?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Odstranit %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Upravit záložku";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Upravit oblíbené";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Upravit složku";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Poloha";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Název webové stránky";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Záložky";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Přidány nové záložky pro všechny karty";
@@ -660,6 +699,9 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Procházení nabídky";
+
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Hotovo";
 
 /* Edit button */
 "navigation.title.edit" = "Upravit";

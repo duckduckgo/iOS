@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Be";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Könyvjelző mentése";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Kedvenc hozzáadása";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Mappa hozzáadása";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Mappa hozzáadása";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Törlés";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Biztos, hogy törölni akarod ezt a mappát és annak %i elemét?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Biztos, hogy törölni akarod ezt a mappát és annak %i elemét?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "%@ törlése?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Könyvjelző szerkesztése";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Kedvenc szerkesztése";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Mappa szerkesztése";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Hely";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Weboldal címe";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Könyvjelzők";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Hozzáadott új könyvjelzők az összes laphoz";
@@ -660,6 +699,9 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Tallózás a menüben";
+
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Kész";
 
 /* Edit button */
 "navigation.title.edit" = "Szerkesztés";

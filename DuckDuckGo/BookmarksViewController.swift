@@ -208,10 +208,18 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func refreshEditButton() {
-        if currentDataSource.isEmpty {
+        if currentDataSource.isEmpty || currentDataSource === searchDataSource {
             disableEditButton()
         } else if !tableView.isEditing {
             enableEditButton()
+        }
+    }
+    
+    private func refreshAddFolderButton() {
+        if currentDataSource === searchDataSource {
+            disableAddFolderButton()
+        } else {
+            enableAddFolderButton()
         }
     }
 
@@ -255,6 +263,16 @@ class BookmarksViewController: UITableViewController {
         editButton.isEnabled = false
     }
     
+    private func enableAddFolderButton() {
+        addFolderButton.title = UserText.addbookmarkFolderButton
+        addFolderButton.isEnabled = true
+    }
+    
+    private func disableAddFolderButton() {
+        addFolderButton.title = ""
+        addFolderButton.isEnabled = false
+    }
+    
     private func changeEditButtonToDone() {
         editButton.title = UserText.navigationTitleDone
         doneButton.title = ""
@@ -269,6 +287,7 @@ class BookmarksViewController: UITableViewController {
     private func prepareForSearching() {
         finishEditing()
         disableEditButton()
+        disableAddFolderButton()
     }
     
     private func finishSearching() {
@@ -276,6 +295,7 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
         
         enableEditButton()
+        enableAddFolderButton()
     }
     
     fileprivate func showShareSheet(for indexPath: IndexPath) {

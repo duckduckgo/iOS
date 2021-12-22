@@ -348,9 +348,7 @@ class BookmarksViewController: UITableViewController {
 extension BookmarksViewController: UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if bookmarksCachingSearch == nil {
-            bookmarksCachingSearch = BookmarksCachingSearch()
-        }
+        bookmarksCachingSearch = BookmarksCachingSearch()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

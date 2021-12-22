@@ -994,6 +994,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "A apărut o eroare necunoscută.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Setări";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Permite accesul la microfon din setările sistemului de operare iOS, pentru ca DuckDuckGo să folosească funcționalitățile vocale.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Este necesar accesul la microfon";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Renunță";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nu ascultă niciodată ceea ce spui. Prelucrarea datelor vocale pentru Căutarea vocală privată are loc pe dispozitivul tău.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Este necesar accesul la microfon pentru Căutarea vocală privată";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Renunță";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Componenta audio este prelucrată pe dispozitiv. Nu este stocată sau distribuită nimănui, nici DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorit eliminat";
 

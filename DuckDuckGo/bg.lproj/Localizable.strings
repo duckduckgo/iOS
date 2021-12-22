@@ -994,6 +994,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Възникна неизвестна грешка.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Настройки";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Разрешете достъп до микрофона в настройките на системата iOS, за да може DuckDuckGo да използва гласовите функции.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Изисква се достъп до микрофона";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "ОК";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Отмени";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo никога не слуша какво казвате. При поверително гласово търсене всички гласови данни се обработват на Вашето устройство.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "За поверително гласово търсене се изисква достъп до микрофона";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Отмени";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Аудиото се обработва на устройството. То не се съхранява или споделя с никого, включително DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Премахнато от любими";
 

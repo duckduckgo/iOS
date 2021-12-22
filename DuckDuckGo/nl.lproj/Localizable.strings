@@ -994,6 +994,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Er is een onbekende fout opgetreden.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Instellingen";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Sta microfoontoegang toe in de iOS-systeeminstellingen zodat DuckDuckGo spraakfuncties kan gebruiken.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Toegang tot microfoon vereist";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Annuleren";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo luistert nooit naar wat je zegt. De verwerking van spraakgegevens voor Private Voice Search gebeurt op je apparaat.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Microfoontoegang vereist voor Private Voice Search";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Annuleren";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Audio wordt op het apparaat verwerkt. Het wordt niet opgeslagen of met iemand gedeeld, ook niet met DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favoriet verwijderd";
 

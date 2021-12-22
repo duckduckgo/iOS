@@ -994,6 +994,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Įvyko nežinoma klaida.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Nustatymai";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Patvirtinkite prieigą prie mikrofono „iOS“ sistemos nustatymuose, kad galėtumėte naudotis „DuckDuckGo“ balsu valdomomis funkcijomis.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Būtina prieiga prie mikrofono";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "GERAI";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Atšaukti";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "„DuckDuckGo“ niekada nesiklauso jūsų pokalbių. Visas kalbos duomenų apdorojimas, skirtas privačiai balsu atliekamai paieškai, vyksta jūsų įrenginyje.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Privačiai balsu atliekamai paieškai reikalinga prieiga prie mikrofono";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Atšaukti";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Garsas apdorojamas įrenginyje. Jis nesaugomas ir su niekuo, įskaitant „DuckDuckGo“, nebendrinamas.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Mėgstamas pašalintas";
 

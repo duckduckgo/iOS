@@ -14,7 +14,7 @@
 "NSLocationWhenInUseUsageDescription" = "Võimaldab oma asukohta jagada";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Võimaldab salvestisi jagada";
+"NSMicrophoneUsageDescription" = "See on vajalik häälfunktsioonide kasutamiseks. DuckDuckGo ei salvesta kunagi seda, mida te ütlete.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Võimaldab salvestada pilte oma seadmesse";

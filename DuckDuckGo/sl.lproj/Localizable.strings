@@ -994,6 +994,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Prišlo je do neznane napake.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Nastavitve";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Dovolite dostop do mikrofona v nastavitvah sistema iOS, da boste lahko v brskalniku DuckDuckGo uporabljali glasovne funkcije.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Potreben je dostop do mikrofona";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "V REDU";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Prekliči";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikoli ne posluša vašega govora. Vsa obdelava govornih podatkov za zasebno glasovno iskanje poteka v vaši napravi.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Za zasebno glasovno iskanje je potreben dostop do mikrofona";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Prekliči";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Zvok bo obdelan v napravi. Zvok ne bo shranjen in ne bo deljen z drugimi, niti z brskalnikom DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Priljubljeni odstranjeni";
 

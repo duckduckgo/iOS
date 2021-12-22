@@ -994,6 +994,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Radās nezināma kļūda.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Iestatījumi";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Lūdzu, atļauj piekļuvi mikrofonam iOS sistēmas iestatījumos, lai DuckDuckGo varētu izmantot balss funkcijas.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Nepieciešama piekļuve mikrofonam";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Labi";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Atcelt";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nenoklausās tevis teikto. Visa runas datu apstrāde privātajai balss meklēšanai ar balsi notiek tavā ierīcē.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Privātajai meklēšanai ar balsi ir nepieciešama piekļuve mikrofonam";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Atcelt";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Audio tiek apstrādāts ierīcē. Tas netiek glabāts, un tam nevar piekļūt neviens, pat ne DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Izlase ir noņemta";
 

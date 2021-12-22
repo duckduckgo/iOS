@@ -22,6 +22,7 @@ import Core
 import os.log
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 class BookmarksViewController: UITableViewController {
 
@@ -427,3 +428,4 @@ extension BookmarksViewController: Themable {
 }
 
 // swiftlint:enable file_length
+// swiftlint:enable type_body_length

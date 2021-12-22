@@ -209,6 +209,7 @@ extension BookmarksCoreDataStorage {
         viewContext.perform { [weak self] in
         
             let fetchRequest: NSFetchRequest<BookmarkManagedObject> = BookmarkManagedObject.fetchRequest()
+            fetchRequest.returnsObjectsAsFaults = false
 
             guard let results = try? self?.viewContext.fetch(fetchRequest) else {
                 assertionFailure("Error fetching Bookmarks")

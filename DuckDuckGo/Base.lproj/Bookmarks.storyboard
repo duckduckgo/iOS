@@ -207,9 +207,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="" value="YES"/>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="addFolderButton" destination="ToB-IA-MxG" id="cqd-PX-XKF"/>
                         <outlet property="doneButton" destination="1oZ-re-yKW" id="bf8-Mw-vOB"/>

@@ -434,9 +434,6 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="" value="YES"/>
-                    </userDefinedRuntimeAttributes>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPV-8g-VdM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

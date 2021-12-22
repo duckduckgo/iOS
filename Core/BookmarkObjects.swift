@@ -57,6 +57,14 @@ public protocol BookmarkFolder: BookmarkItem {
     var children: NSOrderedSet? { get set }
 }
 
+public extension BookmarkFolder {
+    
+    var numberOfChildrenDeep: Int {
+        guard let children = children else { return 0 }
+        return children.reduce(children.count) { $0 + (($1 as? BookmarkFolder)?.numberOfChildrenDeep ?? 0) }
+    }
+}
+
 extension BookmarkItemManagedObject: BookmarkItem {
     public var parentFolder: BookmarkFolder? {
         get {

@@ -182,8 +182,9 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
         if let delegate = delegate,
             let folder = item as? BookmarkFolder,
             (folder.children?.count ?? 0) > 0 {
+            
             let title = String(format: UserText.deleteBookmarkFolderAlertTitle, folder.title ?? "")
-            let count = folder.children?.count ?? 0
+            let count = folder.numberOfChildrenDeep
             let messageString: String
             if count == 1 {
                 messageString = UserText.deleteBookmarkFolderAlertMessageSingular

@@ -266,7 +266,7 @@
                             <constraint firstItem="63r-nO-tSp" firstAttribute="top" secondItem="nHt-Cp-jg8" secondAttribute="bottom" id="tF9-jy-3gI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Folder" id="qaZ-4Z-o70" customClass="AddBoo">
+                    <navigationItem key="navigationItem" title="Add Folder" id="qaZ-4Z-o70">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="C1d-SD-0h1">
                             <connections>
                                 <action selector="onCancelPressed:" destination="gvC-OM-VDO" id="8pi-gg-8dr"/>
@@ -508,7 +508,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Q6P-k0-1D4"/>
+        <segue reference="zyO-WQ-z92"/>
         <segue reference="bDN-md-SJE"/>
     </inferredMetricsTieBreakers>
     <resources>

@@ -27,7 +27,7 @@ extension UIViewController {
     }
     
     var isPad: Bool {
-        return traitCollection.horizontalSizeClass == .regular
+        return UIDevice.current.userInterfaceIdiom == .pad
     }
 
     @objc func buildActivities() -> [UIActivity] {

@@ -24,28 +24,33 @@ extension MainViewController {
     func launchBrowsingMenu() {
         guard let tab = currentTab, browsingMenu == nil else { return }
         
-        let entries = tab.buildBrowsingMenu()
-        let controller = BrowsingMenuViewController(nibName: "BrowsingMenuViewController", bundle: nil)
-        controller.attachTo(self.view) { [weak self, weak controller] in
-            guard let controller = controller else { return }
-            self?.presentedMenuButton.setState(.menuImage, animated: true)
-            self?.dismiss(controller)
+        tab.buildBrowsingMenu { [weak self] entries in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                let controller = BrowsingMenuViewController(nibName: "BrowsingMenuViewController", bundle: nil)
+                controller.attachTo(self.view) { [weak self, weak controller] in
+                    guard let controller = controller else { return }
+                    self?.presentedMenuButton.setState(.menuImage, animated: true)
+                    self?.dismiss(controller)
+                }
+                self.addChild(controller)
+                
+                controller.setHeaderEntries(tab.buildBrowsingMenuHeaderContent())
+                controller.setMenuEntries(entries)
+            
+                self.layoutAndPresent(controller)
+                
+                if self.canDisplayAddFavoriteVisualIndicator {
+                    controller.highlightCell(atIndex: IndexPath(row: tab.favoriteEntryIndex, section: 0))
+                }
+                
+                self.browsingMenu = controller
+                
+                self.presentedMenuButton.setState(.closeImage, animated: true)
+                tab.didLaunchBrowsingMenu()
+            }
         }
-        addChild(controller)
-        
-        controller.setHeaderEntries(tab.buildBrowsingMenuHeaderContent())
-        controller.setMenuEntries(entries)
-    
-        layoutAndPresent(controller)
-        
-        if canDisplayAddFavoriteVisualIndicator {
-            controller.highlightCell(atIndex: IndexPath(row: tab.favoriteEntryIndex, section: 0))
-        }
-        
-        browsingMenu = controller
-        
-        presentedMenuButton.setState(.closeImage, animated: true)
-        tab.didLaunchBrowsingMenu()
     }
     
     fileprivate func layoutAndPresent(_ controller: BrowsingMenuViewController) {

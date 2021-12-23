@@ -30,18 +30,26 @@ extension TabViewController {
         }
 
         let bookmarksManager = BookmarksManager()
-        guard !bookmarksManager.contains(url: link.url) else {
-            ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
-            return
+        bookmarksManager.contains(url: link.url) { contains in
+            
+            if contains {
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
+                }
+            } else {
+                if favorite {
+                    bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url)
+                    DispatchQueue.main.async {
+                        ActionMessageView.present(message: UserText.webSaveFavoriteDone)
+                    }
+                } else {
+                    bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
+                    DispatchQueue.main.async {
+                        ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+                    }
+                }
+            }
+            
         }
-
-        if favorite {
-            bookmarksManager.save(favorite: link)
-            ActionMessageView.present(message: UserText.webSaveFavoriteDone)
-        } else {
-            bookmarksManager.save(bookmark: link)
-            ActionMessageView.present(message: UserText.webSaveBookmarkDone)
-        }
-
     }
 }

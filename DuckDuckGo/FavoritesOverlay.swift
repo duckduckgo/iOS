@@ -22,7 +22,7 @@ import Core
 
 protocol FavoritesOverlayDelegate: AnyObject {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link)
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Bookmark)
 }
 
 class FavoritesOverlay: UIViewController {
@@ -103,8 +103,12 @@ class FavoritesOverlay: UIViewController {
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
-        delegate?.favoritesOverlay(self, didSelect: link)
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
+        delegate?.favoritesOverlay(self, didSelect: favorite)
+    }
+    
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+        // currently can't edit favorites from overlay
     }
     
 }

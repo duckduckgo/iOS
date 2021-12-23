@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Добави отметка";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Добавяне в любими";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Добавяне на папка";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Добавяне на папка";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Изтриване";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Сигурни ли сте, че искате да изтриете тази папка и %i елемента?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Сигурни ли сте, че искате да изтриете тази папка и %i елемент?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Изтриване на %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Редактиране на отметка";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Редактиране на Предпочитан";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Редактиране на папка";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Местоположение";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Заглавие на уебсайт";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Отметки";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Добавени са нови отметки за всички раздели";
@@ -660,6 +699,9 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню за сърфиране";
+
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Готово";
 
 /* Edit button */
 "navigation.title.edit" = "Редактиране";

@@ -22,13 +22,16 @@ import Core
 
 class SaveBookmarkActivity: UIActivity {
 
-    private lazy var bookmarksManager: BookmarksManager = BookmarksManager()
-    private var bookmark: Link?
+    private let bookmarksManager: BookmarksManager
+    private var bookmarkURL: URL?
     
-    private weak var controller: UIViewController?
+    private weak var controller: TabViewController?
     private var isFavorite: Bool
+    
+    private var activityViewControllerAccessed = false
 
-    init(controller: UIViewController, isFavorite: Bool = false) {
+    init(controller: TabViewController, isFavorite: Bool = false, bookmarksManager: BookmarksManager = BookmarksManager()) {
+        self.bookmarksManager = bookmarksManager
         self.controller = controller
         self.isFavorite = isFavorite
         super.init()
@@ -47,33 +50,51 @@ class SaveBookmarkActivity: UIActivity {
     }
 
     override func canPerform(withActivityItems activityItems: [Any]) -> Bool {
-        return activityItems.contains(where: { $0 is Link })
+        return activityItems.contains(where: { $0 is URL })
     }
 
     override func prepare(withActivityItems activityItems: [Any]) {
-        bookmark = activityItems.first(where: { $0 is Link }) as? Link
+        bookmarkURL = activityItems.first(where: { $0 is URL }) as? URL
     }
 
     override var activityViewController: UIViewController? {
-        defer {
+        guard !activityViewControllerAccessed else { return nil }
+        activityViewControllerAccessed = true
+
+        guard let bookmarkURL = bookmarkURL else {
             activityDidFinish(true)
-        }
-
-        guard let bookmark = bookmark else {
             return nil
         }
 
-        if bookmarksManager.contains(url: bookmark.url) {
-            ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
-            return nil
-        }
-
-        if isFavorite {
-            bookmarksManager.save(favorite: bookmark)
-            ActionMessageView.present(message: UserText.webSaveFavoriteDone)
-        } else {
-            bookmarksManager.save(bookmark: bookmark)
-            ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+        bookmarksManager.contains(url: bookmarkURL) { contains in
+            if contains {
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
+                    self.activityDidFinish(true)
+                }
+            } else {
+                let linkForTitle: Link
+                // Get the proper title from the webview if we can
+                if let link = self.controller?.link, link.url == bookmarkURL {
+                    linkForTitle = link
+                } else {
+                    linkForTitle = Link(title: nil, url: bookmarkURL)
+                }
+                let title = linkForTitle.displayTitle ?? bookmarkURL.absoluteString
+                if self.isFavorite {
+                    self.bookmarksManager.saveNewFavorite(withTitle: title, url: bookmarkURL)
+                    DispatchQueue.main.async {
+                        ActionMessageView.present(message: UserText.webSaveFavoriteDone)
+                        self.activityDidFinish(true)
+                    }
+                } else {
+                    self.bookmarksManager.saveNewBookmark(withTitle: title, url: bookmarkURL, parentID: nil)
+                    DispatchQueue.main.async {
+                        ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+                        self.activityDidFinish(true)
+                    }
+                }
+            }
         }
         return nil
     }

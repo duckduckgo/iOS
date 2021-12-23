@@ -71,6 +71,8 @@ public struct UserDefaultsWrapper<T> {
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
         
+        case bookmarksMigratedFromUserDefaultsToCD = "com.duckduckgo.app.bookmarksMigratedFromUserDefaultsToCoreData"
+        
         case textSize = "com.duckduckgo.ios.textSize"
     }
 

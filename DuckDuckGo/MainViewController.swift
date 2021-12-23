@@ -104,6 +104,8 @@ class MainViewController: UIViewController {
     let gestureBookmarksButton = GestureToolbarButton()
     
     private var fireButtonAnimator: FireButtonAnimator?
+    
+    private var bookmarksCachingSearch: BookmarksCachingSearch?
 
     fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
@@ -313,6 +315,7 @@ class MainViewController: UIViewController {
     }
     
     // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable function_body_length
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
@@ -340,6 +343,9 @@ class MainViewController: UIViewController {
             if segue.identifier == "BookmarksEditCurrent",
                let link = currentTab?.link {
                 controller.openEditFormWhenPresented(link: link)
+            } else if segue.identifier == "BookmarksEdit",
+                        let bookmark = sender as? Bookmark {
+                controller.openEditFormWhenPresented(bookmark: bookmark)
             }
             return
         }
@@ -377,6 +383,7 @@ class MainViewController: UIViewController {
 
     }
     // swiftlint:enable cyclomatic_complexity
+    // swiftlint:enable function_body_length
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -683,6 +690,7 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         hideSuggestionTray()
         refreshOmniBar()
+        bookmarksCachingSearch = nil
     }
 
     fileprivate func refreshBackForwardButtons() {
@@ -1031,7 +1039,8 @@ extension MainViewController: OmniBarDelegate {
                 showSuggestionTray(.favorites)
             }
         } else {
-            showSuggestionTray(.autocomplete(query: updatedQuery))
+            let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
+            showSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
         }
         
     }
@@ -1108,10 +1117,14 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+        if bookmarksCachingSearch == nil {
+            bookmarksCachingSearch = BookmarksCachingSearch()
+        }
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
-            showSuggestionTray(.autocomplete(query: query))
+            let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
+            showSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksSearch))
         } else {
             showSuggestionTray(.favorites)
         }
@@ -1146,12 +1159,13 @@ extension MainViewController: OmniBarDelegate {
 
 extension MainViewController: FavoritesOverlayDelegate {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link) {
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Bookmark) {
+        guard let url = favorite.url else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
-        loadUrl(link.url)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        loadUrl(url)
         showHomeRowReminder()
     }
 }
@@ -1211,6 +1225,10 @@ extension MainViewController: HomeControllerDelegate {
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
         showKeyboardAfterFireButton?.cancel()
         loadUrl(url)
+    }
+    
+    func home(_ home: HomeViewController, didRequestEdit favorite: Bookmark) {
+        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
     }
     
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
@@ -1459,9 +1477,11 @@ extension MainViewController: TabSwitcherDelegate {
 }
 
 extension MainViewController: BookmarksDelegate {
-    func bookmarksDidSelect(link: Link) {
+    func bookmarksDidSelect(bookmark: Bookmark) {
         dismissOmniBar()
-        loadUrl(link.url)
+        if let url = bookmark.url {
+            loadUrl(url)
+        }
     }
     
     func bookmarksUpdated() {

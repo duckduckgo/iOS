@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Uključeno";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Dodaj knjižnu oznaku";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Dodaj omiljenu stavku";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Dodaj mapu";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Dodaj mapu";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Izbriši";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Jeste li sigurni da želite izbrisati ovu mapu i %i stavki?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Jeste li sigurni da želite izbrisati ovu mapu i %i stavku?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Izbrisati %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Uredi knjižnu oznaku";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Uredi Favorite";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Uredi mapu";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Lokacija";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Naslov web-mjesta";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Knjižne oznake";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Za sve kartice su dodane nove knjižne oznake";
@@ -660,6 +699,9 @@
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Izbornik pregledavanja";
+
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Gotovo";
 
 /* Edit button */
 "navigation.title.edit" = "Uredi";

@@ -19,6 +19,7 @@
 
 import Foundation
 
+// This is no longer how bookmarks are stored. It is kept only so old data can be migrated
 public class BookmarkUserDefaults: BookmarkStore {
     
     public struct Notifications {
@@ -85,6 +86,11 @@ public class BookmarkUserDefaults: BookmarkStore {
             $0.url.host == domain
         }
         return bookmarks.contains(where: domainMatches) || favorites.contains(where: domainMatches)
+    }
+    
+    public func deleteAllData() {
+        bookmarks = []
+        favorites = []
     }
 
 }

@@ -1,8 +1,8 @@
 //
-//  MockBookmarkStore.swift
-//  UnitTests
+//  BookmarksTextFieldCell.swift
+//  DuckDuckGo
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,26 +17,22 @@
 //  limitations under the License.
 //
 
+import UIKit
 import Core
 
-class MockBookmarkStore: BookmarkStore {
+class BookmarksTextFieldCell: UITableViewCell {
+
+    static let reuseIdentifier = "BookmarksTextFieldCell"
     
-    var bookmarks: [Link] = []
-    
-    var favorites: [Link] = []
-    
-    var addedBookmarks = [Link]()
-    func addBookmark(_ bookmark: Link) {
-        addedBookmarks.append(bookmark)
-    }
-    
-    var addedFavorites = [Link]()
-    func addFavorite(_ favorite: Link) {
-        addedFavorites.append(favorite)
+    var title: String? {
+        get {
+            textField.text
+        }
+        set {
+            textField.text = newValue
+        }
     }
 
-    func contains(domain: String) -> Bool {
-        return false
-    }
-
+    @IBOutlet weak var textField: UITextField!
+    
 }

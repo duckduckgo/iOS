@@ -23,7 +23,9 @@ import Core
 protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
-                           didSelect link: Link)
+                           didSelect favorite: Bookmark)
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
+                           didRequestEdit favorite: Bookmark)
     
 }
 
@@ -39,7 +41,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
-    private lazy var bookmarksManager = BookmarksManager()
+    let bookmarksManager: BookmarksManager
 
     private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)?
     
@@ -53,12 +55,13 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
 
-    init(allowsEditing: Bool = true) {
+    init(allowsEditing: Bool = true, bookmarksManager: BookmarksManager = BookmarksManager()) {
         guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
             fatalError("Failed to load FavoriteHomeCell")
         }
         
         self.allowsEditing = allowsEditing
+        self.bookmarksManager = bookmarksManager
         self.cellHeight = cell.frame.height
         self.cellWidth = cell.frame.width
     }
@@ -134,10 +137,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             fatalError("not a FavoriteCell")
         }
 
-        guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else {
+        guard let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else {
             return cell
         }
-        cell.updateFor(link: link)
+
+        cell.updateFor(favorite: favorite)
 
         // can't use captured index path because deleting items can change it
         cell.onDelete = { [weak self, weak collectionView, weak cell] in
@@ -157,32 +161,22 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     private func deleteFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        guard let indexPath = collectionView.indexPath(for: cell),
+        let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
-        bookmarksManager.deleteFavorite(at: indexPath.row)
+        bookmarksManager.delete(favorite)
         collectionView.performBatchUpdates({
             collectionView.deleteItems(at: [indexPath])
         })
     }
     
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        guard let indexPath = collectionView.indexPath(for: cell),
+              let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
+        
         Pixel.fire(pixel: .homeScreenEditFavorite)
-        let alert = EditBookmarkAlert.buildAlert(
-            title: UserText.alertSaveFavorite,
-            bookmark: bookmarksManager.favorite(atIndex: indexPath.row),
-            saveCompletion: { [weak self, weak collectionView] newLink in
-                guard let collectionView = collectionView else { return }
-                self?.updateFavorite(at: indexPath, in: collectionView, with: newLink)
-            })
-        controller?.present(alert, animated: true, completion: nil)
-    }
-    
-    private func updateFavorite(at indexPath: IndexPath, in collectionView: UICollectionView, with link: Link) {
-        bookmarksManager.updateFavorite(at: indexPath.row, with: link)
-        collectionView.performBatchUpdates({
-            collectionView.reloadItems(at: [indexPath])
-        })
+        
+        controller?.favoritesRenderer(self, didRequestEdit: favorite)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -209,7 +203,10 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        bookmarksManager.moveFavorite(at: sourceIndexPath.row, to: destinationIndexPath.row)
+        guard let favorite = bookmarksManager.favorite(atIndex: sourceIndexPath.row) else {
+            return
+        }
+        bookmarksManager.updateIndex(of: favorite.objectID, newIndex: destinationIndexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
@@ -246,32 +243,9 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
-        guard let link = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
+        guard let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
-        controller?.favoritesRenderer(self, didSelect: link)
-    }
-    
-    private func addNewFavorite(in collectionView: UICollectionView, at indexPath: IndexPath) {
-        Pixel.fire(pixel: .homeScreenAddFavorite)
-        let alert = EditBookmarkAlert.buildAlert(
-            title: UserText.alertSaveFavorite,
-            bookmark: nil,
-            saveCompletion: { [weak self] newLink in
-                Pixel.fire(pixel: .homeScreenAddFavoriteOK)
-                self?.saveNewFavorite(newLink, in: collectionView, at: indexPath)
-            },
-            cancelCompletion: {
-                Pixel.fire(pixel: .homeScreenAddFavoriteCancel)
-            }
-        )
-        controller?.present(alert, animated: true, completion: nil)
-    }
-    
-    private func saveNewFavorite(_ link: Link, in collectionView: UICollectionView, at indexPath: IndexPath) {
-        bookmarksManager.save(favorite: link)
-        collectionView.performBatchUpdates({
-            collectionView.insertItems(at: [indexPath])
-        })
+        controller?.favoritesRenderer(self, didSelect: favorite)
     }
     
 }

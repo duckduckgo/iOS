@@ -218,26 +218,39 @@ class TabSwitcherViewController: UIViewController {
         }
     }
     
-    fileprivate func bookmarkAll(_ tabs: [Tab] ) -> BookmarkAllResult {
+    fileprivate func bookmarkAll(tabsToBookmark: [Tab],
+                                 newBookmarksCount: Int = 0,
+                                 existingBookmarksCount: Int = 0,
+                                 bookmarksManager: BookmarksManager,
+                                 completion: @escaping (BookmarkAllResult) -> Void) {
         
-        let bookmarksManager = BookmarksManager()
-        var newBookmarksCount: Int = 0
-        var existingBookmarksCount: Int = 0
-        
-        tabs.forEach { tab in
-            if let link = tab.link {
-                if bookmarksManager.contains(url: link.url) {
-                    existingBookmarksCount += 1
-                } else {
-                    bookmarksManager.save(bookmark: link)
-                    newBookmarksCount += 1
-                }
-            } else {
-                os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
-            }
+        if tabsToBookmark.count == 0 {
+            completion((newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount))
+            return
         }
         
-        return (newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount)
+        let tab = tabsToBookmark[0]
+        if let link = tab.link {
+            bookmarksManager.contains(url: link.url) { contains in
+                if contains {
+                    self.bookmarkAll(tabsToBookmark: Array(tabsToBookmark.dropFirst()),
+                                     newBookmarksCount: newBookmarksCount,
+                                     existingBookmarksCount: existingBookmarksCount + 1,
+                                     bookmarksManager: bookmarksManager,
+                                     completion: completion)
+                } else {
+                    bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil) { _, _ in
+                        self.bookmarkAll(tabsToBookmark: Array(tabsToBookmark.dropFirst()),
+                                         newBookmarksCount: newBookmarksCount + 1,
+                                         existingBookmarksCount: existingBookmarksCount,
+                                         bookmarksManager: bookmarksManager,
+                                         completion: completion)
+                    }
+                }
+            }
+        } else {
+            os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
+        }
     }
     
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
@@ -248,8 +261,10 @@ class TabSwitcherViewController: UIViewController {
         alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let savedState = self.bookmarkAll(self.tabsModel.tabs)
-            self.displayBookmarkAllStatusMessage(with: savedState, openTabsCount: self.tabsModel.tabs.count)
+            self.bookmarkAll(tabsToBookmark: self.tabsModel.tabs, bookmarksManager: BookmarksManager()) { bookmarkAllResult in
+                
+                self.displayBookmarkAllStatusMessage(with: bookmarkAllResult, openTabsCount: self.tabsModel.tabs.count)
+            }
         }
         
         present(alert, animated: true, completion: nil)

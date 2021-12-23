@@ -46,7 +46,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     var onDelete: (() -> Void)?
     var onEdit: (() -> Void)?
     
-    private var link: Link?
+    private var favorite: Bookmark?
     private var theme: Theme?
     
     struct Actions {
@@ -81,27 +81,29 @@ class FavoriteHomeCell: UICollectionViewCell {
         return [ Actions.delete, Actions.edit ].contains(action)
     }
     
-    func updateFor(link: Link) {
-        self.link = link
+    func updateFor(favorite: Bookmark) {
+        self.favorite = favorite
         
-        let host = link.url.host?.dropPrefix(prefix: "www.") ?? ""
+        let host = favorite.url?.host?.dropPrefix(prefix: "www.") ?? ""
         
         isAccessibilityElement = true
         accessibilityTraits = .button
-        accessibilityLabel = "\(link.displayTitle ?? "")). \(UserText.favorite)"
+        accessibilityLabel = "\(favorite.displayTitle ?? "")). \(UserText.favorite)"
         
-        titleLabel.text = link.displayTitle
+        titleLabel.text = favorite.displayTitle
         iconBackground.backgroundColor = UIColor.forDomain(host)
         
-        if let domain = link.url.host?.dropPrefix(prefix: "www."),
-           let fakeFavicon = UIImageView.createFakeFavicon(forDomain: link.url.host ?? "", backgroundColor: UIColor.forDomain(domain), bold: false) {
+        if let domain = favorite.url?.host?.dropPrefix(prefix: "www."),
+           let fakeFavicon = UIImageView.createFakeFavicon(forDomain: favorite.url?.host ?? "",
+                                                           backgroundColor: UIColor.forDomain(domain),
+                                                           bold: false) {
             iconImage.image = fakeFavicon
         }
 
-        iconImage.loadFavicon(forDomain: link.url.host, usingCache: .bookmarks, useFakeFavicon: false) { image, _ in
+        iconImage.loadFavicon(forDomain: favorite.url?.host, usingCache: .bookmarks, useFakeFavicon: false) { image, _ in
             guard let image = image else { return }
 
-            let useBorder = Self.appUrls.isDuckDuckGo(domain: link.url.host) || image.size.width < Constants.largeFaviconSize
+            let useBorder = Self.appUrls.isDuckDuckGo(domain: favorite.url?.host) || image.size.width < Constants.largeFaviconSize
             self.useImageBorder(useBorder)
             self.applyFavicon(image)
         }
@@ -136,8 +138,8 @@ extension FavoriteHomeCell: Themable {
     func decorate(with theme: Theme) {
         self.theme = theme
         titleLabel.textColor = theme.favoriteTextColor
-        if let link = link {
-            updateFor(link: link)
+        if let favorite = favorite {
+            updateFor(favorite: favorite)
         }
     }
 

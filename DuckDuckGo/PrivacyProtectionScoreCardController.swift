@@ -106,6 +106,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, config: privacyConfig)
         cell.disclosureImage.isHidden = true
         cell.backImage.isHidden = !AppWidthObserver.shared.isLargeWidth
+        cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.onBack)))
         
         return cell
     }

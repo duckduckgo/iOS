@@ -74,10 +74,10 @@
 "action.title.save" = "Salvesta";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Lisa see lehekülg järjehoidjatesse";
+"action.title.save.bookmark" = "Lisa järjehoidja";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Määra see leht lemmikuks";
+"action.title.save.favorite" = "Lisa lemmik";
 
 /* Settings action */
 "action.title.settings" = "Seaded";

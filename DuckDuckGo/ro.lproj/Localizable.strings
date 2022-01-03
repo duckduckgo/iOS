@@ -74,10 +74,10 @@
 "action.title.save" = "Salvează";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Marchează această pagină";
+"action.title.save.bookmark" = "Adăugare semn de carte";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Adaugă pagina la Favorite";
+"action.title.save.favorite" = "Adaugă preferință";
 
 /* Settings action */
 "action.title.settings" = "Setări";

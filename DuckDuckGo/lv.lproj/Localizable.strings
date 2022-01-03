@@ -74,10 +74,10 @@
 "action.title.save" = "Saglabāt";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Atzīmēt šo lapu";
+"action.title.save.bookmark" = "Pievienot grāmatzīmi";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Atzīmēt šo lapu kā iecienītu";
+"action.title.save.favorite" = "Pievienot izlases vienumu";
 
 /* Settings action */
 "action.title.settings" = "Iestatījumi";

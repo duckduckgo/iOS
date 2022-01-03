@@ -74,10 +74,10 @@
 "action.title.save" = "Αποθήκευση";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Προσθήκη σελιδοδείκτη σε αυτή τη σελίδα";
+"action.title.save.bookmark" = "Προσθήκη σελιδοδείκτη";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Προσθήκη της σελίδας αυτής στα αγαπημένα";
+"action.title.save.favorite" = "Προσθήκη Αγαπημένου";
 
 /* Settings action */
 "action.title.settings" = "Ρυθμίσεις";

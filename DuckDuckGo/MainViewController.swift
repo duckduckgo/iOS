@@ -1271,6 +1271,8 @@ extension MainViewController: TabDelegate {
 
         let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
         newTab.openedByPage = true
+        newTab.openingTab = tab
+        
         newTabAnimation {
             self.dismissOmniBar()
             self.addToView(tab: newTab)

@@ -53,11 +53,10 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
 #else
         isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
         
-        #warning("Enable before release")
         // We don't want to override the flag in case there's no SpeechRecognizer available for this device
-//        if let variantManager = variantManager, isSpeechRecognizerAvailable {
-//            isSpeechRecognizerAvailable = variantManager.isSupported(feature: .voiceSearch)
-//        }
+        if let variantManager = variantManager, isSpeechRecognizerAvailable {
+            isSpeechRecognizerAvailable = variantManager.isSupported(feature: .voiceSearch)
+        }
 #endif
     }
 }

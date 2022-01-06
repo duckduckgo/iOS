@@ -91,16 +91,16 @@ public class LinkCleaner {
     
     public func cleanTrackingParameters(initiator: URL?, url: URL?,
                                         config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
-        guard let url = url, !isURLExcluded(url: url, config: config, feature: .trackingParameters) else { return nil }
+        guard let url = url, !isURLExcluded(url: url, config: config, feature: .trackingParameters) else { return url }
         if let initiator = initiator, isURLExcluded(url: initiator, config: config, feature: .trackingParameters) {
-            return nil
+            return url
         }
         
-        guard let urlsComps = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-            return nil
+        guard var urlsComps = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return url
         }
         guard let queryParams = urlsComps.queryItems, queryParams.count > 0 else {
-            return nil
+            return url
         }
         
         let trackingParams = TrackingLinkSettings(fromConfig: config).trackingParameters
@@ -115,15 +115,10 @@ public class LinkCleaner {
             return true
         }
         
-        var newComps = URLComponents()
-        newComps.scheme = urlsComps.scheme
-        newComps.host = urlsComps.host
-        newComps.port = urlsComps.port
-        newComps.path = urlsComps.path
         if preservedParams.count > 0 {
-            newComps.queryItems = preservedParams
+            urlsComps.queryItems = preservedParams
         }
         
-        return newComps.url
+        return urlsComps.url
     }
 }

@@ -26,9 +26,9 @@ struct TrackingLinkSettings {
     let trackingParameters: [String]
     
     struct Constants {
-        static let ampLinkFormats = "ampLinkFormats"
-        static let ampKeywords = "ampKeywords"
-        static let trackingParameters = "trackingParameters"
+        static let ampLinkFormats = "linkFormats"
+        static let ampKeywords = "keywords"
+        static let trackingParameters = "parameters"
     }
     
     init(fromConfig config: PrivacyConfiguration) {

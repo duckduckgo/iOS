@@ -134,6 +134,7 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     }
     
     private func reset() {
+        try? AVAudioSession.sharedInstance().setActive(false)
         recognitionTask?.cancel()
         audioEngine.stop()
         recognitionRequest = nil

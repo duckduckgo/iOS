@@ -37,10 +37,6 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
         self.variantManager = variantManager
         
         updateFlag()
-        
-        NotificationCenter.default.addObserver(forName: NSLocale.currentLocaleDidChangeNotification, object: nil, queue: nil) { [weak self] _ in
-            self?.updateFlag()
-        }
     }
     
     func markPrivacyAlertAsConfirmed() {

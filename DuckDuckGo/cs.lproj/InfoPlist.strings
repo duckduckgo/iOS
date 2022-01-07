@@ -14,7 +14,7 @@
 "NSLocationWhenInUseUsageDescription" = "Umožňuje vám sdílet vaši polohu";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Umožňuje vám sdílet nahrávky";
+"NSMicrophoneUsageDescription" = "Je potřeba pro používání hlasových funkcí. DuckDuckGo nikdy nenahrává, co říkáš.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Umožňuje vám ukládat obrázky do vašeho zařízení";

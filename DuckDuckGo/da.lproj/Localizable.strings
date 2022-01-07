@@ -1036,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Der opstod en ukendt fejl.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Indstillinger";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Tillad mikrofonadgang i iOS-systemindstillinger for DuckDuckGo for at bruge stemmefunktioner.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Mikrofonadgang påkrævet";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Okay";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Annullér";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo lytter aldrig til det, du siger. Al databehandling af tale til privat stemmesøgning sker på din enhed.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Mikrofonadgang påkrævet til privat stemmesøgning";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Annullér";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Lyden behandles på enheden. Den hverken gemmes eller deles med nogen, inklusive DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorit fjernet";
 

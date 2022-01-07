@@ -14,7 +14,7 @@
 "NSLocationWhenInUseUsageDescription" = "Hiermee kun je je locatie delen";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Hiermee kun je opnames delen";
+"NSMicrophoneUsageDescription" = "Dit is vereist om spraakfuncties te gebruiken. DuckDuckGo neemt nooit op wat je zegt.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Hiermee kun je afbeeldingen op je apparaat opslaan";

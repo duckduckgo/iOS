@@ -152,6 +152,10 @@ public enum PixelName: String {
     case emailUserCreatedAlias = "email_generated_button"
     case emailTooltipDismissed = "email_tooltip_dismissed"
     
+    case voiceSearchPrivacyDialogAccepted = "m_voice_search_privacy_dialog_accepted"
+    case voiceSearchPrivacyDialogRejected = "m_voice_search_privacy_dialog_rejected"
+    case voiceSearchDone = "m_voice_search_done"
+    
     case emailDidShowWaitlistDialog = "email_did_show_waitlist_dialog"
     case emailDidPressWaitlistDialogDismiss = "email_did_press_waitlist_dialog_dismiss"
     case emailDidPressWaitlistDialogNotifyMe = "email_did_press_waitlist_dialog_notify_me"

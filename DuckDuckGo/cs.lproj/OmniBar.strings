@@ -19,6 +19,9 @@
 /* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
 "ii4-Sq-bD1.accessibilityLabel" = "Záložky";
 
+/* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "ita-iD-8ad"; */
+"ita-iD-8ad.accessibilityLabel" = "Vymazat text";
+
 /* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
 "nJo-2d-gri.accessibilityLabel" = "Procházení nabídky";
 

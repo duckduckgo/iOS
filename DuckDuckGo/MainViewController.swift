@@ -912,7 +912,63 @@ class MainViewController: UIViewController {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
     }
+    
+    private func showVoiceSearch() {
+        // https://app.asana.com/0/0/1201408131067987
+        UIMenuController.shared.hideMenu()
+        omniBar.removeTextSelection()
         
+        let voiceSearchController = VoiceSearchViewController()
+        voiceSearchController.delegate = self
+        voiceSearchController.modalTransitionStyle = .crossDissolve
+        voiceSearchController.modalPresentationStyle = .overFullScreen
+        present(voiceSearchController, animated: true, completion: nil)
+    }
+    
+    private func showNoMicrophonePermissionAlert() {
+        let alertController = UIAlertController(title: UserText.noVoicePermissionAlertTitle,
+                                                message: UserText.noVoicePermissionAlertMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let openSettingsButton = UIAlertAction(title: UserText.noVoicePermissionActionSettings, style: .default) { _ in
+            let url = URL(string: UIApplication.openSettingsURLString)!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: nil)
+
+        alertController.addAction(openSettingsButton)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func displayVoiceSearchPrivacyAlertIfNecessary(completion: @escaping(Bool) -> Void) {
+        if AppDependencyProvider.shared.voiceSearchHelper.privacyAlertWasConfirmed {
+            completion(true)
+            return
+        }
+        
+        let alertController = UIAlertController(title: UserText.voiceSearchPrivacyAcknowledgmentTitle,
+                                                message: UserText.voiceSearchPrivacyAcknowledgmentMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentAcceptButton, style: .default) { _ in
+            AppDependencyProvider.shared.voiceSearchHelper.markPrivacyAlertAsConfirmed()
+            Pixel.fire(pixel: .voiceSearchPrivacyDialogAccepted)
+            completion(true)
+        }
+        let cancelAction = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentRejectButton, style: .cancel) { _ in
+            Pixel.fire(pixel: .voiceSearchPrivacyDialogRejected)
+            completion(false)
+        }
+
+        alertController.addAction(confirmButton)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -1155,6 +1211,22 @@ extension MainViewController: OmniBarDelegate {
         currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton, orginatedFromMenu: false)
     }
     
+    func onVoiceSearchPressed() {
+
+        displayVoiceSearchPrivacyAlertIfNecessary { result in
+            guard result else { return }
+            
+            SpeechRecognizer.requestMicAccess { permission in
+                DispatchQueue.main.async {
+                    if permission {
+                        self.showVoiceSearch()
+                    } else {
+                        self.showNoMicrophonePermissionAlert()
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension MainViewController: FavoritesOverlayDelegate {
@@ -1706,6 +1778,19 @@ extension MainViewController: UIDropInteractionDelegate {
             
         }
         
+    }
+}
+
+// MARK: - VoiceSearchViewControllerDelegate
+
+extension MainViewController: VoiceSearchViewControllerDelegate {
+    
+    func voiceSearchViewController(_ controller: VoiceSearchViewController, didFinishQuery query: String?) {
+        controller.dismiss(animated: true, completion: nil)
+        if let query = query {
+            Pixel.fire(pixel: .voiceSearchDone)
+            loadQuery(query)
+        }
     }
 }
 

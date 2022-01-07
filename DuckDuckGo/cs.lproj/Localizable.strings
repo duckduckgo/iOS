@@ -1036,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Vyskytla se neznámá chyba.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Nastavení";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Pro používání hlasových funkcí DuckDuckGo je potřeba v Nastaveních iOS povolit přístup k mikrofonu.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Je nutný přístup k mikrofonu";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "DOBŘE";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Zrušit";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikdy neposlouchá, co říkáš. Veškeré zpracování dat řeči při soukromém hlasovém vyhledávání probíhá přímo v zařízení.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Pro soukromé hlasové vyhledávání je nutný přístup k mikrofonu";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Zrušit";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Zvuk se zpracovává na zařízení. Nikde ho neukládáme a s nikým ho nesdílíme. Ani DuckDuckGo se k němu nedostane.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Oblíbená položka odstraněna";
 

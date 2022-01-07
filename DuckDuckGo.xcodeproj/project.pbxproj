@@ -35,7 +35,14 @@
 		1EEFD2D52758E31600B1393B /* textsize.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFD2D42758E31600B1393B /* textsize.js */; };
 		1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
+		3151F0EA27357FBA00226F58 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0E927357FBA00226F58 /* SpeechRecognizer.swift */; };
+		3151F0EC27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0EB27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift */; };
+		3151F0EE2735800800226F58 /* VoiceSearchFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */; };
+		3151F0F02735802800226F58 /* VoiceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0EF2735802800226F58 /* VoiceSearchViewController.swift */; };
 		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
+		31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */; };
+		31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */; };
+		31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */; };
 		4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */; };
 		4B051169262A166300F6079C /* EmailWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D349D025502AC3002AAF35 /* EmailWaitlistViewController.swift */; };
 		4B14B56326937892002E6805 /* EmailWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */; };
@@ -751,7 +758,14 @@
 		1EEFD2D42758E31600B1393B /* textsize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = textsize.js; sourceTree = "<group>"; };
 		1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalSlider.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
+		3151F0E927357FBA00226F58 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		3151F0EB27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchFeedbackViewModel.swift; sourceTree = "<group>"; };
+		3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchFeedbackView.swift; sourceTree = "<group>"; };
+		3151F0EF2735802800226F58 /* VoiceSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchViewController.swift; sourceTree = "<group>"; };
 		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
+		31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceSearchHelper.swift; sourceTree = "<group>"; };
+		31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerProtocol.swift; sourceTree = "<group>"; };
+		31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchHelper.swift; sourceTree = "<group>"; };
 		4B0295182537BC6700E00CEF /* ConfigurationDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationDebugViewController.swift; sourceTree = "<group>"; };
 		4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B15817526706A2200F34D16 /* EmailProtectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailProtectionViewController.swift; sourceTree = "<group>"; };
@@ -2101,6 +2115,19 @@
 			name = fingerprinting;
 			sourceTree = "<group>";
 		};
+		3151F0E827357F8F00226F58 /* VoiceSearch */ = {
+			isa = PBXGroup;
+			children = (
+				3151F0EF2735802800226F58 /* VoiceSearchViewController.swift */,
+				3151F0EB27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift */,
+				3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */,
+				31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */,
+				3151F0E927357FBA00226F58 /* SpeechRecognizer.swift */,
+				31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */,
+			);
+			name = VoiceSearch;
+			sourceTree = "<group>";
+		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -2376,6 +2403,7 @@
 				F11CEF581EBB66C80088E4D7 /* Tutorials */,
 				F1D796ED1E7AE4090019D451 /* UserInterface */,
 				84E341E31E2FC0E400BDBA6F /* UserInterfaceResources */,
+				3151F0E827357F8F00226F58 /* VoiceSearch */,
 			);
 			path = DuckDuckGo;
 			sourceTree = "<group>";
@@ -3434,6 +3462,7 @@
 				F1134EBA1F40D3D000B73467 /* MockStatisticsStore.swift */,
 				8536A1C7209AF2410050739E /* MockVariantManager.swift */,
 				98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */,
+				31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */,
 				857D1DC8223A9E7D00833940 /* MockAppSettings.swift */,
 				8521FDED238DD1B500A44CC3 /* MockEntityMapping.swift */,
 			);
@@ -4452,7 +4481,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n[ -z \"$TRAVIS\" ]\n\nif env | grep -q ^TRAVIS=\nthen\n    echo Skipping fonts on TRAVIS build\nelif [ -d ~/DuckDuckGo/Fonts/proximanova ]\nthen\n\n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf \"$SRCROOT/fonts/licensed\"\n\nelif [ ! -d ~/DuckDuckGo/Fonts/proximanova ]\nthen\n                                      \n    echo \"warning: Correct fonts not found, install proximanova fonts at ~/DuckDuckGo/Fonts/proximanova\"\n                                      \nfi\n";
+			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  [ -z \"$TRAVIS\" ]\n\n  if env | grep -q ^TRAVIS=\n  then\n    echo Skipping fonts on TRAVIS build\n  elif [ -d ~/DuckDuckGo/Fonts/proximanova ]\n  then\n  \n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf \"$SRCROOT/fonts/licensed\"\n\n  elif [ ! -d ~/DuckDuckGo/Fonts/proximanova ]\n  then\n                                        \n      echo \"warning: Correct fonts not found, install proximanova fonts at ~/DuckDuckGo/Fonts/proximanova\"\n                                        \n  fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		98B0CE69251C937D003FB601 /* Update Localizable.strings */ = {
@@ -4471,7 +4500,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SOURCE_ROOT/loc_update.sh\"\n";
+			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  \"$SOURCE_ROOT/loc_update.sh\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4509,7 +4538,9 @@
 				8590CB69268A4E190089F6BF /* DebugEtagStorage.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
+				31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
+				3151F0F02735802800226F58 /* VoiceSearchViewController.swift in Sources */,
 				85BDC310243359040053DB07 /* FindInPageUserScript.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewGridCell.swift in Sources */,
 				984D035824ACCC6F0066CFB8 /* TabViewListCell.swift in Sources */,
@@ -4575,11 +4606,13 @@
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
+				31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */,
 				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
 				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
 				851B128822200575004781BC /* Onboarding.swift in Sources */,
+				3151F0EE2735800800226F58 /* VoiceSearchFeedbackView.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				85449EF523FDA02800512AAF /* KeyboardSettingsViewController.swift in Sources */,
@@ -4651,6 +4684,7 @@
 				85BD869F1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift in Sources */,
 				9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */,
 				4B14B56326937892002E6805 /* EmailWaitlistDebugViewController.swift in Sources */,
+				3151F0EC27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift in Sources */,
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				8565A3431FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift in Sources */,
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
@@ -4699,6 +4733,7 @@
 				98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */,
 				985892522260B1B200EEB31B /* ProgressView.swift in Sources */,
 				85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */,
+				3151F0EA27357FBA00226F58 /* SpeechRecognizer.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */,
 				98D98A8F25ED952F00D8E3DF /* BrowsingMenuButton.swift in Sources */,
@@ -4774,6 +4809,7 @@
 				98733E5D26FB354300521D94 /* TrackerAllowlistReferenceTests.swift in Sources */,
 				985CA1F426CD3D40001325DB /* ContentBlockerRulesUserScriptsTests.swift in Sources */,
 				4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */,
+				31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */,
 				8598F67B2405EB8D00FBC70C /* KeyboardSettingsTests.swift in Sources */,
 				85D2187224BF24F2004373D2 /* NotFoundCachingDownloaderTests.swift in Sources */,
 				85081A031FE03154006561FD /* SiteRatingPrivacyProtectionExtensionTests.swift in Sources */,

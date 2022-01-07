@@ -18,7 +18,6 @@
 //
 
 import XCTest
-@testable import Core
 @testable import DuckDuckGo
 
 class SettingsViewControllerTests: XCTestCase {

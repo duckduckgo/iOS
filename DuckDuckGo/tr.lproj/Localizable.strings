@@ -1036,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Bilinmeyen bir hata oluştu.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Ayarlar";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Ses özelliklerini kullanmak istiyorsanız iOS Sistem Ayarları'ndan DuckDuckGo için Mikrofon erişimine izin verin.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Mikrofon Erişimi Gerekli";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Tamam";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "İptal";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo söylediklerinizi asla dinlemez. Özel Sesli Arama için tüm konuşma verilerinin işlenmesi cihazınızda gerçekleşir.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Özel Sesli Arama için Mikrofon Erişimi Gerekli";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "İptal";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Ses cihazda işlenir. Saklanmaz ve DuckDuckGo da dâhil olmak üzere kimseyle paylaşılmaz.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favori kaldırıldı";
 

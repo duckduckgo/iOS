@@ -21,7 +21,7 @@ import Foundation
 import UIKit
 
 protocol VoiceSearchFeedbackViewModelDelegate: AnyObject {
-    func voiceSearchFeedbackViewModelDidFinish(_ model: VoiceSearchFeedbackViewModel, query: String?)
+    func voiceSearchFeedbackViewModel(_ model: VoiceSearchFeedbackViewModel, didFinishQuery query: String?)
 }
 
 class VoiceSearchFeedbackViewModel: ObservableObject {
@@ -111,10 +111,10 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     }
     
     func cancel() {
-        delegate?.voiceSearchFeedbackViewModelDidFinish(self, query: nil)
+        delegate?.voiceSearchFeedbackViewModel(self, didFinishQuery: nil)
     }
     
     func finish() {
-        self.delegate?.voiceSearchFeedbackViewModelDidFinish(self, query: recognizedWords)
+        delegate?.voiceSearchFeedbackViewModel(self, didFinishQuery: recognizedWords)
     }
 }

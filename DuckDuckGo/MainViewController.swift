@@ -1783,7 +1783,7 @@ extension MainViewController: UIDropInteractionDelegate {
 
 extension MainViewController: VoiceSearchViewControllerDelegate {
     
-    func voiceSearchViewControllerDidFinish(_ controller: VoiceSearchViewController, query: String?) {
+    func voiceSearchViewController(_ controller: VoiceSearchViewController, didFinishQuery query: String?) {
         controller.dismiss(animated: true, completion: nil)
         if let query = query {
             Pixel.fire(pixel: .voiceSearchDone)

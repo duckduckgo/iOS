@@ -115,7 +115,7 @@ public class LinkCleaner {
             return true
         }
         
-        urlsComps.queryItems = preservedParams
+        urlsComps.queryItems = preservedParams.count > 0 ? preservedParams : nil
         
         return urlsComps.url
     }

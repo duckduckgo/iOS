@@ -72,7 +72,7 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     @available(iOS 15, *)
     func startRecording(resultHandler: @escaping (_ text: String?,
                                                   _ error: Error?,
-                                                  _ speechDidFinished: Bool) -> Void,
+                                                  _ speechDidFinish: Bool) -> Void,
                         volumeCallback: @escaping(_ volume: Float) -> Void) {
         
         self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()

@@ -58,13 +58,13 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     
     @available(iOS 15, *)
     func startSpeechRecognizer() {
-        speechRecognizer.startRecording { [weak self] text, error, speechDidFinished in
+        speechRecognizer.startRecording { [weak self] text, error, speechDidFinish in
             DispatchQueue.main.async {
                 guard let self = self else { return }
 
                 self.recognizedWords = text
                 
-                if speechDidFinished || error != nil || self.hasReachedWordLimit(text) {
+                if speechDidFinish || error != nil || self.hasReachedWordLimit(text) {
                     self.finish()
                 }
             }

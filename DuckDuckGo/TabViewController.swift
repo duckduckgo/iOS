@@ -346,7 +346,8 @@ class TabViewController: UIViewController {
     public func getCleanUrl(_ url: URL, showLoadingIndicator: Bool = true, completion: @escaping (URL) -> Void) {
         // Rewrite tracking links
         var urlToLoad = url
-        if let cleanUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: urlToLoad) {
+        if AppDependencyProvider.shared.variantManager.isSupported(feature: .parameterStripping),
+           let cleanUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: urlToLoad) {
             urlToLoad = cleanUrl
         }
         
@@ -1158,8 +1159,9 @@ extension TabViewController: WKNavigationDelegate {
             return true
         }
         
-        if let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
-                                                                   url: navigationAction.request.url) {
+        if AppDependencyProvider.shared.variantManager.isSupported(feature: .parameterStripping),
+           let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
+                                                            url: navigationAction.request.url) {
             decisionHandler(.cancel)
             load(newUrl: newUrl, forNavigationAction: navigationAction)
             return true

@@ -1,8 +1,8 @@
 //
-//  MockBookmarkStore.swift
-//  UnitTests
+//  MockVoiceSearchHelper.swift
+//  DuckDuckGo
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,26 +17,20 @@
 //  limitations under the License.
 //
 
+import Foundation
 import Core
+@testable import DuckDuckGo
 
-class MockBookmarkStore: BookmarkStore {
+class MockVoiceSearchHelper: VoiceSearchHelperProtocol {
+    var isSpeechRecognizerAvailable: Bool
+    var privacyAlertWasConfirmed: Bool
     
-    var bookmarks: [Link] = []
-    
-    var favorites: [Link] = []
-    
-    var addedBookmarks = [Link]()
-    func addBookmark(_ bookmark: Link) {
-        addedBookmarks.append(bookmark)
+    init(isSpeechRecognizerAvailable: Bool = true, privacyAlertWasConfirmed: Bool = true) {
+        self.isSpeechRecognizerAvailable = isSpeechRecognizerAvailable
+        self.privacyAlertWasConfirmed = privacyAlertWasConfirmed
     }
     
-    var addedFavorites = [Link]()
-    func addFavorite(_ favorite: Link) {
-        addedFavorites.append(favorite)
+    func markPrivacyAlertAsConfirmed() {
+        privacyAlertWasConfirmed = true
     }
-
-    func contains(domain: String) -> Bool {
-        return false
-    }
-
 }

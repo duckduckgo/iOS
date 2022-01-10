@@ -121,7 +121,10 @@ class BlankSnapshotViewController: UIViewController {
 }
 
 extension BlankSnapshotViewController: OmniBarDelegate {
-
+    func onVoiceSearchPressed() {
+       // No-op
+    }
+    
     func selectedSuggestion() -> Suggestion? {
         return nil
     }

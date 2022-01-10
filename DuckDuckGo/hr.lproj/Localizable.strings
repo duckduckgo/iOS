@@ -74,10 +74,10 @@
 "action.title.save" = "Spremi";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Označi ovu stranicu knjižnom oznakom";
+"action.title.save.bookmark" = "Dodaj knjižnu oznaku";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Dodaj ovu stranicu u omiljene";
+"action.title.save.favorite" = "Dodaj omiljenu stavku";
 
 /* Settings action */
 "action.title.settings" = "Postavke";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Uključeno";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Dodaj knjižnu oznaku";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Dodaj omiljenu stavku";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Dodaj mapu";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Dodaj mapu";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Izbriši";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Jeste li sigurni da želite izbrisati ovu mapu i %i stavki?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Jeste li sigurni da želite izbrisati ovu mapu i %i stavku?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Izbrisati %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Uredi knjižnu oznaku";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Uredi Favorite";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Uredi mapu";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Lokacija";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Naslov web-mjesta";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Knjižne oznake";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Za sve kartice su dodane nove knjižne oznake";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Izbornik pregledavanja";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Gotovo";
+
 /* Edit button */
 "navigation.title.edit" = "Uredi";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Došlo je do nepoznate pogreške.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Postavke";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Dopustite pristup mikrofonu u postavkama sustava iOS kako bi DuckDuckGo mogao koristiti glasovne funkcije.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Potreban je pristup mikrofonu";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "U redu";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Otkaži";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikad ne sluša što govorite. Sva obrada glasovnih podataka za Privatno glasovno pretraživanje odvija se na vašem uređaju.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Potreban je pristup mikrofonu za Privatno glasovno pretraživanje";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Otkaži";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Zvuk se obrađuje na uređaju. Ne pohranjuje se i ne dijeli ni s kim, uključujući DuckDuckGo.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Omiljena je stavka uklonjena";

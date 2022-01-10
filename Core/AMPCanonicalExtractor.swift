@@ -21,16 +21,33 @@ import Foundation
 import WebKit
 
 public class AMPCanonicalExtractor: NSObject {
-    
+
+    class CompletionHandler {
+
+        private var completion: ((URL?) -> Void)?
+
+        func setCompletionHandler(completion: ((URL?) -> Void)?) {
+            completeWithURL(nil)
+            self.completion = completion
+        }
+
+        func completeWithURL(_ url: URL?) {
+            completion?(url)
+            completion = nil
+        }
+
+    }
+
     struct Constants {
         static let sendCanonical = "sendCanonical"
         static let canonicalKey = "canonical"
         static let ruleListIdentifier = "blockImageRules"
     }
-    
+
+    private let completionHandler = CompletionHandler()
+
     private var webView: WKWebView?
-    private var completion: ((URL?) -> Void)?
-    
+
     private var imageBlockingRules: WKContentRuleList?
     
     private var linkCleaner: LinkCleaner
@@ -119,9 +136,9 @@ public class AMPCanonicalExtractor: NSObject {
     public func cancelOngoingExtraction() {
         webView?.stopLoading()
         webView = nil
-        completion = nil
+        completionHandler.completeWithURL(nil)
     }
-    
+
     public func getCanonicalUrl(initiator: URL?, url: URL?,
                                 config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig,
                                 completion: @escaping ((URL?) -> Void)) {
@@ -136,7 +153,7 @@ public class AMPCanonicalExtractor: NSObject {
             return
         }
         
-        self.completion = completion
+        self.completionHandler.setCompletionHandler(completion: completion)
         
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = .nonPersistent()
@@ -153,7 +170,11 @@ public class AMPCanonicalExtractor: NSObject {
         webView?.navigationDelegate = self
         webView?.load(URLRequest(url: url))
     }
-    
+
+    deinit {
+        completionHandler.completeWithURL(nil)
+    }
+
 }
 
 extension AMPCanonicalExtractor: WKScriptMessageHandler {
@@ -166,24 +187,24 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
            let canonical = dict[Constants.canonicalKey] as? String {
             if let canonicalUrl = URL(string: canonical),
                !linkCleaner.isURLExcluded(url: canonicalUrl,
-                                            config: PrivacyConfigurationManager.shared.privacyConfig) {
+                                          config: PrivacyConfigurationManager.shared.privacyConfig) {
                 linkCleaner.lastAmpUrl = canonicalUrl.absoluteString
-                completion?(canonicalUrl)
+                completionHandler.completeWithURL(canonicalUrl)
             } else {
-                completion?(nil)
+                completionHandler.completeWithURL(nil)
             }
         } else {
-            completion?(nil)
+            completionHandler.completeWithURL(nil)
         }
     }
 }
 
 extension AMPCanonicalExtractor: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        completion?(nil)
+        completionHandler.completeWithURL(nil)
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        completion?(nil)
+        completionHandler.completeWithURL(nil)
     }
 }

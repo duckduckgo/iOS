@@ -18,35 +18,67 @@
 //
 
 import Core
+import Foundation
 
-class BookmarksSearch {
+protocol BookmarksSearchStore {
+    var hasData: Bool { get }
+    func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void)
+}
+
+extension BookmarksCoreDataStorage: BookmarksSearchStore {
+    var hasData: Bool {
+        !topLevelBookmarksItems.isEmpty || !favorites.isEmpty
+    }
     
-    private class ScoredLink {
-        let link: Link
+    func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
+        allBookmarksAndFavoritesFlat(completion: completion)
+    }
+}
+
+class BookmarksCachingSearch {
+    
+    private class ScoredBookmark {
+        let bookmark: Bookmark
         var score: Int
         
-        init(link: Link, score: Int = 0) {
-            self.link = link
+        init(bookmark: Bookmark, score: Int = 0) {
+            self.bookmark = bookmark
             self.score = score
         }
     }
     
-    private let bookmarksStore: BookmarkStore
+    private let bookmarksStore: BookmarksSearchStore
     
-    init(bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
+    init(bookmarksStore: BookmarksSearchStore = BookmarksCoreDataStorage.shared) {
         self.bookmarksStore = bookmarksStore
+        loadCache()
     }
     
     var hasData: Bool {
-        return !bookmarksStore.bookmarks.isEmpty || !bookmarksStore.favorites.isEmpty
+        return bookmarksStore.hasData
+    }
+    
+    private var cachedBookmarksAndFavorites: [Bookmark]?
+    private let cacheLoadedCondition = RunLoop.ResumeCondition()
+    
+    private func loadCache() {
+        bookmarksStore.bookmarksAndFavorites { bookmarks in
+            self.cachedBookmarksAndFavorites = bookmarks
+            self.cacheLoadedCondition.resolve()
+        }
+    }
+    
+    private var bookmarksAndFavorites: [Bookmark] {
+        RunLoop.current.run(until: cacheLoadedCondition)
+        return cachedBookmarksAndFavorites ?? []
     }
     
     // swiftlint:disable cyclomatic_complexity
-    private func score(query: String, results: [ScoredLink]) {
+    private func score(query: String, results: [ScoredBookmark]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
         
         for entry in results {
-            guard let title = entry.link.displayTitle?.lowercased() else { continue }
+            guard let title = entry.bookmark.displayTitle?.lowercased() else { continue }
             
             // Exact matches - full query
             if title.starts(with: query) { // High score for exact match from the begining of the title
@@ -55,7 +87,7 @@ class BookmarksSearch {
                 entry.score += 100
             }
             
-            let domain = entry.link.url.host?.dropPrefix(prefix: "www.") ?? ""
+            let domain = entry.bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
             
             // Tokenized matches
             
@@ -92,21 +124,28 @@ class BookmarksSearch {
     }
     // swiftlint:enable cyclomatic_complexity
     
-    func search(query: String, sortByRelevance: Bool = true) -> [Link] {
+    func search(query: String, sortByRelevance: Bool = true, completion: @escaping ([Bookmark]) -> Void) {
         guard hasData else {
-            return []
+            completion([])
+            return
         }
         
-        let results = bookmarksStore.favorites.map { ScoredLink(link: $0)} + bookmarksStore.bookmarks.map { ScoredLink(link: $0, score: -1) }
-        
+        let bookmarks = bookmarksAndFavorites
+        let results: [ScoredBookmark] = bookmarks.map {
+            let score = $0.isFavorite ? 0 : -1
+            return ScoredBookmark(bookmark: $0, score: score)
+        }
+                    
         let trimmed = query.trimWhitespace()
-        score(query: trimmed, results: results)
+        self.score(query: trimmed, results: results)
         
         var finalResult = results.filter { $0.score > 0 }
         if sortByRelevance {
             finalResult = finalResult.sorted { $0.score > $1.score }
         }
         
-        return finalResult.map { $0.link }
+        DispatchQueue.main.async {
+            completion(finalResult.map { $0.bookmark })
+        }
     }
 }

@@ -81,6 +81,14 @@ class HomeViewController: UIViewController {
 
         configureCollectionView()
         applyTheme(ThemeManager.shared.currentTheme)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(bookmarksDidChange),
+                                               name: BookmarksManager.Notifications.bookmarksDidChange,
+                                               object: nil)
+    }
+    
+    @objc func bookmarksDidChange() {
+        configureCollectionView()
     }
     
     func configureCollectionView() {
@@ -231,10 +239,15 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect link: Link) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
+        guard let url = favorite.url else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
-        Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
-        delegate?.home(self, didRequestUrl: link.url)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        delegate?.home(self, didRequestUrl: url)
+    }
+    
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+        delegate?.home(self, didRequestEdit: favorite)
     }
 
 }

@@ -74,10 +74,10 @@
 "action.title.save" = "Salvesta";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Lisa see lehekülg järjehoidjatesse";
+"action.title.save.bookmark" = "Lisa järjehoidja";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Määra see leht lemmikuks";
+"action.title.save.favorite" = "Lisa lemmik";
 
 /* Settings action */
 "action.title.settings" = "Seaded";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Sees";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Lisa järjehoidja";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Lisa lemmik";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Lisa kaust";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Lisa kaust";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Kustuta";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Kas soovid kindlasti kustutada selle kausta ja %i üksust?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Kas soovid kindlasti kustutada selle kausta ja %i üksuse?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Kustutada %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Redigeeri järjehoidjat";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Redigeeri lemmikut";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Redigeeri kausta";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Asukoht";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Veebisaidi pealkiri";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Järjehoidjad";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Lisati uued järjehoidjad kõigile vahekaartidele";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Sirvimismenüü";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Valmis";
+
 /* Edit button */
 "navigation.title.edit" = "Redigeeri";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Tekkis tundmatu tõrge.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Seaded";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Häälfunktsioonide kasutamiseks lubage DuckDuckGo jaoks juurdepääs mikrofonile iOS-i süsteemiseadetes.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Vajalik juurdepääs mikrofonile";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Tühista";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo ei kuula kunagi pealt, mida te ütlete. Kogu kõneandmete töötlemine privaatse häälotsingu jaoks toimub teie seadmes.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Privaatse häälotsingu jaoks on vajalik juurdepääs mikrofonile";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Tühista";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Heli töödeldakse seadmes. Seda ei salvestata ega jagata kellegagi, sealhulgas DuckDuckGoga.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Lemmik on eemaldatud";

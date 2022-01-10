@@ -14,7 +14,7 @@
 "NSLocationWhenInUseUsageDescription" = "Ļauj kopīgot tavu atrašanās vietu";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Ļauj kopīgot ierakstus";
+"NSMicrophoneUsageDescription" = "Nepieciešams, lai izmantotu balss funkcijas. DuckDuckGo neieraksta tevis teikto.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Ļauj saglabāt attēlus ierīcē";

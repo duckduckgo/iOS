@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -88,7 +88,7 @@
                                     </constraints>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="30" y="0.0" width="375" height="40"/>
+                                    <rect key="frame" x="30" y="0.0" width="345" height="40"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-px-Ypi" customClass="SiteRatingContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
@@ -153,7 +153,7 @@
                                             </connections>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="30" y="0.0" width="345" height="40"/>
+                                            <rect key="frame" x="30" y="0.0" width="315" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -193,6 +193,17 @@
                                         <outletCollection property="gestureRecognizers" destination="N3q-x6-xYr" appends="YES" id="oez-nJ-1QO"/>
                                     </connections>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ita-iD-8ad" userLabel="Voice Button">
+                                    <rect key="frame" x="375" y="8" width="30" height="24"/>
+                                    <accessibility key="accessibilityConfiguration" label="Clear Text"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" priority="900" constant="30" id="80Y-p8-kj7"/>
+                                    </constraints>
+                                    <state key="normal" image="MicrophoneSolid"/>
+                                    <connections>
+                                        <action selector="onVoiceSearchButtonPressed:" destination="ojX-nM-dyN" eventType="touchUpInside" id="hLt-8r-LIV"/>
+                                    </connections>
+                                </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
                                     <rect key="frame" x="405" y="0.0" width="30" height="40"/>
                                     <accessibility key="accessibilityConfiguration" label="Clear Text"/>
@@ -344,8 +355,9 @@
                 <outlet property="shareButton" destination="hor-Jd-3kw" id="tc5-Us-Mba"/>
                 <outlet property="siteRatingContainer" destination="4JV-px-Ypi" id="VRT-kc-Ijt"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
+                <outlet property="voiceSearchButton" destination="ita-iD-8ad" id="6ms-wg-lln"/>
             </connections>
-            <point key="canvasLocation" x="-229" y="-108"/>
+            <point key="canvasLocation" x="-229.06295754026354" y="-108.3984375"/>
         </view>
         <tapGestureRecognizer id="qXd-RO-1cS" userLabel="Site Rating Tap Recogniser">
             <connections>
@@ -375,6 +387,7 @@
         <image name="BrowsePrevious" width="24" height="24"/>
         <image name="ClearText" width="24" height="24"/>
         <image name="MenuShare" width="24" height="24"/>
+        <image name="MicrophoneSolid" width="24" height="24"/>
         <image name="PP Network Icon google" width="24" height="24"/>
         <image name="PP Network Icon more" width="22" height="22"/>
         <image name="PP Network Icon yahoo!" width="24" height="24"/>

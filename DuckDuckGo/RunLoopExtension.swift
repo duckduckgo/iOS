@@ -19,7 +19,7 @@
 
 import Foundation
 
-extension RunLoop {
+public extension RunLoop {
 
     final class ResumeCondition {
 
@@ -33,7 +33,7 @@ extension RunLoop {
             return _isResolved
         }
 
-        init() {
+        public init() {
         }
 
         convenience init(dispatchGroup: DispatchGroup) {
@@ -55,7 +55,7 @@ extension RunLoop {
             return port
         }
 
-        func resolve(mode: RunLoop.Mode = .default) {
+        public func resolve(mode: RunLoop.Mode = .default) {
             lock.lock()
 
             assert(!_isResolved)

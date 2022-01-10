@@ -74,6 +74,8 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    
+    lazy var bookmarksManager = BookmarksManager()
 
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
@@ -984,6 +986,11 @@ extension TabViewController: WKNavigationDelegate {
                             
                 scheduleTrackerNetworksAnimation(collapsing: true)
                 return
+        }
+        
+        if let url = link?.url, AppUrls().isDuckDuckGoEmailProtection(url: url) {
+            scheduleTrackerNetworksAnimation(collapsing: true)
+            return
         }
         
         guard let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {

@@ -14,7 +14,7 @@
 "NSLocationWhenInUseUsageDescription" = "Σας επιτρέπει να κοινοποιείτε την τοποθεσία σας";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Σας επιτρέπει να μοιράζεστε ηχογραφήσεις";
+"NSMicrophoneUsageDescription" = "Αυτό είναι απαραίτητο για τη χρήση λειτουργιών φωνής. Το DuckDuckGo δεν καταγράφει ποτέ ό,τι λέτε.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Σας επιτρέπει να αποθηκεύετε φωτογραφίες στη συσκευή σας";

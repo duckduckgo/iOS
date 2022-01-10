@@ -14,7 +14,7 @@
 "NSLocationWhenInUseUsageDescription" = "Leidžia bendrinti jūsų vietą";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Leidžia bendrinti įrašus";
+"NSMicrophoneUsageDescription" = "Tai būtina, kai naudojamos balsu valdomos funkcijos. „DuckDuckGo“ niekada neįrašinėja to, ką sakote.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Leidžia įrašyti nuotraukas į jūsų įrenginį";

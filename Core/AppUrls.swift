@@ -53,6 +53,7 @@ public struct AppUrls {
         static let newYorkTimesBase = "https://nytimes.com"
         static let gpcEnabled = [gpcGlitchBase, washingtonPostBase, newYorkTimesBase]
 
+        static var emailProtectionLink = "https://duckduckgo.com/email"
         static var loginQuickLink = "https://duckduckgo.com/email/login"
         static var emailPrivacyGuarantees = "https://duckduckgo.com/email/privacy-guarantees"
         static var addressBlogPostQuickLink = "https://duckduckgo.com/email/learn-more"
@@ -229,6 +230,10 @@ public struct AppUrls {
             }
         }
         return false
+    }
+    
+    public func isDuckDuckGoEmailProtection(url: URL) -> Bool {
+        return url.absoluteString.starts(with: Url.emailProtectionLink)
     }
 
     public func applyStatsParams(for url: URL) -> URL {

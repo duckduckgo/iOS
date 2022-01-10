@@ -1,9 +1,42 @@
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "1oZ-re-yKW"; */
+"1oZ-re-yKW.title" = "Ferdig";
+
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "Buv-ez-2Lr"; */
+"Buv-ez-2Lr.text" = "Ingen bokmerker lagt til ennå";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "K2O-E5-pyF"; */
+"K2O-E5-pyF.text" = "Etikett";
+
+/* Class = "UITextField"; placeholder = "Title"; ObjectID = "KiU-Wb-7jj"; */
+"KiU-Wb-7jj.placeholder" = "Tittel";
+
 /* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
 "Lqe-Wh-Evj.text" = "Etikett";
 
 /* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
 "N2X-jQ-cbU.text" = "Ingen bokmerker lagt til ennå";
 
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "pwj-Ie-VbJ"; */
+"pwj-Ie-VbJ.title" = "Rediger";
+
+/* Class = "UINavigationItem"; title = "Add Bookmark"; ObjectID = "qA0-bu-lRC"; */
+"qA0-bu-lRC.title" = "Legg til bokmerke";
+
+/* Class = "UINavigationItem"; title = "Add Folder"; ObjectID = "qaZ-4Z-o70"; */
+"qaZ-4Z-o70.title" = "Legg til mappe";
+
+/* Class = "UITextField"; placeholder = "Title"; ObjectID = "rT4-Yr-P8D"; */
+"rT4-Yr-P8D.placeholder" = "Tittel";
+
+/* Class = "UIBarButtonItem"; title = "Add Folder"; ObjectID = "ToB-IA-MxG"; */
+"ToB-IA-MxG.title" = "Legg til mappe";
+
 /* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
 "tVt-jc-YaY.title" = "Bokmerker";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vil-gw-sgh"; */
+"vil-gw-sgh.text" = "Etikett";
+
+/* Class = "UITextField"; placeholder = "URL"; ObjectID = "YqY-sP-hhb"; */
+"YqY-sP-hhb.placeholder" = "URL";
 

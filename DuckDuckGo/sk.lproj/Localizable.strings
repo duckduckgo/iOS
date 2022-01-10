@@ -74,10 +74,10 @@
 "action.title.save" = "Uložiť";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Pridať túto stránku medzi záložky";
+"action.title.save.bookmark" = "Pridať záložku";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Pridať túto stránku medzi obľúbené";
+"action.title.save.favorite" = "Pridať do obľúbených položiek";
 
 /* Settings action */
 "action.title.settings" = "Nastavenia";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Zapnuté";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Pridať záložku";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Pridať do obľúbených položiek";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Pridanie priečinka";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Pridať priečinok";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Vymazať";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Naozaj chcete odstrániť tento priečinok a položky (%i)?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Naozaj chcete odstrániť tento priečinok a položky (%i)?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Chcete odstrániť priečinok %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Upraviť záložku";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Úprava obľúbenej položky";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Úprava priečinka";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Poloha";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Názov webovej stránky";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Záložky";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Nové záložky boli pridané pre všetky karty";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Ponuka prehliadania";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Hotovo";
+
 /* Edit button */
 "navigation.title.edit" = "Upraviť";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Vyskytla sa neznáma chyba.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Nastavenia";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Ak chcete používať hlasové funkcie, povoľte pre DuckDuckGo prístup k mikrofónu v nastaveniach systému iOS.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Vyžaduje sa prístup k mikrofónu";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Zrušiť";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikdy nepočúva, čo hovoríte. Všetky údaje reči potrebné pre súkromné hlasové vyhľadávanie sa spracúvajú vo vašom zariadení.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Na používanie funkcie súkromného hlasového vyhľadávania sa vyžaduje prístup k mikrofónu.";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Zrušiť";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Zvuk sa spracováva v zariadení. Neukladá sa nikde a s nikým, vrátane DuckDuckGo, sa nezdieľa.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Obľúbená položka bola odstránená";

@@ -38,6 +38,7 @@ protocol OmniBarState {
     var showRefresh: Bool { get }
     var showMenu: Bool { get }
     var showSettings: Bool { get }
+    var showVoiceSearch: Bool { get }
     var name: String { get }
     var onEditingStoppedState: OmniBarState { get }
     var onEditingStartedState: OmniBarState { get }

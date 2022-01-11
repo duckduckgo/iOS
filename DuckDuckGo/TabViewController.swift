@@ -806,7 +806,8 @@ class TabViewController: UIViewController {
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlockerRulesManager.shared.currentRules?.etag ?? "",
-                              ampUrl: linkCleaner?.lastAmpUrl)
+                              ampUrl: linkCleaner?.lastAmpUrl,
+                              urlParametersRemoved: linkCleaner?.urlParametersRemoved ?? false)
     }
     
     public func print() {

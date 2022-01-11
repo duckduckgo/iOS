@@ -22,6 +22,7 @@ import Foundation
 public class LinkCleaner {
     
     public var lastAmpUrl: String?
+    public var urlParametersRemoved: Bool = false
     
     public init() {
         
@@ -91,6 +92,7 @@ public class LinkCleaner {
     
     public func cleanTrackingParameters(initiator: URL?, url: URL?,
                                         config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
+        urlParametersRemoved = false
         guard let url = url, !isURLExcluded(url: url, config: config, feature: .trackingParameters) else { return url }
         if let initiator = initiator, isURLExcluded(url: initiator, config: config, feature: .trackingParameters) {
             return url
@@ -108,6 +110,7 @@ public class LinkCleaner {
         let preservedParams: [URLQueryItem] = queryParams.filter { param in
             for trackingParam in trackingParams {
                 if param.name.matches(pattern: "^\(trackingParam)$") {
+                    urlParametersRemoved = true
                     return false
                 }
             }

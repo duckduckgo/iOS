@@ -1142,7 +1142,7 @@ extension TabViewController: WKNavigationDelegate {
             showProgressIndicator()
             ampExtractor.getCanonicalUrl(initiator: webView.url,
                                           url: navigationAction.request.url) { canonical in
-                guard let canonical = canonical else {
+                guard let canonical = canonical, canonical != navigationAction.request.url else {
                     decisionHandler(.allow)
                     return
                 }

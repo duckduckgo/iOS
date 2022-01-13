@@ -327,7 +327,7 @@ extension TabViewController {
         })
     }
     
-    private func togglePrivacyProtection(protectionStore: DomainsProtectionStore, domain: String) {
+    private func togglePrivacyProtection(protectionStore: Core.DomainsProtectionStore, domain: String) {
         let isProtected = !protectionStore.unprotectedDomains.contains(domain)
         let operation = isProtected ? protectionStore.disableProtection : protectionStore.enableProtection
         

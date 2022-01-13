@@ -640,7 +640,8 @@ class TabViewController: UIViewController {
             self.webView.configuration.userContentController.removeAllContentRuleLists()
             self.webView.configuration.userContentController.add(rules.rulesList)
             
-            if let diff = notification.userInfo?[ContentBlockerProtectionChangedNotification.diffKey] as? ContentBlockerRulesIdentifier.Difference {
+            let key = ContentBlockerProtectionChangedNotification.diffKey
+            if let diff = notification.userInfo?[key]as? Core.ContentBlockerRulesIdentifier.Difference {
                 if diff.contains(.unprotectedSites) {
                     reload(scripts: true)
                 } else {
@@ -1484,18 +1485,18 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension TabViewController: ContentBlockerRulesUserScriptDelegate {
+extension TabViewController: Core.ContentBlockerRulesUserScriptDelegate {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
+    func contentBlockerUserScriptShouldProcessTrackers(_ script: Core.ContentBlockerRulesUserScript) -> Bool {
         return siteRating?.isFor(self.url) ?? false
     }
     
-    func contentBlockerUserScript(_ script: ContentBlockerRulesUserScript,
-                                  detectedTracker tracker: DetectedTracker) {
+    func contentBlockerUserScript(_ script: Core.ContentBlockerRulesUserScript,
+                                  detectedTracker tracker: Core.DetectedTracker) {
         userScriptDetectedTracker(tracker)
     }
 
-    fileprivate func userScriptDetectedTracker(_ tracker: DetectedTracker) {
+    fileprivate func userScriptDetectedTracker(_ tracker: Core.DetectedTracker) {
         if tracker.blocked && fireWoFollowUp {
             fireWoFollowUp = false
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
@@ -1519,14 +1520,14 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     }
 }
 
-extension TabViewController: SurrogatesUserScriptDelegate {
+extension TabViewController: Core.SurrogatesUserScriptDelegate {
 
-    func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
+    func surrogatesUserScriptShouldProcessTrackers(_ script: Core.SurrogatesUserScript) -> Bool {
         return siteRating?.isFor(self.url) ?? false
     }
 
-    func surrogatesUserScript(_ script: SurrogatesUserScript,
-                              detectedTracker tracker: DetectedTracker,
+    func surrogatesUserScript(_ script: Core.SurrogatesUserScript,
+                              detectedTracker tracker: Core.DetectedTracker,
                               withSurrogate host: String) {
         if siteRating?.url.absoluteString == tracker.pageUrl {
             siteRating?.surrogateInstalled(host)

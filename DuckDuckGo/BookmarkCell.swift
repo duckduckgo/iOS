@@ -24,28 +24,88 @@ class BookmarkCell: UITableViewCell {
 
     static let reuseIdentifier = "BookmarkCell"
 
-    @IBOutlet weak var linkImage: UIImageView!
+    @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var title: UILabel!
-
-    var link: Link? {
+    @IBOutlet weak var numberOfChildrenLabel: UILabel!
+    @IBOutlet weak var disclosureEditView: UIImageView!
+    @IBOutlet weak var editSeperatorView: UIView!
+    @IBOutlet weak var mainContentStackView: UIStackView!
+    @IBOutlet weak var stackViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var editSeperatorViewWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    
+    var bookmarkItem: BookmarkItem? {
         didSet {
-            if let linkTitle = link?.title?.trimWhitespace(), !linkTitle.isEmpty {
-                title.text = linkTitle
-            } else {
-                title.text = link?.url.host?.dropPrefix(prefix: "www.") ?? ""
+            if let bookmark = bookmarkItem as? Bookmark {
+                numberOfChildrenLabel.isHidden = true
+                imageWidthConstraint.constant = 24
+                imageHeightConstraint.constant = 24
+                if let linkTitle = bookmark.title?.trimWhitespace(), !linkTitle.isEmpty {
+                    title.text = linkTitle
+                } else {
+                    title.text = bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
+                }
+                
+                accessoryView = nil
+                
+                itemImage.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks)
+            } else if let folder = bookmarkItem as? BookmarkFolder {
+                imageWidthConstraint.constant = 22
+                imageHeightConstraint.constant = 20
+                numberOfChildrenLabel.isHidden = false
+                title.text = folder.title
+                numberOfChildrenLabel.text = folder.children?.count.description
+                itemImage.image = #imageLiteral(resourceName: "Folder")
+                
+                let theme = ThemeManager.shared.currentTheme
+                let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))
+                accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
+                accesoryImage.tintColor = theme.tableCellAccessoryColor
+                accessoryView = accesoryImage
             }
-            linkImage.loadFavicon(forDomain: link?.url.host, usingCache: .bookmarks)
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         showsReorderControl = true
+        disclosureEditView.isHidden = true
+        editSeperatorView.isHidden = true
+        editSeperatorViewWidthConstraint.constant =  1.0 / UIScreen.main.scale
+    }
+    
+    var currentState: UITableViewCell.StateMask = []
+    
+    override func willTransition(to state: UITableViewCell.StateMask) {
+        currentState = state
+        super.willTransition(to: state)
+        currentState = state
+        if state == .showingEditControl {
+            
+        }
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
-        linkImage.isHidden = editing
         super.setEditing(editing, animated: animated)
+        
+        // require current state to make sure this doesn't happen when swiping cells
+        if editing && currentState.contains(.showingEditControl) {
+            numberOfChildrenLabel.isHidden = true
+            disclosureEditView.isHidden = false
+            editSeperatorView.isHidden = false
+            stackViewTrailingConstraint.constant = 32 + editSeperatorViewWidthConstraint.constant
+            mainContentStackView.setCustomSpacing(8, after: itemImage)
+        } else {
+            disclosureEditView.isHidden = true
+            editSeperatorView.isHidden = true
+            stackViewTrailingConstraint.constant = 0
+            if bookmarkItem as? BookmarkFolder != nil {
+                numberOfChildrenLabel.isHidden = false
+            }
+            mainContentStackView.setCustomSpacing(16, after: itemImage)
+        }
     }
 
 }

@@ -20,6 +20,7 @@
 import WidgetKit
 import SwiftUI
 import Core
+import CoreData
 import Kingfisher
 
 struct Favorite {
@@ -44,46 +45,70 @@ struct Favorite {
 struct Provider: TimelineProvider {
 
     typealias Entry = FavoritesEntry
-
+    
     func getSnapshot(in context: Context, completion: @escaping (FavoritesEntry) -> Void) {
-        completion(createEntry(in: context))
+        createEntry(in: context) { entry in
+            completion(entry)
+        }
     }
 
     func placeholder(in context: Context) -> FavoritesEntry {
-        return createEntry(in: context)
+        return FavoritesEntry(date: Date(), favorites: [], isPreview: context.isPreview)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<FavoritesEntry>) -> Void) {
-        let timeline = Timeline(entries: [createEntry(in: context)], policy: .never)
-        completion(timeline)
+        createEntry(in: context) { entry in
+            let timeline = Timeline(entries: [entry], policy: .never)
+            completion(timeline)
+        }
     }
 
-    private func getFavorites(returningNoMoreThan maxLength: Int) -> [Favorite] {
-        return BookmarkUserDefaults().favorites.prefix(maxLength)
-            .map {
-                return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: $0.url),
-                                domain: $0.url.host?.dropPrefix(prefix: "www.") ?? "",
-                                title: $0.displayTitle ?? "",
-                                favicon: loadImageFromCache(forDomain: $0.url.host) )
-            }
+    private func coreDataFavoritesToFavories(_ coreDataFavorites: [Bookmark], returningNoMoreThan maxLength: Int) -> [Favorite] {
+        
+        return coreDataFavorites.prefix(maxLength)
+            .compactMap {
+            guard let url = $0.url else { return nil }
+            return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
+                            domain: url.host?.dropPrefix(prefix: "www.") ?? "",
+                            title: $0.displayTitle ?? "",
+                            favicon: loadImageFromCache(forDomain: url.host) )
+        }
+    }
+    
+    private func getCoreDataFavorites(completion: @escaping ([Bookmark]) -> Void) {
+        
+        let coreData = BookmarksCoreDataStorage()
+        coreData.loadStoreOnlyForWidget()
+        coreData.favoritesUncachedForWidget { favorites in
+            completion(favorites)
+        }
     }
 
-    private func createEntry(in context: Context) -> FavoritesEntry {
-        let favorites: [Favorite]
-
+    private func createEntry(in context: Context, completion: @escaping (FavoritesEntry) -> Void) {
+        let maxFavorites: Int
         switch context.family {
 
         case .systemMedium:
-            favorites = getFavorites(returningNoMoreThan: 4)
+            maxFavorites = 4
 
         case .systemLarge:
-            favorites = getFavorites(returningNoMoreThan: 12)
+            maxFavorites = 12
 
         default:
-            favorites = []
+            maxFavorites = 0
         }
-
-        return FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)
+        
+        if maxFavorites > 0 {
+            getCoreDataFavorites { coreDataFavorites in
+                let favorites = coreDataFavoritesToFavories(coreDataFavorites, returningNoMoreThan: maxFavorites)
+                
+                let entry = FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)
+                completion(entry)
+            }
+        } else {
+            let entry = FavoritesEntry(date: Date(), favorites: [], isPreview: context.isPreview)
+            completion(entry)
+        }
     }
 
     private func loadImageFromCache(forDomain domain: String?) -> UIImage? {

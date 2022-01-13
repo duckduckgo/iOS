@@ -21,26 +21,30 @@ import UIKit
 import Core
 import os.log
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
+
 class BookmarksViewController: UITableViewController {
 
+    @IBOutlet weak var addFolderButton: UIBarButtonItem!
     @IBOutlet weak var editButton: UIBarButtonItem!
-
-    private var searchController: UISearchController!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
+    private var searchController: UISearchController?
     weak var delegate: BookmarksDelegate?
     
-    private lazy var appSettings = AppDependencyProvider.shared.appSettings
-
-    fileprivate var dataSource = DefaultBookmarksDataSource()
+    fileprivate lazy var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource(alertDelegate: self)
     fileprivate var searchDataSource = SearchBookmarksDataSource()
+    private var bookmarksCachingSearch: BookmarksCachingSearch?
     
     fileprivate var onDidAppearAction: () -> Void = {}
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForNotifications()
         configureTableView()
-        configureSearch()
-        refreshEditButton()
+        configureSearchIfNeeded()
+        configureBars()
         
         applyTheme(ThemeManager.shared.currentTheme)
     }
@@ -52,26 +56,60 @@ class BookmarksViewController: UITableViewController {
         onDidAppearAction = {}
     }
     
+    @objc func dataDidChange(notification: Notification) {
+        tableView.reloadData()
+        refreshEditButton()
+    }
+    
+    func openEditFormWhenPresented(bookmark: Bookmark) {
+        onDidAppearAction = { [weak self] in
+            self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
+        }
+    }
+    
     func openEditFormWhenPresented(link: Link) {
         onDidAppearAction = { [weak self] in
-            guard let strongSelf = self,
-                  let index = strongSelf.dataSource.bookmarksManager.indexOfBookmark(url: link.url) else { return }
-            
-            let indexPath = IndexPath(row: index, section: 1)
-            strongSelf.tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
-            strongSelf.showEditBookmarkAlert(for: indexPath)
+            self?.dataSource.bookmarksManager.bookmark(forURL: link.url) { bookmark in
+                if let bookmark = bookmark {
+                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
+                }
+            }
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let item = currentDataSource.item(at: indexPath) else { return }
+        
         if tableView.isEditing {
-            showEditBookmarkAlert(for: indexPath)
-        } else if let link = currentDataSource.link(at: indexPath) {
-            selectLink(link)
+            tableView.deselectRow(at: indexPath, animated: true)
+            if let bookmark = item as? Bookmark {
+                performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
+            } else if let folder = item as? BookmarkFolder {
+                performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: folder)
+            }
+        } else {
+            if let bookmark = item as? Bookmark {
+                select(bookmark: bookmark)
+            } else if let folder = item as? BookmarkFolder {
+                let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
+                guard let viewController = storyboard.instantiateViewController(withIdentifier: "BookmarksViewController")
+                        as? BookmarksViewController else {
+                            
+                    return
+                }
+                viewController.dataSource = DefaultBookmarksDataSource(alertDelegate: viewController, parentFolder: folder)
+                viewController.delegate = delegate
+                navigationController?.pushViewController(viewController, animated: true)
+            }
         }
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let item = currentDataSource.item(at: indexPath),
+              item as? BookmarkFolder == nil else {
+            return nil
+        }
+     
         let shareContextualAction = UIContextualAction(style: .normal, title: UserText.actionShare) { (_, _, completionHandler) in
             self.showShareSheet(for: indexPath)
             completionHandler(true)
@@ -79,53 +117,77 @@ class BookmarksViewController: UITableViewController {
         shareContextualAction.backgroundColor = UIColor.cornflowerBlue
         return UISwipeActionsConfiguration(actions: [shareContextualAction])
     }
+    
+    override func tableView(_ tableView: UITableView,
+                            targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath,
+                            toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        
+        // Can't move folders into favorites
+        if let item = currentDataSource.item(at: sourceIndexPath),
+           item as? BookmarkFolder != nil &&
+            proposedDestinationIndexPath.section == currentDataSource.favoritesSectionIndex {
+            return sourceIndexPath
+        }
+        
+        // Check if the proposed section is empty, if so we need to make sure the proposed row is 0, not 1
+        let sectionIndexPath = IndexPath(row: 0, section: proposedDestinationIndexPath.section)
+        if currentDataSource.item(at: sectionIndexPath) == nil {
+            return sectionIndexPath
+        }
+        
+        return proposedDestinationIndexPath
+    }
 
     private func registerForNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onApplicationBecameActive),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onExternalDataChange),
-                                               name: BookmarkUserDefaults.Notifications.bookmarkStoreDidChange,
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(dataDidChange),
+                                               name: BookmarksManager.Notifications.bookmarksDidChange,
                                                object: nil)
     }
 
     private func configureTableView() {
         tableView.dataSource = dataSource
+        if dataSource.folder != nil {
+            tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: CGFloat.leastNormalMagnitude))
+        }
     }
     
-    private func configureSearch() {
-        // Do not use UISearchController() as it causes iOS 12 to miss search bar.
-        searchController = UISearchController(searchResultsController: nil)
+    private func configureSearchIfNeeded() {
+        guard dataSource.showSearch else {
+            // Don't show search for sub folders
+            return
+        }
+        let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
-        if #available(iOS 13.0, *) {
-            searchController.automaticallyShowsScopeBar = false
-            searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
-            
-            // Add separator
-            if let nv = navigationController?.navigationBar {
-                let separator = UIView()
-                separator.backgroundColor = .greyish
-                nv.addSubview(separator)
-                separator.translatesAutoresizingMaskIntoConstraints = false
-                separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
-                separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
-                separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
-                separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
-            }
+        searchController.automaticallyShowsScopeBar = false
+        searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
+        
+        // Add separator
+        if let nv = navigationController?.navigationBar {
+            let separator = UIView()
+            separator.backgroundColor = .greyish
+            nv.addSubview(separator)
+            separator.translatesAutoresizingMaskIntoConstraints = false
+            separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
+            separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
+            separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
+            separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
         }
+        self.searchController = searchController
         
         // Initially puling down the table to reveal search bar will result in a glitch if content offset is 0 and we are using `isModalInPresentation` set to true
         tableView.setContentOffset(CGPoint(x: 0, y: 1), animated: false)
     }
     
-    private var currentDataSource: BookmarksDataSource {
+    private var currentDataSource: MainBookmarksViewDataSource {
         if tableView.dataSource === dataSource {
             return dataSource
         }
@@ -136,41 +198,60 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    @objc func onExternalDataChange(notification: NSNotification) {
-        guard let source = notification.object as? BookmarkUserDefaults,
-              dataSource.bookmarksManager.dataStore !== source else { return }
-        
-        tableView.reloadData()
+    private func configureBars() {
+        self.navigationController?.setToolbarHidden(false, animated: true)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+        toolbarItems?.insert(flexibleSpace, at: 1)
+        if let dataSourceTitle = dataSource.navigationTitle {
+            title = dataSourceTitle
+        }
+        refreshEditButton()
     }
 
     private func refreshEditButton() {
-        if currentDataSource.isEmpty {
+        if currentDataSource.isEmpty || currentDataSource === searchDataSource {
             disableEditButton()
-        } else {
+        } else if !tableView.isEditing {
             enableEditButton()
         }
     }
-
-    @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
-        startEditing()
-    }
-
-    @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
-        if tableView.isEditing && !currentDataSource.isEmpty {
-            finishEditing()
+    
+    private func refreshAddFolderButton() {
+        if currentDataSource === searchDataSource {
+            disableAddFolderButton()
         } else {
-            dismiss()
+            enableAddFolderButton()
         }
     }
 
+    @IBAction func onAddFolderPressed(_ sender: Any) {
+        performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: nil)
+    }
+    
+    @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
+        if tableView.isEditing && !currentDataSource.isEmpty {
+            finishEditing()
+        } else {
+            startEditing()
+        }
+    }
+
+    @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
+        dismiss()
+    }
+
     private func startEditing() {
+        // necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
+        tableView.isEditing = false
+        
         tableView.isEditing = true
-        disableEditButton()
+        changeEditButtonToDone()
     }
 
     private func finishEditing() {
         tableView.isEditing = false
         refreshEditButton()
+        enableDoneButton()
     }
 
     private func enableEditButton() {
@@ -183,9 +264,31 @@ class BookmarksViewController: UITableViewController {
         editButton.isEnabled = false
     }
     
+    private func enableAddFolderButton() {
+        addFolderButton.title = UserText.addbookmarkFolderButton
+        addFolderButton.isEnabled = true
+    }
+    
+    private func disableAddFolderButton() {
+        addFolderButton.title = ""
+        addFolderButton.isEnabled = false
+    }
+    
+    private func changeEditButtonToDone() {
+        editButton.title = UserText.navigationTitleDone
+        doneButton.title = ""
+        doneButton.isEnabled = false
+    }
+    
+    private func enableDoneButton() {
+        doneButton.title = UserText.navigationTitleDone
+        doneButton.isEnabled = true
+    }
+    
     private func prepareForSearching() {
         finishEditing()
         disableEditButton()
+        disableAddFolderButton()
     }
     
     private func finishSearching() {
@@ -193,39 +296,28 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
         
         enableEditButton()
-    }
-
-    fileprivate func showEditBookmarkAlert(for indexPath: IndexPath) {
-        let title = UserText.actionEditBookmark
-        let link = dataSource.link(at: indexPath)
-        let alert = EditBookmarkAlert.buildAlert(
-            title: title,
-            bookmark: link,
-            saveCompletion: { [weak self] (updatedBookmark) in
-                self?.dataSource.tableView(self!.tableView, updateBookmark: updatedBookmark, at: indexPath)
-            }
-        )
-        present(alert, animated: true)
+        enableAddFolderButton()
     }
     
     fileprivate func showShareSheet(for indexPath: IndexPath) {
 
-        if let link = currentDataSource.link(at: indexPath) {
-            presentShareSheet(withItems: [link], fromView: self.view)
+        if let item = currentDataSource.item(at: indexPath),
+            let bookmark = item as? Bookmark {
+            presentShareSheet(withItems: [bookmark], fromView: self.view)
         } else {
             os_log("Invalid share link found", log: generalLog, type: .debug)
         }
     }
 
-    fileprivate func selectLink(_ link: Link) {
+    fileprivate func select(bookmark: Bookmark) {
         dismiss()
-        delegate?.bookmarksDidSelect(link: link)
+        delegate?.bookmarksDidSelect(bookmark: bookmark)
     }
 
     private func dismiss() {
         delegate?.bookmarksUpdated()
         
-        if searchController.isActive {
+        if let searchController = searchController, searchController.isActive {
             searchController.dismiss(animated: false) {
                 self.dismiss(animated: true, completion: nil)
             }
@@ -234,22 +326,40 @@ class BookmarksViewController: UITableViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
+            viewController.hidesBottomBarWhenPushed = true
+            viewController.setExistingFolder(sender as? BookmarkFolder, initialParentFolder: dataSource.folder)
+        } else if let viewController = segue.destination.children.first as? AddOrEditBookmarkViewController {
+            viewController.hidesBottomBarWhenPushed = true
+            viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
+        }
+    }
+    
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if #available(iOS 13.0, *), searchController.searchBar.bounds.height == 0 {
+        if (searchController?.searchBar.bounds.height ?? 0) == 0 {
             // Disable drag-to-dismiss if we start scrolling and search bar is still hidden
             isModalInPresentation = true
         }
     }
 
     override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+        guard let searchController = searchController else {
+            return
+        }
+
+        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
             // Re-enable drag-to-dismiss if needed
             isModalInPresentation = false
         }
     }
 
     override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if #available(iOS 13.0, *), isModalInPresentation, searchController.searchBar.bounds.height > 0 {
+        guard let searchController = searchController else {
+            return
+        }
+        
+        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
             // Re-enable drag-to-dismiss if needed
             isModalInPresentation = false
         }
@@ -257,6 +367,10 @@ class BookmarksViewController: UITableViewController {
 }
 
 extension BookmarksViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        bookmarksCachingSearch = BookmarksCachingSearch()
+    }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
@@ -270,9 +384,11 @@ extension BookmarksViewController: UISearchBarDelegate {
             prepareForSearching()
             tableView.dataSource = searchDataSource
         }
-        
-        searchDataSource.performSearch(query: searchText)
-        tableView.reloadData()
+
+        let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
+        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksSearch) {
+            self.tableView.reloadData()
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -286,44 +402,30 @@ extension BookmarksViewController: UISearchResultsUpdating {
     }
 }
 
+extension BookmarksViewController: BookmarksSectionDataSourceDelegate {
+    func bookmarksSectionDataSourceDidRequestViewControllerForDeleteAlert(
+        _ bookmarksSectionDataSource: BookmarksSectionDataSource) -> UIViewController {
+       
+        return self
+    }
+}
+
 extension BookmarksViewController: Themable {
     
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
+        decorateToolbar(with: theme)
         
-        if #available(iOS 13.0, *) {
-            overrideSystemTheme(with: theme)
-            searchController.searchBar.searchTextField.textColor = theme.searchBarTextColor
-        } else {
-            
-            switch theme.currentImageSet {
-            case .dark:
-                searchController.searchBar.barStyle = .black
-            case .light:
-                searchController.searchBar.barStyle = .default
-            }
-            
-            searchController.searchBar.tintColor = theme.searchBarTextColor
-            if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
-                searchField.layer.backgroundColor = theme.searchBarBackgroundColor.cgColor
-                searchField.layer.cornerRadius = 8
+        overrideSystemTheme(with: theme)
+        searchController?.searchBar.searchTextField.textColor = theme.searchBarTextColor
                 
-                // Hide default background view.
-                for view in searchField.subviews {
-                    // Background has same size as search field
-                    guard view.bounds == searchField.bounds else {
-                        continue
-                    }
-
-                    view.alpha = 0.0
-                    break
-                }
-            }
-        }
-        
         tableView.separatorColor = theme.tableCellSeparatorColor
-        tableView.backgroundColor = theme.backgroundColor
+        
+        navigationController?.view.backgroundColor = tableView.backgroundColor
         
         tableView.reloadData()
     }
 }
+
+// swiftlint:enable type_body_length
+// swiftlint:enable file_length

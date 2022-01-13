@@ -24,10 +24,26 @@ import XCTest
 class AppUrlsTests: XCTestCase {
 
     var mockStatisticsStore: MockStatisticsStore!
+    var appConfig: PrivacyConfiguration!
 
     override func setUp() {
         super.setUp()
         mockStatisticsStore = MockStatisticsStore()
+        
+        let gpcFeature = PrivacyConfigurationData.PrivacyFeature(state: "enabled",
+                                                                 exceptions: [],
+                                                                 settings: [
+                "gpcHeaderEnabledSites": [
+                    "washingtonpost.com",
+                    "nytimes.com",
+                    "global-privacy-control.glitch.me"
+                ]
+        ])
+        let privacyData = PrivacyConfigurationData(features: [PrivacyFeature.gpc.rawValue: gpcFeature],
+                                                   unprotectedTemporary: [],
+                                                   trackerAllowlist: [:])
+        let localProtection = MockDomainsProtectionStore()
+        appConfig = AppPrivacyConfiguration(data: privacyData, identifier: "", localProtection: localProtection)
     }
 
     func testWhenCanDetectBlogUrl() {
@@ -160,37 +176,38 @@ class AppUrlsTests: XCTestCase {
     
     func testWhenGPCEnableDomainIsHttpThenISGPCEnabledTrue() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let result = testee.isGPCEnabled(url: URL(string: "https://www.washingtonpost.com")!)
+        let result = testee.isGPCEnabled(url: URL(string: "https://www.washingtonpost.com")!, config: appConfig)
         XCTAssertTrue(result)
     }
     
     func testWhenGPCEnableDomainIsHttpsThenISGPCEnabledTrue() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let result = testee.isGPCEnabled(url: URL(string: "http://www.washingtonpost.com")!)
+        let result = testee.isGPCEnabled(url: URL(string: "http://www.washingtonpost.com")!, config: appConfig)
         XCTAssertTrue(result)
     }
     
     func testWhenGPCEnableDomainHasNoSubDomainThenISGPCEnabledTrue() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let result = testee.isGPCEnabled(url: URL(string: "http://washingtonpost.com")!)
+        let result = testee.isGPCEnabled(url: URL(string: "http://washingtonpost.com")!, config: appConfig)
         XCTAssertTrue(result)
     }
     
     func testWhenGPCEnableDomainHasPathThenISGPCEnabledTrue() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let result = testee.isGPCEnabled(url: URL(string: "http://www.washingtonpost.com/test/somearticle.html")!)
+        let result = testee.isGPCEnabled(url: URL(string: "http://www.washingtonpost.com/test/somearticle.html")!,
+                                         config: appConfig)
         XCTAssertTrue(result)
     }
     
     func testWhenGPCEnableDomainHasCorrectSubdomainThenISGPCEnabledTrue() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let result = testee.isGPCEnabled(url: URL(string: "http://global-privacy-control.glitch.me")!)
+        let result = testee.isGPCEnabled(url: URL(string: "http://global-privacy-control.glitch.me")!, config: appConfig)
         XCTAssertTrue(result)
     }
     
     func testWhenGPCEnableDomainHasWrongSubdomainThenISGPCEnabledFalse() {
         let testee = AppUrls(statisticsStore: mockStatisticsStore)
-        let result = testee.isGPCEnabled(url: URL(string: "http://glitch.me")!)
+        let result = testee.isGPCEnabled(url: URL(string: "http://glitch.me")!, config: appConfig)
         XCTAssertFalse(result)
     }
     

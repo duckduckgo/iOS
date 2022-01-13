@@ -178,7 +178,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allows you to share your location</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allows you to share recordings</string>
+	<string>This is required to use voice features. DuckDuckGo never records what you say.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allows you to save images to your device</string>
 	<key>NSUserActivityTypes</key>
@@ -228,6 +228,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This is required to use voice search. DuckDuckGo never records what you say.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>

@@ -35,12 +35,10 @@ extension UIViewController {
     }
 
     func overrideUserInterfaceStyle() {
-        if #available(iOS 13.0, *) {
-            if ThemeManager.shared.currentTheme.currentImageSet == .dark {
-                overrideUserInterfaceStyle = .dark
-            } else {
-                overrideUserInterfaceStyle = .light
-            }
+        if ThemeManager.shared.currentTheme.currentImageSet == .dark {
+            overrideUserInterfaceStyle = .dark
+        } else {
+            overrideUserInterfaceStyle = .light
         }
     }
 
@@ -73,6 +71,57 @@ extension UIViewController {
         }
         present(controller, animated: true, completion: nil)
     }
+    
+    public func installChildViewController(_ childController: UIViewController) {
+        addChild(childController)
+        childController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        childController.view.frame = view.bounds
+        view.addSubview(childController.view)
+        childController.didMove(toParent: self)
+    }
+}
+
+extension Core.Bookmark {
+
+    public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        guard let url = url else {
+            return ""
+        }
+        return AppUrls().removeInternalSearchParameters(fromUrl: url)
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        guard let url = url else { return nil }
+        return AppUrls().removeInternalSearchParameters(fromUrl: url)
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        if let title = title, activityType == .mail {
+            return title
+        } else {
+            return ""
+        }
+    }
+}
+
+// Unfortuntely required to make methods available to objc
+extension Core.BookmarkManagedObject: UIActivityItemSource {
+    
+    @objc public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        (self as Bookmark).activityViewControllerPlaceholderItem(activityViewController)
+    }
+
+    @objc public func activityViewController(_ activityViewController: UIActivityViewController,
+                                             itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        (self as Bookmark).activityViewController(activityViewController, itemForActivityType: activityType)
+    }
+
+    @objc public func activityViewController(_ activityViewController: UIActivityViewController,
+                                             subjectForActivityType activityType: UIActivity.ActivityType?) -> String {
+        (self as Bookmark).activityViewController(activityViewController, subjectForActivityType: activityType)
+    }
 }
 
 extension Core.Link: UIActivityItemSource {
@@ -94,5 +143,4 @@ extension Core.Link: UIActivityItemSource {
             return ""
         }
     }
-
 }

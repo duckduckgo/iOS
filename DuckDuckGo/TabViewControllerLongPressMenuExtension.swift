@@ -24,7 +24,6 @@ import WebKit
 
 extension TabViewController {
 
-    @available(iOS 13.0, *)
     func buildLinkPreviewMenu(for url: URL, withProvided providedElements: [UIMenuElement]) -> UIMenu {
         var items = [UIMenuElement]()
 
@@ -35,6 +34,15 @@ extension TabViewController {
                               image: UIImage(systemName: "arrow.up.right.square")) { [weak self] _ in
             self?.onBackgroundTabAction(url: url)
         })
+        items.append(UIAction(title: UserText.actionCopy,
+                              image: UIImage(systemName: "doc.on.doc")) { [weak self] _ in
+            self?.onCopyAction(forUrl: url)
+        })
+        items.append(UIAction(title: UserText.actionShare,
+                              image: UIImage(systemName: "square.and.arrow.up")) { [weak self] _ in
+            self?.onShareAction(forUrl: url, atPoint: nil)
+        })
+
         return UIMenu(title: url.host?.dropPrefix(prefix: "www.") ?? "", children: items + providedElements)
     }
     
@@ -81,7 +89,7 @@ extension TabViewController {
     
     private func onOpenAction(forUrl url: URL) {
         if let webView = webView {
-            webView.load(URLRequest(url: url))
+            webView.load(URLRequest.userInitiated(url))
         }
     }
     
@@ -91,18 +99,10 @@ extension TabViewController {
     }
 }
 
-@available(iOS 13.0, *)
 extension TabViewController {
 
-    static let excludedLongPressItems = [
-        UIImage(systemName: "safari"),
-        UIImage(systemName: "eyeglasses"),
-        UIImage(systemName: "eye.fill"), //  hide/show link previews on some versions of ios
-        nil // hide/show link previews on some versions of ios
-    ]
-
-        func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
-                     completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
+    func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
+                 completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
 
         guard let url = elementInfo.linkURL else {
             completionHandler(nil)
@@ -111,13 +111,9 @@ extension TabViewController {
 
         let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
             return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: url) : nil
-        }, actionProvider: { elements in
-
-            let provided = elements.filter({
-                !TabViewController.excludedLongPressItems.contains($0.image)
-            })
-
-            return self.buildLinkPreviewMenu(for: url, withProvided: provided)
+        }, actionProvider: { _ in
+            // We don't use provided elements as they are not built with correct URL in case of AMP links
+            return self.buildLinkPreviewMenu(for: url, withProvided: [])
         })
 
         completionHandler(config)
@@ -135,7 +131,7 @@ extension TabViewController {
         tabController.isLinkPreview = true
         tabController.decorate(with: ThemeManager.shared.currentTheme)
         let configuration = WKWebViewConfiguration.nonPersistent()
-        tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest(url: url), consumeCookies: false)
+        tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest.userInitiated(url), consumeCookies: false)
         tabController.loadViewIfNeeded()
         return tabController
     }

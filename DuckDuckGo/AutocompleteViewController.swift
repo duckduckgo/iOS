@@ -24,13 +24,7 @@ import os.log
 class AutocompleteViewController: UIViewController {
     
     struct Constants {
-        static let debounceDelay: TimeInterval = {
-            if #available(iOS 13.0, *) {
-                return 0.1
-            }
-            return 0.3
-        }()
-        
+        static let debounceDelay: TimeInterval = 0.1
         static let minItems = 1
         static let maxLocalItems = 2
     }
@@ -46,7 +40,7 @@ class AutocompleteViewController: UIViewController {
     fileprivate var suggestions = [Suggestion]()
     fileprivate var selectedItem = -1
     
-    private let bookmarksSearch = BookmarksSearch()
+    private var bookmarksSearch: BookmarksCachingSearch!
 
     var showBackground = true {
         didSet {
@@ -66,11 +60,12 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
     
-    static func loadFromStoryboard() -> AutocompleteViewController {
+    static func loadFromStoryboard(bookmarksCachingSearch: BookmarksCachingSearch) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
+        controller.bookmarksSearch = bookmarksCachingSearch
         return controller
     }
 
@@ -155,20 +150,21 @@ class AutocompleteViewController: UIViewController {
         lastRequest!.execute { [weak self] (suggestions, error) in
             guard let strongSelf = self else { return }
             
-            let matches = strongSelf.bookmarksSearch.search(query: query)
-            let notQueryMatches = matches.filter { $0.url.absoluteString != query }
-            let filteredMatches = notQueryMatches.filter { $0.displayTitle != nil }.prefix(Constants.maxLocalItems)
-            let localSuggestions = filteredMatches.map { Suggestion(source: .local, suggestion: $0.displayTitle!, url: $0.url)}
-            
-            guard let suggestions = suggestions, error == nil else {
-                os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
-                self?.updateSuggestions(localSuggestions)
-                return
-            }
+            strongSelf.bookmarksSearch.search(query: query) { matches in
+                let notQueryMatches = matches.filter { $0.url?.absoluteString != query }
+                let filteredMatches = notQueryMatches.filter { $0.displayTitle != nil }.prefix(Constants.maxLocalItems)
+                let localSuggestions = filteredMatches.map { Suggestion(source: .local, suggestion: $0.displayTitle!, url: $0.url)}
+                
+                guard let suggestions = suggestions, error == nil else {
+                    os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
+                    self?.updateSuggestions(localSuggestions)
+                    return
+                }
 
-            let combinedSuggestions = localSuggestions + suggestions
-            strongSelf.updateSuggestions(Array(combinedSuggestions))
-            strongSelf.pendingRequest = false
+                let combinedSuggestions = localSuggestions + suggestions
+                strongSelf.updateSuggestions(Array(combinedSuggestions))
+                strongSelf.pendingRequest = false
+            }
         }
     }
 

@@ -74,10 +74,10 @@
 "action.title.save" = "Spremi";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Označi ovu stranicu knjižnom oznakom";
+"action.title.save.bookmark" = "Dodaj knjižnu oznaku";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Dodaj ovu stranicu u omiljene";
+"action.title.save.favorite" = "Dodaj omiljenu stavku";
 
 /* Settings action */
 "action.title.settings" = "Postavke";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Uključeno";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Dodaj knjižnu oznaku";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Dodaj omiljenu stavku";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Dodaj mapu";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Dodaj mapu";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Izbriši";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Jeste li sigurni da želite izbrisati ovu mapu i %i stavki?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Jeste li sigurni da želite izbrisati ovu mapu i %i stavku?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Izbrisati %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Uredi knjižnu oznaku";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Uredi Favorite";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Uredi mapu";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Lokacija";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Naslov web-mjesta";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Knjižne oznake";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Za sve kartice su dodane nove knjižne oznake";
@@ -263,19 +302,97 @@
 "email.aliasAlert.decline" = "Otkaži";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Generirajte privatnu adresu";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Blokirajte praćenje e-pošte s Duck adresom";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Koristite %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Nova adresa kopirana je u međuspremnik";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Izradite Duck adresu";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Omogućeno";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Uklanjanjem zaštite e-pošte s ovog uređaja uklanja se i mogućnost popunjavanja polja vaše osobne ili novogenerirane privatne Duck adrese dok pregledavate web.\n\nŽelite li u cijelosti izbrisati svoje Duck adrese te imate li pitanja ili povratne informacije, pišite nam na support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Isključeno";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Otkaži";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Napomena: uklanjanjem zaštite e-pošte s ovog uređaja neće se izbrisati vaša Duck adresa.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Ukloni";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Ukloniti zaštitu e-pošte?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Došlo je do pogreške prilikom pridruživanja listi čekanja; pokušajte ponovo kasnije";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Započnite";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Imam pozivnu šifru";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Pozvani ste!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Pridružite se privatnoj listi čekanja";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Na listi ste čekanja!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Vaša pozivnica pojavit će se ovdje kad budemo spremni za vas. Želite li %1$@ kad stigne? %2$@ o zaštiti e-pošte.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "primite obavijest";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Poslat ćemo vam obavijest kad zaštita e-pošte bude spremna za vas. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Saznajte više";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Poslat ćemo vam obavijest kad možete početi koristiti zaštitu e-pošte.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Želite li da vas obavijestimo kada dođete na red?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Pridružili ste se listi čekanja i zatražili da vas obavijestimo kada dođete na red za isprobavanje naše značajke zaštite e-pošte.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Ne, hvala";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "OBAVIJESTI ME";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Vaša pozivnica za zaštitu e-pošte je stigla!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Ne čuvamo vašu e-poštu. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Zaštita privatnosti e-pošte, na jednostavan način.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Blokirajte programe za praćenje e-pošte i sakrijte svoju adresu bez promjene pružatelja usluga e-pošte. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Još nema dodanih knjižnih oznaka";
@@ -583,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Izbornik pregledavanja";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Gotovo";
+
 /* Edit button */
 "navigation.title.edit" = "Uredi";
 
@@ -769,12 +889,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "OCJENA ZAŠTITE PRIVATNOSTI";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Zaštita privatnosti web-mjesta";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +1003,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Mjenjač kartica";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Odaberite željenu veličinu teksta. Web stranice koje pregledavate u DuckDuckGou prilagodit će se ovoj postavci.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Veličina teksta: %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Tamna";
 
@@ -916,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Došlo je do nepoznate pogreške.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Postavke";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Dopustite pristup mikrofonu u postavkama sustava iOS kako bi DuckDuckGo mogao koristiti glasovne funkcije.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Potreban je pristup mikrofonu";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "U redu";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Otkaži";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikad ne sluša što govorite. Sva obrada glasovnih podataka za Privatno glasovno pretraživanje odvija se na vašem uređaju.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Potreban je pristup mikrofonu za Privatno glasovno pretraživanje";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Otkaži";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Zvuk se obrađuje na uređaju. Ne pohranjuje se i ne dijeli ni s kim, uključujući DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Omiljena je stavka uklonjena";
 
@@ -930,4 +1077,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Dodano u Omiljeno";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Otkaži";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "U redu";
 

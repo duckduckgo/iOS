@@ -74,10 +74,10 @@
 "action.title.save" = "Guardar";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Marcar esta página";
+"action.title.save.bookmark" = "Adicionar marcador";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Torne esta página sua favorita";
+"action.title.save.favorite" = "Adicionar favorito";
 
 /* Settings action */
 "action.title.settings" = "Definições";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ligado";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Adicionar marcador";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Adicionar favorito";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Adicionar pasta";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Adicionar pasta";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.exemplo.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Eliminar";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Tem a certeza de que deseja apagar esta pasta e os itens %i?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Tem a certeza de que deseja apagar esta pasta e o item %i?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Apagar %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Editar marcador";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Editar favorito";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Editar pasta";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Localização";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Título do website";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Marcadores";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Adicionados novos marcadores para todos os separadores";
@@ -263,19 +302,97 @@
 "email.aliasAlert.decline" = "Cancelar";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Gerar um Endereço Privado";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Bloqueie os rastreadores de e-mail com um endereço do Duck";
 
 /* Parameter is an email address (string) */
 "email.aliasAlert.useUserAddress" = "Use %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Novo endereço copiado para a área de transferência";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Crie um endereço Duck";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Ativado";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Ao remover a proteção de e-mail deste dispositivo, remove a opção de preencher o seu endereço pessoal Duck ou um endereço privado recém-gerado Duck nos campos de e-mail enquanto navega na web.\n\nPara excluir totalmente os seus endereços Duck, ou para qualquer outra pergunta ou feedback, entre em contato connosco em support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Desligado";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Cancelar";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Nota: Ao remover a proteção de e-mail deste dispositivo não excluirá o seu endereço Duck.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Remover";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Remover a proteção de e-mail?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Ocorreu um erro ao entrar na Lista de Espera, tente novamente mais tarde";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Comece";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Tenho um Código de Convite";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Você foi convidado!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Adira à Lista de Espera Privada";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Você está na lista de espera!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "O seu convite aparecerá aqui quando estivermos prontos para si. Quer %1$@ quando chegar? %2$@ sobre a proteção de e-mail.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "receba uma notificação";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Enviaremos uma notificação quando a proteção de e-mail estiver pronta para si. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Saiba mais";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Enviaremos uma notificação quando começar a usar a proteção de e-mail.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Gostaria que o notificássemos quando for a sua vez?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Você entrou na lista de espera e pediu-nos para o notificar quando for a sua vez de experimentar a nossa proteção de e-mail.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Não, obrigado";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "NOTIFICAR-ME";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "O seu convite para Proteção de E-mail está aqui!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Não guardamos os seus e-mails. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "A privacidade dos e-mails, simplificada.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Bloqueie os rastreadores de e-mail e oculte o seu endereço, sem alterar o seu provedor de e-mail. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ainda não foram adicionados marcadores";
@@ -583,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menu de navegação";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Feito";
+
 /* Edit button */
 "navigation.title.edit" = "Editar";
 
@@ -769,12 +889,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "GRAU DE PRIVACIDADE";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Proteção de Privacidade do Site";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +1003,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Alternar de separador";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Escolha o tamanho de texto da sua preferência. Os sites que vê no DuckDuckGo ajustar-se-ão.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Tamanho do texto - %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Escuro";
 
@@ -916,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ocorreu um erro desconhecido.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Definições";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Permita o acesso ao microfone nas definições do sistema iOS para que o DuckDuckGo use as funcionalidades de voz.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "É necessário o acesso ao microfone";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Cancelar";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "O DuckDuckGo nunca ouve o que você diz. Todo o processamento dos dados de fala da Pesquisa por Voz Privada acontece no seu dispositivo.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "É necessário o acesso ao microfone para pesquisar por voz privada";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Cancelar";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "O áudio é processado no dispositivo. Não foi armazenado ou partilhado com ninguém, incluindo o DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorito removido";
 
@@ -930,4 +1077,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorito adicionado";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Cancelar";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "OK";
 

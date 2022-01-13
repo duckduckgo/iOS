@@ -74,10 +74,10 @@
 "action.title.save" = "Uložiť";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Pridať túto stránku medzi záložky";
+"action.title.save.bookmark" = "Pridať záložku";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Pridať túto stránku medzi obľúbené";
+"action.title.save.favorite" = "Pridať do obľúbených položiek";
 
 /* Settings action */
 "action.title.settings" = "Nastavenia";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Zapnuté";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Pridať záložku";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Pridať do obľúbených položiek";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Pridanie priečinka";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Pridať priečinok";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Vymazať";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Naozaj chcete odstrániť tento priečinok a položky (%i)?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Naozaj chcete odstrániť tento priečinok a položky (%i)?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Chcete odstrániť priečinok %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Upraviť záložku";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Úprava obľúbenej položky";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Úprava priečinka";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Poloha";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Názov webovej stránky";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Záložky";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Nové záložky boli pridané pre všetky karty";
@@ -263,19 +302,97 @@
 "email.aliasAlert.decline" = "Zrušiť";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Vygenerovať súkromnú adresu";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Blokujte e-mailové sledovače (trackery) s adresou Duck";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Použite %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Nová adresa bola skopírovaná do schránky";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Vytvorenie adresy Duck";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Zapnuté";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Odstránením e-mailovej ochrany z tohto zariadenia stratíte pri prezeraní webu možnosť dopĺňania svojej osobnej adresy Duck alebo novej vygenerovanej súkromnej adresy Duck do polí pre e-mail.\n\nAk chcete úplne odstrániť svoje adresy Duck alebo ak máte akékoľvek otázky či pripomienky, obráťte sa na nás na adrese support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Vypnuté";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Zrušiť";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Upozornenie: Odstránením e-mailovej ochrany z tohto zariadenia sa neodstráni vaša adresa Duck.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Odstrániť";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Odstrániť e-mailovú ochranu?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Pri pridávaní na zoznam čakateľov sa vyskytla chyba. Prosím, skúste to neskôr znova.";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Začnite";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Mám pozývací kód";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Boli ste pozvaný/á!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Pridajte sa do súkromného zoznamu čakateľov";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Ste na zozname čakateľov!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Vaša pozvánka sa zobrazí tu, keď pre vás budeme pripravení. Prajete si, aby sme vám poslali %1$@, keď budete mať pozvánku? %2$@ o e-mailovej ochrane.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "dostať upozornenie";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Pošleme vám upozornenie, keď bude pre vás pripravená e-mailová ochrana. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Zistite viac";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Pošleme vám upozornenie, keď budete môcť začať používať e-mailovú ochranu.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Prajete si, aby sme vám poslali upozornenie, keď na vás príde rad?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Pridali ste sa na zoznam čakateľov a požiadali ste nás, aby sme vás upozornili, keď na vás príde rad a keď budete si môcť vyskúšať našu e-mailovú ochranu.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Nie, ďakujem";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "UPOZORNITE MA";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Vaše pozvánka na ochranu e‑mailu je tu!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Vaše e-maily neukladáme. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Zjednodušená ochrana súkromia v e‑mailoch.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Zablokujte e-mailové trackery a skryte svoju adresu bez toho, aby ste museli prepínať svojich poskytovateľov e-mailu. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatiaľ neboli pridané žiadne záložky";
@@ -583,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Ponuka prehliadania";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Hotovo";
+
 /* Edit button */
 "navigation.title.edit" = "Upraviť";
 
@@ -769,12 +889,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "STUPEŇ OCHRANY SÚKROMIA";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Ochrana súkromia stránky";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +1003,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Prepínač kariet";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Vyberte si preferovanú veľkosť textu. Webové stránky zobrazené v DuckDuckGo sa tomu prispôsobia.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Veľkosť textu - %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Tmavý";
 
@@ -916,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Vyskytla sa neznáma chyba.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Nastavenia";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Ak chcete používať hlasové funkcie, povoľte pre DuckDuckGo prístup k mikrofónu v nastaveniach systému iOS.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Vyžaduje sa prístup k mikrofónu";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Zrušiť";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikdy nepočúva, čo hovoríte. Všetky údaje reči potrebné pre súkromné hlasové vyhľadávanie sa spracúvajú vo vašom zariadení.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Na používanie funkcie súkromného hlasového vyhľadávania sa vyžaduje prístup k mikrofónu.";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Zrušiť";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Zvuk sa spracováva v zariadení. Neukladá sa nikde a s nikým, vrátane DuckDuckGo, sa nezdieľa.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Obľúbená položka bola odstránená";
 
@@ -930,4 +1077,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Obľúbená položka bola pridaná";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Zrušiť";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "OK";
 

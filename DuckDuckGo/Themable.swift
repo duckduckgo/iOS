@@ -28,10 +28,7 @@ extension Themable where Self: UIViewController {
     
     func decorate(with theme: Theme) {
         decorateNavigationBar(with: theme)
-        
-        if #available(iOS 13.0, *) {
-            overrideSystemTheme(with: theme)
-        }
+        overrideSystemTheme(with: theme)
     }
     
     func decorateNavigationBar(with theme: Theme) {
@@ -42,9 +39,24 @@ extension Themable where Self: UIViewController {
         var titleAttrs = navigationController?.navigationBar.titleTextAttributes ?? [:]
         titleAttrs[NSAttributedString.Key.foregroundColor] = theme.navigationBarTitleColor
         navigationController?.navigationBar.titleTextAttributes = titleAttrs
+        
+        if #available(iOS 15.0, *) {
+            let appearance = navigationController?.navigationBar.standardAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
     }
     
-    @available(iOS 13.0, *)
+    func decorateToolbar(with theme: Theme) {
+        navigationController?.toolbar.barTintColor = theme.barBackgroundColor
+        navigationController?.toolbar.backgroundColor = theme.barBackgroundColor
+        navigationController?.toolbar.tintColor = theme.barTintColor
+        
+        if #available(iOS 15.0, *) {
+            let appearance = navigationController?.toolbar.standardAppearance
+            navigationController?.toolbar.scrollEdgeAppearance = appearance
+        }
+    }
+    
     func overrideSystemTheme(with theme: Theme) {
         if theme.currentImageSet == .dark {
             overrideUserInterfaceStyle = .dark

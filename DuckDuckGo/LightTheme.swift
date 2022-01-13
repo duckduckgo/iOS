@@ -22,12 +22,7 @@ struct LightTheme: Theme {
     var name = ThemeName.light
     
     var currentImageSet: ThemeManager.ImageSet = .light
-    var statusBarStyle: UIStatusBarStyle {
-        if #available(iOS 13.0, *) {
-            return .darkContent
-        }
-        return .default
-    }
+    var statusBarStyle: UIStatusBarStyle = .darkContent
     
     var keyboardAppearance: UIKeyboardAppearance = .light
 
@@ -51,6 +46,7 @@ struct LightTheme: Theme {
     var searchBarTextDeemphasisColor = UIColor.greyish3
     var searchBarBorderColor = UIColor.lightGreyish
     var searchBarClearTextIconColor = UIColor.greyish2
+    var searchBarVoiceSearchIconColor = UIColor.greyish2
     
     var browsingMenuTextColor = UIColor.nearlyBlack
     var browsingMenuIconsColor = UIColor.nearlyBlackLight

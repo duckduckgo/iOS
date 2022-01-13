@@ -104,6 +104,8 @@ class MainViewController: UIViewController {
     let gestureBookmarksButton = GestureToolbarButton()
     
     private var fireButtonAnimator: FireButtonAnimator?
+    
+    private var bookmarksCachingSearch: BookmarksCachingSearch?
 
     fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
@@ -313,6 +315,7 @@ class MainViewController: UIViewController {
     }
     
     // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable function_body_length
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
@@ -340,6 +343,9 @@ class MainViewController: UIViewController {
             if segue.identifier == "BookmarksEditCurrent",
                let link = currentTab?.link {
                 controller.openEditFormWhenPresented(link: link)
+            } else if segue.identifier == "BookmarksEdit",
+                        let bookmark = sender as? Bookmark {
+                controller.openEditFormWhenPresented(bookmark: bookmark)
             }
             return
         }
@@ -377,12 +383,12 @@ class MainViewController: UIViewController {
 
     }
     // swiftlint:enable cyclomatic_complexity
+    // swiftlint:enable function_body_length
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        if #available(iOS 13.0, *),
-            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
         }
         
@@ -684,6 +690,7 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         hideSuggestionTray()
         refreshOmniBar()
+        bookmarksCachingSearch = nil
     }
 
     fileprivate func refreshBackForwardButtons() {
@@ -905,7 +912,63 @@ class MainViewController: UIViewController {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
     }
+    
+    private func showVoiceSearch() {
+        // https://app.asana.com/0/0/1201408131067987
+        UIMenuController.shared.hideMenu()
+        omniBar.removeTextSelection()
         
+        let voiceSearchController = VoiceSearchViewController()
+        voiceSearchController.delegate = self
+        voiceSearchController.modalTransitionStyle = .crossDissolve
+        voiceSearchController.modalPresentationStyle = .overFullScreen
+        present(voiceSearchController, animated: true, completion: nil)
+    }
+    
+    private func showNoMicrophonePermissionAlert() {
+        let alertController = UIAlertController(title: UserText.noVoicePermissionAlertTitle,
+                                                message: UserText.noVoicePermissionAlertMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let openSettingsButton = UIAlertAction(title: UserText.noVoicePermissionActionSettings, style: .default) { _ in
+            let url = URL(string: UIApplication.openSettingsURLString)!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: nil)
+
+        alertController.addAction(openSettingsButton)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func displayVoiceSearchPrivacyAlertIfNecessary(completion: @escaping(Bool) -> Void) {
+        if AppDependencyProvider.shared.voiceSearchHelper.privacyAlertWasConfirmed {
+            completion(true)
+            return
+        }
+        
+        let alertController = UIAlertController(title: UserText.voiceSearchPrivacyAcknowledgmentTitle,
+                                                message: UserText.voiceSearchPrivacyAcknowledgmentMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentAcceptButton, style: .default) { _ in
+            AppDependencyProvider.shared.voiceSearchHelper.markPrivacyAlertAsConfirmed()
+            Pixel.fire(pixel: .voiceSearchPrivacyDialogAccepted)
+            completion(true)
+        }
+        let cancelAction = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentRejectButton, style: .cancel) { _ in
+            Pixel.fire(pixel: .voiceSearchPrivacyDialogRejected)
+            completion(false)
+        }
+
+        alertController.addAction(confirmButton)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -1032,7 +1095,8 @@ extension MainViewController: OmniBarDelegate {
                 showSuggestionTray(.favorites)
             }
         } else {
-            showSuggestionTray(.autocomplete(query: updatedQuery))
+            let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
+            showSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
         }
         
     }
@@ -1109,10 +1173,14 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
+        if bookmarksCachingSearch == nil {
+            bookmarksCachingSearch = BookmarksCachingSearch()
+        }
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
-            showSuggestionTray(.autocomplete(query: query))
+            let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
+            showSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksSearch))
         } else {
             showSuggestionTray(.favorites)
         }
@@ -1143,16 +1211,33 @@ extension MainViewController: OmniBarDelegate {
         currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton, orginatedFromMenu: false)
     }
     
+    func onVoiceSearchPressed() {
+
+        displayVoiceSearchPrivacyAlertIfNecessary { result in
+            guard result else { return }
+            
+            SpeechRecognizer.requestMicAccess { permission in
+                DispatchQueue.main.async {
+                    if permission {
+                        self.showVoiceSearch()
+                    } else {
+                        self.showNoMicrophonePermissionAlert()
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension MainViewController: FavoritesOverlayDelegate {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect link: Link) {
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Bookmark) {
+        guard let url = favorite.url else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
-        Favicons.shared.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
-        loadUrl(link.url)
+        Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
+        loadUrl(url)
         showHomeRowReminder()
     }
 }
@@ -1214,6 +1299,10 @@ extension MainViewController: HomeControllerDelegate {
         loadUrl(url)
     }
     
+    func home(_ home: HomeViewController, didRequestEdit favorite: Bookmark) {
+        performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
+    }
+    
     func home(_ home: HomeViewController, didRequestContentOverflow shouldOverflow: Bool) -> CGFloat {
         allowContentUnderflow = shouldOverflow
         return contentUnderflow
@@ -1254,6 +1343,8 @@ extension MainViewController: TabDelegate {
 
         let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
         newTab.openedByPage = true
+        newTab.openingTab = tab
+        
         newTabAnimation {
             self.dismissOmniBar()
             self.addToView(tab: newTab)
@@ -1460,9 +1551,11 @@ extension MainViewController: TabSwitcherDelegate {
 }
 
 extension MainViewController: BookmarksDelegate {
-    func bookmarksDidSelect(link: Link) {
+    func bookmarksDidSelect(bookmark: Bookmark) {
         dismissOmniBar()
-        loadUrl(link.url)
+        if let url = bookmark.url {
+            loadUrl(url)
+        }
     }
     
     func bookmarksUpdated() {
@@ -1557,7 +1650,7 @@ extension MainViewController: AutoClearWorker {
 
         let pixel = TimedPixel(.forgetAllDataCleared)
         WebCacheManager.shared.clear {
-            pixel.fire(withAdditionalParmaeters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
+            pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
     }
     
@@ -1566,6 +1659,7 @@ extension MainViewController: AutoClearWorker {
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
+            self.tabManager.stopLoadingInAllTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()
             self.forgetTabs()
@@ -1684,6 +1778,19 @@ extension MainViewController: UIDropInteractionDelegate {
             
         }
         
+    }
+}
+
+// MARK: - VoiceSearchViewControllerDelegate
+
+extension MainViewController: VoiceSearchViewControllerDelegate {
+    
+    func voiceSearchViewController(_ controller: VoiceSearchViewController, didFinishQuery query: String?) {
+        controller.dismiss(animated: true, completion: nil)
+        if let query = query {
+            Pixel.fire(pixel: .voiceSearchDone)
+            loadQuery(query)
+        }
     }
 }
 

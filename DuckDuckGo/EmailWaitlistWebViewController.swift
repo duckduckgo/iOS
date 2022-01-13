@@ -61,8 +61,7 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
         reloadUserScripts()
         updateContentMode()
 
-        let request = URLRequest(url: baseURL)
-        webView.load(request)
+        webView.load(URLRequest.userInitiated(baseURL))
     }
 
     private func reloadUserScripts() {

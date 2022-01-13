@@ -74,10 +74,10 @@
 "action.title.save" = "Salvează";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Marchează această pagină";
+"action.title.save.bookmark" = "Adăugare semn de carte";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Adaugă pagina la Favorite";
+"action.title.save.favorite" = "Adaugă preferință";
 
 /* Settings action */
 "action.title.settings" = "Setări";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activat";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Adăugare semn de carte";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Adaugă preferință";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Adaugă folder";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Adaugă folder";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Ștergere";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Sigur dorești să ștergi aceste folder și %i elemente?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Sigur dorești să ștergi aceste folder și %i element?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Ștergi %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Editare semn de carte";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Editează preferința";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Editează folderul";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Locație";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titlul site-ului web";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Semne de carte";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "S-au adăugat marcaje noi pentru toate filele";
@@ -263,19 +302,97 @@
 "email.aliasAlert.decline" = "Renunță";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Generează o adresă privată";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Blochează instrumentele de urmărire a e-mailului cu o adresă Duck";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Folosește %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Adresă nouă copiată în clipboard";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Creează o adresă Duck";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Activat";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Eliminarea protecției comunicațiilor prin e-mail de pe acest dispozitiv elimină opțiunea de a completa adresa personală Duck sau o adresă Duck privată recent generată, în câmpurile de e-mail în timp ce navighezi pe web.<br/><br/>Pentru a-ți șterge în totalitate adresele Duck sau pentru orice alte întrebări sau feedback, ne poți contacta la adresa: support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Dezactivat";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Renunță";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Notă: eliminarea protecției comunicațiilor prin e-mail de pe acest dispozitiv nu va șterge adresa ta Duck.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Elimină";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Elimină protecția comunicațiilor prin e-mail?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "S-a produs o eroare la aderarea la lista de așteptare, încearcă din nou mai târziu";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Să începem";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Am un cod de invitație";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Ai primit o invitație!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Alătură-te listei de așteptare private";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Ești pe lista de așteptare!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Invitația ta va apărea aici, când vom fi pregătiți pentru tine. Dorești să %1$@ în momentul în care sosește? %2$@ despre protecția comunicațiilor prin e-mail.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "primește o notificare";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Îți vom trimite o notificare când<br/> protecția comunicațiilor prin e-mail este pregătită pentru tine. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Află mai multe";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Îți vom trimite o notificare în momentul în care poți începe să folosești protecția comunicațiilor prin e-mail.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Dorești să te înștiințăm când a sosit rândul tău?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Te-ai alăturat listei de așteptare și ne-ai solicitat să te anunțăm când este rândul tău să încerci protecția comunicațiilor prin e-mail.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Nu, mulțumesc";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "DORESC SĂ PRIMESC NOTIFICĂRI";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Invitația ta de protecție a comunicațiilor prin e-mail este aici!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Nu îți salvăm e-mailurile. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Confidențialitatea e-mailurilor, simplificată.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Blochează modulele cookie de urmărire pentru e-mail și ascunde-ți adresa, <br/> fără a schimba furnizorul de e-mail. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nu s-a adăugat niciun semn de carte";
@@ -583,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Meniul de navigare";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Terminat";
+
 /* Edit button */
 "navigation.title.edit" = "Editați";
 
@@ -769,12 +889,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "GRAD DE CONFIDENȚIALITATE";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Protecția confidențialității site-ului";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +1003,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Comutator între file";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Alege dimensiunea preferată a textului. Site-urile pe care le vizitezi în DuckDuckGo se vor adapta la aceasta.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Dimensiune text - %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Întunecat";
 
@@ -916,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "A apărut o eroare necunoscută.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Setări";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Permite accesul la microfon din setările sistemului de operare iOS, pentru ca DuckDuckGo să folosească funcționalitățile vocale.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Este necesar accesul la microfon";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Renunță";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nu ascultă niciodată ceea ce spui. Prelucrarea datelor vocale pentru Căutarea vocală privată are loc pe dispozitivul tău.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Este necesar accesul la microfon pentru Căutarea vocală privată";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Renunță";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Componenta audio este prelucrată pe dispozitiv. Nu este stocată sau distribuită nimănui, nici DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorit eliminat";
 
@@ -930,4 +1077,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Preferință adăugată";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Renunță";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "OK";
 

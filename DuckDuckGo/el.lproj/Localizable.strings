@@ -74,10 +74,10 @@
 "action.title.save" = "Αποθήκευση";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Προσθήκη σελιδοδείκτη σε αυτή τη σελίδα";
+"action.title.save.bookmark" = "Προσθήκη σελιδοδείκτη";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Προσθήκη της σελίδας αυτής στα αγαπημένα";
+"action.title.save.favorite" = "Προσθήκη Αγαπημένου";
 
 /* Settings action */
 "action.title.settings" = "Ρυθμίσεις";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ενεργό";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Προσθήκη σελιδοδείκτη";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Προσθήκη Αγαπημένου";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Προσθήκη φακέλου";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Προσθήκη φακέλου";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Διαγραφή";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Θέλετε σίγουρα να διαγράψετε αυτόν τον φάκελο και %i αντικείμενα;";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Θέλετε σίγουρα να διαγράψετε αυτόν τον φάκελο και %i αντικείμενο;";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Διαγραφή %@;";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Επεξεργασία σελιδοδείκτη";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Επεξεργασία αγαπημένων";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Επεξεργασία φακέλου";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Τοποθεσία";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Τίτλος ιστότοπου";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Σελιδοδείκτες";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Προστέθηκαν νέοι σελιδοδείκτες για όλες τις καρτέλες";
@@ -263,19 +302,97 @@
 "email.aliasAlert.decline" = "Ακύρωση";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Δημιουργία ιδιωτικής διεύθυνσης";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Αποκλείστε εφαρμογές παρακολούθησης email με μια Διεύθυνση Duck";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Χρησιμοποιήστε το %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Έγινε αντιγραφή νέας διεύθυνσης στο πρόχειρό σας";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Δημιουργήστε Διεύθυνση Duck";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Ενεργοποιήθηκε";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Αφαιρώντας την Προστασία email από τη συσκευή αυτή καταργείται η επιλογή συμπλήρωσης της Προσωπικής διεύθυνσης Duck που διαθέτετε ή μιας Ιδιωτικής διεύθυνσης Duck που δημιουργήθηκε πρόσφατα στα πεδία email καθώς περιηγείστε στο διαδίκτυο.<br/><br/>Για να διαγράψετε εντελώς τις Διευθύνσεις Duck που διαθέτετε ή για οποιεσδήποτε άλλες ερωτήσεις ή σχόλια, επικοινωνήστε μαζί μας στο support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Κλειστό";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Ακύρωση";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Σημείωση: Η αφαίρεση της προστασίας email από τη συσκευή αυτή δεν θα διαγράψει τη Διεύθυνση Duck που διαθέτετε.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Αφαίρεση";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Αφαίρεση προστασίας email;";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Προέκυψε σφάλμα κατά την εγγραφή στη Λίστα αναμονής. Ξαναπροσπαθήστε αργότερα.";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Ξεκινήστε";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Διαθέτω Κωδικό πρόσκλησης";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Έχετε προσκληθεί!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Εγγραφείτε στην Ιδιωτική λίστα αναμονής";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Βρίσκεστε στη λίστα αναμονής!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Η πρόσκλησή σας θα εμφανιστεί εδώ όταν θα είναι έτοιμη για εσάς. Θέλετε να %1$@ μόλις φτάσει; %2$@ σχετικά με την Προστασία email.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "λάβετε ειδοποίηση";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Θα σας στείλουμε ειδοποίηση όταν θα είναι έτοιμη για σας η Προστασία<br/>email. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Μάθετε περισσότερα";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Θα σας στείλουμε ειδοποίηση όταν θα μπορείτε να αρχίσετε να χρησιμοποιείτε την Προστασία email.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Θα θέλατε να σας ειδοποιήσουμε για το πότε θα είναι η σειρά σας;";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Εγγραφήκατε στη λίστα αναμονής και μας ζητήσατε να σας ενημερώσουμε για το πότε θα είναι η σειρά σας να δοκιμάσετε την Προστασία email.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Όχι, ευχαριστώ";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "ΝΑ ΕΙΔΟΠΟΙΗΘΩ";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Η πρόσκλησή σας για προστασία των email είναι εδώ!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Δεν αποθηκεύουμε τα email σας. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Ιδιωτικότητα email, απλοποιημένη.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Αποκλείστε εφαρμογές παρακολούθησης email και αποκρύψτε τη διεύθυνσή σας,<br/>χωρίς να αλλάξετε πάροχο email. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";
@@ -583,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Μενού περιήγησης";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Ολοκληρώθηκε";
+
 /* Edit button */
 "navigation.title.edit" = "Επεξεργασία";
 
@@ -769,12 +889,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "ΒΑΘΜΟΣ ΠΡΟΣΤΑΣΙΑΣ ΠΡΟΣΩΠΙΚΩΝ ΔΕΔΟΜΕΝΩΝ";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Προστασία της ιδιωτικότητας του ιστότοπου";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +1003,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Εναλλαγή καρτελών";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Επιλέξτε το προτιμώμενο μέγεθος κειμένου. Οι ιστότοποι που βλέπετε στο DuckDuckGo θα προσαρμοστούν σε αυτό.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Μέγεθος κειμένου - %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Σκοτεινό";
 
@@ -916,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Προέκυψε άγνωστο σφάλμα.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Ρυθμίσεις";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Επιτρέψτε πρόσβαση στο Μικρόφωνο από τις Ρυθμίσεις συστήματος iOS για να κάνει το DuckDuckGo χρήση των φωνητικών λειτουργιών.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Απαιτείται πρόσβαση στο μικρόφωνο";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Εντάξει";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Ακύρωση";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "Το DuckDuckGo δεν ακούει ποτέ ό,τι λέτε. Όλη η επεξεργασία των δεδομένων ομιλίας για την Ιδιωτική φωνητική αναζήτηση πραγματοποιείται στη συσκευή σας.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Απαιτείται πρόσβαση στο μικρόφωνο για Ιδιωτική φωνητική αναζήτηση";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Ακύρωση";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Η επεξεργασία του ήχου πραγματοποιείται στη συσκευή. Δεν αποθηκεύεται ούτε κοινοποιείται σε οποιονδήποτε, συμπεριλαμβανομένου του DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Το Αγαπημένο αφαιρέθηκε";
 
@@ -930,4 +1077,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Προστέθηκε αγαπημένο";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Ακύρωση";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "Εντάξει";
 

@@ -74,10 +74,10 @@
 "action.title.save" = "Išsaugoti";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Pažymėti šį puslapį";
+"action.title.save.bookmark" = "Pridėti žymę";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Mėgti šį puslapį";
+"action.title.save.favorite" = "Pridėti mėgstamą";
 
 /* Settings action */
 "action.title.settings" = "Nustatymai";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Įjungti";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Pridėti žymę";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Pridėti mėgstamą";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Pridėti aplanką";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Pridėti aplanką";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Trinti";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Ar tikrai norite ištrinti šį aplanką ir %i elementus (-ų)?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Ar tikrai norite ištrinti šį aplanką ir %i elementą?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Ištrinti %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Redaguoti žymę";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Redaguoti mėgstamiausią";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Redaguoti aplanką";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Vieta";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Svetainės pavadinimas";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Žymės";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Pridėta naujų žymių visiems skirtukams";
@@ -263,19 +302,97 @@
 "email.aliasAlert.decline" = "Atšaukti";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Generuoti privatų adresą";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "Blokuoti el. pašto adresų stebėjimo priemones „Duck“ adresams";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "Naudoti %@";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Naujas adresas nukopijuotas į jūsų iškarpinę";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Susikurkite „Duck“ adresą";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Įjungta";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Jei iš šio įrenginio pašalinsite el. pašto adreso apsaugos priemonę, bus pašalinta parinktis el. pašto adreso laukuose įvesti asmeninį „Duck“ adresą arba sugeneruotą naują privatų „Duck“ adresą jums naršant internete.\n\nNorėdami visiškai ištrinti savo „Duck“ adresus arba jei turite klausimų ar norite išreikšti nuomonę, susisiekite su mumis el. pašto adresu support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Išjungti";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Atšaukti";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Pastaba: jei iš šio įrenginio pašalinsite el. pašto adreso apsaugos priemonę, jūsų „Duck“ adresas nebus ištrintas.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Pašalinti";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Pašalinti el. pašto adreso apsaugos priemonę?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Jungiantis prie laukimo sąrašo atsirado klaida; vėliau pabandykite dar kartą";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Pradėti";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Turiu kvietimo kodą";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Buvote pakviesti!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Prisijungti prie privataus laukimo sąrašo";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Esate laukimo sąraše!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Kai jums viską paruošime, pakvietimą matysite čia. Ar nori %1$@, kai gausi pakvietimą? %2$@ apie el. pašto adreso apsaugos priemonę.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "gauti pranešimą";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Kai el. pašto adreso apsaugos priemonė jums bus paruošta, atsiųsime pranešimą. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Sužinokite daugiau";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Kai galėsite pradėti naudoti el. pašto adreso apsaugos priemonę, atsiųsime pranešimą.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Ar norite, kad praneštume, kai ateis jūsų eilė?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Prisijungėte prie laukimo sąrašo ir paprašėte mus informuoti, kai ateis jūsų eilė išbandyti mūsų parengtą el. pašto adreso apsaugos priemonę.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Ne, dėkoju";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "INFORMUOTI";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Jūsų el. pašto apsaugos kvietimas jau čia!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Jūsų el. laiškų neišsaugome. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Supaprastintas el. pašto privatumas.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Užbluokuokite el. pašto adresų stebėjimo priemones ir paslėpkite savo adresus nekeisdami el. pašto paslaugų teikėjo. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Žymių dar nepridėta";
@@ -583,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Naršymo meniu";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Atlikta";
+
 /* Edit button */
 "navigation.title.edit" = "Redaguoti";
 
@@ -769,12 +889,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "PRIVATUMO LAIPSNIS";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "Svetainės privatumo apsauga";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +1003,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Skirtukų perjungiklis";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Pasirinkite norimą teksto dydį. „DuckDuckGo“ rodomos svetainės atitiks šį nustatymą.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Teksto dydis – %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Tamsi";
 
@@ -916,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Įvyko nežinoma klaida.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Nustatymai";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Patvirtinkite prieigą prie mikrofono „iOS“ sistemos nustatymuose, kad galėtumėte naudotis „DuckDuckGo“ balsu valdomomis funkcijomis.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Būtina prieiga prie mikrofono";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "GERAI";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Atšaukti";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "„DuckDuckGo“ niekada nesiklauso jūsų pokalbių. Visas kalbos duomenų apdorojimas, skirtas privačiai balsu atliekamai paieškai, vyksta jūsų įrenginyje.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Privačiai balsu atliekamai paieškai reikalinga prieiga prie mikrofono";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Atšaukti";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Garsas apdorojamas įrenginyje. Jis nesaugomas ir su niekuo, įskaitant „DuckDuckGo“, nebendrinamas.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Mėgstamas pašalintas";
 
@@ -930,4 +1077,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Mėgstamas pridėtas";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Atšaukti";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "GERAI";
 

@@ -74,10 +74,10 @@
 "action.title.save" = "Mentés";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Oldal felvétele a könyvjelzők közé";
+"action.title.save.bookmark" = "Könyvjelző mentése";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Oldal felvétele a kedvencek közé";
+"action.title.save.favorite" = "Kedvenc hozzáadása";
 
 /* Settings action */
 "action.title.settings" = "Beállítások";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Be";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Könyvjelző mentése";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Kedvenc hozzáadása";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Mappa hozzáadása";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Mappa hozzáadása";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Törlés";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Biztos, hogy törölni akarod ezt a mappát és annak %i elemét?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Biztos, hogy törölni akarod ezt a mappát és annak %i elemét?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "%@ törlése?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Könyvjelző szerkesztése";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Kedvenc szerkesztése";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Mappa szerkesztése";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Hely";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Weboldal címe";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Könyvjelzők";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Hozzáadott új könyvjelzők az összes laphoz";
@@ -263,19 +302,97 @@
 "email.aliasAlert.decline" = "Mégsem";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generate a Private Address";
+"email.aliasAlert.generatePrivateAddress" = "Privát cím létrehozása";
 
 /* Title for the email alias selection alert */
-"email.aliasAlert.title" = "Block email trackers with a Duck Address";
+"email.aliasAlert.title" = "E-mail nyomkövetők letiltása Duck-címmel";
 
 /* Parameter is an email address (string) */
-"email.aliasAlert.useUserAddress" = "Use %@";
+"email.aliasAlert.useUserAddress" = "%@ használata";
 
 /* Title for the email copy browsing menu alert */
-"email.browsingMenu.alert" = "New address copied to your clipboard";
+"email.browsingMenu.alert" = "Új cím a vágólapra másolva";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Create a Duck Address";
+"email.browsingMenu.useNewDuckAddress" = "Duck-cím létrehozása";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Engedélyezve";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Az e-mail-védelem eltávolítása erről az eszközről megszünteti azt a lehetőséget, hogy a webböngészés során a rendszer automatikusan beírja a személyes Duck-címedet vagy egy újonnan létrehozott privát Duck-címet az e-mail-cím mezőkbe.\n\nA Duck-címeid teljes törléséhez, vagy bármilyen más kérdés vagy visszajelzés esetén fordulj hozzánk a support@duck.com címen.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Ki";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Mégsem";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Megjegyzés: az e-mail-védelem eltávolítása erről az eszközről nem törli a Duck-címedet.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Eltávolítás";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Eltávolítod az e-mail-védelmet?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Hiba történt a várólistához való csatlakozás közben. Kérjük, próbálkozz újra később.";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Első lépések";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "Van meghívókódom";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Meghívót kaptál!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Csatlakozz a privát várólistához";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Felkerültél a várólistára!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "A meghívód itt fog megjelenni, amikor készen állunk. Szeretnél %1$@, amikor megérkezik? %2$@ az e-mail-védelemről.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "értesítést kapni";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Értesítést küldünk, amikor az e-mail-védelem készen áll számodra. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "További tudnivalók";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Értesítést küldünk, amikor megkezdheted az e-mail-védelem használatát.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Szeretnéd, hogy értesítsünk, amikor rád kerül a sor?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Feliratkoztál a várólistára, és arra kértél minket, hogy értesítsünk, amikor rád kerül a sor, hogy kipróbálhasd az e-mail-védelmet.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Nem, köszönöm";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "ÉRTESÍTSETEK";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Megérkezett az e-mail védelmi meghívód!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Nem mentjük el az e-mailjeidet. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "E-mail adatvédelem, egyszerűsítve.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Tiltsd le az e-mail nyomkövetőket, és rejtsd el a címedet anélkül, hogy e-mail szolgáltatót váltanál. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Még nincsenek könyvjelzők hozzáadva";
@@ -583,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Tallózás a menüben";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Kész";
+
 /* Edit button */
 "navigation.title.edit" = "Szerkesztés";
 
@@ -769,12 +889,6 @@
 /* No comment provided by engineer. */
 "privacy.protection.main.grade" = "ADATVÉDELMI FOKOZAT";
 
-/* No comment provided by engineer. */
-"privacy.protection.main.temp.disabled" = "Protections are temporarily disabled due to this site being broken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.toggle.label" = "A weboldal adatvédelme";
-
 /* Major trackers blocked */
 "privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
 
@@ -889,6 +1003,12 @@
 /* Tab Switcher Accessibility Label */
 "tab.switcher.accessibility.label" = "Lapváltó";
 
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Válaszd ki a kívánt szövegméretet. A DuckDuckGo ennek használatával jeleníti meg a webhelyeket.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Szövegméret: %@";
+
 /* Dark Theme entry */
 "theme.acc.dark" = "Sötét";
 
@@ -916,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ismeretlen hiba történt.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Beállítások";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "A beszédhangfunkciók használatához az iOS rendszerbeállításaiban engedélyezd a DuckDuckGo számára a Mikrofon-hozzáférést.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Mikrofon-hozzáférés szükséges";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Mégsem";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "A DuckDuckGo soha nem hallgatja azt, amit mondasz. A Privát beszédhangalapú keresés működéséhez szükséges összes beszédhang-feldolgozási művelet a telefonodon zajlik.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "A Privát beszédhangalapú kereséshez Mikrofon-hozzáférés szükséges";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Mégsem";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "A hang feldolgozása az eszközön történik. Nem tároljuk és nem osztjuk meg senkivel, még a DuckDuckGóval sem.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Kedvenc eltávolítva";
 
@@ -930,4 +1077,10 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Kedvenc hozzáadva";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Mégsem";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "OK";
 

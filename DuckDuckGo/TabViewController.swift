@@ -1000,7 +1000,14 @@ extension TabViewController: WKNavigationDelegate {
         
         isShowingFullScreenDaxDialog = true
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
+        let currentURL = self.url
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            // https://app.asana.com/0/414709148257752/1201620790053163/f
+            if self?.url != currentURL {
+                return
+            }
+            
             self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)

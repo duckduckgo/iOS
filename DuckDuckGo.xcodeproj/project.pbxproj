@@ -481,6 +481,9 @@
 		AAF2E28523E0496F00962AF8 /* AppIconGreen83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAF2E28423E0496F00962AF8 /* AppIconGreen83.5x83.5@2x.png */; };
 		AAF2E28723E0498200962AF8 /* AppIconPurple83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAF2E28623E0498100962AF8 /* AppIconPurple83.5x83.5@2x.png */; };
 		AAF2E28B23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAF2E28A23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png */; };
+		CB9B8739278C8E72001F4906 /* AddWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B8738278C8E72001F4906 /* AddWidgetViewController.swift */; };
+		CB9B873C278C8FEA001F4906 /* AddWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B873B278C8FEA001F4906 /* AddWidgetView.swift */; };
+		CB9B873E278C93C2001F4906 /* AddWidget.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB9B873D278C93C2001F4906 /* AddWidget.xcassets */; };
 		EA39B7E2268A1A35000C62CD /* privacy-reference-tests in Resources */ = {isa = PBXBuildFile; fileRef = EA39B7E1268A1A35000C62CD /* privacy-reference-tests */; };
 		EAB19EDA268963510015D3EA /* DomainMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
@@ -1829,6 +1832,9 @@
 		AAF2E28423E0496F00962AF8 /* AppIconGreen83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconGreen83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		AAF2E28623E0498100962AF8 /* AppIconPurple83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconPurple83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		AAF2E28A23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconYellow83.5x83.5@2x.png"; sourceTree = "<group>"; };
+		CB9B8738278C8E72001F4906 /* AddWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWidgetViewController.swift; sourceTree = "<group>"; };
+		CB9B873B278C8FEA001F4906 /* AddWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWidgetView.swift; sourceTree = "<group>"; };
+		CB9B873D278C93C2001F4906 /* AddWidget.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AddWidget.xcassets; sourceTree = "<group>"; };
 		EA39B7E1268A1A35000C62CD /* privacy-reference-tests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "privacy-reference-tests"; path = "submodules/privacy-reference-tests"; sourceTree = SOURCE_ROOT; };
 		EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainMatchingTests.swift; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
@@ -2552,6 +2558,7 @@
 				9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */,
 				8531A08D1F9950E6000484F0 /* UnprotectedSitesViewController.swift */,
 				02C57C4A2514FEFB009E5129 /* DoNotSellSettingsViewController.swift */,
+				CB9B8738278C8E72001F4906 /* AddWidgetViewController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -3018,6 +3025,15 @@
 			name = Red;
 			sourceTree = "<group>";
 		};
+		CB9B873A278C8FD5001F4906 /* AddWidget */ = {
+			isa = PBXGroup;
+			children = (
+				CB9B873B278C8FEA001F4906 /* AddWidgetView.swift */,
+				CB9B873D278C93C2001F4906 /* AddWidget.xcassets */,
+			);
+			name = AddWidget;
+			sourceTree = "<group>";
+		};
 		EA7EFE662677F5BD0075464E /* PrivacyReferenceTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -3118,6 +3134,7 @@
 		F11CEF581EBB66C80088E4D7 /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
+				CB9B873A278C8FD5001F4906 /* AddWidget */,
 				858650CF2469BCC100C36F8A /* DaxOnboarding */,
 				85EE7F53224667C3000FE757 /* WebContainer */,
 				85C11E4A209084DE00BFFEB4 /* HomeRow */,
@@ -4322,6 +4339,7 @@
 				98EF177D21837E35006750C1 /* new_tab_dark.json in Resources */,
 				85C2970A247EB7AA0063A335 /* Text.xcassets in Resources */,
 				98788E9A2521DA1E00D55218 /* Localizable.stringsdict in Resources */,
+				CB9B873E278C93C2001F4906 /* AddWidget.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4559,6 +4577,7 @@
 				98196CFA23AA75D0007809AC /* OnboardingHomeRowViewController.swift in Sources */,
 				98D98A7425ED88D100D8E3DF /* BrowsingMenuEntryViewCell.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
+				CB9B873C278C8FEA001F4906 /* AddWidgetView.swift in Sources */,
 				85F200002215C17B006BB258 /* FindInPage.swift in Sources */,
 				85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
@@ -4569,6 +4588,7 @@
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,
+				CB9B8739278C8E72001F4906 /* AddWidgetViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
 				8565A3411FC4F78D00239327 /* PrivacyProtectionErrorController.swift in Sources */,

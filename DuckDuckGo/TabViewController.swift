@@ -1000,11 +1000,11 @@ extension TabViewController: WKNavigationDelegate {
         
         isShowingFullScreenDaxDialog = true
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
-        let currentURL = self.url
+        let daxDialogSourceURL = self.url
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             // https://app.asana.com/0/414709148257752/1201620790053163/f
-            if self?.url != currentURL {
+            if self?.url != daxDialogSourceURL {
                 return
             }
             

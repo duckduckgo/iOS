@@ -69,8 +69,8 @@ public struct Variant {
         Variant(name: "ma", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [.voiceSearch]),
         Variant(name: "mb", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: []),
         
-        Variant(name: "ba", weight: 1, isIncluded: When.always, features: [.parameterStripping]),
-        Variant(name: "bb", weight: 1, isIncluded: When.always, features: [])
+        Variant(name: "mc", weight: 1, isIncluded: When.always, features: [.parameterStripping]),
+        Variant(name: "md", weight: 1, isIncluded: When.always, features: [])
     ]
     
     public let name: String

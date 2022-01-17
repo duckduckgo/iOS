@@ -1163,9 +1163,11 @@ extension TabViewController: WKNavigationDelegate {
         if AppDependencyProvider.shared.variantManager.isSupported(feature: .parameterStripping),
            let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
                                                             url: navigationAction.request.url) {
-            decisionHandler(.cancel)
-            load(newUrl: newUrl, forNavigationAction: navigationAction)
-            return true
+            if newUrl != navigationAction.request.url {
+                decisionHandler(.cancel)
+                load(newUrl: newUrl, forNavigationAction: navigationAction)
+                return true
+            }
         }
         
         return false

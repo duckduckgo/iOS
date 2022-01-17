@@ -14,7 +14,7 @@
 "NSLocationWhenInUseUsageDescription" = "Permite-lhe partilhar a sua localização";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Permite-lhe partilhar gravações";
+"NSMicrophoneUsageDescription" = "Isto é necessário para usar as funcionalidades de voz. O DuckDuckGo nunca grava o que você diz.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Permite-lhe gravar imagens no seu dispositivo";

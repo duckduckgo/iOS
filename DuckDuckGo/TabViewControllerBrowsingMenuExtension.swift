@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import BrowserServicesKit
+import simd
 
 extension TabViewController {
     
@@ -59,63 +60,80 @@ extension TabViewController {
     
     var favoriteEntryIndex: Int { 1 }
     
-    func buildBrowsingMenu() -> [BrowsingMenuEntry] {
+    func buildBrowsingMenu(completion: @escaping ([BrowsingMenuEntry]) -> Void) {
         
         var entries = [BrowsingMenuEntry]()
         
-        if let link = link, !isError {
-            if let entry = buildBookmarkEntry(for: link) {
-                entries.append(entry)
+        buildLinkEntries { linkEntries in
+            entries.append(contentsOf: linkEntries)
+            
+            if let domain = self.siteRating?.domain {
+                entries.append(self.buildToggleProtectionEntry(forDomain: domain))
             }
             
-            if let entry = buildFavoriteEntry(for: link) {
-                assert(favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
-                entries.append(entry)
-            }
-            
-            entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
-                                                     image: UIImage(named: "MenuBookmarks")!,
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
+                                                     image: UIImage(named: "MenuFeedback")!,
                                                      action: { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
+                self?.onReportBrokenSiteAction()
             }))
             
-            entries.append(.separator)
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
+                                                     image: UIImage(named: "MenuSettings")!,
+                                                     action: { [weak self] in
+                self?.onBrowsingSettingsAction()
+            }))
+            
+            completion(entries)
+        }
+    }
+    
+    private func buildLinkEntries(completion: @escaping ([BrowsingMenuEntry]) -> Void) {
+        guard let link = link, !isError else {
+            completion([])
+            return
+        }
+        
+        var entries = [BrowsingMenuEntry]()
+        
+        buildBookmarkEntry(for: link) { bookmarkEntry in
+            if let bookmarkEntry = bookmarkEntry {
+                entries.append(bookmarkEntry)
+            }
+            
+            self.buildFavoriteEntry(for: link) { favoriteEntry in
+                if let favoriteEntry = favoriteEntry {
+                    assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
+                    entries.append(favoriteEntry)
+                }
+                
+                entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
+                                                         image: UIImage(named: "MenuBookmarks")!,
+                                                         action: { [weak self] in
+                    guard let strongSelf = self else { return }
+                    strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
+                }))
+                
+                entries.append(.separator)
 
-            if let entry = buildKeepSignInEntry(forLink: link) {
-                entries.append(entry)
+                if let entry = self.buildKeepSignInEntry(forLink: link) {
+                    entries.append(entry)
+                }
+                
+                if let entry = self.buildUseNewDuckAddressEntry(forLink: link) {
+                    entries.append(entry)
+                }
+                
+                let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
+                let image = self.tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
+                entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
+                    self?.onToggleDesktopSiteAction(forUrl: link.url)
+                }))
+                
+                entries.append(self.buildFindInPageEntry(forLink: link))
+                
+                completion(entries)
             }
-            
-            if let entry = buildUseNewDuckAddressEntry(forLink: link) {
-                entries.append(entry)
-            }
-            
-            let title = tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
-            let image = tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
-            entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
-                self?.onToggleDesktopSiteAction(forUrl: link.url)
-            }))
-            
-            entries.append(buildFindInPageEntry(forLink: link))
         }
-        
-        if let domain = siteRating?.domain {
-            entries.append(buildToggleProtectionEntry(forDomain: domain))
-        }
-        
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
-                                                 image: UIImage(named: "MenuFeedback")!,
-                                                 action: { [weak self] in
-            self?.onReportBrokenSiteAction()
-        }))
-        
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
-                                                 image: UIImage(named: "MenuSettings")!,
-                                                 action: { [weak self] in
-            self?.onBrowsingSettingsAction()
-        }))
-        
-        return entries
     }
     
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
@@ -151,30 +169,30 @@ extension TabViewController {
         })
     }
     
-    private func buildBookmarkEntry(for link: Link) -> BrowsingMenuEntry? {
-        
-        let bookmarksManager = BookmarksManager()
-        let isBookmark = bookmarksManager.containsBookmark(url: link.url)
-        if isBookmark {
-            return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
-                                             image: UIImage(named: "MenuBookmarkSolid")!,
-                                             action: { [weak self] in
-                                                self?.performEditBookmarkAction(for: link)
-                                             })
-        } else {
-            return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
-                                             image: UIImage(named: "MenuBookmark")!,
-                                             action: { [weak self] in
-                                                self?.performSaveBookmarkAction(for: link)
-                                             })
+    private func buildBookmarkEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
+        bookmarksManager.containsBookmark(url: link.url) { contains in
+            if contains {
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
+                                                      image: UIImage(named: "MenuBookmarkSolid")!,
+                                                      action: { [weak self] in
+                                                         self?.performEditBookmarkAction(for: link)
+                                                      })
+                completion(entry)
+            } else {
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
+                                                      image: UIImage(named: "MenuBookmark")!,
+                                                      action: { [weak self] in
+                                                        self?.performSaveBookmarkAction(for: link)
+                                                      })
+                completion(entry)
+            }
         }
     }
     
     private func performSaveBookmarkAction(for link: Link) {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
-        
-        BookmarksManager().save(bookmark: link)
-        
+        bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
+
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit) {
             self.performEditBookmarkAction(for: link)
@@ -187,49 +205,60 @@ extension TabViewController {
         delegate?.tabDidRequestEditBookmark(tab: self)
     }
     
-    private func buildFavoriteEntry(for link: Link) -> BrowsingMenuEntry? {
-        let bookmarksManager = BookmarksManager()
-        let isFavorite = bookmarksManager.containsFavorite(url: link.url)
-        
-        if isFavorite {
-            
-            let action: () -> Void = { [weak self] in
-                Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
-                self?.performRemoveFavoriteAction(for: link)
-            }
-            
-            return BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
-                                             image: UIImage(named: "MenuFavoriteSolid")!,
-                                             action: action)
-                                                
-        } else {
-            // Capture flow state here as will be reset after menu is shown
-            let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
+    private func buildFavoriteEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
+        bookmarksManager.containsFavorite(url: link.url) { contains in
 
-            return BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite, image: UIImage(named: "MenuFavorite")!, action: { [weak self] in
-                Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
-                self?.performSaveFavoriteAction(for: link)
-            })
+            if contains {
+                let action: () -> Void = { [weak self] in
+                    Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
+                    self?.performRemoveFavoriteAction(for: link)
+                }
+
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
+                                                      image: UIImage(named: "MenuFavoriteSolid")!,
+                                                      action: action)
+                completion(entry)
+
+            } else {
+                // Capture flow state here as will be reset after menu is shown
+                let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
+
+                let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite,
+                                                      image: UIImage(named: "MenuFavorite")!,
+                                                      action: { [weak self] in
+                    Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
+                    self?.performSaveFavoriteAction(for: link)
+                })
+                completion(entry)
+            }
         }
     }
     
     private func performSaveFavoriteAction(for link: Link) {
-        let bookmarksManager = BookmarksManager()
-        bookmarksManager.save(favorite: link)
-        
-        ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
-            self.performRemoveFavoriteAction(for: link)
+        bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url) { _, _ in
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
+                    self.performRemoveFavoriteAction(for: link)
+                }
+            }
         }
     }
     
     private func performRemoveFavoriteAction(for link: Link) {
         let bookmarksManager = BookmarksManager()
-        guard let index = bookmarksManager.indexOfFavorite(url: link.url) else { return }
-        
-        bookmarksManager.deleteFavorite(at: index)
-        
-        ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
-            self.performSaveFavoriteAction(for: link)
+        bookmarksManager.favorite(forURL: link.url) { bookmark in
+            guard let bookmark = bookmark else {
+                return
+            }
+            
+            bookmarksManager.delete(bookmark) { _, _ in
+
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
+                        self.performSaveFavoriteAction(for: link)
+                    }
+                }
+            }
         }
     }
     

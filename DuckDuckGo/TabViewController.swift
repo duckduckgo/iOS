@@ -74,6 +74,8 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
+    
+    lazy var bookmarksManager = BookmarksManager()
 
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
@@ -307,7 +309,7 @@ class TabViewController: UIViewController {
         } else if let request = request {
             if let url = request.url {
                 getCleanUrl(url) { [weak self] cleanUrl in
-                    self?.load(urlRequest: URLRequest(url: cleanUrl))
+                    self?.load(urlRequest: URLRequest.userInitiated(cleanUrl))
                 }
             } else {
                 load(urlRequest: request)
@@ -370,7 +372,7 @@ class TabViewController: UIViewController {
         lastError = nil
         updateContentMode()
         getCleanUrl(url) { [weak self] url in
-            self?.load(urlRequest: URLRequest(url: url))
+            self?.load(urlRequest: URLRequest.userInitiated(url))
         }
     }
     
@@ -384,6 +386,11 @@ class TabViewController: UIViewController {
         if let url = urlRequest.url, !shouldReissueSearch(for: url) {
             requeryLogic.onNewNavigation(url: url)
         }
+
+        if #available(iOS 15.0, *) {
+            assert(urlRequest.attribution == .user, "WebView requests should be user attributed")
+        }
+
         webView.stopLoading()
         webView.load(urlRequest)
     }
@@ -976,6 +983,11 @@ extension TabViewController: WKNavigationDelegate {
                 return
         }
         
+        if let url = link?.url, AppUrls().isDuckDuckGoEmailProtection(url: url) {
+            scheduleTrackerNetworksAnimation(collapsing: true)
+            return
+        }
+        
         guard let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
             
             if DaxDialogs.shared.shouldShowFireButtonPulse {
@@ -1089,12 +1101,22 @@ extension TabViewController: WKNavigationDelegate {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
+
+                if #available(iOS 15.0, *) {
+                    request.attribution = .user
+                }
+
                 return request
             }
         } else {
             // Check if DN$ header is still there and remove it
             if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
                 request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
+
+                if #available(iOS 15.0, *) {
+                    request.attribution = .user
+                }
+
                 return request
             }
         }
@@ -1120,7 +1142,7 @@ extension TabViewController: WKNavigationDelegate {
             showProgressIndicator()
             ampExtractor.getCanonicalUrl(initiator: webView.url,
                                           url: navigationAction.request.url) { canonical in
-                guard let canonical = canonical else {
+                guard let canonical = canonical, canonical != navigationAction.request.url else {
                     decisionHandler(.allow)
                     return
                 }

@@ -74,10 +74,10 @@
 "action.title.save" = "Saglabāt";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Atzīmēt šo lapu";
+"action.title.save.bookmark" = "Pievienot grāmatzīmi";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Atzīmēt šo lapu kā iecienītu";
+"action.title.save.favorite" = "Pievienot izlases vienumu";
 
 /* Settings action */
 "action.title.settings" = "Iestatījumi";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ieslēgts";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Pievienot grāmatzīmi";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Pievienot izlases vienumu";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Pievienot mapi";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Pievienot mapi";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.piemērs.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Dzēst";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Vai tiešām vēlies dzēst šo mapi un %i vienumus?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Vai tiešām vēlies dzēst šo mapi un %i vienumu?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Vai dzēst %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Rediģēt grāmatzīmi";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Rediģēt izlasi";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Rediģēt mapi";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Atrašanās vieta";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Vietnes nosaukums";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Grāmatzīmes";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Pievienotas jaunas grāmatzīmes visām cilnēm";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Pārlūkošanas izvēlne";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Gatavs";
+
 /* Edit button */
 "navigation.title.edit" = "Rediģēt";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Radās nezināma kļūda.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Iestatījumi";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Lūdzu, atļauj piekļuvi mikrofonam iOS sistēmas iestatījumos, lai DuckDuckGo varētu izmantot balss funkcijas.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Nepieciešama piekļuve mikrofonam";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Labi";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Atcelt";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nenoklausās tevis teikto. Visa runas datu apstrāde privātajai balss meklēšanai ar balsi notiek tavā ierīcē.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Privātajai meklēšanai ar balsi ir nepieciešama piekļuve mikrofonam";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Atcelt";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Audio tiek apstrādāts ierīcē. Tas netiek glabāts, un tam nevar piekļūt neviens, pat ne DuckDuckGo.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Izlase ir noņemta";

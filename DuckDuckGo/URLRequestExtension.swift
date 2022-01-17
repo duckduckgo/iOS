@@ -1,8 +1,8 @@
 //
-//  MockBookmarkStore.swift
-//  UnitTests
+//  URLRequestExtension.swift
+//  DuckDuckGo
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2021 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,26 +17,28 @@
 //  limitations under the License.
 //
 
-import Core
+import Foundation
 
-class MockBookmarkStore: BookmarkStore {
-    
-    var bookmarks: [Link] = []
-    
-    var favorites: [Link] = []
-    
-    var addedBookmarks = [Link]()
-    func addBookmark(_ bookmark: Link) {
-        addedBookmarks.append(bookmark)
+extension URLRequest {
+
+    public static func developerInitiated(_ url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+
+        if #available(iOS 15.0, *) {
+            request.attribution = .developer
+        }
+
+        return request
     }
     
-    var addedFavorites = [Link]()
-    func addFavorite(_ favorite: Link) {
-        addedFavorites.append(favorite)
-    }
+    public static func userInitiated(_ url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
 
-    func contains(domain: String) -> Bool {
-        return false
+        if #available(iOS 15.0, *) {
+            request.attribution = .user
+        }
+
+        return request
     }
 
 }

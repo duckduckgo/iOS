@@ -89,7 +89,7 @@ extension TabViewController {
     
     private func onOpenAction(forUrl url: URL) {
         if let webView = webView {
-            webView.load(URLRequest(url: url))
+            webView.load(URLRequest.userInitiated(url))
         }
     }
     
@@ -101,25 +101,22 @@ extension TabViewController {
 
 extension TabViewController {
 
-        func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
-                     completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
+    func webView(_ webView: WKWebView, contextMenuConfigurationForElement elementInfo: WKContextMenuElementInfo,
+                 completionHandler: @escaping (UIContextMenuConfiguration?) -> Void) {
 
         guard let url = elementInfo.linkURL else {
             completionHandler(nil)
             return
         }
 
-        getCleanUrl(url, showLoadingIndicator: false) { cleanUrl in
-            let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
-                return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: cleanUrl) : nil
-            }, actionProvider: { _ in
-                // We don't use provided elements as they are not built with correct URL in case of AMP links
+        let config = UIContextMenuConfiguration(identifier: nil, previewProvider: {
+            return AppUserDefaults().longPressPreviews ? self.buildOpenLinkPreview(for: url) : nil
+        }, actionProvider: { _ in
+            // We don't use provided elements as they are not built with correct URL in case of AMP links
+            return self.buildLinkPreviewMenu(for: url, withProvided: [])
+        })
 
-                return self.buildLinkPreviewMenu(for: cleanUrl, withProvided: [])
-            })
-
-            completionHandler(config)
-        }
+        completionHandler(config)
     }
 
     func webView(_ webView: WKWebView, contextMenuForElement elementInfo: WKContextMenuElementInfo,
@@ -134,7 +131,7 @@ extension TabViewController {
         tabController.isLinkPreview = true
         tabController.decorate(with: ThemeManager.shared.currentTheme)
         let configuration = WKWebViewConfiguration.nonPersistent()
-        tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest(url: url), consumeCookies: false)
+        tabController.attachWebView(configuration: configuration, andLoadRequest: URLRequest.userInitiated(url), consumeCookies: false)
         tabController.loadViewIfNeeded()
         return tabController
     }

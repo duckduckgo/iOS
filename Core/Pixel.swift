@@ -152,6 +152,22 @@ public enum PixelName: String {
     case emailUserCreatedAlias = "email_generated_button"
     case emailTooltipDismissed = "email_tooltip_dismissed"
     
+    case voiceSearchPrivacyDialogAccepted = "m_voice_search_privacy_dialog_accepted"
+    case voiceSearchPrivacyDialogRejected = "m_voice_search_privacy_dialog_rejected"
+    case voiceSearchDone = "m_voice_search_done"
+    
+    case emailDidShowWaitlistDialog = "email_did_show_waitlist_dialog"
+    case emailDidPressWaitlistDialogDismiss = "email_did_press_waitlist_dialog_dismiss"
+    case emailDidPressWaitlistDialogNotifyMe = "email_did_press_waitlist_dialog_notify_me"
+    
+    case bookmarksFolderCreated = "m_bookmarks_folder_created"
+
+    case bookmarkCreatedAtTopLevel = "m_bookmark_created_at_top_level"
+    case bookmarkCreatedInSubfolder = "m_bookmark_created_in_subfolder"
+
+    case bookmarkEditedAtTopLevel = "m_bookmark_edited_at_top_level"
+    case bookmarkEditedInSubfolder = "m_bookmark_edited_in_subfolder"
+    
     case textSizeSettingsShown = "m_text_size_settings_shown"
     case textSizeSettingsChanged = "m_text_size_settings_changed"
 

@@ -19,11 +19,13 @@
 
 import Foundation
 import os.log
+import Speech
 
 public enum FeatureName: String {
 
     // Used for unit tests
     case dummy
+    case voiceSearch
 }
 
 public struct Variant {
@@ -38,15 +40,19 @@ public struct Variant {
         
         static let inEnglish = { return Locale.current.languageCode == "en" }
 
-        static let iOS14 = { () -> Bool in
-            if #available(iOS 14, *) {
+        static let iOS15 = { () -> Bool in
+            if #available(iOS 15, *) {
                 return true
             } else {
                 return false
             }
         }
         
-        static let inEnglishAndIOS14 = { return inEnglish() && iOS14() }
+        static let supportsOnDeviceRecognizer = { SFSpeechRecognizer()?.supportsOnDeviceRecognition ?? false }
+        
+        static let isIOS15EnglishWithOnDeviceSpeech = {
+            return inEnglish() && iOS15() && supportsOnDeviceRecognizer()
+        }
     }
     
     static let doNotAllocate = 0
@@ -57,7 +63,10 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
+        Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
+        
+        Variant(name: "ma", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [.voiceSearch]),
+        Variant(name: "mb", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [])
     ]
     
     public let name: String

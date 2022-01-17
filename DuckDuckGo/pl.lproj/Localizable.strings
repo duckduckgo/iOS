@@ -74,10 +74,10 @@
 "action.title.save" = "Zapisz";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Dodaj tę stronę do zakładek";
+"action.title.save.bookmark" = "Dodaj zakładkę";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Dodaj tę stronę do ulubionych";
+"action.title.save.favorite" = "Dodaj do Ulubionych";
 
 /* Settings action */
 "action.title.settings" = "Ustawienia";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Włączone";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Dodaj zakładkę";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Dodaj do Ulubionych";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Dodaj folder";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Dodaj folder";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.domena.pl";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Usuń";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Czy na pewno chcesz usunąć ten folder i elementy (%i)?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Czy na pewno chcesz usunąć ten folder i %i element?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Usunąć %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Edytuj zakładkę";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Edytuj ulubione";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Edytuj folder";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Lokalizacja";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Tytuł strony";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Zakładki";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Dodano nowe zakładki dla wszystkich kart";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Dostępne opcje";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Gotowe";
+
 /* Edit button */
 "navigation.title.edit" = "Edytuj";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Wystąpił nieznany błąd.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Ustawienia";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Aby korzystać z funkcji głosowych, zezwól na dostęp DuckDuckGo do mikrofonu w ustawieniach systemu iOS.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Wymagany dostęp do mikrofonu";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Anuluj";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nigdy nie rejestruje tego, co mówisz. Całość przetwarzania danych mowy na potrzeby prywatnego wyszukiwania głosowego odbywa się na Twoim urządzeniu.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Wymagany dostęp do mikrofonu na potrzeby prywatnego wyszukiwania głosowego";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Anuluj";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Dźwięk jest przetwarzany na urządzeniu. Dane nie są przechowywane ani udostępniane żadnym podmiotom, w tym DuckDuckGo.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Usunięto ulubione";

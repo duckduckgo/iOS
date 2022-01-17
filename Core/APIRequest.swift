@@ -109,7 +109,7 @@ public class APIRequest {
                                      httpBody: Data? = nil,
                                      timeoutInterval: TimeInterval = 60.0) -> URLRequest {
         let url = url.addParams(parameters ?? [:])
-        var urlRequest = URLRequest(url: url)
+        var urlRequest = URLRequest.developerInitiated(url)
         urlRequest.allHTTPHeaderFields = headers
         urlRequest.httpMethod = method.rawValue
         urlRequest.httpBody = httpBody

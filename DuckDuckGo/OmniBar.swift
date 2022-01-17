@@ -42,7 +42,8 @@ class OmniBar: UIView {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var refreshButton: UIButton!
- 
+    @IBOutlet weak var voiceSearchButton: UIButton!
+    
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
@@ -181,6 +182,10 @@ class OmniBar: UIView {
         textField.becomeFirstResponder()
     }
     
+    func removeTextSelection() {
+        textField.selectedTextRange = nil
+    }
+    
     public func startLoadingAnimation(for url: URL?) {
         trackersAnimator.startLoadingAnimation(in: self, for: url)
     }
@@ -215,7 +220,7 @@ class OmniBar: UIView {
         if state.showSiteRating {
             searchFieldContainer.revealSiteRatingView()
         } else {
-            searchFieldContainer.hideSiteRatingView()
+            searchFieldContainer.hideSiteRatingView(state)
         }
 
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
@@ -224,6 +229,7 @@ class OmniBar: UIView {
         setVisibility(settingsButton, hidden: !state.showSettings)
         setVisibility(cancelButton, hidden: !state.showCancel)
         setVisibility(refreshButton, hidden: !state.showRefresh)
+        setVisibility(voiceSearchButton, hidden: !state.showVoiceSearch)
 
         setVisibility(backButton, hidden: !state.showBackButton)
         setVisibility(forwardButton, hidden: !state.showForwardButton)
@@ -235,6 +241,10 @@ class OmniBar: UIView {
         leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
         rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
 
+        if state.showVoiceSearch && state.showClear {
+            searchStackContainer.setCustomSpacing(8, after: voiceSearchButton)
+        }
+        
         updateOmniBarPadding()
         updateSearchBarBorder()
     }
@@ -350,6 +360,10 @@ class OmniBar: UIView {
         }
     }
 
+    @IBAction func onVoiceSearchButtonPressed(_ sender: UIButton) {
+        omniDelegate?.onVoiceSearchPressed()
+    }
+    
     @IBAction func onClearButtonPressed(_ sender: Any) {
         refreshState(state.onTextClearedState)
     }
@@ -416,6 +430,10 @@ class OmniBar: UIView {
 // swiftlint:enable type_body_length
 
 extension OmniBar: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.refreshState(self.state.onEditingStartedState)
+        return true
+    }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         omniDelegate?.onTextFieldWillBeginEditing(self)
@@ -472,7 +490,8 @@ extension OmniBar: Themable {
         textField.tintColor = theme.searchBarTextColor
         textField.keyboardAppearance = theme.keyboardAppearance
         clearButton.tintColor = theme.searchBarClearTextIconColor
-
+        voiceSearchButton.tintColor = theme.searchBarVoiceSearchIconColor
+        
         searchLoupe.tintColor = theme.barTintColor
         cancelButton.setTitleColor(theme.barTintColor, for: .normal)
         

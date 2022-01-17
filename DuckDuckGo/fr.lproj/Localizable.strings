@@ -74,10 +74,10 @@
 "action.title.save" = "Enregistrer";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Ajouter cette page aux signets";
+"action.title.save.bookmark" = "Ajouter un signet";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Ajouter cette page aux favoris";
+"action.title.save.favorite" = "Ajouter un favori";
 
 /* Settings action */
 "action.title.settings" = "Paramètres";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activé";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Ajouter un signet";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Ajouter un favori";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Ajouter le dossier";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Ajouter le dossier";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.exemple.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Supprimer";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Voulez-vous vraiment supprimer ce dossier et %i éléments ?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Voulez-vous vraiment supprimer ce dossier et %i élément ?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Supprimer %@ ?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Modifier le signet";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Modifier le favori";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Modifier le dossier";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Localisation";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titre du site Web";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Signets";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Nouveaux signets ajoutés pour tous les onglets";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menu de navigation";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Terminé";
+
 /* Edit button */
 "navigation.title.edit" = "Modifier";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Une erreur inconnue s'est produite.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Paramètres";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Veuillez autoriser l'accès au microphone dans les réglages système iOS pour que DuckDuckGo puisse utiliser les fonctionnalités vocales.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Accès au microphone requis";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Annuler";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo n'écoute jamais ce que vous dites. Le traitement des données vocales pour la recherche vocale privée se déroule sur votre appareil.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Accès au microphone requis pour la recherche vocale privée";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Annuler";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "L'audio est traité directement sur l'appareil. Il n'est ni stocké ni partagé avec qui que ce soit, y compris DuckDuckGo.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favori supprimé";

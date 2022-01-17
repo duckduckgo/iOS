@@ -74,10 +74,10 @@
 "action.title.save" = "Сохранить";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Сохранить в закладках";
+"action.title.save.bookmark" = "Добавить закладку";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Добавить страницу в избранное";
+"action.title.save.favorite" = "Добавить в избранное";
 
 /* Settings action */
 "action.title.settings" = "Настройки";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Добавить закладку";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Добавить в избранное";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Добавить папку";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Добавить папку";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Удалить";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Действительно удалить эту папку и пункты (%i)?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Действительно удалить эту папку и %i пункт?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Удалить %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Редактировать закладку";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Изменить избранное";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Изменить папку";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Геопозиция";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Название сайта";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Закладки";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Все вкладки сохранены в закладках";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню браузера";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Готово";
+
 /* Edit button */
 "navigation.title.edit" = "Редактировать";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Произошла неизвестная ошибка.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Настройки";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Чтобы пользоваться голосовыми функциями, откройте DuckDuckGo доступ к микрофону в системных настройках iOS.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Требуется доступ к микрофону";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Хорошо";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Отменить";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo ни в коем случае не подслушивает ваши разговоры. Вся обработка голосовых данных для приватного голосового поиска осуществляется на вашем устройства.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Для приватного голосового поиска требуется доступ к микрофону";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Отменить";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Аудио обрабатывается непосредственно на устройстве, не хранится и не передается никому, даже DuckDuckGo.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Страница удалена из избранного";

@@ -53,6 +53,7 @@ protocol Theme {
     var searchBarTextDeemphasisColor: UIColor { get }
     var searchBarBorderColor: UIColor { get }
     var searchBarClearTextIconColor: UIColor { get }
+    var searchBarVoiceSearchIconColor: UIColor { get }
     
     var browsingMenuTextColor: UIColor { get }
     var browsingMenuIconsColor: UIColor { get }

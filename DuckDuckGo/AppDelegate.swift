@@ -89,6 +89,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
         
+        BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
+            BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
+        }
+        
         HTTPSUpgrade.shared.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"

@@ -74,10 +74,10 @@
 "action.title.save" = "Spara";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Lägg till bokmärke för den här sidan";
+"action.title.save.bookmark" = "Lägg till bokmärke";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Lägg till den här sidan som favorit";
+"action.title.save.favorite" = "Lägg till favorit";
 
 /* Settings action */
 "action.title.settings" = "Inställningar";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "På";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Lägg till bokmärke";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Lägg till favorit";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Lägg till mapp";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Lägg till mapp";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Ta bort";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Är du säker på att du vill radera den här mappen och %i objekt?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Är du säker på att du vill radera den här mappen och %i objekt?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Radera %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Redigera bokmärke";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Redigera favorit";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Redigera mapp";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Plats";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Webbplatsens rubrik";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Bokmärken";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Nya bokmärken för alla flikar har lagts till";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Bläddra-meny";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Klart";
+
 /* Edit button */
 "navigation.title.edit" = "Redigera";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ett okänt fel uppstod.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Inställningar";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "För att DuckDuckGo ska kunna använda röstfunktionerna måste du tillåta åtkomst till mikrofonen i systeminställningarna för iOS.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Mikrofonåtkomst krävs";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Avbryt";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo lyssnar aldrig på det du säger. All behandling av taldata för privat röstsökning utförs på din enhet.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Mikrofonåtkomst krävs för privat röstsökning";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Avbryt";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Ljudet bearbetas på enheten. Det lagras inte och delas inte med någon, inte ens DuckDuckGo.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorit borttagen";

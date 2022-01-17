@@ -74,10 +74,10 @@
 "action.title.save" = "Uložit";
 
 /* Add to Bookmarks action */
-"action.title.save.bookmark" = "Přidejte si tuto stránku do záložek";
+"action.title.save.bookmark" = "Přidat záložku";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Označit tuto stránku jako oblíbenou";
+"action.title.save.favorite" = "Přidat oblíbené";
 
 /* Settings action */
 "action.title.settings" = "Nastavení";
@@ -130,11 +130,50 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aktivní";
 
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Přidat záložku";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Přidat oblíbené";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Přidat složku";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Přidat složku";
+
 /* Placeholder in the add bookmark form */
 "bookmark.address.placeholder" = "www.example.com";
 
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Smazat";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Opravdu chceš odstranit tuto složku a položky (%i)?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Opravdu chceš odstranit tuto složku a %i položku?";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Odstranit %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Upravit záložku";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Upravit oblíbené";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Upravit složku";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Poloha";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Název webové stránky";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Záložky";
 
 /* Info message after selecting Bookmark All button */
 "bookmarkAll.tabs.failed" = "Přidány nové záložky pro všechny karty";
@@ -661,6 +700,9 @@
 /* No comment provided by engineer. */
 "menu.button.hint" = "Procházení nabídky";
 
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Hotovo";
+
 /* Edit button */
 "navigation.title.edit" = "Upravit";
 
@@ -993,6 +1035,33 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Vyskytla se neznámá chyba.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Nastavení";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Pro používání hlasových funkcí DuckDuckGo je potřeba v Nastaveních iOS povolit přístup k mikrofonu.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Je nutný přístup k mikrofonu";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "DOBŘE";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Zrušit";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikdy neposlouchá, co říkáš. Veškeré zpracování dat řeči při soukromém hlasovém vyhledávání probíhá přímo v zařízení.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Pro soukromé hlasové vyhledávání je nutný přístup k mikrofonu";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Zrušit";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Zvuk se zpracovává na zařízení. Nikde ho neukládáme a s nikým ho nesdílíme. Ani DuckDuckGo se k němu nedostane.";
 
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Oblíbená položka odstraněna";

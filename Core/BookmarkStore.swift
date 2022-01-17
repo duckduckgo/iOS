@@ -19,6 +19,11 @@
 
 import Foundation
 
+/*
+ This is no longer used since the switch to core data for bookmark storage
+ It is kept for migration from the old store
+ */
+
 public protocol BookmarkStore: AnyObject {
 
     var bookmarks: [Link] { get set }
@@ -26,5 +31,6 @@ public protocol BookmarkStore: AnyObject {
     func addBookmark(_ bookmark: Link)
     func addFavorite(_ favorite: Link)
     func contains(domain: String) -> Bool
+    func deleteAllData()
 
 }

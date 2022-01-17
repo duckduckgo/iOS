@@ -54,6 +54,7 @@ public class LinkCleaner {
     public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?,
                                             config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
         lastAmpUrl = nil
+        guard config.isEnabled(featureKey: .ampLinks) else { return nil }
         guard let url = url, !isURLExcluded(url: url, config: config) else { return nil }
         if let initiator = initiator, isURLExcluded(url: initiator, config: config) {
             return nil

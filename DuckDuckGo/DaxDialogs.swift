@@ -21,6 +21,8 @@ import Foundation
 import Core
 import TrackerRadarKit
 
+// swiftlint:disable type_body_length
+
 class DaxDialogs {
     
     struct MajorTrackers {
@@ -33,7 +35,6 @@ class DaxDialogs {
     }
     
     struct HomeScreenSpec: Equatable {
-
         static let initial = HomeScreenSpec(message: UserText.daxDialogHomeInitial, accessibilityLabel: nil)
         static let subsequent = HomeScreenSpec(message: UserText.daxDialogHomeSubsequent, accessibilityLabel: nil)
         static let addFavorite = HomeScreenSpec(message: UserText.daxDialogHomeAddFavorite,
@@ -41,53 +42,78 @@ class DaxDialogs {
 
         let message: String
         let accessibilityLabel: String?
-
+    }
+    
+    func overrideShownFlagForSpec(spec: BrowsingSpec, flag: Bool) {
+        switch spec.type {
+        case .withMutipleTrackers, .withOneTracker :
+            settings.browsingWithTrackersShown = flag
+        case .afterSearch:
+            settings.browsingAfterSearchShown = flag
+        case .withoutTrackers:
+            settings.browsingWithoutTrackersShown = flag
+        case .siteIsMajorTracker, .siteOwnedByMajorTracker:
+            settings.browsingMajorTrackingSiteShown = flag
+            settings.browsingWithoutTrackersShown = flag
+         }
     }
     
     struct BrowsingSpec: Equatable {
-        
+        // swiftlint:disable nesting
+
+        enum SpecType {
+            case afterSearch
+            case withoutTrackers
+            case siteIsMajorTracker
+            case siteOwnedByMajorTracker
+            case withOneTracker
+            case withMutipleTrackers
+        }
+        // swiftlint:enable nesting
+
         static let afterSearch = BrowsingSpec(message: UserText.daxDialogBrowsingAfterSearch,
                                               cta: UserText.daxDialogBrowsingAfterSearchCTA,
                                               highlightAddressBar: false,
-                                              pixelName: .daxDialogsSerp)
+                                              pixelName: .daxDialogsSerp, type: .afterSearch)
         
         static let withoutTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithoutTrackers,
                                                   cta: UserText.daxDialogBrowsingWithoutTrackersCTA,
                                                   highlightAddressBar: false,
-                                                  pixelName: .daxDialogsWithoutTrackers)
+                                                  pixelName: .daxDialogsWithoutTrackers, type: .withoutTrackers)
         
         static let siteIsMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteIsMajorTracker,
                                                      cta: UserText.daxDialogBrowsingSiteIsMajorTrackerCTA,
                                                      highlightAddressBar: false,
-                                                     pixelName: .daxDialogsSiteIsMajor)
+                                                     pixelName: .daxDialogsSiteIsMajor, type: .siteIsMajorTracker)
         
         static let siteOwnedByMajorTracker = BrowsingSpec(message: UserText.daxDialogBrowsingSiteOwnedByMajorTracker,
                                                           cta: UserText.daxDialogBrowsingSiteOwnedByMajorTrackerCTA,
                                                           highlightAddressBar: false,
-                                                          pixelName: .daxDialogsSiteOwnedByMajor)
+                                                          pixelName: .daxDialogsSiteOwnedByMajor, type: .siteOwnedByMajorTracker)
         
         static let withOneTracker = BrowsingSpec(message: UserText.daxDialogBrowsingWithOneTracker,
                                                  cta: UserText.daxDialogBrowsingWithOneTrackerCTA,
                                                  highlightAddressBar: true,
-                                                 pixelName: .daxDialogsWithTrackers)
+                                                 pixelName: .daxDialogsWithTrackers, type: .withOneTracker)
         
         static let withMutipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
-                                                      pixelName: .daxDialogsWithTrackers)
+                                                      pixelName: .daxDialogsWithTrackers, type: .withMutipleTrackers)
         
         let message: String
         let cta: String
         let highlightAddressBar: Bool
         let pixelName: PixelName
+        let type: SpecType
         
         func format(args: CVarArg...) -> BrowsingSpec {
             return BrowsingSpec(message: String(format: message, arguments: args),
                                 cta: cta,
                                 highlightAddressBar: highlightAddressBar,
-                                pixelName: pixelName)
+                                pixelName: pixelName,
+                                type: type)
         }
-        
     }
     
     struct ActionSheetSpec: Equatable {
@@ -228,7 +254,6 @@ class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
-
         if nextHomeScreenMessageOverride != nil {
             return nextHomeScreenMessageOverride
         }
@@ -302,7 +327,6 @@ class DaxDialogs {
                                                            entitiesBlocked[0].displayName ?? "",
                                                            entitiesBlocked[1].displayName ?? "")
         }
-
     }
  
     private func entitiesBlocked(_ siteRating: SiteRating) -> [Entity]? {
@@ -322,5 +346,5 @@ class DaxDialogs {
               let entity = currentTrackerData.findEntity(forHost: host) else { return nil }
         return entity.domains?.contains(where: { MajorTrackers.domains.contains($0) }) ?? false ? entity : nil
     }
-    
 }
+// swiftlint:enable type_body_length

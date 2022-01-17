@@ -46,7 +46,7 @@ class DaxDialogs {
     
     func overrideShownFlagForSpec(spec: BrowsingSpec, flag: Bool) {
         switch spec.type {
-        case .withMutipleTrackers, .withOneTracker :
+        case .withMultipleTrackers, .withOneTracker :
             settings.browsingWithTrackersShown = flag
         case .afterSearch:
             settings.browsingAfterSearchShown = flag
@@ -67,7 +67,7 @@ class DaxDialogs {
             case siteIsMajorTracker
             case siteOwnedByMajorTracker
             case withOneTracker
-            case withMutipleTrackers
+            case withMultipleTrackers
         }
         // swiftlint:enable nesting
 
@@ -96,10 +96,10 @@ class DaxDialogs {
                                                  highlightAddressBar: true,
                                                  pixelName: .daxDialogsWithTrackers, type: .withOneTracker)
         
-        static let withMutipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
+        static let withMultipleTrackers = BrowsingSpec(message: UserText.daxDialogBrowsingWithMultipleTrackers,
                                                       cta: UserText.daxDialogBrowsingWithMultipleTrackersCTA,
                                                       highlightAddressBar: true,
-                                                      pixelName: .daxDialogsWithTrackers, type: .withMutipleTrackers)
+                                                      pixelName: .daxDialogsWithTrackers, type: .withMultipleTrackers)
         
         let message: String
         let cta: String
@@ -323,7 +323,7 @@ class DaxDialogs {
             
         default:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withMutipleTrackers.format(args: entitiesBlocked.count - 2,
+            return BrowsingSpec.withMultipleTrackers.format(args: entitiesBlocked.count - 2,
                                                            entitiesBlocked[0].displayName ?? "",
                                                            entitiesBlocked[1].displayName ?? "")
         }

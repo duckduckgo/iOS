@@ -86,6 +86,24 @@
 "action.title.share" = "Share";
 
 /* No comment provided by engineer. */
+"addWidget.button" = "Add Widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Search privately and quickly visit sites you love.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Long-press on the home screen to enter jiggle mode.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Tap the plus %@ button.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Find and select DuckDuckGo. Then choose a widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "One tap to your favorite sites.";
+
+/* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existing bookmarks will not be duplicated.";
 
 /* Question from confirmation dialog */

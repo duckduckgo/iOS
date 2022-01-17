@@ -34,12 +34,12 @@ struct AddWidgetView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Const.Spacing.paragraph) {
                     NumberedParagraph(number: 1,
-                                      text: Text("Long-press on the home screen to enter jiggle mode."))
+                                      text: Text(UserText.addWidgetSettingsFirstParagraph))
                     NumberedParagraph(number: 2,
-                                      text: Text("Tap the plus \(Image.add) button."),
+                                      text: secondParagraphText,
                                       image: Image.homeScreen)
                     NumberedParagraph(number: 3,
-                                      text: Text("Find and select DuckDuckGo. Then choose a widget."),
+                                      text: Text(UserText.addWidgetSettingsThirdParagraph),
                                       image: Image.widgetExample)
                 }
                 .padding(EdgeInsets(top: Const.Padding.top,
@@ -48,6 +48,11 @@ struct AddWidgetView: View {
                                     trailing: Const.Padding.trailing))
             }
         }
+    }
+    
+    private var secondParagraphText: Text {
+        // https://stackoverflow.com/questions/62168292/what-s-the-equivalent-to-string-localizedstringwithformat-for-swiftuis-lo
+        Text("addWidget.settings.secondParagraph.\(Image.add)")
     }
 }
 

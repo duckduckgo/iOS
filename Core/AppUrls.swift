@@ -47,11 +47,6 @@ public struct AppUrls {
         
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@"
-        
-        static let gpcGlitchBase = "http://global-privacy-control.glitch.me"
-        static let washingtonPostBase = "https://washingtonpost.com"
-        static let newYorkTimesBase = "https://nytimes.com"
-        static let gpcEnabled = [gpcGlitchBase, washingtonPostBase, newYorkTimesBase]
 
         static var emailProtectionLink = "https://duckduckgo.com/email"
         static var loginQuickLink = "https://duckduckgo.com/email/login"
@@ -149,12 +144,6 @@ public struct AppUrls {
             .addParam(name: Param.atb, value: atbWithVariant)
             .addParam(name: Param.setAtb, value: setAtb)
     }
-    
-    private var gpcEnabledURLs: [URL] {
-        return Url.gpcEnabled.map {
-            URL(string: $0)!
-        }
-    }
 
     public func isBlog(url: URL) -> Bool {
         guard let host = url.host else { return false }
@@ -222,13 +211,19 @@ public struct AppUrls {
         return true
     }
     
-    public func isGPCEnabled(url: URL) -> Bool {
-        for gpcURL in gpcEnabledURLs {
-            if let host = gpcURL.host,
-               url.isPart(ofDomain: host) {
+    public func isGPCEnabled(url: URL,
+                             config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
+        guard let gpcFeature = config.feature(forKey: .gpc),
+              let gpcUrls = gpcFeature.settings["gpcHeaderEnabledSites"] as? [String] else {
+            return false
+        }
+        
+        for gpcHost in gpcUrls {
+            if url.isPart(ofDomain: gpcHost) {
                 return true
             }
         }
+        
         return false
     }
     

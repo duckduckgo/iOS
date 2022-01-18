@@ -423,8 +423,13 @@ extension BookmarksCoreDataStorage {
     }
     
     public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {
+        guard BookmarksCoreDataStorageMigration.migratedFromUserDefaults else {
+            completion([])
+            return
+        }
+        
         getTopLevelFolder(isFavorite: true, onContext: viewContext) { folder in
-            
+
             let children = folder.children?.array as? [BookmarkItemManagedObject] ?? []
             let favorites: [BookmarkManagedObject] = children.map {
                 if let fav = $0 as? BookmarkManagedObject {
@@ -701,7 +706,7 @@ extension BookmarksCoreDataStorage {
 public class BookmarksCoreDataStorageMigration {
     
     @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCD, defaultValue: false)
-    private static var migratedFromUserDefaults: Bool
+    fileprivate static var migratedFromUserDefaults: Bool
     
     public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) {
         if migratedFromUserDefaults {

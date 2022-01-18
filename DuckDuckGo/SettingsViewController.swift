@@ -21,6 +21,7 @@ import UIKit
 import MessageUI
 import Core
 import BrowserServicesKit
+import SwiftUI
 
 // swiftlint:disable file_length
 class SettingsViewController: UITableViewController {
@@ -216,7 +217,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func showDesktopBrowserWaitlistViewController() {
-        navigationController?.pushViewController(MacBrowserWaitlistViewController.loadFromStoryboard(), animated: true)
+        navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -54,6 +54,10 @@
 		4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B62C4B925B930DD008912C6 /* AppConfigurationFetchTests.swift */; };
 		4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75EA9126A266CB00018634 /* PrintingUserScript.swift */; };
 		4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B82E97F25B634B800656FE7 /* TrackerRadarKit */; };
+		4BAB74AC279601F700EF4098 /* MacBrowserWaitlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB74AB279601F700EF4098 /* MacBrowserWaitlistView.swift */; };
+		4BAB74AE2796086D00EF4098 /* UserText+MacWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB74AD2796086D00EF4098 /* UserText+MacWaitlist.swift */; };
+		4BAB74B0279622D300EF4098 /* MacWaitlistHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB74AF279622D300EF4098 /* MacWaitlistHostingViewController.swift */; };
+		4BAB74B227962D3300EF4098 /* MacWaitlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB74B127962D3300EF4098 /* MacWaitlistViewModel.swift */; };
 		4BC21A2B2723862E00229F0E /* RunLoopExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A29272384F500229F0E /* RunLoopExtension.swift */; };
 		4BC21A2F27238B7500229F0E /* RunLoopExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */; };
 		4BC68A75275B09890029A586 /* MacBrowserWaitlistStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC68A74275B09890029A586 /* MacBrowserWaitlistStorage.swift */; };
@@ -779,6 +783,10 @@
 		4B60ACA0252EC0B100E8D219 /* FullScreenVideoUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenVideoUserScript.swift; sourceTree = "<group>"; };
 		4B62C4B925B930DD008912C6 /* AppConfigurationFetchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationFetchTests.swift; sourceTree = "<group>"; };
 		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
+		4BAB74AB279601F700EF4098 /* MacBrowserWaitlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistView.swift; sourceTree = "<group>"; };
+		4BAB74AD2796086D00EF4098 /* UserText+MacWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserText+MacWaitlist.swift"; sourceTree = "<group>"; };
+		4BAB74AF279622D300EF4098 /* MacWaitlistHostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacWaitlistHostingViewController.swift; sourceTree = "<group>"; };
+		4BAB74B127962D3300EF4098 /* MacWaitlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewModel.swift; sourceTree = "<group>"; };
 		4BC21A29272384F500229F0E /* RunLoopExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunLoopExtension.swift; path = ../DuckDuckGo/RunLoopExtension.swift; sourceTree = "<group>"; };
 		4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoopExtensionTests.swift; sourceTree = "<group>"; };
 		4BC68A74275B09890029A586 /* MacBrowserWaitlistStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistStorage.swift; sourceTree = "<group>"; };
@@ -2556,6 +2564,8 @@
 				85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */,
 				8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */,
 				4BC68A76275B0ADC0029A586 /* MacBrowserWaitlistViewController.swift */,
+				4BAB74AB279601F700EF4098 /* MacBrowserWaitlistView.swift */,
+				4BAB74AF279622D300EF4098 /* MacWaitlistHostingViewController.swift */,
 				F176699D1E40BC86003D3222 /* Settings.storyboard */,
 				F1AB2B411E3F7D5C00868554 /* SettingsViewController.swift */,
 				9881439B23326DC200573F7C /* ThemeSettingsViewController.swift */,
@@ -2573,6 +2583,7 @@
 				4BC68A78275B14110029A586 /* WaitlistRequest.swift */,
 				4BC68A74275B09890029A586 /* MacBrowserWaitlistStorage.swift */,
 				4BC68A7A275B141A0029A586 /* MacBrowserWaitlistViewModel.swift */,
+				4BAB74B127962D3300EF4098 /* MacWaitlistViewModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3758,6 +3769,7 @@
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
+				4BAB74AD2796086D00EF4098 /* UserText+MacWaitlist.swift */,
 				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
 				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
 				982686B82600C0960011A8D6 /* ActionMessageView.xib */,
@@ -4591,6 +4603,7 @@
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
+				4BAB74B0279622D300EF4098 /* MacWaitlistHostingViewController.swift in Sources */,
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
 				31B524572715BB23002225AB /* WebJSAlert.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
@@ -4610,6 +4623,7 @@
 				85F200042216F5D8006BB258 /* FindInPageView.swift in Sources */,
 				8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */,
 				F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */,
+				4BAB74AC279601F700EF4098 /* MacBrowserWaitlistView.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
@@ -4658,6 +4672,7 @@
 				984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */,
 				8577B0AE2225CA4F009CCC71 /* OnboardingPadViewController.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
+				4BAB74AE2796086D00EF4098 /* UserText+MacWaitlist.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,
@@ -4703,6 +4718,7 @@
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				8565A3431FC5995900239327 /* PrivacyProtectionTrackerNetworksController.swift in Sources */,
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
+				4BAB74B227962D3300EF4098 /* MacWaitlistViewModel.swift in Sources */,
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,

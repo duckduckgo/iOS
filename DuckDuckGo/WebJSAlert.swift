@@ -21,9 +21,9 @@ import UIKit
 
 struct WebJSAlert {
     enum JSAlertType {
-        case confirm(handler: (Bool) -> Void)
-        case text(handler: (String?) -> Void, defaultText: String?)
-        case alert(handler: () -> Void)
+        case confirm(handler: (_ suppress: Bool, _ confirm: Bool) -> Void)
+        case text(handler: (_ suppress: Bool, _ text: String?) -> Void, defaultText: String?)
+        case alert(handler: (_ suppress: Bool) -> Void)
     }
     
     private let message: String
@@ -36,25 +36,34 @@ struct WebJSAlert {
     
     func createAlertController() -> UIAlertController {
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        
+        let suppressButtonTitle = "Suppress Dialogs"
         switch alertType {
-        
+            
         case .confirm(let handler):
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertOKButton,
                                                     style: .default, handler: { _ in
-                handler(true)
+                handler(false, true)
             }))
             
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertCancelButton,
-                                                    style: .cancel, handler: { _ in
-                handler(false)
+                                                    style: .default, handler: { _ in
+                handler(false, false)
+            }))
+            
+            alertController.addAction(UIAlertAction(title: suppressButtonTitle,
+                                                    style: .destructive, handler: { _ in
+                handler(true, false)
             }))
             return alertController
             
         case .alert(let handler):
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertOKButton,
                                                     style: .default, handler: { _ in
-                handler()
+                handler(false)
+            }))
+            alertController.addAction(UIAlertAction(title: suppressButtonTitle,
+                                                    style: .destructive, handler: { _ in
+                handler(true)
             }))
             return alertController
             
@@ -65,16 +74,21 @@ struct WebJSAlert {
             
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertOKButton,
                                                     style: .default, handler: { [weak alertController] _ in
-                handler(alertController?.textFields?.first?.text)
-
+                handler(false, alertController?.textFields?.first?.text)
+                
             }))
-
+            
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertCancelButton,
-                                                    style: .cancel, handler: { _ in
-                handler(nil)
+                                                    style: .default, handler: { _ in
+                handler(false, nil)
+            }))
+            
+            alertController.addAction(UIAlertAction(title: suppressButtonTitle,
+                                                    style: .destructive, handler: { _ in
+                handler(true, nil)
             }))
             
             return alertController
         }
-     }
+    }
 }

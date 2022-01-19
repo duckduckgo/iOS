@@ -1177,6 +1177,8 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
+        // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
+        // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
             if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
                 // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.

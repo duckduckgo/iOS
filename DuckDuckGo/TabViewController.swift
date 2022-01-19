@@ -1177,6 +1177,13 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
+        if navigationAction.navigationType == .linkActivated {
+            if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
+                // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
+                return
+            }
+        }
+
         if navigationAction.isTargetingMainFrame(),
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
@@ -1185,13 +1192,6 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
             load(urlRequest: request)
             return
-        }
-        
-        if navigationAction.navigationType == .linkActivated {
-            if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
-                // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
-                return
-            }
         }
             
         if navigationAction.navigationType == .linkActivated,

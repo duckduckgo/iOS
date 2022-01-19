@@ -32,8 +32,12 @@ public class AMPCanonicalExtractor: NSObject {
         }
 
         func completeWithURL(_ url: URL?) {
-            completion?(url)
+            // Make a copy of completion and set it to nil
+            // This will prevent other callers before the completion has completed completing
+            let compBlock = completion
             completion = nil
+            compBlock?(url)
+            
         }
 
     }
@@ -104,6 +108,7 @@ public class AMPCanonicalExtractor: NSObject {
     public func urlContainsAmpKeyword(_ url: URL?,
                                       config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
         linkCleaner.lastAmpUrl = nil
+        guard config.isEnabled(featureKey: .ampLinks) else { return false }
         guard let url = url, !linkCleaner.isURLExcluded(url: url, config: config) else { return false }
         let urlStr = url.absoluteString
         
@@ -143,6 +148,10 @@ public class AMPCanonicalExtractor: NSObject {
                                 config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig,
                                 completion: @escaping ((URL?) -> Void)) {
         cancelOngoingExtraction()
+        guard config.isEnabled(featureKey: .ampLinks) else {
+            completion(nil)
+            return
+        }
         guard let url = url, !linkCleaner.isURLExcluded(url: url, config: config) else {
             completion(nil)
             return

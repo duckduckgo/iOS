@@ -345,21 +345,27 @@ class TabViewController: UIViewController {
     
     public func getCleanUrl(_ url: URL, showLoadingIndicator: Bool = true, completion: @escaping (URL) -> Void) {
         // Rewrite tracking links
-        if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: url) {
+        var urlToLoad = url
+        if AppDependencyProvider.shared.variantManager.isSupported(feature: .parameterStripping),
+           let cleanUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: urlToLoad) {
+            urlToLoad = cleanUrl
+        }
+        
+        if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: urlToLoad) {
             completion(cleanUrl)
-        } else if ampExtractor.urlContainsAmpKeyword(url) {
+        } else if ampExtractor.urlContainsAmpKeyword(urlToLoad) {
             if showLoadingIndicator {
                 showProgressIndicator()
             }
-            ampExtractor.getCanonicalUrl(initiator: nil, url: url) { canonical in
+            ampExtractor.getCanonicalUrl(initiator: nil, url: urlToLoad) { canonical in
                 if let canonical = canonical {
                     completion(canonical)
                 } else {
-                    completion(url)
+                    completion(urlToLoad)
                 }
             }
         } else {
-            completion(url)
+            completion(urlToLoad)
         }
     }
     
@@ -801,7 +807,8 @@ class TabViewController: UIViewController {
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlockerRulesManager.shared.currentRules?.etag ?? "",
-                              ampUrl: linkCleaner?.lastAmpUrl)
+                              ampUrl: linkCleaner?.lastAmpUrl,
+                              urlParametersRemoved: linkCleaner?.urlParametersRemoved ?? false)
     }
     
     public func print() {
@@ -1143,7 +1150,7 @@ extension TabViewController: WKNavigationDelegate {
             showProgressIndicator()
             ampExtractor.getCanonicalUrl(initiator: webView.url,
                                           url: navigationAction.request.url) { canonical in
-                guard let canonical = canonical else {
+                guard let canonical = canonical, canonical != navigationAction.request.url else {
                     decisionHandler(.allow)
                     return
                 }
@@ -1154,6 +1161,16 @@ extension TabViewController: WKNavigationDelegate {
             return true
         }
         
+        if AppDependencyProvider.shared.variantManager.isSupported(feature: .parameterStripping),
+           let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
+                                                            url: navigationAction.request.url) {
+            if newUrl != navigationAction.request.url {
+                decisionHandler(.cancel)
+                load(newUrl: newUrl, forNavigationAction: navigationAction)
+                return true
+            }
+        }
+        
         return false
     }
             
@@ -1161,6 +1178,15 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         
+        // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
+        // which would skip link rewrites.
+        if navigationAction.navigationType == .linkActivated {
+            if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
+                // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
+                return
+            }
+        }
+
         if navigationAction.isTargetingMainFrame(),
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
@@ -1169,13 +1195,6 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
             load(urlRequest: request)
             return
-        }
-        
-        if navigationAction.navigationType == .linkActivated {
-            if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
-                // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
-                return
-            }
         }
             
         if navigationAction.navigationType == .linkActivated,

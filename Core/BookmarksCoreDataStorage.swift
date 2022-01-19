@@ -424,6 +424,9 @@ extension BookmarksCoreDataStorage {
     
     public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {
         guard BookmarksCoreDataStorageMigration.migratedFromUserDefaults else {
+            // Users with a pre-folders install who have then installed a build with folders and have not yet migrated it will
+            // not be able to read folders from Core Data. This will be resolved the first time they launch the app, so an empty
+            // set of favorites is returned here to avoid the widget crashing.
             completion([])
             return
         }

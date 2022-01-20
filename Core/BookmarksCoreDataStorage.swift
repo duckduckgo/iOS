@@ -422,26 +422,34 @@ extension BookmarksCoreDataStorage {
         loadStore()
     }
     
-    public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {
-        guard BookmarksCoreDataStorageMigration.migratedFromUserDefaults else {
-            // Users with a pre-folders install who have then installed a build with folders and have not yet migrated it will
-            // not be able to read folders from Core Data. This will be resolved the first time they launch the app, so an empty
-            // set of favorites is returned here to avoid the widget crashing.
-            completion([])
-            return
-        }
-        
-        getTopLevelFolder(isFavorite: true, onContext: viewContext) { folder in
-
-            let children = folder.children?.array as? [BookmarkItemManagedObject] ?? []
-            let favorites: [BookmarkManagedObject] = children.map {
-                if let fav = $0 as? BookmarkManagedObject {
-                    return fav
-                } else {
-                    fatalError("Favourites shouldn't contain folders")
-                }
+    public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {        
+        Task {
+            guard await hasTopLevelFolder() else {
+                completion([])
+                return
             }
-            completion(favorites)
+            
+            getTopLevelFolder(isFavorite: true, onContext: viewContext) { folder in
+                let children = folder.children?.array as? [BookmarkItemManagedObject] ?? []
+                let favorites: [BookmarkManagedObject] = children.map {
+                    if let fav = $0 as? BookmarkManagedObject {
+                        return fav
+                    } else {
+                        fatalError("Favourites shouldn't contain folders")
+                    }
+                }
+                completion(favorites)
+            }
+        }
+    }
+    
+    private func hasTopLevelFolder() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            viewContext.perform { [weak self] in
+                let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
+                let count = (try? self?.viewContext.count(for: fetchRequest)) ?? 0
+                continuation.resume(returning: count > 0)
+            }
         }
     }
 }

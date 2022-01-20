@@ -717,7 +717,7 @@ extension BookmarksCoreDataStorage {
 public class BookmarksCoreDataStorageMigration {
     
     @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCD, defaultValue: false)
-    fileprivate static var migratedFromUserDefaults: Bool
+    private static var migratedFromUserDefaults: Bool
     
     public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) {
         if migratedFromUserDefaults {

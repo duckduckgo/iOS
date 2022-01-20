@@ -118,6 +118,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         
         window?.windowScene?.screenshotService?.delegate = self
+        
+        let manager = SecureVaultManager()
+        manager.delegate = self
+        let script = AutofillUserScript()
+        let domain = "www.cnn.com"
+        manager.autofillUserScript(script, didRequestStoreCredentialsForDomain: domain, username: "user", password: "password")
+
+        manager.autofillUserScript(script, didRequestAccountsForDomain: domain) { thing in
+            print(thing)
+        }
 
         appIsLaunching = true
         return true
@@ -476,6 +486,25 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(waitlist, animated: true)
         }
+    }
+
+}
+
+extension AppDelegate: SecureVaultManagerDelegate {
+    
+    func secureVaultManager(_: SecureVaultManager, promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+
+        // why does the secureVaultManagerDelegate do the actual factory making/saving?
+        
+        do {
+            try SecureVaultFactory.default.makeVault().storeWebsiteCredentials(credentials)
+        } catch {
+            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        }
+    }
+
+    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
+        
     }
 
 }

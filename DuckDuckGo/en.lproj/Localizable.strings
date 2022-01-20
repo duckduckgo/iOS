@@ -1081,6 +1081,9 @@
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancel";
 
+/* Disable Alerts button for JavaScript alertss */
+"webJSAlert.disable-alerts.button" = "Disable Alerts";
+
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
 

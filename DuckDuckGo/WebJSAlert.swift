@@ -36,7 +36,6 @@ struct WebJSAlert {
     
     func createAlertController() -> UIAlertController {
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let suppressButtonTitle = "Suppress Dialogs"
         switch alertType {
             
         case .confirm(let handler):
@@ -50,7 +49,7 @@ struct WebJSAlert {
                 handler(false, false)
             }))
             
-            alertController.addAction(UIAlertAction(title: suppressButtonTitle,
+            alertController.addAction(UIAlertAction(title: UserText.webJSAlertDisableAlertsButton,
                                                     style: .destructive, handler: { _ in
                 handler(true, false)
             }))
@@ -61,7 +60,7 @@ struct WebJSAlert {
                                                     style: .default, handler: { _ in
                 handler(false)
             }))
-            alertController.addAction(UIAlertAction(title: suppressButtonTitle,
+            alertController.addAction(UIAlertAction(title: UserText.webJSAlertDisableAlertsButton,
                                                     style: .destructive, handler: { _ in
                 handler(true)
             }))
@@ -83,7 +82,7 @@ struct WebJSAlert {
                 handler(false, nil)
             }))
             
-            alertController.addAction(UIAlertAction(title: suppressButtonTitle,
+            alertController.addAction(UIAlertAction(title: UserText.webJSAlertDisableAlertsButton,
                                                     style: .destructive, handler: { _ in
                 handler(true, nil)
             }))

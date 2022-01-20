@@ -90,7 +90,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
-            BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
+            BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context) {
+                
+                if #available(iOS 14, *) {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
+            }
         }
         
         HTTPSUpgrade.shared.loadDataAsync()

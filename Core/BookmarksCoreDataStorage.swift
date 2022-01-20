@@ -719,7 +719,7 @@ public class BookmarksCoreDataStorageMigration {
     @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCD, defaultValue: false)
     private static var migratedFromUserDefaults: Bool
     
-    public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) {
+    public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext, completion: () -> Void) {
         if migratedFromUserDefaults {
             return
         }
@@ -773,6 +773,7 @@ public class BookmarksCoreDataStorageMigration {
         }
 
         migratedFromUserDefaults = true
+        completion()
     }
 }
 

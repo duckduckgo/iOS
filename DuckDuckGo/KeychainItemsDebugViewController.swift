@@ -33,11 +33,14 @@ private struct KeychainItem {
         return String(data: valueData, encoding: .utf8)
     }
     
-    // swiftlint:disable line_length
     var displayString: String {
-        return "Service: \(service ?? "nil")\nAccount: \(account ?? "nil")\nValue as String: \(value ?? "nil")\nValue data: \(String(describing: valueData))"
+        return """
+        Service: \(service ?? "nil")
+        Account: \(account ?? "nil")
+        Value as String: \(value ?? "nil")
+        Value data: \(String(describing: valueData))
+        """
     }
-    // swiftlint:enable line_length
 }
 
 private enum SecClass: CaseIterable {

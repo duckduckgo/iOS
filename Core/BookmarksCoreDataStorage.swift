@@ -719,9 +719,12 @@ public class BookmarksCoreDataStorageMigration {
     @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCD, defaultValue: false)
     private static var migratedFromUserDefaults: Bool
     
-    public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext, completion: () -> Void) {
+    /// Migrates bookmark data to Core Data.
+    ///
+    /// - Returns: A boolean representing whether the migration took place. If the migration has already happened and this function is called, it returns `false`.
+    public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) -> Bool {
         if migratedFromUserDefaults {
-            return
+            return false
         }
         
         context.performAndWait {
@@ -773,7 +776,7 @@ public class BookmarksCoreDataStorageMigration {
         }
 
         migratedFromUserDefaults = true
-        completion()
+        return true
     }
 }
 

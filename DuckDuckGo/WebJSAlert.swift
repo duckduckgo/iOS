@@ -18,12 +18,13 @@
 //
 
 import UIKit
+import Core
 
 struct WebJSAlert {
     enum JSAlertType {
-        case confirm(handler: (_ suppress: Bool, _ confirm: Bool) -> Void)
-        case text(handler: (_ suppress: Bool, _ text: String?) -> Void, defaultText: String?)
-        case alert(handler: (_ suppress: Bool) -> Void)
+        case confirm(handler: (_ blockAlerts: Bool, _ confirm: Bool) -> Void)
+        case text(handler: (_ blockAlerts: Bool, _ text: String?) -> Void, defaultText: String?)
+        case alert(handler: (_ blockAlerts: Bool) -> Void)
     }
     
     private let message: String
@@ -35,6 +36,10 @@ struct WebJSAlert {
     }
     
     func createAlertController() -> UIAlertController {
+        
+        // createAlertController is only called right before its presentation
+        Pixel.fire(pixel: .jsAlertShown)
+        
         let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         switch alertType {
             
@@ -51,6 +56,7 @@ struct WebJSAlert {
             
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertDisableAlertsButton,
                                                     style: .destructive, handler: { _ in
+                Pixel.fire(pixel: .jsAlertBlocked)
                 handler(true, false)
             }))
             return alertController
@@ -62,6 +68,7 @@ struct WebJSAlert {
             }))
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertDisableAlertsButton,
                                                     style: .destructive, handler: { _ in
+                Pixel.fire(pixel: .jsAlertBlocked)
                 handler(true)
             }))
             return alertController
@@ -84,6 +91,7 @@ struct WebJSAlert {
             
             alertController.addAction(UIAlertAction(title: UserText.webJSAlertDisableAlertsButton,
                                                     style: .destructive, handler: { _ in
+                Pixel.fire(pixel: .jsAlertBlocked)
                 handler(true, nil)
             }))
             

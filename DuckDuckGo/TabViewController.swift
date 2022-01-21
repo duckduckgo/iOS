@@ -1379,8 +1379,8 @@ extension TabViewController: WKUIDelegate {
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping () -> Void) {
         if canDisplayJavaScriptAlert {
-            let alertController = WebJSAlert(message: message, alertType: .alert(handler: { [weak self] suppress in
-                self?.shouldBlockJSAlert = suppress
+            let alertController = WebJSAlert(message: message, alertType: .alert(handler: { [weak self] blockAlerts in
+                self?.shouldBlockJSAlert = blockAlerts
                 completionHandler()
             })).createAlertController()
             
@@ -1397,8 +1397,8 @@ extension TabViewController: WKUIDelegate {
         
         if canDisplayJavaScriptAlert {
             let alertController = WebJSAlert(message: message,
-                                             alertType: .confirm(handler: { [weak self] suppress, confirm in
-                self?.shouldBlockJSAlert = suppress
+                                             alertType: .confirm(handler: { [weak self] blockAlerts, confirm in
+                self?.shouldBlockJSAlert = blockAlerts
                 completionHandler(confirm)
             })).createAlertController()
             
@@ -1415,9 +1415,9 @@ extension TabViewController: WKUIDelegate {
                  completionHandler: @escaping (String?) -> Void) {
         if canDisplayJavaScriptAlert {
             let alertController = WebJSAlert(message: prompt,
-                                             alertType: .text(handler: { [weak self] suppress, text in
+                                             alertType: .text(handler: { [weak self] blockAlerts, text in
                 
-                self?.shouldBlockJSAlert = suppress
+                self?.shouldBlockJSAlert = blockAlerts
                 completionHandler(text)
             }, defaultText: defaultText)).createAlertController()
             

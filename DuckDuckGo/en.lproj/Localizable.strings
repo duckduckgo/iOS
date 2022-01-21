@@ -1078,11 +1078,11 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorite added";
 
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Block Alerts";
+
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancel";
-
-/* Disable Alerts button for JavaScript alertss */
-"webJSAlert.disable-alerts.button" = "Disable Alerts";
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";

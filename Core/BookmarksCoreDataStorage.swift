@@ -422,18 +422,34 @@ extension BookmarksCoreDataStorage {
         loadStore()
     }
     
-    public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {
-        getTopLevelFolder(isFavorite: true, onContext: viewContext) { folder in
-            
-            let children = folder.children?.array as? [BookmarkItemManagedObject] ?? []
-            let favorites: [BookmarkManagedObject] = children.map {
-                if let fav = $0 as? BookmarkManagedObject {
-                    return fav
-                } else {
-                    fatalError("Favourites shouldn't contain folders")
-                }
+    public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {        
+        Task {
+            guard await hasTopLevelFolder() else {
+                completion([])
+                return
             }
-            completion(favorites)
+            
+            getTopLevelFolder(isFavorite: true, onContext: viewContext) { folder in
+                let children = folder.children?.array as? [BookmarkItemManagedObject] ?? []
+                let favorites: [BookmarkManagedObject] = children.map {
+                    if let fav = $0 as? BookmarkManagedObject {
+                        return fav
+                    } else {
+                        fatalError("Favourites shouldn't contain folders")
+                    }
+                }
+                completion(favorites)
+            }
+        }
+    }
+    
+    private func hasTopLevelFolder() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            viewContext.perform { [weak self] in
+                let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
+                let count = (try? self?.viewContext.count(for: fetchRequest)) ?? 0
+                continuation.resume(returning: count > 0)
+            }
         }
     }
 }
@@ -703,9 +719,12 @@ public class BookmarksCoreDataStorageMigration {
     @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCD, defaultValue: false)
     private static var migratedFromUserDefaults: Bool
     
-    public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) {
+    /// Migrates bookmark data to Core Data.
+    ///
+    /// - Returns: A boolean representing whether the migration took place. If the migration has already happened and this function is called, it returns `false`.
+    public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) -> Bool {
         if migratedFromUserDefaults {
-            return
+            return false
         }
         
         context.performAndWait {
@@ -757,6 +776,7 @@ public class BookmarksCoreDataStorageMigration {
         }
 
         migratedFromUserDefaults = true
+        return true
     }
 }
 

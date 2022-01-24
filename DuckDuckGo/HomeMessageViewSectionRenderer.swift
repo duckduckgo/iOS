@@ -36,20 +36,9 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
-    private var isIPad: Bool {
-        return controller?.traitCollection.horizontalSizeClass == .regular
-    }
-    
-    private weak var controller: (UIViewController & HomeMessageViewSectionRendererDelegate)?
+    private weak var controller: HomeViewController?
     
     private let homePageConfiguration: HomePageConfiguration
-    
-    private lazy var cellForSizing: HomeMessageCell = {
-        let nib = Bundle.main.loadNibNamed("HomeMessageCell", owner: HomeMessageCell.self, options: nil)
-        // swiftlint:disable force_cast
-        return nib!.first as! HomeMessageCell
-        // swiftlint:enable force_cast
-    }()
     
     init(homePageConfiguration: HomePageConfiguration) {
         self.homePageConfiguration = homePageConfiguration
@@ -58,10 +47,13 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     func install(into controller: HomeViewController) {
         self.controller = controller
+        hideLogoIfThereAreMessagesToDisplay()
     }
     
-    func install(into controller: UIViewController & HomeMessageViewSectionRendererDelegate) {
-        self.controller = controller
+    private func hideLogoIfThereAreMessagesToDisplay() {
+        if !homePageConfiguration.homeMessages.isEmpty {
+            controller?.hideLogo()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -77,7 +69,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return homePageConfiguration.homeMessages().count
+        return homePageConfiguration.homeMessages.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -89,65 +81,94 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeMessageCell.reuseIdentifier,
-                                                            for: indexPath) as? HomeMessageCell else {
-            fatalError("not a HomeMessageCell")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeMessageCollectionViewCell.reuseIdentifier,
+                                                            for: indexPath) as? HomeMessageCollectionViewCell else {
+            fatalError("Could not dequeue cell")
         }
-
-        cell.alpha = 1.0
-        cell.setWidth(collectionViewCellWidth(collectionView))
-        cell.configure(withModel: homeMessageModel(forIndexPath: indexPath))
-        cell.delegate = self
+        configureCell(cell, in: collectionView, at: indexPath)
         return cell
     }
     
+    private func configureCell(_ cell: HomeMessageCollectionViewCell,
+                               in collectionView: UICollectionView,
+                               at indexPath: IndexPath) {
+        if let controller = controller {
+            let viewModel = homeMessageViewModel(for: indexPath, collectionView: collectionView)
+            cell.configure(with: viewModel, parent: controller)
+        }
+    }
+    
+    private func homeMessageViewModel(for indexPath: IndexPath,
+                                      collectionView: UICollectionView) -> HomeMessageViewModel {
+        let message = homePageConfiguration.homeMessages[indexPath.row]
+        switch message {
+        case .widgetEducation:
+            return WidgetEducationHomeMessageViewModel.makeViewModel(presentingViewController: controller!,
+                                                                     onDidClose: {
+                Pixel.fire(pixel: .defaultBrowserHomeMessageDismissed) // todo: wrong msg
+                self.dismissHomeMessage(message, at: indexPath, in: collectionView) // todo weak
+            })
+        }
+    }
+    
+    private func dismissHomeMessage(_ message: HomeMessage,
+                                    at indexPath: IndexPath,
+                                    in collectionView: UICollectionView) {
+        homePageConfiguration.dismissHomeMessage(message)
+        animateCellDismissal(at: indexPath, in: collectionView) {
+            self.controller?.homeMessageRenderer(self, didDismissHomeMessage: message)
+        }
+    }
+    
+    private func animateCellDismissal(at indexPath: IndexPath,
+                                      in collectionView: UICollectionView,
+                                      completion: @escaping () -> Void) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else {
+            completion()
+            return
+        }
+                
+        UIView.animate(withDuration: 0.3, animations: {
+            cell.alpha = 0
+        }, completion: { _ in
+            completion()
+        })
+    }
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionViewCellWidth(collectionView)
-
-        cellForSizing.setWidth(width)
-        cellForSizing.configure(withModel: homeMessageModel(forIndexPath: indexPath))
-
-        let targetSize = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-        let size = cellForSizing.systemLayoutSizeFitting(targetSize)
+        let cell = HomeMessageCollectionViewCell()
+        configureCell(cell, in: collectionView, at: indexPath)
+        let size = cell.host?.sizeThatFits(in: CGSize(width: collectionViewCellWidth(collectionView),
+                                                      height: CGFloat.greatestFiniteMagnitude)) ?? .zero
         return size
-    }
-
-    private func homeMessageModel(forIndexPath indexPath: IndexPath) -> HomeMessageModel {
-        return homePageConfiguration.homeMessages()[indexPath.row]
     }
     
     private func collectionViewCellWidth(_ collectionView: UICollectionView) -> CGFloat {
         let marginWidth = Constants.horizontalMargin * 2
-        let availableWidth = collectionView.bounds.size.width - marginWidth
-        let maxCellWidth = isIPad ? HomeMessageCell.maximumWidthIpad : HomeMessageCell.maximumWidth
-        return  min(availableWidth, maxCellWidth)
+        let availableWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width - marginWidth // (view.safeAreaLayoutGuide.layoutFrame.width)
+        let maxCellWidth = isPad ? HomeMessageCollectionViewCell.maximumWidthPad : HomeMessageCollectionViewCell.maximumWidth
+        return min(availableWidth, maxCellWidth)
+    }
+    
+    private var isPad: Bool {
+        return controller?.traitCollection.horizontalSizeClass == .regular
     }
 }
 
-extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
-    
-    func homeMessageCellDismissButtonWasPressed(_ cell: HomeMessageCell) {
-        Pixel.fire(pixel: .defaultBrowserHomeMessageDismissed)
-        homePageConfiguration.homeMessageDismissed(cell.homeMessage)
-        UIView.animate(withDuration: 0.3, animations: {
-            cell.alpha = 0
-        }, completion: { _ in
-            self.controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
-        })
-    }
-    
-    func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell) {
-        switch cell.homeMessage {
-        case .defaultBrowserPrompt:
-            Pixel.fire(pixel: .defaultBrowserButtonPressedHome)
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url)
-            }
-        }
-        homePageConfiguration.homeMessageDismissed(cell.homeMessage)
-        controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
-    }
-}
+//extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
+//
+//
+//    func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell) {
+////        switch cell.homeMessage {
+////        case .defaultBrowserPrompt:
+////            Pixel.fire(pixel: .defaultBrowserButtonPressedHome)
+////            if let url = URL(string: UIApplication.openSettingsURLString) {
+////                UIApplication.shared.open(url)
+////            }
+////        }
+////        homePageConfiguration.homeMessageDismissed(cell.homeMessage)
+////        controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
+//    }
+//}

@@ -484,6 +484,12 @@
 		CB9B8739278C8E72001F4906 /* AddWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B8738278C8E72001F4906 /* AddWidgetViewController.swift */; };
 		CB9B873C278C8FEA001F4906 /* AddWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B873B278C8FEA001F4906 /* AddWidgetView.swift */; };
 		CB9B873E278C93C2001F4906 /* AddWidget.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB9B873D278C93C2001F4906 /* AddWidget.xcassets */; };
+		CBD4F13C279EBF4A00B20FD7 /* HomeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBD4F13B279EBF4A00B20FD7 /* HomeMessage.swift */; };
+		CBD4F13D279EBFA000B20FD7 /* HomeMessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF14FC627970C8A001D94D0 /* HomeMessageCollectionViewCell.swift */; };
+		CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF14FC227970072001D94D0 /* HomeMessageView.swift */; };
+		CBD4F13F279EBFAF00B20FD7 /* HomeMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF14FC427970AB0001D94D0 /* HomeMessageViewModel.swift */; };
+		CBD4F140279EBFB300B20FD7 /* SwiftUICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */; };
+		CBD4F141279EBFC500B20FD7 /* WidgetEducationHomeMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1AEFB4279AF5AA0031AE3D /* WidgetEducationHomeMessageViewModel.swift */; };
 		EA39B7E2268A1A35000C62CD /* privacy-reference-tests in Resources */ = {isa = PBXBuildFile; fileRef = EA39B7E1268A1A35000C62CD /* privacy-reference-tests */; };
 		EAB19EDA268963510015D3EA /* DomainMatchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
@@ -594,8 +600,6 @@
 		F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */; };
 		F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */; };
 		F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */; };
-		F446B9B725115C1700324016 /* HomeMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F446B9B625115C1700324016 /* HomeMessageCell.xib */; };
-		F446B9B925115F9700324016 /* HomeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B825115F9700324016 /* HomeMessageCell.swift */; };
 		F456B3B525810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456B3B425810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift */; };
 		F45B37762760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B37752760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift */; };
 		F45B37792760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B37782760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift */; };
@@ -612,7 +616,6 @@
 		F4D1BFA42587EA0600469046 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F4D1BFA32587EA0600469046 /* Lottie */; };
 		F4D7220E26F15529007D6193 /* AddOrEditBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7220D26F15529007D6193 /* AddOrEditBookmarkViewController.swift */; };
 		F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */; };
-		F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F62511711800814B71 /* HomeMessageModel.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */; };
 		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
 		F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */; };
@@ -1832,9 +1835,15 @@
 		AAF2E28423E0496F00962AF8 /* AppIconGreen83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconGreen83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		AAF2E28623E0498100962AF8 /* AppIconPurple83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconPurple83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		AAF2E28A23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconYellow83.5x83.5@2x.png"; sourceTree = "<group>"; };
+		CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICollectionViewCell.swift; sourceTree = "<group>"; };
+		CB1AEFB4279AF5AA0031AE3D /* WidgetEducationHomeMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEducationHomeMessageViewModel.swift; sourceTree = "<group>"; };
 		CB9B8738278C8E72001F4906 /* AddWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWidgetViewController.swift; sourceTree = "<group>"; };
 		CB9B873B278C8FEA001F4906 /* AddWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWidgetView.swift; sourceTree = "<group>"; };
 		CB9B873D278C93C2001F4906 /* AddWidget.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AddWidget.xcassets; sourceTree = "<group>"; };
+		CBD4F13B279EBF4A00B20FD7 /* HomeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessage.swift; sourceTree = "<group>"; };
+		CBF14FC227970072001D94D0 /* HomeMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageView.swift; sourceTree = "<group>"; };
+		CBF14FC427970AB0001D94D0 /* HomeMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageViewModel.swift; sourceTree = "<group>"; };
+		CBF14FC627970C8A001D94D0 /* HomeMessageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA39B7E1268A1A35000C62CD /* privacy-reference-tests */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "privacy-reference-tests"; path = "submodules/privacy-reference-tests"; sourceTree = SOURCE_ROOT; };
 		EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DomainMatchingTests.swift; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
@@ -1972,7 +1981,6 @@
 		F4D349D025502AC3002AAF35 /* EmailWaitlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailWaitlistViewController.swift; sourceTree = "<group>"; };
 		F4D7220D26F15529007D6193 /* AddOrEditBookmarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditBookmarkViewController.swift; sourceTree = "<group>"; };
 		F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDetailsCell.swift; sourceTree = "<group>"; };
-		F4D9C4F62511711800814B71 /* HomeMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageModel.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageStorage.swift; sourceTree = "<group>"; };
 		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
 		F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCutOutView.swift; sourceTree = "<group>"; };
@@ -3025,6 +3033,14 @@
 			name = Red;
 			sourceTree = "<group>";
 		};
+		CB1AEFB6279AF6420031AE3D /* WidgetEducation */ = {
+			isa = PBXGroup;
+			children = (
+				CB1AEFB4279AF5AA0031AE3D /* WidgetEducationHomeMessageViewModel.swift */,
+			);
+			name = WidgetEducation;
+			sourceTree = "<group>";
+		};
 		CB9B873A278C8FD5001F4906 /* AddWidget */ = {
 			isa = PBXGroup;
 			children = (
@@ -3227,6 +3243,7 @@
 		F13B4BF31F18C73A00814661 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				CB1AEFB6279AF6420031AE3D /* WidgetEducation */,
 				F4D9C4F8251179CC00814B71 /* HomeMessages */,
 				984147B324F0264300362052 /* Home.storyboard */,
 				853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */,
@@ -3858,8 +3875,12 @@
 		F4D9C4F8251179CC00814B71 /* HomeMessages */ = {
 			isa = PBXGroup;
 			children = (
-				F4D9C4F62511711800814B71 /* HomeMessageModel.swift */,
 				F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */,
+				CBF14FC427970AB0001D94D0 /* HomeMessageViewModel.swift */,
+				CBF14FC227970072001D94D0 /* HomeMessageView.swift */,
+				CBF14FC627970C8A001D94D0 /* HomeMessageCollectionViewCell.swift */,
+				CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */,
+				CBD4F13B279EBF4A00B20FD7 /* HomeMessage.swift */,
 			);
 			name = HomeMessages;
 			sourceTree = "<group>";
@@ -4309,7 +4330,6 @@
 				F1ED309D1EDC2EA400651986 /* TabSwitcher.storyboard in Resources */,
 				982686B92600C0960011A8D6 /* ActionMessageView.xib in Resources */,
 				F4F7F10A25813FE200045D62 /* 01_Fire_really_small.json in Resources */,
-				F446B9B725115C1700324016 /* HomeMessageCell.xib in Resources */,
 				8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */,
 				984147C924F02E9E00362052 /* DaxOnboarding.storyboard in Resources */,
 				858650DB246B111900C36F8A /* DaxOnboarding.xcassets in Resources */,
@@ -4573,6 +4593,7 @@
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
+				CBD4F141279EBFC500B20FD7 /* WidgetEducationHomeMessageViewModel.swift in Sources */,
 				858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */,
 				98196CFA23AA75D0007809AC /* OnboardingHomeRowViewController.swift in Sources */,
 				98D98A7425ED88D100D8E3DF /* BrowsingMenuEntryViewCell.swift in Sources */,
@@ -4603,10 +4624,8 @@
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
 				85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */,
 				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,
-				F446B9B925115F9700324016 /* HomeMessageCell.swift in Sources */,
 				F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
-				F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
 				98DD03D025064FD20017FE36 /* PrivacyProtectionHeaderCell.swift in Sources */,
 				85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */,
@@ -4672,14 +4691,17 @@
 				986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,
+				CBD4F13D279EBFA000B20FD7 /* HomeMessageCollectionViewCell.swift in Sources */,
 				8505836D219F424500ED4EDB /* Point.swift in Sources */,
 				981FED76220464EF008488D7 /* AutoClearSettingsModel.swift in Sources */,
 				984FD95823018E6700B3E4DE /* LocalNotifications.swift in Sources */,
 				83004E882193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift in Sources */,
 				98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */,
+				CBD4F140279EBFB300B20FD7 /* SwiftUICollectionViewCell.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
+				CBD4F13C279EBF4A00B20FD7 /* HomeMessage.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,
 				858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */,
@@ -4728,6 +4750,7 @@
 				4B15817626706A2200F34D16 /* EmailProtectionViewController.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */,
+				CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */,
 				851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */,
 				F45B37792760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift in Sources */,
 				8505836A219F424500ED4EDB /* UIAlertControllerExtension.swift in Sources */,
@@ -4771,6 +4794,7 @@
 				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,
 				8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */,
+				CBD4F13F279EBFAF00B20FD7 /* HomeMessageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -109,6 +109,7 @@ class HomeViewController: UIViewController {
         coordinator.animate(alongsideTransition: { _ in
             self.collectionView.viewDidTransition(to: size)
         })
+        self.collectionView.collectionViewLayout.invalidateLayout() // todo
     }
 
     func refresh() {
@@ -134,10 +135,6 @@ class HomeViewController: UIViewController {
         if presentedViewController == nil { // prevents these being called when settings forces this controller to be reattached
             showNextDaxDialog()
             Pixel.fire(pixel: .homeScreenShown)
-            
-            if collectionView.isShowingHomeMessage(.defaultBrowserPrompt) {
-                Pixel.fire(pixel: .defaultBrowserHomeMessageShown)
-            }
         }
                 
         viewHasAppeared = true

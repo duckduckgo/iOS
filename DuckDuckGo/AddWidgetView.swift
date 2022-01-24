@@ -27,27 +27,34 @@ extension Font {
 
 @available(iOS 14.0, *)
 struct AddWidgetView: View {
+    
     var body: some View {
-        ZStack {
-            Color.background
-                .ignoresSafeArea()
-            ScrollView {
-                VStack(alignment: .leading, spacing: Const.Spacing.paragraph) {
-                    NumberedParagraph(number: 1,
-                                      text: Text(UserText.addWidgetSettingsFirstParagraph))
-                    NumberedParagraph(number: 2,
-                                      text: secondParagraphText,
-                                      image: Image.homeScreen)
-                    NumberedParagraph(number: 3,
-                                      text: Text(UserText.addWidgetSettingsThirdParagraph),
-                                      image: Image.widgetExample)
+//        NavigationView {
+            ZStack {
+                Color.background
+                    .ignoresSafeArea()
+                ScrollView {
+                    VStack(alignment: .leading, spacing: Const.Spacing.paragraph) {
+                        NumberedParagraph(number: 1,
+                                          text: Text(UserText.addWidgetSettingsFirstParagraph))
+                        NumberedParagraph(number: 2,
+                                          text: secondParagraphText,
+                                          image: Image.homeScreen)
+                        NumberedParagraph(number: 3,
+                                          text: Text(UserText.addWidgetSettingsThirdParagraph),
+                                          image: Image.widgetExample)
+                    }
+                    .padding(EdgeInsets(top: Const.Padding.top,
+                                        leading: Const.Padding.leading,
+                                        bottom: 0,
+                                        trailing: Const.Padding.trailing))
                 }
-                .padding(EdgeInsets(top: Const.Padding.top,
-                                    leading: Const.Padding.leading,
-                                    bottom: 0,
-                                    trailing: Const.Padding.trailing))
             }
-        }
+//        }
+//        .navigationBarTitle(Text("Create Event"), displayMode: .inline)
+//        .navigationBarItems(leading:
+//                                Button("Close") {
+//        })
     }
     
     private var secondParagraphText: Text {

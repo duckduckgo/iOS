@@ -1,8 +1,8 @@
 //
-//  HomeMessageStorage.swift
+//  HomeMessageViewModel.swift
 //  DuckDuckGo
 //
-//  Copyright © 2020 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,23 +17,25 @@
 //  limitations under the License.
 //
 
-import Core
+import Foundation
 
-public class HomeMessageStorage {
+struct HomeMessageViewModel {
+    let image: String?
+    let topText: String?
+    let title: String
+    let subtitle: String
+    let buttons: [HomeMessageButtonViewModel]
     
-    @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
-    var widgetEducationMessageDismissed: Bool
-    
-    var messagesToBeShown: [HomeMessage] {
-        var messages = [HomeMessage]()
-        if #available(iOS 14, *) {//}!widgetEducationMessageDismissed {
-            messages.append(.widgetEducation)
-        }
-        return messages
-    }
-    
-    func hasExpiredForHomeRow() -> Bool { //TODO
-        false
-    }
+    let onDidClose: () -> Void
 }
 
+struct HomeMessageButtonViewModel {
+    enum ActionStyle {
+        case `default`
+        case cancel
+    }
+    
+    let title: String
+    let action: () -> Void
+    var actionStyle: ActionStyle = .default
+}

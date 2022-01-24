@@ -24,22 +24,24 @@ import SwiftUI
 @available(iOS 14.0, *)
 final class AddWidgetViewController: UIViewController {
     
-    private let hostingController = UIHostingController(rootView: AddWidgetView())
+    private let host = UIHostingController(rootView: AddWidgetView())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addChild(hostingController)
-        view.addSubview(hostingController.view)
+        addChild(host)
+        view.addSubview(host.view)
         setupConstraints()
     }
     
     private func setupConstraints() {
-        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
-        hostingController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        hostingController.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        hostingController.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        host.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            host.view.topAnchor.constraint(equalTo: view.topAnchor),
+            host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            host.view.leftAnchor.constraint(equalTo: view.leftAnchor),
+            host.view.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ])
     }
     
 }

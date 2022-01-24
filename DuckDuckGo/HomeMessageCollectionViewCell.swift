@@ -1,8 +1,8 @@
 //
-//  HomeMessageStorage.swift
+//  HomeMessageCollectionViewCell.swift
 //  DuckDuckGo
 //
-//  Copyright © 2020 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,23 +17,19 @@
 //  limitations under the License.
 //
 
-import Core
+import SwiftUI
+import UIKit
 
-public class HomeMessageStorage {
+final class HomeMessageCollectionViewCell: SwiftUICollectionViewCell<HomeMessageView> {
     
-    @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
-    var widgetEducationMessageDismissed: Bool
+    static let maximumWidth: CGFloat = 380
+    static let maximumWidthPad: CGFloat = 455
     
-    var messagesToBeShown: [HomeMessage] {
-        var messages = [HomeMessage]()
-        if #available(iOS 14, *) {//}!widgetEducationMessageDismissed {
-            messages.append(.widgetEducation)
-        }
-        return messages
-    }
+    static var reuseIdentifier = "HomeMessageCell"
     
-    func hasExpiredForHomeRow() -> Bool { //TODO
-        false
+    func configure(with viewModel: HomeMessageViewModel, parent: UIViewController) {
+        embed(in: parent, withView: HomeMessageView(viewModel: viewModel))
+        host?.view.frame = contentView.bounds
+        host?.view.backgroundColor = .clear
     }
 }
-

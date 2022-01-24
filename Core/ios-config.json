@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1638282217816,
+    "version": 1638444798224,
     "features": {
         "autoconsent": {
             "state": "enabled",
@@ -34,6 +34,10 @@
         "contentBlocking": {
             "state": "enabled",
             "exceptions": [
+                {
+                    "domain": "iltalehti.fi",
+                    "reason": "Video content missing"
+                },
                 {
                     "domain": "agame.com",
                     "reason": "Site not loading"

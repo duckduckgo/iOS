@@ -19,6 +19,6 @@
 
 import Foundation
 
-enum HomeMessage: String {
+enum HomeMessage {
     case widgetEducation
 }

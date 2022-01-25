@@ -20,7 +20,6 @@
 import Core
 
 public class HomeMessageStorage {
-    
     @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
     var widgetEducationMessageDismissed: Bool
     

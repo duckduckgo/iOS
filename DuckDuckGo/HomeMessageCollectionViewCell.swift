@@ -21,7 +21,7 @@ import SwiftUI
 import UIKit
 
 final class HomeMessageCollectionViewCell: SwiftUICollectionViewCell<HomeMessageView> {
-    
+
     static let maximumWidth: CGFloat = 380
     static let maximumWidthPad: CGFloat = 455
     

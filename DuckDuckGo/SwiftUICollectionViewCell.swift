@@ -29,10 +29,8 @@ class SwiftUICollectionViewCell<Content>: UICollectionViewCell where Content: Vi
         if let host = self.host {
             host.rootView = content
             host.view.layoutIfNeeded()
-
         } else {
             let host = UIHostingController(rootView: content)
-
             parent.addChild(host)
             host.didMove(toParent: parent)
             contentView.addSubview(host.view)
@@ -40,8 +38,6 @@ class SwiftUICollectionViewCell<Content>: UICollectionViewCell where Content: Vi
         }
     }
     
-    // MARK: Controller + view clean up
-
     deinit {
         host?.willMove(toParent: nil)
         host?.view.removeFromSuperview()

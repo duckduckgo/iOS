@@ -37,42 +37,43 @@ struct HomeMessageView: View {
     var viewModel: HomeMessageViewModel
     
     var body: some View {
-            if #available(iOS 15.0, *) {
-                VStack(spacing: Const.Spacing.titleAndSubtitle) {
-                    HStack(alignment: .top) {
-                        Spacer()
-                        VStack {
-                            topText
-                            image
-                            title
-                        }.offset(x: Const.Size.closeButtonWidth / 2, y: 0)
-                        .layoutPriority(1)
-                        Spacer()
-                        closeButton
-                    }
-                    
-                    VStack(spacing: Const.Spacing.subtitleAndButtons) {
-                        subtitle
-                        HStack {
-                            buttons
-                        }
-                    }
+        VStack(spacing: Const.Spacing.titleAndSubtitle) {
+            HStack(alignment: .top) {
+                Spacer()
+                VStack {
+                    topText
+                    image
+                    title
                 }
-                .multilineTextAlignment(.center)
-                .padding()
-                .background(Color.background)
-                .background(in: RoundedRectangle(cornerRadius: Const.Radius.corner))
-                .clipped()
-                .shadow(color: Color.shadow, radius: Const.Radius.shadow, x: 0, y: Const.Offset.shadowVertical)
-            } else {
-                // Fallback on earlier versions
+                .offset(x: Const.Size.closeButtonWidth / 2, y: 0)
+                .layoutPriority(1)
+                Spacer()
+                closeButton
             }
+            
+            VStack(spacing: Const.Spacing.subtitleAndButtons) {
+                subtitle
+                HStack {
+                    buttons
+                }
+            }
+        }
+        .multilineTextAlignment(.center)
+        .padding()
+        .background(RoundedRectangle(cornerRadius: Const.Radius.corner)
+                        .fill(Color.background)
+                        .shadow(color: Color.shadow,
+                                radius: Const.Radius.shadow,
+                                x: 0,
+                                y: Const.Offset.shadowVertical))
     }
     
     private var closeButton: some View {
-        Button(action: { viewModel.onDidClose() }, label: { Image.dismiss })
-        .layoutPriority(2)
-        .offset(x: Const.Offset.closeButton, y: -Const.Offset.closeButton)
+        Button(action: { viewModel.onDidClose() },
+               label: { Image.dismiss })
+            .layoutPriority(2)
+            .offset(x: Const.Offset.closeButton,
+                    y: -Const.Offset.closeButton)
     }
     
     private var topText: some View {

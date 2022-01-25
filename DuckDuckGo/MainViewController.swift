@@ -843,23 +843,16 @@ class MainViewController: UIViewController {
     }
 
     func showHomeRowReminder() {
-
         let feature = HomeRowReminder()
-        if #available(iOS 14, *) {
-            guard feature.showNow(isDefaultBrowserSupported: true) else { return }
-        } else {
-            guard feature.showNow(isDefaultBrowserSupported: false) else { return }
-        }
-
-        showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
-            if tapped {
-                self.launchInstructions()
+        if feature.shouldShow {
+            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
+                if tapped {
+                    self.launchInstructions()
+                }
+                self.hideNotification()
             }
-
-            self.hideNotification()
+            feature.setShown()
         }
-
-        feature.setShown()
     }
 
     func animateBackgroundTab() {

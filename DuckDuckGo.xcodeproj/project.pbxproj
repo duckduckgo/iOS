@@ -617,7 +617,6 @@
 		F4D7220E26F15529007D6193 /* AddOrEditBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7220D26F15529007D6193 /* AddOrEditBookmarkViewController.swift */; };
 		F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */; };
-		F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */; };
 		F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */; };
 		F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB126E6AEC100ED7E12 /* AddOrEditBookmarkFolderViewController.swift */; };
 		F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */; };
@@ -1968,8 +1967,6 @@
 		F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCoreDataStorage.swift; sourceTree = "<group>"; };
 		F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetDaxDialogViewController.swift; sourceTree = "<group>"; };
 		F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMessageViewSectionRenderer.swift; sourceTree = "<group>"; };
-		F446B9B625115C1700324016 /* HomeMessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeMessageCell.xib; sourceTree = "<group>"; };
-		F446B9B825115F9700324016 /* HomeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageCell.swift; sourceTree = "<group>"; };
 		F456B3B425810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireButtonAnimationSettingsViewController.swift; sourceTree = "<group>"; };
 		F45B37752760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkItemDetailsDataSource.swift; sourceTree = "<group>"; };
 		F45B37782760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFoldersSectionDataSource.swift; sourceTree = "<group>"; };
@@ -1982,7 +1979,6 @@
 		F4D7220D26F15529007D6193 /* AddOrEditBookmarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditBookmarkViewController.swift; sourceTree = "<group>"; };
 		F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDetailsCell.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageStorage.swift; sourceTree = "<group>"; };
-		F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeCells.xcassets; sourceTree = "<group>"; };
 		F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCutOutView.swift; sourceTree = "<group>"; };
 		F4F6DFB126E6AEC100ED7E12 /* AddOrEditBookmarkFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditBookmarkFolderViewController.swift; sourceTree = "<group>"; };
 		F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFolderCell.swift; sourceTree = "<group>"; };
@@ -2665,12 +2661,9 @@
 			children = (
 				9865DFFC22A84CF300D27829 /* FavoriteHomeCell.xib */,
 				85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */,
-				F446B9B625115C1700324016 /* HomeMessageCell.xib */,
-				F446B9B825115F9700324016 /* HomeMessageCell.swift */,
 				984E291A22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib */,
 				984E291822CD67B500EE7154 /* PrivacyProtectionHomeCell.swift */,
 				989B337422D7EF2100437824 /* EmptyCollectionReusableView.swift */,
-				F4D9C4FB2514BBCF00814B71 /* HomeCells.xcassets */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -4267,7 +4260,6 @@
 				AA4D6AB823DE4D15007E8790 /* AppIconYellow29x29@2x.png in Resources */,
 				984147C024F026A300362052 /* Tab.storyboard in Resources */,
 				AA4D6AE123DE4D33007E8790 /* AppIconGreen76x76@2x.png in Resources */,
-				F4D9C4FC2514BBCF00814B71 /* HomeCells.xcassets in Resources */,
 				AA4D6A9123DE49A5007E8790 /* AppIconBlack60x60@3x.png in Resources */,
 				AA4D6A8E23DE49A5007E8790 /* AppIconBlack60x60@2x.png in Resources */,
 				AA4D6AC023DE4D15007E8790 /* AppIconYellow76x76@2x.png in Resources */,

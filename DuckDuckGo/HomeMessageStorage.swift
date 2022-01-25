@@ -19,7 +19,8 @@
 
 import Core
 
-public class HomeMessageStorage {
+struct HomeMessageStorage {
+    
     @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
     var widgetEducationMessageDismissed: Bool
     
@@ -29,10 +30,6 @@ public class HomeMessageStorage {
             messages.append(.widgetEducation)
         }
         return messages
-    }
-    
-    func hasExpiredForHomeRow() -> Bool { //TODO
-        false
     }
 }
 

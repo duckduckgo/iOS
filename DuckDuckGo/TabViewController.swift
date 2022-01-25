@@ -920,8 +920,19 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        decisionHandler(.allow)
+      
         url = webView.url
+
+        guard !navigationResponse.canShowMIMEType else {
+            decisionHandler(.allow)
+            return
+        }
+        
+        let responsePolicy = AppDependencyProvider.shared
+            .downloadsManager.download(navigationResponse,
+                                       cookieStore: webView.configuration.websiteDataStore.httpCookieStore)
+        
+        decisionHandler(responsePolicy)
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -1062,6 +1073,11 @@ extension TabViewController: WKNavigationDelegate {
         lastError = error
         let error = error as NSError
 
+        // Ignore Frame Load Interrupted that will be caused when a download starts
+        if error.code == 102 && error.domain == "WebKitErrorDomain" {
+            return
+        }
+        
         if let url = url,
             let domain = url.host,
             error.code == Constants.frameLoadInterruptedErrorCode {

@@ -20,13 +20,20 @@
 import Foundation
 import WebKit
 
+public struct DownloadNotification {
+    static let started: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
+    static let finished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
+
+    public static let downloadItemKey = "com.duckduckgo.userInfoKey.downloadItem"
+}
+
 protocol DownloadDelegate: AnyObject {
     func downloadDidFinish(_ download: Download)
 }
 
 class Download: NSObject, Identifiable, ObservableObject {
     weak var delegate: DownloadDelegate?
-
+    
     let id = UUID()
     let filename: String
     let mimeType: MIMEType
@@ -58,7 +65,6 @@ class Download: NSObject, Identifiable, ObservableObject {
     func suspend() {
         downloadSession?.suspend()
         self.state = downloadSession?.state ?? .completed
-
     }
     
     func start() {
@@ -69,6 +75,9 @@ class Download: NSObject, Identifiable, ObservableObject {
         }
         downloadSession?.resume()
         self.state = downloadSession?.state ?? .completed
+        NotificationCenter.default.post(name: DownloadNotification.started,
+                                        object: self,
+                                        userInfo: [DownloadNotification.downloadItemKey: self])
     }
     
     private func renameFile(_ oldPath: URL, name: String) -> URL? {
@@ -96,6 +105,10 @@ extension Download: URLSessionDownloadDelegate, URLSessionTaskDelegate {
         }
         self.session?.finishTasksAndInvalidate()
         self.state = downloadTask.state
+        
+        NotificationCenter.default.post(name: DownloadNotification.finished,
+                                        object: self,
+                                        userInfo: [DownloadNotification.downloadItemKey: self])
     }
     
     func urlSession(_ session: URLSession,
@@ -107,7 +120,7 @@ extension Download: URLSessionDownloadDelegate, URLSessionTaskDelegate {
         self.bytesWritten = bytesWritten
         self.totalBytesWritten = totalBytesWritten
         self.totalBytesExpectedToWrite = totalBytesExpectedToWrite
-
+        
         self.state = downloadTask.state
     }
 }

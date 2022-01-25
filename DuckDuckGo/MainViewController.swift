@@ -144,8 +144,8 @@ class MainViewController: UIViewController {
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
-        registerForKeyboardNotifications()
-
+        registerForNotifications()
+        
         applyTheme(ThemeManager.shared.currentTheme)
 
         tabsBarController?.refresh(tabsModel: tabManager.model, scrollToSelected: true)
@@ -191,8 +191,8 @@ class MainViewController: UIViewController {
 
         performSegue(withIdentifier: onboardingFlow, sender: self)
     }
-    
-    private func registerForKeyboardNotifications() {
+
+    private func registerForNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillChangeFrame),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
@@ -202,6 +202,28 @@ class MainViewController: UIViewController {
                                                selector: #selector(keyboardWillHide),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(downloadDidStart),
+                                               name: DownloadNotification.started,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(downloadDidFinish),
+                                               name: DownloadNotification.finished,
+                                               object: nil)
+    }
+    
+    @objc private func downloadDidFinish(_ notification: Notification) {
+#warning("Handle download finish")
+        if let download = notification.userInfo?[DownloadNotification.downloadItemKey] as? Download {
+            print("Download name \(download.filename)")
+        }
+        print("Download Finish \(notification)")
+    }
+    
+    @objc private func downloadDidStart(_ notification: Notification) {
+#warning("Handle download start")
+        print("Download Started \(notification)")
     }
 
     /// This is only really for iOS 10 devices that don't properly support the change frame approach.

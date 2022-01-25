@@ -921,9 +921,8 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
       
-        url = webView.url
-
         guard !navigationResponse.canShowMIMEType else {
+            url = webView.url
             decisionHandler(.allow)
             return
         }

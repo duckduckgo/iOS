@@ -104,9 +104,9 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         switch message {
         case .widgetEducation:
             return WidgetEducationHomeMessageViewModel.makeViewModel(presentingViewController: controller!,
-                                                                     onDidClose: {
-                Pixel.fire(pixel: .defaultBrowserHomeMessageDismissed) // todo: wrong msg
-                self.dismissHomeMessage(message, at: indexPath, in: collectionView) // todo weak
+                                                                     onDidClose: { [weak self] in
+                Pixel.fire(pixel: .widgetEducationDismissed)
+                self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
             })
         }
     }
@@ -147,7 +147,7 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private func collectionViewCellWidth(_ collectionView: UICollectionView) -> CGFloat {
         let marginWidth = Constants.horizontalMargin * 2
-        let availableWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width - marginWidth // (view.safeAreaLayoutGuide.layoutFrame.width)
+        let availableWidth = collectionView.safeAreaLayoutGuide.layoutFrame.width - marginWidth
         let maxCellWidth = isPad ? HomeMessageCollectionViewCell.maximumWidthPad : HomeMessageCollectionViewCell.maximumWidth
         return min(availableWidth, maxCellWidth)
     }
@@ -156,19 +156,3 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
 }
-
-//extension HomeMessageViewSectionRenderer: HomeMessageCellDelegate {
-//
-//
-//    func homeMessageCellMainButtonWaspressed(_ cell: HomeMessageCell) {
-////        switch cell.homeMessage {
-////        case .defaultBrowserPrompt:
-////            Pixel.fire(pixel: .defaultBrowserButtonPressedHome)
-////            if let url = URL(string: UIApplication.openSettingsURLString) {
-////                UIApplication.shared.open(url)
-////            }
-////        }
-////        homePageConfiguration.homeMessageDismissed(cell.homeMessage)
-////        controller?.homeMessageRenderer(self, didDismissHomeMessage: cell.homeMessage)
-//    }
-//}

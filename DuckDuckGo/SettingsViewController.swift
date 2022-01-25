@@ -46,7 +46,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
-
+    @IBOutlet weak var widgetEducationCell: UITableViewCell!
+    
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
@@ -224,7 +225,7 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(url)
-
+            
         case emailProtectionCell:
             if emailManager.isSignedIn {
                 showEmailProtectionViewController()
@@ -234,6 +235,9 @@ class SettingsViewController: UITableViewController {
 
         case versionCell:
             showDebug()
+            
+        case widgetEducationCell:
+            Pixel.fire(pixel: .widgetEducationOpenedFromSettings)
 
         default: break
         }

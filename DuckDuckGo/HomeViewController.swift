@@ -109,7 +109,7 @@ class HomeViewController: UIViewController {
         coordinator.animate(alongsideTransition: { _ in
             self.collectionView.viewDidTransition(to: size)
         })
-        self.collectionView.collectionViewLayout.invalidateLayout() // todo
+        self.collectionView.collectionViewLayout.invalidateLayout()
     }
 
     func refresh() {

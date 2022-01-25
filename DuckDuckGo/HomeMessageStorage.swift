@@ -32,4 +32,3 @@ struct HomeMessageStorage {
         return messages
     }
 }
-

@@ -42,5 +42,4 @@ final class WidgetEducationViewController: UIViewController {
             host.view.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
     }
-    
 }

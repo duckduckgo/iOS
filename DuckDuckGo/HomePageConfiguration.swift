@@ -39,7 +39,7 @@ final class HomePageConfiguration {
     
     // MARK: - Messages
     
-    private let homeMessageStorage = HomeMessageStorage()
+    private var homeMessageStorage = HomeMessageStorage()
     
     var homeMessages: [HomeMessage] { homeMessageStorage.messagesToBeShown }
     

@@ -113,7 +113,7 @@ struct HomeMessageView: View {
     
     private var buttons: some View {
         ForEach(viewModel.buttons, id: \.title) {
-            let foreground: Color = $0.actionStyle == .default ? .white : .black // todo
+            let foreground: Color = $0.actionStyle == .default ? .white : .black
             let background: Color = $0.actionStyle == .default ? .button : .gray
             Button($0.title, action: $0.action)
                 .font(Font(uiFont: Const.Font.button))

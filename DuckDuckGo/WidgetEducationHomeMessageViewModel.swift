@@ -21,9 +21,13 @@ import UIKit
 import Core
 
 struct WidgetEducationHomeMessageViewModel {
+    enum Const {
+        static let image = "WidgetEducationWidgetExample"
+    }
+    
     static func makeViewModel(presentingViewController: UIViewController,
                               onDidClose: @escaping () -> Void) -> HomeMessageViewModel {
-        return HomeMessageViewModel(image: "WidgeEducationWidgetExample",
+        return HomeMessageViewModel(image: Const.image,
                                     topText: nil,
                                     title: UserText.addWidgetTitle,
                                     subtitle: UserText.addWidgetDescription,

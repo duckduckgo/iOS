@@ -1,5 +1,5 @@
 //
-//  AddWidgetViewController.swift
+//  WidgetEducationViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -17,14 +17,13 @@
 //  limitations under the License.
 //
 
-import Foundation
 import UIKit
 import SwiftUI
 
 @available(iOS 14.0, *)
-final class AddWidgetViewController: UIViewController {
+final class WidgetEducationViewController: UIViewController {
     
-    private let host = UIHostingController(rootView: AddWidgetView())
+    private let host = UIHostingController(rootView: WidgetEducationView())
     
     override func viewDidLoad() {
         super.viewDidLoad()

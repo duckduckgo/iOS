@@ -1,5 +1,5 @@
 //
-//  AddWidgetView.swift
+//  WidgetEducationView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -26,35 +26,29 @@ extension Font {
 }
 
 @available(iOS 14.0, *)
-struct AddWidgetView: View {
+struct WidgetEducationView: View {
     
     var body: some View {
-//        NavigationView {
-            ZStack {
-                Color.background
-                    .ignoresSafeArea()
-                ScrollView {
-                    VStack(alignment: .leading, spacing: Const.Spacing.paragraph) {
-                        NumberedParagraph(number: 1,
-                                          text: Text(UserText.addWidgetSettingsFirstParagraph))
-                        NumberedParagraph(number: 2,
-                                          text: secondParagraphText,
-                                          image: Image.homeScreen)
-                        NumberedParagraph(number: 3,
-                                          text: Text(UserText.addWidgetSettingsThirdParagraph),
-                                          image: Image.widgetExample)
-                    }
-                    .padding(EdgeInsets(top: Const.Padding.top,
-                                        leading: Const.Padding.leading,
-                                        bottom: 0,
-                                        trailing: Const.Padding.trailing))
+        ZStack {
+            Color.background
+                .ignoresSafeArea()
+            ScrollView {
+                VStack(alignment: .leading, spacing: Const.Spacing.paragraph) {
+                    NumberedParagraph(number: 1,
+                                      text: Text(UserText.addWidgetSettingsFirstParagraph))
+                    NumberedParagraph(number: 2,
+                                      text: secondParagraphText,
+                                      image: Image.homeScreen)
+                    NumberedParagraph(number: 3,
+                                      text: Text(UserText.addWidgetSettingsThirdParagraph),
+                                      image: Image.widgetExample)
                 }
+                .padding(EdgeInsets(top: Const.Padding.top,
+                                    leading: Const.Padding.leading,
+                                    bottom: 0,
+                                    trailing: Const.Padding.trailing))
             }
-//        }
-//        .navigationBarTitle(Text("Create Event"), displayMode: .inline)
-//        .navigationBarItems(leading:
-//                                Button("Close") {
-//        })
+        }
     }
     
     private var secondParagraphText: Text {
@@ -102,16 +96,16 @@ private struct NumberedCircleView: View {
 }
 
 private extension Color {
-    static let background = Color("WidgetBackgroundColor")
-    static let font = Color("WidgetFontColor")
+    static let background = Color("WidgetEducationBackgroundColor")
+    static let font = Color("WidgetEducationFontColor")
     static let circle = Color(UIColor.cornflowerBlue)
     static let numbers = Color.white
 }
 
 private extension Image {
-    static let add = Image("WidgetAddIcon")
-    static let widgetExample = Image("WidgetExample")
-    static let homeScreen = Image("WidgetHomeScreen")
+    static let add = Image("WidgetEducationAddIcon")
+    static let widgetExample = Image("WidgeEducationWidgetExample")
+    static let homeScreen = Image("WidgetEducationHomeScreen")
 }
 
 private enum Const {
@@ -140,8 +134,8 @@ private enum Const {
 }
 
 @available(iOS 14.0, *)
-struct AddWidgetView_Previews: PreviewProvider {
+struct WidgetEducationView_Previews: PreviewProvider {
     static var previews: some View {
-        AddWidgetView()
+        WidgetEducationView()
     }
 }

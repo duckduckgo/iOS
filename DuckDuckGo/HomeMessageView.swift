@@ -129,7 +129,7 @@ private extension Color {
 }
 
 private extension Image {
-    static let dismiss = Image("WidgetDismissIcon")
+    static let dismiss = Image("HomeMessageDismissIcon")
 }
 
 private enum Const {

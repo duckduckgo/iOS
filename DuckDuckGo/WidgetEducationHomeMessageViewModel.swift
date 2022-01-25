@@ -17,20 +17,48 @@
 //  limitations under the License.
 //
 
-import Foundation
 import UIKit
+import Core
 
 struct WidgetEducationHomeMessageViewModel {
     static func makeViewModel(presentingViewController: UIViewController,
                               onDidClose: @escaping () -> Void) -> HomeMessageViewModel {
-        return HomeMessageViewModel(image: "WidgetExample",
-                                    topText: nil,//UserText.defaultBrowserHomeMessageHeader,
-                                    title: UserText.addWidgetTitle,//UserText.defaultBrowserHomeMessageHeader,
-                                    subtitle: UserText.addWidgetDescription,//UserText.defaultBrowserHomeMessageSubheader,
-                                    buttons: [.init(title: UserText.addWidgetButton/*UserText.defaultBrowserHomeMessageButtonText*/, action: {
-            guard #available(iOS 14.0, *) else { return }
-            presentingViewController.present(AddWidgetViewController(), animated: true)
+        return HomeMessageViewModel(image: "WidgeEducationWidgetExample",
+                                    topText: nil,
+                                    title: UserText.addWidgetTitle,
+                                    subtitle: UserText.addWidgetDescription,
+                                    buttons: [.init(title: UserText.addWidget,
+                                                    action: {
+            Pixel.fire(pixel: .widgetEducationOpenedFromHomeScreen)
+            let widgetEducationViewController = makeWidgetEducationViewController(presentingViewController: presentingViewController)
+            presentingViewController.present(widgetEducationViewController, animated: true)
         })],
                                     onDidClose: onDidClose)
+    }
+    
+    private static func makeWidgetEducationViewController(presentingViewController: UIViewController) -> UIViewController {
+        guard #available(iOS 14.0, *) else { fatalError() }
+        return WidgetEducationViewController().embeddedInNavigationController
+    }
+}
+
+@available(iOS 14.0, *)
+extension WidgetEducationViewController: Themable {
+    var embeddedInNavigationController: UIViewController {
+        let navigationController = ThemableNavigationController(rootViewController: self)
+        configureNavigationBar()
+        return navigationController
+    }
+    
+    private func configureNavigationBar() {
+        title = UserText.addWidget
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
+                                                            target: self,
+                                                            action: #selector(done))
+        decorate(with: ThemeManager.shared.currentTheme)
+    }
+    
+    @objc private func done() {
+        dismiss(animated: true)
     }
 }

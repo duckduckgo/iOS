@@ -53,6 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: lifecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        
         #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.
@@ -118,6 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         
         window?.windowScene?.screenshotService?.delegate = self
+        ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
         return true

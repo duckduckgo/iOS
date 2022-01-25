@@ -626,18 +626,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Whirlpool";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Set as Default Browser";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Make DuckDuckGo your default browser.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Open links with peace of mind, every time.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NEW IN IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Add DuckDuckGo to your home screen!";
 
 /* No comment provided by engineer. */

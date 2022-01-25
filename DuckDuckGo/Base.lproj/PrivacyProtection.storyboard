@@ -2547,6 +2547,7 @@ many trackers we've blocked.</string>
                         <outlet property="isMajorNetworkCell" destination="YWf-b0-9Jx" id="sHo-Ui-l1Y"/>
                         <outlet property="majorNetworksCell" destination="bLw-VQ-f8g" id="hLd-p7-KCA"/>
                         <outlet property="networksCell" destination="8qZ-Eh-VsF" id="eLZ-iJ-obV"/>
+                        <outlet property="onHeaderCellTapped" destination="ons-8k-ZtF" id="or6-Bc-KER"/>
                         <outlet property="privacyGradeCell" destination="THl-q3-0pd" id="aXs-ho-6oc"/>
                         <outlet property="privacyPracticesCell" destination="Djq-pK-0ll" id="Wtr-kX-v5D"/>
                     </connections>

@@ -22,7 +22,7 @@ import UIKit
 struct FilePreviewHelper {
     
     static func fileHandlerForDownload(_ download: Download, viewController: UIViewController) -> FilePreview? {
-        guard let filePath = download.filePath else { return nil }
+        guard let filePath = download.location else { return nil }
         switch download.mimeType {
         case .usdz, .reality:
             return QuickLookPreviewHelper(filePath, viewController: viewController)

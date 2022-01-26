@@ -217,6 +217,7 @@ class TabViewController: UIViewController {
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
         addTextSizeObserver()
+        registerForNotifications()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -324,6 +325,17 @@ class TabViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
+    }
+    
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(downloadDidStart),
+                                               name: .downloadStarted,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(downloadDidFinish),
+                                               name: .downloadFinished,
+                                               object: nil)
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
@@ -453,7 +465,7 @@ class TabViewController: UIViewController {
         PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self, forDomain: domain) { [weak self] in
             Pixel.fire(pixel: .browsingMenuFireproof)
             self?.preserveLoginsWorker?.handleUserEnablingFireproofing(forDomain: domain)
-        }    
+        }
     }
     
     func disableFireproofingForDomain(_ domain: String) {
@@ -842,7 +854,27 @@ class TabViewController: UIViewController {
     deinit {
         removeMessageHandlers()
         removeObservers()
-    }    
+    }
+    
+    @objc private func downloadDidFinish(_ notification: Notification) {
+#warning("Display download finished toast")
+        guard let download = notification.object as? Download else { return }
+        DispatchQueue.main.async {
+            self.previewDownloadedFileIfNecessary(download)
+        }
+    }
+    
+    @objc private func downloadDidStart(_ notification: Notification) {
+#warning("Display download started toast")
+        Swift.print("Download Started \(notification)")
+    }
+    
+    private func previewDownloadedFileIfNecessary(_ download: Download) {
+#warning("Check if user changed tabs or if the original tab is not visible")
+        guard let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self) else { return }
+        fileHandler.preview()
+    }
+
 }   
 
 extension TabViewController: LoginFormDetectionDelegate {
@@ -926,12 +958,15 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(.allow)
             return
         }
+       
+        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
         
-        let responsePolicy = AppDependencyProvider.shared
-            .downloadsManager.download(navigationResponse,
-                                       cookieStore: webView.configuration.websiteDataStore.httpCookieStore)
+        if let download = downloadManager.setupDownload(navigationResponse, cookieStore: cookieStore) {
+            downloadManager.startDownload(download)
+        }
         
-        decisionHandler(responsePolicy)
+        decisionHandler(.cancel)
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {

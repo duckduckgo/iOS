@@ -20,35 +20,66 @@
 import Foundation
 import WebKit
 
-protocol DownloadManagerDelegate: AnyObject {
-    func downloadManager(_ downloadManager: DownloadsManager, didFinish download: Download)
-}
-
 class DownloadsManager {
-    weak var delegate: DownloadManagerDelegate?
     private(set) var downloadList = Set<Download>()
+    //private let downloadsFolder
     
-    func download(_ navigationResponse: WKNavigationResponse, cookieStore: WKHTTPCookieStore) -> WKNavigationResponsePolicy {
-        guard let mimeType = navigationResponse.response.mimeType else {
-            return .cancel
-        }
-
-        let download = Download(navigationResponse.response.url!,
-                                mimeType: mimeType,
-                                fileName: navigationResponse.response.suggestedFilename!,
-                                cookieStore: cookieStore ,
-                                delegate: self)
+    func setupDownload(_ navigationResponse: WKNavigationResponse, cookieStore: WKHTTPCookieStore) -> Download? {
         
+        guard let mimeType = navigationResponse.response.mimeType,
+              let url = navigationResponse.response.url else {
+                  return nil
+        }
+        let fileName = navigationResponse.response.suggestedFilename ?? "unknown"
+
+        let type = MIMEType(rawValue: mimeType) ?? .unknown
+        let temporary: Bool
+        
+        switch type {
+        case .reality, .usdz, .passbook:
+            temporary = true
+        default:
+            temporary = false
+        }
+        
+        return Download(url,
+                        mimeType: type,
+                        fileName: fileName,
+                        cookieStore: cookieStore,
+                        temporary: temporary,
+                        delegate: self)
+    }
+    
+    func startDownload(_ download: Download) {
         downloadList.insert(download)
         download.start()
+        NotificationCenter.default.post(name: .downloadStarted, object: download, userInfo: nil)
+    }
+    
+    private func move(_ download: Download, toPath path: URL) {
+        /*
+         do {
+             let newPath = oldPath.deletingLastPathComponent().appendingPathComponent(name)
+             try? FileManager.default.removeItem(at: newPath)
+             try FileManager.default.moveItem(at: oldPath, to: newPath)
+             
+             return newPath
+         } catch {
+             return nil
+         }
+         */
+    }
+    
+    private func moveDownloadIfNecessary(_ download: Download) {
+        guard !download.temporary else { return }
         
-        return .cancel
     }
 }
 
 extension DownloadsManager: DownloadDelegate {
     func downloadDidFinish(_ download: Download) {
-        delegate?.downloadManager(self, didFinish: download)
+        moveDownloadIfNecessary(download)
+        NotificationCenter.default.post(name: .downloadFinished, object: download, userInfo: nil)
         downloadList.remove(download)
     }
 }

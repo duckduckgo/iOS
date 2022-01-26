@@ -1,5 +1,5 @@
 //
-//  WidgetEducationHomeMessageViewModel.swift
+//  WidgetEducationHomeMessage.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import UIKit
 import Core
 
-struct WidgetEducationHomeMessageViewModel {
+struct WidgetEducationHomeMessage {
     enum Const {
         static let image = "WidgetEducationWidgetExample"
     }
@@ -32,12 +32,15 @@ struct WidgetEducationHomeMessageViewModel {
                                     title: UserText.addWidgetTitle,
                                     subtitle: UserText.addWidgetDescription,
                                     buttons: [.init(title: UserText.addWidget,
-                                                    action: {
-            Pixel.fire(pixel: .widgetEducationOpenedFromHomeScreen)
-            let widgetEducationViewController = makeWidgetEducationViewController(presentingViewController: presentingViewController)
-            presentingViewController.present(widgetEducationViewController, animated: true)
-        })],
+                                                    action: { presentWidgetEducation(presentingViewController: presentingViewController) })],
                                     onDidClose: onDidClose)
+    }
+    
+    private static func presentWidgetEducation(presentingViewController: UIViewController) {
+        Pixel.fire(pixel: .widgetEducationOpenedFromHomeScreen)
+        let widgetEducationViewController = makeWidgetEducationViewController(presentingViewController: presentingViewController)
+        widgetEducationViewController.modalPresentationStyle = .formSheet
+        presentingViewController.present(widgetEducationViewController, animated: true)
     }
     
     private static func makeWidgetEducationViewController(presentingViewController: UIViewController) -> UIViewController {

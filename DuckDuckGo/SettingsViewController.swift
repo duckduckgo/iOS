@@ -62,10 +62,14 @@ class SettingsViewController: UITableViewController {
     private static var shouldShowDefaultBrowserSection: Bool {
         if #available(iOS 14, *) {
             return true
-        } else {
-            return false
         }
+        return false
     }
+    
+    private lazy var shouldShowWidgetEducationCell: Bool = {
+        guard #available(iOS 14, *), variantManager.isSupported(feature: .widgetEducation) else { return false }
+        return true
+    }()
     
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
@@ -76,6 +80,7 @@ class SettingsViewController: UITableViewController {
 
         configureVersionCell()
         configureDefaultBroswerCell()
+        configureWidgetEducationCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -127,6 +132,10 @@ class SettingsViewController: UITableViewController {
 
     private func configureDefaultBroswerCell() {
         defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
+    }
+    
+    private func configureWidgetEducationCell() {
+        widgetEducationCell.isHidden = !shouldShowWidgetEducationCell
     }
 
     private func configureThemeCellAccessory() {

@@ -61,7 +61,7 @@ private struct NumberedParagraph: View {
     var number: Int
     var text: Text
     var image: Image?
-        
+    
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: Const.Spacing.numberAndText) {
             NumberedCircleView(number: number)
@@ -72,7 +72,7 @@ private struct NumberedParagraph: View {
                     .foregroundColor(Color.font)
                 image?
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .frame(maxWidth: Const.Size.imageWidth)
             }
         }

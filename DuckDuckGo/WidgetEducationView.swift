@@ -104,7 +104,7 @@ private extension Color {
 
 private extension Image {
     static let add = Image("WidgetEducationAddIcon")
-    static let widgetExample = Image("WidgeEducationWidgetExample")
+    static let widgetExample = Image("WidgetEducationWidgetExample")
     static let homeScreen = Image("WidgetEducationHomeScreen")
 }
 

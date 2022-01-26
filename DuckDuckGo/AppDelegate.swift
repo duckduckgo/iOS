@@ -52,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: lifecycle
 
+    // swiftlint:disable function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         #if targetEnvironment(simulator)
@@ -91,7 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
-            BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
+            if BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context) {
+                if #available(iOS 14, *) {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
+            }
         }
         
         HTTPSUpgrade.shared.loadDataAsync()
@@ -124,6 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appIsLaunching = true
         return true
     }
+    // swiftlint:enable function_body_length
 
     private func clearTmp() {
         let tmp = FileManager.default.temporaryDirectory

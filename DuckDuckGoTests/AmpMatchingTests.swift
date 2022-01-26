@@ -62,8 +62,8 @@ class AmpMatchingTests: XCTestCase {
     private var ampTestSuite: AmpRefTests!
     
     override func setUpWithError() throws {
-        let configJSON = data.fromJsonFile("privacy-reference-tests/url-modifications/config_reference.json")
-        let testJSON = data.fromJsonFile("privacy-reference-tests/url-modifications/tests.json")
+        let configJSON = data.fromJsonFile("privacy-reference-tests/amp-protections/config_reference.json")
+        let testJSON = data.fromJsonFile("privacy-reference-tests/amp-protections/tests.json")
         
         ampTestSuite = try JSONDecoder().decode(AmpRefTests.self, from: testJSON)
         

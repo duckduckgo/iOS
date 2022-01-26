@@ -205,17 +205,17 @@ class MainViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(downloadDidStart),
-                                               name: DownloadNotification.started,
+                                               name: .downloadStarted,
                                                object: nil)
         NotificationCenter.default.addObserver(self, selector:
                                                 #selector(downloadDidFinish),
-                                               name: DownloadNotification.finished,
+                                               name: .downloadFinished,
                                                object: nil)
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
 #warning("Handle download finish")
-        if let download = notification.userInfo?[DownloadNotification.downloadItemKey] as? Download {
+        if let download = notification.object as? Download {
             print("Download name \(download.filename)")
         }
         print("Download Finish \(notification)")

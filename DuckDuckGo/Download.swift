@@ -20,13 +20,6 @@
 import Foundation
 import WebKit
 
-public struct DownloadNotification {
-    static let started: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
-    static let finished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
-
-    public static let downloadItemKey = "com.duckduckgo.userInfoKey.downloadItem"
-}
-
 protocol DownloadDelegate: AnyObject {
     func downloadDidFinish(_ download: Download)
 }
@@ -75,9 +68,7 @@ class Download: NSObject, Identifiable, ObservableObject {
         }
         downloadSession?.resume()
         self.state = downloadSession?.state ?? .completed
-        NotificationCenter.default.post(name: DownloadNotification.started,
-                                        object: self,
-                                        userInfo: [DownloadNotification.downloadItemKey: self])
+        NotificationCenter.default.post(name: .downloadStarted, object: self, userInfo: nil)
     }
     
     private func renameFile(_ oldPath: URL, name: String) -> URL? {
@@ -106,9 +97,7 @@ extension Download: URLSessionDownloadDelegate, URLSessionTaskDelegate {
         self.session?.finishTasksAndInvalidate()
         self.state = downloadTask.state
         
-        NotificationCenter.default.post(name: DownloadNotification.finished,
-                                        object: self,
-                                        userInfo: [DownloadNotification.downloadItemKey: self])
+        NotificationCenter.default.post(name: .downloadFinished, object: self, userInfo: nil)
     }
     
     func urlSession(_ session: URLSession,
@@ -123,4 +112,9 @@ extension Download: URLSessionDownloadDelegate, URLSessionTaskDelegate {
         
         self.state = downloadTask.state
     }
+}
+
+extension NSNotification.Name {
+    static let downloadStarted: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
+    static let downloadFinished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
 }

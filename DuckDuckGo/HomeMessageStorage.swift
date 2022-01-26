@@ -21,14 +21,26 @@ import Core
 
 struct HomeMessageStorage {
     
+    private let variantManager: VariantManager?
+    
+    init(variantManager: VariantManager? = nil) {
+        self.variantManager = variantManager
+    }
+    
     @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
     var widgetEducationMessageDismissed: Bool
     
     var messagesToBeShown: [HomeMessage] {
         var messages = [HomeMessage]()
-        if #available(iOS 14, *) {//}!widgetEducationMessageDismissed {
+        if shouldShowWidgetEducation {
             messages.append(.widgetEducation)
         }
         return messages
+    }
+    
+    private var shouldShowWidgetEducation: Bool {
+        guard #available(iOS 14, *), let variantManager = variantManager else { return false }
+        let isFeatureSupported = variantManager.isSupported(feature: .widgetEducation)
+        return isFeatureSupported && !widgetEducationMessageDismissed
     }
 }

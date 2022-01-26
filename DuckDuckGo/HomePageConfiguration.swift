@@ -39,7 +39,11 @@ final class HomePageConfiguration {
     
     // MARK: - Messages
     
-    private var homeMessageStorage = HomeMessageStorage()
+    private var homeMessageStorage: HomeMessageStorage
+    
+    init(variantManager: VariantManager) {
+        homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
+    }
     
     var homeMessages: [HomeMessage] { homeMessageStorage.messagesToBeShown }
     

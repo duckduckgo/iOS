@@ -269,12 +269,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.newTab(reuseExisting: true)
             if url.getParam(name: "w") != nil {
                 Pixel.fire(pixel: .widgetNewSearch)
+                HomePageConfiguration().dismissHomeMessage(.widgetEducation)
                 mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
             Pixel.fire(pixel: .widgetFavoriteLaunch)
+            HomePageConfiguration().dismissHomeMessage(.widgetEducation)
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)

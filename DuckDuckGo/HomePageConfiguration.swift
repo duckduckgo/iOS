@@ -41,7 +41,7 @@ final class HomePageConfiguration {
     
     private var homeMessageStorage: HomeMessageStorage
     
-    init(variantManager: VariantManager) {
+    init(variantManager: VariantManager? = nil) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
     }
     
@@ -50,7 +50,7 @@ final class HomePageConfiguration {
     func dismissHomeMessage(_ homeMessage: HomeMessage) {
         switch homeMessage {
         case .widgetEducation:
-            homeMessageStorage.widgetEducationMessageDismissed = true
+            homeMessageStorage.hideWidgetEducation()
         }
     }
 }

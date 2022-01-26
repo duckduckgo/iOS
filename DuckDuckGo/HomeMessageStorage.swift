@@ -27,15 +27,21 @@ struct HomeMessageStorage {
         self.variantManager = variantManager
     }
     
-    @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
-    var widgetEducationMessageDismissed: Bool
-    
     var messagesToBeShown: [HomeMessage] {
         var messages = [HomeMessage]()
         if shouldShowWidgetEducation {
             messages.append(.widgetEducation)
         }
         return messages
+    }
+    
+    // MARK: - Widget Education
+    
+    @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
+    private var widgetEducationMessageDismissed: Bool
+    
+    mutating func hideWidgetEducation() {
+        widgetEducationMessageDismissed = true
     }
     
     private var shouldShowWidgetEducation: Bool {

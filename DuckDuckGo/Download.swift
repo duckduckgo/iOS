@@ -21,7 +21,7 @@ import Foundation
 import WebKit
 
 protocol DownloadDelegate: AnyObject {
-    func downloadDidFinish(_ download: Download)
+    func downloadDidFinish(_ download: Download, error: Error?)
 }
 
 class Download: NSObject, Identifiable, ObservableObject {
@@ -52,7 +52,7 @@ class Download: NSObject, Identifiable, ObservableObject {
         self.temporary = temporary
         super.init()
         self.session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
-        downloadSession = self.session?.downloadTask(with: URLRequest(url: url))
+        downloadSession = self.session?.downloadTask(with: url)
     }
     
     func start() {
@@ -86,9 +86,12 @@ extension Download: URLSessionDownloadDelegate, URLSessionTaskDelegate {
   
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         self.location = renameFile(location, name: filename)
+    }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         self.session?.finishTasksAndInvalidate()
-        state = downloadTask.state
-        delegate?.downloadDidFinish(self)
+        state = task.state
+        delegate?.downloadDidFinish(self, error: error)
     }
     
     func urlSession(_ session: URLSession,

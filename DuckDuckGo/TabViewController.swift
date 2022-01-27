@@ -858,7 +858,11 @@ class TabViewController: UIViewController {
     
     @objc private func downloadDidFinish(_ notification: Notification) {
 #warning("Display download finished toast")
-        guard let download = notification.object as? Download else { return }
+        if let error = notification.userInfo?[DownloadsManager.UserInfoKeys.error] as? Error {
+            #warning("Handle Error")
+            Swift.print("Error \(error)")
+        }
+        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download else { return }
         DispatchQueue.main.async {
             self.previewDownloadedFileIfNecessary(download)
         }

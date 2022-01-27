@@ -21,6 +21,12 @@ import Foundation
 import WebKit
 
 class DownloadsManager {
+    
+    struct UserInfoKeys {
+        static let download = "com.duckduckgo.com.userInfoKey.download"
+        static let error = "com.duckduckgo.com.userInfoKey.error"
+    }
+    
     private(set) var downloadList = Set<Download>()
     //private let downloadsFolder
     
@@ -53,7 +59,7 @@ class DownloadsManager {
     func startDownload(_ download: Download) {
         downloadList.insert(download)
         download.start()
-        NotificationCenter.default.post(name: .downloadStarted, object: download, userInfo: nil)
+        NotificationCenter.default.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
     }
     
     private func move(_ download: Download, toPath path: URL) {
@@ -77,9 +83,13 @@ class DownloadsManager {
 }
 
 extension DownloadsManager: DownloadDelegate {
-    func downloadDidFinish(_ download: Download) {
+    func downloadDidFinish(_ download: Download, error: Error?) {
         moveDownloadIfNecessary(download)
-        NotificationCenter.default.post(name: .downloadFinished, object: download, userInfo: nil)
+        var userInfo:[AnyHashable: Any] = [UserInfoKeys.download: download]
+        if let error = error {
+            userInfo[UserInfoKeys.error] = error
+        }
+        NotificationCenter.default.post(name: .downloadFinished, object: nil, userInfo: userInfo)
         downloadList.remove(download)
     }
 }

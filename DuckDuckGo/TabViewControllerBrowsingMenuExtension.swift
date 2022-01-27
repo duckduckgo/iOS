@@ -77,6 +77,11 @@ extension TabViewController {
                 self?.onReportBrokenSiteAction()
             }))
             
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
+                                                     image: UIImage(named: "MenuDownloads")!,
+                                                     action: {
+            }))
+            
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
                                                      image: UIImage(named: "MenuSettings")!,
                                                      action: { [weak self] in

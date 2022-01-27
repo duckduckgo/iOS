@@ -793,6 +793,10 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
+    fileprivate func launchDownloads() {
+        performSegue(withIdentifier: "Downloads", sender: self)
+    }
+    
     fileprivate func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
     }
@@ -1422,6 +1426,10 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestEditBookmark(tab: TabViewController) {
         onBookmarkEdit()
+    }
+    
+    func tabDidRequestDownloads(tab: TabViewController) {
+        launchDownloads()
     }
 
     func tabDidRequestSettings(tab: TabViewController) {

@@ -79,7 +79,8 @@ extension TabViewController {
             
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
                                                      image: UIImage(named: "MenuDownloads")!,
-                                                     action: {
+                                                     action: { [weak self] in
+                self?.onOpenDownloadsAction()
             }))
             
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
@@ -341,6 +342,11 @@ extension TabViewController {
     private func onReportBrokenSiteAction() {
         Pixel.fire(pixel: .browsingMenuReportBrokenSite)
         delegate?.tabDidRequestReportBrokenSite(tab: self)
+    }
+    
+    private func onOpenDownloadsAction() {
+        // Add pixel reporting here
+        delegate?.tabDidRequestDownloads(tab: self)
     }
     
     private func onBrowsingSettingsAction() {

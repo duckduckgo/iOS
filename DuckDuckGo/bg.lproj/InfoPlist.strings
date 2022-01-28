@@ -19,6 +19,9 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Позволява запазване на изображения на вашето устройство";
 
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Необходимо е за използване на гласово търсене. DuckDuckGo никога не записва какво казвате.";
+
 /* (No Comment) */
 "Paste from clipboard" = "Поставяне от клипборда";
 

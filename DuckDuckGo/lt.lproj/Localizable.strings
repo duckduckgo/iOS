@@ -1078,6 +1078,9 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Mėgstamas pridėtas";
 
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokuoti įspėjimus";
+
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Atšaukti";
 

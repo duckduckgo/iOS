@@ -557,7 +557,7 @@
 "feedback.positive.header" = "¡Es fantástico oír eso!";
 
 /* No comment provided by engineer. */
-"feedback.positive.noThanks" = "No, gracias. He terminado";
+"feedback.positive.noThanks" = "No, gracias He terminado";
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Compartir detalles";
@@ -1077,6 +1077,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorito añadido";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Bloquear alertas";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancelar";

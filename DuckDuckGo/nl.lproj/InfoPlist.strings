@@ -19,6 +19,9 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Hiermee kun je afbeeldingen op je apparaat opslaan";
 
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Dit is vereist om spraakzoekopdrachten te gebruiken. DuckDuckGo neemt nooit op wat je zegt.";
+
 /* (No Comment) */
 "Paste from clipboard" = "Plakken vanaf klembord";
 

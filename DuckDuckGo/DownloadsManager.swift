@@ -54,10 +54,11 @@ class DownloadsManager {
             temporary = false
         }
         
-        return Download(url,
+        let session = DownloadSession(url, cookieStore: cookieStore)
+        
+        return Download(downloadSession: session,
                         mimeType: type,
                         fileName: fileName,
-                        cookieStore: cookieStore,
                         temporary: temporary,
                         delegate: self)
     }

@@ -40,11 +40,9 @@ class Download: NSObject, Identifiable, ObservableObject {
     @Published private(set) var totalBytesWritten: Int64 = 0
     @Published private(set) var totalBytesExpectedToWrite: Int64 = 0
     
-    required init(_ url: URL,
-                  downloadSession: DownloadSession? = nil,
+    required init(downloadSession: DownloadSession,
                   mimeType: MIMEType,
                   fileName: String,
-                  cookieStore: WKHTTPCookieStore? = nil,
                   temporary: Bool,
                   delegate: DownloadDelegate? = nil) {
       
@@ -52,11 +50,7 @@ class Download: NSObject, Identifiable, ObservableObject {
         self.filename = fileName
         self.mimeType = mimeType
         self.temporary = temporary
-        if let downloadSession = downloadSession {
-            self.downloadSession = downloadSession
-        } else {
-            self.downloadSession = DownloadSession(url, cookieStore: cookieStore)
-        }
+        self.downloadSession = downloadSession
         
         super.init()
         self.downloadSession.delegate = self

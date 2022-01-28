@@ -96,3 +96,8 @@ extension DownloadsManager: DownloadDelegate {
         downloadList.remove(download)
     }
 }
+
+extension NSNotification.Name {
+    static let downloadStarted: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
+    static let downloadFinished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
+}

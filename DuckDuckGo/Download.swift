@@ -46,7 +46,7 @@ class Download: NSObject, Identifiable, ObservableObject {
                   fileName: String,
                   cookieStore: WKHTTPCookieStore? = nil,
                   temporary: Bool,
-                  delegate: DownloadDelegate) {
+                  delegate: DownloadDelegate? = nil) {
       
         self.delegate = delegate
         self.filename = fileName
@@ -60,7 +60,6 @@ class Download: NSObject, Identifiable, ObservableObject {
         
         super.init()
         self.downloadSession.delegate = self
-        
     }
     
     func start() {
@@ -109,9 +108,4 @@ extension Download: DownloadSessionDelegate {
         
         self.state = downloadTask.state
     }
-}
-
-extension NSNotification.Name {
-    static let downloadStarted: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
-    static let downloadFinished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
 }

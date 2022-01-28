@@ -20,33 +20,100 @@
 import XCTest
 @testable import DuckDuckGo
 
-class DownloadTests: XCTestCase {
+private class MockDownloadSession: DownloadSession {
+    var temporaryFilePath: URL?
+    
+    override func start() {
+        let session = URLSession.shared
+        let task = session.downloadTask(with: URL(string: "https://duck.com")!)
 
-    override func setUpWithError() throws {
-        deleteAllTemporaryFiles()
+        delegate?.urlSession(session, downloadTask: task, didFinishDownloadingTo: temporaryFilePath!)
+        delegate?.urlSession(URLSession.shared, task: task, didCompleteWithError: nil)
     }
+}
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+class DownloadTests: XCTestCase {
+    private let mockURL = URL(string: "https://duck.com")!
+    private let tmpDirectory = FileManager.default.temporaryDirectory
+    // swiftlint:disable force_try
+    private let documentsDirectory = try! FileManager.default.url(for: .documentDirectory,
+                                                                     in: .userDomainMask,
+                                                                     appropriateFor: nil,
+                                                                     create: false)
+    // swiftlint:enable force_try
+    override func setUpWithError() throws {
     }
     
-    private func deleteAllTemporaryFiles() {
-        
+    override func tearDownWithError() throws {
+        deleteAllFiles()
     }
-
-    func testTemporaryFlag() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    private func deleteAllFiles() {
+        deleteFilesOnPath(documentsDirectory)
+        deleteFilesOnPath(tmpDirectory)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    private func createMockFile(on path: URL) {
+        try? Data("FakeFileData".utf8).write(to: path)
+    }
+    
+    private func deleteFilesOnPath(_ url: URL) {
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: url,
+                                                                    includingPropertiesForKeys: nil,
+                                                                    options: .skipsHiddenFiles)
+            
+            files.forEach {
+                try? FileManager.default.removeItem(at: $0)
+            }
+            
+        } catch {
+            XCTFail(error.localizedDescription)
         }
+    }
+    
+    private func checkIfFileExists(_ filePath: URL) -> Bool {
+        return FileManager.default.fileExists(atPath: filePath.path)
+    }
+
+    func testTemporaryDownload() {
+        let mockSession = MockDownloadSession(mockURL)
+        
+        let tmpName = "MOCK_\(UUID().uuidString).tmp"
+        let filename = "\(UUID().uuidString).zip"
+
+        let path = tmpDirectory.appendingPathComponent(tmpName)
+        createMockFile(on: path)
+        
+        let finalFilePath = tmpDirectory.appendingPathComponent(filename)
+        
+        mockSession.temporaryFilePath = path
+        
+        let temporaryDownload = Download(mockURL, downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: true)
+        temporaryDownload.start()
+
+        XCTAssertTrue(temporaryDownload.temporary, "File should be temporary")
+        XCTAssertTrue(checkIfFileExists(finalFilePath), "File should exist")
+    }
+    
+    func testPermanentDownload() {
+        let mockSession = MockDownloadSession(mockURL)
+        
+        let tmpName = "MOCK_\(UUID().uuidString).tmp"
+        let filename = "\(UUID().uuidString).zip"
+        
+        let path = tmpDirectory.appendingPathComponent(tmpName)
+        createMockFile(on: path)
+        
+        let finalFilePath = tmpDirectory.appendingPathComponent(filename)
+        
+        mockSession.temporaryFilePath = path
+        
+        let temporaryDownload = Download(mockURL, downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: false)
+        temporaryDownload.start()
+
+        XCTAssertFalse(temporaryDownload.temporary, "File should not temporary")
+        XCTAssertTrue(checkIfFileExists(finalFilePath), "File should exist")
     }
 
 }

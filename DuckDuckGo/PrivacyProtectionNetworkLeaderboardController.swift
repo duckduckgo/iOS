@@ -20,6 +20,7 @@
 import Foundation
 import UIKit
 import Core
+import BrowserServicesKit
 
 class PrivacyProtectionNetworkLeaderboardController: UIViewController {
 
@@ -36,7 +37,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     @IBOutlet weak var resetView: UIView!
     @IBOutlet weak var resetViewInfo: UILabel!
 
-    private var privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+    private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
     private var siteRating: SiteRating!
 
     let leaderboard = NetworkLeaderboard.shared
@@ -208,7 +209,7 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
             fatalError("Failed to dequeue cell as PrivacyProtectionNetworkLeaderboardCell")
         }
 
-        let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData
+        let currentTrackerData = ContentBlocking.contentBlockingManager.currentTDSRules?.trackerData
         let networkName = currentTrackerData?.findEntity(byName: network.name!)?.displayName ?? network.name!
         cell.update(network: networkName, percent: percent)
         return cell

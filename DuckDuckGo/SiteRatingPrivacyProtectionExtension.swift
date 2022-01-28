@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 extension SiteRating {
     

@@ -19,6 +19,7 @@
 
 import XCTest
 import TrackerRadarKit
+import BrowserServicesKit
 @testable import Core
 
 class TrackerRadarIntegrationTests: XCTestCase {
@@ -27,8 +28,7 @@ class TrackerRadarIntegrationTests: XCTestCase {
 
         let url = AppUrls(statisticsStore: MockStatisticsStore()).trackerDataSet
         let data = try Data(contentsOf: url)
-        let trackerData = try JSONDecoder().decode(TrackerData.self, from: data)
-        let dataManager = TrackerDataManager(trackerData: trackerData)
+        let dataManager = TrackerDataManager(etag: UUID().uuidString, data: data)
 
         dataManager.assertIsMajorTracker(domain: "google.com")
         dataManager.assertIsMajorTracker(domain: "facebook.com")

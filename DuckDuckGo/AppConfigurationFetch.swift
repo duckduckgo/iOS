@@ -21,6 +21,7 @@ import Foundation
 import BackgroundTasks
 import Core
 import os.log
+import BrowserServicesKit
 
 public typealias AppConfigurationCompletion = (Bool) -> Void
 
@@ -329,7 +330,7 @@ extension AppConfigurationFetch {
 
         queue.async {
             let fetchedNewData = configurationFetcher.fetchConfigurationFiles(isBackground: true)
-            ContentBlockerRulesManager.shared.recompile()
+            ContentBlocking.contentBlockingManager.scheduleCompilation()
 
             DispatchQueue.main.async {
                 lastCompletionStatus = backgroundRefreshTaskCompletionHandler(store: store,

@@ -20,6 +20,7 @@
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
+import BrowserServicesKit
 
 class DaxDialogTests: XCTestCase {
     
@@ -36,7 +37,9 @@ class DaxDialogTests: XCTestCase {
     }
     
     lazy var mockVariantManager = MockVariantManager(isSupportedReturns: true)
-    lazy var onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(), variantManager: mockVariantManager)
+    lazy var onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(),
+                                     contentBlockingRulesManager: Self.rulesManager!,
+                                     variantManager: mockVariantManager)
     
     static var rulesManager: ContentBlockerRulesManager?
 
@@ -44,23 +47,38 @@ class DaxDialogTests: XCTestCase {
         super.setUp()
         UserDefaults.clearStandard()
         
-        if let cbrl = Self.rulesManager {
-            // ensure we use the embedded version
-            try? FileManager.default.removeItem(at: FileStore().persistenceLocation(forConfiguration: .trackerDataSet))
-            
-            ContentBlockerRulesManager.test_replaceSharedInstance(with: cbrl)
-        } else {
-            let cbrm = ContentBlockerRulesManager.test_prepareEmbeddedInstance()
-            Self.rulesManager = cbrm
-            
-            let exp = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
-                                  object: cbrm,
-                                  handler: nil)
-    
-            wait(for: [exp], timeout: 15.0)
-        }
-    }
+        guard Self.rulesManager == nil else { return }
+        
+        let contentBlockingUpdating = ContentBlockingUpdating()
 
+        let trackerDataManager = TrackerDataManager(etag: nil,
+                                                    data: nil,
+                                                    errorReporting: nil)
+        
+        let privacyConfigurationManager
+        = PrivacyConfigurationManager(fetchedETag: nil,
+                                      fetchedData: nil,
+                                      embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
+                                      localProtection: DomainsProtectionUserDefaultsStore(),
+                                      errorReporting: nil)
+        
+        let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManger: trackerDataManager)
+        let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
+
+        let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,
+                                                                       exceptionsSource: exceptionsSource,
+                                                                       updateListener: contentBlockingUpdating,
+                                                                       logger: contentBlockingLog)
+        
+        Self.rulesManager = contentBlockingManager
+        
+        let exp = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
+                              object: contentBlockingUpdating,
+                              handler: nil)
+        
+        wait(for: [exp], timeout: 15.0)
+    }
+    
     func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessagesShown() {
         onboarding.enableAddFavoriteFlow()
         onboarding.resumeRegularFlow()
@@ -264,7 +282,7 @@ class DaxDialogTests: XCTestCase {
     }
         
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedTracker {
-        let tds = ContentBlockerRulesManager.shared.currentRules?.trackerData
+        let tds = Self.rulesManager?.currentTDSRules?.trackerData
         let entity = tds?.findEntity(forHost: url.host!)
         let knownTracker = tds?.findTracker(forUrl: url.absoluteString)
         return DetectedTracker(url: url.absoluteString,

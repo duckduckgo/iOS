@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import BrowserServicesKit
 
 public class HTTPSUpgrade {
 
@@ -32,7 +33,7 @@ public class HTTPSUpgrade {
     private var bloomFilter: BloomFilterWrapper?
     
     init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence(), appUrls: AppUrls = AppUrls(),
-         privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) {
+         privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) {
         self.store = store
         self.appUrls = appUrls
         self.privacyConfig = privacyConfig

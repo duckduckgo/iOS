@@ -683,7 +683,7 @@ class MainViewController: UIViewController {
     }
     
     private func updateSiteRating(_ siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating, with: PrivacyConfigurationManager.shared.privacyConfig)
+        omniBar.updateSiteRating(siteRating, with: ContentBlocking.privacyConfigurationManager.privacyConfig)
     }
 
     func dismissOmniBar() {

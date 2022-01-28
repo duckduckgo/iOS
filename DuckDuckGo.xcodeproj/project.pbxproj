@@ -50,6 +50,9 @@
 		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
 		31C138A427A3352600FFD4B2 /* DownloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138A227A3350A00FFD4B2 /* DownloadTests.swift */; };
 		31C138A827A3E9C900FFD4B2 /* DownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138A727A3E9C900FFD4B2 /* DownloadSession.swift */; };
+		31C138AC27A403CB00FFD4B2 /* DownloadsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138AB27A403CB00FFD4B2 /* DownloadsManagerTests.swift */; };
+		31C138AF27A408C600FFD4B2 /* MockDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138AE27A408C600FFD4B2 /* MockDownloadSession.swift */; };
+		31C138B227A4097800FFD4B2 /* DownloadTestsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138B127A4097800FFD4B2 /* DownloadTestsHelper.swift */; };
 		31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */; };
 		31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */; };
 		31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */; };
@@ -784,6 +787,9 @@
 		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
 		31C138A227A3350A00FFD4B2 /* DownloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTests.swift; sourceTree = "<group>"; };
 		31C138A727A3E9C900FFD4B2 /* DownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadSession.swift; sourceTree = "<group>"; };
+		31C138AB27A403CB00FFD4B2 /* DownloadsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsManagerTests.swift; sourceTree = "<group>"; };
+		31C138AE27A408C600FFD4B2 /* MockDownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDownloadSession.swift; sourceTree = "<group>"; };
+		31C138B127A4097800FFD4B2 /* DownloadTestsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTestsHelper.swift; sourceTree = "<group>"; };
 		31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerProtocol.swift; sourceTree = "<group>"; };
 		31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchHelper.swift; sourceTree = "<group>"; };
@@ -2176,9 +2182,28 @@
 		31C138A127A334F600FFD4B2 /* Downloads */ = {
 			isa = PBXGroup;
 			children = (
+				31C138B027A4096C00FFD4B2 /* Helper */,
+				31C138AD27A408B800FFD4B2 /* Mocks */,
 				31C138A227A3350A00FFD4B2 /* DownloadTests.swift */,
+				31C138AB27A403CB00FFD4B2 /* DownloadsManagerTests.swift */,
 			);
 			name = Downloads;
+			sourceTree = "<group>";
+		};
+		31C138AD27A408B800FFD4B2 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				31C138AE27A408C600FFD4B2 /* MockDownloadSession.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		31C138B027A4096C00FFD4B2 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				31C138B127A4097800FFD4B2 /* DownloadTestsHelper.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
@@ -4847,6 +4872,7 @@
 				985CA1F226CD3D27001325DB /* TestSchemeHandler.swift in Sources */,
 				85BA58581F34F72F00C6E8CA /* AppUserDefaultsTests.swift in Sources */,
 				F1134EBC1F40D45700B73467 /* MockStatisticsStore.swift in Sources */,
+				31C138AC27A403CB00FFD4B2 /* DownloadsManagerTests.swift in Sources */,
 				F11E23211ED3B7A600523BC9 /* MockBundle.swift in Sources */,
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */,
@@ -4864,6 +4890,7 @@
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
 				858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */,
 				98A69A7326D70D9600370512 /* SurrogatesUserScriptTests.swift in Sources */,
+				31C138B227A4097800FFD4B2 /* DownloadTestsHelper.swift in Sources */,
 				98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */,
 				85C11E532090B23A00BFFEB4 /* UserDefaultsHomeRowReminderStorageTests.swift in Sources */,
 				F16393F51ECCA85900DDD653 /* DomainsProtectionUserDefaultsStoreTests.swift in Sources */,
@@ -4873,6 +4900,7 @@
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
 				859C5FBA2147E6E200E2A43D /* GradeTests.swift in Sources */,
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
+				31C138AF27A408C600FFD4B2 /* MockDownloadSession.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
 				98733E5D26FB354300521D94 /* TrackerAllowlistReferenceTests.swift in Sources */,
 				985CA1F426CD3D40001325DB /* ContentBlockerRulesUserScriptsTests.swift in Sources */,

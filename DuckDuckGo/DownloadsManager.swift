@@ -36,7 +36,9 @@ class DownloadsManager {
         }
     }()
     
-    func setupDownload(_ navigationResponse: WKNavigationResponse, cookieStore: WKHTTPCookieStore) -> Download? {
+    func setupDownload(_ navigationResponse: WKNavigationResponse,
+                       downloadSession: DownloadSession? = nil,
+                       cookieStore: WKHTTPCookieStore? = nil) -> Download? {
         
         guard let mimeType = navigationResponse.response.mimeType,
               let url = navigationResponse.response.url else {
@@ -54,7 +56,12 @@ class DownloadsManager {
             temporary = false
         }
         
-        let session = DownloadSession(url, cookieStore: cookieStore)
+        let session: DownloadSession
+        if let downloadSession = downloadSession {
+            session = downloadSession
+        } else {
+            session = DownloadSession(url, cookieStore: cookieStore)
+        }
         
         return Download(downloadSession: session,
                         mimeType: type,

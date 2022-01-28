@@ -20,100 +20,52 @@
 import XCTest
 @testable import DuckDuckGo
 
-private class MockDownloadSession: DownloadSession {
-    var temporaryFilePath: URL?
-    
-    override func start() {
-        let session = URLSession.shared
-        let task = session.downloadTask(with: URL(string: "https://duck.com")!)
-
-        delegate?.urlSession(session, downloadTask: task, didFinishDownloadingTo: temporaryFilePath!)
-        delegate?.urlSession(URLSession.shared, task: task, didCompleteWithError: nil)
-    }
-}
-
 class DownloadTests: XCTestCase {
-    private let mockURL = URL(string: "https://duck.com")!
-    private let tmpDirectory = FileManager.default.temporaryDirectory
-    // swiftlint:disable force_try
-    private let documentsDirectory = try! FileManager.default.url(for: .documentDirectory,
-                                                                     in: .userDomainMask,
-                                                                     appropriateFor: nil,
-                                                                     create: false)
-    // swiftlint:enable force_try
+
     override func setUpWithError() throws {
     }
     
     override func tearDownWithError() throws {
-        deleteAllFiles()
-    }
-    
-    private func deleteAllFiles() {
-        deleteFilesOnPath(documentsDirectory)
-        deleteFilesOnPath(tmpDirectory)
-    }
-    
-    private func createMockFile(on path: URL) {
-        try? Data("FakeFileData".utf8).write(to: path)
-    }
-    
-    private func deleteFilesOnPath(_ url: URL) {
-        do {
-            let files = try FileManager.default.contentsOfDirectory(at: url,
-                                                                    includingPropertiesForKeys: nil,
-                                                                    options: .skipsHiddenFiles)
-            
-            files.forEach {
-                try? FileManager.default.removeItem(at: $0)
-            }
-            
-        } catch {
-            XCTFail(error.localizedDescription)
-        }
-    }
-    
-    private func checkIfFileExists(_ filePath: URL) -> Bool {
-        return FileManager.default.fileExists(atPath: filePath.path)
+        DownloadTestsHelper.deleteAllFiles()
     }
 
     func testTemporaryDownload() {
-        let mockSession = MockDownloadSession(mockURL)
+        let mockSession = MockDownloadSession(DownloadTestsHelper.mockURL)
         
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         let filename = "\(UUID().uuidString).zip"
 
-        let path = tmpDirectory.appendingPathComponent(tmpName)
-        createMockFile(on: path)
+        let path = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
+        DownloadTestsHelper.createMockFile(on: path)
         
-        let finalFilePath = tmpDirectory.appendingPathComponent(filename)
+        let finalFilePath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(filename)
         
         mockSession.temporaryFilePath = path
         
-        let temporaryDownload = Download(mockURL, downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: true)
+        let temporaryDownload = Download(downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: true)
         temporaryDownload.start()
 
         XCTAssertTrue(temporaryDownload.temporary, "File should be temporary")
-        XCTAssertTrue(checkIfFileExists(finalFilePath), "File should exist")
+        XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
     }
     
     func testPermanentDownload() {
-        let mockSession = MockDownloadSession(mockURL)
+        let mockSession = MockDownloadSession(DownloadTestsHelper.mockURL)
         
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         let filename = "\(UUID().uuidString).zip"
+
+        let path = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
+        DownloadTestsHelper.createMockFile(on: path)
         
-        let path = tmpDirectory.appendingPathComponent(tmpName)
-        createMockFile(on: path)
-        
-        let finalFilePath = tmpDirectory.appendingPathComponent(filename)
+        let finalFilePath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(filename)
         
         mockSession.temporaryFilePath = path
         
-        let temporaryDownload = Download(mockURL, downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: false)
+        let temporaryDownload = Download(downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: false)
         temporaryDownload.start()
-
-        XCTAssertFalse(temporaryDownload.temporary, "File should not temporary")
-        XCTAssertTrue(checkIfFileExists(finalFilePath), "File should exist")
+        
+        XCTAssertFalse(temporaryDownload.temporary, "File should not be temporary")
+        XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
     }
-
 }

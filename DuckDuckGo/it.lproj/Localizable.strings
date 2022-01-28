@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Modifica";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Condividi";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Aggiungi widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Cerca in privato e visita velocemente i siti che preferisci.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Premi a lungo sulla schermata iniziale per accedere alla modalità Jiggle.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Tocca il pulsante più %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Trova e seleziona DuckDuckGo. Quindi scegli un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Accedi ai tuoi siti preferiti con un solo tocco.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "I segnalibri già presenti non saranno duplicati.";
@@ -606,18 +627,6 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Mulinello";
-
-/* No comment provided by engineer. */
-"home.message.buttonText" = "Imposta come browser predefinito";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Imposta DuckDuckGo come browser predefinito.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Apri i collegamenti con la massima tranquillità, ogni volta.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOVITÀ IN IOS 14";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Aggiungi DuckDuckGo alla tua schermata iniziale!";

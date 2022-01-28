@@ -19,6 +19,9 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Umožňuje vám ukládat obrázky do vašeho zařízení";
 
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Je potřeba pro používání hlasového vyhledávání. DuckDuckGo nikdy nenahrává, co říkáš.";
+
 /* (No Comment) */
 "Paste from clipboard" = "Vložit ze schránky";
 

@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Szerkesztés";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Megosztás";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Minialkalmazás hozzáadása";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Folytass privát keresést, és látogass el gyorsan kedvenc oldalaidra.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Az ugráló ikonos üzemmódba lépéshez tartsd nyomva hosszan a kezdőképernyőt.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Koppints a plusz %@ gombra.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Keresd meg és jelöld ki a DuckDuckGo elemet. Ezután válassz egy minialkalmazást.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Egyetlen koppintással nyisd meg kedvenc oldalaidat.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "A meglévő könyvjelzők nem kettőződnek.";
@@ -606,18 +627,6 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Örvény";
-
-/* No comment provided by engineer. */
-"home.message.buttonText" = "Beállítás alapértelmezett böngészőként";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Tedd a DuckDuckGót az alapértelmezett böngésződdé.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Nyugodtan kattints a linkekre, mindig.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "ÚJDONSÁG AZ IOS 14-BEN";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Add hozzá a DuckDuckGo-t a kezdőképernyődhöz!";

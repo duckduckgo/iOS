@@ -19,6 +19,9 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Gör att du kan spara bilder på din enhet";
 
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Det här krävs för att använda röstsökning. DuckDuckGo spelar aldrig in det du säger.";
+
 /* (No Comment) */
 "Paste from clipboard" = "Klistra in från urklipp";
 

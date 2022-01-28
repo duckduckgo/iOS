@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Editar";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Compartir";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Añadir widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Busca de manera privada y visita rápidamente los sitios que te gustan.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Mantén pulsada la pantalla de inicio para entrar en el modo jiggle.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Pulsa el botón más %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Busca y selecciona DuckDuckGo. A continuación, elige un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Visita tus sitios favoritos con un toque.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Los marcadores existentes no se duplicarán.";
@@ -557,7 +578,7 @@
 "feedback.positive.header" = "¡Es fantástico oír eso!";
 
 /* No comment provided by engineer. */
-"feedback.positive.noThanks" = "No, gracias. He terminado";
+"feedback.positive.noThanks" = "No, gracias He terminado";
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Compartir detalles";
@@ -606,18 +627,6 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Remolino";
-
-/* No comment provided by engineer. */
-"home.message.buttonText" = "Definir como navegador predeterminado";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Establece DuckDuckGo como tu navegador predeterminado.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Abre los enlaces con tranquilidad, siempre.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NUEVO EN IOS 14";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Añade DuckDuckGo a tu pantalla de inicio.";

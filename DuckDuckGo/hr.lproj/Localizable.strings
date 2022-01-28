@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Podijeli";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Dodaj widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Pretražujte u potpunoj privatnosti i u tren oka posjetite omiljene web stranice.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Duže zadržite prst na početnom zaslonu za ulaz u način tresenja.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Dodirnite gumb plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Pronađite i odaberite DuckDuckGo. Zatim odaberite widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Jednim dodirom do vaših omiljenih stranica.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
@@ -606,18 +627,6 @@
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Vrtlog";
-
-/* No comment provided by engineer. */
-"home.message.buttonText" = "Postavi kao zadani preglednik";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Postavi DuckDuckGo kao svoj zadani preglednik.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Svaki put poveznice otvori spokojno.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOVO U IOS-u 14";
 
 /* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo na svoj početni zaslon!";

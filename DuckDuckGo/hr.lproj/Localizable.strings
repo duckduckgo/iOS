@@ -1078,6 +1078,9 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Dodano u Omiljeno";
 
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokiraj upozorenja";
+
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Otkaži";
 

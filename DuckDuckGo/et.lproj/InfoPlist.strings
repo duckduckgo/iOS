@@ -19,6 +19,9 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Võimaldab salvestada pilte oma seadmesse";
 
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "See on vajalik häälotsingu kasutamiseks. DuckDuckGo ei salvesta kunagi seda, mida te ütlete.";
+
 /* (No Comment) */
 "Paste from clipboard" = "Kleebi lõikelaualt";
 

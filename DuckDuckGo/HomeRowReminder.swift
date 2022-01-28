@@ -43,7 +43,7 @@ class HomeRowReminder {
         self.homeMessageStorage = homeMessageStorage
     }
 
-    var shouldShow: Bool {
+    func showNow() -> Bool {
         guard !hasShownBefore() else { return false }
         guard hasReminderTimeElapsed else { return false }
         return true

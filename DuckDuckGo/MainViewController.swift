@@ -844,7 +844,7 @@ class MainViewController: UIViewController {
 
     func showHomeRowReminder() {
         let feature = HomeRowReminder()
-        if feature.shouldShow {
+        if feature.showNow() {
             showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
                 if tapped {
                     self.launchInstructions()

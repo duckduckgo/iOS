@@ -28,7 +28,13 @@ class DownloadsManager {
     }
     
     private(set) var downloadList = Set<Download>()
-    //private let downloadsFolder
+    private var downloadsFolder: URL = {
+        do {
+            return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        } catch {
+            return FileManager.default.temporaryDirectory
+        }
+    }()
     
     func setupDownload(_ navigationResponse: WKNavigationResponse, cookieStore: WKHTTPCookieStore) -> Download? {
         
@@ -63,29 +69,26 @@ class DownloadsManager {
     }
     
     private func move(_ download: Download, toPath path: URL) {
-        /*
+        guard let location = download.location else { return }
          do {
-             let newPath = oldPath.deletingLastPathComponent().appendingPathComponent(name)
+             let newPath = path.appendingPathComponent(download.filename)
              try? FileManager.default.removeItem(at: newPath)
-             try FileManager.default.moveItem(at: oldPath, to: newPath)
-             
-             return newPath
+             try FileManager.default.moveItem(at: location, to: newPath)
          } catch {
-             return nil
+             print("Error \(error)")
          }
-         */
     }
     
-    private func moveDownloadIfNecessary(_ download: Download) {
+    private func moveToDownloadFolderIfNecessary(_ download: Download) {
         guard !download.temporary else { return }
-        
+        move(download, toPath: downloadsFolder)
     }
 }
 
 extension DownloadsManager: DownloadDelegate {
     func downloadDidFinish(_ download: Download, error: Error?) {
-        moveDownloadIfNecessary(download)
-        var userInfo:[AnyHashable: Any] = [UserInfoKeys.download: download]
+        moveToDownloadFolderIfNecessary(download)
+        var userInfo: [AnyHashable: Any] = [UserInfoKeys.download: download]
         if let error = error {
             userInfo[UserInfoKeys.error] = error
         }

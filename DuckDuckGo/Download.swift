@@ -33,36 +33,39 @@ class Download: NSObject, Identifiable, ObservableObject {
     var location: URL?
     let date = Date()
     let temporary: Bool
-    
-    private var session: URLSession?
-    private let cookieStore: WKHTTPCookieStore?
-    private var downloadSession: URLSessionDownloadTask?
+    let downloadSession: DownloadSession
     
     @Published private(set) var state: URLSessionTask.State = .suspended
     @Published private(set) var bytesWritten: Int64 = 0
     @Published private(set) var totalBytesWritten: Int64 = 0
     @Published private(set) var totalBytesExpectedToWrite: Int64 = 0
     
-    required init(_ url: URL, mimeType: MIMEType, fileName: String, cookieStore: WKHTTPCookieStore?, temporary: Bool, delegate: DownloadDelegate) {
+    required init(_ url: URL,
+                  downloadSession: DownloadSession? = nil,
+                  mimeType: MIMEType,
+                  fileName: String,
+                  cookieStore: WKHTTPCookieStore? = nil,
+                  temporary: Bool,
+                  delegate: DownloadDelegate) {
       
         self.delegate = delegate
         self.filename = fileName
-        self.cookieStore = cookieStore
         self.mimeType = mimeType
         self.temporary = temporary
+        if let downloadSession = downloadSession {
+            self.downloadSession = downloadSession
+        } else {
+            self.downloadSession = DownloadSession(url, cookieStore: cookieStore)
+        }
+        
         super.init()
-        self.session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
-        downloadSession = self.session?.downloadTask(with: url)
+        self.downloadSession.delegate = self
+        
     }
     
     func start() {
-        cookieStore?.getAllCookies { cookies in
-            cookies.forEach { cookie in
-                self.session?.configuration.httpCookieStorage?.setCookie(cookie)
-            }
-        }
-        downloadSession?.resume()
-        self.state = downloadSession?.state ?? .completed
+        downloadSession.start()
+        self.state = self.downloadSession.downloadSession?.state ?? .completed
     }
     
     deinit {
@@ -82,14 +85,14 @@ class Download: NSObject, Identifiable, ObservableObject {
     }
 }
 
-extension Download: URLSessionDownloadDelegate, URLSessionTaskDelegate {
+extension Download: DownloadSessionDelegate {
   
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         self.location = renameFile(location, name: filename)
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        self.session?.finishTasksAndInvalidate()
+        downloadSession.finishTasksAndInvalidate()
         state = task.state
         delegate?.downloadDidFinish(self, error: error)
     }

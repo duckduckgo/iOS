@@ -1078,6 +1078,9 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Preferință adăugată";
 
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blochează notificările";
+
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Renunță";
 

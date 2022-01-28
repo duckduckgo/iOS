@@ -175,6 +175,7 @@ class TabViewController: UIViewController {
     private var textSizeUserScript = TextSizeUserScript()
     private var autofillUserScript = AutofillUserScript()
     private var debugScript = DebugUserScript()
+    private var shouldBlockJSAlert = false
 
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
@@ -186,7 +187,7 @@ class TabViewController: UIViewController {
     private var userScripts: [UserScript] = []
     
     private var canDisplayJavaScriptAlert: Bool {
-        return presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
+        return !shouldBlockJSAlert && presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
     }
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {
@@ -1455,8 +1456,10 @@ extension TabViewController: WKUIDelegate {
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping () -> Void) {
         if canDisplayJavaScriptAlert {
-            let alertController = WebJSAlert(message: message,
-                                             alertType: .alert(handler: completionHandler)).createAlertController()
+            let alertController = WebJSAlert(message: message, alertType: .alert(handler: { [weak self] blockAlerts in
+                self?.shouldBlockJSAlert = blockAlerts
+                completionHandler()
+            })).createAlertController()
             
             self.present(alertController, animated: true, completion: nil)
         } else {
@@ -1471,29 +1474,35 @@ extension TabViewController: WKUIDelegate {
         
         if canDisplayJavaScriptAlert {
             let alertController = WebJSAlert(message: message,
-                                             alertType: .confirm(handler: completionHandler)).createAlertController()
+                                             alertType: .confirm(handler: { [weak self] blockAlerts, confirm in
+                self?.shouldBlockJSAlert = blockAlerts
+                completionHandler(confirm)
+            })).createAlertController()
             
             self.present(alertController, animated: true, completion: nil)
         } else {
             completionHandler(false)
         }
      }
-
-     func webView(_ webView: WKWebView,
-                  runJavaScriptTextInputPanelWithPrompt prompt: String,
-                  defaultText: String?,
-                  initiatedByFrame frame: WKFrameInfo,
-                  completionHandler: @escaping (String?) -> Void) {
+    
+    func webView(_ webView: WKWebView,
+                 runJavaScriptTextInputPanelWithPrompt prompt: String,
+                 defaultText: String?,
+                 initiatedByFrame frame: WKFrameInfo,
+                 completionHandler: @escaping (String?) -> Void) {
         if canDisplayJavaScriptAlert {
             let alertController = WebJSAlert(message: prompt,
-                                             alertType: .text(handler: completionHandler,
-                                                              defaultText: defaultText)).createAlertController()
+                                             alertType: .text(handler: { [weak self] blockAlerts, text in
+                
+                self?.shouldBlockJSAlert = blockAlerts
+                completionHandler(text)
+            }, defaultText: defaultText)).createAlertController()
             
             self.present(alertController, animated: true, completion: nil)
         } else {
             completionHandler(nil)
         }
-     }
+    }
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {

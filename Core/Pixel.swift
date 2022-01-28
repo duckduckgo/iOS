@@ -172,6 +172,8 @@ public enum PixelName: String {
     case textSizeSettingsChanged = "m_text_size_settings_changed"
     
     case presentPreviewWithoutTab = "m_present_preview_without_tab"
+    case jsAlertShown = "m_js_alert_shown"
+    case jsAlertBlocked = "m_js_alert_blocked"
 
     // MARK: SERP pixels
     

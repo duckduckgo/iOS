@@ -188,7 +188,6 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
     }
 
     private func onStoreChanged() {
-        // FIXME?
         ContentBlocking.contentBlockingManager.scheduleCompilation()
     }
 

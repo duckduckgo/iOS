@@ -149,7 +149,6 @@ public class AMPCanonicalExtractor: NSObject {
                                 config: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig,
                                 completion: @escaping ((URL?) -> Void)) {
         cancelOngoingExtraction()
-        // FIXME
         guard config.isEnabled(featureKey: .ampLinks) else {
             completion(nil)
             return

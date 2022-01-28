@@ -43,10 +43,8 @@ struct WidgetEducationView: View {
                                       text: Text(UserText.addWidgetSettingsThirdParagraph),
                                       image: Image.widgetExample)
                 }
-                .padding(EdgeInsets(top: Const.Padding.top,
-                                    leading: Const.Padding.leading,
-                                    bottom: 0,
-                                    trailing: Const.Padding.trailing))
+                .padding(.horizontal)
+                .padding(.top, Const.Padding.top)
             }
         }
     }
@@ -72,7 +70,7 @@ private struct NumberedParagraph: View {
                     .foregroundColor(Color.font)
                 image?
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
                     .frame(maxWidth: Const.Size.imageWidth)
             }
         }
@@ -116,14 +114,12 @@ private enum Const {
     
     enum Padding {
         static let top: CGFloat = 32
-        static let leading: CGFloat = 24
-        static let trailing: CGFloat = 40
     }
     
     enum Spacing {
-        static let paragraph: CGFloat = 32
+        static let paragraph: CGFloat = 24
         static let numberAndText: CGFloat = 16
-        static let textAndImage: CGFloat = 18
+        static let textAndImage: CGFloat = 16
         static let line: CGFloat = 4
     }
     

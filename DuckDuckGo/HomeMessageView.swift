@@ -40,7 +40,7 @@ struct HomeMessageView: View {
         VStack(spacing: Const.Spacing.titleAndSubtitle) {
             HStack(alignment: .top) {
                 Spacer()
-                VStack {
+                VStack(spacing: Const.Spacing.imageAndTitle) {
                     topText
                     image
                     title
@@ -152,9 +152,10 @@ private enum Const {
     }
     
     enum Spacing {
-        static let titleAndSubtitle: CGFloat = 6
+        static let imageAndTitle: CGFloat = 16
+        static let titleAndSubtitle: CGFloat = 8
         static let subtitleAndButtons: CGFloat = 16
-        static let line: CGFloat = 3
+        static let line: CGFloat = 4
     }
     
     enum Size {

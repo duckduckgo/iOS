@@ -39,6 +39,9 @@ class FingerprintUITest: XCTestCase {
 
         // Add a bookmark to edit to a bookmarklet later
         app.searchFields["searchEntry"].tap()
+        
+        sleep(1)
+        
         app
             .searchFields["searchEntry"]
             .typeText("https://duckduckgo.com\n")
@@ -46,15 +49,15 @@ class FingerprintUITest: XCTestCase {
         sleep(5) // let site load
         
         app.buttons["Browsing Menu"].tap()
-        if app.tables.staticTexts["Bookmark This Page"].waitForExistence(timeout: 2) {
-            app.tables.staticTexts["Bookmark This Page"].tap()
+        if app.tables.staticTexts["Add Bookmark"].waitForExistence(timeout: 2) {
+            app.tables.staticTexts["Add Bookmark"].tap()
         } else if app.tables.staticTexts["Bookmarks"].waitForExistence(timeout: 2) {
             dismissMenu()
             removeTheBookmark()
             
             app.buttons["Browsing Menu"].tap()
-            if app.tables.staticTexts["Bookmark This Page"].waitForExistence(timeout: 2) {
-                app.tables.staticTexts["Bookmark This Page"].tap()
+            if app.tables.staticTexts["Add Bookmark"].waitForExistence(timeout: 2) {
+                app.tables.staticTexts["Add Bookmark"].tap()
             } else {
                 XCTFail("Could not ensure one bookmark is present")
             }
@@ -96,21 +99,21 @@ class FingerprintUITest: XCTestCase {
         }
         
         // Edit bookmark into bookmarklet to verify fingerprinting test
-        let bookmarksNavigationBar = app.navigationBars["Bookmarks"]
-        _ = bookmarksNavigationBar.buttons["Edit"].waitForExistence(timeout: 25)
-        bookmarksNavigationBar.buttons["Edit"].tap()
+        let bookmarksToolbarButtons = app.toolbars.buttons
+        _ = bookmarksToolbarButtons["Edit"].waitForExistence(timeout: 25)
+        bookmarksToolbarButtons["Edit"].tap()
         if app.tables.staticTexts["DuckDuckGo — Privacy, simplified."].waitForExistence(timeout: 25) {
             app.staticTexts["DuckDuckGo — Privacy, simplified."].tap()
         } else {
             XCTFail("Could not find bookmark")
         }
         
-        app.alerts["Edit Bookmark"].textFields["Bookmark Address"].clear()
-        app.alerts["Edit Bookmark"].textFields["Bookmark Address"]
+        app.textFields.matching(identifier: "URL").firstMatch.clear()
+        app.textFields.matching(identifier: "URL").firstMatch
             .typeText("javascript:(function(){const values = {'screen.availTop': 0,'screen.availLeft': 0,'screen.availWidth': screen.width,'screen.availHeight': screen.height,'screen.colorDepth': 24,'screen.pixelDepth': 24,'window.screenY': 0,'window.screenLeft': 0,'navigator.doNotTrack': undefined};var passed = true;var reason = null;for (const test of results.results) {if (values[test.id] !== undefined) {if (values[test.id] !== test.value) {console.log(test.id, values[test.id]);reason = test.id;passed = false;break;}}}var elem = document.createElement('p');elem.innerHTML = (passed) ? 'TEST PASSED' : 'TEST FAILED: ' + reason;document.body.insertBefore(elem, document.body.childNodes[0]);}());")
-        app.alerts["Edit Bookmark"].scrollViews.otherElements.buttons["Save"].tap()
-        bookmarksNavigationBar.buttons["Done"].tap()
-        bookmarksNavigationBar.buttons["Done"].tap()
+        app.navigationBars.buttons["Save"].tap()
+        app.toolbars.buttons["Done"].tap()
+        app.navigationBars.buttons["Done"].tap()
         
         // Clear all tabs and data
         app.toolbars["Toolbar"].buttons["Fire"].tap()

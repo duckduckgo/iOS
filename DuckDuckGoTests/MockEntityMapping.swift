@@ -30,7 +30,7 @@ class MockEntityMapping: EntityMapping {
         self.prevalence = prevalence
     }
 
-    override func findEntity(forHost host: String) -> Entity? {
+    override func findEntity(forHost host: String, in: TrackerData? = nil) -> Entity? {
         return Entity(displayName: entity, domains: nil, prevalence: prevalence)
     }
         

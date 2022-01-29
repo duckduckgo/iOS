@@ -19,15 +19,21 @@
 
 import XCTest
 @testable import Core
+import BrowserServicesKit
 
 class EntityMappingTests: XCTestCase {
     
     /// This is now based on the embedded tracker data so if this test fails it might be because the embedded data was updated.
     func testWhenDomainHasSubdomainThenParentEntityIsFound() {
+        
+        let trackerDataManager = TrackerDataManager(etag: nil,
+                                                    data: nil,
+                                                    errorReporting: nil)
+        
         let testee = EntityMapping()
-        XCTAssertEqual("comScore", testee.findEntity(forHost: "sub.domain.comscore.com")?.displayName)
-        XCTAssertEqual("comScore", testee.findEntity(forHost: "www.comscore.com")?.displayName)
-        XCTAssertEqual("comScore", testee.findEntity(forHost: "comscore.com")?.displayName)
+        XCTAssertEqual("comScore", testee.findEntity(forHost: "sub.domain.comscore.com", in: trackerDataManager.embeddedData.tds)?.displayName)
+        XCTAssertEqual("comScore", testee.findEntity(forHost: "www.comscore.com", in: trackerDataManager.embeddedData.tds)?.displayName)
+        XCTAssertEqual("comScore", testee.findEntity(forHost: "comscore.com", in: trackerDataManager.embeddedData.tds)?.displayName)
     }
     
 }

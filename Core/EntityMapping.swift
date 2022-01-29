@@ -24,8 +24,8 @@ public class EntityMapping {
     
     public init() { }
     
-    public func findEntity(forHost host: String) -> Entity? {
-        return ContentBlocking.contentBlockingManager.currentTDSRules?.trackerData.findEntity(forHost: host)
+    public func findEntity(forHost host: String, in trackerData: TrackerData? = ContentBlocking.contentBlockingManager.currentTDSRules?.trackerData) -> Entity? {
+        return trackerData?.findEntity(forHost: host)
     }
     
 }

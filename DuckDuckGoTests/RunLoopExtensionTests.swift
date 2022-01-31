@@ -37,7 +37,7 @@ class RunLoopExtensionTests: XCTestCase {
         RunLoop.current.run(until: condition)
         XCTAssertFalse(isExecuted)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenConditionIsResolvedThenWaitIsFinished() {
@@ -50,7 +50,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 0)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenDispatchGroupIsEmptyThenNoWaitIsPerformed() {
@@ -63,7 +63,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 0)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenDispatchGroupIsCompleteThenWaitIsFinished() {
@@ -83,7 +83,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 0)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenNestedWaitIsCalledThenWaitIsPerformed() {
@@ -99,7 +99,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 0)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenResolveFromBackgroundThreadThenWaitIsFinished() {
@@ -125,7 +125,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 10)
     }
 
 }

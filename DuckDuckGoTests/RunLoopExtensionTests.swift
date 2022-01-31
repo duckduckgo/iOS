@@ -104,12 +104,16 @@ class RunLoopExtensionTests: XCTestCase {
 
     func testWhenResolveFromBackgroundThreadThenWaitIsFinished() {
         let condition = RunLoop.ResumeCondition()
+        
+        let e = expectation(description: "should execute")
 
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.05) {
             condition.resolve()
+            e.fulfill()
         }
 
         RunLoop.current.run(until: condition)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenWaitingInBackgroundThreadThenWaitIsFinishedWhenResolved() {

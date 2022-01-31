@@ -19,6 +19,9 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Gør det muligt at gemme billeder på din enhed";
 
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Dette er nødvendigt for at bruge stemmesøgning. DuckDuckGo optager aldrig det, du siger.";
+
 /* (No Comment) */
 "Paste from clipboard" = "Indsæt fra udklipsholder";
 

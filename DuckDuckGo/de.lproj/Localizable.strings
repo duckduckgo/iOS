@@ -1087,6 +1087,9 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorit wurde hinzugefügt";
 
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Benachrichtigungen blockieren";
+
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Abbrechen";
 

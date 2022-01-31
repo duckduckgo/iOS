@@ -172,6 +172,9 @@ public enum PixelName: String {
     case widgetEducationOpenedFromSettings = "m_widget_education_opened_from_settings"
     case widgetEducationDismissed = "m_widget_education_dismissed"
 
+    case jsAlertShown = "m_js_alert_shown"
+    case jsAlertBlocked = "m_js_alert_blocked"
+
     // MARK: SERP pixels
     
     case serpRequerySame = "rq_0"

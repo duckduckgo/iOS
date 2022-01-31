@@ -1087,6 +1087,9 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori eklendi";
 
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Uyarıları Engelle";
+
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "İptal";
 

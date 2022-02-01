@@ -47,7 +47,8 @@ class DownloadTests: XCTestCase {
         let expectation = expectation(description: "Download finish")
         temporaryDownload.start()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {           XCTAssertTrue(temporaryDownload.temporary, "File should be temporary")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            XCTAssertTrue(temporaryDownload.temporary, "File should be temporary")
             XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
             expectation.fulfill()
         }

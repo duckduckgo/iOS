@@ -28,6 +28,7 @@ class DownloadsManager {
     }
     
     private(set) var downloadList = Set<Download>()
+    private let notificationCenter: NotificationCenter
     private var downloadsFolder: URL = {
         do {
             return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
@@ -35,6 +36,10 @@ class DownloadsManager {
             return FileManager.default.temporaryDirectory
         }
     }()
+    
+    init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {
+        self.notificationCenter = notificationCenter
+    }
     
     func setupDownload(_ navigationResponse: WKNavigationResponse,
                        downloadSession: DownloadSession? = nil,
@@ -73,7 +78,7 @@ class DownloadsManager {
     func startDownload(_ download: Download) {
         downloadList.insert(download)
         download.start()
-        NotificationCenter.default.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
+        notificationCenter.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
     }
     
     private func move(_ download: Download, toPath path: URL) {
@@ -100,7 +105,7 @@ extension DownloadsManager: DownloadDelegate {
         if let error = error {
             userInfo[UserInfoKeys.error] = error
         }
-        NotificationCenter.default.post(name: .downloadFinished, object: nil, userInfo: userInfo)
+        notificationCenter.post(name: .downloadFinished, object: nil, userInfo: userInfo)
         downloadList.remove(download)
     }
 }

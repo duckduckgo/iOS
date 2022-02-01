@@ -27,20 +27,15 @@ class DownloadsManagerTests: XCTestCase {
     var mockDependencyProvider: MockDependencyProvider!
     
     override func setUp() {
-        mockDependencyProvider = MockDependencyProvider()
-        AppDependencyProvider.shared = mockDependencyProvider
     }
     
     override func tearDown() {
-        AppDependencyProvider.shared = AppDependencyProvider()
         DownloadTestsHelper.deleteAllFiles()
-        // swiftlint:disable notification_center_detachment
-        NotificationCenter.default.removeObserver(self)
-        // swiftlint:enable notification_center_detachment
     }
     
     func testTemporaryPKPassDownload() {
-        let downloadsManager = mockDependencyProvider.downloadsManager
+        let notificationCenter = NotificationCenter()
+        let downloadsManager = DownloadsManager(notificationCenter)
         
         let sessionSetup = MockSessionSetup(mimeType: "application/vnd.apple.pkpass", downloadsManager: downloadsManager)
         
@@ -49,7 +44,8 @@ class DownloadsManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        NotificationCenter.default.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+          
             if DownloadTestsHelper.downloadForNotification(notification) == download {
                 XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(sessionSetup.tmpFinalPath), "File should exist")
                 XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(sessionSetup.documentsFinalPath), "File should not exist")
@@ -62,8 +58,10 @@ class DownloadsManagerTests: XCTestCase {
     }
     
     func testTemporaryRealityDownload() {
-        let downloadsManager = mockDependencyProvider.downloadsManager
         
+        let notificationCenter = NotificationCenter()
+        let downloadsManager = DownloadsManager(notificationCenter)
+
         let sessionSetup = MockSessionSetup(mimeType: "model/vnd.reality", downloadsManager: downloadsManager)
         
         let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
@@ -71,7 +69,8 @@ class DownloadsManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        NotificationCenter.default.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+           
             if DownloadTestsHelper.downloadForNotification(notification) == download {
                 XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(sessionSetup.tmpFinalPath), "File should exist")
                 XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(sessionSetup.documentsFinalPath), "File should not exist")
@@ -85,8 +84,9 @@ class DownloadsManagerTests: XCTestCase {
     }
     
     func testTemporaryUSDZDownload() {
-        let downloadsManager = mockDependencyProvider.downloadsManager
-        
+        let notificationCenter = NotificationCenter()
+        let downloadsManager = DownloadsManager(notificationCenter)
+
         let sessionSetup = MockSessionSetup(mimeType: "model/vnd.usdz+zip", downloadsManager: downloadsManager)
         
         let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
@@ -94,7 +94,8 @@ class DownloadsManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        NotificationCenter.default.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+            
             if DownloadTestsHelper.downloadForNotification(notification) == download {
                 XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(sessionSetup.tmpFinalPath), "File should exist")
                 XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(sessionSetup.documentsFinalPath), "File should not exist")
@@ -107,8 +108,9 @@ class DownloadsManagerTests: XCTestCase {
     }
     
     func testPermanentBinaryDownload() {
-        let downloadsManager = mockDependencyProvider.downloadsManager
-        
+        let notificationCenter = NotificationCenter()
+        let downloadsManager = DownloadsManager(notificationCenter)
+
         let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager)
         
         let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
@@ -116,9 +118,9 @@ class DownloadsManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        NotificationCenter.default.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+           
             if DownloadTestsHelper.downloadForNotification(notification) == download {
-                
                 XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(sessionSetup.tmpFinalPath), "File should not exist")
                 XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(sessionSetup.documentsFinalPath), "File should exist")
                 expectation.fulfill()

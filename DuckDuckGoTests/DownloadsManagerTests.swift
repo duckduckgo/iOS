@@ -132,7 +132,25 @@ class DownloadsManagerTests: XCTestCase {
     }
     
     func testIfFinishedDownloadIsRemovedFromList() {
+        let notificationCenter = NotificationCenter()
+        let downloadsManager = DownloadsManager(notificationCenter)
+
+        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, completionDelay: 1)
+        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        let expectation = expectation(description: "Download finish")
         
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+           
+            if DownloadTestsHelper.downloadForNotification(notification) == download {
+                XCTAssertEqual(downloadsManager.downloadList.count, 0)
+                expectation.fulfill()
+            }
+        }
+        
+        downloadsManager.startDownload(download)
+        XCTAssertEqual(downloadsManager.downloadList.count, 1)
+
+        wait(for: [expectation], timeout: 2)
     }
     
     func downloadForNotification(_ notification: Notification) -> Download {

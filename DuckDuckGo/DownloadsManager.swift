@@ -105,8 +105,8 @@ extension DownloadsManager: DownloadDelegate {
         if let error = error {
             userInfo[UserInfoKeys.error] = error
         }
-        notificationCenter.post(name: .downloadFinished, object: nil, userInfo: userInfo)
         downloadList.remove(download)
+        notificationCenter.post(name: .downloadFinished, object: nil, userInfo: userInfo)
     }
 }
 

@@ -14,10 +14,13 @@
 "NSLocationWhenInUseUsageDescription" = "Îți permite să îți partajezi locația";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Îți permite să partajezi înregistrări";
+"NSMicrophoneUsageDescription" = "Este necesar pentru utilizarea funcționalităților vocale. DuckDuckGo nu înregistrează niciodată ceea ce spui.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Îți permite să salvezi imagini pe dispozitivul tău";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Este necesar pentru a utiliza căutarea vocală. DuckDuckGo nu înregistrează niciodată ceea ce spui.";
 
 /* (No Comment) */
 "Paste from clipboard" = "Lipește din clipboard";

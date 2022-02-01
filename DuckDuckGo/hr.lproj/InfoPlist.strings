@@ -14,10 +14,13 @@
 "NSLocationWhenInUseUsageDescription" = "Omogućuje ti dijeljenje lokacije";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Omogućuje ti dijeljenje snimaka";
+"NSMicrophoneUsageDescription" = "To je potrebno za korištenje glasovnih funkcija. DuckDuckGo nikad ne snima ono što govorite.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Omogućuje ti spremanje slika na uređaj";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "To je potrebno za korištenje glasovnih funkcija. DuckDuckGo nikad ne snima ono što govorite.";
 
 /* (No Comment) */
 "Paste from clipboard" = "Zalijepi iz međuspremnika";

@@ -14,10 +14,13 @@
 "NSLocationWhenInUseUsageDescription" = "Voit jakaa sijaintisi";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Voit jakaa tallenteita";
+"NSMicrophoneUsageDescription" = "Tätä tarvitaan ääniominaisuuksien käyttämiseen. DuckDuckGo ei koskaan tallenna puhettasi.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Voit tallentaa kuvia laitteellesi";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Tämä vaaditaan puhehaun käyttämiseen. DuckDuckGo ei koskaan tallenna puhettasi.";
 
 /* (No Comment) */
 "Paste from clipboard" = "Liitä leikepöydältä";

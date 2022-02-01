@@ -1036,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Tapahtui tuntematon virhe.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Asetukset";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Salli mikrofonin käyttö DuckDuckGolle iOS-järjestelmäasetuksissa, jotta voit käyttää ääniominaisuuksia.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Mikrofonin käyttöoikeus vaaditaan";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Peruuta";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo ei koskaan kuuntele puhettasi. Kaikki yksityisen äänihaun äänen käsittely tapahtuu omalla laitteellasi.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Mikrofonin käyttöoikeus vaaditaan yksityiseen äänihakuun";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Peruuta";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Ääni käsitellään laitteella. Sitä ei tallenneta eikä jaeta kenellekään, edes DuckDuckGolle.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Suosikki poistettu";
 
@@ -1050,6 +1077,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Suosikki lisätty";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Estä ilmoitukset";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Peruuta";

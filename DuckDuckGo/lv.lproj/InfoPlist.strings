@@ -14,10 +14,13 @@
 "NSLocationWhenInUseUsageDescription" = "Ļauj kopīgot tavu atrašanās vietu";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Ļauj kopīgot ierakstus";
+"NSMicrophoneUsageDescription" = "Nepieciešams, lai izmantotu balss funkcijas. DuckDuckGo neieraksta tevis teikto.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Ļauj saglabāt attēlus ierīcē";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Nepieciešams, lai izmantotu meklēšanu ar balsi. DuckDuckGo neieraksta tevis teikto.";
 
 /* (No Comment) */
 "Paste from clipboard" = "Ielīmēt no starpliktuves";

@@ -14,10 +14,13 @@
 "NSLocationWhenInUseUsageDescription" = "Konumunuzu paylaşmanıza olanak tanır";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Kayıtları paylaşmanıza olanak tanır";
+"NSMicrophoneUsageDescription" = "Ses özelliklerini kullanmak için bu gereklidir. DuckDuckGo söylediklerinizi asla kaydetmez.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Görselleri cihazınıza kaydetmenize olanak tanır";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Sesli aramayı kullanmak için bu gereklidir. DuckDuckGo söylediklerinizi asla kaydetmez.";
 
 /* (No Comment) */
 "Paste from clipboard" = "Panodan yapıştır";

@@ -84,6 +84,7 @@ public enum PrivacyFeature: String {
     case gpc
     case httpsUpgrade = "https"
     case ampLinks
+    case trackingParameters
 }
 
 public struct AppPrivacyConfiguration: PrivacyConfiguration {

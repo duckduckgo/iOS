@@ -1033,6 +1033,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "An unknown error occurred.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Settings";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Please allow Microphone access in iOS System Settings for DuckDuckGo to use voice features.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Microphone Access Required";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Cancel";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo never listens to what you say. All speech data processing for Private Voice Search happens on your device.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Microphone Access Required for Private Voice Search";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Cancel";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorite removed";
 
@@ -1047,6 +1074,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorite added";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Block Alerts";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancel";

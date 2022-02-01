@@ -209,7 +209,9 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
             cell.separatorInset = UIEdgeInsets(top: 0, left: .greatestFiniteMagnitude, bottom: 0, right: 0)
             return cell
         } else {
-            return (self as BookmarkItemsSectionDataSource).createEmptyCell(tableView, forIndex: index)
+            let cell = (self as BookmarkItemsSectionDataSource).createEmptyCell(tableView, forIndex: index)
+            cell.label.text =  UserText.emptyBookmarks
+            return cell
         }
     }
 }

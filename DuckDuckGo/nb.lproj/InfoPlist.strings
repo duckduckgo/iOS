@@ -14,10 +14,13 @@
 "NSLocationWhenInUseUsageDescription" = "Gjør at du kan dele posisjonen din";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Gjør at du kan dele innspillinger";
+"NSMicrophoneUsageDescription" = "Dette er nødvendig for å bruke talefunksjoner. DuckDuckGo tar aldri opp det du sier.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Gjør at du kan lagre bilder på enheten din";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Dette kreves for å bruke talesøk. DuckDuckGo tar aldri opp det du sier.";
 
 /* (No Comment) */
 "Paste from clipboard" = "Lim inn fra utklippstavlen";

@@ -557,7 +557,7 @@
 "feedback.positive.header" = "¡Es fantástico oír eso!";
 
 /* No comment provided by engineer. */
-"feedback.positive.noThanks" = "No, gracias. He terminado";
+"feedback.positive.noThanks" = "No, gracias He terminado";
 
 /* Button encouraging uses to share details aboout their feedback */
 "feedback.positive.submit" = "Compartir detalles";
@@ -1036,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Se ha producido un error desconocido.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Ajustes";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Permite el acceso al micrófono en la configuración del sistema de iOS para que DuckDuckGo use las funciones de voz.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Se requiere acceso al micrófono";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "De acuerdo";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Cancelar";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nunca escucha lo que dices. Todo el procesamiento de datos de voz para la búsqueda por voz privada se realiza en tu dispositivo.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Se requiere acceso al micrófono para la búsqueda por voz privada";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Cancelar";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "El audio se procesa en el dispositivo. No se almacena ni comparte con nadie, incluyendo DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorito eliminado";
 
@@ -1050,6 +1077,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorito añadido";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Bloquear alertas";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancelar";

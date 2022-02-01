@@ -18,15 +18,30 @@
 //
 
 import Foundation
-
 import XCTest
+@testable import Core
 @testable import DuckDuckGo
 
 // swiftlint:disable type_body_length
+// swiftlint:disable file_length
+
 class LargeOmniBarStateTests: XCTestCase {
 
-    func testWhenInHomeEmptyEditingStateThenCorrectButtonsAreShown() {
+    var mockDependencyProvider: MockDependencyProvider!
+    
+    override func setUp() {
+        mockDependencyProvider = MockDependencyProvider()
+        AppDependencyProvider.shared = mockDependencyProvider
+    }
+    
+    override func tearDown() {
+        AppDependencyProvider.shared = AppDependencyProvider()
+    }
+    
+    func testWhenInHomeEmptyEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)
         let testee = LargeOmniBarState.HomeEmptyEditingState()
+        
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertFalse(testee.showClear)
@@ -34,6 +49,27 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
+        XCTAssertFalse(testee.showVoiceSearch)
+        
+        XCTAssertTrue(testee.hasLargeWidth)
+        XCTAssertTrue(testee.showBackButton)
+        XCTAssertTrue(testee.showForwardButton)
+        XCTAssertTrue(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
+    }
+    
+    func testWhenInHomeEmptyEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: true)
+        let testee = LargeOmniBarState.HomeEmptyEditingState()
+        
+        XCTAssertFalse(testee.showBackground)
+        XCTAssertFalse(testee.showSiteRating)
+        XCTAssertFalse(testee.showClear)
+        XCTAssertFalse(testee.showMenu)
+        XCTAssertTrue(testee.showSettings)
+        XCTAssertFalse(testee.showCancel)
+        XCTAssertFalse(testee.showSearchLoupe)
+        XCTAssertTrue(testee.showVoiceSearch)
         
         XCTAssertTrue(testee.hasLargeWidth)
         XCTAssertTrue(testee.showBackButton)
@@ -77,8 +113,10 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, LargeOmniBarState.HomeEmptyEditingState().name)
     }
 
-    func testWhenInHomeTextEditingStateThenCorrectButtonsAreShown() {
+    func testWhenInHomeTextEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)
         let testee = LargeOmniBarState.HomeTextEditingState()
+        
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
         XCTAssertTrue(testee.showClear)
@@ -86,6 +124,7 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
+        XCTAssertFalse(testee.showVoiceSearch)
         
         XCTAssertTrue(testee.hasLargeWidth)
         XCTAssertTrue(testee.showBackButton)
@@ -94,6 +133,25 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showShareButton)
     }
 
+    func testWhenInHomeTextEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: true)
+        let testee = LargeOmniBarState.HomeTextEditingState()
+        
+        XCTAssertFalse(testee.showBackground)
+        XCTAssertFalse(testee.showSiteRating)
+        XCTAssertTrue(testee.showClear)
+        XCTAssertFalse(testee.showMenu)
+        XCTAssertTrue(testee.showSettings)
+        XCTAssertFalse(testee.showCancel)
+        XCTAssertFalse(testee.showSearchLoupe)
+        XCTAssertTrue(testee.showVoiceSearch)
+        
+        XCTAssertTrue(testee.hasLargeWidth)
+        XCTAssertTrue(testee.showBackButton)
+        XCTAssertTrue(testee.showForwardButton)
+        XCTAssertTrue(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
+    }
     func testWhenEnteringHomeTextEditingStateThenTextIsNotCleared() {
         let testee = LargeOmniBarState.HomeTextEditingState()
         XCTAssertFalse(testee.clearTextOnStart)
@@ -129,7 +187,9 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, LargeOmniBarState.HomeEmptyEditingState().name)
     }
 
-    func testWhenInHomeNonEditingStateThenCorrectButtonsAreShown() {
+    func testWhenInHomeNonEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: true)
+
         let testee = LargeOmniBarState.HomeNonEditingState()
         XCTAssertTrue(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
@@ -138,7 +198,28 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
-        
+        XCTAssertTrue(testee.showVoiceSearch)
+
+        XCTAssertTrue(testee.hasLargeWidth)
+        XCTAssertTrue(testee.showBackButton)
+        XCTAssertTrue(testee.showForwardButton)
+        XCTAssertTrue(testee.showBookmarksButton)
+        XCTAssertFalse(testee.showShareButton)
+    }
+    
+    func testWhenInHomeNonEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)
+
+        let testee = LargeOmniBarState.HomeNonEditingState()
+        XCTAssertTrue(testee.showBackground)
+        XCTAssertFalse(testee.showSiteRating)
+        XCTAssertFalse(testee.showClear)
+        XCTAssertFalse(testee.showMenu)
+        XCTAssertTrue(testee.showSettings)
+        XCTAssertFalse(testee.showCancel)
+        XCTAssertTrue(testee.showSearchLoupe)
+        XCTAssertFalse(testee.showVoiceSearch)
+
         XCTAssertTrue(testee.hasLargeWidth)
         XCTAssertTrue(testee.showBackButton)
         XCTAssertTrue(testee.showForwardButton)
@@ -181,7 +262,8 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, LargeOmniBarState.HomeNonEditingState().name)
     }
 
-    func testWhenInBrowserEmptyEditingStateThenCorrectButtonsAreShown() {
+    func testWhenInBrowserEmptyEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)
         let testee = LargeOmniBarState.BrowsingEmptyEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
@@ -190,7 +272,8 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
-        
+        XCTAssertFalse(testee.showVoiceSearch)
+
         XCTAssertTrue(testee.hasLargeWidth)
         XCTAssertTrue(testee.showBackButton)
         XCTAssertTrue(testee.showForwardButton)
@@ -198,6 +281,25 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertTrue(testee.showShareButton)
     }
 
+    func testWhenInBrowserEmptyEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: true)
+        let testee = LargeOmniBarState.BrowsingEmptyEditingState()
+        XCTAssertFalse(testee.showBackground)
+        XCTAssertFalse(testee.showSiteRating)
+        XCTAssertFalse(testee.showClear)
+        XCTAssertTrue(testee.showMenu)
+        XCTAssertFalse(testee.showSettings)
+        XCTAssertFalse(testee.showCancel)
+        XCTAssertFalse(testee.showSearchLoupe)
+        XCTAssertTrue(testee.showVoiceSearch)
+
+        XCTAssertTrue(testee.hasLargeWidth)
+        XCTAssertTrue(testee.showBackButton)
+        XCTAssertTrue(testee.showForwardButton)
+        XCTAssertTrue(testee.showBookmarksButton)
+        XCTAssertTrue(testee.showShareButton)
+    }
+    
     func testWhenEnteringBrowserEmptyEditingStateThenTextIsCleared() {
         let testee = LargeOmniBarState.BrowsingEmptyEditingState()
         XCTAssertTrue(testee.clearTextOnStart)
@@ -233,7 +335,27 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertEqual(testee.onBrowsingStoppedState.name, LargeOmniBarState.HomeEmptyEditingState().name)
     }
 
-    func testWhenInBrowsingTextEditingStateThenCorrectButtonsAreShown() {
+    func testWhenInBrowsingTextEditingStateWithVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: true)
+        let testee = LargeOmniBarState.BrowsingTextEditingState()
+        XCTAssertFalse(testee.showBackground)
+        XCTAssertFalse(testee.showSiteRating)
+        XCTAssertTrue(testee.showClear)
+        XCTAssertTrue(testee.showMenu)
+        XCTAssertFalse(testee.showSettings)
+        XCTAssertFalse(testee.showCancel)
+        XCTAssertFalse(testee.showSearchLoupe)
+        XCTAssertTrue(testee.showVoiceSearch)
+
+        XCTAssertTrue(testee.hasLargeWidth)
+        XCTAssertTrue(testee.showBackButton)
+        XCTAssertTrue(testee.showForwardButton)
+        XCTAssertTrue(testee.showBookmarksButton)
+        XCTAssertTrue(testee.showShareButton)
+}
+    
+    func testWhenInBrowsingTextEditingStateWithoutVoiceSearchThenCorrectButtonsAreShown() {
+        mockDependencyProvider.voiceSearchHelper = MockVoiceSearchHelper(isSpeechRecognizerAvailable: false)
         let testee = LargeOmniBarState.BrowsingTextEditingState()
         XCTAssertFalse(testee.showBackground)
         XCTAssertFalse(testee.showSiteRating)
@@ -242,7 +364,8 @@ class LargeOmniBarStateTests: XCTestCase {
         XCTAssertFalse(testee.showSettings)
         XCTAssertFalse(testee.showCancel)
         XCTAssertTrue(testee.showSearchLoupe)
-        
+        XCTAssertFalse(testee.showVoiceSearch)
+
         XCTAssertTrue(testee.hasLargeWidth)
         XCTAssertTrue(testee.showBackButton)
         XCTAssertTrue(testee.showForwardButton)
@@ -338,3 +461,4 @@ class LargeOmniBarStateTests: XCTestCase {
     }
 }
 // swiftlint:enable type_body_length
+// swiftlint:enable file_length

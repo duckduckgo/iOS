@@ -1,5 +1,5 @@
 //
-//  BookmarksSearch.swift
+//  BookmarksCachingSearch.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.

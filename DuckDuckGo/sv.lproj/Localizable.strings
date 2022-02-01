@@ -1036,6 +1036,33 @@
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ett okänt fel uppstod.";
 
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Inställningar";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "För att DuckDuckGo ska kunna använda röstfunktionerna måste du tillåta åtkomst till mikrofonen i systeminställningarna för iOS.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Mikrofonåtkomst krävs";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Avbryt";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo lyssnar aldrig på det du säger. All behandling av taldata för privat röstsökning utförs på din enhet.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Mikrofonåtkomst krävs för privat röstsökning";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Avbryt";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Ljudet bearbetas på enheten. Det lagras inte och delas inte med någon, inte ens DuckDuckGo.";
+
 /* Confirmation message */
 "web.url.remove.favorite.done" = "Favorit borttagen";
 
@@ -1050,6 +1077,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorit har lagts till";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blockera varningar";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Avbryt";

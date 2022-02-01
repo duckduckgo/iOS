@@ -14,10 +14,13 @@
 "NSLocationWhenInUseUsageDescription" = "Lehetővé teszi a helymegosztást";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Lehetővé teszi a felvételek megosztását";
+"NSMicrophoneUsageDescription" = "Erre a beszédhangfunkciók használatához van szükség. A DuckDuckGo soha nem készít felvételt arról, amit mondasz.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Lehetővé teszi képek mentését az eszközödre";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Erre a hangalapú keresés használatához van szükség. A DuckDuckGo soha nem készít felvételt arról, amit mondasz.";
 
 /* (No Comment) */
 "Paste from clipboard" = "Beillesztés a vágólapról";

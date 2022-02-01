@@ -14,10 +14,13 @@
 "NSLocationWhenInUseUsageDescription" = "Umožňuje vám zdieľať vašu polohu";
 
 /* Privacy - Microphone Usage Description */
-"NSMicrophoneUsageDescription" = "Umožňuje vám zdieľať nahrávky";
+"NSMicrophoneUsageDescription" = "Toto sa požaduje na používanie hlasových funkcií. DuckDuckGo nikdy nenahráva, čo hovoríte.";
 
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Umožňuje vám ukladať obrázky do vášho zariadenia";
+
+/* Privacy - Speech Recognition Usage Description */
+"NSSpeechRecognitionUsageDescription" = "Toto sa vyžaduje na použitie hlasového vyhľadávania. DuckDuckGo nikdy nenahráva, čo hovoríte.";
 
 /* (No Comment) */
 "Paste from clipboard" = "Prilepiť zo schránky";

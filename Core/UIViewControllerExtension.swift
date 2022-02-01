@@ -71,6 +71,14 @@ extension UIViewController {
         }
         present(controller, animated: true, completion: nil)
     }
+    
+    public func installChildViewController(_ childController: UIViewController) {
+        addChild(childController)
+        childController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        childController.view.frame = view.bounds
+        view.addSubview(childController.view)
+        childController.didMove(toParent: self)
+    }
 }
 
 extension Core.Bookmark {

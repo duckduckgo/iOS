@@ -34,7 +34,7 @@ class DownloadTests: XCTestCase {
         
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         let filename = "\(UUID().uuidString).zip"
-
+        
         let path = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
         DownloadTestsHelper.createMockFile(on: path)
         
@@ -43,10 +43,15 @@ class DownloadTests: XCTestCase {
         mockSession.temporaryFilePath = path
         
         let temporaryDownload = Download(downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: true)
+        
+        let expectation = expectation(description: "Download finish")
         temporaryDownload.start()
 
-        XCTAssertTrue(temporaryDownload.temporary, "File should be temporary")
-        XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {           XCTAssertTrue(temporaryDownload.temporary, "File should be temporary")
+            XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
     }
     
     func testPermanentDownload() {
@@ -54,7 +59,7 @@ class DownloadTests: XCTestCase {
         
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         let filename = "\(UUID().uuidString).zip"
-
+        
         let path = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
         DownloadTestsHelper.createMockFile(on: path)
         
@@ -63,9 +68,16 @@ class DownloadTests: XCTestCase {
         mockSession.temporaryFilePath = path
         
         let temporaryDownload = Download(downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: false)
+        
+        let expectation = expectation(description: "Download finish")
         temporaryDownload.start()
         
-        XCTAssertFalse(temporaryDownload.temporary, "File should not be temporary")
-        XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            XCTAssertFalse(temporaryDownload.temporary, "File should not be temporary")
+            XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
     }
 }

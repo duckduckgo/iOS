@@ -18,6 +18,7 @@
 //
 
 import Foundation
+@testable import DuckDuckGo
 
 struct DownloadTestsHelper {
     static let mockURL = URL(string: "https://duck.com")!
@@ -55,5 +56,12 @@ struct DownloadTestsHelper {
     static func deleteAllFiles() {
         DownloadTestsHelper.deleteFilesOnPath(DownloadTestsHelper.documentsDirectory)
         DownloadTestsHelper.deleteFilesOnPath(DownloadTestsHelper.tmpDirectory)
+    }
+    
+    static func downloadForNotification(_ notification: Notification) -> Download {
+        if let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download {
+            return download
+        }
+        fatalError("Should only be used to test valid downloads")
     }
 }

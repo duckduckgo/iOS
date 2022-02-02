@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Os websites confiam nos cookies para o manter ligado. Quando se usa uma barreira de segurança num site, os cookies não são apagados e permanecerá ligado, mesmo após usar o botão de segurança. Ainda bloqueamos rastreadores de terceiros encontrados em sites com barreiras de segurança.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Websites";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Sites com barreira de segurança";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Gostaria de usar a barreira de segurança em %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Utilizar uma barreira de segurança neste site vai mantê-lo ligado após utilizar o botão de segurança.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Colocar Barreira de segurança em %@ para ficar conectado?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Site à prova de fogo";
+"preserveLogins.menu.confirm" = "Barreira de segurança";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ já tem barreira de segurança";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Pedir para avaliar as barreiras de segurança de sites";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmo";
@@ -1077,9 +1077,6 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorito adicionado";
-
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Bloquear alertas";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancelar";

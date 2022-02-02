@@ -169,7 +169,7 @@ class DownloadsManagerTests: XCTestCase {
     }
     
     func testRTLSanitizing() {
-        let spoofedName = "test.‮gpj‬" // U+202E character
+        let spoofedName = "test.‮gpj‬" // U+202E + U+202C character
         let expectedName = "test.gpj"
         let notificationCenter = NotificationCenter()
         let downloadsManager = DownloadsManager(notificationCenter)

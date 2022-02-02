@@ -53,6 +53,10 @@ extension String {
         }
         return self
     }
+    
+    public func drop(suffix: String) -> String {
+        return hasSuffix(suffix) ? String(dropLast(suffix.count)) : self
+    }
 
     /// URL and URLComponents can't cope with emojis and international characters so this routine does some manual processing while trying to
     ///  retain the input as much as possible.

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import WebKit
 
 class DownloadsManager {
@@ -29,13 +30,17 @@ class DownloadsManager {
     
     private(set) var downloadList = Set<Download>()
     private let notificationCenter: NotificationCenter
-    private var downloadsFolder: URL = {
+    private var downloadsFolder: URL {
         do {
             return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         } catch {
             return FileManager.default.temporaryDirectory
         }
-    }()
+    }
+    
+    var downloadsFolderFiles: [URL]? {
+        try? FileManager.default.contentsOfDirectory(at: downloadsFolder, includingPropertiesForKeys: nil)
+    }
     
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.notificationCenter = notificationCenter
@@ -50,7 +55,6 @@ class DownloadsManager {
               let url = navigationResponse.response.url else {
                   return nil
         }
-        let fileName = sanitizeFilename(navigationResponse.response.suggestedFilename)
 
         let type = MIMEType(rawValue: mimeType) ?? .unknown
         
@@ -72,6 +76,8 @@ class DownloadsManager {
         } else {
             session = DownloadSession(url, cookieStore: cookieStore)
         }
+        var fileName = sanitizeFilename(navigationResponse.response.suggestedFilename)
+        fileName = convertToUniqueFilename(fileName)
         
         return Download(downloadSession: session,
                         mimeType: type,
@@ -108,6 +114,31 @@ class DownloadsManager {
         guard !download.temporary else { return }
         move(download, toPath: downloadsFolder)
     }
+    
+    private func convertToUniqueFilename(_ filename: String, counter: Int = 0) -> String {
+        let downloadingFilenames = Set(downloadList.map { $0.filename })
+        let downloadedFilenames = Set(downloadsFolderFiles?.compactMap { $0.lastPathComponent } ?? [] )
+        let list = downloadingFilenames.union(downloadedFilenames)
+        
+        let fileExtension = downloadsFolder.appendingPathComponent(filename).pathExtension
+        
+        let pathExtension = fileExtension.count > 0 ? ".\(fileExtension)" : ""
+        let filePrefix = filename.drop(suffix: pathExtension)
+
+        let newFilename: String
+        if counter > 0 {
+            newFilename = "\(filePrefix) \(counter)\(pathExtension)"
+        } else {
+            newFilename = filename
+        }
+        
+        if list.contains(newFilename) {
+            let newSuffix = counter + 1
+            return convertToUniqueFilename(filename, counter: newSuffix)
+        } else {
+            return newFilename
+        }
+    }
 }
 
 extension DownloadsManager: DownloadDelegate {
@@ -126,3 +157,4 @@ extension NSNotification.Name {
     static let downloadStarted: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
     static let downloadFinished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
 }
+

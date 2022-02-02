@@ -55,8 +55,8 @@
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Dane i/lub karty zostaną wyczyszczone po ponownym uruchomieniu aplikacji.";
 
-/* Class = "UILabel"; text = "When Signing In"; ObjectID = "bIg-0T-UWq"; */
-"bIg-0T-UWq.text" = "Podczas logowania";
+/* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
+"bIg-0T-UWq.text" = "Proś o zabezpieczanie witryn internetowych podczas logowania";
 
 /* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
 "bJo-qn-f57.title" = "Ochrona poczty e-mail (wersja beta)";
@@ -169,8 +169,8 @@
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Po włączeniu witryny internetowe będą automatycznie otwierane w DuckDuckGo.";
 
-/* Class = "UILabel"; text = "No Fireproof websites"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Brak bezpiecznych witryn internetowych";
+/* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
+"OfP-Kw-IOk.text" = "Brak zabezpieczonych witryn internetowych";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Niezabezpieczone witryny";

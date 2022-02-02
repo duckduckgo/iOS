@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Les sites Web utilisent des cookies pour maintenir votre connexion. Quand vous placez un site en mode coupe-feu, les cookies sont conservés et vous restez connecté(e), même après avoir utilisé le bouton en forme de flamme. Ceci dit, les traqueurs tiers sont bloqués sur les sites coupe-feu.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Sites Web";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Sites coupe-feu";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Souhaitez-vous placer %@ en mode coupe-feu ?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Placer ce site en mode coupe-feu et utiliser le bouton en forme de flamme ne vous déconnectera pas.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Placer %@ en mode coupe-feu pour rester connecté ?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Site Web coupe-feu";
+"preserveLogins.menu.confirm" = "Mode coupe-feu";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ est maintenant en mode coupe-feu";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Demander à placer des sites en mode coupe-feu";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorithme";
@@ -1077,9 +1077,6 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori ajouté";
-
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Bloquer les alertes";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Annuler";

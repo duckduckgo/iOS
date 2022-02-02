@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Site-urile web se bazează pe cookie-uri pentru a te menține conectat. Atunci când ștergi activitatea și istoricul unui site, cookie-urile nu vor fi șterse și vei rămâne conectat, chiar și după utilizarea butonului Ștergere activitate și istoric. Blocăm totuși instrumentele de urmărire terțe găsite pe site-urile web cu ștergerea activității și istoricului din browser la ieșire.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Site-uri web";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Site-uri cu ștergerea activității și istoricului din browser la ieșire";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Dorești să ștergi activitatea și istoricul pentru %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Ștergerea activității și istoricului din browser pentru acest site te va menține conectat după utilizarea butonului Ștergere activitate și istoric.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Ignifughezi %@ pentru a rămâne autentificat(ă)?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Site cu ștergerea activității și istoricului din browser la ieșire";
+"preserveLogins.menu.confirm" = "Ignifugă";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ nu mai păstrează acum activitatea și istoricul";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Solicită ștergea activității și istoricului din browser la site-uri";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";
@@ -1077,9 +1077,6 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Preferință adăugată";
-
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blochează notificările";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Renunță";

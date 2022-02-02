@@ -55,8 +55,8 @@
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Данные и/или вкладки будут сброшены при следующем запуске приложения.";
 
-/* Class = "UILabel"; text = "When Signing In"; ObjectID = "bIg-0T-UWq"; */
-"bIg-0T-UWq.text" = "При входе в учетную запись";
+/* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
+"bIg-0T-UWq.text" = "Предлагать обезопасить сайты при входе";
 
 /* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
 "bJo-qn-f57.title" = "Защита почты (бета)";
@@ -169,7 +169,7 @@
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "При активации этой функции сайты будут автоматически открываться в DuckDuckGo.";
 
-/* Class = "UILabel"; text = "No Fireproof websites"; ObjectID = "OfP-Kw-IOk"; */
+/* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Огнеупорных сайтов нет";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */

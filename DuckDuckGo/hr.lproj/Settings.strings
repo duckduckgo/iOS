@@ -55,8 +55,8 @@
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Podaci i/ili kartice bit će uklonjeni nakon ponovnog pokretanja aplikacije.";
 
-/* Class = "UILabel"; text = "When Signing In"; ObjectID = "bIg-0T-UWq"; */
-"bIg-0T-UWq.text" = "Pri prijavljivanju";
+/* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
+"bIg-0T-UWq.text" = "Zatraži označavanje web-mjesta kao zaštićenih prilikom prijave";
 
 /* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
 "bJo-qn-f57.title" = "Zaštita e-pošte (Beta)";
@@ -169,8 +169,8 @@
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Kad je omogućeno, mrežna će se mjesta automatski otvoriti u pregledniku DuckDuckGo.";
 
-/* Class = "UILabel"; text = "No Fireproof websites"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Nema zaštićenih web-mjesta";
+/* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
+"OfP-Kw-IOk.text" = "Još nema web-mjesta koja su označena kao zaštićena";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Nezaštićena web-mjesta";

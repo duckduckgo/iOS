@@ -125,12 +125,7 @@ class DownloadsManager {
         let pathExtension = fileExtension.count > 0 ? ".\(fileExtension)" : ""
         let filePrefix = filename.drop(suffix: pathExtension)
 
-        let newFilename: String
-        if counter > 0 {
-            newFilename = "\(filePrefix) \(counter)\(pathExtension)"
-        } else {
-            newFilename = filename
-        }
+        let newFilename = counter > 0 ? "\(filePrefix) \(counter)\(pathExtension)" : filename
         
         if list.contains(newFilename) {
             let newSuffix = counter + 1

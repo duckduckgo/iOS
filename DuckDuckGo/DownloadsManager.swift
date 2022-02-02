@@ -49,7 +49,7 @@ class DownloadsManager {
               let url = navigationResponse.response.url else {
                   return nil
         }
-        let fileName = navigationResponse.response.suggestedFilename ?? "unknown"
+        let fileName = sanitizeFilename(navigationResponse.response.suggestedFilename)
 
         let type = MIMEType(rawValue: mimeType) ?? .unknown
         let temporary: Bool
@@ -79,6 +79,13 @@ class DownloadsManager {
         downloadList.insert(download)
         download.start()
         notificationCenter.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
+    }
+    
+    //https://app.asana.com/0/0/1201734618649839/f
+    private func sanitizeFilename(_ originalFilename: String?) -> String {
+        let fileName = originalFilename ?? "unknown"
+        let allowedCharacterSet = CharacterSet.alphanumerics.union(CharacterSet.punctuationCharacters)
+        return fileName.components(separatedBy: allowedCharacterSet.inverted).joined()
     }
     
     private func move(_ download: Download, toPath path: URL) {

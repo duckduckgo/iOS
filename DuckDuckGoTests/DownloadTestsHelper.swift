@@ -64,4 +64,11 @@ struct DownloadTestsHelper {
         }
         fatalError("Should only be used to test valid downloads")
     }
+    
+    static func temporaryAndFinalPathForDownload(_ download: Download) -> (URL, URL) {
+        let tmpPath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(download.filename)
+        let finalPath = DownloadTestsHelper.documentsDirectory.appendingPathComponent(download.filename)
+
+        return (tmpPath, finalPath)
+    }
 }

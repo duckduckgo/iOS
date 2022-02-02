@@ -54,27 +54,28 @@ class MockNavigationResponse: WKNavigationResponse {
 }
 
 struct MockSessionSetup {
-    let tmpFinalPath: URL
-    let documentsFinalPath: URL
     let session: MockDownloadSession
     let response: MockNavigationResponse
     
-    init(mimeType: String, downloadsManager: DownloadsManager, completionDelay: TimeInterval = 0) {
+    init(mimeType: String, downloadsManager: DownloadsManager, completionDelay: TimeInterval = 0, filename: String? = nil) {
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
-        let filename = "\(UUID().uuidString).zip"
+        
+        let file: String
+        if let filename = filename {
+            file = filename
+        } else {
+            file = "\(UUID().uuidString).zip"
+        }
         
         response = MockNavigationResponse()
-        response.suggestedFileName = filename
+        response.suggestedFileName = file
         response.mimeType = mimeType
         
         session = MockDownloadSession(DownloadTestsHelper.mockURL)
         session.delaySeconds = completionDelay
 
         let tmpPath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
-        
-        tmpFinalPath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(filename)
-        documentsFinalPath = DownloadTestsHelper.documentsDirectory.appendingPathComponent(filename)
-        
+    
         session.temporaryFilePath = tmpPath
         
         DownloadTestsHelper.createMockFile(on: tmpPath)

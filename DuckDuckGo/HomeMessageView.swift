@@ -175,8 +175,8 @@ struct HomeMessageView_Previews: PreviewProvider {
                                              topText: "TOP TEXT",
                                              title: "Placeholder Title",
                                              subtitle: "Body text goes here. This component can be used with one or two buttons.",
-                                             buttons: [.init(title: "Button1", action: {}, actionStyle: .cancel),
-                                                       .init(title: "Button2", action: {})],
+                                             buttons: [.init(title: "Button1", actionStyle: .cancel) {},
+                                                       .init(title: "Button2") {}],
                                              onDidClose: {})
         return HomeMessageView(viewModel: viewModel)
     }

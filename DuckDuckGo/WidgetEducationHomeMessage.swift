@@ -31,9 +31,12 @@ struct WidgetEducationHomeMessage {
                                     topText: nil,
                                     title: UserText.addWidgetTitle,
                                     subtitle: UserText.addWidgetDescription,
-                                    buttons: [.init(title: UserText.addWidget,
-                                                    action: { presentWidgetEducation(presentingViewController: presentingViewController) })],
+                                    buttons: [makeAddWidgetButton(presentingViewController: presentingViewController)],
                                     onDidClose: onDidClose)
+    }
+    
+    private static func makeAddWidgetButton(presentingViewController: UIViewController) -> HomeMessageButtonViewModel {
+        .init(title: UserText.addWidget) { presentWidgetEducation(presentingViewController: presentingViewController) }
     }
     
     private static func presentWidgetEducation(presentingViewController: UIViewController) {

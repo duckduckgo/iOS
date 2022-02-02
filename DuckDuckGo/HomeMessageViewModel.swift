@@ -36,6 +36,6 @@ struct HomeMessageButtonViewModel {
     }
     
     let title: String
-    let action: () -> Void
     var actionStyle: ActionStyle = .default
+    let action: () -> Void
 }

@@ -73,8 +73,8 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
         
-        Variant(name: "ma", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [.voiceSearch]),
-        Variant(name: "mb", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: []),
+        Variant(name: "ma", weight: doNotAllocate, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [.voiceSearch]),
+        Variant(name: "mb", weight: doNotAllocate, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: []),
 
         Variant(name: "mc", weight: 1, isIncluded: When.always, features: [.parameterStripping]),
         Variant(name: "md", weight: 1, isIncluded: When.always, features: []),

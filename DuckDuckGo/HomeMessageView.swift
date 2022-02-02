@@ -20,8 +20,8 @@
 import SwiftUI
 
 struct RoundedRectStyle: ButtonStyle {
-    var foregroundColor: Color
-    var backgroundColor: Color
+    let foregroundColor: Color
+    let backgroundColor: Color
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
@@ -34,7 +34,7 @@ struct RoundedRectStyle: ButtonStyle {
 }
 
 struct HomeMessageView: View {
-    var viewModel: HomeMessageViewModel
+    let viewModel: HomeMessageViewModel
     
     var body: some View {
         VStack(spacing: Const.Spacing.titleAndSubtitle) {

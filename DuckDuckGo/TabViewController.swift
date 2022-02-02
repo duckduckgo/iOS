@@ -874,13 +874,15 @@ class TabViewController: UIViewController {
     }
     
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-#warning("Check if user changed tabs or if the original tab is not visible")
         guard let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
-              let delegate = self.delegate,
-              delegate.tabCheckIfItsBeingCurrentlyPresented(self) else { return }
-        fileHandler.preview()
+              let delegate = self.delegate else { return }
+        
+        if delegate.tabCheckIfItsBeingCurrentlyPresented(self) {
+            fileHandler.preview()
+        } else {
+            Pixel.fire(pixel: .presentPreviewWithoutTab)
+        }
     }
-
 }   
 
 extension TabViewController: LoginFormDetectionDelegate {

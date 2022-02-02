@@ -120,12 +120,12 @@ class DownloadsManager {
         let downloadedFilenames = Set(downloadsFolderFiles?.compactMap { $0.lastPathComponent } ?? [] )
         let list = downloadingFilenames.union(downloadedFilenames)
         
-        let fileExtension = downloadsFolder.appendingPathComponent(filename).pathExtension
+        var fileExtension = downloadsFolder.appendingPathComponent(filename).pathExtension
+        fileExtension = fileExtension.count > 0 ? ".\(fileExtension)" : ""
         
-        let pathExtension = fileExtension.count > 0 ? ".\(fileExtension)" : ""
-        let filePrefix = filename.drop(suffix: pathExtension)
+        let filePrefix = filename.drop(suffix: fileExtension)
 
-        let newFilename = counter > 0 ? "\(filePrefix) \(counter)\(pathExtension)" : filename
+        let newFilename = counter > 0 ? "\(filePrefix) \(counter)\(fileExtension)" : filename
         
         if list.contains(newFilename) {
             let newSuffix = counter + 1

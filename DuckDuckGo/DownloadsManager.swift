@@ -43,7 +43,8 @@ class DownloadsManager {
     
     func setupDownload(_ navigationResponse: WKNavigationResponse,
                        downloadSession: DownloadSession? = nil,
-                       cookieStore: WKHTTPCookieStore? = nil) -> Download? {
+                       cookieStore: WKHTTPCookieStore? = nil,
+                       temporary: Bool? = nil) -> Download? {
         
         guard let mimeType = navigationResponse.response.mimeType,
               let url = navigationResponse.response.url else {
@@ -52,13 +53,17 @@ class DownloadsManager {
         let fileName = sanitizeFilename(navigationResponse.response.suggestedFilename)
 
         let type = MIMEType(rawValue: mimeType) ?? .unknown
-        let temporary: Bool
         
-        switch type {
-        case .reality, .usdz, .passbook:
-            temporary = true
-        default:
-            temporary = false
+        let temporaryFile: Bool
+        if let temporary = temporary {
+            temporaryFile = temporary
+        } else {
+            switch type {
+            case .reality, .usdz, .passbook:
+                temporaryFile = true
+            default:
+                temporaryFile = false
+            }
         }
         
         let session: DownloadSession
@@ -71,7 +76,7 @@ class DownloadsManager {
         return Download(downloadSession: session,
                         mimeType: type,
                         fileName: fileName,
-                        temporary: temporary,
+                        temporary: temporaryFile,
                         delegate: self)
     }
     

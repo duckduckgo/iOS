@@ -79,15 +79,16 @@ class DownloadsManager {
         var fileName = sanitizeFilename(navigationResponse.response.suggestedFilename)
         fileName = convertToUniqueFilename(fileName)
         
-        return Download(downloadSession: session,
+        let download = Download(downloadSession: session,
                         mimeType: type,
                         fileName: fileName,
                         temporary: temporaryFile,
                         delegate: self)
+        downloadList.insert(download)
+        return download
     }
     
     func startDownload(_ download: Download) {
-        downloadList.insert(download)
         download.start()
         notificationCenter.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
     }
@@ -152,4 +153,3 @@ extension NSNotification.Name {
     static let downloadStarted: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
     static let downloadFinished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
 }
-

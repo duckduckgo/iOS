@@ -36,7 +36,7 @@ protocol DownloadSessionDelegate: AnyObject {
 class DownloadSession: NSObject {
     private(set) var session: URLSession?
     private(set) var cookieStore: WKHTTPCookieStore?
-    private(set) var downloadSession: URLSessionDownloadTask?
+    private(set) var task: URLSessionDownloadTask?
     weak var delegate: DownloadSessionDelegate?
     
     internal init(_ url: URL, session: URLSession? = nil, cookieStore: WKHTTPCookieStore? = nil) {
@@ -47,7 +47,7 @@ class DownloadSession: NSObject {
         } else {
             self.session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
         }
-        self.downloadSession = self.session?.downloadTask(with: url)
+        self.task = self.session?.downloadTask(with: url)
     }
     
     func start() {
@@ -56,7 +56,11 @@ class DownloadSession: NSObject {
                 self.session?.configuration.httpCookieStorage?.setCookie(cookie)
             }
         }
-        downloadSession?.resume()
+        task?.resume()
+    }
+    
+    func cancel() {
+        task?.cancel()
     }
     
     func finishTasksAndInvalidate() {

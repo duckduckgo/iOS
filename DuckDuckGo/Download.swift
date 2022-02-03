@@ -33,7 +33,7 @@ class Download: NSObject, Identifiable, ObservableObject {
     var location: URL?
     let date = Date()
     let temporary: Bool
-    let downloadSession: DownloadSession
+    let session: DownloadSession
     
     @Published private(set) var state: URLSessionTask.State = .suspended
     @Published private(set) var bytesWritten: Int64 = 0
@@ -50,15 +50,24 @@ class Download: NSObject, Identifiable, ObservableObject {
         self.filename = fileName
         self.mimeType = mimeType
         self.temporary = temporary
-        self.downloadSession = downloadSession
+        self.session = downloadSession
         
         super.init()
-        self.downloadSession.delegate = self
+        self.session.delegate = self
     }
     
     func start() {
-        downloadSession.start()
-        self.state = self.downloadSession.downloadSession?.state ?? .completed
+        session.start()
+        updateState()
+    }
+    
+    func cancel() {
+        session.cancel()
+        updateState()
+    }
+    
+    private func updateState() {
+        self.state = self.session.task?.state ?? .completed
     }
     
     deinit {
@@ -85,7 +94,7 @@ extension Download: DownloadSessionDelegate {
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        downloadSession.finishTasksAndInvalidate()
+        session.finishTasksAndInvalidate()
         state = task.state
         delegate?.downloadDidFinish(self, error: error)
     }

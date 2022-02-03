@@ -93,6 +93,10 @@ class DownloadsManager {
         notificationCenter.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
     }
     
+    func cancelAllDownloads() {
+        downloadList.forEach { $0.cancel() }
+    }
+    
     //https://app.asana.com/0/0/1201734618649839/f
     private func sanitizeFilename(_ originalFilename: String?) -> String {
         let fileName = originalFilename ?? "unknown"

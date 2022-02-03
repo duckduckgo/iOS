@@ -195,4 +195,47 @@ class DownloadsManagerTests: XCTestCase {
         downloadsManager.startDownload(download)
         wait(for: [expectation], timeout: 1)
     }
+    
+    func testDownloadListUniqueFilenames() {
+        let numberOfFiles = 3
+        var files = [String](repeating: "duck.txt", count: numberOfFiles)
+        files.append(contentsOf: [String](repeating: "duck", count: numberOfFiles))
+        
+        let expectedList = ["duck", "duck 1", "duck 2", "duck.txt", "duck 1.txt", "duck 2.txt"]
+        let downloadsManager = DownloadsManager()
+
+        files.forEach {
+            let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, filename: $0)
+             _ = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        }
+        
+        let downloadListNames = downloadsManager.downloadList.map { $0.filename }.sorted()
+        
+        XCTAssertEqual(downloadListNames, expectedList.sorted(), "Lists should be the same")
+    }
+    
+    func testFileSystemUniqueFilenames() {
+        let fileWithExtension = "duck.txt"
+        let fileWithoutExtension = "duck"
+        
+        DownloadTestsHelper.createMockFile(on: DownloadTestsHelper.documentsDirectory.appendingPathComponent(fileWithExtension))
+        DownloadTestsHelper.createMockFile(on: DownloadTestsHelper.documentsDirectory.appendingPathComponent(fileWithoutExtension))
+        
+        let numberOfFiles = 3
+        var files = [String](repeating: fileWithExtension, count: numberOfFiles)
+        files.append(contentsOf: [String](repeating: fileWithoutExtension, count: numberOfFiles))
+        
+        let expectedList = ["duck 1", "duck 2", "duck 3", "duck 1.txt", "duck 2.txt", "duck 3.txt"]
+        let downloadsManager = DownloadsManager()
+
+        files.forEach {
+            let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, filename: $0)
+             _ = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        }
+        
+        let downloadListNames = downloadsManager.downloadList.map { $0.filename }.sorted()
+        
+        XCTAssertEqual(downloadListNames, expectedList.sorted(), "Lists should be the same")
+
+    }
 }

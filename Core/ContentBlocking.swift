@@ -36,6 +36,7 @@ public final class ContentBlocking {
 
     public static let trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet),
                                                        data: FileStore().loadAsData(forConfiguration: .trackerDataSet),
+                                                              embeddedDataProvider: AppTrackerDataSetProvider(),
                                                        errorReporting: debugEvents)
 
     public static let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,

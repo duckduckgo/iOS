@@ -317,6 +317,7 @@
 		982C87C42255559A00919035 /* UITableViewCellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982C87C32255559A00919035 /* UITableViewCellExtension.swift */; };
 		982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982E562F222C3D5B008D861B /* FeedbackPickerViewController.swift */; };
 		9830A06325ED0DB900DB64DE /* BrowsingMenu.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9830A06225ED0DB900DB64DE /* BrowsingMenu.xcassets */; };
+		9833913727AC400800DAF119 /* AppTrackerDataSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9833913627AC400800DAF119 /* AppTrackerDataSetProvider.swift */; };
 		9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */; };
 		983B4D9A254B67F900467D62 /* BookmarksCachingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983B4D99254B67F900467D62 /* BookmarksCachingSearch.swift */; };
 		983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983EABB7236198F6003948D1 /* DatabaseMigration.swift */; };
@@ -1070,6 +1071,7 @@
 		982FBD07251EAC15004EAE67 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		982FBD08251EAC15004EAE67 /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9830A06225ED0DB900DB64DE /* BrowsingMenu.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = BrowsingMenu.xcassets; sourceTree = "<group>"; };
+		9833913627AC400800DAF119 /* AppTrackerDataSetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackerDataSetProvider.swift; sourceTree = "<group>"; };
 		9838059E2228208E00385F1A /* PositiveFeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveFeedbackViewController.swift; sourceTree = "<group>"; };
 		983A4B8C251EABEA00F3EDF1 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		983A4B8D251EABEA00F3EDF1 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2146,6 +2148,7 @@
 				85C271DC1FD04459007216B4 /* HTTPSUpgrade.swift */,
 				9847BFFD27A2DDB400DB07AA /* ContentBlocking.swift */,
 				9847BFFF27A2DDBB00DB07AA /* AppPrivacyConfigurationDataProvider.swift */,
+				9833913627AC400800DAF119 /* AppTrackerDataSetProvider.swift */,
 				85F1E9AD1FB49EA200A75AC1 /* ServerTrustCache.swift */,
 			);
 			name = ContentBlocker;
@@ -4825,6 +4828,7 @@
 				85267D232151221C00A0CE28 /* PrivacyPractices.swift in Sources */,
 				8328AABE212AF70B00293140 /* HTTPSBloomFilterSpecification.swift in Sources */,
 				85CA53AC24BBD39300A6288C /* FaviconRequestModifier.swift in Sources */,
+				9833913727AC400800DAF119 /* AppTrackerDataSetProvider.swift in Sources */,
 				85C271DD1FD04459007216B4 /* HTTPSUpgrade.swift in Sources */,
 				83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */,
 				853A717620F62FE800FE60BC /* Pixel.swift in Sources */,

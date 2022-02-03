@@ -53,6 +53,7 @@ class DaxDialogTests: XCTestCase {
 
         let trackerDataManager = TrackerDataManager(etag: nil,
                                                     data: nil,
+                                                    embeddedDataProvider: AppTrackerDataSetProvider(),
                                                     errorReporting: nil)
         
         let privacyConfigurationManager

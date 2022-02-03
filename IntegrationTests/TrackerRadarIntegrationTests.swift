@@ -28,7 +28,9 @@ class TrackerRadarIntegrationTests: XCTestCase {
 
         let url = AppUrls(statisticsStore: MockStatisticsStore()).trackerDataSet
         let data = try Data(contentsOf: url)
-        let dataManager = TrackerDataManager(etag: UUID().uuidString, data: data)
+        let dataManager = TrackerDataManager(etag: UUID().uuidString,
+                                             data: data,
+                                             embeddedDataProvider: AppTrackerDataSetProvider())
 
         dataManager.assertIsMajorTracker(domain: "google.com")
         dataManager.assertIsMajorTracker(domain: "facebook.com")

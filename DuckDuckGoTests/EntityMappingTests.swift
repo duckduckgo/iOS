@@ -28,6 +28,7 @@ class EntityMappingTests: XCTestCase {
         
         let trackerDataManager = TrackerDataManager(etag: nil,
                                                     data: nil,
+                                                    embeddedDataProvider: AppTrackerDataSetProvider(),
                                                     errorReporting: nil)
         
         let testee = EntityMapping()

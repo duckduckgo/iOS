@@ -51,12 +51,9 @@ class DownloadsManager {
                        cookieStore: WKHTTPCookieStore? = nil,
                        temporary: Bool? = nil) -> Download? {
         
-        guard let mimeType = navigationResponse.response.mimeType,
-              let url = navigationResponse.response.url else {
-                  return nil
-        }
-
-        let type = MIMEType(rawValue: mimeType) ?? .unknown
+        guard let metaData = downloadMetaData(for: navigationResponse) else { return nil }
+        
+        let type = MIMEType(rawValue: metaData.mimeType) ?? .unknown
         
         let temporaryFile: Bool
         if let temporary = temporary {
@@ -74,18 +71,21 @@ class DownloadsManager {
         if let downloadSession = downloadSession {
             session = downloadSession
         } else {
-            session = DownloadSession(url, cookieStore: cookieStore)
+            session = DownloadSession(metaData.url, cookieStore: cookieStore)
         }
-        var fileName = sanitizeFilename(navigationResponse.response.suggestedFilename)
-        fileName = convertToUniqueFilename(fileName)
         
         let download = Download(downloadSession: session,
-                        mimeType: type,
-                        fileName: fileName,
-                        temporary: temporaryFile,
-                        delegate: self)
+                                mimeType: type,
+                                fileName: metaData.fileName,
+                                temporary: temporaryFile,
+                                delegate: self)
         downloadList.insert(download)
         return download
+    }
+    
+    func downloadMetaData(for navigationResponse: WKNavigationResponse) -> DownloadMetaData? {
+        let filename = fileName(for: navigationResponse)
+        return DownloadMetaData(navigationResponse.response, filename: filename)
     }
     
     func startDownload(_ download: Download) {
@@ -96,14 +96,7 @@ class DownloadsManager {
     func cancelAllDownloads() {
         downloadList.forEach { $0.cancel() }
     }
-    
-    //https://app.asana.com/0/0/1201734618649839/f
-    private func sanitizeFilename(_ originalFilename: String?) -> String {
-        let fileName = originalFilename ?? "unknown"
-        let allowedCharacterSet = CharacterSet.alphanumerics.union(CharacterSet.punctuationCharacters)
-        return fileName.components(separatedBy: allowedCharacterSet.inverted).joined()
-    }
-    
+
     private func move(_ download: Download, toPath path: URL) {
         guard let location = download.location else { return }
          do {
@@ -119,6 +112,11 @@ class DownloadsManager {
         guard !download.temporary else { return }
         move(download, toPath: downloadsFolder)
     }
+}
+
+// MARK: - Filename Methods
+
+extension DownloadsManager {
     
     private func convertToUniqueFilename(_ filename: String, counter: Int = 0) -> String {
         let downloadingFilenames = Set(downloadList.map { $0.filename })
@@ -138,6 +136,18 @@ class DownloadsManager {
         } else {
             return newFilename
         }
+    }
+    
+    private func fileName(for navigationResponse: WKNavigationResponse) -> String {
+        let fileName = sanitizeFilename(navigationResponse.response.suggestedFilename)
+        return convertToUniqueFilename(fileName)
+    }
+    
+    //https://app.asana.com/0/0/1201734618649839/f
+    private func sanitizeFilename(_ originalFilename: String?) -> String {
+        let fileName = originalFilename ?? "unknown"
+        let allowedCharacterSet = CharacterSet.alphanumerics.union(CharacterSet.punctuationCharacters)
+        return fileName.components(separatedBy: allowedCharacterSet.inverted).joined()
     }
 }
 

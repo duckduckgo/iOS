@@ -658,11 +658,14 @@ class TabViewController: UIViewController {
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
         if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
            ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
-            self.webView.configuration.userContentController.removeAllContentRuleLists()
-            self.webView.configuration.userContentController.add(rules.rulesList)
+            webView.configuration.userContentController.removeAllContentRuleLists()
+            webView.configuration.userContentController.add(rules.rulesList)
             
-            if let diff = notification.userInfo?[ContentBlockerProtectionChangedNotification.diffKey] as? ContentBlockerRulesIdentifier.Difference {
-                if diff.contains(.unprotectedSites) {
+            let diffKey = ContentBlockerProtectionChangedNotification.diffKey
+            let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
+            
+            if let diff = notification.userInfo?[diffKey] as? [String: ContentBlockerRulesIdentifier.Difference] {
+                if diff[tdsKey]?.contains(.unprotectedSites) ?? false {
                     reload(scripts: true)
                 } else {
                     reloadUserScripts()
@@ -671,6 +674,8 @@ class TabViewController: UIViewController {
                 reloadUserScripts()
             }
 
+        } else {
+            webView.configuration.userContentController.removeAllContentRuleLists()
         }
     }
 

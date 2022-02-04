@@ -1118,13 +1118,9 @@ extension TabViewController: WKNavigationDelegate {
         // Add Do Not sell header if needed
         let config = ContentBlocking.privacyConfigurationManager.privacyConfig
         let domain = incomingRequest.url?.host
-        let urlAllowed = !config.isInExceptionList(domain: domain, forFeature: .gpc)
-                            && !config.isUserUnprotected(domain: domain)
-                            && !config.isTempUnprotected(domain: domain)
+        let urlAllowed = config.isFeature(.gpc, enabledForDomain: domain)
         
-        if appSettings.sendDoNotSell
-            && ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .gpc)
-            && urlAllowed {
+        if appSettings.sendDoNotSell && urlAllowed {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)

@@ -43,15 +43,8 @@ public class LinkCleaner {
     
     public func isURLExcluded(url: URL, config: PrivacyConfiguration, feature: PrivacyFeature = .ampLinks) -> Bool {
         guard let host = url.host else { return true }
-        guard config.isEnabled(featureKey: feature) else { return true }
         
-        if config.isTempUnprotected(domain: host)
-            || config.isUserUnprotected(domain: host)
-            || config.isInExceptionList(domain: host, forFeature: feature) {
-            return true
-        }
-        
-        return false
+        return !config.isFeature(feature, enabledForDomain: host)
     }
     
     public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?,

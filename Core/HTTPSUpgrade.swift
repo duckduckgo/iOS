@@ -56,21 +56,7 @@ public class HTTPSUpgrade {
             return
         }
         
-        if privacyConfig.isEnabled(featureKey: .httpsUpgrade) {
-            // Check exception lists before upgrading
-            if privacyConfig.isTempUnprotected(domain: host) {
-                completion(false)
-                return
-            }
-            if privacyConfig.isUserUnprotected(domain: host) {
-                completion(false)
-                return
-            }
-            if privacyConfig.isInExceptionList(domain: host, forFeature: .httpsUpgrade) {
-                completion(false)
-                return
-            }
-        } else {
+        guard privacyConfig.isFeature(.httpsUpgrade, enabledForDomain: host) else {
             completion(false)
             return
         }

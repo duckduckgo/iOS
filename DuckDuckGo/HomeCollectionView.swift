@@ -161,6 +161,7 @@ class HomeCollectionView: UICollectionView {
 extension HomeCollectionView: Themable {
 
     func decorate(with theme: Theme) {
+        backgroundColor = theme.backgroundColor
         renderers.decorate(with: theme)
         reloadData()
     }

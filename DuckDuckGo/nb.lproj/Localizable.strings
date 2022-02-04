@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Nettsider anvender informasjonskapsler for å holde deg innlogget. Når du gjør en side brannsikker, slettes ikke informasjonskapslene, og du forblir innlogget, selv etter å ha brukt brannknappen. Vi blokkerer fortsatt tredjeparters sporingsanordninger som blir funnet på Brannsikre nettsteder.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Nettsteder";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Brannsikre nettsteder";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Ønsker du å brannsikre %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Hvis du brannsikrer dette nettstedet, vil du fortsatt være innlogget etter å ha brukt brannknappen.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Vil du brannsikre %@ for å forbli pålogget?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Brannsikre nettsted";
+"preserveLogins.menu.confirm" = "Brannsikre";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ er nå brannsikret";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Spør om å gjøre nettsteder brannsikre";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";

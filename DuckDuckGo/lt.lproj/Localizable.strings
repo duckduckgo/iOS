@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Svetainės pagrįstos slapukais, kad liktumėte prisijungę. Apsaugojus svetainę, slapukai nėra ištrinami ir liksite prisijungę net paspaudę apsaugojimo mygtuką. Vis tiek blokuosime trečiųjų šalių stebėjimo priemones, randamas svetainėse, kuriose pasinaudosite parinktimi „Fireproof“.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Svetainės";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Apsaugoti svetaines";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Ar norite apsaugoti %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Pasirinkę parinktį „Fireproof“ šioje svetainėje, liksite prisijungę net panaudoję mygtuką „Fire“.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Apsaugoti %@ ir likti prisijungus?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Patikrinti svetainę";
+"preserveLogins.menu.confirm" = "Ugniai atsparus";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ jau apsaugota";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "GERAI";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Prašyti apsaugoti svetaines";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmas";

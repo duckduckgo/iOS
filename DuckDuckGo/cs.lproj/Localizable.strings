@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Webové stránky spoléhají na soubory cookie, aby vás udržely přihlášené. Když na webu zapnete ochranu, soubory cookie se nevymažou a zůstanete přihlášeni, a to i po použití tlačítka pro mazání. Stále přitom blokujeme sledovací programy třetích stran nalezené na webových stránkách s ochranou.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Webové stránky";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Stránky s ochranou";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Chtěli byste u %@ ochranu?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Když na těchto stránkách zapnete ochranu, zůstanete přihlášeni i po použití tlačítka pro mazání.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Aktivovat ochranu stránky %@, abyste zůstali přihlášeni?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Webová stránka pro ochranu souborů";
+"preserveLogins.menu.confirm" = "Ochrana";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "Adresa %@ je nyní chráněná";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "DOBŘE";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Požádat o ochranu stránek";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";

@@ -371,7 +371,7 @@
 "email.waitlist.notification-permission.body" = "We’ll send you a notification when you can start using Email Protection.";
 
 /* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Would you like to us to notify you when it’s your turn?";
+"email.waitlist.notification-permission.title" = "Would you like us to notify you when it’s your turn?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.";

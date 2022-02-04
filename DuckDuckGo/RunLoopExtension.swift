@@ -86,7 +86,7 @@ public extension RunLoop {
         }
 
         while !condition.isResolved {
-            self.run(mode: mode, before: .distantFuture)
+            self.run(mode: mode, before: .init(timeIntervalSinceNow: 1.0))
         }
         self.remove(port, forMode: mode)
     }

@@ -371,7 +371,14 @@ class TabViewController: UIViewController {
     }
     
     public func load(url: URL) {
-        lastUpgradedURL = nil
+        load(url: url, didUpgradeUrl: false)
+    }
+    
+    private func load(url: URL, didUpgradeUrl: Bool) {
+        if !didUpgradeUrl {
+            lastUpgradedURL = nil
+        }
+        
         if !url.isBookmarklet() {
             self.url = url
         }
@@ -1314,7 +1321,7 @@ extension TabViewController: WKNavigationDelegate {
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
                 NetworkLeaderboard.shared.incrementHttpsUpgrades()
                 self?.lastUpgradedURL = upgradedUrl
-                self?.load(url: upgradedUrl)
+                self?.load(url: upgradedUrl, didUpgradeUrl: true)
                 completion(.cancel)
                 return
             }

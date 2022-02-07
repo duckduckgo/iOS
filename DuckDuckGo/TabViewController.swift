@@ -1005,7 +1005,7 @@ extension TabViewController: WKNavigationDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             // https://app.asana.com/0/414709148257752/1201620790053163/f
             if self?.url != daxDialogSourceURL {
-                DaxDialogs.shared.overrideShownFlagForSpec(spec: spec, flag: false)
+                DaxDialogs.shared.overrideShownFlagFor(spec, flag: false)
                 self?.isShowingFullScreenDaxDialog = false
                 return
             }

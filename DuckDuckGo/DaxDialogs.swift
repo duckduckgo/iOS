@@ -44,7 +44,7 @@ class DaxDialogs {
         let accessibilityLabel: String?
     }
     
-    func overrideShownFlagForSpec(spec: BrowsingSpec, flag: Bool) {
+    func overrideShownFlagFor(_ spec: BrowsingSpec, flag: Bool) {
         switch spec.type {
         case .withMultipleTrackers, .withOneTracker :
             settings.browsingWithTrackersShown = flag

@@ -55,8 +55,8 @@
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Duomenys ir (arba) skirtukai bus išvalyti iš naujo paleidus programą.";
 
-/* Class = "UILabel"; text = "When Signing In"; ObjectID = "bIg-0T-UWq"; */
-"bIg-0T-UWq.text" = "Prisijungiant";
+/* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
+"bIg-0T-UWq.text" = "Prašyti apsaugoti svetaines prisijungiant";
 
 /* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
 "bJo-qn-f57.title" = "El. pašto apsauga (beta)";
@@ -169,8 +169,8 @@
 /* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
 "NRb-Cc-1d6.footerTitle" = "Įjungus svetainės automatiškai atsidarys „DuckDuckGo“.";
 
-/* Class = "UILabel"; text = "No Fireproof websites"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Apsaugotų svetainių nėra";
+/* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
+"OfP-Kw-IOk.text" = "Apsaugotų svetainių dar nėra";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Neapsaugotos svetainės";

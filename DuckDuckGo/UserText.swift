@@ -277,18 +277,17 @@ public struct UserText {
     public static let onboardingSetAsDefaultBrowser = NSLocalizedString("onboardingSetAsDefaultBrowser", value: "Set as Default Browser", comment: "")
     public static let onboardingDefaultBrowserTitle = NSLocalizedString("onboardingDefaultBrowserTitle", value: "Make DuckDuckGo your default browser.", comment: "")
     public static let onboardingDefaultBrowserMaybeLater = NSLocalizedString("onboardingDefaultBrowserMaybeLater", value: "Maybe Later", comment: "")
-    
-    public static let preserveLoginsSwitchTitle = NSLocalizedString("preserveLogins.switch.title", value: "Ask to Fireproof Sites", comment: "Ask to Fireproof Sites")
-    
-    public static let preserveLoginsListTitle = NSLocalizedString("preserveLogins.domain.list.title", value: "Websites", comment: "Section header above Fireproffed websites list")
+
+    public static let preserveLoginsListTitle = NSLocalizedString("preserveLogins.domain.list.title", value: "Fireproof Sites", comment: "Section header above Fireproofed websites list")
     public static let preserveLoginsListFooter = NSLocalizedString("preserveLogins.domain.list.footer", value: "Websites rely on cookies to keep you signed in. When you Fireproof a site, cookies won’t be erased and you’ll stay signed in, even after using the Fire Button. We still block third-party trackers found on Fireproof websites.", comment: "")
     public static let preserveLoginsRemoveAll = NSLocalizedString("preserveLogins.remove.all", value: "Remove All", comment: "Alert title")
     public static let preserveLoginsRemoveAllOk = NSLocalizedString("preserveLogins.remove.all.ok", value: "OK", comment: "Confirmation button in alert")
-    
-    public static let preserveLoginsFireproofAsk = NSLocalizedString("preserveLogins.fireproof.message", value: "Would you like to Fireproof %@?", comment: "Paramter is a string - domain name")
+
+    public static let preserveLoginsFireproofAskTitle = NSLocalizedString("preserveLogins.fireproof.title", value: "Fireproof %@ to stay signed in?", comment: "Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in")
+    public static let preserveLoginsFireproofAskMessage = NSLocalizedString("preserveLogins.fireproof.message", value: "Fireproofing this site will keep you signed in after using the Fire Button.", comment: "Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in")
     public static let enablePreservingLogins = NSLocalizedString("preserveLogins.menu.enable", value: "Fireproof This Site", comment: "Enable fireproofing for site")
     public static let disablePreservingLogins = NSLocalizedString("preserveLogins.menu.disable", value: "Remove Fireproofing", comment: "Disable fireproofing for site")
-    public static let preserveLoginsFireproofConfirmAction = NSLocalizedString("preserveLogins.menu.confirm", value: "Fireproof Website", comment: "Confirm fireproofing action")
+    public static let preserveLoginsFireproofConfirmAction = NSLocalizedString("preserveLogins.menu.confirm", value: "Fireproof", comment: "Confirm fireproofing action")
     public static let preserveLoginsFireproofDefer = NSLocalizedString("preserveLogins.menu.defer", value: "Not Now", comment: "Deny fireproofing action")
     public static let preserveLoginsFireproofConfirmMessage = NSLocalizedString("preserveLogins.menu.confirm.message", value: "%@ is now Fireproof", comment: "Parameter is a website URL. Messege confirms that given website has been fireproofed.")
     public static let preserveLoginsRemovalConfirmMessage = NSLocalizedString("preserveLogins.menu.removal.message", value: "Fireproofing removed", comment: " Messege confirms that website is no longer fireproofed.")
@@ -396,7 +395,7 @@ public struct UserText {
     public static let emailWaitlistLearnMore = NSLocalizedString("email.waitlist.learn-more", value: "Learn more", comment: "Footer text for the email waitlist")
     public static let emailWaitlistErrorJoining = NSLocalizedString("email.waitlist.error-joining", value: "An error occurred while joining the Waitlist, please try again later", comment: "Error text when failing to join the waitlist")
 
-    public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like to us to notify you when it’s your turn?", comment: "Title for the permission notification for the email waitlist")
+    public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like us to notify you when it’s your turn?", comment: "Title for the permission notification for the email waitlist")
     public static let emailWaitlistNotificationPermissionBody = NSLocalizedString("email.waitlist.notification-permission.body", value: "We’ll send you a notification when you can start using Email Protection.", comment: "Body text for the permission notification for the email waitlist")
     public static let emailWaitlistNotificationPermissionNotifyMe = NSLocalizedString("email.waitlist.notification.notify-me", value: "Notify Me", comment: "Accept option for the permission notification for the email waitlist")
     public static let emailWaitlistNotificationPermissionNoThanks = NSLocalizedString("email.waitlist.notification.no-thanks", value: "No Thanks", comment: "Decline option for the permission notification for the email waitlist")

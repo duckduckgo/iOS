@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Verkkosivustot käyttävät evästeitä, joilla pysyt kirjautuneena sisään. Kun teet sivustosta palonkestävän, evästeitä ei poisteta ja pysyt kirjautuneena sisään, vaikka käytät Liekki-painiketta. Estämme edelleen kolmannen osapuolen seurannan palonkestävillä sivustoilla.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Verkkosivustot";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Tee sivustoista palonkestäviä";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Haluatko tehdä sivustosta %@? palonkestävän?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Sivuston tekeminen palonkestäväksi tarkoittaa, että pysyt kirjautuneena, vaikka käytät Liekki-painiketta.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Tehdäänkö kohteesta %@ palonkestävä, jotta voit pysyä sisäänkirjautuneena?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Palonkestävä verkkosivusto";
+"preserveLogins.menu.confirm" = "Tee palonkestäväksi";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ on nyt palonkestävä";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Kysy tehdäänkö sivustoista palonkestäviä";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmi";
@@ -1077,9 +1077,6 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Suosikki lisätty";
-
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Estä ilmoitukset";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Peruuta";

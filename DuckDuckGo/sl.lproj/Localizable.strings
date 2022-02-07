@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Spletne strani se zanašajo na piškotke, da boš vedno prijavljen. Ko spletno mesto požarno zaščitiš, piškotki ne bodo izbrisani in ostal boš prijavljen tudi po uporabi gumba Fire. Še vedno blokiramo zunanje sledilce, ki jih najdemo na požarno izoliranih spletnih mestih.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Spletna mesta";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Spletne strani s požarno zaščito";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Želiš požarno zaščito %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "S požarno zaščito tega spletnega mesta se boste prijavili po uporabi gumba Fire.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Želite nastaviti požarno zaščito spletnega mesta %@, da ostanete prijavljeni?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Spletna stran s požarno zaščito";
+"preserveLogins.menu.confirm" = "Požarna zaščita";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ ima sedaj požarno zaščito";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "V REDU";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Poziv ob straneh s požarno zaščito";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritem";
@@ -1077,9 +1077,6 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Priljubljeni dodan";
-
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blokiraj opozorila";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Prekliči";

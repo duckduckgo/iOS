@@ -23,13 +23,19 @@ import Combine
 @MainActor
 final class MacWaitlistViewModel: ObservableObject {
     
-    enum State {
+    enum ViewState {
         case notJoinedQueue
-        case joinedQueue
+        case joinedQueue(NotificationPermissionState)
         case inBeta
     }
     
-    @Published var state: State
+    enum NotificationPermissionState {
+        case notificationAllowed
+        case notificationDenied
+        case cannotPromptForNotification
+    }
+    
+    @Published var viewState: ViewState
     
     private let waitlistRequest: WaitlistRequesting
     private let browserWaitlistStorage: MacBrowserWaitlistStorage
@@ -40,17 +46,17 @@ final class MacWaitlistViewModel: ObservableObject {
         self.browserWaitlistStorage = waitlistStorage
         
         if browserWaitlistStorage.getWaitlistTimestamp() != nil, browserWaitlistStorage.getWaitlistInviteCode() == nil {
-            self.state = .joinedQueue
+            self.viewState = .joinedQueue(.notificationAllowed)
         } else if browserWaitlistStorage.getWaitlistInviteCode() != nil {
-            self.state = .inBeta
+            self.viewState = .inBeta
         } else {
-            self.state = .notJoinedQueue
+            self.viewState = .notJoinedQueue
         }
     }
     
     func joinWaitlist() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.state = .joinedQueue
+            self.viewState = .joinedQueue(.notificationAllowed)
         }
     }
     

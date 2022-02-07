@@ -362,10 +362,10 @@
 "email.waitlist.joined.no-notification.get-notification" = "get a notification";
 
 /* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. %@.";
+"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. %@.";
 
 /* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Learn more";
+"email.waitlist.learn-more" = "Learn more";
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "We’ll send you a notification when you can start using Email Protection.";
@@ -697,6 +697,9 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Invite Code";
+
 /* First parameter is 'get a notification', second is 'Learn more'. */
 "mac-browser.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to %1$@ when it arrives? %2$@ about the macOS browser beta.";
 
@@ -705,6 +708,12 @@
 
 /* Description text for the macOS waitlist. Parameter is 'Learn more.' */
 "mac-browser.waitlist.joined.notification" = "We’ll send you a notification when we're ready for you. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Your invite to try DuckDuckGo for Mac will arrive here. Check back soon, or we can send you a notification when it’s your turn.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download.";
 
 /* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
 "mac-browser.waitlist.learn-more" = "%@ about the beta.";
@@ -715,8 +724,9 @@
 /* Title for the macOS waitlist notification */
 "mac-browser.waitlist.notification.title" = "Your Desktop Browser Invitation is Here!";
 
-/* Description text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.summary" = "Sign up to try the DuckDuckGo Privacy Browser on macOS. %@.";
+/* Description text for the macOS waitlist. Parameter is 'Learn more'.
+   Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "The DuckDuckGo Privacy App for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
 
 /* Header text for the macOS browser waitlist */
 "mac-browser.waitlist.title" = "macOS Browser Beta";

@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Veebisaidid kasutavad küpsiseid, et hoida sind sisse logitud. Kui teed saidi tulekindlaks, ei kustutata küpsiseid ja sa jääd sisse logituks isegi pärast tulenupu kasutamist. Me blokeerime endiselt kolmanda poole jälitajad, kelle me tulekindlatelt lehtedelt leiame.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Veebilehed";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Tulekindlad veebisaidid";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Kas soovid muuta %@ tulekindaks?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Selle lehe muutmine tulekindaks hoiab sind sisse logitud pärast tulenupu kasutamist.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Tagada %@ tulekindlus, et jääda sisselogituks?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Tulekindel veebisait";
+"preserveLogins.menu.confirm" = "Tulekindel";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ on nüüd tulekindel";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Küsi tulekindlaid veebisaite";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";

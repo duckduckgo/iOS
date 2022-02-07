@@ -58,6 +58,9 @@ class BookmarksViewController: UITableViewController {
     
     @objc func dataDidChange(notification: Notification) {
         tableView.reloadData()
+        if currentDataSource.isEmpty && tableView.isEditing {
+            finishEditing()
+        }
         refreshEditButton()
     }
     
@@ -209,7 +212,7 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func refreshEditButton() {
-        if currentDataSource.isEmpty || currentDataSource === searchDataSource {
+        if (currentDataSource.isEmpty && !tableView.isEditing) || currentDataSource === searchDataSource {
             disableEditButton()
         } else if !tableView.isEditing {
             enableEditButton()
@@ -229,7 +232,7 @@ class BookmarksViewController: UITableViewController {
     }
     
     @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
-        if tableView.isEditing && !currentDataSource.isEmpty {
+        if tableView.isEditing {
             finishEditing()
         } else {
             startEditing()

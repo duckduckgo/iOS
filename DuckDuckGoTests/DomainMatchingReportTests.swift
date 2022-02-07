@@ -37,7 +37,14 @@ class DomainMatchingReportTests: XCTestCase {
         
         let resolver = TrackerResolver(tds: trackerData, unprotectedSites: [], tempList: [])
 
-        for test in tests {            
+        for test in tests {
+            let skip = test.exceptPlatforms?.contains("ios-browser")
+            if skip == true {
+                os_log("!!SKIPPING TEST: %s", test.name)
+                continue
+            }
+            os_log("TEST: %s", test.name)
+            
             let tracker = resolver.trackerFromUrl(test.requestURL,
                                                   pageUrlString: test.siteURL,
                                                   resourceType: test.requestType,

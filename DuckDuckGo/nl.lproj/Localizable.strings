@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Websites gebruiken cookies om te zorgen dat je ingelogd blijft. Als je een site brandveilig maakt, worden de cookies niet gewist en blijf je ingelogd, zelfs nadat je de vuurknop hebt gebruikt. Trackers van derden worden ook op brandveilige websites geblokkeerd.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Websites";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Brandveilige websites";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Wil je %@ brandveilig maken?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Als je deze site brandveilig maakt, blijf je ook na het gebruiken van de vuurknop ingelogd.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "%@ brandveilig maken om ingelogd te blijven?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Website brandveilig maken";
+"preserveLogins.menu.confirm" = "Brandveilig";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ is nu brandveilig";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Vragen om websites brandveilig te maken";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";

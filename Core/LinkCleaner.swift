@@ -22,6 +22,7 @@ import Foundation
 public class LinkCleaner {
     
     public var lastAmpUrl: String?
+    public var urlParametersRemoved: Bool = false
     
     public init() {
         
@@ -39,12 +40,13 @@ public class LinkCleaner {
         return nil
     }
     
-    public func isURLExcluded(url: URL, config: PrivacyConfiguration) -> Bool {
+    public func isURLExcluded(url: URL, config: PrivacyConfiguration, feature: PrivacyFeature = .ampLinks) -> Bool {
         guard let host = url.host else { return true }
+        guard config.isEnabled(featureKey: feature) else { return true }
         
         if config.isTempUnprotected(domain: host)
             || config.isUserUnprotected(domain: host)
-            || config.isInExceptionList(domain: host, forFeature: .ampLinks) {
+            || config.isInExceptionList(domain: host, forFeature: feature) {
             return true
         }
         
@@ -54,6 +56,7 @@ public class LinkCleaner {
     public func extractCanonicalFromAmpLink(initiator: URL?, destination url: URL?,
                                             config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
         lastAmpUrl = nil
+        guard config.isEnabled(featureKey: .ampLinks) else { return nil }
         guard let url = url, !isURLExcluded(url: url, config: config) else { return nil }
         if let initiator = initiator, isURLExcluded(url: initiator, config: config) {
             return nil
@@ -87,5 +90,37 @@ public class LinkCleaner {
         }
         
         return nil
+    }
+    
+    public func cleanTrackingParameters(initiator: URL?, url: URL?,
+                                        config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> URL? {
+        urlParametersRemoved = false
+        guard config.isEnabled(featureKey: .trackingParameters) else { return url }
+        guard let url = url, !isURLExcluded(url: url, config: config, feature: .trackingParameters) else { return url }
+        if let initiator = initiator, isURLExcluded(url: initiator, config: config, feature: .trackingParameters) {
+            return url
+        }
+        
+        guard var urlsComps = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return url
+        }
+        guard let queryParams = urlsComps.queryItems, queryParams.count > 0 else {
+            return url
+        }
+        
+        let trackingParams = TrackingLinkSettings(fromConfig: config).trackingParameters
+        
+        let preservedParams: [URLQueryItem] = queryParams.filter { param in
+            if trackingParams.contains(where: { param.name.matches(pattern: "^\($0)$") }) {
+                urlParametersRemoved = true
+                return false
+            }
+            
+            return true
+        }
+        
+        urlsComps.queryItems = preservedParams.count > 0 ? preservedParams : nil
+        
+        return urlsComps.url
     }
 }

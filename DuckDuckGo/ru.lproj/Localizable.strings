@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Чтобы вам не приходилось каждый раз входить в свою учетную запись, сайты используют куки-файлы. Если сделать сайт огнеупорным, мы не будем стирать его куки-файлы, даже если вы воспользуетесь кнопкой «Пожар». Но мы по-прежнему будем блокировать сторонние трекеры, в том числе на огнеупорных сайтах.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Сайты";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Огнеупорные сайты";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Сделать сайт %@ огнеупорным?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Вам не придется заново входить в свою учетную запись даже после применения кнопки «Пожар».";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Обезопасить сайт %@, чтобы не выходить из учетной записи?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Обезопасить сайт";
+"preserveLogins.menu.confirm" = "Обезопасить";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ теперь в безопасности";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Хорошо";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Предлагать обезопасить сайты";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритм";

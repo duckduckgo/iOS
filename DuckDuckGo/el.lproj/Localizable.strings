@@ -745,14 +745,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Οι ιστότοποι βασίζονται σε cookies για να σας διατηρούν συνδεδεμένους. Όταν ενεργοποιείτε τη διαγραφή δραστηριότητας για έναν ιστότοπο, τα cookies δεν διαγράφονται και παραμένετε συνδεδεμένοι, ακόμα και μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας. Εξακολουθούμε να αποκλείουμε εφαρμογές παρακολούθησης από τρίτους που υπάρχουν σε ιστότοπους με διαγραφή δραστηριότητας.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Ιστότοποι";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Ασφαλείς ιστότοποι";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Θα θέλατε να ενεργοποιήσετε τη διαγραφή δραστηριότητας για το %@;";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Ενεργοποιώντας τη διαγραφή δραστηριότητας για αυτόν τον ιστότοπο, θα παραμείνετε συνδεδεμένοι μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Διαγραφή δραστηριότητας στο %@ για να παραμείνετε συνδεδεμένοι;";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Ασφαλής ιστότοπος";
+"preserveLogins.menu.confirm" = "Διαγραφή δραστηριότητας";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "Έχει γίνει πλέον διαγραφή δραστηριότητας για το %@";
@@ -774,9 +777,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Εντάξει";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Ζητήστε διαγραφή δραστηριότητας για ιστότοπους";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Αλγόριθμος";

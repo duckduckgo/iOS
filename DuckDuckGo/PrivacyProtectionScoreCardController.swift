@@ -30,6 +30,8 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet weak var enhancedGradeCell: PrivacyProtectionScoreCardCell!
     @IBOutlet weak var isMajorNetworkCell: PrivacyProtectionScoreCardCell!
 
+    @IBOutlet var onHeaderCellTapped: UITapGestureRecognizer!
+    
     private var siteRating: SiteRating!
     private var privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
 
@@ -106,6 +108,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
         PrivacyProtectionHeaderConfigurator.configure(cell: cell, siteRating: siteRating, config: privacyConfig)
         cell.disclosureImage.isHidden = true
         cell.backImage.isHidden = !AppWidthObserver.shared.isLargeWidth
+        cell.addGestureRecognizer(onHeaderCellTapped)
         
         return cell
     }

@@ -32,7 +32,7 @@ class MacBrowserWaitlistViewController: UIViewController {
         return storyboard.instantiateViewController(identifier: "MacBrowserWaitlistViewController") { (coder) -> MacBrowserWaitlistViewController? in
             return MacBrowserWaitlistViewController(
                 coder: coder,
-                viewModel: MacBrowserWaitlistViewModel()
+                viewModel: DeprecatedWaitlisViewModel()
             )
         }
     }
@@ -45,10 +45,10 @@ class MacBrowserWaitlistViewController: UIViewController {
     @IBOutlet weak var waitlistActionButton: UIButton!
     @IBOutlet weak var existingInviteCodeButton: UIButton!
     
-    private let viewModel: MacBrowserWaitlistViewModel
+    private let viewModel: DeprecatedWaitlisViewModel
     private var currentTheme: Theme?
     
-    init?(coder: NSCoder, viewModel: MacBrowserWaitlistViewModel) {
+    init?(coder: NSCoder, viewModel: DeprecatedWaitlisViewModel) {
         self.viewModel = viewModel
         super.init(coder: coder)
     }
@@ -69,7 +69,7 @@ class MacBrowserWaitlistViewController: UIViewController {
         render(state: viewModel.waitlistState)
     }
     
-    private func render(state: MacBrowserWaitlistViewModel.WaitlistState) {
+    private func render(state: DeprecatedWaitlisViewModel.WaitlistState) {
         switch state {
         case .notJoinedQueue:
             renderNotJoinedQueueState()

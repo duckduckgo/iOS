@@ -184,9 +184,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        MacBrowserWaitlistViewModel.shared.getInviteCodeIfAvailable { error in
+        DeprecatedWaitlisViewModel.shared.getInviteCodeIfAvailable { error in
             if error == nil {
-                MacBrowserWaitlistViewModel.sendInviteCodeAvailableNotification()
+                DeprecatedWaitlisViewModel.sendInviteCodeAvailableNotification()
             }
         }
     }

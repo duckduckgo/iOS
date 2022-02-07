@@ -463,7 +463,7 @@ extension UserText {
 
     public static let macBrowserWaitlistGetANotification = NSLocalizedString("mac-browser.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the macOS waitlist")
     
-    public static func  macBrowserWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
+    public static func macBrowserWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
         let message =  NSLocalizedString("mac-browser.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about the macOS browser beta.", comment: "First parameter is 'get a notification', second is 'Learn more'.")
         return message.format(arguments: getNotifiedString, learnMoreString)
     }

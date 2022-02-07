@@ -30,23 +30,24 @@ struct MacBrowserWaitlistView: View {
 }
 
 struct MacBrowserWaitlistSignUpView: View {
+
     let requestInFlight: Bool
 
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
-            Image("EmailWaitlistWeHatched")
-            
-            Text("Try DuckDuckGo for Mac!")
-                .font(.system(size: 22, weight: .semibold, design: .default))
+            HeaderView(imageName: "MacWaitlistJoinWaitlist", title: "Try DuckDuckGo for Mac!")
             
             Text(UserText.macBrowserWaitlistSummary)
+                .foregroundColor(Color("MacWaitlistTextColor"))
                 .multilineTextAlignment(.center)
             
             Button("Join the Private Waitlist") {
-                
+                print("Joining waitlist")
             }
             .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
             .padding(.top, 24)
+            
+            Text("Windows coming soon!")
             
             if requestInFlight {
                 HStack {
@@ -64,6 +65,7 @@ struct MacBrowserWaitlistSignUpView: View {
         }
         .padding([.leading, .trailing], 24)
     }
+
 }
 
 // MARK: - Joined Waitlist Views
@@ -73,30 +75,43 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
     let notificationState: MacWaitlistViewModel.NotificationPermissionState
     
     var body: some View {
-        VStack(spacing: 16) {
-            HeaderView(imageName: "MacWaitlistJoined", title: "You're on the list!")
-
-            switch notificationState {
-            case .notificationAllowed:
-                Text(UserText.macBrowserWaitlistJoinedWithNotifications)
-            case .notificationDenied:
-                Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
-
-                Button("Notify Me") {
-                    
-                }
-                .buttonStyle(RoundedButtonStyle(enabled: true))
-                .padding(.top, 24)
-            case .cannotPromptForNotification:
-                Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
-                
-                AllowNotificationsView()
+        ZStack {
+            if #available(iOS 14.0, *) {
+                Color("MacWaitlistBackgroundColor")
+                    .ignoresSafeArea()
+            } else {
+                Color("MacWaitlistBackgroundColor")
             }
-            
-            Spacer()
+
+            VStack(spacing: 16) {
+                HeaderView(imageName: "MacWaitlistJoined", title: "You're on the list!")
+                
+                switch notificationState {
+                case .notificationAllowed:
+                    Text(UserText.macBrowserWaitlistJoinedWithNotifications)
+                        .foregroundColor(Color("MacWaitlistTextColor"))
+                case .notificationDenied:
+                    Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
+                        .foregroundColor(Color("MacWaitlistTextColor"))
+                    
+                    Button("Notify Me") {
+                        print("Notifying")
+                    }
+                    .buttonStyle(RoundedButtonStyle(enabled: true))
+                    .padding(.top, 24)
+                case .cannotPromptForNotification:
+                    Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
+                        .foregroundColor(Color("MacWaitlistTextColor"))
+                    
+                    AllowNotificationsView()
+                        .padding(.top, 8)
+                }
+                
+                Spacer()
+            }
+            .padding([.leading, .trailing], 24)
         }
         .multilineTextAlignment(.center)
-        .padding([.leading, .trailing], 24)
     }
     
 }
@@ -108,6 +123,7 @@ private struct AllowNotificationsView: View {
         VStack {
             
             Text("We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.")
+                .foregroundColor(Color("MacWaitlistTextColor"))
             
             Button("Allow Notifications") {
                 
@@ -118,6 +134,7 @@ private struct AllowNotificationsView: View {
         .padding()
         .background(Color.white)
         .cornerRadius(8)
+        .shadow(color: .black.opacity(0.05), radius: 12, x: 0, y: 4)
         
     }
     
@@ -164,6 +181,7 @@ struct HeaderView: View {
             Text(title)
                 .font(.system(size: 22, weight: .semibold, design: .default))
         }
+        .padding(.top, 16)
     }
     
 }
@@ -177,7 +195,7 @@ struct RoundedButtonStyle: ButtonStyle {
             .font(.system(size: 16, weight: .semibold))
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 12)
-            .background(enabled ? Color(UIColor.systemBlue) : Color(UIColor.lightGray))
+            .background(enabled ? Color("MacWaitlistBlue") : Color(UIColor.lightGray))
             .foregroundColor(enabled ? .white : .gray)
             .clipShape(Capsule())
     }
@@ -202,31 +220,49 @@ struct ActivityIndicator: UIViewRepresentable {
 
 struct MacBrowserWaitlistView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            MacBrowserWaitlistSignUpView(requestInFlight: false)
+        if #available(iOS 14.0, *) {
+            Group {
+                NavigationView {
+                    MacBrowserWaitlistSignUpView(requestInFlight: false)
+                        .navigationTitle("DuckDuckGo Desktop App")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .overlay(Divider(), alignment: .top)
+                }
                 .previewDisplayName("Sign Up")
-            
-            MacBrowserWaitlistSignUpView(requestInFlight: true)
-                .previewDisplayName("Sign Up Request In-Flight")
-            
-            if #available(iOS 14.0, *) {
+                
+                MacBrowserWaitlistSignUpView(requestInFlight: true)
+                    .previewDisplayName("Sign Up Request In-Flight")
+                
                 NavigationView {
                     MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationAllowed)
                         .navigationTitle("DuckDuckGo Desktop App")
                         .navigationBarTitleDisplayMode(.inline)
+                        .overlay(Divider(), alignment: .top)
                 }
                 .previewDisplayName("Joined Waitlist – Notifications Allowed")
-            }
-            
-            MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationDenied)
+                
+                NavigationView {
+                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationDenied)
+                        .navigationTitle("DuckDuckGo Desktop App")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .overlay(Divider(), alignment: .top)
+                }
                 .previewDisplayName("Joined Waitlist – Notifications Denied")
-            
-            MacBrowserWaitlistJoinedWaitlistView(notificationState: .cannotPromptForNotification)
+                
+                NavigationView {
+                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .cannotPromptForNotification)
+                        .navigationTitle("DuckDuckGo Desktop App")
+                        .navigationBarTitleDisplayMode(.inline)
+                        .overlay(Divider(), alignment: .top)
+                }
                 .previewDisplayName("Joined Waitlist – Notifications Not Allowed")
-            
-            InviteCodeView(inviteCode: "F20IZILP")
-                .previewLayout(PreviewLayout.sizeThatFits)
-                .previewDisplayName("Invite Code View")
+                
+                InviteCodeView(inviteCode: "F20IZILP")
+                    .previewLayout(PreviewLayout.sizeThatFits)
+                    .previewDisplayName("Invite Code View")
+            }
+        } else {
+            Text("Use iOS 14+ simulator")
         }
     }
 }

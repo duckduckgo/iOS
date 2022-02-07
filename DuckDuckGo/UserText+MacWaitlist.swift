@@ -22,7 +22,7 @@ import Foundation
 // swiftlint:disable line_length
 extension UserText {
     
-    public static let macWaitlistTitle = NSLocalizedString("mac-waitlist.title", value: "Join Private Beta", comment: "Title for the Mac Waitlist feature")
+    public static let macWaitlistTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
     
     public static let macWaitlistPrivacyDisclaimer = NSLocalizedString("mac-waitlist.privacy-disclaimer",
                                                                        value: "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.",

@@ -20,7 +20,7 @@
 import Foundation
 import UserNotifications
 
-class MacBrowserWaitlistViewModel {
+class DeprecatedWaitlisViewModel {
     
     enum WaitlistState {
         case notJoinedQueue
@@ -35,7 +35,7 @@ class MacBrowserWaitlistViewModel {
         case failure(Error)
     }
     
-    static var shared = MacBrowserWaitlistViewModel()
+    static var shared = DeprecatedWaitlisViewModel()
     
     static func sendInviteCodeAvailableNotification() {
         let notificationContent = UNMutableNotificationContent()

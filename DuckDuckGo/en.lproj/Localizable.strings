@@ -735,7 +735,7 @@
 "mac-waitlist.privacy-disclaimer" = "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.";
 
 /* Title for the Mac Waitlist feature */
-"mac-waitlist.title" = "Join Private Beta";
+"mac-waitlist.title" = "DuckDuckGo Desktop App";
 
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsing Menu";

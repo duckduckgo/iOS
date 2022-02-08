@@ -270,10 +270,10 @@
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="9Ko-0g-T3h" detailTextLabel="EB8-09-gt2" style="IBUITableViewCellStyleValue1" id="S20-Qg-xka">
-                                        <rect key="frame" x="0.0" y="384" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="384" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S20-Qg-xka" id="PC0-Vf-NNz">
-                                            <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Text Size" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Ko-0g-T3h">
@@ -302,7 +302,7 @@
                             <tableViewSection headerTitle="Privacy &amp; Security" footerTitle="If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening." id="dOj-jn-mSN" userLabel="Security">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="X9R-j6-TtK">
-                                        <rect key="frame" x="0.0" y="484.66666793823242" width="414" height="44.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="485" width="414" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X9R-j6-TtK" id="hhP-bZ-dyU">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="44.333332061767578"/>
@@ -346,7 +346,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="EqN-m3-s4f">
-                                        <rect key="frame" x="0.0" y="529" width="414" height="44.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="529.33333206176758" width="414" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EqN-m3-s4f" id="R54-xq-W5V">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="44.333332061767578"/>
@@ -390,7 +390,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="z07-QI-waz">
-                                        <rect key="frame" x="0.0" y="573.33333206176758" width="414" height="44.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="573.66666412353516" width="414" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z07-QI-waz" id="1HL-Ha-Yz0">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="44.333332061767578"/>
@@ -434,7 +434,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="FHC-1z-Z3v" style="IBUITableViewCellStyleDefault" id="qdD-7s-mmM">
-                                        <rect key="frame" x="0.0" y="617.66666412353516" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="617.99999618530273" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qdD-7s-mmM" id="RVQ-jf-2kf">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="43.666667938232422"/>
@@ -455,7 +455,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="kyY-Fb-Oh6" userLabel="Email Protection Cell">
-                                        <rect key="frame" x="0.0" y="661.33333206176758" width="414" height="44.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="661.66666412353516" width="414" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kyY-Fb-Oh6" id="uZd-se-xLZ">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="44.333332061767578"/>
@@ -497,7 +497,7 @@
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="mSQ-M3-da5">
-                                        <rect key="frame" x="0.0" y="705.66666412353516" width="414" height="44.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="705.99999618530273" width="414" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="mSQ-M3-da5" id="uF1-dD-wAq">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44.333332061767578"/>
@@ -539,7 +539,7 @@
                             <tableViewSection footerTitle="Disable to prevent links from automatically opening in other installed apps." id="0gU-rZ-pRc">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="PlN-Mw-1PX">
-                                        <rect key="frame" x="0.0" y="808.33332824707031" width="414" height="44.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="808.66666030883789" width="414" height="44.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="PlN-Mw-1PX" id="buN-xv-p62">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44.333332061767578"/>
@@ -581,7 +581,7 @@
                             <tableViewSection headerTitle="More From DuckDuckGo" footerTitle="" id="wyV-R9-87K" userLabel="More From DuckDuckGo">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Ahk-U1-qSD" detailTextLabel="SQb-wA-ukS" style="IBUITableViewCellStyleSubtitle" id="iyL-Cc-ysN">
-                                        <rect key="frame" x="0.0" y="931.99999237060547" width="414" height="45.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="932.33332443237305" width="414" height="45.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iyL-Cc-ysN" id="gHE-5S-HNl">
                                             <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="45.666667938232422"/>
@@ -616,14 +616,14 @@
                             <tableViewSection headerTitle="Help" id="zMK-jc-4bJ" userLabel="Help">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="yvj-LL-MiR" style="IBUITableViewCellStyleDefault" id="pfh-oL-Cic">
-                                        <rect key="frame" x="0.0" y="1027.9999923706055" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="1028.333324432373" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pfh-oL-Cic" id="Ikg-ak-nRy">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add DuckDuckGo to Your Dock" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yvj-LL-MiR">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.666667938232422"/>
+                                                    <rect key="frame" x="8" y="0.0" width="398" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -640,14 +640,14 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="m23-t6-9cb" style="IBUITableViewCellStyleDefault" id="aJ8-VX-XrI">
-                                        <rect key="frame" x="0.0" y="1071.6666603088379" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="1071.9999923706055" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aJ8-VX-XrI" id="9Mf-ZL-aUg">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Share Feedback" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m23-t6-9cb">
-                                                    <rect key="frame" x="20" y="0.0" width="374" height="43.666667938232422"/>
+                                                    <rect key="frame" x="8" y="0.0" width="398" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -668,14 +668,14 @@
                             <tableViewSection headerTitle="Other" footerTitle="" id="FpT-1C-xtx">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="oM7-1o-9oY" style="IBUITableViewCellStyleDefault" id="iy0-gV-9MR">
-                                        <rect key="frame" x="0.0" y="1172.3333282470703" width="414" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="1172.6666603088379" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iy0-gV-9MR" id="Msh-jY-fMD">
-                                            <rect key="frame" x="0.0" y="0.0" width="385.33333333333331" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="397.33333333333331" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="About DuckDuckGo" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oM7-1o-9oY">
-                                                    <rect key="frame" x="20" y="0.0" width="357.33333333333331" height="43.666667938232422"/>
+                                                    <rect key="frame" x="8" y="0.0" width="381.33333333333331" height="43.666667938232422"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <bool key="isElement" value="NO"/>
@@ -695,21 +695,21 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2ky-s9-1aZ" detailTextLabel="d5n-vG-8kF" style="IBUITableViewCellStyleSubtitle" id="TYF-GX-a3j">
-                                        <rect key="frame" x="0.0" y="1215.9999961853027" width="414" height="44.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="1216.3333282470703" width="414" height="44.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TYF-GX-a3j" id="XV6-jV-uNS">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ky-s9-1aZ">
-                                                    <rect key="frame" x="20" y="9" width="54" height="16"/>
+                                                    <rect key="frame" x="8" y="9" width="54" height="16"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="10.0.1 (Build 10005)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d5n-vG-8kF">
-                                                    <rect key="frame" x="20.000000000000007" y="25" width="98.666666666666671" height="12"/>
+                                                    <rect key="frame" x="8" y="25" width="98.666666666666671" height="12"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="12"/>
                                                     <color key="textColor" red="0.74509803919999995" green="0.76078431369999999" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2157,7 +2157,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="4WC-3q-ccD">
-                            <rect key="frame" x="0.0" y="149.33333206176755" width="414" height="120.00000000000003"/>
+                            <rect key="frame" x="0.0" y="154.66666793823242" width="414" height="120.00000000000006"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">
@@ -2188,19 +2188,19 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                             <tableViewSection id="Qyq-nQ-LoP">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="hAx-0b-BaR">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="39"/>
+                                        <rect key="frame" x="0.0" y="18" width="414" height="41.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hAx-0b-BaR" id="1u9-NP-PGn">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="39"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Personal Duck Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i4Y-CX-8b6">
-                                                    <rect key="frame" x="20" y="0.0" width="166.33333333333334" height="39"/>
+                                                    <rect key="frame" x="20" y="0.0" width="167.66666666666666" height="41.666666666666664"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dax@duck.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25v-n4-wJD">
-                                                    <rect key="frame" x="288.33333333333331" y="10.999999999999998" width="105.66666666666669" height="16.333333333333329"/>
+                                                    <rect key="frame" x="283.66666666666669" y="11" width="110.33333333333331" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2222,14 +2222,14 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                             <tableViewSection id="JKJ-hO-TaH">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="NR2-0i-W2V">
-                                        <rect key="frame" x="0.0" y="93" width="414" height="38.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="95.666667938232422" width="414" height="41"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NR2-0i-W2V" id="k3G-bL-YVw">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="38.333332061767578"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remove from Device" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEh-V1-QaM">
-                                                    <rect key="frame" x="20" y="10.999999999999998" width="374" height="16.333333333333329"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="19"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" systemColor="systemPinkColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2362,131 +2362,11 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
             </objects>
             <point key="canvasLocation" x="7170" y="929"/>
         </scene>
-        <!--Mac Browser Waitlist-->
-        <scene sceneID="0Ke-VF-tWV">
-            <objects>
-                <viewController storyboardIdentifier="MacBrowserWaitlistViewController" title="Mac Browser Waitlist" id="dnr-SI-BaR" customClass="MacBrowserWaitlistViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="zcE-oZ-Wru"/>
-                        <viewControllerLayoutGuide type="bottom" id="gHQ-hS-n5T"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5Mu-ae-kPb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="t9G-Vb-i3k">
-                                <rect key="frame" x="167" y="32" width="80" height="80"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="lYE-QT-cm7"/>
-                                    <constraint firstAttribute="width" secondItem="t9G-Vb-i3k" secondAttribute="height" multiplier="1:1" id="xcE-jG-pWJ"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Header Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2V-M0-XfW">
-                                <rect key="frame" x="20" y="132" width="374" height="24"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Description Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hYG-SA-Pyk">
-                                <rect key="frame" x="20" y="168" width="374" height="32"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" systemColor="secondaryLabelColor"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="h3E-h1-cmI">
-                                <rect key="frame" x="20" y="232" width="374" height="135"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYb-Wi-Mne">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
-                                        <color key="backgroundColor" name="AccentColor"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
-                                        <state key="normal" title="Action button">
-                                            <color key="titleColor" systemColor="systemBackgroundColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="waitlistActionButtonTapped:" destination="dnr-SI-BaR" eventType="touchUpInside" id="q0u-Vd-h1J"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INVITECODE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mua-n6-Yp1">
-                                        <rect key="frame" x="0.0" y="50" width="374" height="35"/>
-                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="30"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTk-bk-Fjg">
-                                        <rect key="frame" x="0.0" y="95" width="374" height="40"/>
-                                        <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="12"/>
-                                        <state key="normal" title="I have an Invite Code">
-                                            <color key="titleColor" name="AccentColor"/>
-                                        </state>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Footer Text" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Sjr-In-mMv">
-                                <rect key="frame" x="20" y="734" width="374" height="32"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" systemColor="secondaryLabelColor"/>
-                                <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npe-k3-nz8">
-                                <rect key="frame" x="132.33333333333337" y="695" width="149.66666666666663" height="31"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Reset Waitlist State"/>
-                                <connections>
-                                    <action selector="resetWaitlistState:" destination="dnr-SI-BaR" eventType="touchUpInside" id="d5d-tk-8mX"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="h3E-h1-cmI" firstAttribute="leading" secondItem="5Mu-ae-kPb" secondAttribute="leadingMargin" id="15a-XN-E2S"/>
-                            <constraint firstItem="Sjr-In-mMv" firstAttribute="leading" secondItem="5Mu-ae-kPb" secondAttribute="leadingMargin" id="Adn-q7-Hsv"/>
-                            <constraint firstItem="t9G-Vb-i3k" firstAttribute="centerX" secondItem="5Mu-ae-kPb" secondAttribute="centerX" id="Bl9-eY-c5Y"/>
-                            <constraint firstItem="t9G-Vb-i3k" firstAttribute="top" relation="greaterThanOrEqual" secondItem="zcE-oZ-Wru" secondAttribute="bottom" id="Dpz-WR-Arw"/>
-                            <constraint firstItem="h3E-h1-cmI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hYG-SA-Pyk" secondAttribute="bottom" id="EnN-AM-kB4"/>
-                            <constraint firstItem="hYG-SA-Pyk" firstAttribute="top" secondItem="R2V-M0-XfW" secondAttribute="bottom" constant="12" id="Exs-NZ-zD4"/>
-                            <constraint firstItem="hYG-SA-Pyk" firstAttribute="leading" secondItem="5Mu-ae-kPb" secondAttribute="leadingMargin" id="MKr-Bl-fzq"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Sjr-In-mMv" secondAttribute="trailing" id="Nz5-Ss-gRR"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="h3E-h1-cmI" secondAttribute="trailing" id="QbX-dm-MbW"/>
-                            <constraint firstItem="R2V-M0-XfW" firstAttribute="top" secondItem="t9G-Vb-i3k" secondAttribute="bottom" constant="20" id="Vi6-gN-S6a"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="R2V-M0-XfW" secondAttribute="trailing" id="XnJ-Nb-6V6"/>
-                            <constraint firstItem="t9G-Vb-i3k" firstAttribute="top" secondItem="zcE-oZ-Wru" secondAttribute="bottom" priority="750" constant="32" id="aFO-rg-EnP"/>
-                            <constraint firstItem="gHQ-hS-n5T" firstAttribute="top" secondItem="Sjr-In-mMv" secondAttribute="bottom" constant="8" symbolic="YES" id="adX-bX-Xtt"/>
-                            <constraint firstItem="R2V-M0-XfW" firstAttribute="leading" secondItem="5Mu-ae-kPb" secondAttribute="leadingMargin" id="iO7-Y4-qOk"/>
-                            <constraint firstItem="Npe-k3-nz8" firstAttribute="centerX" secondItem="5Mu-ae-kPb" secondAttribute="centerX" id="ny0-HL-UF7"/>
-                            <constraint firstItem="h3E-h1-cmI" firstAttribute="top" secondItem="hYG-SA-Pyk" secondAttribute="bottom" priority="750" constant="32" id="r8g-9a-miG"/>
-                            <constraint firstItem="Sjr-In-mMv" firstAttribute="top" secondItem="Npe-k3-nz8" secondAttribute="bottom" constant="8" symbolic="YES" id="v1h-wb-Su4"/>
-                            <constraint firstItem="Sjr-In-mMv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="h3E-h1-cmI" secondAttribute="bottom" id="vtC-PM-ncp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hYG-SA-Pyk" secondAttribute="trailing" id="x7o-rP-xRT"/>
-                            <constraint firstItem="Sjr-In-mMv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="h3E-h1-cmI" secondAttribute="bottom" priority="750" constant="24" id="yAt-Xh-aBA"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Desktop Browser Waitlist" id="0ac-IP-1TD"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <connections>
-                        <outlet property="existingInviteCodeButton" destination="MTk-bk-Fjg" id="nvR-kf-vtI"/>
-                        <outlet property="footerTextView" destination="Sjr-In-mMv" id="bAq-zf-G18"/>
-                        <outlet property="headerDescriptionTextView" destination="hYG-SA-Pyk" id="UoN-nt-zSh"/>
-                        <outlet property="headerImageView" destination="t9G-Vb-i3k" id="FUM-yI-8F1"/>
-                        <outlet property="headerTitleLabel" destination="R2V-M0-XfW" id="bLj-oW-nLj"/>
-                        <outlet property="inviteCodeLabel" destination="Mua-n6-Yp1" id="wAD-I7-6Xl"/>
-                        <outlet property="waitlistActionButton" destination="XYb-Wi-Mne" id="DoH-wj-P4n"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xTY-2M-lWL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7828" y="1592"/>
-        </scene>
     </scenes>
     <resources>
         <image name="EmailWaitlistContactUs" width="100" height="100"/>
         <image name="GlobeSmall" width="24" height="24"/>
         <image name="HomeRowAppIcon" width="512" height="512"/>
-        <image name="Logo" width="128" height="128"/>
         <image name="LogoLightText" width="160" height="128"/>
         <image name="PP Arrow Back" width="10" height="16"/>
         <image name="TextSizeLarger" width="24" height="24"/>

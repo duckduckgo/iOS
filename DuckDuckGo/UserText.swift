@@ -430,8 +430,8 @@ public struct UserText {
 
 extension UserText {
     
-    public static let macBrowserWaitlistAvailableNotificationTitle = NSLocalizedString("mac-browser.waitlist.notification.title", value: "Your Desktop Browser Invitation is Here!", comment: "Title for the macOS waitlist notification")
-    public static let macBrowserWaitlistAvailableNotificationBody = NSLocalizedString("mac-browser.waitlist.notification.body", value: "You asked us to notify you when it’s your turn to try our new macOS browser.", comment: "Body text for the macOS waitlist notification")
+    public static let macBrowserWaitlistAvailableNotificationTitle = NSLocalizedString("mac-browser.waitlist.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")
+    public static let macBrowserWaitlistAvailableNotificationBody = NSLocalizedString("mac-browser.waitlist.notification.body", value: "Open your invite", comment: "Body text for the macOS waitlist notification")
     
     public static let macBrowserWaitlistTitle = NSLocalizedString("mac-browser.waitlist.title", value: "macOS Browser Beta", comment: "Header text for the macOS browser waitlist")
     

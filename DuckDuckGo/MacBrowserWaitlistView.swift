@@ -364,12 +364,8 @@ struct MacBrowserWaitlistView_Previews: PreviewProvider {
                 }
                 
                 PreviewView("Invite Screen With Code") {
-                    MacBrowserWaitlistInvitedView(inviteCode: "F20IZILP") { _ in }
+                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
                 }
-                
-                InviteCodeView(inviteCode: "CODE1234")
-                    .previewLayout(PreviewLayout.sizeThatFits)
-                    .previewDisplayName("Invite Code View")
             }
         } else {
             Text("Use iOS 14+ simulator")

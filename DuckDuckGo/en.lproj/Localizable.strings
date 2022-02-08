@@ -719,10 +719,10 @@
 "mac-browser.waitlist.learn-more" = "%@ about the beta.";
 
 /* Body text for the macOS waitlist notification */
-"mac-browser.waitlist.notification.body" = "You asked us to notify you when it’s your turn to try our new macOS browser.";
+"mac-browser.waitlist.notification.body" = "Open your invite";
 
 /* Title for the macOS waitlist notification */
-"mac-browser.waitlist.notification.title" = "Your Desktop Browser Invitation is Here!";
+"mac-browser.waitlist.notification.title" = "DuckDuckGo for Mac is ready!";
 
 /* Description text for the macOS waitlist. Parameter is 'Learn more'.
    Summary text for the macOS browser waitlist */

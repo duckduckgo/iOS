@@ -20,6 +20,13 @@
 import Foundation
 import UserNotifications
 
+enum WaitlistInviteCodeFetchError: Error {
+    case alreadyHasInviteCode
+    case notOnWaitlist
+    case noCodeAvailable
+    case failure(Error)
+}
+
 struct MacBrowserWaitlist {
     
     static func settingsSubtitle() -> String {

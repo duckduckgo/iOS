@@ -63,9 +63,7 @@
 		4BC21A2B2723862E00229F0E /* RunLoopExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A29272384F500229F0E /* RunLoopExtension.swift */; };
 		4BC21A2F27238B7500229F0E /* RunLoopExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */; };
 		4BC68A75275B09890029A586 /* MacBrowserWaitlistStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC68A74275B09890029A586 /* MacBrowserWaitlistStorage.swift */; };
-		4BC68A77275B0ADC0029A586 /* MacBrowserWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC68A76275B0ADC0029A586 /* MacBrowserWaitlistViewController.swift */; };
 		4BC68A79275B14110029A586 /* WaitlistRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC68A78275B14110029A586 /* WaitlistRequest.swift */; };
-		4BC68A7B275B141A0029A586 /* DeprecatedWaitlisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC68A7A275B141A0029A586 /* DeprecatedWaitlisViewModel.swift */; };
 		4BDCECB92680333100F5C244 /* EmailWaitlistWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDCECB82680333100F5C244 /* EmailWaitlistWebViewController.swift */; };
 		4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE27566272F878F006B20B0 /* URLRequestExtension.swift */; };
 		4BE86C5D2633DBD8001C0E77 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE86C5C2633DBD8001C0E77 /* BrowserServicesKit */; };
@@ -795,9 +793,7 @@
 		4BC21A29272384F500229F0E /* RunLoopExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunLoopExtension.swift; path = ../DuckDuckGo/RunLoopExtension.swift; sourceTree = "<group>"; };
 		4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoopExtensionTests.swift; sourceTree = "<group>"; };
 		4BC68A74275B09890029A586 /* MacBrowserWaitlistStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistStorage.swift; sourceTree = "<group>"; };
-		4BC68A76275B0ADC0029A586 /* MacBrowserWaitlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistViewController.swift; sourceTree = "<group>"; };
 		4BC68A78275B14110029A586 /* WaitlistRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitlistRequest.swift; sourceTree = "<group>"; };
-		4BC68A7A275B141A0029A586 /* DeprecatedWaitlisViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedWaitlisViewModel.swift; sourceTree = "<group>"; };
 		4BDCECB82680333100F5C244 /* EmailWaitlistWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailWaitlistWebViewController.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
 		6FB030C7234331B400A10DB9 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Configuration.xcconfig; path = Configuration/Configuration.xcconfig; sourceTree = "<group>"; };
@@ -2569,7 +2565,6 @@
 				F456B3B425810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift */,
 				85449EF423FDA02800512AAF /* KeyboardSettingsViewController.swift */,
 				8540BD5523D9E9C20057FDD2 /* PreserveLoginsSettingsViewController.swift */,
-				4BC68A76275B0ADC0029A586 /* MacBrowserWaitlistViewController.swift */,
 				4BAB74AB279601F700EF4098 /* MacBrowserWaitlistView.swift */,
 				4BAB74AF279622D300EF4098 /* MacWaitlistHostingViewController.swift */,
 				F176699D1E40BC86003D3222 /* Settings.storyboard */,
@@ -2589,7 +2584,6 @@
 				4B0DC71127B20AD30052B514 /* MacBrowserWaitlist.swift */,
 				4BC68A78275B14110029A586 /* WaitlistRequest.swift */,
 				4BC68A74275B09890029A586 /* MacBrowserWaitlistStorage.swift */,
-				4BC68A7A275B141A0029A586 /* DeprecatedWaitlisViewModel.swift */,
 				4BAB74B127962D3300EF4098 /* MacWaitlistViewModel.swift */,
 			);
 			name = Model;
@@ -4601,7 +4595,6 @@
 				988AC355257E47C100793C64 /* RequeryLogic.swift in Sources */,
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
-				4BC68A77275B0ADC0029A586 /* MacBrowserWaitlistViewController.swift in Sources */,
 				4BC68A79275B14110029A586 /* WaitlistRequest.swift in Sources */,
 				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
@@ -4699,7 +4692,6 @@
 				98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
-				4BC68A7B275B141A0029A586 /* DeprecatedWaitlisViewModel.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				F1D477C61F2126CC0031ED49 /* OmniBarState.swift in Sources */,
 				85F2FFCD2211F615006BB258 /* MainViewController+KeyCommands.swift in Sources */,

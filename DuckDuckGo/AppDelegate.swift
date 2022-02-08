@@ -187,16 +187,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MacBrowserWaitlist.fetchInviteCodeIfAvailable { error in
             if error == nil {
                 MacBrowserWaitlist.sendInviteCodeAvailableNotification()
-            } else {
-                print("DEBUG: Error: \(error)")
             }
         }
 
-        DeprecatedWaitlisViewModel.shared.getInviteCodeIfAvailable { error in
-            if error == nil {
-                DeprecatedWaitlisViewModel.sendInviteCodeAvailableNotification()
-            }
-        }
     }
 
     private func fireAppLaunchPixel() {
@@ -511,7 +504,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
             rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
             let navigationController = rootViewController.presentedViewController as? UINavigationController
-            let waitlist = MacBrowserWaitlistViewController.loadFromStoryboard()
+            let waitlist = MacWaitlistViewController(nibName: nil, bundle: nil)
 
             navigationController?.popToRootViewController(animated: false)
             navigationController?.pushViewController(waitlist, animated: true)

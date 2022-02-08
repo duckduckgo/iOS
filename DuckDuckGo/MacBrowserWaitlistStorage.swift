@@ -49,6 +49,14 @@ class MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
         }
     }
     
+    var isOnWaitlist: Bool {
+        return getWaitlistToken() != nil && getWaitlistTimestamp() != nil
+    }
+    
+    var isInvited: Bool {
+        return getWaitlistInviteCode() != nil
+    }
+    
     func getWaitlistToken() -> String? {
         return getString(forField: .waitlistToken)
     }

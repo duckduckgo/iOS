@@ -69,7 +69,7 @@ class MacBrowserWaitlistViewController: UIViewController {
         render(state: viewModel.waitlistState)
     }
     
-    private func render(state: DeprecatedWaitlisViewModel.WaitlistState) {
+    private func render(state: WaitlistState) {
         switch state {
         case .notJoinedQueue:
             renderNotJoinedQueueState()

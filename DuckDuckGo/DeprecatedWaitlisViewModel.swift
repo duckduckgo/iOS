@@ -20,20 +20,20 @@
 import UIKit
 import UserNotifications
 
+enum WaitlistState {
+    case notJoinedQueue
+    case joinedQueue
+    case inBeta
+}
+
+enum WaitlistInviteCodeFetchError: Error {
+    case alreadyHasInviteCode
+    case notOnWaitlist
+    case noCodeAvailable
+    case failure(Error)
+}
+
 class DeprecatedWaitlisViewModel {
-    
-    enum WaitlistState {
-        case notJoinedQueue
-        case joinedQueue
-        case inBeta
-    }
-    
-    enum WaitlistInviteCodeFetchError: Error {
-        case alreadyHasInviteCode
-        case notOnWaitlist
-        case noCodeAvailable
-        case failure(Error)
-    }
     
     static var shared = DeprecatedWaitlisViewModel()
     

@@ -100,6 +100,7 @@ class SettingsViewController: UITableViewController {
         configureDoNotSell()
         configureIconViews()
         configureEmailProtectionAccessoryText()
+        configureMacBrowserWaitlistCell()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
@@ -194,6 +195,10 @@ class SettingsViewController: UITableViewController {
     private func configureLinkPreviewsToggle() {
         longPressCell.isHidden = false
         longPressPreviewsToggle.isOn = appSettings.longPressPreviews
+    }
+    
+    private func configureMacBrowserWaitlistCell() {
+        macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.settingsSubtitle()
     }
 
     private func showDebug() {

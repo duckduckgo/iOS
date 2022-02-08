@@ -184,6 +184,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        MacBrowserWaitlist.fetchInviteCodeIfAvailable { error in
+            if error == nil {
+                MacBrowserWaitlist.sendInviteCodeAvailableNotification()
+            } else {
+                print("DEBUG: Error: \(error)")
+            }
+        }
+
         DeprecatedWaitlisViewModel.shared.getInviteCodeIfAvailable { error in
             if error == nil {
                 DeprecatedWaitlisViewModel.sendInviteCodeAvailableNotification()

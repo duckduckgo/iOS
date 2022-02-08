@@ -221,6 +221,10 @@ struct MacBrowserWaitlistInvitedView: View {
             Text("Visit this URL on your Mac to download:")
                 .foregroundColor(.macWaitlistText)
             
+            Text("duckduckgo.com/macbeta")
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(.blue)
+            
             Text(UserText.macWaitlistInviteScreenStep2)
                 .font(.system(size: 17, weight: .bold))
                 .foregroundColor(.macWaitlistText)
@@ -236,10 +240,10 @@ struct MacBrowserWaitlistInvitedView: View {
             
             Button(action: {
                 action(.openShareSheet)
-            }) {
+            }, label: {
                 Image("Share")
                     .foregroundColor(.macWaitlistText)
-            }
+            })
         }
         .padding([.leading, .trailing], 18)
         .multilineTextAlignment(.center)
@@ -301,7 +305,7 @@ struct RoundedButtonStyle: ButtonStyle {
             .font(.system(size: 16, weight: .semibold))
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 12)
-            .background(enabled ? Color("MacWaitlistBlue") : Color("MacWaitlistBlue").opacity(0.2))
+            .background(enabled ? Color.macWaitlistBlue : Color.macWaitlistBlue.opacity(0.2))
             .foregroundColor(.white)
             .clipShape(Capsule())
     }
@@ -355,18 +359,15 @@ struct MacBrowserWaitlistView_Previews: PreviewProvider {
                 }
                 
                 PreviewView("Joined Waitlist (Notifications Not Allowed)") {
-                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .cannotPromptForNotification, showNotificationAlert: $hideNotification) { _ in }
+                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .cannotPromptForNotification,
+                                                         showNotificationAlert: $hideNotification) { _ in }
                 }
                 
                 PreviewView("Invite Screen With Code") {
                     MacBrowserWaitlistInvitedView(inviteCode: "F20IZILP") { _ in }
                 }
-
-                AllowNotificationsView(action: { _ in })
-                    .previewLayout(PreviewLayout.sizeThatFits)
-                    .previewDisplayName("Allow Notifications View")
                 
-                InviteCodeView(inviteCode: "F20IZILP")
+                InviteCodeView(inviteCode: "CODE1234")
                     .previewLayout(PreviewLayout.sizeThatFits)
                     .previewDisplayName("Invite Code View")
             }
@@ -413,6 +414,10 @@ private extension Color {
     
     static var macWaitlistGreen: Color {
         Color("MacWaitlistGreen")
+    }
+    
+    static var macWaitlistBlue: Color {
+        Color("MacWaitlistBlue")
     }
     
 }

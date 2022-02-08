@@ -5,8 +5,8 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "release/friends-and-family",
-          "revision": "c9df66135fa085950ada1da2d24c79858ce2e705",
+          "branch": "sam/bump-autofill-to-ios-fix-commit",
+          "revision": "59825142ba86b3d399d7bf2357d7e78d6a303d13",
           "version": null
         }
       },

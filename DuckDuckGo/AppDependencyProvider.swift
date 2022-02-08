@@ -35,7 +35,7 @@ class AppDependencyProvider: DependencyProvider {
     
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
-    let homePageConfiguration: HomePageConfiguration = HomePageConfiguration()
+    lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager)
     let storageCache = StorageCacheProvider()
     lazy var voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper(variantManager)
 }

@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // swiftlint:disable function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
         #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.
@@ -123,6 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         
         window?.windowScene?.screenshotService?.delegate = self
+        ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
         return true
@@ -273,12 +275,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.newTab(reuseExisting: true)
             if url.getParam(name: "w") != nil {
                 Pixel.fire(pixel: .widgetNewSearch)
+                HomePageConfiguration().dismissHomeMessage(.widgetEducation)
                 mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
             Pixel.fire(pixel: .widgetFavoriteLaunch)
+            HomePageConfiguration().dismissHomeMessage(.widgetEducation)
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)

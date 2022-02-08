@@ -17,16 +17,27 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
+import SwiftUI
 import Combine
 
 @MainActor
 final class MacWaitlistViewModel: ObservableObject {
     
-    enum ViewState {
+    enum ViewState: Equatable {
         case notJoinedQueue
+        case joiningQueue
         case joinedQueue(NotificationPermissionState)
-        case inBeta
+        case invited(inviteCode: String)
+    }
+    
+    enum ViewAction: Equatable {
+        case joinQueue
+        case acceptNotifications
+        case declineNotifications
+        case requestNotificationPrompt
+        case openNotificationSettings
+        case openShareSheet
     }
     
     enum NotificationPermissionState {
@@ -36,28 +47,110 @@ final class MacWaitlistViewModel: ObservableObject {
     }
     
     @Published var viewState: ViewState
+    @Published var showNotificationPrompt = false
     
     private let waitlistRequest: WaitlistRequesting
-    private let browserWaitlistStorage: MacBrowserWaitlistStorage
+    private let waitlistStorage: MacBrowserWaitlistStorage
     
     init(waitlistRequest: WaitlistRequesting = WaitlistRequest(product: .macBrowser),
          waitlistStorage: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore()) {
         self.waitlistRequest = waitlistRequest
-        self.browserWaitlistStorage = waitlistStorage
+        self.waitlistStorage = waitlistStorage
         
-        if browserWaitlistStorage.getWaitlistTimestamp() != nil, browserWaitlistStorage.getWaitlistInviteCode() == nil {
+        if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
             self.viewState = .joinedQueue(.notificationAllowed)
-        } else if browserWaitlistStorage.getWaitlistInviteCode() != nil {
-            self.viewState = .inBeta
+            
+            Task {
+                await checkNotificationPermissions()
+            }
+        } else if let inviteCode = waitlistStorage.getWaitlistInviteCode() {
+            self.viewState = .invited(inviteCode: inviteCode)
         } else {
             self.viewState = .notJoinedQueue
         }
     }
     
-    func joinWaitlist() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+    private func checkNotificationPermissions() async {
+        if waitlistStorage.shouldReceiveNotifications() {
             self.viewState = .joinedQueue(.notificationAllowed)
+        } else {
+            let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
+            
+            if notificationSettings.authorizationStatus == .denied {
+                self.viewState = .joinedQueue(.cannotPromptForNotification)
+            } else {
+                self.viewState = .joinedQueue(.notificationDenied)
+            }
         }
+    }
+    
+    func perform(action: ViewAction) {
+        switch action {
+        case .joinQueue: Task { await joinQueue() }
+        case .acceptNotifications: Task { await acceptNotifications() }
+        case .declineNotifications: declineNotifications()
+        case .requestNotificationPrompt: requestNotificationPrompt()
+        case .openNotificationSettings: openNotificationSettings()
+        case .openShareSheet: openShareSheet()
+        }
+    }
+    
+    private func requestNotificationPrompt() {
+        self.showNotificationPrompt = true
+    }
+    
+    private func joinQueue() async {
+        self.viewState = .joiningQueue
+
+        let waitlistJoinResult = await waitlistRequest.joinWaitlist()
+        
+        switch waitlistJoinResult {
+        case .success(let joinResponse):
+            waitlistStorage.store(waitlistToken: joinResponse.token)
+            waitlistStorage.store(waitlistTimestamp: joinResponse.timestamp)
+        case .failure:
+            print("DEBUG: Waitlist join error")
+            self.viewState = .notJoinedQueue
+            return
+        }
+
+        let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
+        
+        if notificationSettings.authorizationStatus == .denied {
+            self.viewState = .joinedQueue(.cannotPromptForNotification)
+        } else {
+            self.showNotificationPrompt = true
+        }
+    }
+    
+    private func acceptNotifications() async {        
+        do {
+            let permissionGranted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert])
+            
+            if permissionGranted {
+                self.waitlistStorage.store(shouldReceiveNotifications: true)
+                self.viewState = .joinedQueue(.notificationAllowed)
+            } else {
+                self.viewState = .joinedQueue(.cannotPromptForNotification)
+            }
+        } catch {
+            self.viewState = .joinedQueue(.cannotPromptForNotification)
+        }
+    }
+    
+    private func declineNotifications() {
+        waitlistStorage.store(shouldReceiveNotifications: false)
+        self.viewState = .joinedQueue(.notificationDenied)
+    }
+    
+    private func openNotificationSettings() {
+        if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
+            UIApplication.shared.open(appSettings)
+        }
+    }
+    
+    private func openShareSheet() {
+        print("Share Sheet")
     }
     
 }

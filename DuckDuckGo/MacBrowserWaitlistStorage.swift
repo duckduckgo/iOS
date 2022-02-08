@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 protocol MacBrowserWaitlistStorage {
     
@@ -30,10 +31,13 @@ protocol MacBrowserWaitlistStorage {
     func store(inviteCode: String)
 
     func deleteWaitlistState()
+    
+    func store(shouldReceiveNotifications: Bool)
+    func shouldReceiveNotifications() -> Bool
 
 }
 
-struct MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
+class MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
     
     enum MacWaitlistKeychainField: String {
         case waitlistToken = ".waitlist.mac.token"
@@ -75,6 +79,21 @@ struct MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
         deleteItem(forField: .waitlistToken)
         deleteItem(forField: .waitlistTimestamp)
         deleteItem(forField: .inviteCode)
+        
+        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.macWaitlistShouldReceiveNotifications.rawValue)
+    }
+    
+    // MARK: - User Defaults
+    
+    @UserDefaultsWrapper(key: .macWaitlistShouldReceiveNotifications, defaultValue: false)
+    var userShouldReceiveNotifications: Bool
+    
+    func store(shouldReceiveNotifications: Bool) {
+        userShouldReceiveNotifications = shouldReceiveNotifications
+    }
+
+    func shouldReceiveNotifications() -> Bool {
+        return userShouldReceiveNotifications
     }
     
     // MARK: - Keychain Read

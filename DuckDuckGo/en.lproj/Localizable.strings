@@ -731,6 +731,15 @@
 /* Header text for the macOS browser waitlist */
 "mac-browser.waitlist.title" = "macOS Browser Beta";
 
+/* Step 1 */
+"mac-waitlist.invite-screen.step-1" = "Step 1";
+
+/* Step 2 */
+"mac-waitlist.invite-screen.step-2" = "Step 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Ready to start browsing privately on Mac?";
+
 /* Privacy disclaimer for the Mac Waitlist feature */
 "mac-waitlist.privacy-disclaimer" = "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.";
 

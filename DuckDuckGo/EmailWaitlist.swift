@@ -66,7 +66,7 @@ struct EmailWaitlist {
     }()
 
     /// This is a permission granted by the user when enrolling in the email waitlist. It is used to determine whether to schedule the background task.
-    @UserDefaultsWrapper(key: .showWaitlistNotification, defaultValue: false)
+    @UserDefaultsWrapper(key: .emailWaitlistShouldReceiveNotifications, defaultValue: false)
     var showWaitlistNotification: Bool
 
     func registerBackgroundRefreshTaskHandler() {

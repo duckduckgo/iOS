@@ -58,11 +58,14 @@ enum WaitlistResponse {
 
 }
 
+typealias WaitlistJoinResult = Result<WaitlistResponse.Join, WaitlistResponse.JoinError>
 typealias WaitlistJoinCompletion = (Result<WaitlistResponse.Join, WaitlistResponse.JoinError>) -> Void
 
 protocol WaitlistRequesting {
     
     func joinWaitlist(completionHandler: @escaping WaitlistJoinCompletion)
+    func joinWaitlist() async -> WaitlistJoinResult
+    
     func getWaitlistStatus(completionHandler: @escaping (Result<WaitlistResponse.Status, WaitlistResponse.StatusError>) -> Void)
     func getInviteCode(token: String, completionHandler: @escaping (Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>) -> Void)
     
@@ -107,6 +110,14 @@ class WaitlistRequest: WaitlistRequesting {
                 DispatchQueue.main.async {
                     completionHandler(.failure(.noData))
                 }
+            }
+        }
+    }
+    
+    func joinWaitlist() async -> WaitlistJoinResult {
+        await withCheckedContinuation { continuation in
+            joinWaitlist { result in
+                continuation.resume(returning: result)
             }
         }
     }

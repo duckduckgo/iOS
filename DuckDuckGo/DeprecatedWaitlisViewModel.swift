@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
 import UserNotifications
 
 class DeprecatedWaitlisViewModel {
@@ -38,6 +38,8 @@ class DeprecatedWaitlisViewModel {
     static var shared = DeprecatedWaitlisViewModel()
     
     static func sendInviteCodeAvailableNotification() {
+        // UNUserNotificationCenter.current().getNotificationSettings(completionHandler: <#T##(UNNotificationSettings) -> Void#>)
+        
         let notificationContent = UNMutableNotificationContent()
 
         notificationContent.title = UserText.macBrowserWaitlistAvailableNotificationTitle

@@ -6551,7 +6551,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
-				branch = "bartek/main-with-content-blocking-stack";
+				branch = "release/friends-and-family ";
 				kind = branch;
 			};
 		};

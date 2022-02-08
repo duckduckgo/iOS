@@ -27,7 +27,6 @@ public enum FeatureName: String {
     case dummy
     case voiceSearch
     case widgetEducation
-    case parameterStripping
 }
 
 public struct Variant {
@@ -75,9 +74,6 @@ public struct Variant {
         
         Variant(name: "ma", weight: doNotAllocate, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [.voiceSearch]),
         Variant(name: "mb", weight: doNotAllocate, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: []),
-
-        Variant(name: "mc", weight: doNotAllocate, isIncluded: When.always, features: [.parameterStripping]),
-        Variant(name: "md", weight: doNotAllocate, isIncluded: When.always, features: []),
         
         Variant(name: "me", weight: 1, isIncluded: When.supportsWidgets, features: [.widgetEducation]),
         Variant(name: "mf", weight: 1, isIncluded: When.supportsWidgets, features: [])

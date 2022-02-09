@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "release/friends-and-family",
-          "revision": "558f39714d57980a209af8999fb28adc2444c9d6",
-          "version": null
+          "branch": null,
+          "revision": "b86c1669fe4c03480f77f96208a482e2335c08a0",
+          "version": "8.0.0"
         }
       },
       {
@@ -71,6 +71,15 @@
           "branch": null,
           "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
           "version": "1.5.0"
+        }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "state": {
+          "branch": null,
+          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
+          "version": "1.0.3"
         }
       }
     ]

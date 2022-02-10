@@ -24,5 +24,16 @@ enum MIMEType: String {
     case usdz = "model/vnd.usdz+zip"
     case reality = "model/vnd.reality"
     case octetStream = "application/octet-stream"
+    case xhtml = "application/xhtml+xml"
+    case html = "text/html"
     case unknown
+    
+    var isHTML: Bool {
+        switch self {
+        case .html, .xhtml:
+            return true
+        default:
+            return false
+        }
+    }
 }

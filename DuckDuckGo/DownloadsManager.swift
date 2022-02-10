@@ -53,13 +53,11 @@ class DownloadsManager {
         
         guard let metaData = downloadMetaData(for: navigationResponse) else { return nil }
         
-        let type = MIMEType(rawValue: metaData.mimeType) ?? .unknown
-        
         let temporaryFile: Bool
         if let temporary = temporary {
             temporaryFile = temporary
         } else {
-            switch type {
+            switch metaData.mimeType {
             case .reality, .usdz, .passbook:
                 temporaryFile = true
             default:
@@ -74,8 +72,9 @@ class DownloadsManager {
             session = DownloadSession(metaData.url, cookieStore: cookieStore)
         }
         
+        #warning("create it using metadata?")
         let download = Download(downloadSession: session,
-                                mimeType: type,
+                                mimeType: metaData.mimeType,
                                 fileName: metaData.fileName,
                                 temporary: temporaryFile,
                                 delegate: self)
@@ -88,7 +87,8 @@ class DownloadsManager {
         return DownloadMetaData(navigationResponse.response, filename: filename)
     }
     
-    func startDownload(_ download: Download) {
+    func startDownload(_ download: Download, completion: Download.Completion? = nil) {
+        download.completionBlock = completion
         download.start()
         notificationCenter.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
     }

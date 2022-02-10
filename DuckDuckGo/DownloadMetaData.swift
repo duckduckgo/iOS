@@ -22,7 +22,8 @@ import Foundation
 struct DownloadMetaData {
     let fileName: String
     let expectedContentLength: Int64
-    let mimeType: String
+    let mimeTypeSource: String
+    let mimeType: MIMEType
     let url: URL
     
     init?(_ response: URLResponse, filename: String? = nil) {
@@ -38,7 +39,8 @@ struct DownloadMetaData {
         }
         
         self.expectedContentLength = response.expectedContentLength
-        self.mimeType = mimeType
+        self.mimeTypeSource = mimeType
+        self.mimeType = MIMEType(rawValue: mimeType) ?? .unknown
         self.url = url
     }
 }

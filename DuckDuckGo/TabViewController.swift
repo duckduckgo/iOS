@@ -108,6 +108,8 @@ class TabViewController: UIViewController {
     // In certain conditions we try to present a dax dialog when one is already showing, so check to ensure we don't
     var isShowingFullScreenDaxDialog = false
     
+    var temporaryDownload: Download?
+    
     public var url: URL? {
         didSet {
             updateTabModel()
@@ -965,11 +967,30 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
     
+    /*
+     Some files might be previewed by webkit but in order to share them
+     we need to download them first.
+     This method stores the temporary download or clears it if necessary
+     */
+    private func setupOrClearTemporaryDownload(for navigationResponse: WKNavigationResponse) {
+        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        
+        if let downloadMetaData = downloadManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
+            let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+            temporaryDownload = downloadManager.setupDownload(navigationResponse,
+                                                              cookieStore: cookieStore,
+                                                              temporary: true)
+        } else {
+            temporaryDownload = nil
+        }
+    }
+    
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
       
         guard !navigationResponse.canShowMIMEType else {
+            setupOrClearTemporaryDownload(for: navigationResponse)
             url = webView.url
             decisionHandler(.allow)
             return

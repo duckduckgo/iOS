@@ -19,6 +19,7 @@
 
 import Foundation
 import WebKit
+import Core
 
 protocol DownloadDelegate: AnyObject {
     func downloadDidFinish(_ download: Download, error: Error?)
@@ -26,6 +27,7 @@ protocol DownloadDelegate: AnyObject {
 
 class Download: NSObject, Identifiable, ObservableObject {
     weak var delegate: DownloadDelegate?
+    typealias Completion = ((Error?) -> Void)
     
     let id = UUID()
     let filename: String
@@ -34,6 +36,15 @@ class Download: NSObject, Identifiable, ObservableObject {
     let date = Date()
     let temporary: Bool
     let session: DownloadSession
+    var completionBlock: Completion?
+
+    var link: Link? {
+        guard let location = location,
+              FileManager.default.fileExists(atPath: location.path) else {
+            return nil
+        }
+        return Link(title: filename, url: location)
+    }
     
     @Published private(set) var state: URLSessionTask.State = .suspended
     @Published private(set) var bytesWritten: Int64 = 0
@@ -97,6 +108,7 @@ extension Download: DownloadSessionDelegate {
         session.finishTasksAndInvalidate()
         state = task.state
         delegate?.downloadDidFinish(self, error: error)
+        completionBlock?(error)
     }
     
     func urlSession(_ session: URLSession,

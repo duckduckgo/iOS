@@ -20,6 +20,7 @@
 import XCTest
 import OHHTTPStubs
 import OHHTTPStubsSwift
+import BrowserServicesKit
 
 @testable import Core
 

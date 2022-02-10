@@ -20,6 +20,7 @@
 import Foundation
 import UIKit
 import Core
+import BrowserServicesKit
 
 protocol PrivacyProtectionErrorDelegate: AnyObject {
 

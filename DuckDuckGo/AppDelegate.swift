@@ -52,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: lifecycle
 
-    // swiftlint:disable function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         #if targetEnvironment(simulator)
@@ -75,10 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Database.shared.loadStore { _ in }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
-        }
-
-        DispatchQueue.global(qos: .background).async {
-            ContentBlockerStringCache.removeLegacyData()
         }
 
         if !Database.shared.isDatabaseFileInitialized {
@@ -129,7 +124,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appIsLaunching = true
         return true
     }
-    // swiftlint:enable function_body_length
 
     private func clearTmp() {
         let tmp = FileManager.default.temporaryDirectory
@@ -175,7 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AppConfigurationFetch().start { newData in
             if newData {
-                ContentBlockerRulesManager.shared.recompile()
+                ContentBlocking.contentBlockingManager.scheduleCompilation()
             }
         }
 

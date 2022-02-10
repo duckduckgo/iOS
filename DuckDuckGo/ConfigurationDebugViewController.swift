@@ -170,7 +170,7 @@ class ConfigurationDebugViewController: UITableViewController {
                         DispatchQueue.main.async {
                             tableView?.reloadData()
                         }
-                        ContentBlockerRulesManager.shared.recompile()
+                        ContentBlocking.contentBlockingManager.scheduleCompilation()
                     }
                 }
             default: break

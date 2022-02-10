@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import BrowserServicesKit
 @testable import Core
 
 // swiftlint:disable type_body_length

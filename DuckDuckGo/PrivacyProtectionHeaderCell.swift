@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
 
 class PrivacyProtectionHeaderCell: UITableViewCell {
 

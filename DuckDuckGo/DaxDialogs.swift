@@ -20,6 +20,7 @@
 import Foundation
 import Core
 import TrackerRadarKit
+import BrowserServicesKit
 
 // swiftlint:disable type_body_length
 
@@ -139,13 +140,17 @@ class DaxDialogs {
 
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
+    private var contentBlockingRulesManager: ContentBlockerRulesManager
     private let variantManager: VariantManager
 
     private var nextHomeScreenMessageOverride: HomeScreenSpec?
 
     /// Use singleton accessor, this is only accessible for tests
-    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(), variantManager: VariantManager = DefaultVariantManager()) {
+    init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(),
+         contentBlockingRulesManager: ContentBlockerRulesManager = ContentBlocking.contentBlockingManager,
+         variantManager: VariantManager = DefaultVariantManager()) {
         self.settings = settings
+        self.contentBlockingRulesManager = contentBlockingRulesManager
         self.variantManager = variantManager
     }
     
@@ -295,7 +300,7 @@ class DaxDialogs {
     
     private func majorTrackerMessage(_ host: String) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingMajorTrackingSiteShown else { return nil }
-        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
+        guard let currentTrackerData = contentBlockingRulesManager.currentTDSRules?.trackerData,
               let entity = currentTrackerData.findEntity(forHost: host),
             let entityName = entity.displayName else { return nil }
         settings.browsingMajorTrackingSiteShown = true
@@ -342,7 +347,7 @@ class DaxDialogs {
     }
     
     private func isOwnedByFacebookOrGoogle(_ host: String) -> Entity? {
-        guard let currentTrackerData = ContentBlockerRulesManager.shared.currentRules?.trackerData,
+        guard let currentTrackerData = contentBlockingRulesManager.currentTDSRules?.trackerData,
               let entity = currentTrackerData.findEntity(forHost: host) else { return nil }
         return entity.domains?.contains(where: { MajorTrackers.domains.contains($0) }) ?? false ? entity : nil
     }

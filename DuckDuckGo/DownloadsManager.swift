@@ -72,7 +72,6 @@ class DownloadsManager {
             session = DownloadSession(metaData.url, cookieStore: cookieStore)
         }
         
-        #warning("create it using metadata?")
         let download = Download(downloadSession: session,
                                 mimeType: metaData.mimeType,
                                 fileName: metaData.fileName,

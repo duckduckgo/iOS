@@ -33,7 +33,7 @@ class DownloadsManagerTests: XCTestCase {
         DownloadTestsHelper.deleteAllFiles()
     }
     
-    func testTemporaryPKPassDownload() {
+    func testNotificationTemporaryPKPassDownload() {
         let notificationCenter = NotificationCenter()
         let downloadsManager = DownloadsManager(notificationCenter)
         
@@ -59,7 +59,7 @@ class DownloadsManagerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
     
-    func testTemporaryRealityDownload() {
+    func testNotificationTemporaryRealityDownload() {
         
         let notificationCenter = NotificationCenter()
         let downloadsManager = DownloadsManager(notificationCenter)
@@ -87,7 +87,7 @@ class DownloadsManagerTests: XCTestCase {
         
     }
     
-    func testTemporaryUSDZDownload() {
+    func testNotificationTemporaryUSDZDownload() {
         let notificationCenter = NotificationCenter()
         let downloadsManager = DownloadsManager(notificationCenter)
 
@@ -113,7 +113,7 @@ class DownloadsManagerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
     
-    func testPermanentBinaryDownload() {
+    func testNotificationPermanentBinaryDownload() {
         let notificationCenter = NotificationCenter()
         let downloadsManager = DownloadsManager(notificationCenter)
 
@@ -136,6 +136,26 @@ class DownloadsManagerTests: XCTestCase {
         }
         
         downloadsManager.startDownload(download)
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testClosurePermanentBinaryDownload() {
+        let downloadsManager = DownloadsManager(NotificationCenter())
+        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager)
+        
+        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        XCTAssertFalse(download.temporary, "download should not be temporary")
+        
+        let expectation = expectation(description: "Download finish")
+
+        downloadsManager.startDownload(download) { error in
+            let (tmpPath, finalPath) = DownloadTestsHelper.temporaryAndFinalPathForDownload(download)
+
+            XCTAssertNil(error)
+            XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(tmpPath), "File should not exist")
+            XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalPath), "File should exist")
+            expectation.fulfill()
+        }
         wait(for: [expectation], timeout: 1)
     }
     

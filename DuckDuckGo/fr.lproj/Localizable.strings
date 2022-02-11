@@ -92,7 +92,7 @@
 "addWidget.button" = "Ajouter un widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Faites des recherches privées et visitez en un clin d'œil les sites que vous aimez.";
+"addWidget.description" = "Accédez rapidement à la recherche privée et aux sites que vous aimez.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Appuyez longuement sur l'écran d'accueil pour passer en mode Jiggle.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori ajouté";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Bloquer les alertes";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Annuler";

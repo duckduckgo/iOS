@@ -92,7 +92,7 @@
 "addWidget.button" = "Widget Ekle";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Gizlice arama yapın ve sevdiğiniz siteleri hızlı bir şekilde ziyaret edin.";
+"addWidget.description" = "Özel aramaya ve sevdiğiniz sitelere hızlı erişim elde edin.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Sallama moduna girmek için ana ekranda uzun basın.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori eklendi";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Uyarıları Engelle";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "İptal";

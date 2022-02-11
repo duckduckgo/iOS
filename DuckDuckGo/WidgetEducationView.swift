@@ -62,7 +62,7 @@ private struct NumberedParagraph: View {
     
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: Const.Spacing.numberAndText) {
-            NumberedCircleView(number: number)
+            NumberedCircle(number: number)
             VStack(alignment: .leading, spacing: Const.Spacing.textAndImage) {
                 text
                     .font(Font(uiFont: Const.Font.text))
@@ -77,7 +77,7 @@ private struct NumberedParagraph: View {
     }
 }
 
-private struct NumberedCircleView: View {
+private struct NumberedCircle: View {
     var number: Int
     
     var body: some View {

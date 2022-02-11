@@ -92,7 +92,7 @@
 "addWidget.button" = "Dodaj gradnik";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Iščite zasebno in hitro obiščite spletna mesta, ki so vam všeč.";
+"addWidget.description" = "Zagotovite si hiter dostop do zasebnega iskanja in spletnih mest, ki so vam všeč.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Pritisnite in pridržite točko na začetnem zaslonu, da vstopite v način premikanja.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Priljubljeni dodan";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokiraj opozorila";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Prekliči";

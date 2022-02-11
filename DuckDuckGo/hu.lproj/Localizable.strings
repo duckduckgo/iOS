@@ -92,7 +92,7 @@
 "addWidget.button" = "Minialkalmazás hozzáadása";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Folytass privát keresést, és látogass el gyorsan kedvenc oldalaidra.";
+"addWidget.description" = "Gyors hozzáférés a privát kereséshez és kedvenc weboldalaidhoz.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Az ugráló ikonos üzemmódba lépéshez tartsd nyomva hosszan a kezdőképernyőt.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Kedvenc hozzáadva";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Figyelmeztetések blokkolása";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Mégsem";

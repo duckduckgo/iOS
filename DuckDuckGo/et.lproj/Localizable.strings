@@ -92,7 +92,7 @@
 "addWidget.button" = "Lisa vidin";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Otsige privaatselt ja külastage kiiresti lemmiksaite.";
+"addWidget.description" = "Kasuta kiiret juurdepääsu privaatsele otsingule ja lemmiksaitidele.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Pikk vajutus avaekraanile rakenduse ümberkorraldusrežiimi sisenemiseks.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Lemmik lisatud";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokeerige märguanded";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Tühista";

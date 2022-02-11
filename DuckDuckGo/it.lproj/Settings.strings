@@ -56,7 +56,7 @@
 "BGs-JL-4ib.footerTitle" = "I dati e/o le schede saranno cancellati al riavvio dell'app.";
 
 /* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
-"bIg-0T-UWq.text" = "Chiedi di proteggere i siti web al momento dell'accesso";
+"bIg-0T-UWq.text" = "Chiedi di rendere i siti web resistenti al fuoco al momento dell'accesso";
 
 /* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
 "bJo-qn-f57.title" = "Protezione e-mail (beta)";
@@ -173,7 +173,7 @@
 "NRb-Cc-1d6.footerTitle" = "Quando l'opzione è attivata, i siti web verranno aperti automaticamente in DuckDuckGo.";
 
 /* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Non esistono ancora siti protetti";
+"OfP-Kw-IOk.text" = "Non esistono ancora siti resistenti al fuoco";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Siti non protetti";

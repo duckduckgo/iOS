@@ -92,7 +92,7 @@
 "addWidget.button" = "Добавить виджет";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Конфиденциальный поиск и быстрый доступ к любимым сайтам.";
+"addWidget.description" = "Быстрый доступ к конфиденциальному поиску и любимым сайтам.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Удерживайте нажатие на домашнем экране, чтобы запустить режим настройки.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Сайт добавлен в избранное";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Блокировать уведомления";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Отменить";

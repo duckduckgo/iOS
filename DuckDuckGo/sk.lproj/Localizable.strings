@@ -92,7 +92,7 @@
 "addWidget.button" = "Pridať miniaplikáciu";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Vyhľadávajte súkromne a rýchlo navštívte svoje obľúbené webové lokality.";
+"addWidget.description" = "Získajte prístup k súkromnému vyhľadávaniu a svojim obľúbeným webovým lokalitám.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Dlhým stlačením na domovskej obrazovke spustíte režim zatrasenia.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Obľúbená položka bola pridaná";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokovať upozornenia";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Zrušiť";

@@ -92,7 +92,7 @@
 "addWidget.button" = "Lägg till widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Sök privat och besök dina favoritwebbplatser snabbt.";
+"addWidget.description" = "Få snabb tillgång till privat sökning och dina favoritwebbplatser.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Tryck länge på startskärmen tills apparna börjar vicka.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorit har lagts till";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blockera varningar";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Avbryt";

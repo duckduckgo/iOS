@@ -92,7 +92,7 @@
 "addWidget.button" = "Widget hinzufügen";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Privat suchen und schnell Seiten besuchen, die du liebst.";
+"addWidget.description" = "Erhalte schnellen Zugriff auf die private Suche und die Websites, die dir gefallen.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Drücke lange auf den Startbildschirm, um in den Jiggle-Modus zu wechseln.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorit wurde hinzugefügt";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Benachrichtigungen blockieren";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Abbrechen";

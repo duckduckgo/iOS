@@ -92,7 +92,7 @@
 "addWidget.button" = "Legg til widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Søk privat og gå raskt til nettstedene du liker best.";
+"addWidget.description" = "Få rask tilgang til privat søk og nettstedene du liker best.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Trykk lenge på startskjermen for å gå inn i ristemodus.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favoritt lagt til";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokker varsler";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Avbryt";

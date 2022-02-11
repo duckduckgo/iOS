@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
 
 protocol PrivacyProtectionDelegate: AnyObject {
 
@@ -39,7 +40,7 @@ class PrivacyProtectionController: ThemableNavigationController {
     var errorText: String?
   
     private var storageCache = AppDependencyProvider.shared.storageCache.current
-    private var privacyConfig = PrivacyConfigurationManager.shared.privacyConfig
+    private var privacyConfig = ContentBlocking.privacyConfigurationManager.privacyConfig
 
     override func viewDidLoad() {
         super.viewDidLoad()

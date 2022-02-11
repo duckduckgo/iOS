@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigera";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Dela";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Lägg till widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Få snabb tillgång till privat sökning och dina favoritwebbplatser.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Tryck länge på startskärmen tills apparna börjar vicka.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Tryck på plusknappen för %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Leta upp och välj DuckDuckGo. Välj sedan en widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Besök dina favoritwebbplatser med ett enda tryck.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Befintliga bokmärken kommer inte att kopieras.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Virvel";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Ställ in som standardwebbläsare";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Gör DuckDuckGo till din standardwebbläsare.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Sluta oroa dig varje gång du öppnar länkar.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NYTT I IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lägg till DuckDuckGo på din hemskärm!";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorit har lagts till";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blockera varningar";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Avbryt";

@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 import TrackerRadarKit
+import BrowserServicesKit
 
 public class SiteRating {
 

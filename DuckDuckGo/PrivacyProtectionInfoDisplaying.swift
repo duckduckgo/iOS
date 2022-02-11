@@ -18,6 +18,7 @@
 //
 
 import Core
+import BrowserServicesKit
 
 protocol PrivacyProtectionInfoDisplaying {
 

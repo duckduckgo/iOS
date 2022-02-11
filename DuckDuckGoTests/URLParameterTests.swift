@@ -20,6 +20,7 @@
 import XCTest
 @testable import TrackerRadarKit
 @testable import Core
+import BrowserServicesKit
 import Foundation
 import os.log
 

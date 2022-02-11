@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Podijeli";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Dodaj widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Čeka vas brzi pristup privatnom pretraživanju i omiljenim mrežnim mjestima.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Duže zadržite prst na početnom zaslonu za ulaz u način tresenja.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Dodirnite gumb plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Pronađite i odaberite DuckDuckGo. Zatim odaberite widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Jednim dodirom do vaših omiljenih stranica.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Vrtlog";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Postavi kao zadani preglednik";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Postavi DuckDuckGo kao svoj zadani preglednik.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Svaki put poveznice otvori spokojno.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOVO U IOS-u 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo na svoj početni zaslon!";
 
 /* No comment provided by engineer. */
@@ -755,7 +764,7 @@
 "preserveLogins.fireproof.title" = "Označiti %@ kao zaštićenu adresu kao biste ostali prijavljeni?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Vatrootporna";
+"preserveLogins.menu.confirm" = "Fireproof";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ je sada sigurno web-mjesto!";
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Dodano u Omiljeno";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokiraj upozorenja";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Otkaži";

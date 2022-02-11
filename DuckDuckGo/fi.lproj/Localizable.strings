@@ -92,7 +92,7 @@
 "addWidget.button" = "Lisää widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Hae yksityisesti ja vieraile nopeasti suosikkisivustoillasi.";
+"addWidget.description" = "Nopea pääsy yksityiseen hakuun ja suosikkisivustoihin.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Paina pitkään aloitusnäyttöä siirtyäksesi heilutustilaan.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Suosikki lisätty";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Estä ilmoitukset";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Peruuta";

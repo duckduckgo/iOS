@@ -92,7 +92,7 @@
 "addWidget.button" = "Dodaj widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Pretražujte u potpunoj privatnosti i u tren oka posjetite omiljene web stranice.";
+"addWidget.description" = "Čeka vas brzi pristup privatnom pretraživanju i omiljenim mrežnim mjestima.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Duže zadržite prst na početnom zaslonu za ulaz u način tresenja.";
@@ -764,7 +764,7 @@
 "preserveLogins.fireproof.title" = "Označiti %@ kao zaštićenu adresu kao biste ostali prijavljeni?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Vatrootporna";
+"preserveLogins.menu.confirm" = "Fireproof";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ je sada sigurno web-mjesto!";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Dodano u Omiljeno";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokiraj upozorenja";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Otkaži";

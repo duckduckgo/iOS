@@ -92,7 +92,7 @@
 "addWidget.button" = "Widget toevoegen";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Zoek privé en bezoek snel sites die je leuk vindt.";
+"addWidget.description" = "Krijg snel toegang tot privézoekopdrachten en de sites die je leuk vindt.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Druk lang op het startscherm om de schudmodus te gebruiken.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favoriet toegevoegd";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Meldingen blokkeren";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Annuleren";

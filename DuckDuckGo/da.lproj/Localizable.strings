@@ -92,7 +92,7 @@
 "addWidget.button" = "Tilføj widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Søg privat, og besøg hurtigt websteder, som du elsker.";
+"addWidget.description" = "Få hurtig adgang til privat søgning og de websteder, du elsker.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Tryk længe på startskærmen for at skifte til jiggle-tilstand.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorit tilføjet";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Bloker advarsler";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Annullér";

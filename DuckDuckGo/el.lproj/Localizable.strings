@@ -92,7 +92,7 @@
 "addWidget.button" = "Προσθήκη γραφικού στοιχείου";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Πραγματοποιήστε ιδιωτική αναζήτηση και επισκεφθείτε γρήγορα ιστότοπους που αγαπάτε.";
+"addWidget.description" = "Αποκτήστε γρήγορη πρόσβαση σε μια ιδιωτική αναζήτηση και στους ιστότοπους που αγαπάτε.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Πατήστε παρατεταμένα στην αρχική οθόνη για να εισέλθετε σε λειτουργία αναδιάταξης.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Προστέθηκε αγαπημένο";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Αποκλεισμός ειδοποιήσεων";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Ακύρωση";

@@ -92,7 +92,7 @@
 "addWidget.button" = "Pridėti valdiklį";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Ieškokite privačiai ir greitai apsilankykite mėgstamose svetainėse.";
+"addWidget.description" = "Greitai pasiekite privačią paiešką ir mėgstamas svetaines.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Ilgai spauskite pagrindinį ekraną, kad įjungtumėte į programėlių perkėlimo ir ištrynimo režimą.";
@@ -764,7 +764,7 @@
 "preserveLogins.fireproof.title" = "Apsaugoti %@ ir likti prisijungus?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Ugniai atsparus";
+"preserveLogins.menu.confirm" = "Parinktis „Fireproof“";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ jau apsaugota";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Mėgstamas pridėtas";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokuoti įspėjimus";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Atšaukti";

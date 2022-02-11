@@ -92,7 +92,7 @@
 "addWidget.button" = "Přidat widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Bezpečně prohlížej obsah a snadno navštěvuj svoje oblíbené stránky.";
+"addWidget.description" = "Získejte rychlý přístup k soukromému vyhledávání a oblíbeným webům.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Podržením prstu na ploše aktivuj režim úprav plochy.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Oblíbené položky uloženy";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokovat výstrahy";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Zrušit";

@@ -92,7 +92,7 @@
 "addWidget.button" = "Dodaj widżet";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Wyszukuj prywatnie i szybko odwiedzaj ulubione witryny.";
+"addWidget.description" = "Uzyskaj szybki dostęp do prywatnego wyszukiwania i ulubionych witryn.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Przyciśnij i przytrzymaj na ekranie głównym, aby przejść do trybu porządkowania.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Dodano ulubione";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokuj alerty";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Anuluj";

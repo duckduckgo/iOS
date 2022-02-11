@@ -92,7 +92,7 @@
 "addWidget.button" = "Aggiungi widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Cerca in privato e visita velocemente i siti che preferisci.";
+"addWidget.description" = "Accedi rapidamente alla navigazione in incognito e ai tuoi siti preferiti.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Premi a lungo sulla schermata iniziale per accedere alla modalità Jiggle.";
@@ -761,7 +761,7 @@
 "preserveLogins.fireproof.message" = "L'attivazione della protezione su questo sito ti consentirà di effettuare l'accesso dopo aver utilizzato il pulsante Proteggi (icona del fuoco).";
 
 /* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
-"preserveLogins.fireproof.title" = "Attivare la protezione su %@ per mantenere l'accesso?";
+"preserveLogins.fireproof.title" = "Rendere %@ resistente al fuoco per mantenere l'accesso?";
 
 /* Confirm fireproofing action */
 "preserveLogins.menu.confirm" = "Proteggi";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Preferito aggiunto";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blocca gli avvisi";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Annulla";

@@ -92,7 +92,7 @@
 "addWidget.button" = "Adăugare widget";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Caută în mod privat și vizitează rapid site-urile care îți plac.";
+"addWidget.description" = "Obține acces rapid la căutarea privată și la site-urile care îți plac.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Ține apăsat pe ecranul de întâmpinare pentru a intra în modul în care elementele „tremură”.";
@@ -764,7 +764,7 @@
 "preserveLogins.fireproof.title" = "Ignifughezi %@ pentru a rămâne autentificat(ă)?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Ignifugă";
+"preserveLogins.menu.confirm" = "Ștergerea activității și istoricului din browser";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ nu mai păstrează acum activitatea și istoricul";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Preferință adăugată";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blochează notificările";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Renunță";

@@ -92,7 +92,7 @@
 "addWidget.button" = "Добави приспособлението";
 
 /* No comment provided by engineer. */
-"addWidget.description" = "Поверително търсене и бързо влизане в любимите страници.";
+"addWidget.description" = "Получете бърз достъп до поверително търсене и до любимите си сайтове.";
 
 /* No comment provided by engineer. */
 "addWidget.settings.firstParagraph" = "Натиснете продължително началния екран, за да влезете в режим за пренареждане.";
@@ -1086,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Добавено в любими";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Блокиране на предупрежденията";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Отмени";

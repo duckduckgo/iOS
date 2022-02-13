@@ -55,7 +55,10 @@ class AutoClearSettingsViewController: UITableViewController {
     
     override func willMove(toParent parent: UIViewController?) {
         guard parent == nil else { return }
-        
+        storeSettingsIfChanged()
+    }
+    
+    private func storeSettingsIfChanged() {
         let oldSettings = loadClearDataSettings()
         if oldSettings != clearDataSettings {
             store()
@@ -102,6 +105,8 @@ class AutoClearSettingsViewController: UITableViewController {
         } else if indexPath.section == Sections.timing.rawValue {
             clearDataSettings?.timing = AutoClearSettingsModel.Timing(rawValue: indexPath.row) ?? .termination
         }
+        
+        storeSettingsIfChanged()
         tableView.reloadData()
     }
     

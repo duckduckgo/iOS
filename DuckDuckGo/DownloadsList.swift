@@ -20,62 +20,83 @@
 import SwiftUI
 
 struct DownloadsList: View {
+    @ObservedObject var viewModel: DownloadsListViewModel
+    @State var editMode: EditMode = .inactive
+    
     var body: some View {
         NavigationView {
             VStack {
                 List {
-                    Section(header: Text("Today")) {
-                        DownloadItem()
-                    }
-                    
-                    Section(header: Text("Yesterday")) {
-                        DownloadItem()
-                        DownloadItem()
-                    }
-                    
-                    Section(header: Text("Last Week")) {
-                        DownloadItem()
-                        DownloadItem()
-                        DownloadItem()
-                    }
-                    
-                    Section(header: Spacer()) {
-                        HStack {
-                            Spacer()
-                            Text("Delete All")
-                                .foregroundColor(Color.red)
-                            Spacer()
+                    ActiveDownloadRow()
+                    ForEach(viewModel.sections) { section in
+                        Section(header: Text(section.header)) {
+                            ForEach(section.rows) { row in
+                                DownloadRow(rowModel: row)
+                            }
+                            .onDelete { offset in
+                                self.delete(at: offset, in: section)
+                            }
                         }
                     }
-                    
+                    if editMode == .active {
+                        DeleteAllSection()
+                    }
                 }
                 .listStyle(.grouped)
-    //            .navigationTitle("Downloads")
-    //            .navigationBarTitleDisplayMode(.inline)
                 .navigationBarTitle("Downloads", displayMode: .inline)
-                .navigationBarItems(trailing: Button("Done") {
-                    print("Done Pressed")
-                })
-//                .toolbar {
-//                    ToolbarItem(placement: .bottomBar) {
-//                        Button("Edit") {
-//                            print("Edit Pressed")
-//                        }
-//                    }
-//                }
-                // toolbar
+                .environment(\.editMode, $editMode)
+                .navigationBarItems(trailing: Button("Done") { print("Done Pressed") }
+                                        .opacity(editMode == .inactive ? 1.0 : 0.0))
+                
                 HStack {
                     Spacer()
-                    Button("Edit") {
-                        print("Edit Pressed")
-                    }
+                    EditButton().environment(\.editMode, $editMode)
                 }.padding()
             }
         }
     }
+    
+    func delete(at offsets: IndexSet, in section: DownloadsListSection) {
+        guard let sectionIndex = viewModel.sections.firstIndex(of: section) else { return }
+        print("\(section), \(offsets.first!)")
+        viewModel.deleteItem(at: offsets, in: sectionIndex)
+    }
+
 }
 
-struct DownloadItem: View {
+struct DownloadsList_Previews: PreviewProvider {
+    static var previews: some View {
+        DownloadsList(viewModel: DownloadsListViewModel())
+    }
+}
+
+struct DownloadRow: View {
+    var rowModel: DownloadsListRow
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(rowModel.filename)
+                Spacer()
+                    .frame(height: 4.0)
+                Text(rowModel.fileSize)
+                    .foregroundColor(.gray)
+            }
+            Spacer()
+            Button {
+                print("Share button was tapped")
+            } label: {
+                Image(systemName: "square.and.arrow.up")
+            }.buttonStyle(.plain)
+                .animation(nil) 
+        }
+        .frame(height: 72.0)
+        .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
+    }
+}
+
+struct ActiveDownloadRow: View {
+    @State var progressValue: Float = 0.0
     
     var body: some View {
         HStack {
@@ -83,30 +104,66 @@ struct DownloadItem: View {
                 Text("download.pdf")
                 Spacer()
                     .frame(height: 4.0)
-                Text("45MB")
+                Text("\(Int(100*progressValue)) of 100MB")
                     .foregroundColor(.gray)
             }
             Spacer()
-
+            
+            ProgressBar(progress: self.$progressValue)
+                .frame(width: 30.0, height: 30.0)
+                .padding(10.0)
+            
             Button {
-                print("Share button was tapped")
+                incrementProgress()
             } label: {
                 Image(systemName: "square.and.arrow.up")
+//                    .tint(.black)
             }.buttonStyle(.plain)
         }
         .frame(height: 72.0)
         .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
-//        .swipeActions {
-//            Button("Delete", role: .destructive) {
-//                print("Delete")
-//            }
-//            .tint(.red)
-//        }
+    }
+    
+    func incrementProgress() {
+        let randomValue = Float([0.012, 0.022, 0.034, 0.016, 0.11].randomElement()!)
+        self.progressValue += randomValue
     }
 }
 
-class DownloadsListHostingController: UIHostingController<DownloadsList> {
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder, rootView: DownloadsList())
+struct ProgressBar: View {
+    @Binding var progress: Float
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 10.0)
+                .opacity(0.3)
+                .foregroundColor(Color.red)
+            
+            Circle()
+                .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
+                .stroke(style: StrokeStyle(lineWidth: 10.0, lineCap: .round, lineJoin: .round))
+                .foregroundColor(Color.red)
+                .rotationEffect(Angle(degrees: 270.0))
+                .animation(.linear)
+
+            Text(String(format: "%.0f %%", min(self.progress, 1.0)*100.0))
+//                .font(.largeTitle)
+//                .bold()
+        }
+    }
+}
+
+struct DeleteAllSection: View {
+    var body: some View {
+        Section(header: Spacer()) {
+            HStack {
+                Spacer()
+                Text("Delete All")
+                    .foregroundColor(Color.red)
+                Spacer()
+            }
+        }
+        .deleteDisabled(true)
     }
 }

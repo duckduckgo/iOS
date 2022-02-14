@@ -108,7 +108,7 @@ class TabViewController: UIViewController {
     // In certain conditions we try to present a dax dialog when one is already showing, so check to ensure we don't
     var isShowingFullScreenDaxDialog = false
     
-    var temporaryDownload: Download?
+    var temporaryDownloadForPreviewedFile: Download?
     
     public var url: URL? {
         didSet {
@@ -884,13 +884,23 @@ class TabViewController: UIViewController {
     }
     
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
+        guard shouldAutoPreviewDownload(download),
+              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
               let delegate = self.delegate else { return }
         
         if delegate.tabCheckIfItsBeingCurrentlyPresented(self) {
             fileHandler.preview()
         } else {
             Pixel.fire(pixel: .presentPreviewWithoutTab)
+        }
+    }
+    
+    private func shouldAutoPreviewDownload(_ download: Download) -> Bool {
+        switch download.mimeType {
+        case .passbook, .reality, .usdz:
+            return true
+        default :
+            return false
         }
     }
 }   
@@ -966,6 +976,26 @@ extension TabViewController: WKNavigationDelegate {
             appRatingPrompt.shown()
         }
     }
+
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationResponse: WKNavigationResponse,
+                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+      
+        if navigationResponse.canShowMIMEType {
+            setupOrClearTemporaryDownload(for: navigationResponse)
+            url = webView.url
+            decisionHandler(.allow)
+        } else {
+             let downloadManager = AppDependencyProvider.shared.downloadsManager
+             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+             
+            if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
+                 downloadManager.startDownload(download)
+             }
+             
+             decisionHandler(.cancel)
+        }
+    }
     
     /*
      Some files might be previewed by webkit but in order to share them
@@ -977,33 +1007,12 @@ extension TabViewController: WKNavigationDelegate {
         
         if let downloadMetaData = downloadManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-            temporaryDownload = downloadManager.setupDownload(navigationResponse,
-                                                              cookieStore: cookieStore,
-                                                              temporary: true)
+            temporaryDownloadForPreviewedFile = downloadManager.makeDownload(navigationResponse: navigationResponse,
+                                                                             cookieStore: cookieStore,
+                                                                             temporary: true)
         } else {
-            temporaryDownload = nil
+            temporaryDownloadForPreviewedFile = nil
         }
-    }
-    
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationResponse: WKNavigationResponse,
-                 decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-      
-        guard !navigationResponse.canShowMIMEType else {
-            setupOrClearTemporaryDownload(for: navigationResponse)
-            url = webView.url
-            decisionHandler(.allow)
-            return
-        }
-       
-        let downloadManager = AppDependencyProvider.shared.downloadsManager
-        let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-        
-        if let download = downloadManager.setupDownload(navigationResponse, cookieStore: cookieStore) {
-            downloadManager.startDownload(download)
-        }
-        
-        decisionHandler(.cancel)
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {

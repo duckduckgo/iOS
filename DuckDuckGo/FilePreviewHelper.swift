@@ -24,14 +24,10 @@ struct FilePreviewHelper {
     static func fileHandlerForDownload(_ download: Download, viewController: UIViewController) -> FilePreview? {
         guard let filePath = download.location else { return nil }
         switch download.mimeType {
-        case .usdz, .reality:
-            return QuickLookPreviewHelper(filePath, viewController: viewController)
-            
         case .passbook:
             return PassKitPreviewHelper(filePath, viewController: viewController)
-            
         default:
-            return nil
+            return QuickLookPreviewHelper(filePath, viewController: viewController)
         }
     }
 }

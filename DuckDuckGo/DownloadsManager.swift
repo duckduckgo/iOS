@@ -46,10 +46,10 @@ class DownloadsManager {
         self.notificationCenter = notificationCenter
     }
     
-    func setupDownload(_ navigationResponse: WKNavigationResponse,
-                       downloadSession: DownloadSession? = nil,
-                       cookieStore: WKHTTPCookieStore? = nil,
-                       temporary: Bool? = nil) -> Download? {
+    func makeDownload(navigationResponse: WKNavigationResponse,
+                      downloadSession: DownloadSession? = nil,
+                      cookieStore: WKHTTPCookieStore? = nil,
+                      temporary: Bool? = nil) -> Download? {
         
         guard let metaData = downloadMetaData(for: navigationResponse) else { return nil }
         
@@ -72,18 +72,19 @@ class DownloadsManager {
             session = DownloadSession(metaData.url, cookieStore: cookieStore)
         }
         
-        let download = Download(downloadSession: session,
+        let download = Download(filename: metaData.filename,
                                 mimeType: metaData.mimeType,
-                                fileName: metaData.fileName,
                                 temporary: temporaryFile,
+                                downloadSession: session,
                                 delegate: self)
+
         downloadList.insert(download)
         return download
     }
     
-    func downloadMetaData(for navigationResponse: WKNavigationResponse) -> DownloadMetaData? {
-        let filename = fileName(for: navigationResponse)
-        return DownloadMetaData(navigationResponse.response, filename: filename)
+    func downloadMetaData(for navigationResponse: WKNavigationResponse) -> DownloadMetadata? {
+        let filename = filename(for: navigationResponse)
+        return DownloadMetadata(navigationResponse.response, filename: filename)
     }
     
     func startDownload(_ download: Download, completion: Download.Completion? = nil) {
@@ -137,16 +138,16 @@ extension DownloadsManager {
         }
     }
     
-    private func fileName(for navigationResponse: WKNavigationResponse) -> String {
-        let fileName = sanitizeFilename(navigationResponse.response.suggestedFilename)
-        return convertToUniqueFilename(fileName)
+    private func filename(for navigationResponse: WKNavigationResponse) -> String {
+        let filename = sanitizeFilename(navigationResponse.response.suggestedFilename)
+        return convertToUniqueFilename(filename)
     }
     
     //https://app.asana.com/0/0/1201734618649839/f
     private func sanitizeFilename(_ originalFilename: String?) -> String {
-        let fileName = originalFilename ?? "unknown"
+        let filename = originalFilename ?? "unknown"
         let allowedCharacterSet = CharacterSet.alphanumerics.union(CharacterSet.punctuationCharacters)
-        return fileName.components(separatedBy: allowedCharacterSet.inverted).joined()
+        return filename.components(separatedBy: allowedCharacterSet.inverted).joined()
     }
 }
 

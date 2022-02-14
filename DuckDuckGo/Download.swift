@@ -51,17 +51,17 @@ class Download: NSObject, Identifiable, ObservableObject {
     @Published private(set) var totalBytesWritten: Int64 = 0
     @Published private(set) var totalBytesExpectedToWrite: Int64 = 0
     
-    required init(downloadSession: DownloadSession,
+    required init(filename: String,
                   mimeType: MIMEType,
-                  fileName: String,
                   temporary: Bool,
+                  downloadSession: DownloadSession,
                   delegate: DownloadDelegate? = nil) {
-      
-        self.delegate = delegate
-        self.filename = fileName
+        
+        self.filename = filename
         self.mimeType = mimeType
         self.temporary = temporary
         self.session = downloadSession
+        self.delegate = delegate
         
         super.init()
         self.session.delegate = self
@@ -85,9 +85,9 @@ class Download: NSObject, Identifiable, ObservableObject {
         print("Download \(id) \(filename) deinit")
     }
     
-    private func renameFile(_ oldPath: URL, name: String) -> URL? {
+    private func renameFile(_ oldPath: URL, newFilename: String) -> URL? {
         do {
-            let newPath = oldPath.deletingLastPathComponent().appendingPathComponent(name)
+            let newPath = oldPath.deletingLastPathComponent().appendingPathComponent(newFilename)
             try? FileManager.default.removeItem(at: newPath)
             try FileManager.default.moveItem(at: oldPath, to: newPath)
             
@@ -99,17 +99,6 @@ class Download: NSObject, Identifiable, ObservableObject {
 }
 
 extension Download: DownloadSessionDelegate {
-  
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        self.location = renameFile(location, name: filename)
-    }
-    
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        session.finishTasksAndInvalidate()
-        state = task.state
-        delegate?.downloadDidFinish(self, error: error)
-        completionBlock?(error)
-    }
     
     func urlSession(_ session: URLSession,
                     downloadTask: URLSessionDownloadTask,
@@ -122,5 +111,16 @@ extension Download: DownloadSessionDelegate {
         self.totalBytesExpectedToWrite = totalBytesExpectedToWrite
         
         self.state = downloadTask.state
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        self.location = renameFile(location, newFilename: filename)
+    }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        session.finishTasksAndInvalidate()
+        state = task.state
+        delegate?.downloadDidFinish(self, error: error)
+        completionBlock?(error)
     }
 }

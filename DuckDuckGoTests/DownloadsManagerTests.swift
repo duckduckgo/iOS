@@ -39,7 +39,7 @@ class DownloadsManagerTests: XCTestCase {
         
         let sessionSetup = MockSessionSetup(mimeType: "application/vnd.apple.pkpass", downloadsManager: downloadsManager)
         
-        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertTrue(download.temporary, "Download should be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -66,7 +66,7 @@ class DownloadsManagerTests: XCTestCase {
 
         let sessionSetup = MockSessionSetup(mimeType: "model/vnd.reality", downloadsManager: downloadsManager)
         
-        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertTrue(download.temporary, "Download should be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -93,7 +93,7 @@ class DownloadsManagerTests: XCTestCase {
 
         let sessionSetup = MockSessionSetup(mimeType: "model/vnd.usdz+zip", downloadsManager: downloadsManager)
         
-        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertTrue(download.temporary, "Download should be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -119,7 +119,7 @@ class DownloadsManagerTests: XCTestCase {
 
         let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager)
         
-        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertFalse(download.temporary, "download should not be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -143,7 +143,7 @@ class DownloadsManagerTests: XCTestCase {
         let downloadsManager = DownloadsManager(NotificationCenter())
         let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager)
         
-        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertFalse(download.temporary, "download should not be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -164,7 +164,7 @@ class DownloadsManagerTests: XCTestCase {
         let downloadsManager = DownloadsManager(notificationCenter)
 
         let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, completionDelay: 1)
-        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         let expectation = expectation(description: "Download finish")
         
         notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
@@ -196,7 +196,7 @@ class DownloadsManagerTests: XCTestCase {
 
         let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, filename: spoofedName)
         
-        let download = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         
         let expectation = expectation(description: "Download finish")
         
@@ -226,7 +226,7 @@ class DownloadsManagerTests: XCTestCase {
 
         files.forEach {
             let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, filename: $0)
-             _ = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+             _ = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         }
         
         let downloadListNames = downloadsManager.downloadList.map { $0.filename }.sorted()
@@ -250,7 +250,7 @@ class DownloadsManagerTests: XCTestCase {
 
         files.forEach {
             let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, filename: $0)
-             _ = downloadsManager.setupDownload(sessionSetup.response, downloadSession: sessionSetup.session)!
+             _ = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         }
         
         let downloadListNames = downloadsManager.downloadList.map { $0.filename }.sorted()

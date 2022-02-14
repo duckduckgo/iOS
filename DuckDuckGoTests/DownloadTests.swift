@@ -42,8 +42,8 @@ class DownloadTests: XCTestCase {
         
         mockSession.temporaryFilePath = path
         
-        let temporaryDownload = Download(downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: true)
-        
+        let temporaryDownload = Download(filename: filename, mimeType: .passbook, temporary: true, downloadSession: mockSession)
+                
         let expectation = expectation(description: "Download finish")
         temporaryDownload.start()
 
@@ -68,8 +68,8 @@ class DownloadTests: XCTestCase {
         
         mockSession.temporaryFilePath = path
         
-        let temporaryDownload = Download(downloadSession: mockSession, mimeType: .passbook, fileName: filename, temporary: false)
-        
+        let temporaryDownload = Download(filename: filename, mimeType: .passbook, temporary: false, downloadSession: mockSession)
+
         let expectation = expectation(description: "Download finish")
         temporaryDownload.start()
         

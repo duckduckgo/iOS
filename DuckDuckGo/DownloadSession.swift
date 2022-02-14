@@ -21,21 +21,21 @@ import Foundation
 import WebKit
 
 protocol DownloadSessionDelegate: AnyObject {
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL)
-    
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?)
-    
     func urlSession(_ session: URLSession,
+   
                     downloadTask: URLSessionDownloadTask,
                     didWriteData bytesWritten: Int64,
                     totalBytesWritten: Int64,
                     totalBytesExpectedToWrite: Int64)
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL)
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?)
 }
 
 class DownloadSession: NSObject {
-    private(set) var session: URLSession?
-    private(set) var cookieStore: WKHTTPCookieStore?
+    private var session: URLSession?
+    private var cookieStore: WKHTTPCookieStore?
     private(set) var task: URLSessionDownloadTask?
     weak var delegate: DownloadSessionDelegate?
     

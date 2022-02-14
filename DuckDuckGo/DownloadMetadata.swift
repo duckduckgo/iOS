@@ -1,5 +1,5 @@
 //
-//  DownloadMetaData.swift
+//  DownloadMetadata.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -19,8 +19,8 @@
 
 import Foundation
 
-struct DownloadMetaData {
-    let fileName: String
+struct DownloadMetadata {
+    let filename: String
     let expectedContentLength: Int64
     let mimeTypeSource: String
     let mimeType: MIMEType
@@ -33,9 +33,9 @@ struct DownloadMetaData {
               }
         
         if let name = filename {
-            self.fileName = name
+            self.filename = name
         } else {
-            self.fileName = response.suggestedFilename ?? "unknown"
+            self.filename = response.suggestedFilename ?? "unknown"
         }
         
         self.expectedContentLength = response.expectedContentLength

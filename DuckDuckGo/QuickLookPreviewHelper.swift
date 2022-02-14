@@ -25,9 +25,9 @@ class QuickLookPreviewHelper: FilePreview {
     private let filePath: URL
 
     private lazy var qlPreview: QLPreviewController = {
-        let p = QLPreviewController()
-        p.dataSource = self
-        return p
+        let preview = QLPreviewController()
+        preview.dataSource = self
+        return preview
     }()
     
     required init(_ filePath: URL, viewController: UIViewController) {

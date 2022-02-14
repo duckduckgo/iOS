@@ -296,7 +296,7 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuShare,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: orginatedFromMenu ? "1" : "0"])
         
-        shareLinkWithTemporaryDownload(temporaryDownload, originalLink: link) { [weak self] link in
+        shareLinkWithTemporaryDownload(temporaryDownloadForPreviewedFile, originalLink: link) { [weak self] link in
             guard let self = self else { return }
             self.presentShareSheet(withItems: [ link, self.webView.viewPrintFormatter() ], fromView: view)
         }

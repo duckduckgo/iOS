@@ -149,6 +149,8 @@ class AutoClearSettingsViewController: UITableViewController {
             clearDataSettings = nil
             tableView.deleteSections(.init(integersIn: Sections.action.rawValue...Sections.timing.rawValue), with: .fade)
         }
+        
+        storeSettingsIfChanged()
     }
 }
 

@@ -103,6 +103,7 @@ class DownloadsManager {
              let newPath = path.appendingPathComponent(download.filename)
              try? FileManager.default.removeItem(at: newPath)
              try FileManager.default.moveItem(at: location, to: newPath)
+             download.location = newPath
          } catch {
              print("Error \(error)")
          }

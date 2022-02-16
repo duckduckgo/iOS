@@ -20,6 +20,7 @@
 import Foundation
 import Core
 import WebKit
+import os
 
 class DownloadsManager {
     
@@ -50,7 +51,7 @@ class DownloadsManager {
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.notificationCenter = notificationCenter
         createDownloadsDirectoryIfNeeded()
-        print("Downloads: \(downloadsDirectory)")
+        os_log("downloads directory location %s", type: .debug, downloadsDirectory.absoluteString)
     }
     
     private func createDownloadsDirectoryIfNeeded() {

@@ -38,38 +38,6 @@ class MockNavigationDelegate: NSObject, WKNavigationDelegate {
     }
 }
 
-class MockRulesUserScriptDelegate: NSObject, ContentBlockerRulesUserScriptDelegate {
-
-    var shouldProcessTrackers = true
-    var onTrackerDetected: ((DetectedTracker) -> Void)?
-    var detectedTrackers = Set<DetectedTracker>()
-
-    func reset() {
-        detectedTrackers.removeAll()
-    }
-
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
-        return shouldProcessTrackers
-    }
-
-    func contentBlockerUserScript(_ script: ContentBlockerRulesUserScript,
-                                  detectedTracker tracker: DetectedTracker) {
-        detectedTrackers.insert(tracker)
-        onTrackerDetected?(tracker)
-    }
-}
-
-class MockUserScriptConfigSource: ContentBlockerUserScriptConfigSource {
-
-    init(privacyConfig: PrivacyConfiguration) {
-        self.privacyConfig = privacyConfig
-    }
-
-    public private(set) var privacyConfig: PrivacyConfiguration
-
-    public var trackerData: TrackerData?
-}
-
 class MockSurrogatesUserScriptDelegate: NSObject, SurrogatesUserScriptDelegate {
 
     var shouldProcessTrackers = true
@@ -93,19 +61,6 @@ class MockSurrogatesUserScriptDelegate: NSObject, SurrogatesUserScriptDelegate {
     }
 }
 
-class MockSurrogatesUserScriptConfigSource: SurrogatesUserScriptConfigSource {
-
-    init(privacyConfig: PrivacyConfiguration) {
-        self.privacyConfig = privacyConfig
-    }
-
-    public private(set) var privacyConfig: PrivacyConfiguration
-
-    public var encodedTrackerData: String?
-
-    public var surrogates = ""
-}
-
 class MockDomainsProtectionStore: DomainsProtectionStore {
     var unprotectedDomains = Set<String>()
 
@@ -115,15 +70,6 @@ class MockDomainsProtectionStore: DomainsProtectionStore {
 
     func enableProtection(forDomain domain: String) {
         unprotectedDomains.insert(domain)
-    }
-}
-
-class CustomContentBlockerRulesUserScript: ContentBlockerRulesUserScript {
-
-    var onSourceInjection: (String) -> String = { $0 }
-
-    override var source: String {
-        return onSourceInjection(super.source)
     }
 }
 

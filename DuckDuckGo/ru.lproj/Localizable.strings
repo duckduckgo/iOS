@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Редактировать";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Поделиться";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Добавить виджет";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Быстрый доступ к конфиденциальному поиску и любимым сайтам.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Удерживайте нажатие на домашнем экране, чтобы запустить режим настройки.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Нажмите кнопку «плюс» %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Найдите и выберите DuckDuckGo. Затем выберите виджет.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Доступ к любимым сайтам в одно касание.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Существующие закладки дублироваться не будут.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Водоворот";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Сделать браузером по умолчанию";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Выберите DuckDuckGo браузером по умолчанию!";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Открывайте ссылки, ни о чем не беспокоясь.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "ЧТО НОВОГО В IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Добавьте DuckDuckGo на домашний экран!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Чтобы вам не приходилось каждый раз входить в свою учетную запись, сайты используют куки-файлы. Если сделать сайт огнеупорным, мы не будем стирать его куки-файлы, даже если вы воспользуетесь кнопкой «Пожар». Но мы по-прежнему будем блокировать сторонние трекеры, в том числе на огнеупорных сайтах.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Сайты";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Огнеупорные сайты";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Сделать сайт %@ огнеупорным?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Вам не придется заново входить в свою учетную запись даже после применения кнопки «Пожар».";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Обезопасить сайт %@, чтобы не выходить из учетной записи?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Обезопасить сайт";
+"preserveLogins.menu.confirm" = "Обезопасить";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ теперь в безопасности";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Хорошо";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Предлагать обезопасить сайты";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритм";

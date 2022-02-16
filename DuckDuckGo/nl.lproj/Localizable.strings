@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Bewerken";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Delen";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Widget toevoegen";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Krijg snel toegang tot privézoekopdrachten en de sites die je leuk vindt.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Druk lang op het startscherm om de schudmodus te gebruiken.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Tik op de plus %@-knop.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Zoek en selecteer DuckDuckGo. Kies vervolgens een widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Eén tik naar uw favoriete sites.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Bestaande bladwijzers worden niet gedupliceerd.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Draaikolk";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Instellen als standaardbrowser";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Stel DuckDuckGo in als standaardbrowser.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Open links altijd met een gerust hart.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NIEUW VOOR IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Voeg DuckDuckGo toe aan je beginscherm!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Websites gebruiken cookies om te zorgen dat je ingelogd blijft. Als je een site brandveilig maakt, worden de cookies niet gewist en blijf je ingelogd, zelfs nadat je de vuurknop hebt gebruikt. Trackers van derden worden ook op brandveilige websites geblokkeerd.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Websites";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Brandveilige websites";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Wil je %@ brandveilig maken?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Als je deze site brandveilig maakt, blijf je ook na het gebruiken van de vuurknop ingelogd.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "%@ brandveilig maken om ingelogd te blijven?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Website brandveilig maken";
+"preserveLogins.menu.confirm" = "Brandveilig";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ is nu brandveilig";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Vragen om websites brandveilig te maken";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";

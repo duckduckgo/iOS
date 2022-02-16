@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Modifier";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Partager";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Ajouter un widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Accédez rapidement à la recherche privée et aux sites que vous aimez.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Appuyez longuement sur l'écran d'accueil pour passer en mode Jiggle.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Appuyez sur le bouton plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Trouvez et sélectionnez DuckDuckGo. Puis choisissez un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Appuyez une fois et accédez à vos sites préférés.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Les signets existants ne seront pas dupliqués.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Tourbillon";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Définir comme navigateur par défaut";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Faites de DuckDuckGo votre navigateur par défaut.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Des liens ouverts en toute tranquillité d'esprit, à chaque fois.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOUVEAUTÉS IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Ajoutez DuckDuckGo à votre écran d'accueil !";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Les sites Web utilisent des cookies pour maintenir votre connexion. Quand vous placez un site en mode coupe-feu, les cookies sont conservés et vous restez connecté(e), même après avoir utilisé le bouton en forme de flamme. Ceci dit, les traqueurs tiers sont bloqués sur les sites coupe-feu.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Sites Web";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Sites coupe-feu";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Souhaitez-vous placer %@ en mode coupe-feu ?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Placer ce site en mode coupe-feu et utiliser le bouton en forme de flamme ne vous déconnectera pas.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Placer %@ en mode coupe-feu pour rester connecté ?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Site Web coupe-feu";
+"preserveLogins.menu.confirm" = "Mode coupe-feu";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ est maintenant en mode coupe-feu";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Demander à placer des sites en mode coupe-feu";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorithme";

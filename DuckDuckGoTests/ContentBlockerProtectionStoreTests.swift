@@ -18,6 +18,7 @@
 //
 
 import XCTest
+import BrowserServicesKit
 @testable import Core
 @testable import DuckDuckGo
 
@@ -36,15 +37,16 @@ class ContentBlockerProtectionStoreTests: XCTestCase {
         }
         """.data(using: .utf8)!
         _ = FileStore().persist(configFile, forConfiguration: .privacyConfiguration)
-        XCTAssertEqual(PrivacyConfigurationManager.shared.embeddedConfigData.etag, PrivacyConfigurationManager.Constants.embeddedConfigETag)
-        XCTAssertEqual(PrivacyConfigurationManager.shared.reload(etag: "new etag"), .downloaded)
+        XCTAssertEqual(ContentBlocking.privacyConfigurationManager.embeddedConfigData.etag,
+                       AppPrivacyConfigurationDataProvider.Constants.embeddedConfigETag)
+        XCTAssertEqual(ContentBlocking.privacyConfigurationManager.reload(etag: "new etag", data: configFile), .downloaded)
 
-        let newConfig = PrivacyConfigurationManager.shared.fetchedConfigData
+        let newConfig = ContentBlocking.privacyConfigurationManager.fetchedConfigData
         XCTAssertNotNil(newConfig)
 
         if let newConfig = newConfig {
             XCTAssertEqual(newConfig.etag, "new etag")
-            let config = AppPrivacyConfiguration(data: newConfig.data, identifier: "")
+            let config = AppPrivacyConfiguration(data: newConfig.data, identifier: "", localProtection: DomainsProtectionUserDefaultsStore())
 
             XCTAssertFalse(config.isTempUnprotected(domain: "main1.com"))
             XCTAssertFalse(config.isTempUnprotected(domain: "notdomain1.com"))

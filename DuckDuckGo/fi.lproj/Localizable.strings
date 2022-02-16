@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Muokkaa";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Jaa";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Lisää widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Nopea pääsy yksityiseen hakuun ja suosikkisivustoihin.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Paina pitkään aloitusnäyttöä siirtyäksesi heilutustilaan.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Napauta pluspainiketta %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Etsi ja valitse DuckDuckGo. Valitse sitten widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Yhdellä napautuksella suosikkisivustoillesi.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemassa olevia kirjanmerkkejä ei kopioida.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Pyörre";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Aseta oletusselaimeksi";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Tee DuckDuckGo:sta oletusselain.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Avaa linkit ilman stressiä, joka kerta.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "UUTTA IOS 14:SSÄ";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lisää DuckDuckGo koti-valikkoon!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Verkkosivustot käyttävät evästeitä, joilla pysyt kirjautuneena sisään. Kun teet sivustosta palonkestävän, evästeitä ei poisteta ja pysyt kirjautuneena sisään, vaikka käytät Liekki-painiketta. Estämme edelleen kolmannen osapuolen seurannan palonkestävillä sivustoilla.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Verkkosivustot";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Tee sivustoista palonkestäviä";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Haluatko tehdä sivustosta %@? palonkestävän?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Sivuston tekeminen palonkestäväksi tarkoittaa, että pysyt kirjautuneena, vaikka käytät Liekki-painiketta.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Tehdäänkö kohteesta %@ palonkestävä, jotta voit pysyä sisäänkirjautuneena?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Palonkestävä verkkosivusto";
+"preserveLogins.menu.confirm" = "Tee palonkestäväksi";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ on nyt palonkestävä";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Kysy tehdäänkö sivustoista palonkestäviä";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmi";

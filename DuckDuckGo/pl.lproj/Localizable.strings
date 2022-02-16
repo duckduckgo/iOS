@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Edytuj";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Udostępnij";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Dodaj widżet";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Uzyskaj szybki dostęp do prywatnego wyszukiwania i ulubionych witryn.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Przyciśnij i przytrzymaj na ekranie głównym, aby przejść do trybu porządkowania.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Dotknij przycisku ze znakiem plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Znajdź i zaznacz DuckDuckGo. Następnie wybierz widżet.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Odwiedzaj swoje ulubione witryny jednym dotknięciem.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Istniejące zakładki nie zostaną zduplikowane.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Wir wodny";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Ustaw jako domyślną przeglądarkę";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Ustaw DuckDuckGo jako domyślną przeglądarkę.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Zawsze otwieraj linki ze spokojem.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOWOŚĆ W iOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo do ekranu głównego!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "W witrynach internetowych są wykorzystywane pliki cookie. Gdy użyjesz w witrynie funkcji zabezpieczenia, pliki cookie nie zostaną usunięte i pozostaniesz zalogowany(-a) nawet po użyciu przycisku Zabezpiecz. Nadal blokujemy narzędzia śledzące innych firm znalezione w zabezpieczonych witrynach.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Witryny internetowe";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Bezpieczne witryny internetowe";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Chcesz zabezpieczyć %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Zabezpieczenie tej witryny za pomocą przycisku Zabezpiecz nie spowoduje wylogowania Cię z witryny.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Zabezpieczyć witrynę %@, aby pozostać zalogowanym?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Bezpieczna strona internetowa";
+"preserveLogins.menu.confirm" = "Zabezpiecz";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ jest teraz zabezpieczona";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Proś o zabezpieczanie witryn internetowych";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorytm";

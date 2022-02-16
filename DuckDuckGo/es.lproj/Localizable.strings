@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Editar";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Compartir";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Añadir widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Obtén acceso rápido a búsquedas privadas y a los sitios que más te gustan.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Mantén pulsada la pantalla de inicio para entrar en el modo jiggle.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Pulsa el botón más %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Busca y selecciona DuckDuckGo. A continuación, elige un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Visita tus sitios favoritos con un toque.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Los marcadores existentes no se duplicarán.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Remolino";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Definir como navegador predeterminado";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Establece DuckDuckGo como tu navegador predeterminado.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Abre los enlaces con tranquilidad, siempre.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NUEVO EN IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Añade DuckDuckGo a tu pantalla de inicio.";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Los sitios web dependen de cookies para mantener tu sesión iniciada. Cuando marcas una web como «a prueba de fuego» no se borrarán las cookies y tu sesión permanecerá iniciada, incluso después de utilizar el botón Fuego. Seguiremos bloqueando rastreadores de terceros que se encuentren en sitios web a prueba de fuego.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Sitios web";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Sitios web a prueba de fuego";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "¿Quieres marcar %@ como a prueba de fuego?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Marcar esta página como a prueba de fuego hará que la sesión se mantenga iniciada después de usar el botón Fuego.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "¿Marcar %@ como a prueba de fuego para mantener la sesión abierta?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Marcar el sitio web como a prueba de fuego";
+"preserveLogins.menu.confirm" = "A prueba de fuego";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ ya está a prueba de fuego";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "De acuerdo";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Preguntar antes de marcar sitios web como a prueba de fuego";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmo";

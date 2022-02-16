@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Szerkesztés";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Megosztás";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Minialkalmazás hozzáadása";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Gyors hozzáférés a privát kereséshez és kedvenc weboldalaidhoz.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Az ugráló ikonos üzemmódba lépéshez tartsd nyomva hosszan a kezdőképernyőt.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Koppints a plusz %@ gombra.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Keresd meg és jelöld ki a DuckDuckGo elemet. Ezután válassz egy minialkalmazást.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Egyetlen koppintással nyisd meg kedvenc oldalaidat.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "A meglévő könyvjelzők nem kettőződnek.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Örvény";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Beállítás alapértelmezett böngészőként";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Tedd a DuckDuckGót az alapértelmezett böngésződdé.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Nyugodtan kattints a linkekre, mindig.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "ÚJDONSÁG AZ IOS 14-BEN";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Add hozzá a DuckDuckGo-t a kezdőképernyődhöz!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "A webhelyek sütik segítségével teszik lehetővé, hogy bejelentkezve maradhass. Ha tűzállóvá teszel egy weboldalt, a sütik nem törlődnek, és még a Tűz gomb használata után is bejelentkezve maradsz. A tűzálló webhelyeken a külső felek nyomkövetőit azonban blokkoljuk.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Weboldalak";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Tűzálló weboldalak";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Szeretnéd tűzállóvá tenni a következőt: %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Ha tűzállóvá teszel egy weboldalt, a Fire gomb használata után is bejelentkezve maradsz.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Legyen a(z) %@ tűzálló, hogy bejelentkezve maradj?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Tűzálló weboldal";
+"preserveLogins.menu.confirm" = "Tűzálló";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "A(z) %@ most már tűzálló!";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Kérdezzen rá a weboldalak tűzállóvá tételére";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";

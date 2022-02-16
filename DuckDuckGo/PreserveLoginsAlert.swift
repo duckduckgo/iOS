@@ -46,8 +46,8 @@ class PreserveLoginsAlert {
     static func showConfirmFireproofWebsite(usingController controller: UIViewController,
                                             forDomain domain: String,
                                             onConfirmHandler: @escaping () -> Void) {
-        let prompt = UIAlertController(title: nil,
-                                       message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
+        let prompt = UIAlertController(title: UserText.preserveLoginsFireproofAskTitle.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
+                                       message: UserText.preserveLoginsFireproofAskMessage,
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
         prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction, style: .default) {
             onConfirmHandler()
@@ -59,8 +59,8 @@ class PreserveLoginsAlert {
     static func showFireproofWebsitePrompt(usingController controller: UIViewController,
                                            forDomain domain: String,
                                            onConfirmHandler: @escaping () -> Void) {
-        let prompt = UIAlertController(title: nil,
-                                       message: UserText.preserveLoginsFireproofAsk.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
+        let prompt = UIAlertController(title: UserText.preserveLoginsFireproofAskTitle.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
+                                       message: UserText.preserveLoginsFireproofAskMessage,
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
         prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction) {
             onConfirmHandler()

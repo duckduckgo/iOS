@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 public struct AppUrls {
 
@@ -212,9 +213,8 @@ public struct AppUrls {
     }
     
     public func isGPCEnabled(url: URL,
-                             config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
-        guard let gpcFeature = config.feature(forKey: .gpc),
-              let gpcUrls = gpcFeature.settings["gpcHeaderEnabledSites"] as? [String] else {
+                             config: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> Bool {
+        guard let gpcUrls = config.settings(for: .gpc)["gpcHeaderEnabledSites"] as? [String] else {
             return false
         }
         

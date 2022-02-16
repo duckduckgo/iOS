@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Editar";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Partilhar";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Adicionar widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Tenha acesso rápido à pesquisa privada e aos sites que mais gosta.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Prima prolongadamente o ecrã inicial para entrar no modo jiggle.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Toque no botão de mais %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Encontre e selecione DuckDuckGo. Depois, escolha um widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Um toque para os seus sites favoritos.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Os marcadores existentes não serão duplicados.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Remoinho";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Definir como navegador padrão";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Faça do DuckDuckGo o seu navegador predefinido.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Abra links com tranquilidade, sempre.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOVO NO IOS14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Adicione o DuckDuckGo ao seu ecrã inicial!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Os websites confiam nos cookies para o manter ligado. Quando se usa uma barreira de segurança num site, os cookies não são apagados e permanecerá ligado, mesmo após usar o botão de segurança. Ainda bloqueamos rastreadores de terceiros encontrados em sites com barreiras de segurança.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Websites";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Sites com barreira de segurança";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Gostaria de usar a barreira de segurança em %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Utilizar uma barreira de segurança neste site vai mantê-lo ligado após utilizar o botão de segurança.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Colocar Barreira de segurança em %@ para ficar conectado?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Site à prova de fogo";
+"preserveLogins.menu.confirm" = "Barreira de segurança";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ já tem barreira de segurança";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Pedir para avaliar as barreiras de segurança de sites";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmo";

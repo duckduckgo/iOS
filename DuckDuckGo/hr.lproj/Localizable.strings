@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Podijeli";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Dodaj widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Čeka vas brzi pristup privatnom pretraživanju i omiljenim mrežnim mjestima.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Duže zadržite prst na početnom zaslonu za ulaz u način tresenja.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Dodirnite gumb plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Pronađite i odaberite DuckDuckGo. Zatim odaberite widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Jednim dodirom do vaših omiljenih stranica.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Postojeće knjižne oznake neće se duplicirati.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Vrtlog";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Postavi kao zadani preglednik";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Postavi DuckDuckGo kao svoj zadani preglednik.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Svaki put poveznice otvori spokojno.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOVO U IOS-u 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo na svoj početni zaslon!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Web-mjesta oslanjaju se na kolačiće kako bi te zadržala prijavljenim/om. Kada je web-mjesto označeno kao zaštićeno, kolačići neće biti izbrisani i ostat ćeš prijavljen/a čak i nakon upotrebe gumba Fire. I dalje blokiramo alate za praćenje trećih strana koje pronađemo na mrežnim mjestima označenim kao Fireproof.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Web-mjesta";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Zaštićena web-mjesta";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Želiš li %@ označiti kao zaštitćeno?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Postavljanjem Fireproof za ovo web-mjesto i dalje ćete ostati prijavljeni nakon korištenja gumba Fire.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Označiti %@ kao zaštićenu adresu kao biste ostali prijavljeni?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Zaštićeno web-mjesto";
+"preserveLogins.menu.confirm" = "Fireproof";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ je sada sigurno web-mjesto!";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "U redu";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Pitaj za označavanje web-mjesta kao zaštićenog";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritam";

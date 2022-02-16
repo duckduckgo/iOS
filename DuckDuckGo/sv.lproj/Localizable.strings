@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigera";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Dela";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Lägg till widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Få snabb tillgång till privat sökning och dina favoritwebbplatser.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Tryck länge på startskärmen tills apparna börjar vicka.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Tryck på plusknappen för %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Leta upp och välj DuckDuckGo. Välj sedan en widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Besök dina favoritwebbplatser med ett enda tryck.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Befintliga bokmärken kommer inte att kopieras.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Virvel";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Ställ in som standardwebbläsare";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Gör DuckDuckGo till din standardwebbläsare.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Sluta oroa dig varje gång du öppnar länkar.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NYTT I IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lägg till DuckDuckGo på din hemskärm!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Webbplatser använder kakor för att hålla dig inloggad. Om du brandsäkrar en webbplats kommer kakor inte att raderas och du förblir inloggad även efter att du har använt brännarknappen. Vi blockerar fortfarande tredje parters spårare som finns på brandsäkrade webbplatser.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Webbplatser";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Brandsäkra webbplatser";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Vill du brandsäkra %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Om du brandsäkrar denna webbplats förblir du inloggad även efter att du har använt brännarknappen.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Brandsäkra %@ för att förbli inloggad?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Brandsäker webbplats";
+"preserveLogins.menu.confirm" = "Brandsäkra";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ är nu brandsäkrad";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Fråga om webbplatser ska brandsäkras";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";

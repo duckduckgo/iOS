@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Επεξεργασία";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Κοινή χρήση";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Προσθήκη γραφικού στοιχείου";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Αποκτήστε γρήγορη πρόσβαση σε μια ιδιωτική αναζήτηση και στους ιστότοπους που αγαπάτε.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Πατήστε παρατεταμένα στην αρχική οθόνη για να εισέλθετε σε λειτουργία αναδιάταξης.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Πατήστε το κουμπί συν %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Εύρεση και επιλογή του DuckDuckGo. Έπειτα, επιλέξτε τη μικροεφαρμογή.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Ένα μόνο πάτημα προς τους αγαπημένους ιστότοπούς σας.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Οι υπάρχοντες σελιδοδείκτες δεν θα αναπαραχθούν.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Δίνη νερού";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Ορισμός ως προεπιλεγμένο πρόγραμμα περιήγησης";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Ορίστε το DuckDuckGo ως το προεπιλεγμένο πρόγραμμα περιήγησής σας.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Ανοίξτε συνδέσμους με ηρεμία και ασφάλεια, κάθε φορά.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "ΝΕΑ ΣΤΟ IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη σας!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Οι ιστότοποι βασίζονται σε cookies για να σας διατηρούν συνδεδεμένους. Όταν ενεργοποιείτε τη διαγραφή δραστηριότητας για έναν ιστότοπο, τα cookies δεν διαγράφονται και παραμένετε συνδεδεμένοι, ακόμα και μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας. Εξακολουθούμε να αποκλείουμε εφαρμογές παρακολούθησης από τρίτους που υπάρχουν σε ιστότοπους με διαγραφή δραστηριότητας.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Ιστότοποι";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Ασφαλείς ιστότοποι";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Θα θέλατε να ενεργοποιήσετε τη διαγραφή δραστηριότητας για το %@;";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Ενεργοποιώντας τη διαγραφή δραστηριότητας για αυτόν τον ιστότοπο, θα παραμείνετε συνδεδεμένοι μετά τη χρήση του Κουμπιού διαγραφής δραστηριότητας.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Διαγραφή δραστηριότητας στο %@ για να παραμείνετε συνδεδεμένοι;";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Ασφαλής ιστότοπος";
+"preserveLogins.menu.confirm" = "Διαγραφή δραστηριότητας";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "Έχει γίνει πλέον διαγραφή δραστηριότητας για το %@";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Εντάξει";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Ζητήστε διαγραφή δραστηριότητας για ιστότοπους";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Αλγόριθμος";

@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Deli";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Dodaj gradnik";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Zagotovite si hiter dostop do zasebnega iskanja in spletnih mest, ki so vam všeč.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Pritisnite in pridržite točko na začetnem zaslonu, da vstopite v način premikanja.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Tapnite gumb plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Poiščite in izberite DuckDuckGo. Nato izberite pripomoček.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "En dotik do vaših priljubljenih spletnih mest.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Obstoječi zaznamki ne bodo podvojeni.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Vodni mehurčki";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Nastavite za privzeti brskalnik";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Nastavite DuckDuckGo kot privzet brskalnik.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Bodite pomirjeni, ko odpirate povezave.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOVO V IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Dodaj DuckDuckGo na domači zaslon!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Spletne strani se zanašajo na piškotke, da boš vedno prijavljen. Ko spletno mesto požarno zaščitiš, piškotki ne bodo izbrisani in ostal boš prijavljen tudi po uporabi gumba Fire. Še vedno blokiramo zunanje sledilce, ki jih najdemo na požarno izoliranih spletnih mestih.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Spletna mesta";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Spletne strani s požarno zaščito";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Želiš požarno zaščito %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "S požarno zaščito tega spletnega mesta se boste prijavili po uporabi gumba Fire.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Želite nastaviti požarno zaščito spletnega mesta %@, da ostanete prijavljeni?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Spletna stran s požarno zaščito";
+"preserveLogins.menu.confirm" = "Požarna zaščita";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ ima sedaj požarno zaščito";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "V REDU";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Poziv ob straneh s požarno zaščito";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritem";

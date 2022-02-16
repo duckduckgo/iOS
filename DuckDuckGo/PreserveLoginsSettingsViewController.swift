@@ -108,9 +108,6 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Section(rawValue: section) {
-        case .some(.toggle):
-            return UserText.preserveLoginsSwitchTitle
-            
         case .some(.domainList):
             return UserText.preserveLoginsListTitle
         

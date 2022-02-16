@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Editați";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Partajare";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Adăugare widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Obține acces rapid la căutarea privată și la site-urile care îți plac.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Ține apăsat pe ecranul de întâmpinare pentru a intra în modul în care elementele „tremură”.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Atinge butonul plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Găsește și selectează DuckDuckGo. Apoi alege un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Atinge o dată pentru a ajunge la site-urile tale preferate.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Marcajele existente nu vor fi duplicate.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Vârtej de apă";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Setare ca browser implicit";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Setează DuckDuckGo ca browser implicit.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Deschide link-urile în siguranță, de fiecare dată.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOU ÎN IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Adaugă DuckDuckGo pe ecranul de start!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Site-urile web se bazează pe cookie-uri pentru a te menține conectat. Atunci când ștergi activitatea și istoricul unui site, cookie-urile nu vor fi șterse și vei rămâne conectat, chiar și după utilizarea butonului Ștergere activitate și istoric. Blocăm totuși instrumentele de urmărire terțe găsite pe site-urile web cu ștergerea activității și istoricului din browser la ieșire.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Site-uri web";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Site-uri cu ștergerea activității și istoricului din browser la ieșire";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Dorești să ștergi activitatea și istoricul pentru %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Ștergerea activității și istoricului din browser pentru acest site te va menține conectat după utilizarea butonului Ștergere activitate și istoric.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Ignifughezi %@ pentru a rămâne autentificat(ă)?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Site cu ștergerea activității și istoricului din browser la ieșire";
+"preserveLogins.menu.confirm" = "Ștergerea activității și istoricului din browser";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ nu mai păstrează acum activitatea și istoricul";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Solicită ștergea activității și istoricului din browser la site-uri";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";

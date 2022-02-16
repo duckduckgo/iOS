@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import BrowserServicesKit
 
 public class HTTPSUpgrade {
 
@@ -32,7 +33,7 @@ public class HTTPSUpgrade {
     private var bloomFilter: BloomFilterWrapper?
     
     init(store: HTTPSUpgradeStore = HTTPSUpgradePersistence(), appUrls: AppUrls = AppUrls(),
-         privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) {
+         privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) {
         self.store = store
         self.appUrls = appUrls
         self.privacyConfig = privacyConfig
@@ -55,21 +56,7 @@ public class HTTPSUpgrade {
             return
         }
         
-        if privacyConfig.isEnabled(featureKey: .httpsUpgrade) {
-            // Check exception lists before upgrading
-            if privacyConfig.isTempUnprotected(domain: host) {
-                completion(false)
-                return
-            }
-            if privacyConfig.isUserUnprotected(domain: host) {
-                completion(false)
-                return
-            }
-            if privacyConfig.isInExceptionList(domain: host, forFeature: .httpsUpgrade) {
-                completion(false)
-                return
-            }
-        } else {
+        guard privacyConfig.isFeature(.httpsUpgrade, enabledForDomain: host) else {
             completion(false)
             return
         }

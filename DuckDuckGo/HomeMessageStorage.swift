@@ -19,39 +19,34 @@
 
 import Core
 
-public class HomeMessageStorage {
+struct HomeMessageStorage {
     
-    struct Constants {
-
-        static let homeRowReminderTimeInDays = 3.0
-
+    private let variantManager: VariantManager?
+    
+    init(variantManager: VariantManager? = nil) {
+        self.variantManager = variantManager
     }
     
-    @UserDefaultsWrapper(key: .homeDefaultBrowserMessageDateDismissed, defaultValue: nil)
-    var homeDefaultBrowserMessageDateDismissed: Date?
-    
-    func homeMessagesThatShouldBeShown() -> [HomeMessageModel] {
-        var messages = [HomeMessageModel]()
-        if shouldShowDefaultBrowserMessage() {
-            messages.append(HomeMessageModel.homeMessageModel(forHomeMessage: .defaultBrowserPrompt))
+    var messagesToBeShown: [HomeMessage] {
+        var messages = [HomeMessage]()
+        if shouldShowWidgetEducation {
+            messages.append(.widgetEducation)
         }
-        
         return messages
     }
     
-    func hasExpiredForHomeRow() -> Bool {
-        guard let date = homeDefaultBrowserMessageDateDismissed else {
-            return false
-        }
-        let days = abs(date.timeIntervalSinceNow / 24 / 60 / 60)
-        return days > Constants.homeRowReminderTimeInDays
+    // MARK: - Widget Education
+    
+    @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
+    private var widgetEducationMessageDismissed: Bool
+    
+    mutating func hideWidgetEducation() {
+        widgetEducationMessageDismissed = true
     }
     
-    private func shouldShowDefaultBrowserMessage() -> Bool {
-        if #available(iOS 14, *), homeDefaultBrowserMessageDateDismissed == nil {
-            return true
-        }
-        return false
+    private var shouldShowWidgetEducation: Bool {
+        guard #available(iOS 14, *), let variantManager = variantManager else { return false }
+        let isFeatureSupported = variantManager.isSupported(feature: .widgetEducation)
+        return isFeatureSupported && !widgetEducationMessageDismissed
     }
-
 }

@@ -163,8 +163,6 @@ class TabViewController: UIViewController {
     
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
-    private var surrogatesScript = SurrogatesUserScript()
-    private var contentBlockerRulesScript = ContentBlockerRulesUserScript()
     private var fingerprintScript = FingerprintUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
     private var doNotSellScript = DoNotSellUserScript()
@@ -239,6 +237,24 @@ class TabViewController: UIViewController {
 
     func initUserScripts() {
         
+        let currentTDSRules = ContentBlocking.contentBlockingManager.currentTDSRules
+        let privacyConfig = ContentBlocking.privacyConfigurationManager.privacyConfig
+        
+        let contentBlockerConfig = DefaultContentBlockerUserScriptConfig(privacyConfiguration: privacyConfig,
+                                                                         trackerData: currentTDSRules?.trackerData,
+                                                                         ctlTrackerData: nil,
+                                                                         trackerDataManager: ContentBlocking.trackerDataManager)
+        let contentBlockerRulesScript = ContentBlockerRulesUserScript(configuration: contentBlockerConfig)
+        
+        let surrogates = FileStore().loadAsString(forConfiguration: .surrogates) ?? ""
+        let surrogatesConfig = DefaultSurrogatesUserScriptConfig(privacyConfig: privacyConfig,
+                                                                 surrogates: surrogates,
+                                                                 trackerData: currentTDSRules?.trackerData,
+                                                                 encodedSurrogateTrackerData: currentTDSRules?.encodedTrackerData,
+                                                                 trackerDataManager: ContentBlocking.trackerDataManager,
+                                                                 isDebugBuild: isDebugBuild)
+        let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
+        
         userScripts = [
             debugScript,
             textSizeUserScript,
@@ -266,7 +282,6 @@ class TabViewController: UIViewController {
         debugScript.instrumentation = instrumentation
         surrogatesScript.delegate = self
         contentBlockerRulesScript.delegate = self
-        contentBlockerRulesScript.storageCache = storageCache
         autofillUserScript.emailDelegate = emailManager
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
@@ -347,8 +362,7 @@ class TabViewController: UIViewController {
     public func getCleanUrl(_ url: URL, showLoadingIndicator: Bool = true, completion: @escaping (URL) -> Void) {
         // Rewrite tracking links
         var urlToLoad = url
-        if AppDependencyProvider.shared.variantManager.isSupported(feature: .parameterStripping),
-           let cleanUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: urlToLoad) {
+        if let cleanUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: urlToLoad) {
             urlToLoad = cleanUrl
         }
         
@@ -371,7 +385,14 @@ class TabViewController: UIViewController {
     }
     
     public func load(url: URL) {
-        lastUpgradedURL = nil
+        load(url: url, didUpgradeUrl: false)
+    }
+    
+    private func load(url: URL, didUpgradeUrl: Bool) {
+        if !didUpgradeUrl {
+            lastUpgradedURL = nil
+        }
+        
         if !url.isBookmarklet() {
             self.url = url
         }
@@ -642,13 +663,16 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
-        if let rules = ContentBlockerRulesManager.shared.currentRules,
-           PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .contentBlocking) {
-            self.webView.configuration.userContentController.removeAllContentRuleLists()
-            self.webView.configuration.userContentController.add(rules.rulesList)
+        if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
+           ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+            webView.configuration.userContentController.removeAllContentRuleLists()
+            webView.configuration.userContentController.add(rules.rulesList)
             
-            if let diff = notification.userInfo?[ContentBlockerProtectionChangedNotification.diffKey] as? ContentBlockerRulesIdentifier.Difference {
-                if diff.contains(.unprotectedSites) {
+            let diffKey = ContentBlockerProtectionChangedNotification.diffKey
+            let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
+            
+            if let diff = notification.userInfo?[diffKey] as? [String: ContentBlockerRulesIdentifier.Difference] {
+                if diff[tdsKey]?.contains(.unprotectedSites) ?? false {
                     reload(scripts: true)
                 } else {
                     reloadUserScripts()
@@ -657,6 +681,8 @@ class TabViewController: UIViewController {
                 reloadUserScripts()
             }
 
+        } else {
+            webView.configuration.userContentController.removeAllContentRuleLists()
         }
     }
 
@@ -806,7 +832,7 @@ class TabViewController: UIViewController {
                               blockedTrackerDomains: blockedTrackerDomains,
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
-                              tdsETag: ContentBlockerRulesManager.shared.currentRules?.etag ?? "",
+                              tdsETag: ContentBlocking.contentBlockingManager.currentTDSRules?.etag ?? "",
                               ampUrl: linkCleaner?.lastAmpUrl,
                               urlParametersRemoved: linkCleaner?.urlParametersRemoved ?? false)
     }
@@ -1008,7 +1034,16 @@ extension TabViewController: WKNavigationDelegate {
         
         isShowingFullScreenDaxDialog = true
         scheduleTrackerNetworksAnimation(collapsing: !spec.highlightAddressBar)
+        let daxDialogSourceURL = self.url
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            // https://app.asana.com/0/414709148257752/1201620790053163/f
+            if self?.url != daxDialogSourceURL {
+                DaxDialogs.shared.overrideShownFlagFor(spec, flag: false)
+                self?.isShowingFullScreenDaxDialog = false
+                return
+            }
+
             self?.chromeDelegate?.omniBar.resignFirstResponder()
             self?.chromeDelegate?.setBarsHidden(false, animated: true)
             self?.performSegue(withIdentifier: "DaxDialog", sender: spec)
@@ -1097,15 +1132,11 @@ extension TabViewController: WKNavigationDelegate {
         
         var request = incomingRequest
         // Add Do Not sell header if needed
-        let config = PrivacyConfigurationManager.shared.privacyConfig
+        let config = ContentBlocking.privacyConfigurationManager.privacyConfig
         let domain = incomingRequest.url?.host
-        let urlAllowed = !config.isInExceptionList(domain: domain, forFeature: .gpc)
-                            && !config.isUserUnprotected(domain: domain)
-                            && !config.isTempUnprotected(domain: domain)
+        let urlAllowed = config.isFeature(.gpc, enabledForDomain: domain)
         
-        if appSettings.sendDoNotSell
-            && PrivacyConfigurationManager.shared.privacyConfig.isEnabled(featureKey: .gpc)
-            && urlAllowed {
+        if appSettings.sendDoNotSell && urlAllowed {
             if let headers = request.allHTTPHeaderFields,
                headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
                 request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
@@ -1161,8 +1192,7 @@ extension TabViewController: WKNavigationDelegate {
             return true
         }
         
-        if AppDependencyProvider.shared.variantManager.isSupported(feature: .parameterStripping),
-           let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
+        if let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
                                                             url: navigationAction.request.url) {
             if newUrl != navigationAction.request.url {
                 decisionHandler(.cancel)
@@ -1305,7 +1335,7 @@ extension TabViewController: WKNavigationDelegate {
             UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
         }
         
-        if !PrivacyConfigurationManager.shared.privacyConfig.isProtected(domain: url.host) {
+        if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {
             completion(allowPolicy)
             return
         }
@@ -1314,7 +1344,7 @@ extension TabViewController: WKNavigationDelegate {
             if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
                 NetworkLeaderboard.shared.incrementHttpsUpgrades()
                 self?.lastUpgradedURL = upgradedUrl
-                self?.load(url: upgradedUrl)
+                self?.load(url: upgradedUrl, didUpgradeUrl: true)
                 completion(.cancel)
                 return
             }
@@ -1514,12 +1544,16 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
 extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
-    func contentBlockerUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
+    func contentBlockerRulesUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
         return siteRating?.isFor(self.url) ?? false
     }
     
-    func contentBlockerUserScript(_ script: ContentBlockerRulesUserScript,
-                                  detectedTracker tracker: DetectedTracker) {
+    func contentBlockerRulesUserScriptShouldProcessCTLTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
+        return false
+    }
+
+    func contentBlockerRulesUserScript(_ script: ContentBlockerRulesUserScript,
+                                       detectedTracker tracker: DetectedTracker) {
         userScriptDetectedTracker(tracker)
     }
 

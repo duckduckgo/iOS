@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Редактиране";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Споделяне";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Добави приспособлението";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Получете бърз достъп до поверително търсене и до любимите си сайтове.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Натиснете продължително началния екран, за да влезете в режим за пренареждане.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Натиснете бутона плюс %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Открийте и изберете DuckDuckGo. След това изберете приспособление.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "На едно докосване от любимите уебсайтове.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Съществуващите отметки няма да бъдат дублирани.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Водовъртеж";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Задаване като браузър по подразбиране";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Направете DuckDuckGo браузър по подразбиране.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Отваряйте връзки без притеснения, всеки път.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "НОВО В IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Добавете DuckDuckGo към началния си екран!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Уеб сайтовете разчитат на бисквитки, за да поддържат сесията ви активна. Когато направите сайта огнеустойчив, бисквитките няма да бъдат изтрити и ще останете вписани, дори след като използвате огнения бутон. Ние все пак блокираме тракери на трети страни, които се намират на огнеустойчиви сайтове.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Уебсайтове";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Огнеустойчиви сайтове";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Искате ли да направите %@ огнеустойчив?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Ако направите този сайт огнеустойчив, ще останете вписани, след като използвате огнения бутон.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Направете %@ огнеустойчив, за да останете вписани?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Огнеустойчив уебсайт";
+"preserveLogins.menu.confirm" = "Направи огнеустойчив";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ вече е огнеустойчив";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "ОК";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Питай дали да направиш сайтовете огнеустойчиви";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритъм";

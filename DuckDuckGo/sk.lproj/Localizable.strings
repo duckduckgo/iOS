@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Upraviť";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Zdieľať";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Pridať miniaplikáciu";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Získajte prístup k súkromnému vyhľadávaniu a svojim obľúbeným webovým lokalitám.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Dlhým stlačením na domovskej obrazovke spustíte režim zatrasenia.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Klepnite na tlačidlo plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Nájdite a vyberte DuckDuckGo. Potom vyberte miniaplikáciu.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Jedným kliknutím na vaše obľúbené webové lokality.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existujúce záložky sa nebudú duplikovať.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Vodný vír";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Nastaviť ako predvolený prehliadač";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Nastavte DuckDuckGo ako svoj predvolený prehliadač.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Vždy otvor odkazy s pokojom mysle.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOVINKA V IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Pridajte DuckDuckGo na svoju domovskú obrazovku!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Webové stránky sa spoliehajú na súbory cookie, aby ste zostali prihlásení. Keď webovú stránku zabezpečíte funkciou ohňovzdornosti, súbory cookie nebudú zmazané a zostanete prihlásení aj po použití tlačidla Oheň. Stále budeme blokovať sledovacie zariadenia tretích strán, ktoré sa nachádzajú na webových stránkach zabezpečených funkciou ohňovzdornosti.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Webové stránky";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Zabezpečené stránky";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "Chceli by ste webovú stránku zabezpečiť funkciou ohňovzdornosti %@?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Zabezpečenie tejto webovej stránky funkciou ohňovzdornosti zaistí, aby ste zostali prihlásení aj po použití tlačidla Oheň.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Zakázať cookie pre %@ a zostať prihlásený?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Zabezpečiť webovú stránku funkciou ohňovzdornosti";
+"preserveLogins.menu.confirm" = "Zabezpečiť funkciou ohňovzdornosti";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "Lokalita %@ je teraz zabezpečená!";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Požiadať o zabezpečenie stránok";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";

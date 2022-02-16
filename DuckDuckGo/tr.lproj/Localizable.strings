@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Düzenle";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Paylaş";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Widget Ekle";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Özel aramaya ve sevdiğiniz sitelere hızlı erişim elde edin.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Sallama moduna girmek için ana ekranda uzun basın.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Artı %@ düğmesine dokunun.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "DuckDuckGo'yu bulun ve seçin. Ardından bir widget seçin.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Favori sitelerinize tek dokunuşla erişin.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Mevcut yer imleri çoğaltılmayacaktır.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Girdap";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Varsayılan Tarayıcı olarak ayarla";
-
-/* No comment provided by engineer. */
-"home.message.header" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Her zaman gönül rahatlığıyla açık bağlantılar.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "IOS 14'TE YENİ";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "DuckDuckGo'yu ana ekranınıza ekleyin!";
 
 /* No comment provided by engineer. */
@@ -745,14 +754,17 @@
 /* No comment provided by engineer. */
 "preserveLogins.domain.list.footer" = "Web siteleri oturumunuzu açık tutmak için çerezler kullanır. Bir siteyi Korumalı hâle getirdiğinizde çerezler silinmez ve Yangın Düğmesi'ni kullandıktan sonra bile oturumunuz açık kalır. Korumalı web sitelerinde bulunan üçüncü taraf izleyicileri yine engelleriz.";
 
-/* Section header above Fireproffed websites list */
-"preserveLogins.domain.list.title" = "Web siteleri";
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Korumalı Siteler";
 
-/* Paramter is a string - domain name */
-"preserveLogins.fireproof.message" = "%@ sitesini Korumalı yapmak ister misiniz?";
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Korumalı yaptığınızda, Yangın düğmesini kullanıktan sonra da oturumunuz açık kalır.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Oturumun açık tutulması için %@ korumalı hâle getirilsin mi?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Korumalı Web Sitesi";
+"preserveLogins.menu.confirm" = "Korumalı yap";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ artık Korumalı";
@@ -774,9 +786,6 @@
 
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Tamam";
-
-/* Ask to Fireproof Sites */
-"preserveLogins.switch.title" = "Siteleri Korumalı Yapmadan Önce Sor";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritma";

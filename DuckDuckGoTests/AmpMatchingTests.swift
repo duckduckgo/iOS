@@ -21,6 +21,7 @@ import XCTest
 @testable import TrackerRadarKit
 @testable import Core
 import Foundation
+import BrowserServicesKit
 import os.log
 
 struct AmpRefTests: Decodable {

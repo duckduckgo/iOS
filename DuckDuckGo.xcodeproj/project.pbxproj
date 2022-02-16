@@ -48,6 +48,7 @@
 		3151F0EE2735800800226F58 /* VoiceSearchFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */; };
 		3151F0F02735802800226F58 /* VoiceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0EF2735802800226F58 /* VoiceSearchViewController.swift */; };
 		3161D13227AC161B00285CF6 /* DownloadMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3161D13127AC161B00285CF6 /* DownloadMetadata.swift */; };
+		316931D727BD10BB0095F5ED /* SaveToDownloadsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316931D627BD10BB0095F5ED /* SaveToDownloadsAlert.swift */; };
 		3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3170048127A9504F00C03F35 /* DownloadMocks.swift */; };
 		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
 		31C138A427A3352600FFD4B2 /* DownloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C138A227A3350A00FFD4B2 /* DownloadTests.swift */; };
@@ -786,6 +787,7 @@
 		3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchFeedbackView.swift; sourceTree = "<group>"; };
 		3151F0EF2735802800226F58 /* VoiceSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchViewController.swift; sourceTree = "<group>"; };
 		3161D13127AC161B00285CF6 /* DownloadMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMetadata.swift; sourceTree = "<group>"; };
+		316931D627BD10BB0095F5ED /* SaveToDownloadsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveToDownloadsAlert.swift; sourceTree = "<group>"; };
 		3170048127A9504F00C03F35 /* DownloadMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMocks.swift; sourceTree = "<group>"; };
 		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
 		31C138A227A3350A00FFD4B2 /* DownloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTests.swift; sourceTree = "<group>"; };
@@ -2154,6 +2156,7 @@
 				31C138A727A3E9C900FFD4B2 /* DownloadSession.swift */,
 				310D09202799FD1A00DC0060 /* MimeType.swift */,
 				3161D13127AC161B00285CF6 /* DownloadMetadata.swift */,
+				316931D627BD10BB0095F5ED /* SaveToDownloadsAlert.swift */,
 			);
 			name = Downloads;
 			sourceTree = "<group>";
@@ -4758,6 +4761,7 @@
 				858650D9246B0D3C00C36F8A /* DaxOnboardingViewController.swift in Sources */,
 				F1A5683A1E70F98E0081082E /* AutocompleteRequest.swift in Sources */,
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
+				316931D727BD10BB0095F5ED /* SaveToDownloadsAlert.swift in Sources */,
 				85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */,
 				98FA4BB72440D0A800894CD8 /* PrivacyProtectionIconSource.swift in Sources */,
 				980891A222369ADB00313A70 /* FeedbackUserText.swift in Sources */,

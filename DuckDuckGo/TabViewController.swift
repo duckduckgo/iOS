@@ -986,14 +986,22 @@ extension TabViewController: WKNavigationDelegate {
             url = webView.url
             decisionHandler(.allow)
         } else {
-             let downloadManager = AppDependencyProvider.shared.downloadsManager
-             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-             
-            if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
-                 downloadManager.startDownload(download)
-             }
-             
-             decisionHandler(.cancel)
+            let downloadManager = AppDependencyProvider.shared.downloadsManager
+            let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse)
+            
+            let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
+                let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+                
+               if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
+                    downloadManager.startDownload(download)
+                }
+            }
+            
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+            decisionHandler(.cancel)
         }
     }
     

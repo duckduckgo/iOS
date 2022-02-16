@@ -867,22 +867,37 @@ class TabViewController: UIViewController {
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
-#warning("Display download finished toast")
-        if let error = notification.userInfo?[DownloadsManager.UserInfoKeys.error] as? Error {
-            #warning("Handle Error")
-            Swift.print("Error \(error)")
+        if notification.userInfo?[DownloadsManager.UserInfoKeys.error] != nil {
+            ActionMessageView.present(message: UserText.messageDownloadFailed)
+            return
         }
+        
         guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download else { return }
+        
         DispatchQueue.main.async {
-            self.previewDownloadedFileIfNecessary(download)
+            if !download.temporary {
+                let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(download: download)
+                ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
+                    #warning("Show download")
+                }
+            } else {
+                self.previewDownloadedFileIfNecessary(download)
+            }
         }
     }
     
     @objc private func downloadDidStart(_ notification: Notification) {
-#warning("Display download started toast")
-        Swift.print("Download Started \(notification)")
+        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download else { return }
+        
+        let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(download: download)
+      
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
+                #warning("Show download")
+            }
+        }
     }
-    
+
     private func previewDownloadedFileIfNecessary(_ download: Download) {
         guard shouldAutoPreviewDownload(download),
               let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),

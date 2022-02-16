@@ -19,7 +19,7 @@
 
 import UIKit
 
-class SaveToDownloadsAlert {
+struct SaveToDownloadsAlert {
     
     static func makeAlert(downloadMetadata: DownloadMetadata?,
                           cancelHandler: (() -> Void)? = nil,

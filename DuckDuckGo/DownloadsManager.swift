@@ -93,6 +93,10 @@ class DownloadsManager {
         notificationCenter.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
     }
     
+    func cancelDownload(_ download: Download) {
+        download.cancel()
+    }
+    
     func cancelAllDownloads() {
         downloadList.forEach { $0.cancel() }
     }

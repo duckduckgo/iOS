@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Är du säker på att du vill ta bort den här mappen och %1$d objekt?</string>
+			<key>other</key>
+			<string>Är du säker på att du vill ta bort den här mappen och %1$d objekt?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -17,13 +33,13 @@
 
 Jag blockerade dem!
 
-☝️ Du kan kontrollera webbadressfältet för att se vem som försöker spåra dig när du besöker en ny webbplats.️</string>
+☝️ Du kan kontrollera adressfältet för att se vem som försöker spåra dig när du besöker en ny sida.</string>
 			<key>other</key>
 			<string>*%2$@, %3$@* och *%1$d andra* försökte spåra dig här.
 
- Jag blockerade dem!
+Jag blockerade dem!
 
-☝️ Du kan kontrollera URL-fältet för att se vem som försöker spåra dig när du besöker en ny webbplats.</string>
+☝️ Du kan kontrollera adressfältet för att se vem som försöker spåra dig när du besöker en ny sida.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

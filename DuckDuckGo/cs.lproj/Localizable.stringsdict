@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Opravdu chceš smazat tuhle složku a %1$d položku?</string>
+			<key>few</key>
+			<string>Opravdu chceš smazat tuhle složku a %1$d položky?</string>
+			<key>many</key>
+			<string>Opravdu chceš smazat tuhle složku a %1$d položky?</string>
+			<key>other</key>
+			<string>Opravdu chceš smazat tuhle složku a %1$d položek?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,29 +33,21 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* a *1 další* se vás snažili tady vysledovat.
+			<string>*%2$@, %3$@* a *1 další subjekt* se tě tady pokouší sledovat.
 
-Zablokovali jsme je!
-
-☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte nový web. ️</string>
+Zablokovali jsme je.&lt;br/&gt;&lt;br/&gt;☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 			<key>few</key>
-			<string>*%2$@, %3$@* a *%1$d další* se vás snažili tady vysledovat.
+			<string>*%2$@, %3$@* a *%1$d další subjekty* se tě tady pokouší sledovat.
 
-Zablokovali jsme je!
-
-☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte nový web. ️</string>
+Zablokovali jsme je.&lt;br/&gt;&lt;br/&gt;☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 			<key>many</key>
-			<string>*%2$@, %3$@* a *%1$d dalších* se vás snažilo tady vysledovat.
+			<string>*%2$@, %3$@* a *%1$d dalšího subjektu* se tě tady pokouší sledovat.
 
-Zablokovali jsme je!
-
-☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte nový web. ️</string>
+Zablokovali jsme je.&lt;br/&gt;&lt;br/&gt;☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* a *%1$d dalších* se vás snažilo tady vysledovat.
+			<string>*%2$@, %3$@* a *%1$d dalších subjektů* se tě tady pokouší sledovat.
 
-Zablokovali jsme je!
-
-☝️Můžete zkontrolovat panel URL a zjistit, kdo se vás snaží sledovat, když navštívíte nový web. ️</string>
+Zablokovali jsme je.&lt;br/&gt;&lt;br/&gt;☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

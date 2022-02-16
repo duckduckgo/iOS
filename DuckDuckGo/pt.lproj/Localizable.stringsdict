@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Tem a certeza de que quer eliminar esta pasta e %1$d item?</string>
+			<key>other</key>
+			<string>Tem a certeza de que quer eliminar esta pasta e %1$d itens?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,17 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* e *mais 1* estavam a tentar rastrear aqui.
+			<string>*%2$@, %3$@* e *1 outro* estavam a tentar rastreá-lo aqui.
 
-Eu bloqueei-os!
+Bloqueei-os!
 
-☝️ Pode verificar a barra de URL para ver quem está a tentar rastrear quando visita um novo site.</string>
+☝️ Pode consultar a barra de endereços para ver quem está a tentar localizá-lo quando visita um novo site.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* e *mais %1$d* estavam a tentar rastrear aqui.
+			<string>*%2$@, %3$@* e *%1$d outros* estavam a tentar rastreá-lo aqui.
 
-Eu bloqueei-os!
+Bloqueei-os!
 
-☝️ Pode verificar a barra de URL para ver quem está a tentar rastreá-lo quando visita um novo site.</string>
+☝️ Pode consultar a barra de endereços para ver quem está a tentar localizá-lo quando visita um novo site.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

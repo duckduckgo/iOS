@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Er du sikker på at du vil slette denne mappen og %1$d element?</string>
+			<key>other</key>
+			<string>Er du sikker på at du vil slette denne mappen og %1$d elementer?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,9 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* og *én annen* prøvde å spore deg her. &lt;br/&gt;&lt;br/&gt;Jeg har blokkert dem!&lt;br/&gt;&lt;br/&gt; ☝️ Du kan se hvem som prøver å spore deg i adressefeltet når du besøker et nytt nettsted.</string>
+			<string>*%2$@, %3$@* og *1 annen* prøvde å spore deg her. 
+
+Jeg blokkerte dem!
+
+☝️ Du kan sjekke adresselinjen for å se hvem som prøver å spore deg når du besøker et nytt nettsted.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* og *%1$d andre* prøvde å spore deg her. &lt;br/&gt;&lt;br/&gt;Jeg har blokkert dem!&lt;br/&gt;&lt;br/&gt; ☝️ Du kan se hvem som prøver å spore deg i adressefeltet når du besøker et nytt nettsted.</string>
+			<string>*%2$@, %3$@* og *%1$d andre* prøvde å spore deg her.
+
+Jeg blokkerte dem!
+
+☝️ Du kan sjekke adresselinjen for å se hvem som prøver å spore deg når du besøker et nytt nettsted.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>
@@ -61,9 +85,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%% sporing oppdaget</string>
+			<string>%1$d sporer funnet</string>
 			<key>other</key>
-			<string>%% sporinger oppdaget</string>
+			<string>%1$d sporere funnet</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>

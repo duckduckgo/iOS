@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Czy na pewno chcesz usunąć ten folder i %1$d element?</string>
+			<key>few</key>
+			<string>Czy na pewno chcesz usunąć ten folder i %1$d elementy?</string>
+			<key>many</key>
+			<string>Czy na pewno chcesz usunąć ten folder i %1$d elementów?</string>
+			<key>other</key>
+			<string>Czy na pewno chcesz usunąć ten folder i %1$d elementu?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,29 +33,29 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* i *1 inny* próbował Cię tutaj wyśledzić.
+			<string>*%2$@, %3$@* i *1 inny* próbowali Cię tutaj śledzić.
 
-Zablokowałem je!
+Zablokowałem ich!
 
- ☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje cię śledzić, gdy odwiedzasz nową witrynę.️</string>
+☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje Cię śledzić, gdy odwiedzasz nową witrynę.️</string>
 			<key>few</key>
-			<string>*%2$@, %3$@* i *%1$d inne* próbowały Cię tutaj wyśledzić.
+			<string>*%2$@, %3$@* i *%1$d inne* próbowali Cię tutaj śledzić.
 
-Zablokowałem je!
+Zablokowałem ich!
 
- ☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje cię śledzić, gdy odwiedzasz nową witrynę.️</string>
+☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje Cię śledzić, gdy odwiedzasz nową witrynę.️</string>
 			<key>many</key>
-			<string>*%2$@, %3$@* i *%1$d inne* próbowały Cię tutaj wyśledzić.
+			<string>*%2$@, %3$@* i *%1$d innych* próbowali Cię tutaj śledzić.
 
-Zablokowałem je!
+Zablokowałem ich!
 
- ☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje cię śledzić, gdy odwiedzasz nową witrynę.️</string>
+☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje Cię śledzić, gdy odwiedzasz nową witrynę.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* i *%1$d innego* próbowali cię tutaj wyśledzić.
+			<string>*%2$@, %3$@* i *%1$d innego* próbowali Cię tutaj śledzić.
 
-Zablokowałem je!
+Zablokowałem ich!
 
- ☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje cię śledzić, gdy odwiedzasz nową witrynę.️</string>
+☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje Cię śledzić, gdy odwiedzasz nową witrynę.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

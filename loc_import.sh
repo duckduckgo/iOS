@@ -1,9 +1,9 @@
 #!/bin/sh
 
-xliffName=$2
+baseName=$2
 
 if [ $# -ne 2 ]; then
-    xliffName="en.xliff"
+    baseName=$(basename $1)
 fi
 
 for dir in $1/*; do
@@ -11,32 +11,37 @@ for dir in $1/*; do
   locale=`basename "$dir"`
   targetLocale=$(echo $locale | cut -f1 -d-)
 
-  if test -f "$dir/$xliffName"; then
+  if test -f "$dir/$baseName.xliff"; then
+    fileName=$baseName.xliff
     echo "Processing $locale xliff"
 
     if [ "$locale" != "$targetLocale" ];
     then
       echo "Changing locale from '$locale' to '$targetLocale'"
-      sed -i '.bak' "s/target-language=\"$locale\"/target-language=\"$targetLocale\"/" "$dir/$xliffName"
-      rm "$dir/$xliffName.bak"
+      sed -i '.bak' "s/target-language=\"$locale\"/target-language=\"$targetLocale\"/" "$dir/$fileName"
+      rm "$dir/$fileName.bak"
     fi
 
-    echo "Importing $dir/$xliffName ..."
-    xcodebuild -importLocalizations -project DuckDuckGo.xcodeproj -localizationPath "$dir/$xliffName"
+    echo "Importing $dir/$fileName ..."
+    xcodebuild -importLocalizations -project DuckDuckGo.xcodeproj -localizationPath "$dir/$fileName"
 
     if [ $? -ne 0 ]; then
-       echo "ERROR: Failed to import $dir/$xliffName"
+       echo "ERROR: Failed to import $dir/$fileName"
        echo
        echo "Check translation folder and files then try again."
        echo
        exit 1
     fi
 
-  elif test -f "$dir/Localizable.stringsdict"; then
+    echo "Reverting changes to stringsdict file"
+    git checkout "DuckDuckGo/$targetLocale.lproj/Localizable.stringsdict"
+
+  elif test -f "$dir/$baseName.stringsdict"; then
+    fileName=$baseName.stringsdict
     echo "Processing $locale stringsdict"
-    cp "$dir/Localizable.stringsdict" "DuckDuckGo/$targetLocale.lproj/"
+    cp "$dir/$fileName" "DuckDuckGo/$targetLocale.lproj/Localizable.stringsdict"
   else
-    echo "ERROR: $xliffName or Localizable.stringsdict not found in $dir"
+    echo "ERROR: $fileName xlif or stringsdict not found in $dir"
     echo
     exit 1
   fi

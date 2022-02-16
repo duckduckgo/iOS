@@ -55,7 +55,6 @@ public struct UserText {
     public static let actionSaveBookmark = NSLocalizedString("action.title.save.bookmark", value: "Add Bookmark", comment: "Add to Bookmarks action")
     public static let actionSaveFavorite = NSLocalizedString("action.title.save.favorite", value: "Add Favorite", comment: "Add to Favorites action")
     public static let actionReportBrokenSite = NSLocalizedString("action.title.reportBrokenSite", value: "Report Broken Site", comment: "Report broken site action")
-    public static let actionDownloads = NSLocalizedString("action.title.downloads", value: "Downloads", comment: "Downloads action")
     public static let actionSettings = NSLocalizedString("action.title.settings", value: "Settings", comment: "Settings action")
     public static let actionGenericEdit = NSLocalizedString("action.generic.edit", value: "Edit", comment: "Buton label for Edit action")
     public static let actionGenericUndo = NSLocalizedString("action.generic.undo", value: "Undo", comment: "Button label for Undo action")

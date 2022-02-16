@@ -21,7 +21,7 @@ import UIKit
 
 struct SaveToDownloadsAlert {
     
-    static func makeAlert(downloadMetadata: DownloadMetadata?,
+    static func makeAlert(downloadMetadata: DownloadMetadata,
                           cancelHandler: (() -> Void)? = nil,
                           saveToDownloadsHandler: @escaping () -> Void) -> UIAlertController {
         
@@ -42,16 +42,16 @@ struct SaveToDownloadsAlert {
         return alert
     }
     
-    private static func makeTitle(downloadMetadata: DownloadMetadata?) -> String? {
-        guard let downloadMetadata = downloadMetadata else {
-            return nil
+    private static func makeTitle(downloadMetadata: DownloadMetadata) -> String? {
+        if downloadMetadata.expectedContentLength <= 0 {
+            return downloadMetadata.filename
+        } else {
+            let formatter = ByteCountFormatter()
+            formatter.allowedUnits = [.useMB]
+            formatter.countStyle = .file
+            let size = formatter.string(fromByteCount: downloadMetadata.expectedContentLength)
+            
+            return "\(downloadMetadata.filename) (\(size))"
         }
-
-        let formatter = ByteCountFormatter()
-        formatter.allowedUnits = [.useMB]
-        formatter.countStyle = .file
-        
-        let size = formatter.string(fromByteCount: downloadMetadata.expectedContentLength)
-        return "\(downloadMetadata.filename) (\(size))"
     }
 }

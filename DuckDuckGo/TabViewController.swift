@@ -887,10 +887,11 @@ class TabViewController: UIViewController {
     }
     
     @objc private func downloadDidStart(_ notification: Notification) {
-        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download else { return }
+        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download,
+                  !download.temporary else { return }
         
         let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(download: download)
-      
+        
         DispatchQueue.main.async {
             ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
                 #warning("Show download")
@@ -899,7 +900,7 @@ class TabViewController: UIViewController {
     }
 
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard shouldAutoPreviewDownload(download),
+        guard shouldAutoPreviewDownloadWithMIMEType(download.mimeType),
               let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
               let delegate = self.delegate else { return }
         
@@ -910,8 +911,8 @@ class TabViewController: UIViewController {
         }
     }
     
-    private func shouldAutoPreviewDownload(_ download: Download) -> Bool {
-        switch download.mimeType {
+    private func shouldAutoPreviewDownloadWithMIMEType(_ mimeType: MIMEType) -> Bool {
+        switch mimeType {
         case .passbook, .reality, .usdz:
             return true
         default :
@@ -1002,18 +1003,25 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(.allow)
         } else {
             let downloadManager = AppDependencyProvider.shared.downloadsManager
-            let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse)
             
-            let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
+            let startDownload = {
                 let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-                
-               if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
+                if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
                     downloadManager.startDownload(download)
                 }
             }
             
-            DispatchQueue.main.async {
-                self.present(alert, animated: true, completion: nil)
+            if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
+                if shouldAutoPreviewDownloadWithMIMEType(downloadMetadata.mimeType) {
+                    startDownload()
+                } else {
+                    let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
+                        startDownload()
+                    }
+                    DispatchQueue.main.async {
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
             }
             
             decisionHandler(.cancel)

@@ -31,17 +31,24 @@ struct DownloadActionMessageViewHelper {
         return DownloadActionMessageViewHelper.boldDownloadFilenameInMessage(downloadStartedMessage, filename: download.filename)
     }
     
- private static func boldDownloadFilenameInMessage(_ message: String, filename: String) -> NSAttributedString {
+    private static func boldDownloadFilenameInMessage(_ message: String, filename: String) -> NSAttributedString {
         let attributedMessage = NSMutableAttributedString(string: message)
         guard let filenameRange = message.range(of: filename) else {
             return NSAttributedString(string: message)
         }
-
-        let boldAttributes = [
-            NSAttributedString.Key.font: UIFont.semiBoldAppFont(ofSize: 16)
+        
+        let fontSize: CGFloat = 16
+        
+        let regularAttributes = [
+            NSAttributedString.Key.font: UIFont.appFont(ofSize: fontSize)
         ]
-
+        
+        let boldAttributes = [
+            NSAttributedString.Key.font: UIFont.semiBoldAppFont(ofSize: fontSize)
+        ]
+        
         let range = NSRange(filenameRange, in: message)
+        attributedMessage.addAttributes(regularAttributes, range: NSRange(location: 0, length: attributedMessage.length))
         attributedMessage.addAttributes(boldAttributes, range: range)
         
         return attributedMessage

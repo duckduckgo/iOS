@@ -43,7 +43,7 @@ class DownloadsManager {
         }
     }
     
-    var downloadsFolderFiles: [URL]? {
+    var downloadsDirectoryFiles: [URL]? {
         try? FileManager.default.contentsOfDirectory(at: downloadsDirectory, includingPropertiesForKeys: nil)
     }
     
@@ -134,7 +134,7 @@ class DownloadsManager {
          }
     }
     
-    private func moveToDownloadFolderIfNecessary(_ download: Download) {
+    private func moveToDownloadDirectortIfNeeded(_ download: Download) {
         guard !download.temporary else { return }
         move(download, toPath: downloadsDirectory)
     }
@@ -146,7 +146,7 @@ extension DownloadsManager {
     
     private func convertToUniqueFilename(_ filename: String, counter: Int = 0) -> String {
         let downloadingFilenames = Set(downloadList.map { $0.filename })
-        let downloadedFilenames = Set(downloadsFolderFiles?.compactMap { $0.lastPathComponent } ?? [] )
+        let downloadedFilenames = Set(downloadsDirectoryFiles?.compactMap { $0.lastPathComponent } ?? [] )
         let list = downloadingFilenames.union(downloadedFilenames)
         
         var fileExtension = downloadsDirectory.appendingPathComponent(filename).pathExtension
@@ -179,7 +179,7 @@ extension DownloadsManager {
 
 extension DownloadsManager: DownloadDelegate {
     func downloadDidFinish(_ download: Download, error: Error?) {
-        moveToDownloadFolderIfNecessary(download)
+        moveToDownloadDirectortIfNeeded(download)
         var userInfo: [AnyHashable: Any] = [UserInfoKeys.download: download]
         if let error = error {
             userInfo[UserInfoKeys.error] = error

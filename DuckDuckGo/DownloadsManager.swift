@@ -45,7 +45,7 @@ class DownloadsManager {
     }
     
     var downloadsDirectoryFiles: [URL]? {
-        try? FileManager.default.contentsOfDirectory(at: downloadsDirectory, includingPropertiesForKeys: nil)
+        try? FileManager.default.contentsOfDirectory(at: downloadsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
     }
     
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {

@@ -867,24 +867,40 @@ class TabViewController: UIViewController {
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
-#warning("Display download finished toast")
-        if let error = notification.userInfo?[DownloadsManager.UserInfoKeys.error] as? Error {
-            #warning("Handle Error")
-            Swift.print("Error \(error)")
+        if notification.userInfo?[DownloadsManager.UserInfoKeys.error] != nil {
+            ActionMessageView.present(message: UserText.messageDownloadFailed)
+            return
         }
+        
         guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download else { return }
+        
         DispatchQueue.main.async {
-            self.previewDownloadedFileIfNecessary(download)
+            if !download.temporary {
+                let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(download: download)
+                ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
+                    #warning("Show download")
+                }
+            } else {
+                self.previewDownloadedFileIfNecessary(download)
+            }
         }
     }
     
     @objc private func downloadDidStart(_ notification: Notification) {
-#warning("Display download started toast")
-        Swift.print("Download Started \(notification)")
+        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download,
+                  !download.temporary else { return }
+        
+        let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(download: download)
+        
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
+                #warning("Show download")
+            }
+        }
     }
-    
+
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard shouldAutoPreviewDownload(download),
+        guard shouldAutoPreviewDownloadWithMIMEType(download.mimeType),
               let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
               let delegate = self.delegate else { return }
         
@@ -895,8 +911,8 @@ class TabViewController: UIViewController {
         }
     }
     
-    private func shouldAutoPreviewDownload(_ download: Download) -> Bool {
-        switch download.mimeType {
+    private func shouldAutoPreviewDownloadWithMIMEType(_ mimeType: MIMEType) -> Bool {
+        switch mimeType {
         case .passbook, .reality, .usdz:
             return true
         default :
@@ -986,14 +1002,29 @@ extension TabViewController: WKNavigationDelegate {
             url = webView.url
             decisionHandler(.allow)
         } else {
-             let downloadManager = AppDependencyProvider.shared.downloadsManager
-             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-             
-            if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
-                 downloadManager.startDownload(download)
-             }
-             
-             decisionHandler(.cancel)
+            let downloadManager = AppDependencyProvider.shared.downloadsManager
+            
+            let startDownload = {
+                let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+                if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
+                    downloadManager.startDownload(download)
+                }
+            }
+            
+            if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
+                if shouldAutoPreviewDownloadWithMIMEType(downloadMetadata.mimeType) {
+                    startDownload()
+                } else {
+                    let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
+                        startDownload()
+                    }
+                    DispatchQueue.main.async {
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+            
+            decisionHandler(.cancel)
         }
     }
     

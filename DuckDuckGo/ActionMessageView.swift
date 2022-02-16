@@ -55,14 +55,23 @@ class ActionMessageView: UIView {
         layer.cornerRadius = Constants.cornerRadius
     }
     
+    static func present(message: NSAttributedString, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
+        let messageView = loadFromXib()
+        messageView.message.attributedText = message
+        ActionMessageView.present(messageView: messageView, actionTitle: actionTitle, onAction: onAction)
+    }
+    
     static func present(message: String, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
+        let messageView = loadFromXib()
+        messageView.message.setAttributedTextString(message)
+        ActionMessageView.present(messageView: messageView, actionTitle: actionTitle, onAction: onAction)
+    }
+    
+    private static func present(messageView: ActionMessageView, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
         guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
         
         dismissAllMessages()
-        
-        let messageView = loadFromXib()
-        messageView.message.setAttributedTextString(message)
-        
+                
         if let actionTitle = actionTitle, let title = messageView.actionButton.attributedTitle(for: .normal) {
             messageView.actionButton.setAttributedTitle(title.withText(actionTitle.uppercased()), for: .normal)
             messageView.action = onAction
@@ -93,7 +102,7 @@ class ActionMessageView: UIView {
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.duration, execute: workItem)
         presentedMessages.append(messageView)
     }
-    
+
     static func dismissAllMessages() {
         presentedMessages.forEach { $0.dismissAndFadeOut() }
     }

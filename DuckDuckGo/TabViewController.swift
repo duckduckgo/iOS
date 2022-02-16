@@ -108,6 +108,8 @@ class TabViewController: UIViewController {
     // In certain conditions we try to present a dax dialog when one is already showing, so check to ensure we don't
     var isShowingFullScreenDaxDialog = false
     
+    var temporaryDownloadForPreviewedFile: Download?
+    
     public var url: URL? {
         didSet {
             updateTabModel()
@@ -218,6 +220,7 @@ class TabViewController: UIViewController {
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
         addTextSizeObserver()
+        registerForNotifications()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -325,6 +328,17 @@ class TabViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
+    }
+    
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(downloadDidStart),
+                                               name: .downloadStarted,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(downloadDidFinish),
+                                               name: .downloadFinished,
+                                               object: nil)
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
@@ -461,7 +475,7 @@ class TabViewController: UIViewController {
         PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self, forDomain: domain) { [weak self] in
             Pixel.fire(pixel: .browsingMenuFireproof)
             self?.preserveLoginsWorker?.handleUserEnablingFireproofing(forDomain: domain)
-        }    
+        }
     }
     
     func disableFireproofingForDomain(_ domain: String) {
@@ -850,7 +864,45 @@ class TabViewController: UIViewController {
     deinit {
         removeMessageHandlers()
         removeObservers()
-    }    
+    }
+    
+    @objc private func downloadDidFinish(_ notification: Notification) {
+#warning("Display download finished toast")
+        if let error = notification.userInfo?[DownloadsManager.UserInfoKeys.error] as? Error {
+            #warning("Handle Error")
+            Swift.print("Error \(error)")
+        }
+        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download else { return }
+        DispatchQueue.main.async {
+            self.previewDownloadedFileIfNecessary(download)
+        }
+    }
+    
+    @objc private func downloadDidStart(_ notification: Notification) {
+#warning("Display download started toast")
+        Swift.print("Download Started \(notification)")
+    }
+    
+    private func previewDownloadedFileIfNecessary(_ download: Download) {
+        guard shouldAutoPreviewDownload(download),
+              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
+              let delegate = self.delegate else { return }
+        
+        if delegate.tabCheckIfItsBeingCurrentlyPresented(self) {
+            fileHandler.preview()
+        } else {
+            Pixel.fire(pixel: .presentPreviewWithoutTab)
+        }
+    }
+    
+    private func shouldAutoPreviewDownload(_ download: Download) -> Bool {
+        switch download.mimeType {
+        case .passbook, .reality, .usdz:
+            return true
+        default :
+            return false
+        }
+    }
 }   
 
 extension TabViewController: LoginFormDetectionDelegate {
@@ -924,12 +976,43 @@ extension TabViewController: WKNavigationDelegate {
             appRatingPrompt.shown()
         }
     }
-    
+
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        decisionHandler(.allow)
-        url = webView.url
+      
+        if navigationResponse.canShowMIMEType {
+            setupOrClearTemporaryDownload(for: navigationResponse)
+            url = webView.url
+            decisionHandler(.allow)
+        } else {
+             let downloadManager = AppDependencyProvider.shared.downloadsManager
+             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+             
+            if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
+                 downloadManager.startDownload(download)
+             }
+             
+             decisionHandler(.cancel)
+        }
+    }
+    
+    /*
+     Some files might be previewed by webkit but in order to share them
+     we need to download them first.
+     This method stores the temporary download or clears it if necessary
+     */
+    private func setupOrClearTemporaryDownload(for navigationResponse: WKNavigationResponse) {
+        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        
+        if let downloadMetaData = downloadManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
+            let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+            temporaryDownloadForPreviewedFile = downloadManager.makeDownload(navigationResponse: navigationResponse,
+                                                                             cookieStore: cookieStore,
+                                                                             temporary: true)
+        } else {
+            temporaryDownloadForPreviewedFile = nil
+        }
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -1070,6 +1153,11 @@ extension TabViewController: WKNavigationDelegate {
         lastError = error
         let error = error as NSError
 
+        // Ignore Frame Load Interrupted that will be caused when a download starts
+        if error.code == 102 && error.domain == "WebKitErrorDomain" {
+            return
+        }
+        
         if let url = url,
             let domain = url.host,
             error.code == Constants.frameLoadInterruptedErrorCode {

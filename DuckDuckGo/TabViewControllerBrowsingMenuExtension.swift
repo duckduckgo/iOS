@@ -295,7 +295,35 @@ extension TabViewController {
     func onShareAction(forLink link: Link, fromView view: UIView, orginatedFromMenu: Bool) {
         Pixel.fire(pixel: .browsingMenuShare,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: orginatedFromMenu ? "1" : "0"])
-        presentShareSheet(withItems: [ link, webView.viewPrintFormatter() ], fromView: view)
+        
+        shareLinkWithTemporaryDownload(temporaryDownloadForPreviewedFile, originalLink: link) { [weak self] link in
+            guard let self = self else { return }
+            self.presentShareSheet(withItems: [ link, self.webView.viewPrintFormatter() ], fromView: view)
+        }
+    }
+    
+    private func shareLinkWithTemporaryDownload(_ temporaryDownload: Download?,
+                                                originalLink: Link,
+                                                completion: @escaping(Link) -> Void) {
+        guard let download = temporaryDownload else {
+            completion(originalLink)
+            return
+        }
+        
+        if let downloadLink = download.link {
+            completion(downloadLink)
+            return
+        }
+        
+        AppDependencyProvider.shared.downloadsManager.startDownload(download) { error in
+            DispatchQueue.main.async {
+                if error == nil, let downloadLink = download.link {
+                    completion(downloadLink)
+                } else {
+                    completion(originalLink)
+                }
+            }
+        }
     }
     
     private func onToggleDesktopSiteAction(forUrl url: URL) {

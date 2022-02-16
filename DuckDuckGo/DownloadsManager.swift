@@ -28,22 +28,43 @@ class DownloadsManager {
         static let error = "com.duckduckgo.com.userInfoKey.error"
     }
     
+    private enum Constants {
+        static var downloadsDirectoryName = "Downloads"
+    }
+    
     private(set) var downloadList = Set<Download>()
     private let notificationCenter: NotificationCenter
-    private var downloadsFolder: URL {
+    private var downloadsDirectory: URL {
         do {
-            return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            return documentsDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
         } catch {
             return FileManager.default.temporaryDirectory
         }
     }
     
     var downloadsFolderFiles: [URL]? {
-        try? FileManager.default.contentsOfDirectory(at: downloadsFolder, includingPropertiesForKeys: nil)
+        try? FileManager.default.contentsOfDirectory(at: downloadsDirectory, includingPropertiesForKeys: nil)
     }
     
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.notificationCenter = notificationCenter
+        createDownloadsDirectoryIfNeeded()
+        print("Downloads: \(downloadsDirectory)")
+    }
+    
+    private func createDownloadsDirectoryIfNeeded() {
+        if !downloadsDirectoryExists() {
+            createDownloadsDirectory()
+        }
+    }
+    
+    private func downloadsDirectoryExists() -> Bool {
+        FileManager.default.fileExists(atPath: downloadsDirectory.absoluteString)
+    }
+    
+    private func createDownloadsDirectory() {
+        try? FileManager.default.createDirectory(at: downloadsDirectory, withIntermediateDirectories: true, attributes: nil)
     }
     
     func makeDownload(navigationResponse: WKNavigationResponse,
@@ -115,7 +136,7 @@ class DownloadsManager {
     
     private func moveToDownloadFolderIfNecessary(_ download: Download) {
         guard !download.temporary else { return }
-        move(download, toPath: downloadsFolder)
+        move(download, toPath: downloadsDirectory)
     }
 }
 
@@ -128,7 +149,7 @@ extension DownloadsManager {
         let downloadedFilenames = Set(downloadsFolderFiles?.compactMap { $0.lastPathComponent } ?? [] )
         let list = downloadingFilenames.union(downloadedFilenames)
         
-        var fileExtension = downloadsFolder.appendingPathComponent(filename).pathExtension
+        var fileExtension = downloadsDirectory.appendingPathComponent(filename).pathExtension
         fileExtension = fileExtension.count > 0 ? ".\(fileExtension)" : ""
         
         let filePrefix = filename.drop(suffix: fileExtension)

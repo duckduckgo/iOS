@@ -1034,11 +1034,11 @@ extension TabViewController: WKNavigationDelegate {
      This method stores the temporary download or clears it if necessary
      */
     private func setupOrClearTemporaryDownload(for navigationResponse: WKNavigationResponse) {
-        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        let downloadsManager = AppDependencyProvider.shared.downloadsManager
         
-        if let downloadMetaData = downloadManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
+        if let downloadMetaData = downloadsManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-            temporaryDownloadForPreviewedFile = downloadManager.makeDownload(navigationResponse: navigationResponse,
+            temporaryDownloadForPreviewedFile = downloadsManager.makeDownload(navigationResponse: navigationResponse,
                                                                              cookieStore: cookieStore,
                                                                              temporary: true)
         } else {

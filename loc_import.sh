@@ -3,16 +3,17 @@
 baseName=$2
 
 if [ $# -ne 2 ]; then
-    baseName=$(basename $1)
+    baseName=$(basename "$1")
+    echo "Choosing $baseName as a base name for translation files"
 fi
 
-for dir in $1/*; do
-  echo processing $dir
+for dir in "$1"/*; do
+  echo "Processing $dir"
   locale=`basename "$dir"`
   targetLocale=$(echo $locale | cut -f1 -d-)
 
   if test -f "$dir/$baseName.xliff"; then
-    fileName=$baseName.xliff
+    fileName="$baseName.xliff"
     echo "Processing $locale xliff"
 
     if [ "$locale" != "$targetLocale" ];

@@ -36,7 +36,7 @@ public struct AppUrls {
         
         static let surrogates = "\(staticBase)/surrogates.txt"
         static let privacyConfig = "\(staticBase)/trackerblocking/config/v1/ios-config.json"
-        static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/tds.json"
+        static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/apple-tds.json"
 
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"

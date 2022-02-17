@@ -76,7 +76,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
                                              target: self,
                                              action: #selector(presentClearDataPrompt(_:)))
         clearDataItem.tintColor = .systemRed
-        navigationItem.rightBarButtonItem = clearDataItem
+        // navigationItem.rightBarButtonItem = clearDataItem
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
             if let task = tasks.first(where: { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }) {

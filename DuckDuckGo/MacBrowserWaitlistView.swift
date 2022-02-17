@@ -61,10 +61,13 @@ struct MacBrowserWaitlistSignUpView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 8) {
             HeaderView(imageName: "MacWaitlistJoinWaitlist", title: "Try DuckDuckGo for Mac!")
+                .padding(.bottom, 8)
             
             Text(UserText.macBrowserWaitlistSummary)
+                .font(.system(size: 16))
                 .foregroundColor(.macWaitlistText)
                 .multilineTextAlignment(.center)
+                .lineSpacing(4)
             
             Button("Join the Private Waitlist", action: { action(.joinQueue) })
                 .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
@@ -90,9 +93,10 @@ struct MacBrowserWaitlistSignUpView: View {
             Spacer()
             
             Text(UserText.macWaitlistPrivacyDisclaimer)
-                .font(.system(size: 14))
-                .foregroundColor(.gray)
+                .font(.custom("proximanova-regular", size: 13))
+                .foregroundColor(.macWaitlistSubtitle)
                 .multilineTextAlignment(.center)
+                .lineSpacing(5)
         }
         .padding([.leading, .trailing], 24)
     }
@@ -133,9 +137,12 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
                 switch notificationState {
                 case .notificationAllowed:
                     Text(UserText.macBrowserWaitlistJoinedWithNotifications)
+                        .font(.custom("proximanova-regular", size: 17))
                         .foregroundColor(.macWaitlistText)
+
                 case .notificationDenied:
                     Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
+                        .font(.custom("proximanova-regular", size: 17))
                         .foregroundColor(.macWaitlistText)
                     
                     Button("Notify Me") {
@@ -144,6 +151,7 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
                     .buttonStyle(RoundedButtonStyle(enabled: true))
                     .padding(.top, 24)
                     .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
+
                 case .cannotPromptForNotification:
                     Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
                         .foregroundColor(.macWaitlistText)
@@ -177,10 +185,12 @@ private struct AllowNotificationsView: View {
 
     var body: some View {
         
-        VStack {
+        VStack(spacing: 20) {
             
             Text("We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.")
+                .font(.custom("proximanova-regular", size: 17))
                 .foregroundColor(.macWaitlistText)
+                .lineSpacing(5)
             
             Button("Allow Notifications") {
                 action(.openNotificationSettings)
@@ -188,7 +198,7 @@ private struct AllowNotificationsView: View {
             .buttonStyle(RoundedButtonStyle(enabled: true))
             
         }
-        .padding()
+        .padding(24)
         .background(Color.white)
         .cornerRadius(8)
         .shadow(color: .black.opacity(0.05), radius: 12, x: 0, y: 4)
@@ -208,7 +218,7 @@ struct MacBrowserWaitlistInvitedView: View {
     var body: some View {
         VStack {
             HeaderView(imageName: "MacWaitlistInvited", title: "You’re Invited!")
-
+            
             Text(UserText.macWaitlistInviteScreenSubtitle)
                 .foregroundColor(.macWaitlistText)
                 .padding(.top, 10)
@@ -221,7 +231,7 @@ struct MacBrowserWaitlistInvitedView: View {
             Text("Visit this URL on your Mac to download:")
                 .foregroundColor(.macWaitlistText)
             
-            Text("duckduckgo.com/macbeta")
+            Text("duckduckgo.com/mac")
                 .font(.system(size: 17, weight: .bold))
                 .foregroundColor(.blue)
             
@@ -229,14 +239,14 @@ struct MacBrowserWaitlistInvitedView: View {
                 .font(.system(size: 17, weight: .bold))
                 .foregroundColor(.macWaitlistText)
                 .padding(.top, 8)
-
+            
             Text("Open the file to install, then enter your invite code to unlock.")
                 .foregroundColor(.macWaitlistText)
-
+            
             InviteCodeView(inviteCode: inviteCode)
                 .padding(.top, 10)
-
-            Spacer()
+            
+            Spacer(minLength: 20)
             
             Button(action: {
                 action(.openShareSheet)
@@ -247,6 +257,7 @@ struct MacBrowserWaitlistInvitedView: View {
         }
         .padding([.leading, .trailing], 18)
         .multilineTextAlignment(.center)
+        .frame(maxHeight: .infinity)
     }
     
 }
@@ -258,7 +269,7 @@ private struct InviteCodeView: View {
     var body: some View {
         VStack(spacing: 4) {
             Text(UserText.macBrowserWaitlistInviteCode)
-                .font(.system(size: 17))
+                .font(.custom("proximanova-regular", size: 17))
                 .foregroundColor(.white)
                 .padding([.top, .bottom], 4)
 
@@ -285,13 +296,13 @@ struct HeaderView: View {
     let title: String
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 18) {
             Image(imageName)
             
             Text(title)
-                .font(.system(size: 22, weight: .semibold, design: .default))
+                .font(.custom("proximanova-bold", size: 21))
         }
-        .padding(.top, 16)
+        .padding(.top, 24)
     }
     
 }
@@ -302,7 +313,7 @@ struct RoundedButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.system(size: 16, weight: .semibold))
+            .font(.custom("proximanova-bold", size: 16))
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 12)
             .background(enabled ? Color.macWaitlistBlue : Color.macWaitlistBlue.opacity(0.2))
@@ -365,6 +376,11 @@ struct MacBrowserWaitlistView_Previews: PreviewProvider {
                 
                 PreviewView("Invite Screen With Code") {
                     MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
+                }
+                
+                if #available(iOS 15.0, *) {
+                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
+                    .previewInterfaceOrientation(.landscapeLeft)
                 }
             }
         } else {

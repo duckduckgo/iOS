@@ -44,17 +44,17 @@ struct DownloadsList: View {
                     }
                 }
                 .listStyle(.grouped)
-                .navigationBarTitle("Downloads", displayMode: .inline)
                 .environment(\.editMode, $editMode)
-                .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() }
-                                        .opacity(editMode == .inactive ? 1.0 : 0.0))
-                
+
                 HStack {
                     Spacer()
                     EditButton().environment(\.editMode, $editMode)
                 }.padding()
             }
-        }
+            .navigationBarTitle("Downloads", displayMode: .inline)
+            .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() }
+                                    .opacity(editMode == .inactive ? 1.0 : 0.0))
+        }.navigationViewStyle(.stack)
     }
     
     func delete(at offsets: IndexSet, in section: DownloadsListSection) {

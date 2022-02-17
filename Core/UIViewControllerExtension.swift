@@ -132,6 +132,14 @@ extension Core.Link: UIActivityItemSource {
 
     public func activityViewController(_ activityViewController: UIActivityViewController,
                                        itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        
+        // We don't want to save localPath to favorites or bookmarks
+        if let localPath = localPath,
+           activityType != .saveBookmarkInDuckDuckGo,
+           activityType != .saveFavoriteInDuckDuckGo {
+        
+            return localPath
+        }
         return AppUrls().removeInternalSearchParameters(fromUrl: url)
     }
 

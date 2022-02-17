@@ -20,16 +20,11 @@
 import Foundation
 
 struct DownloadsListModel {
-    var downloads: [DownloadItem]
+    var downloads: [DownloadItem] = []
     
     init() {
         print("M: init")
-        downloads = [DownloadItem(filename: "book.pdf"),
-                     DownloadItem(filename: "ticket.pdf"),
-                     DownloadItem(filename: "archive.zip"),
-                     DownloadItem(filename: "song.mp3")]
-        
-        downloads.append(contentsOf: downloadsDirectoryItems())
+        downloads = makeDownloadsDirectoryItems()
     }
 
     mutating func deleteItemWithIdentifier(_ identifier: String) {
@@ -40,35 +35,15 @@ struct DownloadsListModel {
         downloads.remove(at: index)
     }
     
-    private func downloadsDirectoryItems() -> [DownloadItem] {
+    private func makeDownloadsDirectoryItems() -> [DownloadItem] {
         print("M: downloadsDirectoryItems()")
-        return downloadsDirectoryContents().map { url in
-            DownloadItem(url: url)
-        }
+        return downloadsDirectoryContents().map { DownloadItem(url: $0) }
     }
     
     private func downloadsDirectoryContents() -> [URL] {
-        let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let directoryContents: [URL]
         
-        print("Put some files in: \(documentsUrl)")
-        
-        do {
-            // Get the directory contents urls (including subfolders urls)
-            directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil)
-//            print(directoryContents)
-
-            // if you want to filter the directory contents you can do like this:
-//            let mp3Files = directoryContents.filter{ $0.pathExtension == "mp3" }
-//            print("mp3 urls:",mp3Files)
-//            let mp3FileNames = mp3Files.map{ $0.deletingPathExtension().lastPathComponent }
-//            print("mp3 list:", mp3FileNames)
-
-        } catch {
-            print(error)
-            directoryContents = []
-        }
-        
-        return directoryContents
+        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        return downloadManager.downloadsDirectoryFiles
+    
     }
 }

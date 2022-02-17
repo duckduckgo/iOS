@@ -57,7 +57,7 @@ class DownloadsListViewModel: ObservableObject {
                 
             return DownloadsListSection(date: date,
                                         header: Self.dateFormatter.string(from: date),
-                                        rows: downloadsByDate.map { makeRow(from: $0) })
+                                        rows: downloadsByDate.sorted(by: >).map { makeRow(from: $0) })
         }
     }
     

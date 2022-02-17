@@ -40,12 +40,13 @@ class DownloadsManager {
             let documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             return documentsDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
         } catch {
+            #warning("we need a better handling of error scenario")
             return FileManager.default.temporaryDirectory
         }
     }
     
-    var downloadsDirectoryFiles: [URL]? {
-        try? FileManager.default.contentsOfDirectory(at: downloadsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+    var downloadsDirectoryFiles: [URL] {
+        (try? FileManager.default.contentsOfDirectory(at: downloadsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)) ?? []
     }
     
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {
@@ -147,7 +148,7 @@ extension DownloadsManager {
     
     private func convertToUniqueFilename(_ filename: String, counter: Int = 0) -> String {
         let downloadingFilenames = Set(downloadList.map { $0.filename })
-        let downloadedFilenames = Set(downloadsDirectoryFiles?.compactMap { $0.lastPathComponent } ?? [] )
+        let downloadedFilenames = Set(downloadsDirectoryFiles.map { $0.lastPathComponent })
         let list = downloadingFilenames.union(downloadedFilenames)
         
         var fileExtension = downloadsDirectory.appendingPathComponent(filename).pathExtension

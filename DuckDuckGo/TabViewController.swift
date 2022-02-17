@@ -878,7 +878,8 @@ class TabViewController: UIViewController {
             if !download.temporary {
                 let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(download: download)
                 ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
-                    #warning("Show download")
+#warning("Perhaps PIXEL here?")
+                    self.delegate?.tabDidRequestDownloads(tab: self)
                 }
             } else {
                 self.previewDownloadedFileIfNecessary(download)
@@ -894,7 +895,8 @@ class TabViewController: UIViewController {
         
         DispatchQueue.main.async {
             ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
-                #warning("Show download")
+#warning("Perhaps PIXEL here?")
+                self.delegate?.tabDidRequestDownloads(tab: self)
             }
         }
     }

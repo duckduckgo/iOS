@@ -345,7 +345,7 @@ extension TabViewController {
     }
     
     private func onOpenDownloadsAction() {
-        // Add pixel reporting here
+#warning("Perhaps PIXEL here?")
         delegate?.tabDidRequestDownloads(tab: self)
     }
     

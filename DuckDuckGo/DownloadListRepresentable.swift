@@ -32,17 +32,17 @@ protocol DownloadListRepresentable {
 }
 
 struct AnyDownloadListRepresentable: DownloadListRepresentable, Comparable {
-    private var wrappedValue: DownloadListRepresentable
+    private var wrappedRepresentable: DownloadListRepresentable
 
     init(_ value: DownloadListRepresentable) {
-      self.wrappedValue = value
+      self.wrappedRepresentable = value
     }
     
     public var id: String { filename}
-    var filename: String { wrappedValue.filename }
-    var creationDate: Date { wrappedValue.creationDate }
-    var fileSize: Int { wrappedValue.fileSize }
-    var type: DownloadItemType { wrappedValue.type }
+    var filename: String { wrappedRepresentable.filename }
+    var creationDate: Date { wrappedRepresentable.creationDate }
+    var fileSize: Int { wrappedRepresentable.fileSize }
+    var type: DownloadItemType { wrappedRepresentable.type }
     
     static func < (lhs: AnyDownloadListRepresentable, rhs: AnyDownloadListRepresentable) -> Bool {
         lhs.creationDate < rhs.creationDate

@@ -20,6 +20,7 @@
 import SwiftUI
 
 struct DownloadsList: View {
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: DownloadsListViewModel
     @State var editMode: EditMode = .inactive
     
@@ -45,7 +46,7 @@ struct DownloadsList: View {
                 .listStyle(.grouped)
                 .navigationBarTitle("Downloads", displayMode: .inline)
                 .environment(\.editMode, $editMode)
-                .navigationBarItems(trailing: Button("Done") { print("Done Pressed") }
+                .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() }
                                         .opacity(editMode == .inactive ? 1.0 : 0.0))
                 
                 HStack {

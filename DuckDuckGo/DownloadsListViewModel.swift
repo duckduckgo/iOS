@@ -38,15 +38,15 @@ class DownloadsListViewModel: ObservableObject {
 
     var sections: [DownloadsListSection] {
         if sectionedModel.isEmpty {
-            sectionedModel = makeSections(from: model.downloads)
+            sectionedModel = makeSections(from: model.ongoingDownloads + model.completeDownloads)
         }
         
         return sectionedModel
     }
     
-    private func makeSections(from downloads: [DownloadItem]) -> [DownloadsListSection] {
+    private func makeSections(from downloads: [AnyDownloadListRepresentable]) -> [DownloadsListSection] {
         print("VM: makeSections(from:)")
-        let downloadsGroupedByDate: [Date: [DownloadItem]] = Dictionary(grouping: downloads, by: {
+        let downloadsGroupedByDate: [Date: [AnyDownloadListRepresentable]] = Dictionary(grouping: downloads, by: {
             Calendar.current.startOfDay(for: $0.creationDate)
         })
         
@@ -61,7 +61,7 @@ class DownloadsListViewModel: ObservableObject {
         }
     }
     
-    private func makeRow(from download: DownloadItem) -> DownloadsListRow {
+    private func makeRow(from download: AnyDownloadListRepresentable) -> DownloadsListRow {
         DownloadsListRow(filename: download.filename,
                          fileSize: Self.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)))
     }

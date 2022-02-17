@@ -20,30 +20,34 @@
 import Foundation
 
 struct DownloadsListModel {
-    var downloads: [DownloadItem] = []
+    var ongoingDownloads: [AnyDownloadListRepresentable] = []
+    var completeDownloads: [AnyDownloadListRepresentable] = []
     
     init() {
         print("M: init")
-        downloads = makeDownloadsDirectoryItems()
+        refetchDownloads()
+    }
+    
+    mutating func refetchDownloads() {
+        refetchOngoingDownloads()
+        refetchCompleteDownloads()
+    }
+    
+    mutating func refetchOngoingDownloads() {
+        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        ongoingDownloads = downloadManager.downloadList.map { AnyDownloadListRepresentable($0) }
+    }
+    
+    mutating func refetchCompleteDownloads() {
+        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        completeDownloads = downloadManager.downloadsDirectoryFiles.map { AnyDownloadListRepresentable($0) }
     }
 
     mutating func deleteItemWithIdentifier(_ identifier: String) {
         print("M: deleteItem()")
-        guard let downloadToBeRemoved = downloads.first(where: { $0.filename == identifier }),
-        let index = downloads.firstIndex(of: downloadToBeRemoved) else { return }
+        guard let downloadToBeRemoved = completeDownloads.first(where: { $0.filename == identifier }),
+        let index = completeDownloads.firstIndex(of: downloadToBeRemoved) else { return }
         
-        downloads.remove(at: index)
-    }
-    
-    private func makeDownloadsDirectoryItems() -> [DownloadItem] {
-        print("M: downloadsDirectoryItems()")
-        return downloadsDirectoryContents().map { DownloadItem(url: $0) }
-    }
-    
-    private func downloadsDirectoryContents() -> [URL] {
-        
-        let downloadManager = AppDependencyProvider.shared.downloadsManager
-        return downloadManager.downloadsDirectoryFiles
-    
+        completeDownloads.remove(at: index)
     }
 }

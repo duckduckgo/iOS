@@ -35,7 +35,7 @@ public class Link: NSObject, NSCoding {
 
     public let title: String?
     public let url: URL
-    public let localPath: URL?
+    public let localFileURL: URL?
     
     public var displayTitle: String? {
         let host = url.host?.dropPrefix(prefix: "www.") ?? url.absoluteString
@@ -53,7 +53,7 @@ public class Link: NSObject, NSCoding {
     public required init(title: String?, url: URL, localPath: URL? = nil) {
         self.title = title
         self.url = url
-        self.localPath = localPath
+        self.localFileURL = localPath
     }
 
     public convenience required init?(coder decoder: NSCoder) {
@@ -66,12 +66,12 @@ public class Link: NSObject, NSCoding {
     public func encode(with coder: NSCoder) {
         coder.encode(title, forKey: NSCodingKeys.title)
         coder.encode(url, forKey: NSCodingKeys.url)
-        coder.encode(localPath, forKey: NSCodingKeys.localPath)
+        coder.encode(localFileURL, forKey: NSCodingKeys.localPath)
     }
 
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Link else { return false }
-        return title == other.title && url == other.url && localPath == other.localPath
+        return title == other.title && url == other.url && localFileURL == other.localFileURL
     }
 
     /**

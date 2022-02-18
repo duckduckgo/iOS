@@ -22,14 +22,25 @@ import Combine
 
 class DownloadsListViewModel: ObservableObject {
 
-    @Published private var model: DownloadsListModel = DownloadsListModel()
+    @Published private var model: DownloadsListModel
     private var sectionedModel: [DownloadsListSection] = []
     private var subscribers: Set<AnyCancellable> = []
         
-    init() {
-        $model.sink { _ in
-            self.resetCachedSectionedModel()
+    init(model: DownloadsListModel) {
+        print("VM: init")
+        
+        self.model = model
+        
+        $model.sink { [weak self] _ in
+            self?.resetCachedSectionedModel()
         }.store(in: &subscribers)
+        
+        startListening()
+    }
+    
+    deinit {
+        print("VM: deinit")
+        stopListening()
     }
     
     private func resetCachedSectionedModel() {
@@ -63,17 +74,34 @@ class DownloadsListViewModel: ObservableObject {
     
     private func makeRow(from download: AnyDownloadListRepresentable) -> DownloadsListRow {
         DownloadsListRow(filename: download.filename,
-                         fileSize: Self.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)))
+                         fileSize: Self.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)),
+                         type: download.type)
+    }
+    
+    private func startListening() {
+        NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownoloadsChanged(notification:)),
+                                               name: .downloadStarted, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownoloadsChanged(notification:)),
+                                               name: .downloadFinished, object: nil)
+    }
+    
+    private func stopListening() {
+        
+    }
+    
+    @objc func ongoingDownoloadsChanged(notification: Notification) {
+        model.refetchAllDownloads()
     }
     
     // MARK: - Intents
     
-    func deleteItem(at offsets: IndexSet, in sectionIndex: Int) {
+    func deleteDownload(at offsets: IndexSet, in sectionIndex: Int) {
         print("VM: deleteItem(at:in:)")
         guard let index = offsets.first else { return }
         
         let item = sections[sectionIndex].rows[index]
-        model.deleteItemWithIdentifier(item.id)
+        model.deleteDownloadWithIdentifier(item.id)
     }
 
 }
@@ -114,4 +142,5 @@ struct DownloadsListRow: Identifiable, Hashable {
     var id: String { filename }
     let filename: String
     let fileSize: String
+    let type: DownloadItemType
 }

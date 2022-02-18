@@ -28,11 +28,13 @@ struct DownloadsList: View {
         NavigationView {
             VStack {
                 List {
-                    ActiveDownloadRow()
                     ForEach(viewModel.sections) { section in
                         Section(header: Text(section.header)) {
                             ForEach(section.rows) { row in
-                                DownloadRow(rowModel: row)
+                                switch row.type {
+                                case .ongoing: ActiveDownloadRow()
+                                case .complete: DownloadRow(rowModel: row)
+                                }
                             }
                             .onDelete { offset in
                                 self.delete(at: offset, in: section)
@@ -60,14 +62,14 @@ struct DownloadsList: View {
     func delete(at offsets: IndexSet, in section: DownloadsListSection) {
         guard let sectionIndex = viewModel.sections.firstIndex(of: section) else { return }
         print("\(section), \(offsets.first!)")
-        viewModel.deleteItem(at: offsets, in: sectionIndex)
+        viewModel.deleteDownload(at: offsets, in: sectionIndex)
     }
 
 }
 
 struct DownloadsList_Previews: PreviewProvider {
     static var previews: some View {
-        DownloadsList(viewModel: DownloadsListViewModel())
+        DownloadsList(viewModel: DownloadsListViewModel(model: DownloadsListModel()))
     }
 }
 
@@ -110,16 +112,16 @@ struct ActiveDownloadRow: View {
             }
             Spacer()
             
-            ProgressBar(progress: self.$progressValue)
-                .frame(width: 30.0, height: 30.0)
-                .padding(10.0)
-            
             Button {
                 incrementProgress()
             } label: {
                 Image(systemName: "square.and.arrow.up")
 //                    .tint(.black)
             }.buttonStyle(.plain)
+                        
+            ProgressBar(progress: self.$progressValue)
+                .frame(width: 30.0, height: 30.0)
+                .padding(10.0)
         }
         .frame(height: 72.0)
         .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))

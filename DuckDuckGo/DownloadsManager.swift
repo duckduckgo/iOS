@@ -35,7 +35,8 @@ class DownloadsManager {
     
     private(set) var downloadList = Set<Download>()
     private let notificationCenter: NotificationCenter
-    private var downloadsDirectory: URL {
+    
+    var downloadsDirectory: URL {
         do {
             let documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             return documentsDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
@@ -52,7 +53,7 @@ class DownloadsManager {
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.notificationCenter = notificationCenter
         createDownloadsDirectoryIfNeeded()
-        os_log("downloads directory location %s", type: .debug, downloadsDirectory.absoluteString)
+        os_log("Downloads directory location %s", type: .debug, downloadsDirectory.absoluteString)
     }
     
     private func createDownloadsDirectoryIfNeeded() {

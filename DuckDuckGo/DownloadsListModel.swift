@@ -25,10 +25,11 @@ struct DownloadsListModel {
     
     init() {
         print("M: init")
-        refetchDownloads()
+        refetchAllDownloads()
+        
     }
     
-    mutating func refetchDownloads() {
+    mutating func refetchAllDownloads() {
         refetchOngoingDownloads()
         refetchCompleteDownloads()
     }
@@ -42,12 +43,42 @@ struct DownloadsListModel {
         let downloadManager = AppDependencyProvider.shared.downloadsManager
         completeDownloads = downloadManager.downloadsDirectoryFiles.map { AnyDownloadListRepresentable($0) }
     }
-
-    mutating func deleteItemWithIdentifier(_ identifier: String) {
+    
+    mutating func deleteDownloadWithIdentifier(_ identifier: String) {
         print("M: deleteItem()")
-        guard let downloadToBeRemoved = completeDownloads.first(where: { $0.filename == identifier }),
-        let index = completeDownloads.firstIndex(of: downloadToBeRemoved) else { return }
+        guard let downloadToDelete = completeDownloads.first(where: { $0.id == identifier }),
+              downloadToDelete.type == .complete
+        else { return }
         
-        completeDownloads.remove(at: index)
+//        let index = completeDownloads.firstIndex(of: downloadToBeRemoved) else { return }
+//        completeDownloads.remove(at: index)
+        
+        do {
+            let fileManager = FileManager.default
+            let initialFilePath = downloadToDelete.filePath
+//            let fileURL = URL(fileURLWithPath: initialFilePath)
+            
+            if fileManager.fileExists(atPath: initialFilePath) {
+                try fileManager.removeItem(atPath: initialFilePath)
+//                var trashURL: NSURL?
+//                try fileManager.trashItem(at: fileURL, resultingItemURL: &trashURL)
+                    
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.messageDownloadDeleted(for: downloadToDelete.filename),
+                                              actionTitle: UserText.actionGenericUndo) {
+//                        guard let trashURL = trashURL as? URL else { return }
+//                        if !fileManager.fileExists(atPath: trashURL.path) {
+//                            try? fileManager.moveItem(atPath: trashURL.path, toPath: initialFilePath)
+//                        }
+                    }
+                }
+            } else {
+                print("File does not exist")
+            }
+        } catch let error as NSError {
+            print("An error took place: \(error)")
+        }
+        
+        refetchCompleteDownloads()
     }
 }

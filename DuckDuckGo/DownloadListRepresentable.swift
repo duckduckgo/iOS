@@ -29,6 +29,7 @@ protocol DownloadListRepresentable {
     var creationDate: Date { get }
     var fileSize: Int { get }
     var type: DownloadItemType { get }
+    var filePath: String { get }
 }
 
 struct AnyDownloadListRepresentable: DownloadListRepresentable, Comparable {
@@ -43,6 +44,7 @@ struct AnyDownloadListRepresentable: DownloadListRepresentable, Comparable {
     var creationDate: Date { wrappedRepresentable.creationDate }
     var fileSize: Int { wrappedRepresentable.fileSize }
     var type: DownloadItemType { wrappedRepresentable.type }
+    var filePath: String { wrappedRepresentable.filePath}
     
     static func < (lhs: AnyDownloadListRepresentable, rhs: AnyDownloadListRepresentable) -> Bool {
         lhs.creationDate < rhs.creationDate
@@ -58,10 +60,12 @@ extension URL: DownloadListRepresentable {
     var creationDate: Date { creation ?? Date() }
     var fileSize: Int { (try? resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0 }
     var type: DownloadItemType { .complete }
+    var filePath: String { self.path }
 }
 
 extension Download: DownloadListRepresentable {
     var creationDate: Date { date }
     var fileSize: Int { Int(totalBytesWritten) }
     var type: DownloadItemType { .ongoing }
+    var filePath: String { location?.path ?? "" }
 }

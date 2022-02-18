@@ -171,7 +171,6 @@ class TabViewController: UIViewController {
     private var fullScreenVideoScript = FullScreenVideoUserScript()
     private var printingUserScript = PrintingUserScript()
     private var textSizeUserScript = TextSizeUserScript()
-    private var autofillUserScript = AutofillUserScript()
     private var debugScript = DebugUserScript()
     private var shouldBlockJSAlert = false
 
@@ -254,6 +253,11 @@ class TabViewController: UIViewController {
                                                                  trackerDataManager: ContentBlocking.trackerDataManager,
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
+        
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
+        let autofillUserScript = AutofillUserScript(
+            scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
+                                                                properties: prefs))
         
         userScripts = [
             debugScript,

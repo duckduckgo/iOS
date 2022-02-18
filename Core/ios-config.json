@@ -25,7 +25,7 @@
                     "reason": "site breakage"
                 }
             ],
-            "state": "disabled"
+            "state": "enabled"
         },
         "clickToPlay": {
             "state": "enabled",

@@ -67,7 +67,7 @@ struct MacBrowserWaitlistSignUpView: View {
                 .font(.system(size: 16))
                 .foregroundColor(.macWaitlistText)
                 .multilineTextAlignment(.center)
-                .lineSpacing(4)
+                .lineSpacing(6)
             
             Button("Join the Private Waitlist", action: { action(.joinQueue) })
                 .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
@@ -123,47 +123,42 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
     let action: (MacWaitlistViewModel.ViewAction) -> Void
     
     var body: some View {
-        ZStack {
-            if #available(iOS 14.0, *) {
-                Color("MacWaitlistBackgroundColor")
-                    .ignoresSafeArea()
-            } else {
-                Color("MacWaitlistBackgroundColor")
-            }
+        VStack(spacing: 16) {
+            HeaderView(imageName: "MacWaitlistJoined", title: "You're on the list!")
+            
+            switch notificationState {
+            case .notificationAllowed:
+                Text(UserText.macBrowserWaitlistJoinedWithNotifications)
+                    .font(.custom("proximanova-regular", size: 17))
+                    .foregroundColor(.macWaitlistText)
+                    .lineSpacing(6)
 
-            VStack(spacing: 16) {
-                HeaderView(imageName: "MacWaitlistJoined", title: "You're on the list!")
+            case .notificationDenied:
+                Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
+                    .font(.custom("proximanova-regular", size: 17))
+                    .foregroundColor(.macWaitlistText)
+                    .lineSpacing(6)
                 
-                switch notificationState {
-                case .notificationAllowed:
-                    Text(UserText.macBrowserWaitlistJoinedWithNotifications)
-                        .font(.custom("proximanova-regular", size: 17))
-                        .foregroundColor(.macWaitlistText)
-
-                case .notificationDenied:
-                    Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
-                        .font(.custom("proximanova-regular", size: 17))
-                        .foregroundColor(.macWaitlistText)
-                    
-                    Button("Notify Me") {
-                        action(.requestNotificationPrompt)
-                    }
-                    .buttonStyle(RoundedButtonStyle(enabled: true))
-                    .padding(.top, 24)
-                    .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
-
-                case .cannotPromptForNotification:
-                    Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
-                        .foregroundColor(.macWaitlistText)
-                    
-                    AllowNotificationsView(action: action)
-                        .padding(.top, 8)
+                Button("Notify Me") {
+                    action(.requestNotificationPrompt)
                 }
+                .buttonStyle(RoundedButtonStyle(enabled: true))
+                .padding(.top, 24)
+                .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
+
+            case .cannotPromptForNotification:
+                Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
+                    .font(.custom("proximanova-regular", size: 17))
+                    .foregroundColor(.macWaitlistText)
+                    .lineSpacing(6)
                 
-                Spacer()
+                AllowNotificationsView(action: action)
+                    .padding(.top, 4)
             }
-            .padding([.leading, .trailing], 24)
+            
+            Spacer()
         }
+        .padding([.leading, .trailing], 24)
         .multilineTextAlignment(.center)
     }
     
@@ -254,6 +249,7 @@ struct MacBrowserWaitlistInvitedView: View {
                 Image("Share")
                     .foregroundColor(.macWaitlistText)
             })
+                .padding(.bottom, 18)
         }
         .padding([.leading, .trailing], 18)
         .multilineTextAlignment(.center)

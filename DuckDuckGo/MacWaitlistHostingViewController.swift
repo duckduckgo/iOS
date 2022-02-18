@@ -50,6 +50,7 @@ final class MacWaitlistViewController: UIViewController {
     private func addHostingControllerToViewHierarchy() {
         let waitlistView = MacBrowserWaitlistView().environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)
+        waitlistViewController.view.backgroundColor = UIColor(named: "MacWaitlistBackgroundColor")!
         
         addChild(waitlistViewController)
         waitlistViewController.view.translatesAutoresizingMaskIntoConstraints = false

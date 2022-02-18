@@ -127,6 +127,9 @@ extension Core.BookmarkManagedObject: UIActivityItemSource {
 extension Core.Link: UIActivityItemSource {
 
     public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        if let localFileURL = localFileURL {
+            return localFileURL
+        }
         return AppUrls().removeInternalSearchParameters(fromUrl: url)
     }
 
@@ -134,11 +137,11 @@ extension Core.Link: UIActivityItemSource {
                                        itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         
         // We don't want to save localPath to favorites or bookmarks
-        if let localPath = localPath,
+        if let localFileURL = localFileURL,
            activityType != .saveBookmarkInDuckDuckGo,
            activityType != .saveFavoriteInDuckDuckGo {
         
-            return localPath
+            return localFileURL
         }
         return AppUrls().removeInternalSearchParameters(fromUrl: url)
     }

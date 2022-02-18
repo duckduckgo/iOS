@@ -35,6 +35,7 @@ class DownloadsManager {
     
     private(set) var downloadList = Set<Download>()
     private let notificationCenter: NotificationCenter
+    private var downloadsDirectoryMonitor: DirectoryMonitor?
     
     var downloadsDirectory: URL {
         do {
@@ -180,6 +181,24 @@ extension DownloadsManager {
     }
 }
 
+// MARK: - Directory monitoring
+
+extension DownloadsManager {
+    
+    func startMonitoringDownloadsDirectoryChanges() {
+        stopMonitoringDownloadsDirectoryChanges()
+        
+        downloadsDirectoryMonitor = DirectoryMonitor(directory: downloadsDirectory)
+        downloadsDirectoryMonitor?.delegate = self
+        try? downloadsDirectoryMonitor?.start()
+    }
+    
+    func stopMonitoringDownloadsDirectoryChanges() {
+        downloadsDirectoryMonitor?.stop()
+        downloadsDirectoryMonitor = nil
+    }
+}
+
 extension DownloadsManager: DownloadDelegate {
     func downloadDidFinish(_ download: Download, error: Error?) {
         moveToDownloadDirectortIfNeeded(download)
@@ -192,7 +211,14 @@ extension DownloadsManager: DownloadDelegate {
     }
 }
 
+extension DownloadsManager: DirectoryMonitorDelegate {
+    func didChange(directoryMonitor: DirectoryMonitor, added: Set<URL>, removed: Set<URL>) {
+        notificationCenter.post(name: .downloadsDirectoryChanged, object: nil, userInfo: nil)
+    }
+}
+
 extension NSNotification.Name {
     static let downloadStarted: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
     static let downloadFinished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
+    static let downloadsDirectoryChanged: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadsDirectoryChanged")
 }

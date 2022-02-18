@@ -84,14 +84,25 @@ class DownloadsListViewModel: ObservableObject {
         
         NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownoloadsChanged(notification:)),
                                                name: .downloadFinished, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(completeDownoloadsChanged(notification:)),
+                                               name: .downloadsDirectoryChanged, object: nil)
+        
+        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        downloadManager.startMonitoringDownloadsDirectoryChanges()
     }
     
     private func stopListening() {
-        
+        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        downloadManager.stopMonitoringDownloadsDirectoryChanges()
     }
     
     @objc func ongoingDownoloadsChanged(notification: Notification) {
-        model.refetchAllDownloads()
+        model.refetchOngoingDownloads()
+    }
+    
+    @objc func completeDownoloadsChanged(notification: Notification) {
+        model.refetchCompleteDownloads()
     }
     
     // MARK: - Intents
@@ -102,6 +113,8 @@ class DownloadsListViewModel: ObservableObject {
         
         let item = sections[sectionIndex].rows[index]
         model.deleteDownloadWithIdentifier(item.id)
+        
+        // present the toast
     }
 
 }

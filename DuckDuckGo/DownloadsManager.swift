@@ -37,6 +37,9 @@ class DownloadsManager {
     private let notificationCenter: NotificationCenter
     private var downloadsDirectoryMonitor: DirectoryMonitor?
     
+    @UserDefaultsWrapper(key: .downloadUserNotificationAvailable, defaultValue: false)
+    private(set) var userNotificationAvailable: Bool
+    
     var downloadsDirectory: URL {
         do {
             let documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)

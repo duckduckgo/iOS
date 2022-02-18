@@ -234,6 +234,7 @@ class TabViewController: UIViewController {
         return activities
     }
 
+    // swiftlint:disable function_body_length
     func initUserScripts() {
         
         let currentTDSRules = ContentBlocking.contentBlockingManager.currentTDSRules
@@ -290,6 +291,7 @@ class TabViewController: UIViewController {
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }
+    // swiftlint:enable function_body_length
     
     func updateTabModel() {
         if let url = url {

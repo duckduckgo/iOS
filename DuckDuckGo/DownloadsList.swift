@@ -24,6 +24,8 @@ struct DownloadsList: View {
     @ObservedObject var viewModel: DownloadsListViewModel
     @State var editMode: EditMode = .inactive
     
+    @State private var isPreviewPresented = false
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -32,8 +34,17 @@ struct DownloadsList: View {
                         Section(header: Text(section.header)) {
                             ForEach(section.rows) { row in
                                 switch row.type {
-                                case .ongoing: ActiveDownloadRow()
-                                case .complete: DownloadRow(rowModel: row)
+                                case .ongoing:
+                                    OngoingDownloadRow()
+                                case .complete:
+                                    CompleteDownloadRow(rowModel: row)
+                                        .contentShape(Rectangle())
+                                        .onTapGesture {
+                                            self.isPreviewPresented.toggle()
+                                        }
+                                        .sheet(isPresented: $isPreviewPresented) {
+                                            DownloadPreview()
+                                        }
                                 }
                             }
                             .onDelete { offset in
@@ -47,16 +58,19 @@ struct DownloadsList: View {
                 }
                 .listStyle(.grouped)
                 .environment(\.editMode, $editMode)
-
+                
                 HStack {
                     Spacer()
                     EditButton().environment(\.editMode, $editMode)
-                }.padding()
+                }
+                .padding()
             }
             .navigationBarTitle("Downloads", displayMode: .inline)
             .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() }
                                     .opacity(editMode == .inactive ? 1.0 : 0.0))
-        }.navigationViewStyle(.stack)
+        }
+        .navigationViewStyle(.stack)
+//        .animation(.spring())
     }
     
     func delete(at offsets: IndexSet, in section: DownloadsListSection) {
@@ -65,96 +79,6 @@ struct DownloadsList: View {
         viewModel.deleteDownload(at: offsets, in: sectionIndex)
     }
 
-}
-
-struct DownloadsList_Previews: PreviewProvider {
-    static var previews: some View {
-        DownloadsList(viewModel: DownloadsListViewModel(model: DownloadsListModel()))
-    }
-}
-
-struct DownloadRow: View {
-    var rowModel: DownloadsListRow
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(rowModel.filename)
-                Spacer()
-                    .frame(height: 4.0)
-                Text(rowModel.fileSize)
-                    .foregroundColor(.gray)
-            }
-            Spacer()
-            Button {
-                print("Share button was tapped")
-            } label: {
-                Image(systemName: "square.and.arrow.up")
-            }.buttonStyle(.plain)
-                .animation(nil) 
-        }
-        .frame(height: 72.0)
-        .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
-    }
-}
-
-struct ActiveDownloadRow: View {
-    @State var progressValue: Float = 0.0
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text("download.pdf")
-                Spacer()
-                    .frame(height: 4.0)
-                Text("\(Int(100*progressValue)) of 100MB")
-                    .foregroundColor(.gray)
-            }
-            Spacer()
-            
-            Button {
-                incrementProgress()
-            } label: {
-                Image(systemName: "square.and.arrow.up")
-//                    .tint(.black)
-            }.buttonStyle(.plain)
-                        
-            ProgressBar(progress: self.$progressValue)
-                .frame(width: 30.0, height: 30.0)
-                .padding(10.0)
-        }
-        .frame(height: 72.0)
-        .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
-    }
-    
-    func incrementProgress() {
-        let randomValue = Float([0.012, 0.022, 0.034, 0.016, 0.11].randomElement()!)
-        self.progressValue += randomValue
-    }
-}
-
-struct ProgressBar: View {
-    @Binding var progress: Float
-    
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(lineWidth: 10.0)
-                .opacity(0.3)
-                .foregroundColor(Color.red)
-            
-            Circle()
-                .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
-                .stroke(style: StrokeStyle(lineWidth: 10.0, lineCap: .round, lineJoin: .round))
-                .foregroundColor(Color.red)
-                .rotationEffect(Angle(degrees: 270.0))
-                .animation(.linear)
-
-            Text(String(format: "%.0f %%", min(self.progress, 1.0)*100.0))
-//                .font(.largeTitle)
-//                .bold()
-        }
-    }
 }
 
 struct DeleteAllSection: View {

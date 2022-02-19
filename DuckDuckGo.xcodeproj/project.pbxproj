@@ -40,6 +40,10 @@
 		1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */; };
 		1E8AD1C727BE9B2900ABA377 /* DownloadsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1C627BE9B2900ABA377 /* DownloadsDataSource.swift */; };
 		1E8AD1C927BFAD1500ABA377 /* DirectoryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1C827BFAD1500ABA377 /* DirectoryMonitor.swift */; };
+		1E8AD1CB27BFE95500ABA377 /* DownloadPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CA27BFE95500ABA377 /* DownloadPreview.swift */; };
+		1E8AD1CD27BFF3A100ABA377 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */; };
+		1E8AD1CF27C000A000ABA377 /* CompleteDownloadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */; };
+		1E8AD1D127C000AB00ABA377 /* OngoingDownloadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1D027C000AB00ABA377 /* OngoingDownloadRow.swift */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
 		1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC460527A9499600E75FCB /* DownloadsList.swift */; };
 		1EEFD2D52758E31600B1393B /* textsize.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFD2D42758E31600B1393B /* textsize.js */; };
@@ -789,6 +793,10 @@
 		1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeSettingsViewController.swift; sourceTree = "<group>"; };
 		1E8AD1C627BE9B2900ABA377 /* DownloadsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsDataSource.swift; sourceTree = "<group>"; };
 		1E8AD1C827BFAD1500ABA377 /* DirectoryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMonitor.swift; sourceTree = "<group>"; };
+		1E8AD1CA27BFE95500ABA377 /* DownloadPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPreview.swift; sourceTree = "<group>"; };
+		1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDownloadRow.swift; sourceTree = "<group>"; };
+		1E8AD1D027C000AB00ABA377 /* OngoingDownloadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingDownloadRow.swift; sourceTree = "<group>"; };
 		1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeDebugViewController.swift; sourceTree = "<group>"; };
 		1EEC460527A9499600E75FCB /* DownloadsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadsList.swift; sourceTree = "<group>"; };
 		1EEFD2D42758E31600B1393B /* textsize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = textsize.js; sourceTree = "<group>"; };
@@ -2171,6 +2179,8 @@
 			isa = PBXGroup;
 			children = (
 				1EEC460527A9499600E75FCB /* DownloadsList.swift */,
+				1E8AD1D227C000E300ABA377 /* Rows */,
+				1E8AD1D327C000EA00ABA377 /* Modals */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2203,6 +2213,24 @@
 				1E4DCF4427B6A2C000961E25 /* Model */,
 			);
 			name = DownloadsList;
+			sourceTree = "<group>";
+		};
+		1E8AD1D227C000E300ABA377 /* Rows */ = {
+			isa = PBXGroup;
+			children = (
+				1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */,
+				1E8AD1D027C000AB00ABA377 /* OngoingDownloadRow.swift */,
+			);
+			name = Rows;
+			sourceTree = "<group>";
+		};
+		1E8AD1D327C000EA00ABA377 /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				1E8AD1CA27BFE95500ABA377 /* DownloadPreview.swift */,
+				1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */,
+			);
+			name = Modals;
 			sourceTree = "<group>";
 		};
 		310D09192799EF5C00DC0060 /* Downloads */ = {
@@ -4755,6 +4783,7 @@
 				F4D9C4F72511711800814B71 /* HomeMessageModel.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
 				1E8AD1C927BFAD1500ABA377 /* DirectoryMonitor.swift in Sources */,
+				1E8AD1D127C000AB00ABA377 /* OngoingDownloadRow.swift in Sources */,
 				98DD03D025064FD20017FE36 /* PrivacyProtectionHeaderCell.swift in Sources */,
 				85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */,
 				98AA92B32456FBE100ED4B9E /* SearchFieldContainerView.swift in Sources */,
@@ -4794,6 +4823,7 @@
 				F4CE6D1B257EA33C00D0A6AA /* FireButtonAnimator.swift in Sources */,
 				983B4D9A254B67F900467D62 /* BookmarksCachingSearch.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
+				1E8AD1CB27BFE95500ABA377 /* DownloadPreview.swift in Sources */,
 				982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */,
 				4BDCECB92680333100F5C244 /* EmailWaitlistWebViewController.swift in Sources */,
 				F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */,
@@ -4828,6 +4858,7 @@
 				83004E882193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift in Sources */,
 				98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
+				1E8AD1CD27BFF3A100ABA377 /* ActivityView.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				3132FA2C27A07A1B00DD7A12 /* FilePreview.swift in Sources */,
@@ -4911,6 +4942,7 @@
 				3151F0EA27357FBA00226F58 /* SpeechRecognizer.swift in Sources */,
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */,
+				1E8AD1CF27C000A000ABA377 /* CompleteDownloadRow.swift in Sources */,
 				98D98A8F25ED952F00D8E3DF /* BrowsingMenuButton.swift in Sources */,
 				9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */,
 				1E4DCF4627B6A33600961E25 /* DownloadsListViewModel.swift in Sources */,

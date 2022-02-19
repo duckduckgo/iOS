@@ -24,75 +24,80 @@ protocol DirectoryMonitorDelegate: AnyObject {
 }
 
 class DirectoryMonitor {
+    typealias FileDescriptor = Int32
+    
     fileprivate enum State {
         case stopped
-        case started(dirSource: DispatchSourceFileSystemObject)
-        case debounce(dirSource: DispatchSourceFileSystemObject, timer: Timer)
+        case started(source: DispatchSourceFileSystemObject)
+        case debounce(source: DispatchSourceFileSystemObject, timer: Timer)
     }
-
+    
     private var state: State = .stopped
     weak var delegate: DirectoryMonitorDelegate?
     
-    let directory: URL
+    private let directory: URL
     private var directoryContents: Set<URL>
-
+    
     init(directory: URL) {
-        print("DirectoryMonitor init for \(directory)")
         self.directory = directory
         self.directoryContents = []
     }
     
-    deinit {
-        print("DirectoryMonitor deinit")
-    }
-
-    private static func source(for directory: URL) throws -> DispatchSourceFileSystemObject {
+    private static func makeFileDescriptor(for directory: URL) throws -> FileDescriptor {
         let dirFD = open(directory.path, O_EVTONLY)
         guard dirFD >= 0 else {
             let err = errno
             throw NSError(domain: POSIXError.errorDomain, code: Int(err), userInfo: nil)
         }
-        return DispatchSource.makeFileSystemObjectSource(
-            fileDescriptor: dirFD,
-            eventMask: [.write],
-            queue: DispatchQueue.main
+        return dirFD
+    }
+    
+    private static func makeSource(with fileDescriptor: FileDescriptor) -> DispatchSourceFileSystemObject {
+        DispatchSource.makeFileSystemObjectSource(fileDescriptor: fileDescriptor,
+                                                  eventMask: [.write],
+                                                  queue: DispatchQueue.main
         )
     }
     
     private static func contents(of directory: URL) -> Set<URL> {
         let contents = (try? FileManager.default.contentsOfDirectory(at: directory,
-                                                                    includingPropertiesForKeys: nil,
-                                                                    options: [.skipsHiddenFiles])) ?? []
+                                                                     includingPropertiesForKeys: nil,
+                                                                     options: [.skipsHiddenFiles])) ?? []
         return Set(contents)
     }
-
+    
     func start() throws {
-        print("- start()")
         guard case .stopped = state else { fatalError() }
         
         directoryContents = DirectoryMonitor.contents(of: directory)
         
-        let dirSource = try DirectoryMonitor.source(for: directory)
-        dirSource.setEventHandler {
+        let fileDescriptor = try DirectoryMonitor.makeFileDescriptor(for: directory)
+        let directorySource = DirectoryMonitor.makeSource(with: fileDescriptor)
+        
+        directorySource.setEventHandler {
             self.kqueueDidFire()
         }
-        dirSource.resume()
-
+        
+        directorySource.setCancelHandler {
+            close(fileDescriptor)
+        }
+        
+        directorySource.resume()
+        
         let nowTimer = Timer.scheduledTimer(withTimeInterval: 0.0, repeats: false) { _ in
             self.debounceTimerDidFire()
         }
         
-        state = .debounce(dirSource: dirSource, timer: nowTimer)
+        state = .debounce(source: directorySource, timer: nowTimer)
     }
     
     private func kqueueDidFire() {
-        print("- kqueueDidFire()")
         switch state {
-        case .started(let dirSource):
-            let timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
+        case .started(let source):
+            let delayedTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in
                 self.debounceTimerDidFire()
             }
-            state = .debounce(dirSource: dirSource, timer: timer)
+            state = .debounce(source: source, timer: delayedTimer)
         case .debounce(_, let timer):
             timer.fireDate = Date(timeIntervalSinceNow: 0.2)
             // Stay in the `.debounce` state.
@@ -103,32 +108,36 @@ class DirectoryMonitor {
             break
         }
     }
-
+    
     private func debounceTimerDidFire() {
-        print("- debounceTimerDidFire()")
-        guard case .debounce(let dirSource, let timer) = state else { fatalError() }
+        guard case .debounce(let source, let timer) = state else { fatalError() }
         
         timer.invalidate()
-        state = .started(dirSource: dirSource)
-
+        state = .started(source: source)
+        
         let newContents = DirectoryMonitor.contents(of: directory)
         
         let itemsAdded = newContents.subtracting(directoryContents)
         let itemsRemoved = directoryContents.subtracting(newContents)
         
         directoryContents = newContents
-
+        
         if !itemsAdded.isEmpty || !itemsRemoved.isEmpty {
             delegate?.didChange(directoryMonitor: self, added: itemsAdded, removed: itemsRemoved)
         }
     }
-
+    
     func stop() {
-        print("- stop()")
-        if !state.isRunning { fatalError() }
-        // I don't need an implementation for this in the current project so
-        // I'm just leaving it out for the moment.
-//        fatalError()
+        switch state {
+        case .started(let source):
+            source.cancel()
+        case .debounce(let source, let timer):
+            timer.invalidate()
+            source.cancel()
+        case .stopped:
+            break
+        }
+        
         state = .stopped
     }
 }

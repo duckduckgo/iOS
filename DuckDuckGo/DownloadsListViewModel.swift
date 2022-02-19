@@ -19,13 +19,14 @@
 
 import SwiftUI
 import Combine
+import Core
 
 class DownloadsListViewModel: ObservableObject {
 
     @Published private var model: DownloadsListModel
     private var sectionedModel: [DownloadsListSection] = []
     private var subscribers: Set<AnyCancellable> = []
-        
+
     init(model: DownloadsListModel) {
         print("VM: init")
         
@@ -79,13 +80,13 @@ class DownloadsListViewModel: ObservableObject {
     }
     
     private func startListening() {
-        NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownoloadsChanged(notification:)),
+        NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownloadsChanged(notification:)),
                                                name: .downloadStarted, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownoloadsChanged(notification:)),
-                                               name: .downloadFinished, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownloadsChanged(notification:)),
+//                                               name: .downloadFinished, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(completeDownoloadsChanged(notification:)),
+        NotificationCenter.default.addObserver(self, selector: #selector(completeDownloadsChanged(notification:)),
                                                name: .downloadsDirectoryChanged, object: nil)
         
         let downloadManager = AppDependencyProvider.shared.downloadsManager
@@ -97,12 +98,14 @@ class DownloadsListViewModel: ObservableObject {
         downloadManager.stopMonitoringDownloadsDirectoryChanges()
     }
     
-    @objc func ongoingDownoloadsChanged(notification: Notification) {
+    @objc func ongoingDownloadsChanged(notification: Notification) {
+        print("ongoingDownoloadsChanged")
         model.refetchOngoingDownloads()
     }
     
-    @objc func completeDownoloadsChanged(notification: Notification) {
-        model.refetchCompleteDownloads()
+    @objc func completeDownloadsChanged(notification: Notification) {
+        print("completeDownoloadsChanged")
+        model.refetchAllDownloads()
     }
     
     // MARK: - Intents

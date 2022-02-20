@@ -21,8 +21,9 @@ import SwiftUI
 
 class DownloadsListHostingController: UIHostingController<DownloadsList> {
     required init?(coder aDecoder: NSCoder) {
-        let model = DownloadsListModel()
-        let viewModel = DownloadsListViewModel(model: model)
+//        let model = DownloadsListModel()
+        let dataSource = DownloadsListDataSource()
+        let viewModel = DownloadsListViewModel(dataSource: dataSource)
         super.init(coder: aDecoder, rootView: DownloadsList(viewModel: viewModel))
     }
 }

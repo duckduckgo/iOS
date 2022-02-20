@@ -38,12 +38,13 @@ class DownloadsListRow: Identifiable, ObservableObject {
     }
     
     func subscribeToUpdates(from download: Download) {
+        let total = download.totalBytesExpectedToWrite
         download.$totalBytesWritten
             .throttle(for: .milliseconds(150), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] in
                 self?.fileSize = DownloadsListViewModel.byteCountFormatter.string(fromByteCount: $0)
                 print("\(self?.fileSize ?? "")")
-                self?.progress = Float($0)/Float(download.totalBytesExpectedToWrite)
+                self?.progress = Float($0)/Float(total)
         }.store(in: &subscribers)
     }
 }

@@ -23,18 +23,25 @@ import Core
 
 class DownloadsListViewModel: ObservableObject {
 
-    @Published private var model: DownloadsListModel
-    private var sectionedModel: [DownloadsListSection] = []
+    @Published var sections: [DownloadsListSection] = []
+    
+    private let dataSource: DownloadsListDataSource
     private var subscribers: Set<AnyCancellable> = []
-
-    init(model: DownloadsListModel) {
+    
+    init(dataSource: DownloadsListDataSource) {
         print("VM: init")
         
-        self.model = model
+        self.dataSource = dataSource
         
-        $model.sink { [weak self] _ in
-            self?.resetCachedSectionedModel()
-        }.store(in: &subscribers)
+        dataSource.$model
+            .throttle(for: .milliseconds(500), scheduler: DispatchQueue.main, latest: true)
+            .sink { [weak self] in
+                print("VM: model changed")
+                print("    ongoing:\($0.ongoingDownloads.count) complete:\($0.completeDownloads.count)")
+                
+                self?.sections = (self?.makeSections(from: $0.ongoingDownloads + $0.completeDownloads))!
+            }
+            .store(in: &subscribers)
         
         startListening()
     }
@@ -44,20 +51,7 @@ class DownloadsListViewModel: ObservableObject {
         stopListening()
     }
     
-    private func resetCachedSectionedModel() {
-        sectionedModel = []
-    }
-
-    var sections: [DownloadsListSection] {
-        if sectionedModel.isEmpty {
-            sectionedModel = makeSections(from: model.ongoingDownloads + model.completeDownloads)
-        }
-        
-        return sectionedModel
-    }
-    
     private func makeSections(from downloads: [AnyDownloadListRepresentable]) -> [DownloadsListSection] {
-        print("VM: makeSections(from:)")
         let downloadsGroupedByDate: [Date: [AnyDownloadListRepresentable]] = Dictionary(grouping: downloads, by: {
             Calendar.current.startOfDay(for: $0.creationDate)
         })
@@ -105,13 +99,13 @@ class DownloadsListViewModel: ObservableObject {
     }
     
     @objc func ongoingDownloadsChanged(notification: Notification) {
-        print("ongoingDownoloadsChanged")
-        model.refetchOngoingDownloads()
+        print("- ongoingDownoloadsChanged")
+        dataSource.refetchOngoingDownloads()
     }
     
     @objc func completeDownloadsChanged(notification: Notification) {
-        print("completeDownoloadsChanged")
-        model.refetchAllDownloads()
+        print("- completeDownoloadsChanged")
+        dataSource.refetchAllDownloads()
     }
     
     // MARK: - Intents
@@ -121,7 +115,7 @@ class DownloadsListViewModel: ObservableObject {
         guard let index = offsets.first else { return }
         
         let item = sections[sectionIndex].rows[index]
-        model.deleteDownloadWithIdentifier(item.id)
+        dataSource.deleteDownloadWithIdentifier(item.id)
         
         // present the toast
     }

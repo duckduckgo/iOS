@@ -38,7 +38,7 @@
 		1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4D27B6A69600961E25 /* DownloadsListHostingController.swift */; };
 		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
 		1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */; };
-		1E8AD1C727BE9B2900ABA377 /* DownloadsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1C627BE9B2900ABA377 /* DownloadsDataSource.swift */; };
+		1E8AD1C727BE9B2900ABA377 /* DownloadsListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */; };
 		1E8AD1C927BFAD1500ABA377 /* DirectoryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1C827BFAD1500ABA377 /* DirectoryMonitor.swift */; };
 		1E8AD1CB27BFE95500ABA377 /* DownloadPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CA27BFE95500ABA377 /* DownloadPreview.swift */; };
 		1E8AD1CD27BFF3A100ABA377 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */; };
@@ -793,7 +793,7 @@
 		1E4DCF4D27B6A69600961E25 /* DownloadsListHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListHostingController.swift; sourceTree = "<group>"; };
 		1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeUserScript.swift; sourceTree = "<group>"; };
 		1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeSettingsViewController.swift; sourceTree = "<group>"; };
-		1E8AD1C627BE9B2900ABA377 /* DownloadsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsDataSource.swift; sourceTree = "<group>"; };
+		1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListDataSource.swift; sourceTree = "<group>"; };
 		1E8AD1C827BFAD1500ABA377 /* DirectoryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMonitor.swift; sourceTree = "<group>"; };
 		1E8AD1CA27BFE95500ABA377 /* DownloadPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadPreview.swift; sourceTree = "<group>"; };
 		1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
@@ -2203,7 +2203,7 @@
 			isa = PBXGroup;
 			children = (
 				1E4DCF4727B6A35400961E25 /* DownloadsListModel.swift */,
-				1E8AD1C627BE9B2900ABA377 /* DownloadsDataSource.swift */,
+				1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */,
 				1E4DCF4927B6A38000961E25 /* DownloadListRepresentable.swift */,
 			);
 			name = Model;
@@ -4748,7 +4748,7 @@
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkFolderViewController.swift in Sources */,
 				8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */,
 				F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */,
-				1E8AD1C727BE9B2900ABA377 /* DownloadsDataSource.swift in Sources */,
+				1E8AD1C727BE9B2900ABA377 /* DownloadsListDataSource.swift in Sources */,
 				853C5F6121C277C7001F7A05 /* global.swift in Sources */,
 				F13B4BD31F1822C700814661 /* Tab.swift in Sources */,
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,

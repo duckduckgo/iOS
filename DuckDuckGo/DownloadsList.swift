@@ -35,7 +35,7 @@ struct DownloadsList: View {
                             ForEach(section.rows) { row in
                                 switch row.type {
                                 case .ongoing:
-                                    OngoingDownloadRow()
+                                    OngoingDownloadRow(rowModel: row)
                                 case .complete:
                                     CompleteDownloadRow(rowModel: row)
                                         .contentShape(Rectangle())
@@ -70,7 +70,6 @@ struct DownloadsList: View {
                                     .opacity(editMode == .inactive ? 1.0 : 0.0))
         }
         .navigationViewStyle(.stack)
-//        .animation(.spring())
     }
     
     func delete(at offsets: IndexSet, in section: DownloadsListSection) {

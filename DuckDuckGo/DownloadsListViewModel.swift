@@ -74,9 +74,15 @@ class DownloadsListViewModel: ObservableObject {
     }
     
     private func makeRow(from download: AnyDownloadListRepresentable) -> DownloadsListRow {
-        DownloadsListRow(filename: download.filename,
-                         fileSize: Self.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)),
-                         type: download.type)
+        let row = DownloadsListRow(filename: download.filename,
+                                   fileSize: Self.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)),
+                                   type: download.type)
+        
+        if let d = download.wrappedRepresentable as? Download {
+            row.subscribeToUpdates(from: d)
+        }
+        
+        return row
     }
     
     private func startListening() {
@@ -132,7 +138,7 @@ extension DownloadsListViewModel {
         return formatter
     }()
     
-    private static let byteCountFormatter: ByteCountFormatter = {
+    fileprivate static let byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
         formatter.allowedUnits = .useAll
         formatter.countStyle = .file
@@ -154,9 +160,41 @@ struct DownloadsListSection: Identifiable, Hashable, Comparable {
     }
 }
 
-struct DownloadsListRow: Identifiable, Hashable {
+class DownloadsListRow: Identifiable, ObservableObject {
+    
     var id: String { filename }
     let filename: String
-    let fileSize: String
     let type: DownloadItemType
+    
+    @Published var fileSize: String
+    @Published var progress: Float = 0.0
+    
+    private var subscribers: Set<AnyCancellable> = []
+    
+    internal init(filename: String, fileSize: String, type: DownloadItemType) {
+        self.filename = filename
+        self.fileSize = fileSize
+        self.type = type
+    }
+    
+    func subscribeToUpdates(from download: Download) {
+        download.$totalBytesWritten
+            .throttle(for: .milliseconds(150), scheduler: DispatchQueue.main, latest: true)
+            .sink { [weak self] in
+                self?.fileSize = DownloadsListViewModel.byteCountFormatter.string(fromByteCount: $0)
+                print("\(self?.fileSize ?? "")")
+                self?.progress = Float($0)/Float(download.totalBytesExpectedToWrite)
+        }.store(in: &subscribers)
+    }
+}
+
+extension DownloadsListRow: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(filename)
+        hasher.combine(type)
+    }
+    
+    public static func == (lhs: DownloadsListRow, rhs: DownloadsListRow) -> Bool {
+        lhs.id == rhs.id
+    }
 }

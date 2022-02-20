@@ -18,44 +18,35 @@
 //
 
 import SwiftUI
+import Combine
 
 struct OngoingDownloadRow: View {
-    @State var progressValue: Float = 0.0
+    @ObservedObject var rowModel: DownloadsListRow
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("download.pdf")
+                Text("\(rowModel.filename)")
                 Spacer()
                     .frame(height: 4.0)
-                Text("\(Int(100*progressValue)) of 100MB")
+                Text("\(rowModel.fileSize)")
                     .foregroundColor(.gray)
+//                Text("\(rowModel.type.) of 100MB")
+//                    .foregroundColor(.gray)
             }
             Spacer()
             
-            Button {
-                incrementProgress()
-            } label: {
-                Image(systemName: "square.and.arrow.up")
-//                    .tint(.black)
-            }.buttonStyle(.plain)
-                        
-            ProgressBar(progress: self.$progressValue)
+            ProgressBar(progress: rowModel.progress)
                 .frame(width: 30.0, height: 30.0)
                 .padding(10.0)
         }
         .frame(height: 72.0)
         .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
     }
-    
-    func incrementProgress() {
-        let randomValue = Float([0.012, 0.022, 0.034, 0.016, 0.11].randomElement()!)
-        self.progressValue += randomValue
-    }
 }
 
 struct ProgressBar: View {
-    @Binding var progress: Float
+    var progress: Float
     
     var body: some View {
         ZStack {

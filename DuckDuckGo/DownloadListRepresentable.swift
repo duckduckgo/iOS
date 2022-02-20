@@ -21,7 +21,8 @@ import Foundation
 import Core
 
 enum DownloadItemType {
-    case ongoing, complete
+    case ongoing
+    case complete
 }
 
 protocol DownloadListRepresentable {
@@ -33,10 +34,10 @@ protocol DownloadListRepresentable {
 }
 
 struct AnyDownloadListRepresentable: DownloadListRepresentable, Comparable {
-    private var wrappedRepresentable: DownloadListRepresentable
+    var wrappedRepresentable: DownloadListRepresentable
 
-    init(_ value: DownloadListRepresentable) {
-      self.wrappedRepresentable = value
+    init(_ representable: DownloadListRepresentable) {
+      self.wrappedRepresentable = representable
     }
     
     public var id: String { filename}

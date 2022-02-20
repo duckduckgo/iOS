@@ -724,8 +724,7 @@
 /* Title for the macOS waitlist notification */
 "mac-browser.waitlist.notification.title" = "DuckDuckGo for Mac is ready!";
 
-/* Description text for the macOS waitlist. Parameter is 'Learn more'.
-   Summary text for the macOS browser waitlist */
+/* Summary text for the macOS browser waitlist */
 "mac-browser.waitlist.summary" = "The DuckDuckGo Privacy App for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
 
 /* Header text for the macOS browser waitlist */

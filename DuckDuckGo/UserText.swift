@@ -446,11 +446,6 @@ extension UserText {
                                                                                     value: "Your invite to try DuckDuckGo for Mac will arrive here. Check back soon, or we can send you a notification when it’s your turn.",
                                                                                     comment: "Label text for the Joined Waitlist state with notifications declined")
     
-    public static func macBrowserWaitlistSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("mac-browser.waitlist.summary", value: "Sign up to try the DuckDuckGo Privacy Browser on macOS. %@.", comment: "Description text for the macOS waitlist. Parameter is 'Learn more'.")
-        return message.format(arguments: learnMoreString)
-    }
-    
     public static func macBrowserWaitlistLearnMore(learnMoreString: String) -> String {
         let message = NSLocalizedString("mac-browser.waitlist.learn-more", value: "%@ about the beta.", comment: "Footer text for the macOS waitlist. Parameter is 'Learn more'.")
         return message.format(arguments: learnMoreString)

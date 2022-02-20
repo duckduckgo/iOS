@@ -129,7 +129,7 @@ class DownloadsListViewModel: ObservableObject {
 }
 
 extension DownloadsListViewModel {
-    private static let dateFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
@@ -138,7 +138,7 @@ extension DownloadsListViewModel {
         return formatter
     }()
     
-    fileprivate static let byteCountFormatter: ByteCountFormatter = {
+    static let byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
         formatter.allowedUnits = .useAll
         formatter.countStyle = .file
@@ -147,54 +147,4 @@ extension DownloadsListViewModel {
         
         return formatter
     }()
-}
-
-struct DownloadsListSection: Identifiable, Hashable, Comparable {
-    var id: String { header }
-    var date: Date
-    var header: String
-    var rows: [DownloadsListRow]
-
-    static func < (lhs: DownloadsListSection, rhs: DownloadsListSection) -> Bool {
-        lhs.date < rhs.date
-    }
-}
-
-class DownloadsListRow: Identifiable, ObservableObject {
-    
-    var id: String { filename }
-    let filename: String
-    let type: DownloadItemType
-    
-    @Published var fileSize: String
-    @Published var progress: Float = 0.0
-    
-    private var subscribers: Set<AnyCancellable> = []
-    
-    internal init(filename: String, fileSize: String, type: DownloadItemType) {
-        self.filename = filename
-        self.fileSize = fileSize
-        self.type = type
-    }
-    
-    func subscribeToUpdates(from download: Download) {
-        download.$totalBytesWritten
-            .throttle(for: .milliseconds(150), scheduler: DispatchQueue.main, latest: true)
-            .sink { [weak self] in
-                self?.fileSize = DownloadsListViewModel.byteCountFormatter.string(fromByteCount: $0)
-                print("\(self?.fileSize ?? "")")
-                self?.progress = Float($0)/Float(download.totalBytesExpectedToWrite)
-        }.store(in: &subscribers)
-    }
-}
-
-extension DownloadsListRow: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(filename)
-        hasher.combine(type)
-    }
-    
-    public static func == (lhs: DownloadsListRow, rhs: DownloadsListRow) -> Bool {
-        lhs.id == rhs.id
-    }
 }

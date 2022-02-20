@@ -44,6 +44,8 @@
 		1E8AD1CD27BFF3A100ABA377 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */; };
 		1E8AD1CF27C000A000ABA377 /* CompleteDownloadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */; };
 		1E8AD1D127C000AB00ABA377 /* OngoingDownloadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1D027C000AB00ABA377 /* OngoingDownloadRow.swift */; };
+		1E8AD1D527C2E22900ABA377 /* DownloadsListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1D427C2E22900ABA377 /* DownloadsListSection.swift */; };
+		1E8AD1D727C2E24E00ABA377 /* DownloadsListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1D627C2E24E00ABA377 /* DownloadsListRow.swift */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
 		1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC460527A9499600E75FCB /* DownloadsList.swift */; };
 		1EEFD2D52758E31600B1393B /* textsize.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFD2D42758E31600B1393B /* textsize.js */; };
@@ -797,6 +799,8 @@
 		1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDownloadRow.swift; sourceTree = "<group>"; };
 		1E8AD1D027C000AB00ABA377 /* OngoingDownloadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingDownloadRow.swift; sourceTree = "<group>"; };
+		1E8AD1D427C2E22900ABA377 /* DownloadsListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListSection.swift; sourceTree = "<group>"; };
+		1E8AD1D627C2E24E00ABA377 /* DownloadsListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListRow.swift; sourceTree = "<group>"; };
 		1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeDebugViewController.swift; sourceTree = "<group>"; };
 		1EEC460527A9499600E75FCB /* DownloadsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadsList.swift; sourceTree = "<group>"; };
 		1EEFD2D42758E31600B1393B /* textsize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = textsize.js; sourceTree = "<group>"; };
@@ -2189,6 +2193,8 @@
 			isa = PBXGroup;
 			children = (
 				1E4DCF4527B6A33600961E25 /* DownloadsListViewModel.swift */,
+				1E8AD1D427C2E22900ABA377 /* DownloadsListSection.swift */,
+				1E8AD1D627C2E24E00ABA377 /* DownloadsListRow.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -4777,6 +4783,7 @@
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
 				85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */,
 				85200F9D1FBC5A1C001AF290 /* NetworkLeaderboard.swift in Sources */,
+				1E8AD1D527C2E22900ABA377 /* DownloadsListSection.swift in Sources */,
 				F446B9B925115F9700324016 /* HomeMessageCell.swift in Sources */,
 				F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
@@ -4950,6 +4957,7 @@
 				8586A11024CCCD040049720E /* TabsBarViewController.swift in Sources */,
 				F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */,
 				8565A3471FC87EC800239327 /* PrivacyProtectionPracticesController.swift in Sources */,
+				1E8AD1D727C2E24E00ABA377 /* DownloadsListRow.swift in Sources */,
 				1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */,
 				8524CC9A246DA81700E59D45 /* FullscreenDaxDialogViewController.swift in Sources */,
 				F17669D71E43401C003D3222 /* MainViewController.swift in Sources */,

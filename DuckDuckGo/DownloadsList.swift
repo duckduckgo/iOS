@@ -23,9 +23,7 @@ struct DownloadsList: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: DownloadsListViewModel
     @State var editMode: EditMode = .inactive
-    
-    @State private var isPreviewPresented = false
-    
+  
     var body: some View {
         NavigationView {
             VStack {
@@ -38,13 +36,6 @@ struct DownloadsList: View {
                                     OngoingDownloadRow(rowModel: row)
                                 case .complete:
                                     CompleteDownloadRow(rowModel: row)
-                                        .contentShape(Rectangle())
-                                        .onTapGesture {
-                                            self.isPreviewPresented.toggle()
-                                        }
-                                        .sheet(isPresented: $isPreviewPresented) {
-                                            DownloadPreview()
-                                        }
                                 }
                             }
                             .onDelete { offset in

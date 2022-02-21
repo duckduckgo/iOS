@@ -21,13 +21,25 @@ import SwiftUI
 
 struct DownloadPreview: View {
     
+    var rowModel: DownloadsListRow
     
     var body: some View {
-        Text("Preview")
+        VStack {
+            Text("Preview for \(rowModel.filename)")
+            Spacer()
+            Text("URL:")
+            Text(rowModel.displayableURL())
+        }
     }
-    
 }
-        
+
+extension DownloadsListRow {
+    fileprivate func displayableURL() -> String {
+        guard let url = localFileURL else { return "(none)"}
+        return url.absoluteString
+    }
+}
+
 //
 //struct DownloadPreview: UIViewControllerRepresentable {
 //    

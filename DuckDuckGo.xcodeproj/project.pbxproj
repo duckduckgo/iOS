@@ -2224,8 +2224,8 @@
 		1E8AD1D227C000E300ABA377 /* Rows */ = {
 			isa = PBXGroup;
 			children = (
-				1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */,
 				1E8AD1D027C000AB00ABA377 /* OngoingDownloadRow.swift */,
+				1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */,
 			);
 			name = Rows;
 			sourceTree = "<group>";

@@ -18,9 +18,12 @@
 //
 
 import SwiftUI
+import GRDB
 
 struct CompleteDownloadRow: View {
+    
     @State private var isSharePresented = false
+    @State private var isPreviewPresented = false
     
     var rowModel: DownloadsListRow
     
@@ -44,11 +47,17 @@ struct CompleteDownloadRow: View {
             .sheet(isPresented: $isSharePresented, onDismiss: {
                 print("Dismiss")
             }, content: {
-                #warning("We need a file URL here")
-                ActivityViewController(activityItems: [rowModel.filename])
+                ActivityViewController(rowModel: rowModel)
             })
         }
         .frame(height: 72.0)
         .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .contentShape(Rectangle())
+        .onTapGesture {
+            self.isPreviewPresented.toggle()
+        }
+        .sheet(isPresented: $isPreviewPresented) {
+            DownloadPreview(rowModel: rowModel)
+        }
     }
 }

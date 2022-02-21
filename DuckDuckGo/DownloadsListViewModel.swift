@@ -67,9 +67,14 @@ class DownloadsListViewModel: ObservableObject {
         let row = DownloadsListRow(filename: download.filename,
                                    fileSize: Self.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)),
                                    type: download.type)
+
         
-        if let d = download.wrappedRepresentable as? Download {
-            row.subscribeToUpdates(from: d)
+        if let download = download.wrappedRepresentable as? Download {
+            row.subscribeToUpdates(from: download)
+        }
+        
+        if let url = download.wrappedRepresentable as? URL {
+            row.localFileURL = url
         }
         
         return row

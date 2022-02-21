@@ -26,6 +26,8 @@ class DownloadsListRow: Identifiable, ObservableObject {
     let filename: String
     let type: DownloadItemType
     
+    var localFileURL: URL?
+    
     @Published var fileSize: String
     @Published var progress: Float = 0.0
     

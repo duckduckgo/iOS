@@ -1662,11 +1662,16 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
+    func stopAllOngoingDownloads() {
+        AppDependencyProvider.shared.downloadsManager.cancelAllDownloads()
+    }
+    
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
+            self.stopAllOngoingDownloads()
             self.tabManager.stopLoadingInAllTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()

@@ -214,7 +214,11 @@ extension DownloadsManager: DownloadDelegate {
             userInfo[UserInfoKeys.error] = error
         }
         downloadList.remove(download)
-        unseenDownloadsAvailable = true
+        
+        if error == nil {
+            unseenDownloadsAvailable = true
+        }
+        
         notificationCenter.post(name: .downloadFinished, object: nil, userInfo: userInfo)
     }
 }

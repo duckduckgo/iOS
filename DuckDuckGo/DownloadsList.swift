@@ -47,7 +47,8 @@ struct DownloadsList: View {
     
     var emptyState: some View {
         VStack {
-            Spacer(minLength: 32.0)
+            Spacer()
+                .frame(height: 32)
             Text(UserText.emptyDownloads)
             Spacer()
         }
@@ -74,16 +75,11 @@ struct DownloadsList: View {
                     }
                 }
                 if editMode == .active {
-                    DeleteAllSection()
+                    deleteAllSection
                 }
             }
             .listStyle(.grouped)
             .environment(\.editMode, $editMode)
-            .overlay(Group {
-                if viewModel.sections.isEmpty {
-                    Text("Oops, loos like there's no data...")
-                }
-            })
             
             HStack {
                 Spacer()
@@ -91,6 +87,23 @@ struct DownloadsList: View {
             }
             .padding()
         }
+    }
+    
+    var deleteAllSection: some View {
+        Section(header: Spacer()) {
+            HStack {
+                Spacer()
+                Button {
+                    viewModel.deleteAllDownloads()
+                } label: {
+                    Text(UserText.downloadsListDeleteAllButton).foregroundColor(Color.red)
+                }
+                .buttonStyle(.plain)
+                Spacer()
+            }
+        }
+        .contentShape(Rectangle())
+        .deleteDisabled(true)
     }
     
     private func cancelDownload(for rowModel: DownloadsListRow) {
@@ -113,19 +126,5 @@ extension DownloadsList {
             }),
             secondaryButton: .default(Text(UserText.cancelDownloadAlertResumeAction))
         )
-    }
-}
-
-struct DeleteAllSection: View {
-    var body: some View {
-        Section(header: Spacer()) {
-            HStack {
-                Spacer()
-                Text("Delete All")
-                    .foregroundColor(Color.red)
-                Spacer()
-            }
-        }
-        .deleteDisabled(true)
     }
 }

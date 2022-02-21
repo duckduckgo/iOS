@@ -98,6 +98,10 @@ class DownloadsListViewModel: ObservableObject {
         
         // TODO: present the toast
     }
+    
+    func deleteAllDownloads() {
+        dataSource.deleteAllDownloads()
+    }
 }
 
 extension DownloadsListViewModel {

@@ -104,6 +104,28 @@ class DownloadsListDataSource {
             print("An error took place: \(error)")
         }
         
-//        refetchCompleteDownloads()
+        //        refetchCompleteDownloads()
+    }
+    
+    func deleteAllDownloads() {
+        do {
+            let fileManager = FileManager.default
+            
+            for filePath in (model.completeDownloads.map { $0.filePath }) {
+                if fileManager.fileExists(atPath: filePath) {
+                    try fileManager.removeItem(atPath: filePath)
+                 }
+            }
+            
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.messageAllFilesDeleted,
+                                          actionTitle: UserText.actionGenericUndo) {
+                    print("UNDO!")
+                }
+            }
+            
+        } catch let error as NSError {
+            print("An error took place: \(error)")
+        }
     }
 }

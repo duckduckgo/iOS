@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": null,
-          "revision": "e1773fdd7dc2a42182c2226051361f9c4cd5c544",
-          "version": null
+          "revision": "a263b2f9557ecfb6b09c5daac9cebd65ddfec6a4",
+          "version": "9.0.0"
         }
       },
       {
@@ -71,6 +71,15 @@
           "branch": null,
           "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
           "version": "1.5.0"
+        }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "state": {
+          "branch": null,
+          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
+          "version": "1.0.3"
         }
       }
     ]

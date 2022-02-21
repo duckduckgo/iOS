@@ -22,8 +22,8 @@ import Combine
 
 struct OngoingDownloadRow: View {
     @ObservedObject var rowModel: DownloadsListRow
-    var cancelButtonAction: (DownloadsListRow) -> Void
-    
+    var cancelButtonAction: () -> Void
+        
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -32,8 +32,6 @@ struct OngoingDownloadRow: View {
                     .frame(height: 4.0)
                 Text("\(rowModel.fileSize)")
                     .foregroundColor(.gray)
-//                Text("\(rowModel.type.) of 100MB")
-//                    .foregroundColor(.gray)
             }
             Spacer()
             
@@ -43,8 +41,7 @@ struct OngoingDownloadRow: View {
                     .padding(10.0)
                 
                 Button {
-                    print("x")
-                    cancelButtonAction(rowModel)
+                    cancelButtonAction()
                 } label: {
                     Image(systemName: "xmark")
                 }
@@ -73,10 +70,6 @@ struct ProgressBar: View {
                 .foregroundColor(Color.red)
                 .rotationEffect(Angle(degrees: 270.0))
                 .animation(.linear)
-
-//            Text(String(format: "%.0f %%", min(self.progress, 1.0)*100.0))
-//                .font(.largeTitle)
-//                .bold()
         }
     }
 }

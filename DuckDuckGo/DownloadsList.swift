@@ -23,7 +23,9 @@ struct DownloadsList: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: DownloadsListViewModel
     @State var editMode: EditMode = .inactive
-  
+    
+    @State private var isCancelDownloadAlertPresented: Bool = false
+
     var body: some View {
         NavigationView {
             VStack {
@@ -33,7 +35,8 @@ struct DownloadsList: View {
                             ForEach(section.rows) { row in
                                 switch row.type {
                                 case .ongoing:
-                                    OngoingDownloadRow(rowModel: row, cancelButtonAction: cancelDownload(for:))
+                                    OngoingDownloadRow(rowModel: row, cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
+                                        .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
                                 case .complete:
                                     CompleteDownloadRow(rowModel: row)
                                 }
@@ -71,7 +74,19 @@ struct DownloadsList: View {
         guard let sectionIndex = viewModel.sections.firstIndex(of: section) else { return }
         viewModel.deleteDownload(at: offsets, in: sectionIndex)
     }
+}
 
+extension DownloadsList {
+    private func makeCancelDownloadAlert(for row: DownloadsListRow) -> Alert {
+        Alert(
+            title: Text(UserText.cancelDownloadAlertTitle),
+            message: Text(UserText.cancelDownloadAlertDescription),
+            primaryButton: .cancel(Text(UserText.cancelDownloadAlertCancelAction), action: {
+                cancelDownload(for: row)
+            }),
+            secondaryButton: .default(Text(UserText.cancelDownloadAlertResumeAction))
+        )
+    }
 }
 
 struct DeleteAllSection: View {

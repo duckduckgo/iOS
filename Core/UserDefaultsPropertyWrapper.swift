@@ -73,7 +73,7 @@ public struct UserDefaultsWrapper<T> {
         case voiceSearchPrivacyAlertWasConfirmed = "com.duckduckgo.app.voiceSearchPrivacyAlertWasConfirmed"
         case bookmarksMigratedFromUserDefaultsToCD = "com.duckduckgo.app.bookmarksMigratedFromUserDefaultsToCoreData"
         case textSize = "com.duckduckgo.ios.textSize"
-        case downloadUserNotificationAvailable = "com.duckduckgo.app.downloadUserNotificationAvailable"
+        case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
 
     }
 

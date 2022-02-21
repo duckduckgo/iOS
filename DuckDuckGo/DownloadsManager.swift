@@ -37,8 +37,8 @@ class DownloadsManager {
     private let notificationCenter: NotificationCenter
     private var downloadsDirectoryMonitor: DirectoryMonitor?
     
-    @UserDefaultsWrapper(key: .downloadUserNotificationAvailable, defaultValue: false)
-    private(set) var userNotificationAvailable: Bool
+    @UserDefaultsWrapper(key: .unseenDownloadsAvailable, defaultValue: false)
+    private(set) var unseenDownloadsAvailable: Bool
     
     var downloadsDirectory: URL {
         do {
@@ -128,6 +128,10 @@ class DownloadsManager {
     func cancelAllDownloads() {
         downloadList.forEach { $0.cancel() }
     }
+    
+    func markAllDownloadsSeen() {
+        unseenDownloadsAvailable = false
+    }
 
     private func move(_ download: Download, toPath path: URL) {
         guard let location = download.location else { return }
@@ -210,6 +214,7 @@ extension DownloadsManager: DownloadDelegate {
             userInfo[UserInfoKeys.error] = error
         }
         downloadList.remove(download)
+        unseenDownloadsAvailable = true
         notificationCenter.post(name: .downloadFinished, object: nil, userInfo: userInfo)
     }
 }

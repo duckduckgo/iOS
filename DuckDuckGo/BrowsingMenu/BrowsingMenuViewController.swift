@@ -240,7 +240,7 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         }
         
         for (entry, view) in zip(entries, headerButtons) {
-            guard case .regular(let name, let accessibilityLabel, let image, _ , let action) = entry else {
+            guard case .regular(let name, let accessibilityLabel, let image, _, let action) = entry else {
                 fatalError("Regular entry not found")
             }
             

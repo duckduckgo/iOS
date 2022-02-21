@@ -68,7 +68,7 @@ class DownloadsListViewModel: ObservableObject {
                                    fileSize: Self.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)),
                                    type: download.type)
 
-        
+
         if let download = download.wrappedRepresentable as? Download {
             row.subscribeToUpdates(from: download)
         }

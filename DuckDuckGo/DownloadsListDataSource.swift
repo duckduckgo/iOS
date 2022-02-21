@@ -38,6 +38,7 @@ class DownloadsListDataSource {
     deinit {
         print("- DownloadsDataSource deinit")
         downloadManager.stopMonitoringDownloadsDirectoryChanges()
+        downloadManager.markAllDownloadsSeen()
     }
     
     private func setupChangeListeners() {
@@ -47,7 +48,6 @@ class DownloadsListDataSource {
         
         downloadsDirectoryChangedPublisher.merge(with: downloadStartedPublisher, downloadFinishedPublisher)
             .sink { [weak self] _ in
-                print(".downloadStarted")
                 self?.updateModel()
             }
             .store(in: &bag)

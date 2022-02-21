@@ -79,7 +79,7 @@ extension TabViewController {
             
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
                                                      image: UIImage(named: "MenuDownloads")!,
-                                                     showNotificationDot: AppDependencyProvider.shared.downloadsManager.userNotificationAvailable,
+                                                     showNotificationDot: AppDependencyProvider.shared.downloadsManager.unseenDownloadsAvailable,
                                                      action: { [weak self] in
                 self?.onOpenDownloadsAction()
             }))

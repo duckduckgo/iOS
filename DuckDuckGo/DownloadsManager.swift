@@ -212,12 +212,11 @@ extension DownloadsManager: DownloadDelegate {
         var userInfo: [AnyHashable: Any] = [UserInfoKeys.download: download]
         if let error = error {
             userInfo[UserInfoKeys.error] = error
-        }
-        downloadList.remove(download)
-        
-        if error == nil {
+        } else {
             unseenDownloadsAvailable = true
         }
+        
+        downloadList.remove(download)
         
         notificationCenter.post(name: .downloadFinished, object: nil, userInfo: userInfo)
     }

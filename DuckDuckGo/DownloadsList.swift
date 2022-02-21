@@ -33,7 +33,7 @@ struct DownloadsList: View {
                             ForEach(section.rows) { row in
                                 switch row.type {
                                 case .ongoing:
-                                    OngoingDownloadRow(rowModel: row)
+                                    OngoingDownloadRow(rowModel: row, cancelButtonAction: cancelDownload(for:))
                                 case .complete:
                                     CompleteDownloadRow(rowModel: row)
                                 }
@@ -63,7 +63,11 @@ struct DownloadsList: View {
         .navigationViewStyle(.stack)
     }
     
-    func delete(at offsets: IndexSet, in section: DownloadsListSection) {
+    private func cancelDownload(for rowModel: DownloadsListRow) {
+        viewModel.cancelDownload(for: rowModel)
+    }
+    
+    private func delete(at offsets: IndexSet, in section: DownloadsListSection) {
         guard let sectionIndex = viewModel.sections.firstIndex(of: section) else { return }
         viewModel.deleteDownload(at: offsets, in: sectionIndex)
     }

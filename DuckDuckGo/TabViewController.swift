@@ -867,8 +867,14 @@ class TabViewController: UIViewController {
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
-        if notification.userInfo?[DownloadsManager.UserInfoKeys.error] != nil {
-            ActionMessageView.present(message: UserText.messageDownloadFailed)
+        if let error = notification.userInfo?[DownloadsManager.UserInfoKeys.error] as? Error {
+            let nserror = error as NSError
+            let downloadWasCancelled = nserror.domain == "NSURLErrorDomain" && nserror.code == -999
+            
+            if !downloadWasCancelled {
+                ActionMessageView.present(message: UserText.messageDownloadFailed)
+            }
+            
             return
         }
         

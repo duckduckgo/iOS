@@ -22,6 +22,7 @@ import Combine
 
 struct OngoingDownloadRow: View {
     @ObservedObject var rowModel: DownloadsListRow
+    var cancelButtonAction: (DownloadsListRow) -> Void
     
     var body: some View {
         HStack {
@@ -36,9 +37,20 @@ struct OngoingDownloadRow: View {
             }
             Spacer()
             
-            ProgressBar(progress: rowModel.progress)
-                .frame(width: 30.0, height: 30.0)
-                .padding(10.0)
+            ZStack {
+                ProgressBar(progress: rowModel.progress)
+                    .frame(width: 30.0, height: 30.0)
+                    .padding(10.0)
+                
+                Button {
+                    print("x")
+                    cancelButtonAction(rowModel)
+                } label: {
+                    Image(systemName: "xmark")
+                }
+                .buttonStyle(.plain)
+            }
+            
         }
         .frame(height: 72.0)
         .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
@@ -62,7 +74,7 @@ struct ProgressBar: View {
                 .rotationEffect(Angle(degrees: 270.0))
                 .animation(.linear)
 
-            Text(String(format: "%.0f %%", min(self.progress, 1.0)*100.0))
+//            Text(String(format: "%.0f %%", min(self.progress, 1.0)*100.0))
 //                .font(.largeTitle)
 //                .bold()
         }

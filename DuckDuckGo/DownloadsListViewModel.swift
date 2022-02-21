@@ -82,6 +82,10 @@ class DownloadsListViewModel: ObservableObject {
     
     // MARK: - Intents
     
+    func cancelDownload(for rowModel: DownloadsListRow) {
+        dataSource.cancelDownloadWithIdentifier(rowModel.id)
+    }
+    
     func deleteDownload(at offsets: IndexSet, in sectionIndex: Int) {
         print("VM: deleteItem(at:in:)")
         guard let rowIndex = offsets.first else { return }

@@ -61,7 +61,13 @@ class DownloadsListDataSource {
                      completeDownloads: completeDownloads)
     }
 
-    // to be extracted 
+    // to be extracted
+    
+    func cancelDownloadWithIdentifier(_ identifier: String) {
+        guard let download = downloadManager.downloadList.first(where: { $0.filename == identifier }) else { return }
+        
+        downloadManager.cancelDownload(download)
+    }
     
     func deleteDownloadWithIdentifier(_ identifier: String) {
         print("M: deleteItem()")

@@ -62,7 +62,8 @@ struct CompleteDownloadRow: View {
             if let localFileURL = rowModel.localFileURL {
                 QuickLookPreviewRepresentable(localFileURL: localFileURL, isPresented: $isPreviewPresented) {
                     self.isPreviewPresented = false
-                }
+                }.edgesIgnoringSafeArea(.all)
+
             } else {
                 #warning("Pixel and/or display an error message?")
             }

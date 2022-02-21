@@ -34,21 +34,17 @@ class DownloadsListViewModel: ObservableObject {
         self.dataSource = dataSource
         
         dataSource.$model
-            .throttle(for: .milliseconds(500), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] in
                 print("VM: model changed")
-                print("    ongoing:\($0.ongoingDownloads.count) complete:\($0.completeDownloads.count)")
+                print("       ongoing:\($0.ongoingDownloads.count) complete:\($0.completeDownloads.count)")
                 
                 self?.sections = (self?.makeSections(from: $0.ongoingDownloads + $0.completeDownloads))!
             }
             .store(in: &subscribers)
-        
-        startListening()
     }
     
     deinit {
         print("VM: deinit")
-        stopListening()
     }
     
     private func makeSections(from downloads: [AnyDownloadListRepresentable]) -> [DownloadsListSection] {
@@ -79,47 +75,20 @@ class DownloadsListViewModel: ObservableObject {
         return row
     }
     
-    private func startListening() {
-        NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownloadsChanged(notification:)),
-                                               name: .downloadStarted, object: nil)
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(ongoingDownloadsChanged(notification:)),
-//                                               name: .downloadFinished, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(completeDownloadsChanged(notification:)),
-                                               name: .downloadsDirectoryChanged, object: nil)
-        
-        let downloadManager = AppDependencyProvider.shared.downloadsManager
-        downloadManager.startMonitoringDownloadsDirectoryChanges()
-    }
-    
-    private func stopListening() {
-        let downloadManager = AppDependencyProvider.shared.downloadsManager
-        downloadManager.stopMonitoringDownloadsDirectoryChanges()
-    }
-    
-    @objc func ongoingDownloadsChanged(notification: Notification) {
-        print("- ongoingDownoloadsChanged")
-        dataSource.refetchOngoingDownloads()
-    }
-    
-    @objc func completeDownloadsChanged(notification: Notification) {
-        print("- completeDownoloadsChanged")
-        dataSource.refetchAllDownloads()
-    }
-    
     // MARK: - Intents
     
     func deleteDownload(at offsets: IndexSet, in sectionIndex: Int) {
         print("VM: deleteItem(at:in:)")
-        guard let index = offsets.first else { return }
+        guard let rowIndex = offsets.first else { return }
         
-        let item = sections[sectionIndex].rows[index]
+        let item = sections[sectionIndex].rows[rowIndex]
+        
+        print("      (section:\(sectionIndex) row:\(rowIndex)")
+        
         dataSource.deleteDownloadWithIdentifier(item.id)
         
-        // present the toast
+        // TODO: present the toast
     }
-
 }
 
 extension DownloadsListViewModel {

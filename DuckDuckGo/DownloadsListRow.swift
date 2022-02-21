@@ -43,7 +43,7 @@ class DownloadsListRow: Identifiable, ObservableObject {
             .throttle(for: .milliseconds(150), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] in
                 self?.fileSize = DownloadsListViewModel.byteCountFormatter.string(fromByteCount: $0)
-                print("\(self?.fileSize ?? "")")
+//                print("\(self?.fileSize ?? "")")
                 self?.progress = Float($0)/Float(total)
         }.store(in: &subscribers)
     }

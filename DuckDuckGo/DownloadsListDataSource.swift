@@ -18,37 +18,50 @@
 //
 
 import Foundation
+import Combine
 
 class DownloadsListDataSource {
     
     @Published var model: DownloadsListModel
     
     private var downloadManager = AppDependencyProvider.shared.downloadsManager
+    private var bag: Set<AnyCancellable> = []
     
     init() {
         print("- DownloadsDataSource init")
         model = DownloadsListModel(ongoingDownloads: downloadManager.downloadList.map { AnyDownloadListRepresentable($0) },
                                    completeDownloads: downloadManager.downloadsDirectoryFiles.map { AnyDownloadListRepresentable($0) })
+        downloadManager.startMonitoringDownloadsDirectoryChanges()
+        setupChangeListeners()
     }
     
     deinit {
         print("- DownloadsDataSource deinit")
+        downloadManager.stopMonitoringDownloadsDirectoryChanges()
     }
     
-    func refetchAllDownloads() {
-        refetchOngoingDownloads()
-        refetchCompleteDownloads()
+    private func setupChangeListeners() {
+        let downloadStartedPublisher = NotificationCenter.default.publisher(for: .downloadStarted)
+        let downloadFinishedPublisher = NotificationCenter.default.publisher(for: .downloadFinished)
+        let downloadsDirectoryChangedPublisher = NotificationCenter.default.publisher(for: .downloadsDirectoryChanged)
+        
+        downloadsDirectoryChangedPublisher.merge(with: downloadStartedPublisher, downloadFinishedPublisher)
+            .sink { [weak self] _ in
+                print(".downloadStarted")
+                self?.updateModel()
+            }
+            .store(in: &bag)
     }
     
-    func refetchOngoingDownloads() {
-        print("DS: refetchOngoingDownloads")
-        model.ongoingDownloads = downloadManager.downloadList.map { AnyDownloadListRepresentable($0) }
+    private func updateModel() {
+        let ongoingDownloads = downloadManager.downloadList.map { AnyDownloadListRepresentable($0) }
+        let completeDownloads = downloadManager.downloadsDirectoryFiles.map { AnyDownloadListRepresentable($0) }
+        
+        model.update(ongoingDownloads: ongoingDownloads,
+                     completeDownloads: completeDownloads)
     }
-    
-    func refetchCompleteDownloads() {
-        print("DS: refetchCompleteDownloads")
-        model.completeDownloads = downloadManager.downloadsDirectoryFiles.map { AnyDownloadListRepresentable($0) }
-    }
+
+    // to be extracted 
     
     func deleteDownloadWithIdentifier(_ identifier: String) {
         print("M: deleteItem()")

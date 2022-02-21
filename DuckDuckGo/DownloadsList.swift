@@ -74,7 +74,6 @@ struct DownloadsList: View {
     
     func delete(at offsets: IndexSet, in section: DownloadsListSection) {
         guard let sectionIndex = viewModel.sections.firstIndex(of: section) else { return }
-        print("\(section), \(offsets.first!)")
         viewModel.deleteDownload(at: offsets, in: sectionIndex)
     }
 

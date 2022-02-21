@@ -20,6 +20,11 @@
 import Foundation
 
 struct DownloadsListModel {
-    var ongoingDownloads: [AnyDownloadListRepresentable] = []
-    var completeDownloads: [AnyDownloadListRepresentable] = []
+    private(set) var ongoingDownloads: [AnyDownloadListRepresentable] = []
+    private(set) var completeDownloads: [AnyDownloadListRepresentable] = []
+    
+    mutating func update(ongoingDownloads: [AnyDownloadListRepresentable], completeDownloads: [AnyDownloadListRepresentable]) {
+        self.ongoingDownloads = ongoingDownloads
+        self.completeDownloads = completeDownloads
+    }
 }

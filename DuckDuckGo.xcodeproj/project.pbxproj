@@ -2202,8 +2202,8 @@
 		1E4DCF4427B6A2C000961E25 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1E4DCF4727B6A35400961E25 /* DownloadsListModel.swift */,
 				1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */,
+				1E4DCF4727B6A35400961E25 /* DownloadsListModel.swift */,
 				1E4DCF4927B6A38000961E25 /* DownloadListRepresentable.swift */,
 			);
 			name = Model;

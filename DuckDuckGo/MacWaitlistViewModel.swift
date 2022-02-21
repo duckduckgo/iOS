@@ -48,6 +48,7 @@ final class MacWaitlistViewModel: ObservableObject {
     
     @Published var viewState: ViewState
     @Published var showNotificationPrompt = false
+    @Published var showShareSheet = false
     
     private let waitlistRequest: WaitlistRequesting
     private let waitlistStorage: MacBrowserWaitlistStorage
@@ -150,7 +151,48 @@ final class MacWaitlistViewModel: ObservableObject {
     }
     
     private func openShareSheet() {
-        print("Share Sheet")
+        self.showShareSheet = true
     }
     
+    func createShareSheetActivityItems() -> [Any] {
+        let message = shareSheetMessage(inviteCode: "FAKECODE")
+        let url = URL(string: "https://duckduckgo.com/mac")!
+        
+        return [url, message]
+    }
+    
+    private func shareSheetMessage(inviteCode: String) -> String {
+        let message = """
+        You're invited!
+        
+        Ready to start browsing privately on Mac?
+        
+        Step 1
+        Visit this URL on your Mac to download:
+        https://duckduckgo.com/mac
+        
+        Step 2
+        Open the file to install, then enter your invite code to unlock.
+        
+        Invite code: \(inviteCode)
+        """
+        
+        return message
+    }
+    
+}
+
+struct ActivityViewController: UIViewControllerRepresentable {
+
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]?
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController,
+                                context: UIViewControllerRepresentableContext<ActivityViewController>) { }
+
 }

@@ -43,7 +43,9 @@ struct MacBrowserWaitlistView: View {
                 viewModel.perform(action: action)
             }
         case .invited(let inviteCode):
-            MacBrowserWaitlistInvitedView(inviteCode: inviteCode) { action in
+            MacBrowserWaitlistInvitedView(inviteCode: inviteCode,
+                                          activityItems: viewModel.createShareSheetActivityItems(),
+                                          showShareSheet: $viewModel.showShareSheet) { action in
                 viewModel.perform(action: action)
             }
         }
@@ -59,46 +61,51 @@ struct MacBrowserWaitlistSignUpView: View {
     let action: ViewActionHandler
 
     var body: some View {
-        VStack(alignment: .center, spacing: 8) {
-            HeaderView(imageName: "MacWaitlistJoinWaitlist", title: "Try DuckDuckGo for Mac!")
-                .padding(.bottom, 8)
-            
-            Text(UserText.macBrowserWaitlistSummary)
-                .font(.system(size: 16))
-                .foregroundColor(.macWaitlistText)
-                .multilineTextAlignment(.center)
-                .lineSpacing(6)
-            
-            Button("Join the Private Waitlist", action: { action(.joinQueue) })
-                .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
-                .padding(.top, 24)
-                .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
-            
-            Text("Windows coming soon!")
-                .font(.system(size: 13))
-                .foregroundColor(.macWaitlistSubtitle)
-                .padding(.top, 4)
-            
-            if requestInFlight {
-                HStack {
-                    Text("Joining Waitlist...")
-                        .font(.system(size: 15))
-                        .foregroundColor(.macWaitlistText)
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(alignment: .center, spacing: 8) {
+                    HeaderView(imageName: "MacWaitlistJoinWaitlist", title: "Try DuckDuckGo for Mac!")
+                        .padding(.bottom, 8)
                     
-                    ActivityIndicator(style: .medium)
+                    Text(UserText.macBrowserWaitlistSummary)
+                        .font(.system(size: 16))
+                        .foregroundColor(.macWaitlistText)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(6)
+                    
+                    Button("Join the Private Waitlist", action: { action(.joinQueue) })
+                        .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
+                        .padding(.top, 24)
+                        .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
+                    
+                    Text("Windows coming soon!")
+                        .font(.system(size: 13))
+                        .foregroundColor(.macWaitlistSubtitle)
+                        .padding(.top, 4)
+                    
+                    if requestInFlight {
+                        HStack {
+                            Text("Joining Waitlist...")
+                                .font(.system(size: 15))
+                                .foregroundColor(.macWaitlistText)
+                            
+                            ActivityIndicator(style: .medium)
+                        }
+                        .padding(.top, 14)
+                    }
+                    
+                    Spacer(minLength: 24)
+                    
+                    Text(UserText.macWaitlistPrivacyDisclaimer)
+                        .font(.custom("proximanova-regular", size: 13))
+                        .foregroundColor(.macWaitlistSubtitle)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(5)
                 }
-                .padding(.top, 14)
+                .padding([.leading, .trailing], 24)
+                .frame(minHeight: proxy.size.height)
             }
-            
-            Spacer()
-            
-            Text(UserText.macWaitlistPrivacyDisclaimer)
-                .font(.custom("proximanova-regular", size: 13))
-                .foregroundColor(.macWaitlistSubtitle)
-                .multilineTextAlignment(.center)
-                .lineSpacing(5)
         }
-        .padding([.leading, .trailing], 24)
     }
     
     func notificationPermissionAlert(action: @escaping ViewActionHandler) -> Alert {
@@ -207,53 +214,65 @@ private struct AllowNotificationsView: View {
 struct MacBrowserWaitlistInvitedView: View {
     
     let inviteCode: String
+    let activityItems: [Any]
+    
+    @Binding var showShareSheet: Bool
     
     let action: (MacWaitlistViewModel.ViewAction) -> Void
     
     var body: some View {
-        VStack {
-            HeaderView(imageName: "MacWaitlistInvited", title: "You’re Invited!")
-            
-            Text(UserText.macWaitlistInviteScreenSubtitle)
-                .foregroundColor(.macWaitlistText)
-                .padding(.top, 10)
-            
-            Text(UserText.macWaitlistInviteScreenStep1)
-                .font(.system(size: 17, weight: .bold))
-                .foregroundColor(.macWaitlistText)
-                .padding(.top, 8)
-            
-            Text("Visit this URL on your Mac to download:")
-                .foregroundColor(.macWaitlistText)
-            
-            Text("duckduckgo.com/mac")
-                .font(.system(size: 17, weight: .bold))
-                .foregroundColor(.blue)
-            
-            Text(UserText.macWaitlistInviteScreenStep2)
-                .font(.system(size: 17, weight: .bold))
-                .foregroundColor(.macWaitlistText)
-                .padding(.top, 8)
-            
-            Text("Open the file to install, then enter your invite code to unlock.")
-                .foregroundColor(.macWaitlistText)
-            
-            InviteCodeView(inviteCode: inviteCode)
-                .padding(.top, 10)
-            
-            Spacer(minLength: 20)
-            
-            Button(action: {
-                action(.openShareSheet)
-            }, label: {
-                Image("Share")
-                    .foregroundColor(.macWaitlistText)
-            })
-                .padding(.bottom, 18)
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(alignment: .center) {
+                    HeaderView(imageName: "MacWaitlistInvited", title: "You’re Invited!")
+                    
+                    Text(UserText.macWaitlistInviteScreenSubtitle)
+                        .foregroundColor(.macWaitlistText)
+                        .padding(.top, 10)
+                    
+                    Text(UserText.macWaitlistInviteScreenStep1)
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(.macWaitlistText)
+                        .padding(.top, 8)
+                    
+                    Text("Visit this URL on your Mac to download:")
+                        .foregroundColor(.macWaitlistText)
+                    
+                    Text("duckduckgo.com/mac")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(.blue)
+                    
+                    Text(UserText.macWaitlistInviteScreenStep2)
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundColor(.macWaitlistText)
+                        .padding(.top, 8)
+                    
+                    Text("Open the file to install, then enter your invite code to unlock.")
+                        .foregroundColor(.macWaitlistText)
+                    
+                    InviteCodeView(inviteCode: inviteCode)
+                        .padding(.top, 10)
+                    
+                    Spacer(minLength: 24)
+                    
+                    Button(action: {
+                        action(.openShareSheet)
+                    }, label: {
+                        Image("Share")
+                            .foregroundColor(.macWaitlistText)
+                    })
+                        .padding(.bottom, 18)
+                        .sheet(isPresented: $showShareSheet, onDismiss: {
+                            print("Dismiss")
+                        }, content: {
+                            ActivityViewController(activityItems: activityItems)
+                        })
+                }
+                .frame(minHeight: proxy.size.height)
+                .padding([.leading, .trailing], 18)
+                .multilineTextAlignment(.center)
+            }
         }
-        .padding([.leading, .trailing], 18)
-        .multilineTextAlignment(.center)
-        .frame(maxHeight: .infinity)
     }
     
 }
@@ -338,6 +357,8 @@ struct ActivityIndicator: UIViewRepresentable {
 struct MacBrowserWaitlistView_Previews: PreviewProvider {
     @State static var showNotification = true
     @State static var hideNotification = false
+
+    @State static var showShareSheet = false
     
     static var previews: some View {
         if #available(iOS 14.0, *) {
@@ -371,11 +392,15 @@ struct MacBrowserWaitlistView_Previews: PreviewProvider {
                 }
                 
                 PreviewView("Invite Screen With Code") {
-                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
+                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE",
+                                                  activityItems: [],
+                                                  showShareSheet: $showShareSheet) { _ in }
                 }
                 
                 if #available(iOS 15.0, *) {
-                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
+                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE",
+                                                  activityItems: [],
+                                                  showShareSheet: $showShareSheet) { _ in }
                     .previewInterfaceOrientation(.landscapeLeft)
                 }
             }

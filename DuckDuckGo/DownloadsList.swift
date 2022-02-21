@@ -37,6 +37,7 @@ struct DownloadsList: View {
                                 case .ongoing:
                                     OngoingDownloadRow(rowModel: row, cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
                                         .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
+                                        .deleteDisabled(true)
                                 case .complete:
                                     CompleteDownloadRow(rowModel: row)
                                 }

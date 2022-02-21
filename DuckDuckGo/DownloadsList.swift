@@ -28,43 +28,69 @@ struct DownloadsList: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    ForEach(viewModel.sections) { section in
-                        Section(header: Text(section.header)) {
-                            ForEach(section.rows) { row in
-                                switch row.type {
-                                case .ongoing:
-                                    OngoingDownloadRow(rowModel: row, cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
-                                        .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
-                                        .deleteDisabled(true)
-                                case .complete:
-                                    CompleteDownloadRow(rowModel: row)
-                                }
-                            }
-                            .onDelete { offset in
-                                self.delete(at: offset, in: section)
-                            }
-                        }
-                    }
-                    if editMode == .active {
-                        DeleteAllSection()
-                    }
-                }
-                .listStyle(.grouped)
-                .environment(\.editMode, $editMode)
-                
-                HStack {
-                    Spacer()
-                    EditButton().environment(\.editMode, $editMode)
-                }
-                .padding()
-            }
-            .navigationBarTitle("Downloads", displayMode: .inline)
-            .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() }
-                                    .opacity(editMode == .inactive ? 1.0 : 0.0))
+            listOrEmptyState
+                .navigationBarTitle("Downloads", displayMode: .inline)
+                .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() }
+                                        .opacity(editMode == .inactive ? 1.0 : 0.0))
         }
         .navigationViewStyle(.stack)
+    }
+    
+    @ViewBuilder
+    var listOrEmptyState: some View {
+        if viewModel.sections.isEmpty {
+            emptyState
+        } else {
+            list
+        }
+    }
+    
+    var emptyState: some View {
+        VStack {
+            Spacer(minLength: 32.0)
+            Text(UserText.emptyDownloads)
+            Spacer()
+        }
+    }
+    
+    var list: some View {
+        VStack {
+            List {
+                ForEach(viewModel.sections) { section in
+                    Section(header: Text(section.header)) {
+                        ForEach(section.rows) { row in
+                            switch row.type {
+                            case .ongoing:
+                                OngoingDownloadRow(rowModel: row, cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
+                                    .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
+                                    .deleteDisabled(true)
+                            case .complete:
+                                CompleteDownloadRow(rowModel: row)
+                            }
+                        }
+                        .onDelete { offset in
+                            self.delete(at: offset, in: section)
+                        }
+                    }
+                }
+                if editMode == .active {
+                    DeleteAllSection()
+                }
+            }
+            .listStyle(.grouped)
+            .environment(\.editMode, $editMode)
+            .overlay(Group {
+                if viewModel.sections.isEmpty {
+                    Text("Oops, loos like there's no data...")
+                }
+            })
+            
+            HStack {
+                Spacer()
+                EditButton().environment(\.editMode, $editMode)
+            }
+            .padding()
+        }
     }
     
     private func cancelDownload(for rowModel: DownloadsListRow) {

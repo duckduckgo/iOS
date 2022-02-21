@@ -436,7 +436,7 @@ public struct UserText {
         return message.format(arguments: filename)
     }
     public static func messageDownloadDeleted(for filename: String) -> String {
-        let message = NSLocalizedString("downloads.message.download-deleted", value: "Deleted %@", comment: "Message confirming that the download process has completed. Parameter is downloaded file's filename")
+        let message = NSLocalizedString("downloads.message.download-deleted", value: "Deleted %@", comment: "Message confirming the file was deleted. Parameter is file's filename")
         return message.format(arguments: filename)
     }
     public static let messageAllFilesDeleted = NSLocalizedString("downloads.message.all-files-deleted", value: "All files deleted", comment: "Message confirming that all files on the downloads list have been deleted")
@@ -463,4 +463,6 @@ public struct UserText {
     public static let dateRangeYesterday = NSLocalizedString("date.range.yesterday", value: "Yesterday", comment: "Title for a section containing only items from yesterday")
     public static let dateRangePastWeek = NSLocalizedString("date.range.past-week", value: "Past week", comment: "Title for a section containing only items from past week")
     public static let dateRangePastMonth = NSLocalizedString("date.range.past-month", value: "Past month", comment: "Title for a section containing only items from past month")
+    
+    public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
 }

@@ -334,6 +334,9 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Delete All";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "No files downloaded yet";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Downloading - %1$@ of %2$@";
 
@@ -349,7 +352,7 @@
 /* Message confirming that the download process has completed. Parameter is downloaded file's filename */
 "downloads.message.download-complete" = "Download complete for %@";
 
-/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+/* Message confirming the file was deleted. Parameter is file's filename */
 "downloads.message.download-deleted" = "Deleted %@";
 
 /* Message informing that the download has failed due to connection issues */

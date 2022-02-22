@@ -44,7 +44,7 @@ class DownloadsListRow: Identifiable, ObservableObject {
         download.$totalBytesWritten
             .throttle(for: .milliseconds(150), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] in
-                self?.fileSize = DownloadsListViewModel.byteCountFormatter.string(fromByteCount: $0)
+                self?.fileSize = DownloadsListRow.byteCountFormatter.string(fromByteCount: $0)
 //                print("\(self?.fileSize ?? "")")
                 self?.progress = Float($0)/Float(total)
         }.store(in: &subscribers)
@@ -60,4 +60,15 @@ extension DownloadsListRow: Hashable {
     public static func == (lhs: DownloadsListRow, rhs: DownloadsListRow) -> Bool {
         lhs.id == rhs.id
     }
+}
+
+extension DownloadsListRow {
+    static let byteCountFormatter: ByteCountFormatter = {
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = .useAll
+        formatter.countStyle = .file
+        formatter.includesUnit = true
+        formatter.isAdaptive = true
+        return formatter
+    }()
 }

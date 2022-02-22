@@ -38,46 +38,13 @@ class DownloadsListViewModel: ObservableObject {
                 print("VM: model changed")
                 print("       ongoing:\($0.ongoingDownloads.count) complete:\($0.completeDownloads.count)")
                 
-                self?.sections = (self?.makeSections(from: $0.ongoingDownloads + $0.completeDownloads))!
+                self?.sections = DownloadsListSectioningHelper().makeSections(from: $0.ongoingDownloads + $0.completeDownloads)
             }
             .store(in: &subscribers)
     }
     
     deinit {
         print("VM: deinit")
-    }
-    
-    private func makeSections(from downloads: [AnyDownloadListRepresentable]) -> [DownloadsListSection] {
-        let downloadsGroupedByDate: [Date: [AnyDownloadListRepresentable]] = Dictionary(grouping: downloads, by: {
-            Calendar.current.startOfDay(for: $0.creationDate)
-        })
-        
-        let sortedDates = downloadsGroupedByDate.map({ $0.key }).sorted(by: >)
-        
-        return sortedDates.compactMap { date in
-            guard let downloadsByDate = downloadsGroupedByDate[date] else { return nil }
-                
-            return DownloadsListSection(date: date,
-                                        header: Self.dateFormatter.string(from: date),
-                                        rows: downloadsByDate.sorted(by: >).map { makeRow(from: $0) })
-        }
-    }
-    
-    private func makeRow(from download: AnyDownloadListRepresentable) -> DownloadsListRow {
-        let row = DownloadsListRow(filename: download.filename,
-                                   fileSize: Self.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)),
-                                   type: download.type)
-
-
-        if let download = download.wrappedRepresentable as? Download {
-            row.subscribeToUpdates(from: download)
-        }
-        
-        if let url = download.wrappedRepresentable as? URL {
-            row.localFileURL = url
-        }
-        
-        return row
     }
     
     // MARK: - Intents
@@ -102,25 +69,4 @@ class DownloadsListViewModel: ObservableObject {
     func deleteAllDownloads() {
         dataSource.deleteAllDownloads()
     }
-}
-
-extension DownloadsListViewModel {
-    static let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        formatter.doesRelativeDateFormatting = true
-        
-        return formatter
-    }()
-    
-    static let byteCountFormatter: ByteCountFormatter = {
-        let formatter = ByteCountFormatter()
-        formatter.allowedUnits = .useAll
-        formatter.countStyle = .file
-        formatter.includesUnit = true
-        formatter.isAdaptive = true
-        
-        return formatter
-    }()
 }

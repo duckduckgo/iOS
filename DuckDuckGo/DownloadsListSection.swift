@@ -29,3 +29,17 @@ struct DownloadsListSection: Identifiable, Hashable, Comparable {
         lhs.date < rhs.date
     }
 }
+
+extension DownloadsListSection {
+    static let monthNameFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "LLLL"
+        return formatter
+    }()
+
+    static let yearFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter
+    }()
+}

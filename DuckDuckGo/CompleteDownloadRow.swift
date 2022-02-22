@@ -56,8 +56,17 @@ struct CompleteDownloadRow: View {
         .onTapGesture {
             self.isPreviewPresented.toggle()
         }
-        .sheet(isPresented: $isPreviewPresented) {
-            DownloadPreview(rowModel: rowModel)
-        }
+        .sheet(isPresented: $isPreviewPresented, onDismiss: {
+            isPreviewPresented = false
+        }, content: {
+            if let localFileURL = rowModel.localFileURL {
+                QuickLookPreviewRepresentable(localFileURL: localFileURL, isPresented: $isPreviewPresented) {
+                    self.isPreviewPresented = false
+                }.edgesIgnoringSafeArea(.all)
+
+            } else {
+                #warning("Pixel and/or display an error message?")
+            }
+        })
     }
 }

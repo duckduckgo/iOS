@@ -102,6 +102,8 @@ public final class ContentBlocking {
             } else {
                 domainEvent = .contentBlockingErrorReportingIssue
             }
+        case .contentBlockingCompilationTime:
+            domainEvent = .contentBlockingErrorReportingIssue // TODO: pick Alex's version once it's merged to develop
         }
 
         if let error = error {

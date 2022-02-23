@@ -50,6 +50,8 @@ struct DownloadsList: View {
             Spacer()
                 .frame(height: 32)
             Text(UserText.emptyDownloads)
+                .font(Font(uiFont: Const.Font.emptyState))
+                .foregroundColor(.emptyState)
             Spacer()
         }
     }
@@ -89,14 +91,16 @@ struct DownloadsList: View {
         }
     }
     
-    var deleteAllSection: some View {
+    private var deleteAllSection: some View {
         Section(header: Spacer()) {
             HStack {
                 Spacer()
                 Button {
                     viewModel.deleteAllDownloads()
                 } label: {
-                    Text(UserText.downloadsListDeleteAllButton).foregroundColor(Color.red)
+                    Text(UserText.downloadsListDeleteAllButton)
+                        .font(Font(uiFont: Const.Font.deleteAll))
+                        .foregroundColor(.deleteAll)
                 }
                 .buttonStyle(.plain)
                 Spacer()
@@ -127,4 +131,16 @@ extension DownloadsList {
             secondaryButton: .default(Text(UserText.cancelDownloadAlertResumeAction))
         )
     }
+}
+
+private enum Const {
+    enum Font {
+        static let emptyState = UIFont.appFont(ofSize: 16)
+        static let deleteAll = UIFont.semiBoldAppFont(ofSize: 16)
+    }
+}
+
+private extension Color {
+    static let emptyState = Color(UIColor.greyish3)
+    static let deleteAll = Color(UIColor.destructive)
 }

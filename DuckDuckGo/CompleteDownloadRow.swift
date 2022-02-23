@@ -31,16 +31,22 @@ struct CompleteDownloadRow: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(rowModel.filename)
+                    .font(Font(uiFont: Const.Font.filename))
+                    .foregroundColor(.filename)
                 Spacer()
-                    .frame(height: 4.0)
+                    .frame(height: 6.0)
                 Text(rowModel.fileSize)
-                    .foregroundColor(.gray)
+                    .font(Font(uiFont: Const.Font.fileSize))
+                    .foregroundColor(.fileSize)
             }
             Spacer()
             Button {
                 self.isSharePresented = true
             } label: {
                 Image(systemName: "square.and.arrow.up")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20.0, height: 20.0)
             }
             .buttonStyle(.plain)
             .animation(nil)
@@ -50,7 +56,7 @@ struct CompleteDownloadRow: View {
                 ActivityViewController(rowModel: rowModel)
             })
         }
-        .frame(height: 72.0)
+        .frame(height: 76.0)
         .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
         .contentShape(Rectangle())
         .onTapGesture {
@@ -65,8 +71,20 @@ struct CompleteDownloadRow: View {
                 }.edgesIgnoringSafeArea(.all)
 
             } else {
-                #warning("Pixel and/or display an error message?")
+#warning("Pixel and/or display an error message?")
             }
         })
     }
+}
+
+private enum Const {
+    enum Font {
+        static let filename = UIFont.semiBoldAppFont(ofSize: 16)
+        static let fileSize = UIFont.appFont(ofSize: 14)
+    }
+}
+
+private extension Color {
+    static let filename = Color(UIColor.darkGreyish)
+    static let fileSize = Color(UIColor.greyish3)
 }

@@ -28,29 +28,35 @@ struct OngoingDownloadRow: View {
         HStack {
             VStack(alignment: .leading) {
                 Text("\(rowModel.filename)")
+                    .font(Font(uiFont: Const.Font.filename))
+                    .foregroundColor(.filename)
                 Spacer()
-                    .frame(height: 4.0)
+                    .frame(height: 6.0)
                 Text("\(rowModel.fileSize)")
-                    .foregroundColor(.gray)
+                    .font(Font(uiFont: Const.Font.fileSize))
+                    .foregroundColor(.fileSize)
             }
             Spacer()
             
             ZStack {
                 ProgressBar(progress: rowModel.progress)
-                    .frame(width: 30.0, height: 30.0)
-                    .padding(10.0)
+                    .frame(width: 34.0, height: 34.0)
                 
                 Button {
                     cancelButtonAction()
                 } label: {
                     Image(systemName: "xmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 13.0, height: 13.0)
                 }
                 .buttonStyle(.plain)
+                
             }
             
         }
-        .frame(height: 72.0)
-        .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .frame(height: 76.0)
+        .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 13))
     }
 }
 
@@ -60,16 +66,31 @@ struct ProgressBar: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(lineWidth: 10.0)
-                .opacity(0.3)
-                .foregroundColor(Color.red)
+                .stroke(lineWidth: 3.0)
+                .foregroundColor(.progressBackground)
             
             Circle()
                 .trim(from: 0.0, to: CGFloat(min(self.progress, 1.0)))
-                .stroke(style: StrokeStyle(lineWidth: 10.0, lineCap: .round, lineJoin: .round))
-                .foregroundColor(Color.red)
+                .stroke(style: StrokeStyle(lineWidth: 3.0, lineCap: .butt, lineJoin: .miter))
+                .foregroundColor(.progressFill)
                 .rotationEffect(Angle(degrees: 270.0))
                 .animation(.linear)
         }
     }
+}
+
+private enum Const {
+    enum Font {
+        static let filename = UIFont.semiBoldAppFont(ofSize: 16)
+        static let fileSize = UIFont.appFont(ofSize: 14)
+    }
+
+}
+
+private extension Color {
+    static let filename = Color(UIColor.darkGreyish)
+    static let fileSize = Color(UIColor.greyish3)
+    static let cancel = Color(UIColor.charcoalGrey)
+    static let progressBackground = Color(UIColor.mercury)
+    static let progressFill = Color(UIColor.cornflowerBlue)
 }

@@ -88,9 +88,9 @@ private enum Const {
 }
 
 private extension Color {
-    static let filename = Color(UIColor.darkGreyish)
-    static let fileSize = Color(UIColor.greyish3)
-    static let cancel = Color(UIColor.charcoalGrey)
-    static let progressBackground = Color(UIColor.mercury)
-    static let progressFill = Color(UIColor.cornflowerBlue)
+    static let filename = Color("DownloadsListFilenameColor")
+    static let fileSize = Color("DownloadsListFileSizeColor")
+    static let cancel = Color("DownloadsListCancelButtonColor")
+    static let progressBackground = Color("DownloadsListProgressBackgroundColor")
+    static let progressFill = Color("DownloadsListProgressFillColor")
 }

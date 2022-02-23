@@ -31,7 +31,7 @@ struct DownloadsList: View {
             listOrEmptyState
                 .navigationBarTitle(Text(UserText.downloadsScreenTitle), displayMode: .inline)
                 .navigationBarItems(trailing: Button(action: { presentationMode.wrappedValue.dismiss() },
-                                                     label: { Text(UserText.navigationTitleDone).bold() }))
+                                                     label: { Text(UserText.navigationTitleDone).foregroundColor(.barButton).bold() }))
         }
         .navigationViewStyle(.stack)
     }
@@ -86,6 +86,7 @@ struct DownloadsList: View {
             HStack {
                 Spacer()
                 EditButton().environment(\.editMode, $editMode)
+                    .foregroundColor(.barButton)
             }
             .padding()
         }
@@ -141,6 +142,7 @@ private enum Const {
 }
 
 private extension Color {
-    static let emptyState = Color(UIColor.greyish3)
-    static let deleteAll = Color(UIColor.destructive)
+    static let barButton = Color("DownloadsListBarButtonColor")
+    static let emptyState = Color("DownloadsListEmptyStateColor")
+    static let deleteAll = Color("DownloadsListDestructiveColor")
 }

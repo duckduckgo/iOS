@@ -82,8 +82,8 @@ private enum Const {
 }
 
 private extension Color {
-    static let filename = Color(UIColor.darkGreyish)
-    static let fileSize = Color(UIColor.greyish3)
+    static let filename = Color("DownloadsListFilenameColor")
+    static let fileSize = Color("DownloadsListFileSizeColor")
 }
 
 private extension Image {

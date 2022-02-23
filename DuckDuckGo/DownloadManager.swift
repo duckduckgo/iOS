@@ -1,5 +1,5 @@
 //
-//  DownloadsManager.swift
+//  DownloadManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -22,7 +22,7 @@ import Core
 import WebKit
 import os
 
-class DownloadsManager {
+class DownloadManager {
     
     struct UserInfoKeys {
         static let download = "com.duckduckgo.com.userInfoKey.download"
@@ -153,7 +153,7 @@ class DownloadsManager {
 
 // MARK: - Filename Methods
 
-extension DownloadsManager {
+extension DownloadManager {
     
     private func convertToUniqueFilename(_ filename: String, counter: Int = 0) -> String {
         let downloadingFilenames = Set(downloadList.map { $0.filename })
@@ -190,7 +190,7 @@ extension DownloadsManager {
 
 // MARK: - Directory monitoring
 
-extension DownloadsManager {
+extension DownloadManager {
     
     func startMonitoringDownloadsDirectoryChanges() {
         stopMonitoringDownloadsDirectoryChanges()
@@ -206,7 +206,7 @@ extension DownloadsManager {
     }
 }
 
-extension DownloadsManager: DownloadDelegate {
+extension DownloadManager: DownloadDelegate {
     func downloadDidFinish(_ download: Download, error: Error?) {
         moveToDownloadDirectortIfNeeded(download)
         var userInfo: [AnyHashable: Any] = [UserInfoKeys.download: download]
@@ -222,7 +222,7 @@ extension DownloadsManager: DownloadDelegate {
     }
 }
 
-extension DownloadsManager: DirectoryMonitorDelegate {
+extension DownloadManager: DirectoryMonitorDelegate {
     func didChange(directoryMonitor: DirectoryMonitor, added: Set<URL>, removed: Set<URL>) {
         notificationCenter.post(name: .downloadsDirectoryChanged, object: nil, userInfo: nil)
     }

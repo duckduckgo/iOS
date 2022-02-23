@@ -79,7 +79,7 @@ extension TabViewController {
             
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
                                                      image: UIImage(named: "MenuDownloads")!,
-                                                     showNotificationDot: AppDependencyProvider.shared.downloadsManager.unseenDownloadsAvailable,
+                                                     showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
                                                      action: { [weak self] in
                 self?.onOpenDownloadsAction()
             }))
@@ -322,7 +322,7 @@ extension TabViewController {
             return
         }
         
-        AppDependencyProvider.shared.downloadsManager.startDownload(download) { error in
+        AppDependencyProvider.shared.downloadManager.startDownload(download) { error in
             DispatchQueue.main.async {
                 if error == nil, let downloadLink = download.link {
                     completion(downloadLink)

@@ -57,7 +57,7 @@ struct MockSessionSetup {
     let session: MockDownloadSession
     let response: MockNavigationResponse
     
-    init(mimeType: String, downloadsManager: DownloadsManager, completionDelay: TimeInterval = 0, filename: String? = nil) {
+    init(mimeType: String, downloadManager: DownloadManager, completionDelay: TimeInterval = 0, filename: String? = nil) {
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         
         let file: String

@@ -24,7 +24,7 @@ class DownloadsListDataSource {
     
     @Published var model: DownloadsListModel
     
-    private var downloadManager = AppDependencyProvider.shared.downloadsManager
+    private var downloadManager = AppDependencyProvider.shared.downloadManager
     private var bag: Set<AnyCancellable> = []
     
     init() {

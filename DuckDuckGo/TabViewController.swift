@@ -867,7 +867,7 @@ class TabViewController: UIViewController {
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
-        if let error = notification.userInfo?[DownloadsManager.UserInfoKeys.error] as? Error {
+        if let error = notification.userInfo?[DownloadManager.UserInfoKeys.error] as? Error {
             let nserror = error as NSError
             let downloadWasCancelled = nserror.domain == "NSURLErrorDomain" && nserror.code == -999
             
@@ -878,7 +878,7 @@ class TabViewController: UIViewController {
             return
         }
         
-        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download else { return }
+        guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download else { return }
         
         DispatchQueue.main.async {
             if !download.temporary {
@@ -894,7 +894,7 @@ class TabViewController: UIViewController {
     }
     
     @objc private func downloadDidStart(_ notification: Notification) {
-        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download,
+        guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download,
                   !download.temporary else { return }
         
         let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(for: download)
@@ -1010,7 +1010,7 @@ extension TabViewController: WKNavigationDelegate {
             url = webView.url
             decisionHandler(.allow)
         } else {
-            let downloadManager = AppDependencyProvider.shared.downloadsManager
+            let downloadManager = AppDependencyProvider.shared.downloadManager
             
             let startDownload = {
                 let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
@@ -1042,11 +1042,11 @@ extension TabViewController: WKNavigationDelegate {
      This method stores the temporary download or clears it if necessary
      */
     private func setupOrClearTemporaryDownload(for navigationResponse: WKNavigationResponse) {
-        let downloadsManager = AppDependencyProvider.shared.downloadsManager
+        let downloadManager = AppDependencyProvider.shared.downloadManager
         
-        if let downloadMetaData = downloadsManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
+        if let downloadMetaData = downloadManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-            temporaryDownloadForPreviewedFile = downloadsManager.makeDownload(navigationResponse: navigationResponse,
+            temporaryDownloadForPreviewedFile = downloadManager.makeDownload(navigationResponse: navigationResponse,
                                                                              cookieStore: cookieStore,
                                                                              temporary: true)
         } else {

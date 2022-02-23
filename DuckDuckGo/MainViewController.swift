@@ -1663,7 +1663,7 @@ extension MainViewController: AutoClearWorker {
     }
     
     func stopAllOngoingDownloads() {
-        AppDependencyProvider.shared.downloadsManager.cancelAllDownloads()
+        AppDependencyProvider.shared.downloadManager.cancelAllDownloads()
     }
     
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {

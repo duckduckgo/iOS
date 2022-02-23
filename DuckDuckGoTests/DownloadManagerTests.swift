@@ -1,5 +1,5 @@
 //
-//  DownloadsManagerTests.swift
+//  DownloadManagerTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -23,7 +23,7 @@ import WebKit
 @testable import DuckDuckGo
 import WidgetKit
 
-class DownloadsManagerTests: XCTestCase {
+class DownloadManagerTests: XCTestCase {
     var mockDependencyProvider: MockDependencyProvider!
     
     override func setUp() {
@@ -35,11 +35,11 @@ class DownloadsManagerTests: XCTestCase {
     
     func testNotificationTemporaryPKPassDownload() {
         let notificationCenter = NotificationCenter()
-        let downloadsManager = DownloadsManager(notificationCenter)
+        let downloadManager = DownloadManager(notificationCenter)
         
-        let sessionSetup = MockSessionSetup(mimeType: "application/vnd.apple.pkpass", downloadsManager: downloadsManager)
+        let sessionSetup = MockSessionSetup(mimeType: "application/vnd.apple.pkpass", downloadManager: downloadManager)
         
-        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertTrue(download.temporary, "Download should be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -55,18 +55,18 @@ class DownloadsManagerTests: XCTestCase {
             }
         }
         
-        downloadsManager.startDownload(download)
+        downloadManager.startDownload(download)
         wait(for: [expectation], timeout: 1)
     }
     
     func testNotificationTemporaryRealityDownload() {
         
         let notificationCenter = NotificationCenter()
-        let downloadsManager = DownloadsManager(notificationCenter)
+        let downloadManager = DownloadManager(notificationCenter)
 
-        let sessionSetup = MockSessionSetup(mimeType: "model/vnd.reality", downloadsManager: downloadsManager)
+        let sessionSetup = MockSessionSetup(mimeType: "model/vnd.reality", downloadManager: downloadManager)
         
-        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertTrue(download.temporary, "Download should be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -82,18 +82,18 @@ class DownloadsManagerTests: XCTestCase {
             }
         }
         
-        downloadsManager.startDownload(download)
+        downloadManager.startDownload(download)
         wait(for: [expectation], timeout: 1)
         
     }
     
     func testNotificationTemporaryUSDZDownload() {
         let notificationCenter = NotificationCenter()
-        let downloadsManager = DownloadsManager(notificationCenter)
+        let downloadManager = DownloadManager(notificationCenter)
 
-        let sessionSetup = MockSessionSetup(mimeType: "model/vnd.usdz+zip", downloadsManager: downloadsManager)
+        let sessionSetup = MockSessionSetup(mimeType: "model/vnd.usdz+zip", downloadManager: downloadManager)
         
-        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertTrue(download.temporary, "Download should be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -109,17 +109,17 @@ class DownloadsManagerTests: XCTestCase {
             }
         }
         
-        downloadsManager.startDownload(download)
+        downloadManager.startDownload(download)
         wait(for: [expectation], timeout: 1)
     }
     
     func testNotificationPermanentBinaryDownload() {
         let notificationCenter = NotificationCenter()
-        let downloadsManager = DownloadsManager(notificationCenter)
+        let downloadManager = DownloadManager(notificationCenter)
 
-        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager)
+        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadManager: downloadManager)
         
-        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertFalse(download.temporary, "download should not be temporary")
         
         let expectation = expectation(description: "Download finish")
@@ -135,20 +135,20 @@ class DownloadsManagerTests: XCTestCase {
             }
         }
         
-        downloadsManager.startDownload(download)
+        downloadManager.startDownload(download)
         wait(for: [expectation], timeout: 1)
     }
     
     func testClosurePermanentBinaryDownload() {
-        let downloadsManager = DownloadsManager(NotificationCenter())
-        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager)
+        let downloadManager = DownloadManager(NotificationCenter())
+        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadManager: downloadManager)
         
-        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         XCTAssertFalse(download.temporary, "download should not be temporary")
         
         let expectation = expectation(description: "Download finish")
 
-        downloadsManager.startDownload(download) { error in
+        downloadManager.startDownload(download) { error in
             let (tmpPath, finalPath) = DownloadTestsHelper.temporaryAndFinalPathForDownload(download)
 
             XCTAssertNil(error)
@@ -161,28 +161,28 @@ class DownloadsManagerTests: XCTestCase {
     
     func testIfFinishedDownloadIsRemovedFromList() {
         let notificationCenter = NotificationCenter()
-        let downloadsManager = DownloadsManager(notificationCenter)
+        let downloadManager = DownloadManager(notificationCenter)
 
-        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, completionDelay: 1)
-        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadManager: downloadManager, completionDelay: 1)
+        let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         let expectation = expectation(description: "Download finish")
         
         notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
            
             if DownloadTestsHelper.downloadForNotification(notification) == download {
-                XCTAssertEqual(downloadsManager.downloadList.count, 0)
+                XCTAssertEqual(downloadManager.downloadList.count, 0)
                 expectation.fulfill()
             }
         }
         
-        downloadsManager.startDownload(download)
-        XCTAssertEqual(downloadsManager.downloadList.count, 1)
+        downloadManager.startDownload(download)
+        XCTAssertEqual(downloadManager.downloadList.count, 1)
 
         wait(for: [expectation], timeout: 2)
     }
     
     func downloadForNotification(_ notification: Notification) -> Download {
-        if let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download {
+        if let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download {
             return download
         }
         fatalError("Should only be used to test valid downloads")
@@ -192,11 +192,11 @@ class DownloadsManagerTests: XCTestCase {
         let spoofedName = "test.‮gpj‬" // U+202E + U+202C character
         let expectedName = "test.gpj"
         let notificationCenter = NotificationCenter()
-        let downloadsManager = DownloadsManager(notificationCenter)
+        let downloadManager = DownloadManager(notificationCenter)
 
-        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, filename: spoofedName)
+        let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadManager: downloadManager, filename: spoofedName)
         
-        let download = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+        let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         
         let expectation = expectation(description: "Download finish")
         
@@ -212,7 +212,7 @@ class DownloadsManagerTests: XCTestCase {
             }
         }
         
-        downloadsManager.startDownload(download)
+        downloadManager.startDownload(download)
         wait(for: [expectation], timeout: 1)
     }
     
@@ -222,14 +222,14 @@ class DownloadsManagerTests: XCTestCase {
         files.append(contentsOf: [String](repeating: "duck", count: numberOfFiles))
         
         let expectedList = ["duck", "duck 1", "duck 2", "duck.txt", "duck 1.txt", "duck 2.txt"]
-        let downloadsManager = DownloadsManager()
+        let downloadManager = DownloadManager()
 
         files.forEach {
-            let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, filename: $0)
-             _ = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+            let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadManager: downloadManager, filename: $0)
+             _ = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         }
         
-        let downloadListNames = downloadsManager.downloadList.map { $0.filename }.sorted()
+        let downloadListNames = downloadManager.downloadList.map { $0.filename }.sorted()
         
         XCTAssertEqual(downloadListNames, expectedList.sorted(), "Lists should be the same")
     }
@@ -246,14 +246,14 @@ class DownloadsManagerTests: XCTestCase {
         files.append(contentsOf: [String](repeating: fileWithoutExtension, count: numberOfFiles))
         
         let expectedList = ["duck 1", "duck 2", "duck 3", "duck 1.txt", "duck 2.txt", "duck 3.txt"]
-        let downloadsManager = DownloadsManager()
+        let downloadManager = DownloadManager()
 
         files.forEach {
-            let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadsManager: downloadsManager, filename: $0)
-             _ = downloadsManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
+            let sessionSetup = MockSessionSetup(mimeType: "application/octet-stream", downloadManager: downloadManager, filename: $0)
+             _ = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         }
         
-        let downloadListNames = downloadsManager.downloadList.map { $0.filename }.sorted()
+        let downloadListNames = downloadManager.downloadList.map { $0.filename }.sorted()
         
         XCTAssertEqual(downloadListNames, expectedList.sorted(), "Lists should be the same")
 

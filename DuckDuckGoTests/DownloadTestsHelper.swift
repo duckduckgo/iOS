@@ -59,7 +59,7 @@ struct DownloadTestsHelper {
     }
     
     static func downloadForNotification(_ notification: Notification) -> Download {
-        if let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download {
+        if let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download {
             return download
         }
         fatalError("Should only be used to test valid downloads")

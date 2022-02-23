@@ -42,6 +42,6 @@ class ForgetDataAlert {
     }
     
     static private func ongoingDownloadsInProgress() -> Bool {
-        !AppDependencyProvider.shared.downloadsManager.downloadList.isEmpty
+        !AppDependencyProvider.shared.downloadManager.downloadList.isEmpty
     }
 }

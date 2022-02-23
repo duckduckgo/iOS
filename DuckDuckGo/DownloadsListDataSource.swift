@@ -29,7 +29,7 @@ class DownloadsListDataSource {
     
     init() {
         print("- DownloadsDataSource init")
-        model = DownloadsListModel(ongoingDownloads: downloadManager.downloadList.map { AnyDownloadListRepresentable($0) },
+        model = DownloadsListModel(ongoingDownloads: downloadManager.downloadList.filter { !$0.temporary }.map { AnyDownloadListRepresentable($0) },
                                    completeDownloads: downloadManager.downloadsDirectoryFiles.map { AnyDownloadListRepresentable($0) })
         downloadManager.startMonitoringDownloadsDirectoryChanges()
         setupChangeListeners()
@@ -54,7 +54,7 @@ class DownloadsListDataSource {
     }
     
     private func updateModel() {
-        let ongoingDownloads = downloadManager.downloadList.map { AnyDownloadListRepresentable($0) }
+        let ongoingDownloads = downloadManager.downloadList.filter { !$0.temporary }.map { AnyDownloadListRepresentable($0) }
         let completeDownloads = downloadManager.downloadsDirectoryFiles.map { AnyDownloadListRepresentable($0) }
         
         model.update(ongoingDownloads: ongoingDownloads,

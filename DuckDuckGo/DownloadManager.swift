@@ -215,7 +215,7 @@ extension DownloadManager: DownloadDelegate {
         var userInfo: [AnyHashable: Any] = [UserInfoKeys.download: download]
         if let error = error {
             userInfo[UserInfoKeys.error] = error
-        } else {
+        } else if !download.temporary {
             unseenDownloadsAvailable = true
         }
         

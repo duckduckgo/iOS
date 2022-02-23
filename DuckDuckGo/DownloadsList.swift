@@ -30,8 +30,8 @@ struct DownloadsList: View {
         NavigationView {
             listOrEmptyState
                 .navigationBarTitle(Text(UserText.downloadsScreenTitle), displayMode: .inline)
-                .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() }
-                                        .opacity(editMode == .inactive ? 1.0 : 0.0))
+                .navigationBarItems(trailing: Button(action: { presentationMode.wrappedValue.dismiss() },
+                                                     label: { Text(UserText.navigationTitleDone).bold() }))
         }
         .navigationViewStyle(.stack)
     }

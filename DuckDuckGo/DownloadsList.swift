@@ -35,14 +35,14 @@ struct DownloadsList: View {
         .navigationViewStyle(.stack)
     }
     
-    var doneButton: some View {
+    private var doneButton: some View {
         Button(action: { presentationMode.wrappedValue.dismiss() },
                label: { Text(UserText.navigationTitleDone).foregroundColor(.barButton).bold() })
             .opacity(editMode == .inactive ? 1.0 : 0.0)
     }
     
     @ViewBuilder
-    var listOrEmptyState: some View {
+    private var listOrEmptyState: some View {
         if viewModel.sections.isEmpty {
             emptyState
         } else {
@@ -50,7 +50,7 @@ struct DownloadsList: View {
         }
     }
     
-    var emptyState: some View {
+    private var emptyState: some View {
         VStack {
             Spacer()
                 .frame(height: 32)
@@ -64,35 +64,31 @@ struct DownloadsList: View {
         .edgesIgnoringSafeArea(.bottom)
     }
     
-    var listWithBottomToolbar: some View {
+    @ViewBuilder
+    private var listWithBottomToolbar: some View {
         if #available(iOS 14.0, *) {
-            return AnyView(
-                list
-                .toolbar {
-                    ToolbarItemGroup(placement: .bottomBar) {
-                        Spacer()
-                        EditButton().environment(\.editMode, $editMode)
-                            .foregroundColor(.barButton)
-                    }
+            list.toolbar {
+                ToolbarItemGroup(placement: .bottomBar) {
+                    Spacer()
+                    EditButton().environment(\.editMode, $editMode)
+                        .foregroundColor(.barButton)
                 }
-            )
+            }
         } else {
             // Due to no proper toolbar support in SwiftUI for iOS 13
-            return AnyView(
-                VStack {
-                    list
-                    HStack {
-                        Spacer()
-                        EditButton().environment(\.editMode, $editMode)
-                            .foregroundColor(.barButton)
-                    }
-                    .padding()
+            VStack {
+                list
+                HStack {
+                    Spacer()
+                    EditButton().environment(\.editMode, $editMode)
+                        .foregroundColor(.barButton)
                 }
-            )
+                .padding()
+            }
         }
     }
     
-    var list: some View {
+    private var list: some View {
         List {
             ForEach(viewModel.sections) { section in
                 Section(header: Text(section.header)) {

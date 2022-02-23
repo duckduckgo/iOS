@@ -25,7 +25,7 @@ import BrowserServicesKit
 extension HTTPSStoredBloomFilterSpecification: Managed {}
 extension HTTPSExcludedDomain: Managed {}
 
-public class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
+public final class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
     
     private struct Resource {
         static var bloomFilter: URL {
@@ -87,7 +87,7 @@ public class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
         return EmbeddedBloomData(specification: specification, bloomFilter: bloomData, excludedDomains: excludedDomains.data)
     }
     
-    @discardableResult public func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
+    @discardableResult func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
         os_log("HTTPS Bloom Filter %s", log: generalLog, type: .debug, Resource.bloomFilter.absoluteString)
         guard data.sha256 == specification.sha256 else { return false }
         guard persistBloomFilter(data: data) else { return false }
@@ -144,7 +144,7 @@ public class AppHTTPSUpgradeStore: HTTPSUpgradeStore {
         return result
     }
     
-    @discardableResult public func persistExcludedDomains(_ domains: [String]) -> Bool {
+    @discardableResult func persistExcludedDomains(_ domains: [String]) -> Bool {
         var result = true
         context.performAndWait {
             deleteExcludedDomains()

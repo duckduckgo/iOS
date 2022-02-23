@@ -882,7 +882,7 @@ class TabViewController: UIViewController {
         
         DispatchQueue.main.async {
             if !download.temporary {
-                let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(download: download)
+                let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(for: download)
                 ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
 #warning("Perhaps PIXEL here?")
                     self.delegate?.tabDidRequestDownloads(tab: self)
@@ -897,7 +897,7 @@ class TabViewController: UIViewController {
         guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download,
                   !download.temporary else { return }
         
-        let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(download: download)
+        let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(for: download)
         
         DispatchQueue.main.async {
             ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {

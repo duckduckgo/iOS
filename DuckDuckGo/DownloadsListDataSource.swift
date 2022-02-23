@@ -89,6 +89,7 @@ class DownloadsListDataSource {
 //                try fileManager.trashItem(at: fileURL, resultingItemURL: &trashURL)
                     
                 DispatchQueue.main.async {
+#warning("Move to ViewModel")
                     ActionMessageView.present(message: UserText.messageDownloadDeleted(for: downloadToDelete.filename),
                                               actionTitle: UserText.actionGenericUndo) {
 //                        guard let trashURL = trashURL as? URL else { return }
@@ -118,6 +119,7 @@ class DownloadsListDataSource {
             }
             
             DispatchQueue.main.async {
+#warning("Move to ViewModel")
                 ActionMessageView.present(message: UserText.messageAllFilesDeleted,
                                           actionTitle: UserText.actionGenericUndo) {
                     print("UNDO!")

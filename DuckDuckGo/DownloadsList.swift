@@ -25,11 +25,11 @@ struct DownloadsList: View {
     @State var editMode: EditMode = .inactive
     
     @State private var isCancelDownloadAlertPresented: Bool = false
-
+    
     var body: some View {
         NavigationView {
             listOrEmptyState
-                .navigationBarTitle("Downloads", displayMode: .inline)
+                .navigationBarTitle(Text(UserText.downloadsScreenTitle), displayMode: .inline)
                 .navigationBarItems(trailing: Button("Done") { presentationMode.wrappedValue.dismiss() }
                                         .opacity(editMode == .inactive ? 1.0 : 0.0))
         }

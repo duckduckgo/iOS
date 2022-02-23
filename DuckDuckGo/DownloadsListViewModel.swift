@@ -63,7 +63,7 @@ class DownloadsListViewModel: ObservableObject {
         
         dataSource.deleteDownloadWithIdentifier(item.id)
         
-        // TODO: present the toast
+        // warning present the toast
     }
     
     func deleteAllDownloads() {

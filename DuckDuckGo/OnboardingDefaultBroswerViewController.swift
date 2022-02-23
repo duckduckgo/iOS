@@ -33,11 +33,6 @@ class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
         return UserText.onboardingSkip
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        HomeMessageStorage().homeDefaultBrowserMessageDateDismissed = Date()
-    }
-    
     override func onContinuePressed(navigationHandler: @escaping () -> Void) {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)

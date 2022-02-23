@@ -26,7 +26,7 @@ public enum FeatureName: String {
     // Used for unit tests
     case dummy
     case voiceSearch
-    case parameterStripping
+    case widgetEducation
 }
 
 public struct Variant {
@@ -44,15 +44,21 @@ public struct Variant {
         static let iOS15 = { () -> Bool in
             if #available(iOS 15, *) {
                 return true
-            } else {
-                return false
             }
+            return false
         }
         
         static let supportsOnDeviceRecognizer = { SFSpeechRecognizer()?.supportsOnDeviceRecognition ?? false }
         
         static let isIOS15EnglishWithOnDeviceSpeech = {
             return inEnglish() && iOS15() && supportsOnDeviceRecognizer()
+        }
+        
+        static let supportsWidgets = { () -> Bool in
+            if #available(iOS 14, *) {
+                return true
+            }
+            return false
         }
     }
     
@@ -66,11 +72,11 @@ public struct Variant {
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
         
-        Variant(name: "ma", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [.voiceSearch]),
-        Variant(name: "mb", weight: 1, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: []),
+        Variant(name: "ma", weight: doNotAllocate, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: [.voiceSearch]),
+        Variant(name: "mb", weight: doNotAllocate, isIncluded: When.isIOS15EnglishWithOnDeviceSpeech, features: []),
         
-        Variant(name: "mc", weight: 1, isIncluded: When.always, features: [.parameterStripping]),
-        Variant(name: "md", weight: 1, isIncluded: When.always, features: [])
+        Variant(name: "me", weight: 1, isIncluded: When.supportsWidgets, features: [.widgetEducation]),
+        Variant(name: "mf", weight: 1, isIncluded: When.supportsWidgets, features: [])
     ]
     
     public let name: String

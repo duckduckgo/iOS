@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Редактировать";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Поделиться";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Добавить виджет";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Быстрый доступ к конфиденциальному поиску и любимым сайтам.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Удерживайте нажатие на домашнем экране, чтобы запустить режим настройки.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Нажмите кнопку «плюс» %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Найдите и выберите DuckDuckGo. Затем выберите виджет.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Доступ к любимым сайтам в одно касание.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Существующие закладки дублироваться не будут.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Водоворот";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Сделать браузером по умолчанию";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Выберите DuckDuckGo браузером по умолчанию!";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Открывайте ссылки, ни о чем не беспокоясь.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "ЧТО НОВОГО В IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Добавьте DuckDuckGo на домашний экран!";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Сайт добавлен в избранное";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Блокировать уведомления";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Отменить";

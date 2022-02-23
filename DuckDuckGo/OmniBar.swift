@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import os.log
+import BrowserServicesKit
 
 extension OmniBar: NibLoading {}
 

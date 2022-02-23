@@ -69,7 +69,8 @@ public extension RunLoop {
             RunLoop.current.add(sendPort, forMode: mode)
 
             // Send Wake message from current RunLoop port to each running RunLoop
-            for receivePort in ports {
+            // Called in reversed order to corretly wake nested RunLoops
+            for receivePort in ports.reversed() {
                 receivePort.send(before: Date(), components: nil, from: sendPort, reserved: 0)
             }
 
@@ -86,7 +87,7 @@ public extension RunLoop {
         }
 
         while !condition.isResolved {
-            self.run(mode: mode, before: .distantFuture)
+            self.run(mode: mode, before: Date(timeIntervalSinceNow: 1.0))
         }
         self.remove(port, forMode: mode)
     }

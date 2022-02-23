@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 public struct AppUrls {
 
@@ -35,7 +36,7 @@ public struct AppUrls {
         
         static let surrogates = "\(staticBase)/surrogates.txt"
         static let privacyConfig = "\(staticBase)/trackerblocking/config/v1/ios-config.json"
-        static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/tds.json"
+        static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/apple-tds.json"
 
         static let atb = "\(base)/atb.js\(devMode)"
         static let exti = "\(base)/exti/\(devMode)"
@@ -212,9 +213,8 @@ public struct AppUrls {
     }
     
     public func isGPCEnabled(url: URL,
-                             config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
-        guard let gpcFeature = config.feature(forKey: .gpc),
-              let gpcUrls = gpcFeature.settings["gpcHeaderEnabledSites"] as? [String] else {
+                             config: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> Bool {
+        guard let gpcUrls = config.settings(for: .gpc)["gpcHeaderEnabledSites"] as? [String] else {
             return false
         }
         

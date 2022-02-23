@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Muokkaa";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Jaa";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Lisää widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Nopea pääsy yksityiseen hakuun ja suosikkisivustoihin.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Paina pitkään aloitusnäyttöä siirtyäksesi heilutustilaan.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Napauta pluspainiketta %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Etsi ja valitse DuckDuckGo. Valitse sitten widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Yhdellä napautuksella suosikkisivustoillesi.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemassa olevia kirjanmerkkejä ei kopioida.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Pyörre";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Aseta oletusselaimeksi";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Tee DuckDuckGo:sta oletusselain.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Avaa linkit ilman stressiä, joka kerta.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "UUTTA IOS 14:SSÄ";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lisää DuckDuckGo koti-valikkoon!";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Suosikki lisätty";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Estä ilmoitukset";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Peruuta";

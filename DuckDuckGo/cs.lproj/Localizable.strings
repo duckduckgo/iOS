@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Upravit";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Sdílet";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Přidat widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Získejte rychlý přístup k soukromému vyhledávání a oblíbeným webům.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Podržením prstu na ploše aktivuj režim úprav plochy.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Klepni na tlačítko plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Najdi aplikaci DuckDuckGo a vyber ji. Pak zvol widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Jedním klepnutím se dostaneš na svoje oblíbené stránky.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existující záložky nebudou duplikovány.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Vodní vír";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Nastavit jako výchozí prohlížeč";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Nastavte si DuckDuckGo jako výchozí prohlížeč.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Otevírejte odkazy s klidem mysli, pokaždé.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOVINKY V IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Přidejte DuckDuckGo na svou domovskou obrazovku!";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Oblíbené položky uloženy";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokovat výstrahy";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Zrušit";

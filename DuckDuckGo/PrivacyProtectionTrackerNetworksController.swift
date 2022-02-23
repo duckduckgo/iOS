@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
 
 class PrivacyProtectionTrackerNetworksController: UIViewController {
 
@@ -30,7 +31,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
-    private var privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+    private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
 
     struct Section {
 

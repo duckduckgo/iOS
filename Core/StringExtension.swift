@@ -22,10 +22,6 @@ import Punycode
 
 extension String {
 
-    public func trimWhitespace() -> String {
-        return trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
     public func length() -> Int {
         return count
     }

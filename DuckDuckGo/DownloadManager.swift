@@ -51,7 +51,10 @@ class DownloadManager {
     }
     
     var downloadsDirectoryFiles: [URL] {
-        (try? FileManager.default.contentsOfDirectory(at: downloadsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)) ?? []
+        let contents = (try? FileManager.default.contentsOfDirectory(at: downloadsDirectory,
+                                                                     includingPropertiesForKeys: nil,
+                                                                     options: .skipsHiddenFiles)) ?? []
+        return contents.filter { !$0.hasDirectoryPath }
     }
     
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {

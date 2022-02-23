@@ -1,0 +1,42 @@
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "1oZ-re-yKW"; */
+"1oZ-re-yKW.title" = "Atlikta";
+
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "Buv-ez-2Lr"; */
+"Buv-ez-2Lr.text" = "Žymių dar nepridėta";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "K2O-E5-pyF"; */
+"K2O-E5-pyF.text" = "Etiketė";
+
+/* Class = "UITextField"; placeholder = "Title"; ObjectID = "KiU-Wb-7jj"; */
+"KiU-Wb-7jj.placeholder" = "Pavadinimas";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
+"Lqe-Wh-Evj.text" = "Etiketė";
+
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
+"N2X-jQ-cbU.text" = "Žymių dar nepridėta";
+
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "pwj-Ie-VbJ"; */
+"pwj-Ie-VbJ.title" = "Redaguoti";
+
+/* Class = "UINavigationItem"; title = "Add Bookmark"; ObjectID = "qA0-bu-lRC"; */
+"qA0-bu-lRC.title" = "Pridėti žymę";
+
+/* Class = "UINavigationItem"; title = "Add Folder"; ObjectID = "qaZ-4Z-o70"; */
+"qaZ-4Z-o70.title" = "Pridėti aplanką";
+
+/* Class = "UITextField"; placeholder = "Title"; ObjectID = "rT4-Yr-P8D"; */
+"rT4-Yr-P8D.placeholder" = "Pavadinimas";
+
+/* Class = "UIBarButtonItem"; title = "Add Folder"; ObjectID = "ToB-IA-MxG"; */
+"ToB-IA-MxG.title" = "Pridėti aplanką";
+
+/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
+"tVt-jc-YaY.title" = "Žymės";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vil-gw-sgh"; */
+"vil-gw-sgh.text" = "Etiketė";
+
+/* Class = "UITextField"; placeholder = "URL"; ObjectID = "YqY-sP-hhb"; */
+"YqY-sP-hhb.placeholder" = "URL";
+

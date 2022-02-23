@@ -1,0 +1,261 @@
+/* Class = "UILabel"; text = "Fireproof Sites"; ObjectID = "0DQ-yq-UuT"; */
+"0DQ-yq-UuT.text" = "Огнеупорные сайты";
+
+/* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
+"0gU-rZ-pRc.footerTitle" = "Отключение этой функции не позволит ссылкам автоматически открываться в других приложениях.";
+
+/* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
+"2ky-s9-1aZ.text" = "Версия";
+
+/* Class = "UINavigationItem"; title = "Keyboard"; ObjectID = "2pp-PM-6rW"; */
+"2pp-PM-6rW.title" = "Клавиатура";
+
+/* Class = "UILabel"; text = "Clear Tabs Only"; ObjectID = "3WZ-Fi-HIH"; */
+"3WZ-Fi-HIH.text" = "Сбросить только вкладки";
+
+/* Class = "UILabel"; text = "App Exit, Inactive for 30 Minutes"; ObjectID = "5Yd-7i-bey"; */
+"5Yd-7i-bey.text" = "После выхода из приложения, через 30 минут бездействия";
+
+/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "5YD-Od-uDU"; */
+"5YD-Od-uDU.text" = "Автоудаление данных";
+
+/* Class = "UIButton"; normalTitle = "More at duckduckgo.com/about"; ObjectID = "7nt-uS-sOh"; */
+"7nt-uS-sOh.normalTitle" = "Подробнее на https://duckduckgo.com/about";
+
+/* Class = "UIButton"; normalTitle = "Settings"; ObjectID = "8YG-7Q-Czd"; */
+"8YG-7Q-Czd.normalTitle" = "Настройки";
+
+/* Class = "UILabel"; text = "App Exit, Inactive for 1 Hour"; ObjectID = "9EC-lx-77p"; */
+"9EC-lx-77p.text" = "После выхода из приложения, через 1 час бездействия";
+
+/* Class = "UILabel"; text = "Clear Tabs and Data"; ObjectID = "9fc-9r-4aA"; */
+"9fc-9r-4aA.text" = "Сбросить вкладки и данные";
+
+/* Class = "UILabel"; text = "Text Size"; ObjectID = "9Ko-0g-T3h"; */
+"9Ko-0g-T3h.text" = "Размер текста";
+
+/* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
+"13n-KI-KLq.text" = "При запуске приложения";
+
+/* Class = "UILabel"; text = "dax@duck.com"; ObjectID = "25v-n4-wJD"; */
+"25v-n4-wJD.text" = "dax@duck.com";
+
+/* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
+"a1T-ui-4Nw.text" = "Открывать ссылки в связанных приложениях";
+
+/* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
+"AtR-nS-Gun.text" = "Анимация";
+
+/* Class = "UIViewController"; title = "Email Protection (Beta)"; ObjectID = "b9u-ZD-F95"; */
+"b9u-ZD-F95.title" = "Защита почты (бета)";
+
+/* Class = "UILabel"; text = "Email Protection"; ObjectID = "bAK-LL-HUH"; */
+"bAK-LL-HUH.text" = "Защита электронной почты";
+
+/* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
+"BGs-JL-4ib.footerTitle" = "Данные и/или вкладки будут сброшены при следующем запуске приложения.";
+
+/* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
+"bIg-0T-UWq.text" = "Предлагать обезопасить сайты при входе";
+
+/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
+"bJo-qn-f57.title" = "Защита почты (бета)";
+
+/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "Br7-C6-EmT"; */
+"Br7-C6-EmT.title" = "Защита почты (бета)";
+
+/* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
+"cKo-er-HNj.text" = "Значок приложения";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "CR5-Al-WIW"; */
+"CR5-Al-WIW.text" = "Метка";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "cW7-OM-2oW"; */
+"cW7-OM-2oW.text" = "Глобальный контроль конфиденциальности (GPC)";
+
+/* Class = "UILabel"; text = "App Exit, Inactive for 15 Minutes"; ObjectID = "D0R-jp-UY8"; */
+"D0R-jp-UY8.text" = "После выхода из приложения, через 15 минут бездействия";
+
+/* Class = "UILabel"; text = "10.0.1 (Build 10005)"; ObjectID = "d5n-vG-8kF"; */
+"d5n-vG-8kF.text" = "10.0.1 (сборка 10005)";
+
+/* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
+"dBZ-yq-FYj.text" = "Блокировка";
+
+/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "dj9-vh-Rig"; */
+"dj9-vh-Rig.headerTitle" = "Собственная настройка";
+
+/* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.footerTitle" = "Если система защищена технологией Touch ID или Face ID либо кодом доступа, при запуске вам придется разблокировать приложение.";
+
+/* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.headerTitle" = "Конфиденциальность и безопасность";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
+"dud-qo-Ces.text" = "Метка";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Dyd-bm-goj"; */
+"Dyd-bm-goj.title" = "Настройки";
+
+/* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
+"EB8-09-gt2.text" = "100 %";
+
+/* Class = "UIButton"; normalTitle = "I already have a Duck Address"; ObjectID = "ehC-NI-TIu"; */
+"ehC-NI-TIu.normalTitle" = "У меня уже есть адрес на Duck";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
+"EIq-Ev-nfj.text" = "Метка";
+
+/* Class = "UILabel"; text = "Automatically Clear Data"; ObjectID = "ekF-SJ-PAQ"; */
+"ekF-SJ-PAQ.text" = "Автоудаление данных";
+
+/* Class = "UILabel"; text = "App Exit, Inactive for 5 Minutes"; ObjectID = "ElX-yE-4PX"; */
+"ElX-yE-4PX.text" = "После выхода из приложения, через 5 минут бездействия";
+
+/* Class = "UINavigationItem"; title = "App Icon"; ObjectID = "eMH-uv-Kms"; */
+"eMH-uv-Kms.title" = "Значок приложения";
+
+/* Class = "UILabel"; text = "Theme"; ObjectID = "f1O-6u-LFY"; */
+"f1O-6u-LFY.text" = "Тема";
+
+/* Class = "UILabel"; text = "App Exit Only"; ObjectID = "Fal-1Y-o2S"; */
+"Fal-1Y-o2S.text" = "Только после выхода из приложения";
+
+/* Class = "UITableViewController"; title = "Automatically Clear Data"; ObjectID = "fdJ-b1-Des"; */
+"fdJ-b1-Des.title" = "Автоудаление данных";
+
+/* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
+"FHC-1z-Z3v.text" = "Незащищенные сайты";
+
+/* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
+"FpT-1C-xtx.headerTitle" = "Прочее";
+
+/* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
+"fV3-86-QQj.title" = "Глобальный контроль конфиденциальности (GPC)";
+
+/* Class = "UILabel"; text = "Add Widget to Home Screen"; ObjectID = "Fxu-zn-51Z"; */
+"Fxu-zn-51Z.text" = "Добавьте виджет на домашний экран";
+
+/* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
+"gBo-Cu-e2k.text" = "Анимация кнопки «Пожар»";
+
+/* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
+"Gbx-kl-uOO.text" = "По умолчанию";
+
+/* Class = "UILabel"; text = "Header Title"; ObjectID = "ghI-g4-R9Q"; */
+"ghI-g4-R9Q.text" = "Заголовок верхнего колонтитула";
+
+/* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
+"gji-Fs-EET.text" = "Максимум конфиденциальности, минимум усилий. ";
+
+/* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
+"gS2-mg-l7R.title" = "Тема";
+
+/* Class = "UILabel"; text = "Long-Press Previews"; ObjectID = "HLr-R8-xxF"; */
+"HLr-R8-xxF.text" = "Предпросмотр долгим нажатием";
+
+/* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
+"Hu1-5i-vjL.text" = "Защита конфиденциальности включена на всех сайтах";
+
+/* Class = "UILabel"; text = "Personal Duck Address"; ObjectID = "i4Y-CX-8b6"; */
+"i4Y-CX-8b6.text" = "Личный адрес на Duck";
+
+/* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
+"jbD-Oy-Cmw.title" = "Значок";
+
+/* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
+"m23-t6-9cb.text" = "Оставьте нам отзыв";
+
+/* Class = "UIViewController"; title = "Email Autofill"; ObjectID = "nB1-eu-sN0"; */
+"nB1-eu-sN0.title" = "Автозаполнение эл. почты";
+
+/* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
+"NRb-Cc-1d6.footerTitle" = "При активации этой функции сайты будут автоматически открываться в DuckDuckGo.";
+
+/* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
+"OfP-Kw-IOk.text" = "Огнеупорных сайтов нет";
+
+/* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
+"OHV-qC-tL9.title" = "Незащищенные сайты";
+
+/* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
+"oM7-1o-9oY.text" = "Несколько слов о DuckDuckGo";
+
+/* Class = "UITextView"; text = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com."; ObjectID = "pT6-FQ-9d9"; */
+"pT6-FQ-9d9.text" = "Снятие почтовой защиты на данном устройстве лишит вас возможности вносить свой личный адрес на Duck или свежесгенерированный приватный адрес Duck в поле для электронной почты при посещении сайтов.<br/><br/>Если вы хотите полностью удалить свои адреса Duck, задать нам вопрос или отправить отзывы и предложения, пишите нам: support@duck.com.";
+
+/* Class = "UILabel"; text = "Remove from Device"; ObjectID = "qEh-V1-QaM"; */
+"qEh-V1-QaM.text" = "Удалить с этого устройства";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
+"qeN-SV-zy7.text" = "Метка";
+
+/* Class = "UITextView"; text = "Description Text"; ObjectID = "rOy-6J-i8L"; */
+"rOy-6J-i8L.text" = "Текст описания";
+
+/* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
+"ssa-zd-L3T.title" = "Размер текста";
+
+/* Class = "UITableViewController"; title = "Email Protection"; ObjectID = "TC3-Kg-XJt"; */
+"TC3-Kg-XJt.title" = "Защита электронной почты";
+
+/* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
+"tGh-di-rfq.headerTitle" = "Показывать клавиатуру";
+
+/* Class = "UINavigationItem"; title = "Global Privacy Control (GPC)"; ObjectID = "tWw-Lh-ZT1"; */
+"tWw-Lh-ZT1.title" = "Глобальный контроль конфиденциальности (GPC)";
+
+/* Class = "UITableViewSection"; headerTitle = "Action"; ObjectID = "U2M-6p-6nl"; */
+"U2M-6p-6nl.headerTitle" = "Действие";
+
+/* Class = "UILabel"; text = "Autocomplete Suggestions"; ObjectID = "U8i-cQ-5WW"; */
+"U8i-cQ-5WW.text" = "Показать предложения автозаполнения";
+
+/* Class = "UINavigationItem"; title = "Fire Button Animation"; ObjectID = "uns-8w-IwL"; Note = "Fire button animation setting page title"; */
+"uns-8w-IwL.title" = "Анимация кнопки «Пожар»";
+
+/* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
+"UZx-52-aer.text" = "Удалить все огнеупорные сайты";
+
+/* Class = "UILabel"; text = "Global Privacy Control (GPC)"; ObjectID = "vPz-uO-6gB"; */
+"vPz-uO-6gB.text" = "Глобальный контроль конфиденциальности (GPC)";
+
+/* Class = "UITableViewSection"; footerTitle = "App exit is defined by swiping the app to close it while inactivity is when the app is in the background."; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
+"vSJ-YJ-bBs.footerTitle" = "Под выходом из приложения подразумевается закрытие свайпом, а под бездействием — работа в фоновом режиме.";
+
+/* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
+"vSJ-YJ-bBs.headerTitle" = "Предпочитаемое время";
+
+/* Class = "UIButton"; normalTitle = "Action button"; ObjectID = "VvN-QG-WsD"; */
+"VvN-QG-WsD.normalTitle" = "Кнопка действий";
+
+/* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
+"xof-5k-PkI.text" = "Сделать браузером по умолчанию";
+
+/* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
+"xUX-nF-HOl.title" = "Огнеупорные сайты";
+
+/* Class = "UITextView"; text = "Footer Text"; ObjectID = "XvR-D4-LMg"; */
+"XvR-D4-LMg.text" = "Текст нижнего колонтитула";
+
+/* Class = "UIButton"; normalTitle = "I have an Invite Code"; ObjectID = "yMC-7O-hSw"; */
+"yMC-7O-hSw.normalTitle" = "У меня есть пригласительный код";
+
+/* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
+"yoZ-jw-Cu3.text" = "Клавиатура";
+
+/* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
+"yvj-LL-MiR.text" = "Добавьте приложение на док-панель";
+
+/* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
+"zMK-jc-4bJ.headerTitle" = "Помощь";
+
+/* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
+"Zpg-h0-rYv.text" = "Новая вкладка";
+
+/* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
+"zWP-d3-nVc.title" = "Домашний экран";
+
+/* Class = "UINavigationItem"; title = "Add Widget to Home Screen"; ObjectID = "zZa-pF-SHk"; */
+"zZa-pF-SHk.title" = "Добавьте виджет на домашний экран";
+

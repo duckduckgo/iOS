@@ -1,0 +1,478 @@
+{
+    "readme": "https://github.com/duckduckgo/privacy-configuration",
+    "version": 1638444798224,
+    "features": {
+        "autoconsent": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "spiegel.de",
+                    "reason": "Opt-out not possible"
+                }
+            ],
+            "settings": {
+                "disabledCMPs": []
+            }
+        },
+        "autofill": {
+            "exceptions": [
+                {
+                    "domain": "asana.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "fastmail.com",
+                    "reason": "site breakage"
+                }
+            ],
+            "state": "disabled"
+        },
+        "clickToPlay": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "contentBlocking": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "iltalehti.fi",
+                    "reason": "Video content missing"
+                },
+                {
+                    "domain": "agame.com",
+                    "reason": "Site not loading"
+                },
+                {
+                    "domain": "wp.pl",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "digitalocean.com",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "ah.nl",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "toledoblade.com",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "magicgameworld.com",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "www.cbssports.com",
+                    "reason": "Video content missing"
+                },
+                {
+                    "domain": "www.nhl.com",
+                    "reason": "Video content missing"
+                },
+                {
+                    "domain": "pnc.com",
+                    "reason": "Login issues"
+                },
+                {
+                    "domain": "ea.com",
+                    "reason": "Login not displaying"
+                },
+                {
+                    "domain": "www.corsair.com",
+                    "reason": "Missing content"
+                },
+                {
+                    "domain": "www.eurogamer.net",
+                    "reason": "Hard adwall"
+                },
+                {
+                    "domain": "53.com",
+                    "reason": "Broken sign in"
+                },
+                {
+                    "domain": "www.livenewsnow.com",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "rp5.ru",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "easyjet.com",
+                    "reason": "Broken site content"
+                },
+                {
+                    "domain": "id.me",
+                    "reason": "Broken logins"
+                },
+                {
+                    "domain": "stubhub.com",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "riteaid.com",
+                    "reason": "Missing site content"
+                },
+                {
+                    "domain": "virginmedia.com",
+                    "reason": "Chat widget blocked"
+                },
+                {
+                    "domain": "zoosk.com",
+                    "reason": "Mobile site banner breakage"
+                }
+            ]
+        },
+        "fingerprintingAudio": {
+            "state": "disabled",
+            "exceptions": [
+                {
+                    "domain": "youtube.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "meet.google.com",
+                    "reason": "site breakage"
+                }
+            ]
+        },
+        "fingerprintingBattery": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingCanvas": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "walgreens.com",
+                    "reason": "Broken login"
+                },
+                {
+                    "domain": "krunker.io",
+                    "reason": "Broken game init"
+                },
+                {
+                    "domain": "usaa.com",
+                    "reason": "Broken login"
+                },
+                {
+                    "domain": "academy.com",
+                    "reason": "Broken login"
+                },
+                {
+                    "domain": "kroger.com",
+                    "reason": "Broken login"
+                }
+            ]
+        },
+        "fingerprintingHardware": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "play.geforcenow.com",
+                    "reason": "site breakage"
+                },
+                {
+                    "domain": "stadia.google.com",
+                    "reason": "site breakage"
+                }
+            ]
+        },
+        "fingerprintingScreenSize": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "fingerprintingTemporaryStorage": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "floc": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "gpc": {
+            "state": "enabled",
+            "exceptions": [
+                {
+                    "domain": "newyorker.com",
+                    "reason": "Cookie consent box hiding audio"
+                }
+            ]
+        },
+        "https": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "referrer": {
+            "state": "enabled",
+            "exceptions": []
+        },
+        "trackerAllowlist": {
+            "state": "enabled",
+            "settings": {
+                "allowlistedTrackers": {
+                    "dynamicyield.com": {
+                        "rules": [
+                            {
+                                "rule": "cdn-eu.dynamicyield.com/9878090/api_static.js",
+                                "domains": [
+                                    "decathlon.co.uk"
+                                ],
+                                "reason": "checkout broken"
+                            }
+                        ]
+                    }
+                }
+            },
+            "exceptions": []
+        },
+        "trackingCookies1p": {
+            "state": "enabled",
+            "settings": {
+                "firstPartyTrackerCookiePolicy": {
+                    "threshold": 86400,
+                    "maxAge": 86400
+                }
+            },
+            "exceptions": []
+        },
+        "trackingCookies3p": {
+            "state": "enabled",
+            "settings": {
+                "excludedCookieDomains": [
+                    {
+                        "domain": "hangouts.google.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "docs.google.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "accounts.google.com",
+                        "reason": "SSO which needs cookies for auth"
+                    },
+                    {
+                        "domain": "googleapis.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "login.live.com",
+                        "reason": "SSO which needs cookies for auth"
+                    },
+                    {
+                        "domain": "apis.google.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "pay.google.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "payments.amazon.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "payments.amazon.de",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "microsoft.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "atlassian.net",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "atlassian.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "paypal.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "paypal.com",
+                        "reason": "site breakage"
+                    },
+                    {
+                        "domain": "bat.bing.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "bingapis.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "c.bing.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "bing.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "salesforce.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "salesforceliveagent.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "force.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "disqus.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "spotify.com",
+                        "reason": "Site breakage"
+                    },
+                    {
+                        "domain": "hangouts.google.com",
+                        "reason": "site breakage"
+                    },
+                    {
+                        "domain": "docs.google.com",
+                        "reason": "site breakage"
+                    },
+                    {
+                        "domain": "btsport-utils-prod.akamaized.net",
+                        "reason": "broken videos"
+                    }
+                ]
+            },
+            "exceptions": []
+        },
+        "userAgentRotation": {
+            "state": "disabled",
+            "settings": {
+                "agentExcludePatterns": [
+                    {
+                        "agent": "Brave Chrome",
+                        "reason": "Uncommon UA"
+                    }
+                ]
+            },
+            "exceptions": [
+                {
+                    "domain": "duosecurity.com",
+                    "reason": "Two factor auth that verifies device pathes using user agent"
+                },
+                {
+                    "domain": "okta.com",
+                    "reason": "Two factor auth that verifies device pathes using user agent"
+                },
+                {
+                    "domain": "pingidentity.com",
+                    "reason": "Two factor auth that verifies device pathes using user agent"
+                },
+                {
+                    "domain": "googleapis.com",
+                    "reason": "Causes site breakage"
+                },
+                {
+                    "domain": "recaptcha.net",
+                    "reason": "Causes login breakage on some sites"
+                },
+                {
+                    "domain": "google.com",
+                    "reason": "If recaptcha is loaded from google, spoofed UA breaks recaptcha"
+                },
+                {
+                    "domain": "gstatic.com",
+                    "reason": "Sometimes hosts recaptcha"
+                },
+                {
+                    "domain": "weather.com",
+                    "reason": "Can break weather sites that depend on weather.com api's"
+                },
+                {
+                    "domain": "dzcdn.net",
+                    "reason": "Breaks images on deezer"
+                }
+            ]
+        },
+        "ampLinks": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "linkFormats": [
+                    "^https?:\\/\\/(?:w{3}\\.)?google\\.\\S{2,}\\/amp\\/s\\/(\\S+)$",
+                    "^https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)$"
+                ],
+                "keywords": [
+                    "=amp",
+                    "amp=",
+                    "&amp",
+                    "amp&",
+                    "/amp",
+                    "amp/",
+                    ".amp",
+                    "amp.",
+                    "%amp",
+                    "amp%",
+                    "_amp",
+                    "amp_",
+                    "?amp"
+                ]
+            }
+        },
+        "trackingParameters": {
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "parameters": [
+                    "utm_[a-zA-Z]*",
+                    "gclid",
+                    "fbclid",
+                    "fb_action_ids",
+                    "fb_action_types",
+                    "fb_source",
+                    "fb_ref",
+                    "ga_source",
+                    "ga_medium",
+                    "ga_term",
+                    "ga_content",
+                    "ga_campaign",
+                    "ga_place",
+                    "action_object_map",
+                    "action_type_map",
+                    "action_ref_map",
+                    "gs_l",
+                    "mkt_tok",
+                    "hmb_campaign",
+                    "hmb_source",
+                    "hmb_medium"
+                ]
+            }
+        }
+    },
+    "unprotectedTemporary": [
+        {
+            "domain": "usbank.com",
+            "reason": "site breakage"
+        },
+        {
+            "domain": "www.x-kom.pl",
+            "reason": "site breakage"
+        },
+        {
+            "domain": "www.merriam-webster.com",
+            "reason": "site breakage"
+        },
+        {
+            "domain": "tiaa.org",
+            "reason": "site breakage"
+        },
+        {
+            "domain": "fidelity.com",
+            "reason": "site breakage"
+        }
+    ]
+}

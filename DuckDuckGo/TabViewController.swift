@@ -72,7 +72,6 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
-    private var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     
     lazy var bookmarksManager = BookmarksManager()
@@ -1346,16 +1345,32 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
-            if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
-                NetworkLeaderboard.shared.incrementHttpsUpgrades()
-                self?.lastUpgradedURL = upgradedUrl
-                self?.load(url: upgradedUrl, didUpgradeUrl: true)
-                completion(.cancel)
-                return
-            }
+        if shouldUpgradeToHttps(url: url, navigationAction: navigationAction) {
+            upgradeToHttps(url: url, allowPolicy: allowPolicy, completion: completion)
+        } else {
             completion(allowPolicy)
         }
+    }
+    
+    private func upgradeToHttps(url: URL,
+                                allowPolicy: WKNavigationActionPolicy,
+                                completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        Task {
+            let result = await PrivacyFeatures.httpsUpgrade.upgrade(url: url)
+            switch result {
+            case let .success(upgradedUrl):
+                NetworkLeaderboard.shared.incrementHttpsUpgrades()
+                lastUpgradedURL = upgradedUrl
+                load(url: upgradedUrl, didUpgradeUrl: true)
+                completion(.cancel)
+            case .failure:
+                completion(allowPolicy)
+            }
+        }
+    }
+    
+    private func shouldUpgradeToHttps(url: URL, navigationAction: WKNavigationAction) -> Bool {
+        return !failingUrls.contains(url.host ?? "") && navigationAction.isTargetingMainFrame()
     }
 
     private func performExternalNavigationFor(url: URL, action: SchemeHandler.Action) {

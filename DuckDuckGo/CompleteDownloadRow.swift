@@ -43,10 +43,7 @@ struct CompleteDownloadRow: View {
             Button {
                 self.isSharePresented = true
             } label: {
-                Image(systemName: "square.and.arrow.up")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 20.0, height: 20.0)
+                Image.share
             }
             .buttonStyle(.plain)
             .animation(nil)
@@ -87,4 +84,8 @@ private enum Const {
 private extension Color {
     static let filename = Color(UIColor.darkGreyish)
     static let fileSize = Color(UIColor.greyish3)
+}
+
+private extension Image {
+    static let share = Image("DownloadsShareIcon")
 }

@@ -21,9 +21,17 @@ import SwiftUI
 
 class DownloadsListHostingController: UIHostingController<DownloadsList> {
     required init?(coder aDecoder: NSCoder) {
-//        let model = DownloadsListModel()
+
         let dataSource = DownloadsListDataSource()
         let viewModel = DownloadsListViewModel(dataSource: dataSource)
         super.init(coder: aDecoder, rootView: DownloadsList(viewModel: viewModel))
+        
+        setupTableViewAppearance()
+    }
+    
+    private func setupTableViewAppearance() {
+        // Required due to lack of SwiftUI API for changing the background color of List
+        let appearance = UITableView.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
+        appearance.backgroundColor = UIColor(named: "DownloadsListBackgroundColor")
     }
 }

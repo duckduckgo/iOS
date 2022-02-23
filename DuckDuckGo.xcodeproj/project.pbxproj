@@ -2162,7 +2162,6 @@
 		1E8AD1C527BE45F800ABA377 /* DownloadsList */ = {
 			isa = PBXGroup;
 			children = (
-				1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */,
 				1E4DCF4D27B6A69600961E25 /* DownloadsListHostingController.swift */,
 				1E4DCF4227B6A29D00961E25 /* View */,
 				1E4DCF4327B6A2B400961E25 /* ViewModel */,
@@ -2193,6 +2192,7 @@
 			isa = PBXGroup;
 			children = (
 				1E8AD1DC27C653F800ABA377 /* Downloads.xcassets */,
+				1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */,
 				1E8AD1C527BE45F800ABA377 /* DownloadsList */,
 				3132FA2227A0776B00DD7A12 /* FilePreview */,
 				316931DA27BD24B60095F5ED /* Alerts */,

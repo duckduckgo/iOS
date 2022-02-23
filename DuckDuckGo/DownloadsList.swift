@@ -41,7 +41,7 @@ struct DownloadsList: View {
         if viewModel.sections.isEmpty {
             emptyState
         } else {
-            list
+            listWithBottomToolbar
         }
     }
     
@@ -54,42 +54,65 @@ struct DownloadsList: View {
                 .foregroundColor(.emptyState)
             Spacer()
         }
+        .frame(maxWidth: .infinity)
+        .background(Color.background)
+        .edgesIgnoringSafeArea(.bottom)
+    }
+    
+    var listWithBottomToolbar: some View {
+        if #available(iOS 14.0, *) {
+            return AnyView(
+                list
+                .toolbar {
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Spacer()
+                        EditButton().environment(\.editMode, $editMode)
+                            .foregroundColor(.barButton)
+                    }
+                }
+            )
+        } else {
+            // Due to no proper toolbar support in SwiftUI for iOS 13
+            return AnyView(
+                VStack {
+                    list
+                    HStack {
+                        Spacer()
+                        EditButton().environment(\.editMode, $editMode)
+                            .foregroundColor(.barButton)
+                    }
+                    .padding()
+                }
+            )
+        }
     }
     
     var list: some View {
-        VStack {
-            List {
-                ForEach(viewModel.sections) { section in
-                    Section(header: Text(section.header)) {
-                        ForEach(section.rows) { row in
-                            switch row.type {
-                            case .ongoing:
-                                OngoingDownloadRow(rowModel: row, cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
-                                    .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
-                                    .deleteDisabled(true)
-                            case .complete:
-                                CompleteDownloadRow(rowModel: row)
-                            }
-                        }
-                        .onDelete { offset in
-                            self.delete(at: offset, in: section)
+        List {
+            ForEach(viewModel.sections) { section in
+                Section(header: Text(section.header)) {
+                    ForEach(section.rows) { row in
+                        switch row.type {
+                        case .ongoing:
+                            OngoingDownloadRow(rowModel: row, cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
+                                .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
+                                .deleteDisabled(true)
+                        case .complete:
+                            CompleteDownloadRow(rowModel: row)
                         }
                     }
+                    .onDelete { offset in
+                        self.delete(at: offset, in: section)
+                    }
                 }
-                if editMode == .active {
-                    deleteAllSection
-                }
+                .listRowBackground(Color.rowBackground)
             }
-            .listStyle(.grouped)
-            .environment(\.editMode, $editMode)
-            
-            HStack {
-                Spacer()
-                EditButton().environment(\.editMode, $editMode)
-                    .foregroundColor(.barButton)
+            if editMode == .active {
+                deleteAllSection
             }
-            .padding()
         }
+        .listStyle(.grouped)
+        .environment(\.editMode, $editMode)
     }
     
     private var deleteAllSection: some View {
@@ -145,4 +168,6 @@ private extension Color {
     static let barButton = Color("DownloadsListBarButtonColor")
     static let emptyState = Color("DownloadsListEmptyStateColor")
     static let deleteAll = Color("DownloadsListDestructiveColor")
+    static let background = Color("DownloadsListBackgroundColor")
+    static let rowBackground = Color("DownloadsListRowBackgroundColor")
 }

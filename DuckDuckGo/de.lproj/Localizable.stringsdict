@@ -29,9 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* und *1 weiteres Tracker-Netzwerk* haben versucht, dich hier zu tracken. Ich habe sie blockiert! ☝️Du kannst in der Adressleiste sehen, wer dich beim Besuch einer neuen Website tracken will.</string>
+			<string>*%2$@, %3$@* und *1 weiteres Tracker-Netzwerk* haben versucht, dich hier zu tracken. 
+
+Ich habe sie blockiert!
+
+ ☝️Du kannst in der Adressleiste sehen, wer dich beim Besuch einer neuen Website tracken will.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* and *%1$d weitere Tracker-Netzwerke* haben versucht, dich hier zu tracken. Ich habe sie blockiert! ☝️Du kannst in der Adressleiste sehen, wer dich beim Besuch einer neuen Website tracken will.</string>
+			<string>*%2$@, %3$@* and *%1$d weitere Tracker-Netzwerke* haben versucht, dich hier zu tracken. 
+
+Ich habe sie blockiert!
+
+ ☝️Du kannst in der Adressleiste sehen, wer dich beim Besuch einer neuen Website tracken will.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

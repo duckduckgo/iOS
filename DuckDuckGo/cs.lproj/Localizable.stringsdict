@@ -35,19 +35,27 @@
 			<key>one</key>
 			<string>*%2$@, %3$@* a *1 další subjekt* se tě tady pokouší sledovat.
 
-Zablokovali jsme je.&lt;br/&gt;&lt;br/&gt;☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
+Zablokovali jsme je.
+
+☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 			<key>few</key>
 			<string>*%2$@, %3$@* a *%1$d další subjekty* se tě tady pokouší sledovat.
 
-Zablokovali jsme je.&lt;br/&gt;&lt;br/&gt;☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
+Zablokovali jsme je.
+
+☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 			<key>many</key>
 			<string>*%2$@, %3$@* a *%1$d dalšího subjektu* se tě tady pokouší sledovat.
 
-Zablokovali jsme je.&lt;br/&gt;&lt;br/&gt;☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
+Zablokovali jsme je.
+
+☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 			<key>other</key>
 			<string>*%2$@, %3$@* a *%1$d dalších subjektů* se tě tady pokouší sledovat.
 
-Zablokovali jsme je.&lt;br/&gt;&lt;br/&gt;☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
+Zablokovali jsme je.
+
+☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

@@ -34,44 +34,46 @@ struct CompleteDownloadRow: View {
                     .font(Font(uiFont: Const.Font.filename))
                     .foregroundColor(.filename)
                 Spacer()
-                    .frame(height: 6.0)
+                    .frame(height: Const.Spacing.betweenLabels)
                 Text(rowModel.fileSize)
                     .font(Font(uiFont: Const.Font.fileSize))
                     .foregroundColor(.fileSize)
             }
+            
             Spacer()
-            Button {
-                self.isSharePresented = true
-            } label: {
-                Image.share
-            }
-            .buttonStyle(.plain)
-            .animation(nil)
-            .sheet(isPresented: $isSharePresented, onDismiss: {
-                print("Dismiss")
-            }, content: {
-                if let fileURL = rowModel.localFileURL {
-                    FileActivityView(localFileURL: fileURL)
-                        .edgesIgnoringSafeArea(.all)
-                } else {
-#warning("Pixel and/or display an error message?")
-                }
-            })
+            
+            shareButton
         }
-        .frame(height: 76.0)
-        .listRowInsets(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
+        .frame(height: Const.Size.rowHeight)
+        .listRowInsets(EdgeInsets.rowInsets)
         .contentShape(Rectangle())
         .onTapGesture {
-            self.isPreviewPresented.toggle()
+            self.isPreviewPresented = true
         }
-        .sheet(isPresented: $isPreviewPresented, onDismiss: {
-            isPreviewPresented = false
-        }, content: {
+        .sheet(isPresented: $isPreviewPresented, content: {
             if let fileURL = rowModel.localFileURL {
                 QuickLookPreviewView(localFileURL: fileURL)
                     .edgesIgnoringSafeArea(.all)
             } else {
-#warning("Pixel and/or display an error message?")
+                #warning("Pixel and/or display an error message?")
+            }
+        })
+    }
+    
+    private var shareButton: some View {
+        Button {
+            self.isSharePresented = true
+        } label: {
+            Image.share
+        }
+        .buttonStyle(.plain)
+        .animation(nil)
+        .sheet(isPresented: $isSharePresented, content: {
+            if let fileURL = rowModel.localFileURL {
+                FileActivityView(localFileURL: fileURL)
+                    .edgesIgnoringSafeArea(.all)
+            } else {
+                #warning("Pixel and/or display an error message?")
             }
         })
     }
@@ -82,6 +84,18 @@ private enum Const {
         static let filename = UIFont.semiBoldAppFont(ofSize: 16)
         static let fileSize = UIFont.appFont(ofSize: 14)
     }
+    
+    enum Spacing {
+        static let betweenLabels: CGFloat = 6
+    }
+    
+    enum Size {
+        static let rowHeight: CGFloat = 76
+    }
+}
+
+private extension EdgeInsets {
+    static let rowInsets = EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
 }
 
 private extension Color {

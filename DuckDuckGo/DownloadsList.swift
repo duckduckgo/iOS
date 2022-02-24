@@ -95,7 +95,8 @@ struct DownloadsList: View {
                     ForEach(section.rows) { row in
                         switch row.type {
                         case .ongoing:
-                            OngoingDownloadRow(rowModel: row, cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
+                            OngoingDownloadRow(rowModel: row,
+                                               cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
                                 .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
                                 .deleteDisabled(true)
                         case .complete:

@@ -35,7 +35,7 @@
 		1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */; };
 		1E8AD1C727BE9B2900ABA377 /* DownloadsListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */; };
 		1E8AD1C927BFAD1500ABA377 /* DirectoryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1C827BFAD1500ABA377 /* DirectoryMonitor.swift */; };
-		1E8AD1CD27BFF3A100ABA377 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */; };
+		1E8AD1CD27BFF3A100ABA377 /* FileActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CC27BFF3A100ABA377 /* FileActivityView.swift */; };
 		1E8AD1CF27C000A000ABA377 /* CompleteDownloadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */; };
 		1E8AD1D127C000AB00ABA377 /* OngoingDownloadRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1D027C000AB00ABA377 /* OngoingDownloadRow.swift */; };
 		1E8AD1D527C2E22900ABA377 /* DownloadsListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1D427C2E22900ABA377 /* DownloadsListSection.swift */; };
@@ -55,7 +55,7 @@
 		3132FA2827A0788400DD7A12 /* PassKitPreviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3132FA2727A0788400DD7A12 /* PassKitPreviewHelper.swift */; };
 		3132FA2A27A0788F00DD7A12 /* QuickLookPreviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3132FA2927A0788F00DD7A12 /* QuickLookPreviewHelper.swift */; };
 		3132FA2C27A07A1B00DD7A12 /* FilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3132FA2B27A07A1B00DD7A12 /* FilePreview.swift */; };
-		314C92B827C3DD660042EC96 /* QuickLookPreviewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314C92B727C3DD660042EC96 /* QuickLookPreviewRepresentable.swift */; };
+		314C92B827C3DD660042EC96 /* QuickLookPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314C92B727C3DD660042EC96 /* QuickLookPreviewView.swift */; };
 		314C92BA27C3E7CB0042EC96 /* QuickLookContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314C92B927C3E7CB0042EC96 /* QuickLookContainerViewController.swift */; };
 		3151F0EA27357FBA00226F58 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0E927357FBA00226F58 /* SpeechRecognizer.swift */; };
 		3151F0EC27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0EB27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift */; };
@@ -772,7 +772,7 @@
 		1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeSettingsViewController.swift; sourceTree = "<group>"; };
 		1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListDataSource.swift; sourceTree = "<group>"; };
 		1E8AD1C827BFAD1500ABA377 /* DirectoryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMonitor.swift; sourceTree = "<group>"; };
-		1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		1E8AD1CC27BFF3A100ABA377 /* FileActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileActivityView.swift; sourceTree = "<group>"; };
 		1E8AD1CE27C0009F00ABA377 /* CompleteDownloadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDownloadRow.swift; sourceTree = "<group>"; };
 		1E8AD1D027C000AB00ABA377 /* OngoingDownloadRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingDownloadRow.swift; sourceTree = "<group>"; };
 		1E8AD1D427C2E22900ABA377 /* DownloadsListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListSection.swift; sourceTree = "<group>"; };
@@ -792,7 +792,7 @@
 		3132FA2727A0788400DD7A12 /* PassKitPreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassKitPreviewHelper.swift; sourceTree = "<group>"; };
 		3132FA2927A0788F00DD7A12 /* QuickLookPreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewHelper.swift; sourceTree = "<group>"; };
 		3132FA2B27A07A1B00DD7A12 /* FilePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreview.swift; sourceTree = "<group>"; };
-		314C92B727C3DD660042EC96 /* QuickLookPreviewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewRepresentable.swift; sourceTree = "<group>"; };
+		314C92B727C3DD660042EC96 /* QuickLookPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewView.swift; sourceTree = "<group>"; };
 		314C92B927C3E7CB0042EC96 /* QuickLookContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookContainerViewController.swift; sourceTree = "<group>"; };
 		3151F0E927357FBA00226F58 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		3151F0EB27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchFeedbackViewModel.swift; sourceTree = "<group>"; };
@@ -2180,7 +2180,9 @@
 		1E8AD1D327C000EA00ABA377 /* Modals */ = {
 			isa = PBXGroup;
 			children = (
-				1E8AD1CC27BFF3A100ABA377 /* ActivityView.swift */,
+				1E8AD1CC27BFF3A100ABA377 /* FileActivityView.swift */,
+				314C92B727C3DD660042EC96 /* QuickLookPreviewView.swift */,
+				314C92B927C3E7CB0042EC96 /* QuickLookContainerViewController.swift */,
 			);
 			name = Modals;
 			sourceTree = "<group>";
@@ -2210,8 +2212,6 @@
 				3132FA2527A0784600DD7A12 /* FilePreviewHelper.swift */,
 				3132FA2927A0788F00DD7A12 /* QuickLookPreviewHelper.swift */,
 				3132FA2727A0788400DD7A12 /* PassKitPreviewHelper.swift */,
-				314C92B727C3DD660042EC96 /* QuickLookPreviewRepresentable.swift */,
-				314C92B927C3E7CB0042EC96 /* QuickLookContainerViewController.swift */,
 			);
 			name = FilePreview;
 			sourceTree = "<group>";
@@ -4822,7 +4822,7 @@
 				98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */,
 				CBD4F140279EBFB300B20FD7 /* SwiftUICollectionViewCell.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
-				1E8AD1CD27BFF3A100ABA377 /* ActivityView.swift in Sources */,
+				1E8AD1CD27BFF3A100ABA377 /* FileActivityView.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				CBD4F13C279EBF4A00B20FD7 /* HomeMessage.swift in Sources */,
@@ -4883,7 +4883,7 @@
 				F45B37792760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift in Sources */,
 				8505836A219F424500ED4EDB /* UIAlertControllerExtension.swift in Sources */,
 				983EABB8236198F6003948D1 /* DatabaseMigration.swift in Sources */,
-				314C92B827C3DD660042EC96 /* QuickLookPreviewRepresentable.swift in Sources */,
+				314C92B827C3DD660042EC96 /* QuickLookPreviewView.swift in Sources */,
 				F1AE54E81F0425FC00D9A700 /* AuthenticationViewController.swift in Sources */,
 				F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */,
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,

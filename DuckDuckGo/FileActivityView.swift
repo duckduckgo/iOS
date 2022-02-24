@@ -1,5 +1,5 @@
 //
-//  ActivityView.swift
+//  FileActivityView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -20,21 +20,15 @@
 import UIKit
 import SwiftUI
 
-struct ActivityViewController: UIViewControllerRepresentable {
-
-//    var activityItems: [Any]
-    var rowModel: DownloadsListRow
+struct FileActivityView: UIViewControllerRepresentable {
+    let localFileURL: URL
     var applicationActivities: [UIActivity]?
 
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
-        let activityItems = [rowModel.localFileURL!]
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-        return controller
+    func makeUIViewController(context: UIViewControllerRepresentableContext<FileActivityView>) -> UIActivityViewController {
+        UIActivityViewController(activityItems: [localFileURL], applicationActivities: applicationActivities)
     }
 
     func updateUIViewController(_ uiViewController: UIActivityViewController,
-                                context: UIViewControllerRepresentableContext<ActivityViewController>) {
-
+                                context: UIViewControllerRepresentableContext<FileActivityView>) {
     }
-
 }

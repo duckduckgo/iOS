@@ -50,7 +50,12 @@ struct CompleteDownloadRow: View {
             .sheet(isPresented: $isSharePresented, onDismiss: {
                 print("Dismiss")
             }, content: {
-                ActivityViewController(rowModel: rowModel)
+                if let fileURL = rowModel.localFileURL {
+                    FileActivityView(localFileURL: fileURL)
+                        .edgesIgnoringSafeArea(.all)
+                } else {
+#warning("Pixel and/or display an error message?")
+                }
             })
         }
         .frame(height: 76.0)
@@ -62,11 +67,9 @@ struct CompleteDownloadRow: View {
         .sheet(isPresented: $isPreviewPresented, onDismiss: {
             isPreviewPresented = false
         }, content: {
-            if let localFileURL = rowModel.localFileURL {
-                QuickLookPreviewRepresentable(localFileURL: localFileURL, isPresented: $isPreviewPresented) {
-                    self.isPreviewPresented = false
-                }.edgesIgnoringSafeArea(.all)
-
+            if let fileURL = rowModel.localFileURL {
+                QuickLookPreviewView(localFileURL: fileURL)
+                    .edgesIgnoringSafeArea(.all)
             } else {
 #warning("Pixel and/or display an error message?")
             }

@@ -1,5 +1,5 @@
 //
-//  QuickLookPreviewRepresentable.swift
+//  QuickLookPreviewView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -19,15 +19,14 @@
 
 import SwiftUI
 
-struct QuickLookPreviewRepresentable: UIViewControllerRepresentable {
+struct QuickLookPreviewView: UIViewControllerRepresentable {
+    @Environment(\.presentationMode) var presentationMode
     let localFileURL: URL
-    @Binding var isPresented: Bool
-    var onDismiss: () -> Void
     
     func makeUIViewController(context: Context) -> QuickLookContainerViewController {
         let controller = QuickLookContainerViewController(localFileURL: localFileURL)
-        controller.didFinish = {
-            isPresented = false
+        controller.onDoneButtonPressed = {
+            presentationMode.wrappedValue.dismiss()
         }
         return controller
     }

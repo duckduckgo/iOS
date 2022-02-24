@@ -20,13 +20,8 @@
 import UIKit
 import QuickLook
 
-protocol QuickLookContainerViewControllerDelegate: AnyObject {
-    func quickLookContainerViewControllerDidFinish(_ controller: QuickLookContainerViewController)
-}
-
 class QuickLookContainerViewController: UIViewController {
-    weak var delegate: QuickLookContainerViewControllerDelegate?
-    var didFinish: (() -> Void)?
+    var onDoneButtonPressed: (() -> Void)?
 
     private lazy var quickLookController: QLPreviewController = {
         let controller = QLPreviewController()
@@ -61,7 +56,7 @@ class QuickLookContainerViewController: UIViewController {
     }
     
     @objc private func doneButtonPressed() {
-        didFinish?()
+        onDoneButtonPressed?()
     }
 }
 

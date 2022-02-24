@@ -102,6 +102,9 @@ public final class ContentBlocking {
             } else {
                 domainEvent = .contentBlockingErrorReportingIssue
             }
+
+        case .contentBlockingCompilationTime:
+            domainEvent = .contentBlockingCompilationTime
         }
 
         if let error = error {

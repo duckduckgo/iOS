@@ -1359,10 +1359,14 @@ extension TabViewController: WKNavigationDelegate {
             let result = await PrivacyFeatures.httpsUpgrade.upgrade(url: url)
             switch result {
             case let .success(upgradedUrl):
-                NetworkLeaderboard.shared.incrementHttpsUpgrades()
-                lastUpgradedURL = upgradedUrl
-                load(url: upgradedUrl, didUpgradeUrl: true)
-                completion(.cancel)
+                if lastUpgradedURL != upgradedUrl {
+                    NetworkLeaderboard.shared.incrementHttpsUpgrades()
+                    lastUpgradedURL = upgradedUrl
+                    load(url: upgradedUrl, didUpgradeUrl: true)
+                    completion(.cancel)
+                } else {
+                    completion(allowPolicy)
+                }
             case .failure:
                 completion(allowPolicy)
             }
@@ -1391,16 +1395,6 @@ extension TabViewController: WKNavigationDelegate {
     private func determineAllowPolicy() -> WKNavigationActionPolicy {
         let allowWithoutUniversalLinks = WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) ?? .allow
         return AppUserDefaults().allowUniversalLinks ? .allow : allowWithoutUniversalLinks
-    }
-    
-    private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
-        guard !failingUrls.contains(url.host ?? ""), navigationAction.isTargetingMainFrame() else { return nil }
-        
-        if let upgradedUrl: URL = url.toHttps(), lastUpgradedURL != upgradedUrl {
-            return upgradedUrl
-        }
-        
-        return nil
     }
     
     private func showErrorNow() {

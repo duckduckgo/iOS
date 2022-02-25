@@ -1,8 +1,8 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Editar";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Mostrar";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Deshacer";
@@ -27,6 +27,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Desactivar la protección de privacidad";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Descargas";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Editar marcador";
@@ -87,24 +90,6 @@
 
 /* Share action */
 "action.title.share" = "Compartir";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Añadir widget";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Obtén acceso rápido a búsquedas privadas y a los sitios que más te gustan.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Mantén pulsada la pantalla de inicio para entrar en el modo jiggle.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Pulsa el botón más %@.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Busca y selecciona DuckDuckGo. A continuación, elige un widget.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Visita tus sitios favoritos con un toque.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Los marcadores existentes no se duplicarán.";
@@ -235,6 +220,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DESCRIBE QUÉ PASÓ";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Mes pasado";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Semana pasada";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Hoy";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Ayer";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ocultar consejos para siempre";
 
@@ -318,6 +315,48 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo bloquea automáticamente muchos rastreadores. Con el Control Global de Privacidad (GPC), también puedes solicitar a los sitios web participantes que restrinjan la venta o el uso compartido de tus datos personales con otras empresas.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Guardar en descargas";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Cancelar";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "¿Seguro que quieres cancelar esta descarga?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Reanudar";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "¿Cancelar descarga?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Eliminar todo";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Descargando - %1$@ de %2$@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Descargas";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Esto también cancelará las descargas en curso";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Todos los archivos eliminados";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Descarga de %@ finalizada";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "%@ eliminado";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "No se ha podido descargar. Comprueba la conexión a internet.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Descarga de %@ iniciada";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Cancelar";

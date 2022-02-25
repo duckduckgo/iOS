@@ -1,8 +1,8 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Редактировать";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Показать";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Отменить";
@@ -27,6 +27,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Отключить защиту конфиденциальности";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Загрузки";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Редактировать закладку";
@@ -87,24 +90,6 @@
 
 /* Share action */
 "action.title.share" = "Поделиться";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Добавить виджет";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Быстрый доступ к конфиденциальному поиску и любимым сайтам.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Удерживайте нажатие на домашнем экране, чтобы запустить режим настройки.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Нажмите кнопку «плюс» %@.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Найдите и выберите DuckDuckGo. Затем выберите виджет.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Доступ к любимым сайтам в одно касание.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Существующие закладки дублироваться не будут.";
@@ -235,6 +220,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "ОПИШИТЕ, ЧТО СЛУЧИЛОСЬ";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "За последний месяц";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "За последнюю неделю";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Сегодня";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Вчера";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Скрыть подсказки навсегда";
 
@@ -319,6 +316,48 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo блокирует многие трекеры автоматически. Функция «Глобальный контроль конфиденциальности» (GPC) позволяет затребовать от участвующих в программе сайтов остановить передачу и продажу ваших личных данных другим компаниям.";
 
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Сохранить в «Загрузки»";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Отменить";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Вы точно хотите отменить эту загрузку?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Продолжить";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Отменить загрузку?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Удалить все";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Загружается файл %1$@ из %2$@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Загрузки";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Текущие загрузки также будут отменены";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Все файлы удалены";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Завершена загрузка файла %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Файл %@ удален";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Ошибка загрузки. Проверьте подключение к интернету.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Началась загрузка файла %@";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отменить";
 
@@ -392,7 +431,7 @@
 "email.waitlist.notification-permission.body" = "Мы отправим вам уведомление, когда вы сможете начать пользоваться защитой почты.";
 
 /* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Хотите, чтобы мы оповестили вас, когда подойдёт ваша очередь?";
+"email.waitlist.notification-permission.title" = "Оповестить, когда подойдет ваша очередь?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Ранее вы встали в очередь и попросили нас оповестить вас о возможности применить защиту почты.";

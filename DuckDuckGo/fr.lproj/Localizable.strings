@@ -1,8 +1,8 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Modifier";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Afficher";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Annuler";
@@ -27,6 +27,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Désactiver la protection de la confidentialité";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Téléchargements";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Modifier le signet";
@@ -87,24 +90,6 @@
 
 /* Share action */
 "action.title.share" = "Partager";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Ajouter un widget";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Accédez rapidement à la recherche privée et aux sites que vous aimez.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Appuyez longuement sur l'écran d'accueil pour passer en mode Jiggle.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Appuyez sur le bouton plus %@.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Trouvez et sélectionnez DuckDuckGo. Puis choisissez un widget.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Appuyez une fois et accédez à vos sites préférés.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Les signets existants ne seront pas dupliqués.";
@@ -235,6 +220,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DÉCRIVEZ CE QU'IL S'EST PASSÉ";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Le mois dernier";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "La semaine dernière";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Auj.";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Hier";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Masquer les conseils définitivement";
 
@@ -319,6 +316,48 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo bloque automatiquement de nombreux traqueurs. Grâce au Global Privacy Control (GPC), vous pouvez également demander aux sites web participants de limiter la vente ou le partage de vos données personnelles avec d'autres entreprises.";
 
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Enregistrer dans les téléchargements";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Annuler";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Voulez-vous vraiment annuler ce téléchargement ?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Reprendre";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Annuler le téléchargement ?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Tout supprimer";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Téléchargement - %1$@ sur %2$@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Téléchargements";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Ceci annulera également les téléchargements en cours";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Tous les fichiers sont supprimés.";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Téléchargement terminé pour %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "%@ supprimé";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Échec du téléchargement. Vérifiez la connexion Internet.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Début du téléchargement pour %@";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuler";
 
@@ -392,7 +431,7 @@
 "email.waitlist.notification-permission.body" = "Nous vous enverrons une notification dès que vous pourrez commencer à utiliser la protection des e-mails.";
 
 /* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Souhaitez-vous être prévenu(e) lorsque vous aurez accès à notre nouvelle fonctionnalité ?";
+"email.waitlist.notification-permission.title" = "Souhaitez-vous être prévenu(e) lorsque ce sera votre tour ?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Vous vous êtes inscrit(e) sur la liste d'attente et nous avez demandé de vous informer lorsque vous pourrez tester notre fonctionnalité de protection des e-mails.";

@@ -1,8 +1,8 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigeeri";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Kuva";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Võta tagasi";
@@ -27,6 +27,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Keela privaatsuse kaitse";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Allalaadimised";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Redigeeri järjehoidjat";
@@ -87,24 +90,6 @@
 
 /* Share action */
 "action.title.share" = "Jaga";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Lisa vidin";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Kasuta kiiret juurdepääsu privaatsele otsingule ja lemmiksaitidele.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Pikk vajutus avaekraanile rakenduse ümberkorraldusrežiimi sisenemiseks.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Vajutage plussnupule %@.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Leidke ja valige DuckDuckGo. Seejärel valige vidin.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Ühe puudutusega oma lemmiksaitidele.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
@@ -235,6 +220,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "KIRJELDAGE TOIMUNUT";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Viimane kuu";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Viimane nädal";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Täna";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Eile";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Peida näpunäited igaveseks";
 
@@ -318,6 +315,48 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo blokeerib automaatselt paljud jälitajad. Üleilmse privaatsuskontrolli (GPC) abil saate paluda osalevatel veebisaitidel piirata teie isikuandmete müümist või jagamist teiste ettevõtetega.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Salvesta allalaadimistesse";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Tühista";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Kas soovid kindlasti selle allalaadimise tühistada?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Taasta";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Kas tühistada allalaadimine?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Kustuta kõik";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Allalaadimine - %1$@/%2$@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Allalaadimised";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "See tühistab ka pooleliolevad allalaadimised";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Kõik failid kustutatud";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "%@ allalaadimine on lõpetatud";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "%@ kustutatud";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Allalaadimine ebaõnnestus. Kontrolli internetiühendust.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "%@ allalaadimine algas";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Tühista";

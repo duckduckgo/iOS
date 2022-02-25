@@ -1,8 +1,8 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigera";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Visa";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Återställ";
@@ -27,6 +27,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Inaktivera integritetsskydd";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Nerladdningar";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Redigera bokmärke";
@@ -87,24 +90,6 @@
 
 /* Share action */
 "action.title.share" = "Dela";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Lägg till widget";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Få snabb tillgång till privat sökning och dina favoritwebbplatser.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Tryck länge på startskärmen tills apparna börjar vicka.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Tryck på plusknappen för %@.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Leta upp och välj DuckDuckGo. Välj sedan en widget.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Besök dina favoritwebbplatser med ett enda tryck.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Befintliga bokmärken kommer inte att kopieras.";
@@ -235,6 +220,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "BERÄTTA VAD SOM HÄNDE";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Senaste månaden";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Senaste veckan";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Idag";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Igår";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Dölj tipsen för alltid";
 
@@ -319,6 +316,48 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo blockerar många spårare automatiskt. Med Global Privacy Control (GPC) kan du dessutom be deltagande webbplatser att begränsa försäljning eller delning av dina personuppgifter till andra företag.";
 
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Spara till Nerladdningar";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Avbryt";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Är du säker på att du vill avbryta denna nerladdning?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Återuppta";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Vill du avbryta nerladdningen?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Radera allt";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Laddar ner – %1$@ av %2$@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Nerladdningar";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Detta kommer också att avbryta pågående nerladdningar";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Alla filer raderade";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Nerladdningen slutförd för %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Raderade %@";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Det gick inte att ladda ner. Kontrollera internetanslutningen.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Nerladdning påbörjad för %@";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Avbryt";
 
@@ -392,7 +431,7 @@
 "email.waitlist.notification-permission.body" = "Vi skickar dig ett meddelande när du kan börja använda e-postskydd.";
 
 /* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Vill du att vi ska skicka ett meddelande när det är din tur?";
+"email.waitlist.notification-permission.title" = "Vill du att vi meddelar dig när det är din tur?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Du satte upp dig på väntelistan och bad oss att meddela dig när det är din tur att prova e-postskydd.";

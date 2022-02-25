@@ -1,8 +1,8 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediģēt";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Rādīt";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Atsaukt";
@@ -27,6 +27,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Atspējot privātuma aizsardzību";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Lejupielādes";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Rediģēt grāmatzīmi";
@@ -87,24 +90,6 @@
 
 /* Share action */
 "action.title.share" = "Kopīgot";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Pievienot logrīku";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Iegūsti ātru piekļuvi privātajai meklēšanai un savām mīļākajām vietnēm.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Ilgi nospied sākuma ekrānā, lai pārietu pārkārtošanas režīmā.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Pieskaries plus %@ pogai.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Atrodi un atlasi DuckDuckGo. Pēc tam izvēlies logrīku.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Viens pieskāriens līdz tavām mīļākajām vietnēm.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esošās grāmatzīmes netiks dublētas.";
@@ -235,6 +220,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "APRAKSTI NOTIKUŠO";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Iepriekšējais mēnesis";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Iepriekšējā nedēļa";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Šodien";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Vakar";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Paslēpt padomus uz visiem laikiem";
 
@@ -318,6 +315,48 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo automātiski bloķē daudzus izsekotājus. Izmantojot globālo privātuma kontroli (GPC), vari arī lūgt iesaistītajām vietnēm ierobežot savu personas datu pārdošanu vai kopīgošanu ar citiem uzņēmumiem.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Lejupielādēt";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Atcelt";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Vai tiešām vēlies atcelt šo lejupielādi?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Turpināt";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Vai atcelt lejupielādi?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Dzēst visus";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Notiek lejupielāde – %1$@ no %2$@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Lejupielādes";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Tas atcels arī ritošās lejupielādes";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Visi faili izdzēsti";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "%@ lejupielāde ir pabeigta";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "%@ izdzēsts";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Neizdevās lejupielādēt. Pārbaudi interneta savienojumu.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "%@ lejupielāde sākta";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atcelt";

@@ -29,10 +29,17 @@ class ActionMessageView: UIView {
         static var maxWidth: CGFloat = 346
         static var minimumHorizontalPadding: CGFloat = 20
         static var cornerRadius: CGFloat = 10
-        static var windowBottomPadding: CGFloat = 70
         
         static var animationDuration: TimeInterval = 0.2
         static var duration: TimeInterval = 3.0
+        
+        static var windowBottomPadding: CGFloat {
+            if UIDevice.current.userInterfaceIdiom == .phone && !isPortrait {
+                return 40
+            }
+            
+            return 70
+        }
     }
     
     @IBOutlet weak var message: UILabel!

@@ -41,13 +41,18 @@ class DownloadsListRow: Identifiable, ObservableObject {
     
     func subscribeToUpdates(from download: Download) {
         let totalSize = download.totalBytesExpectedToWrite
-        let totalSizeString = totalSize > 0 ? DownloadsListRow.byteCountFormatter.string(fromByteCount: totalSize) : "?"
 
         download.$totalBytesWritten
             .throttle(for: .milliseconds(1000), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] currentSize in
                 let currentSizeString = DownloadsListRow.byteCountFormatter.string(fromByteCount: currentSize)
-                self?.fileSize = UserText.downloadProgressMessage(currentSize: currentSizeString, totalSize: totalSizeString)
+                
+                if totalSize > 0 {
+                    let totalSizeString = DownloadsListRow.byteCountFormatter.string(fromByteCount: totalSize)
+                    self?.fileSize = UserText.downloadProgressMessage(currentSize: currentSizeString, totalSize: totalSizeString)
+                } else {
+                    self?.fileSize = UserText.downloadProgressMessageForUnknownTotalSize(currentSize: currentSizeString)
+                }
         }.store(in: &subscribers)
         
         download.$totalBytesWritten

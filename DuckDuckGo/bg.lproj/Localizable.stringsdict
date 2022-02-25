@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Сигурни ли сте, че искате да изтриете тази папка и %1$d елемент?</string>
+			<key>other</key>
+			<string>Сигурни ли сте, че искате да изтриете тази папка и %1$d елемента?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,17 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* и *още 1 друг* се опитват да ви проследят тук.
+			<string>*%2$@, %3$@* и *още 1 друг* се опитват да Ви проследят до тук.
 
 Блокирах ги!
 
-☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.</string>
+☝️ Вижте лентата с адреса, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* и *още %1$d други* се опитват да ви проследят тук.
+			<string>*%2$@, %3$@* и *още %1$d други* се опитват да Ви проследят до тук.
 
 Блокирах ги!
 
-☝️ Вижте URL лентата, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.</string>
+☝️ Вижте лентата с адреса, за да разберете кой се опитва да ви проследи, когато посещавате нов сайт.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

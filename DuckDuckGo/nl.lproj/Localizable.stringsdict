@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Weet je zeker dat je deze deze map en %1$d item wilt verwijderen?</string>
+			<key>other</key>
+			<string>Weet je zeker dat je deze map en %1$d items wilt verwijderen?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,17 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* en *1 andere* probeerden je hier te volgen.
+			<string>*%2$@, %3$@* en *1 andere* probeerden je hier te volgen. 
 
 Ik heb ze geblokkeerd!
 
-☝️ Check de URL-balk om te zien wie je probeert te volgen wanneer je een nieuwe site bezoekt.</string>
+☝️ Je kunt de URL-balk bekijken om te zien wie je probeert te volgen wanneer je een nieuwe site bezoekt.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* en *%1$d andere* probeerden je hier te volgen.
+			<string>*%2$@, %3$@* en *%1$d anderen* probeerden je hier te volgen.
 
 Ik heb ze geblokkeerd!
 
-☝ Check de URL-balk bekijken om te zien wie je probeert te volgen wanneer je een nieuwe site bezoekt.</string>
+☝️ Je kunt de URL-balk bekijken om te zien wie je probeert te volgen wanneer je een nieuwe site bezoekt.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

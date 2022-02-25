@@ -40,7 +40,7 @@ struct CompleteDownloadRow: View {
                     .foregroundColor(.fileSize)
             }
             
-            Spacer()
+            Spacer(minLength: Const.Spacing.betweenLabelsAndShareButton)
             
             shareButton
         }
@@ -87,6 +87,7 @@ private enum Const {
     
     enum Spacing {
         static let betweenLabels: CGFloat = 6
+        static let betweenLabelsAndShareButton: CGFloat = 20
     }
     
     enum Size {

@@ -33,6 +33,8 @@ struct CompleteDownloadRow: View {
                 Text(rowModel.filename)
                     .font(Font(uiFont: Const.Font.filename))
                     .foregroundColor(.filename)
+                    .truncationMode(.middle)
+                    .lineLimit(2)
                 Spacer()
                     .frame(height: Const.Spacing.betweenLabels)
                 Text(rowModel.fileSize)

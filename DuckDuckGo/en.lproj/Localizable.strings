@@ -358,6 +358,9 @@
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Downloading - %1$@ of %2$@";
 
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Downloading - %@";
+
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "Downloads";
 

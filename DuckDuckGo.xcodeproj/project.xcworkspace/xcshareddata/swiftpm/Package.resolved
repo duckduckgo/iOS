@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "jkt/update-autofill-25feb",
-          "revision": "b39d771b685643183bd1d06ad069f28fbe076e6d",
-          "version": null
+          "branch": null,
+          "revision": "b9c5cdb717c1d783e63e0fcfb16455f4db2a5d1a",
+          "version": "10.0.2"
         }
       },
       {
@@ -71,6 +71,15 @@
           "branch": null,
           "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
           "version": "1.5.0"
+        }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "state": {
+          "branch": null,
+          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
+          "version": "1.0.3"
         }
       }
     ]

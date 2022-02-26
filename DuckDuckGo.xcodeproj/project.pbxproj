@@ -6591,8 +6591,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
-				branch = "jkt/update-autofill-25feb";
-				kind = branch;
+				kind = exactVersion;
+				version = 10.0.2;
 			};
 		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {

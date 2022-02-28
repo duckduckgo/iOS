@@ -29,6 +29,11 @@ enum WaitlistInviteCodeFetchError: Error {
 
 struct MacBrowserWaitlist {
     
+    static let downloadURL = URL(string: "https://duckduckgo.com/mac")!
+    static let downloadURLString: String = {
+        downloadURL.absoluteString
+    }()
+    
     static func settingsSubtitle() -> String {
         let store = MacBrowserWaitlistKeychainStore()
         

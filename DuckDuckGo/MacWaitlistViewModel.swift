@@ -20,6 +20,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import LinkPresentation
 
 @MainActor
 final class MacWaitlistViewModel: ObservableObject {
@@ -52,7 +53,7 @@ final class MacWaitlistViewModel: ObservableObject {
     
     private let waitlistRequest: WaitlistRequesting
     private let waitlistStorage: MacBrowserWaitlistStorage
-    
+
     init(waitlistRequest: WaitlistRequesting = WaitlistRequest(product: .macBrowser),
          waitlistStorage: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore()) {
         self.waitlistRequest = waitlistRequest
@@ -155,10 +156,56 @@ final class MacWaitlistViewModel: ObservableObject {
     }
     
     func createShareSheetActivityItems() -> [Any] {
-        let message = shareSheetMessage(inviteCode: "FAKECODE")
-        let url = URL(string: "https://duckduckgo.com/mac")!
-        
-        return [url, message]
+        guard let inviteCode = waitlistStorage.getWaitlistInviteCode() else {
+            assertionFailure("Failed to get invite code when creating share sheet")
+            return []
+        }
+
+        let linkMetadata = MacWaitlistLinkMetadata(inviteCode: inviteCode)
+
+        return [MacBrowserWaitlist.downloadURL, linkMetadata]
+    }
+    
+}
+
+private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
+    
+    fileprivate let metadata: LPLinkMetadata = {
+        let metadata = LPLinkMetadata()
+        metadata.originalURL = MacBrowserWaitlist.downloadURL
+        metadata.url = metadata.originalURL
+        metadata.title = "You're Invited!"
+        metadata.imageProvider = NSItemProvider(object: UIImage(named: "MacWaitlistShareSheetLogo")!)
+
+        return metadata
+    }()
+    
+    private let inviteCode: String
+    
+    init(inviteCode: String) {
+        self.inviteCode = inviteCode
+    }
+    
+    func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
+        return self.metadata
+    }
+    
+    public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+        return self.metadata.originalURL as Any
+    }
+
+    public func activityViewController(_ activityViewController: UIActivityViewController,
+                                       itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        guard let type = activityType else {
+            return self.metadata.originalURL as Any
+        }
+
+        switch type {
+        case .message:
+            return shareSheetMessage(inviteCode: inviteCode)
+        default:
+            return self.metadata.originalURL as Any
+        }
     }
     
     private func shareSheetMessage(inviteCode: String) -> String {
@@ -188,11 +235,9 @@ struct ActivityViewController: UIViewControllerRepresentable {
     var applicationActivities: [UIActivity]?
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-        return controller
+        return UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
     }
 
-    func updateUIViewController(_ uiViewController: UIActivityViewController,
-                                context: UIViewControllerRepresentableContext<ActivityViewController>) { }
+    func updateUIViewController(_ controller: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) { }
 
 }

@@ -62,9 +62,10 @@ class ActionMessageView: UIView {
         layer.cornerRadius = Constants.cornerRadius
     }
     
-    static func present(message: NSAttributedString, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
+    static func present(message: NSAttributedString, numberOfLines: Int = 0, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
         let messageView = loadFromXib()
         messageView.message.attributedText = message
+        messageView.message.numberOfLines = numberOfLines
         ActionMessageView.present(messageView: messageView, actionTitle: actionTitle, onAction: onAction)
     }
     

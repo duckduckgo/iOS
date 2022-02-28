@@ -151,10 +151,10 @@ extension DownloadsList {
         Alert(
             title: Text(UserText.cancelDownloadAlertTitle),
             message: Text(UserText.cancelDownloadAlertDescription),
-            primaryButton: .cancel(Text(UserText.cancelDownloadAlertCancelAction), action: {
+            primaryButton: .cancel(Text(UserText.cancelDownloadAlertResumeAction)),
+            secondaryButton: .destructive(Text(UserText.cancelDownloadAlertCancelAction), action: {
                 cancelDownload(for: row)
-            }),
-            secondaryButton: .default(Text(UserText.cancelDownloadAlertResumeAction))
+            })
         )
     }
 }

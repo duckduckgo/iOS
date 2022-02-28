@@ -67,7 +67,6 @@ class MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
     }
     
     func getWaitlistInviteCode() -> String? {
-        return "FAKECODE"
         return getString(forField: .inviteCode)
     }
 

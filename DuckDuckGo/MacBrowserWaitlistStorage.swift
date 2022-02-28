@@ -91,6 +91,10 @@ class MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
         UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.macWaitlistShouldReceiveNotifications.rawValue)
     }
     
+    func delete(field: MacWaitlistKeychainField) {
+        deleteItem(forField: field)
+    }
+    
     // MARK: - User Defaults
     
     @UserDefaultsWrapper(key: .macWaitlistShouldReceiveNotifications, defaultValue: false)

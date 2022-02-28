@@ -1,8 +1,8 @@
 //
-//  EmailWaitlistDebugViewController.swift
+//  MacBrowserWaitlistDebugViewController.swift
 //  DuckDuckGo
 //
-//  Copyright © 2021 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -20,9 +20,8 @@
 import UIKit
 import Core
 import BackgroundTasks
-import BrowserServicesKit
 
-final class EmailWaitlistDebugViewController: UITableViewController {
+final class MacBrowserWaitlistDebugViewController: UITableViewController {
 
     enum Sections: Int, CaseIterable {
 
@@ -63,8 +62,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
     }
 
-    private let emailManager = EmailManager()
-    private let storage = EmailKeychainManager()
+    private let storage = MacBrowserWaitlistKeychainStore()
 
     private var backgroundTaskExecutionDate: String?
 
@@ -129,7 +127,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
             case .shouldNotifyWhenAvailable:
                 // Not using `bool(forKey:)` as it's useful to tell whether a value has been set at all, and `bool(forKey:)` returns false by default.
-                let key = UserDefaultsWrapper<Any>.Key.emailWaitlistShouldReceiveNotifications.rawValue
+                let key = UserDefaultsWrapper<Any>.Key.macWaitlistShouldReceiveNotifications.rawValue
                 if let shouldNotify = UserDefaults.standard.value(forKey: key) as? Bool {
                     cell.detailTextLabel?.text = shouldNotify ? "Yes" : "No"
                 } else {
@@ -163,14 +161,14 @@ final class EmailWaitlistDebugViewController: UITableViewController {
             switch row {
             case .scheduleWaitlistNotification:
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-                    EmailWaitlist.shared.showWaitlistNotification = true
-                    self.storage.store(inviteCode: "ABCDE")
-                    EmailWaitlist.shared.sendInviteCodeAvailableNotification()
+                    self.storage.userShouldReceiveNotifications = true
+                    self.storage.store(inviteCode: "FAKECODE")
+                    MacBrowserWaitlist.sendInviteCodeAvailableNotification()
                 }
             case .setMockInviteCode:
-                storage.store(inviteCode: "ABCDE")
+                storage.store(inviteCode: "FAKECODE")
             case .deleteInviteCode:
-                EmailKeychainManager.deleteInviteCode()
+                storage.delete(field: .inviteCode)
                 tableView.reloadData()
             }
         }
@@ -193,7 +191,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
     }
 
     private func clearDataAndReload() {
-        EmailKeychainManager.deleteWaitlistState()
+        storage.deleteWaitlistState()
         UserDefaultsWrapper<Any>.clearWaitlistValues()
         tableView.reloadData()
     }
@@ -202,7 +200,7 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 extension UserDefaultsWrapper {
 
     fileprivate static func clearWaitlistValues() {
-        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper.Key.emailWaitlistShouldReceiveNotifications.rawValue)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper.Key.macWaitlistShouldReceiveNotifications.rawValue)
     }
 
 }

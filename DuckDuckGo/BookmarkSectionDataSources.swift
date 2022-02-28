@@ -185,13 +185,7 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
             
             let title = String(format: UserText.deleteBookmarkFolderAlertTitle, folder.title ?? "")
             let count = folder.numberOfChildrenDeep
-            let messageString: String
-            if count == 1 {
-                messageString = UserText.deleteBookmarkFolderAlertMessageSingular
-            } else {
-                messageString = UserText.deleteBookmarkFolderAlertMessagePlural
-            }
-            let message = String(format: messageString, count)
+            let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
                 self.bookmarksManager.delete(item)

@@ -49,7 +49,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
-
+    @IBOutlet weak var widgetEducationCell: UITableViewCell!
+    
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
@@ -64,10 +65,14 @@ class SettingsViewController: UITableViewController {
     private static var shouldShowDefaultBrowserSection: Bool {
         if #available(iOS 14, *) {
             return true
-        } else {
-            return false
         }
+        return false
     }
+    
+    private lazy var shouldShowWidgetEducationCell: Bool = {
+        guard #available(iOS 14, *), variantManager.isSupported(feature: .widgetEducation) else { return false }
+        return true
+    }()
     
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
@@ -78,6 +83,7 @@ class SettingsViewController: UITableViewController {
 
         configureVersionCell()
         configureDefaultBroswerCell()
+        configureWidgetEducationCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -130,6 +136,10 @@ class SettingsViewController: UITableViewController {
 
     private func configureDefaultBroswerCell() {
         defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
+    }
+    
+    private func configureWidgetEducationCell() {
+        widgetEducationCell.isHidden = !shouldShowWidgetEducationCell
     }
 
     private func configureThemeCellAccessory() {
@@ -236,7 +246,7 @@ class SettingsViewController: UITableViewController {
             Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
             UIApplication.shared.open(url)
-
+            
         case emailProtectionCell:
             if emailManager.isSignedIn {
                 showEmailProtectionViewController()
@@ -249,6 +259,9 @@ class SettingsViewController: UITableViewController {
 
         case versionCell:
             showDebug()
+            
+        case widgetEducationCell:
+            Pixel.fire(pixel: .widgetEducationOpenedFromSettings)
 
         default: break
         }

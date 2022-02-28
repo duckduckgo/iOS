@@ -32,7 +32,7 @@ class HomeRowReminderTests: XCTestCase {
     func testWhenFeatureFirstAccessedThenDateIsStored() {
 
         let feature = HomeRowReminder(storage: storage)
-        _ = feature.showNow(isDefaultBrowserSupported: false)
+        _ = feature.showNow()
         XCTAssertNotNil(storage.firstAccessDate)
 
     }
@@ -43,19 +43,19 @@ class HomeRowReminderTests: XCTestCase {
         let feature = HomeRowReminder(storage: storage)
         feature.setShown()
 
-        XCTAssertFalse(feature.showNow(isDefaultBrowserSupported: false))
+        XCTAssertFalse(feature.showNow())
     }
 
     func testWhenIsNewAndTimeHasElapsedThenShow() {
         setReminderTimeElapsed()
 
         let feature = HomeRowReminder(storage: storage)
-        XCTAssertTrue(feature.showNow(isDefaultBrowserSupported: false))
+        XCTAssertTrue(feature.showNow())
     }
 
     func testWhenIsNewAndTimeNotElapsedThenDontShow() {
         let feature = HomeRowReminder(storage: storage)
-        XCTAssertFalse(feature.showNow(isDefaultBrowserSupported: false))
+        XCTAssertFalse(feature.showNow())
     }
 
     private func setReminderTimeElapsed() {

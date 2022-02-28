@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import BrowserServicesKit
 
 class PrivacyProtectionScoreCardController: UITableViewController {
 
@@ -33,7 +34,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet var onHeaderCellTapped: UITapGestureRecognizer!
     
     private var siteRating: SiteRating!
-    private var privacyConfig: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+    private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
 
     override func viewDidLoad() {
         Pixel.fire(pixel: .privacyDashboardScorecard)

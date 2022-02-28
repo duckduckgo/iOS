@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 struct TrackingLinkSettings {
     
@@ -32,12 +33,12 @@ struct TrackingLinkSettings {
     }
     
     init(fromConfig config: PrivacyConfiguration) {
-        let ampFeature = config.feature(forKey: .ampLinks)
-        let trackingParametersFeature = config.feature(forKey: .trackingParameters)
+        let ampFeatureSettings = config.settings(for: .ampLinks)
+        let trackingParametersSettings = config.settings(for: .trackingParameters)
         
-        ampLinkFormats = ampFeature?.settings[Constants.ampLinkFormats] as? [String] ?? []
-        ampKeywords = ampFeature?.settings[Constants.ampKeywords] as? [String] ?? []
-        trackingParameters = trackingParametersFeature?.settings[Constants.trackingParameters] as? [String] ?? []
+        ampLinkFormats = ampFeatureSettings[Constants.ampLinkFormats] as? [String] ?? []
+        ampKeywords = ampFeatureSettings[Constants.ampKeywords] as? [String] ?? []
+        trackingParameters = trackingParametersSettings[Constants.trackingParameters] as? [String] ?? []
     }
     
 }

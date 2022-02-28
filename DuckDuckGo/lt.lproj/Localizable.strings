@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redaguoti";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Bendrinti";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Pridėti valdiklį";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Greitai pasiekite privačią paiešką ir mėgstamas svetaines.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Ilgai spauskite pagrindinį ekraną, kad įjungtumėte į programėlių perkėlimo ir ištrynimo režimą.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Bakstelėkite pliuso mygtuką %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Raskite ir pasirinkite „DuckDuckGo“. Tuomet pasirinkite valdiklį.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Tik vienas bakstelėjimas – ir jūs jau mėgstamiausiose svetainėse.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esamos žymės nebus kopijuojamos.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "„Whirlpool“";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Nustatyti kaip numatytąją naršyklę";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Nustatykite „DuckDuckGo“ savo numatytąja naršykle.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Kiekvieną kartą be jaudulio atverkite nuorodas.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NAUJIENA „IOS 14“";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Pridėti „DuckDuckGo“ prie pagrindinio ekrano!";
 
 /* No comment provided by engineer. */
@@ -755,7 +764,7 @@
 "preserveLogins.fireproof.title" = "Apsaugoti %@ ir likti prisijungus?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Ugniai atsparus";
+"preserveLogins.menu.confirm" = "Parinktis „Fireproof“";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
 "preserveLogins.menu.confirm.message" = "%@ jau apsaugota";
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Mėgstamas pridėtas";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokuoti įspėjimus";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Atšaukti";

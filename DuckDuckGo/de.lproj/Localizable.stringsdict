@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Möchtest du diesen Ordner mit %1$d Element wirklich löschen?</string>
+			<key>other</key>
+			<string>Möchtest du diesen Ordner mit %1$d Elementen wirklich löschen?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,17 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* und * 1 anderes Tracker-Netzwerk* haben versucht, dich hier zu tracken.
+			<string>*%2$@, %3$@* und *1 weiteres Tracker-Netzwerk* haben versucht, dich hier zu tracken. 
 
 Ich habe sie blockiert!
 
- ☝️Du kannst in der URL-Leiste überprüfen, wer versucht, dich zu tracken, wenn du eine neue Website besuchst.</string>
+ ☝️Du kannst in der Adressleiste sehen, wer dich beim Besuch einer neuen Website tracken will.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* und *%1$d andere Tracker-Netzwerke* haben versucht, dich hier zu tracken.
+			<string>*%2$@, %3$@* and *%1$d weitere Tracker-Netzwerke* haben versucht, dich hier zu tracken. 
 
 Ich habe sie blockiert!
 
- ☝️Du kannst in der URL-Leiste überprüfen, wer versucht, dich zu tracken, wenn du eine neue Website besuchst.</string>
+ ☝️Du kannst in der Adressleiste sehen, wer dich beim Besuch einer neuen Website tracken will.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

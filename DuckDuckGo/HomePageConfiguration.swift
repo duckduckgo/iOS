@@ -20,7 +20,7 @@
 import Foundation
 import Core
 
-class HomePageConfiguration {
+final class HomePageConfiguration {
     
     enum Component: Equatable {
         case navigationBarSearch(fixed: Bool)
@@ -37,16 +37,20 @@ class HomePageConfiguration {
         ]
     }
     
-    private let homeMessageStorage = HomeMessageStorage()
+    // MARK: - Messages
     
-    func homeMessages() -> [HomeMessageModel] {
-        return homeMessageStorage.homeMessagesThatShouldBeShown()
+    private var homeMessageStorage: HomeMessageStorage
+    
+    init(variantManager: VariantManager? = nil) {
+        homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
     }
     
-    func homeMessageDismissed(_ homeMessage: HomeMessage) {
+    var homeMessages: [HomeMessage] { homeMessageStorage.messagesToBeShown }
+    
+    func dismissHomeMessage(_ homeMessage: HomeMessage) {
         switch homeMessage {
-        case .defaultBrowserPrompt:
-            homeMessageStorage.homeDefaultBrowserMessageDateDismissed = Date()
+        case .widgetEducation:
+            homeMessageStorage.hideWidgetEducation()
         }
     }
 }

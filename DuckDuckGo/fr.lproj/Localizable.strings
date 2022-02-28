@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Modifier";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Partager";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Ajouter un widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Accédez rapidement à la recherche privée et aux sites que vous aimez.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Appuyez longuement sur l'écran d'accueil pour passer en mode Jiggle.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Appuyez sur le bouton plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Trouvez et sélectionnez DuckDuckGo. Puis choisissez un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Appuyez une fois et accédez à vos sites préférés.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Les signets existants ne seront pas dupliqués.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Tourbillon";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Définir comme navigateur par défaut";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Faites de DuckDuckGo votre navigateur par défaut.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Des liens ouverts en toute tranquillité d'esprit, à chaque fois.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "NOUVEAUTÉS IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Ajoutez DuckDuckGo à votre écran d'accueil !";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori ajouté";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Bloquer les alertes";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Annuler";

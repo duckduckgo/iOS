@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Επεξεργασία";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Κοινή χρήση";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Προσθήκη γραφικού στοιχείου";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Αποκτήστε γρήγορη πρόσβαση σε μια ιδιωτική αναζήτηση και στους ιστότοπους που αγαπάτε.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Πατήστε παρατεταμένα στην αρχική οθόνη για να εισέλθετε σε λειτουργία αναδιάταξης.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Πατήστε το κουμπί συν %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Εύρεση και επιλογή του DuckDuckGo. Έπειτα, επιλέξτε τη μικροεφαρμογή.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Ένα μόνο πάτημα προς τους αγαπημένους ιστότοπούς σας.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Οι υπάρχοντες σελιδοδείκτες δεν θα αναπαραχθούν.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Δίνη νερού";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Ορισμός ως προεπιλεγμένο πρόγραμμα περιήγησης";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Ορίστε το DuckDuckGo ως το προεπιλεγμένο πρόγραμμα περιήγησής σας.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Ανοίξτε συνδέσμους με ηρεμία και ασφάλεια, κάθε φορά.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "ΝΕΑ ΣΤΟ IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Προσθήκη του DuckDuckGo στην αρχική οθόνη σας!";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Προστέθηκε αγαπημένο";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Αποκλεισμός ειδοποιήσεων";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Ακύρωση";

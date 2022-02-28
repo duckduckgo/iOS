@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Düzenle";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Paylaş";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Widget Ekle";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Özel aramaya ve sevdiğiniz sitelere hızlı erişim elde edin.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Sallama moduna girmek için ana ekranda uzun basın.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Artı %@ düğmesine dokunun.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "DuckDuckGo'yu bulun ve seçin. Ardından bir widget seçin.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Favori sitelerinize tek dokunuşla erişin.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Mevcut yer imleri çoğaltılmayacaktır.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Girdap";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Varsayılan Tarayıcı olarak ayarla";
-
-/* No comment provided by engineer. */
-"home.message.header" = "DuckDuckGo'yu varsayılan tarayıcınız yapın.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Her zaman gönül rahatlığıyla açık bağlantılar.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "IOS 14'TE YENİ";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "DuckDuckGo'yu ana ekranınıza ekleyin!";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori eklendi";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Uyarıları Engelle";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "İptal";

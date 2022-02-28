@@ -37,7 +37,7 @@ class RunLoopExtensionTests: XCTestCase {
         RunLoop.current.run(until: condition)
         XCTAssertFalse(isExecuted)
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenConditionIsResolvedThenWaitIsFinished() {
@@ -50,7 +50,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 0)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenDispatchGroupIsEmptyThenNoWaitIsPerformed() {
@@ -63,7 +63,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 0)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenDispatchGroupIsCompleteThenWaitIsFinished() {
@@ -83,7 +83,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 0)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenNestedWaitIsCalledThenWaitIsPerformed() {
@@ -99,17 +99,21 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 0)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenResolveFromBackgroundThreadThenWaitIsFinished() {
         let condition = RunLoop.ResumeCondition()
+        
+        let e = expectation(description: "should execute")
 
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.05) {
             condition.resolve()
+            e.fulfill()
         }
 
         RunLoop.current.run(until: condition)
+        waitForExpectations(timeout: 10)
     }
 
     func testWhenWaitingInBackgroundThreadThenWaitIsFinishedWhenResolved() {
@@ -125,7 +129,7 @@ class RunLoopExtensionTests: XCTestCase {
         }
 
         RunLoop.current.run(until: condition)
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 10)
     }
 
 }

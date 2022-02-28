@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediģēt";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Kopīgot";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Pievienot logrīku";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Iegūsti ātru piekļuvi privātajai meklēšanai un savām mīļākajām vietnēm.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Ilgi nospied sākuma ekrānā, lai pārietu pārkārtošanas režīmā.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Pieskaries plus %@ pogai.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Atrodi un atlasi DuckDuckGo. Pēc tam izvēlies logrīku.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Viens pieskāriens līdz tavām mīļākajām vietnēm.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esošās grāmatzīmes netiks dublētas.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Atvars";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Iestatīt kā noklusējuma pārlūku";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Padari DuckDuckGo par savu noklusējuma pārlūku!";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Katru reizi atver saites bez raizēm.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "JAUNUMS IOS 14";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Pievieno DuckDuckGo savam sākuma ekrānam!";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Izlases vienums ir pievienots";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Bloķēt brīdinājumus";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Atcelt";

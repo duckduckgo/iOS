@@ -51,7 +51,7 @@ public class FileStore {
         return true
     }
     
-    func loadAsString(forConfiguration config: ContentBlockerRequest.Configuration) -> String? {
+    public func loadAsString(forConfiguration config: ContentBlockerRequest.Configuration) -> String? {
         return try? String(contentsOf: persistenceLocation(forConfiguration: config))
     }
     

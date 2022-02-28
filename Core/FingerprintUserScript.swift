@@ -26,25 +26,25 @@ public class FingerprintUserScript: NSObject, UserScript {
         let featureSettings =
         """
         {
-            fingerprintingTemporaryStorage: \(PrivacyConfigurationManager.shared.privacyConfig
+            fingerprintingTemporaryStorage: \(ContentBlocking.privacyConfigurationManager.privacyConfig
                 .isEnabled(featureKey: .fingerprintingTemporaryStorage) ? "true" : "false"),
-            fingerprintingBattery: \(PrivacyConfigurationManager.shared.privacyConfig
+            fingerprintingBattery: \(ContentBlocking.privacyConfigurationManager.privacyConfig
                                         .isEnabled(featureKey: .fingerprintingBattery) ? "true" : "false"),
-            fingerprintingScreenSize: \(PrivacyConfigurationManager.shared.privacyConfig
+            fingerprintingScreenSize: \(ContentBlocking.privacyConfigurationManager.privacyConfig
                                             .isEnabled(featureKey: .fingerprintingScreenSize) ? "true" : "false"),
         }
         """
         
-        let tempStorageExceptions = PrivacyConfigurationManager.shared.privacyConfig
+        let tempStorageExceptions = ContentBlocking.privacyConfigurationManager.privacyConfig
             .exceptionsList(forFeature: .fingerprintingTemporaryStorage).joined(separator: "\n")
-        let batteryExceptions = PrivacyConfigurationManager.shared.privacyConfig
+        let batteryExceptions = ContentBlocking.privacyConfigurationManager.privacyConfig
             .exceptionsList(forFeature: .fingerprintingBattery).joined(separator: "\n")
-        let screenSizeExceptions = PrivacyConfigurationManager.shared.privacyConfig
+        let screenSizeExceptions = ContentBlocking.privacyConfigurationManager.privacyConfig
             .exceptionsList(forFeature: .fingerprintingScreenSize).joined(separator: "\n")
         
-        let tempExceptions = PrivacyConfigurationManager.shared.privacyConfig
+        let tempExceptions = ContentBlocking.privacyConfigurationManager.privacyConfig
             .tempUnprotectedDomains.joined(separator: "\n")
-        let userExceptions = PrivacyConfigurationManager.shared.privacyConfig.userUnprotectedDomains.joined(separator: "\n")
+        let userExceptions = ContentBlocking.privacyConfigurationManager.privacyConfig.userUnprotectedDomains.joined(separator: "\n")
         
         return Self.loadJS("fingerprint", from: Bundle.core, withReplacements: [
             "$FEATURE_SETTINGS$": featureSettings,

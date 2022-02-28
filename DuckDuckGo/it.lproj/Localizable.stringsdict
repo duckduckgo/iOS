@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Vuoi davvero eliminare questa cartella e %1$d elemento?</string>
+			<key>other</key>
+			<string>Vuoi davvero eliminare questa cartella e %1$d elementi?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,17 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* e *1 altro* cercavano di tracciare la tua attività qui.
+			<string>*%2$@, %3$@* e *1 altro* stavano tentando di tracciare la tua attività qui.
 
 Li ho bloccati!
 
-☝️ Controlla la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività quando visiti un nuovo sito.️</string>
+ ☝ Controlla la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività quando visiti un nuovo sito.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* e *altri %1$d* cercavano di tracciare la tua attività qui.
+			<string>*%2$@, %3$@* e *altri %1$d* stavano tentando di tracciare la tua attività qui.
 
 Li ho bloccati!
 
-☝️ Controlla la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività quando visiti un nuovo sito.️</string>
+ ☝ Controlla la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività quando visiti un nuovo sito.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

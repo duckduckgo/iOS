@@ -139,9 +139,6 @@ public enum PixelName: String {
     case widgetNewSearch = "m_w_ns"
 
     case defaultBrowserButtonPressedSettings = "m_db_s"
-    case defaultBrowserButtonPressedHome = "m_db_h"
-    case defaultBrowserHomeMessageShown = "m_db_h_s"
-    case defaultBrowserHomeMessageDismissed = "m_db_h_d"
     
     case widgetsOnboardingCTAPressed = "m_o_w_a"
     case widgetsOnboardingDeclineOptionPressed = "m_o_w_d"
@@ -171,6 +168,10 @@ public enum PixelName: String {
     case textSizeSettingsShown = "m_text_size_settings_shown"
     case textSizeSettingsChanged = "m_text_size_settings_changed"
     
+    case widgetEducationOpenedFromHomeScreen = "m_widget_education_opened_from_home"
+    case widgetEducationOpenedFromSettings = "m_widget_education_opened_from_settings"
+    case widgetEducationDismissed = "m_widget_education_dismissed"
+
     case jsAlertShown = "m_js_alert_shown"
     case jsAlertBlocked = "m_js_alert_blocked"
 
@@ -205,10 +206,13 @@ public enum PixelName: String {
     case contentBlockingUnpSitesCompilationFailed = "m_d_cb_cu"
     case contentBlockingFallbackCompilationFailed = "m_d_cb_cf"
     
+    case contentBlockingErrorReportingIssue = "m_content_blocking_error_reporting_issue"
+    case contentBlockingCompilationTime = "m_content_blocking_compilation_time"
+
     case ampBlockingRulesCompilationFailed = "m_debug_amp_rules_compilation_failed"
-    
+
     case contentBlockingIdentifierError = "m_d_cb_ie"
-    
+
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 

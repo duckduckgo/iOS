@@ -218,7 +218,11 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureEmailProtectionAccessoryText() {
-        emailProtectionAccessoryText.text = emailManager.userEmail
+        if let userEmail = emailManager.userEmail {
+            emailProtectionAccessoryText.text = userEmail
+        } else {
+            emailProtectionAccessoryText.text = "Block email trackers and hide your address"
+        }
     }
 
     private func showEmailProtectionViewController() {

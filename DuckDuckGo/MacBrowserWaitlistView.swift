@@ -65,10 +65,9 @@ struct MacBrowserWaitlistSignUpView: View {
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
                     HeaderView(imageName: "MacWaitlistJoinWaitlist", title: "Try DuckDuckGo for Mac!")
-                        .padding(.bottom, 8)
                     
                     Text(UserText.macBrowserWaitlistSummary)
-                        .font(.system(size: 16))
+                        .font(.custom("proximanova-regular", size: 16))
                         .foregroundColor(.macWaitlistText)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
@@ -79,14 +78,14 @@ struct MacBrowserWaitlistSignUpView: View {
                         .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
                     
                     Text("Windows coming soon!")
-                        .font(.system(size: 13))
+                        .font(.custom("proximanova-regular", size: 14))
                         .foregroundColor(.macWaitlistSubtitle)
                         .padding(.top, 4)
                     
                     if requestInFlight {
                         HStack {
                             Text("Joining Waitlist...")
-                                .font(.system(size: 15))
+                                .font(.custom("proximanova-regular", size: 15))
                                 .foregroundColor(.macWaitlistText)
                             
                             ActivityIndicator(style: .medium)
@@ -223,37 +222,44 @@ struct MacBrowserWaitlistInvitedView: View {
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
-                VStack(alignment: .center) {
+                VStack(alignment: .center, spacing: 0) {
                     HeaderView(imageName: "MacWaitlistInvited", title: "You’re Invited!")
                     
                     Text(UserText.macWaitlistInviteScreenSubtitle)
+                        .font(.custom("proximanova-regular", size: 17))
                         .foregroundColor(.macWaitlistText)
                         .padding(.top, 10)
                     
                     Text(UserText.macWaitlistInviteScreenStep1)
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.custom("proximanova-bold", size: 17))
                         .foregroundColor(.macWaitlistText)
-                        .padding(.top, 8)
+                        .padding(.top, 22)
+                        .padding(.bottom, 8)
                     
                     Text("Visit this URL on your Mac to download:")
+                        .font(.custom("proximanova-regular", size: 17))
                         .foregroundColor(.macWaitlistText)
                     
                     Text("duckduckgo.com/mac")
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.custom("proximanova-bold", size: 17))
                         .foregroundColor(.blue)
                         .editMenu {
                             EditMenuItem(UserText.macWaitlistCopy) {
                                 action(.copyDownloadURLToPasteboard)
                             }
                         }
+                        .padding(.top, 6)
                     
                     Text(UserText.macWaitlistInviteScreenStep2)
-                        .font(.system(size: 17, weight: .bold))
+                        .font(.custom("proximanova-bold", size: 17))
                         .foregroundColor(.macWaitlistText)
-                        .padding(.top, 8)
+                        .padding(.top, 22)
+                        .padding(.bottom, 8)
                     
                     Text("Open the file to install, then enter your invite code to unlock.")
+                        .font(.custom("proximanova-regular", size: 17))
                         .foregroundColor(.macWaitlistText)
+                        .lineSpacing(6)
                     
                     InviteCodeView(inviteCode: inviteCode)
                         .editMenu {
@@ -261,7 +267,7 @@ struct MacBrowserWaitlistInvitedView: View {
                                 action(.copyInviteCodeToPasteboard)
                             }
                         }
-                        .padding(.top, 10)
+                        .padding(.top, 28)
                     
                     Spacer(minLength: 24)
                     
@@ -273,12 +279,12 @@ struct MacBrowserWaitlistInvitedView: View {
                     })
                         .padding(.bottom, 18)
                         .sheet(isPresented: $showShareSheet, onDismiss: {
-                            print("Dismiss")
+                            // Nothing to do
                         }, content: {
                             ActivityViewController(activityItems: activityItems)
                         })
                 }
-                .frame(minHeight: proxy.size.height)
+                .frame(maxWidth: .infinity, minHeight: proxy.size.height)
                 .padding([.leading, .trailing], 18)
                 .multilineTextAlignment(.center)
             }
@@ -325,9 +331,10 @@ struct HeaderView: View {
             Image(imageName)
             
             Text(title)
-                .font(.custom("proximanova-bold", size: 21))
+                .font(.custom("proximanova-bold", size: 22))
         }
         .padding(.top, 24)
+        .padding(.bottom, 12)
     }
     
 }

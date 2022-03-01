@@ -32,6 +32,11 @@ final class MacWaitlistViewController: UIViewController {
         addHostingControllerToViewHierarchy()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.updateViewState()
+    }
+    
     private func addHostingControllerToViewHierarchy() {
         let waitlistView = MacBrowserWaitlistView().environmentObject(viewModel)
         let waitlistViewController = UIHostingController(rootView: waitlistView)

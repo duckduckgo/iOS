@@ -74,6 +74,20 @@ final class MacWaitlistViewModel: ObservableObject {
         }
     }
     
+    func updateViewState() {
+        if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
+            self.viewState = .joinedQueue(.notificationAllowed)
+            
+            Task {
+                await checkNotificationPermissions()
+            }
+        } else if let inviteCode = waitlistStorage.getWaitlistInviteCode() {
+            self.viewState = .invited(inviteCode: inviteCode)
+        } else {
+            self.viewState = .notJoinedQueue
+        }
+    }
+    
     private func checkNotificationPermissions() async {
         if waitlistStorage.shouldReceiveNotifications() {
             self.viewState = .joinedQueue(.notificationAllowed)

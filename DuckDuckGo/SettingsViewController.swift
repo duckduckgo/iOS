@@ -23,7 +23,7 @@ import Core
 import BrowserServicesKit
 import SwiftUI
 
-// swiftlint:disable file_length
+// swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {
 
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
@@ -430,4 +430,4 @@ extension SettingsViewController {
         }
     }
 }
-// swiftlint:enable file_length
+// swiftlint:enable file_length type_body_length

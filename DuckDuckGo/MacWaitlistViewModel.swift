@@ -39,6 +39,8 @@ final class MacWaitlistViewModel: ObservableObject {
         case requestNotificationPrompt
         case openNotificationSettings
         case openShareSheet
+        case copyDownloadURLToPasteboard
+        case copyInviteCodeToPasteboard
     }
     
     enum NotificationPermissionState {
@@ -94,6 +96,8 @@ final class MacWaitlistViewModel: ObservableObject {
         case .requestNotificationPrompt: requestNotificationPrompt()
         case .openNotificationSettings: openNotificationSettings()
         case .openShareSheet: openShareSheet()
+        case .copyDownloadURLToPasteboard: copyDownloadUrlToClipboard()
+        case .copyInviteCodeToPasteboard: copyInviteCodeToClipboard()
         }
     }
     
@@ -153,6 +157,19 @@ final class MacWaitlistViewModel: ObservableObject {
     
     private func openShareSheet() {
         self.showShareSheet = true
+    }
+    
+    private func copyDownloadUrlToClipboard() {
+        UIPasteboard.general.url = MacBrowserWaitlist.downloadURL
+    }
+    
+    private func copyInviteCodeToClipboard() {
+        guard let inviteCode = waitlistStorage.getWaitlistInviteCode() else {
+            assertionFailure("Failed to get waitlist invite code when copying")
+            return
+        }
+        
+        UIPasteboard.general.string = inviteCode
     }
     
     func createShareSheetActivityItems() -> [Any] {

@@ -30,21 +30,6 @@ final class MacWaitlistViewController: UIViewController {
         title = UserText.macWaitlistTitle
 
         addHostingControllerToViewHierarchy()
-        
-        addResetButton()
-    }
-    
-    private func addResetButton() {
-        let resetButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(resetWaitlistState))
-        self.navigationItem.rightBarButtonItem = resetButton
-    }
-    
-    @objc
-    private func resetWaitlistState() {
-        print("Resetting")
-        
-        let store = MacBrowserWaitlistKeychainStore()
-        store.deleteWaitlistState()
     }
     
     private func addHostingControllerToViewHierarchy() {

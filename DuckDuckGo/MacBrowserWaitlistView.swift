@@ -241,6 +241,11 @@ struct MacBrowserWaitlistInvitedView: View {
                     Text("duckduckgo.com/mac")
                         .font(.system(size: 17, weight: .bold))
                         .foregroundColor(.blue)
+                        .editMenu {
+                            EditMenuItem(UserText.macWaitlistCopy) {
+                                action(.copyDownloadURLToPasteboard)
+                            }
+                        }
                     
                     Text(UserText.macWaitlistInviteScreenStep2)
                         .font(.system(size: 17, weight: .bold))
@@ -251,6 +256,11 @@ struct MacBrowserWaitlistInvitedView: View {
                         .foregroundColor(.macWaitlistText)
                     
                     InviteCodeView(inviteCode: inviteCode)
+                        .editMenu {
+                            EditMenuItem(UserText.macWaitlistCopy) {
+                                action(.copyInviteCodeToPasteboard)
+                            }
+                        }
                         .padding(.top, 10)
                     
                     Spacer(minLength: 24)

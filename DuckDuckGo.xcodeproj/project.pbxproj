@@ -44,6 +44,9 @@
 		4B0DC71227B20AD30052B514 /* MacBrowserWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DC71127B20AD30052B514 /* MacBrowserWaitlist.swift */; };
 		4B14B56326937892002E6805 /* EmailWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */; };
 		4B15817626706A2200F34D16 /* EmailProtectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B15817526706A2200F34D16 /* EmailProtectionViewController.swift */; };
+		4B2DCF2827CD957400FA36B4 /* ArrayBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2DCF2727CD957400FA36B4 /* ArrayBuilder.swift */; };
+		4B2DCF2A27CD959400FA36B4 /* MenuControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2DCF2927CD959400FA36B4 /* MenuControllerView.swift */; };
+		4B2DCF2C27CD95CC00FA36B4 /* IndexedCallable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2DCF2B27CD95CC00FA36B4 /* IndexedCallable.swift */; };
 		4B4037ED27CC7155007D94B4 /* MacBrowserWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4037EC27CC7155007D94B4 /* MacBrowserWaitlistDebugViewController.swift */; };
 		4B52648B25F9613B00CB4C24 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B52648A25F9613B00CB4C24 /* trackerData.json */; };
 		4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53648926718D0E001AA041 /* EmailWaitlist.swift */; };
@@ -754,6 +757,9 @@
 		4B0DC71127B20AD30052B514 /* MacBrowserWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlist.swift; sourceTree = "<group>"; };
 		4B14B56226937892002E6805 /* EmailWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B15817526706A2200F34D16 /* EmailProtectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailProtectionViewController.swift; sourceTree = "<group>"; };
+		4B2DCF2727CD957400FA36B4 /* ArrayBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayBuilder.swift; sourceTree = "<group>"; };
+		4B2DCF2927CD959400FA36B4 /* MenuControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuControllerView.swift; sourceTree = "<group>"; };
+		4B2DCF2B27CD95CC00FA36B4 /* IndexedCallable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedCallable.swift; sourceTree = "<group>"; };
 		4B4037EC27CC7155007D94B4 /* MacBrowserWaitlistDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
 		4B53648926718D0E001AA041 /* EmailWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailWaitlist.swift; sourceTree = "<group>"; };
@@ -2085,6 +2091,16 @@
 				31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */,
 			);
 			name = VoiceSearch;
+			sourceTree = "<group>";
+		};
+		4B2DCF2627CD956700FA36B4 /* SwiftUI Menu Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4B2DCF2727CD957400FA36B4 /* ArrayBuilder.swift */,
+				4B2DCF2927CD959400FA36B4 /* MenuControllerView.swift */,
+				4B2DCF2B27CD95CC00FA36B4 /* IndexedCallable.swift */,
+			);
+			name = "SwiftUI Menu Controller";
 			sourceTree = "<group>";
 		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
@@ -3716,6 +3732,7 @@
 				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
 				982686B82600C0960011A8D6 /* ActionMessageView.xib */,
 				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
+				4B2DCF2627CD956700FA36B4 /* SwiftUI Menu Controller */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -4532,6 +4549,7 @@
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
 				CB9B873C278C8FEA001F4906 /* WidgetEducationView.swift in Sources */,
 				85F200002215C17B006BB258 /* FindInPage.swift in Sources */,
+				4B2DCF2827CD957400FA36B4 /* ArrayBuilder.swift in Sources */,
 				85BD869D1FAA08C400252411 /* PrivacyProtectionEncryptionDetailController.swift in Sources */,
 				F1386BA41E6846C40062FC3C /* TabDelegate.swift in Sources */,
 				4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */,
@@ -4647,6 +4665,7 @@
 				8565A34B1FC8D96B00239327 /* LaunchTabNotification.swift in Sources */,
 				85449EFD23FDA71F00512AAF /* KeyboardSettings.swift in Sources */,
 				98FA4BB72440D0A800894CD8 /* PrivacyProtectionIconSource.swift in Sources */,
+				4B2DCF2C27CD95CC00FA36B4 /* IndexedCallable.swift in Sources */,
 				980891A222369ADB00313A70 /* FeedbackUserText.swift in Sources */,
 				988F3DD3237DE8D900AEE34C /* ForgetDataAlert.swift in Sources */,
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
@@ -4682,6 +4701,7 @@
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
+				4B2DCF2A27CD959400FA36B4 /* MenuControllerView.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
 				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,

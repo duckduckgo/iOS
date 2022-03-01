@@ -733,10 +733,13 @@
 /* Header text for the macOS browser waitlist */
 "mac-browser.waitlist.title" = "macOS Browser Beta";
 
-/* Step 1 */
+/* Title for the copy action */
+"mac-waitlist.copy" = "Copy";
+
+/* Subtitle on the invite screen */
 "mac-waitlist.invite-screen.step-1" = "Step 1";
 
-/* Step 2 */
+/* Subtitle on the invite screen */
 "mac-waitlist.invite-screen.step-2" = "Step 2";
 
 /* Subtitle for the Mac Waitlist Invite screen */

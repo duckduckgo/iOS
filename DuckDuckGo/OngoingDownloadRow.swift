@@ -39,7 +39,7 @@ struct OngoingDownloadRow: View {
                     .foregroundColor(.fileSize)
             }
             
-            Spacer()
+            Spacer(minLength: Const.Spacing.betweenLabelsAndProgressCircle)
             
             ZStack {
                 ProgressCircle(progress: rowModel.progress)
@@ -93,6 +93,7 @@ private enum Const {
 
     enum Spacing {
         static let betweenLabels: CGFloat = 6
+        static let betweenLabelsAndProgressCircle: CGFloat = 16
     }
     
     enum Size {
@@ -104,7 +105,7 @@ private enum Const {
 }
 
 private extension EdgeInsets {
-    static let rowInsets = EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 13)
+    static let rowInsets = EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 15)
 }
 
 private extension Color {

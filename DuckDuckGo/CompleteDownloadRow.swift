@@ -22,10 +22,10 @@ import GRDB
 
 struct CompleteDownloadRow: View {
     
-    @State private var isSharePresented = false
     @State private var isPreviewPresented = false
     
     var rowModel: DownloadsListRow
+    var shareButtonAction: () -> Void
     
     var body: some View {
         HStack {
@@ -63,20 +63,12 @@ struct CompleteDownloadRow: View {
     
     private var shareButton: some View {
         Button {
-            self.isSharePresented = true
+            self.shareButtonAction()
         } label: {
             Image.share
         }
         .buttonStyle(.plain)
         .animation(nil)
-        .sheet(isPresented: $isSharePresented, content: {
-            if let fileURL = rowModel.localFileURL {
-                FileActivityView(localFileURL: fileURL)
-                    .edgesIgnoringSafeArea(.all)
-            } else {
-                #warning("Pixel and/or display an error message?")
-            }
-        })
     }
 }
 

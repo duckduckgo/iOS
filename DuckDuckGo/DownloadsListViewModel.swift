@@ -27,6 +27,7 @@ class DownloadsListViewModel: ObservableObject {
     
     private let dataSource: DownloadsListDataSource
     private var subscribers: Set<AnyCancellable> = []
+    var requestActivityViewHandler: ((URL) -> Void)?
     
     init(dataSource: DownloadsListDataSource) {
         print("VM: init")
@@ -68,5 +69,10 @@ class DownloadsListViewModel: ObservableObject {
     
     func deleteAllDownloads() {
         dataSource.deleteAllDownloads()
+    }
+    
+    func showActivityView(for rowModel: DownloadsListRow) {
+        guard let url = rowModel.localFileURL, let handler = self.requestActivityViewHandler else { return }
+        handler(url)
     }
 }

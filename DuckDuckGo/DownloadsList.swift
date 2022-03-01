@@ -122,7 +122,7 @@ struct DownloadsList: View {
             HStack {
                 Spacer()
                 Button {
-                    viewModel.deleteAllDownloads()
+                    self.deleteAll()
                 } label: {
                     Text(UserText.downloadsListDeleteAllButton)
                         .font(Font(uiFont: Const.Font.deleteAll))
@@ -143,6 +143,11 @@ struct DownloadsList: View {
     private func delete(at offsets: IndexSet, in section: DownloadsListSection) {
         guard let sectionIndex = viewModel.sections.firstIndex(of: section) else { return }
         viewModel.deleteDownload(at: offsets, in: sectionIndex)
+    }
+    
+    private func deleteAll() {
+        editMode = .inactive
+        viewModel.deleteAllDownloads()
     }
     
     private func share(_ rowModel: DownloadsListRow) {

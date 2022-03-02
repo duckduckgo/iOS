@@ -38,11 +38,19 @@ extension UserText {
     
     public static let macWaitlistJoining = NSLocalizedString("mac-waitlist.join-waitlist-screen.joining", value: "Joining Waitlist...", comment: "Temporary status text for the Join Waitlist screen")
     
+    // MARK: - Notifications
+    
+    public static let macWaitlistNotificationNotifyMe = NSLocalizedString("mac-waitlist.notification.notify-me", value: "Notify Me", comment: "Confirmation text for the Mac Waitlist notification prompt")
+    
+    public static let macWaitlistNotificationNoThanks = NSLocalizedString("mac-waitlist.notification.no-thanks", value: "No Thanks", comment: "Cancellation text for the Mac Waitlist notification prompt")
+    
     // MARK: - Queue Screen
     
-    public static let macWaitlistOnTheList = NSLocalizedString("mac-waitlist.queue-screen.on-the-list", value: "You're on the list!", comment: "Title for the queue screen")
+    public static let macWaitlistOnTheList = NSLocalizedString("mac-waitlist.queue-screen.on-the-list", value: "You’re on the list!", comment: "Title for the queue screen")
     
     // MARK: - Invite Code Screen
+    
+    public static let macWaitlistYoureInvited = NSLocalizedString("mac-waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
     
     public static let macWaitlistInviteScreenSubtitle = NSLocalizedString("mac-waitlist.invite-screen.subtitle", value: "Ready to start browsing privately on Mac?", comment: "Subtitle for the Mac Waitlist Invite screen")
     

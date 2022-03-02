@@ -751,6 +751,9 @@
 /* Subtitle for the Mac Waitlist Invite screen */
 "mac-waitlist.invite-screen.subtitle" = "Ready to start browsing privately on Mac?";
 
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "You’re Invited!";
+
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.join" = "Join the Private Waitlist";
 
@@ -763,11 +766,17 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows coming soon!";
 
+/* Cancellation text for the Mac Waitlist notification prompt */
+"mac-waitlist.notification.no-thanks" = "No Thanks";
+
+/* Confirmation text for the Mac Waitlist notification prompt */
+"mac-waitlist.notification.notify-me" = "Notify Me";
+
 /* Privacy disclaimer for the Mac Waitlist feature */
 "mac-waitlist.privacy-disclaimer" = "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.";
 
 /* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "You're on the list!";
+"mac-waitlist.queue-screen.on-the-list" = "You’re on the list!";
 
 /* Title for the settings subtitle */
 "mac-waitlist.settings.available-for-download" = "Available for download on Mac";

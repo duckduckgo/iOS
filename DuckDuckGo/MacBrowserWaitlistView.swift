@@ -21,6 +21,7 @@ import SwiftUI
 
 typealias ViewActionHandler = (MacWaitlistViewModel.ViewAction) -> Void
 
+// swiftlint:disable file_length
 struct MacBrowserWaitlistView: View {
 
     @EnvironmentObject var viewModel: MacWaitlistViewModel
@@ -30,23 +31,23 @@ struct MacBrowserWaitlistView: View {
         case .notJoinedQueue:
             MacBrowserWaitlistSignUpView(requestInFlight: false,
                                          showNotificationAlert: $viewModel.showNotificationPrompt) { action in
-                viewModel.perform(action: action)
+                Task { await viewModel.perform(action: action) }
             }
         case .joiningQueue:
             MacBrowserWaitlistSignUpView(requestInFlight: true,
                                          showNotificationAlert: $viewModel.showNotificationPrompt) { action in
-                viewModel.perform(action: action)
+                Task { await viewModel.perform(action: action) }
             }
         case .joinedQueue(let state):
             MacBrowserWaitlistJoinedWaitlistView(notificationState: state,
                                                  showNotificationAlert: $viewModel.showNotificationPrompt) { action in
-                viewModel.perform(action: action)
+                Task { await viewModel.perform(action: action) }
             }
         case .invited(let inviteCode):
             MacBrowserWaitlistInvitedView(inviteCode: inviteCode,
                                           activityItems: viewModel.createShareSheetActivityItems(),
                                           showShareSheet: $viewModel.showShareSheet) { action in
-                viewModel.perform(action: action)
+                Task { await viewModel.perform(action: action) }
             }
         }
     }
@@ -108,8 +109,8 @@ struct MacBrowserWaitlistSignUpView: View {
     }
     
     func notificationPermissionAlert(action: @escaping ViewActionHandler) -> Alert {
-        let accept = ActionSheet.Button.default(Text("Notify Me")) { action(.acceptNotifications) }
-        let decline = ActionSheet.Button.cancel(Text("No Thanks")) { action(.declineNotifications) }
+        let accept = ActionSheet.Button.default(Text(UserText.macWaitlistNotificationNotifyMe)) { action(.acceptNotifications) }
+        let decline = ActionSheet.Button.cancel(Text(UserText.macWaitlistNotificationNoThanks)) { action(.declineNotifications) }
         
         return Alert(title: Text("Get a notification when it’s your turn?"),
                      message: Text("We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download"),
@@ -223,7 +224,7 @@ struct MacBrowserWaitlistInvitedView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 0) {
-                    HeaderView(imageName: "MacWaitlistInvited", title: "You’re Invited!")
+                    HeaderView(imageName: "MacWaitlistInvited", title: UserText.macWaitlistYoureInvited)
                     
                     Text(UserText.macWaitlistInviteScreenSubtitle)
                         .font(.custom("proximanova-regular", size: 17))
@@ -471,3 +472,4 @@ private extension Color {
     }
     
 }
+// swiftlint:enable file_length

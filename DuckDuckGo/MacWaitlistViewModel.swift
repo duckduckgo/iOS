@@ -102,10 +102,10 @@ final class MacWaitlistViewModel: ObservableObject {
         }
     }
     
-    func perform(action: ViewAction) {
+    func perform(action: ViewAction) async {
         switch action {
-        case .joinQueue: Task { await joinQueue() }
-        case .acceptNotifications: Task { await acceptNotifications() }
+        case .joinQueue: await joinQueue()
+        case .acceptNotifications: await acceptNotifications()
         case .declineNotifications: declineNotifications()
         case .requestNotificationPrompt: requestNotificationPrompt()
         case .openNotificationSettings: openNotificationSettings()
@@ -129,7 +129,6 @@ final class MacWaitlistViewModel: ObservableObject {
             waitlistStorage.store(waitlistToken: joinResponse.token)
             waitlistStorage.store(waitlistTimestamp: joinResponse.timestamp)
         case .failure:
-            print("DEBUG: Waitlist join error")
             self.viewState = .notJoinedQueue
             return
         }

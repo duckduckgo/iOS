@@ -593,6 +593,7 @@
 		F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */; };
 		F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */; };
 		F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */; };
+		F4EC313F27CFE546006F9873 /* FeatureFlagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EC313E27CFE546006F9873 /* FeatureFlagManager.swift */; };
 		F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB126E6AEC100ED7E12 /* AddOrEditBookmarkFolderViewController.swift */; };
 		F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */; };
 		F4F6DFB626E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */; };
@@ -1930,6 +1931,7 @@
 		F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDetailsCell.swift; sourceTree = "<group>"; };
 		F4D9C4F925117A0F00814B71 /* HomeMessageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMessageStorage.swift; sourceTree = "<group>"; };
 		F4E1936525AF722F001D2666 /* HighlightCutOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightCutOutView.swift; sourceTree = "<group>"; };
+		F4EC313E27CFE546006F9873 /* FeatureFlagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FeatureFlagManager.swift; path = Core/FeatureFlagManager.swift; sourceTree = "<group>"; };
 		F4F6DFB126E6AEC100ED7E12 /* AddOrEditBookmarkFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrEditBookmarkFolderViewController.swift; sourceTree = "<group>"; };
 		F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFolderCell.swift; sourceTree = "<group>"; };
 		F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFoldersTableViewController.swift; sourceTree = "<group>"; };
@@ -2271,6 +2273,7 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
+				F4EC313E27CFE546006F9873 /* FeatureFlagManager.swift */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				84E341941E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E51E4A4CD400CFDE3A /* Core */,
@@ -4543,6 +4546,7 @@
 				85F200042216F5D8006BB258 /* FindInPageView.swift in Sources */,
 				8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */,
 				F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */,
+				F4EC313F27CFE546006F9873 /* FeatureFlagManager.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,

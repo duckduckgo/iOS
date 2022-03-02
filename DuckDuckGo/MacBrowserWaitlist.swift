@@ -34,15 +34,13 @@ struct MacBrowserWaitlist {
         downloadURL.absoluteString
     }()
     
-    static func settingsSubtitle() -> String {
-        let store = MacBrowserWaitlistKeychainStore()
-        
+    static func settingsSubtitle(store: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore()) -> String {        
         if store.isInvited {
-            return "Available for download on Mac"
+            return UserText.macWaitlistAvailableForDownload
         } else if store.isOnWaitlist {
-            return "You're on the list!"
+            return UserText.macWaitlistSettingsOnTheList
         } else {
-            return "Browse privately with our app for Mac"
+            return UserText.macWaitlistBrowsePrivately
         }
     }
     

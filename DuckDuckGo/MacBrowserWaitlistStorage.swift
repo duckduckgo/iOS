@@ -37,6 +37,18 @@ protocol MacBrowserWaitlistStorage {
 
 }
 
+extension MacBrowserWaitlistStorage {
+    
+    var isOnWaitlist: Bool {
+        return getWaitlistToken() != nil && getWaitlistTimestamp() != nil
+    }
+    
+    var isInvited: Bool {
+        return getWaitlistInviteCode() != nil
+    }
+    
+}
+
 class MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
     
     enum MacWaitlistKeychainField: String {
@@ -47,14 +59,6 @@ class MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
         var keyValue: String {
             (Bundle.main.bundleIdentifier ?? "com.duckduckgo") + rawValue
         }
-    }
-    
-    var isOnWaitlist: Bool {
-        return getWaitlistToken() != nil && getWaitlistTimestamp() != nil
-    }
-    
-    var isInvited: Bool {
-        return getWaitlistInviteCode() != nil
     }
     
     func getWaitlistToken() -> String? {

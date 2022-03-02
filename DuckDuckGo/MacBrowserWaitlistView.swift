@@ -64,7 +64,7 @@ struct MacBrowserWaitlistSignUpView: View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(alignment: .center, spacing: 8) {
-                    HeaderView(imageName: "MacWaitlistJoinWaitlist", title: "Try DuckDuckGo for Mac!")
+                    HeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
                     
                     Text(UserText.macBrowserWaitlistSummary)
                         .font(.custom("proximanova-regular", size: 16))
@@ -72,19 +72,19 @@ struct MacBrowserWaitlistSignUpView: View {
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                     
-                    Button("Join the Private Waitlist", action: { action(.joinQueue) })
+                    Button(UserText.macWaitlistJoin, action: { action(.joinQueue) })
                         .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
                         .padding(.top, 24)
                         .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
                     
-                    Text("Windows coming soon!")
+                    Text(UserText.macWaitlistWindows)
                         .font(.custom("proximanova-regular", size: 14))
                         .foregroundColor(.macWaitlistSubtitle)
                         .padding(.top, 4)
                     
                     if requestInFlight {
                         HStack {
-                            Text("Joining Waitlist...")
+                            Text(UserText.macWaitlistJoining)
                                 .font(.custom("proximanova-regular", size: 15))
                                 .foregroundColor(.macWaitlistText)
                             
@@ -130,7 +130,7 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
     
     var body: some View {
         VStack(spacing: 16) {
-            HeaderView(imageName: "MacWaitlistJoined", title: "You're on the list!")
+            HeaderView(imageName: "MacWaitlistJoined", title: UserText.macWaitlistOnTheList)
             
             switch notificationState {
             case .notificationAllowed:
@@ -230,13 +230,13 @@ struct MacBrowserWaitlistInvitedView: View {
                         .foregroundColor(.macWaitlistText)
                         .padding(.top, 10)
                     
-                    Text(UserText.macWaitlistInviteScreenStep1)
+                    Text(UserText.macWaitlistInviteScreenStep1Title)
                         .font(.custom("proximanova-bold", size: 17))
                         .foregroundColor(.macWaitlistText)
                         .padding(.top, 22)
                         .padding(.bottom, 8)
                     
-                    Text("Visit this URL on your Mac to download:")
+                    Text(UserText.macWaitlistInviteScreenStep1Description)
                         .font(.custom("proximanova-regular", size: 17))
                         .foregroundColor(.macWaitlistText)
                     
@@ -250,13 +250,13 @@ struct MacBrowserWaitlistInvitedView: View {
                         }
                         .padding(.top, 6)
                     
-                    Text(UserText.macWaitlistInviteScreenStep2)
+                    Text(UserText.macWaitlistInviteScreenStep2Title)
                         .font(.custom("proximanova-bold", size: 17))
                         .foregroundColor(.macWaitlistText)
                         .padding(.top, 22)
                         .padding(.bottom, 8)
                     
-                    Text("Open the file to install, then enter your invite code to unlock.")
+                    Text(UserText.macWaitlistInviteScreenStep2Description)
                         .font(.custom("proximanova-regular", size: 17))
                         .foregroundColor(.macWaitlistText)
                         .lineSpacing(6)

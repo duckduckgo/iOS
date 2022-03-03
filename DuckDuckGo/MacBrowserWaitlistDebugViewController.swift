@@ -163,7 +163,7 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
                     self.storage.userShouldReceiveNotifications = true
                     self.storage.store(inviteCode: "FAKECODE")
-                    MacBrowserWaitlist.sendInviteCodeAvailableNotification()
+                    MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
                 }
             case .setMockInviteCode:
                 storage.store(inviteCode: "FAKECODE")

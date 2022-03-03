@@ -115,6 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         EmailWaitlist.shared.registerBackgroundRefreshTaskHandler()
+        MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -180,9 +181,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        MacBrowserWaitlist.fetchInviteCodeIfAvailable { error in
+        MacBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
             if error == nil {
-                MacBrowserWaitlist.sendInviteCodeAvailableNotification()
+                MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
             }
         }
 
@@ -332,9 +333,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
             }
 
-            let hasWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
-            if !hasWaitlistTask {
+            let hasEmailWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
+            if !hasEmailWaitlistTask {
                 EmailWaitlist.shared.scheduleBackgroundRefreshTask()
+            }
+            
+            let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == MacBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }
+            if !hasMacBrowserWaitlistTask {
+                MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
     }

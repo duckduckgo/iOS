@@ -19,6 +19,7 @@
 
 import Foundation
 import UserNotifications
+import BackgroundTasks
 
 enum WaitlistInviteCodeFetchError: Error {
     case alreadyHasInviteCode
@@ -29,31 +30,46 @@ enum WaitlistInviteCodeFetchError: Error {
 
 struct MacBrowserWaitlist {
     
+    struct Constants {
+        static let backgroundTaskName = "Mac Browser Waitlist Status Task"
+        static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.macBrowserWaitlistStatus"
+        static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
+    }
+    
     static let downloadURL = URL(string: "https://duckduckgo.com/mac")!
     static let downloadURLString: String = {
         downloadURL.absoluteString
     }()
     
-    static func settingsSubtitle(store: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore()) -> String {        
-        if store.isInvited {
+    static var shared = MacBrowserWaitlist()
+    
+    private let waitlistStorage: MacBrowserWaitlistStorage
+    private let waitlistRequest: WaitlistRequesting
+
+    init(store: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore(), request: WaitlistRequesting = WaitlistRequest(product: .macBrowser)) {
+        self.waitlistStorage = store
+        self.waitlistRequest = request
+    }
+    
+    func settingsSubtitle() -> String {
+        if waitlistStorage.isInvited {
             return UserText.macWaitlistAvailableForDownload
-        } else if store.isOnWaitlist {
+        } else if waitlistStorage.isOnWaitlist {
             return UserText.macWaitlistSettingsOnTheList
         } else {
             return UserText.macWaitlistBrowsePrivately
         }
     }
     
-    static func fetchInviteCodeIfAvailable(completion: @escaping (WaitlistInviteCodeFetchError?) -> Void) {
-        let browserWaitlistStorage = MacBrowserWaitlistKeychainStore()
+    func fetchInviteCodeIfAvailable(completion: @escaping (WaitlistInviteCodeFetchError?) -> Void) {
         let waitlistRequest = WaitlistRequest(product: .macBrowser)
         
-        guard browserWaitlistStorage.getWaitlistInviteCode() == nil else {
+        guard waitlistStorage.getWaitlistInviteCode() == nil else {
             completion(.alreadyHasInviteCode)
             return
         }
 
-        guard let token = browserWaitlistStorage.getWaitlistToken(), let storedTimestamp = browserWaitlistStorage.getWaitlistTimestamp() else {
+        guard let token = waitlistStorage.getWaitlistToken(), let storedTimestamp = waitlistStorage.getWaitlistTimestamp() else {
             completion(.notOnWaitlist)
             return
         }
@@ -65,7 +81,7 @@ struct MacBrowserWaitlist {
                     waitlistRequest.getInviteCode(token: token) { inviteCodeResult in
                         switch inviteCodeResult {
                         case .success(let inviteCode):
-                            browserWaitlistStorage.store(inviteCode: inviteCode.code)
+                            waitlistStorage.store(inviteCode: inviteCode.code)
                             completion(nil)
                         case .failure(let inviteCodeError):
                             completion(.failure(inviteCodeError))
@@ -82,7 +98,57 @@ struct MacBrowserWaitlist {
         }
     }
     
-    static func sendInviteCodeAvailableNotification() {
+    func registerBackgroundRefreshTaskHandler() {
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
+            let manager = EmailWaitlist.shared.emailManager
+
+            guard manager.isInWaitlist else {
+                task.setTaskCompleted(success: true)
+                return
+            }
+
+            manager.fetchInviteCodeIfAvailable { result in
+                switch result {
+                case .success:
+                    sendInviteCodeAvailableNotification()
+                    task.setTaskCompleted(success: true)
+                case .failure(let error):
+                    task.setTaskCompleted(success: false)
+
+                    if error != .notOnWaitlist {
+                        scheduleBackgroundRefreshTask()
+                    }
+                }
+            }
+        }
+    }
+
+    func scheduleBackgroundRefreshTask() {
+        guard waitlistStorage.isOnWaitlist, waitlistStorage.shouldReceiveNotifications() else {
+            return
+        }
+
+        let task = BGAppRefreshTaskRequest(identifier: Constants.backgroundRefreshTaskIdentifier)
+        task.earliestBeginDate = Date(timeIntervalSinceNow: Constants.minimumConfigurationRefreshInterval)
+
+        // Background tasks can be debugged by breaking on the `submit` call, stepping over, then running the following LLDB command, before resuming:
+        //
+        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateLaunchForTaskWithIdentifier:@"com.duckduckgo.app.waitlistStatus"]
+        //
+        // Task expiration can be simulated similarly:
+        //
+        // e -l objc -- (void)[[BGTaskScheduler sharedScheduler] _simulateExpirationForTaskWithIdentifier:@"com.duckduckgo.app.waitlistStatus"]
+
+        #if !targetEnvironment(simulator)
+        do {
+            try BGTaskScheduler.shared.submit(task)
+        } catch {
+            Pixel.fire(pixel: .backgroundTaskSubmissionFailed, error: error)
+        }
+        #endif
+    }
+    
+    func sendInviteCodeAvailableNotification() {
         let notificationContent = UNMutableNotificationContent()
 
         notificationContent.title = UserText.macBrowserWaitlistAvailableNotificationTitle

@@ -149,6 +149,7 @@ final class MacWaitlistViewModel: ObservableObject {
             if permissionGranted {
                 self.waitlistStorage.store(shouldReceiveNotifications: true)
                 self.viewState = .joinedQueue(.notificationAllowed)
+                MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             } else {
                 self.viewState = .joinedQueue(.cannotPromptForNotification)
             }

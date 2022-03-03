@@ -88,12 +88,7 @@ class DownloadManager {
         if let temporary = temporary {
             temporaryFile = temporary
         } else {
-            switch metaData.mimeType {
-            case .reality, .usdz, .passbook:
-                temporaryFile = true
-            default:
-                temporaryFile = false
-            }
+            temporaryFile = FilePreviewHelper.canAutoPreviewMIMEType(metaData.mimeType)
         }
         
         let session: DownloadSession

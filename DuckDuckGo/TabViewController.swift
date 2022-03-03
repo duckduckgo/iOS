@@ -933,7 +933,7 @@ class TabViewController: UIViewController {
     }
 
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard shouldAutoPreviewDownloadWithMIMEType(download.mimeType),
+        guard FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
               let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
               let delegate = self.delegate else { return }
         
@@ -943,16 +943,7 @@ class TabViewController: UIViewController {
             Pixel.fire(pixel: .presentPreviewWithoutTab)
         }
     }
-    
-    private func shouldAutoPreviewDownloadWithMIMEType(_ mimeType: MIMEType) -> Bool {
-        switch mimeType {
-        case .passbook, .reality, .usdz:
-            return true
-        default :
-            return false
-        }
-    }
-}   
+}
 
 extension TabViewController: LoginFormDetectionDelegate {
     
@@ -1045,7 +1036,7 @@ extension TabViewController: WKNavigationDelegate {
             }
             
             if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
-                if shouldAutoPreviewDownloadWithMIMEType(downloadMetadata.mimeType) {
+                if FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
                     startDownload()
                 } else {
                     let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {

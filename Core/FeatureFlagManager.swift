@@ -41,14 +41,14 @@ class FeatureFlagManager {
     private static let stagingURL = URL(string: "https://staticcdn.duckduckgo.com/remotefeatureflagging/config/staging/ios-config.json")!
     private static let productionURL = URL(string: "https://staticcdn.duckduckgo.com/remotefeatureflagging/config/v1/ios-config.json")!
     
-    private let storage: FeatureFlagUserDefaults
+    private let storage: FeatureFlagStorage
     
     private static var endpointURL: URL {
         return isDebugBuild ? stagingURL : productionURL
     }
     
     // Values for feature flags for testing can be provided by providing alternative storage
-    init(storage: FeatureFlagUserDefaults = FeatureFlagUserDefaults()) {
+    init(storage: FeatureFlagStorage = FeatureFlagUserDefaults()) {
         self.storage = storage
     }
     

@@ -22,16 +22,11 @@ import Core
 
 protocol VoiceSearchHelperProtocol {
     var isSpeechRecognizerAvailable: Bool { get }
-    var privacyAlertWasConfirmed: Bool { get }
-    func markPrivacyAlertAsConfirmed()
 }
 
 class VoiceSearchHelper: VoiceSearchHelperProtocol {
     private(set) var isSpeechRecognizerAvailable: Bool = false
     private var variantManager: VariantManager?
-
-    @UserDefaultsWrapper(key: .voiceSearchPrivacyAlertWasConfirmed, defaultValue: false)
-    private(set) var privacyAlertWasConfirmed: Bool
     
     init(_ variantManager: VariantManager? = nil) {
         self.variantManager = variantManager
@@ -39,20 +34,7 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
         updateFlag()
     }
     
-    func markPrivacyAlertAsConfirmed() {
-        privacyAlertWasConfirmed = true
-    }
-    
     private func updateFlag() {
-#if targetEnvironment(simulator)
-        isSpeechRecognizerAvailable = true
-#else
         isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
-        
-        // We don't want to override the flag in case there's no SpeechRecognizer available for this device
-        if let variantManager = variantManager, isSpeechRecognizerAvailable {
-            isSpeechRecognizerAvailable = variantManager.isSupported(feature: .voiceSearch)
-        }
-#endif
     }
 }

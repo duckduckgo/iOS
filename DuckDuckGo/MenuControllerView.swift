@@ -20,7 +20,7 @@
 import SwiftUI
 import UIKit
 
-public struct EditMenuItem {
+struct MenuControllerItem {
 
     public let title: String
     public let action: () -> Void
@@ -32,105 +32,88 @@ public struct EditMenuItem {
 
 }
 
-public extension View {
+extension View {
     
-    func editMenu(@ArrayBuilder<EditMenuItem> _ items: () -> [EditMenuItem]) -> some View {
-        EditMenuView(content: self, items: items())
+    func menuController(_ title: String, action: @escaping () -> Void) -> some View {
+        MenuControllerView(content: self, title: title, action: action)
             .fixedSize()
     }
 
 }
 
-public struct EditMenuView<Content: View>: UIViewControllerRepresentable {
+struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
 
-    public typealias Item = EditMenuItem
+    typealias Item = MenuControllerItem
     
-    public let content: Content
-    public let items: [Item]
-    
-    public func makeCoordinator() -> Coordinator {
-        Coordinator(items: items)
+    let content: Content
+    let title: String
+    let action: () -> Void
+
+    func makeCoordinator() -> Coordinator<Content> {
+        Coordinator(title: title, action: action)
     }
     
-    public func makeUIViewController(context: Context) -> UIHostingController<Content> {
+    func makeUIViewController(context: Context) -> UIHostingController<Content> {
         let coordinator = context.coordinator
         
-        // `handler` dispatches calls to each item's action
-        let hostVC = HostingController(rootView: content) { [weak coordinator] index in
-            guard let items = coordinator?.items else { return }
-            
-            if !items.indices.contains(index) {
-                assertionFailure()
-                return
-            }
-
-            items[index].action()
-        }
-        
-        coordinator.responder = hostVC
+        let hostingController = HostingController(rootView: content, action: action)
+        coordinator.responder = hostingController
         
         let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.tap))
-        hostVC.view.addGestureRecognizer(tap)
+        hostingController.view.addGestureRecognizer(tap)
         
-        return hostVC
+        return hostingController
     }
     
-    public func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: Context) { }
+    func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: Context) { }
     
-    public class Coordinator: NSObject {
-        let items: [Item]
+    class Coordinator<Content: View>: NSObject {
         var responder: UIResponder?
         
-        init(items: [Item]) {
-            self.items = items
+        private let title: String
+        private let action: () -> Void
+        
+        init(title: String, action: @escaping () -> Void) {
+            self.title = title
+            self.action = action
         }
         
-        @objc func tap(_ gesture: UILongPressGestureRecognizer) {
+        @objc func tap(_ gestureRecognizer: UILongPressGestureRecognizer) {
             let menu = UIMenuController.shared
 
-            guard gesture.state == .ended, let view = gesture.view, !menu.isMenuVisible else {
+            guard gestureRecognizer.state == .ended, let view = gestureRecognizer.view, !menu.isMenuVisible else {
                 return
             }
             
             responder?.becomeFirstResponder()
-            
-            menu.menuItems = items.enumerated().map { index, item in
-                UIMenuItem(title: item.title, action: IndexedCallable.selector(for: index))
-            }
-            
+
+            menu.menuItems = [
+                UIMenuItem(title: self.title, action: #selector(HostingController<Content>.menuItemAction(_:)))
+            ]
+
             menu.showMenu(from: view, rect: view.bounds)
         }
+
     }
     
-    /// Subclass of `UIHostingController` to handle responder actions
     class HostingController<Content: View>: UIHostingController<Content> {
-        private var callable: IndexedCallable?
-        
-        convenience init(rootView: Content, handler: @escaping (Int) -> Void) {
+        private var action: (() -> Void)?
+
+        convenience init(rootView: Content, action: @escaping () -> Void) {
             self.init(rootView: rootView)
 
-            // make sure this VC is sized to its content
+            self.action = action
+            
             preferredContentSize = view.intrinsicContentSize
             view.backgroundColor = .clear
-            
-            callable = IndexedCallable(handler: handler)
         }
         
         override var canBecomeFirstResponder: Bool {
             true
         }
         
-        override func responds(to aSelector: Selector!) -> Bool {
-            return super.responds(to: aSelector) || IndexedCallable.willRespond(to: aSelector)
-        }
-        
-        // forward valid selectors to `callable`
-        override func forwardingTarget(for aSelector: Selector!) -> Any? {
-            guard IndexedCallable.willRespond(to: aSelector) else {
-                return super.forwardingTarget(for: aSelector)
-            }
-            
-            return callable
+        @objc func menuItemAction(_ sender: Any) {
+            self.action?()
         }
     }
 

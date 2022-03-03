@@ -46,6 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
+    private lazy var featureFlagManager = FeatureFlagManager()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -120,6 +121,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.windowScene?.screenshotService?.delegate = self
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
+        
+        featureFlagManager.getLatestConfigAndProcess()
 
         appIsLaunching = true
         return true

@@ -20,51 +20,8 @@
 import Foundation
 import Core
 
-struct FeatureFlagConfig: Decodable {
-
-    let version: Int
-    let rollouts: [FeatureFlag]
-    
-    func features(mergingPreviousFeatures previousFeatures: [String: Feature]?) -> [String: Feature] {
-        rollouts.reduce(into: [String: Feature]()) { dict, featureFlag in
-            // It's important we use previousFeatures to preserve their allocated percentiles, to avoid redistributing users
-            if let previousFeature = previousFeatures?[featureFlag.featureName] {
-                dict[previousFeature.name] = previousFeature
-            } else {
-                let feature = Feature(featureFlag: featureFlag)
-                dict[feature.name] = feature
-            }
-        }
-    }
-}
-
-struct FeatureFlag: Decodable {
-    
-    let featureName: String
-    let rolloutToPercentage: Int
-    
-}
-
-struct Feature {
-    
-    let name: String
-    let rolloutPercentage: Int
-    
-    private let clientPercentile: Int
-    
-    var isEnabled: Bool {
-        return clientPercentile <= rolloutPercentage
-    }
-
-    init(featureFlag: FeatureFlag) {
-        
-        self.name = featureFlag.featureName
-        self.rolloutPercentage = featureFlag.rolloutToPercentage
-        
-        // By generating from 1 to a 100 and using `clientPercentile <= rolloutPercentage`, we ensure 0% rollout means 0, and 100% means 100%
-        // It's critical this is stored and not generated again for the same feature when there's a config change, so the users that see a feature don't get completely reallocated
-        self.clientPercentile = Int.random(in: 1...100)
-    }
+enum SupportedFeature: String {
+    case someNewFeature = "some_new_feature"
 }
 
 class FeatureFlagManager {
@@ -73,6 +30,10 @@ class FeatureFlagManager {
     
     // TODO how are we gonna make this mockable for testing?
         
+    public struct Notifications {
+        public static let featureFlagConfigDidChange = Notification.Name("com.duckduckgo.app.featureFlagConfigDidChange")
+    }
+    
     // TODO should be in appURLs?
     private static let stagingURL = URL(string: "https://staticcdn.duckduckgo.com/remotefeatureflagging/config/staging/ios-config.json")!
     private static let productionURL = URL(string: "https://staticcdn.duckduckgo.com/remotefeatureflagging/config/v1/ios-config.json")!
@@ -87,24 +48,30 @@ class FeatureFlagManager {
         self.storage = storage
     }
     
-    func getJSONFile() {
+    func isFeatureEnabled(_ feature: SupportedFeature) -> Bool {
+        guard let savedFeature = storage.features[feature.rawValue] else {
+            return false
+        }
+        return savedFeature.isEnabled
+    }
+    
+    func getLatestConfigAndProcess() {
         
         let request = URLRequest(url: FeatureFlagManager.endpointURL)
       
         let task = URLSession.shared.dataTask(with: request) { [weak self] (data, _, error) -> Void in
             guard let weakSelf = self else {
-                fatalError("TODO don't ship with this fatal error, do some actual error handling")
+                assertionFailure("self nil in FeatureFlagManager")
+                return
             }
             do {
                 let config = try weakSelf.processResult(data: data, error: error)
-                guard config.version > weakSelf.storage.lastConfigVersion else { return }
-                
-                let previousFeatures = weakSelf.storage.features
-                let newFeatures = config.features(mergingPreviousFeatures: previousFeatures)
-                weakSelf.storage.features = newFeatures
-                weakSelf.storage.featureFlagConfig = config
+                let configChanged = weakSelf.storage.saveConfigIfNeeded(config)
+                if configChanged {
+                    NotificationCenter.default.post(name: Notifications.featureFlagConfigDidChange, object: self)
+                }
             } catch {
-                fatalError("TODO don't ship with this fatal error, do some actual error handling")
+                assertionFailure("Error processing feature flag config")
             }
         }
         task.resume()
@@ -123,37 +90,33 @@ class FeatureFlagManager {
 class FeatureFlagUserDefaults {
     
     private struct Keys {
-        static let configKey = "com.duckduckgo.featureFlags.configKey"
+        static let lastConfigVersionKey = "com.duckduckgo.featureFlags.lastConfigVersionKey"
         static let featuresKey = "com.duckduckgo.featureFlags.featuresKey"
     }
 
-    
     private var userDefaults: UserDefaults {
         return UserDefaults.standard
     }
 
-    // Currently save the whole config cos why not, but we could just save the version
-    public var featureFlagConfig: FeatureFlagConfig? {
+    @discardableResult
+    fileprivate func saveConfigIfNeeded(_ config: FeatureFlagConfig) -> Bool {
+        guard config.version > lastConfigVersion else { return false }
+        
+        features = config.features(mergingPreviousFeatures: features)
+        lastConfigVersion = config.version
+        return true
+    }
+    
+    private(set) fileprivate var lastConfigVersion: Int {
         get {
-            if let data = userDefaults.data(forKey: Keys.configKey) {
-                return (try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? FeatureFlagConfig)
-            }
-            return nil
+            userDefaults.integer(forKey: Keys.lastConfigVersionKey)
         }
-        set(newConfig) {
-            guard let newConfig = newConfig else {
-                return
-            }
-            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newConfig, requiringSecureCoding: false) else { return }
-            userDefaults.set(data, forKey: Keys.configKey)
+        set(latestConfigVersion) {
+            userDefaults.set(latestConfigVersion, forKey: Keys.lastConfigVersionKey)
         }
     }
     
-    public var lastConfigVersion: Int {
-        return featureFlagConfig?.version ?? -1
-    }
-    
-    public var features: [String: Feature] {
+    private(set) fileprivate var features: [String: Feature] {
         get {
             if let data = userDefaults.data(forKey: Keys.featuresKey) {
                 return (try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String: Feature]) ?? [:]
@@ -165,4 +128,77 @@ class FeatureFlagUserDefaults {
             userDefaults.set(data, forKey: Keys.featuresKey)
         }
     }
+}
+
+class Feature: NSObject, NSCoding {
+    
+    let name: String
+    let rolloutPercentage: Int
+    var isEnabled: Bool {
+        return clientPercentile <= rolloutPercentage
+    }
+    
+    private let clientPercentile: Int
+    
+    override init() {
+        fatalError("Feature must not be created without a clientPercentile, use init(featureFlag: FeatureFlag)")
+    }
+
+    fileprivate init(featureFlag: FeatureFlag) {
+        
+        self.name = featureFlag.featureName
+        self.rolloutPercentage = featureFlag.rolloutToPercentage
+        
+        // By generating from 1 to a 100 and using `clientPercentile <= rolloutPercentage`, we ensure 0% rollout means 0, and 100% means 100%
+        // It's critical this is stored and not generated again for the same feature when there's a config change, so the users that see a feature don't get completely reallocated
+        self.clientPercentile = Int.random(in: 1...100)
+    }
+    
+    // NSCoding
+    private struct NSCodingKeys {
+        static let name = "name"
+        static let rolloutPercentage = "rolloutPercentage"
+        static let clientPercentile = "clientPercentile"
+    }
+    
+    required init?(coder: NSCoder) {
+        let name = coder.decodeObject(forKey: NSCodingKeys.name) as? String
+        guard let name = name else {
+            return nil
+        }
+        self.name = name
+        self.rolloutPercentage = coder.decodeInteger(forKey: NSCodingKeys.rolloutPercentage)
+        self.clientPercentile = coder.decodeInteger(forKey: NSCodingKeys.clientPercentile)
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(name, forKey: NSCodingKeys.name)
+        coder.encode(rolloutPercentage, forKey: NSCodingKeys.rolloutPercentage)
+        coder.encode(clientPercentile, forKey: NSCodingKeys.clientPercentile)
+    }
+}
+
+private struct FeatureFlagConfig: Decodable {
+
+    let version: Int
+    let rollouts: [FeatureFlag]
+    
+    func features(mergingPreviousFeatures previousFeatures: [String: Feature]?) -> [String: Feature] {
+        rollouts.reduce(into: [String: Feature]()) { dict, featureFlag in
+            // It's important we use previousFeatures to preserve their allocated percentiles, to avoid redistributing users
+            if let previousFeature = previousFeatures?[featureFlag.featureName] {
+                dict[previousFeature.name] = previousFeature
+            } else {
+                let feature = Feature(featureFlag: featureFlag)
+                dict[feature.name] = feature
+            }
+        }
+    }
+}
+
+private struct FeatureFlag: Decodable {
+    
+    let featureName: String
+    let rolloutToPercentage: Int
+    
 }

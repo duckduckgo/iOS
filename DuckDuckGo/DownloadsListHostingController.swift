@@ -29,8 +29,8 @@ class DownloadsListHostingController: UIHostingController<DownloadsList> {
 
         setupTableViewAppearance()
         
-        viewModel.requestActivityViewHandler = { [weak self] url in
-            self?.presentActivityView(for: url)
+        viewModel.requestActivityViewHandler = { [weak self] url, rectangle in
+            self?.presentActivityView(for: url, from: rectangle)
         }
     }
     
@@ -40,10 +40,17 @@ class DownloadsListHostingController: UIHostingController<DownloadsList> {
         appearance.backgroundColor = UIColor(named: "DownloadsListBackgroundColor")
     }
     
-    private func presentActivityView(for url: URL) {
+    private func presentActivityView(for url: URL, from rect: CGRect) {
         // Required due to lack of SwuftUI support for detents
         let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         activityViewController.overrideUserInterfaceStyle()
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
+            activityViewController.popoverPresentationController?.permittedArrowDirections = .right
+            activityViewController.popoverPresentationController?.sourceRect = rect
+        }
+        
         present(activityViewController, animated: true, completion: nil)
     }
 }

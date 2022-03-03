@@ -100,7 +100,9 @@ struct DownloadsList: View {
                                 .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
                                 .deleteDisabled(true)
                         case .complete:
-                            CompleteDownloadRow(rowModel: row, shareButtonAction: { share(row) })
+                            CompleteDownloadRow(rowModel: row, shareButtonAction: { buttonFrame in
+                                share(row, from: buttonFrame)
+                            })
                         }
                     }
                     .onDelete { offset in
@@ -150,8 +152,8 @@ struct DownloadsList: View {
         viewModel.deleteAllDownloads()
     }
     
-    private func share(_ rowModel: DownloadsListRow) {
-        viewModel.showActivityView(for: rowModel)
+    private func share(_ rowModel: DownloadsListRow, from rectangle: CGRect) {
+        viewModel.showActivityView(for: rowModel, from: rectangle)
     }
 }
 

@@ -20,12 +20,17 @@
 import SwiftUI
 import GRDB
 
+private struct ShareButtonFramePreferenceKey: PreferenceKey {
+    static var defaultValue: CGRect = .zero
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {}
+}
+
 struct CompleteDownloadRow: View {
-    
     @State private var isPreviewPresented = false
+    @State private var shareButtonFrame: CGRect = .zero
     
     var rowModel: DownloadsListRow
-    var shareButtonAction: () -> Void
+    var shareButtonAction: (CGRect) -> Void
     
     var body: some View {
         HStack {
@@ -63,12 +68,23 @@ struct CompleteDownloadRow: View {
     
     private var shareButton: some View {
         Button {
-            self.shareButtonAction()
+            self.shareButtonAction(shareButtonFrame)
         } label: {
             Image.share
         }
         .buttonStyle(.plain)
         .animation(nil)
+        .background(
+            GeometryReader { geometryProxy in
+                Color.clear
+                    .preference(key: ShareButtonFramePreferenceKey.self, value: geometryProxy.frame(in: .global))
+            }
+        )
+        .onPreferenceChange(ShareButtonFramePreferenceKey.self) { newFrame in
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                self.shareButtonFrame = newFrame
+            }
+        }
     }
 }
 

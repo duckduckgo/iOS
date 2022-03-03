@@ -22,13 +22,16 @@ import Core
 
 enum SupportedFeature: String {
     case someNewFeature = "some_new_feature"
+    case featureOff = "feature_off"
+    case featureOn = "feature_on"
 }
 
+/*
+ At present, the config is only fetched on app start (in the app delegate). However, this is async, so anything using feature flagging should be aware that wether or not the fature flag is enabled could change at any time.
+ */
 class FeatureFlagManager {
-    
-    // TODO maybe should be async with notification for did change and just embrace it?
-    
-    // TODO how are we gonna make this mockable for testing?
+        
+    // TODO I should probably also test mergingPreviousFeatures
         
     public struct Notifications {
         public static let featureFlagConfigDidChange = Notification.Name("com.duckduckgo.app.featureFlagConfigDidChange")
@@ -44,12 +47,13 @@ class FeatureFlagManager {
         return isDebugBuild ? stagingURL : productionURL
     }
     
+    // Values for feature flags for testing can be provided by providing alternative storage
     init(storage: FeatureFlagUserDefaults = FeatureFlagUserDefaults()) {
         self.storage = storage
     }
     
     func isFeatureEnabled(_ feature: SupportedFeature) -> Bool {
-        guard let savedFeature = storage.features[feature.rawValue] else {
+        guard let savedFeature = storage.savedFeatures()[feature.rawValue] else {
             return false
         }
         return savedFeature.isEnabled
@@ -65,7 +69,7 @@ class FeatureFlagManager {
                 return
             }
             do {
-                let config = try weakSelf.processResult(data: data, error: error)
+                let config = try weakSelf.parseConfigData(data, error: error)
                 let configChanged = weakSelf.storage.saveConfigIfNeeded(config)
                 if configChanged {
                     NotificationCenter.default.post(name: Notifications.featureFlagConfigDidChange, object: self)
@@ -77,7 +81,7 @@ class FeatureFlagManager {
         task.resume()
     }
 
-    private func processResult(data: Data?, error: Error?) throws -> FeatureFlagConfig {
+    private func parseConfigData(_ data: Data?, error: Error?) throws -> FeatureFlagConfig {
         if let error = error { throw error }
         guard let data = data else { throw ApiRequestError.noData }
         let config = try JSONDecoder().decode(FeatureFlagConfig.self, from: data)
@@ -87,7 +91,12 @@ class FeatureFlagManager {
     
 }
 
-class FeatureFlagUserDefaults {
+protocol FeatureFlagStorage {
+    func saveConfigIfNeeded(_ config: FeatureFlagConfig) -> Bool
+    func savedFeatures() -> [String: Feature]
+}
+
+class FeatureFlagUserDefaults: FeatureFlagStorage {
     
     private struct Keys {
         static let lastConfigVersionKey = "com.duckduckgo.featureFlags.lastConfigVersionKey"
@@ -99,7 +108,7 @@ class FeatureFlagUserDefaults {
     }
 
     @discardableResult
-    fileprivate func saveConfigIfNeeded(_ config: FeatureFlagConfig) -> Bool {
+    func saveConfigIfNeeded(_ config: FeatureFlagConfig) -> Bool {
         guard config.version > lastConfigVersion else { return false }
         
         features = config.features(mergingPreviousFeatures: features)
@@ -107,7 +116,11 @@ class FeatureFlagUserDefaults {
         return true
     }
     
-    private(set) fileprivate var lastConfigVersion: Int {
+    func savedFeatures() -> [String: Feature] {
+        return features
+    }
+    
+    private var lastConfigVersion: Int {
         get {
             userDefaults.integer(forKey: Keys.lastConfigVersionKey)
         }
@@ -116,7 +129,7 @@ class FeatureFlagUserDefaults {
         }
     }
     
-    private(set) fileprivate var features: [String: Feature] {
+    private var features: [String: Feature] {
         get {
             if let data = userDefaults.data(forKey: Keys.featuresKey) {
                 return (try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String: Feature]) ?? [:]
@@ -178,7 +191,7 @@ class Feature: NSObject, NSCoding {
     }
 }
 
-private struct FeatureFlagConfig: Decodable {
+struct FeatureFlagConfig: Decodable {
 
     let version: Int
     let rollouts: [FeatureFlag]
@@ -186,6 +199,7 @@ private struct FeatureFlagConfig: Decodable {
     func features(mergingPreviousFeatures previousFeatures: [String: Feature]?) -> [String: Feature] {
         rollouts.reduce(into: [String: Feature]()) { dict, featureFlag in
             // It's important we use previousFeatures to preserve their allocated percentiles, to avoid redistributing users
+            // However, if a feature is no longer present in the config, we don't currently keep it stored, so if the feature is ever readded, users will be reallocated.
             if let previousFeature = previousFeatures?[featureFlag.featureName] {
                 dict[previousFeature.name] = previousFeature
             } else {
@@ -196,7 +210,7 @@ private struct FeatureFlagConfig: Decodable {
     }
 }
 
-private struct FeatureFlag: Decodable {
+struct FeatureFlag: Decodable {
     
     let featureName: String
     let rolloutToPercentage: Int

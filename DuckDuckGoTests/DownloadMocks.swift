@@ -71,14 +71,16 @@ struct MockSessionSetup {
         response.suggestedFileName = file
         response.mimeType = mimeType
         
-        session = MockDownloadSession(DownloadTestsHelper.mockURL)
+        let downloadTestsHelper = DownloadTestsHelper(downloadsDirectory: downloadManager.downloadsDirectory)
+        
+        session = MockDownloadSession(downloadTestsHelper.mockURL)
         session.delaySeconds = completionDelay
 
-        let tmpPath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
+        let tmpPath = downloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
     
         session.temporaryFilePath = tmpPath
         
-        DownloadTestsHelper.createMockFile(on: tmpPath)
+        downloadTestsHelper.createMockFile(on: tmpPath)
     }
 }
 

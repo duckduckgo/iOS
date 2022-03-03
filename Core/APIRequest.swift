@@ -44,6 +44,10 @@ public class APIRequest {
         
     }
     
+    public enum APIRequestError: Error {
+        case noResponseOrError
+    }
+    
     public enum HTTPMethod: String {
         case get = "GET"
         case head = "HEAD"
@@ -76,7 +80,7 @@ public class APIRequest {
                 } else if let response = response {
                     continuation.resume(returning: .success(response))
                 } else {
-                    fatalError("Did not receive network response or error")
+                    continuation.resume(returning: .failure(APIRequestError.noResponseOrError))
                 }
             }
         }

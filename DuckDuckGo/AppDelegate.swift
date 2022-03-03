@@ -486,22 +486,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     private func presentEmailWaitlistSettingsModal() {
-        guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
-
-        rootViewController.clearNavigationStack()
-
-        // Give the `clearNavigationStack` call time to complete.
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-            rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
-            let navigationController = rootViewController.presentedViewController as? UINavigationController
-            let waitlist = EmailWaitlistViewController.loadFromStoryboard()
-
-            navigationController?.popToRootViewController(animated: false)
-            navigationController?.pushViewController(waitlist, animated: true)
-        }
+        let waitlistViewController = EmailWaitlistViewController.loadFromStoryboard()
+        presentSettings(with: waitlistViewController)
     }
     
     private func presentMacBrowserWaitlistSettingsModal() {
+        let waitlistViewController = MacWaitlistViewController(nibName: nil, bundle: nil)
+        presentSettings(with: waitlistViewController)
+    }
+    
+    private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
         rootViewController.clearNavigationStack()
@@ -510,10 +504,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
             rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
             let navigationController = rootViewController.presentedViewController as? UINavigationController
-            let waitlist = MacWaitlistViewController(nibName: nil, bundle: nil)
-
             navigationController?.popToRootViewController(animated: false)
-            navigationController?.pushViewController(waitlist, animated: true)
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
 

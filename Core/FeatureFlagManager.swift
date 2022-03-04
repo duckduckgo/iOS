@@ -24,6 +24,10 @@ enum SupportedFeature: String {
     case someNewFeature = "some_new_feature"
     case featureOff = "feature_off"
     case featureOn = "feature_on"
+    case featureWithFiltersSameVersion = "feature_with_filters_same_version"
+    case featureWithFiltersTooBigMajor = "feature_with_filters_too_big_major"
+    case featureWithFiltersTooBigMinor = "feature_with_filters_too_big_minor"
+    case featureWithFiltersTooBigPatch = "feature_with_filters_too_big_patch"
 }
 
 /*
@@ -32,6 +36,7 @@ enum SupportedFeature: String {
 class FeatureFlagManager {
         
     // TODO I should probably also test mergingPreviousFeatures
+    // TODO make this a singleton and mandate injection to where ever it's used? I reckon so
         
     public struct Notifications {
         public static let featureFlagConfigDidChange = Notification.Name("com.duckduckgo.app.featureFlagConfigDidChange")
@@ -52,11 +57,11 @@ class FeatureFlagManager {
         self.storage = storage
     }
     
-    func isFeatureEnabled(_ feature: SupportedFeature) -> Bool {
+    func shouldShowFeature(_ feature: SupportedFeature) -> Bool {
         guard let savedFeature = storage.savedFeatures()[feature.rawValue] else {
             return false
         }
-        return savedFeature.isEnabled
+        return savedFeature.shouldShowFeature
     }
     
     func getLatestConfigAndProcess() {
@@ -146,9 +151,34 @@ class FeatureFlagUserDefaults: FeatureFlagStorage {
 class Feature: NSObject, NSCoding {
     
     let name: String
-    let rolloutPercentage: Int
-    var isEnabled: Bool {
-        return clientPercentile <= rolloutPercentage
+    let isEnabled: Bool
+    let rolloutPercentage: Int?
+    let minimumAppVersion: String?
+    
+    var shouldShowFeature: Bool {
+        if isEnabled == false {
+            return false
+        }
+        if let minimumAppVersion = minimumAppVersion {
+            let versionProvider = AppVersion.shared // TODO inject
+            let versions = minimumAppVersion.split(separator: ".") //TODO make all the array access safe here
+            if versions[0] > versionProvider.majorVersionNumber {
+                return false
+            } else if versions[0] == versionProvider.majorVersionNumber {
+                if versions[1] > versionProvider.minorVersionNumber {
+                    return false
+                }
+                if versions[1] == versionProvider.minorVersionNumber &&
+                    versions[2] > versionProvider.patchVersionNumber {
+                    
+                    return false
+                }
+            }
+        }
+        if let rolloutPercentage = rolloutPercentage {
+            return clientPercentile <= rolloutPercentage
+        }
+        return true
     }
     
     private let clientPercentile: Int
@@ -160,7 +190,9 @@ class Feature: NSObject, NSCoding {
     fileprivate init(featureFlag: FeatureFlag) {
         
         self.name = featureFlag.featureName
+        self.isEnabled = featureFlag.isEnabled
         self.rolloutPercentage = featureFlag.rolloutToPercentage
+        self.minimumAppVersion = featureFlag.minimumAppVersion
         
         // By generating from 1 to a 100 and using `clientPercentile <= rolloutPercentage`, we ensure 0% rollout means 0, and 100% means 100%
         // It's critical this is stored and not generated again for the same feature when there's a config change, so the users that see a feature don't get completely reallocated
@@ -170,7 +202,9 @@ class Feature: NSObject, NSCoding {
     // NSCoding
     private struct NSCodingKeys {
         static let name = "name"
+        static let isEnabled = "isEnabled"
         static let rolloutPercentage = "rolloutPercentage"
+        static let minimumAppVersion = "minimumAppVersion"
         static let clientPercentile = "clientPercentile"
     }
     
@@ -180,13 +214,17 @@ class Feature: NSObject, NSCoding {
             return nil
         }
         self.name = name
-        self.rolloutPercentage = coder.decodeInteger(forKey: NSCodingKeys.rolloutPercentage)
+        self.isEnabled = coder.decodeBool(forKey: NSCodingKeys.isEnabled)
+        self.rolloutPercentage = coder.decodeObject(forKey: NSCodingKeys.rolloutPercentage) as? Int
+        self.minimumAppVersion = coder.decodeObject(forKey: NSCodingKeys.minimumAppVersion) as? String
         self.clientPercentile = coder.decodeInteger(forKey: NSCodingKeys.clientPercentile)
     }
     
     func encode(with coder: NSCoder) {
         coder.encode(name, forKey: NSCodingKeys.name)
+        coder.encode(isEnabled, forKey: NSCodingKeys.isEnabled)
         coder.encode(rolloutPercentage, forKey: NSCodingKeys.rolloutPercentage)
+        coder.encode(minimumAppVersion, forKey: NSCodingKeys.minimumAppVersion)
         coder.encode(clientPercentile, forKey: NSCodingKeys.clientPercentile)
     }
 }
@@ -213,6 +251,8 @@ struct FeatureFlagConfig: Decodable {
 struct FeatureFlag: Decodable {
     
     let featureName: String
-    let rolloutToPercentage: Int
+    let isEnabled: Bool
+    let rolloutToPercentage: Int?
+    let minimumAppVersion: String?
     
 }

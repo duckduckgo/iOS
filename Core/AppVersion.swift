@@ -47,6 +47,14 @@ public struct AppVersion {
     public var majorVersionNumber: String {
         return String(versionNumber.split(separator: ".").first ?? "")
     }
+    
+    public var minorVersionNumber: String {
+        return String(versionNumber.split(separator: ".")[1])
+    }
+    
+    public var patchVersionNumber: String {
+        return String(versionNumber.split(separator: ".")[2])
+    }
 
     public var versionNumber: String {
         return bundle.object(forInfoDictionaryKey: Keys.versionNumber) as? String ?? ""

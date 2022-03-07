@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Upravit";
 
@@ -90,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Sdílet";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Přidat widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Získejte rychlý přístup k soukromému vyhledávání a oblíbeným webům.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Podržením prstu na ploše aktivuj režim úprav plochy.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Klepni na tlačítko plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Najdi aplikaci DuckDuckGo a vyber ji. Pak zvol widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Jedním klepnutím se dostaneš na svoje oblíbené stránky.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Existující záložky nebudou duplikovány.";
@@ -334,8 +355,14 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Smazat vše";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Zatím žádný stažený soubor";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Stahování %1$@ z %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Stahování – %@";
 
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "Stahování";

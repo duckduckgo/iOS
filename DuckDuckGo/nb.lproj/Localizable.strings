@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
 
@@ -90,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Del";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Legg til widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Få rask tilgang til privat søk og nettstedene du liker best.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Trykk lenge på startskjermen for å gå inn i ristemodus.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Trykk på %@-knappen.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Finn og velg DuckDuckGo. Velg deretter en widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Ett trykk til favorittnettstedene dine.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bokmerker blir ikke duplisert.";
@@ -334,8 +355,14 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Slett alt";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Ingen filer er lastet ned ennå";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Laster ned – %1$@ av %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Laster ned – %@";
 
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "Nedlastinger";

@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Editar";
 
@@ -90,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Compartir";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Añadir widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Obtén acceso rápido a búsquedas privadas y a los sitios que más te gustan.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Mantén pulsada la pantalla de inicio para entrar en el modo jiggle.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Pulsa el botón más %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Busca y selecciona DuckDuckGo. A continuación, elige un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Visita tus sitios favoritos con un toque.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Los marcadores existentes no se duplicarán.";
@@ -334,8 +355,14 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Eliminar todo";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Todavía no se han descargado archivos";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Descargando - %1$@ de %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Descargando - %@";
 
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "Descargas";

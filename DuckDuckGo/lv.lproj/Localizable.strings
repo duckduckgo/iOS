@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediģēt";
 
@@ -90,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Kopīgot";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Pievienot logrīku";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Iegūsti ātru piekļuvi privātajai meklēšanai un savām mīļākajām vietnēm.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Ilgi nospied sākuma ekrānā, lai pārietu pārkārtošanas režīmā.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Pieskaries plus %@ pogai.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Atrodi un atlasi DuckDuckGo. Pēc tam izvēlies logrīku.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Viens pieskāriens līdz tavām mīļākajām vietnēm.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esošās grāmatzīmes netiks dublētas.";
@@ -334,8 +355,14 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Dzēst visus";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Vēl nav lejupielādēts neviens fails";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Notiek lejupielāde – %1$@ no %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Notiek lejupielāde — %@";
 
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "Lejupielādes";

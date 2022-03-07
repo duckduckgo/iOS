@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Editați";
 
@@ -90,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Partajare";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Adăugare widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Obține acces rapid la căutarea privată și la site-urile care îți plac.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Ține apăsat pe ecranul de întâmpinare pentru a intra în modul în care elementele „tremură”.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Atinge butonul plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Găsește și selectează DuckDuckGo. Apoi alege un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Atinge o dată pentru a ajunge la site-urile tale preferate.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Marcajele existente nu vor fi duplicate.";
@@ -334,8 +355,14 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Șterge toate";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Nu a fost descărcat încă niciun fișier";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Se descarcă - %1$@ din %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Se descarcă - %@";
 
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "Descărcări";

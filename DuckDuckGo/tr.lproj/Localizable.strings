@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Düzenle";
 
@@ -90,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Paylaş";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Widget Ekle";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Özel aramaya ve sevdiğiniz sitelere hızlı erişim elde edin.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Sallama moduna girmek için ana ekranda uzun basın.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Artı %@ düğmesine dokunun.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "DuckDuckGo'yu bulun ve seçin. Ardından bir widget seçin.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Favori sitelerinize tek dokunuşla erişin.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Mevcut yer imleri çoğaltılmayacaktır.";
@@ -334,8 +355,14 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Tümünü Sil";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Henüz indirilen dosya yok";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "İndiriliyor - %1$@ / %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "İndiriliyor - %@";
 
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "İndirilenler";

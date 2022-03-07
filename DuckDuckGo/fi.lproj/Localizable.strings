@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Muokkaa";
 
@@ -90,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Jaa";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Lisää widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Nopea pääsy yksityiseen hakuun ja suosikkisivustoihin.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Paina pitkään aloitusnäyttöä siirtyäksesi heilutustilaan.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Napauta pluspainiketta %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Etsi ja valitse DuckDuckGo. Valitse sitten widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Yhdellä napautuksella suosikkisivustoillesi.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemassa olevia kirjanmerkkejä ei kopioida.";
@@ -334,8 +355,14 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Poista kaikki";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Yhtään tiedostoa ei ole vielä ladattu";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Ladataan - %1$@/%2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Ladataan – %@";
 
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "Lataukset";

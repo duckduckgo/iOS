@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redaguoti";
 
@@ -90,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Bendrinti";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Pridėti valdiklį";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Greitai pasiekite privačią paiešką ir mėgstamas svetaines.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Ilgai spauskite pagrindinį ekraną, kad įjungtumėte į programėlių perkėlimo ir ištrynimo režimą.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Bakstelėkite pliuso mygtuką %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Raskite ir pasirinkite „DuckDuckGo“. Tuomet pasirinkite valdiklį.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Tik vienas bakstelėjimas – ir jūs jau mėgstamiausiose svetainėse.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esamos žymės nebus kopijuojamos.";
@@ -334,8 +355,14 @@
 /* Button for deleting all items on downloads list */
 "downloads.downloads-list.delete-all" = "Ištrinti viską";
 
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Nėra atsisiųstų failų";
+
 /* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
 "downloads.downloads-list.row.downloading" = "Atsisiunčiama – %1$@ iš %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Atsisiunčiama – %@";
 
 /* Downloads list screen title */
 "downloads.downloads-list.title" = "Atsisiuntimai";

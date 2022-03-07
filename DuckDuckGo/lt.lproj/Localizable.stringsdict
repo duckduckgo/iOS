@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Ar tikrai norite ištrinti šį aplanką ir %1$d elementą?</string>
+			<key>few</key>
+			<string>Ar tikrai norite ištrinti šį aplanką ir %1$d elementus?</string>
+			<key>many</key>
+			<string>Ar tikrai norite ištrinti šį aplanką ir %1$d elemento?</string>
+			<key>other</key>
+			<string>Ar tikrai norite ištrinti šį aplanką ir %1$d elementų?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,29 +33,29 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* ir *1 kitas* bandė tave stebėti.
+			<string>*%2$@, %3$@* ir *dar 1* bandė tave sekti.
 
 Užblokavau juos!
 
-☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
+☝️ Patikrink adreso juostą ir pamatyk, kas bando tave sekti, kai lankaisi naujoje svetainėje.️</string>
 			<key>few</key>
-			<string>*%2$@, %3$@* ir *%1$d kiti* bandė tave stebėti.
+			<string>*%2$@, %3$@* ir *dar %1$d* bandė tave sekti.
 
 Užblokavau juos!
 
-☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
+☝️ Patikrink adreso juostą ir pamatyk, kas bando tave sekti, kai lankaisi naujoje svetainėje.️</string>
 			<key>many</key>
-			<string>*%2$@, %3$@* ir *%1$d kito* bandė tave stebėti.
+			<string>*%2$@, %3$@* ir *dar %1$d* bandė tave sekti.
 
 Užblokavau juos!
 
-☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
+☝️ Patikrink adreso juostą ir pamatyk, kas bando tave sekti, kai lankaisi naujoje svetainėje.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* ir *%1$d kitų* bandė tave stebėti.
+			<string>*%2$@, %3$@* ir *dar %1$d* bandė tave sekti.
 
 Užblokavau juos!
 
-☝️Patikrink URL juostą ir pamatyk, kas bando tave stebėti, kai lankaisi naujoje svetainėje.️</string>
+☝️ Patikrink adreso juostą ir pamatyk, kas bando tave sekti, kai lankaisi naujoje svetainėje.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

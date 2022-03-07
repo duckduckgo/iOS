@@ -40,6 +40,7 @@ class SuggestionTrayViewController: UIViewController {
 
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
+    private var willRemoveAutocomplete = false
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -80,17 +81,30 @@ class SuggestionTrayViewController: UIViewController {
     
     override var canBecomeFirstResponder: Bool { return true }
     
-    func willShow(for type: SuggestionType) -> Bool {
+    func canShow(for type: SuggestionType) -> Bool {
+        var canShow = false
+        switch type {
+        case .autocomplete(let query, _):
+            canShow = canDisplayAutocompleteSuggestions(forQuery: query)
+        case.favorites:
+            canShow = canDisplayFavorites
+        }
+        return canShow
+    }
+    
+    func show(for type: SuggestionType) {
         switch type {
         case .autocomplete(let query, let bookmarksCachingSearch):
-            return displayAutocompleteSuggestions(forQuery: query, bookmarksCachingSearch: bookmarksCachingSearch)
-        case.favorites:
+            displayAutocompleteSuggestions(forQuery: query, bookmarksCachingSearch: bookmarksCachingSearch)
+        case .favorites:
             if isPad {
                 removeAutocomplete()
-                return displayFavorites()
+                displayFavoritesIfNeeded()
             } else {
-                return displayFavorites { [weak self] in
+                willRemoveAutocomplete = true
+                displayFavoritesIfNeeded { [weak self] in
                     self?.removeAutocomplete()
+                    self?.willRemoveAutocomplete = false
                 }
             }
         }
@@ -177,35 +191,48 @@ class SuggestionTrayViewController: UIViewController {
         containerView.addGestureRecognizer(foregroundTap)
     }
     
-    private func displayFavorites(onInstall: @escaping () -> Void = {}) -> Bool {
-        guard bookmarkManager.favoritesCount != 0 else { return false }
-
-        if favoritesOverlay == nil {
-            let controller = FavoritesOverlay()
-            controller.delegate = favoritesOverlayDelegate
-            install(controller: controller, completion: onInstall)
-            favoritesOverlay = controller
-        }
-        
-        return true
+    private var canDisplayFavorites: Bool {
+        bookmarkManager.favoritesCount != 0
     }
     
-    private func displayAutocompleteSuggestions(forQuery query: String, bookmarksCachingSearch: BookmarksCachingSearch) -> Bool {
-        guard appSettings.autocomplete && !query.isEmpty else {
+    private func displayFavoritesIfNeeded(onInstall: @escaping () -> Void = {}) {
+        if favoritesOverlay == nil {
+            installFavoritesOverlay(onInstall: onInstall)
+        }
+    }
+    
+    private func installFavoritesOverlay(onInstall: @escaping () -> Void = {}) {
+        let controller = FavoritesOverlay()
+        controller.delegate = favoritesOverlayDelegate
+        install(controller: controller, completion: onInstall)
+        favoritesOverlay = controller
+    }
+    
+    private func canDisplayAutocompleteSuggestions(forQuery query: String) -> Bool {
+        let canDisplay = appSettings.autocomplete && !query.isEmpty
+        if !canDisplay {
             removeAutocomplete()
-            return false
         }
-        
-        if autocompleteController == nil {
-            let controller = AutocompleteViewController.loadFromStoryboard(bookmarksCachingSearch: bookmarksCachingSearch)
-            install(controller: controller)
-            controller.delegate = autocompleteDelegate
-            controller.presentationDelegate = self
-            autocompleteController = controller
-        }
-        
+        return canDisplay
+    }
+    
+    private func displayAutocompleteSuggestions(forQuery query: String, bookmarksCachingSearch: BookmarksCachingSearch) {
+        installAutocompleteSuggestionsIfNeeded(with: bookmarksCachingSearch)
         autocompleteController?.updateQuery(query: query)
-        return true
+    }
+    
+    private func installAutocompleteSuggestionsIfNeeded(with bookmarksCachingSearch: BookmarksCachingSearch) {
+        if autocompleteController == nil {
+            installAutocompleteSuggestions(with: bookmarksCachingSearch)
+        }
+    }
+    
+    private func installAutocompleteSuggestions(with bookmarksCachingSearch: BookmarksCachingSearch) {
+        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksCachingSearch: bookmarksCachingSearch)
+        install(controller: controller)
+        controller.delegate = autocompleteDelegate
+        controller.presentationDelegate = self
+        autocompleteController = controller
     }
 
     private func removeAutocomplete() {
@@ -244,7 +271,7 @@ class SuggestionTrayViewController: UIViewController {
 extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDelegate {
     
     func autocompleteDidChangeContentHeight(height: CGFloat) {
-        if autocompleteController != nil {
+        if autocompleteController != nil && !willRemoveAutocomplete {
             removeFavorites()
         }
         

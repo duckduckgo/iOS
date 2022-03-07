@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Jeste li sigurni da želite izbrisati ovu mapu i %1$d stavku?</string>
+			<key>few</key>
+			<string>Jeste li sigurni da želite izbrisati ovu mapu i %1$d stavke?</string>
+			<key>many</key>
+			<string>Jeste li sigurni da želite izbrisati ovu mapu i %1$d stavki?</string>
+			<key>other</key>
+			<string>Jeste li sigurni da želite izbrisati ovu mapu i %1$d stavki?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,29 +33,29 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* i *1 drugi* pokušali su te pratiti ovdje.
+			<string>*Ovdje su te pokušali pratiti *%2$@, %3$@* i *još 1 osoba*. 
 
 Ja sam ih blokirao!
 
-☝️ Možeš pogledati na traku koja sadrži URL-ove za provjeru tko te pokušava pratiti kad posjetiš novo web-mjesto.</string>
+ ☝️Možeš pogledati adresnu traku da vidiš tko te pokušava pratiti kad posjetiš novo web-mjesto.</string>
 			<key>few</key>
-			<string>*%2$@, %3$@* i *%1$d druga* pokušali su te pratiti ovdje.
+			<string>*Ovdje su te pokušali pratiti *%2$@, %3$@* i još *%1$d druge osobe*. 
 
 Ja sam ih blokirao!
 
-☝️ Možeš pogledati na traku koja sadrži URL-ove za provjeru tko te pokušava pratiti kad posjetiš novo web-mjesto.</string>
+ ☝️Možeš pogledati adresnu traku da vidiš tko te pokušava pratiti kad posjetiš novo web-mjesto.</string>
 			<key>many</key>
-			<string>*%2$@, %3$@* i *%1$d drugih* pokušali su te pratiti ovdje.
+			<string>*Ovdje su te pokušali pratiti *%2$@, %3$@* i *još %1$d drugih osoba*. 
 
 Ja sam ih blokirao!
 
-☝️ Možeš pogledati na traku koja sadrži URL-ove za provjeru tko te pokušava pratiti kad posjetiš novo web-mjesto.</string>
+ ☝️Možeš pogledati adresnu traku da vidiš tko te pokušava pratiti kad posjetiš novo web-mjesto.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* i *%1$d drugih* pokušali su te pratiti ovdje.
+			<string>*Ovdje su te pokušali pratiti *%2$@, %3$@* i *još %1$d drugih osoba*. 
 
 Ja sam ih blokirao!
 
-☝️ Možeš pogledati na traku koja sadrži URL-ove za provjeru tko te pokušava pratiti kad posjetiš novo web-mjesto.</string>
+ ☝️Možeš pogledati adresnu traku da vidiš tko te pokušava pratiti kad posjetiš novo web-mjesto.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

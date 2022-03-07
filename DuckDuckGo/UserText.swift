@@ -189,8 +189,12 @@ public struct UserText {
     public static let bookmarkFolderSelectTitle = NSLocalizedString("bookmark.folderSelect.title", value: "Location", comment: "Header for folder selection for bookmarks")
     public static let bookmarkTopLevelFolderTitle = NSLocalizedString("bookmark.topLevelFolder.title", value: "Bookmarks", comment: "Top level bookmarks folder title")
     public static let deleteBookmarkFolderAlertTitle = NSLocalizedString("bookmark.deleteFolderAlert.title", value: "Delete %@?", comment: "Delete bookmark folder alert title")
-    public static let deleteBookmarkFolderAlertMessageSingular = NSLocalizedString("bookmark.deleteFolderAlert.message.singular", value: "Are you sure you want to delete this folder and %i item?", comment: "Delete bookmark folder alert message")
-    public static let deleteBookmarkFolderAlertMessagePlural = NSLocalizedString("bookmark.deleteFolderAlert.message.plural", value: "Are you sure you want to delete this folder and %i items?", comment: "Delete bookmark folder alert message plural")
+    
+    public static func deleteBookmarkFolderAlertMessage(numberOfChildren: Int) -> String {
+        let message = NSLocalizedString("bookmark.deleteFolderAlert.message", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: numberOfChildren)
+    }
+    
     public static let deleteBookmarkFolderAlertDeleteButton = NSLocalizedString("bookmark.deleteFolderAlert.deleteButton", value: "Delete", comment: "Delete bookmark folder alert delete button")
     public static let addbookmarkFolderButton = NSLocalizedString("bookmark.addFolderButton", value: "Add Folder", comment: "Add bookmark folder button text")
     

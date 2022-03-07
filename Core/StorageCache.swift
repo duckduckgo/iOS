@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 protocol StorageCacheUpdating {
     
@@ -27,7 +28,7 @@ protocol StorageCacheUpdating {
 public class StorageCache: StorageCacheUpdating {
     
     public let fileStore = FileStore()
-    public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
+    public let httpsUpgradeStore: AppHTTPSUpgradeStore = PrivacyFeatures.httpsUpgradeStore
     
     // Read only
     public let tld: TLD
@@ -59,7 +60,7 @@ public class StorageCache: StorageCacheUpdating {
         case .httpsBloomFilter:
             guard let bloomFilter = data as? (spec: HTTPSBloomFilterSpecification, data: Data) else { return false }
             let result = httpsUpgradeStore.persistBloomFilter(specification: bloomFilter.spec, data: bloomFilter.data)
-            HTTPSUpgrade.shared.loadData()
+            PrivacyFeatures.httpsUpgrade.loadData()
             return result
             
         case .surrogates:

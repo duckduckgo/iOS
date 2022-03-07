@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import BrowserServicesKit
 
 public class ContentBlockerLoader {
     typealias ContentBlockerLoaderProgress = (ContentBlockerRequest.Configuration) -> Void
@@ -26,7 +27,7 @@ public class ContentBlockerLoader {
     private typealias DataDict = [ContentBlockerRequest.Configuration: Any]
     private typealias EtagDict = [ContentBlockerRequest.Configuration: String]
 
-    private let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
+    private let httpsUpgradeStore: HTTPSUpgradeStore = AppHTTPSUpgradeStore()
     private let etagStorage: BlockerListETagStorage
     private let fileStore: FileStore
 
@@ -120,7 +121,7 @@ public class ContentBlockerLoader {
                     return
             }
             
-            if let storedSpecification = self.httpsUpgradeStore.bloomFilterSpecification(), storedSpecification == specification {
+            if let storedSpecification = self.httpsUpgradeStore.bloomFilterSpecification, storedSpecification == specification {
                 os_log("Bloom filter already downloaded", log: generalLog, type: .debug)
                 progress?(.httpsBloomFilter)
                 semaphore.signal()

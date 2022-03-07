@@ -18,6 +18,7 @@
 //
 
 import XCTest
+@testable import BrowserServicesKit
 
 // swiftlint:disable type_body_length
 class URLExtensionTests: XCTestCase {
@@ -258,17 +259,17 @@ class URLExtensionTests: XCTestCase {
 
     func testWhenUrlProtocolIsHttpThenIsHttpsIsFalse() {
         let url = URL(string: "http://test.com")!
-        XCTAssertFalse(url.isHttps())
+        XCTAssertFalse(url.isHttps)
     }
 
     func testWhenUrlProtocolIsHttpsThenIsHttpsIsTrue() {
         let url = URL(string: "https://test.com")!
-        XCTAssertTrue(url.isHttps())
+        XCTAssertTrue(url.isHttps)
     }
 
     func testWhenUrlProtocolIsNonHttpThenIsHttpsIsFalse() {
         let url = URL(string: "mailto://test.com")!
-        XCTAssertFalse(url.isHttps())
+        XCTAssertFalse(url.isHttps)
     }
     
     func testWhenHostMatchesDomainThenIsPartOfDomainIsTrue() {

@@ -19,10 +19,11 @@
 
 import XCTest
 @testable import Core
+@testable import BrowserServicesKit
 
 class HTTPSBloomFilterSpecificationTest: XCTestCase {
     
-    let store = HTTPSUpgradePersistence()
+    let store = AppHTTPSUpgradeStore()
     let testee = HTTPSBloomFilterSpecification(bitCount: 100,
                                                errorRate: 0.001,
                                                totalEntries: 100,

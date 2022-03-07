@@ -25,6 +25,8 @@ class DownloadsListDataSource {
     @Published var model: DownloadsListModel
     
     private var downloadManager = AppDependencyProvider.shared.downloadManager
+    private var deleteDownloadsHelper = DownloadsDeleteHelper()
+    
     private var bag: Set<AnyCancellable> = []
     
     init() {
@@ -69,65 +71,17 @@ class DownloadsListDataSource {
         downloadManager.cancelDownload(download)
     }
     
-    func deleteDownloadWithIdentifier(_ identifier: String) {
-        print("M: deleteItem()")
-        guard let downloadToDelete = model.completeDownloads.first(where: { $0.id == identifier }),
-              downloadToDelete.type == .complete
-        else { return }
+    func deleteDownloadWithIdentifier(_ identifier: String, completionHandler: DeleteHandler) {
+        guard let downloadToDelete = model.completeDownloads.first(where: { $0.id == identifier }) else { return }
         
-//        let index = completeDownloads.firstIndex(of: downloadToBeRemoved) else { return }
-//        completeDownloads.remove(at: index)
-        
-        do {
-            let fileManager = FileManager.default
-            let initialFilePath = downloadToDelete.filePath
-//            let fileURL = URL(fileURLWithPath: initialFilePath)
-            
-            if fileManager.fileExists(atPath: initialFilePath) {
-                try fileManager.removeItem(atPath: initialFilePath)
-//                var trashURL: NSURL?
-//                try fileManager.trashItem(at: fileURL, resultingItemURL: &trashURL)
-                    
-                DispatchQueue.main.async {
-#warning("Move to ViewModel")
-                    ActionMessageView.present(message: UserText.messageDownloadDeleted(for: downloadToDelete.filename),
-                                              actionTitle: UserText.actionGenericUndo) {
-//                        guard let trashURL = trashURL as? URL else { return }
-//                        if !fileManager.fileExists(atPath: trashURL.path) {
-//                            try? fileManager.moveItem(atPath: trashURL.path, toPath: initialFilePath)
-//                        }
-                    }
-                }
-            } else {
-                print("File does not exist")
-            }
-        } catch let error as NSError {
-            print("An error took place: \(error)")
-        }
-        
-        //        refetchCompleteDownloads()
+        deleteDownloadsHelper.deleteDownloads(atPaths: [downloadToDelete.filePath],
+                                              completionHandler: completionHandler)
     }
     
-    func deleteAllDownloads() {
-        do {
-            let fileManager = FileManager.default
-            
-            for filePath in (model.completeDownloads.map { $0.filePath }) {
-                if fileManager.fileExists(atPath: filePath) {
-                    try fileManager.removeItem(atPath: filePath)
-                 }
-            }
-            
-            DispatchQueue.main.async {
-#warning("Move to ViewModel")
-                ActionMessageView.present(message: UserText.messageAllFilesDeleted,
-                                          actionTitle: UserText.actionGenericUndo) {
-                    print("UNDO!")
-                }
-            }
-            
-        } catch let error as NSError {
-            print("An error took place: \(error)")
-        }
+    func deleteAllDownloads(completionHandler: DeleteHandler) {
+        let completeDownloadsFilePaths = model.completeDownloads.map { $0.filePath }
+        
+        deleteDownloadsHelper.deleteDownloads(atPaths: completeDownloadsFilePaths,
+                                              completionHandler: completionHandler)
     }
 }

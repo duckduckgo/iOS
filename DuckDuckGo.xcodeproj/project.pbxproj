@@ -46,6 +46,7 @@
 		1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC460527A9499600E75FCB /* DownloadsList.swift */; };
 		1EEFD2D52758E31600B1393B /* textsize.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFD2D42758E31600B1393B /* textsize.js */; };
 		1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */; };
+		1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		310D091B2799F54900DC0060 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310D091A2799F54900DC0060 /* DownloadManager.swift */; };
 		310D091D2799F57200DC0060 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310D091C2799F57200DC0060 /* Download.swift */; };
@@ -782,6 +783,7 @@
 		1EEC460527A9499600E75FCB /* DownloadsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadsList.swift; sourceTree = "<group>"; };
 		1EEFD2D42758E31600B1393B /* textsize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = textsize.js; sourceTree = "<group>"; };
 		1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalSlider.swift; sourceTree = "<group>"; };
+		1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsDeleteHelper.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		310D091A2799F54900DC0060 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		310D091C2799F57200DC0060 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
@@ -2151,6 +2153,7 @@
 				1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */,
 				1E4DCF4727B6A35400961E25 /* DownloadsListModel.swift */,
 				1E4DCF4927B6A38000961E25 /* DownloadListRepresentable.swift */,
+				1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -4775,6 +4778,7 @@
 				85449EF523FDA02800512AAF /* KeyboardSettingsViewController.swift in Sources */,
 				85058371219F424500ED4EDB /* PartiallyRoundedRectangleView.swift in Sources */,
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,
+				1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */,
 				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,
 				85DFEDF124C7EEA400973FE7 /* LargeOmniBarState.swift in Sources */,
 				9880722A25FA497B0039EF4B /* MenuButton.swift in Sources */,

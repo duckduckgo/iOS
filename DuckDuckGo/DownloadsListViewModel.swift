@@ -20,6 +20,7 @@
 import SwiftUI
 import Combine
 import Core
+import os.log
 
 class DownloadsListViewModel: ObservableObject {
 
@@ -55,20 +56,40 @@ class DownloadsListViewModel: ObservableObject {
     }
     
     func deleteDownload(at offsets: IndexSet, in sectionIndex: Int) {
-        print("VM: deleteItem(at:in:)")
         guard let rowIndex = offsets.first else { return }
         
         let item = sections[sectionIndex].rows[rowIndex]
-        
-        print("      (section:\(sectionIndex) row:\(rowIndex)")
-        
-        dataSource.deleteDownloadWithIdentifier(item.id)
-        
-        // warning present the toast
+    
+        dataSource.deleteDownloadWithIdentifier(item.id) { result in
+            switch result {
+            case .success(let undoHandler):
+                let message = UserText.messageDownloadDeleted(for: item.filename)
+                presentDeleteConfirmation(message: message,
+                                          undoHandler: undoHandler)
+            case .failure(let error):
+                os_log("Error deleting all downloads %s", log: generalLog, type: .debug, error.localizedDescription)
+            }
+        }
     }
     
     func deleteAllDownloads() {
-        dataSource.deleteAllDownloads()
+        dataSource.deleteAllDownloads { result in
+            switch result {
+            case .success(let undoHandler):
+                presentDeleteConfirmation(message: UserText.messageAllFilesDeleted,
+                                          undoHandler: undoHandler)
+            case .failure(let error):
+                os_log("Error deleting all downloads %s", log: generalLog, type: .debug, error.localizedDescription)
+            }
+        }
+    }
+    
+    private func presentDeleteConfirmation(message: String, undoHandler: @escaping UndoHandler) {
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: message,
+                                      actionTitle: UserText.actionGenericUndo,
+                                      onAction: undoHandler)
+        }
     }
     
     func showActivityView(for rowModel: DownloadsListRow, from sourceRect: CGRect) {

@@ -6557,8 +6557,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
-				branch = "jacek/smarter-encryption";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.2.0;
 			};
 		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {

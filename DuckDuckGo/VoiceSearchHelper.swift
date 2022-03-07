@@ -35,6 +35,9 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
     }
     
     private func updateFlag() {
+#if targetEnvironment(simulator)
+        isSpeechRecognizerAvailable = true
+#endif
         isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
     }
 }

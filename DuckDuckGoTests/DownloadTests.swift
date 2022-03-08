@@ -21,61 +21,62 @@ import XCTest
 @testable import DuckDuckGo
 
 class DownloadTests: XCTestCase {
-
+    private let downloadManagerTestsHelper = DownloadTestsHelper(downloadsDirectory: DownloadManager().downloadsDirectory)
+    
     override func setUpWithError() throws {
     }
     
     override func tearDownWithError() throws {
-        DownloadTestsHelper.deleteAllFiles()
+        downloadManagerTestsHelper.deleteAllFiles()
     }
-
+    
     func testTemporaryDownload() {
-        let mockSession = MockDownloadSession(DownloadTestsHelper.mockURL)
+        let mockSession = MockDownloadSession(        downloadManagerTestsHelper.mockURL)
         
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         let filename = "\(UUID().uuidString).zip"
         
-        let path = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
-        DownloadTestsHelper.createMockFile(on: path)
+        let path = downloadManagerTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
+        downloadManagerTestsHelper.createMockFile(on: path)
         
-        let finalFilePath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(filename)
+        let finalFilePath = downloadManagerTestsHelper.tmpDirectory.appendingPathComponent(filename)
         
         mockSession.temporaryFilePath = path
         
         let temporaryDownload = Download(filename: filename, mimeType: .passbook, temporary: true, downloadSession: mockSession)
-                
+        
         let expectation = expectation(description: "Download finish")
         temporaryDownload.start()
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             XCTAssertTrue(temporaryDownload.temporary, "File should be temporary")
-            XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
+            XCTAssertTrue(self.downloadManagerTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)
     }
     
     func testPermanentDownload() {
-        let mockSession = MockDownloadSession(DownloadTestsHelper.mockURL)
+        let mockSession = MockDownloadSession(downloadManagerTestsHelper.mockURL)
         
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         let filename = "\(UUID().uuidString).zip"
         
-        let path = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
-        DownloadTestsHelper.createMockFile(on: path)
+        let path = downloadManagerTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
+        downloadManagerTestsHelper.createMockFile(on: path)
         
-        let finalFilePath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(filename)
+        let finalFilePath = downloadManagerTestsHelper.tmpDirectory.appendingPathComponent(filename)
         
         mockSession.temporaryFilePath = path
         
         let temporaryDownload = Download(filename: filename, mimeType: .passbook, temporary: false, downloadSession: mockSession)
-
+        
         let expectation = expectation(description: "Download finish")
         temporaryDownload.start()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             XCTAssertFalse(temporaryDownload.temporary, "File should not be temporary")
-            XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
+             XCTAssertTrue(self.downloadManagerTestsHelper.checkIfFileExists(finalFilePath), "File should exist")
             expectation.fulfill()
         }
         

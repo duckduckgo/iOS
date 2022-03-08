@@ -24,13 +24,15 @@ import WebKit
 import WidgetKit
 
 class DownloadManagerTests: XCTestCase {
+    private let downloadManagerTestsHelper = DownloadTestsHelper(downloadsDirectory: DownloadManager().downloadsDirectory)
+    
     var mockDependencyProvider: MockDependencyProvider!
     
     override func setUp() {
     }
     
     override func tearDown() {
-        DownloadTestsHelper.deleteAllFiles()
+        downloadManagerTestsHelper.deleteAllFiles()
     }
     
     func testNotificationTemporaryPKPassDownload() {
@@ -44,13 +46,13 @@ class DownloadManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { [self] notification in
           
-            if DownloadTestsHelper.downloadForNotification(notification) == download {
-                let (tmpPath, finalPath) = DownloadTestsHelper.temporaryAndFinalPathForDownload(download)
+            if downloadManagerTestsHelper.downloadForNotification(notification) == download {
+                let (tmpPath, finalPath) = downloadManagerTestsHelper.temporaryAndFinalPathForDownload(download)
 
-                XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(tmpPath), "File should exist")
-                XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(finalPath), "File should not exist")
+                XCTAssertTrue(downloadManagerTestsHelper.checkIfFileExists(tmpPath), "File should exist")
+                XCTAssertFalse(downloadManagerTestsHelper.checkIfFileExists(finalPath), "File should not exist")
                 expectation.fulfill()
             }
         }
@@ -71,13 +73,13 @@ class DownloadManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { [self] notification in
            
-            if DownloadTestsHelper.downloadForNotification(notification) == download {
-                let (tmpPath, finalPath) = DownloadTestsHelper.temporaryAndFinalPathForDownload(download)
+            if downloadManagerTestsHelper.downloadForNotification(notification) == download {
+                let (tmpPath, finalPath) = downloadManagerTestsHelper.temporaryAndFinalPathForDownload(download)
 
-                XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(tmpPath), "File should exist")
-                XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(finalPath), "File should not exist")
+                XCTAssertTrue(downloadManagerTestsHelper.checkIfFileExists(tmpPath), "File should exist")
+                XCTAssertFalse(downloadManagerTestsHelper.checkIfFileExists(finalPath), "File should not exist")
                 expectation.fulfill()
             }
         }
@@ -98,13 +100,13 @@ class DownloadManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { [self] notification in
             
-            if DownloadTestsHelper.downloadForNotification(notification) == download {
-                let (tmpPath, finalPath) = DownloadTestsHelper.temporaryAndFinalPathForDownload(download)
+            if downloadManagerTestsHelper.downloadForNotification(notification) == download {
+                let (tmpPath, finalPath) = downloadManagerTestsHelper.temporaryAndFinalPathForDownload(download)
 
-                XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(tmpPath), "File should exist")
-                XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(finalPath), "File should not exist")
+                XCTAssertTrue(downloadManagerTestsHelper.checkIfFileExists(tmpPath), "File should exist")
+                XCTAssertFalse(downloadManagerTestsHelper.checkIfFileExists(finalPath), "File should not exist")
                 expectation.fulfill()
             }
         }
@@ -124,13 +126,13 @@ class DownloadManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { [self] notification in
            
-            if DownloadTestsHelper.downloadForNotification(notification) == download {
-                let (tmpPath, finalPath) = DownloadTestsHelper.temporaryAndFinalPathForDownload(download)
+            if downloadManagerTestsHelper.downloadForNotification(notification) == download {
+                let (tmpPath, finalPath) = downloadManagerTestsHelper.temporaryAndFinalPathForDownload(download)
 
-                XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(tmpPath), "File should not exist")
-                XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalPath), "File should exist")
+                XCTAssertFalse(downloadManagerTestsHelper.checkIfFileExists(tmpPath), "File should not exist")
+                XCTAssertTrue(downloadManagerTestsHelper.checkIfFileExists(finalPath), "File should exist")
                 expectation.fulfill()
             }
         }
@@ -148,12 +150,12 @@ class DownloadManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
 
-        downloadManager.startDownload(download) { error in
-            let (tmpPath, finalPath) = DownloadTestsHelper.temporaryAndFinalPathForDownload(download)
+        downloadManager.startDownload(download) { [self] error in
+            let (tmpPath, finalPath) = downloadManagerTestsHelper.temporaryAndFinalPathForDownload(download)
 
             XCTAssertNil(error)
-            XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(tmpPath), "File should not exist")
-            XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalPath), "File should exist")
+            XCTAssertFalse(downloadManagerTestsHelper.checkIfFileExists(tmpPath), "File should not exist")
+            XCTAssertTrue(downloadManagerTestsHelper.checkIfFileExists(finalPath), "File should exist")
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)
@@ -167,9 +169,9 @@ class DownloadManagerTests: XCTestCase {
         let download = downloadManager.makeDownload(navigationResponse: sessionSetup.response, downloadSession: sessionSetup.session)!
         let expectation = expectation(description: "Download finish")
         
-        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { [self] notification in
            
-            if DownloadTestsHelper.downloadForNotification(notification) == download {
+            if downloadManagerTestsHelper.downloadForNotification(notification) == download {
                 XCTAssertEqual(downloadManager.downloadList.count, 0)
                 expectation.fulfill()
             }
@@ -200,13 +202,13 @@ class DownloadManagerTests: XCTestCase {
         
         let expectation = expectation(description: "Download finish")
         
-        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { notification in
+        notificationCenter.addObserver(forName: .downloadFinished, object: nil, queue: nil) { [self] notification in
            
-            if DownloadTestsHelper.downloadForNotification(notification) == download {
-                let (tmpPath, finalPath) = DownloadTestsHelper.temporaryAndFinalPathForDownload(download)
+            if downloadManagerTestsHelper.downloadForNotification(notification) == download {
+                let (tmpPath, finalPath) = downloadManagerTestsHelper.temporaryAndFinalPathForDownload(download)
                 
-                XCTAssertFalse(DownloadTestsHelper.checkIfFileExists(tmpPath), "File should not exist")
-                XCTAssertTrue(DownloadTestsHelper.checkIfFileExists(finalPath), "File should exist")
+                XCTAssertFalse(downloadManagerTestsHelper.checkIfFileExists(tmpPath), "File should not exist")
+                XCTAssertTrue(downloadManagerTestsHelper.checkIfFileExists(finalPath), "File should exist")
                 XCTAssertEqual(expectedName, download.filename, "Names should be equal")
                 expectation.fulfill()
             }
@@ -238,8 +240,8 @@ class DownloadManagerTests: XCTestCase {
         let fileWithExtension = "duck.txt"
         let fileWithoutExtension = "duck"
         
-        DownloadTestsHelper.createMockFile(on: DownloadTestsHelper.documentsDirectory.appendingPathComponent(fileWithExtension))
-        DownloadTestsHelper.createMockFile(on: DownloadTestsHelper.documentsDirectory.appendingPathComponent(fileWithoutExtension))
+        downloadManagerTestsHelper.createMockFile(on: downloadManagerTestsHelper.downloadsDirectory.appendingPathComponent(fileWithExtension))
+        downloadManagerTestsHelper.createMockFile(on: downloadManagerTestsHelper.downloadsDirectory.appendingPathComponent(fileWithoutExtension))
         
         let numberOfFiles = 3
         var files = [String](repeating: fileWithExtension, count: numberOfFiles)

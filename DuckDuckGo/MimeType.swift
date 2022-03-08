@@ -26,6 +26,7 @@ enum MIMEType: String {
     case octetStream = "application/octet-stream"
     case xhtml = "application/xhtml+xml"
     case html = "text/html"
+    case calendar = "text/calendar"
     case unknown
     
     var isHTML: Bool {

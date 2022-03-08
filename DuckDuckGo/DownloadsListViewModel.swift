@@ -84,7 +84,7 @@ class DownloadsListViewModel: ObservableObject {
         }
     }
     
-    private func presentDeleteConfirmation(message: String, undoHandler: @escaping UndoHandler) {
+    private func presentDeleteConfirmation(message: String, undoHandler: @escaping DeleteUndoHandler) {
         DispatchQueue.main.async {
             ActionMessageView.present(message: message,
                                       actionTitle: UserText.actionGenericUndo,

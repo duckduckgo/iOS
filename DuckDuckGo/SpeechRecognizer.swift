@@ -26,7 +26,7 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let speechRecognizer: SFSpeechRecognizer?
-    private var operationQueue: OperationQueue
+    private let operationQueue: OperationQueue
     
     init() {
         // https://app.asana.com/0/0/1201701558793614/1201934552312834

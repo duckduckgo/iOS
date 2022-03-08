@@ -25,12 +25,22 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     private var audioEngine = AVAudioEngine()
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
-    private let speechRecognizer = SFSpeechRecognizer()
+    private let speechRecognizer: SFSpeechRecognizer?
+    private var operationQueue: OperationQueue
+    
+    init() {
+        // https://app.asana.com/0/0/1201701558793614/1201934552312834
+        operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .userInteractive
+        
+        speechRecognizer = SFSpeechRecognizer()
+        speechRecognizer?.queue = operationQueue
+    }
     
     var isAvailable: Bool {
         // https://app.asana.com/0/1201011656765697/1201271104639596
         if #available(iOS 15.0, *) {
-            return (speechRecognizer?.isAvailable ?? false) && supportsOnDeviceRecognition
+            return supportsOnDeviceRecognition && (speechRecognizer?.isAvailable ?? false)
         } else {
             return false
         }
@@ -47,7 +57,6 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     }
     
     private func convertArr<T>(count: Int, data: UnsafePointer<T>) -> [T] {
-
         let buffer = UnsafeBufferPointer(start: data, count: count)
         return Array(buffer)
     }

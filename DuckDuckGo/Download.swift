@@ -81,10 +81,6 @@ class Download: NSObject, Identifiable, ObservableObject {
         self.state = self.session.task?.state ?? .completed
     }
     
-    deinit {
-        print("Download \(id) \(filename) deinit")
-    }
-    
     private func renameFile(_ oldPath: URL, newFilename: String) -> URL? {
         do {
             let newPath = oldPath.deletingLastPathComponent().appendingPathComponent(newFilename)

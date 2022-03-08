@@ -30,7 +30,6 @@ class DownloadsListDataSource {
     private var bag: Set<AnyCancellable> = []
     
     init() {
-        print("- DownloadsDataSource init")
         model = DownloadsListModel(ongoingDownloads: downloadManager.downloadList.filter { !$0.temporary }.map { AnyDownloadListRepresentable($0) },
                                    completeDownloads: downloadManager.downloadsDirectoryFiles.map { AnyDownloadListRepresentable($0) })
         downloadManager.startMonitoringDownloadsDirectoryChanges()
@@ -38,7 +37,6 @@ class DownloadsListDataSource {
     }
     
     deinit {
-        print("- DownloadsDataSource deinit")
         downloadManager.stopMonitoringDownloadsDirectoryChanges()
         downloadManager.markAllDownloadsSeen()
     }

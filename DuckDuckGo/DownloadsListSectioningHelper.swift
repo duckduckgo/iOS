@@ -80,17 +80,6 @@ class DownloadsListSectioningHelper {
             }
         })
         
-        // Test print out
-        downloadsGroupedByRelativeDateRanges.map({ $0.key }).sorted(by: >).forEach { relativeDateRange in
-            print("[\(relativeDateRange)]:")
-            if let downloads = downloadsGroupedByRelativeDateRanges[relativeDateRange] {
-                downloads.forEach {
-                    print("[   \($0.creationDate) - (\($0.filename)]:")
-                }
-            }
-        }
-        //
-        
         let sortedRelativeDateRanges = downloadsGroupedByRelativeDateRanges.map({ $0.key }).sorted(by: >)
         return sortedRelativeDateRanges.compactMap { relativeDateRange in
             guard let downloads = downloadsGroupedByRelativeDateRanges[relativeDateRange] else { return nil }

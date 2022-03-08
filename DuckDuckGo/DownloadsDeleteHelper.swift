@@ -61,7 +61,7 @@ class DownloadsDeleteHelper {
     }
     
     private func createTemporaryUndoDirectory(with identifier: String = UUID().uuidString) -> URL? {
-        let undoDirectoryURL = FileManager.default.temporaryDirectory.appendingPathComponent(identifier)
+        let undoDirectoryURL = FileManager.default.temporaryDirectory.appendingPathComponent(identifier, isDirectory: true)
         
         do {
             try FileManager.default.createDirectory(at: undoDirectoryURL, withIntermediateDirectories: false, attributes: nil)

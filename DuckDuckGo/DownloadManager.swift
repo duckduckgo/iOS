@@ -20,7 +20,7 @@
 import Foundation
 import Core
 import WebKit
-import os
+import os.log
 
 class DownloadManager {
     
@@ -45,8 +45,9 @@ class DownloadManager {
             let documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             return documentsDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
         } catch {
-            #warning("we need a better handling of error scenario")
-            return FileManager.default.temporaryDirectory
+            os_log("Failed to create downloads directory: %s", type: .debug, error.localizedDescription)
+            let temporaryDirectory = FileManager.default.temporaryDirectory
+            return temporaryDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
         }
     }
     
@@ -144,7 +145,7 @@ class DownloadManager {
              try FileManager.default.moveItem(at: location, to: newPath)
              download.location = newPath
          } catch {
-             print("Error \(error)")
+             os_log("Error moving file to downloads directory: %s", type: .debug, error.localizedDescription)
          }
     }
     

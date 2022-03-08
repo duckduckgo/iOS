@@ -19,6 +19,7 @@
 
 import UIKit
 import PassKit
+import os.log
 
 class PassKitPreviewHelper: FilePreview {
     private weak var viewController: UIViewController?
@@ -36,11 +37,7 @@ class PassKitPreviewHelper: FilePreview {
             let controller = PKAddPassesViewController(pass: pass)!
             viewController?.present(controller, animated: true)
         } catch {
-            print("Can't present passkit \(error)")
+            os_log("Can't present passkit: %s", type: .debug, error.localizedDescription)
         }
-    }
-    
-    deinit {
-        print("PassKitPreviewHelper deinit")
     }
 }

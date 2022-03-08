@@ -2130,6 +2130,7 @@
 			isa = PBXGroup;
 			children = (
 				1EEC460527A9499600E75FCB /* DownloadsList.swift */,
+				1E4DCF4D27B6A69600961E25 /* DownloadsListHostingController.swift */,
 				1E8AD1D227C000E300ABA377 /* Rows */,
 				1E8AD1D327C000EA00ABA377 /* Modals */,
 			);
@@ -2140,9 +2141,9 @@
 			isa = PBXGroup;
 			children = (
 				1E4DCF4527B6A33600961E25 /* DownloadsListViewModel.swift */,
-				1E8AD1D827C4FEC100ABA377 /* DownloadsListSectioningHelper.swift */,
 				1E8AD1D427C2E22900ABA377 /* DownloadsListSection.swift */,
 				1E8AD1D627C2E24E00ABA377 /* DownloadsListRow.swift */,
+				1E8AD1D827C4FEC100ABA377 /* DownloadsListSectioningHelper.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -2161,7 +2162,6 @@
 		1E8AD1C527BE45F800ABA377 /* DownloadsList */ = {
 			isa = PBXGroup;
 			children = (
-				1E4DCF4D27B6A69600961E25 /* DownloadsListHostingController.swift */,
 				1E4DCF4227B6A29D00961E25 /* View */,
 				1E4DCF4327B6A2B400961E25 /* ViewModel */,
 				1E4DCF4427B6A2C000961E25 /* Model */,

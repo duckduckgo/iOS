@@ -88,6 +88,12 @@ struct CompleteDownloadRow: View {
     }
 }
 
+extension CompleteDownloadRow: Equatable {
+    static func == (lhs: CompleteDownloadRow, rhs: CompleteDownloadRow) -> Bool {
+        lhs.rowModel.filename == rhs.rowModel.filename && lhs.rowModel.fileSize == rhs.rowModel.fileSize
+    }
+}
+
 private enum Const {
     enum Font {
         static let filename = UIFont.semiBoldAppFont(ofSize: 16)

@@ -173,8 +173,10 @@ class OmniBar: UIView {
     }
     
     @objc private func speechRecognizerShouldReload() {
-        state = state.onReloadState
-        refreshState(state)
+        DispatchQueue.main.async {
+            self.state = self.state.onReloadState
+            self.refreshState(self.state)
+        }
     }
     
     func showSeparator() {

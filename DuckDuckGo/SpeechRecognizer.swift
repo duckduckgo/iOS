@@ -40,7 +40,6 @@ class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
     }
     
     override init() {
-        // https://app.asana.com/0/0/1201701558793614/1201934552312834
         operationQueue = OperationQueue()
         operationQueue.qualityOfService = .userInteractive
         
@@ -52,12 +51,13 @@ class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
         speechRecognizer?.delegate = self
         updateAvailabilityFlag()
     }
-
+    
     private func updateAvailabilityFlag() {
-        // https://app.asana.com/0/1201011656765697/1201271104639596
-
+        // https://app.asana.com/0/0/1201701558793614/1201934552312834
+        
         operationQueue.addOperation { [weak self] in
             guard let self = self else { return }
+            // https://app.asana.com/0/1201011656765697/1201271104639596
             if #available(iOS 15.0, *) {
                 self.isAvailable = self.supportsOnDeviceRecognition && (self.speechRecognizer?.isAvailable ?? false)
             } else {

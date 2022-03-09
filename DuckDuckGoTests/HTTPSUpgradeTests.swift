@@ -20,6 +20,7 @@
 import XCTest
 import OHHTTPStubs
 import OHHTTPStubsSwift
+import BrowserServicesKit
 
 @testable import Core
 
@@ -140,15 +141,8 @@ private class MockHTTPSUpgradeStore: HTTPSUpgradeStore {
         return nil
     }
     
-    func persistBloomFilter(specification: HTTPSBloomFilterSpecification, data: Data) -> Bool {
-        return true
-    }
-    
     func shouldExcludeDomain(_ domain: String) -> Bool {
         return domain == "excluded.url"
     }
-    
-    func persistExcludedDomains(_ domains: [String]) -> Bool {
-        return true
-    }
+
 }

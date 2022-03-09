@@ -1,3 +1,6 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigeeri";
 
@@ -84,6 +87,24 @@
 
 /* Share action */
 "action.title.share" = "Jaga";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Lisa vidin";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Kasuta kiiret juurdepääsu privaatsele otsingule ja lemmiksaitidele.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Pikk vajutus avaekraanile rakenduse ümberkorraldusrežiimi sisenemiseks.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Vajutage plussnupule %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Leidke ja valige DuckDuckGo. Seejärel valige vidin.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Ühe puudutusega oma lemmiksaitidele.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
@@ -608,18 +629,6 @@
 "fireButtonAnimation.waterSwirl.name" = "Whirlpool";
 
 /* No comment provided by engineer. */
-"home.message.buttonText" = "Määrake vaikebrauseriks";
-
-/* No comment provided by engineer. */
-"home.message.header" = "Muutke DuckDuckGo oma vaikimisi brauseriks.";
-
-/* No comment provided by engineer. */
-"home.message.subheader" = "Avage linke igal ajal, rahuliku meelega.";
-
-/* No comment provided by engineer. */
-"home.message.topText" = "UUS IOS 14-S";
-
-/* No comment provided by engineer. */
 "home.row.onboarding.header" = "Lisa DuckDuckGo oma avaekraanile!";
 
 /* No comment provided by engineer. */
@@ -1077,6 +1086,9 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Lemmik lisatud";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Blokeerige märguanded";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Tühista";

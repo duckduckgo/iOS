@@ -55,6 +55,8 @@ class HomeCollectionView: UICollectionView {
         register(UINib(nibName: "ExtraContentHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "extraContent")
         
+        register(HomeMessageCollectionViewCell.self, forCellWithReuseIdentifier: "HomeMessageCell")
+        
         register(EmptyCollectionReusableView.self,
                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                  withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier)
@@ -152,16 +154,11 @@ class HomeCollectionView: UICollectionView {
         }
         controller.collectionView.reloadData()
     }
-    
-    func isShowingHomeMessage(_ homeMessage: HomeMessage) -> Bool {
-        return homePageConfiguration.homeMessages().contains { $0.homeMessage == homeMessage }
-    }
 }
 
 extension HomeCollectionView: Themable {
 
     func decorate(with theme: Theme) {
-        backgroundColor = theme.backgroundColor
         renderers.decorate(with: theme)
         reloadData()
     }

@@ -133,6 +133,9 @@
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Küresel Gizlilik Kontrolü (GPC)";
 
+/* Class = "UILabel"; text = "Add Widget to Home Screen"; ObjectID = "Fxu-zn-51Z"; */
+"Fxu-zn-51Z.text" = "Widget'ı Ana Ekrana Ekle";
+
 /* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
 "gBo-Cu-e2k.text" = "Yangın Düğmesi Animasyonu";
 
@@ -241,8 +244,8 @@
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Klavye";
 
-/* Class = "UILabel"; text = "Add DuckDuckGo to Your Dock"; ObjectID = "yvj-LL-MiR"; */
-"yvj-LL-MiR.text" = "DuckDuckGo'yu Dock'una Ekle";
+/* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
+"yvj-LL-MiR.text" = "Uygulamayı Dock'a Ekle";
 
 /* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
 "zMK-jc-4bJ.headerTitle" = "Yardım";
@@ -252,4 +255,7 @@
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Ana Ekran";
+
+/* Class = "UINavigationItem"; title = "Add Widget to Home Screen"; ObjectID = "zZa-pF-SHk"; */
+"zZa-pF-SHk.title" = "Widget'ı Ana Ekrana Ekle";
 

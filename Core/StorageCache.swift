@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 protocol StorageCacheUpdating {
     
@@ -27,7 +28,7 @@ protocol StorageCacheUpdating {
 public class StorageCache: StorageCacheUpdating {
     
     public let fileStore = FileStore()
-    public let httpsUpgradeStore: HTTPSUpgradeStore = HTTPSUpgradePersistence()
+    public let httpsUpgradeStore: AppHTTPSUpgradeStore = PrivacyFeatures.httpsUpgradeStore
     
     // Read only
     public let tld: TLD
@@ -59,15 +60,16 @@ public class StorageCache: StorageCacheUpdating {
         case .httpsBloomFilter:
             guard let bloomFilter = data as? (spec: HTTPSBloomFilterSpecification, data: Data) else { return false }
             let result = httpsUpgradeStore.persistBloomFilter(specification: bloomFilter.spec, data: bloomFilter.data)
-            HTTPSUpgrade.shared.loadData()
+            PrivacyFeatures.httpsUpgrade.loadData()
             return result
             
         case .surrogates:
             return fileStore.persist(data as? Data, forConfiguration: configuration)
             
         case .trackerDataSet:
-            if fileStore.persist(data as? Data, forConfiguration: configuration) {
-                if TrackerDataManager.shared.reload(etag: etag) != .downloaded {
+            if let data = data as? Data,
+                fileStore.persist(data, forConfiguration: configuration) {
+                if ContentBlocking.trackerDataManager.reload(etag: etag, data: data) != .downloaded {
                     Pixel.fire(pixel: .trackerDataReloadFailed)
                     return false
                 }
@@ -76,8 +78,9 @@ public class StorageCache: StorageCacheUpdating {
             return false
             
         case .privacyConfiguration:
-            if fileStore.persist(data as? Data, forConfiguration: configuration) {
-                if PrivacyConfigurationManager.shared.reload(etag: etag) != .downloaded {
+            if let data = data as? Data,
+               fileStore.persist(data, forConfiguration: configuration) {
+                if ContentBlocking.privacyConfigurationManager.reload(etag: etag, data: data) != .downloaded {
                     Pixel.fire(pixel: .privacyConfigurationReloadFailed)
                     return false
                 }

@@ -52,8 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: lifecycle
 
-    // swiftlint:disable function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
         #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.environment["UITESTING"] == "true" {
             // Disable hardware keyboards.
@@ -76,10 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        DispatchQueue.global(qos: .background).async {
-            ContentBlockerStringCache.removeLegacyData()
-        }
-
         if !Database.shared.isDatabaseFileInitialized {
             let autofillStorage = EmailKeychainManager()
             autofillStorage.deleteAuthenticationState()
@@ -98,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        HTTPSUpgrade.shared.loadDataAsync()
+        PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"
         // has already been called on the HomeViewController so won't show the home row CTA
@@ -123,11 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         
         window?.windowScene?.screenshotService?.delegate = self
+        ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
         return true
     }
-    // swiftlint:enable function_body_length
 
     private func clearTmp() {
         let tmp = FileManager.default.temporaryDirectory
@@ -173,7 +169,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AppConfigurationFetch().start { newData in
             if newData {
-                ContentBlockerRulesManager.shared.recompile()
+                ContentBlocking.contentBlockingManager.scheduleCompilation()
             }
         }
 
@@ -273,12 +269,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.newTab(reuseExisting: true)
             if url.getParam(name: "w") != nil {
                 Pixel.fire(pixel: .widgetNewSearch)
+                HomePageConfiguration().dismissHomeMessage(.widgetEducation)
                 mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
             Pixel.fire(pixel: .widgetFavoriteLaunch)
+            HomePageConfiguration().dismissHomeMessage(.widgetEducation)
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)

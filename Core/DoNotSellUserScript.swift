@@ -24,14 +24,14 @@ import BrowserServicesKit
 public class DoNotSellUserScript: NSObject, UserScript {
     public var source: String {
         
-        let privacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig
+        let privacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
 
         let remoteUnprotectedDomains = (privacyConfiguration.tempUnprotectedDomains.joined(separator: "\n"))
             + "\n"
             + (privacyConfiguration.exceptionsList(forFeature: .gpc).joined(separator: "\n"))
         
         return Self.loadJS("donotsell", from: Bundle.core, withReplacements: [
-            "$GPC_ENABLED$": PrivacyConfigurationManager.shared.privacyConfig
+            "$GPC_ENABLED$": ContentBlocking.privacyConfigurationManager.privacyConfig
                 .isEnabled(featureKey: .gpc) ? "true" : "false",
             "$TEMP_UNPROTECTED_DOMAINS$": remoteUnprotectedDomains,
             "$USER_UNPROTECTED_DOMAINS$": privacyConfiguration.userUnprotectedDomains.joined(separator: "\n")

@@ -683,7 +683,7 @@ class MainViewController: UIViewController {
     }
     
     private func updateSiteRating(_ siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating, with: PrivacyConfigurationManager.shared.privacyConfig)
+        omniBar.updateSiteRating(siteRating, with: ContentBlocking.privacyConfigurationManager.privacyConfig)
     }
 
     func dismissOmniBar() {
@@ -764,23 +764,27 @@ class MainViewController: UIViewController {
         omniBar.enterPhoneState()
     }
 
-    func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
-        
-        if suggestionTrayController?.willShow(for: type) ?? false {
-            applyWidthToTrayController()
-
-            if !AppWidthObserver.shared.isLargeWidth {
-                if !DaxDialogs.shared.shouldShowFireButtonPulse {
-                    ViewHighlighter.hideAll()
-                }
-                if type.hideOmnibarSeparator() {
-                    omniBar.hideSeparator()
-                }
-            }
-            
-            suggestionTrayContainer.isHidden = false
+    @discardableResult
+    func tryToShowSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) -> Bool {
+        let canShow = suggestionTrayController?.canShow(for: type) ?? false
+        if canShow {
+            showSuggestionTray(type)
         }
-        
+        return canShow
+    }
+    
+    private func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
+        suggestionTrayController?.show(for: type)
+        applyWidthToTrayController()
+        if !AppWidthObserver.shared.isLargeWidth {
+            if !DaxDialogs.shared.shouldShowFireButtonPulse {
+                ViewHighlighter.hideAll()
+            }
+            if type.hideOmnibarSeparator() {
+                omniBar.hideSeparator()
+            }
+        }
+        suggestionTrayContainer.isHidden = false
     }
     
     func hideSuggestionTray() {
@@ -843,23 +847,16 @@ class MainViewController: UIViewController {
     }
 
     func showHomeRowReminder() {
-
         let feature = HomeRowReminder()
-        if #available(iOS 14, *) {
-            guard feature.showNow(isDefaultBrowserSupported: true) else { return }
-        } else {
-            guard feature.showNow(isDefaultBrowserSupported: false) else { return }
-        }
-
-        showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
-            if tapped {
-                self.launchInstructions()
+        if feature.showNow() {
+            showNotification(title: UserText.homeRowReminderTitle, message: UserText.homeRowReminderMessage) { tapped in
+                if tapped {
+                    self.launchInstructions()
+                }
+                self.hideNotification()
             }
-
-            self.hideNotification()
+            feature.setShown()
         }
-
-        feature.setShown()
     }
 
     func animateBackgroundTab() {
@@ -1092,11 +1089,14 @@ extension MainViewController: OmniBarDelegate {
             if homeController != nil {
                 hideSuggestionTray()
             } else {
-                showSuggestionTray(.favorites)
+                let didShow = tryToShowSuggestionTray(.favorites)
+                if !didShow {
+                    hideSuggestionTray()
+                }
             }
         } else {
             let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-            showSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
+            tryToShowSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
         }
         
     }
@@ -1180,9 +1180,9 @@ extension MainViewController: OmniBarDelegate {
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
             let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-            showSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksSearch))
+            tryToShowSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksSearch))
         } else {
-            showSuggestionTray(.favorites)
+            tryToShowSuggestionTray(.favorites)
         }
     }
 

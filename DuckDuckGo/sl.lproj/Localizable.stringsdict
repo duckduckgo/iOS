@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Ali ste prepričani, da želite izbrisati to mapo in %1$d element?</string>
+			<key>two</key>
+			<string>Ali ste prepričani, da želite izbrisati to mapo in %1$d elementa?</string>
+			<key>few</key>
+			<string>Ali ste prepričani, da želite izbrisati to mapo in %1$d elemente?</string>
+			<key>other</key>
+			<string>Ali ste prepričani, da želite izbrisati to mapo in %1$d elementov?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,29 +33,29 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* in *še 1* so te skušali zaslediti tukaj. 
+			<string>*%2$@, %3$@* in *1 drugi* so vam skušali slediti sem.
 
 Blokiral sem jih!
 
-☝️ Preveriš lahko URL vrstico, da vidiš, kdo te poskuša zaslediti, ko obiščeš novo spletišče.️</string>
+☝️V naslovni vrstici lahko preverite kdo vam poskuša slediti, ko obiščete novo spletno mesto.️</string>
 			<key>two</key>
-			<string>*%2$@, %3$@* in *%1$d druga* so te skušali zaslediti tukaj.
+			<string>*%2$@, %3$@* in *%1$d druga* so vam skušali slediti sem.
 
 Blokiral sem jih!
 
-☝️ Preveriš lahko URL vrstico, da vidiš, kdo vas poskuša zaslediti, ko obiščeš novo spletišče.️</string>
+☝️V naslovni vrstici lahko preverite kdo vam poskuša slediti, ko obiščete novo spletno mesto.️</string>
 			<key>few</key>
-			<string>*%2$@, %3$@* in *%1$d drugi* so te skušali zaslediti tukaj.
+			<string>*%2$@, %3$@* in *%1$d drugi* so vam skušali slediti sem.
 
 Blokiral sem jih!
 
-☝️ Preveriš lahko URL vrstico, da vidiš, kdo vas poskuša zaslediti, ko obiščeš novo spletišče.️</string>
+☝️V naslovni vrstici lahko preverite kdo vam poskuša slediti, ko obiščete novo spletno mesto.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* in *%1$d drugi* so te skušali zaslediti tukaj.
+			<string>*%2$@, %3$@* in *%1$d drugih* vam je skušalo slediti sem.
 
 Blokiral sem jih!
 
-☝️ Preveriš lahko URL vrstico, da vidiš, kdo te poskuša zaslediti, ko obiščeš novo spletišče.️</string>
+☝️ V naslovni vrstici lahko preverite kdo vam poskuša slediti, ko obiščete novo spletno mesto.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

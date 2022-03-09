@@ -344,22 +344,25 @@ extension TabViewController {
     }
     
     private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {
-        let protectionStore = DomainsProtectionUserDefaultsStore()
-        let isProtected = !protectionStore.unprotectedDomains.contains(domain)
+        let config = ContentBlocking.privacyConfigurationManager.privacyConfig
+        let isProtected = !config.isUserUnprotected(domain: domain)
         let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
         let image = isProtected ? UIImage(named: "MenuDisableProtection")! : UIImage(named: "MenuEnableProtection")!
     
         return BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
             Pixel.fire(pixel: isProtected ? .browsingMenuDisableProtection : .browsingMenuEnableProtection)
-            self?.togglePrivacyProtection(protectionStore: protectionStore, domain: domain)
+            self?.togglePrivacyProtection(domain: domain)
         })
     }
     
-    private func togglePrivacyProtection(protectionStore: DomainsProtectionStore, domain: String) {
-        let isProtected = !protectionStore.unprotectedDomains.contains(domain)
-        let operation = isProtected ? protectionStore.disableProtection : protectionStore.enableProtection
-        
-        operation(domain)
+    private func togglePrivacyProtection(domain: String) {
+        let config = ContentBlocking.privacyConfigurationManager.privacyConfig
+        let isProtected = !config.isUserUnprotected(domain: domain)
+        if isProtected {
+            config.userDisabledProtection(forDomain: domain)
+        } else {
+            config.userEnabledProtection(forDomain: domain)
+        }
         
         let message: String
         if isProtected {
@@ -369,7 +372,7 @@ extension TabViewController {
         }
         
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
-            self?.togglePrivacyProtection(protectionStore: protectionStore, domain: domain)
+            self?.togglePrivacyProtection(domain: domain)
         }
     }
 }

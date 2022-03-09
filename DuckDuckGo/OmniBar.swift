@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import os.log
+import BrowserServicesKit
 
 extension OmniBar: NibLoading {}
 
@@ -79,6 +80,10 @@ class OmniBar: UIView {
         super.awakeFromNib()
         configureMenuButton()
         configureTextField()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(textDidChange),
+                                               name: UITextField.textDidChangeNotification,
+                                               object: textField)
         configureSeparator()
         configureEditingMenu()
         refreshState(state)
@@ -119,11 +124,6 @@ class OmniBar: UIView {
         textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
                                                              attributes: [.foregroundColor: theme.searchBarTextPlaceholderColor])
         textField.delegate = self
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(textDidChange),
-                                               name: UITextField.textDidChangeNotification,
-                                               object: textField)
         
         textField.textDragInteraction?.isEnabled = false
         

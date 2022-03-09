@@ -19,6 +19,7 @@
 
 import Foundation
 import WebKit
+import BrowserServicesKit
 
 public class AMPCanonicalExtractor: NSObject {
 
@@ -106,7 +107,7 @@ public class AMPCanonicalExtractor: NSObject {
     }
     
     public func urlContainsAmpKeyword(_ url: URL?,
-                                      config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig) -> Bool {
+                                      config: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> Bool {
         linkCleaner.lastAmpUrl = nil
         guard config.isEnabled(featureKey: .ampLinks) else { return false }
         guard let url = url, !linkCleaner.isURLExcluded(url: url, config: config) else { return false }
@@ -145,7 +146,7 @@ public class AMPCanonicalExtractor: NSObject {
     }
 
     public func getCanonicalUrl(initiator: URL?, url: URL?,
-                                config: PrivacyConfiguration = PrivacyConfigurationManager.shared.privacyConfig,
+                                config: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig,
                                 completion: @escaping ((URL?) -> Void)) {
         cancelOngoingExtraction()
         guard config.isEnabled(featureKey: .ampLinks) else {
@@ -168,7 +169,7 @@ public class AMPCanonicalExtractor: NSObject {
         configuration.websiteDataStore = .nonPersistent()
         configuration.userContentController.add(self, name: Constants.sendCanonical)
         configuration.userContentController.addUserScript(buildUserScript())
-        if let rulesList = ContentBlockerRulesManager.shared.currentRules?.rulesList {
+        if let rulesList = ContentBlocking.contentBlockingManager.currentTDSRules?.rulesList {
             configuration.userContentController.add(rulesList)
         }
         if let imageBlockingRules = imageBlockingRules {
@@ -196,7 +197,7 @@ extension AMPCanonicalExtractor: WKScriptMessageHandler {
            let canonical = dict[Constants.canonicalKey] as? String {
             if let canonicalUrl = URL(string: canonical),
                !linkCleaner.isURLExcluded(url: canonicalUrl,
-                                          config: PrivacyConfigurationManager.shared.privacyConfig) {
+                                          config: ContentBlocking.privacyConfigurationManager.privacyConfig) {
                 linkCleaner.lastAmpUrl = canonicalUrl.absoluteString
                 completionHandler.completeWithURL(canonicalUrl)
             } else {

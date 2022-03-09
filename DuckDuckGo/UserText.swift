@@ -189,8 +189,12 @@ public struct UserText {
     public static let bookmarkFolderSelectTitle = NSLocalizedString("bookmark.folderSelect.title", value: "Location", comment: "Header for folder selection for bookmarks")
     public static let bookmarkTopLevelFolderTitle = NSLocalizedString("bookmark.topLevelFolder.title", value: "Bookmarks", comment: "Top level bookmarks folder title")
     public static let deleteBookmarkFolderAlertTitle = NSLocalizedString("bookmark.deleteFolderAlert.title", value: "Delete %@?", comment: "Delete bookmark folder alert title")
-    public static let deleteBookmarkFolderAlertMessageSingular = NSLocalizedString("bookmark.deleteFolderAlert.message.singular", value: "Are you sure you want to delete this folder and %i item?", comment: "Delete bookmark folder alert message")
-    public static let deleteBookmarkFolderAlertMessagePlural = NSLocalizedString("bookmark.deleteFolderAlert.message.plural", value: "Are you sure you want to delete this folder and %i items?", comment: "Delete bookmark folder alert message plural")
+    
+    public static func deleteBookmarkFolderAlertMessage(numberOfChildren: Int) -> String {
+        let message = NSLocalizedString("bookmark.deleteFolderAlert.message", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: numberOfChildren)
+    }
+    
     public static let deleteBookmarkFolderAlertDeleteButton = NSLocalizedString("bookmark.deleteFolderAlert.deleteButton", value: "Delete", comment: "Delete bookmark folder alert delete button")
     public static let addbookmarkFolderButton = NSLocalizedString("bookmark.addFolderButton", value: "Add Folder", comment: "Add bookmark folder button text")
     
@@ -333,12 +337,7 @@ public struct UserText {
     public static let daxDialogHideCancel = NSLocalizedString("dax.hide.cancel", value: "Cancel", comment: "")
     
     public static let tabSwitcherAccessibilityLabel = NSLocalizedString("tab.switcher.accessibility.label", value: "Tab Switcher", comment: "Tab Switcher Accessibility Label")
-    
-    public static let defaultBrowserHomeMessageHeader = NSLocalizedString("home.message.header", value: "Make DuckDuckGo your default browser.", comment: "")
-    public static let defaultBrowserHomeMessageSubheader = NSLocalizedString("home.message.subheader", value: "Open links with peace of mind, every time.", comment: "")
-    public static let defaultBrowserHomeMessageTopText = NSLocalizedString("home.message.topText", value: "NEW IN IOS 14", comment: "")
-    public static let defaultBrowserHomeMessageButtonText = NSLocalizedString("home.message.buttonText", value: "Set as Default Browser", comment: "")
-    
+        
     public static let onboardingWidgetsHeader = NSLocalizedString("onboarding.widgets.header", value: "Using DuckDuckGo just got easier.", comment: "")
     public static let onboardingWidgetsContinueButtonText = NSLocalizedString("onboarding.widgets.continueButton", value: "Add Widget", comment: "")
     public static let onboardingWidgetsSkipButtonText = NSLocalizedString("onboarding.widgets.skipButton", value: "Maybe Later", comment: "")
@@ -424,6 +423,14 @@ public struct UserText {
         let message = NSLocalizedString("textSize.footer", value: "Text Size - %@", comment: "Replacement string is a current percent value e.g. '120%'")
         return message.format(arguments: percentage)
     }
+    
+    public static let addWidget = NSLocalizedString("addWidget.button", value: "Add Widget", comment: "")
+    public static let addWidgetTitle = NSLocalizedString("addWidget.title", value: "One tap to your favorite sites.", comment: "")
+    public static let addWidgetDescription = NSLocalizedString("addWidget.description", value: "Get quick access to private search and the sites you love.", comment: "")
+    public static let addWidgetSettingsFirstParagraph = NSLocalizedString("addWidget.settings.firstParagraph", value: "Long-press on the home screen to enter jiggle mode.", comment: "")
+    public static let addWidgetSettingsSecondParagraph = NSLocalizedString("addWidget.settings.secondParagraph.%@", value: "Tap the plus %@ button.", comment: "Replacement string is a plus button icon.")
+    public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select DuckDuckGo. Then choose a widget.", comment: "")
+    
     public static let webJSAlertDisableAlertsButton = NSLocalizedString("webJSAlert.block-alerts.button", value: "Block Alerts", comment: "Block Alerts button for JavaScript alerts")
     
     public static let actionSaveToDownloads = NSLocalizedString("downloads.alert.action.save-to-downloads", value: "Save to Downloads", comment: "Alert action for starting a file dowload")

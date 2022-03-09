@@ -21,28 +21,48 @@ import Foundation
 import Speech
 import Accelerate
 
-class SpeechRecognizer: SpeechRecognizerProtocol {
-    private var audioEngine = AVAudioEngine()
+protocol SpeechRecognizerDelegate: AnyObject {
+    func speechRecognizer(_ speechRecognizer: SpeechRecognizer, availabilityDidChange available: Bool)
+}
+
+class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
+    weak var delegate: SpeechRecognizerDelegate?
+    private var audioEngine: AVAudioEngine?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let speechRecognizer: SFSpeechRecognizer?
     private let operationQueue: OperationQueue
     
-    init() {
+    private(set) var isAvailable = false {
+        didSet {
+            delegate?.speechRecognizer(self, availabilityDidChange: isAvailable)
+        }
+    }
+    
+    override init() {
         // https://app.asana.com/0/0/1201701558793614/1201934552312834
         operationQueue = OperationQueue()
         operationQueue.qualityOfService = .userInteractive
         
         speechRecognizer = SFSpeechRecognizer()
         speechRecognizer?.queue = operationQueue
+        
+        super.init()
+        
+        speechRecognizer?.delegate = self
+        updateAvailabilityFlag()
     }
-    
-    var isAvailable: Bool {
+
+    private func updateAvailabilityFlag() {
         // https://app.asana.com/0/1201011656765697/1201271104639596
-        if #available(iOS 15.0, *) {
-            return supportsOnDeviceRecognition && (speechRecognizer?.isAvailable ?? false)
-        } else {
-            return false
+
+        operationQueue.addOperation { [weak self] in
+            guard let self = self else { return }
+            if #available(iOS 15.0, *) {
+                self.isAvailable = self.supportsOnDeviceRecognition && (self.speechRecognizer?.isAvailable ?? false)
+            } else {
+                self.isAvailable = false
+            }
         }
     }
     
@@ -84,8 +104,11 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
                                                   _ speechDidFinish: Bool) -> Void,
                         volumeCallback: @escaping(_ volume: Float) -> Void) {
         
-        self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let recognitionRequest = self.recognitionRequest else {
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        audioEngine = AVAudioEngine()
+
+        guard let recognitionRequest = self.recognitionRequest,
+        let audioEngine = audioEngine else {
             resultHandler(nil, nil, true)
             return
         }
@@ -145,12 +168,18 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     private func reset() {
         try? AVAudioSession.sharedInstance().setActive(false)
         recognitionTask?.cancel()
-        audioEngine.stop()
+        audioEngine?.stop()
         recognitionRequest = nil
         recognitionTask = nil
     }
     
     deinit {
         reset()
+    }
+}
+
+extension SpeechRecognizer: SFSpeechRecognizerDelegate {
+    func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+        isAvailable = self.supportsOnDeviceRecognition && available
     }
 }

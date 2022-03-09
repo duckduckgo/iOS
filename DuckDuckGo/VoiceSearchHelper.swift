@@ -26,11 +26,10 @@ protocol VoiceSearchHelperProtocol {
 
 class VoiceSearchHelper: VoiceSearchHelperProtocol {
     private(set) var isSpeechRecognizerAvailable: Bool = false
-    private var variantManager: VariantManager?
+    private let speechRecognizer = SpeechRecognizer()
     
-    init(_ variantManager: VariantManager? = nil) {
-        self.variantManager = variantManager
-        
+    init() {
+        speechRecognizer.delegate = self
         updateFlag()
     }
     
@@ -38,6 +37,17 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
 #if targetEnvironment(simulator)
         isSpeechRecognizerAvailable = true
 #endif
-        isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
+        isSpeechRecognizerAvailable = speechRecognizer.isAvailable
     }
+}
+
+extension VoiceSearchHelper: SpeechRecognizerDelegate {
+    func speechRecognizer(_ speechRecognizer: SpeechRecognizer, availabilityDidChange available: Bool) {
+        isSpeechRecognizerAvailable = speechRecognizer.isAvailable
+        NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
+    }
+}
+
+extension Notification.Name {
+    public static let speechRecognizerDidChangeAvailability = Notification.Name("com.duckduckgo.app.SpeechRecognizerDidChangeAvailability")
 }

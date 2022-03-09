@@ -23,12 +23,6 @@ import Core
 struct LargeOmniBarState {
     
     struct HomeEmptyEditingState: OmniBarState {
-        private let isVoiceSearchOn: Bool
-        
-        init(isVoiceSearchOn: Bool = AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable) {
-            self.isVoiceSearchOn = isVoiceSearchOn
-        }
-        
         let hasLargeWidth: Bool = true
         let showBackButton: Bool = true
         let showForwardButton: Bool = true
@@ -54,6 +48,7 @@ struct LargeOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return self }
         var onEnterPadState: OmniBarState { return self }
         var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeEmptyEditingState() }
+        var onReloadState: OmniBarState { return BrowsingNonEditingState() }
     }
 
     struct HomeTextEditingState: OmniBarState {
@@ -82,6 +77,7 @@ struct LargeOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return self }
         var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeTextEditingState() }
+        var onReloadState: OmniBarState { return HomeTextEditingState() }
     }
 
     struct HomeNonEditingState: OmniBarState {
@@ -110,6 +106,7 @@ struct LargeOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEnterPadState: OmniBarState { return self }
         var onEnterPhoneState: OmniBarState { return SmallOmniBarState.HomeNonEditingState() }
+        var onReloadState: OmniBarState { return HomeNonEditingState() }
     }
 
     struct BrowsingEmptyEditingState: OmniBarState {
@@ -138,6 +135,7 @@ struct LargeOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return self }
         var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingEmptyEditingState() }
+        var onReloadState: OmniBarState { return BrowsingEmptyEditingState() }
     }
 
     struct BrowsingTextEditingState: OmniBarState {
@@ -166,6 +164,7 @@ struct LargeOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return self }
         var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingTextEditingState() }
+        var onReloadState: OmniBarState { return BrowsingTextEditingState() }
     }
 
     struct BrowsingNonEditingState: OmniBarState {
@@ -194,6 +193,7 @@ struct LargeOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEnterPadState: OmniBarState { return self }
         var onEnterPhoneState: OmniBarState { return SmallOmniBarState.BrowsingNonEditingState() }
+        var onReloadState: OmniBarState { return BrowsingNonEditingState() }
     }
 
 }

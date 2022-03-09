@@ -20,7 +20,7 @@
 import Foundation
 import Core
 
-enum DownloadItemType {
+enum DownloadListRepresentableType {
     case ongoing
     case complete
 }
@@ -29,7 +29,7 @@ protocol DownloadListRepresentable {
     var filename: String { get }
     var creationDate: Date { get }
     var fileSize: Int { get }
-    var type: DownloadItemType { get }
+    var type: DownloadListRepresentableType { get }
     var filePath: String { get }
 }
 
@@ -44,9 +44,9 @@ struct AnyDownloadListRepresentable: DownloadListRepresentable, Comparable {
     var filename: String { wrappedRepresentable.filename }
     var creationDate: Date { wrappedRepresentable.creationDate }
     var fileSize: Int { wrappedRepresentable.fileSize }
-    var type: DownloadItemType { wrappedRepresentable.type }
+    var type: DownloadListRepresentableType { wrappedRepresentable.type }
     var filePath: String { wrappedRepresentable.filePath}
-    
+        
     static func < (lhs: AnyDownloadListRepresentable, rhs: AnyDownloadListRepresentable) -> Bool {
         lhs.creationDate < rhs.creationDate
     }
@@ -60,13 +60,13 @@ extension URL: DownloadListRepresentable {
     var filename: String { lastPathComponent }
     var creationDate: Date { creation ?? Date() }
     var fileSize: Int { (try? resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0 }
-    var type: DownloadItemType { .complete }
+    var type: DownloadListRepresentableType { .complete }
     var filePath: String { self.path }
 }
 
 extension Download: DownloadListRepresentable {
     var creationDate: Date { date }
     var fileSize: Int { Int(totalBytesWritten) }
-    var type: DownloadItemType { .ongoing }
+    var type: DownloadListRepresentableType { .ongoing }
     var filePath: String { location?.path ?? "" }
 }

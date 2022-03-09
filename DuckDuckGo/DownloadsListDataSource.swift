@@ -60,8 +60,6 @@ class DownloadsListDataSource {
         model.update(ongoingDownloads: ongoingDownloads,
                      completeDownloads: completeDownloads)
     }
-
-    // to be extracted
     
     func cancelDownloadWithIdentifier(_ identifier: String) {
         guard let download = downloadManager.downloadList.first(where: { $0.filename == identifier }) else { return }
@@ -71,7 +69,7 @@ class DownloadsListDataSource {
     
     func deleteDownloadWithIdentifier(_ identifier: String, completionHandler: DeleteHandler) {
         guard let downloadToDelete = model.completeDownloads.first(where: { $0.id == identifier }) else { return }
-        
+
         deleteDownloadsHelper.deleteDownloads(atPaths: [downloadToDelete.filePath],
                                               completionHandler: completionHandler)
     }

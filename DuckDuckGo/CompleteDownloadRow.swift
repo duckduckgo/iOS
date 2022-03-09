@@ -29,7 +29,8 @@ struct CompleteDownloadRow: View {
     @State private var isPreviewPresented = false
     @State private var shareButtonFrame: CGRect = .zero
     
-    var rowModel: DownloadsListRow
+    var rowModel: CompleteDownloadRowViewModel
+    
     var shareButtonAction: (CGRect) -> Void
     
     var body: some View {
@@ -57,12 +58,8 @@ struct CompleteDownloadRow: View {
             self.isPreviewPresented = true
         }
         .sheet(isPresented: $isPreviewPresented, content: {
-            if let fileURL = rowModel.localFileURL {
-                QuickLookPreviewView(localFileURL: fileURL)
-                    .edgesIgnoringSafeArea(.all)
-            } else {
-                #warning("Pixel and/or display an error message?")
-            }
+            QuickLookPreviewView(localFileURL: rowModel.fileURL)
+                .edgesIgnoringSafeArea(.all)
         })
     }
     

@@ -1,5 +1,5 @@
 //
-//  DownloadsListRow.swift
+//  OngoingDownloadRowViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -20,35 +20,27 @@
 import Foundation
 import Combine
 
-class DownloadsListRow: Identifiable, ObservableObject {
-    
-    var id: String { filename }
-    let filename: String
-    let type: DownloadItemType
-    
-    var localFileURL: URL?
-    
-    @Published var fileSize: String
+class OngoingDownloadRowViewModel: DownloadsListRowViewModel {
+    @Published var fileSize: String = ""
     @Published var progress: Float = 0.0
     
     private var subscribers: Set<AnyCancellable> = []
     
-    internal init(filename: String, fileSize: String, type: DownloadItemType) {
-        self.filename = filename
-        self.fileSize = fileSize
-        self.type = type
+    init(download: Download) {
+        super.init(filename: download.filename)
+        subscribeToUpdates(from: download)
     }
     
-    func subscribeToUpdates(from download: Download) {
+    private func subscribeToUpdates(from download: Download) {
         let totalSize = download.totalBytesExpectedToWrite
 
         download.$totalBytesWritten
             .throttle(for: .milliseconds(1000), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] currentSize in
-                let currentSizeString = DownloadsListRow.byteCountFormatter.string(fromByteCount: currentSize)
+                let currentSizeString = DownloadsListRowViewModel.byteCountFormatter.string(fromByteCount: currentSize)
                 
                 if totalSize > 0 {
-                    let totalSizeString = DownloadsListRow.byteCountFormatter.string(fromByteCount: totalSize)
+                    let totalSizeString = DownloadsListRowViewModel.byteCountFormatter.string(fromByteCount: totalSize)
                     self?.fileSize = UserText.downloadProgressMessage(currentSize: currentSizeString, totalSize: totalSizeString)
                 } else {
                     self?.fileSize = UserText.downloadProgressMessageForUnknownTotalSize(currentSize: currentSizeString)
@@ -60,26 +52,4 @@ class DownloadsListRow: Identifiable, ObservableObject {
                 self?.progress = Float(currentSize)/Float(totalSize)
         }.store(in: &subscribers)
     }
-}
-
-extension DownloadsListRow: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(filename)
-        hasher.combine(type)
-    }
-    
-    public static func == (lhs: DownloadsListRow, rhs: DownloadsListRow) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-extension DownloadsListRow {
-    static let byteCountFormatter: ByteCountFormatter = {
-        let formatter = ByteCountFormatter()
-        formatter.allowedUnits = .useAll
-        formatter.countStyle = .file
-        formatter.includesUnit = true
-        formatter.isAdaptive = true
-        return formatter
-    }()
 }

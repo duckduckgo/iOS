@@ -93,14 +93,14 @@ struct DownloadsList: View {
             ForEach(viewModel.sections) { section in
                 Section(header: Text(section.header)) {
                     ForEach(section.rows) { row in
-                        switch row.type {
-                        case .ongoing:
+                        if let row = row as? OngoingDownloadRowViewModel {
                             OngoingDownloadRow(rowModel: row,
                                                cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
                                 .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
                                 .deleteDisabled(true)
-                        case .complete:
-                            CompleteDownloadRow(rowModel: row, shareButtonAction: { buttonFrame in
+                        } else if let row = row as? CompleteDownloadRowViewModel {
+                            CompleteDownloadRow(rowModel: row,
+                                                shareButtonAction: { buttonFrame in
                                 share(row, from: buttonFrame)
                             })
                         }
@@ -139,11 +139,11 @@ struct DownloadsList: View {
         .deleteDisabled(true)
     }
     
-    private func cancelDownload(for rowModel: DownloadsListRow) {
+    private func cancelDownload(for rowModel: OngoingDownloadRowViewModel) {
         viewModel.cancelDownload(for: rowModel)
     }
     
-    private func delete(at offsets: IndexSet, in section: DownloadsListSection) {
+    private func delete(at offsets: IndexSet, in section: DownloadsListSectionViewModel) {
         guard let sectionIndex = viewModel.sections.firstIndex(of: section) else { return }
         viewModel.deleteDownload(at: offsets, in: sectionIndex)
     }
@@ -153,13 +153,13 @@ struct DownloadsList: View {
         viewModel.deleteAllDownloads()
     }
     
-    private func share(_ rowModel: DownloadsListRow, from rectangle: CGRect) {
+    private func share(_ rowModel: CompleteDownloadRowViewModel, from rectangle: CGRect) {
         viewModel.showActivityView(for: rowModel, from: rectangle)
     }
 }
 
 extension DownloadsList {
-    private func makeCancelDownloadAlert(for row: DownloadsListRow) -> Alert {
+    private func makeCancelDownloadAlert(for row: OngoingDownloadRowViewModel) -> Alert {
         Alert(
             title: Text(UserText.cancelDownloadAlertTitle),
             message: Text(UserText.cancelDownloadAlertDescription),

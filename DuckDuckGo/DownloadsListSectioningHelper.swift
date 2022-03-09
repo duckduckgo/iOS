@@ -45,7 +45,7 @@ class DownloadsListSectioningHelper {
         yearAgo = calendar.date(byAdding: .year, value: -1, to: today)!
     }
     
-    func makeSections(from downloads: [AnyDownloadListRepresentable]) -> [DownloadsListSection] {
+    func makeSections(from downloads: [AnyDownloadListRepresentable]) -> [DownloadsListSectionViewModel] {
 
         let downloadsGroupedByRelativeDateRanges: [RelativeDateRange: [AnyDownloadListRepresentable]] = Dictionary(grouping: downloads, by: {
             
@@ -65,7 +65,7 @@ class DownloadsListSectioningHelper {
                     let components = calendar.dateComponents([.month, .year], from: fileDate)
                     let monthDate = calendar.date(from: components)!
                     
-                    let monthString = DownloadsListSection.monthNameFormatter.string(from: monthDate)
+                    let monthString = DownloadsListSectionViewModel.monthNameFormatter.string(from: monthDate)
                     
                     return RelativeDateRange(date: monthDate, displayName: monthString)
                 } else {
@@ -73,7 +73,7 @@ class DownloadsListSectioningHelper {
                     let components = calendar.dateComponents([.year], from: fileDate)
                     let yearDate = calendar.date(from: components)!
                     
-                    let yearString = DownloadsListSection.yearFormatter.string(from: yearDate)
+                    let yearString = DownloadsListSectionViewModel.yearFormatter.string(from: yearDate)
                     
                     return RelativeDateRange(date: yearDate, displayName: yearString)
                 }
@@ -84,23 +84,22 @@ class DownloadsListSectioningHelper {
         return sortedRelativeDateRanges.compactMap { relativeDateRange in
             guard let downloads = downloadsGroupedByRelativeDateRanges[relativeDateRange] else { return nil }
 
-            return DownloadsListSection(date: relativeDateRange.date,
+            return DownloadsListSectionViewModel(date: relativeDateRange.date,
                                         header: relativeDateRange.displayName,
                                         rows: downloads.sorted(by: >).map { makeRow(from: $0) })
         }
     }
     
-    private func makeRow(from download: AnyDownloadListRepresentable) -> DownloadsListRow {
-        let row = DownloadsListRow(filename: download.filename,
-                                   fileSize: DownloadsListRow.byteCountFormatter.string(fromByteCount: Int64(download.fileSize)),
-                                   type: download.type)
-
-        if let download = download.wrappedRepresentable as? Download {
-            row.subscribeToUpdates(from: download)
-        }
+    private func makeRow(from downloadRepresentable: AnyDownloadListRepresentable) -> DownloadsListRowViewModel {
+        let row: DownloadsListRowViewModel
         
-        if let url = download.wrappedRepresentable as? URL {
-            row.localFileURL = url
+        switch downloadRepresentable.type {
+        case .ongoing:
+            guard let download = downloadRepresentable.wrappedRepresentable as? Download else { fatalError() }
+            row = OngoingDownloadRowViewModel(download: download)
+        case .complete:
+            guard let url = downloadRepresentable.wrappedRepresentable as? URL else { fatalError() }
+            row = CompleteDownloadRowViewModel(fileURL: url)
         }
         
         return row

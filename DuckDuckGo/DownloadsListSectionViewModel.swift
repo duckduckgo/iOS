@@ -1,5 +1,5 @@
 //
-//  DownloadsListSection.swift
+//  DownloadsListSectionViewModel.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -19,18 +19,18 @@
 
 import Foundation
 
-struct DownloadsListSection: Identifiable, Hashable, Comparable {
+struct DownloadsListSectionViewModel: Identifiable, Hashable, Comparable {
     var id: String { header }
     var date: Date
     var header: String
-    var rows: [DownloadsListRow]
+    var rows: [DownloadsListRowViewModel]
 
-    static func < (lhs: DownloadsListSection, rhs: DownloadsListSection) -> Bool {
+    static func < (lhs: DownloadsListSectionViewModel, rhs: DownloadsListSectionViewModel) -> Bool {
         lhs.date < rhs.date
     }
 }
 
-extension DownloadsListSection {
+extension DownloadsListSectionViewModel {
     static let monthNameFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "LLLL"

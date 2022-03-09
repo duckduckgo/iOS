@@ -24,7 +24,7 @@ import os.log
 
 class DownloadsListViewModel: ObservableObject {
 
-    @Published var sections: [DownloadsListSection] = []
+    @Published var sections: [DownloadsListSectionViewModel] = []
     var requestActivityViewHandler: ((_ url: URL, _ sourceRect: CGRect) -> Void)?
     
     private let dataSource: DownloadsListDataSource
@@ -51,7 +51,7 @@ class DownloadsListViewModel: ObservableObject {
     
     // MARK: - Intents
     
-    func cancelDownload(for rowModel: DownloadsListRow) {
+    func cancelDownload(for rowModel: OngoingDownloadRowViewModel) {
         dataSource.cancelDownloadWithIdentifier(rowModel.id)
     }
     
@@ -92,8 +92,8 @@ class DownloadsListViewModel: ObservableObject {
         }
     }
     
-    func showActivityView(for rowModel: DownloadsListRow, from sourceRect: CGRect) {
-        guard let url = rowModel.localFileURL, let handler = self.requestActivityViewHandler else { return }
-        handler(url, sourceRect)
+    func showActivityView(for rowModel: CompleteDownloadRowViewModel, from sourceRect: CGRect) {
+        guard let handler = self.requestActivityViewHandler else { return }
+        handler(rowModel.fileURL, sourceRect)
     }
 }

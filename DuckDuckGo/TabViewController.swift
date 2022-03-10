@@ -72,7 +72,6 @@ class TabViewController: UIViewController {
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
-    private var httpsUpgrade = HTTPSUpgrade.shared
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     
     lazy var bookmarksManager = BookmarksManager()
@@ -1464,16 +1463,36 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        httpsUpgrade.isUgradeable(url: url) { [weak self] isUpgradable in
-            if isUpgradable, let upgradedUrl = self?.upgradeUrl(url, navigationAction: navigationAction) {
-                NetworkLeaderboard.shared.incrementHttpsUpgrades()
-                self?.lastUpgradedURL = upgradedUrl
-                self?.load(url: upgradedUrl, didUpgradeUrl: true)
-                completion(.cancel)
-                return
-            }
+        if shouldUpgradeToHttps(url: url, navigationAction: navigationAction) {
+            upgradeToHttps(url: url, allowPolicy: allowPolicy, completion: completion)
+        } else {
             completion(allowPolicy)
         }
+    }
+    
+    private func upgradeToHttps(url: URL,
+                                allowPolicy: WKNavigationActionPolicy,
+                                completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        Task {
+            let result = await PrivacyFeatures.httpsUpgrade.upgrade(url: url)
+            switch result {
+            case let .success(upgradedUrl):
+                if lastUpgradedURL != upgradedUrl {
+                    NetworkLeaderboard.shared.incrementHttpsUpgrades()
+                    lastUpgradedURL = upgradedUrl
+                    load(url: upgradedUrl, didUpgradeUrl: true)
+                    completion(.cancel)
+                } else {
+                    completion(allowPolicy)
+                }
+            case .failure:
+                completion(allowPolicy)
+            }
+        }
+    }
+    
+    private func shouldUpgradeToHttps(url: URL, navigationAction: WKNavigationAction) -> Bool {
+        return !failingUrls.contains(url.host ?? "") && navigationAction.isTargetingMainFrame()
     }
 
     private func performExternalNavigationFor(url: URL, action: SchemeHandler.Action) {
@@ -1494,16 +1513,6 @@ extension TabViewController: WKNavigationDelegate {
     private func determineAllowPolicy() -> WKNavigationActionPolicy {
         let allowWithoutUniversalLinks = WKNavigationActionPolicy(rawValue: WKNavigationActionPolicy.allow.rawValue + 2) ?? .allow
         return AppUserDefaults().allowUniversalLinks ? .allow : allowWithoutUniversalLinks
-    }
-    
-    private func upgradeUrl(_ url: URL, navigationAction: WKNavigationAction) -> URL? {
-        guard !failingUrls.contains(url.host ?? ""), navigationAction.isTargetingMainFrame() else { return nil }
-        
-        if let upgradedUrl: URL = url.toHttps(), lastUpgradedURL != upgradedUrl {
-            return upgradedUrl
-        }
-        
-        return nil
     }
     
     private func showErrorNow() {

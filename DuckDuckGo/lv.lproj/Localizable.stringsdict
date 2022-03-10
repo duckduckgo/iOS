@@ -2,6 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>Vai tiešām vēlies dzēst šo mapi un %1$d vienumus?</string>
+			<key>one</key>
+			<string>Vai tiešām vēlies dzēst šo mapi un %1$d vienumu?</string>
+			<key>other</key>
+			<string>Vai tiešām vēlies dzēst šo mapi un %1$d vienumus?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,23 +31,23 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>zero</key>
-			<string>*%2$@, %3$@* un *%1$d citas vietnes* mēģināja tevi šeit izsekot.
+			<string>*%2$@, %3$@* un *%1$d citi* mēģināja tevi šeit izsekot.
 
-Es tās nobloķēju!
+Es tos nobloķēju!
 
-☝️ Vari pārbaudīt URL joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.️</string>
+☝️ Vari ieskatīties adreses joslā, lai redzētu, kas mēģina tevi izsekot, apmeklējot jaunas vietnes.</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* un *1 cita vietne* mēģināja tevi šeit izsekot.
+			<string>*%2$@, %3$@* un *%1$d cits* mēģināja tevi šeit izsekot.
 
-Es tās nobloķēju!
+Es tos nobloķēju!
 
-☝️ Vari pārbaudīt URL joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.️</string>
+☝️ Vari ieskatīties adreses joslā, lai redzētu, kas mēģina tevi izsekot, apmeklējot jaunas vietnes.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* un *%1$d citas vietnes* mēģināja tevi šeit izsekot.
+			<string>*%2$@, %3$@* un *%1$d citi* mēģināja tevi šeit izsekot.
 
-Es tās nobloķēju!
+Es tos nobloķēju!
 
-☝️ Vari pārbaudīt URL joslu, lai redzētu, kas tevi mēģina izsekot, kad tu apmeklē jaunu vietni.️</string>
+☝️ Vari ieskatīties adreses joslā, lai redzētu, kas mēģina tevi izsekot, apmeklējot jaunas vietnes.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

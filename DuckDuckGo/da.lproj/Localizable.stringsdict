@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Er du sikker på, at du vil slette denne mappe og %1$d element?</string>
+			<key>other</key>
+			<string>Er du sikker på, at du vil slette denne mappe og %1$d elementer?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,17 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* og * 1 anden forsøgte at spore dig her. 
+			<string>*%2$@, %3$@* og *1 anden* forsøgte at spore dig her. 
 
 Jeg blokerede dem!
 
- ☝️Du kan kontrollere URL-linjen for at se, hvem der prøver at spore dig, når du besøger et nyt sted.️</string>
+☝️ Du kan kontrollere adresselinjen for at se, hvem der prøver at spore dig, når du besøger et nyt websted.️</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* og *%1$d andre forsøgte at spore dig her. 
+			<string>*%2$@, %3$@* og *%1$d andre* forsøgte at spore dig her. 
 
 Jeg blokerede dem!
 
- ☝️Du kan tjekke URL-linjen for at se, hvem der prøver at spore dig, når du besøger et nyt sted.️</string>
+☝️ Du kan kontrollere adresselinjen for at se, hvem der prøver at spore dig, når du besøger et nyt websted.️</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

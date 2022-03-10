@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Вы точно хотите удалить эту папку с %1$d объектом?</string>
+			<key>few</key>
+			<string>Вы точно хотите удалить эту папку с %1$d объектами?</string>
+			<key>many</key>
+			<string>Вы точно хотите удалить эту папку с %1$d объектами?</string>
+			<key>other</key>
+			<string>Вы точно хотите удалить эту папку с объектами (%1$d)?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -31,7 +51,7 @@
 
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* и еще *%1$d сервиса* пытались вести за вами слежку.
+			<string>*%2$@, %3$@* и другие сервисы *(еще %1$d)* пытались вести за вами слежку.
 
 Но мы их заблокировали!
 

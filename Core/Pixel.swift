@@ -209,11 +209,12 @@ public enum PixelName: String {
     case contentBlockingFallbackCompilationFailed = "m_d_cb_cf"
     
     case contentBlockingErrorReportingIssue = "m_content_blocking_error_reporting_issue"
-    
+    case contentBlockingCompilationTime = "m_content_blocking_compilation_time"
+
     case ampBlockingRulesCompilationFailed = "m_debug_amp_rules_compilation_failed"
-    
+
     case contentBlockingIdentifierError = "m_d_cb_ie"
-    
+
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 

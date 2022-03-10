@@ -1,8 +1,8 @@
 //
-//  AtbParser.swift
+//  NSManagedObjectContextExtension.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,18 +17,21 @@
 //  limitations under the License.
 //
 
-import Foundation
-import BrowserServicesKit
+import CoreData
 
-public struct AtbParser {
-    func convert(fromJsonData data: Data) throws -> Atb {
-        do {
-            let decoder = JSONDecoder()
-            return try decoder.decode(Atb.self, from: data)
-        } catch DecodingError.dataCorrupted {
-            throw JsonError.invalidJson
-        } catch {
-            throw JsonError.typeMismatch
+protocol Managed: NSFetchRequestResult {
+    static var entityName: String { get }
+}
+
+extension Managed where Self: NSManagedObject {
+    static var entityName: String { return entity().name! }
+}
+
+extension NSManagedObjectContext {
+    func insertObject<A: NSManagedObject>() -> A where A: Managed {
+        guard let obj = NSEntityDescription.insertNewObject(forEntityName: A.entityName, into: self) as? A else {
+            fatalError("Wrong object type")
         }
+        return obj
     }
 }

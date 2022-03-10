@@ -2,6 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Sigur vrei să ștergi acest folder și %1$d element?</string>
+			<key>few</key>
+			<string>Sigur vrei să ștergi acest folder și %1$d elemente?</string>
+			<key>other</key>
+			<string>Sigur vrei să ștergi acest folder și %1$d elemente?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,23 +31,23 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* și *încă unul* încercau să te urmărească aici.
+			<string>*%2$@, %3$@* și *încă 1* încercau să te urmărească aici.
 
 I-am blocat!
 
-☝️ Poți verifica bara URL pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.️</string>
+☝️ Poți verifica bara de adrese pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.</string>
 			<key>few</key>
-			<string>*%2$@, %3$@* și *alți %1$d* încercau să te urmărească aici.
+			<string>*%2$@, %3$@* și *încă %1$d* încercau să te urmărească aici.
 
 I-am blocat!
 
-☝️ Poți verifica bara URL pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.</string>
+☝️ Poți verifica bara de adrese pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* și *alți %1$d* încercau să te urmărească aici.
+			<string>*%2$@, %3$@* și *încă %1$d* încercau să te urmărească aici.
 
 I-am blocat!
 
-☝️ Poți verifica bara URL pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.</string>
+☝️ Poți verifica bara de adrese pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

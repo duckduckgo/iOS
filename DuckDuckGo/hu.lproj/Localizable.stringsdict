@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Biztos, hogy törölni akarod ezt a mappát és annak %1$d elemét?</string>
+			<key>other</key>
+			<string>Biztos, hogy törölni akarod ezt a mappát és annak %1$d elemét?</string>
+		</dict>
+	</dict>
 	<key>dax.onboarding.browsing.multiple.trackers</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -13,17 +29,17 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>*%2$@, %3$@* és *további 1* próbált itt követni.
+			<string>*%2$@, %3$@* és *1 másik* megpróbált itt követni. 
 
 Blokkoltam őket!
 
-☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új weboldalra látogatsz.</string>
+ ☝️A címsorban láthatod, hogy ki próbál meg követni, amikor új webhelyre látogatsz.</string>
 			<key>other</key>
-			<string>*%2$@, %3$@* és *további %1$d* próbált itt követni.
+			<string>*%2$@, %3$@* és *%1$d másik* megpróbált itt követni. 
 
 Blokkoltam őket!
 
-☝️ Ellenőrizheted az URL-sávot, hogy megtudhasd, ki próbál nyomon követni, amikor új weboldalra látogatsz.</string>
+ ☝️A címsorban láthatod, hogy ki próbál meg követni, amikor új webhelyre látogatsz.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

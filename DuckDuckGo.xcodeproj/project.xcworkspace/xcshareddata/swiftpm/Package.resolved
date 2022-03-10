@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": null,
-          "revision": "256c06ff40188d965916a21d70c07defde6b6065",
-          "version": "11.2.1"
+          "branch": "sam/autofill-cards-and-identities",
+          "revision": "49ab8163d5b82cb2c5c5164979b11194df0f1a8d",
+          "version": null
         }
       },
       {
@@ -71,15 +71,6 @@
           "branch": null,
           "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
           "version": "1.5.0"
-        }
-      },
-      {
-        "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
-        "state": {
-          "branch": null,
-          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
-          "version": "1.0.3"
         }
       }
     ]

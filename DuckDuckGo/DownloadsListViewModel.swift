@@ -52,10 +52,12 @@ class DownloadsListViewModel: ObservableObject {
     // MARK: - Intents
     
     func cancelDownload(for rowModel: OngoingDownloadRowViewModel) {
+        Pixel.fire(pixel: .downloadsListOngoingDownloadCancelled)
         dataSource.cancelDownloadWithIdentifier(rowModel.id)
     }
     
     func deleteDownload(at offsets: IndexSet, in sectionIndex: Int) {
+        Pixel.fire(pixel: .downloadsListCompleteDownloadDeleted)
         guard let rowIndex = offsets.first else { return }
         
         let item = sections[sectionIndex].rows[rowIndex]
@@ -67,12 +69,13 @@ class DownloadsListViewModel: ObservableObject {
                 presentDeleteConfirmation(message: message,
                                           undoHandler: undoHandler)
             case .failure(let error):
-                os_log("Error deleting all downloads %s", log: generalLog, type: .debug, error.localizedDescription)
+                os_log("Error deleting a download %s", log: generalLog, type: .debug, error.localizedDescription)
             }
         }
     }
     
     func deleteAllDownloads() {
+        Pixel.fire(pixel: .downloadsListAllCompleteDownloadsDeleted)
         dataSource.deleteAllDownloads { result in
             switch result {
             case .success(let undoHandler):
@@ -94,6 +97,7 @@ class DownloadsListViewModel: ObservableObject {
     
     func showActivityView(for rowModel: CompleteDownloadRowViewModel, from sourceRect: CGRect) {
         guard let handler = self.requestActivityViewHandler else { return }
+        Pixel.fire(pixel: .downloadsListSharePressed)
         handler(rowModel.fileURL, sourceRect)
     }
 }

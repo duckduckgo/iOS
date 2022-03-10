@@ -908,7 +908,8 @@ class TabViewController: UIViewController {
             if !download.temporary {
                 let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(for: download)
                 ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow) {
-#warning("Perhaps PIXEL here?")
+                    Pixel.fire(pixel: .downloadsListOpened,
+                               withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
                     self.delegate?.tabDidRequestDownloads(tab: self)
                 }
             } else {
@@ -925,7 +926,8 @@ class TabViewController: UIViewController {
         
         DispatchQueue.main.async {
             ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow) {
-#warning("Perhaps PIXEL here?")
+                Pixel.fire(pixel: .downloadsListOpened,
+                           withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
                 self.delegate?.tabDidRequestDownloads(tab: self)
             }
         }
@@ -939,7 +941,7 @@ class TabViewController: UIViewController {
         if delegate.tabCheckIfItsBeingCurrentlyPresented(self) {
             fileHandler.preview()
         } else {
-            Pixel.fire(pixel: .presentPreviewWithoutTab)
+            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
         }
     }
 }
@@ -1035,11 +1037,16 @@ extension TabViewController: WKNavigationDelegate {
             }
             
             if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
+                
                 if FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
                     startDownload()
+                    Pixel.fire(pixel: .downloadStarted,
+                               withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
                 } else {
                     let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
                         startDownload()
+                        Pixel.fire(pixel: .downloadStarted,
+                                   withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "0"])
                     }
                     DispatchQueue.main.async {
                         self.present(alert, animated: true, completion: nil)

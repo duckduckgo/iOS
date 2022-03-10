@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 
+// swiftlint:disable file_length
 // swiftlint:disable identifier_name
 public enum PixelName: String {
     
@@ -171,8 +172,18 @@ public enum PixelName: String {
     case widgetEducationOpenedFromHomeScreen = "m_widget_education_opened_from_home"
     case widgetEducationOpenedFromSettings = "m_widget_education_opened_from_settings"
     case widgetEducationDismissed = "m_widget_education_dismissed"
+    
+    case downloadStarted = "m_download_started"
+    case downloadTriedToPresentPreviewWithoutTab = "m_download_tried_to_present_preview_without_tab"
+    case downloadsListOpened = "m_downloads_list_opened"
 
-    case presentPreviewWithoutTab = "m_present_preview_without_tab"
+    case downloadsListOngoingDownloadCancelled = "m_downloads_list_ongoing_download_cancelled"
+    case downloadsListCompleteDownloadDeleted = "m_downloads_list_complete_download_deleted"
+    case downloadsListAllCompleteDownloadsDeleted = "m_downloads_list_all_complete_downloads_deleted"
+    case downloadsListDeleteUndo = "m_downloads_list_delete_undo"
+    case downloadsListSharePressed = "m_downloads_list_share_pressed"
+    
+    case downloadsSharingPredownloadedLocalFile = "m_downloads_sharing_predownloaded_local_file"
 
     case jsAlertShown = "m_js_alert_shown"
     case jsAlertBlocked = "m_js_alert_blocked"
@@ -288,6 +299,10 @@ public struct PixelParameters {
 
     public static let textSizeInitial = "text_size_initial"
     public static let textSizeUpdated = "text_size_updated"
+    
+    public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
+    public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
+    
 }
 
 public struct PixelValues {
@@ -385,3 +400,4 @@ public class TimedPixel {
     }
     
 }
+// swiftlint:enable file_length

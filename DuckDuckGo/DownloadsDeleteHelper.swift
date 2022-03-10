@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 
 private enum Const {
     static let undoTimeoutInterval: TimeInterval = 3.0
@@ -99,6 +100,8 @@ class DownloadsDeleteHelper {
             }
             
             try? FileManager.default.removeItem(at: directory)
+            
+            Pixel.fire(pixel: .downloadsListDeleteUndo)
         }
     }
 }

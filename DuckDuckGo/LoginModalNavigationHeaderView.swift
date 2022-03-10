@@ -28,7 +28,7 @@ struct LoginModalNavigationHeaderView: View {
             HStack {
                 ZStack {
                     RoundedRectangle(cornerRadius: Constants.headerIconBackgroundCornerRadius)
-                        .foregroundColor(Color("FormSecondaryBackgroundColor"))
+                        .foregroundColor(.secondaryBackground)
                         .frame(width: Constants.headerIconBackgroundSize, height: Constants.headerIconBackgroundSize)
                     Image(Constants.headerIconImageName)
                         .foregroundColor(.primary)
@@ -36,6 +36,8 @@ struct LoginModalNavigationHeaderView: View {
                 }
                 
                 Text(title)
+                    .foregroundColor(.textPrimary)
+                    .font(.boldTitle)
                 
                 Spacer()
                 
@@ -44,7 +46,7 @@ struct LoginModalNavigationHeaderView: View {
                 } label: {
                     Image(systemName: Constants.closeButtonImageName)
                         .frame(width: Constants.closeButtonImageSize, height: Constants.closeButtonImageSize)
-                        .foregroundColor(Constants.closeButtonColor)
+                        .foregroundColor(.closeButton)
                 }
                 .frame(width: Constants.closeButtonSize, height: Constants.closeButtonSize)
                 .padding(.trailing, Constants.closeButtonImageOffset)
@@ -57,10 +59,15 @@ struct LoginModalNavigationHeaderView: View {
     }
 }
 
-struct LoginModalNavigationHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginModalNavigationHeaderView(title: "Save Email and Password?", didClose: {})
-    }
+// MARK: - Constants
+
+private extension Font {
+    static let boldTitle = Font(uiFont: UIFont.boldAppFont(ofSize: 17))
+}
+
+private extension Color {
+    static let closeButton = Color("CTAPrimaryColor")
+    static let secondaryBackground = Color("FormSecondaryBackgroundColor")
 }
 
 private struct Constants {
@@ -73,5 +80,12 @@ private struct Constants {
     static let closeButtonImageOffset: CGFloat = -10
     static let headerIconImageName = "Key"
     static let closeButtonImageName = "xmark"
-    static let closeButtonColor = Color("CTAPrimaryColor")
+}
+
+// MARK: - Preview
+
+struct LoginModalNavigationHeaderView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginModalNavigationHeaderView(title: "Save Email and Password?", didClose: {})
+    }
 }

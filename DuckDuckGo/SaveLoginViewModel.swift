@@ -26,21 +26,49 @@ protocol SaveLoginViewModelDelegate: AnyObject {
 }
 
 class SaveLoginViewModel: ObservableObject {
-    weak var delegate: SaveLoginViewModelDelegate?
+    enum LoginViewState {
+        case saveUsernameAndPassword
+        case saveUsername
+        case update
+    }
     
+    weak var delegate: SaveLoginViewModelDelegate?
     @Published var password: String
     @Published var username: String
     @Published var faviconImage = UIImage(named: "Logo")!
-    
+    let state: LoginViewState
     private(set) var website: String
+
     static var preview = SaveLoginViewModel(website: "www.duck.com",
                                             password: "LV-426",
-                                            username: "Dax")
+                                            username: "Dax",
+                                            state: .saveUsernameAndPassword)
 
-    internal init(website: String, password: String, username: String) {
+    var formTitle: String {
+        switch state {
+        case .saveUsernameAndPassword:
+            return UserText.loginPlusFormSaveEmailPasswordTitle
+        case .saveUsername:
+            return UserText.loginPlusFormSaveLoginTitle
+        case .update:
+            return UserText.loginPlusFormUpdatePasswordTitle
+        }
+    }
+    
+    var saveButtonTitle: String {
+        switch state {
+        case .saveUsernameAndPassword, .saveUsername:
+            return UserText.loginPlusFormSaveButton
+        case .update:
+            return UserText.loginPlusFormUpdateButton
+        }
+    }
+    
+    internal init(website: String, password: String, username: String, state: LoginViewState) {
         self.website = website
         self.password = password
         self.username = username
+        self.state = state
         loadFavicon()
     }
     

@@ -42,6 +42,7 @@
 		317B9D0527D935AC009ED18B /* SaveLoginFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9D0427D935AC009ED18B /* SaveLoginFormView.swift */; };
 		317B9D0727D93606009ED18B /* LoginModalNavigationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9D0627D93606009ED18B /* LoginModalNavigationHeaderView.swift */; };
 		317B9D0D27D952C6009ED18B /* FaviconsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9D0A27D94A4C009ED18B /* FaviconsHelper.swift */; };
+		31B3ECCC27DA97FF006742ED /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B3ECCB27DA97FF006742ED /* ColorExtension.swift */; };
 		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
 		31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */; };
 		31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */; };
@@ -743,6 +744,7 @@
 		317B9D0427D935AC009ED18B /* SaveLoginFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginFormView.swift; sourceTree = "<group>"; };
 		317B9D0627D93606009ED18B /* LoginModalNavigationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModalNavigationHeaderView.swift; sourceTree = "<group>"; };
 		317B9D0A27D94A4C009ED18B /* FaviconsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconsHelper.swift; sourceTree = "<group>"; };
+		31B3ECCB27DA97FF006742ED /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
 		31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerProtocol.swift; sourceTree = "<group>"; };
@@ -3701,6 +3703,7 @@
 				83004E832193E14C00DA013C /* UIAlertControllerExtension.swift */,
 				F1B745211E549D550072547E /* UIColorExtension.swift */,
 				F194FAEC1F14E2B3009B4DF8 /* UIFontExtension.swift */,
+				31B3ECCB27DA97FF006742ED /* ColorExtension.swift */,
 				850365F223DE087800D0F787 /* UIImageViewExtension.swift */,
 				980891A82238504B00313A70 /* UILabelExtension.swift */,
 				9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */,
@@ -4652,6 +4655,7 @@
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,
 				85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */,
 				85058368219C49E000ED4EDB /* HomeViewSectionRenderers.swift in Sources */,
+				31B3ECCC27DA97FF006742ED /* ColorExtension.swift in Sources */,
 				F456B3B525810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift in Sources */,
 				85F1E9B01FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift in Sources */,
 				85BD869F1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift in Sources */,

@@ -700,11 +700,26 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
 
+/* Cancel login button */
+"loginplus.cancel.button" = "Not Now";
+
 /* Placeholder for password on Login Form */
 "loginplus.password.placeholder" = "Password";
 
 /* Title for save email and password form */
 "loginplus.save-email-password.title" = "Save Email and Password?";
+
+/* Title for save login form */
+"loginplus.save-login.title" = "Save Login?";
+
+/* Save login button */
+"loginplus.save.button" = "Save";
+
+/* Title for update password form */
+"loginplus.update-password.title" = "Update Password?";
+
+/* Update login button */
+"loginplus.update.button" = "Update";
 
 /* Placeholder for username on Login Form */
 "loginplus.username.placeholder" = "Username";

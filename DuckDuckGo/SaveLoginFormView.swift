@@ -25,14 +25,16 @@ struct SaveLoginFormView: View {
 
     var body: some View {
         VStack {
-            SaveLoginWebsiteCell(text: loginViewModel.website, image: Image(uiImage: loginViewModel.faviconImage))
+            SaveLoginWebsiteCell(text: loginViewModel.website,
+                                 image: Image(uiImage: loginViewModel.faviconImage),
+                                 disabled: loginViewModel.state == .update)
                 .frame(height: cellHeight)
             
             Divider()
             
-            SaveLoginUsernameCell(username: $loginViewModel.username)
+            SaveLoginUsernameCell(username: $loginViewModel.username, disabled: loginViewModel.state == .update)
                 .frame(height: cellHeight)
-            
+
             Divider()
             
             SaveLoginPasswordCell(password: $loginViewModel.password)

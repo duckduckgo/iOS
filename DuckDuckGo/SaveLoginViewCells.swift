@@ -22,10 +22,15 @@ import SwiftUI
 struct SaveLoginWebsiteCell: View {
     let text: String
     let image: Image
+    let disabled: Bool
     
     var body: some View {
         HStack {
             Text(text)
+                .foregroundColor(disabled ? .gray : .textPrimary)
+                .font(.bold)
+                .disabled(disabled)
+            
             Spacer()
             image
                 .resizable()
@@ -37,12 +42,17 @@ struct SaveLoginWebsiteCell: View {
 
 struct SaveLoginUsernameCell: View {
     @Binding var username: String
-    
+    let disabled: Bool
+
     var body: some View {
         HStack {
             TextField(UserText.loginPlusFormUsernamePlaceholder, text: $username)
+                .font(.normal)
+                .foregroundColor(disabled ? .gray : .textPrimary)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
+                .disabled(disabled)
+
             Spacer()
         }
     }
@@ -56,10 +66,14 @@ struct SaveLoginPasswordCell: View {
         HStack {
             if isSecure {
                 SecureField(UserText.loginPlusFormPasswordPlaceholder, text: $password)
+                    .foregroundColor(.textPrimary)
+                    .font(.normal)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
             } else {
                 TextField(UserText.loginPlusFormPasswordPlaceholder, text: $password)
+                    .foregroundColor(.textPrimary)
+                    .font(.normal)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
             }
@@ -82,11 +96,20 @@ struct SaveLoginPasswordCell: View {
     }
 }
 
+// MARK: - Constants
+
+private extension Font {
+    static let bold = Font(uiFont: UIFont.boldAppFont(ofSize: 16))
+    static let normal = Font(uiFont: UIFont.appFont(ofSize: 16))
+}
+
+// MARK: - Preview
+
 struct SaveLoginCells_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            SaveLoginWebsiteCell(text: "www.duck.com", image: Image(systemName: "globe"))
-            SaveLoginUsernameCell(username: .constant("Dax"))
+            SaveLoginWebsiteCell(text: "www.duck.com", image: Image(systemName: "globe"), disabled: false)
+            SaveLoginUsernameCell(username: .constant("Dax"), disabled: false)
             SaveLoginPasswordCell(isSecure: false, password: .constant("LV-426"))
             SaveLoginPasswordCell(isSecure: true, password: .constant("LV-426"))
         }.padding()

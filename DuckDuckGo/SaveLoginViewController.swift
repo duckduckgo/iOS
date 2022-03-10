@@ -20,12 +20,37 @@
 import UIKit
 import SwiftUI
 
-class SaveLoginViewController: UIViewController {
-    let domain: String
+class LoginPlusItem {
+    enum LoginItemState {
+        case new
+        case update
+    }
     
-    //TODO create LoginPlusItem
-    internal init(domain: String) {
+    private(set) var username: String?
+    private(set) var password: String?
+    private(set) var domain: String
+    private(set) var state: LoginItemState
+    
+    internal init(username: String? = nil, password: String? = nil, domain: String) {
+        self.username = username
+        self.password = password
         self.domain = domain
+        state = .new
+    }
+    
+    internal init(loginItem: LoginPlusItem) {
+        self.username = loginItem.username
+        self.password = loginItem.password
+        self.domain = loginItem.domain
+        state = .update
+    }
+}
+
+class SaveLoginViewController: UIViewController {
+    private let loginItem: LoginPlusItem
+
+    internal init(loginItem: LoginPlusItem) {
+        self.loginItem = loginItem
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -40,10 +65,21 @@ class SaveLoginViewController: UIViewController {
     }
     
     private func setupSaveLoginView() {
+        let loginState: SaveLoginViewModel.LoginViewState
+        
+        if loginItem.state == .new && loginItem.username != nil {
+            loginState = .saveUsernameAndPassword
+        } else if loginItem.username == nil {
+            loginState = .saveUsername
+        } else {
+            loginState = .update
+        }
+        
         let viewModel = SaveLoginViewModel(
-            website: domain,
-            password: "",
-            username: "")
+            website: loginItem.domain,
+            password: loginItem.password ?? "",
+            username: loginItem.username ?? "",
+            state: loginState)
         
         viewModel.delegate = self
         

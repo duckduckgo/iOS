@@ -36,7 +36,7 @@ struct SaveLoginView: View {
             Color(UIColor.systemGroupedBackground)
             
             VStack {
-                LoginModalNavigationHeaderView(title: UserText.loginPlusFormSaveEmailPasswordTitle, didClose: {
+                LoginModalNavigationHeaderView(title: loginViewModel.formTitle, didClose: {
                     loginViewModel.dismissLoginView()
                 })
                 
@@ -44,7 +44,7 @@ struct SaveLoginView: View {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: Constants.formBackgroundCornerRadius)
-                            .foregroundColor(Constants.formBackgroundColor)
+                            .foregroundColor(.formBackground)
                     )
                     .padding(.top)
                     .padding(.bottom)
@@ -65,10 +65,12 @@ struct SaveLoginView: View {
             Button {
                 loginViewModel.dismissLoginView()
             } label: {
-                Text("Not now")
+                Text(UserText.loginPlusFormCancelButton)
+                    .font(.CTA)
+                    .foregroundColor(.textPrimary)
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Constants.CTAButtonMaxHeight)
-                    .background(Constants.cancelButtonColor)
+                    .background(Color.cancelButton)
                     .foregroundColor(.primary)
                     .cornerRadius(Constants.CTAButtonCornerRadius)
             }
@@ -76,10 +78,11 @@ struct SaveLoginView: View {
             Button {
                 loginViewModel.saveLogin()
             } label: {
-                Text("Save")
+                Text(loginViewModel.saveButtonTitle)
+                    .font(.CTA)
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Constants.CTAButtonMaxHeight)
-                    .background(Constants.saveButtonColor)
+                    .background(Color.saveButton)
                     .foregroundColor(.white)
                     .cornerRadius(Constants.CTAButtonCornerRadius)
             }
@@ -87,19 +90,31 @@ struct SaveLoginView: View {
     }
 }
 
+// MARK: - Constants
+
+private extension Color {
+    static let saveButton = Color("CTAPrimaryColor")
+    static let cancelButton = Color("FormSecondaryBackgroundColor")
+    static let formBackground = Color("FormSecondaryBackgroundColor")
+}
+
+private extension SaveLoginView {
+    private struct Constants {
+        static let formPadding: CGFloat = 45
+        static let formBackgroundCornerRadius: CGFloat = 13
+        static let CTAButtonCornerRadius: CGFloat = 12
+        static let CTAButtonMaxHeight: CGFloat = 50
+    }
+}
+
+private extension Font {
+    static let CTA = Font(uiFont: UIFont.boldAppFont(ofSize: 16))
+}
+// MARK: - Preview
+
 struct SaveLoginView_Previews: PreviewProvider {
     static var previews: some View {
         SaveLoginView(loginViewModel: SaveLoginViewModel.preview).preferredColorScheme(.light)
         SaveLoginView(loginViewModel: SaveLoginViewModel.preview).preferredColorScheme(.dark)
     }
-}
-
-private struct Constants {
-    static let formPadding: CGFloat = 45
-    static let formBackgroundCornerRadius: CGFloat = 13
-    static let CTAButtonCornerRadius: CGFloat = 12
-    static let CTAButtonMaxHeight: CGFloat = 50
-    static let saveButtonColor = Color("CTAPrimaryColor")
-    static let cancelButtonColor = Color("FormSecondaryBackgroundColor")
-    static let formBackgroundColor = Color("FormSecondaryBackgroundColor")
 }

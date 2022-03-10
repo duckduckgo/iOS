@@ -433,4 +433,9 @@ public struct UserText {
     
     public static let webJSAlertDisableAlertsButton = NSLocalizedString("webJSAlert.block-alerts.button", value: "Block Alerts", comment: "Block Alerts button for JavaScript alerts")
 
+    public static let loginPlusFormUsernamePlaceholder = NSLocalizedString("loginplus.username.placeholder", value: "Username", comment: "Placeholder for username on Login Form")
+    public static let loginPlusFormPasswordPlaceholder = NSLocalizedString("loginplus.password.placeholder", value: "Password", comment: "Placeholder for password on Login Form")
+    public static let loginPlusFormSaveEmailPasswordTitle = NSLocalizedString("loginplus.save-email-password.title", value: "Save Email and Password?", comment: "Title for save email and password form")
+
+
 }

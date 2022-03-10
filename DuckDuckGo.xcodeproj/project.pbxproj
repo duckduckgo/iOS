@@ -35,6 +35,13 @@
 		3151F0EC27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0EB27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift */; };
 		3151F0EE2735800800226F58 /* VoiceSearchFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */; };
 		3151F0F02735802800226F58 /* VoiceSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3151F0EF2735802800226F58 /* VoiceSearchViewController.swift */; };
+		317B9CFD27D93588009ED18B /* SaveLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9CFC27D93588009ED18B /* SaveLoginViewController.swift */; };
+		317B9CFF27D93593009ED18B /* SaveLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9CFE27D93593009ED18B /* SaveLoginViewModel.swift */; };
+		317B9D0127D9359B009ED18B /* SaveLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9D0027D9359B009ED18B /* SaveLoginView.swift */; };
+		317B9D0327D935A3009ED18B /* SaveLoginViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9D0227D935A3009ED18B /* SaveLoginViewCells.swift */; };
+		317B9D0527D935AC009ED18B /* SaveLoginFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9D0427D935AC009ED18B /* SaveLoginFormView.swift */; };
+		317B9D0727D93606009ED18B /* LoginModalNavigationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9D0627D93606009ED18B /* LoginModalNavigationHeaderView.swift */; };
+		317B9D0D27D952C6009ED18B /* FaviconsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317B9D0A27D94A4C009ED18B /* FaviconsHelper.swift */; };
 		31B524572715BB23002225AB /* WebJSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B524562715BB23002225AB /* WebJSAlert.swift */; };
 		31C7D71C27515A6300A95D0A /* MockVoiceSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */; };
 		31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */; };
@@ -729,6 +736,13 @@
 		3151F0EB27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchFeedbackViewModel.swift; sourceTree = "<group>"; };
 		3151F0ED2735800800226F58 /* VoiceSearchFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchFeedbackView.swift; sourceTree = "<group>"; };
 		3151F0EF2735802800226F58 /* VoiceSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchViewController.swift; sourceTree = "<group>"; };
+		317B9CFC27D93588009ED18B /* SaveLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginViewController.swift; sourceTree = "<group>"; };
+		317B9CFE27D93593009ED18B /* SaveLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginViewModel.swift; sourceTree = "<group>"; };
+		317B9D0027D9359B009ED18B /* SaveLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginView.swift; sourceTree = "<group>"; };
+		317B9D0227D935A3009ED18B /* SaveLoginViewCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginViewCells.swift; sourceTree = "<group>"; };
+		317B9D0427D935AC009ED18B /* SaveLoginFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginFormView.swift; sourceTree = "<group>"; };
+		317B9D0627D93606009ED18B /* LoginModalNavigationHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModalNavigationHeaderView.swift; sourceTree = "<group>"; };
+		317B9D0A27D94A4C009ED18B /* FaviconsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconsHelper.swift; sourceTree = "<group>"; };
 		31B524562715BB23002225AB /* WebJSAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebJSAlert.swift; sourceTree = "<group>"; };
 		31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceSearchHelper.swift; sourceTree = "<group>"; };
 		31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerProtocol.swift; sourceTree = "<group>"; };
@@ -2054,6 +2068,35 @@
 			name = VoiceSearch;
 			sourceTree = "<group>";
 		};
+		317B9CFA27D93559009ED18B /* SaveLoginForm */ = {
+			isa = PBXGroup;
+			children = (
+				317B9CFC27D93588009ED18B /* SaveLoginViewController.swift */,
+				317B9CFE27D93593009ED18B /* SaveLoginViewModel.swift */,
+				317B9D0027D9359B009ED18B /* SaveLoginView.swift */,
+				317B9D0227D935A3009ED18B /* SaveLoginViewCells.swift */,
+				317B9D0427D935AC009ED18B /* SaveLoginFormView.swift */,
+			);
+			name = SaveLoginForm;
+			sourceTree = "<group>";
+		};
+		317B9CFB27D93561009ED18B /* LoginPlus */ = {
+			isa = PBXGroup;
+			children = (
+				317B9CFA27D93559009ED18B /* SaveLoginForm */,
+				317B9D0627D93606009ED18B /* LoginModalNavigationHeaderView.swift */,
+			);
+			name = LoginPlus;
+			sourceTree = "<group>";
+		};
+		317B9D0E27D95320009ED18B /* Favicons */ = {
+			isa = PBXGroup;
+			children = (
+				317B9D0A27D94A4C009ED18B /* FaviconsHelper.swift */,
+			);
+			name = Favicons;
+			sourceTree = "<group>";
+		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -2259,6 +2302,8 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
+				317B9D0E27D95320009ED18B /* Favicons */,
+				317B9CFB27D93561009ED18B /* LoginPlus */,
 				AA4D6A8023DE4973007E8790 /* AppIcon */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				9817C9C121EF58BA00884F65 /* AutoClear */,
@@ -4509,6 +4554,7 @@
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
 				98DD03D025064FD20017FE36 /* PrivacyProtectionHeaderCell.swift in Sources */,
+				317B9D0127D9359B009ED18B /* SaveLoginView.swift in Sources */,
 				85058366219AE9EA00ED4EDB /* HomePageConfiguration.swift in Sources */,
 				98AA92B32456FBE100ED4B9E /* SearchFieldContainerView.swift in Sources */,
 				85C37D861FA8BE7100CDE257 /* PrivacyProtectionOverviewController.swift in Sources */,
@@ -4547,10 +4593,12 @@
 				983B4D9A254B67F900467D62 /* BookmarksCachingSearch.swift in Sources */,
 				9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */,
 				982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */,
+				317B9D0D27D952C6009ED18B /* FaviconsHelper.swift in Sources */,
 				4BDCECB92680333100F5C244 /* EmailWaitlistWebViewController.swift in Sources */,
 				F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */,
 				98D98A8225ED88E300D8E3DF /* BrowsingMenuSeparatorViewCell.swift in Sources */,
 				F14513551F45FBFD00710C46 /* SiteRatingView.swift in Sources */,
+				317B9CFD27D93588009ED18B /* SaveLoginViewController.swift in Sources */,
 				8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */,
 				1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */,
 				980891A72237D5D800313A70 /* FeedbackPresenter.swift in Sources */,
@@ -4563,6 +4611,7 @@
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,
 				984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */,
+				317B9CFF27D93593009ED18B /* SaveLoginViewModel.swift in Sources */,
 				8577B0AE2225CA4F009CCC71 /* OnboardingPadViewController.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
@@ -4642,6 +4691,7 @@
 				85864FBC24D31EF300E756FF /* SuggestionTrayViewController.swift in Sources */,
 				1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */,
 				85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */,
+				317B9D0527D935AC009ED18B /* SaveLoginFormView.swift in Sources */,
 				853273B224FF114700E3C778 /* DeepLinks.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				982686A1260004760011A8D6 /* MainViewController+BrowsingMenu.swift in Sources */,
@@ -4656,6 +4706,7 @@
 				85200F911FBA38E2001AF290 /* PrivacyProtectionScoreCardController.swift in Sources */,
 				F16390821E648B7A005B4550 /* HomeViewController.swift in Sources */,
 				98F3A1DA217B37200011A0D4 /* LightTheme.swift in Sources */,
+				317B9D0727D93606009ED18B /* LoginModalNavigationHeaderView.swift in Sources */,
 				985892522260B1B200EEB31B /* ProgressView.swift in Sources */,
 				85BA585A1F3506AE00C6E8CA /* AppSettings.swift in Sources */,
 				3151F0EA27357FBA00226F58 /* SpeechRecognizer.swift in Sources */,
@@ -4676,6 +4727,7 @@
 				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,
 				8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */,
+				317B9D0327D935A3009ED18B /* SaveLoginViewCells.swift in Sources */,
 				CBD4F13F279EBFAF00B20FD7 /* HomeMessageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

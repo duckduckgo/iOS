@@ -40,10 +40,11 @@ class Download: NSObject, Identifiable, ObservableObject {
 
     var link: Link? {
         guard let location = location,
+              let remoteURL = session.task?.currentRequest?.url,
               FileManager.default.fileExists(atPath: location.path) else {
             return nil
         }
-        return Link(title: filename, url: location)
+        return Link(title: filename, url: remoteURL, localPath: location)
     }
     
     @Published private(set) var state: URLSessionTask.State = .suspended

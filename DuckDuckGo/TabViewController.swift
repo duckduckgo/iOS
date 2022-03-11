@@ -891,18 +891,26 @@ class TabViewController: UIViewController {
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
-        if notification.userInfo?[DownloadsManager.UserInfoKeys.error] != nil {
-            ActionMessageView.present(message: UserText.messageDownloadFailed)
+        if let error = notification.userInfo?[DownloadManager.UserInfoKeys.error] as? Error {
+            let nserror = error as NSError
+            let downloadWasCancelled = nserror.domain == "NSURLErrorDomain" && nserror.code == -999
+            
+            if !downloadWasCancelled {
+                ActionMessageView.present(message: UserText.messageDownloadFailed)
+            }
+            
             return
         }
         
-        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download else { return }
+        guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download else { return }
         
         DispatchQueue.main.async {
             if !download.temporary {
-                let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(download: download)
-                ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
-                    #warning("Show download")
+                let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(for: download)
+                ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow) {
+                    Pixel.fire(pixel: .downloadsListOpened,
+                               withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
+                    self.delegate?.tabDidRequestDownloads(tab: self)
                 }
             } else {
                 self.previewDownloadedFileIfNecessary(download)
@@ -911,39 +919,32 @@ class TabViewController: UIViewController {
     }
     
     @objc private func downloadDidStart(_ notification: Notification) {
-        guard let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download,
+        guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download,
                   !download.temporary else { return }
         
-        let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(download: download)
+        let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(for: download)
         
         DispatchQueue.main.async {
-            ActionMessageView.present(message: attributedMessage, actionTitle: UserText.actionGenericShow) {
-                #warning("Show download")
+            ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow) {
+                Pixel.fire(pixel: .downloadsListOpened,
+                           withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
+                self.delegate?.tabDidRequestDownloads(tab: self)
             }
         }
     }
 
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard shouldAutoPreviewDownloadWithMIMEType(download.mimeType),
+        guard FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
               let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
               let delegate = self.delegate else { return }
         
         if delegate.tabCheckIfItsBeingCurrentlyPresented(self) {
             fileHandler.preview()
         } else {
-            Pixel.fire(pixel: .presentPreviewWithoutTab)
+            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
         }
     }
-    
-    private func shouldAutoPreviewDownloadWithMIMEType(_ mimeType: MIMEType) -> Bool {
-        switch mimeType {
-        case .passbook, .reality, .usdz:
-            return true
-        default :
-            return false
-        }
-    }
-}   
+}
 
 extension TabViewController: LoginFormDetectionDelegate {
     
@@ -1026,7 +1027,7 @@ extension TabViewController: WKNavigationDelegate {
             url = webView.url
             decisionHandler(.allow)
         } else {
-            let downloadManager = AppDependencyProvider.shared.downloadsManager
+            let downloadManager = AppDependencyProvider.shared.downloadManager
             
             let startDownload = {
                 let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
@@ -1036,11 +1037,16 @@ extension TabViewController: WKNavigationDelegate {
             }
             
             if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
-                if shouldAutoPreviewDownloadWithMIMEType(downloadMetadata.mimeType) {
+                
+                if FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
                     startDownload()
+                    Pixel.fire(pixel: .downloadStarted,
+                               withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
                 } else {
                     let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
                         startDownload()
+                        Pixel.fire(pixel: .downloadStarted,
+                                   withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "0"])
                     }
                     DispatchQueue.main.async {
                         self.present(alert, animated: true, completion: nil)
@@ -1058,7 +1064,7 @@ extension TabViewController: WKNavigationDelegate {
      This method stores the temporary download or clears it if necessary
      */
     private func setupOrClearTemporaryDownload(for navigationResponse: WKNavigationResponse) {
-        let downloadManager = AppDependencyProvider.shared.downloadsManager
+        let downloadManager = AppDependencyProvider.shared.downloadManager
         
         if let downloadMetaData = downloadManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
             let cookieStore = webView.configuration.websiteDataStore.httpCookieStore

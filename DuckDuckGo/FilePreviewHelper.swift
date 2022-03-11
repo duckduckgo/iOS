@@ -30,4 +30,13 @@ struct FilePreviewHelper {
             return QuickLookPreviewHelper(filePath, viewController: viewController)
         }
     }
+    
+    static func canAutoPreviewMIMEType(_ mimeType: MIMEType) -> Bool {
+        switch mimeType {
+        case .reality, .usdz, .passbook, .calendar:
+            return true
+        default:
+            return false
+        }
+    }
 }

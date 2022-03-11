@@ -4,6 +4,9 @@
 /* Buton label for Edit action */
 "action.generic.edit" = "Editar";
 
+/* Button label for a generic show action */
+"action.generic.show" = "Mostrar";
+
 /* Button label for Undo action */
 "action.generic.undo" = "Anular";
 
@@ -27,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Desativar Proteção de Privacidade";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Transferências";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Editar marcador";
@@ -235,6 +241,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DESCREVER O QUE ACONTECEU";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Mês passado";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Semana passada";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Hoje";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Ontem";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ocultar dicas para sempre";
 
@@ -318,6 +336,54 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo bloqueia automaticamente muitos rastreadores. Com o Controlo de Privacidade Global (CPG), pode também solicitar aos websites participantes para restringir a venda ou a partilha dos seus dados pessoais com outras empresas.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Guardar em Transferências";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Cancelar";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Tem a certeza de que quer cancelar esta transferência?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Retomar";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Cancelar Transferência?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Eliminar tudo";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Ainda não foram transferidos ficheiros";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "A transferir - %1$@ de %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "A transferir - %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Transferências";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Isto também irá cancelar as transferências em curso";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Todos os ficheiros eliminados";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Transferência completa de %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Eliminado %@";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Ocorreu uma falha na transferência. Verifique a ligação à Internet.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Transferência iniciada de %@";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Cancelar";

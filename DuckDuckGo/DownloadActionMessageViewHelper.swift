@@ -21,14 +21,14 @@ import UIKit
 
 struct DownloadActionMessageViewHelper {
     
-    static func makeDownloadStartedMessage(download: Download) -> NSAttributedString {
+    static func makeDownloadStartedMessage(for download: Download) -> NSAttributedString {
         let downloadStartedMessage = UserText.messageDownloadStarted(for: download.filename)
-        return DownloadActionMessageViewHelper.boldDownloadFilenameInMessage(downloadStartedMessage, filename: download.filename)
+        return Self.boldDownloadFilenameInMessage(downloadStartedMessage, filename: download.filename)
     }
     
-    static func makeDownloadFinishedMessage(download: Download) -> NSAttributedString {
+    static func makeDownloadFinishedMessage(for download: Download) -> NSAttributedString {
         let downloadStartedMessage = UserText.messageDownloadComplete(for: download.filename)
-        return DownloadActionMessageViewHelper.boldDownloadFilenameInMessage(downloadStartedMessage, filename: download.filename)
+        return Self.boldDownloadFilenameInMessage(downloadStartedMessage, filename: download.filename)
     }
     
     private static func boldDownloadFilenameInMessage(_ message: String, filename: String) -> NSAttributedString {

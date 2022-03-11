@@ -21,24 +21,23 @@ import Foundation
 @testable import DuckDuckGo
 
 struct DownloadTestsHelper {
-    static let mockURL = URL(string: "https://duck.com")!
-    static let tmpDirectory = FileManager.default.temporaryDirectory
-    // swiftlint:disable force_try
-    static let documentsDirectory = try! FileManager.default.url(for: .documentDirectory,
-                                                                     in: .userDomainMask,
-                                                                     appropriateFor: nil,
-                                                                     create: false)
-    // swiftlint:enable force_try
-
-    static func createMockFile(on path: URL) {
+    let mockURL = URL(string: "https://duck.com")!
+    let tmpDirectory = FileManager.default.temporaryDirectory
+    let downloadsDirectory: URL
+        
+    internal init(downloadsDirectory: URL) {
+        self.downloadsDirectory = downloadsDirectory
+    }
+    
+    func createMockFile(on path: URL) {
         try? Data("FakeFileData".utf8).write(to: path)
     }
     
-    static func checkIfFileExists(_ filePath: URL) -> Bool {
+    func checkIfFileExists(_ filePath: URL) -> Bool {
         return FileManager.default.fileExists(atPath: filePath.path)
     }
     
-    static func deleteFilesOnPath(_ url: URL) {
+    func deleteFilesOnPath(_ url: URL) {
         do {
             let files = try FileManager.default.contentsOfDirectory(at: url,
                                                                     includingPropertiesForKeys: nil,
@@ -53,21 +52,21 @@ struct DownloadTestsHelper {
         }
     }
     
-    static func deleteAllFiles() {
-        DownloadTestsHelper.deleteFilesOnPath(DownloadTestsHelper.documentsDirectory)
-        DownloadTestsHelper.deleteFilesOnPath(DownloadTestsHelper.tmpDirectory)
+     func deleteAllFiles() {
+        deleteFilesOnPath(downloadsDirectory)
+        deleteFilesOnPath(tmpDirectory)
     }
     
-    static func downloadForNotification(_ notification: Notification) -> Download {
-        if let download = notification.userInfo?[DownloadsManager.UserInfoKeys.download] as? Download {
+    func downloadForNotification(_ notification: Notification) -> Download {
+        if let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download {
             return download
         }
         fatalError("Should only be used to test valid downloads")
     }
     
-    static func temporaryAndFinalPathForDownload(_ download: Download) -> (URL, URL) {
-        let tmpPath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(download.filename)
-        let finalPath = DownloadTestsHelper.documentsDirectory.appendingPathComponent(download.filename)
+    func temporaryAndFinalPathForDownload(_ download: Download) -> (URL, URL) {
+        let tmpPath = tmpDirectory.appendingPathComponent(download.filename)
+        let finalPath = downloadsDirectory.appendingPathComponent(download.filename)
 
         return (tmpPath, finalPath)
     }

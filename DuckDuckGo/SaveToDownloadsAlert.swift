@@ -25,8 +25,9 @@ struct SaveToDownloadsAlert {
                           cancelHandler: (() -> Void)? = nil,
                           saveToDownloadsHandler: @escaping () -> Void) -> UIAlertController {
         
+        let style: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
         let title = SaveToDownloadsAlert.makeTitle(downloadMetadata: downloadMetadata)
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: style)
         alert.overrideUserInterfaceStyle()
 
         let saveToDownloadsAction = UIAlertAction(title: UserText.actionSaveToDownloads, style: .default) { _ in
@@ -43,15 +44,13 @@ struct SaveToDownloadsAlert {
     }
     
     private static func makeTitle(downloadMetadata: DownloadMetadata) -> String? {
-        if downloadMetadata.expectedContentLength <= 0 {
-            return downloadMetadata.filename
-        } else {
-            let formatter = ByteCountFormatter()
-            formatter.allowedUnits = [.useMB]
-            formatter.countStyle = .file
-            let size = formatter.string(fromByteCount: downloadMetadata.expectedContentLength)
-            
-            return "\(downloadMetadata.filename) (\(size))"
+        var title = downloadMetadata.filename
+        
+        if downloadMetadata.expectedContentLength > 0 {
+            let size = DownloadsListRowViewModel.byteCountFormatter.string(fromByteCount: downloadMetadata.expectedContentLength)
+            title += " (\(size))"
         }
+        
+        return title
     }
 }

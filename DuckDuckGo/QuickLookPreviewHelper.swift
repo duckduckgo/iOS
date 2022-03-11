@@ -39,10 +39,6 @@ class QuickLookPreviewHelper: FilePreview {
         viewController?.present(qlPreview, animated: true, completion: nil)
     }
     
-    deinit {
-        print("QuickLookHelper deinit")
-    }
-    
     static func canPreview(_ url: URL) -> Bool {
         let previewItem = url as NSURL
         return QLPreviewController.canPreview(previewItem)

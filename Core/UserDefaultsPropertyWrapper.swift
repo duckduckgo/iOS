@@ -73,6 +73,8 @@ public struct UserDefaultsWrapper<T> {
         case voiceSearchPrivacyAlertWasConfirmed = "com.duckduckgo.app.voiceSearchPrivacyAlertWasConfirmed"
         case bookmarksMigratedFromUserDefaultsToCD = "com.duckduckgo.app.bookmarksMigratedFromUserDefaultsToCoreData"
         case textSize = "com.duckduckgo.ios.textSize"
+        case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
+
     }
 
     private let key: Key

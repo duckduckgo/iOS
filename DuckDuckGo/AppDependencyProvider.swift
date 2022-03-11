@@ -26,7 +26,7 @@ protocol DependencyProvider {
     var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCacheProvider { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
-    var downloadsManager: DownloadsManager { get }
+    var downloadManager: DownloadManager { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -39,5 +39,5 @@ class AppDependencyProvider: DependencyProvider {
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager)
     let storageCache = StorageCacheProvider()
     lazy var voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper(variantManager)
-    let downloadsManager = DownloadsManager()
+    let downloadManager = DownloadManager()
 }

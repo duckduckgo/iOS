@@ -797,6 +797,10 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
+    fileprivate func launchDownloads() {
+        performSegue(withIdentifier: "Downloads", sender: self)
+    }
+    
     fileprivate func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
     }
@@ -1423,6 +1427,10 @@ extension MainViewController: TabDelegate {
     func tabDidRequestEditBookmark(tab: TabViewController) {
         onBookmarkEdit()
     }
+    
+    func tabDidRequestDownloads(tab: TabViewController) {
+        launchDownloads()
+    }
 
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
@@ -1654,11 +1662,16 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
+    func stopAllOngoingDownloads() {
+        AppDependencyProvider.shared.downloadManager.cancelAllDownloads()
+    }
+    
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
+            self.stopAllOngoingDownloads()
             self.tabManager.stopLoadingInAllTabs()
             self.forgetData()
             DaxDialogs.shared.resumeRegularFlow()

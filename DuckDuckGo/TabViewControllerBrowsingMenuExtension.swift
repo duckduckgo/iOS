@@ -77,6 +77,13 @@ extension TabViewController {
                 self?.onReportBrokenSiteAction()
             }))
             
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
+                                                     image: UIImage(named: "MenuDownloads")!,
+                                                     showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
+                                                     action: { [weak self] in
+                self?.onOpenDownloadsAction()
+            }))
+            
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
                                                      image: UIImage(named: "MenuSettings")!,
                                                      action: { [weak self] in
@@ -315,9 +322,12 @@ extension TabViewController {
             return
         }
         
-        AppDependencyProvider.shared.downloadsManager.startDownload(download) { error in
+        AppDependencyProvider.shared.downloadManager.startDownload(download) { error in
             DispatchQueue.main.async {
                 if error == nil, let downloadLink = download.link {
+                    let isFileSizeGreaterThan10MB = (downloadLink.url.fileSize > 10 * 1000 * 1000)
+                    Pixel.fire(pixel: .downloadsSharingPredownloadedLocalFile,
+                               withAdditionalParameters: [PixelParameters.fileSizeGreaterThan10MB: isFileSizeGreaterThan10MB ? "1" : "0"])
                     completion(downloadLink)
                 } else {
                     completion(originalLink)
@@ -336,6 +346,12 @@ extension TabViewController {
     private func onReportBrokenSiteAction() {
         Pixel.fire(pixel: .browsingMenuReportBrokenSite)
         delegate?.tabDidRequestReportBrokenSite(tab: self)
+    }
+    
+    private func onOpenDownloadsAction() {
+        Pixel.fire(pixel: .downloadsListOpened,
+                   withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
+        delegate?.tabDidRequestDownloads(tab: self)
     }
     
     private func onBrowsingSettingsAction() {

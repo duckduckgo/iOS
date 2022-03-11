@@ -1,5 +1,5 @@
 //
-//  DownloadsManager.swift
+//  DownloadManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -20,30 +20,62 @@
 import Foundation
 import Core
 import WebKit
+import os.log
 
-class DownloadsManager {
+class DownloadManager {
     
     struct UserInfoKeys {
         static let download = "com.duckduckgo.com.userInfoKey.download"
         static let error = "com.duckduckgo.com.userInfoKey.error"
     }
     
+    private enum Constants {
+        static var downloadsDirectoryName = "Downloads"
+    }
+    
     private(set) var downloadList = Set<Download>()
     private let notificationCenter: NotificationCenter
-    private var downloadsFolder: URL {
+    private var downloadsDirectoryMonitor: DirectoryMonitor?
+    
+    @UserDefaultsWrapper(key: .unseenDownloadsAvailable, defaultValue: false)
+    private(set) var unseenDownloadsAvailable: Bool
+    
+    var downloadsDirectory: URL {
         do {
-            return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            let documentsDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+            return documentsDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
         } catch {
-            return FileManager.default.temporaryDirectory
+            os_log("Failed to create downloads directory: %s", type: .debug, error.localizedDescription)
+            let temporaryDirectory = FileManager.default.temporaryDirectory
+            return temporaryDirectory.appendingPathComponent(Constants.downloadsDirectoryName, isDirectory: true)
         }
     }
     
-    var downloadsFolderFiles: [URL]? {
-        try? FileManager.default.contentsOfDirectory(at: downloadsFolder, includingPropertiesForKeys: nil)
+    var downloadsDirectoryFiles: [URL] {
+        let contents = (try? FileManager.default.contentsOfDirectory(at: downloadsDirectory,
+                                                                     includingPropertiesForKeys: nil,
+                                                                     options: .skipsHiddenFiles)) ?? []
+        return contents.filter { !$0.hasDirectoryPath }
     }
     
     init(_ notificationCenter: NotificationCenter = NotificationCenter.default) {
         self.notificationCenter = notificationCenter
+        createDownloadsDirectoryIfNeeded()
+        os_log("Downloads directory location %s", type: .debug, downloadsDirectory.absoluteString)
+    }
+    
+    private func createDownloadsDirectoryIfNeeded() {
+        if !downloadsDirectoryExists() {
+            createDownloadsDirectory()
+        }
+    }
+    
+    private func downloadsDirectoryExists() -> Bool {
+        FileManager.default.fileExists(atPath: downloadsDirectory.absoluteString)
+    }
+    
+    private func createDownloadsDirectory() {
+        try? FileManager.default.createDirectory(at: downloadsDirectory, withIntermediateDirectories: true, attributes: nil)
     }
     
     func makeDownload(navigationResponse: WKNavigationResponse,
@@ -57,12 +89,7 @@ class DownloadsManager {
         if let temporary = temporary {
             temporaryFile = temporary
         } else {
-            switch metaData.mimeType {
-            case .reality, .usdz, .passbook:
-                temporaryFile = true
-            default:
-                temporaryFile = false
-            }
+            temporaryFile = FilePreviewHelper.canAutoPreviewMIMEType(metaData.mimeType)
         }
         
         let session: DownloadSession
@@ -100,6 +127,10 @@ class DownloadsManager {
     func cancelAllDownloads() {
         downloadList.forEach { $0.cancel() }
     }
+    
+    func markAllDownloadsSeen() {
+        unseenDownloadsAvailable = false
+    }
 
     private func move(_ download: Download, toPath path: URL) {
         guard let location = download.location else { return }
@@ -109,26 +140,26 @@ class DownloadsManager {
              try FileManager.default.moveItem(at: location, to: newPath)
              download.location = newPath
          } catch {
-             print("Error \(error)")
+             os_log("Error moving file to downloads directory: %s", type: .debug, error.localizedDescription)
          }
     }
     
-    private func moveToDownloadFolderIfNecessary(_ download: Download) {
+    private func moveToDownloadDirectortIfNeeded(_ download: Download) {
         guard !download.temporary else { return }
-        move(download, toPath: downloadsFolder)
+        move(download, toPath: downloadsDirectory)
     }
 }
 
 // MARK: - Filename Methods
 
-extension DownloadsManager {
+extension DownloadManager {
     
     private func convertToUniqueFilename(_ filename: String, counter: Int = 0) -> String {
         let downloadingFilenames = Set(downloadList.map { $0.filename })
-        let downloadedFilenames = Set(downloadsFolderFiles?.compactMap { $0.lastPathComponent } ?? [] )
+        let downloadedFilenames = Set(downloadsDirectoryFiles.map { $0.lastPathComponent })
         let list = downloadingFilenames.union(downloadedFilenames)
         
-        var fileExtension = downloadsFolder.appendingPathComponent(filename).pathExtension
+        var fileExtension = downloadsDirectory.appendingPathComponent(filename).pathExtension
         fileExtension = fileExtension.count > 0 ? ".\(fileExtension)" : ""
         
         let filePrefix = filename.drop(suffix: fileExtension)
@@ -156,19 +187,48 @@ extension DownloadsManager {
     }
 }
 
-extension DownloadsManager: DownloadDelegate {
+// MARK: - Directory monitoring
+
+extension DownloadManager {
+    
+    func startMonitoringDownloadsDirectoryChanges() {
+        stopMonitoringDownloadsDirectoryChanges()
+        
+        downloadsDirectoryMonitor = DirectoryMonitor(directory: downloadsDirectory)
+        downloadsDirectoryMonitor?.delegate = self
+        try? downloadsDirectoryMonitor?.start()
+    }
+    
+    func stopMonitoringDownloadsDirectoryChanges() {
+        downloadsDirectoryMonitor?.stop()
+        downloadsDirectoryMonitor = nil
+    }
+}
+
+extension DownloadManager: DownloadDelegate {
     func downloadDidFinish(_ download: Download, error: Error?) {
-        moveToDownloadFolderIfNecessary(download)
+        moveToDownloadDirectortIfNeeded(download)
         var userInfo: [AnyHashable: Any] = [UserInfoKeys.download: download]
         if let error = error {
             userInfo[UserInfoKeys.error] = error
+        } else if !download.temporary {
+            unseenDownloadsAvailable = true
         }
+        
         downloadList.remove(download)
+        
         notificationCenter.post(name: .downloadFinished, object: nil, userInfo: userInfo)
+    }
+}
+
+extension DownloadManager: DirectoryMonitorDelegate {
+    func didChange(directoryMonitor: DirectoryMonitor, added: Set<URL>, removed: Set<URL>) {
+        notificationCenter.post(name: .downloadsDirectoryChanged, object: nil, userInfo: nil)
     }
 }
 
 extension NSNotification.Name {
     static let downloadStarted: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadStarted")
     static let downloadFinished: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadFinished")
+    static let downloadsDirectoryChanged: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.downloadsDirectoryChanged")
 }

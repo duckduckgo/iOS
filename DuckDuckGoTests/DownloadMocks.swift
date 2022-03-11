@@ -57,7 +57,7 @@ struct MockSessionSetup {
     let session: MockDownloadSession
     let response: MockNavigationResponse
     
-    init(mimeType: String, downloadsManager: DownloadsManager, completionDelay: TimeInterval = 0, filename: String? = nil) {
+    init(mimeType: String, downloadManager: DownloadManager, completionDelay: TimeInterval = 0, filename: String? = nil) {
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         
         let file: String
@@ -71,14 +71,16 @@ struct MockSessionSetup {
         response.suggestedFileName = file
         response.mimeType = mimeType
         
-        session = MockDownloadSession(DownloadTestsHelper.mockURL)
+        let downloadTestsHelper = DownloadTestsHelper(downloadsDirectory: downloadManager.downloadsDirectory)
+        
+        session = MockDownloadSession(downloadTestsHelper.mockURL)
         session.delaySeconds = completionDelay
 
-        let tmpPath = DownloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
+        let tmpPath = downloadTestsHelper.tmpDirectory.appendingPathComponent(tmpName)
     
         session.temporaryFilePath = tmpPath
         
-        DownloadTestsHelper.createMockFile(on: tmpPath)
+        downloadTestsHelper.createMockFile(on: tmpPath)
     }
 }
 

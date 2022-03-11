@@ -45,8 +45,9 @@ extension VoiceSearchHelper: SpeechRecognizerDelegate {
     func speechRecognizer(_ speechRecognizer: SpeechRecognizer, availabilityDidChange available: Bool) {
        
         // Avoid unnecessary notifications
-        if speechRecognizer.isAvailable != isSpeechRecognizerAvailable {
-            isSpeechRecognizerAvailable = speechRecognizer.isAvailable
+        if isSpeechRecognizerAvailable != available {
+            isSpeechRecognizerAvailable = available
+            
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
             }

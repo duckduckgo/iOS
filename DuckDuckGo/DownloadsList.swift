@@ -92,18 +92,8 @@ struct DownloadsList: View {
         List {
             ForEach(viewModel.sections) { section in
                 Section(header: Text(section.header)) {
-                    ForEach(section.rows) { row in
-                        if let row = row as? OngoingDownloadRowViewModel {
-                            OngoingDownloadRow(rowModel: row,
-                                               cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
-                                .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: row) }
-                                .deleteDisabled(true)
-                        } else if let row = row as? CompleteDownloadRowViewModel {
-                            CompleteDownloadRow(rowModel: row,
-                                                shareButtonAction: { buttonFrame in
-                                share(row, from: buttonFrame)
-                            })
-                        }
+                    ForEach(section.rows) { rowModel in
+                        row(for: rowModel)
                     }
                     .onDelete { offset in
                         self.delete(at: offset, in: section)
@@ -118,6 +108,19 @@ struct DownloadsList: View {
             }
         }
         .listStyle(.grouped)
+    }
+    
+    @ViewBuilder
+    private func row(for rowModel: DownloadsListRowViewModel) -> some View {
+        if let rowModel = rowModel as? OngoingDownloadRowViewModel {
+            OngoingDownloadRow(rowModel: rowModel,
+                               cancelButtonAction: { self.isCancelDownloadAlertPresented = true })
+                .alert(isPresented: $isCancelDownloadAlertPresented) { makeCancelDownloadAlert(for: rowModel) }
+                .deleteDisabled(true)
+        } else if let rowModel = rowModel as? CompleteDownloadRowViewModel {
+            CompleteDownloadRow(rowModel: rowModel,
+                                shareButtonAction: { buttonFrame in share(rowModel, from: buttonFrame) })
+        }
     }
     
     private var deleteAllSection: some View {

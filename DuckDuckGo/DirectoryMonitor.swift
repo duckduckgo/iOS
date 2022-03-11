@@ -75,7 +75,7 @@ class DirectoryMonitor {
         let directorySource = DirectoryMonitor.makeSource(with: fileDescriptor)
         
         directorySource.setEventHandler {
-            self.kqueueDidFire()
+            self.onDirectorySourceChangeEvent()
         }
         
         directorySource.setCancelHandler {
@@ -91,7 +91,7 @@ class DirectoryMonitor {
         state = .debounce(source: directorySource, timer: nowTimer)
     }
     
-    private func kqueueDidFire() {
+    private func onDirectorySourceChangeEvent() {
         switch state {
         case .started(let source):
             let delayedTimer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { _ in

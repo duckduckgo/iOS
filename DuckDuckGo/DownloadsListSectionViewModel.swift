@@ -39,7 +39,7 @@ extension DownloadsListSectionViewModel {
 
     static let yearFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy"
+        formatter.dateFormat = "y"
         return formatter
     }()
 }

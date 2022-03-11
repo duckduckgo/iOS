@@ -31,14 +31,17 @@ class DownloadsListViewModel: ObservableObject {
     private var subscribers: Set<AnyCancellable> = []
     
     init(dataSource: DownloadsListDataSource) {
-        print("VM: init")
+        os_log("DownloadsListViewModel init", log: generalLog, type: .debug)
         
         self.dataSource = dataSource
         
         dataSource.$model
             .sink { [weak self] in
-                print("VM: model changed")
-                print("       ongoing:\($0.ongoingDownloads.count) complete:\($0.completeDownloads.count)")
+                os_log("DownloadsListViewModel changed - ongoing:%d complete:%d",
+                       log: generalLog,
+                       type: .debug,
+                       $0.ongoingDownloads.count,
+                       $0.completeDownloads.count)
                 
                 self?.sections = DownloadsListSectioningHelper().makeSections(from: $0.ongoingDownloads + $0.completeDownloads)
             }
@@ -46,7 +49,7 @@ class DownloadsListViewModel: ObservableObject {
     }
     
     deinit {
-        print("VM: deinit")
+        os_log("DownloadsListViewModel deinit", log: generalLog, type: .debug)
     }
     
     // MARK: - Intents

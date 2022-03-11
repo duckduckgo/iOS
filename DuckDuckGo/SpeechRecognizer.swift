@@ -180,6 +180,6 @@ class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
 
 extension SpeechRecognizer: SFSpeechRecognizerDelegate {
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
-        isAvailable = self.supportsOnDeviceRecognition && available
+        isAvailable = supportsOnDeviceRecognition && available
     }
 }

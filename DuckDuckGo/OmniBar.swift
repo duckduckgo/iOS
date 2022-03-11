@@ -96,7 +96,7 @@ class OmniBar: UIView {
                                                object: textField)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(speechRecognizerShouldReload),
+                                               selector: #selector(reloadSpeechRecognizerAvailability),
                                                name: .speechRecognizerDidChangeAvailability,
                                                object: nil)
     }
@@ -172,11 +172,10 @@ class OmniBar: UIView {
         onQuerySubmitted()
     }
     
-    @objc private func speechRecognizerShouldReload() {
-        DispatchQueue.main.async {
-            self.state = self.state.onReloadState
-            self.refreshState(self.state)
-        }
+    @objc private func reloadSpeechRecognizerAvailability() {
+        assert(Thread.isMainThread)
+        self.state = self.state.onReloadState
+        self.refreshState(self.state)
     }
     
     func showSeparator() {

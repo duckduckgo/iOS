@@ -23,10 +23,12 @@ import Combine
 class OngoingDownloadRowViewModel: DownloadsListRowViewModel {
     @Published var fileSize: String = ""
     @Published var progress: Float = 0.0
+    var isTotalSizeKnown: Bool
     
     private var subscribers: Set<AnyCancellable> = []
     
     init(download: Download) {
+        isTotalSizeKnown = download.totalBytesExpectedToWrite > 0
         super.init(filename: download.filename)
         subscribeToUpdates(from: download)
     }

@@ -42,8 +42,13 @@ struct OngoingDownloadRow: View {
             Spacer(minLength: Const.Spacing.betweenLabelsAndProgressCircle)
             
             ZStack {
-                ProgressCircle(progress: rowModel.progress)
-                    .frame(width: Const.Size.progress.width, height: Const.Size.progress.height)
+                if rowModel.isTotalSizeKnown {
+                    ProgressCircle(progress: rowModel.progress)
+                        .frame(width: Const.Size.progress.width, height: Const.Size.progress.height)
+                } else {
+                    IndefiniteProgressCircle()
+                        .frame(width: Const.Size.progress.width, height: Const.Size.progress.height)
+                }
                 
                 cancelButton
             }
@@ -81,6 +86,39 @@ struct ProgressCircle: View {
                 .foregroundColor(.progressFill)
                 .rotationEffect(Angle(degrees: 270.0))
                 .animation(.linear)
+        }
+    }
+}
+
+struct IndefiniteProgressCircle: View {
+    
+    @State private var angle = 0.0
+    
+    private let gradient = AngularGradient(gradient: Gradient(colors: [.progressFill, .progressBackground]),
+                                           center: .center,
+                                           startAngle: .degrees(270),
+                                           endAngle: .degrees(0))
+    
+    private var animation: Animation {
+        Animation.linear(duration: 1.5)
+            .repeatForever(autoreverses: false)
+    }
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(lineWidth: Const.Size.progressStrokeWidth)
+                .foregroundColor(.progressBackground)
+            
+            Circle()
+                .trim(from: 0, to: CGFloat(0.8))
+                .stroke(gradient, style: StrokeStyle(lineWidth: Const.Size.progressStrokeWidth, lineCap: .round))
+                .rotationEffect(Angle.degrees(angle))
+                .onAppear(perform: {
+                    withAnimation(animation) {
+                        angle = 360
+                    }
+                })
         }
     }
 }

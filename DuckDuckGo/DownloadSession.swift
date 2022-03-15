@@ -51,12 +51,12 @@ class DownloadSession: NSObject {
     }
     
     func start() {
-        cookieStore?.getAllCookies { cookies in
+        cookieStore?.getAllCookies { [weak self] cookies in
             cookies.forEach { cookie in
-                self.session?.configuration.httpCookieStorage?.setCookie(cookie)
+                self?.session?.configuration.httpCookieStorage?.setCookie(cookie)
             }
+            self?.task?.resume()
         }
-        task?.resume()
     }
     
     func cancel() {

@@ -36,14 +36,16 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
     private func updateFlag() {
 #if targetEnvironment(simulator)
         isSpeechRecognizerAvailable = true
-#endif
+#else
         isSpeechRecognizerAvailable = speechRecognizer.isAvailable
+#endif
     }
 }
 
 extension VoiceSearchHelper: SpeechRecognizerDelegate {
     func speechRecognizer(_ speechRecognizer: SpeechRecognizer, availabilityDidChange available: Bool) {
-       
+        
+#if !targetEnvironment(simulator)
         // Avoid unnecessary notifications
         if isSpeechRecognizerAvailable != available {
             isSpeechRecognizerAvailable = available
@@ -52,6 +54,7 @@ extension VoiceSearchHelper: SpeechRecognizerDelegate {
                 NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
             }
         }
+#endif
     }
 }
 

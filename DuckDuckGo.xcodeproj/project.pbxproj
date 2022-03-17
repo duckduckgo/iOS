@@ -56,7 +56,6 @@
 		4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B82E97F25B634B800656FE7 /* TrackerRadarKit */; };
 		4BAA73EE27CF20CE004802D1 /* MacWaitlistViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA73ED27CF20CE004802D1 /* MacWaitlistViewModelTests.swift */; };
 		4BAB74AC279601F700EF4098 /* MacBrowserWaitlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB74AB279601F700EF4098 /* MacBrowserWaitlistView.swift */; };
-		4BAB74AE2796086D00EF4098 /* UserText+MacWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB74AD2796086D00EF4098 /* UserText+MacWaitlist.swift */; };
 		4BAB74B0279622D300EF4098 /* MacWaitlistHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB74AF279622D300EF4098 /* MacWaitlistHostingViewController.swift */; };
 		4BAB74B227962D3300EF4098 /* MacWaitlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAB74B127962D3300EF4098 /* MacWaitlistViewModel.swift */; };
 		4BC21A2B2723862E00229F0E /* RunLoopExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A29272384F500229F0E /* RunLoopExtension.swift */; };
@@ -759,7 +758,6 @@
 		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
 		4BAA73ED27CF20CE004802D1 /* MacWaitlistViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewModelTests.swift; sourceTree = "<group>"; };
 		4BAB74AB279601F700EF4098 /* MacBrowserWaitlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistView.swift; sourceTree = "<group>"; };
-		4BAB74AD2796086D00EF4098 /* UserText+MacWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserText+MacWaitlist.swift"; sourceTree = "<group>"; };
 		4BAB74AF279622D300EF4098 /* MacWaitlistHostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacWaitlistHostingViewController.swift; sourceTree = "<group>"; };
 		4BAB74B127962D3300EF4098 /* MacWaitlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewModel.swift; sourceTree = "<group>"; };
 		4BC21A29272384F500229F0E /* RunLoopExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunLoopExtension.swift; path = ../DuckDuckGo/RunLoopExtension.swift; sourceTree = "<group>"; };
@@ -3694,7 +3692,6 @@
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
-				4BAB74AD2796086D00EF4098 /* UserText+MacWaitlist.swift */,
 				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
 				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
 				982686B82600C0960011A8D6 /* ActionMessageView.xib */,
@@ -4603,7 +4600,6 @@
 				984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */,
 				8577B0AE2225CA4F009CCC71 /* OnboardingPadViewController.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
-				4BAB74AE2796086D00EF4098 /* UserText+MacWaitlist.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,

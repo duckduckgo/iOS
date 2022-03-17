@@ -794,7 +794,18 @@
 "mac-waitlist.settings.on-the-list" = "You’re on the list!";
 
 /* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "mac-waitlist.share-sheet.message";
+"mac-waitlist.share-sheet.message" = "You're invited!
+
+Ready to start browsing privately on Mac?
+
+Step 1
+Visit this URL on your Mac to download:
+https://duckduckgo.com/mac
+
+Step 2
+Open the file to install, then enter your invite code to unlock.
+
+Invite code: %@";
 
 /* Title for the share sheet entry */
 "mac-waitlist.share-sheet.title" = "You’re Invited!";

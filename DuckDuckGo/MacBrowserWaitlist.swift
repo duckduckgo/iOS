@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import UserNotifications
 import BackgroundTasks
 
@@ -46,7 +47,8 @@ struct MacBrowserWaitlist {
     private let waitlistStorage: MacBrowserWaitlistStorage
     private let waitlistRequest: WaitlistRequest
 
-    init(store: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore(), request: WaitlistRequest = ProductWaitlistRequest(product: .macBrowser)) {
+    init(store: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore(),
+         request: WaitlistRequest = ProductWaitlistRequest(product: .macBrowser)) {
         self.waitlistStorage = store
         self.waitlistRequest = request
     }

@@ -38,29 +38,22 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
     init() {
         // https://app.asana.com/0/1201011656765697/1201271104639596
         if #available(iOS 15.0, *) {
-            speechRecognizer.delegate = self
-            updateFlag()
-        }
-    }
-    
-    private func updateFlag() {
 #if targetEnvironment(simulator)
-        isSpeechRecognizerAvailable = true
+            isSpeechRecognizerAvailable = true
 #else
-        isSpeechRecognizerAvailable = speechRecognizer.isAvailable
+            speechRecognizer.delegate = self
+            isSpeechRecognizerAvailable = speechRecognizer.isAvailable
 #endif
+        }
     }
 }
 
 extension VoiceSearchHelper: SpeechRecognizerDelegate {
     func speechRecognizer(_ speechRecognizer: SpeechRecognizer, availabilityDidChange available: Bool) {
-        
-#if !targetEnvironment(simulator)
         // Avoid unnecessary notifications
         if isSpeechRecognizerAvailable != available {
             isSpeechRecognizerAvailable = available
         }
-#endif
     }
 }
 

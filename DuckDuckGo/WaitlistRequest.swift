@@ -61,7 +61,7 @@ enum WaitlistResponse {
 typealias WaitlistJoinResult = Result<WaitlistResponse.Join, WaitlistResponse.JoinError>
 typealias WaitlistJoinCompletion = (Result<WaitlistResponse.Join, WaitlistResponse.JoinError>) -> Void
 
-protocol WaitlistRequesting {
+protocol WaitlistRequest {
     
     func joinWaitlist(completionHandler: @escaping WaitlistJoinCompletion)
     func joinWaitlist() async -> WaitlistJoinResult
@@ -71,16 +71,22 @@ protocol WaitlistRequesting {
     
 }
 
-class WaitlistRequest: WaitlistRequesting {
+class ProductWaitlistRequest: WaitlistRequest {
 
-    static let developmentEndpoint = URL(string: "https://quackdev.duckduckgo.com/api/auth/waitlist/")!
-    
     enum Product: String {
         case macBrowser = "macosbrowser"
     }
     
     private let product: Product
     
+    private var endpoint: URL {
+#if DEBUG
+        return URL(string: "https://quackdev.duckduckgo.com/api/auth/waitlist/")!
+#else
+        return URL(string: "https://quack.duckduckgo.com/api/auth/waitlist/")!
+#endif
+    }
+
     init(product: Product) {
         self.product = product
     }
@@ -88,7 +94,7 @@ class WaitlistRequest: WaitlistRequesting {
     // MARK: - WaitlistRequesting
     
     func joinWaitlist(completionHandler: @escaping (Result<WaitlistResponse.Join, WaitlistResponse.JoinError>) -> Void) {
-        let url = Self.developmentEndpoint.appendingPathComponent(product.rawValue).appendingPathComponent("join")
+        let url = endpoint.appendingPathComponent(product.rawValue).appendingPathComponent("join")
         
         APIRequest.request(url: url, method: .post) { response, error in
             guard let data = response?.data, error == nil else {
@@ -123,7 +129,7 @@ class WaitlistRequest: WaitlistRequesting {
     }
     
     func getWaitlistStatus(completionHandler: @escaping (Result<WaitlistResponse.Status, WaitlistResponse.StatusError>) -> Void) {
-        let url = Self.developmentEndpoint.appendingPathComponent(product.rawValue).appendingPathComponent("status")
+        let url = endpoint.appendingPathComponent(product.rawValue).appendingPathComponent("status")
         
         APIRequest.request(url: url, method: .get) { response, error in
             guard let data = response?.data, error == nil else {
@@ -150,7 +156,7 @@ class WaitlistRequest: WaitlistRequesting {
     }
     
     func getInviteCode(token: String, completionHandler: @escaping (Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>) -> Void) {
-        let url = Self.developmentEndpoint.appendingPathComponent(product.rawValue).appendingPathComponent("code")
+        let url = endpoint.appendingPathComponent(product.rawValue).appendingPathComponent("code")
         
         var components = URLComponents()
         components.queryItems = [URLQueryItem(name: "token", value: token)]

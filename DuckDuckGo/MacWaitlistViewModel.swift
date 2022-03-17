@@ -46,20 +46,23 @@ final class MacWaitlistViewModel: ObservableObject {
     enum NotificationPermissionState {
         case notificationAllowed
         case notificationDenied
-        case cannotPromptForNotification
+        case notificationsDisabled
     }
     
     @Published var viewState: ViewState
     @Published var showNotificationPrompt = false
     @Published var showShareSheet = false
     
-    private let waitlistRequest: WaitlistRequesting
+    private let waitlistRequest: WaitlistRequest
     private let waitlistStorage: MacBrowserWaitlistStorage
+    private let notificationService: NotificationService
 
-    init(waitlistRequest: WaitlistRequesting = WaitlistRequest(product: .macBrowser),
-         waitlistStorage: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore()) {
+    init(waitlistRequest: WaitlistRequest = ProductWaitlistRequest(product: .macBrowser),
+         waitlistStorage: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore(),
+         notificationService: NotificationService = UNUserNotificationCenter.current()) {
         self.waitlistRequest = waitlistRequest
         self.waitlistStorage = waitlistStorage
+        self.notificationService = notificationService
         
         if waitlistStorage.getWaitlistTimestamp() != nil, waitlistStorage.getWaitlistInviteCode() == nil {
             self.viewState = .joinedQueue(.notificationAllowed)
@@ -95,7 +98,7 @@ final class MacWaitlistViewModel: ObservableObject {
             let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
             
             if notificationSettings.authorizationStatus == .denied {
-                self.viewState = .joinedQueue(.cannotPromptForNotification)
+                self.viewState = .joinedQueue(.notificationsDisabled)
             } else {
                 self.viewState = .joinedQueue(.notificationDenied)
             }
@@ -136,7 +139,7 @@ final class MacWaitlistViewModel: ObservableObject {
         let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
         
         if notificationSettings.authorizationStatus == .denied {
-            self.viewState = .joinedQueue(.cannotPromptForNotification)
+            self.viewState = .joinedQueue(.notificationsDisabled)
         } else {
             self.showNotificationPrompt = true
         }
@@ -144,17 +147,17 @@ final class MacWaitlistViewModel: ObservableObject {
     
     private func acceptNotifications() async {        
         do {
-            let permissionGranted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert])
+            let permissionGranted = try await notificationService.requestAuthorization(options: [.alert])
             
             if permissionGranted {
                 self.waitlistStorage.store(shouldReceiveNotifications: true)
                 self.viewState = .joinedQueue(.notificationAllowed)
                 MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             } else {
-                self.viewState = .joinedQueue(.cannotPromptForNotification)
+                self.viewState = .joinedQueue(.notificationsDisabled)
             }
         } catch {
-            self.viewState = .joinedQueue(.cannotPromptForNotification)
+            self.viewState = .joinedQueue(.notificationsDisabled)
         }
     }
     

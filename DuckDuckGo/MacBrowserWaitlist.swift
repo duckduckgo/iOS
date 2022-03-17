@@ -44,9 +44,9 @@ struct MacBrowserWaitlist {
     static var shared = MacBrowserWaitlist()
     
     private let waitlistStorage: MacBrowserWaitlistStorage
-    private let waitlistRequest: WaitlistRequesting
+    private let waitlistRequest: WaitlistRequest
 
-    init(store: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore(), request: WaitlistRequesting = WaitlistRequest(product: .macBrowser)) {
+    init(store: MacBrowserWaitlistStorage = MacBrowserWaitlistKeychainStore(), request: WaitlistRequest = ProductWaitlistRequest(product: .macBrowser)) {
         self.waitlistStorage = store
         self.waitlistRequest = request
     }
@@ -62,7 +62,7 @@ struct MacBrowserWaitlist {
     }
     
     func fetchInviteCodeIfAvailable(completion: @escaping (WaitlistInviteCodeFetchError?) -> Void) {
-        let waitlistRequest = WaitlistRequest(product: .macBrowser)
+        let waitlistRequest = ProductWaitlistRequest(product: .macBrowser)
         
         guard waitlistStorage.getWaitlistInviteCode() == nil else {
             completion(.alreadyHasInviteCode)

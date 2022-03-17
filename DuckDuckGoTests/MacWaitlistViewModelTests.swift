@@ -65,21 +65,41 @@ class MacWaitlistViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testWhenWaitlistJoiningQueue_AndAcceptNotificationsActionIsPerformed_ThenViewStateIsJoinedQueue() async {
+    func testWhenWaitlistJoiningQueue_AndAcceptNotificationsActionIsPerformed_AndNotificationPermissionIsGranted_ThenViewStateIsJoinedQueue() async {
         let request = MockWaitlistRequest.returning(.success(.init(token: mockToken, timestamp: newTimestamp)))
         let storage = MockWaitlistStorage()
-        let viewModel = MacWaitlistViewModel(waitlistRequest: request, waitlistStorage: storage)
-        
+        let notificationService = MockNotificationService(authorized: true)
+        let viewModel = MacWaitlistViewModel(waitlistRequest: request, waitlistStorage: storage, notificationService: notificationService)
+
         await viewModel.perform(action: .joinQueue)
-        
+
         XCTAssertEqual(viewModel.viewState, .joiningQueue)
         XCTAssertTrue(viewModel.showNotificationPrompt)
         XCTAssertFalse(storage.shouldReceiveNotifications())
-        
+
         await viewModel.perform(action: .acceptNotifications)
-        
+
         XCTAssertTrue(storage.shouldReceiveNotifications())
         XCTAssertEqual(viewModel.viewState, .joinedQueue(.notificationAllowed))
+    }
+    
+    @MainActor
+    func testWhenWaitlistJoiningQueue_AndAcceptNotificationsActionIsPerformed_AndNotificationPermissionIsDenied_ThenViewStateIsJoinedQueue() async {
+        let request = MockWaitlistRequest.returning(.success(.init(token: mockToken, timestamp: newTimestamp)))
+        let storage = MockWaitlistStorage()
+        let notificationService = MockNotificationService(authorized: false)
+        let viewModel = MacWaitlistViewModel(waitlistRequest: request, waitlistStorage: storage, notificationService: notificationService)
+
+        await viewModel.perform(action: .joinQueue)
+
+        XCTAssertEqual(viewModel.viewState, .joiningQueue)
+        XCTAssertTrue(viewModel.showNotificationPrompt)
+        XCTAssertFalse(storage.shouldReceiveNotifications())
+
+        await viewModel.perform(action: .acceptNotifications)
+
+        XCTAssertFalse(storage.shouldReceiveNotifications())
+        XCTAssertEqual(viewModel.viewState, .joinedQueue(.notificationsDisabled))
     }
     
     @MainActor
@@ -139,7 +159,7 @@ class MacWaitlistViewModelTests: XCTestCase {
 
 // MARK: - Private Mocks
 
-private struct MockWaitlistRequest: WaitlistRequesting {
+private struct MockWaitlistRequest: WaitlistRequest {
     
     static func failure() -> MockWaitlistRequest {
         return MockWaitlistRequest(joinResult: .failure(.noData),
@@ -218,6 +238,16 @@ private class MockWaitlistStorage: MacBrowserWaitlistStorage {
     
     func shouldReceiveNotifications() -> Bool {
         return receiveNotifications
+    }
+    
+}
+
+private struct MockNotificationService: NotificationService {
+    
+    let authorized: Bool
+
+    func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
+        return authorized
     }
     
 }

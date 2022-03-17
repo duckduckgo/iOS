@@ -153,7 +153,7 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
                 .padding(.top, 24)
                 .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
 
-            case .cannotPromptForNotification:
+            case .notificationsDisabled:
                 Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
                     .font(.custom("proximanova-regular", size: 17))
                     .foregroundColor(.macWaitlistText)
@@ -401,7 +401,7 @@ struct MacBrowserWaitlistView_Previews: PreviewProvider {
                 }
                 
                 PreviewView("Joined Waitlist (Notifications Not Allowed)") {
-                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .cannotPromptForNotification,
+                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationsDisabled,
                                                          showNotificationAlert: $hideNotification) { _ in }
                 }
                 

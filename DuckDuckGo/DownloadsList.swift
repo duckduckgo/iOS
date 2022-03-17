@@ -81,9 +81,7 @@ struct DownloadsList: View {
         if #available(iOS 14.0, *) {
             list.toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
-                    Spacer()
-                    EditButton().environment(\.editMode, $editMode)
-                        .foregroundColor(.barButton)
+                    toolbarButtons
                 }
             }
         } else {
@@ -91,13 +89,28 @@ struct DownloadsList: View {
             VStack {
                 list
                 HStack {
-                    Spacer()
-                    EditButton().environment(\.editMode, $editMode)
-                        .foregroundColor(.barButton)
+                    toolbarButtons
                 }
                 .padding()
             }
         }
+    }
+    
+    @ViewBuilder
+    private var toolbarButtons: some View {
+        if editMode == .active {
+            Button {
+                self.deleteAll()
+            } label: {
+                Text(UserText.downloadsListDeleteAllButton)
+                    .font(Font(uiFont: Const.Font.deleteAll))
+                    .foregroundColor(.deleteAll)
+            }
+            .buttonStyle(.plain)
+        }
+        Spacer()
+        EditButton().environment(\.editMode, $editMode)
+            .foregroundColor(.barButton)
     }
     
     private var list: some View {
@@ -112,10 +125,6 @@ struct DownloadsList: View {
                     }
                 }
                 .listRowBackground(Color.rowBackground)
-            }
-            
-            if editMode == .active {
-                deleteAllSection
             }
         }
         .environment(\.editMode, $editMode)
@@ -133,25 +142,6 @@ struct DownloadsList: View {
             CompleteDownloadRow(rowModel: rowModel,
                                 shareButtonAction: { buttonFrame in share(rowModel, from: buttonFrame) })
         }
-    }
-    
-    private var deleteAllSection: some View {
-        Section(header: Spacer()) {
-            HStack {
-                Spacer()
-                Button {
-                    self.deleteAll()
-                } label: {
-                    Text(UserText.downloadsListDeleteAllButton)
-                        .font(Font(uiFont: Const.Font.deleteAll))
-                        .foregroundColor(.deleteAll)
-                }
-                .buttonStyle(.plain)
-                Spacer()
-            }
-        }
-        .contentShape(Rectangle())
-        .deleteDisabled(true)
     }
     
     private func cancelDownload(for rowModel: OngoingDownloadRowViewModel) {

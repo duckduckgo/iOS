@@ -174,8 +174,8 @@ class OmniBar: UIView {
     
     @objc private func reloadSpeechRecognizerAvailability() {
         assert(Thread.isMainThread)
-        self.state = self.state.onReloadState
-        self.refreshState(self.state)
+        state = state.onReloadState
+        refreshState(state)
     }
     
     func showSeparator() {

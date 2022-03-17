@@ -25,7 +25,7 @@ protocol SpeechRecognizerDelegate: AnyObject {
     func speechRecognizer(_ speechRecognizer: SpeechRecognizer, availabilityDidChange available: Bool)
 }
 
-class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
+final class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
     weak var delegate: SpeechRecognizerDelegate?
     private var audioEngine: AVAudioEngine?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?

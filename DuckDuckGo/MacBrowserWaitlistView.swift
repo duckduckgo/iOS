@@ -67,7 +67,7 @@ struct MacBrowserWaitlistSignUpView: View {
                 VStack(alignment: .center, spacing: 8) {
                     HeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
                     
-                    Text(UserText.macBrowserWaitlistSummary)
+                    Text(UserText.macWaitlistSummary)
                         .font(.custom("proximanova-regular", size: 16))
                         .foregroundColor(.macWaitlistText)
                         .multilineTextAlignment(.center)
@@ -76,7 +76,7 @@ struct MacBrowserWaitlistSignUpView: View {
                     Button(UserText.macWaitlistJoin, action: { action(.joinQueue) })
                         .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
                         .padding(.top, 24)
-                        .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
+                        .alert(isPresented: $showNotificationAlert, content: { Alert.notificationPermissionAlert(action: action) })
                     
                     Text(UserText.macWaitlistWindows)
                         .font(.custom("proximanova-regular", size: 14))
@@ -107,16 +107,6 @@ struct MacBrowserWaitlistSignUpView: View {
             }
         }
     }
-    
-    func notificationPermissionAlert(action: @escaping ViewActionHandler) -> Alert {
-        let accept = ActionSheet.Button.default(Text(UserText.macWaitlistNotificationNotifyMe)) { action(.acceptNotifications) }
-        let decline = ActionSheet.Button.cancel(Text(UserText.macWaitlistNotificationNoThanks)) { action(.declineNotifications) }
-        
-        return Alert(title: Text("Get a notification when it’s your turn?"),
-                     message: Text("We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download"),
-                     primaryButton: accept,
-                     secondaryButton: decline)
-    }
 
 }
 
@@ -135,13 +125,13 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
             
             switch notificationState {
             case .notificationAllowed:
-                Text(UserText.macBrowserWaitlistJoinedWithNotifications)
+                Text(UserText.macWaitlistJoinedWithNotifications)
                     .font(.custom("proximanova-regular", size: 17))
                     .foregroundColor(.macWaitlistText)
                     .lineSpacing(6)
 
             case .notificationDenied:
-                Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
+                Text(UserText.macWaitlistJoinedWithoutNotifications)
                     .font(.custom("proximanova-regular", size: 17))
                     .foregroundColor(.macWaitlistText)
                     .lineSpacing(6)
@@ -151,10 +141,10 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
                 }
                 .buttonStyle(RoundedButtonStyle(enabled: true))
                 .padding(.top, 24)
-                .alert(isPresented: $showNotificationAlert, content: { notificationPermissionAlert(action: action) })
+                .alert(isPresented: $showNotificationAlert, content: { Alert.notificationPermissionAlert(action: action) })
 
             case .notificationsDisabled:
-                Text(UserText.macBrowserWaitlistJoinedWithoutNotifications)
+                Text(UserText.macWaitlistJoinedWithoutNotifications)
                     .font(.custom("proximanova-regular", size: 17))
                     .foregroundColor(.macWaitlistText)
                     .lineSpacing(6)
@@ -168,17 +158,21 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
         .padding([.leading, .trailing], 24)
         .multilineTextAlignment(.center)
     }
+
+}
+
+private extension Alert {
     
-    func notificationPermissionAlert(action: @escaping ViewActionHandler) -> Alert {
-        let accept = ActionSheet.Button.default(Text("Notify Me")) { action(.acceptNotifications) }
-        let decline = ActionSheet.Button.cancel(Text("No Thanks")) { action(.declineNotifications) }
+    static func notificationPermissionAlert(action: @escaping ViewActionHandler) -> Alert {
+        let accept = ActionSheet.Button.default(Text(UserText.macWaitlistNotificationNotifyMe)) { action(.acceptNotifications) }
+        let decline = ActionSheet.Button.cancel(Text(UserText.macWaitlistNotificationNoThanks)) { action(.declineNotifications) }
         
-        return Alert(title: Text("Get a notification when it’s your turn?"),
-                     message: Text("We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download"),
+        return Alert(title: Text(UserText.macWaitlistNotificationTitle),
+                     message: Text(UserText.macWaitlistNotificationMessage),
                      primaryButton: accept,
                      secondaryButton: decline)
     }
-
+    
 }
 
 private struct AllowNotificationsView: View {
@@ -189,7 +183,7 @@ private struct AllowNotificationsView: View {
         
         VStack(spacing: 20) {
             
-            Text("We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.")
+            Text(UserText.macWaitlistNotificationDisabled)
                 .font(.custom("proximanova-regular", size: 17))
                 .foregroundColor(.macWaitlistText)
                 .lineSpacing(5)
@@ -296,7 +290,7 @@ private struct InviteCodeView: View {
     
     var body: some View {
         VStack(spacing: 4) {
-            Text(UserText.macBrowserWaitlistInviteCode)
+            Text(UserText.macWaitlistInviteCode)
                 .font(.custom("proximanova-regular", size: 17))
                 .foregroundColor(.white)
                 .padding([.top, .bottom], 4)

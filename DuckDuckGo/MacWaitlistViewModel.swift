@@ -208,7 +208,7 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
         let metadata = LPLinkMetadata()
         metadata.originalURL = MacBrowserWaitlist.downloadURL
         metadata.url = metadata.originalURL
-        metadata.title = "You're Invited!"
+        metadata.title = UserText.macWaitlistShareSheetTitle
         metadata.imageProvider = NSItemProvider(object: UIImage(named: "MacWaitlistShareSheetLogo")!)
 
         return metadata
@@ -236,29 +236,10 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
 
         switch type {
         case .message:
-            return shareSheetMessage(inviteCode: inviteCode)
+            return UserText.macWaitlistShareSheetMessage(code: inviteCode)
         default:
             return self.metadata.originalURL as Any
         }
-    }
-    
-    private func shareSheetMessage(inviteCode: String) -> String {
-        let message = """
-        You're invited!
-        
-        Ready to start browsing privately on Mac?
-        
-        Step 1
-        Visit this URL on your Mac to download:
-        https://duckduckgo.com/mac
-        
-        Step 2
-        Open the file to install, then enter your invite code to unlock.
-        
-        Invite code: \(inviteCode)
-        """
-        
-        return message
     }
     
 }

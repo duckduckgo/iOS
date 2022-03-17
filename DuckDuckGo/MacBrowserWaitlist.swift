@@ -151,8 +151,8 @@ struct MacBrowserWaitlist {
     func sendInviteCodeAvailableNotification() {
         let notificationContent = UNMutableNotificationContent()
 
-        notificationContent.title = UserText.macBrowserWaitlistAvailableNotificationTitle
-        notificationContent.body = UserText.macBrowserWaitlistAvailableNotificationBody
+        notificationContent.title = UserText.macWaitlistAvailableNotificationTitle
+        notificationContent.body = UserText.macWaitlistAvailableNotificationBody
 
         let notificationIdentifier = "com.duckduckgo.ios.mac-browser.invite-code-available"
         let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: nil)

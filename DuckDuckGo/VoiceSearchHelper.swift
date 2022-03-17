@@ -25,12 +25,22 @@ protocol VoiceSearchHelperProtocol {
 }
 
 class VoiceSearchHelper: VoiceSearchHelperProtocol {
-    private(set) var isSpeechRecognizerAvailable: Bool = false
+    private(set) var isSpeechRecognizerAvailable: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
+            }
+        }
+    }
+    
     private let speechRecognizer = SpeechRecognizer()
     
     init() {
-        speechRecognizer.delegate = self
-        updateFlag()
+        // https://app.asana.com/0/1201011656765697/1201271104639596
+        if #available(iOS 15.0, *) {
+            speechRecognizer.delegate = self
+            updateFlag()
+        }
     }
     
     private func updateFlag() {
@@ -49,10 +59,6 @@ extension VoiceSearchHelper: SpeechRecognizerDelegate {
         // Avoid unnecessary notifications
         if isSpeechRecognizerAvailable != available {
             isSpeechRecognizerAvailable = available
-            
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
-            }
         }
 #endif
     }

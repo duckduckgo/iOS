@@ -113,12 +113,12 @@ struct DownloadsList: View {
                 }
                 .listRowBackground(Color.rowBackground)
             }
-            .environment(\.editMode, $editMode)
             
             if editMode == .active {
                 deleteAllSection
             }
         }
+        .environment(\.editMode, $editMode)
         .listStyle(.grouped)
     }
     

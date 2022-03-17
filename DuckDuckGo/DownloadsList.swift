@@ -36,7 +36,19 @@ struct DownloadsList: View {
     }
     
     private var doneButton: some View {
-        Button(action: { presentationMode.wrappedValue.dismiss() },
+        Button(action: {
+            if #available(iOS 15.0, *) {
+                presentationMode.wrappedValue.dismiss()
+            } else {
+                // Because: presentationMode.wrappedValue.dismiss() for view wrapped in NavigationView() does not work in iOS 14 and lower
+                if var topController = UIApplication.shared.windows.first!.rootViewController {
+                    while let presentedViewController = topController.presentedViewController {
+                        topController = presentedViewController
+                    }
+                    topController.dismiss(animated: true)
+                }
+            }
+        },
                label: { Text(UserText.navigationTitleDone).foregroundColor(.barButton).bold() })
             .opacity(editMode == .inactive ? 1.0 : 0.0)
     }

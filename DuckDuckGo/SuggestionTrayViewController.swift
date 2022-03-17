@@ -40,6 +40,7 @@ class SuggestionTrayViewController: UIViewController {
 
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
+    private var willRemoveAutocomplete = false
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -100,8 +101,10 @@ class SuggestionTrayViewController: UIViewController {
                 removeAutocomplete()
                 displayFavoritesIfNeeded()
             } else {
+                willRemoveAutocomplete = true
                 displayFavoritesIfNeeded { [weak self] in
                     self?.removeAutocomplete()
+                    self?.willRemoveAutocomplete = false
                 }
             }
         }
@@ -268,7 +271,7 @@ class SuggestionTrayViewController: UIViewController {
 extension SuggestionTrayViewController: AutocompleteViewControllerPresentationDelegate {
     
     func autocompleteDidChangeContentHeight(height: CGFloat) {
-        if autocompleteController != nil {
+        if autocompleteController != nil && !willRemoveAutocomplete {
             removeFavorites()
         }
         

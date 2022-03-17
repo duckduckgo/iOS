@@ -1659,10 +1659,11 @@ extension MainViewController: AutoClearWorker {
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
-            self.tabManager.stopLoadingInAllTabs()
-            self.forgetData()
-            DaxDialogs.shared.resumeRegularFlow()
-            self.forgetTabs()
+            self.tabManager.prepareTabsForDataClearing {
+                self.forgetData()
+                DaxDialogs.shared.resumeRegularFlow()
+                self.forgetTabs()
+            }
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone)
             transitionCompletion?()

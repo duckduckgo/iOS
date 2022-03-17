@@ -78,11 +78,15 @@ struct DownloadsList: View {
     
     @ViewBuilder
     private var listWithBottomToolbar: some View {
-        if #available(iOS 14.0, *) {
+        if #available(iOS 15.0, *) {
             list.toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     toolbarButtons
                 }
+            }
+        } else if #available(iOS 14.0, *) {
+            list.toolbar {
+                toolbarContent
             }
         } else {
             // Due to no proper toolbar support in SwiftUI for iOS 13
@@ -111,6 +115,38 @@ struct DownloadsList: View {
         Spacer()
         EditButton().environment(\.editMode, $editMode)
             .foregroundColor(.barButton)
+    }
+    
+    @available(iOS 14.0, *)
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        // Required due to iOS 14 issue of buttons ignoring styling
+        ToolbarItem(placement: .bottomBar) {
+            HStack {
+                Button {
+                    self.deleteAll()
+                } label: {
+                    Text(UserText.downloadsListDeleteAllButton)
+                        .font(Font(uiFont: Const.Font.deleteAll))
+                        .foregroundColor(.deleteAll)
+                }
+                .foregroundColor(.deleteAll)
+                .buttonStyle(.plain)
+                
+                Spacer(minLength: 0)
+            }
+            .opacity(editMode == .active ? 1.0 : 0.0)
+        }
+        ToolbarItem(placement: .bottomBar) {
+            Spacer()
+        }
+        ToolbarItem(placement: .bottomBar) {
+            HStack {
+                EditButton().environment(\.editMode, $editMode)
+                    .foregroundColor(.barButton)
+                Spacer(minLength: 0)
+            }
+        }
     }
     
     private var list: some View {

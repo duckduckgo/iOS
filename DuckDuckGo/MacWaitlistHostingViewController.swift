@@ -30,10 +30,20 @@ final class MacWaitlistViewController: UIViewController {
         title = UserText.macWaitlistTitle
 
         addHostingControllerToViewHierarchy()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onApplicationBecameActive),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.updateViewState()
+    }
+    
+    @objc
+    private func onApplicationBecameActive() {
         viewModel.updateViewState()
     }
     

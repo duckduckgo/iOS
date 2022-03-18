@@ -184,9 +184,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         MacBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
-            if error == nil {
-                MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-            }
+            guard error == nil else { return }
+            MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
         }
 
     }

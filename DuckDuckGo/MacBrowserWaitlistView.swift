@@ -68,7 +68,7 @@ struct MacBrowserWaitlistSignUpView: View {
                     HeaderView(imageName: "MacWaitlistJoinWaitlist", title: UserText.macWaitlistTryDuckDuckGoForMac)
                     
                     Text(UserText.macWaitlistSummary)
-                        .font(.custom("proximanova-regular", size: 16))
+                        .font(.proximaNova(size: 16, weight: .regular))
                         .foregroundColor(.macWaitlistText)
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
@@ -79,14 +79,14 @@ struct MacBrowserWaitlistSignUpView: View {
                         .alert(isPresented: $showNotificationAlert, content: { Alert.notificationPermissionAlert(action: action) })
                     
                     Text(UserText.macWaitlistWindows)
-                        .font(.custom("proximanova-regular", size: 14))
+                        .font(.proximaNova(size: 14, weight: .regular))
                         .foregroundColor(.macWaitlistSubtitle)
                         .padding(.top, 4)
                     
                     if requestInFlight {
                         HStack {
                             Text(UserText.macWaitlistJoining)
-                                .font(.custom("proximanova-regular", size: 15))
+                                .font(.proximaNova(size: 15, weight: .regular))
                                 .foregroundColor(.macWaitlistText)
                             
                             ActivityIndicator(style: .medium)
@@ -97,10 +97,11 @@ struct MacBrowserWaitlistSignUpView: View {
                     Spacer(minLength: 24)
                     
                     Text(UserText.macWaitlistPrivacyDisclaimer)
-                        .font(.custom("proximanova-regular", size: 13))
+                        .font(.proximaNova(size: 13, weight: .regular))
                         .foregroundColor(.macWaitlistSubtitle)
                         .multilineTextAlignment(.center)
                         .lineSpacing(5)
+                        .padding(.bottom, 12)
                 }
                 .padding([.leading, .trailing], 24)
                 .frame(minHeight: proxy.size.height)
@@ -126,13 +127,13 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
             switch notificationState {
             case .notificationAllowed:
                 Text(UserText.macWaitlistJoinedWithNotifications)
-                    .font(.custom("proximanova-regular", size: 17))
+                    .font(.proximaNovaRegular17)
                     .foregroundColor(.macWaitlistText)
                     .lineSpacing(6)
 
             case .notificationDenied:
                 Text(UserText.macWaitlistJoinedWithoutNotifications)
-                    .font(.custom("proximanova-regular", size: 17))
+                    .font(.proximaNovaRegular17)
                     .foregroundColor(.macWaitlistText)
                     .lineSpacing(6)
                 
@@ -145,7 +146,7 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
 
             case .notificationsDisabled:
                 Text(UserText.macWaitlistJoinedWithoutNotifications)
-                    .font(.custom("proximanova-regular", size: 17))
+                    .font(.proximaNovaRegular17)
                     .foregroundColor(.macWaitlistText)
                     .lineSpacing(6)
                 
@@ -184,7 +185,7 @@ private struct AllowNotificationsView: View {
         VStack(spacing: 20) {
             
             Text(UserText.macWaitlistNotificationDisabled)
-                .font(.custom("proximanova-regular", size: 17))
+                .font(.proximaNovaRegular17)
                 .foregroundColor(.macWaitlistText)
                 .lineSpacing(5)
             
@@ -221,22 +222,25 @@ struct MacBrowserWaitlistInvitedView: View {
                     HeaderView(imageName: "MacWaitlistInvited", title: UserText.macWaitlistYoureInvited)
                     
                     Text(UserText.macWaitlistInviteScreenSubtitle)
-                        .font(.custom("proximanova-regular", size: 17))
+                        .font(.proximaNovaRegular17)
                         .foregroundColor(.macWaitlistText)
                         .padding(.top, 10)
+                        .lineSpacing(6)
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     Text(UserText.macWaitlistInviteScreenStep1Title)
-                        .font(.custom("proximanova-bold", size: 17))
+                        .font(.proximaNovaBold17)
                         .foregroundColor(.macWaitlistText)
                         .padding(.top, 22)
                         .padding(.bottom, 8)
                     
                     Text(UserText.macWaitlistInviteScreenStep1Description)
-                        .font(.custom("proximanova-regular", size: 17))
+                        .font(.proximaNovaRegular17)
                         .foregroundColor(.macWaitlistText)
+                        .lineSpacing(6)
                     
                     Text("duckduckgo.com/mac")
-                        .font(.custom("proximanova-bold", size: 17))
+                        .font(.proximaNovaBold17)
                         .foregroundColor(.blue)
                         .menuController(UserText.macWaitlistCopy) {
                             action(.copyDownloadURLToPasteboard)
@@ -244,13 +248,13 @@ struct MacBrowserWaitlistInvitedView: View {
                         .padding(.top, 6)
                     
                     Text(UserText.macWaitlistInviteScreenStep2Title)
-                        .font(.custom("proximanova-bold", size: 17))
+                        .font(.proximaNovaBold17)
                         .foregroundColor(.macWaitlistText)
                         .padding(.top, 22)
                         .padding(.bottom, 8)
                     
                     Text(UserText.macWaitlistInviteScreenStep2Description)
-                        .font(.custom("proximanova-regular", size: 17))
+                        .font(.proximaNovaRegular17)
                         .foregroundColor(.macWaitlistText)
                         .lineSpacing(6)
                     
@@ -268,7 +272,7 @@ struct MacBrowserWaitlistInvitedView: View {
                         Image("Share")
                             .foregroundColor(.macWaitlistText)
                     })
-                        .padding(.bottom, 18)
+                        .padding(.bottom, 26)
                         .sheet(isPresented: $showShareSheet, onDismiss: {
                             // Nothing to do
                         }, content: {
@@ -291,7 +295,7 @@ private struct InviteCodeView: View {
     var body: some View {
         VStack(spacing: 4) {
             Text(UserText.macWaitlistInviteCode)
-                .font(.custom("proximanova-regular", size: 17))
+                .font(.proximaNovaRegular17)
                 .foregroundColor(.white)
                 .padding([.top, .bottom], 4)
 
@@ -322,7 +326,7 @@ private struct HeaderView: View {
             Image(imageName)
             
             Text(title)
-                .font(.custom("proximanova-bold", size: 22))
+                .font(.proximaNova(size: 22, weight: .bold))
         }
         .padding(.top, 24)
         .padding(.bottom, 12)
@@ -336,7 +340,7 @@ private struct RoundedButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.custom("proximanova-bold", size: 16))
+            .font(.proximaNovaBold17)
             .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 12)
             .background(enabled ? Color.macWaitlistBlue : Color.macWaitlistBlue.opacity(0.2))
@@ -464,4 +468,19 @@ private extension Color {
     }
     
 }
+
+private extension Font {
+    
+    static var proximaNovaRegular17: Self {
+        let fontName = "proximanova-\(Font.ProximaNovaWeight.regular.rawValue)"
+        return .custom(fontName, size: 17)
+    }
+    
+    static var proximaNovaBold17: Self {
+        let fontName = "proximanova-\(Font.ProximaNovaWeight.bold.rawValue)"
+        return .custom(fontName, size: 17)
+    }
+    
+}
+
 // swiftlint:enable file_length

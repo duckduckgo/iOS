@@ -47,6 +47,7 @@
 		4B2DCF2A27CD959400FA36B4 /* MenuControllerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2DCF2927CD959400FA36B4 /* MenuControllerView.swift */; };
 		4B4037ED27CC7155007D94B4 /* MacBrowserWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4037EC27CC7155007D94B4 /* MacBrowserWaitlistDebugViewController.swift */; };
 		4B4FBC6527E2F5B90053F459 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4FBC6427E2F5B90053F459 /* NotificationService.swift */; };
+		4B4FBC6927E41D430053F459 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4FBC6827E41D430053F459 /* FontExtension.swift */; };
 		4B52648B25F9613B00CB4C24 /* trackerData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B52648A25F9613B00CB4C24 /* trackerData.json */; };
 		4B53648A26718D0E001AA041 /* EmailWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B53648926718D0E001AA041 /* EmailWaitlist.swift */; };
 		4B60AC97252EC07B00E8D219 /* fullscreenvideo.js in Resources */ = {isa = PBXBuildFile; fileRef = 4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */; };
@@ -750,6 +751,7 @@
 		4B2DCF2927CD959400FA36B4 /* MenuControllerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuControllerView.swift; sourceTree = "<group>"; };
 		4B4037EC27CC7155007D94B4 /* MacBrowserWaitlistDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistDebugViewController.swift; sourceTree = "<group>"; };
 		4B4FBC6427E2F5B90053F459 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		4B4FBC6827E41D430053F459 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		4B52648A25F9613B00CB4C24 /* trackerData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = trackerData.json; sourceTree = "<group>"; };
 		4B53648926718D0E001AA041 /* EmailWaitlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailWaitlist.swift; sourceTree = "<group>"; };
 		4B60AC96252EC07B00E8D219 /* fullscreenvideo.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = fullscreenvideo.js; sourceTree = "<group>"; };
@@ -2072,6 +2074,14 @@
 				31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */,
 			);
 			name = VoiceSearch;
+			sourceTree = "<group>";
+		};
+		4B4FBC6727E41D360053F459 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				4B4FBC6827E41D430053F459 /* FontExtension.swift */,
+			);
+			name = SwiftUI;
 			sourceTree = "<group>";
 		};
 		830FA79B1F8E81FB00FCE105 /* ContentBlocker */ = {
@@ -3670,6 +3680,7 @@
 		F1D796ED1E7AE4090019D451 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				4B4FBC6727E41D360053F459 /* SwiftUI */,
 				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
 				859872221F5743AF00041CB8 /* FireAnimation */,
 				985AAE4424899369007A43EC /* HomeScreenTransition.swift */,
@@ -4714,6 +4725,7 @@
 				98E888F2223FCC4A00B608A4 /* OnboardingViewController.swift in Sources */,
 				85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */,
 				85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */,
+				4B4FBC6927E41D430053F459 /* FontExtension.swift in Sources */,
 				8505836C219F424500ED4EDB /* TextFieldWithInsets.swift in Sources */,
 				CBD4F13F279EBFAF00B20FD7 /* HomeMessageViewModel.swift in Sources */,
 			);

@@ -196,7 +196,7 @@ private struct AllowNotificationsView: View {
             
         }
         .padding(24)
-        .background(Color.white)
+        .background(Color.macWaitlistNotificationBackground)
         .cornerRadius(8)
         .shadow(color: .black.opacity(0.05), radius: 12, x: 0, y: 4)
         
@@ -465,6 +465,10 @@ private extension Color {
     
     static var macWaitlistBlue: Color {
         Color("MacWaitlistBlue")
+    }
+    
+    static var macWaitlistNotificationBackground: Color {
+        Color("MacWaitlistNotificationsBackgroundColor")
     }
     
 }

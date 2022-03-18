@@ -93,13 +93,13 @@ final class MacWaitlistViewModel: ObservableObject {
     }
     
     private func checkNotificationPermissions() async {
-        if waitlistStorage.shouldReceiveNotifications() {
-            self.viewState = .joinedQueue(.notificationAllowed)
+        let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
+        
+        if notificationSettings.authorizationStatus == .denied {
+            self.viewState = .joinedQueue(.notificationsDisabled)
         } else {
-            let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
-            
-            if notificationSettings.authorizationStatus == .denied {
-                self.viewState = .joinedQueue(.notificationsDisabled)
+            if waitlistStorage.shouldReceiveNotifications() {
+                self.viewState = .joinedQueue(.notificationAllowed)
             } else {
                 self.viewState = .joinedQueue(.notificationDenied)
             }

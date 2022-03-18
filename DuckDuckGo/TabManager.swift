@@ -227,8 +227,17 @@ class TabManager {
         model.save()
     }
     
-    func stopLoadingInAllTabs() {
-        tabControllerCache.forEach { $0.stopLoading() }
+    func prepareTabsForDataClearing(completion: @escaping () -> Void) {
+
+        let totalCount = tabControllerCache.count
+        
+        var prepared = 0
+        tabControllerCache.forEach { $0.prepareForDataClearing {
+            prepared += 1
+            if prepared >= totalCount {
+                completion()
+            }
+        } }
     }
 
 }

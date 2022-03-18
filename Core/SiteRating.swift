@@ -73,19 +73,19 @@ public class SiteRating {
 
         self.url = url
         self.httpsForced = httpsForced
-        self.hasOnlySecureContent = url.isHttps()
+        self.hasOnlySecureContent = url.isHttps
         self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
         //  then we assume auto upgrade is available for the purpose of grade scoring.
-        self.grade.httpsAutoUpgrade = url.isHttps()
-        self.grade.https = url.isHttps()
+        self.grade.httpsAutoUpgrade = url.isHttps
+        self.grade.https = url.isHttps
         self.grade.privacyScore = privacyPractice.score
         
     }
     
     public var https: Bool {
-        return url.isHttps()
+        return url.isHttps
     }
 
     public var encryptionType: EncryptionType {

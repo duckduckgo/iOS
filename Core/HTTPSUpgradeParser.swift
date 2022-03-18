@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 public class HTTPSUpgradeParser {
     
@@ -42,4 +43,5 @@ public class HTTPSUpgradeParser {
             throw JsonError.typeMismatch
         }
     }
+    
 }

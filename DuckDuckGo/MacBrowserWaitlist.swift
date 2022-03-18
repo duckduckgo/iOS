@@ -37,11 +37,6 @@ struct MacBrowserWaitlist {
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
     }
     
-    static let downloadURL = URL(string: "https://duckduckgo.com/mac")!
-    static let downloadURLString: String = {
-        downloadURL.absoluteString
-    }()
-    
     static var shared = MacBrowserWaitlist()
     
     private let waitlistStorage: MacBrowserWaitlistStorage

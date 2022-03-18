@@ -21,6 +21,7 @@ import UIKit
 import SwiftUI
 import Combine
 import LinkPresentation
+import Core
 
 @MainActor
 final class MacWaitlistViewModel: ObservableObject {
@@ -177,7 +178,7 @@ final class MacWaitlistViewModel: ObservableObject {
     }
     
     private func copyDownloadUrlToClipboard() {
-        UIPasteboard.general.url = MacBrowserWaitlist.downloadURL
+        UIPasteboard.general.url = AppUrls().macBrowserDownloadURL
     }
     
     private func copyInviteCodeToClipboard() {
@@ -197,7 +198,7 @@ final class MacWaitlistViewModel: ObservableObject {
 
         let linkMetadata = MacWaitlistLinkMetadata(inviteCode: inviteCode)
 
-        return [MacBrowserWaitlist.downloadURL, linkMetadata]
+        return [AppUrls().macBrowserDownloadURL, linkMetadata]
     }
     
 }
@@ -206,7 +207,7 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
     
     fileprivate let metadata: LPLinkMetadata = {
         let metadata = LPLinkMetadata()
-        metadata.originalURL = MacBrowserWaitlist.downloadURL
+        metadata.originalURL = AppUrls().macBrowserDownloadURL
         metadata.url = metadata.originalURL
         metadata.title = UserText.macWaitlistShareSheetTitle
         metadata.imageProvider = NSItemProvider(object: UIImage(named: "MacWaitlistShareSheetLogo")!)

@@ -293,6 +293,10 @@ public struct AppUrls {
         return URL(string: Url.emailLoginQuickLink)!
     }
     
+    public var macBrowserDownloadURL: URL {
+        return URL(string: "https://duckduckgo.com/mac")!
+    }
+    
     public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
         var urlString = Url.pixel.format(arguments: pixelName)
         if let formFactor = formFactor {

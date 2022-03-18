@@ -24,3 +24,4 @@ public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? 
 public let contentBlockingLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
                                              category: "DDG Content Blocking")
 public let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG Lifecycle")
+public let waitlistLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG Mac Waitlist")

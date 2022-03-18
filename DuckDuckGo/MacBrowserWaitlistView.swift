@@ -312,7 +312,7 @@ private struct InviteCodeView: View {
 
 // MARK: - Generic Views
  
-struct HeaderView: View {
+private struct HeaderView: View {
     
     let imageName: String
     let title: String
@@ -330,7 +330,7 @@ struct HeaderView: View {
     
 }
 
-struct RoundedButtonStyle: ButtonStyle {
+private struct RoundedButtonStyle: ButtonStyle {
 
     let enabled: Bool
 
@@ -346,7 +346,8 @@ struct RoundedButtonStyle: ButtonStyle {
 
 }
 
-struct ActivityIndicator: UIViewRepresentable {
+private struct ActivityIndicator: UIViewRepresentable {
+
     typealias UIViewType = UIActivityIndicatorView
 
     let style: UIActivityIndicatorView.Style
@@ -358,11 +359,12 @@ struct ActivityIndicator: UIViewRepresentable {
     func updateUIView(_ view: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
         view.startAnimating()
     }
+
 }
 
 // MARK: - Previews
 
-struct MacBrowserWaitlistView_Previews: PreviewProvider {
+private struct MacBrowserWaitlistView_Previews: PreviewProvider {
     @State static var showNotification = true
     @State static var hideNotification = false
 
@@ -417,7 +419,7 @@ struct MacBrowserWaitlistView_Previews: PreviewProvider {
         }
     }
     
-    struct PreviewView<Content: View>: View {
+    private struct PreviewView<Content: View>: View {
         let title: String
         var content: () -> Content
         

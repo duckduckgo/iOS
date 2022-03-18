@@ -49,7 +49,7 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
     }
 
     private let debuggingActionTitles = [
-        DebuggingActionRows.scheduleWaitlistNotification: "Fire Waitlist Notification in 3s",
+        DebuggingActionRows.scheduleWaitlistNotification: "Fire Waitlist Notification in 3 seconds",
         DebuggingActionRows.setMockInviteCode: "Set Mock Invite Code",
         DebuggingActionRows.deleteInviteCode: "Delete Invite Code"
     ]
@@ -77,7 +77,7 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
         navigationItem.rightBarButtonItem = clearDataItem
 
         BGTaskScheduler.shared.getPendingTaskRequests { tasks in
-            if let task = tasks.first(where: { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }) {
+            if let task = tasks.first(where: { $0.identifier == MacBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }) {
                 let formatter = DateFormatter()
                 formatter.dateStyle = .short
                 formatter.timeStyle = .medium

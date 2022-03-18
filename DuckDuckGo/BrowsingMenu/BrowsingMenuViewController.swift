@@ -307,14 +307,14 @@ extension BrowsingMenuViewController: UITableViewDataSource {
         switch menuEntries[indexPath.row] {
         case .regular(let name, let accessibilityLabel, let image, _):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuEntryViewCell", for: indexPath) as? BrowsingMenuEntryViewCell else {
-                fatalError()
+                fatalError("Cell should be dequeued")
             }
             
             cell.configure(image: image, label: name, accessibilityLabel: accessibilityLabel, theme: theme)
             return cell
         case .separator:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "BrowsingMenuSeparatorViewCell", for: indexPath) as? BrowsingMenuSeparatorViewCell else {
-                fatalError()
+                fatalError("Cell should be dequeued")
             }
             
             cell.separator.backgroundColor = theme.browsingMenuSeparatorColor

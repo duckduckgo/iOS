@@ -31,6 +31,8 @@ class DomainsProtectionUserDefaultsStoreTests: XCTestCase {
     var testee: DomainsProtectionUserDefaultsStore!
 
     override func setUp() {
+        super.setUp()
+        
         UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
         testee = DomainsProtectionUserDefaultsStore(suiteName: Constants.userDefaultsSuit)
     }

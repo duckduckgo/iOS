@@ -88,7 +88,7 @@ class DaxDialogsBrowsingSpecTests: XCTestCase {
 }
 
 // From: https://stackoverflow.com/a/49547114/73479
-fileprivate extension String {
+private extension String {
     func countInstances(of stringToFind: String) -> Int {
         var stringToSearch = self
         var count = 0

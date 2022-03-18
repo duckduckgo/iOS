@@ -30,11 +30,15 @@ class LargeOmniBarStateTests: XCTestCase {
     var mockDependencyProvider: MockDependencyProvider!
     
     override func setUp() {
+        super.setUp()
+        
         mockDependencyProvider = MockDependencyProvider()
         AppDependencyProvider.shared = mockDependencyProvider
     }
     
     override func tearDown() {
+        super.tearDown()
+        
         AppDependencyProvider.shared = AppDependencyProvider()
     }
     

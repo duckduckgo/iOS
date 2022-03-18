@@ -28,6 +28,8 @@ class APIRequestTests: XCTestCase {
     let url = AppUrls().surrogates
     
     override func setUp() {
+        super.setUp()
+        
         swizzlePreferredLanguagesMethod()
     }
 

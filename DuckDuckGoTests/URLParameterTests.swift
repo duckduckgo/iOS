@@ -49,6 +49,8 @@ class URLParameterTests: XCTestCase {
     private var urlParamTestSuite: URLParamRefTests!
     
     override func setUpWithError() throws {
+        try super.setUpWithError()
+        
         let configJSON = data.fromJsonFile("privacy-reference-tests/url-parameters/config_reference.json")
         let testJSON = data.fromJsonFile("privacy-reference-tests/url-parameters/tests.json")
         

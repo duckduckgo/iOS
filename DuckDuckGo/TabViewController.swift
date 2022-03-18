@@ -481,7 +481,7 @@ class TabViewController: UIViewController {
         PreserveLoginsAlert.showConfirmFireproofWebsite(usingController: self, forDomain: domain) { [weak self] in
             Pixel.fire(pixel: .browsingMenuFireproof)
             self?.preserveLoginsWorker?.handleUserEnablingFireproofing(forDomain: domain)
-        }    
+        }
     }
     
     func disableFireproofingForDomain(_ domain: String) {
@@ -836,7 +836,7 @@ class TabViewController: UIViewController {
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
+                              installedSurrogates: siteRating?.installedSurrogates.map { $0 } ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.contentBlockingManager.currentTDSRules?.etag ?? "",
                               ampUrl: linkCleaner?.lastAmpUrl,
@@ -875,8 +875,8 @@ class TabViewController: UIViewController {
     deinit {
         removeMessageHandlers()
         removeObservers()
-    }    
-}   
+    }
+}
 
 extension TabViewController: LoginFormDetectionDelegate {
     

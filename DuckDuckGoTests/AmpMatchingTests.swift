@@ -63,6 +63,8 @@ class AmpMatchingTests: XCTestCase {
     private var ampTestSuite: AmpRefTests!
     
     override func setUpWithError() throws {
+        try super.setUpWithError()
+        
         let configJSON = data.fromJsonFile("privacy-reference-tests/amp-protections/config_reference.json")
         let testJSON = data.fromJsonFile("privacy-reference-tests/amp-protections/tests.json")
         

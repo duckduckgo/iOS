@@ -31,6 +31,8 @@ class TabPreviewsSourceTests: XCTestCase {
     private let containerUrl = TabPreviewsSourceTests.makeContainerUrl()
     
     override func setUp() {
+        super.setUp()
+        
         guard let containerUrl = containerUrl else {
             XCTFail("Could not determine containerUrl")
             return
@@ -46,6 +48,8 @@ class TabPreviewsSourceTests: XCTestCase {
     }
     
     override func tearDown() {
+        super.tearDown()
+        
         guard let containerUrl = containerUrl else {
             XCTFail("Could not determine containerUrl")
             return

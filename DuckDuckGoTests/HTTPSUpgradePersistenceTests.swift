@@ -25,11 +25,15 @@ class HTTPSUpgradePersistenceTests: XCTestCase {
     var testee: HTTPSUpgradePersistence!
 
     override func setUp() {
+        super.setUp()
+        
         testee = HTTPSUpgradePersistence()
         testee.reset()
     }
     
     override func tearDown() {
+        super.tearDown()
+        
         testee.reset()
     }
 

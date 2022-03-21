@@ -201,7 +201,7 @@ final class MacWaitlistViewModel: ObservableObject {
 
         let linkMetadata = MacWaitlistLinkMetadata(inviteCode: inviteCode)
 
-        return [AppUrls().macBrowserDownloadURL, linkMetadata]
+        return [linkMetadata]
     }
     
     // MARK: - Debug
@@ -254,7 +254,7 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
         }
 
         switch type {
-        case .message:
+        case .message, .mail:
             return UserText.macWaitlistShareSheetMessage(code: inviteCode)
         default:
             return self.metadata.originalURL as Any

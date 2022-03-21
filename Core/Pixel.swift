@@ -172,6 +172,7 @@ public enum PixelName: String {
     case widgetEducationDismissed = "m_widget_education_dismissed"
     
     case downloadStarted = "m_download_started"
+    case downloadStartedDueToUnhandledMIMEType = "m_download_started_due_to_unhandled_mime_type"
     case downloadTriedToPresentPreviewWithoutTab = "m_download_tried_to_present_preview_without_tab"
     case downloadsListOpened = "m_downloads_list_opened"
 
@@ -299,6 +300,7 @@ public struct PixelParameters {
     public static let textSizeUpdated = "text_size_updated"
     
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
+    public static let mimeType = "mime_type"
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
     
 }

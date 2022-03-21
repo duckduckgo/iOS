@@ -943,33 +943,6 @@ class MainViewController: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
-    
-    func displayVoiceSearchPrivacyAlertIfNecessary(completion: @escaping(Bool) -> Void) {
-        if AppDependencyProvider.shared.voiceSearchHelper.privacyAlertWasConfirmed {
-            completion(true)
-            return
-        }
-        
-        let alertController = UIAlertController(title: UserText.voiceSearchPrivacyAcknowledgmentTitle,
-                                                message: UserText.voiceSearchPrivacyAcknowledgmentMessage,
-                                                preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
-
-        let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentAcceptButton, style: .default) { _ in
-            AppDependencyProvider.shared.voiceSearchHelper.markPrivacyAlertAsConfirmed()
-            Pixel.fire(pixel: .voiceSearchPrivacyDialogAccepted)
-            completion(true)
-        }
-        let cancelAction = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentRejectButton, style: .cancel) { _ in
-            Pixel.fire(pixel: .voiceSearchPrivacyDialogRejected)
-            completion(false)
-        }
-
-        alertController.addAction(confirmButton)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -1216,17 +1189,12 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onVoiceSearchPressed() {
-
-        displayVoiceSearchPrivacyAlertIfNecessary { result in
-            guard result else { return }
-            
-            SpeechRecognizer.requestMicAccess { permission in
-                DispatchQueue.main.async {
-                    if permission {
-                        self.showVoiceSearch()
-                    } else {
-                        self.showNoMicrophonePermissionAlert()
-                    }
+        SpeechRecognizer.requestMicAccess { permission in
+            DispatchQueue.main.async {
+                if permission {
+                    self.showVoiceSearch()
+                } else {
+                    self.showNoMicrophonePermissionAlert()
                 }
             }
         }
@@ -1671,11 +1639,12 @@ extension MainViewController: AutoClearWorker {
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
-            self.stopAllOngoingDownloads()
-            self.tabManager.stopLoadingInAllTabs()
-            self.forgetData()
-            DaxDialogs.shared.resumeRegularFlow()
-            self.forgetTabs()
+            self.tabManager.prepareTabsForDataClearing {
+                self.stopAllOngoingDownloads()
+                self.forgetData()
+                DaxDialogs.shared.resumeRegularFlow()
+                self.forgetTabs()
+            }
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone)
             transitionCompletion?()

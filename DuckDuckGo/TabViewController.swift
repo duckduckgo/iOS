@@ -187,6 +187,8 @@ class TabViewController: UIViewController {
     private var canDisplayJavaScriptAlert: Bool {
         return !shouldBlockJSAlert && presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
     }
+    
+    private var onWebsiteLoaded: (() -> Void)?
 
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -423,8 +425,10 @@ class TabViewController: UIViewController {
         }
     }
     
-    func stopLoading() {
+    func prepareForDataClearing(completion: @escaping () -> Void) {
         webView.stopLoading()
+        webView.load(URLRequest(url: URL(string: "about:blank")!))
+        onWebsiteLoaded = completion
     }
     
     private func load(urlRequest: URLRequest) {
@@ -1118,6 +1122,11 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
+        
+        if let callback = onWebsiteLoaded {
+            callback()
+            onWebsiteLoaded = nil
+        }
         
         siteRating?.finishedLoading = true
         updateSiteRating()

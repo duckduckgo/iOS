@@ -38,6 +38,6 @@ class AppDependencyProvider: DependencyProvider {
     let variantManager: VariantManager = DefaultVariantManager()
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager)
     let storageCache = StorageCacheProvider()
-    lazy var voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper(variantManager)
+    let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
 }

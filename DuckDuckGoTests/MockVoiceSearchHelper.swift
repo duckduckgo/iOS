@@ -23,14 +23,8 @@ import Core
 
 class MockVoiceSearchHelper: VoiceSearchHelperProtocol {
     var isSpeechRecognizerAvailable: Bool
-    var privacyAlertWasConfirmed: Bool
     
-    init(isSpeechRecognizerAvailable: Bool = true, privacyAlertWasConfirmed: Bool = true) {
+    init(isSpeechRecognizerAvailable: Bool = true) {
         self.isSpeechRecognizerAvailable = isSpeechRecognizerAvailable
-        self.privacyAlertWasConfirmed = privacyAlertWasConfirmed
-    }
-    
-    func markPrivacyAlertAsConfirmed() {
-        privacyAlertWasConfirmed = true
     }
 }

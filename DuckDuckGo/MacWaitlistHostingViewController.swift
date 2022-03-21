@@ -32,8 +32,13 @@ final class MacWaitlistViewController: UIViewController {
         addHostingControllerToViewHierarchy()
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(onApplicationBecameActive),
+                                               selector: #selector(updateViewState),
                                                name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateViewState),
+                                               name: MacBrowserWaitlist.Notifications.inviteCodeChanged,
                                                object: nil)
     }
     
@@ -43,7 +48,7 @@ final class MacWaitlistViewController: UIViewController {
     }
     
     @objc
-    private func onApplicationBecameActive() {
+    private func updateViewState() {
         viewModel.updateViewState()
     }
     

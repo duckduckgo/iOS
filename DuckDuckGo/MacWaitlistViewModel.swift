@@ -154,6 +154,9 @@ final class MacWaitlistViewModel: ObservableObject {
                 self.waitlistStorage.store(shouldReceiveNotifications: true)
                 self.viewState = .joinedQueue(.notificationAllowed)
                 MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
+                
+                // TODO: Remove
+                scheduleFakeInvitation()
             } else {
                 self.viewState = .joinedQueue(.notificationsDisabled)
             }
@@ -201,6 +204,22 @@ final class MacWaitlistViewModel: ObservableObject {
         return [AppUrls().macBrowserDownloadURL, linkMetadata]
     }
     
+    // MARK: - Debug
+
+    private func scheduleFakeInvitation() {
+        let taskName = "mac-waitlist.fake-invitation"
+        let taskID = UIApplication.shared.beginBackgroundTask(withName: taskName)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            let store = MacBrowserWaitlistKeychainStore()
+            store.store(inviteCode: "ABCD1234")
+
+            MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
+            
+            UIApplication.shared.endBackgroundTask(taskID)
+        }
+    }
+    
 }
 
 private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
@@ -225,12 +244,11 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
         return self.metadata
     }
     
-    public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
+    public func activityViewControllerPlaceholderItem(_: UIActivityViewController) -> Any {
         return self.metadata.originalURL as Any
     }
 
-    public func activityViewController(_ activityViewController: UIActivityViewController,
-                                       itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+    public func activityViewController(_: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         guard let type = activityType else {
             return self.metadata.originalURL as Any
         }

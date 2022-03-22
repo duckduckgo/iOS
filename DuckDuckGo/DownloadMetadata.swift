@@ -30,7 +30,6 @@ struct DownloadMetadata {
         guard let mimeType = response.mimeType,
               let url = response.url else {
                   return nil
-                  #warning("Do we want a pixel here?")
               }
         
         if let name = filename {

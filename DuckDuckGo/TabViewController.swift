@@ -1051,6 +1051,12 @@ extension TabViewController: WKNavigationDelegate {
                         startDownload()
                         Pixel.fire(pixel: .downloadStarted,
                                    withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "0"])
+                        
+                        if downloadMetadata.mimeType != .octetStream {
+                            let mimeType = downloadMetadata.mimeTypeSource
+                            Pixel.fire(pixel: .downloadStartedDueToUnhandledMIMEType,
+                                       withAdditionalParameters: [PixelParameters.mimeType: mimeType])
+                        }
                     }
                     DispatchQueue.main.async {
                         self.present(alert, animated: true, completion: nil)

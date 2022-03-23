@@ -72,6 +72,8 @@ public struct UserDefaultsWrapper<T> {
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
         case bookmarksMigratedFromUserDefaultsToCD = "com.duckduckgo.app.bookmarksMigratedFromUserDefaultsToCoreData"
         case textSize = "com.duckduckgo.ios.textSize"
+        case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
+
     }
 
     private let key: Key

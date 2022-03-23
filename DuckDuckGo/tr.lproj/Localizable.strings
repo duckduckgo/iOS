@@ -4,6 +4,9 @@
 /* Buton label for Edit action */
 "action.generic.edit" = "Düzenle";
 
+/* Button label for a generic show action */
+"action.generic.show" = "Göster";
+
 /* Button label for Undo action */
 "action.generic.undo" = "Geri al";
 
@@ -27,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Gizlilik Korumasını Devre Dışı Bırak";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "İndirilenler";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Yer İşaretini Düzenle";
@@ -235,6 +241,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "NE OLDUĞUNU AÇIKLAYIN";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Geçen ay";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Geçen hafta";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Bugün";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Dün";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "İpuçlarını Sonsuza Kadar Gizle";
 
@@ -318,6 +336,54 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo birçok izleyiciyi otomatik olarak engeller. Küresel Gizlilik Kontrolü (GPC) ile, katılımcı web sitelerinden kişisel verilerinizin satışını veya diğer şirketlerle paylaşımını kısıtlamalarını da isteyebilirsiniz.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "İndirilenlere Kaydet";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "İptal";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Bu indirmeyi iptal etmek istediğinizden emin misiniz?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Devam et";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "İndirme iptal edilsin mi?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Tümünü Sil";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Henüz indirilen dosya yok";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "İndiriliyor - %1$@ / %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "İndiriliyor - %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "İndirilenler";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Bu işlem devam eden indirmeleri de iptal edecektir";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Tüm dosyalar silindi";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "%@ için indirme tamamlandı";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "%@ Silindi";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "İndirme başarısız. İnternet bağlantınızı kontrol edin.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "%@ için indirme başlatıldı";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "İptal";

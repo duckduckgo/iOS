@@ -54,10 +54,12 @@ class UnprotectedSitesViewController: UITableViewController {
         infoText.attributedText = text
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        navigationController?.setToolbarHidden(true, animated: false)
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+
+        if parent == nil {
+            navigationController?.setToolbarHidden(true, animated: false)
+        }
     }
     
     private func refreshToolbarItems(animated: Bool) {

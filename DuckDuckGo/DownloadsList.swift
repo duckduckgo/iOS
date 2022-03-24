@@ -107,7 +107,6 @@ struct DownloadsList: View {
                 self.deleteAll()
             } label: {
                 Text(UserText.downloadsListDeleteAllButton)
-                    .font(Font(uiFont: Const.Font.deleteAll))
                     .foregroundColor(.deleteAll)
             }
             .buttonStyle(.plain)
@@ -128,7 +127,6 @@ struct DownloadsList: View {
                     self.deleteAll()
                 } label: {
                     Text(UserText.downloadsListDeleteAllButton)
-                        .font(Font(uiFont: Const.Font.deleteAll))
                         .foregroundColor(.deleteAll)
                 }
                 .foregroundColor(.deleteAll)
@@ -216,7 +214,6 @@ extension DownloadsList {
 private enum Const {
     enum Font {
         static let emptyState = UIFont.appFont(ofSize: 16)
-        static let deleteAll = UIFont.semiBoldAppFont(ofSize: 16)
     }
 }
 

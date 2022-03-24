@@ -115,6 +115,7 @@ struct DownloadsList: View {
         Spacer()
         EditButton().environment(\.editMode, $editMode)
             .foregroundColor(.barButton)
+            .buttonStyle(.plain)
     }
     
     @available(iOS 14.0, *)

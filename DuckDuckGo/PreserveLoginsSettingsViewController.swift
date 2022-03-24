@@ -35,6 +35,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     @IBOutlet var editButton: UIBarButtonItem!
 
     var model = [String]()
+    private var shouldShowRemoveAll = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,23 +48,28 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     @IBAction func startEditing() {
         navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.setRightBarButton(doneButton, animated: true)
+
+        tableView.setEditing(false, animated: true)
+        tableView.setEditing(true, animated: true)
         
-        // Fix glitch happening when there's cell that is already in the editing state (swiped to reveal delete button) and user presses 'Edit'.
-        tableView.isEditing = false
-        tableView.isEditing = true
-        tableView.reloadData()
+        shouldShowRemoveAll = true
+        tableView.insertSections([Section.removeAll.rawValue], with: .fade)
     }
     
     @IBAction func endEditing() {
         navigationItem.setHidesBackButton(false, animated: true)
         navigationItem.setRightBarButton(model.isEmpty ? nil : editButton, animated: true)
         
-        tableView.isEditing = false
-        tableView.reloadData()
+        tableView.setEditing(false, animated: true)
+        
+        if shouldShowRemoveAll {
+            shouldShowRemoveAll = false
+            tableView.deleteSections([Section.removeAll.rawValue], with: .fade)
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return tableView.isEditing ? Section.allCases.count : Section.allCases.count - 1
+        return shouldShowRemoveAll ? Section.allCases.count : Section.allCases.count - 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -75,11 +81,10 @@ class PreserveLoginsSettingsViewController: UITableViewController {
             return 1
                     
         case .removeAll:
-            return tableView.isEditing ? 1 : 0
+            return 1
             
         default:
             return 0
-        
         }
     }
     
@@ -142,11 +147,12 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         PreserveLogins.shared.remove(domain: domain)
         Favicons.shared.removeFireproofFavicon(forDomain: domain)
         WebCacheManager.shared.removeCookies(forDomains: [domain]) { }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if self.model.isEmpty {
-                self.endEditing()
-            }
+        
+        if self.model.isEmpty {
+            self.endEditing()
             tableView.reloadData()
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     

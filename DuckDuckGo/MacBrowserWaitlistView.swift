@@ -29,18 +29,15 @@ struct MacBrowserWaitlistView: View {
     var body: some View {
         switch viewModel.viewState {
         case .notJoinedQueue:
-            MacBrowserWaitlistSignUpView(requestInFlight: false,
-                                         showNotificationAlert: $viewModel.showNotificationPrompt) { action in
+            MacBrowserWaitlistSignUpView(requestInFlight: false) { action in
                 Task { await viewModel.perform(action: action) }
             }
         case .joiningQueue:
-            MacBrowserWaitlistSignUpView(requestInFlight: true,
-                                         showNotificationAlert: $viewModel.showNotificationPrompt) { action in
+            MacBrowserWaitlistSignUpView(requestInFlight: true) { action in
                 Task { await viewModel.perform(action: action) }
             }
         case .joinedQueue(let state):
-            MacBrowserWaitlistJoinedWaitlistView(notificationState: state,
-                                                 showNotificationAlert: $viewModel.showNotificationPrompt) { action in
+            MacBrowserWaitlistJoinedWaitlistView(notificationState: state) { action in
                 Task { await viewModel.perform(action: action) }
             }
         case .invited(let inviteCode):
@@ -57,7 +54,6 @@ struct MacBrowserWaitlistView: View {
 struct MacBrowserWaitlistSignUpView: View {
 
     let requestInFlight: Bool
-    @Binding var showNotificationAlert: Bool
     
     let action: ViewActionHandler
 
@@ -76,7 +72,6 @@ struct MacBrowserWaitlistSignUpView: View {
                     Button(UserText.macWaitlistJoin, action: { action(.joinQueue) })
                         .buttonStyle(RoundedButtonStyle(enabled: !requestInFlight))
                         .padding(.top, 24)
-                        .alert(isPresented: $showNotificationAlert, content: { Alert.notificationPermissionAlert(action: action) })
                     
                     Text(UserText.macWaitlistWindows)
                         .font(.proximaNova(size: 14, weight: .regular))
@@ -116,7 +111,6 @@ struct MacBrowserWaitlistSignUpView: View {
 struct MacBrowserWaitlistJoinedWaitlistView: View {
     
     let notificationState: MacWaitlistViewModel.NotificationPermissionState
-    @Binding var showNotificationAlert: Bool
 
     let action: (MacWaitlistViewModel.ViewAction) -> Void
     
@@ -130,19 +124,6 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
                     .font(.proximaNovaRegular17)
                     .foregroundColor(.macWaitlistText)
                     .lineSpacing(6)
-
-            case .notificationDenied:
-                Text(UserText.macWaitlistJoinedWithoutNotifications)
-                    .font(.proximaNovaRegular17)
-                    .foregroundColor(.macWaitlistText)
-                    .lineSpacing(6)
-                
-                Button("Notify Me") {
-                    action(.requestNotificationPrompt)
-                }
-                .buttonStyle(RoundedButtonStyle(enabled: true))
-                .padding(.top, 24)
-                .alert(isPresented: $showNotificationAlert, content: { Alert.notificationPermissionAlert(action: action) })
 
             case .notificationsDisabled:
                 Text(UserText.macWaitlistJoinedWithoutNotifications)
@@ -160,20 +141,6 @@ struct MacBrowserWaitlistJoinedWaitlistView: View {
         .multilineTextAlignment(.center)
     }
 
-}
-
-private extension Alert {
-    
-    static func notificationPermissionAlert(action: @escaping ViewActionHandler) -> Alert {
-        let accept = ActionSheet.Button.default(Text(UserText.macWaitlistNotificationNotifyMe)) { action(.acceptNotifications) }
-        let decline = ActionSheet.Button.cancel(Text(UserText.macWaitlistNotificationNoThanks)) { action(.declineNotifications) }
-        
-        return Alert(title: Text(UserText.macWaitlistNotificationTitle),
-                     message: Text(UserText.macWaitlistNotificationMessage),
-                     primaryButton: accept,
-                     secondaryButton: decline)
-    }
-    
 }
 
 private struct AllowNotificationsView: View {
@@ -369,8 +336,6 @@ private struct ActivityIndicator: UIViewRepresentable {
 // MARK: - Previews
 
 private struct MacBrowserWaitlistView_Previews: PreviewProvider {
-    @State static var showNotification = true
-    @State static var hideNotification = false
 
     @State static var showShareSheet = false
     
@@ -378,31 +343,19 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
         if #available(iOS 14.0, *) {
             Group {
                 PreviewView("Sign Up") {
-                    MacBrowserWaitlistSignUpView(requestInFlight: false,
-                                                 showNotificationAlert: $hideNotification) { _ in }
+                    MacBrowserWaitlistSignUpView(requestInFlight: false) { _ in }
                 }
                 
                 PreviewView("Sign Up (API Request In Progress)") {
-                    MacBrowserWaitlistSignUpView(requestInFlight: true,
-                                                 showNotificationAlert: $hideNotification) { _ in }
+                    MacBrowserWaitlistSignUpView(requestInFlight: true) { _ in }
                 }
-                
-                PreviewView("Sign Up (API Request In Progress, With Alert)") {
-                    MacBrowserWaitlistSignUpView(requestInFlight: true,
-                                                 showNotificationAlert: $showNotification) { _ in }
-                }
-                
+
                 PreviewView("Joined Waitlist (Notifications Allowed)") {
-                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationAllowed, showNotificationAlert: $hideNotification) { _ in }
-                }
-                
-                PreviewView("Joined Waitlist (Notifications Denied)") {
-                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationDenied, showNotificationAlert: $hideNotification) { _ in }
+                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationAllowed) { _ in }
                 }
                 
                 PreviewView("Joined Waitlist (Notifications Not Allowed)") {
-                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationsDisabled,
-                                                         showNotificationAlert: $hideNotification) { _ in }
+                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationsDisabled) { _ in }
                 }
                 
                 PreviewView("Invite Screen With Code") {

@@ -31,16 +31,13 @@ protocol MacBrowserWaitlistStorage {
     func store(inviteCode: String)
 
     func deleteWaitlistState()
-    
-    func store(shouldReceiveNotifications: Bool)
-    func shouldReceiveNotifications() -> Bool
 
 }
 
 extension MacBrowserWaitlistStorage {
     
     var isOnWaitlist: Bool {
-        return getWaitlistToken() != nil && getWaitlistTimestamp() != nil
+        return getWaitlistToken() != nil && getWaitlistTimestamp() != nil && !isInvited
     }
     
     var isInvited: Bool {
@@ -92,25 +89,10 @@ class MacBrowserWaitlistKeychainStore: MacBrowserWaitlistStorage {
         deleteItem(forField: .waitlistToken)
         deleteItem(forField: .waitlistTimestamp)
         deleteItem(forField: .inviteCode)
-        
-        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.macWaitlistShouldReceiveNotifications.rawValue)
     }
     
     func delete(field: MacWaitlistKeychainField) {
         deleteItem(forField: field)
-    }
-    
-    // MARK: - User Defaults
-    
-    @UserDefaultsWrapper(key: .macWaitlistShouldReceiveNotifications, defaultValue: false)
-    var userShouldReceiveNotifications: Bool
-    
-    func store(shouldReceiveNotifications: Bool) {
-        userShouldReceiveNotifications = shouldReceiveNotifications
-    }
-
-    func shouldReceiveNotifications() -> Bool {
-        return userShouldReceiveNotifications
     }
     
     // MARK: - Keychain Read

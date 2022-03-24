@@ -73,7 +73,6 @@ public struct UserDefaultsWrapper<T> {
         case textSize = "com.duckduckgo.ios.textSize"
         
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
-        case macWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.macWaitlist.shouldReceiveNotifications"
     }
 
     private let key: Key

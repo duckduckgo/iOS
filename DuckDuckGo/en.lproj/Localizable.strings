@@ -766,18 +766,6 @@
 /* Text used for the Notifications Disabled state */
 "mac-waitlist.notification.disabled" = "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.";
 
-/* Text used for the notification message */
-"mac-waitlist.notification.message" = "We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download";
-
-/* Cancellation text for the Mac Waitlist notification prompt */
-"mac-waitlist.notification.no-thanks" = "No Thanks";
-
-/* Confirmation text for the Mac Waitlist notification prompt */
-"mac-waitlist.notification.notify-me" = "Notify Me";
-
-/* Text used for the notification title */
-"mac-waitlist.notification.title" = "Get a notification when it’s your turn?";
-
 /* Privacy disclaimer for the Mac Waitlist feature */
 "mac-waitlist.privacy-disclaimer" = "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.";
 

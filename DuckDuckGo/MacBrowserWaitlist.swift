@@ -136,7 +136,7 @@ struct MacBrowserWaitlist {
     }
 
     func scheduleBackgroundRefreshTask() {
-        guard waitlistStorage.isOnWaitlist, waitlistStorage.shouldReceiveNotifications() else {
+        guard waitlistStorage.isOnWaitlist else {
             return
         }
 

@@ -482,14 +482,6 @@ public struct UserText {
     
     // MARK: Notifications
     
-    public static let macWaitlistNotificationTitle = NSLocalizedString("mac-waitlist.notification.title", value: "Get a notification when it’s your turn?", comment: "Text used for the notification title")
-    
-    public static let macWaitlistNotificationMessage = NSLocalizedString("mac-waitlist.notification.message", value: "We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download", comment: "Text used for the notification message")
-    
-    public static let macWaitlistNotificationNotifyMe = NSLocalizedString("mac-waitlist.notification.notify-me", value: "Notify Me", comment: "Confirmation text for the Mac Waitlist notification prompt")
-    
-    public static let macWaitlistNotificationNoThanks = NSLocalizedString("mac-waitlist.notification.no-thanks", value: "No Thanks", comment: "Cancellation text for the Mac Waitlist notification prompt")
-    
     public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")
     
     public static let macWaitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the macOS waitlist notification")

@@ -34,7 +34,6 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
         WaitlistInformationRows.waitlistTimestamp: "Timestamp",
         WaitlistInformationRows.waitlistToken: "Token",
         WaitlistInformationRows.waitlistInviteCode: "Invite Code",
-        WaitlistInformationRows.shouldNotifyWhenAvailable: "Notify When Available",
         WaitlistInformationRows.backgroundTask: "Earliest Refresh Date"
     ]
 
@@ -43,7 +42,6 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
         case waitlistTimestamp
         case waitlistToken
         case waitlistInviteCode
-        case shouldNotifyWhenAvailable
         case backgroundTask
 
     }
@@ -125,15 +123,6 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
             case .waitlistInviteCode:
                 cell.detailTextLabel?.text = storage.getWaitlistInviteCode() ?? "None"
 
-            case .shouldNotifyWhenAvailable:
-                // Not using `bool(forKey:)` as it's useful to tell whether a value has been set at all, and `bool(forKey:)` returns false by default.
-                let key = UserDefaultsWrapper<Any>.Key.macWaitlistShouldReceiveNotifications.rawValue
-                if let shouldNotify = UserDefaults.standard.value(forKey: key) as? Bool {
-                    cell.detailTextLabel?.text = shouldNotify ? "Yes" : "No"
-                } else {
-                    cell.detailTextLabel?.text = "TBD"
-                }
-
             case .backgroundTask:
                 cell.detailTextLabel?.text = backgroundTaskExecutionDate ?? "None"
             }
@@ -161,7 +150,6 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
             switch row {
             case .scheduleWaitlistNotification:
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-                    self.storage.userShouldReceiveNotifications = true
                     self.storage.store(inviteCode: "ABCD1234")
                     MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
                 }
@@ -192,15 +180,6 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
 
     private func clearDataAndReload() {
         storage.deleteWaitlistState()
-        UserDefaultsWrapper<Any>.clearWaitlistValues()
         tableView.reloadData()
     }
-}
-
-extension UserDefaultsWrapper {
-
-    fileprivate static func clearWaitlistValues() {
-        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper.Key.macWaitlistShouldReceiveNotifications.rawValue)
-    }
-
 }

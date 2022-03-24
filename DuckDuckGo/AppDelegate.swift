@@ -187,7 +187,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard error == nil else { return }
             MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
         }
-
+        
+        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+            let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == MacBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }
+            if !hasMacBrowserWaitlistTask {
+                MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
+            }
+        }
     }
 
     private func fireAppLaunchPixel() {
@@ -337,11 +343,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let hasEmailWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
             if !hasEmailWaitlistTask {
                 EmailWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
-            
-            let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == MacBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }
-            if !hasMacBrowserWaitlistTask {
-                MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
     }

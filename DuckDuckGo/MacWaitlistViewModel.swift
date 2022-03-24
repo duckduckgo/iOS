@@ -35,9 +35,6 @@ final class MacWaitlistViewModel: ObservableObject {
     
     enum ViewAction: Equatable {
         case joinQueue
-        case acceptNotifications
-        case declineNotifications
-        case requestNotificationPrompt
         case openNotificationSettings
         case openShareSheet
         case copyDownloadURLToPasteboard
@@ -46,12 +43,10 @@ final class MacWaitlistViewModel: ObservableObject {
     
     enum NotificationPermissionState {
         case notificationAllowed
-        case notificationDenied
         case notificationsDisabled
     }
     
     @Published var viewState: ViewState
-    @Published var showNotificationPrompt = false
     @Published var showShareSheet = false
     
     private let waitlistRequest: WaitlistRequest
@@ -98,31 +93,20 @@ final class MacWaitlistViewModel: ObservableObject {
         if notificationSettings.authorizationStatus == .denied {
             self.viewState = .joinedQueue(.notificationsDisabled)
         } else {
-            if waitlistStorage.shouldReceiveNotifications() {
-                self.viewState = .joinedQueue(.notificationAllowed)
-            } else {
-                self.viewState = .joinedQueue(.notificationDenied)
-            }
+            self.viewState = .joinedQueue(.notificationAllowed)
         }
     }
     
     func perform(action: ViewAction) async {
         switch action {
         case .joinQueue: await joinQueue()
-        case .acceptNotifications: await acceptNotifications()
-        case .declineNotifications: declineNotifications()
-        case .requestNotificationPrompt: requestNotificationPrompt()
         case .openNotificationSettings: openNotificationSettings()
         case .openShareSheet: openShareSheet()
         case .copyDownloadURLToPasteboard: copyDownloadUrlToClipboard()
         case .copyInviteCodeToPasteboard: copyInviteCodeToClipboard()
         }
     }
-    
-    private func requestNotificationPrompt() {
-        self.showNotificationPrompt = true
-    }
-    
+
     private func joinQueue() async {
         self.viewState = .joiningQueue
 
@@ -137,25 +121,18 @@ final class MacWaitlistViewModel: ObservableObject {
             return
         }
 
-        let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
-        
-        if notificationSettings.authorizationStatus == .denied {
-            self.viewState = .joinedQueue(.notificationsDisabled)
-        } else {
-            self.showNotificationPrompt = true
-        }
+        await promptForNotifications()
     }
     
-    private func acceptNotifications() async {        
+    private func promptForNotifications() async {        
         do {
             let permissionGranted = try await notificationService.requestAuthorization(options: [.alert])
             
             if permissionGranted {
-                self.waitlistStorage.store(shouldReceiveNotifications: true)
                 self.viewState = .joinedQueue(.notificationAllowed)
                 MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
                 
-                // TODO: Remove
+                // To Do Sam: Remove
                 scheduleFakeInvitation()
             } else {
                 self.viewState = .joinedQueue(.notificationsDisabled)
@@ -163,11 +140,6 @@ final class MacWaitlistViewModel: ObservableObject {
         } catch {
             self.viewState = .joinedQueue(.notificationsDisabled)
         }
-    }
-    
-    private func declineNotifications() {
-        waitlistStorage.store(shouldReceiveNotifications: false)
-        self.viewState = .joinedQueue(.notificationDenied)
     }
     
     private func openNotificationSettings() {

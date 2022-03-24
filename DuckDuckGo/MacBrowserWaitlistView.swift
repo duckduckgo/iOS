@@ -97,6 +97,7 @@ struct MacBrowserWaitlistSignUpView: View {
                         .multilineTextAlignment(.center)
                         .lineSpacing(5)
                         .padding(.bottom, 12)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding([.leading, .trailing], 24)
                 .frame(minHeight: proxy.size.height)

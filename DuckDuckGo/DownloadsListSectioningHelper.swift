@@ -95,10 +95,10 @@ class DownloadsListSectioningHelper {
         
         switch downloadRepresentable.type {
         case .ongoing:
-            guard let download = downloadRepresentable.wrappedRepresentable as? Download else { fatalError() }
+            guard let download = downloadRepresentable.wrappedRepresentable as? Download else { fatalError("Ongoing download should be Download") }
             row = OngoingDownloadRowViewModel(download: download)
         case .complete:
-            guard let url = downloadRepresentable.wrappedRepresentable as? URL else { fatalError() }
+            guard let url = downloadRepresentable.wrappedRepresentable as? URL else { fatalError("Complete download should be URL") }
             row = CompleteDownloadRowViewModel(fileURL: url)
         }
         

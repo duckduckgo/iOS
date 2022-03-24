@@ -67,7 +67,7 @@ class DirectoryMonitor {
     }
     
     func start() throws {
-        guard case .stopped = state else { fatalError() }
+        guard case .stopped = state else { fatalError("Should only start stopped state") }
         
         directoryContents = DirectoryMonitor.contents(of: directory)
         
@@ -110,7 +110,7 @@ class DirectoryMonitor {
     }
     
     private func debounceTimerDidFire() {
-        guard case .debounce(let source, let timer) = state else { fatalError() }
+        guard case .debounce(let source, let timer) = state else { fatalError("debounce should have source and timer") }
         
         timer.invalidate()
         state = .started(source: source)
@@ -142,7 +142,7 @@ class DirectoryMonitor {
     }
 }
 
-fileprivate extension DirectoryMonitor.State {
+private extension DirectoryMonitor.State {
     var isRunning: Bool {
         switch self {
         case .stopped:  return false

@@ -102,15 +102,14 @@ struct DownloadsList: View {
     
     @ViewBuilder
     private var toolbarButtons: some View {
-        if editMode == .active {
-            Button {
-                self.deleteAll()
-            } label: {
-                Text(UserText.downloadsListDeleteAllButton)
-                    .foregroundColor(.deleteAll)
-            }
-            .buttonStyle(.plain)
+        Button {
+            self.deleteAll()
+        } label: {
+            Text(UserText.downloadsListDeleteAllButton)
+                .foregroundColor(.deleteAll)
         }
+        .buttonStyle(.plain)
+        .opacity(editMode == .active ? 1.0 : 0.0)
         Spacer()
         EditButton().environment(\.editMode, $editMode)
             .foregroundColor(.barButton)

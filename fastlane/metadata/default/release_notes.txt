@@ -1,3 +1,11 @@
-• Bug fixes and other improvements.
+With new enhancements and improvements to file handling and downloading, you can now:
+• Download files, keep track of their progress, and manage them through the Downloads list.
+• Easily export and share PDF files (and other documents) that you preview in browser tabs.
+• Preview links with Wallet passes and AR file.
+
+You can now start a web search using your voice in English, Spanish, Italian, Brazilian Portuguese, Russian, Turkish, Mandarin, or Cantonese. Voice searches are processed on your device, with the same level of privacy as regular searches.
+This feature requires:
+• iPhone 6s or later / iPad (5th generation) or later
+• iOS 15 or later
 
 Join our fully distributed team and help raise the standard of trust online — from anywhere! https://duckduckgo.com/hiring

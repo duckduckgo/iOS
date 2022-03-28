@@ -1871,6 +1871,11 @@ extension TabViewController: EmailManagerRequestDelegate {
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
+    func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
+        // TODO we have no authetnication yet :(
+        didRequestAuthenticationWithCompletionHandler(true)
+    }
+    
     
     func secureVaultManager(_: SecureVaultManager, promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
         Swift.print("promptUserToStoreCredentials")

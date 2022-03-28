@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": null,
-          "revision": "7d2c892e0dfdbd458cd8288ec54c72c0fc167889",
-          "version": "11.2.3"
+          "branch": "elle/logins/initialExperimentation",
+          "revision": "00d1703dd19830e7cb9d18e36e47f6d901280c11",
+          "version": null
         }
       },
       {

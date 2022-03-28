@@ -22,6 +22,7 @@ import Core
 import StoreKit
 import os.log
 import BrowserServicesKit
+import SwiftUI
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -142,7 +143,7 @@ class TabViewController: UIViewController {
         return errorMessage.text
     }
     
-    public var link: Link? {
+    public var link: Core.Link? {
         if isError {
             if let url = url ?? webView.url ?? URL(string: "") {
                 return Link(title: errorText, url: url)
@@ -181,6 +182,13 @@ class TabViewController: UIViewController {
         return emailManager
     }()
     
+    lazy var vaultManager: SecureVaultManager = {
+        let manager = SecureVaultManager()
+        manager.delegate = self
+        return manager
+    }()
+    
+    
     private var userScripts: [UserScript] = []
     
     private var canDisplayJavaScriptAlert: Bool {
@@ -215,6 +223,18 @@ class TabViewController: UIViewController {
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
         addTextSizeObserver()
+        
+        if #available(iOS 15.0, *) {
+            let hostingViewController = UIHostingController(rootView: AutofillKeyboardView())
+            addChild(hostingViewController)
+            view.addSubview(hostingViewController.view)
+            hostingViewController.view.translatesAutoresizingMaskIntoConstraints = false
+            // hostingViewController.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            hostingViewController.view.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            //hostingViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            hostingViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            hostingViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -288,6 +308,7 @@ class TabViewController: UIViewController {
         surrogatesScript.delegate = self
         contentBlockerRulesScript.delegate = self
         autofillUserScript.emailDelegate = emailManager
+        autofillUserScript.vaultDelegate = vaultManager
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }
@@ -1709,6 +1730,55 @@ extension TabViewController: EmailManagerRequestDelegate {
         }
     }
     // swiftlint:enable function_parameter_count
+
+}
+
+extension TabViewController: SecureVaultManagerDelegate {
+    
+    func secureVaultManager(_: SecureVaultManager, promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        Swift.print("promptUserToStoreCredentials")
+        let alert = UIAlertController(title: "Save credentials?", message: "Store login and password for \(url!)", preferredStyle: .actionSheet)
+        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+            do {
+                try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+            } catch {
+                os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+            }
+        }
+        alert.addAction(saveAction)
+        let noAction = UIAlertAction(title: "No", style: .cancel) { _ in
+            // TODO is there aqnything we're supposed to do here? Does the script need to know the user said no?
+        }
+        alert.addAction(noAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
+        Swift.print("Secure vault didAutofill")
+        // this is never gonna happen...cos we need native interface probs
+    }
+    
+    func secureVaultInitFailed(_ error: SecureVaultError) {
+        Swift.print("Secure vault error")
+    }
+}
+
+//TODO copied straight from macOS with minimal changes
+final class SecureVaultErrorReporter: SecureVaultErrorReporting {
+    static let shared = SecureVaultErrorReporter()
+    private init() {}
+
+    func secureVaultInitFailed(_ error: SecureVaultError) {
+#if DEBUG
+        guard !ProcessInfo().arguments.contains("testing") else { return } //TODO does this work? I need to test it
+#endif
+        switch error {
+        case .initFailed, .failedToOpenDatabase:
+            fatalError()
+        default:
+            fatalError()
+        }
+    }
 
 }
 

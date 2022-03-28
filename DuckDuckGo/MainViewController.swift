@@ -764,23 +764,27 @@ class MainViewController: UIViewController {
         omniBar.enterPhoneState()
     }
 
-    func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
-        
-        if suggestionTrayController?.willShow(for: type) ?? false {
-            applyWidthToTrayController()
-
-            if !AppWidthObserver.shared.isLargeWidth {
-                if !DaxDialogs.shared.shouldShowFireButtonPulse {
-                    ViewHighlighter.hideAll()
-                }
-                if type.hideOmnibarSeparator() {
-                    omniBar.hideSeparator()
-                }
-            }
-            
-            suggestionTrayContainer.isHidden = false
+    @discardableResult
+    func tryToShowSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) -> Bool {
+        let canShow = suggestionTrayController?.canShow(for: type) ?? false
+        if canShow {
+            showSuggestionTray(type)
         }
-        
+        return canShow
+    }
+    
+    private func showSuggestionTray(_ type: SuggestionTrayViewController.SuggestionType) {
+        suggestionTrayController?.show(for: type)
+        applyWidthToTrayController()
+        if !AppWidthObserver.shared.isLargeWidth {
+            if !DaxDialogs.shared.shouldShowFireButtonPulse {
+                ViewHighlighter.hideAll()
+            }
+            if type.hideOmnibarSeparator() {
+                omniBar.hideSeparator()
+            }
+        }
+        suggestionTrayContainer.isHidden = false
     }
     
     func hideSuggestionTray() {
@@ -791,6 +795,10 @@ class MainViewController: UIViewController {
     
     fileprivate func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
+    }
+    
+    fileprivate func launchDownloads() {
+        performSegue(withIdentifier: "Downloads", sender: self)
     }
     
     fileprivate func launchSettings() {
@@ -935,33 +943,6 @@ class MainViewController: UIViewController {
         
         present(alertController, animated: true, completion: nil)
     }
-    
-    func displayVoiceSearchPrivacyAlertIfNecessary(completion: @escaping(Bool) -> Void) {
-        if AppDependencyProvider.shared.voiceSearchHelper.privacyAlertWasConfirmed {
-            completion(true)
-            return
-        }
-        
-        let alertController = UIAlertController(title: UserText.voiceSearchPrivacyAcknowledgmentTitle,
-                                                message: UserText.voiceSearchPrivacyAcknowledgmentMessage,
-                                                preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
-
-        let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentAcceptButton, style: .default) { _ in
-            AppDependencyProvider.shared.voiceSearchHelper.markPrivacyAlertAsConfirmed()
-            Pixel.fire(pixel: .voiceSearchPrivacyDialogAccepted)
-            completion(true)
-        }
-        let cancelAction = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentRejectButton, style: .cancel) { _ in
-            Pixel.fire(pixel: .voiceSearchPrivacyDialogRejected)
-            completion(false)
-        }
-
-        alertController.addAction(confirmButton)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
 }
 
 extension MainViewController: FindInPageDelegate {
@@ -1085,11 +1066,14 @@ extension MainViewController: OmniBarDelegate {
             if homeController != nil {
                 hideSuggestionTray()
             } else {
-                showSuggestionTray(.favorites)
+                let didShow = tryToShowSuggestionTray(.favorites)
+                if !didShow {
+                    hideSuggestionTray()
+                }
             }
         } else {
             let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-            showSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
+            tryToShowSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
         }
         
     }
@@ -1173,9 +1157,9 @@ extension MainViewController: OmniBarDelegate {
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
             let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-            showSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksSearch))
+            tryToShowSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksSearch))
         } else {
-            showSuggestionTray(.favorites)
+            tryToShowSuggestionTray(.favorites)
         }
     }
 
@@ -1205,17 +1189,12 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onVoiceSearchPressed() {
-
-        displayVoiceSearchPrivacyAlertIfNecessary { result in
-            guard result else { return }
-            
-            SpeechRecognizer.requestMicAccess { permission in
-                DispatchQueue.main.async {
-                    if permission {
-                        self.showVoiceSearch()
-                    } else {
-                        self.showNoMicrophonePermissionAlert()
-                    }
+        SpeechRecognizer.requestMicAccess { permission in
+            DispatchQueue.main.async {
+                if permission {
+                    self.showVoiceSearch()
+                } else {
+                    self.showNoMicrophonePermissionAlert()
                 }
             }
         }
@@ -1415,6 +1394,10 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestEditBookmark(tab: TabViewController) {
         onBookmarkEdit()
+    }
+    
+    func tabDidRequestDownloads(tab: TabViewController) {
+        launchDownloads()
     }
 
     func tabDidRequestSettings(tab: TabViewController) {
@@ -1647,15 +1630,21 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
+    func stopAllOngoingDownloads() {
+        AppDependencyProvider.shared.downloadManager.cancelAllDownloads()
+    }
+    
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
         fireButtonAnimator?.animate {
-            self.tabManager.stopLoadingInAllTabs()
-            self.forgetData()
-            DaxDialogs.shared.resumeRegularFlow()
-            self.forgetTabs()
+            self.tabManager.prepareTabsForDataClearing {
+                self.stopAllOngoingDownloads()
+                self.forgetData()
+                DaxDialogs.shared.resumeRegularFlow()
+                self.forgetTabs()
+            }
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone)
             transitionCompletion?()

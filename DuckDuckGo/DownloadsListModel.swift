@@ -1,8 +1,8 @@
 //
-//  HTTPSExcludedDomains.swift
-//  Core
+//  DownloadsListModel.swift
+//  DuckDuckGo
 //
-//  Copyright © 2020 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,6 +19,12 @@
 
 import Foundation
 
-struct HTTPSExcludedDomains: Decodable {
-    let data: [String]
+struct DownloadsListModel {
+    private(set) var ongoingDownloads: [AnyDownloadListRepresentable] = []
+    private(set) var completeDownloads: [AnyDownloadListRepresentable] = []
+    
+    mutating func update(ongoingDownloads: [AnyDownloadListRepresentable], completeDownloads: [AnyDownloadListRepresentable]) {
+        self.ongoingDownloads = ongoingDownloads
+        self.completeDownloads = completeDownloads
+    }
 }

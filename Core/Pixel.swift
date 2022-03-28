@@ -20,6 +20,7 @@
 import Foundation
 import os.log
 
+// swiftlint:disable file_length
 // swiftlint:disable identifier_name
 public enum PixelName: String {
     
@@ -149,8 +150,6 @@ public enum PixelName: String {
     case emailUserCreatedAlias = "email_generated_button"
     case emailTooltipDismissed = "email_tooltip_dismissed"
     
-    case voiceSearchPrivacyDialogAccepted = "m_voice_search_privacy_dialog_accepted"
-    case voiceSearchPrivacyDialogRejected = "m_voice_search_privacy_dialog_rejected"
     case voiceSearchDone = "m_voice_search_done"
     
     case emailDidShowWaitlistDialog = "email_did_show_waitlist_dialog"
@@ -171,6 +170,19 @@ public enum PixelName: String {
     case widgetEducationOpenedFromHomeScreen = "m_widget_education_opened_from_home"
     case widgetEducationOpenedFromSettings = "m_widget_education_opened_from_settings"
     case widgetEducationDismissed = "m_widget_education_dismissed"
+    
+    case downloadStarted = "m_download_started"
+    case downloadStartedDueToUnhandledMIMEType = "m_download_started_due_to_unhandled_mime_type"
+    case downloadTriedToPresentPreviewWithoutTab = "m_download_tried_to_present_preview_without_tab"
+    case downloadsListOpened = "m_downloads_list_opened"
+
+    case downloadsListOngoingDownloadCancelled = "m_downloads_list_ongoing_download_cancelled"
+    case downloadsListCompleteDownloadDeleted = "m_downloads_list_complete_download_deleted"
+    case downloadsListAllCompleteDownloadsDeleted = "m_downloads_list_all_complete_downloads_deleted"
+    case downloadsListDeleteUndo = "m_downloads_list_delete_undo"
+    case downloadsListSharePressed = "m_downloads_list_share_pressed"
+    
+    case downloadsSharingPredownloadedLocalFile = "m_downloads_sharing_predownloaded_local_file"
 
     case jsAlertShown = "m_js_alert_shown"
     case jsAlertBlocked = "m_js_alert_blocked"
@@ -207,11 +219,12 @@ public enum PixelName: String {
     case contentBlockingFallbackCompilationFailed = "m_d_cb_cf"
     
     case contentBlockingErrorReportingIssue = "m_content_blocking_error_reporting_issue"
-    
+    case contentBlockingCompilationTime = "m_content_blocking_compilation_time"
+
     case ampBlockingRulesCompilationFailed = "m_debug_amp_rules_compilation_failed"
-    
+
     case contentBlockingIdentifierError = "m_d_cb_ie"
-    
+
     case webKitDidTerminate = "m_d_wkt"
     case webKitTerminationDidReloadCurrentTab = "m_d_wktct"
 
@@ -285,6 +298,11 @@ public struct PixelParameters {
 
     public static let textSizeInitial = "text_size_initial"
     public static let textSizeUpdated = "text_size_updated"
+    
+    public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
+    public static let mimeType = "mime_type"
+    public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
+    
 }
 
 public struct PixelValues {
@@ -382,3 +400,4 @@ public class TimedPixel {
     }
     
 }
+// swiftlint:enable file_length

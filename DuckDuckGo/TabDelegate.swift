@@ -46,6 +46,8 @@ protocol TabDelegate: AnyObject {
     func tabDidRequestBookmarks(tab: TabViewController)
     
     func tabDidRequestEditBookmark(tab: TabViewController)
+    
+    func tabDidRequestDownloads(tab: TabViewController)
 
     func tabDidRequestSettings(tab: TabViewController)
     

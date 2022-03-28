@@ -35,6 +35,7 @@ struct URLParamRefTests: Decodable {
         let name: String
         let testURL: String
         let expectURL: String
+        let initiatorURL: String?
         let exceptPlatforms: [String]?
     }
     
@@ -78,7 +79,8 @@ class URLParameterTests: XCTestCase {
             os_log("TEST: %s", test.name)
             
             let testUrl = URL(string: test.testURL)
-            var resultUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: testUrl, config: appConfig)
+            let initiator = test.initiatorURL != nil ? URL(string: test.initiatorURL!) : nil
+            var resultUrl = linkCleaner.cleanTrackingParameters(initiator: initiator, url: testUrl, config: appConfig)
             
             if resultUrl == nil {
                 // Tests expect unchanged URLs to match testURL

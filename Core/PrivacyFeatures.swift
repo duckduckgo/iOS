@@ -1,8 +1,8 @@
 //
-//  BloomFilterWrapper.h
+//  PrivacyFeatures.swift
 //  DuckDuckGo
 //
-//  Copyright © 2018 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
-#import <Foundation/Foundation.h>
 
-@interface BloomFilterWrapper : NSObject
-- (instancetype)initFromPath:(NSString*)path withBitCount:(int)bitCount andTotalItems:(int)totalItems;
-- (instancetype)initWithTotalItems:(int)count errorRate:(double)errorRate;
-- (void)dealloc;
-- (void)add:(NSString*) entry;
-- (BOOL)contains:(NSString*) entry;
-@end
+import BrowserServicesKit
+
+public final class PrivacyFeatures {
+    
+    public static let httpsUpgradeStore = AppHTTPSUpgradeStore()
+    public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.privacyConfigurationManager)
+    
+}

@@ -1,8 +1,8 @@
 //
-//  JsonError.swift
+//  MimeType.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,7 +19,22 @@
 
 import Foundation
 
-public enum JsonError: Error {
-    case invalidJson
-    case typeMismatch
+enum MIMEType: String {
+    case passbook = "application/vnd.apple.pkpass"
+    case usdz = "model/vnd.usdz+zip"
+    case reality = "model/vnd.reality"
+    case octetStream = "application/octet-stream"
+    case xhtml = "application/xhtml+xml"
+    case html = "text/html"
+    case calendar = "text/calendar"
+    case unknown
+    
+    var isHTML: Bool {
+        switch self {
+        case .html, .xhtml:
+            return true
+        default:
+            return false
+        }
+    }
 }

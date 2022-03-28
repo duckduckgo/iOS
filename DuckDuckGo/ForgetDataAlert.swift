@@ -23,7 +23,9 @@ class ForgetDataAlert {
     
     static func buildAlert(cancelHandler: (() -> Void)? = nil, forgetTabsAndDataHandler: @escaping () -> Void) -> UIAlertController {
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let additionalDescription = ongoingDownloadsInProgress() ? UserText.fireButtonInterruptingDownloadsAlertDescription : nil
+        
+        let alert = UIAlertController(title: additionalDescription, message: nil, preferredStyle: .actionSheet)
         alert.overrideUserInterfaceStyle()
 
         let forgetTabsAndDataAction = UIAlertAction(title: UserText.actionForgetAll, style: .destructive) { _ in
@@ -37,5 +39,9 @@ class ForgetDataAlert {
         alert.addAction(forgetTabsAndDataAction)
         alert.addAction(cancelAction)
         return alert
+    }
+    
+    static private func ongoingDownloadsInProgress() -> Bool {
+        !AppDependencyProvider.shared.downloadManager.downloadList.isEmpty
     }
 }

@@ -22,24 +22,8 @@ import JavaScriptCore
 
 extension URL {
 
-    public enum URLProtocol: String {
-        case http
-        case https
-
-        public var scheme: String {
-            return "\(rawValue)://"
-        }
-    }
-
     enum Host: String {
         case localhost
-    }
-    
-    public func toHttps() -> URL? {
-        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
-        guard components.scheme == URLProtocol.http.rawValue else { return self }
-        components.scheme = URLProtocol.https.rawValue
-        return components.url
     }
 
     public func toDesktopUrl() -> URL {
@@ -89,10 +73,6 @@ extension URL {
 
         components.queryItems = query
         return components.url ?? self
-    }
-
-    public func isHttps() -> Bool {
-        return absoluteString.hasPrefix(URLProtocol.https.scheme)
     }
 
     // Encodes plus symbols in a string. iOS does not automatically encode plus symbols so it

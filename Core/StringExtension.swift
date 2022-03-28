@@ -30,8 +30,8 @@ extension String {
         return NSRange(location: 0, length: count)
     }
 
-    public func matches(pattern: String) -> Bool {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {
+    public func matches(pattern: String, options: NSRegularExpression.Options = [.caseInsensitive]) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else {
             return false
         }
         let matches = regex.matches(in: self, options: .anchored, range: fullRange)
@@ -48,6 +48,10 @@ extension String {
             return String(dropFirst(prefix.count))
         }
         return self
+    }
+    
+    public func drop(suffix: String) -> String {
+        return hasSuffix(suffix) ? String(dropLast(suffix.count)) : self
     }
 
     /// URL and URLComponents can't cope with emojis and international characters so this routine does some manual processing while trying to

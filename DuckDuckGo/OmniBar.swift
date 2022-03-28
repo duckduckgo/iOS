@@ -80,11 +80,25 @@ class OmniBar: UIView {
         super.awakeFromNib()
         configureMenuButton()
         configureTextField()
+        registerNotifications()
+        
         configureSeparator()
         configureEditingMenu()
         refreshState(state)
         enableInteractionsWithPointer()
         observeSafeAreaInsets()
+    }
+    
+    private func registerNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(textDidChange),
+                                               name: UITextField.textDidChangeNotification,
+                                               object: textField)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadSpeechRecognizerAvailability),
+                                               name: .speechRecognizerDidChangeAvailability,
+                                               object: nil)
     }
     
     private func observeSafeAreaInsets() {
@@ -121,11 +135,6 @@ class OmniBar: UIView {
                                                              attributes: [.foregroundColor: theme.searchBarTextPlaceholderColor])
         textField.delegate = self
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(textDidChange),
-                                               name: UITextField.textDidChangeNotification,
-                                               object: textField)
-        
         textField.textDragInteraction?.isEnabled = false
         
         textField.onCopyAction = { field in
@@ -161,6 +170,12 @@ class OmniBar: UIView {
         guard let pastedText = UIPasteboard.general.string else { return }
         textField.text = pastedText
         onQuerySubmitted()
+    }
+    
+    @objc private func reloadSpeechRecognizerAvailability() {
+        assert(Thread.isMainThread)
+        state = state.onReloadState
+        refreshState(state)
     }
     
     func showSeparator() {

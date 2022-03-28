@@ -189,8 +189,12 @@ public struct UserText {
     public static let bookmarkFolderSelectTitle = NSLocalizedString("bookmark.folderSelect.title", value: "Location", comment: "Header for folder selection for bookmarks")
     public static let bookmarkTopLevelFolderTitle = NSLocalizedString("bookmark.topLevelFolder.title", value: "Bookmarks", comment: "Top level bookmarks folder title")
     public static let deleteBookmarkFolderAlertTitle = NSLocalizedString("bookmark.deleteFolderAlert.title", value: "Delete %@?", comment: "Delete bookmark folder alert title")
-    public static let deleteBookmarkFolderAlertMessageSingular = NSLocalizedString("bookmark.deleteFolderAlert.message.singular", value: "Are you sure you want to delete this folder and %i item?", comment: "Delete bookmark folder alert message")
-    public static let deleteBookmarkFolderAlertMessagePlural = NSLocalizedString("bookmark.deleteFolderAlert.message.plural", value: "Are you sure you want to delete this folder and %i items?", comment: "Delete bookmark folder alert message plural")
+    
+    public static func deleteBookmarkFolderAlertMessage(numberOfChildren: Int) -> String {
+        let message = NSLocalizedString("bookmark.deleteFolderAlert.message", comment: "Do not translate - stringsdict entry")
+        return message.format(arguments: numberOfChildren)
+    }
+    
     public static let deleteBookmarkFolderAlertDeleteButton = NSLocalizedString("bookmark.deleteFolderAlert.deleteButton", value: "Delete", comment: "Delete bookmark folder alert delete button")
     public static let addbookmarkFolderButton = NSLocalizedString("bookmark.addFolderButton", value: "Add Folder", comment: "Add bookmark folder button text")
     
@@ -409,10 +413,6 @@ public struct UserText {
     public static let noVoicePermissionAlertMessage = NSLocalizedString("voiceSearch.alert.no-permission.message", value: "Please allow Microphone access in iOS System Settings for DuckDuckGo to use voice features.", comment: "Message for alert warning the user about missing microphone permission")
     public static let noVoicePermissionActionSettings = NSLocalizedString("voiceSearch.alert.no-permission.action.settings", value: "Settings", comment: "No microphone permission alert action button to open the settings app")
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
-    public static let voiceSearchPrivacyAcknowledgmentTitle = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.title", value: "Microphone Access Required for Private Voice Search", comment: "Title for alert explaining voice-search privacy")
-    public static let voiceSearchPrivacyAcknowledgmentMessage = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.message", value: "DuckDuckGo never listens to what you say. All speech data processing for Private Voice Search happens on your device.", comment: "Message for alert explaining voice-search privacy")
-    public static let voiceSearchPrivacyAcknowledgmentAcceptButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.accept", value: "OK", comment: "Voice-search privacy accept alert action")
-    public static let voiceSearchPrivacyAcknowledgmentRejectButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.reject", value: "Cancel", comment: "Voice-search privacy reject alert action")
     public static let voiceSearchFooter = NSLocalizedString("voiceSearch.footer.note", value: "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
     public static let textSizeDescription = NSLocalizedString("textSize.description", value: "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.", comment: "Description text for the text size adjustment setting")
     public static func textSizeFooter(for percentage: String) -> String {
@@ -428,5 +428,49 @@ public struct UserText {
     public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select DuckDuckGo. Then choose a widget.", comment: "")
     
     public static let webJSAlertDisableAlertsButton = NSLocalizedString("webJSAlert.block-alerts.button", value: "Block Alerts", comment: "Block Alerts button for JavaScript alerts")
+    
+    public static let actionSaveToDownloads = NSLocalizedString("downloads.alert.action.save-to-downloads", value: "Save to Downloads", comment: "Alert action for starting a file dowload")
+    public static func messageDownloadStarted(for filename: String) -> String {
+        let message = NSLocalizedString("downloads.message.download-started", value: "Download started for %@", comment: "Message confirming that the download process has started. Parameter is downloaded file's filename")
+        return message.format(arguments: filename)
+    }
+    public static func messageDownloadComplete(for filename: String) -> String {
+        let message = NSLocalizedString("downloads.message.download-complete", value: "Download complete for %@", comment: "Message confirming that the download process has completed. Parameter is downloaded file's filename")
+        return message.format(arguments: filename)
+    }
+    public static func messageDownloadDeleted(for filename: String) -> String {
+        let message = NSLocalizedString("downloads.message.download-deleted", value: "Deleted %@", comment: "Message confirming the file was deleted. Parameter is file's filename")
+        return message.format(arguments: filename)
+    }
+    public static let messageAllFilesDeleted = NSLocalizedString("downloads.message.all-files-deleted", value: "All files deleted", comment: "Message confirming that all files on the downloads list have been deleted")
+    
+    public static let actionGenericShow = NSLocalizedString("action.generic.show", value: "Show", comment: "Button label for a generic show action")
+    public static let actionDownloads = NSLocalizedString("action.title.downloads", value: "Downloads", comment: "Downloads menu item opening the downlods list")
+    public static let downloadsScreenTitle = NSLocalizedString("downloads.downloads-list.title", value: "Downloads", comment: "Downloads list screen title")
+    
+    public static func downloadProgressMessage(currentSize: String, totalSize: String) -> String {
+        let message = NSLocalizedString("downloads.downloads-list.row.downloading", value: "Downloading - %@ of %@", comment: "Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file.")
+        return message.format(arguments: currentSize, totalSize)
+    }
+    
+    public static func downloadProgressMessageForUnknownTotalSize(currentSize: String) -> String {
+        let message = NSLocalizedString("downloads.downloads-list.row.downloadingUnknownTotalSize", value: "Downloading - %@", comment: "Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB.")
+        return message.format(arguments: currentSize)
+    }
 
+    public static let cancelDownloadAlertTitle = NSLocalizedString("downloads.cancel-download.alert.title", value: "Cancel download?", comment: "Title for alert when trying to cancel the file download")
+    public static let cancelDownloadAlertDescription = NSLocalizedString("downloads.cancel-download.alert.message", value: "Are you sure you want to cancel this download?", comment: "Message for alert when trying to cancel the file download")
+    public static let cancelDownloadAlertResumeAction = NSLocalizedString("downloads.cancel-download.alert.resume", value: "Resume", comment: "Resume download action for alert when trying to cancel the file download")
+    public static let cancelDownloadAlertCancelAction = NSLocalizedString("downloads.cancel-download.alert.cancel", value: "Cancel", comment: "Cancel download action for alert when trying to cancel the file download")
+
+    public static let downloadsListDeleteAllButton = NSLocalizedString("downloads.downloads-list.delete-all", value: "Delete All", comment: "Button for deleting all items on downloads list")
+    public static let messageDownloadFailed = NSLocalizedString("downloads.message.download-failed", value: "Failed to download. Check internet connection.", comment: "Message informing that the download has failed due to connection issues")
+    public static let fireButtonInterruptingDownloadsAlertDescription = NSLocalizedString("downloads.fire-button.alert.message", value: "This will also cancel downloads in progress", comment: "Additional alert message shown when there are active downloads when using the fire button")
+    
+    public static let dateRangeToday = NSLocalizedString("date.range.today", value: "Today", comment: "Title for a section containing only items from today")
+    public static let dateRangeYesterday = NSLocalizedString("date.range.yesterday", value: "Yesterday", comment: "Title for a section containing only items from yesterday")
+    public static let dateRangePastWeek = NSLocalizedString("date.range.past-week", value: "Past week", comment: "Title for a section containing only items from past week")
+    public static let dateRangePastMonth = NSLocalizedString("date.range.past-month", value: "Past month", comment: "Title for a section containing only items from past month")
+    
+    public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
 }

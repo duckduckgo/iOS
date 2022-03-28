@@ -48,4 +48,5 @@ protocol OmniBarState {
     var onBrowsingStoppedState: OmniBarState { get }
     var onEnterPhoneState: OmniBarState { get }
     var onEnterPadState: OmniBarState { get }
+    var onReloadState: OmniBarState { get }
 }

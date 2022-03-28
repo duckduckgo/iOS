@@ -473,4 +473,13 @@ public struct UserText {
     public static let dateRangePastMonth = NSLocalizedString("date.range.past-month", value: "Past month", comment: "Title for a section containing only items from past month")
     
     public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
+
+    public static let loginPlusFormUsernamePlaceholder = NSLocalizedString("loginplus.username.placeholder", value: "Username", comment: "Placeholder for username on Login Form")
+    public static let loginPlusFormPasswordPlaceholder = NSLocalizedString("loginplus.password.placeholder", value: "Password", comment: "Placeholder for password on Login Form")
+    public static let loginPlusFormSaveEmailPasswordTitle = NSLocalizedString("loginplus.save-email-password.title", value: "Save Email and Password?", comment: "Title for save email and password form")
+    public static let loginPlusFormSaveLoginTitle = NSLocalizedString("loginplus.save-login.title", value: "Save Login?", comment: "Title for save login form")
+    public static let loginPlusFormUpdatePasswordTitle = NSLocalizedString("loginplus.update-password.title", value: "Update Password?", comment: "Title for update password form")
+    public static let loginPlusFormSaveButton = NSLocalizedString("loginplus.save.button", value: "Save", comment: "Save login button")
+    public static let loginPlusFormUpdateButton = NSLocalizedString("loginplus.update.button", value: "Update", comment: "Update login button")
+    public static let loginPlusFormCancelButton = NSLocalizedString("loginplus.cancel.button", value: "Not Now", comment: "Cancel login button")
 }

@@ -189,6 +189,12 @@ class TabViewController: UIViewController {
         return manager
     }()
     
+    lazy var autofillUserScript: AutofillUserScript = {
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
+        let autofillUserScript = AutofillUserScript(scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
+                                                                properties: prefs))
+        return autofillUserScript
+    }()
     
     private var userScripts: [UserScript] = []
     
@@ -266,11 +272,6 @@ class TabViewController: UIViewController {
                                                                  trackerDataManager: ContentBlocking.trackerDataManager,
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
-        
-        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
-        let autofillUserScript = AutofillUserScript(
-            scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
-                                                                properties: prefs))
         
         userScripts = [
             debugScript,
@@ -1879,20 +1880,22 @@ extension TabViewController: SecureVaultManagerDelegate {
     
     func secureVaultManager(_: SecureVaultManager, promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
         Swift.print("promptUserToStoreCredentials")
-        let alert = UIAlertController(title: "Save credentials?", message: "Store login and password for \(url!)", preferredStyle: .actionSheet)
-        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            do {
-                try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
-            } catch {
-                os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        
+        // This obviously doesn't live here, I just included it to show how to retreive stored accounts/for testing
+        vaultManager.autofillUserScript(autofillUserScript, didRequestAccountsForDomain: credentials.account.domain) { thing in
+            Swift.print("Stored accounts: \(thing)")
+        }
+
+        
+        let test = LoginPlusItem(credentials: credentials)
+        let saveLoginController = SaveLoginViewController(loginItem: test)
+        
+        if #available(iOS 15.0, *) {
+            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium(), .large()]
             }
         }
-        alert.addAction(saveAction)
-        let noAction = UIAlertAction(title: "No", style: .cancel) { _ in
-            // TODO is there aqnything we're supposed to do here? Does the script need to know the user said no?
-        }
-        alert.addAction(noAction)
-        present(alert, animated: true, completion: nil)
+        present(saveLoginController, animated: true, completion: nil)
     }
     
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
@@ -1905,7 +1908,21 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
 }
 
-//TODO copied straight from macOS with minimal changes
+extension TabViewController: SaveLoginViewControllerDelegate {
+    func saveLoginViewControllerDidSave(_ viewController: SaveLoginViewController, credentials: SecureVaultModels.WebsiteCredentials) {
+        do {
+            try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+        } catch {
+            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        }
+    }
+    
+    func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
+        // TODO is there anything we're supposed to do here? Does the script need to know the user said no?
+    }
+}
+
+// TODO copied straight from macOS with minimal changes
 final class SecureVaultErrorReporter: SecureVaultErrorReporting {
     static let shared = SecureVaultErrorReporter()
     private init() {}

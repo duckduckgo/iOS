@@ -4,6 +4,9 @@
 /* Buton label for Edit action */
 "action.generic.edit" = "Edytuj";
 
+/* Button label for a generic show action */
+"action.generic.show" = "Pokaż";
+
 /* Button label for Undo action */
 "action.generic.undo" = "Cofnij";
 
@@ -27,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Wyłącz ochronę prywatności";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Pobrane";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Edytuj zakładkę";
@@ -235,6 +241,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "OPISZ, CO SIĘ STAŁO";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Ostatni miesiąc";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Ostatni tydzień";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Dziś";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Wczoraj";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ukryj wskazówki na zawsze";
 
@@ -318,6 +336,54 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo automatycznie blokuje wiele skryptów śledzących. Dzięki Globalnej kontroli prywatności (Global Privacy Control – GPC) możesz również poprosić uczestniczące witryny internetowe o zablokowanie sprzedaży lub udostępniania Twoich danych osobowych innym firmom.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Zapisz w Pobranych";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Anuluj";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Czy na pewno chcesz anulować to pobieranie?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Wznów";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Anulować pobieranie?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Usuń wszystko";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Nie pobrano jeszcze żadnych plików";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Pobieranie – %1$@ z %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Pobieranie – %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Pobrane";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Spowoduje to również anulowanie trwającego pobierania";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Wszystkie pliki usunięte";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Zakończono pobieranie %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Usunięto %@";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Nie udało się pobrać. Sprawdź połączenie internetowe.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Rozpoczęto pobieranie %@";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Anuluj";

@@ -4,6 +4,9 @@
 /* Buton label for Edit action */
 "action.generic.edit" = "Muokkaa";
 
+/* Button label for a generic show action */
+"action.generic.show" = "Näytä";
+
 /* Button label for Undo action */
 "action.generic.undo" = "Kumoa";
 
@@ -27,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Poista yksityisyyden suoja käytöstä";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Lataukset";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Muokkaa kirjanmerkkiä";
@@ -235,6 +241,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "KUVAILE MITÄ TAPAHTUI";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Viime kuukausi";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Viime viikko";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Tänään";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Eilen";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Piilota vinkit ikuisesti";
 
@@ -318,6 +336,54 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo estää monet seurannat automaattisesti. GPC:n (Global Privacy Control) avulla voit myös pyytää osallistuvia sivustoja rajoittamaan henkilötietojesi myyntiä tai jakamista muiden yritysten kanssa.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Tallenna latauksiin";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Peruuta";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Haluatko varmasti peruuttaa tämän latauksen?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Jatka";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Perutaanko lataus?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Poista kaikki";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Yhtään tiedostoa ei ole vielä ladattu";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Ladataan - %1$@/%2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Ladataan – %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Lataukset";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Tämä peruuttaa myös käynnissä olevat lataukset";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Kaikki tiedostot poistettu";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Tiedoston %@ lataus valmis";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "%@ poistettu";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Lataus epäonnistui. Tarkista internetyhteys.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Tiedoston %@ lataus aloitettu";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Peruuta";

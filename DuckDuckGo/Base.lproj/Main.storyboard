@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -337,6 +337,7 @@
                         <segue destination="CeD-SH-IsP" kind="presentation" identifier="ActionSheetDaxDialog" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="PjE-Cf-1P2"/>
                         <segue destination="0sP-vt-2ZT" kind="presentation" identifier="BookmarksEditCurrent" id="lgJ-lb-xgS"/>
                         <segue destination="0sP-vt-2ZT" kind="presentation" identifier="BookmarksEdit" id="IrO-EU-EzF"/>
+                        <segue destination="ER6-yn-Oo2" kind="presentation" identifier="Downloads" id="mfy-s9-JEe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2QN-Mc-SXu" sceneMemberID="firstResponder"/>
@@ -390,6 +391,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AdC-gU-UaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="376" y="537"/>
+        </scene>
+        <!--Downloads-->
+        <scene sceneID="5x5-HW-CdZ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Downloads" id="ER6-yn-Oo2" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lvu-5o-UKv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1018" y="536"/>
         </scene>
         <!--Feedback-->
         <scene sceneID="DKk-fR-oH5">
@@ -457,7 +466,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IrO-EU-EzF"/>
+        <segue reference="lgJ-lb-xgS"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Bookmarks" width="24" height="24"/>

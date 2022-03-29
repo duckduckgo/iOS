@@ -77,6 +77,13 @@ extension TabViewController {
                 self?.onReportBrokenSiteAction()
             }))
             
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
+                                                     image: UIImage(named: "MenuDownloads")!,
+                                                     showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
+                                                     action: { [weak self] in
+                self?.onOpenDownloadsAction()
+            }))
+            
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
                                                      image: UIImage(named: "MenuSettings")!,
                                                      action: { [weak self] in
@@ -295,7 +302,38 @@ extension TabViewController {
     func onShareAction(forLink link: Link, fromView view: UIView, orginatedFromMenu: Bool) {
         Pixel.fire(pixel: .browsingMenuShare,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: orginatedFromMenu ? "1" : "0"])
-        presentShareSheet(withItems: [ link, webView.viewPrintFormatter() ], fromView: view)
+        
+        shareLinkWithTemporaryDownload(temporaryDownloadForPreviewedFile, originalLink: link) { [weak self] link in
+            guard let self = self else { return }
+            self.presentShareSheet(withItems: [ link, self.webView.viewPrintFormatter() ], fromView: view)
+        }
+    }
+    
+    private func shareLinkWithTemporaryDownload(_ temporaryDownload: Download?,
+                                                originalLink: Link,
+                                                completion: @escaping(Link) -> Void) {
+        guard let download = temporaryDownload else {
+            completion(originalLink)
+            return
+        }
+        
+        if let downloadLink = download.link {
+            completion(downloadLink)
+            return
+        }
+        
+        AppDependencyProvider.shared.downloadManager.startDownload(download) { error in
+            DispatchQueue.main.async {
+                if error == nil, let downloadLink = download.link {
+                    let isFileSizeGreaterThan10MB = (downloadLink.url.fileSize > 10 * 1000 * 1000)
+                    Pixel.fire(pixel: .downloadsSharingPredownloadedLocalFile,
+                               withAdditionalParameters: [PixelParameters.fileSizeGreaterThan10MB: isFileSizeGreaterThan10MB ? "1" : "0"])
+                    completion(downloadLink)
+                } else {
+                    completion(originalLink)
+                }
+            }
+        }
     }
     
     private func onToggleDesktopSiteAction(forUrl url: URL) {
@@ -308,6 +346,12 @@ extension TabViewController {
     private func onReportBrokenSiteAction() {
         Pixel.fire(pixel: .browsingMenuReportBrokenSite)
         delegate?.tabDidRequestReportBrokenSite(tab: self)
+    }
+    
+    private func onOpenDownloadsAction() {
+        Pixel.fire(pixel: .downloadsListOpened,
+                   withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
+        delegate?.tabDidRequestDownloads(tab: self)
     }
     
     private func onBrowsingSettingsAction() {

@@ -94,9 +94,6 @@ class TabViewController: UIViewController {
     private var preserveLoginsWorker: PreserveLoginsWorker?
     
     private var trackersInfoWorkItem: DispatchWorkItem?
-    
-    private var linkCleaner: LinkCleaner!
-    private var ampExtractor: AMPCanonicalExtractor!
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -180,6 +177,23 @@ class TabViewController: UIViewController {
         return emailManager
     }()
     
+    private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
+        let domainEvent: PixelName
+        switch event {
+        case .ampBlockingRulesCompilationFailed:
+            domainEvent = .ampBlockingRulesCompilationFailed
+            Pixel.fire(pixel: domainEvent,
+                       withAdditionalParameters: [:],
+                       onComplete: onComplete)
+        }
+    }
+    
+    private lazy var ampProtection: AMPProtection = {
+        AMPProtection(privacyManager: ContentBlocking.privacyConfigurationManager,
+                      contentBlockingManager: ContentBlocking.contentBlockingManager,
+                      errorReporting: Self.debugEvents)
+    }()
+    
     private var userScripts: [UserScript] = []
     
     private var canDisplayJavaScriptAlert: Bool {
@@ -204,9 +218,6 @@ class TabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.linkCleaner = LinkCleaner()
-        self.ampExtractor = AMPCanonicalExtractor(linkCleaner: linkCleaner)
         
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
         initUserScripts()
@@ -326,14 +337,14 @@ class TabViewController: UIViewController {
         updateContentMode()
         
         instrumentation.didPrepareWebView()
-
+        
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
         } else if let request = request {
             if let url = request.url {
-                getCleanUrl(url) { [weak self] cleanUrl in
-                    self?.load(urlRequest: URLRequest.userInitiated(cleanUrl))
-                }
+                ampProtection.getCleanURL(from: url,
+                                          onExtracting: { showProgressIndicator() },
+                                          completion: { [weak self] cleanURL in self?.load(urlRequest: .userInitiated(cleanURL)) })
             } else {
                 load(urlRequest: request)
             }
@@ -366,37 +377,12 @@ class TabViewController: UIViewController {
         }
     }
     
-    public func getCleanUrl(_ url: URL, showLoadingIndicator: Bool = true, completion: @escaping (URL) -> Void) {
-        // Rewrite tracking links
-        var urlToLoad = url
-        if let cleanUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: urlToLoad) {
-            urlToLoad = cleanUrl
-        }
-        
-        if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: urlToLoad) {
-            completion(cleanUrl)
-        } else if ampExtractor.urlContainsAmpKeyword(urlToLoad) {
-            if showLoadingIndicator {
-                showProgressIndicator()
-            }
-            ampExtractor.getCanonicalUrl(initiator: nil, url: urlToLoad) { canonical in
-                if let canonical = canonical {
-                    completion(canonical)
-                } else {
-                    completion(urlToLoad)
-                }
-            }
-        } else {
-            completion(urlToLoad)
-        }
-    }
-    
     public func load(url: URL) {
-        load(url: url, didUpgradeUrl: false)
+        load(url: url, didUpgradeURL: false)
     }
     
-    private func load(url: URL, didUpgradeUrl: Bool) {
-        if !didUpgradeUrl {
+    private func load(url: URL, didUpgradeURL: Bool) {
+        if !didUpgradeURL {
             lastUpgradedURL = nil
         }
         
@@ -406,11 +392,13 @@ class TabViewController: UIViewController {
         
         lastError = nil
         updateContentMode()
-        getCleanUrl(url) { [weak self] url in
-            self?.load(urlRequest: URLRequest.userInitiated(url))
-        }
+        ampProtection.getCleanURL(from: url, onExtracting: {
+            showProgressIndicator()
+        }, completion: { [weak self] url in
+            self?.load(urlRequest: .userInitiated(url))
+        })
     }
-    
+                                  
     func prepareForDataClearing(completion: @escaping () -> Void) {
         webView.stopLoading()
         webView.load(URLRequest(url: URL(string: "about:blank")!))
@@ -842,8 +830,8 @@ class TabViewController: UIViewController {
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.contentBlockingManager.currentTDSRules?.etag ?? "",
-                              ampUrl: linkCleaner?.lastAmpUrl,
-                              urlParametersRemoved: linkCleaner?.urlParametersRemoved ?? false)
+                              ampUrl: ampProtection.lastAMPURLString,
+                              urlParametersRemoved: ampProtection.urlParametersRemoved)
     }
     
     public func print() {
@@ -967,7 +955,7 @@ extension TabViewController: WKNavigationDelegate {
         hideErrorMessage()
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
-        ampExtractor.cancelOngoingExtraction()
+        ampProtection.cancelOngoingExtraction()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1175,48 +1163,6 @@ extension TabViewController: WKNavigationDelegate {
         }
         return nil
     }
-    
-    func requestTrackingLinkRewrite(navigationAction: WKNavigationAction,
-                                    decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) -> Bool {
-        func load(newUrl: URL, forNavigationAction navigationAction: WKNavigationAction) {
-            if isNewTargetBlankRequest(navigationAction: navigationAction) {
-                delegate?.tab(self, didRequestNewTabForUrl: newUrl, openedByPage: true)
-            } else {
-                self.load(url: newUrl)
-            }
-        }
-        
-        if let newUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: webView.url,
-                                                                 destination: navigationAction.request.url) {
-            decisionHandler(.cancel)
-            load(newUrl: newUrl, forNavigationAction: navigationAction)
-            return true
-        } else if ampExtractor.urlContainsAmpKeyword(navigationAction.request.url) {
-            showProgressIndicator()
-            ampExtractor.getCanonicalUrl(initiator: webView.url,
-                                          url: navigationAction.request.url) { canonical in
-                guard let canonical = canonical, canonical != navigationAction.request.url else {
-                    decisionHandler(.allow)
-                    return
-                }
-                
-                decisionHandler(.cancel)
-                load(newUrl: canonical, forNavigationAction: navigationAction)
-            }
-            return true
-        }
-        
-        if let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
-                                                            url: navigationAction.request.url) {
-            if newUrl != navigationAction.request.url {
-                decisionHandler(.cancel)
-                load(newUrl: newUrl, forNavigationAction: navigationAction)
-                return true
-            }
-        }
-        
-        return false
-    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
@@ -1225,8 +1171,20 @@ extension TabViewController: WKNavigationDelegate {
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
-            if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
-                // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
+            let didRewriteLink = ampProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
+                                                                          navigationAction: navigationAction,
+                                                                          onExtracting: { showProgressIndicator() },
+                                                                          onLinkRewrite: { [weak self] newURL, navigationAction in
+                guard let self = self else { return }
+                if self.isNewTargetBlankRequest(navigationAction: navigationAction) {
+                    self.delegate?.tab(self, didRequestNewTabForUrl: newURL, openedByPage: true)
+                } else {
+                    self.load(url: newURL)
+                }
+            },
+                                                                          policyDecisionHandler: decisionHandler)
+            
+            if didRewriteLink {
                 return
             }
         }
@@ -1371,7 +1329,7 @@ extension TabViewController: WKNavigationDelegate {
                 if lastUpgradedURL != upgradedUrl {
                     NetworkLeaderboard.shared.incrementHttpsUpgrades()
                     lastUpgradedURL = upgradedUrl
-                    load(url: upgradedUrl, didUpgradeUrl: true)
+                    load(url: upgradedUrl, didUpgradeURL: true)
                     completion(.cancel)
                 } else {
                     completion(allowPolicy)

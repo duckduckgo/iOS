@@ -140,13 +140,6 @@ public final class ContentBlockingUpdating: ContentBlockerRulesUpdating {
 
 }
 
-extension ContentBlockerRulesManager {
-    
-    public var currentTDSRules: Rules? {
-        return currentRules.first(where: { $0.name == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName })
-    }
-}
-
 public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
 
     private struct Keys {

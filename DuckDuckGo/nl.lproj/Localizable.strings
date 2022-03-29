@@ -1,11 +1,5 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Bewerken";
-
-/* Button label for a generic show action */
-"action.generic.show" = "Tonen";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Ongedaan maken";
@@ -95,24 +89,6 @@
 "action.title.share" = "Delen";
 
 /* No comment provided by engineer. */
-"addWidget.button" = "Widget toevoegen";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Krijg snel toegang tot privézoekopdrachten en de sites die je leuk vindt.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Druk lang op het startscherm om de schudmodus te gebruiken.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Tik op de plus %@-knop.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Zoek en selecteer DuckDuckGo. Kies vervolgens een widget.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Eén tik naar uw favoriete sites.";
-
-/* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Bestaande bladwijzers worden niet gedupliceerd.";
 
 /* Question from confirmation dialog */
@@ -175,12 +151,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Verwijderen";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Weet u zeker dat u deze map en %i items wilt verwijderen?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Weet u zeker dat u deze map en %i item wilt verwijderen?";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "%@ verwijderen?";
 
@@ -196,6 +166,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Locatie";
 
+/* More options button text */
+"bookmark.moreButton" = "Meer";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Websitetitel";
 
@@ -210,6 +183,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Bladwijzers";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "We kunnen je bladwijzers niet exporteren. Probeer het opnieuw.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Je bladwijzers zijn geëxporteerd.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Je bladwijzers zijn gedeeld.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "HTML-bestand exporteren";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Sorry, we kunnen dit bestand niet importeren.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Je bladwijzers zijn geïmporteerd.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "HTML-bestand importeren";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Bladwijzerbestand importeren vanuit een andere browser";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importeer een HTML-bestand met bladwijzers uit een andere browser of exporteer je bestaande bladwijzers.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Opmerkingen zijn niet geladen";
@@ -240,18 +240,6 @@
 
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "BESCHRIJF WAT ER IS GEBEURD";
-
-/* Title for a section containing only items from past month */
-"date.range.past-month" = "Afgelopen maand";
-
-/* Title for a section containing only items from past week */
-"date.range.past-week" = "Afgelopen week";
-
-/* Title for a section containing only items from today */
-"date.range.today" = "Vandaag";
-
-/* Title for a section containing only items from yesterday */
-"date.range.yesterday" = "Gisteren";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Tips voor altijd verbergen";
@@ -337,54 +325,6 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Veel trackers worden automatisch geblokkeerd door DuckDuckGo. Met Global Privacy Control (GPC) kun je deelnemende websites ook vragen om je persoonsgegevens niet te verkopen aan of te delen met andere bedrijven.";
 
-/* Alert action for starting a file dowload */
-"downloads.alert.action.save-to-downloads" = "Opslaan in downloads";
-
-/* Cancel download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.cancel" = "Annuleren";
-
-/* Message for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.message" = "Weet je zeker dat je deze download wilt annuleren?";
-
-/* Resume download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.resume" = "Hervatten";
-
-/* Title for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.title" = "Downloaden annuleren?";
-
-/* Button for deleting all items on downloads list */
-"downloads.downloads-list.delete-all" = "Alles verwijderen";
-
-/* Empty downloads list placholder */
-"downloads.downloads-list.empty" = "Nog geen bestanden gedownload";
-
-/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
-"downloads.downloads-list.row.downloading" = "Downloaden - %1$@ van %2$@";
-
-/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
-"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Downloaden - %@";
-
-/* Downloads list screen title */
-"downloads.downloads-list.title" = "Downloads";
-
-/* Additional alert message shown when there are active downloads when using the fire button */
-"downloads.fire-button.alert.message" = "Hiermee worden ook lopende downloads geannuleerd";
-
-/* Message confirming that all files on the downloads list have been deleted */
-"downloads.message.all-files-deleted" = "Alle bestanden verwijderd";
-
-/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
-"downloads.message.download-complete" = "%@ is gedownload";
-
-/* Message confirming the file was deleted. Parameter is file's filename */
-"downloads.message.download-deleted" = "%@ verwijderd";
-
-/* Message informing that the download has failed due to connection issues */
-"downloads.message.download-failed" = "Downloaden mislukt. Controleer uw internetverbinding.";
-
-/* Message confirming that the download process has started. Parameter is downloaded file's filename */
-"downloads.message.download-started" = "Downloaden gestart voor %@";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuleren";
 
@@ -456,9 +396,6 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "We sturen je een melding wanneer je E-mailbescherming kunt gaan gebruiken.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Wil je dat we je een melding sturen als je aan de beurt bent?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Je hebt je ingeschreven voor de wachtlijst en ons gevraagd je te laten weten wanneer je aan de beurt bent om onze E-mailbescherming te proberen.";
@@ -1119,18 +1056,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Toegang tot microfoon vereist";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Annuleren";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo luistert nooit naar wat je zegt. De verwerking van spraakgegevens voor Private Voice Search gebeurt op je apparaat.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Microfoontoegang vereist voor Private Voice Search";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Annuleren";

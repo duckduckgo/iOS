@@ -1,11 +1,5 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Επεξεργασία";
-
-/* Button label for a generic show action */
-"action.generic.show" = "Εμφάνιση";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Αναίρεση";
@@ -30,9 +24,6 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Απενεργοποίηση Προστασίας προσωπικών δεδομένων";
-
-/* Downloads menu item opening the downlods list */
-"action.title.downloads" = "Λήψεις";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Επεξεργασία σελιδοδείκτη";
@@ -93,24 +84,6 @@
 
 /* Share action */
 "action.title.share" = "Κοινή χρήση";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Προσθήκη γραφικού στοιχείου";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Αποκτήστε γρήγορη πρόσβαση σε μια ιδιωτική αναζήτηση και στους ιστότοπους που αγαπάτε.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Πατήστε παρατεταμένα στην αρχική οθόνη για να εισέλθετε σε λειτουργία αναδιάταξης.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Πατήστε το κουμπί συν %@.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Εύρεση και επιλογή του DuckDuckGo. Έπειτα, επιλέξτε τη μικροεφαρμογή.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Ένα μόνο πάτημα προς τους αγαπημένους ιστότοπούς σας.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Οι υπάρχοντες σελιδοδείκτες δεν θα αναπαραχθούν.";
@@ -175,12 +148,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Διαγραφή";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Θέλετε σίγουρα να διαγράψετε αυτόν τον φάκελο και %i αντικείμενα;";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Θέλετε σίγουρα να διαγράψετε αυτόν τον φάκελο και %i αντικείμενο;";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Διαγραφή %@;";
 
@@ -196,6 +163,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Τοποθεσία";
 
+/* More options button text */
+"bookmark.moreButton" = "Περισσότερα";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Τίτλος ιστότοπου";
 
@@ -210,6 +180,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Σελιδοδείκτες";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Δεν καταφέραμε να κάνουμε εξαγωγή των σελιδοδεικτών σας. Προσπαθήστε ξανά.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Η εξαγωγή των σελιδοδεικτών σας έχει πραγματοποιηθεί.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Η κοινοποίηση των σελιδοδεικτών σας έχει πραγματοποιηθεί.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Εξαγωγή αρχείου HTML";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Δυστυχώς, δεν μπορούμε να κάνουμε εισαγωγή αυτού του αρχείου.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Η εισαγωγή των σελιδοδεικτών σας έχει πραγματοποιηθεί.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Εισαγωγή αρχείου HTML";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Εισαγωγή αρχείου με σελιδοδείκτες από άλλο πρόγραμμα περιήγησης";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Κάντε εισαγωγή ενός αρχείου HTML με σελιδοδείκτες από άλλο πρόγραμμα περιήγησης, ή κάντε εξαγωγή των σελιδοδεικτών που διαθέτετε ήδη.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Τα σχόλια δεν φορτώθηκαν";
@@ -240,18 +237,6 @@
 
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "ΠΕΡΙΓΡΑΨΤΕ ΤΙ ΣΥΝΕΒΗ";
-
-/* Title for a section containing only items from past month */
-"date.range.past-month" = "Προηγούμενος μήνας";
-
-/* Title for a section containing only items from past week */
-"date.range.past-week" = "Προηγούμενη εβδομάδα";
-
-/* Title for a section containing only items from today */
-"date.range.today" = "Σήμερα";
-
-/* Title for a section containing only items from yesterday */
-"date.range.yesterday" = "Χθες";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Απόκρυψη συμβουλών για πάντα";
@@ -337,54 +322,6 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Το DuckDuckGo αποκλείει αυτόματα πολλές εφαρμογές παρακολούθησης. Με τον Παγκόσμιο έλεγχο απορρήτου (GPC), μπορείτε επίσης να ζητήσετε από τους ιστότοπους που συμμετέχουν να περιορίσουν την πώληση ή την κοινοποίηση των προσωπικών δεδομένων σας σε άλλες εταιρείες.";
 
-/* Alert action for starting a file dowload */
-"downloads.alert.action.save-to-downloads" = "Αποθήκευση στις λήψεις";
-
-/* Cancel download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.cancel" = "Ακύρωση";
-
-/* Message for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.message" = "Θέλετε σίγουρα να ακυρώσετε τη λήψη αυτή;";
-
-/* Resume download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.resume" = "Συνέχιση";
-
-/* Title for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.title" = "Ακύρωση λήψης;";
-
-/* Button for deleting all items on downloads list */
-"downloads.downloads-list.delete-all" = "Διαγραφή όλων";
-
-/* Empty downloads list placholder */
-"downloads.downloads-list.empty" = "Δεν έχει γίνει ακόμα λήψη αρχείων";
-
-/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
-"downloads.downloads-list.row.downloading" = "Λήψη - %1$@ από %2$@";
-
-/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
-"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Λήψη - %@";
-
-/* Downloads list screen title */
-"downloads.downloads-list.title" = "Λήψεις";
-
-/* Additional alert message shown when there are active downloads when using the fire button */
-"downloads.fire-button.alert.message" = "Αυτό θα ακυρώσει επίσης τις λήψεις που βρίσκονται σε εξέλιξη";
-
-/* Message confirming that all files on the downloads list have been deleted */
-"downloads.message.all-files-deleted" = "Διαγράφηκαν όλα τα αρχεία";
-
-/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
-"downloads.message.download-complete" = "Η λήψη ολοκληρώθηκε για το αρχείο %@";
-
-/* Message confirming the file was deleted. Parameter is file's filename */
-"downloads.message.download-deleted" = "Το αρχείο %@ διαγράφηκε";
-
-/* Message informing that the download has failed due to connection issues */
-"downloads.message.download-failed" = "Αποτυχία λήψης. Ελέγξτε τη σύνδεση στο διαδίκτυο.";
-
-/* Message confirming that the download process has started. Parameter is downloaded file's filename */
-"downloads.message.download-started" = "Άρχισε η λήψη για το αρχείο %@";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Ακύρωση";
 
@@ -456,9 +393,6 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Θα σας στείλουμε ειδοποίηση όταν θα μπορείτε να αρχίσετε να χρησιμοποιείτε την Προστασία email.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Θα θέλατε να σας ειδοποιήσουμε όταν θα είναι η σειρά σας;";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Εγγραφήκατε στη λίστα αναμονής και μας ζητήσατε να σας ενημερώσουμε για το πότε θα είναι η σειρά σας να δοκιμάσετε την Προστασία email.";
@@ -1119,18 +1053,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Απαιτείται πρόσβαση στο μικρόφωνο";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Εντάξει";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Ακύρωση";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "Το DuckDuckGo δεν ακούει ποτέ ό,τι λέτε. Όλη η επεξεργασία των δεδομένων ομιλίας για την Ιδιωτική φωνητική αναζήτηση πραγματοποιείται στη συσκευή σας.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Απαιτείται πρόσβαση στο μικρόφωνο για Ιδιωτική φωνητική αναζήτηση";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Ακύρωση";

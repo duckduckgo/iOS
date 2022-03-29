@@ -1,11 +1,5 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Upraviť";
-
-/* Button label for a generic show action */
-"action.generic.show" = "Zobraziť";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Vrátenie späť";
@@ -30,9 +24,6 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Vypnúť ochranu súkromia";
-
-/* Downloads menu item opening the downlods list */
-"action.title.downloads" = "Stiahnuté";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Upraviť záložku";
@@ -175,12 +166,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Vymazať";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Naozaj chcete odstrániť tento priečinok a položky (%i)?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Naozaj chcete odstrániť tento priečinok a položky (%i)?";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Chcete odstrániť priečinok %@?";
 
@@ -196,6 +181,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Poloha";
 
+/* More options button text */
+"bookmark.moreButton" = "Viac na";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Názov webovej stránky";
 
@@ -210,6 +198,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Záložky";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Vaše záložky sa nepodarilo exportovať, skúste to znova.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Všetky záložky boli vyexportované.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Vaše záložky sú zdieľané.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Exportovať súbor HTML";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Ľutujeme, tento súbor nie je možné importovať.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Vaše záložky boli importované.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Importovať súbor HTML";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Importujte súbor so záložkami z iného prehliadača";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importujte súbor HTML so záložkami z iného prehliadača alebo exportujte svoje existujúce záložky.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentáre sa nepodarilo načítať";
@@ -240,18 +255,6 @@
 
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "POPÍŠTE, ČO SA STALO";
-
-/* Title for a section containing only items from past month */
-"date.range.past-month" = "Minulý mesiac";
-
-/* Title for a section containing only items from past week */
-"date.range.past-week" = "Minulý týždeň";
-
-/* Title for a section containing only items from today */
-"date.range.today" = "Dnes";
-
-/* Title for a section containing only items from yesterday */
-"date.range.yesterday" = "Včera";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Navždy skryť tipy";
@@ -337,54 +340,6 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo automaticky blokuje množstvo trackerov. Vďaka Globálnej kontrole súkromia (GPC) môžete tiež požiadať partnerské webové lokality o obmedzenie predaja alebo zdieľania vašich osobných údajov s inými spoločnosťami.";
 
-/* Alert action for starting a file dowload */
-"downloads.alert.action.save-to-downloads" = "Uložiť do stiahnutých";
-
-/* Cancel download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.cancel" = "Zrušiť";
-
-/* Message for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.message" = "Naozaj chcete zrušiť toto sťahovanie?";
-
-/* Resume download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.resume" = "Obnoviť";
-
-/* Title for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.title" = "Zrušiť sťahovanie?";
-
-/* Button for deleting all items on downloads list */
-"downloads.downloads-list.delete-all" = "Odstrániť všetko";
-
-/* Empty downloads list placholder */
-"downloads.downloads-list.empty" = "Zatiaľ žiadne stiahnuté súbory";
-
-/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
-"downloads.downloads-list.row.downloading" = "Sťahuje sa: %1$@/%2$@";
-
-/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
-"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Sťahuje sa %@";
-
-/* Downloads list screen title */
-"downloads.downloads-list.title" = "Stiahnuté";
-
-/* Additional alert message shown when there are active downloads when using the fire button */
-"downloads.fire-button.alert.message" = "Zrušia sa aj prebiehajúce sťahovania";
-
-/* Message confirming that all files on the downloads list have been deleted */
-"downloads.message.all-files-deleted" = "Všetky súbory sa odstránili";
-
-/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
-"downloads.message.download-complete" = "%@ – sťahovanie dokončené";
-
-/* Message confirming the file was deleted. Parameter is file's filename */
-"downloads.message.download-deleted" = "%@ – odstránené";
-
-/* Message informing that the download has failed due to connection issues */
-"downloads.message.download-failed" = "Sťahovanie zlyhalo. Skontrolujte internetové pripojenie.";
-
-/* Message confirming that the download process has started. Parameter is downloaded file's filename */
-"downloads.message.download-started" = "%@ – začalo sa sťahovanie";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Zrušiť";
 
@@ -456,9 +411,6 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Pošleme vám upozornenie, keď budete môcť začať používať e-mailovú ochranu.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Chcete, aby sme vám poslali upozornenie, keď budete na rade?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Pridali ste sa na zoznam čakateľov a požiadali ste nás, aby sme vás upozornili, keď na vás príde rad a keď budete si môcť vyskúšať našu e-mailovú ochranu.";
@@ -1119,18 +1071,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Vyžaduje sa prístup k mikrofónu";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Zrušiť";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikdy nepočúva, čo hovoríte. Všetky údaje reči potrebné pre súkromné hlasové vyhľadávanie sa spracúvajú vo vašom zariadení.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Na používanie funkcie súkromného hlasového vyhľadávania sa vyžaduje prístup k mikrofónu.";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Zrušiť";

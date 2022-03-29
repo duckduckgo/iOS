@@ -1,11 +1,5 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Redigeeri";
-
-/* Button label for a generic show action */
-"action.generic.show" = "Kuva";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Võta tagasi";
@@ -30,9 +24,6 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Keela privaatsuse kaitse";
-
-/* Downloads menu item opening the downlods list */
-"action.title.downloads" = "Allalaadimised";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Redigeeri järjehoidjat";
@@ -93,24 +84,6 @@
 
 /* Share action */
 "action.title.share" = "Jaga";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Lisa vidin";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Kasuta kiiret juurdepääsu privaatsele otsingule ja lemmiksaitidele.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Pikk vajutus avaekraanile rakenduse ümberkorraldusrežiimi sisenemiseks.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Vajutage plussnupule %@.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Leidke ja valige DuckDuckGo. Seejärel valige vidin.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Ühe puudutusega oma lemmiksaitidele.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Olemasolevaid järjehoidjaid ei dubleerita.";
@@ -175,12 +148,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Kustuta";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Kas soovid kindlasti kustutada selle kausta ja %i üksust?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Kas soovid kindlasti kustutada selle kausta ja %i üksuse?";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Kustutada %@?";
 
@@ -196,6 +163,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Asukoht";
 
+/* More options button text */
+"bookmark.moreButton" = "Rohkem";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Veebisaidi pealkiri";
 
@@ -210,6 +180,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Järjehoidjad";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Järjehoidjate eksport ei õnnestunud, palun proovi uuesti.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Sinu järjehoidjad on eksporditud.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Sinu järjehoidjad on jagatud.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "HTML-faili eksport";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Kahjuks ei saa me seda faili importida.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Sinu järjehoidjad on imporditud.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "HTML-faili import";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Järjehoidja faili importimine teisest brauserist";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Impordi järjehoidjate HTML-fail teisest brauserist või ekspordi oma olemas olevad järjehoidjad.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentaare ei laaditud";
@@ -240,18 +237,6 @@
 
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "KIRJELDAGE TOIMUNUT";
-
-/* Title for a section containing only items from past month */
-"date.range.past-month" = "Viimane kuu";
-
-/* Title for a section containing only items from past week */
-"date.range.past-week" = "Viimane nädal";
-
-/* Title for a section containing only items from today */
-"date.range.today" = "Täna";
-
-/* Title for a section containing only items from yesterday */
-"date.range.yesterday" = "Eile";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Peida näpunäited igaveseks";
@@ -337,54 +322,6 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo blokeerib automaatselt paljud jälitajad. Üleilmse privaatsuskontrolli (GPC) abil saate paluda osalevatel veebisaitidel piirata teie isikuandmete müümist või jagamist teiste ettevõtetega.";
 
-/* Alert action for starting a file dowload */
-"downloads.alert.action.save-to-downloads" = "Salvesta allalaadimistesse";
-
-/* Cancel download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.cancel" = "Tühista";
-
-/* Message for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.message" = "Kas soovid kindlasti selle allalaadimise tühistada?";
-
-/* Resume download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.resume" = "Taasta";
-
-/* Title for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.title" = "Kas tühistada allalaadimine?";
-
-/* Button for deleting all items on downloads list */
-"downloads.downloads-list.delete-all" = "Kustuta kõik";
-
-/* Empty downloads list placholder */
-"downloads.downloads-list.empty" = "Ühtegi faili pole veel alla laaditud";
-
-/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
-"downloads.downloads-list.row.downloading" = "Allalaadimine - %1$@/%2$@";
-
-/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
-"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Allalaadimine: %@";
-
-/* Downloads list screen title */
-"downloads.downloads-list.title" = "Allalaadimised";
-
-/* Additional alert message shown when there are active downloads when using the fire button */
-"downloads.fire-button.alert.message" = "See tühistab ka pooleliolevad allalaadimised";
-
-/* Message confirming that all files on the downloads list have been deleted */
-"downloads.message.all-files-deleted" = "Kõik failid kustutatud";
-
-/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
-"downloads.message.download-complete" = "%@ allalaadimine on lõpetatud";
-
-/* Message confirming the file was deleted. Parameter is file's filename */
-"downloads.message.download-deleted" = "%@ kustutatud";
-
-/* Message informing that the download has failed due to connection issues */
-"downloads.message.download-failed" = "Allalaadimine ebaõnnestus. Kontrolli internetiühendust.";
-
-/* Message confirming that the download process has started. Parameter is downloaded file's filename */
-"downloads.message.download-started" = "%@ allalaadimine algas";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Tühista";
 
@@ -456,9 +393,6 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Saadame teile teatise, kui saate e-posti kaitset kasutama hakata.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Kas soovite, et me saadame teile teavituse, kui on teie kord?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Liitusite ootenimekirjaga ja palusite meid teavitada, kui on teie kord proovida meie e-posti kaitset.";
@@ -1119,18 +1053,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Vajalik juurdepääs mikrofonile";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Tühista";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo ei kuula kunagi pealt, mida te ütlete. Kogu kõneandmete töötlemine privaatse häälotsingu jaoks toimub teie seadmes.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Privaatse häälotsingu jaoks on vajalik juurdepääs mikrofonile";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Tühista";

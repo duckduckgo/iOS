@@ -1,11 +1,5 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediģēt";
-
-/* Button label for a generic show action */
-"action.generic.show" = "Rādīt";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Atsaukt";
@@ -30,9 +24,6 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Atspējot privātuma aizsardzību";
-
-/* Downloads menu item opening the downlods list */
-"action.title.downloads" = "Lejupielādes";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Rediģēt grāmatzīmi";
@@ -93,24 +84,6 @@
 
 /* Share action */
 "action.title.share" = "Kopīgot";
-
-/* No comment provided by engineer. */
-"addWidget.button" = "Pievienot logrīku";
-
-/* No comment provided by engineer. */
-"addWidget.description" = "Iegūsti ātru piekļuvi privātajai meklēšanai un savām mīļākajām vietnēm.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.firstParagraph" = "Ilgi nospied sākuma ekrānā, lai pārietu pārkārtošanas režīmā.";
-
-/* Replacement string is a plus button icon. */
-"addWidget.settings.secondParagraph.%@" = "Pieskaries plus %@ pogai.";
-
-/* No comment provided by engineer. */
-"addWidget.settings.title" = "Atrodi un atlasi DuckDuckGo. Pēc tam izvēlies logrīku.";
-
-/* No comment provided by engineer. */
-"addWidget.title" = "Viens pieskāriens līdz tavām mīļākajām vietnēm.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esošās grāmatzīmes netiks dublētas.";
@@ -175,12 +148,6 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Dzēst";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Vai tiešām vēlies dzēst šo mapi un %i vienumus?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Vai tiešām vēlies dzēst šo mapi un %i vienumu?";
-
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Vai dzēst %@?";
 
@@ -196,6 +163,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Atrašanās vieta";
 
+/* More options button text */
+"bookmark.moreButton" = "Vairāk";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Vietnes nosaukums";
 
@@ -210,6 +180,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Grāmatzīmes";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Mums neizdevās eksportēt tavas grāmatzīmes. Lūdzu, mēģini vēlreiz.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Tavas grāmatzīmes ir eksportētas.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Tavas grāmatzīmes ir kopīgotas.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Eksportēt HTML failu";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Diemžēl mēs nevaram importēt šo failu.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Tavas grāmatzīmes ir importētas.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Importēt HTML failu";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Importēt grāmatzīmju failu no citas pārlūkprogrammas";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importē grāmatzīmju HTML failu no citas pārlūkprogrammas vai eksportē esošās grāmatzīmes.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentāri netika ielādēti";
@@ -240,18 +237,6 @@
 
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "APRAKSTI NOTIKUŠO";
-
-/* Title for a section containing only items from past month */
-"date.range.past-month" = "Iepriekšējais mēnesis";
-
-/* Title for a section containing only items from past week */
-"date.range.past-week" = "Iepriekšējā nedēļa";
-
-/* Title for a section containing only items from today */
-"date.range.today" = "Šodien";
-
-/* Title for a section containing only items from yesterday */
-"date.range.yesterday" = "Vakar";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Paslēpt padomus uz visiem laikiem";
@@ -337,54 +322,6 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo automātiski bloķē daudzus izsekotājus. Izmantojot globālo privātuma kontroli (GPC), vari arī lūgt iesaistītajām vietnēm ierobežot savu personas datu pārdošanu vai kopīgošanu ar citiem uzņēmumiem.";
 
-/* Alert action for starting a file dowload */
-"downloads.alert.action.save-to-downloads" = "Lejupielādēt";
-
-/* Cancel download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.cancel" = "Atcelt";
-
-/* Message for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.message" = "Vai tiešām vēlies atcelt šo lejupielādi?";
-
-/* Resume download action for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.resume" = "Turpināt";
-
-/* Title for alert when trying to cancel the file download */
-"downloads.cancel-download.alert.title" = "Vai atcelt lejupielādi?";
-
-/* Button for deleting all items on downloads list */
-"downloads.downloads-list.delete-all" = "Dzēst visus";
-
-/* Empty downloads list placholder */
-"downloads.downloads-list.empty" = "Vēl nav lejupielādēts neviens fails";
-
-/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
-"downloads.downloads-list.row.downloading" = "Notiek lejupielāde – %1$@ no %2$@";
-
-/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
-"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Notiek lejupielāde — %@";
-
-/* Downloads list screen title */
-"downloads.downloads-list.title" = "Lejupielādes";
-
-/* Additional alert message shown when there are active downloads when using the fire button */
-"downloads.fire-button.alert.message" = "Tas atcels arī ritošās lejupielādes";
-
-/* Message confirming that all files on the downloads list have been deleted */
-"downloads.message.all-files-deleted" = "Visi faili izdzēsti";
-
-/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
-"downloads.message.download-complete" = "%@ lejupielāde ir pabeigta";
-
-/* Message confirming the file was deleted. Parameter is file's filename */
-"downloads.message.download-deleted" = "%@ izdzēsts";
-
-/* Message informing that the download has failed due to connection issues */
-"downloads.message.download-failed" = "Neizdevās lejupielādēt. Pārbaudi interneta savienojumu.";
-
-/* Message confirming that the download process has started. Parameter is downloaded file's filename */
-"downloads.message.download-started" = "%@ lejupielāde sākta";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atcelt";
 
@@ -456,9 +393,6 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Mēs nosūtīsim tev paziņojumu, kad varēsi sākt lietot e-pasta aizsardzību.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Vai vēlies, lai tev paziņojam, kad būs pienākusi tava kārta?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Tu pievienojies nogaides sarakstam un lūdzi mūs informēt, kad būs pienākusi tava kārta izmēģināt mūsu e-pasta aizsardzību.";
@@ -1119,18 +1053,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Nepieciešama piekļuve mikrofonam";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Labi";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Atcelt";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nenoklausās tevis teikto. Visa runas datu apstrāde privātajai balss meklēšanai ar balsi notiek tavā ierīcē.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Privātajai meklēšanai ar balsi ir nepieciešama piekļuve mikrofonam";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Atcelt";

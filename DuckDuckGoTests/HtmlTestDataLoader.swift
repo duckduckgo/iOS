@@ -1,8 +1,8 @@
 //
-//  JsonTestDataLoader.swift
+//  HtmlTestDataLoader.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -20,23 +20,14 @@
 import Foundation
 @testable import Core
 
-final class JsonTestDataLoader: TestDataLoader {
+final class HtmlTestDataLoader: TestDataLoader {
 
-    func invalid() -> Data {
-        return "{[}".data(using: .utf16)!
-    }
-
-    func unexpected() -> Data {
-        guard let data = try? FileLoader().load(fileName: "MockFiles/unexpected.json", fromBundle: bundle) else {
-            fatalError("Failed to load MockFiles/unexpected.json")
-        }
-        return data
-    }
-
-    func fromJsonFile(_ fileName: String) -> Data {
-        guard let data = try? FileLoader().load(fileName: fileName, fromBundle: bundle) else {
+    func fromHtmlFile(_ fileName: String) -> String {
+        guard let data = try? FileLoader().load(fileName: fileName, fromBundle: bundle),
+              let html = String(data: data, encoding: .utf8)  else {
             fatalError("Unable to load \(fileName)")
         }
-        return data
+
+        return html
     }
 }

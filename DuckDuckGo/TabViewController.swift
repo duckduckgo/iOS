@@ -182,6 +182,19 @@ class TabViewController: UIViewController {
         return emailManager
     }()
     
+    lazy var vaultManager: SecureVaultManager = {
+        let manager = SecureVaultManager()
+        manager.delegate = self
+        return manager
+    }()
+    
+    lazy var autofillUserScript: AutofillUserScript = {
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
+        let provider = DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager, properties: prefs)
+        let autofillUserScript = AutofillUserScript(scriptSourceProvider: provider)
+        return autofillUserScript
+    }()
+    
     private var userScripts: [UserScript] = []
     
     private var canDisplayJavaScriptAlert: Bool {
@@ -292,6 +305,7 @@ class TabViewController: UIViewController {
         surrogatesScript.delegate = self
         contentBlockerRulesScript.delegate = self
         autofillUserScript.emailDelegate = emailManager
+        autofillUserScript.vaultDelegate = vaultManager
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }
@@ -551,6 +565,9 @@ class TabViewController: UIViewController {
     }
     
     func goBack() {
+        #warning("REMOVE")
+        openSaveUI()
+        return
         if isError {
             hideErrorMessage()
             url = webView.url
@@ -1612,6 +1629,17 @@ extension TabViewController: WKUIDelegate {
         }
      }
     
+    func openSaveUI() {
+#warning("Remove this, just for test")
+let saveLoginController = SaveLoginViewController()
+//saveLoginController.delegate = self
+if #available(iOS 15.0, *) {
+    if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+        presentationController.detents = [.medium(), .large()]
+    }
+}
+present(saveLoginController, animated: true, completion: nil)
+    }
     func webView(_ webView: WKWebView,
                  runJavaScriptTextInputPanelWithPrompt prompt: String,
                  defaultText: String?,
@@ -1885,6 +1913,33 @@ extension NSError {
         return userInfo[NSURLErrorFailingURLErrorKey] as? URL
     }
 
+}
+
+extension TabViewController: SecureVaultManagerDelegate {
+
+    func secureVaultManager(_: SecureVaultManager,
+                            promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+#warning("Remove this, just for test")
+vaultManager.autofillUserScript(autofillUserScript, didRequestAccountsForDomain: credentials.account.domain) { thing in
+    Swift.print("Stored accounts: \(thing)")
+}
+
+openSaveUI()
+    }
+    
+    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
+        // should not be called
+    }
+    
+    func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
+        #warning("We don't have auth yet")
+        didRequestAuthenticationWithCompletionHandler(true)
+    }
+    
+    func secureVaultInitFailed(_ error: SecureVaultError) {
+        #warning("How to handle this error?")
+        Swift.print("Secure vault error")
+    }
 }
 
 // swiftlint:enable file_length

@@ -1,5 +1,11 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Szerkesztés";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Megjelenítés";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Visszavonás";
@@ -24,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Adatvédelem letiltása";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Letöltések";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Könyvjelző szerkesztése";
@@ -84,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Megosztás";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Minialkalmazás hozzáadása";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Gyors hozzáférés a privát kereséshez és kedvenc weboldalaidhoz.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Az ugráló ikonos üzemmódba lépéshez tartsd nyomva hosszan a kezdőképernyőt.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Koppints a plusz %@ gombra.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Keresd meg és jelöld ki a DuckDuckGo elemet. Ezután válassz egy minialkalmazást.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Egyetlen koppintással nyisd meg kedvenc oldalaidat.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "A meglévő könyvjelzők nem kettőződnek.";
@@ -147,6 +174,12 @@
 
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Törlés";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Biztos, hogy törölni akarod ezt a mappát és annak %i elemét?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Biztos, hogy törölni akarod ezt a mappát és annak %i elemét?";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "%@ törlése?";
@@ -238,6 +271,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "ESEMÉNY LEÍRÁSA";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Elmúlt hónapban";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Elmúlt héten";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Ma";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Tegnap";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ötletek elrejtése örökre";
 
@@ -322,6 +367,54 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "A DuckDuckGo számos nyomkövetőt automatikusan blokkol. A Global Privacy Control (GPC, Globális Adatvédelmi Ellenőrzés) segítségével arra is megkérheted a részt vevő webhelyeket, hogy korlátozzák személyes adataid eladását vagy megosztását más vállalatokkal.";
 
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Mentés a Letöltések közé";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Mégsem";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Biztos, hogy meg akarod szakítani ezt a letöltést?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Folytatás";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Megszakítod a letöltést?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Összes törlése";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Még nincsenek letöltött fájlok";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Letöltés – %1$@/%2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Letöltés – %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Letöltések";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Ez a folyamatban lévő letöltéseket is megszakítja";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Összes fájl törölve";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "A letöltés kész: %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Törölve: %@";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "A letöltés sikertelen. Ellenőrizd az internetkapcsolatot.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "A letöltés elindult: %@";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Mégsem";
 
@@ -393,6 +486,9 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Értesítést küldünk, amikor megkezdheted az e-mail-védelem használatát.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Szeretnéd, hogy értesítsünk, amikor rád kerül a sor?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Feliratkoztál a várólistára, és arra kértél minket, hogy értesítsünk, amikor rád kerül a sor, hogy kipróbálhasd az e-mail-védelmet.";
@@ -1053,6 +1149,18 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofon-hozzáférés szükséges";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Mégsem";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "A DuckDuckGo soha nem hallgatja azt, amit mondasz. A Privát beszédhangalapú keresés működéséhez szükséges összes beszédhang-feldolgozási művelet a telefonodon zajlik.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "A Privát beszédhangalapú kereséshez Mikrofon-hozzáférés szükséges";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Mégsem";

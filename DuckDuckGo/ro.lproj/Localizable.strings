@@ -1,5 +1,11 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Editați";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Afișează";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Anulați";
@@ -24,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Dezactivează protecția confidențialității";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Descărcări";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Editare semn de carte";
@@ -84,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Partajare";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Adăugare widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Obține acces rapid la căutarea privată și la site-urile care îți plac.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Ține apăsat pe ecranul de întâmpinare pentru a intra în modul în care elementele „tremură”.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Atinge butonul plus %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Găsește și selectează DuckDuckGo. Apoi alege un widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Atinge o dată pentru a ajunge la site-urile tale preferate.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Marcajele existente nu vor fi duplicate.";
@@ -147,6 +174,12 @@
 
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Ștergere";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Sigur dorești să ștergi aceste folder și %i elemente?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Sigur dorești să ștergi aceste folder și %i element?";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Ștergi %@?";
@@ -238,6 +271,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "DESCRIE CE S-A INTAMPLAT";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Ultima lună";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Ultima săptămână";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Astăzi";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Ieri";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ascunde sfaturile definitiv";
 
@@ -322,6 +367,54 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo blochează automat mai multe instrumente de urmărire. Cu Global Privacy Control (GPC) poți solicita, de asemenea, site-urilor web participante să restricționeze vânzarea sau partajarea datelor tale cu caracter personal cu alte companii.";
 
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Salvează în Descărcări";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Renunță";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Sigur dorești să anulezi această descărcare?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Reia";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Anulezi descărcarea?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Șterge toate";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Nu a fost descărcat încă niciun fișier";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Se descarcă - %1$@ din %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Se descarcă - %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Descărcări";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Aceasta va anula și descărcările în desfășurare";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Toate fișierele au fost șterse";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Descărcare finalizată pentru %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "S-a șters %@";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Nu s-a putut descărca. Verifică conexiunea la internet.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Descărcarea a început pentru %@";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Renunță";
 
@@ -393,6 +486,9 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Îți vom trimite o notificare în momentul în care poți începe să folosești protecția comunicațiilor prin e-mail.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Vrei să te înștiințăm când îți vine rândul?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Te-ai alăturat listei de așteptare și ne-ai solicitat să te anunțăm când este rândul tău să încerci protecția comunicațiilor prin e-mail.";
@@ -1053,6 +1149,18 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Este necesar accesul la microfon";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Renunță";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nu ascultă niciodată ceea ce spui. Prelucrarea datelor vocale pentru Căutarea vocală privată are loc pe dispozitivul tău.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Este necesar accesul la microfon pentru Căutarea vocală privată";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Renunță";

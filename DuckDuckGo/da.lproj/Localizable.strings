@@ -1,5 +1,11 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Rediger";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Vis";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Fortryd";
@@ -24,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Deaktiver Beskyttelse af privatlivet";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Downloads";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Rediger bogmærke";
@@ -84,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Del";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Tilføj widget";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Få hurtig adgang til privat søgning og de websteder, du elsker.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Tryk længe på startskærmen for at skifte til jiggle-tilstand.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Tryk på %@-knappen.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Find og vælg DuckDuckGo. Vælg derefter en widget.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Ét tryk til dine yndlingswebsteder.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Eksisterende bogmærker duplikeres ikke.";
@@ -147,6 +174,12 @@
 
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Slet";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Er du sikker på, at du vil slette denne mappe og %i elementer?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Er du sikker på, at du vil slette denne mappe og %i element?";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Vil du slette %@?";
@@ -238,6 +271,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "BESKRIV, HVAD DER SKETE";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Seneste Måned";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Seneste Uge";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "I dag";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "I går";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Skjul tip for evigt";
 
@@ -322,6 +367,54 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo blokerer automatisk mange trackere. Med Global Privacy Control (GPC) kan du også bede deltagende websteder om at begrænse salg eller deling af dine personoplysninger med andre virksomheder.";
 
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Gem i downloads";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Annullér";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Er du sikker på, at du vil annullere denne download?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Genoptag";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Annuller download?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Slet alle";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Der er ikke downloadet nogen filer endnu";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Downloader - %1$@ af %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Downloader – %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Downloads";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Dette annullerer også igangværende downloads";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Alle filer er slettet";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Download fuldført for %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Slettet %@";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Det var ikke muligt at downloade. Kontroller internetforbindelsen.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Download startet for %@";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annullér";
 
@@ -393,6 +486,9 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Vi sender dig en meddelelse, når du kan begynde at bruge e-mailbeskyttelse.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Skal vi give dig besked, når det er din tur?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Du har tilmeldt dig ventelisten og bedt os om at underrette dig, når det er din tur til at prøve vores e-mailbeskyttelsesfunktion.";
@@ -1053,6 +1149,18 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofonadgang påkrævet";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Okay";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Annullér";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo lytter aldrig til det, du siger. Al databehandling af tale til privat stemmesøgning sker på din enhed.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Mikrofonadgang påkrævet til privat stemmesøgning";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Annullér";

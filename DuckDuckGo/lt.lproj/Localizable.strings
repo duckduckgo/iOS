@@ -1,5 +1,11 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Redaguoti";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Rodyti";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Anuliuoti";
@@ -24,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Išjungti privatumo apsaugą";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Atsisiuntimai";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Redaguoti žymę";
@@ -84,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Bendrinti";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Pridėti valdiklį";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Greitai pasiekite privačią paiešką ir mėgstamas svetaines.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Ilgai spauskite pagrindinį ekraną, kad įjungtumėte į programėlių perkėlimo ir ištrynimo režimą.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Bakstelėkite pliuso mygtuką %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Raskite ir pasirinkite „DuckDuckGo“. Tuomet pasirinkite valdiklį.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Tik vienas bakstelėjimas – ir jūs jau mėgstamiausiose svetainėse.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Esamos žymės nebus kopijuojamos.";
@@ -147,6 +174,12 @@
 
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Trinti";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Ar tikrai norite ištrinti šį aplanką ir %i elementus (-ų)?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Ar tikrai norite ištrinti šį aplanką ir %i elementą?";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Ištrinti %@?";
@@ -238,6 +271,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "APRAŠYKITE, KAS ATSITIKO";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Praėjęs mėnuo";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Praėjusi savaitė";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Šiandien";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Vakar";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Slėpti patarimus visam laikui";
 
@@ -322,6 +367,54 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "„DuckDuckGo“ automatiškai blokuoja daugelį stebėjimo priemonių. Pasirinkę visuotinę privatumo kontrolę (VPK), taip pat galite paprašyti dalyvaujančių svetainių apriboti jūsų asmeninių duomenų prekybą ir bendrinimą su kitomis įmonėmis.";
 
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Išsaugoti Atsisiuntimuose";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Atšaukti";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Ar tikrai norite atšaukti šį atsisiuntimą?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Tęsti";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Atšaukti atsisiuntimą?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Ištrinti viską";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Nėra atsisiųstų failų";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Atsisiunčiama – %1$@ iš %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Atsisiunčiama – %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Atsisiuntimai";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Šis veiksmas taip pat atšauks vykdomus atsisiuntimus";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Visi failai ištrinti";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "%@ atsisiuntimas baigtas";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "%@ ištrintas";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Nepavyko atsisiųsti. Patikrinkite interneto ryšį.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "%@ atsiusntimas prasidėjo.";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atšaukti";
 
@@ -393,6 +486,9 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Kai galėsite pradėti naudoti el. pašto adreso apsaugos priemonę, atsiųsime pranešimą.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Ar norite, kad praneštume, kai ateis jūsų eilė?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Prisijungėte prie laukimo sąrašo ir paprašėte mus informuoti, kai ateis jūsų eilė išbandyti mūsų parengtą el. pašto adreso apsaugos priemonę.";
@@ -1053,6 +1149,18 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Būtina prieiga prie mikrofono";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "GERAI";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Atšaukti";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "„DuckDuckGo“ niekada nesiklauso jūsų pokalbių. Visas kalbos duomenų apdorojimas, skirtas privačiai balsu atliekamai paieškai, vyksta jūsų įrenginyje.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "Privačiai balsu atliekamai paieškai reikalinga prieiga prie mikrofono";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Atšaukti";

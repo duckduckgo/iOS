@@ -1,5 +1,11 @@
+/* No comment provided by engineer. */
+"%@" = "%@";
+
 /* Buton label for Edit action */
 "action.generic.edit" = "Редактиране";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Показване";
 
 /* Button label for Undo action */
 "action.generic.undo" = "Отмяна";
@@ -24,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Деактивиране на защита на поверителността";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Изтеглени файлове";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Редактиране на отметка";
@@ -84,6 +93,24 @@
 
 /* Share action */
 "action.title.share" = "Споделяне";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Добави приспособлението";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Получете бърз достъп до поверително търсене и до любимите си сайтове.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Натиснете продължително началния екран, за да влезете в режим за пренареждане.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Натиснете бутона плюс %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Открийте и изберете DuckDuckGo. След това изберете приспособление.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "На едно докосване от любимите уебсайтове.";
 
 /* No comment provided by engineer. */
 "alert.message.bookmarkAll" = "Съществуващите отметки няма да бъдат дублирани.";
@@ -147,6 +174,12 @@
 
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Изтриване";
+
+/* Delete bookmark folder alert message plural */
+"bookmark.deleteFolderAlert.message.plural" = "Сигурни ли сте, че искате да изтриете тази папка и %i елемента?";
+
+/* Delete bookmark folder alert message */
+"bookmark.deleteFolderAlert.message.singular" = "Сигурни ли сте, че искате да изтриете тази папка и %i елемент?";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Изтриване на %@?";
@@ -238,6 +271,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "ОПИШЕТЕ ПРОБЛЕМА";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Миналия месец";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Миналата седмица";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Днес";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Вчера";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Скрий съветите за постоянно";
 
@@ -322,6 +367,54 @@
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo блокира автоматично много тракери. С настройката \"Глобален контрол на поверителността\" (GPC) можете също да поискате от участващите уебсайтове да ограничат продажбата или споделянето на Вашите лични данни на/с други компании.";
 
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Запазване в Изтеглени файлове";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Отмени";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Сигурни ли сте, че искате да отмените изтеглянето на този файл?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Възобновяване";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Отмяна на изтеглянето?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Изтриване на всички";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Все още няма изтеглени файлове";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Изтегляне - %1$@ от %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Изтегляне - %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Изтеглени файлове";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Това действие ще отмени също и файловете, които се изтеглят в момента";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Всички файлове са изтрити";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Завършено изтегляне на %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Файл %@ е изтрит";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Неуспешно изтегляне. Проверете интернет връзката.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Стартирано изтегляне на %@";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отмени";
 
@@ -393,6 +486,9 @@
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "Ще ви изпратим известие, когато можете да започнете да използвате защитата на имейла.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Искате ли да Ви изпратим известие, когато дойде Вашият ред?";
 
 /* Body text for the email waitlist notification */
 "email.waitlist.notification.body" = "Присъединихте се към списъка с чакащи и поискахте да ви уведомим, когато дойде вашият ред да изпробвате нашата функция за защита на имейл.";
@@ -1053,6 +1149,18 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Изисква се достъп до микрофона";
+
+/* Voice-search privacy accept alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.accept" = "ОК";
+
+/* Voice-search privacy reject alert action */
+"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Отмени";
+
+/* Message for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo никога не слуша какво казвате. При поверително гласово търсене всички гласови данни се обработват на Вашето устройство.";
+
+/* Title for alert explaining voice-search privacy */
+"voiceSearch.alert.privacy-acknowledgment.title" = "За поверително гласово търсене се изисква достъп до микрофона";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Отмени";

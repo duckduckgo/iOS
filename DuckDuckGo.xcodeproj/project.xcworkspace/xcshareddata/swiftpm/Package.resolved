@@ -1,86 +1,79 @@
 {
-  "pins" : [
-    {
-      "identity" : "browserserviceskit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/BrowserServicesKit.git",
-      "state" : {
-        "branch" : "jacek/link-protection",
-        "revision" : "768bf34e9f2e43453eb8735385ed195b0ea9598a"
+  "object": {
+    "pins": [
+      {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
+        "state": {
+          "branch": "jacek/link-protection",
+          "revision": "4f8617dd963107e49f6079991f63f243885b4684",
+          "version": null
+        }
+      },
+      {
+        "package": "GRDB",
+        "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "9efe5a515acff8b73f69a31a65fc2bce2a823219",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
+        "state": {
+          "branch": null,
+          "revision": "32e4acdf6971f58f5ad552389cf2d7d016334eaf",
+          "version": "7.2.0"
+        }
+      },
+      {
+        "package": "Lottie",
+        "repositoryURL": "https://github.com/duckduckgo/lottie-ios.git",
+        "state": {
+          "branch": "2.5.3/spm",
+          "revision": "58eabd4767dcd4862d0e0a6a93e08ff0746141c6",
+          "version": null
+        }
+      },
+      {
+        "package": "OHHTTPStubs",
+        "repositoryURL": "https://github.com/AliSoftware/OHHTTPStubs.git",
+        "state": {
+          "branch": null,
+          "revision": "12f19662426d0434d6c330c6974d53e2eb10ecd9",
+          "version": "9.1.0"
+        }
+      },
+      {
+        "package": "Punycode",
+        "repositoryURL": "https://github.com/gumob/PunycodeSwift.git",
+        "state": {
+          "branch": "master",
+          "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
+          "version": "0.5.0"
+        }
+      },
+      {
+        "package": "Swifter",
+        "repositoryURL": "https://github.com/httpswift/swifter.git",
+        "state": {
+          "branch": null,
+          "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
+          "version": "1.5.0"
+        }
       }
-    },
-    {
-      "identity" : "grdb.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/GRDB.swift.git",
-      "state" : {
-        "revision" : "9efe5a515acff8b73f69a31a65fc2bce2a823219",
-        "version" : "1.1.0"
-      }
-    },
-    {
-      "identity" : "kingfisher",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/onevcat/Kingfisher.git",
-      "state" : {
-        "revision" : "32e4acdf6971f58f5ad552389cf2d7d016334eaf",
-        "version" : "7.2.0"
-      }
-    },
-    {
-      "identity" : "lottie-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/lottie-ios.git",
-      "state" : {
-        "branch" : "2.5.3/spm",
-        "revision" : "58eabd4767dcd4862d0e0a6a93e08ff0746141c6"
-      }
-    },
-    {
-      "identity" : "ohhttpstubs",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/AliSoftware/OHHTTPStubs.git",
-      "state" : {
-        "revision" : "12f19662426d0434d6c330c6974d53e2eb10ecd9",
-        "version" : "9.1.0"
-      }
-    },
-    {
-      "identity" : "punycodeswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gumob/PunycodeSwift.git",
-      "state" : {
-        "branch" : "master",
-        "revision" : "4356ec54e073741449640d3d50a1fd24fd1e1b8b"
-      }
-    },
-    {
-      "identity" : "swift-argument-parser",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser",
-      "state" : {
-        "revision" : "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
-        "version" : "0.5.0"
-      }
-    },
-    {
-      "identity" : "swifter",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/httpswift/swifter.git",
-      "state" : {
-        "revision" : "9483a5d459b45c3ffd059f7b55f9638e268632fd",
-        "version" : "1.5.0"
-      }
-    },
-    {
-      "identity" : "trackerradarkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/duckduckgo/TrackerRadarKit.git",
-      "state" : {
-        "revision" : "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
-        "version" : "1.0.3"
-      }
-    }
-  ],
-  "version" : 2
+    ]
+  },
+  "version": 1
 }

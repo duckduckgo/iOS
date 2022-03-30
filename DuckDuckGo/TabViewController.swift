@@ -190,10 +190,10 @@ class TabViewController: UIViewController {
         }
     }
     
-    private lazy var ampProtection: AMPProtection = {
-        AMPProtection(privacyManager: ContentBlocking.privacyConfigurationManager,
-                      contentBlockingManager: ContentBlocking.contentBlockingManager,
-                      errorReporting: Self.debugEvents)
+    private lazy var linkProtection: LinkProtection = {
+        LinkProtection(privacyManager: ContentBlocking.privacyConfigurationManager,
+                       contentBlockingManager: ContentBlocking.contentBlockingManager,
+                       errorReporting: Self.debugEvents)
     }()
     
     private var userScripts: [UserScript] = []
@@ -345,9 +345,9 @@ class TabViewController: UIViewController {
             consumeCookiesThenLoadRequest(request)
         } else if let request = request {
             if let url = request.url {
-                ampProtection.getCleanURL(from: url,
-                                          onExtracting: { showProgressIndicator() },
-                                          completion: { [weak self] cleanURL in self?.load(urlRequest: .userInitiated(cleanURL)) })
+                linkProtection.getCleanURL(from: url,
+                                           onExtracting: { showProgressIndicator() },
+                                           completion: { [weak self] cleanURL in self?.load(urlRequest: .userInitiated(cleanURL)) })
             } else {
                 load(urlRequest: request)
             }
@@ -406,13 +406,13 @@ class TabViewController: UIViewController {
         
         lastError = nil
         updateContentMode()
-        ampProtection.getCleanURL(from: url, onExtracting: {
+        linkProtection.getCleanURL(from: url, onExtracting: {
             showProgressIndicator()
         }, completion: { [weak self] url in
             self?.load(urlRequest: .userInitiated(url))
         })
     }
-                                  
+    
     func prepareForDataClearing(completion: @escaping () -> Void) {
         webView.stopLoading()
         webView.load(URLRequest(url: URL(string: "about:blank")!))
@@ -844,8 +844,8 @@ class TabViewController: UIViewController {
                               installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.contentBlockingManager.currentTDSRules?.etag ?? "",
-                              ampUrl: ampProtection.lastAMPURLString,
-                              urlParametersRemoved: ampProtection.urlParametersRemoved)
+                              ampUrl: linkProtection.lastAMPURLString,
+                              urlParametersRemoved: linkProtection.urlParametersRemoved)
     }
     
     public func print() {
@@ -1081,7 +1081,7 @@ extension TabViewController: WKNavigationDelegate {
         hideErrorMessage()
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
-        ampProtection.cancelOngoingExtraction()
+        linkProtection.cancelOngoingExtraction()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1302,10 +1302,10 @@ extension TabViewController: WKNavigationDelegate {
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
-            let didRewriteLink = ampProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
-                                                                          navigationAction: navigationAction,
-                                                                          onExtracting: { showProgressIndicator() },
-                                                                          onLinkRewrite: { [weak self] newURL, navigationAction in
+            let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
+                                                                           navigationAction: navigationAction,
+                                                                           onExtracting: { showProgressIndicator() },
+                                                                           onLinkRewrite: { [weak self] newURL, navigationAction in
                 guard let self = self else { return }
                 if self.isNewTargetBlankRequest(navigationAction: navigationAction) {
                     self.delegate?.tab(self, didRequestNewTabForUrl: newURL, openedByPage: true)
@@ -1313,7 +1313,7 @@ extension TabViewController: WKNavigationDelegate {
                     self.load(url: newURL)
                 }
             },
-                                                                          policyDecisionHandler: decisionHandler)
+                                                                           policyDecisionHandler: decisionHandler)
             
             if didRewriteLink {
                 return

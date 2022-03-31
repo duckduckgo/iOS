@@ -939,11 +939,13 @@ class TabViewController: UIViewController {
     }
 
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
-              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
-              let delegate = self.delegate else { return }
+        guard let delegate = self.delegate,
+              delegate.tabCheckIfItsBeingCurrentlyPresented(self),
+              FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
+              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self)
+        else { return }
         
-        if delegate.tabCheckIfItsBeingCurrentlyPresented(self) {
+        if mostRecentAutoPreviewDownloadID == download.id {
             fileHandler.preview()
         } else {
             Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)

@@ -110,7 +110,7 @@ class DirectoryMonitor {
     }
     
     private func debounceTimerDidFire() {
-        guard case .debounce(let source, let timer) = state else { fatalError("debounce should have source and timer") }
+        guard case .debounce(let source, let timer) = state else { fatalError("state should be .debounce") }
         
         timer.invalidate()
         state = .started(source: source)

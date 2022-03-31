@@ -376,40 +376,40 @@ Sometimes, things should be structs but need to conform to `AnyObject` or are hi
 Here's an example of a well-styled class definition:
 
 ```swift
-class Circle: Shape {
-  var x: Int, y: Int
-  var radius: Double
-  var diameter: Double {
-    get {
-      return radius * 2
-    }
-    set {
-      radius = newValue / 2
-    }
+final class Circle: Shape {
+    var x: Int, y: Int
+    var radius: Double
+    var diameter: Double {
+        get {
+          radius * 2
+        }
+        set {
+          radius = newValue / 2
+        }
   }
 
   init(x: Int, y: Int, radius: Double) {
-    self.x = x
-    self.y = y
-    self.radius = radius
+      self.x = x
+      self.y = y
+      self.radius = radius
   }
 
   convenience init(x: Int, y: Int, diameter: Double) {
-    self.init(x: x, y: y, radius: diameter / 2)
+      self.init(x: x, y: y, radius: diameter / 2)
   }
 
   override func area() -> Double {
-    return Double.pi * radius * radius
+      Double.pi * radius * radius
   }
 }
 
 extension Circle: CustomStringConvertible {
-  var description: String {
-    return "center = \(centerString) area = \(area())"
-  }
-  private var centerString: String {
-    return "(\(x),\(y))"
-  }
+    var description: String {
+        "center = \(centerString) area = \(area())"
+    }
+    private var centerString: String {
+        "(\(x),\(y))"
+    }
 }
 ```
 
@@ -436,7 +436,7 @@ For conciseness, if a computed property is read-only, omit the get clause. The g
 **Preferred**:
 ```swift
 var diameter: Double {
-  return radius * 2
+    radius * 2
 }
 ```
 
@@ -456,10 +456,10 @@ Marking classes or members as `final` in tutorials can distract from the main to
 ```swift
 // Turn any generic type into a reference type using this Box class.
 final class Box<T> {
-  let value: T
-  init(_ value: T) {
-    self.value = value
-  }
+    let value: T
+    init(_ value: T) {
+        self.value = value
+    }
 }
 ```
 
@@ -473,16 +473,14 @@ func reticulateSplines(spline: [Double]) -> Bool {
 }
 ```
 
-For functions with long signatures, put each parameter on a new line and add an extra indent on subsequent lines:
+For functions with long signatures, put each following parameter on a new line:
 
 ```swift
-func reticulateSplines(
-  spline: [Double], 
-  adjustmentFactor: Double,
-  translateConstant: Int, 
-  comment: String
-) -> Bool {
-  // reticulate code goes here
+func reticulateSplines(spline: [Double],
+                        adjustmentFactor: Double,
+                        translateConstant: Int,
+                        comment: String) -> Bool {
+    // reticulate code goes here
 }
 ```
 
@@ -803,11 +801,11 @@ Extend object lifetime using the `[weak self]` and `guard let self = self else {
 **Preferred**
 ```swift
 resource.request().onComplete { [weak self] response in
-  guard let self = self else {
-    return
-  }
-  let model = self.updateModel(response)
-  self.updateUI(model)
+    guard let self = self else {
+        return
+    }
+    let model = self.updateModel(response)
+    self.updateUI(model)
 }
 ```
 
@@ -815,8 +813,8 @@ resource.request().onComplete { [weak self] response in
 ```swift
 // might crash if self is released before response returns
 resource.request().onComplete { [unowned self] response in
-  let model = self.updateModel(response)
-  self.updateUI(model)
+    let model = self.updateModel(response)
+    self.updateUI(model)
 }
 ```
 
@@ -824,8 +822,8 @@ resource.request().onComplete { [unowned self] response in
 ```swift
 // deallocate could happen between updating the model and updating UI
 resource.request().onComplete { [weak self] response in
-  let model = self?.updateModel(response)
-  self?.updateUI(model)
+    let model = self?.updateModel(response)
+    self?.updateUI(model)
 }
 ```
 

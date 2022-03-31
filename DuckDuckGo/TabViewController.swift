@@ -108,6 +108,7 @@ class TabViewController: UIViewController {
     var isShowingFullScreenDaxDialog = false
     
     var temporaryDownloadForPreviewedFile: Download?
+    var mostRecentAutoPreviewDownloadID: UUID?
     
     public var url: URL? {
         didSet {
@@ -938,11 +939,13 @@ class TabViewController: UIViewController {
     }
 
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
-              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
-              let delegate = self.delegate else { return }
+        guard let delegate = self.delegate,
+              delegate.tabCheckIfItsBeingCurrentlyPresented(self),
+              FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
+              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self)
+        else { return }
         
-        if delegate.tabCheckIfItsBeingCurrentlyPresented(self) {
+        if mostRecentAutoPreviewDownloadID == download.id {
             fileHandler.preview()
         } else {
             Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
@@ -1034,21 +1037,25 @@ extension TabViewController: WKNavigationDelegate {
         } else {
             let downloadManager = AppDependencyProvider.shared.downloadManager
             
-            let startDownload = {
+            let startDownload: () -> Download? = {
                 let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
                 if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
                     downloadManager.startDownload(download)
+                    return download
+                } else {
+                    return nil
                 }
             }
             
             if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-                startDownload()
+                let download = startDownload()
+                mostRecentAutoPreviewDownloadID = download?.id
                 Pixel.fire(pixel: .downloadStarted,
                            withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
             } else {
                 if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
                     let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
-                        startDownload()
+                        _ = startDownload()
                         Pixel.fire(pixel: .downloadStarted,
                                    withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "0"])
                         

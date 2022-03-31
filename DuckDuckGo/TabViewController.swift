@@ -1041,13 +1041,12 @@ extension TabViewController: WKNavigationDelegate {
                 }
             }
             
-            if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
-                
-                if FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
-                    startDownload()
-                    Pixel.fire(pixel: .downloadStarted,
-                               withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-                } else {
+            if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+                startDownload()
+                Pixel.fire(pixel: .downloadStarted,
+                           withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
+            } else {
+                if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
                     let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
                         startDownload()
                         Pixel.fire(pixel: .downloadStarted,
@@ -1064,7 +1063,7 @@ extension TabViewController: WKNavigationDelegate {
                     }
                 }
             }
-            
+        
             decisionHandler(.cancel)
         }
     }

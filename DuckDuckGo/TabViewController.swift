@@ -108,6 +108,7 @@ class TabViewController: UIViewController {
     var isShowingFullScreenDaxDialog = false
     
     var temporaryDownloadForPreviewedFile: Download?
+    var mostRecentAutoPreviewDownloadID: UUID?
     
     public var url: URL? {
         didSet {
@@ -1034,21 +1035,25 @@ extension TabViewController: WKNavigationDelegate {
         } else {
             let downloadManager = AppDependencyProvider.shared.downloadManager
             
-            let startDownload = {
+            let startDownload: () -> Download? = {
                 let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
                 if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
                     downloadManager.startDownload(download)
+                    return download
+                } else {
+                    return nil
                 }
             }
             
             if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-                startDownload()
+                let download = startDownload()
+                mostRecentAutoPreviewDownloadID = download?.id
                 Pixel.fire(pixel: .downloadStarted,
                            withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
             } else {
                 if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
                     let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
-                        startDownload()
+                        _ = startDownload()
                         Pixel.fire(pixel: .downloadStarted,
                                    withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "0"])
                         

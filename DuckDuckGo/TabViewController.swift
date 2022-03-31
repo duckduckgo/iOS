@@ -1025,8 +1025,9 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType)
       
-        if navigationResponse.canShowMIMEType {
+        if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             setupOrClearTemporaryDownload(for: navigationResponse)
             url = webView.url
             decisionHandler(.allow)

@@ -29,6 +29,10 @@ enum MIMEType: String {
     case calendar = "text/calendar"
     case unknown
     
+    init(from string: String?) {
+        self = MIMEType(rawValue: string ?? "") ?? .unknown
+    }
+    
     var isHTML: Bool {
         switch self {
         case .html, .xhtml:

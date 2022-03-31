@@ -346,7 +346,8 @@ class TabViewController: UIViewController {
         } else if let request = request {
             if let url = request.url {
                 linkProtection.getCleanURL(from: url,
-                                           onExtracting: { showProgressIndicator() },
+                                           onStartExtracting: { showProgressIndicator() },
+                                           onFinishExtracting: { },
                                            completion: { [weak self] cleanURL in self?.load(urlRequest: .userInitiated(cleanURL)) })
             } else {
                 load(urlRequest: request)
@@ -406,9 +407,10 @@ class TabViewController: UIViewController {
         
         lastError = nil
         updateContentMode()
-        linkProtection.getCleanURL(from: url, onExtracting: {
-            showProgressIndicator()
-        }, completion: { [weak self] url in
+        linkProtection.getCleanURL(from: url,
+                                   onStartExtracting: { showProgressIndicator() },
+                                   onFinishExtracting: { },
+                                   completion: { [weak self] url in
             self?.load(urlRequest: .userInitiated(url))
         })
     }
@@ -1304,7 +1306,8 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.navigationType == .linkActivated {
             let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
                                                                            navigationAction: navigationAction,
-                                                                           onExtracting: { showProgressIndicator() },
+                                                                           onStartExtracting: { showProgressIndicator() },
+                                                                           onFinishExtracting: { },
                                                                            onLinkRewrite: { [weak self] newURL, navigationAction in
                 guard let self = self else { return }
                 if self.isNewTargetBlankRequest(navigationAction: navigationAction) {

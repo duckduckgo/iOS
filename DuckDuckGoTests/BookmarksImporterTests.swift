@@ -95,15 +95,15 @@ class BookmarksImporterTests: XCTestCase {
     }
 
     func test_WhenCreateBookmark_ThenBookmarkCreated() {
-        let importedBookmark = BookmarkOrFolder(name: "AFolder", type: BookmarksImporter.Constants.folder,
+        let importedBookmark = BookmarkOrFolder(name: "AFolder", type: .folder,
                 urlString: Constants.bookmarkURLString, children: nil)
 
         let createdBookmark = importer.createBookmarkOrFolder(name: "A bookmark",
-                                                              type: BookmarksImporter.Constants.bookmark,
+                                                              type: .bookmark,
                                                               urlString: Constants.bookmarkURLString,
                                                               bookmarkOrFolder: importedBookmark)
         XCTAssertNotNil(createdBookmark)
-        XCTAssertEqual(createdBookmark.type, BookmarksImporter.Constants.bookmark)
+        XCTAssertEqual(createdBookmark.type, .bookmark)
     }
 
     func test_WhenSaveBookmarks_ThenDataSaved() async throws {

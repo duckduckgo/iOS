@@ -208,7 +208,7 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    func bookmark(forURL url: URL) async -> BookmarkManagedObject? {
+    public func bookmark(forURL url: URL) async -> BookmarkManagedObject? {
         return await withCheckedContinuation { continuation in
             bookmark(forURL: url) { bookmarkManagedObject in
                 continuation.resume(returning: bookmarkManagedObject)
@@ -230,7 +230,7 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    func favorite(forURL url: URL) async throws -> BookmarkManagedObject? {
+    public func favorite(forURL url: URL) async throws -> BookmarkManagedObject? {
         return await withCheckedContinuation { continuation in
             favorite(forURL: url) { bookmarkManagedObject in
                 continuation.resume(returning: bookmarkManagedObject)
@@ -266,7 +266,7 @@ extension BookmarksCoreDataStorage {
         createFolder(title: title, isFavorite: false, parentID: parentID, completion: completion)
     }
     
-    func saveNewFolder(withTitle: String, parentID: NSManagedObjectID) async throws -> NSManagedObjectID {
+    public func saveNewFolder(withTitle: String, parentID: NSManagedObjectID) async throws -> NSManagedObjectID {
         return try await withCheckedThrowingContinuation { continuation in
             saveNewFolder(withTitle: withTitle, parentID: parentID) { managedObjectID, error in
                 if let error = error {
@@ -520,26 +520,32 @@ extension BookmarksCoreDataStorage {
                                   in: viewContext)
     }
 
-    func recursivelyCreateEntities(from bookmarks: [BookmarkOrFolder],
-                                   parent: BookmarkItemManagedObject,
-                                   in context: NSManagedObjectContext) async throws {
+    private func recursivelyCreateEntities(from bookmarks: [BookmarkOrFolder],
+                                           parent: BookmarkItemManagedObject,
+                                           in context: NSManagedObjectContext) async throws {
         for bookmarkOrFolder in bookmarks {
-            if bookmarkOrFolder.isFolder {
+            if bookmarkOrFolder.isInvalidBookmark {
+                continue
+            }
+
+            switch bookmarkOrFolder.type {
+            case .folder:
                 let folderManagedObjectID = try await saveNewFolder(withTitle: bookmarkOrFolder.name, parentID: parent.objectID)
                 if let children = bookmarkOrFolder.children, let bookmarkFolderManagedObject = await getFolder(objectID: folderManagedObjectID) {
                     try await recursivelyCreateEntities(from: children, parent: bookmarkFolderManagedObject, in: context)
                 }
-            } else if bookmarkOrFolder.isFavorite {
-                if let url = bookmarkOrFolder.url, await !containBookmark(url: url, searchType: .favoritesOnly) {
+            case .favorite:
+                if let url = bookmarkOrFolder.url, await !containsBookmark(url: url, searchType: .favoritesOnly) {
                     _ = try await saveNewFavorite(withTitle: bookmarkOrFolder.name, url: url)
                 }
-            } else {
+            case .bookmark:
                 if let url = bookmarkOrFolder.url {
-                    if parent == topLevelBookmarksFolder, await containBookmark(url: url, searchType: .bookmarksOnly) {
+                    if parent == topLevelBookmarksFolder,
+                       await containsBookmark(url: url, searchType: .topLevelBookmarksOnly, parentId: parent.objectID) {
                         continue
                     } else {
                         _ = try await saveNewBookmark(withTitle: bookmarkOrFolder.name, url: url, parentID: parent.objectID)
-                   }
+                    }
                 }
             }
         }
@@ -643,13 +649,17 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private enum SearchType {
+    internal enum SearchType {
         case bookmarksOnly
         case favoritesOnly
         case bookmarksAndFavorites
+        case topLevelBookmarksOnly
     }
     
-    private func containsBookmark(url: URL, searchType: SearchType, completion: @escaping BookmarkExistsMainThreadCompletion) {
+    private func containsBookmark(url: URL,
+                                  searchType: SearchType,
+                                  parentId: NSManagedObjectID? = nil,
+                                  completion: @escaping BookmarkExistsMainThreadCompletion) {
         viewContext.perform {
             let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
             fetchRequest.fetchLimit = 1
@@ -669,6 +679,17 @@ extension BookmarksCoreDataStorage {
                 fetchRequest.predicate = NSPredicate(format: "%K == %@",
                                                      #keyPath(BookmarkManagedObject.url),
                                                      url as NSURL)
+            case .topLevelBookmarksOnly:
+                guard let parentId = parentId else {
+                    completion(false)
+                    return
+                }
+                fetchRequest.predicate = NSPredicate(format: "%K == %@ AND %K == false AND %K == %@",
+                                                     #keyPath(BookmarkManagedObject.url),
+                                                     url as NSURL,
+                                                     #keyPath(BookmarkManagedObject.isFavorite),
+                                                     #keyPath(BookmarkManagedObject.parent),
+                                                     parentId)
             }
             
             guard let result = try? self.viewContext.count(for: fetchRequest) else {
@@ -679,9 +700,9 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func containBookmark(url: URL, searchType: SearchType) async -> Bool {
+    internal func containsBookmark(url: URL, searchType: SearchType, parentId: NSManagedObjectID? = nil) async -> Bool {
         return await withCheckedContinuation({ continuation in
-            containsBookmark(url: url, searchType: searchType) { exists in
+            containsBookmark(url: url, searchType: searchType, parentId: parentId) { exists in
                 return continuation.resume(returning: exists)
             }
         })

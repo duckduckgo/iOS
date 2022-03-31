@@ -114,7 +114,7 @@ final public class BookmarksImporter {
                         //  Handling for DDG favorites imported from Android
                         if folderName == Constants.FavoritesFolder || folderName == Constants.BookmarksFolder {
                             let newBookmarkOrFolder = createBookmarkOrFolder(name: folderName,
-                                                                             type: Constants.folder,
+                                                                             type: .folder,
                                                                              urlString: nil,
                                                                              bookmarkOrFolder: importedBookmark)
                             try parse(documentElement: element,
@@ -122,7 +122,7 @@ final public class BookmarksImporter {
                                       inFavorite: folderName == Constants.FavoritesFolder)
                         } else {
                             let newBookmarkOrFolder = createBookmarkOrFolder(name: folderName,
-                                                                             type: Constants.folder,
+                                                                             type: .folder,
                                                                              urlString: nil,
                                                                              bookmarkOrFolder: importedBookmark)
                             try parse(documentElement: element, importedBookmark: newBookmarkOrFolder)
@@ -139,7 +139,7 @@ final public class BookmarksImporter {
 
                             if let link = try? linkItem.attr(Constants.href), let title = try? linkItem.text() {
                                 _ = createBookmarkOrFolder(name: title,
-                                                           type: isDDGFavoriteAttr || inFavorite ? Constants.favorite : Constants.bookmark,
+                                                           type: isDDGFavoriteAttr || inFavorite ? .favorite : .bookmark,
                                                            urlString: link,
                                                            bookmarkOrFolder: importedBookmark)
                             }
@@ -148,7 +148,10 @@ final public class BookmarksImporter {
                 })
     }
 
-    func createBookmarkOrFolder(name: String, type: String, urlString: String?, bookmarkOrFolder: BookmarkOrFolder?) -> BookmarkOrFolder {
+    func createBookmarkOrFolder(name: String,
+                                type: BookmarkOrFolder.BookmarkType,
+                                urlString: String?,
+                                bookmarkOrFolder: BookmarkOrFolder?) -> BookmarkOrFolder {
         let newBookmarkOrFolder = BookmarkOrFolder(name: name, type: type, urlString: urlString, children: nil)
         if let bookmarkOrFolder = bookmarkOrFolder {
             if bookmarkOrFolder.children == nil {
@@ -173,9 +176,6 @@ final public class BookmarksImporter {
     enum Constants {
         static let FavoritesFolder = "DuckDuckGo Favorites"
         static let BookmarksFolder = "DuckDuckGo Bookmarks"
-        static let folder = "folder"
-        static let bookmark = "bookmark"
-        static let favorite = "favorite"
         static let bookmarkURLString = "https://duckduckgo.com"
         static let bookmarkURL = URL(string: "https://duckduckgo.com")!
         static let favoriteAttribute = "duckduckgo:favorite"

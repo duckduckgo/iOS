@@ -168,6 +168,37 @@ class BookmarksCoreDataStorageTests: XCTestCase {
         XCTAssertEqual(bookmarkManagedObject.url, Constants.bookmarkURL)
     }
 
+    func test_WhenSaveTopLevelBookmark_AndBookmarkAlreadySavedInFolder_ThenBookmarkSaves() async throws {
+        guard let topLevelBookMarksFolder = storage.topLevelBookmarksFolder else {
+            XCTFail("must have topLevelBookMarkFolder")
+            return
+        }
+
+        let folderManagedObjectID = try await storage.saveNewFolder(withTitle: "AFolder", parentID: topLevelBookMarksFolder.objectID)
+        XCTAssertNotNil(folderManagedObjectID)
+
+        let bookmarkManagedObjectID = try await storage.saveNewBookmark(withTitle: Constants.bookmarkTitle,
+                                                                        url: Constants.bookmarkURL,
+                                                                        parentID: folderManagedObjectID)
+        XCTAssertNotNil(bookmarkManagedObjectID)
+
+        guard let bookmarkManagedObject = await storage.bookmark(forURL: Constants.bookmarkURL) else {
+            XCTFail("bookmark should exist")
+            return
+        }
+
+        if let url = bookmarkManagedObject.url,
+           await storage.containsBookmark(url: url, searchType: .topLevelBookmarksOnly, parentId: topLevelBookMarksFolder.objectID) {
+            XCTFail("bookmark should not already exist at top level")
+            return
+        }
+
+        let topLevelBookmarkManagedObjectID = try await storage.saveNewBookmark(withTitle: Constants.bookmarkTitle,
+                                                                                url: Constants.bookmarkURL,
+                                                                                parentID: topLevelBookMarksFolder.objectID)
+        XCTAssertNotNil(topLevelBookmarkManagedObjectID)
+    }
+
     func test_WhenSaveBookmarkInFolder_ThenAllBookmarksCountIsCorrect() async throws {
         guard let topLevelBookMarksFolder = storage.topLevelBookmarksFolder else {
             XCTFail("must have topLevelBookMarkFolder")

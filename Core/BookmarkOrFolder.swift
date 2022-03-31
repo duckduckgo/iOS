@@ -20,13 +20,21 @@
 import Foundation
 
 public class BookmarkOrFolder {
-    public let name: String
-    public let type: String
+    let name: String
+
+    enum BookmarkType: String {
+        case bookmark
+        case favorite
+        case folder
+    }
+
+    let type: BookmarkType
+
     let urlString: String?
 
-    public var children: [BookmarkOrFolder]?
+    var children: [BookmarkOrFolder]?
 
-    public var url: URL? {
+    var url: URL? {
         if let url = self.urlString {
             return URL(string: url)
         }
@@ -34,12 +42,14 @@ public class BookmarkOrFolder {
         return nil
     }
 
-    public var isFolder: Bool {
-        return type == "folder"
-    }
-
-    public var isFavorite: Bool {
-        return type == "favorite"
+    // There's no guarantee that imported bookmarks will have a URL, this is used to filter them out during import
+    var isInvalidBookmark: Bool {
+        switch type {
+        case .bookmark, .favorite:
+            return urlString == nil
+        default:
+            return false
+        }
     }
 
     enum CodingKeys: String, CodingKey {
@@ -49,7 +59,7 @@ public class BookmarkOrFolder {
         case children
     }
 
-    public init(name: String, type: String, urlString: String?, children: [BookmarkOrFolder]?) {
+    init(name: String, type: BookmarkType, urlString: String?, children: [BookmarkOrFolder]?) {
         self.name = name
         self.type = type
         self.urlString = urlString

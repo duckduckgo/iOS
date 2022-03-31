@@ -214,6 +214,7 @@ public class Favicons {
                             fromURL url: URL? = nil,
                             intoCache targetCacheType: CacheType,
                             fromCache: CacheType? = nil,
+                            queue: DispatchQueue? = OperationQueue.current?.underlyingQueue,
                             completion: ((UIImage?) -> Void)? = nil) {
 
         guard let domain = domain,
@@ -229,7 +230,7 @@ public class Favicons {
             return
         }
 
-        guard let queue = OperationQueue.current?.underlyingQueue else { return }
+        guard let queue = queue else { return }
 
         func complete(withImage image: UIImage?) {
             queue.async {

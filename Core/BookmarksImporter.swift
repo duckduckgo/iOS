@@ -161,6 +161,12 @@ final public class BookmarksImporter {
         } else {
             importedBookmarks.append(newBookmarkOrFolder)
         }
+
+        // request Favicon
+        if let urlString = newBookmarkOrFolder.urlString, let url = URL(string: urlString), let host = url.host {
+            Favicons.shared.loadFavicon(forDomain: host, intoCache: .bookmarks, fromCache: .tabs, queue: DispatchQueue.global(qos: .utility))
+        }
+
         return newBookmarkOrFolder
     }
 

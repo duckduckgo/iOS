@@ -253,23 +253,35 @@ class BookmarksViewController: UITableViewController {
     @objc func onApplicationBecameActive(notification: NSNotification) {
         tableView.reloadData()
     }
-    
+
     private func configureBars() {
         self.navigationController?.setToolbarHidden(false, animated: true)
         toolbarItems?.insert(addFolderBarButtonItem, at: 0)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         toolbarItems?.insert(flexibleSpace, at: 1)
         // Edit button is at position 2
-        if #available(iOS 14, *) {
-            toolbarItems?.insert(flexibleSpace, at: 3)
-            toolbarItems?.insert(moreBarButtonItem, at: 4)
-            refreshMoreButton()
-        }
+        configureToolbarMoreItem()
 
         if let dataSourceTitle = dataSource.navigationTitle {
             title = dataSourceTitle
         }
         refreshEditButton()
+    }
+
+    private func configureToolbarMoreItem() {
+        if #available(iOS 14, *) {
+            if tableView.isEditing {
+                if toolbarItems?.count ?? 0 >= 5 {
+                    toolbarItems?.remove(at: 4)
+                    toolbarItems?.remove(at: 3)
+                }
+            } else {
+                let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+                toolbarItems?.insert(flexibleSpace, at: 3)
+                toolbarItems?.insert(moreBarButtonItem, at: 4)
+                refreshMoreButton()
+            }
+        }
     }
 
     private func refreshEditButton() {
@@ -350,6 +362,9 @@ class BookmarksViewController: UITableViewController {
             let result = await BookmarksImporter().parseAndSave(html: html)
             switch result {
             case .success:
+                loadVisibleFavicons()
+                dataSource.bookmarksManager.reloadWidgets()
+
                 let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
                 let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
                 Pixel.fire(pixel: .bookmarkImportSuccess,
@@ -362,6 +377,30 @@ class BookmarksViewController: UITableViewController {
                 Pixel.fire(pixel: .bookmarkImportFailure)
                 DispatchQueue.main.async {
                     ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
+                }
+            }
+        }
+    }
+
+    /// Only force Favicon load and tableView refresh rows that are visible in viewport
+    func loadVisibleFavicons() {
+        guard let numberOfSections = dataSource.numberOfSections?(in: tableView) else {
+            return
+        }
+        var indexPaths: [IndexPath] = []
+
+        for i in 0...numberOfSections {
+            indexPaths.append(contentsOf: tableView.visibleCells
+                .compactMap(tableView.indexPath)
+                .filter { $0.section == i })
+        }
+
+        indexPaths.forEach { indexPath in
+            if let bookmark = dataSource.item(at: indexPath) as? Bookmark, let host = bookmark.url?.host {
+                Favicons.shared.loadFavicon(forDomain: host, intoCache: .bookmarks, queue: DispatchQueue.global(qos: .utility)) { _ in
+                    DispatchQueue.main.async {
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
+                    }
                 }
             }
         }
@@ -441,7 +480,7 @@ class BookmarksViewController: UITableViewController {
         tableView.isEditing = true
         changeEditButtonToDone()
         if #available(iOS 14, *) {
-            refreshMoreButton()
+            configureToolbarMoreItem()
             refreshFooterView()
         }
     }
@@ -451,7 +490,7 @@ class BookmarksViewController: UITableViewController {
         refreshEditButton()
         enableDoneButton()
         if #available(iOS 14, *) {
-            refreshMoreButton()
+            configureToolbarMoreItem()
             refreshFooterView()
         }
     }

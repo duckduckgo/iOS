@@ -102,19 +102,18 @@ struct DownloadsList: View {
     
     @ViewBuilder
     private var toolbarButtons: some View {
-        if editMode == .active {
-            Button {
-                self.deleteAll()
-            } label: {
-                Text(UserText.downloadsListDeleteAllButton)
-                    .font(Font(uiFont: Const.Font.deleteAll))
-                    .foregroundColor(.deleteAll)
-            }
-            .buttonStyle(.plain)
+        Button {
+            self.deleteAll()
+        } label: {
+            Text(UserText.downloadsListDeleteAllButton)
+                .foregroundColor(.deleteAll)
         }
+        .buttonStyle(.plain)
+        .opacity(editMode == .active ? 1.0 : 0.0)
         Spacer()
         EditButton().environment(\.editMode, $editMode)
             .foregroundColor(.barButton)
+            .buttonStyle(.plain)
     }
     
     @available(iOS 14.0, *)
@@ -127,7 +126,6 @@ struct DownloadsList: View {
                     self.deleteAll()
                 } label: {
                     Text(UserText.downloadsListDeleteAllButton)
-                        .font(Font(uiFont: Const.Font.deleteAll))
                         .foregroundColor(.deleteAll)
                 }
                 .foregroundColor(.deleteAll)
@@ -215,7 +213,6 @@ extension DownloadsList {
 private enum Const {
     enum Font {
         static let emptyState = UIFont.appFont(ofSize: 16)
-        static let deleteAll = UIFont.semiBoldAppFont(ofSize: 16)
     }
 }
 

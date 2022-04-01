@@ -1638,13 +1638,15 @@ extension MainViewController: AutoClearWorker {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
+        tabManager.prepareAllTabsExceptCurrentForDataClearing()
+        
         fireButtonAnimator?.animate {
-            self.tabManager.prepareTabsForDataClearing {
-                self.stopAllOngoingDownloads()
-                self.forgetData()
-                DaxDialogs.shared.resumeRegularFlow()
-                self.forgetTabs()
-            }
+            self.tabManager.prepareCurrentTabForDataClearing()
+            
+            self.stopAllOngoingDownloads()
+            self.forgetData()
+            DaxDialogs.shared.resumeRegularFlow()
+            self.forgetTabs()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone)
             transitionCompletion?()

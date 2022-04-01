@@ -1,5 +1,5 @@
 //
-//  MimeType.swift
+//  MIMEType.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -28,6 +28,10 @@ enum MIMEType: String {
     case html = "text/html"
     case calendar = "text/calendar"
     case unknown
+    
+    init(from string: String?) {
+        self = MIMEType(rawValue: string ?? "") ?? .unknown
+    }
     
     var isHTML: Bool {
         switch self {

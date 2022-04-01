@@ -128,7 +128,6 @@ public class BookmarksCoreDataStorage {
     static internal func rootFolderManagedObject(_ context: NSManagedObjectContext) -> BookmarkFolderManagedObject {
         guard let bookmarksFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context)
                 as? BookmarkFolderManagedObject else {
-            // TODO - this should not be fatal
             fatalError("Error creating top level bookmarks folder")
         }
 
@@ -139,7 +138,6 @@ public class BookmarksCoreDataStorage {
     static internal func rootFavoritesFolderManagedObject(_ context: NSManagedObjectContext) -> BookmarkFolderManagedObject {
         guard let bookmarksFolder = NSEntityDescription.insertNewObject(forEntityName: "BookmarkFolderManagedObject", into: context)
                 as? BookmarkFolderManagedObject else {
-            // TODO - this should not be fatal
             fatalError("Error creating top level favorites folder")
         }
 
@@ -906,7 +904,7 @@ extension BookmarksCoreDataStorage {
 
 // MARK: Constants
 extension BookmarksCoreDataStorage {
-    struct Constants {
+    enum Constants {
         static let privateContextName = "EditBookmarksAndFolders"
         static let viewContextName = "ViewBookmarksAndFolders"
 

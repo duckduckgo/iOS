@@ -325,7 +325,8 @@ extension TabViewController {
         AppDependencyProvider.shared.downloadManager.startDownload(download) { error in
             DispatchQueue.main.async {
                 if error == nil, let downloadLink = download.link {
-                    let isFileSizeGreaterThan10MB = (downloadLink.url.fileSize > 10 * 1000 * 1000)
+                    let fileSize = downloadLink.localFileURL?.fileSize ?? 0
+                    let isFileSizeGreaterThan10MB = (fileSize > 10 * 1000 * 1000)
                     Pixel.fire(pixel: .downloadsSharingPredownloadedLocalFile,
                                withAdditionalParameters: [PixelParameters.fileSizeGreaterThan10MB: isFileSizeGreaterThan10MB ? "1" : "0"])
                     completion(downloadLink)

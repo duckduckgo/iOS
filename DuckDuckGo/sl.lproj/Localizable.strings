@@ -4,6 +4,9 @@
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
+/* Button label for a generic show action */
+"action.generic.show" = "Prikaži";
+
 /* Button label for Undo action */
 "action.generic.undo" = "Prekliči spremembe";
 
@@ -27,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Onemogoči zaščito zasebnosti";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Prenosi";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Uredi zaznamek";
@@ -235,6 +241,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "OPIŠITE, KAJ SE JE ZGODILO";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Pretekli mesec";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Prejšnji teden";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Danes";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Včeraj";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Skrivaj nasvete za vedno";
 
@@ -318,6 +336,54 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "DuckDuckGo samodejno blokira številne sledilce. Z globalnim nadzorom zasebnosti (GPC) lahko tudi od sodelujočih spletnih mest zahtevate, da omejijo prodajo ali skupno rabo vaših osebnih podatkov z drugimi podjetji.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Shrani med prenose";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Prekliči";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Ste prepričani, da želite preklicati ta prenos?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Nadaljuj";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Želite preklicati prenos?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Izbriši vse";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Nobena datoteka še ni bila prenesena";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Prenos – %1$@ od %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Prenos poteka – %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Prenosi";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "S tem boste preklicali tudi prenose v teku";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Vse datoteke so bile izbrisane";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Prenos za %@ je končan";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Izbrisano %@";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Prenos ni uspel. Preverite internetno povezavo.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Prenos za %@ se je začel";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Prekliči";

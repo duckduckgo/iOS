@@ -28,12 +28,14 @@ public class Link: NSObject, NSCoding {
     private struct NSCodingKeys {
         static let title = "title"
         static let url = "url"
+        static let localPath = "localPath"
     }
     
     static let appUrls = AppUrls()
 
     public let title: String?
     public let url: URL
+    public let localFileURL: URL?
     
     public var displayTitle: String? {
         let host = url.host?.dropPrefix(prefix: "www.") ?? url.absoluteString
@@ -48,25 +50,28 @@ public class Link: NSObject, NSCoding {
         return displayTitle
     }
 
-    public required init(title: String?, url: URL) {
+    public required init(title: String?, url: URL, localPath: URL? = nil) {
         self.title = title
         self.url = url
+        self.localFileURL = localPath
     }
 
     public convenience required init?(coder decoder: NSCoder) {
         guard let url = decoder.decodeObject(forKey: NSCodingKeys.url) as? URL else { return nil }
         let title = decoder.decodeObject(forKey: NSCodingKeys.title) as? String
-        self.init(title: title, url: url)
+        let localPath = decoder.decodeObject(forKey: NSCodingKeys.localPath) as? URL
+        self.init(title: title, url: url, localPath: localPath)
     }
 
     public func encode(with coder: NSCoder) {
         coder.encode(title, forKey: NSCodingKeys.title)
         coder.encode(url, forKey: NSCodingKeys.url)
+        coder.encode(localFileURL, forKey: NSCodingKeys.localPath)
     }
 
     public override func isEqual(_ other: Any?) -> Bool {
         guard let other = other as? Link else { return false }
-        return title == other.title && url == other.url
+        return title == other.title && url == other.url && localFileURL == other.localFileURL
     }
 
     /**

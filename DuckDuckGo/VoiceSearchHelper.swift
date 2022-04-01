@@ -22,37 +22,41 @@ import Core
 
 protocol VoiceSearchHelperProtocol {
     var isSpeechRecognizerAvailable: Bool { get }
-    var privacyAlertWasConfirmed: Bool { get }
-    func markPrivacyAlertAsConfirmed()
 }
 
 class VoiceSearchHelper: VoiceSearchHelperProtocol {
-    private(set) var isSpeechRecognizerAvailable: Bool = false
-    private var variantManager: VariantManager?
-
-    @UserDefaultsWrapper(key: .voiceSearchPrivacyAlertWasConfirmed, defaultValue: false)
-    private(set) var privacyAlertWasConfirmed: Bool
-    
-    init(_ variantManager: VariantManager? = nil) {
-        self.variantManager = variantManager
-        
-        updateFlag()
-    }
-    
-    func markPrivacyAlertAsConfirmed() {
-        privacyAlertWasConfirmed = true
-    }
-    
-    private func updateFlag() {
-#if targetEnvironment(simulator)
-        isSpeechRecognizerAvailable = true
-#else
-        isSpeechRecognizerAvailable = SpeechRecognizer().isAvailable
-        
-        // We don't want to override the flag in case there's no SpeechRecognizer available for this device
-        if let variantManager = variantManager, isSpeechRecognizerAvailable {
-            isSpeechRecognizerAvailable = variantManager.isSupported(feature: .voiceSearch)
+    private(set) var isSpeechRecognizerAvailable: Bool = false {
+        didSet {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
+            }
         }
-#endif
     }
+    
+    private let speechRecognizer = SpeechRecognizer()
+    
+    init() {
+        // https://app.asana.com/0/1201011656765697/1201271104639596
+        if #available(iOS 15.0, *) {
+#if targetEnvironment(simulator)
+            isSpeechRecognizerAvailable = true
+#else
+            speechRecognizer.delegate = self
+            isSpeechRecognizerAvailable = speechRecognizer.isAvailable
+#endif
+        }
+    }
+}
+
+extension VoiceSearchHelper: SpeechRecognizerDelegate {
+    func speechRecognizer(_ speechRecognizer: SpeechRecognizer, availabilityDidChange available: Bool) {
+        // Avoid unnecessary notifications
+        if isSpeechRecognizerAvailable != available {
+            isSpeechRecognizerAvailable = available
+        }
+    }
+}
+
+extension Notification.Name {
+    public static let speechRecognizerDidChangeAvailability = Notification.Name("com.duckduckgo.app.SpeechRecognizerDidChangeAvailability")
 }

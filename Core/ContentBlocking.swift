@@ -24,89 +24,90 @@ import os.log
 // ContentBlocking.trackerDataManager
 // ContentBlocking.contentBlockingManager
 public final class ContentBlocking {
-
+    
     public static let privacyConfigurationManager
     = PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().etag(for: .privacyConfiguration),
                                   fetchedData: FileStore().loadAsData(forConfiguration: .privacyConfiguration),
-                                      embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
-                                      localProtection: DomainsProtectionUserDefaultsStore(),
-                                      errorReporting: debugEvents)
-
+                                  embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
+                                  localProtection: DomainsProtectionUserDefaultsStore(),
+                                  errorReporting: debugEvents)
+    
     public static let contentBlockingUpdating = ContentBlockingUpdating()
-
+    
     public static let trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet),
-                                                       data: FileStore().loadAsData(forConfiguration: .trackerDataSet),
+                                                              data: FileStore().loadAsData(forConfiguration: .trackerDataSet),
                                                               embeddedDataProvider: AppTrackerDataSetProvider(),
-                                                       errorReporting: debugEvents)
-
+                                                              errorReporting: debugEvents)
+    
     public static let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,
-                                                                   exceptionsSource: exceptionsSource,
-                                                                   updateListener: contentBlockingUpdating,
-                                                                   logger: contentBlockingLog)
+                                                                          exceptionsSource: exceptionsSource,
+                                                                          updateListener: contentBlockingUpdating,
+                                                                          errorReporting: debugEvents,
+                                                                          logger: contentBlockingLog)
     
     private static let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManger: trackerDataManager)
     private static let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
-
+    
     private static let debugEvents = EventMapping<ContentBlockerDebugEvents> { event, scope, error, parameters, onComplete in
         let domainEvent: PixelName
         switch event {
         case .trackerDataParseFailed:
             domainEvent = .trackerDataParseFailed
-
+            
         case .trackerDataReloadFailed:
             domainEvent = .trackerDataReloadFailed
-
+            
         case .trackerDataCouldNotBeLoaded:
             domainEvent = .trackerDataCouldNotBeLoaded
-
+            
         case .privacyConfigurationReloadFailed:
             domainEvent = .privacyConfigurationReloadFailed
-
+            
         case .privacyConfigurationParseFailed:
             domainEvent = .privacyConfigurationParseFailed
-
+            
         case .privacyConfigurationCouldNotBeLoaded:
             domainEvent = .privacyConfigurationCouldNotBeLoaded
-
+            
         case .contentBlockingTDSCompilationFailed:
             if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
                 domainEvent = .contentBlockingTDSCompilationFailed
             } else {
                 domainEvent = .contentBlockingErrorReportingIssue
             }
-
+            
         case .contentBlockingTempListCompilationFailed:
             if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
                 domainEvent = .contentBlockingTempListCompilationFailed
             } else {
                 domainEvent = .contentBlockingErrorReportingIssue
             }
-
+            
         case .contentBlockingAllowListCompilationFailed:
             if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
                 domainEvent = .contentBlockingAllowListCompilationFailed
             } else {
                 domainEvent = .contentBlockingErrorReportingIssue
             }
-
+            
         case .contentBlockingUnpSitesCompilationFailed:
             if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
                 domainEvent = .contentBlockingUnpSitesCompilationFailed
             } else {
                 domainEvent = .contentBlockingErrorReportingIssue
             }
-
+            
         case .contentBlockingFallbackCompilationFailed:
             if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
                 domainEvent = .contentBlockingFallbackCompilationFailed
             } else {
                 domainEvent = .contentBlockingErrorReportingIssue
             }
-
+            
         case .contentBlockingCompilationTime:
             domainEvent = .contentBlockingCompilationTime
         }
-
+        
         if let error = error {
             Pixel.fire(pixel: domainEvent,
                        error: error,
@@ -123,7 +124,7 @@ public final class ContentBlocking {
 
 public struct ContentBlockerProtectionChangedNotification {
     public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
-
+    
     public static let diffKey = "ContentBlockingDiff"
 }
 
@@ -137,33 +138,26 @@ public final class ContentBlockingUpdating: ContentBlockerRulesUpdating {
                                         object: self,
                                         userInfo: [ContentBlockerProtectionChangedNotification.diffKey: changes])
     }
-
-}
-
-extension ContentBlockerRulesManager {
     
-    public var currentTDSRules: Rules? {
-        return currentRules.first(where: { $0.name == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName })
-    }
 }
 
 public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
-
+    
     private struct Keys {
         static let unprotectedDomains = "com.duckduckgo.contentblocker.whitelist"
         static let trackerList = "com.duckduckgo.trackerList"
     }
-
+    
     private let suiteName: String
-
+    
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
         self.suiteName =  suiteName
     }
-
+    
     private var userDefaults: UserDefaults? {
         return UserDefaults(suiteName: suiteName)
     }
-
+    
     public private(set) var unprotectedDomains: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.unprotectedDomains) else { return Set<String>() }
@@ -178,21 +172,21 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
             onStoreChanged()
         }
     }
-
+    
     public func disableProtection(forDomain domain: String) {
         var domains = unprotectedDomains
         domains.insert(domain)
         unprotectedDomains = domains
     }
-
+    
     public func enableProtection(forDomain domain: String) {
         var domains = unprotectedDomains
         domains.remove(domain)
         unprotectedDomains = domains
     }
-
+    
     private func onStoreChanged() {
         ContentBlocking.contentBlockingManager.scheduleCompilation()
     }
-
+    
 }

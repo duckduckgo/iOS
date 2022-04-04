@@ -28,10 +28,8 @@ class DownloadManagerTests: XCTestCase {
     
     var mockDependencyProvider: MockDependencyProvider!
     
-    override func setUp() {
-    }
-    
     override func tearDown() {
+        super.tearDown()
         downloadManagerTestsHelper.deleteAllFiles()
     }
     

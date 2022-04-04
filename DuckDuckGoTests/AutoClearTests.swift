@@ -46,6 +46,8 @@ class AutoClearTests: XCTestCase {
     private var logic: AutoClear!
 
     override func setUp() {
+        super.setUp()
+        
         worker = MockWorker()
         logic = AutoClear(worker: worker)
     }

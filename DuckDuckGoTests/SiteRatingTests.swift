@@ -67,6 +67,8 @@ class SiteRatingTests: XCTestCase {
     fileprivate let classATOS = MockTermsOfServiceStore().add(domain: "example.com", classification: .a, score: -100)
 
     override func setUp() {
+        super.setUp()
+        
         GradeCache.shared.reset()
     }
 
@@ -246,7 +248,7 @@ private class MockTermsOfServiceStore: TermsOfServiceStore {
     
 }
 
-fileprivate extension KnownTracker {
+private extension KnownTracker {
     
     static func build(domain: String, ownerName: String, category: String) -> KnownTracker {
         let owner = KnownTracker.Owner(name: ownerName, displayName: ownerName)

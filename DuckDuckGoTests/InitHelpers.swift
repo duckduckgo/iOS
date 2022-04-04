@@ -87,7 +87,6 @@ extension HTTPCookie {
             properties[HTTPCookiePropertyKey.sameSitePolicy] = policy
         }
         
-        return HTTPCookie(properties: properties)!        
-    }
+        return HTTPCookie(properties: properties)!    }
     
 }

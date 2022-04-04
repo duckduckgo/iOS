@@ -26,11 +26,14 @@ final class AppHTTPSUpgradeStoreTests: XCTestCase {
     var testee: AppHTTPSUpgradeStore!
 
     override func setUp() {
+        super.setUp()
         testee = AppHTTPSUpgradeStore()
         testee.reset()
     }
     
     override func tearDown() {
+        super.tearDown()
+        
         testee.reset()
     }
 

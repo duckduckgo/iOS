@@ -113,7 +113,7 @@ public class WebCacheManager {
         cookieStore.getAllCookies { cookies in
             let group = DispatchGroup()
             cookies.forEach { cookie in
-                if domains.contains(where: { self.isCookie(cookie, matchingDomain: $0)}) {
+                if domains.contains(where: { self.isCookie(cookie, matchingDomain: $0) }) {
                     group.enter()
                     cookieStore.delete(cookie) {
                         group.leave()

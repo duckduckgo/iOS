@@ -88,7 +88,7 @@ final class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
         let silenceThreshold: Float = 0.0030
         let loudThreshold: Float = 0.07
         
-        let sumChannelData = channelDataArray.reduce(0) {$0 + abs($1)}
+        let sumChannelData = channelDataArray.reduce(0) { $0 + abs($1) }
         var channelAverage = sumChannelData / Float(channelDataArray.count)
         channelAverage = min(channelAverage, loudThreshold)
         channelAverage = max(channelAverage, silenceThreshold)

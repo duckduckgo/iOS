@@ -160,7 +160,7 @@ extension TabViewController: FullscreenDaxDialogDelegate {
     }
 }
 
-fileprivate extension DefaultDaxDialogsSettings {
+private extension DefaultDaxDialogsSettings {
     
     var browsingDialogsSeenCount: String {
         let count = [ browsingMajorTrackingSiteShown,

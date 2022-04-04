@@ -74,7 +74,7 @@ class ActionSheetDaxDialogViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0        
+        containerHeight.constant = daxDialogViewController?.calculateHeight() ?? 0
     }
 
     override func viewDidAppear(_ animated: Bool) {

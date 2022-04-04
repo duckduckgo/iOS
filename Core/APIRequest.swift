@@ -88,7 +88,7 @@ public class APIRequest {
             
             if let error = error {
                 completion(nil, error)
-            } else if let error = httpResponse?.validateStatusCode(statusCode: 200..<300) { 
+            } else if let error = httpResponse?.validateStatusCode(statusCode: 200..<300) {
                 completion(nil, error)
             } else {
                 var etag = httpResponse?.headerValue(for: APIHeaders.Name.etag)

@@ -149,6 +149,9 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .doNotSell, defaultValue: true)
     var sendDoNotSell: Bool
     
+    @UserDefaultsWrapper(key: .voiceSearch, defaultValue: true)
+    var voiceSearch: Bool
+    
     var currentFireButtonAnimation: FireButtonAnimationType {
         get {
             if let string = userDefaults?.string(forKey: Keys.currentFireButtonAnimationKey),

@@ -290,6 +290,9 @@
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="Nyt-t3-U84"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="onVoiceSeachToggle:" destination="fAo-H3-Yyo" eventType="valueChanged" id="0fR-iC-NMW"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -2200,7 +2203,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="4WC-3q-ccD">
-                            <rect key="frame" x="0.0" y="149.33333206176763" width="414" height="120"/>
+                            <rect key="frame" x="0.0" y="149.33333206176761" width="414" height="120.00000000000003"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">

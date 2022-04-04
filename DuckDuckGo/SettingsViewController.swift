@@ -74,7 +74,7 @@ class SettingsViewController: UITableViewController {
     }()
     
     private lazy var showShowVoiceSearchCell: Bool = {
-        true
+        AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
     }()
     
     static func loadFromStoryboard() -> UIViewController {
@@ -147,7 +147,7 @@ class SettingsViewController: UITableViewController {
     
     private func configureVoiceSearchCell() {
         voiceSearchCell.isHidden = !showShowVoiceSearchCell
-        voiceSearchToggle.isOn = true
+        voiceSearchToggle.isOn = appSettings.voiceSearch
     }
 
     private func configureThemeCellAccessory() {
@@ -347,6 +347,10 @@ class SettingsViewController: UITableViewController {
 
     @IBAction func onLinkPreviewsToggle(_ sender: UISwitch) {
         appSettings.longPressPreviews = sender.isOn
+    }
+    
+    @IBAction func onVoiceSeachToggle(_ sender: UISwitch) {
+        appSettings.voiceSearch = sender.isOn
     }
 }
 

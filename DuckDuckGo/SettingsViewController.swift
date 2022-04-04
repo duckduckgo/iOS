@@ -47,7 +47,9 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var textSizeCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
+    @IBOutlet weak var voiceSearchCell: UITableViewCell!
     
+    @IBOutlet weak var voiceSearchToggle: UISwitch!
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
@@ -71,6 +73,10 @@ class SettingsViewController: UITableViewController {
         return true
     }()
     
+    private lazy var showShowVoiceSearchCell: Bool = {
+        true
+    }()
+    
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
@@ -81,6 +87,7 @@ class SettingsViewController: UITableViewController {
         configureVersionCell()
         configureDefaultBroswerCell()
         configureWidgetEducationCell()
+        configureVoiceSearchCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -136,6 +143,11 @@ class SettingsViewController: UITableViewController {
     
     private func configureWidgetEducationCell() {
         widgetEducationCell.isHidden = !shouldShowWidgetEducationCell
+    }
+    
+    private func configureVoiceSearchCell() {
+        voiceSearchCell.isHidden = !showShowVoiceSearchCell
+        voiceSearchToggle.isOn = true
     }
 
     private func configureThemeCellAccessory() {
@@ -358,6 +370,7 @@ extension SettingsViewController: Themable {
         authenticationToggle.onTintColor = theme.buttonTintColor
         openUniversalLinksToggle.onTintColor = theme.buttonTintColor
         longPressPreviewsToggle.onTintColor = theme.buttonTintColor
+        voiceSearchToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

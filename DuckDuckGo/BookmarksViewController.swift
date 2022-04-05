@@ -362,7 +362,6 @@ class BookmarksViewController: UITableViewController {
             let result = await BookmarksImporter().parseAndSave(html: html)
             switch result {
             case .success:
-                loadVisibleFavicons()
                 dataSource.bookmarksManager.reloadWidgets()
 
                 let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
@@ -377,30 +376,6 @@ class BookmarksViewController: UITableViewController {
                 Pixel.fire(pixel: .bookmarkImportFailure)
                 DispatchQueue.main.async {
                     ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
-                }
-            }
-        }
-    }
-
-    /// Only force Favicon load and tableView refresh rows that are visible in viewport
-    func loadVisibleFavicons() {
-        guard let numberOfSections = dataSource.numberOfSections?(in: tableView) else {
-            return
-        }
-        var indexPaths: [IndexPath] = []
-
-        for i in 0...numberOfSections {
-            indexPaths.append(contentsOf: tableView.visibleCells
-                .compactMap(tableView.indexPath)
-                .filter { $0.section == i })
-        }
-
-        indexPaths.forEach { indexPath in
-            if let bookmark = dataSource.item(at: indexPath) as? Bookmark, let host = bookmark.url?.host {
-                Favicons.shared.loadFavicon(forDomain: host, intoCache: .bookmarks, queue: DispatchQueue.global(qos: .utility)) { _ in
-                    DispatchQueue.main.async {
-                        self.tableView.reloadRows(at: [indexPath], with: .none)
-                    }
                 }
             }
         }

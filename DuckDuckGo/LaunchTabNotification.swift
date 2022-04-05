@@ -56,7 +56,7 @@ class LaunchTabNotification {
 
 }
 
-fileprivate extension NSNotification.Name {
+private extension NSNotification.Name {
 
     static let launchTab: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.launchTab")
 

@@ -47,7 +47,7 @@ struct WidgetEducationHomeMessage {
     }
     
     private static func makeWidgetEducationViewController(presentingViewController: UIViewController) -> UIViewController {
-        guard #available(iOS 14.0, *) else { fatalError() }
+        guard #available(iOS 14.0, *) else { fatalError("Widget education should be available on iOS 15+ only") }
         return WidgetEducationViewController().embeddedInNavigationController
     }
 }

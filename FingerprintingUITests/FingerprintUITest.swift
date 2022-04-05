@@ -24,6 +24,8 @@ import XCTest
 class FingerprintUITest: XCTestCase {
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
+        
         continueAfterFailure = false
         
         let app = XCUIApplication()
@@ -65,6 +67,7 @@ class FingerprintUITest: XCTestCase {
     }
     
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         removeTheBookmark()
     }
     

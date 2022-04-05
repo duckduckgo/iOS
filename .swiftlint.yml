@@ -1,21 +1,56 @@
 
 disabled_rules:
-  - trailing_whitespace
+  - discarded_notification_center_observer
+  - notification_center_detachment
+  - orphaned_doc_comment
+  - todo
+  - unused_capture_list
 
-# Rule Config
-line_length:
-  warning: 150
-  ignores_comments: true
+opt_in_rules:
+  - closure_end_indentation
+  - closure_spacing
+  - colon
+  - overridden_super_call
+  - unused_import
+  - fatal_error_message
+
+force_cast: warning
+force_try: warning
+legacy_hashing: error
+
 identifier_name:
   min_length: 1
   max_length:
     warning: 40
     error: 60
+  excluded:
+    - i
+    - id
+    - x
+    - y
+    - z
+
+line_length:
+  warning: 150
+  ignores_urls: true
+  ignores_function_declarations: true
+  ignores_comments: true
+
+vertical_whitespace:
+  max_empty_lines: 2
+
+trailing_whitespace:
+  ignores_empty_lines: true
+  ignores_comments: true
+
+private_over_fileprivate:
+  validate_extensions: true
+
 type_name:
-  min_length: 3
-  max_length:
-    warning: 80
-    error: 100
+ min_length: 3
+ max_length:
+   warning: 80
+   error: 100
 
 # General Config
 excluded:

@@ -26,6 +26,8 @@ class UserDefaultsHomeRowReminderStorageTests: XCTestCase {
     let defaultsName = "UserDefaultsHomeRowReminderStorageTests"
 
     override func setUp() {
+        super.setUp()
+        
         UserDefaults(suiteName: defaultsName)?.removePersistentDomain(forName: defaultsName)
     }
 

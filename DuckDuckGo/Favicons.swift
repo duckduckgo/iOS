@@ -142,7 +142,10 @@ public class Favicons {
         guard let domain = domain,
             let resource = defaultResource(forDomain: domain),
             (Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)),
-            let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
+            let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else {
+                loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
+                return
+            }
 
         let replace = {
             Constants.bookmarksCache.removeImage(forKey: resource.cacheKey)

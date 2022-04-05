@@ -88,13 +88,26 @@ final public class BookmarksImporter {
         // create new DL tag
         let dlElement = try newDocument.appendElement("DL")
 
-        // get all childnodes of document body
-        let bodyChildren = body.getChildNodes()
+        // get all childNodes of document body, filtering out Safari Reading list
+        let bodyChildren = body.getChildNodes().filter { isSafariReadingList(node: $0) == false }
 
         // insert DT elements into the new DL element
         try dlElement.insertChildren(0, bodyChildren)
 
         return newDocument
+    }
+
+    func isSafariReadingList(node: Node) -> Bool {
+        if let element = node as? Element {
+            for childElement in element.children() {
+                if let folder = try? childElement.select("H3").first(),
+                    let attribute = try? folder.attr(Constants.idAttribute),
+                    attribute == Constants.readingListId {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     func parse(documentElement: Element, importedBookmark: BookmarkOrFolder?, inFavorite: Bool = false) throws {
@@ -181,6 +194,9 @@ final public class BookmarksImporter {
         static let bookmarkURL = URL(string: "https://duckduckgo.com")!
         static let favoriteAttribute = "duckduckgo:favorite"
         static let isFavorite = "true"
+        static let idAttribute = "id"
+        static let readingListId = "com.apple.ReadingList"
+
         static let href = "href"
     }
 }

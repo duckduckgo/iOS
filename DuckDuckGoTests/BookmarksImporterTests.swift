@@ -61,7 +61,14 @@ class BookmarksImporterTests: XCTestCase {
 
     func test_WhenParseSafariHtml_ThenImportSuccess() async throws {
         try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_safari.html"))
-        XCTAssertEqual(importer.importedBookmarks.count, 11)
+        XCTAssertEqual(importer.importedBookmarks.count, 10)
+    }
+
+    func test_WhenParseSafariHtml_ThenReadingListExcluded() async throws {
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_safari.html"))
+
+        let result = importer.importedBookmarks.filter { $0.name == "Reading List" }
+        XCTAssertEqual(result.count, 0)
     }
 
     func test_WhenParseFirefoxHtml_ThenImportSuccess() async throws {
@@ -111,7 +118,7 @@ class BookmarksImporterTests: XCTestCase {
         try await importer.saveBookmarks(importer.importedBookmarks)
 
         // Note: exhaustive hierarchy is tested in BookmarksExporterTests.testExportHtml
-        XCTAssertEqual(storage.topLevelBookmarksItems.count, 11)
+        XCTAssertEqual(storage.topLevelBookmarksItems.count, 10)
     }
 
     func test_WhenParseHtmlAndSave_ThenDataSaved() async {

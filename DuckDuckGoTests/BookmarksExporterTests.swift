@@ -87,8 +87,6 @@ class BookmarksExporterTests: XCTestCase {
             content.append(BookmarksExporter.Template.closeFolder(level: 2))
             content.append(BookmarksExporter.Template.openFolder(level: 2, named: "Bookmarks Menu"))
             content.append(BookmarksExporter.Template.closeFolder(level: 2))
-            content.append(BookmarksExporter.Template.openFolder(level: 2, named: "Reading List"))
-            content.append(BookmarksExporter.Template.closeFolder(level: 2))
             content.append(buildCommonContent())
             content.append(BookmarksExporter.Template.footer)
 
@@ -98,7 +96,6 @@ class BookmarksExporterTests: XCTestCase {
         }
     }
 
-    // swiftlint:disable line_length
     func test_WhenImportFirefox_ThenExportSuccess() async throws {
         let result = await importer.parseAndSave(html: htmlLoader.fromHtmlFile("MockFiles/bookmarks_firefox.html"))
         switch result {
@@ -270,5 +267,4 @@ class BookmarksExporterTests: XCTestCase {
             BookmarksExporter.Template.closeFolder(level: level)
         ].joined()
     }
-    // swiftlint:enable function_body_length
 }

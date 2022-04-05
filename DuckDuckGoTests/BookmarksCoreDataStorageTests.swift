@@ -146,7 +146,7 @@ class BookmarksCoreDataStorageTests: XCTestCase {
     func test_WhenSaveBookmarkInFolder_ThenBookmarkExistsInFolder() async throws {
         guard let topLevelBookMarksFolder = storage.topLevelBookmarksFolder else {
             XCTFail("must have topLevelBookMarkFolder")
-            return 
+            return
         }
 
         let folderManagedObjectID = try await storage.saveNewFolder(withTitle: "AFolder", parentID: topLevelBookMarksFolder.objectID)

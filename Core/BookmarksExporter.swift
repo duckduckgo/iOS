@@ -110,7 +110,7 @@ extension BookmarksExporter {
     }
 }
 
-fileprivate extension String {
+private extension String {
 
     var escapedForHTML: String {
         self.replacingOccurrences(of: "&", with: "&amp;")

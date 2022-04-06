@@ -131,9 +131,6 @@ final class MacWaitlistViewModel: ObservableObject {
             if permissionGranted {
                 self.viewState = .joinedQueue(.notificationAllowed)
                 MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
-                
-                // To Do Sam: Remove
-                scheduleFakeInvitation()
             } else {
                 self.viewState = .joinedQueue(.notificationsDisabled)
             }
@@ -174,22 +171,6 @@ final class MacWaitlistViewModel: ObservableObject {
         let linkMetadata = MacWaitlistLinkMetadata(inviteCode: inviteCode)
 
         return [linkMetadata]
-    }
-    
-    // MARK: - Debug
-
-    private func scheduleFakeInvitation() {
-        let taskName = "mac-waitlist.fake-invitation"
-        let taskID = UIApplication.shared.beginBackgroundTask(withName: taskName)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            let store = MacBrowserWaitlistKeychainStore()
-            store.store(inviteCode: "ABCD1234")
-
-            MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
-            
-            UIApplication.shared.endBackgroundTask(taskID)
-        }
     }
     
 }

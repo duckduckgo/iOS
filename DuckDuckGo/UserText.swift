@@ -373,7 +373,7 @@ public struct UserText {
         return message.format(arguments: learnMoreString)
     }
     public static func emailWaitlistJoinedWithNotificationSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when Email Protection is ready for you. %@.", comment: "Description text for the email waitlist. Parameter is 'Learn more.'")
+        let message = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when Email Protection is ready for you. %@.", comment: "Description text for the email waitlist. Parameter is 'Learn more.'")
         return message.format(arguments: learnMoreString)
     }
 
@@ -391,7 +391,7 @@ public struct UserText {
         let message = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We do not save your emails. %@.", comment: "Footer text for the email waitlist. Parameter is 'Learn more'.")
         return message.format(arguments: learnMoreString)
     }
-    public static let emailWaitlistLearnMore = NSLocalizedString("email.waitlist.learn-more", value: "Learn more", comment: "Footer text for the email waitlist")
+    public static let emailWaitlistLearnMore = NSLocalizedString("email.waitlist.learn-more", value: "Learn more", comment: "Footer text for the email waitlist")
     public static let emailWaitlistErrorJoining = NSLocalizedString("email.waitlist.error-joining", value: "An error occurred while joining the Waitlist, please try again later", comment: "Error text when failing to join the waitlist")
 
     public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like us to notify you when it’s your turn?", comment: "Title for the permission notification for the email waitlist")
@@ -413,10 +413,6 @@ public struct UserText {
     public static let noVoicePermissionAlertMessage = NSLocalizedString("voiceSearch.alert.no-permission.message", value: "Please allow Microphone access in iOS System Settings for DuckDuckGo to use voice features.", comment: "Message for alert warning the user about missing microphone permission")
     public static let noVoicePermissionActionSettings = NSLocalizedString("voiceSearch.alert.no-permission.action.settings", value: "Settings", comment: "No microphone permission alert action button to open the settings app")
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
-    public static let voiceSearchPrivacyAcknowledgmentTitle = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.title", value: "Microphone Access Required for Private Voice Search", comment: "Title for alert explaining voice-search privacy")
-    public static let voiceSearchPrivacyAcknowledgmentMessage = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.message", value: "DuckDuckGo never listens to what you say. All speech data processing for Private Voice Search happens on your device.", comment: "Message for alert explaining voice-search privacy")
-    public static let voiceSearchPrivacyAcknowledgmentAcceptButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.accept", value: "OK", comment: "Voice-search privacy accept alert action")
-    public static let voiceSearchPrivacyAcknowledgmentRejectButton = NSLocalizedString("voiceSearch.alert.privacy-acknowledgment.action.reject", value: "Cancel", comment: "Voice-search privacy reject alert action")
     public static let voiceSearchFooter = NSLocalizedString("voiceSearch.footer.note", value: "Audio is processed on-device. It's not stored or shared with anyone, including DuckDuckGo.", comment: "Voice-search footer note with on-device privacy warning")
     public static let textSizeDescription = NSLocalizedString("textSize.description", value: "Choose your preferred text size. Websites you view in DuckDuckGo will adjust to it.", comment: "Description text for the text size adjustment setting")
     public static func textSizeFooter(for percentage: String) -> String {
@@ -432,112 +428,49 @@ public struct UserText {
     public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select DuckDuckGo. Then choose a widget.", comment: "")
     
     public static let webJSAlertDisableAlertsButton = NSLocalizedString("webJSAlert.block-alerts.button", value: "Block Alerts", comment: "Block Alerts button for JavaScript alerts")
-
-    // MARK: - Mac Waitlist
     
-    static let macWaitlistTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
+    public static let actionSaveToDownloads = NSLocalizedString("downloads.alert.action.save-to-downloads", value: "Save to Downloads", comment: "Alert action for starting a file dowload")
+    public static func messageDownloadStarted(for filename: String) -> String {
+        let message = NSLocalizedString("downloads.message.download-started", value: "Download started for %@", comment: "Message confirming that the download process has started. Parameter is downloaded file's filename")
+        return message.format(arguments: filename)
+    }
+    public static func messageDownloadComplete(for filename: String) -> String {
+        let message = NSLocalizedString("downloads.message.download-complete", value: "Download complete for %@", comment: "Message confirming that the download process has completed. Parameter is downloaded file's filename")
+        return message.format(arguments: filename)
+    }
+    public static func messageDownloadDeleted(for filename: String) -> String {
+        let message = NSLocalizedString("downloads.message.download-deleted", value: "Deleted %@", comment: "Message confirming the file was deleted. Parameter is file's filename")
+        return message.format(arguments: filename)
+    }
+    public static let messageAllFilesDeleted = NSLocalizedString("downloads.message.all-files-deleted", value: "All files deleted", comment: "Message confirming that all files on the downloads list have been deleted")
     
-    static let macWaitlistPrivacyDisclaimer = NSLocalizedString("mac-waitlist.privacy-disclaimer",
-                                                                       value: "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.",
-                                                                       comment: "Privacy disclaimer for the Mac Waitlist feature")
+    public static let actionGenericShow = NSLocalizedString("action.generic.show", value: "Show", comment: "Button label for a generic show action")
+    public static let actionDownloads = NSLocalizedString("action.title.downloads", value: "Downloads", comment: "Downloads menu item opening the downlods list")
+    public static let downloadsScreenTitle = NSLocalizedString("downloads.downloads-list.title", value: "Downloads", comment: "Downloads list screen title")
     
-    public static let macWaitlistSummary = NSLocalizedString("mac-browser.waitlist.summary", value: "The DuckDuckGo Privacy App for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the macOS browser waitlist")
-    
-    public static let macWaitlistInviteCode = NSLocalizedString("mac-browser.waitlist.invite-code", value: "Invite Code", comment: "Label text for the invite code")
-    
-    public static let macWaitlistJoinedWithNotifications = NSLocalizedString("mac-browser.waitlist.joined.notifications-enabled",
-                                                                                    value: "We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download.",
-                                                                                    comment: "Label text for the Joined Waitlist state with notifications enabled")
-    
-    public static let macWaitlistJoinedWithoutNotifications = NSLocalizedString("mac-browser.waitlist.joined.notifications-declined",
-                                                                                    value: "Your invite to try DuckDuckGo for Mac will arrive here. Check back soon, or we can send you a notification when it’s your turn.",
-                                                                                    comment: "Label text for the Joined Waitlist state with notifications declined")
-    
-    public static func macWaitlistLearnMore(learnMoreString: String) -> String {
-        let message = NSLocalizedString("mac-browser.waitlist.learn-more", value: "%@ about the beta.", comment: "Footer text for the macOS waitlist. Parameter is 'Learn more'.")
-        return message.format(arguments: learnMoreString)
+    public static func downloadProgressMessage(currentSize: String, totalSize: String) -> String {
+        let message = NSLocalizedString("downloads.downloads-list.row.downloading", value: "Downloading - %@ of %@", comment: "Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file.")
+        return message.format(arguments: currentSize, totalSize)
     }
     
-    public static func macWaitlistJoinedWithNotificationSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("mac-browser.waitlist.joined.notification", value: "We’ll send you a notification when we're ready for you. %@.", comment: "Description text for the macOS waitlist. Parameter is 'Learn more.'")
-        return message.format(arguments: learnMoreString)
+    public static func downloadProgressMessageForUnknownTotalSize(currentSize: String) -> String {
+        let message = NSLocalizedString("downloads.downloads-list.row.downloadingUnknownTotalSize", value: "Downloading - %@", comment: "Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB.")
+        return message.format(arguments: currentSize)
     }
 
-    public static let macWaitlistGetANotification = NSLocalizedString("mac-browser.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the macOS waitlist")
-    
-    public static func macWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
-        let message =  NSLocalizedString("mac-browser.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about the macOS browser beta.", comment: "First parameter is 'get a notification', second is 'Learn more'.")
-        return message.format(arguments: getNotifiedString, learnMoreString)
-    }
-    
-    // MARK: Join Waitlist Screen
-    
-    public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Try DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
-    
-    public static let macWaitlistJoin = NSLocalizedString("mac-waitlist.join-waitlist-screen.join", value: "Join the Private Waitlist", comment: "Title for the Join Waitlist screen")
-    
-    public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Windows coming soon!", comment: "Disclaimer for the Join Waitlist screen")
-    
-    public static let macWaitlistJoining = NSLocalizedString("mac-waitlist.join-waitlist-screen.joining", value: "Joining Waitlist...", comment: "Temporary status text for the Join Waitlist screen")
-    
-    // MARK: Notifications
-    
-    public static let macWaitlistAvailableNotificationTitle = NSLocalizedString("mac-waitlist.available.notification.title", value: "DuckDuckGo for Mac is ready!", comment: "Title for the macOS waitlist notification")
-    
-    public static let macWaitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the macOS waitlist notification")
-    
-    // MARK: Queue Screen
-    
-    public static let macWaitlistOnTheList = NSLocalizedString("mac-waitlist.queue-screen.on-the-list", value: "You’re on the list!", comment: "Title for the queue screen")
-    
-    // MARK: Invite Code Screen
-    
-    public static let macWaitlistYoureInvited = NSLocalizedString("mac-waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
-    
-    public static let macWaitlistInviteScreenSubtitle = NSLocalizedString("mac-waitlist.invite-screen.subtitle", value: "Ready to start browsing privately on Mac?", comment: "Subtitle for the Mac Waitlist Invite screen")
-    
-    public static let macWaitlistInviteScreenStep1Title = NSLocalizedString("mac-waitlist.invite-screen.step-1.title", value: "Step 1", comment: "Title on the invite screen")
+    public static let cancelDownloadAlertTitle = NSLocalizedString("downloads.cancel-download.alert.title", value: "Cancel download?", comment: "Title for alert when trying to cancel the file download")
+    public static let cancelDownloadAlertDescription = NSLocalizedString("downloads.cancel-download.alert.message", value: "Are you sure you want to cancel this download?", comment: "Message for alert when trying to cancel the file download")
+    public static let cancelDownloadAlertResumeAction = NSLocalizedString("downloads.cancel-download.alert.resume", value: "Resume", comment: "Resume download action for alert when trying to cancel the file download")
+    public static let cancelDownloadAlertCancelAction = NSLocalizedString("downloads.cancel-download.alert.cancel", value: "Cancel", comment: "Cancel download action for alert when trying to cancel the file download")
 
-    public static let macWaitlistInviteScreenStep1Description = NSLocalizedString("mac-waitlist.invite-screen.step-1.description", value: "Visit this URL on your Mac to download:", comment: "Description on the invite screen")
+    public static let downloadsListDeleteAllButton = NSLocalizedString("downloads.downloads-list.delete-all", value: "Delete All", comment: "Button for deleting all items on downloads list")
+    public static let messageDownloadFailed = NSLocalizedString("downloads.message.download-failed", value: "Failed to download. Check internet connection.", comment: "Message informing that the download has failed due to connection issues")
+    public static let fireButtonInterruptingDownloadsAlertDescription = NSLocalizedString("downloads.fire-button.alert.message", value: "This will also cancel downloads in progress", comment: "Additional alert message shown when there are active downloads when using the fire button")
     
-    public static let macWaitlistInviteScreenStep2Title = NSLocalizedString("mac-waitlist.invite-screen.step-2.title", value: "Step 2", comment: "Title on the invite screen")
+    public static let dateRangeToday = NSLocalizedString("date.range.today", value: "Today", comment: "Title for a section containing only items from today")
+    public static let dateRangeYesterday = NSLocalizedString("date.range.yesterday", value: "Yesterday", comment: "Title for a section containing only items from yesterday")
+    public static let dateRangePastWeek = NSLocalizedString("date.range.past-week", value: "Past week", comment: "Title for a section containing only items from past week")
+    public static let dateRangePastMonth = NSLocalizedString("date.range.past-month", value: "Past month", comment: "Title for a section containing only items from past month")
     
-    public static let macWaitlistInviteScreenStep2Description = NSLocalizedString("mac-waitlist.invite-screen.step-2.description", value: "Open the file to install, then enter your invite code to unlock.", comment: "Description on the invite screen")
-    
-    public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
-    
-    public static let macWaitlistNotificationDisabled = NSLocalizedString("mac-waitlist.notification.disabled", value: "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.", comment: "Text used for the Notifications Disabled state")
-    
-    // MARK: Settings Screen
-    
-    public static let macWaitlistAvailableForDownload = NSLocalizedString("mac-waitlist.settings.available-for-download", value: "Available for download on Mac", comment: "Title for the settings subtitle")
-    
-    public static let macWaitlistSettingsOnTheList = NSLocalizedString("mac-waitlist.settings.on-the-list", value: "You’re on the list!", comment: "Title for the settings subtitle")
-    
-    public static let macWaitlistBrowsePrivately = NSLocalizedString("mac-waitlist.settings.browse-privately", value: "Browse privately with our app for Mac", comment: "Title for the settings subtitle")
-    
-    // MARK: Share Sheet
-    
-    public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "You’re Invited!", comment: "Title for the share sheet entry")
-    
-    public static func macWaitlistShareSheetMessage(code: String) -> String {        
-        let localized = NSLocalizedString("mac-waitlist.share-sheet.message", value: """
-        You're invited!
-        
-        Ready to start browsing privately on Mac?
-        
-        Step 1
-        Visit this URL on your Mac to download:
-        https://duckduckgo.com/mac
-        
-        Step 2
-        Open the file to install, then enter your invite code to unlock.
-        
-        Invite code: %@
-        """, comment: "Message used when sharing to iMessage. Parameter is an eight digit invite code.")
-
-        return localized.format(arguments: code)
-    }
-    
-    
+    public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
 }

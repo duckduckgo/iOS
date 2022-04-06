@@ -29,6 +29,8 @@ class StatisticsLoaderTests: XCTestCase {
     var testee: StatisticsLoader!
 
     override func setUp() {
+        super.setUp()
+        
         mockStatisticsStore = MockStatisticsStore()
         testee = StatisticsLoader(statisticsStore: mockStatisticsStore)
     }

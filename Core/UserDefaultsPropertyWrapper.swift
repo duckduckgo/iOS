@@ -68,11 +68,12 @@ public struct UserDefaultsWrapper<T> {
         case downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
-        case voiceSearchPrivacyAlertWasConfirmed = "com.duckduckgo.app.voiceSearchPrivacyAlertWasConfirmed"
         case bookmarksMigratedFromUserDefaultsToCD = "com.duckduckgo.app.bookmarksMigratedFromUserDefaultsToCoreData"
         case textSize = "com.duckduckgo.ios.textSize"
         
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
+        case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
+
     }
 
     private let key: Key

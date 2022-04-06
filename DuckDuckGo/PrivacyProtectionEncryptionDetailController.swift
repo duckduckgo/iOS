@@ -47,7 +47,8 @@ class PrivacyProtectionEncryptionDetailController: UIViewController {
     private var sections = [Section]()
  
     override func viewDidLoad() {
-
+        super.viewDidLoad()
+        
         Pixel.fire(pixel: .privacyDashboardEncryption)
         
         initTableView()
@@ -192,7 +193,7 @@ extension PrivacyProtectionEncryptionDetailController: UITableViewDataSource {
 
 }
 
-fileprivate extension Data {
+private extension Data {
 
     func hexString() -> String {
         let bytes =  map { String(format: "%02hhx", $0) }

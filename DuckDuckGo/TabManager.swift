@@ -227,19 +227,13 @@ class TabManager {
         model.save()
     }
     
-    func prepareTabsForDataClearing(completion: @escaping () -> Void) {
-
-        let totalCount = tabControllerCache.count
-        
-        var prepared = 0
-        tabControllerCache.forEach { $0.prepareForDataClearing {
-            prepared += 1
-            if prepared >= totalCount {
-                completion()
-            }
-        } }
+    func prepareAllTabsExceptCurrentForDataClearing() {
+        tabControllerCache.filter { $0 != current }.forEach { $0.prepareForDataClearing() }
     }
-
+    
+    func prepareCurrentTabForDataClearing() {
+        current?.prepareForDataClearing()
+    }
 }
 
 extension TabManager: Themable {

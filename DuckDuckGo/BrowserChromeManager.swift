@@ -333,7 +333,7 @@ private class BarsAnimator {
     }
 }
 
-fileprivate extension UIScrollView {
+private extension UIScrollView {
     
     /// Calculate Y-axis content offset corresponding to very bottom of the scroll area
     var contentOffsetYAtBottom: CGFloat {

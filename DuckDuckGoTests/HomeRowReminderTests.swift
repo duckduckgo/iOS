@@ -26,6 +26,8 @@ class HomeRowReminderTests: XCTestCase {
     var storage: MockHomeRowReminderStorage!
 
     override func setUp() {
+        super.setUp()
+        
         storage = MockHomeRowReminderStorage()
     }
 

@@ -34,7 +34,7 @@ private struct Constants {
 public protocol Bookmark: BookmarkItem {
     var url: URL? { get set }
     
-    var displayTitle: String? { get }    
+    var displayTitle: String? { get }
 }
 
 public extension Bookmark {

@@ -27,6 +27,7 @@ class MockDependencyProvider: DependencyProvider {
     var homePageConfiguration: HomePageConfiguration
     var storageCache: StorageCacheProvider
     var voiceSearchHelper: VoiceSearchHelperProtocol
+    var downloadManager: DownloadManager
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -35,5 +36,6 @@ class MockDependencyProvider: DependencyProvider {
         homePageConfiguration = defaultProvider.homePageConfiguration
         storageCache = defaultProvider.storageCache
         voiceSearchHelper = defaultProvider.voiceSearchHelper
+        downloadManager = defaultProvider.downloadManager
     }
 }

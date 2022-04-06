@@ -24,6 +24,8 @@ import XCTest
 class NetworkLeaderboardTests: XCTestCase {
 
     override func setUp() {
+        super.setUp()
+        
         NetworkLeaderboard().reset()
         UserDefaults(suiteName: "test")?.removePersistentDomain(forName: "test")
     }

@@ -22,18 +22,23 @@ import Core
 
 protocol VoiceSearchHelperProtocol {
     var isSpeechRecognizerAvailable: Bool { get }
+    var isVoiceSearchEnabled: Bool { get }
+    
+    func enableVoiceSearch(_ enable: Bool)
 }
 
 class VoiceSearchHelper: VoiceSearchHelperProtocol {
-    private(set) var isSpeechRecognizerAvailable: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
-            }
-        }
+    private let speechRecognizer = SpeechRecognizer()
+    
+    var isVoiceSearchEnabled: Bool {
+        isSpeechRecognizerAvailable && AppDependencyProvider.shared.appSettings.voiceSearchEnabled
     }
     
-    private let speechRecognizer = SpeechRecognizer()
+    private(set) var isSpeechRecognizerAvailable: Bool = false {
+        didSet {
+            notifyAvailabilityChange()
+        }
+    }
     
     init() {
         // https://app.asana.com/0/1201011656765697/1201271104639596
@@ -44,6 +49,17 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
             speechRecognizer.delegate = self
             isSpeechRecognizerAvailable = speechRecognizer.isAvailable
 #endif
+        }
+    }
+    
+    func enableVoiceSearch(_ enable: Bool) {
+        AppDependencyProvider.shared.appSettings.voiceSearchEnabled = enable
+        notifyAvailabilityChange()
+    }
+    
+    private func notifyAvailabilityChange() {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
         }
     }
 }

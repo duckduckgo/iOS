@@ -49,7 +49,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
     @IBOutlet weak var voiceSearchCell: UITableViewCell!
     
-    @IBOutlet weak var voiceSearchToggle: UISwitch!
+    @IBOutlet weak var hideVoiceSearchToggle: UISwitch!
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
@@ -147,7 +147,7 @@ class SettingsViewController: UITableViewController {
     
     private func configureVoiceSearchCell() {
         voiceSearchCell.isHidden = !showShowVoiceSearchCell
-        voiceSearchToggle.isOn = appSettings.voiceSearch
+        hideVoiceSearchToggle.isOn = !appSettings.voiceSearchEnabled
     }
 
     private func configureThemeCellAccessory() {
@@ -349,8 +349,8 @@ class SettingsViewController: UITableViewController {
         appSettings.longPressPreviews = sender.isOn
     }
     
-    @IBAction func onVoiceSeachToggle(_ sender: UISwitch) {
-        appSettings.voiceSearch = sender.isOn
+    @IBAction func onHideVoiceSeachToggle(_ sender: UISwitch) {
+        AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(!sender.isOn)
     }
 }
 
@@ -374,7 +374,7 @@ extension SettingsViewController: Themable {
         authenticationToggle.onTintColor = theme.buttonTintColor
         openUniversalLinksToggle.onTintColor = theme.buttonTintColor
         longPressPreviewsToggle.onTintColor = theme.buttonTintColor
-        voiceSearchToggle.onTintColor = theme.buttonTintColor
+        hideVoiceSearchToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

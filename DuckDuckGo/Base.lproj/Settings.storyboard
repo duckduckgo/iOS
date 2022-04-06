@@ -276,7 +276,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Voice-Search" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFi-YT-JmF">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Hide Voice Search Icon" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFi-YT-JmF">
                                                     <rect key="frame" x="20" y="9.9999999999999982" width="305" height="24.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="crl-32-aLI"/>
@@ -291,7 +291,7 @@
                                                         <constraint firstAttribute="width" constant="49" id="Nyt-t3-U84"/>
                                                     </constraints>
                                                     <connections>
-                                                        <action selector="onVoiceSeachToggle:" destination="fAo-H3-Yyo" eventType="valueChanged" id="0fR-iC-NMW"/>
+                                                        <action selector="onHideVoiceSeachToggle:" destination="fAo-H3-Yyo" eventType="valueChanged" id="lvD-pB-YDk"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -774,6 +774,7 @@
                         <outlet property="emailProtectionAccessoryText" destination="mtJ-8m-qOK" id="b4k-OA-YA8"/>
                         <outlet property="emailProtectionCell" destination="kyY-Fb-Oh6" id="7aW-RF-fJy"/>
                         <outlet property="fireButtonAnimationAccessoryText" destination="AtR-nS-Gun" id="hxe-n6-40j"/>
+                        <outlet property="hideVoiceSearchToggle" destination="g0s-x0-gj6" id="281-As-xN8"/>
                         <outlet property="longPressCell" destination="4cy-nR-Oqa" id="VLj-kO-3Zm"/>
                         <outlet property="longPressPreviewsToggle" destination="Z1R-um-rgF" id="Sgy-b1-Tbb"/>
                         <outlet property="openUniversalLinksToggle" destination="cBU-D1-Ut8" id="LVX-uS-1Xi"/>
@@ -785,7 +786,6 @@
                         <outlet property="versionCell" destination="TYF-GX-a3j" id="KDT-RF-urU"/>
                         <outlet property="versionText" destination="d5n-vG-8kF" id="Mgc-L1-gi4"/>
                         <outlet property="voiceSearchCell" destination="3xN-rp-lcy" id="hXM-XA-PzX"/>
-                        <outlet property="voiceSearchToggle" destination="g0s-x0-gj6" id="281-As-xN8"/>
                         <outlet property="widgetEducationCell" destination="6p8-aW-0yc" id="rkC-f5-EHV"/>
                         <outletCollection property="labels" destination="FHC-1z-Z3v" collectionClass="NSMutableArray" id="IrB-hk-2iB"/>
                         <outletCollection property="labels" destination="oM7-1o-9oY" collectionClass="NSMutableArray" id="51p-86-4KL"/>
@@ -814,6 +814,7 @@
                         <outletCollection property="accessoryLabels" destination="EB8-09-gt2" collectionClass="NSMutableArray" id="Ipo-rO-Bqv"/>
                         <outletCollection property="labels" destination="9Ko-0g-T3h" collectionClass="NSMutableArray" id="60g-rV-iwg"/>
                         <outletCollection property="labels" destination="Fxu-zn-51Z" collectionClass="NSMutableArray" id="BNa-0p-QNA"/>
+                        <outletCollection property="labels" destination="XFi-YT-JmF" collectionClass="NSMutableArray" id="Ayz-fY-Erv"/>
                         <segue destination="fzf-7H-o48" kind="show" identifier="Debug" id="o3U-Oe-eLc"/>
                     </connections>
                 </tableViewController>
@@ -2203,7 +2204,7 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="4WC-3q-ccD">
-                            <rect key="frame" x="0.0" y="149.33333206176761" width="414" height="120.00000000000003"/>
+                            <rect key="frame" x="0.0" y="149.33333206176755" width="414" height="120.00000000000003"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-FQ-9d9">

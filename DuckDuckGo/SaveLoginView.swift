@@ -21,17 +21,29 @@ import SwiftUI
 
 struct SaveLoginView: View {
     var body: some View {
-        VStack {
-            headerView
-                .padding(.top, 5)
-            contentView
+        VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                closeButton
+            }
+            .padding(.horizontal)
+            
+            VStack {
+                contentView
+            }.frame(width: Const.Size.contentWidth)
         }
     }
     
     private var contentView: some View {
-        GeometryReader { geometry in
-            
+        VStack {
             VStack {
+                HStack {
+                    Image(systemName: "globe")
+                    Text("blablala.com")
+                        .font(Const.Fonts.titleCaption)
+                }
+                .padding(.top, 5)
+
                 Text("Do you want DuckDuckGo to save your Login?")
                     .font(Const.Fonts.title)
                     .frame(maxWidth: .infinity)
@@ -43,37 +55,23 @@ struct SaveLoginView: View {
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
                     .padding()
-                
-                buttonsStack
-                
-                Spacer()
-            }.padding(.horizontal, geometry.size.width * 0.12)
+            }.padding(.horizontal)
+            
+            buttonsStack
+            
+            Spacer()
         }
     }
-    
-    private var headerView: some View {
-        ZStack {
-            HStack {
-                Image(systemName: "globe")
-                Text("blablala.com")
-                    .font(Const.Fonts.titleCaption)
-            }
-            HStack {
-                Spacer()
-                closeButton
-            }
-        }
-    }
-    
+
     private var closeButton: some View {
-           Button {
-           } label: {
-               Image(systemName: "xmark")
-                   .frame(width: 13, height: 13)
-                   .foregroundColor(.primary)
-           }
-           .frame(width: 44, height: 44)
-           .contentShape(Rectangle())
+        Button {
+        } label: {
+            Image(systemName: "xmark")
+                .frame(width: 13, height: 13)
+                .foregroundColor(.primary)
+        }
+        .frame(width: 44, height: 44)
+        .contentShape(Rectangle())
     }
     
     private var buttonsStack: some View {
@@ -122,6 +120,7 @@ private enum Const {
         static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
         
     }
+    
     enum CornerRadius {
         static let CTA: CGFloat = 12
     }
@@ -137,6 +136,7 @@ private enum Const {
     enum Size {
         static let CTAButtonCornerRadius: CGFloat = 12
         static let CTAButtonMaxHeight: CGFloat = 50
+        static let contentWidth: CGFloat = 286
     }
 }
 

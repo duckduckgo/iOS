@@ -443,10 +443,10 @@
 "email.waitlist.joined.no-notification.get-notification" = "get a notification";
 
 /* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. %@.";
+"email.waitlist.joined.notification" = "We’ll send you a notification when Email Protection is ready for you. %@.";
 
 /* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Learn more";
+"email.waitlist.learn-more" = "Learn more";
 
 /* Body text for the permission notification for the email waitlist */
 "email.waitlist.notification-permission.body" = "We’ll send you a notification when you can start using Email Protection.";

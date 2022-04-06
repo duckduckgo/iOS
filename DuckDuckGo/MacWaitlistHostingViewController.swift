@@ -22,7 +22,16 @@ import SwiftUI
 
 final class MacWaitlistViewController: UIViewController {
     
-    private let viewModel = MacWaitlistViewModel()
+    private let viewModel: MacWaitlistViewModel
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.viewModel = MacWaitlistViewModel()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

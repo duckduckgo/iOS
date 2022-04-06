@@ -1020,6 +1020,10 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        
+        if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
+            Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
+        }
       
         if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             setupOrClearTemporaryDownload(for: navigationResponse)

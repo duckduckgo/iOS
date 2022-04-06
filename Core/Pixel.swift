@@ -185,6 +185,7 @@ public enum PixelName: String {
     case downloadsSharingPredownloadedLocalFile = "m_downloads_sharing_predownloaded_local_file"
     
     case downloadPreparingToStart = "m_download_preparing_to_start"
+    case downloadAttemptToOpenBLOB = "m_download_attempt_to_open_blob"
 
     case jsAlertShown = "m_js_alert_shown"
     case jsAlertBlocked = "m_js_alert_blocked"

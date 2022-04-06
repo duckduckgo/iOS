@@ -124,7 +124,7 @@ final class MacWaitlistViewModel: ObservableObject {
         await promptForNotifications()
     }
     
-    private func promptForNotifications() async {        
+    private func promptForNotifications() async {
         do {
             let permissionGranted = try await notificationService.requestAuthorization(options: [.alert])
             

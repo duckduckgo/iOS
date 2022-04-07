@@ -464,6 +464,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
+            Pixel.fire(pixel: .macBrowserWaitlistNotificationShown)
+        }
+        
         if #available(iOS 14.0, *) {
             completionHandler(.banner)
         } else {
@@ -475,9 +479,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            if response.notification.request.identifier == "com.duckduckgo.ios.mac-browser.invite-code-available" {
+            if response.notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
+                Pixel.fire(pixel: .macBrowserWaitlistNotificationLaunched)
                 presentMacBrowserWaitlistSettingsModal()
-            } else {
+            } else if response.notification.request.identifier == EmailWaitlist.Constants.notificationIdentitier {
                 presentEmailWaitlistSettingsModal()
             }
         }

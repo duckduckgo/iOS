@@ -200,7 +200,6 @@ public enum PixelName: String {
     
     case macBrowserWaitlistNotificationShown = "m_notification_shown_mac_waitlist"
     case macBrowserWaitlistNotificationLaunched = "m_notification_launch_mac_waitlist"
-    case macBrowserWaitlistNotificationCancelled = "m_notification_cancel_mac_waitlist"
 
     // MARK: debug pixels
     

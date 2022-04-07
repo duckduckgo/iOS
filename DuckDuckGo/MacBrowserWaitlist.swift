@@ -45,6 +45,7 @@ struct MacBrowserWaitlist {
         static let backgroundTaskName = "Mac Browser Waitlist Status Task"
         static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.macBrowserWaitlistStatus"
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
+        static let notificationIdentitier = "com.duckduckgo.ios.mac-browser.invite-code-available"
     }
     
     struct Notifications {
@@ -164,7 +165,7 @@ struct MacBrowserWaitlist {
         notificationContent.title = UserText.macWaitlistAvailableNotificationTitle
         notificationContent.body = UserText.macWaitlistAvailableNotificationBody
 
-        let notificationIdentifier = "com.duckduckgo.ios.mac-browser.invite-code-available"
+        let notificationIdentifier = Constants.notificationIdentitier
         let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: nil)
 
         UNUserNotificationCenter.current().add(request)

@@ -33,7 +33,7 @@ public enum DuckColor {
     public static let blue30 = Color.init(0x7295F6)
     public static let blue20 = Color.init(0x8FABF9)
     public static let blue10 = Color.init(0xADC2FC)
-    public static let blue00 = Color.init(0xADC2FC)
+    public static let blue0 = Color.init(0xADC2FC)
 }
 
 private extension Color {

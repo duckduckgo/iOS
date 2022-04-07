@@ -29,7 +29,9 @@ class DesignSystemViewController: UIViewController {
     
     private func installContentView() {
         let contentView = DesignSystemView()
+        
         let controller = UIHostingController(rootView: contentView)
-        installChildViewController(controller)
+        let navigationController = UINavigationController(rootViewController: controller)
+        installChildViewController(navigationController)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MacWaitlistHostingViewController.swift
+//  MacWaitlistViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -92,7 +92,7 @@ extension MacWaitlistViewController: MacWaitlistViewModelDelegate {
         
         Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButton)
         
-        activityViewController.completionWithItemsHandler = { activityType, completed, returnedItems, error in
+        activityViewController.completionWithItemsHandler = { _, completed, _, _ in
             if completed {
                 Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButtonShared)
             } else {

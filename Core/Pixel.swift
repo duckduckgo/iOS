@@ -191,6 +191,16 @@ public enum PixelName: String {
     
     case serpRequerySame = "rq_0"
     case serpRequeryNew = "rq_1"
+    
+    // MARK: macOS browser waitlist pixels
+    
+    case macBrowserWaitlistDidPressShareButton = "m_macos_waitlist_did_press_share_button"
+    case macBrowserWaitlistDidPressShareButtonDismiss = "m_macos_waitlist_did_press_share_button_dismiss"
+    case macBrowserWaitlistDidPressShareButtonShared = "m_macos_waitlist_did_press_share_button_shared"
+    
+    case macBrowserWaitlistNotificationShown = "m_notification_shown_mac_waitlist"
+    case macBrowserWaitlistNotificationLaunched = "m_notification_launch_mac_waitlist"
+    case macBrowserWaitlistNotificationCancelled = "m_notification_cancel_mac_waitlist"
 
     // MARK: debug pixels
     

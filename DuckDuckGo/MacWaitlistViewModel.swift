@@ -20,8 +20,11 @@
 import UIKit
 import SwiftUI
 import Combine
-import LinkPresentation
 import Core
+
+protocol MacWaitlistViewModelDelegate: AnyObject {
+    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: MacWaitlistViewModel, inviteCode: String, senderFrame: CGRect)
+}
 
 @MainActor
 final class MacWaitlistViewModel: ObservableObject {
@@ -36,7 +39,7 @@ final class MacWaitlistViewModel: ObservableObject {
     enum ViewAction: Equatable {
         case joinQueue
         case openNotificationSettings
-        case openShareSheet
+        case openShareSheet(CGRect)
         case copyDownloadURLToPasteboard
         case copyInviteCodeToPasteboard
     }
@@ -48,6 +51,8 @@ final class MacWaitlistViewModel: ObservableObject {
     
     @Published var viewState: ViewState
     @Published var showShareSheet = false
+    
+    weak var delegate: MacWaitlistViewModelDelegate?
     
     private let waitlistRequest: WaitlistRequest
     private let waitlistStorage: MacBrowserWaitlistStorage
@@ -101,7 +106,7 @@ final class MacWaitlistViewModel: ObservableObject {
         switch action {
         case .joinQueue: await joinQueue()
         case .openNotificationSettings: openNotificationSettings()
-        case .openShareSheet: openShareSheet()
+        case .openShareSheet(let frame): openShareSheet(senderFrame: frame)
         case .copyDownloadURLToPasteboard: copyDownloadUrlToClipboard()
         case .copyInviteCodeToPasteboard: copyInviteCodeToClipboard()
         }
@@ -145,8 +150,13 @@ final class MacWaitlistViewModel: ObservableObject {
         }
     }
     
-    private func openShareSheet() {
-        self.showShareSheet = true
+    private func openShareSheet(senderFrame: CGRect) {
+        guard let inviteCode = waitlistStorage.getWaitlistInviteCode() else {
+            assertionFailure("Failed to get invite code when creating share sheet")
+            return
+        }
+        
+        self.delegate?.macWaitlistViewModelDidOpenShareSheet(self, inviteCode: inviteCode, senderFrame: senderFrame)
     }
     
     private func copyDownloadUrlToClipboard() {
@@ -162,69 +172,4 @@ final class MacWaitlistViewModel: ObservableObject {
         UIPasteboard.general.string = inviteCode
     }
     
-    func createShareSheetActivityItems() -> [Any] {
-        guard let inviteCode = waitlistStorage.getWaitlistInviteCode() else {
-            assertionFailure("Failed to get invite code when creating share sheet")
-            return []
-        }
-
-        let linkMetadata = MacWaitlistLinkMetadata(inviteCode: inviteCode)
-
-        return [linkMetadata]
-    }
-    
-}
-
-private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
-    
-    fileprivate let metadata: LPLinkMetadata = {
-        let metadata = LPLinkMetadata()
-        metadata.originalURL = AppUrls().macBrowserDownloadURL
-        metadata.url = metadata.originalURL
-        metadata.title = UserText.macWaitlistShareSheetTitle
-        metadata.imageProvider = NSItemProvider(object: UIImage(named: "MacWaitlistShareSheetLogo")!)
-
-        return metadata
-    }()
-    
-    private let inviteCode: String
-    
-    init(inviteCode: String) {
-        self.inviteCode = inviteCode
-    }
-    
-    func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
-        return self.metadata
-    }
-    
-    public func activityViewControllerPlaceholderItem(_: UIActivityViewController) -> Any {
-        return self.metadata.originalURL as Any
-    }
-
-    public func activityViewController(_: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-        guard let type = activityType else {
-            return self.metadata.originalURL as Any
-        }
-
-        switch type {
-        case .message, .mail:
-            return UserText.macWaitlistShareSheetMessage(code: inviteCode)
-        default:
-            return self.metadata.originalURL as Any
-        }
-    }
-    
-}
-
-struct ActivityViewController: UIViewControllerRepresentable {
-
-    var activityItems: [Any]
-    var applicationActivities: [UIActivity]?
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
-        return UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-    }
-
-    func updateUIViewController(_ controller: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityViewController>) { }
-
 }

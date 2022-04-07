@@ -84,7 +84,7 @@
 		4B6484EC27FD1E350050A7A1 /* WaitlistRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E227FD1E340050A7A1 /* WaitlistRequest.swift */; };
 		4B6484ED27FD1E350050A7A1 /* MacBrowserWaitlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E327FD1E340050A7A1 /* MacBrowserWaitlist.swift */; };
 		4B6484EE27FD1E350050A7A1 /* MacBrowserWaitlistDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */; };
-		4B6484EF27FD1E350050A7A1 /* MacWaitlistHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E527FD1E340050A7A1 /* MacWaitlistHostingViewController.swift */; };
+		4B6484EF27FD1E350050A7A1 /* MacWaitlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */; };
 		4B6484F027FD1E350050A7A1 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E627FD1E340050A7A1 /* FontExtension.swift */; };
 		4B6484F127FD1E350050A7A1 /* MacBrowserWaitlistStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E727FD1E340050A7A1 /* MacBrowserWaitlistStorage.swift */; };
 		4B6484F227FD1E350050A7A1 /* MacWaitlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484E827FD1E340050A7A1 /* MacWaitlistViewModel.swift */; };
@@ -818,7 +818,7 @@
 		4B6484E227FD1E340050A7A1 /* WaitlistRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitlistRequest.swift; sourceTree = "<group>"; };
 		4B6484E327FD1E340050A7A1 /* MacBrowserWaitlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlist.swift; sourceTree = "<group>"; };
 		4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistDebugViewController.swift; sourceTree = "<group>"; };
-		4B6484E527FD1E340050A7A1 /* MacWaitlistHostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistHostingViewController.swift; sourceTree = "<group>"; };
+		4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewController.swift; sourceTree = "<group>"; };
 		4B6484E627FD1E340050A7A1 /* FontExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		4B6484E727FD1E340050A7A1 /* MacBrowserWaitlistStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistStorage.swift; sourceTree = "<group>"; };
 		4B6484E827FD1E340050A7A1 /* MacWaitlistViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewModel.swift; sourceTree = "<group>"; };
@@ -2262,7 +2262,7 @@
 				4B6484E427FD1E340050A7A1 /* MacBrowserWaitlistDebugViewController.swift */,
 				4B6484E727FD1E340050A7A1 /* MacBrowserWaitlistStorage.swift */,
 				4B6484E027FD1E340050A7A1 /* MacBrowserWaitlistView.swift */,
-				4B6484E527FD1E340050A7A1 /* MacWaitlistHostingViewController.swift */,
+				4B6484E527FD1E340050A7A1 /* MacWaitlistViewController.swift */,
 				4B6484E827FD1E340050A7A1 /* MacWaitlistViewModel.swift */,
 				4B6484E927FD1E340050A7A1 /* MenuControllerView.swift */,
 				4B6484E127FD1E340050A7A1 /* NotificationService.swift */,
@@ -4825,7 +4825,7 @@
 				CBD4F140279EBFB300B20FD7 /* SwiftUICollectionViewCell.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
-				4B6484EF27FD1E350050A7A1 /* MacWaitlistHostingViewController.swift in Sources */,
+				4B6484EF27FD1E350050A7A1 /* MacWaitlistViewController.swift in Sources */,
 				8531A08E1F9950E6000484F0 /* UnprotectedSitesViewController.swift in Sources */,
 				CBD4F13C279EBF4A00B20FD7 /* HomeMessage.swift in Sources */,
 				3132FA2C27A07A1B00DD7A12 /* FilePreview.swift in Sources */,

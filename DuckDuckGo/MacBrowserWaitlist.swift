@@ -73,8 +73,6 @@ struct MacBrowserWaitlist {
     }
     
     func fetchInviteCodeIfAvailable(completion: @escaping (WaitlistInviteCodeFetchError?) -> Void) {
-        let waitlistRequest = ProductWaitlistRequest(product: .macBrowser)
-        
         guard waitlistStorage.getWaitlistInviteCode() == nil else {
             completion(.alreadyHasInviteCode)
             return

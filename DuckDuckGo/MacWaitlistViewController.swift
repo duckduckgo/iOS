@@ -19,6 +19,8 @@
 
 import UIKit
 import SwiftUI
+import LinkPresentation
+import Core
 
 final class MacWaitlistViewController: UIViewController {
     
@@ -27,6 +29,7 @@ final class MacWaitlistViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         self.viewModel = MacWaitlistViewModel()
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -77,6 +80,64 @@ final class MacWaitlistViewController: UIViewController {
             waitlistViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             waitlistViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+    
+}
+
+extension MacWaitlistViewController: MacWaitlistViewModelDelegate {
+    
+    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: MacWaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
+        let linkMetadata = MacWaitlistLinkMetadata(inviteCode: inviteCode)
+        let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            activityViewController.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
+            activityViewController.popoverPresentationController?.permittedArrowDirections = .right
+            activityViewController.popoverPresentationController?.sourceRect = senderFrame
+        }
+        
+        present(activityViewController, animated: true, completion: nil)
+    }
+    
+}
+
+private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
+    
+    fileprivate let metadata: LPLinkMetadata = {
+        let metadata = LPLinkMetadata()
+        metadata.originalURL = AppUrls().macBrowserDownloadURL
+        metadata.url = metadata.originalURL
+        metadata.title = UserText.macWaitlistShareSheetTitle
+        metadata.imageProvider = NSItemProvider(object: UIImage(named: "MacWaitlistShareSheetLogo")!)
+
+        return metadata
+    }()
+    
+    private let inviteCode: String
+    
+    init(inviteCode: String) {
+        self.inviteCode = inviteCode
+    }
+    
+    func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
+        return self.metadata
+    }
+    
+    public func activityViewControllerPlaceholderItem(_: UIActivityViewController) -> Any {
+        return self.metadata.originalURL as Any
+    }
+
+    public func activityViewController(_: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
+        guard let type = activityType else {
+            return self.metadata.originalURL as Any
+        }
+
+        switch type {
+        case .message, .mail:
+            return UserText.macWaitlistShareSheetMessage(code: inviteCode)
+        default:
+            return self.metadata.originalURL as Any
+        }
     }
     
 }

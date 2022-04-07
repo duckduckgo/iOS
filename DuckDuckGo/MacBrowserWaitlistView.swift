@@ -41,9 +41,7 @@ struct MacBrowserWaitlistView: View {
                 Task { await viewModel.perform(action: action) }
             }
         case .invited(let inviteCode):
-            MacBrowserWaitlistInvitedView(inviteCode: inviteCode,
-                                          activityItems: viewModel.createShareSheetActivityItems(),
-                                          showShareSheet: $viewModel.showShareSheet) { action in
+            MacBrowserWaitlistInvitedView(inviteCode: inviteCode) { action in
                 Task { await viewModel.perform(action: action) }
             }
         }
@@ -174,14 +172,17 @@ private struct AllowNotificationsView: View {
 
 // MARK: - Invite Available Views
 
+private struct ShareButtonFramePreferenceKey: PreferenceKey {
+    static var defaultValue: CGRect = .zero
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {}
+}
+
 struct MacBrowserWaitlistInvitedView: View {
     
     let inviteCode: String
-    let activityItems: [Any]
-    
-    @Binding var showShareSheet: Bool
-    
     let action: (MacWaitlistViewModel.ViewAction) -> Void
+    
+    @State private var shareButtonFrame: CGRect = .zero
     
     var body: some View {
         GeometryReader { proxy in
@@ -234,24 +235,38 @@ struct MacBrowserWaitlistInvitedView: View {
                     
                     Spacer(minLength: 24)
                     
-                    Button(action: {
-                        action(.openShareSheet)
-                    }, label: {
-                        Image("Share")
-                            .foregroundColor(.macWaitlistText)
-                    })
+                    shareButton
                         .padding(.bottom, 26)
-                        .sheet(isPresented: $showShareSheet, onDismiss: {
-                            // Nothing to do
-                        }, content: {
-                            ActivityViewController(activityItems: activityItems)
-                        })
+
                 }
                 .frame(maxWidth: .infinity, minHeight: proxy.size.height)
                 .padding([.leading, .trailing], 18)
                 .multilineTextAlignment(.center)
             }
         }
+    }
+    
+    var shareButton: some View {
+        
+        Button(action: {
+            action(.openShareSheet(shareButtonFrame))
+        }, label: {
+            Image("Share")
+                .foregroundColor(.macWaitlistText)
+        })
+        .frame(width: 44, height: 44)
+        .background(
+            GeometryReader { proxy in
+                Color.clear
+                    .preference(key: ShareButtonFramePreferenceKey.self, value: proxy.frame(in: .global))
+            }
+        )
+        .onPreferenceChange(ShareButtonFramePreferenceKey.self) { newFrame in
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                self.shareButtonFrame = newFrame
+            }
+        }
+        
     }
     
 }
@@ -337,8 +352,6 @@ private struct ActivityIndicator: UIViewRepresentable {
 // MARK: - Previews
 
 private struct MacBrowserWaitlistView_Previews: PreviewProvider {
-
-    @State static var showShareSheet = false
     
     static var previews: some View {
         if #available(iOS 14.0, *) {
@@ -360,15 +373,11 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
                 }
                 
                 PreviewView("Invite Screen With Code") {
-                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE",
-                                                  activityItems: [],
-                                                  showShareSheet: $showShareSheet) { _ in }
+                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
                 }
                 
                 if #available(iOS 15.0, *) {
-                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE",
-                                                  activityItems: [],
-                                                  showShareSheet: $showShareSheet) { _ in }
+                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
                     .previewInterfaceOrientation(.landscapeLeft)
                 }
             }
@@ -402,6 +411,8 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
         }
     }
 }
+
+// MARK: - Extensions
 
 private extension Color {
     

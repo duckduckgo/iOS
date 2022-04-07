@@ -118,7 +118,6 @@ extension SaveLoginViewController: UISheetPresentationControllerDelegate {
 
 extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginModelDidSave(_ model: SaveLoginViewModel) {
-        //TODO this seems to not get called
         delegate?.saveLoginViewControllerDidSave(self, credentials: loginItem.credentials!)
         dismiss(animated: true, completion: nil)
     }

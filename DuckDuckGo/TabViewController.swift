@@ -1889,6 +1889,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         
         let test = LoginPlusItem(credentials: credentials)
         let saveLoginController = SaveLoginViewController(loginItem: test)
+        saveLoginController.delegate = self
         
         if #available(iOS 15.0, *) {
             if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {

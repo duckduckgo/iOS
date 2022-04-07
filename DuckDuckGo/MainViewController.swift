@@ -506,6 +506,11 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
+        let controller = DesignSystemViewController()
+              present(controller, animated: true, completion: nil)
+              
+              #warning("REMOVE")
+        
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {

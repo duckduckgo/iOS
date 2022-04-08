@@ -35,7 +35,7 @@ class OngoingDownloadRowViewModel: DownloadsListRowViewModel {
     
     private func subscribeToUpdates(from download: Download) {
         let totalSize = download.totalBytesExpectedToWrite
-
+        
         download.$totalBytesWritten
             .throttle(for: .milliseconds(1000), scheduler: DispatchQueue.main, latest: true)
             .sink { [weak self] currentSize in
@@ -47,11 +47,11 @@ class OngoingDownloadRowViewModel: DownloadsListRowViewModel {
                 } else {
                     self?.fileSize = UserText.downloadProgressMessageForUnknownTotalSize(currentSize: currentSizeString)
                 }
-        }.store(in: &subscribers)
+            }.store(in: &subscribers)
         
         download.$totalBytesWritten
             .sink { [weak self] currentSize in
                 self?.progress = Float(currentSize)/Float(totalSize)
-        }.store(in: &subscribers)
+            }.store(in: &subscribers)
     }
 }

@@ -130,7 +130,7 @@ private class AppRatingPromptStorageStub: AppRatingPromptStorage {
     
 }
 
-fileprivate extension Date {
+private extension Date {
     
     func inDays(fromNow day: Int) -> Date {
         let components = DateComponents(day: day)

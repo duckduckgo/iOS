@@ -845,7 +845,7 @@ class TabViewController: UIViewController {
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
+                              installedSurrogates: siteRating?.installedSurrogates.map { $0 } ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.contentBlockingManager.currentTDSRules?.etag ?? "",
                               ampUrl: linkProtection.lastAMPURLString,

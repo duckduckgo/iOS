@@ -137,7 +137,7 @@ class AtbIntegrationTests: XCTestCase {
     
 }
 
-fileprivate extension HttpRequest {
+private extension HttpRequest {
 
     func queryParam(_ named: String) -> String? {
         return queryParams.first(where: { $0.0 == named })?.1

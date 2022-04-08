@@ -122,5 +122,5 @@ private class DDGPersistentContainer: NSPersistentContainer {
     override public class func defaultDirectoryURL() -> URL {
         
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Database.Constants.databaseGroupID)!
-    } 
+    }
 }

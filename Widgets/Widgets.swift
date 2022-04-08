@@ -62,17 +62,17 @@ struct Provider: TimelineProvider {
             completion(timeline)
         }
     }
-
+    
     private func coreDataFavoritesToFavories(_ coreDataFavorites: [Bookmark], returningNoMoreThan maxLength: Int) -> [Favorite] {
         
         return coreDataFavorites.prefix(maxLength)
             .compactMap {
-            guard let url = $0.url else { return nil }
-            return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
-                            domain: url.host?.dropPrefix(prefix: "www.") ?? "",
-                            title: $0.displayTitle ?? "",
-                            favicon: loadImageFromCache(forDomain: url.host) )
-        }
+                guard let url = $0.url else { return nil }
+                return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
+                                domain: url.host?.dropPrefix(prefix: "www.") ?? "",
+                                title: $0.displayTitle ?? "",
+                                favicon: loadImageFromCache(forDomain: url.host) )
+            }
     }
     
     private func getCoreDataFavorites(completion: @escaping ([Bookmark]) -> Void) {

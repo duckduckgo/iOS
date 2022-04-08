@@ -20,7 +20,7 @@
 import SwiftUI
 import Combine
 
-struct OngoingDownloadRow: View {    
+struct OngoingDownloadRow: View {
     @ObservedObject var rowModel: OngoingDownloadRowViewModel
     
     var cancelButtonAction: () -> Void

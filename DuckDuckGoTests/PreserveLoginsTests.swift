@@ -23,6 +23,8 @@ import XCTest
 class PreserveLoginsTests: XCTestCase {
     
     override func setUp() {
+        super.setUp()
+        
         UserDefaultsWrapper<Any>.clearAll()
     }
     

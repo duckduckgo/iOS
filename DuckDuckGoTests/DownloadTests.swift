@@ -23,10 +23,8 @@ import XCTest
 class DownloadTests: XCTestCase {
     private let downloadManagerTestsHelper = DownloadTestsHelper(downloadsDirectory: DownloadManager().downloadsDirectory)
     
-    override func setUpWithError() throws {
-    }
-    
     override func tearDownWithError() throws {
+        try super.tearDownWithError()
         downloadManagerTestsHelper.deleteAllFiles()
     }
     

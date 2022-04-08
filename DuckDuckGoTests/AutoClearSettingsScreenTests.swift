@@ -26,11 +26,15 @@ class AutoClearSettingsScreenTests: XCTestCase {
     var mockDependencyProvider: MockDependencyProvider!
     
     override func setUp() {
+        super.setUp()
+        
         mockDependencyProvider = MockDependencyProvider()
         AppDependencyProvider.shared = mockDependencyProvider
     }
     
     override func tearDown() {
+        super.tearDown()
+        
         AppDependencyProvider.shared = AppDependencyProvider()
     }
     
@@ -79,7 +83,7 @@ class AutoClearSettingsScreenTests: XCTestCase {
     }
 }
 
-fileprivate extension AutoClearSettingsViewController {
+private extension AutoClearSettingsViewController {
     
     static func loadFromStoryboard() -> AutoClearSettingsViewController? {
         let controller = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoClearSettingsViewController")

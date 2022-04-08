@@ -208,13 +208,20 @@ struct MacBrowserWaitlistInvitedView: View {
                         .foregroundColor(.macWaitlistText)
                         .lineSpacing(6)
                     
-                    Text("duckduckgo.com/mac")
-                        .font(.proximaNovaBold17)
-                        .foregroundColor(.blue)
-                        .menuController(UserText.macWaitlistCopy) {
-                            action(.copyDownloadURLToPasteboard)
-                        }
-                        .padding(.top, 6)
+                    if #available(iOS 14.0, *) {
+                        Text("duckduckgo.com/mac")
+                            .font(.proximaNovaBold17)
+                            .foregroundColor(.blue)
+                            .menuController(UserText.macWaitlistCopy) {
+                                action(.copyDownloadURLToPasteboard)
+                            }
+                            .padding(.top, 6)
+                    } else {
+                        Text("duckduckgo.com/mac")
+                            .font(.proximaNovaBold17)
+                            .foregroundColor(.blue)
+                            .padding(.top, 6)
+                    }
                     
                     Text(UserText.macWaitlistInviteScreenStep2Title)
                         .font(.proximaNovaBold17)
@@ -227,11 +234,17 @@ struct MacBrowserWaitlistInvitedView: View {
                         .foregroundColor(.macWaitlistText)
                         .lineSpacing(6)
                     
-                    InviteCodeView(inviteCode: inviteCode)
-                        .menuController(UserText.macWaitlistCopy) {
-                            action(.copyInviteCodeToPasteboard)
-                        }
-                        .padding(.top, 28)
+                    if #available(iOS 14.0, *) {
+                        InviteCodeView(inviteCode: inviteCode)
+                            .menuController(UserText.macWaitlistCopy) {
+                                action(.copyInviteCodeToPasteboard)
+                            }
+                            .padding(.top, 28)
+                    } else {
+                        InviteCodeView(inviteCode: inviteCode)
+                            .padding(.top, 28)
+                    }
+
                     
                     Spacer(minLength: 24)
                     

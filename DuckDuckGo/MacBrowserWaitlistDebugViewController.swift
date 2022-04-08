@@ -168,8 +168,12 @@ final class MacBrowserWaitlistDebugViewController: UITableViewController {
     @objc
     private func presentClearDataPrompt(_ sender: AnyObject) {
         let alert = UIAlertController(title: "Clear Waitlist Data?", message: nil, preferredStyle: .actionSheet)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            alert.popoverPresentationController?.barButtonItem = (sender as? UIBarButtonItem)
+        }
 
-        alert.addAction(UIAlertAction(title: "Clear", style: .destructive, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Clear Data", style: .destructive, handler: { _ in
             self.clearDataAndReload()
         }))
 

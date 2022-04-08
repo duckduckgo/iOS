@@ -97,99 +97,19 @@ class MacWaitlistViewModelTests: XCTestCase {
     
     @MainActor
     func testWhenOpenShareSheetActionIsPerformed_ThenShowShareSheetIsTrue() async {
+        let inviteCode = "INVITECODE"
         let request = MockWaitlistRequest.returning(.success(.init(token: mockToken, timestamp: newTimestamp)))
         let storage = MockWaitlistStorage()
+        storage.store(inviteCode: inviteCode)
+
         let viewModel = MacWaitlistViewModel(waitlistRequest: request, waitlistStorage: storage)
-
-        XCTAssertFalse(viewModel.showShareSheet)
-        await viewModel.perform(action: .openShareSheet)
-        XCTAssertTrue(viewModel.showShareSheet)
-    }
-    
-}
-
-// MARK: - Private Mocks
-
-private struct MockWaitlistRequest: WaitlistRequest {
-    
-    static func failure() -> MockWaitlistRequest {
-        return MockWaitlistRequest(joinResult: .failure(.noData),
-                                   statusResult: .failure(.noData),
-                                   inviteCodeResult: .failure(.noData))
-    }
-    
-    static func returning(_ joinResult: WaitlistJoinResult) -> MockWaitlistRequest {
-        return MockWaitlistRequest(joinResult: joinResult,
-                                   statusResult: .success(.init(timestamp: 0)),
-                                   inviteCodeResult: .failure(.noData))
-    }
-    
-    let joinResult: WaitlistJoinResult
-    let statusResult: Result<WaitlistResponse.Status, WaitlistResponse.StatusError>
-    let inviteCodeResult: Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>
-    
-    func joinWaitlist(completionHandler: @escaping WaitlistJoinCompletion) {
-        completionHandler(joinResult)
-    }
-    
-    func joinWaitlist() async -> WaitlistJoinResult {
-        return joinResult
-    }
-    
-    func getWaitlistStatus(completionHandler: @escaping (Result<WaitlistResponse.Status, WaitlistResponse.StatusError>) -> Void) {
-        completionHandler(statusResult)
-    }
-    
-    func getInviteCode(token: String, completionHandler: @escaping (Result<WaitlistResponse.InviteCode, WaitlistResponse.InviteCodeError>) -> Void) {
-        completionHandler(inviteCodeResult)
-    }
-    
-}
-
-private class MockWaitlistStorage: MacBrowserWaitlistStorage {
-    
-    private var token: String?
-    private var timestamp: Int?
-    private var code: String?
-    
-    func getWaitlistToken() -> String? {
-        return token
-    }
-    
-    func getWaitlistTimestamp() -> Int? {
-        return timestamp
-    }
-    
-    func getWaitlistInviteCode() -> String? {
-        return code
-    }
-    
-    func store(waitlistToken: String) {
-        token = waitlistToken
-    }
-    
-    func store(waitlistTimestamp: Int) {
-        timestamp = waitlistTimestamp
-    }
-    
-    func store(inviteCode: String) {
-        code = inviteCode
-    }
-    
-    func deleteWaitlistState() {
-        token = nil
-        timestamp = nil
-        code = nil
-    }
-    
-}
-
-private struct MockNotificationService: NotificationService {
-    
-    let authorized: Bool
-
-    func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
-        return authorized
+        let delegate = MockMacWaitlistViewModelDelegate()
+        viewModel.delegate = delegate
+        
+        await viewModel.perform(action: .openShareSheet(.zero))
+        
+        XCTAssertTrue(delegate.didOpenShareSheetCalled)
+        XCTAssertEqual(delegate.didOpenShareSheetInviteCode, inviteCode)
     }
     
 }

@@ -73,6 +73,14 @@ struct MacBrowserWaitlist {
         }
     }
     
+    func fetchInviteCodeIfAvailable() async -> WaitlistInviteCodeFetchError? {
+        await withCheckedContinuation { continuation in
+            fetchInviteCodeIfAvailable { error in
+                continuation.resume(returning: error)
+            }
+        }
+    }
+    
     func fetchInviteCodeIfAvailable(completion: @escaping (WaitlistInviteCodeFetchError?) -> Void) {
         guard waitlistStorage.getWaitlistInviteCode() == nil else {
             completion(.alreadyHasInviteCode)

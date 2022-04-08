@@ -50,7 +50,6 @@ final class MacWaitlistViewModel: ObservableObject {
     }
     
     @Published var viewState: ViewState
-    @Published var showShareSheet = false
     
     weak var delegate: MacWaitlistViewModelDelegate?
     

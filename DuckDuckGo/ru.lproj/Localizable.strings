@@ -824,16 +824,16 @@
 "preserveLogins.domain.list.title" = "Огнеупорные сайты";
 
 /* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
-"preserveLogins.fireproof.message" = "Вам не придется заново входить в свою учетную запись даже после применения кнопки «Пожар».";
+"preserveLogins.fireproof.message" = "Вам не придется заново входить в свою учетную запись даже после применения кнопки «Огонь».";
 
 /* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
-"preserveLogins.fireproof.title" = "Обезопасить сайт %@, чтобы не выходить из учетной записи?";
+"preserveLogins.fireproof.title" = "Сделать сайт %@ огнеупорным, чтобы не выходить из учетной записи?";
 
 /* Confirm fireproofing action */
-"preserveLogins.menu.confirm" = "Обезопасить";
+"preserveLogins.menu.confirm" = "Сделать огнеупорным";
 
 /* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
-"preserveLogins.menu.confirm.message" = "%@ теперь в безопасности";
+"preserveLogins.menu.confirm.message" = "%@ теперь огнеупорный";
 
 /* Deny fireproofing action */
 "preserveLogins.menu.defer" = "Не сейчас";

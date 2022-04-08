@@ -1020,12 +1020,21 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        
+        if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
+            Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
+        }
       
         if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             setupOrClearTemporaryDownload(for: navigationResponse)
             url = webView.url
             decisionHandler(.allow)
         } else {
+            if let httpResponse = navigationResponse.response as? HTTPURLResponse {
+                Pixel.fire(pixel: .downloadPreparingToStart,
+                           withAdditionalParameters: [PixelParameters.statusCode: String(httpResponse.statusCode)])
+            }
+                           
             let downloadManager = AppDependencyProvider.shared.downloadManager
             
             let startDownload: () -> Download? = {

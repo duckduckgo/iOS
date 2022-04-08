@@ -61,8 +61,6 @@ public struct UserDefaultsWrapper<T> {
         
         case doNotSell = "com.duckduckgo.ios.sendDoNotSell"
 
-        case showWaitlistNotification = "com.duckduckgo.ios.showWaitlistNotification"
-
         case backgroundFetchTaskDuration = "com.duckduckgo.app.bgFetchTaskDuration"
         case downloadedHTTPSBloomFilterSpecCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterSpecCount"
         case downloadedHTTPSBloomFilterCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterCount"
@@ -72,6 +70,8 @@ public struct UserDefaultsWrapper<T> {
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
         case bookmarksMigratedFromUserDefaultsToCD = "com.duckduckgo.app.bookmarksMigratedFromUserDefaultsToCoreData"
         case textSize = "com.duckduckgo.ios.textSize"
+        
+        case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
         case voiceSearch = "com.duckduckgo.app.voiceSearch"
 

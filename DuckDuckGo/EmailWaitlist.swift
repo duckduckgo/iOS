@@ -55,6 +55,7 @@ struct EmailWaitlist {
         static let backgroundTaskName = "Waitlist Status Task"
         static let backgroundRefreshTaskIdentifier = "com.duckduckgo.app.waitlistStatus"
         static let minimumConfigurationRefreshInterval: TimeInterval = 60 * 60 * 12
+        static let notificationIdentitier = "com.duckduckgo.ios.waitlist-available"
     }
 
     static var shared = EmailWaitlist()
@@ -66,7 +67,7 @@ struct EmailWaitlist {
     }()
 
     /// This is a permission granted by the user when enrolling in the email waitlist. It is used to determine whether to schedule the background task.
-    @UserDefaultsWrapper(key: .showWaitlistNotification, defaultValue: false)
+    @UserDefaultsWrapper(key: .emailWaitlistShouldReceiveNotifications, defaultValue: false)
     var showWaitlistNotification: Bool
 
     func registerBackgroundRefreshTaskHandler() {
@@ -127,7 +128,7 @@ struct EmailWaitlist {
         notificationContent.title = UserText.emailWaitlistAvailableNotificationTitle
         notificationContent.body = UserText.emailWaitlistAvailableNotificationBody
 
-        let notificationIdentifier = "com.duckduckgo.ios.waitlist-available"
+        let notificationIdentifier = Constants.notificationIdentitier
         let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: nil)
 
         UNUserNotificationCenter.current().add(request)

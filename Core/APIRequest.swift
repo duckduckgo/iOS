@@ -21,6 +21,7 @@ import Foundation
 import os.log
 
 public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
+public typealias APIRequestResult = Result<APIRequest.Response, Error>
 
 public class APIRequest {
     
@@ -43,6 +44,10 @@ public class APIRequest {
         
     }
     
+    public enum APIRequestError: Error {
+        case noResponseOrError
+    }
+    
     public enum HTTPMethod: String {
         case get = "GET"
         case head = "HEAD"
@@ -53,6 +58,32 @@ public class APIRequest {
         case options = "OPTIONS"
         case trace = "TRACE"
         case patch = "PATCH"
+    }
+    
+    public static func request(url: URL,
+                               method: HTTPMethod = .get,
+                               parameters: [String: String]? = nil,
+                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                               httpBody: Data? = nil,
+                               callBackOnMainThread: Bool = false,
+                               timeoutInterval: TimeInterval = 60.0) async -> APIRequestResult {
+        await withCheckedContinuation { continuation in
+            request(url: url,
+                    method: method,
+                    parameters: parameters,
+                    headers: headers,
+                    httpBody: httpBody,
+                    timeoutInterval: timeoutInterval,
+                    callBackOnMainThread: callBackOnMainThread) { response, error in
+                if let error = error {
+                    continuation.resume(returning: .failure(error))
+                } else if let response = response {
+                    continuation.resume(returning: .success(response))
+                } else {
+                    continuation.resume(returning: .failure(APIRequestError.noResponseOrError))
+                }
+            }
+        }
     }
     
     @discardableResult
@@ -98,6 +129,7 @@ public class APIRequest {
                 completion(Response(data: data, etag: etag, urlResponse: response), nil)
             }
         }
+
         task.resume()
         return task
     }

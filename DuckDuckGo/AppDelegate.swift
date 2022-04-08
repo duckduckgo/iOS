@@ -52,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: lifecycle
 
+    // swiftlint:disable function_body_length
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         #if targetEnvironment(simulator)
@@ -115,6 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         EmailWaitlist.shared.registerBackgroundRefreshTaskHandler()
+        MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -124,6 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appIsLaunching = true
         return true
     }
+    // swiftlint:enable function_body_length
 
     private func clearTmp() {
         let tmp = FileManager.default.temporaryDirectory
@@ -177,6 +180,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch result {
             case .success: EmailWaitlist.shared.sendInviteCodeAvailableNotification()
             case .failure: break
+            }
+        }
+        
+        MacBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
+            guard error == nil else { return }
+            MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
+        }
+        
+        BGTaskScheduler.shared.getPendingTaskRequests { tasks in
+            let hasMacBrowserWaitlistTask = tasks.contains { $0.identifier == MacBrowserWaitlist.Constants.backgroundRefreshTaskIdentifier }
+            if !hasMacBrowserWaitlistTask {
+                MacBrowserWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
     }
@@ -325,8 +340,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
             }
 
-            let hasWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
-            if !hasWaitlistTask {
+            let hasEmailWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
+            if !hasEmailWaitlistTask {
                 EmailWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
@@ -449,6 +464,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        if notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
+            Pixel.fire(pixel: .macBrowserWaitlistNotificationShown)
+        }
+        
         if #available(iOS 14.0, *) {
             completionHandler(.banner)
         } else {
@@ -460,25 +479,38 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            presentWaitlistSettingsModal()
+            if response.notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
+                Pixel.fire(pixel: .macBrowserWaitlistNotificationLaunched)
+                presentMacBrowserWaitlistSettingsModal()
+            } else if response.notification.request.identifier == EmailWaitlist.Constants.notificationIdentitier {
+                presentEmailWaitlistSettingsModal()
+            }
         }
 
         completionHandler()
     }
 
-    private func presentWaitlistSettingsModal() {
+    private func presentEmailWaitlistSettingsModal() {
+        let waitlistViewController = EmailWaitlistViewController.loadFromStoryboard()
+        presentSettings(with: waitlistViewController)
+    }
+    
+    private func presentMacBrowserWaitlistSettingsModal() {
+        let waitlistViewController = MacWaitlistViewController(nibName: nil, bundle: nil)
+        presentSettings(with: waitlistViewController)
+    }
+    
+    private func presentSettings(with viewController: UIViewController) {
         guard let window = window, let rootViewController = window.rootViewController as? MainViewController else { return }
 
         rootViewController.clearNavigationStack()
 
         // Give the `clearNavigationStack` call time to complete.
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
             rootViewController.performSegue(withIdentifier: "Settings", sender: nil)
             let navigationController = rootViewController.presentedViewController as? UINavigationController
-            let waitlist = EmailWaitlistViewController.loadFromStoryboard()
-
             navigationController?.popToRootViewController(animated: false)
-            navigationController?.pushViewController(waitlist, animated: true)
+            navigationController?.pushViewController(viewController, animated: true)
         }
     }
 

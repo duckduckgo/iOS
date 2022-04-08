@@ -23,35 +23,68 @@ import DuckUI
 struct DesignSystemView: View {
     @State var selectedColors: [Color]?
     
-    private let redColors = [DuckColor.red100,
-                             DuckColor.red90,
-                             DuckColor.red80,
-                             DuckColor.red70,
-                             DuckColor.red60,
-                             DuckColor.redBase,
-                             DuckColor.red40,
-                             DuckColor.red30,
-                             DuckColor.red20,
-                             DuckColor.red10,
-                             DuckColor.red0]
+    private let redColors: [Color] = [.red100,
+                                      .red90,
+                                      .red80,
+                                      .red70,
+                                      .red60,
+                                      .redBase,
+                                      .red40,
+                                      .red30,
+                                      .red20,
+                                      .red10,
+                                      .red0]
     
-    private let blueColors = [DuckColor.blue100,
-                              DuckColor.blue90,
-                              DuckColor.blue80,
-                              DuckColor.blue70,
-                              DuckColor.blue60,
-                              DuckColor.blueBase,
-                              DuckColor.blue40,
-                              DuckColor.blue30,
-                              DuckColor.blue20,
-                              DuckColor.blue10,
-                              DuckColor.blue0]
+    private let blueColors: [Color] = [.blue100,
+                                       .blue90,
+                                       .blue80,
+                                       .blue70,
+                                       .blue60,
+                                       .blueBase,
+                                       .blue40,
+                                       .blue30,
+                                       .blue20,
+                                       .blue10,
+                                       .blue0,
+                                       .deprecatedBlue]
     
+    private var backgroundColor: Color {
+        if #available(iOS 15.0, *) {
+            return Color(uiColor: .systemGroupedBackground)
+        } else {
+            return Color.white
+        }
+    }
     
     var body: some View {
-        List {
-            colorCell(name: "Red", colors: redColors, circleColor: DuckColor.redBase)
-            colorCell(name: "Blue", colors: blueColors, circleColor: DuckColor.blueBase)
+        
+       
+        
+        VStack {
+            List {
+                colorCell(name: "Red", colors: redColors, circleColor: .redBase)
+                colorCell(name: "Blue", colors: blueColors, circleColor: .blueBase)
+            }
+            VStack {
+                Button {
+                    print("Primary Button")
+                } label: {
+                    Text("Primary Button")
+                }.buttonStyle(PrimaryButtonStyle())
+                
+                Button {
+                    print("test2")
+                } label: {
+                    Text("Secondary Button")
+                }.buttonStyle(SecondaryButtonStyle())
+                
+                Button {
+                    print("test2")
+                } label: {
+                    Text("Ghost Button")
+                }.buttonStyle(GhostButtonStyle())
+            }
+            .padding()
         }
     }
     
@@ -76,7 +109,7 @@ struct DesignSystemView: View {
                         .frame(height: 50)
                     Text(color.self.description)
                 }
-
+                
             }
         }
     }

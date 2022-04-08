@@ -406,6 +406,9 @@
 /* Signed out state for the email feature */
 "email.settings.off" = "Off";
 
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Block email trackers and hide your address";
+
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Cancel";
 
@@ -848,7 +851,7 @@
 "mac-waitlist.settings.on-the-list" = "You’re on the list!";
 
 /* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "You're invited!
+"mac-waitlist.share-sheet.message" = "You’re invited!
 
 Ready to start browsing privately on Mac?
 

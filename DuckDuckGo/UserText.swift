@@ -551,6 +551,8 @@ public struct UserText {
     
     // MARK: Settings Screen
     
+    public static let emailSettingsSubtitle = NSLocalizedString("email.settings.subtitle", value: "Block email trackers and hide your address", comment: "Subtitle for the email settings cell")
+    
     public static let macWaitlistAvailableForDownload = NSLocalizedString("mac-waitlist.settings.available-for-download", value: "Available for download on Mac", comment: "Title for the settings subtitle")
     
     public static let macWaitlistSettingsOnTheList = NSLocalizedString("mac-waitlist.settings.on-the-list", value: "You’re on the list!", comment: "Title for the settings subtitle")
@@ -563,7 +565,7 @@ public struct UserText {
     
     public static func macWaitlistShareSheetMessage(code: String) -> String {
         let localized = NSLocalizedString("mac-waitlist.share-sheet.message", value: """
-        You're invited!
+        You’re invited!
         
         Ready to start browsing privately on Mac?
         

@@ -183,6 +183,9 @@ public enum PixelName: String {
     case downloadsListSharePressed = "m_downloads_list_share_pressed"
     
     case downloadsSharingPredownloadedLocalFile = "m_downloads_sharing_predownloaded_local_file"
+    
+    case downloadPreparingToStart = "m_download_preparing_to_start"
+    case downloadAttemptToOpenBLOB = "m_download_attempt_to_open_blob"
 
     case jsAlertShown = "m_js_alert_shown"
     case jsAlertBlocked = "m_js_alert_blocked"
@@ -311,6 +314,7 @@ public struct PixelParameters {
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
+    public static let statusCode = "status_code"
     
 }
 

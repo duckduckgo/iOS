@@ -20,7 +20,62 @@
 import SwiftUI
 
 struct SaveLoginView: View {
+    enum LayoutType {
+        case newUser
+        case saveLogin
+        case savePassword
+        case saveAdditionalLogin
+        case updateUsername
+        case updatePassword
+    }
+    
     let viewModel: SaveLoginViewModel
+    let layoutType: LayoutType
+    
+    private var title: String {
+        switch layoutType {
+        case .newUser:
+            return UserText.loginPlusSaveLoginTitleNewUser
+        case .saveLogin, .saveAdditionalLogin:
+            return UserText.loginPlusSaveLoginTitle
+        case .savePassword:
+            return "Save Password?"
+        case .updateUsername:
+            return "Update Username?"
+        case .updatePassword:
+            return "Update Password?"
+        }
+    }
+    
+    private var confirmButton: String {
+        switch layoutType {
+        case .newUser, .saveLogin, .saveAdditionalLogin:
+            return UserText.loginPlusSaveLoginSaveCTA
+        case .savePassword:
+            return "Save Password"
+        case .updateUsername:
+            return "Update Login"
+        case .updatePassword:
+            return "Update Password"
+        }
+    }
+    
+    private var buttonsStackTopPadding: CGFloat {
+        if viewModel.password != nil || viewModel.username != nil  || viewModel.subtitle == nil {
+            return 53
+        } else {
+            return 0
+        }
+    }
+    private var userInfo: String? {
+        if let username = viewModel.username {
+            return username
+        }
+        if let password = viewModel.password {
+            return password
+        }
+        return nil
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -30,15 +85,7 @@ struct SaveLoginView: View {
             }
             .padding(.horizontal)
             
-            VStack {
-                contentView
-            }.frame(width: Const.Size.contentWidth)
-        }
-    }
-    
-    private var contentView: some View {
-        VStack {
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
                     Image(systemName: "globe")
                     Text("blablala.com")
@@ -46,35 +93,56 @@ struct SaveLoginView: View {
                 }
                 .padding(.top, 5)
                 
-                Text(viewModel.title)
-                    .font(Const.Fonts.title)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 17)
-                
-                if let subtitle = viewModel.subtitle {
-                    Text(subtitle)
-                        .font(Const.Fonts.subtitle)
+                VStack {
+                    Text(title)
+                        .font(Const.Fonts.title)
                         .frame(maxWidth: .infinity)
                         .multilineTextAlignment(.center)
-                        .padding()
-                        .padding(.horizontal)
-                }
-            }
-            
-            
-            SaveLoginCTAStackView(confirmLabel: viewModel.confirmButtonLabel,
-                                  cancelLabel: viewModel.cancelButtonLabel,
-                                  confirmAction: {
-                print("Save")
-            }, cancelAction: {
-                print("Not now")
-            })
-            
-            Spacer()
+                }.padding(.top, 25)
+                
+                contentView
+                
+                SaveLoginCTAStackView(confirmLabel: confirmButton,
+                                      cancelLabel: viewModel.cancelButtonLabel,
+                                      confirmAction: {
+                    print("Save")
+                }, cancelAction: {
+                    print("Not now")
+                })
+                
+                Spacer()
+            }.frame(width: Const.Size.contentWidth)
         }
     }
-
+    
+    private var contentView: some View {
+        switch layoutType {
+        case .newUser:
+            return newUserContentView
+        case .saveLogin:
+            return newUserContentView
+        case .savePassword:
+            return newUserContentView
+        case .saveAdditionalLogin:
+            return newUserContentView
+        case .updateUsername:
+            return newUserContentView
+        case .updatePassword:
+            return newUserContentView
+        }
+    }
+    
+    private var newUserContentView: some View {
+        Text(UserText.loginPlusSaveLoginMessageNewUser)
+            .font(Const.Fonts.subtitle)
+            .frame(maxWidth: .infinity)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 30)
+            .padding(.top, 24)
+            .padding(.bottom, 40)
+        
+    }
+    
     private var closeButton: some View {
         Button {
         } label: {
@@ -93,16 +161,17 @@ struct SaveLoginView_Previews: PreviewProvider {
                                            subtitle: UserText.loginPlusSaveLoginMessageNewUser,
                                            confirmButtonLabel: UserText.loginPlusSaveLoginSaveCTA,
                                            cancelButtonLabel: UserText.loginPlusSaveLoginNotNowCTA)
-        SaveLoginView(viewModel: viewModel)
+        SaveLoginView(viewModel: viewModel, layoutType: .saveAdditionalLogin)
     }
 }
 
 private enum Const {
     enum Fonts {
-        static let title = Font.system(size: 20).weight(.semibold)
+        static let title = Font.system(size: 20).weight(.bold)
         static let subtitle = Font.system(size: 13.0)
         static let updatedInfo = Font.system(size: 16)
         static let titleCaption = Font.system(size: 13)
+        static let userInfo = Font.system(size: 13).weight(.bold)
         static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
         
     }

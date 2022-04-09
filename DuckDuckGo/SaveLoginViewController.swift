@@ -47,12 +47,23 @@ class SaveLoginViewController: UIViewController {
     }
 
     private func setupSaveLoginView() {
-        let viewModel = SaveLoginViewModel(title: UserText.loginPlusSaveLoginTitleNewUser,
+        let newUser = SaveLoginViewModel(title: UserText.loginPlusSaveLoginTitleNewUser,
                                            subtitle: UserText.loginPlusSaveLoginMessageNewUser,
                                            confirmButtonLabel: UserText.loginPlusSaveLoginSaveCTA,
                                            cancelButtonLabel: UserText.loginPlusSaveLoginNotNowCTA)
+        
+        let viewModel = SaveLoginViewModel(title: UserText.loginPlusSaveLoginTitle,
+                                           confirmButtonLabel: UserText.loginPlusSaveLoginSaveCTA,
+                                           cancelButtonLabel: UserText.loginPlusSaveLoginNotNowCTA)
+        
+        let userInfo = SaveLoginViewModel(title: UserText.loginPlusSaveLoginTitle,
+                                          password: "sdfisdoifjsdiofjiosdfj",
+                                           confirmButtonLabel: UserText.loginPlusSaveLoginSaveCTA,
+                                           cancelButtonLabel: UserText.loginPlusSaveLoginNotNowCTA)
 
-        let saveLoginView = SaveLoginView(viewModel: viewModel)
+
+
+        let saveLoginView = SaveLoginView(viewModel: userInfo, layoutType: .newUser)
         let controller = UIHostingController(rootView: saveLoginView)
         controller.view.backgroundColor = .clear
         //presentationController?.delegate = self

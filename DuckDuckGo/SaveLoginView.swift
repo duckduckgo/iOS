@@ -115,20 +115,17 @@ struct SaveLoginView: View {
         }
     }
     
+    @ViewBuilder
     private var contentView: some View {
         switch layoutType {
         case .newUser:
-            return newUserContentView
-        case .saveLogin:
-            return newUserContentView
-        case .savePassword:
-            return newUserContentView
+            newUserContentView
+        case .saveLogin, .savePassword:
+            saveContentView
         case .saveAdditionalLogin:
-            return newUserContentView
-        case .updateUsername:
-            return newUserContentView
-        case .updatePassword:
-            return newUserContentView
+            aditionalLoginContentView
+        case .updateUsername, .updatePassword:
+            updateContentView
         }
     }
     
@@ -140,7 +137,29 @@ struct SaveLoginView: View {
             .padding(.horizontal, 30)
             .padding(.top, 24)
             .padding(.bottom, 40)
-        
+    }
+    
+    private var saveContentView: some View {
+        Spacer(minLength: 60)
+    }
+    
+    private var updateContentView: some View {
+        Text(verbatim: "me@email.com")
+            .font(Const.Fonts.userInfo)
+            .frame(maxWidth: .infinity)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 30)
+            .padding(.top, 56)
+            .padding(.bottom, 56)
+    }
+    
+    private var aditionalLoginContentView: some View {
+        Text(verbatim: "This will save an additional Login for this site.")
+            .font(Const.Fonts.subtitle)
+            .frame(maxWidth: .infinity)
+            .multilineTextAlignment(.center)
+            .padding(.top, 56)
+            .padding(.bottom, 56)
     }
     
     private var closeButton: some View {

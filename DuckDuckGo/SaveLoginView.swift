@@ -20,6 +20,8 @@
 import SwiftUI
 
 struct SaveLoginView: View {
+    let viewModel: SaveLoginViewModel
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -43,21 +45,31 @@ struct SaveLoginView: View {
                         .font(Const.Fonts.titleCaption)
                 }
                 .padding(.top, 5)
-
-                Text("Do you want DuckDuckGo to save your Login?")
+                
+                Text(viewModel.title)
                     .font(Const.Fonts.title)
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
                     .padding(.top, 17)
                 
-                Text("Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.")
-                    .font(Const.Fonts.subtitle)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
-                    .padding()
-            }.padding(.horizontal)
+                if let subtitle = viewModel.subtitle {
+                    Text(subtitle)
+                        .font(Const.Fonts.subtitle)
+                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .padding(.horizontal)
+                }
+            }
             
-            buttonsStack
+            
+            SaveLoginCTAStackView(confirmLabel: viewModel.confirmButtonLabel,
+                                  cancelLabel: viewModel.cancelButtonLabel,
+                                  confirmAction: {
+                print("Save")
+            }, cancelAction: {
+                print("Not now")
+            })
             
             Spacer()
         }
@@ -73,41 +85,15 @@ struct SaveLoginView: View {
         .frame(width: 44, height: 44)
         .contentShape(Rectangle())
     }
-    
-    private var buttonsStack: some View {
-        VStack {
-            Button {
-                
-            } label: {
-                Text("Save Login")
-                    .font(Const.Fonts.CTA)
-                    .foregroundColor(Const.Colors.CTAPrimaryForeground)
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
-                    .background(Const.Colors.CTAPrimaryBackground)
-                    .foregroundColor(.primary)
-                    .cornerRadius(Const.CornerRadius.CTA)
-            }
-            
-            Button {
-                
-            } label: {
-                Text("Not Now")
-                    .font(Const.Fonts.CTA)
-                    .foregroundColor(Const.Colors.CTASecondaryForeground)
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
-                    .background(Const.Colors.CTASecondaryBackground)
-                    .foregroundColor(.primary)
-                    .cornerRadius(Const.CornerRadius.CTA)
-            }
-        }
-    }
 }
 
 struct SaveLoginView_Previews: PreviewProvider {
     static var previews: some View {
-        SaveLoginView()
+        let viewModel = SaveLoginViewModel(title: UserText.loginPlusSaveLoginTitleNewUser,
+                                           subtitle: UserText.loginPlusSaveLoginMessageNewUser,
+                                           confirmButtonLabel: UserText.loginPlusSaveLoginSaveCTA,
+                                           cancelButtonLabel: UserText.loginPlusSaveLoginNotNowCTA)
+        SaveLoginView(viewModel: viewModel)
     }
 }
 
@@ -143,4 +129,47 @@ private enum Const {
 extension Color {
     static let textPrimary = Color("TextPrimary")
     static let textSecondary = Color("TextSecondary")
+}
+
+private struct SaveLoginCTAStackView: View {
+    let confirmLabel: String
+    let cancelLabel: String
+    let confirmAction: () -> Void
+    let cancelAction: () -> Void
+    
+    var body: some View {
+        VStack {
+            Button {
+                confirmAction()
+            } label: {
+                Text(confirmLabel)
+                    .font(Const.Fonts.CTA)
+                    .foregroundColor(Const.Colors.CTAPrimaryForeground)
+                    .padding()
+                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
+                    .background(Const.Colors.CTAPrimaryBackground)
+                    .foregroundColor(.primary)
+                    .cornerRadius(Const.CornerRadius.CTA)
+            }
+            
+            Button {
+                cancelAction()
+            } label: {
+                Text(cancelLabel)
+                    .font(Const.Fonts.CTA)
+                    .foregroundColor(Const.Colors.CTASecondaryForeground)
+                    .padding()
+                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
+                    .background(Const.Colors.CTASecondaryBackground)
+                    .foregroundColor(.primary)
+                    .cornerRadius(Const.CornerRadius.CTA)
+            }
+        }
+    }
+}
+
+struct SaveLoginCTAStackView_Previews: PreviewProvider {
+    static var previews: some View {
+        SaveLoginCTAStackView(confirmLabel: "Save Login", cancelLabel: "Not Now", confirmAction: {}, cancelAction: {})
+    }
 }

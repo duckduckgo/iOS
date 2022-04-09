@@ -473,4 +473,12 @@ public struct UserText {
     public static let dateRangePastMonth = NSLocalizedString("date.range.past-month", value: "Past month", comment: "Title for a section containing only items from past month")
     
     public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
+    
+
+    public static let loginPlusSaveLoginTitleNewUser = NSLocalizedString("loginplus.save-login.new-user.title", value: "Do you want DuckDuckGo to save your Login?", comment: "Title displayed on modal asking for the user to save the login for the first time")
+    public static let loginPlusSaveLoginMessageNewUser = NSLocalizedString("loginplus.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let loginPlusSaveLoginSaveCTA = NSLocalizedString("loginplus.save-login.save.CTA", value: "Save Login", comment: "Confirm CTA displayed on modal asking for the user to save the login")
+    public static let loginPlusSaveLoginNotNowCTA = NSLocalizedString("loginplus.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
+
+
 }

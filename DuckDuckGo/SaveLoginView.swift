@@ -39,11 +39,11 @@ struct SaveLoginView: View {
         case .saveLogin, .saveAdditionalLogin:
             return UserText.loginPlusSaveLoginTitle
         case .savePassword:
-            return "Save Password?"
+            return UserText.loginPlusSavePasswordTitle
         case .updateUsername:
-            return "Update Username?"
+            return UserText.loginPlusUpdateUsernameTitle
         case .updatePassword:
-            return "Update Password?"
+            return UserText.loginPlusUpdatePasswordTitle
         }
     }
     
@@ -52,11 +52,11 @@ struct SaveLoginView: View {
         case .newUser, .saveLogin, .saveAdditionalLogin:
             return UserText.loginPlusSaveLoginSaveCTA
         case .savePassword:
-            return "Save Password"
+            return UserText.loginPlusSavePasswordSaveCTA
         case .updateUsername:
-            return "Update Login"
+            return UserText.loginPlusUpdateLoginSaveCTA
         case .updatePassword:
-            return "Update Password"
+            return UserText.loginPlusUpdatePasswordSaveCTA
         }
     }
     
@@ -186,7 +186,7 @@ struct SaveLoginView: View {
     }
     
     private var additionalLoginContentView: some View {
-        Text(verbatim: "This will save an additional Login for this site.")
+        Text(verbatim: UserText.loginPlusAdditionalLoginInfoMessage)
             .font(Const.Fonts.subtitle)
             .foregroundColor(Const.Colors.SecondaryTextColor)
             .frame(maxWidth: .infinity)

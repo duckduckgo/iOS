@@ -60,13 +60,6 @@ struct SaveLoginView: View {
         }
     }
     
-    private var buttonsStackTopPadding: CGFloat {
-        if viewModel.password != nil || viewModel.username != nil  || viewModel.subtitle == nil {
-            return 53
-        } else {
-            return 0
-        }
-    }
     private var userInfo: String? {
         if let username = viewModel.username {
             return username
@@ -77,13 +70,33 @@ struct SaveLoginView: View {
         return nil
     }
     
-    var body: some View {
-        VStack(spacing: 0) {
+    var closeButtonHeader: some View {
+        VStack {
             HStack {
                 Spacer()
                 closeButton
+                    .padding(5)
             }
-            .padding(.horizontal)
+            Spacer()
+        }
+    }
+    
+    private var closeButton: some View {
+        Button {
+        } label: {
+            Image(systemName: "xmark")
+                .resizable()
+                .scaledToFit()
+                .frame(width: Const.Size.closeButtonSize, height: Const.Size.closeButtonSize)
+                .foregroundColor(.primary)
+        }
+        .frame(width: Const.Size.closeButtonTappableArea, height: Const.Size.closeButtonTappableArea)
+        .contentShape(Rectangle())
+    }
+    
+    var body: some View {
+        ZStack {
+            closeButtonHeader
             
             VStack(spacing: 0) {
                 HStack {
@@ -91,7 +104,6 @@ struct SaveLoginView: View {
                     Text("blablala.com")
                         .font(Const.Fonts.titleCaption)
                 }
-                .padding(.top, 5)
                 
                 VStack {
                     Text(title)
@@ -111,7 +123,9 @@ struct SaveLoginView: View {
                 })
                 
                 Spacer()
-            }.frame(width: Const.Size.contentWidth)
+            }
+            .frame(width: Const.Size.contentWidth)
+            .padding(.top, 43)
         }
     }
     
@@ -161,17 +175,7 @@ struct SaveLoginView: View {
             .padding(.top, 56)
             .padding(.bottom, 56)
     }
-    
-    private var closeButton: some View {
-        Button {
-        } label: {
-            Image(systemName: "xmark")
-                .frame(width: 13, height: 13)
-                .foregroundColor(.primary)
-        }
-        .frame(width: 44, height: 44)
-        .contentShape(Rectangle())
-    }
+
 }
 
 struct SaveLoginView_Previews: PreviewProvider {
@@ -204,13 +208,23 @@ private enum Const {
         static let CTASecondaryBackground = Color("CTASecondaryBackground")
         static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
         static let CTASecondaryForeground = Color("CTASecondaryForeground")
-        
+    }
+    
+    enum Margin {
+        static var closeButtonMargin: CGFloat {
+            Const.Size.closeButtonOffset - 21
+        }
     }
     
     enum Size {
         static let CTAButtonCornerRadius: CGFloat = 12
         static let CTAButtonMaxHeight: CGFloat = 50
         static let contentWidth: CGFloat = 286
+        static let closeButtonSize: CGFloat = 13
+        static let closeButtonTappableArea: CGFloat = 44
+        static var closeButtonOffset: CGFloat {
+            closeButtonTappableArea - closeButtonSize
+        }
     }
 }
 

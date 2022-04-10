@@ -28,7 +28,7 @@ struct SaveLoginView: View {
         case updateUsername
         case updatePassword
     }
-    
+    @State var frame: CGSize = .zero
     let viewModel: SaveLoginViewModel
     let layoutType: LayoutType
     
@@ -70,6 +70,29 @@ struct SaveLoginView: View {
         return nil
     }
     
+    var body: some View {
+        GeometryReader { geometry in
+            makeBodyView(geometry)
+        }
+    }
+    
+    private func makeBodyView(_ geometry: GeometryProxy) -> some View {
+        DispatchQueue.main.async { self.frame = geometry.size }
+        
+        return ZStack {
+            closeButtonHeader
+            
+            VStack(spacing: 0) {
+                titleHeaderView
+                contentView
+                ctaView
+                Spacer()
+            }
+            .frame(width: Const.Size.contentWidth)
+            .padding(.top, isSmallFrame ? 19 : 43)
+        }
+    }
+    
     var closeButtonHeader: some View {
         VStack {
             HStack {
@@ -94,41 +117,33 @@ struct SaveLoginView: View {
         .contentShape(Rectangle())
     }
     
-    var body: some View {
-        ZStack {
-            closeButtonHeader
-            
-            VStack(spacing: 0) {
-                HStack {
-                    Image(systemName: "globe")
-                    Text("blablala.com")
-                        .font(Const.Fonts.titleCaption)
-                        .foregroundColor(Const.Colors.SecondaryTextColor)
-                        
-                }
-                
-                VStack {
-                    Text(title)
-                        .font(Const.Fonts.title)
-                        .frame(maxWidth: .infinity)
-                        .multilineTextAlignment(.center)
-                }.padding(.top, 25)
-                
-                contentView
-                
-                SaveLoginCTAStackView(confirmLabel: confirmButton,
-                                      cancelLabel: viewModel.cancelButtonLabel,
-                                      confirmAction: {
-                    print("Save")
-                }, cancelAction: {
-                    print("Not now")
-                })
-                
-                Spacer()
+    var titleHeaderView: some View {
+        VStack {
+            HStack {
+                Image(systemName: "globe")
+                Text("blablala.com")
+                    .font(Const.Fonts.titleCaption)
+                    .foregroundColor(Const.Colors.SecondaryTextColor)
             }
-            .frame(width: Const.Size.contentWidth)
-            .padding(.top, 43)
+            
+            VStack {
+                Text(title)
+                    .font(Const.Fonts.title)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.top, isSmallFrame ? 15 : 25)
         }
+    }
+    
+    var ctaView: some View {
+        SaveLoginCTAStackView(confirmLabel: confirmButton,
+                              cancelLabel: viewModel.cancelButtonLabel,
+                              confirmAction: {
+            print("Save")
+        }, cancelAction: {
+            print("Not now")
+        })
     }
     
     @ViewBuilder
@@ -151,9 +166,9 @@ struct SaveLoginView: View {
             .foregroundColor(Const.Colors.SecondaryTextColor)
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, 30)
-            .padding(.top, 24)
-            .padding(.bottom, 40)
+            .padding(.horizontal, isSmallFrame ? 28 : 30)
+            .padding(.top, isSmallFrame ? 10 : 24)
+            .padding(.bottom, isSmallFrame ? 15 : 40)
     }
     
     private var saveContentView: some View {
@@ -179,7 +194,11 @@ struct SaveLoginView: View {
             .padding(.top, 56)
             .padding(.bottom, 56)
     }
-
+    
+    // We have specific layouts for the smaller iPhones
+    private var isSmallFrame: Bool {
+        frame.width <= 320 || frame.height <= 320
+    }
 }
 
 struct SaveLoginView_Previews: PreviewProvider {

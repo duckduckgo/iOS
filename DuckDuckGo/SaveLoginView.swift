@@ -103,6 +103,8 @@ struct SaveLoginView: View {
                     Image(systemName: "globe")
                     Text("blablala.com")
                         .font(Const.Fonts.titleCaption)
+                        .foregroundColor(Const.Colors.SecondaryTextColor)
+                        
                 }
                 
                 VStack {
@@ -137,7 +139,7 @@ struct SaveLoginView: View {
         case .saveLogin, .savePassword:
             saveContentView
         case .saveAdditionalLogin:
-            aditionalLoginContentView
+            additionalLoginContentView
         case .updateUsername, .updatePassword:
             updateContentView
         }
@@ -146,6 +148,7 @@ struct SaveLoginView: View {
     private var newUserContentView: some View {
         Text(UserText.loginPlusSaveLoginMessageNewUser)
             .font(Const.Fonts.subtitle)
+            .foregroundColor(Const.Colors.SecondaryTextColor)
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 30)
@@ -167,9 +170,10 @@ struct SaveLoginView: View {
             .padding(.bottom, 56)
     }
     
-    private var aditionalLoginContentView: some View {
+    private var additionalLoginContentView: some View {
         Text(verbatim: "This will save an additional Login for this site.")
             .font(Const.Fonts.subtitle)
+            .foregroundColor(Const.Colors.SecondaryTextColor)
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.top, 56)
@@ -208,6 +212,7 @@ private enum Const {
         static let CTASecondaryBackground = Color("CTASecondaryBackground")
         static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
         static let CTASecondaryForeground = Color("CTASecondaryForeground")
+        static let SecondaryTextColor = Color("SecondaryTextColor")
     }
     
     enum Margin {

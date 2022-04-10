@@ -63,7 +63,7 @@ class SaveLoginViewController: UIViewController {
 
 
 
-        let saveLoginView = SaveLoginView(viewModel: userInfo, layoutType: .saveAdditionalLogin)
+        let saveLoginView = SaveLoginView(viewModel: userInfo, layoutType: .newUser)
         let controller = UIHostingController(rootView: saveLoginView)
         controller.view.backgroundColor = .clear
         //presentationController?.delegate = self

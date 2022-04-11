@@ -20,7 +20,13 @@
 import UIKit
 import SwiftUI
 
+protocol SaveLoginViewControllerDelegate: AnyObject {
+    func saveLoginViewControllerDidConfirm(_ viewController: SaveLoginViewController)
+    func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController)
+}
+
 class SaveLoginViewController: UIViewController {
+    weak var delegate: SaveLoginViewControllerDelegate?
     
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemMaterial)
@@ -61,12 +67,22 @@ class SaveLoginViewController: UIViewController {
                                            confirmButtonLabel: UserText.loginPlusSaveLoginSaveCTA,
                                            cancelButtonLabel: UserText.loginPlusSaveLoginNotNowCTA)
 
-
+        userInfo.delegate = self
 
         let saveLoginView = SaveLoginView(viewModel: userInfo, layoutType: .saveAdditionalLogin)
         let controller = UIHostingController(rootView: saveLoginView)
         controller.view.backgroundColor = .clear
         //presentationController?.delegate = self
         installChildViewController(controller)
+    }
+}
+
+extension SaveLoginViewController: SaveLoginViewModelDelegate {
+    func saveLoginViewModelDidConfirm(_ viewModel: SaveLoginViewModel) {
+        delegate?.saveLoginViewControllerDidConfirm(self)
+    }
+    
+    func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel) {
+        delegate?.saveLoginViewControllerDidCancel(self)
     }
 }

@@ -19,7 +19,13 @@
 
 import Foundation
 
-struct SaveLoginViewModel {
+protocol SaveLoginViewModelDelegate: AnyObject {
+    func saveLoginViewModelDidConfirm(_ viewModel: SaveLoginViewModel)
+    func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
+}
+
+class SaveLoginViewModel {
+    weak var delegate: SaveLoginViewModelDelegate?
     let title: String
     let subtitle: String?
     let username: String?
@@ -36,8 +42,12 @@ struct SaveLoginViewModel {
         self.cancelButtonLabel = cancelButtonLabel
     }
     
+    func cancel() {
+        delegate?.saveLoginViewModelDidCancel(self)
+    }
+    
+    func save() {
+        delegate?.saveLoginViewModelDidConfirm(self)
+    }
+    
 }
-
-//"Do you want DuckDuckGo to save your Login?"
-
-

@@ -1632,7 +1632,7 @@ extension TabViewController: WKUIDelegate {
     func openSaveUI() {
 #warning("Remove this, just for test")
 let saveLoginController = SaveLoginViewController()
-//saveLoginController.delegate = self
+saveLoginController.delegate = self
 if #available(iOS 15.0, *) {
     if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
         presentationController.detents = [.medium(), .large()]
@@ -1939,6 +1939,16 @@ openSaveUI()
     func secureVaultInitFailed(_ error: SecureVaultError) {
         #warning("How to handle this error?")
         Swift.print("Secure vault error")
+    }
+}
+
+extension TabViewController: SaveLoginViewControllerDelegate {
+    func saveLoginViewControllerDidConfirm(_ viewController: SaveLoginViewController) {
+        viewController.dismiss(animated: true)
+    }
+    
+    func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
+        viewController.dismiss(animated: true)
     }
 }
 

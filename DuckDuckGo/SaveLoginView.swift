@@ -106,6 +106,7 @@ struct SaveLoginView: View {
     
     private var closeButton: some View {
         Button {
+            viewModel.cancel()
         } label: {
             Image(systemName: "xmark")
                 .resizable()
@@ -140,9 +141,9 @@ struct SaveLoginView: View {
         SaveLoginCTAStackView(confirmLabel: confirmButton,
                               cancelLabel: viewModel.cancelButtonLabel,
                               confirmAction: {
-            print("Save")
+            viewModel.save()
         }, cancelAction: {
-            print("Not now")
+            viewModel.cancel()
         })
     }
     

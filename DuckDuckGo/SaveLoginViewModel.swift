@@ -20,7 +20,7 @@
 import Foundation
 
 protocol SaveLoginViewModelDelegate: AnyObject {
-    func saveLoginViewModelDidConfirm(_ viewModel: SaveLoginViewModel)
+    func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
 }
 
@@ -47,7 +47,7 @@ class SaveLoginViewModel {
     }
     
     func save() {
-        delegate?.saveLoginViewModelDidConfirm(self)
+        delegate?.saveLoginViewModelDidSave(self)
     }
     
 }

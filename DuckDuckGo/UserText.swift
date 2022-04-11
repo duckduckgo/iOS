@@ -477,7 +477,7 @@ public struct UserText {
 
     public static let loginPlusSaveLoginTitleNewUser = NSLocalizedString("loginplus.save-login.new-user.title", value: "Do you want DuckDuckGo to save your Login?", comment: "Title displayed on modal asking for the user to save the login for the first time")
     public static let loginPlusSaveLoginTitle = NSLocalizedString("loginplus.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
-    public static let loginPlusUpdateUsernameTitle = NSLocalizedString("loginplus.save-login.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
+    public static let loginPlusUpdateUsernameTitle = NSLocalizedString("loginplus.update-usernamr.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
 
     public static let loginPlusSaveLoginMessageNewUser = NSLocalizedString("loginplus.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let loginPlusSaveLoginNotNowCTA = NSLocalizedString("loginplus.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
@@ -487,7 +487,7 @@ public struct UserText {
     public static let loginPlusSaveLoginSaveCTA = NSLocalizedString("loginplus.save-login.save.CTA", value: "Save Login", comment: "Confirm CTA displayed on modal asking for the user to save the login")
     public static let loginPlusSavePasswordSaveCTA = NSLocalizedString("loginplus.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
     public static let loginPlusUpdatePasswordSaveCTA = NSLocalizedString("loginplus.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
-    public static let loginPlusUpdateLoginSaveCTA = NSLocalizedString("loginplus.save-login.save.CTA", value: "Update Login", comment: "Confirm CTA displayed on modal asking for the user to update the login")
+    public static let loginPlusUpdateLoginSaveCTA = NSLocalizedString("loginplus.update-login.save.CTA", value: "Update Login", comment: "Confirm CTA displayed on modal asking for the user to update the login")
     public static let loginPlusAdditionalLoginInfoMessage = NSLocalizedString("loginplus.save-login.additional-login.message", value: "This will save an additional Login for this site.", comment: "Message displayed on modal explaining that an additional login will be saved.")
 
 

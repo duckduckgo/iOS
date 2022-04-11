@@ -565,9 +565,6 @@ class TabViewController: UIViewController {
     }
     
     func goBack() {
-        #warning("REMOVE")
-        openSaveUI()
-        return
         if isError {
             hideErrorMessage()
             url = webView.url
@@ -1629,17 +1626,6 @@ extension TabViewController: WKUIDelegate {
         }
      }
     
-    func openSaveUI() {
-#warning("Remove this, just for test")
-let saveLoginController = SaveLoginViewController()
-saveLoginController.delegate = self
-if #available(iOS 15.0, *) {
-    if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
-        presentationController.detents = [.medium(), .large()]
-    }
-}
-present(saveLoginController, animated: true, completion: nil)
-    }
     func webView(_ webView: WKWebView,
                  runJavaScriptTextInputPanelWithPrompt prompt: String,
                  defaultText: String?,
@@ -1924,13 +1910,21 @@ extension TabViewController: SecureVaultManagerDelegate {
             Swift.print("Stored accounts: \(thing)")
         }
         
-        openSaveUI()
+        let saveLoginController = SaveLoginViewController(credentials: credentials)
+        saveLoginController.delegate = self
+        if #available(iOS 15.0, *) {
+            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium(), .large()]
+            }
+        }
+        present(saveLoginController, animated: true, completion: nil)
     }
     
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
         // should not be called
     }
-    
+   
+    // swiftlint:disable:next identifier_name
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
 #warning("We don't have auth yet")
         didRequestAuthenticationWithCompletionHandler(true)
@@ -1943,10 +1937,16 @@ extension TabViewController: SecureVaultManagerDelegate {
 }
 
 extension TabViewController: SaveLoginViewControllerDelegate {
-    func saveLoginViewControllerDidConfirm(_ viewController: SaveLoginViewController) {
+    func saveLoginViewControllerDidSave(_ viewController: SaveLoginViewController, credentials: SecureVaultModels.WebsiteCredentials) {
         viewController.dismiss(animated: true)
+
+        do {
+            try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+        } catch {
+            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        }
     }
-    
+
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
         viewController.dismiss(animated: true)
     }

@@ -19,21 +19,32 @@
 
 import UIKit
 import SwiftUI
+import BrowserServicesKit
 
 protocol SaveLoginViewControllerDelegate: AnyObject {
-    func saveLoginViewControllerDidConfirm(_ viewController: SaveLoginViewController)
+    func saveLoginViewControllerDidSave(_ viewController: SaveLoginViewController, credentials: SecureVaultModels.WebsiteCredentials)
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController)
 }
 
 class SaveLoginViewController: UIViewController {
     weak var delegate: SaveLoginViewControllerDelegate?
-    
+    private let credentials: SecureVaultModels.WebsiteCredentials
+
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemMaterial)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         return blurEffectView
     }()
 
+    internal init(credentials: SecureVaultModels.WebsiteCredentials) {
+        self.credentials = credentials
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,14 +83,13 @@ class SaveLoginViewController: UIViewController {
         let saveLoginView = SaveLoginView(viewModel: userInfo, layoutType: .saveAdditionalLogin)
         let controller = UIHostingController(rootView: saveLoginView)
         controller.view.backgroundColor = .clear
-        //presentationController?.delegate = self
         installChildViewController(controller)
     }
 }
 
 extension SaveLoginViewController: SaveLoginViewModelDelegate {
-    func saveLoginViewModelDidConfirm(_ viewModel: SaveLoginViewModel) {
-        delegate?.saveLoginViewControllerDidConfirm(self)
+    func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel) {
+        delegate?.saveLoginViewControllerDidSave(self, credentials: credentials)
     }
     
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel) {

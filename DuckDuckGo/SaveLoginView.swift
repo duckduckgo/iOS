@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import BrowserServicesKit
 
 struct SaveLoginView: View {
     enum LayoutType {
@@ -29,7 +30,7 @@ struct SaveLoginView: View {
         case updatePassword
     }
     @State var frame: CGSize = .zero
-    let viewModel: SaveLoginViewModel
+    @ObservedObject var viewModel: SaveLoginViewModel
     let layoutType: LayoutType
     
     private var title: String {
@@ -58,16 +59,6 @@ struct SaveLoginView: View {
         case .updatePassword:
             return UserText.loginPlusUpdatePasswordSaveCTA
         }
-    }
-    
-    private var userInfo: String? {
-        if let username = viewModel.username {
-            return username
-        }
-        if let password = viewModel.password {
-            return password
-        }
-        return nil
     }
     
     var body: some View {
@@ -121,8 +112,11 @@ struct SaveLoginView: View {
     var titleHeaderView: some View {
         VStack {
             HStack {
-                Image(systemName: "globe")
-                Text("blablala.com")
+                Image(uiImage: viewModel.faviconImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                Text(viewModel.accountDomain)
                     .font(Const.Fonts.titleCaption)
                     .foregroundColor(Const.Colors.SecondaryTextColor)
             }
@@ -139,7 +133,7 @@ struct SaveLoginView: View {
     
     var ctaView: some View {
         SaveLoginCTAStackView(confirmLabel: confirmButton,
-                              cancelLabel: viewModel.cancelButtonLabel,
+                              cancelLabel: UserText.loginPlusSaveLoginNotNowCTA,
                               confirmAction: {
             viewModel.save()
         }, cancelAction: {
@@ -204,10 +198,9 @@ struct SaveLoginView: View {
 
 struct SaveLoginView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = SaveLoginViewModel(title: UserText.loginPlusSaveLoginTitleNewUser,
-                                           subtitle: UserText.loginPlusSaveLoginMessageNewUser,
-                                           confirmButtonLabel: UserText.loginPlusSaveLoginSaveCTA,
-                                           cancelButtonLabel: UserText.loginPlusSaveLoginNotNowCTA)
+        let websiteAccount = SecureVaultModels.WebsiteAccount(title: "Test", username: "test", domain: "www.dax.com")
+        let credentials = SecureVaultModels.WebsiteCredentials(account: websiteAccount, password: Data("test".utf8))
+        let viewModel = SaveLoginViewModel(credentials: credentials)
         SaveLoginView(viewModel: viewModel, layoutType: .saveAdditionalLogin)
     }
 }

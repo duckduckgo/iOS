@@ -17,29 +17,37 @@
 //  limitations under the License.
 //
 
-import Foundation
+import UIKit
+import BrowserServicesKit
 
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
 }
 
-class SaveLoginViewModel {
+class SaveLoginViewModel: ObservableObject {
     weak var delegate: SaveLoginViewModelDelegate?
-    let title: String
-    let subtitle: String?
-    let username: String?
-    let password: String?
-    let confirmButtonLabel: String
-    let cancelButtonLabel: String
+    private let layoutType: SaveLoginView.LayoutType
+    private let credentials: SecureVaultModels.WebsiteCredentials
+    @Published var faviconImage = UIImage(systemName: "globe")!
+    var accountDomain: String {
+        credentials.account.domain
+    }
+
+    internal init(credentials: SecureVaultModels.WebsiteCredentials) {
+        self.credentials = credentials
+        layoutType = .newUser
+        loadFavicon()
+    }
     
-    internal init(title: String, subtitle: String? = nil, username: String? = nil, password: String? = nil, confirmButtonLabel: String, cancelButtonLabel: String) {
-        self.title = title
-        self.subtitle = subtitle
-        self.username = username
-        self.password = password
-        self.confirmButtonLabel = confirmButtonLabel
-        self.cancelButtonLabel = cancelButtonLabel
+    private func loadFavicon() {
+        FaviconsHelper.loadFaviconSync(forDomain: credentials.account.domain,
+                                       usingCache: .tabs,
+                                       useFakeFavicon: true) { image, _ in
+            if let image = image {
+                self.faviconImage = image
+            }
+        }
     }
     
     func cancel() {

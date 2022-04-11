@@ -1912,19 +1912,19 @@ extension NSError {
     var failedUrl: URL? {
         return userInfo[NSURLErrorFailingURLErrorKey] as? URL
     }
-
+    
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
-
+    
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
 #warning("Remove this, just for test")
-vaultManager.autofillUserScript(autofillUserScript, didRequestAccountsForDomain: credentials.account.domain) { thing in
-    Swift.print("Stored accounts: \(thing)")
-}
-
-openSaveUI()
+        vaultManager.autofillUserScript(autofillUserScript, didRequestAccountsForDomain: credentials.account.domain) { thing in
+            Swift.print("Stored accounts: \(thing)")
+        }
+        
+        openSaveUI()
     }
     
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
@@ -1932,12 +1932,12 @@ openSaveUI()
     }
     
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
-        #warning("We don't have auth yet")
+#warning("We don't have auth yet")
         didRequestAuthenticationWithCompletionHandler(true)
     }
     
     func secureVaultInitFailed(_ error: SecureVaultError) {
-        #warning("How to handle this error?")
+#warning("How to handle this error?")
         Swift.print("Secure vault error")
     }
 }

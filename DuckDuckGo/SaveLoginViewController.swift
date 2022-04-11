@@ -28,7 +28,7 @@ protocol SaveLoginViewControllerDelegate: AnyObject {
 
 class SaveLoginViewController: UIViewController {
     weak var delegate: SaveLoginViewControllerDelegate?
-    private let credentials: SecureVaultModels.WebsiteCredentials
+    private let credentialManager: LoginPlusCredentialManager
 
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemMaterial)
@@ -36,8 +36,8 @@ class SaveLoginViewController: UIViewController {
         return blurEffectView
     }()
 
-    internal init(credentials: SecureVaultModels.WebsiteCredentials) {
-        self.credentials = credentials
+    internal init(credentialManager: LoginPlusCredentialManager) {
+        self.credentialManager = credentialManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,10 +64,10 @@ class SaveLoginViewController: UIViewController {
     }
 
     private func setupSaveLoginView() {
-        let saveViewModel = SaveLoginViewModel(credentials: credentials)
+        let saveViewModel = SaveLoginViewModel(credentialManager: credentialManager)
         saveViewModel.delegate = self
 
-        let saveLoginView = SaveLoginView(viewModel: saveViewModel, layoutType: .saveAdditionalLogin)
+        let saveLoginView = SaveLoginView(viewModel: saveViewModel)
         let controller = UIHostingController(rootView: saveLoginView)
         controller.view.backgroundColor = .clear
         installChildViewController(controller)
@@ -76,7 +76,7 @@ class SaveLoginViewController: UIViewController {
 
 extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel) {
-        delegate?.saveLoginViewControllerDidSave(self, credentials: credentials)
+        delegate?.saveLoginViewControllerDidSave(self, credentials: credentialManager.credentials)
     }
     
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel) {

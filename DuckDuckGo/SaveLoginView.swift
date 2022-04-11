@@ -31,7 +31,9 @@ struct SaveLoginView: View {
     }
     @State var frame: CGSize = .zero
     @ObservedObject var viewModel: SaveLoginViewModel
-    let layoutType: LayoutType
+    var layoutType: LayoutType {
+        viewModel.layoutType
+    }
     
     private var title: String {
         switch layoutType {
@@ -196,14 +198,15 @@ struct SaveLoginView: View {
     }
 }
 
-struct SaveLoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        let websiteAccount = SecureVaultModels.WebsiteAccount(title: "Test", username: "test", domain: "www.dax.com")
-        let credentials = SecureVaultModels.WebsiteCredentials(account: websiteAccount, password: Data("test".utf8))
-        let viewModel = SaveLoginViewModel(credentials: credentials)
-        SaveLoginView(viewModel: viewModel, layoutType: .saveAdditionalLogin)
-    }
-}
+#warning("Create LoginPlusCredentialManager protocol and send mock data here")
+//struct SaveLoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let websiteAccount = SecureVaultModels.WebsiteAccount(title: "Test", username: "test", domain: "www.dax.com")
+//        let credentials = SecureVaultModels.WebsiteCredentials(account: websiteAccount, password: Data("test".utf8))
+//        let viewModel = SaveLoginViewModel(credentials: credentials)
+//        SaveLoginView(viewModel: viewModel)
+//    }
+//}
 
 private enum Const {
     enum Fonts {

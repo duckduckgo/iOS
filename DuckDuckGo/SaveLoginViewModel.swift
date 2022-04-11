@@ -25,23 +25,61 @@ protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
 }
 
-class SaveLoginViewModel: ObservableObject {
-    weak var delegate: SaveLoginViewModelDelegate?
-    private let layoutType: SaveLoginView.LayoutType
-    private let credentials: SecureVaultModels.WebsiteCredentials
+final class SaveLoginViewModel: ObservableObject {
     @Published var faviconImage = UIImage(systemName: "globe")!
+    weak var delegate: SaveLoginViewModelDelegate?
+    private let credentialManager: LoginPlusCredentialManager
     var accountDomain: String {
-        credentials.account.domain
-    }
-
-    internal init(credentials: SecureVaultModels.WebsiteCredentials) {
-        self.credentials = credentials
-        layoutType = .newUser
-        loadFavicon()
+        credentialManager.accountDomain
     }
     
+    var isUpdatingPassword: Bool {
+        false
+    }
+    
+    var isUpdatingLogin: Bool {
+        false
+    }
+    
+    var isSavingAdditionalLogin: Bool {
+        false
+    }
+    
+    var isFirstTimeUser: Bool {
+        false
+    }
+    
+    var layoutType: SaveLoginView.LayoutType {
+        if isFirstTimeUser {
+            return .newUser
+        }
+        
+        if credentialManager.isPasswordOnlyAccount {
+            return .savePassword
+        }
+        
+        if isUpdatingLogin {
+            return .updateUsername
+        }
+        
+        if isUpdatingPassword {
+            return .updatePassword
+        }
+        
+        if isSavingAdditionalLogin {
+            return .saveAdditionalLogin
+        }
+
+        return .saveLogin
+    }
+
+    internal init(credentialManager: LoginPlusCredentialManager) {
+    self.credentialManager = credentialManager
+        loadFavicon()
+    }
+        
     private func loadFavicon() {
-        FaviconsHelper.loadFaviconSync(forDomain: credentials.account.domain,
+        FaviconsHelper.loadFaviconSync(forDomain: credentialManager.accountDomain,
                                        usingCache: .tabs,
                                        useFakeFavicon: true) { image, _ in
             if let image = image {

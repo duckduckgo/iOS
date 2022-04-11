@@ -1905,12 +1905,12 @@ extension TabViewController: SecureVaultManagerDelegate {
     
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
-#warning("Remove this, just for test")
-        vaultManager.autofillUserScript(autofillUserScript, didRequestAccountsForDomain: credentials.account.domain) { thing in
-            Swift.print("Stored accounts: \(thing)")
-        }
+
+        let credentialManager = LoginPlusCredentialManager(credentials: credentials, vaultManager: vaultManager, autofillScript: autofillUserScript)
         
-        let saveLoginController = SaveLoginViewController(credentials: credentials)
+        credentialManager.test()
+        
+        let saveLoginController = SaveLoginViewController(credentialManager: credentialManager)
         saveLoginController.delegate = self
         if #available(iOS 15.0, *) {
             if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {

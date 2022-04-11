@@ -26,12 +26,12 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
 
     func secureVaultInitFailed(_ error: SecureVaultError) {
 #if DEBUG
-        #warning("TODO does this work?")
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif
         switch error {
         case .initFailed, .failedToOpenDatabase:
             fatalError()
+            #warning("Do we need pixels here like macOS?")
         default:
             fatalError()
         }

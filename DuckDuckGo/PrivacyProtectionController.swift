@@ -20,6 +20,8 @@
 import UIKit
 import Core
 import BrowserServicesKit
+import WebKit
+import PrivacyDashboard
 
 protocol PrivacyProtectionDelegate: AnyObject {
 
@@ -28,6 +30,39 @@ protocol PrivacyProtectionDelegate: AnyObject {
     func reload(scripts: Bool)
 
     func getCurrentWebsiteInfo() -> BrokenSiteInfo
+}
+
+class SimpleWebViewController: UIViewController {
+    var webView: WKWebView?
+    
+    var url: URL? {
+        didSet {
+            if let url = url {
+                load(url: url)
+            }
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        extendedLayoutIncludesOpaqueBars = true
+        
+        applyTheme(ThemeManager.shared.currentTheme)
+        
+        let webView = WKWebView(frame: view.frame)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(webView)
+        self.webView = webView
+
+        if let url = url {
+            load(url: url)
+        }
+    }
+
+    private func load(url: URL) {
+        webView?.load(URLRequest.userInitiated(url))
+    }
 }
 
 class PrivacyProtectionController: ThemableNavigationController {
@@ -70,8 +105,13 @@ class PrivacyProtectionController: ThemableNavigationController {
     }
 
     private func showInitialScreen() {
-        guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen")
-            as? PrivacyProtectionOverviewController else { return }
+        let u = Bundle.privacyDashboard.startPageURL
+
+        let controller = SimpleWebViewController()
+        controller.url = u
+        print(u?.absoluteString ?? "")
+        
+                
         pushViewController(controller, animated: true)
         updateViewControllers()
     }

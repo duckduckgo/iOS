@@ -167,10 +167,6 @@ public enum PixelName: String {
     case textSizeSettingsShown = "m_text_size_settings_shown"
     case textSizeSettingsChanged = "m_text_size_settings_changed"
     
-    case widgetEducationOpenedFromHomeScreen = "m_widget_education_opened_from_home"
-    case widgetEducationOpenedFromSettings = "m_widget_education_opened_from_settings"
-    case widgetEducationDismissed = "m_widget_education_dismissed"
-    
     case downloadStarted = "m_download_started"
     case downloadStartedDueToUnhandledMIMEType = "m_download_started_due_to_unhandled_mime_type"
     case downloadTriedToPresentPreviewWithoutTab = "m_download_tried_to_present_preview_without_tab"
@@ -183,6 +179,9 @@ public enum PixelName: String {
     case downloadsListSharePressed = "m_downloads_list_share_pressed"
     
     case downloadsSharingPredownloadedLocalFile = "m_downloads_sharing_predownloaded_local_file"
+    
+    case downloadPreparingToStart = "m_download_preparing_to_start"
+    case downloadAttemptToOpenBLOB = "m_download_attempt_to_open_blob"
 
     case jsAlertShown = "m_js_alert_shown"
     case jsAlertBlocked = "m_js_alert_blocked"
@@ -191,6 +190,15 @@ public enum PixelName: String {
     
     case serpRequerySame = "rq_0"
     case serpRequeryNew = "rq_1"
+    
+    // MARK: macOS browser waitlist pixels
+    
+    case macBrowserWaitlistDidPressShareButton = "m_macos_waitlist_did_press_share_button"
+    case macBrowserWaitlistDidPressShareButtonDismiss = "m_macos_waitlist_did_press_share_button_dismiss"
+    case macBrowserWaitlistDidPressShareButtonShared = "m_macos_waitlist_did_press_share_button_shared"
+    
+    case macBrowserWaitlistNotificationShown = "m_notification_shown_mac_waitlist"
+    case macBrowserWaitlistNotificationLaunched = "m_notification_launch_mac_waitlist"
 
     // MARK: debug pixels
     
@@ -302,6 +310,7 @@ public struct PixelParameters {
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
+    public static let statusCode = "status_code"
     
 }
 

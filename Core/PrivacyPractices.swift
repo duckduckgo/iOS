@@ -72,7 +72,7 @@ public class PrivacyPractices {
     
     func findPractice(forHost host: String) -> Practice {
         guard let domain = tld.domain(host) else { return Constants.unknown }
-        guard let term = termsOfServiceStore.terms[domain] else { return Constants.unknown}
+        guard let term = termsOfServiceStore.terms[domain] else { return Constants.unknown }
         let entityScore = entityScores[entityMapping.findEntity(forHost: domain)?.displayName ?? ""]
         return Practice(score: entityScore ?? term.derivedScore,
                         summary: term.summary,

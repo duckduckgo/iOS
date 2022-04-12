@@ -27,6 +27,8 @@ class DatabaseMigrationTests: XCTestCase {
     let sourceDB = Database(name: "Source", model: Database.shared.model)
 
     override func setUp() {
+        super.setUp()
+        
         sourceDB.loadStore()
         
         cleanup(database: Database.shared)
@@ -34,6 +36,8 @@ class DatabaseMigrationTests: XCTestCase {
     }
     
     override func tearDown() {
+        super.tearDown()
+        
         cleanup(database: Database.shared)
         cleanup(database: sourceDB)
     }
@@ -118,7 +122,7 @@ class DatabaseMigrationTests: XCTestCase {
         result = (try? destination.fetch(PPTrackerNetwork.fetchRequest())) ?? []
         XCTAssert(result.count == 2)
         XCTAssert(destination.hasChanges)
-        let modified = destination.updatedObjects.first(where: { ($0 as? PPTrackerNetwork)?.name == "Updated"})
+        let modified = destination.updatedObjects.first(where: { ($0 as? PPTrackerNetwork)?.name == "Updated" })
         XCTAssertNotNil(modified)
         
         result = (try? source.fetch(PPTrackerNetwork.fetchRequest())) ?? []

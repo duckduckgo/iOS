@@ -199,7 +199,7 @@ class OnboardingViewController: UIViewController, Onboarding {
     }
 
     override var shouldAutorotate: Bool {
-        return true 
+        return true
     }
     
 }

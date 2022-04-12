@@ -62,7 +62,7 @@ class VariantManagerTests: XCTestCase {
         for i in 0 ..< 100 {
             
             let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: i))
-            subject.assignVariantIfNeeded { _ in  }
+            subject.assignVariantIfNeeded { _ in }
             XCTAssertNotEqual("mt", subject.currentVariant?.name)
 
         }
@@ -75,7 +75,7 @@ class VariantManagerTests: XCTestCase {
         mockStore.atb = "atb"
 
         let subject = DefaultVariantManager(variants: testVariants, storage: mockStore, rng: MockVariantRNG(returnValue: 0))
-        subject.assignVariantIfNeeded {  _ in  }
+        subject.assignVariantIfNeeded { _ in }
         XCTAssertNil(subject.currentVariant)
 
     }
@@ -84,7 +84,7 @@ class VariantManagerTests: XCTestCase {
 
         let variant = Variant(name: "anything", weight: 100, isIncluded: Variant.When.always, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore())
-        subject.assignVariantIfNeeded {  _ in }
+        subject.assignVariantIfNeeded { _ in }
         XCTAssertEqual(variant.name, subject.currentVariant?.name)
 
     }

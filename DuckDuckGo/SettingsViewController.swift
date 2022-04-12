@@ -21,8 +21,9 @@ import UIKit
 import MessageUI
 import Core
 import BrowserServicesKit
+import SwiftUI
 
-// swiftlint:disable file_length
+// swiftlint:disable file_length type_body_length
 class SettingsViewController: UITableViewController {
 
     @IBOutlet weak var defaultBrowserCell: UITableViewCell!
@@ -42,6 +43,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
     @IBOutlet weak var emailProtectionCell: UITableViewCell!
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
+    @IBOutlet weak var macBrowserWaitlistCell: UITableViewCell!
+    @IBOutlet weak var macBrowserWaitlistAccessoryText: UILabel!
     @IBOutlet weak var longPressCell: UITableViewCell!
     @IBOutlet weak var versionCell: UITableViewCell!
     @IBOutlet weak var textSizeCell: UITableViewCell!
@@ -67,7 +70,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private lazy var shouldShowWidgetEducationCell: Bool = {
-        guard #available(iOS 14, *), variantManager.isSupported(feature: .widgetEducation) else { return false }
+        guard #available(iOS 14, *) else { return false }
         return true
     }()
     
@@ -103,6 +106,7 @@ class SettingsViewController: UITableViewController {
         configureDoNotSell()
         configureIconViews()
         configureEmailProtectionAccessoryText()
+        configureMacBrowserWaitlistCell()
         
         // Make sure muliline labels are correctly presented
         tableView.setNeedsLayout()
@@ -202,6 +206,10 @@ class SettingsViewController: UITableViewController {
         longPressCell.isHidden = false
         longPressPreviewsToggle.isOn = appSettings.longPressPreviews
     }
+    
+    private func configureMacBrowserWaitlistCell() {
+        macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle()
+    }
 
     private func showDebug() {
         // Use the "AdhocDebug" scheme when archiving to create a compatible adhoc build
@@ -210,7 +218,11 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureEmailProtectionAccessoryText() {
-        emailProtectionAccessoryText.text = emailManager.userEmail
+        if let userEmail = emailManager.userEmail {
+            emailProtectionAccessoryText.text = userEmail
+        } else {
+            emailProtectionAccessoryText.text = UserText.emailSettingsSubtitle
+        }
     }
 
     private func showEmailProtectionViewController() {
@@ -221,6 +233,10 @@ class SettingsViewController: UITableViewController {
 
     private func showEmailWaitlistViewController() {
         navigationController?.pushViewController(EmailWaitlistViewController.loadFromStoryboard(), animated: true)
+    }
+    
+    private func showDesktopBrowserWaitlistViewController() {
+        navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -241,12 +257,12 @@ class SettingsViewController: UITableViewController {
             } else {
                 showEmailWaitlistViewController()
             }
+            
+        case macBrowserWaitlistCell:
+            showDesktopBrowserWaitlistViewController()
 
         case versionCell:
             showDebug()
-            
-        case widgetEducationCell:
-            Pixel.fire(pixel: .widgetEducationOpenedFromSettings)
 
         default: break
         }
@@ -415,4 +431,4 @@ extension SettingsViewController {
         }
     }
 }
-// swiftlint:enable file_length
+// swiftlint:enable file_length type_body_length

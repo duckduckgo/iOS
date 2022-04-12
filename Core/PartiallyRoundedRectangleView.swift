@@ -47,9 +47,9 @@ public class PartiallyRoundedRectangleView: UIView {
     override public func layoutSubviews() {
         super.layoutSubviews()
         var corners = UIRectCorner()
-        if topLeftCorner { corners.insert(.topLeft)     }
-        if topRightCorner { corners.insert(.topRight)    }
-        if bottomLeftCorner { corners.insert(.bottomLeft)  }
+        if topLeftCorner { corners.insert(.topLeft) }
+        if topRightCorner { corners.insert(.topRight) }
+        if bottomLeftCorner { corners.insert(.bottomLeft) }
         if bottomRightCorner { corners.insert(.bottomRight) }
         round(corners: corners, radius: cornerRadius)
     }

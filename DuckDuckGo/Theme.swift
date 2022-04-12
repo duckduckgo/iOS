@@ -33,7 +33,7 @@ protocol Theme {
     var keyboardAppearance: UIKeyboardAppearance { get }
 
     var tabsBarBackgroundColor: UIColor { get }
-    var tabsBarSeparatorColor: UIColor { get } 
+    var tabsBarSeparatorColor: UIColor { get }
     
     var backgroundColor: UIColor { get }
     

@@ -163,7 +163,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     func createSwitchCell(forTableView tableView: UITableView, withTheme theme: Theme) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingCell") as? PreserveLoginsSwitchCell else {
-            fatalError()
+            fatalError("Cell should be dequeued")
         }
         cell.label.textColor = theme.tableCellTextColor
         cell.toggle.onTintColor = theme.buttonTintColor
@@ -175,7 +175,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     func createDomainCell(forTableView tableView: UITableView, withTheme theme: Theme, forIndex index: Int) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "DomainCell") as? PreserveLoginDomainCell else {
-            fatalError()
+            fatalError("Cell should be dequeued")
         }
         cell.label.textColor = theme.tableCellTextColor
         cell.faviconImage.loadFavicon(forDomain: model[index], usingCache: .bookmarks)
@@ -253,7 +253,7 @@ class PreserveLoginDomainCell: UITableViewCell {
 
 }
 
-fileprivate extension IndexPath {
+private extension IndexPath {
     
     func isInSection(section: PreserveLoginsSettingsViewController.Section) -> Bool {
         return self.section == section.rawValue

@@ -1,5 +1,5 @@
 //
-//  MimeType.swift
+//  FontExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -18,23 +18,21 @@
 //
 
 import Foundation
+import SwiftUI
 
-enum MIMEType: String {
-    case passbook = "application/vnd.apple.pkpass"
-    case usdz = "model/vnd.usdz+zip"
-    case reality = "model/vnd.reality"
-    case octetStream = "application/octet-stream"
-    case xhtml = "application/xhtml+xml"
-    case html = "text/html"
-    case calendar = "text/calendar"
-    case unknown
+extension Font {
     
-    var isHTML: Bool {
-        switch self {
-        case .html, .xhtml:
-            return true
-        default:
-            return false
-        }
+    enum ProximaNovaWeight: String {
+        case light
+        case regular
+        case semiBold = "semibold"
+        case bold
+        case extraBold = "extrabold"
     }
+    
+    static func proximaNova(size: CGFloat, weight: ProximaNovaWeight) -> Self {
+        let fontName = "proximanova-\(weight.rawValue)"
+        return .custom(fontName, size: size)
+    }
+    
 }

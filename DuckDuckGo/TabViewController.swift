@@ -94,9 +94,6 @@ class TabViewController: UIViewController {
     private var preserveLoginsWorker: PreserveLoginsWorker?
     
     private var trackersInfoWorkItem: DispatchWorkItem?
-    
-    private var linkCleaner: LinkCleaner!
-    private var ampExtractor: AMPCanonicalExtractor!
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -108,6 +105,7 @@ class TabViewController: UIViewController {
     var isShowingFullScreenDaxDialog = false
     
     var temporaryDownloadForPreviewedFile: Download?
+    var mostRecentAutoPreviewDownloadID: UUID?
     
     public var url: URL? {
         didSet {
@@ -188,11 +186,29 @@ class TabViewController: UIViewController {
         return manager
     }()
     
-    lazy var autofillUserScript: AutofillUserScript = {
+    lazy var autofillUserScript: BrowserServicesKit.AutofillUserScript = {
         let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
         let provider = DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager, properties: prefs)
         let autofillUserScript = AutofillUserScript(scriptSourceProvider: provider)
         return autofillUserScript
+    }()
+    
+    private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
+        let domainEvent: PixelName
+        switch event {
+        case .ampBlockingRulesCompilationFailed:
+            domainEvent = .ampBlockingRulesCompilationFailed
+            Pixel.fire(pixel: domainEvent,
+                       withAdditionalParameters: [:],
+                       onComplete: onComplete)
+        }
+    }
+    
+    private lazy var linkProtection: LinkProtection = {
+        LinkProtection(privacyManager: ContentBlocking.privacyConfigurationManager,
+                       contentBlockingManager: ContentBlocking.contentBlockingManager,
+                       errorReporting: Self.debugEvents)
+
     }()
     
     private var userScripts: [UserScript] = []
@@ -201,8 +217,6 @@ class TabViewController: UIViewController {
         return !shouldBlockJSAlert && presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
     }
     
-    private var onWebsiteLoaded: (() -> Void)?
-
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
@@ -219,9 +233,6 @@ class TabViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.linkCleaner = LinkCleaner()
-        self.ampExtractor = AMPCanonicalExtractor(linkCleaner: linkCleaner)
         
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
         initUserScripts()
@@ -343,14 +354,15 @@ class TabViewController: UIViewController {
         updateContentMode()
         
         instrumentation.didPrepareWebView()
-
+        
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
         } else if let request = request {
             if let url = request.url {
-                getCleanUrl(url) { [weak self] cleanUrl in
-                    self?.load(urlRequest: URLRequest.userInitiated(cleanUrl))
-                }
+                linkProtection.getCleanURL(from: url,
+                                           onStartExtracting: { showProgressIndicator() },
+                                           onFinishExtracting: { },
+                                           completion: { [weak self] cleanURL in self?.load(urlRequest: .userInitiated(cleanURL)) })
             } else {
                 load(urlRequest: request)
             }
@@ -394,37 +406,12 @@ class TabViewController: UIViewController {
         }
     }
     
-    public func getCleanUrl(_ url: URL, showLoadingIndicator: Bool = true, completion: @escaping (URL) -> Void) {
-        // Rewrite tracking links
-        var urlToLoad = url
-        if let cleanUrl = linkCleaner.cleanTrackingParameters(initiator: nil, url: urlToLoad) {
-            urlToLoad = cleanUrl
-        }
-        
-        if let cleanUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: nil, destination: urlToLoad) {
-            completion(cleanUrl)
-        } else if ampExtractor.urlContainsAmpKeyword(urlToLoad) {
-            if showLoadingIndicator {
-                showProgressIndicator()
-            }
-            ampExtractor.getCanonicalUrl(initiator: nil, url: urlToLoad) { canonical in
-                if let canonical = canonical {
-                    completion(canonical)
-                } else {
-                    completion(urlToLoad)
-                }
-            }
-        } else {
-            completion(urlToLoad)
-        }
-    }
-    
     public func load(url: URL) {
-        load(url: url, didUpgradeUrl: false)
+        load(url: url, didUpgradeURL: false)
     }
     
-    private func load(url: URL, didUpgradeUrl: Bool) {
-        if !didUpgradeUrl {
+    private func load(url: URL, didUpgradeURL: Bool) {
+        if !didUpgradeURL {
             lastUpgradedURL = nil
         }
         
@@ -434,15 +421,21 @@ class TabViewController: UIViewController {
         
         lastError = nil
         updateContentMode()
-        getCleanUrl(url) { [weak self] url in
-            self?.load(urlRequest: URLRequest.userInitiated(url))
-        }
+        linkProtection.getCleanURL(from: url,
+                                   onStartExtracting: { showProgressIndicator() },
+                                   onFinishExtracting: { },
+                                   completion: { [weak self] url in
+            self?.load(urlRequest: .userInitiated(url))
+        })
     }
     
-    func prepareForDataClearing(completion: @escaping () -> Void) {
+    func prepareForDataClearing() {
+        webView.navigationDelegate = nil
+        webView.uiDelegate = nil
+        delegate = nil
+        
         webView.stopLoading()
-        webView.load(URLRequest(url: URL(string: "about:blank")!))
-        onWebsiteLoaded = completion
+        webView.loadHTMLString("", baseURL: nil)
     }
     
     private func load(urlRequest: URLRequest) {
@@ -867,11 +860,11 @@ class TabViewController: UIViewController {
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: siteRating?.installedSurrogates.map {$0} ?? [],
+                              installedSurrogates: siteRating?.installedSurrogates.map { $0 } ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.contentBlockingManager.currentTDSRules?.etag ?? "",
-                              ampUrl: linkCleaner?.lastAmpUrl,
-                              urlParametersRemoved: linkCleaner?.urlParametersRemoved ?? false)
+                              ampUrl: linkProtection.lastAMPURLString,
+                              urlParametersRemoved: linkProtection.urlParametersRemoved)
     }
     
     public func print() {
@@ -952,11 +945,13 @@ class TabViewController: UIViewController {
     }
 
     private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
-              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self),
-              let delegate = self.delegate else { return }
+        guard let delegate = self.delegate,
+              delegate.tabCheckIfItsBeingCurrentlyPresented(self),
+              FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
+              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self)
+        else { return }
         
-        if delegate.tabCheckIfItsBeingCurrentlyPresented(self) {
+        if mostRecentAutoPreviewDownloadID == download.id {
             fileHandler.preview()
         } else {
             Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
@@ -1039,30 +1034,43 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        let mimeType = MIMEType(from: navigationResponse.response.mimeType)
+        
+        if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
+            Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
+        }
       
-        if navigationResponse.canShowMIMEType {
+        if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             setupOrClearTemporaryDownload(for: navigationResponse)
             url = webView.url
             decisionHandler(.allow)
         } else {
+            if let httpResponse = navigationResponse.response as? HTTPURLResponse {
+                Pixel.fire(pixel: .downloadPreparingToStart,
+                           withAdditionalParameters: [PixelParameters.statusCode: String(httpResponse.statusCode)])
+            }
+                           
             let downloadManager = AppDependencyProvider.shared.downloadManager
             
-            let startDownload = {
+            let startDownload: () -> Download? = {
                 let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
                 if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
                     downloadManager.startDownload(download)
+                    return download
+                } else {
+                    return nil
                 }
             }
             
-            if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
-                
-                if FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType) {
-                    startDownload()
-                    Pixel.fire(pixel: .downloadStarted,
-                               withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-                } else {
+            if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
+                let download = startDownload()
+                mostRecentAutoPreviewDownloadID = download?.id
+                Pixel.fire(pixel: .downloadStarted,
+                           withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
+            } else {
+                if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
                     let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
-                        startDownload()
+                        _ = startDownload()
                         Pixel.fire(pixel: .downloadStarted,
                                    withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "0"])
                         
@@ -1077,7 +1085,7 @@ extension TabViewController: WKNavigationDelegate {
                     }
                 }
             }
-            
+        
             decisionHandler(.cancel)
         }
     }
@@ -1107,7 +1115,7 @@ extension TabViewController: WKNavigationDelegate {
         hideErrorMessage()
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
-        ampExtractor.cancelOngoingExtraction()
+        linkProtection.cancelOngoingExtraction()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1142,11 +1150,6 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
-        
-        if let callback = onWebsiteLoaded {
-            callback()
-            onWebsiteLoaded = nil
-        }
         
         siteRating?.finishedLoading = true
         updateSiteRating()
@@ -1320,48 +1323,6 @@ extension TabViewController: WKNavigationDelegate {
         }
         return nil
     }
-    
-    func requestTrackingLinkRewrite(navigationAction: WKNavigationAction,
-                                    decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) -> Bool {
-        func load(newUrl: URL, forNavigationAction navigationAction: WKNavigationAction) {
-            if isNewTargetBlankRequest(navigationAction: navigationAction) {
-                delegate?.tab(self, didRequestNewTabForUrl: newUrl, openedByPage: true)
-            } else {
-                self.load(url: newUrl)
-            }
-        }
-        
-        if let newUrl = linkCleaner.extractCanonicalFromAmpLink(initiator: webView.url,
-                                                                 destination: navigationAction.request.url) {
-            decisionHandler(.cancel)
-            load(newUrl: newUrl, forNavigationAction: navigationAction)
-            return true
-        } else if ampExtractor.urlContainsAmpKeyword(navigationAction.request.url) {
-            showProgressIndicator()
-            ampExtractor.getCanonicalUrl(initiator: webView.url,
-                                          url: navigationAction.request.url) { canonical in
-                guard let canonical = canonical, canonical != navigationAction.request.url else {
-                    decisionHandler(.allow)
-                    return
-                }
-                
-                decisionHandler(.cancel)
-                load(newUrl: canonical, forNavigationAction: navigationAction)
-            }
-            return true
-        }
-        
-        if let newUrl = linkCleaner.cleanTrackingParameters(initiator: webView.url,
-                                                            url: navigationAction.request.url) {
-            if newUrl != navigationAction.request.url {
-                decisionHandler(.cancel)
-                load(newUrl: newUrl, forNavigationAction: navigationAction)
-                return true
-            }
-        }
-        
-        return false
-    }
             
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
@@ -1370,8 +1331,21 @@ extension TabViewController: WKNavigationDelegate {
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
-            if requestTrackingLinkRewrite(navigationAction: navigationAction, decisionHandler: decisionHandler) {
-                // Returns true if the clicked link has been rewritten. We need to drop out of the method in this case.
+            let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
+                                                                           navigationAction: navigationAction,
+                                                                           onStartExtracting: { showProgressIndicator() },
+                                                                           onFinishExtracting: { },
+                                                                           onLinkRewrite: { [weak self] newURL, navigationAction in
+                guard let self = self else { return }
+                if self.isNewTargetBlankRequest(navigationAction: navigationAction) {
+                    self.delegate?.tab(self, didRequestNewTabForUrl: newURL, openedByPage: true)
+                } else {
+                    self.load(url: newURL)
+                }
+            },
+                                                                           policyDecisionHandler: decisionHandler)
+            
+            if didRewriteLink {
                 return
             }
         }
@@ -1516,7 +1490,7 @@ extension TabViewController: WKNavigationDelegate {
                 if lastUpgradedURL != upgradedUrl {
                     NetworkLeaderboard.shared.incrementHttpsUpgrades()
                     lastUpgradedURL = upgradedUrl
-                    load(url: upgradedUrl, didUpgradeUrl: true)
+                    load(url: upgradedUrl, didUpgradeURL: true)
                     completion(.cancel)
                 } else {
                     completion(allowPolicy)
@@ -1902,38 +1876,54 @@ extension NSError {
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
-    
-    func secureVaultManager(_: SecureVaultManager,
-                            promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
-
-        let credentialManager = LoginPlusCredentialManager(credentials: credentials, vaultManager: vaultManager, autofillScript: autofillUserScript)
-        
-        credentialManager.test()
-        
-        let saveLoginController = SaveLoginViewController(credentialManager: credentialManager)
-        saveLoginController.delegate = self
-        if #available(iOS 15.0, *) {
-            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
-                presentationController.detents = [.medium(), .large()]
-            }
-        }
-        present(saveLoginController, animated: true, completion: nil)
-    }
-    
-    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
-        // should not be called
-    }
-   
-    // swiftlint:disable:next identifier_name
-    func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
-#warning("We don't have auth yet")
-        didRequestAuthenticationWithCompletionHandler(true)
-    }
-    
     func secureVaultInitFailed(_ error: SecureVaultError) {
-#warning("How to handle this error?")
-        Swift.print("Secure vault error")
+        
     }
+    
+    func secureVaultManager(_: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
+        
+    }
+
+    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
+        
+    }
+    
+    func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
+        
+    }
+    
+    
+//    func secureVaultManager(_: SecureVaultManager,
+//                            promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+//
+//        let credentialManager = LoginPlusCredentialManager(credentials: credentials, vaultManager: vaultManager, autofillScript: autofillUserScript)
+//
+//        credentialManager.test()
+//
+//        let saveLoginController = SaveLoginViewController(credentialManager: credentialManager)
+//        saveLoginController.delegate = self
+//        if #available(iOS 15.0, *) {
+//            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+//                presentationController.detents = [.medium(), .large()]
+//            }
+//        }
+//        present(saveLoginController, animated: true, completion: nil)
+//    }
+//
+//    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
+//        // should not be called
+//    }
+//
+//    // swiftlint:disable:next identifier_name
+//    func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
+//#warning("We don't have auth yet")
+//        didRequestAuthenticationWithCompletionHandler(true)
+//    }
+//
+//    func secureVaultInitFailed(_ error: SecureVaultError) {
+//#warning("How to handle this error?")
+//        Swift.print("Secure vault error")
+//    }
 }
 
 extension TabViewController: SaveLoginViewControllerDelegate {

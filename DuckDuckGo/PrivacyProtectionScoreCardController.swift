@@ -37,6 +37,8 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         Pixel.fire(pixel: .privacyDashboardScorecard)
         
         tableView.register(UINib(nibName: "PrivacyProtectionHeaderCell", bundle: nil),

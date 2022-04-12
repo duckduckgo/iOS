@@ -102,12 +102,10 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
                                       collectionView: UICollectionView) -> HomeMessageViewModel {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
-        case .widgetEducation:
-            return WidgetEducationHomeMessage.makeViewModel(presentingViewController: controller!,
-                                                            onDidClose: { [weak self] in
-                Pixel.fire(pixel: .widgetEducationDismissed)
+        case .placeholder:
+            return HomeMessageViewModel(image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
-            })
+            }
         }
     }
     

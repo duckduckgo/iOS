@@ -1,5 +1,5 @@
 //
-//  LoginPlusCredentialManager.swift
+//  AutofillCredentialManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -69,7 +69,7 @@ struct AutofillCredentialManager {
                             print("USER \(credential.account.username) PASS \(pass)")
                         }
                     }
-                } 
+                }
             }
         }
     }

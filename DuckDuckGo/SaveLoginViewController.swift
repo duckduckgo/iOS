@@ -22,7 +22,9 @@ import SwiftUI
 import BrowserServicesKit
 
 protocol SaveLoginViewControllerDelegate: AnyObject {
-    func saveLoginViewControllerDidSave(_ viewController: SaveLoginViewController, credentials: SecureVaultModels.WebsiteCredentials)
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials)
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials)
+
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController)
 }
 
@@ -76,7 +78,12 @@ class SaveLoginViewController: UIViewController {
 
 extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel) {
-        delegate?.saveLoginViewControllerDidSave(self, credentials: credentialManager.credentials)
+        switch viewModel.layoutType {
+        case .updatePassword, .updateUsername:
+            delegate?.saveLoginViewController(self, didSaveCredentials: credentialManager.credentials)
+        default:
+            delegate?.saveLoginViewController(self, didUpdateCredentials: credentialManager.credentials)
+        }
     }
     
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel) {

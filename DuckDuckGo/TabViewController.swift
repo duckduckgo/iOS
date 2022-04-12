@@ -1876,24 +1876,28 @@ extension NSError {
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
+    
+    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
+        let manager = AutofillCredentialManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
+        manager.test()
+        
+        let saveLoginController = SaveLoginViewController(credentialManager: manager)
+        saveLoginController.delegate = self
+        if #available(iOS 15.0, *) {
+            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium(), .large()]
+            }
+        }
+        present(saveLoginController, animated: true, completion: nil)
+    }
+    
     func secureVaultInitFailed(_ error: SecureVaultError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
         if let credentials = data.credentials {
-            let manager = AutofillCredentialManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
-            manager.test()
-            
-            let saveLoginController = SaveLoginViewController(credentialManager: manager)
-            saveLoginController.delegate = self
-            if #available(iOS 15.0, *) {
-                if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = [.medium(), .large()]
-                }
-            }
-            present(saveLoginController, animated: true, completion: nil)
-            
+            presentSavePasswordModal(with: vault, credentials: credentials)
         }
         Swift.print("PROMPT")
         
@@ -1910,16 +1914,27 @@ extension TabViewController: SecureVaultManagerDelegate {
 }
 
 extension TabViewController: SaveLoginViewControllerDelegate {
-    func saveLoginViewControllerDidSave(_ viewController: SaveLoginViewController, credentials: SecureVaultModels.WebsiteCredentials) {
-        viewController.dismiss(animated: true)
-        
+    
+    private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
         do {
            try AutofillCredentialManager.saveCredentials(credentials, with: SecureVaultFactory.default)
+            ActionMessageView.present(message: message, actionTitle: "SHOW") {
+                Swift.print("Show login")
+            }
+
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
         }
     }
-
+    
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        saveCredentials(credentials, withSuccessMessage: "Login Saved")
+    }
+    
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        saveCredentials(credentials, withSuccessMessage: "Login Updated")
+    }
+    
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
         viewController.dismiss(animated: true)
     }

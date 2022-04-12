@@ -35,7 +35,7 @@ public struct AppUrls {
         static let autocomplete = "\(base)/ac/"
         
         static let surrogates = "\(staticBase)/surrogates.txt"
-        static let privacyConfig = "\(staticBase)/trackerblocking/config/v1/ios-config.json"
+        static let privacyConfig = "\(staticBase)/trackerblocking/config/v2/ios-config.json"
         static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/apple-tds.json"
 
         static let atb = "\(base)/atb.js\(devMode)"

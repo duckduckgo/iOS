@@ -20,7 +20,7 @@
 import Foundation
 import BrowserServicesKit
 
-struct LoginPlusCredentialManager {
+struct AutofillCredentialManager {
     let credentials: SecureVaultModels.WebsiteCredentials
     let vaultManager: SecureVaultManager
     let autofillScript: AutofillUserScript
@@ -50,6 +50,10 @@ struct LoginPlusCredentialManager {
     
     var isPasswordOnlyAccount: Bool {
         !visiblePassword.isEmpty && username.isEmpty
+    }
+    
+    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws {
+        try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
     }
     
     func test() {

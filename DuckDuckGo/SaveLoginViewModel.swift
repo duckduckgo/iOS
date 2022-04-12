@@ -28,7 +28,7 @@ protocol SaveLoginViewModelDelegate: AnyObject {
 final class SaveLoginViewModel: ObservableObject {
     @Published var faviconImage = UIImage(systemName: "globe")!
     weak var delegate: SaveLoginViewModelDelegate?
-    private let credentialManager: LoginPlusCredentialManager
+    private let credentialManager: AutofillCredentialManager
     var accountDomain: String {
         credentialManager.accountDomain
     }
@@ -73,7 +73,7 @@ final class SaveLoginViewModel: ObservableObject {
         return .saveLogin
     }
 
-    internal init(credentialManager: LoginPlusCredentialManager) {
+    internal init(credentialManager: AutofillCredentialManager) {
     self.credentialManager = credentialManager
         loadFavicon()
     }

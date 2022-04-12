@@ -1877,61 +1877,44 @@ extension NSError {
 
 extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultInitFailed(_ error: SecureVaultError) {
-        
+        SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
-    func secureVaultManager(_: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
+    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
+        if let credentials = data.credentials {
+            let manager = AutofillCredentialManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
+            manager.test()
+            
+            let saveLoginController = SaveLoginViewController(credentialManager: manager)
+            saveLoginController.delegate = self
+            if #available(iOS 15.0, *) {
+                if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+                    presentationController.detents = [.medium(), .large()]
+                }
+            }
+            present(saveLoginController, animated: true, completion: nil)
+            
+        }
+        Swift.print("PROMPT")
         
     }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
-        
+        #warning("Add pixel here?")
     }
     
+    // swiftlint:disable:next identifier_name
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
-        
+        // We don't have auth yet
     }
-    
-    
-//    func secureVaultManager(_: SecureVaultManager,
-//                            promptUserToStoreCredentials credentials: SecureVaultModels.WebsiteCredentials) {
-//
-//        let credentialManager = LoginPlusCredentialManager(credentials: credentials, vaultManager: vaultManager, autofillScript: autofillUserScript)
-//
-//        credentialManager.test()
-//
-//        let saveLoginController = SaveLoginViewController(credentialManager: credentialManager)
-//        saveLoginController.delegate = self
-//        if #available(iOS 15.0, *) {
-//            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
-//                presentationController.detents = [.medium(), .large()]
-//            }
-//        }
-//        present(saveLoginController, animated: true, completion: nil)
-//    }
-//
-//    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
-//        // should not be called
-//    }
-//
-//    // swiftlint:disable:next identifier_name
-//    func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
-//#warning("We don't have auth yet")
-//        didRequestAuthenticationWithCompletionHandler(true)
-//    }
-//
-//    func secureVaultInitFailed(_ error: SecureVaultError) {
-//#warning("How to handle this error?")
-//        Swift.print("Secure vault error")
-//    }
 }
 
 extension TabViewController: SaveLoginViewControllerDelegate {
     func saveLoginViewControllerDidSave(_ viewController: SaveLoginViewController, credentials: SecureVaultModels.WebsiteCredentials) {
         viewController.dismiss(animated: true)
-
+        
         do {
-            try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+           try AutofillCredentialManager.saveCredentials(credentials, with: SecureVaultFactory.default)
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
         }

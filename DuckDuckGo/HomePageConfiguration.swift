@@ -47,10 +47,5 @@ final class HomePageConfiguration {
     
     var homeMessages: [HomeMessage] { homeMessageStorage.messagesToBeShown }
     
-    func dismissHomeMessage(_ homeMessage: HomeMessage) {
-        switch homeMessage {
-        case .widgetEducation:
-            homeMessageStorage.hideWidgetEducation()
-        }
-    }
+    func dismissHomeMessage(_ homeMessage: HomeMessage) { }
 }

@@ -70,7 +70,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private lazy var shouldShowWidgetEducationCell: Bool = {
-        guard #available(iOS 14, *), variantManager.isSupported(feature: .widgetEducation) else { return false }
+        guard #available(iOS 14, *) else { return false }
         return true
     }()
     
@@ -263,9 +263,6 @@ class SettingsViewController: UITableViewController {
 
         case versionCell:
             showDebug()
-            
-        case widgetEducationCell:
-            Pixel.fire(pixel: .widgetEducationOpenedFromSettings)
 
         default: break
         }

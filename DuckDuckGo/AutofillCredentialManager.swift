@@ -52,9 +52,41 @@ struct AutofillCredentialManager {
         !visiblePassword.isEmpty && username.isEmpty
     }
     
+    private var storedCredentials: [SecureVaultModels.WebsiteCredentials] {
+        let semaphore = DispatchSemaphore(value: 0)
+        var result = [SecureVaultModels.WebsiteCredentials]()
+        
+        vaultManager.autofillUserScript(autofillScript, didRequestAccountsForDomain: accountDomain) { accounts in
+            accounts.forEach { account in
+                
+                if let credentialID = account.id {
+                    vaultManager.autofillUserScript(autofillScript, didRequestCredentialsForAccount: credentialID) { credentials in
+                        
+                        if let credentials = credentials {
+                            result.append(credentials)
+                        }
+                    }
+                }
+            }
+            semaphore.signal()
+        }
+        
+        semaphore.wait()
+        return result
+    }
+    
+    var hasMoreCredentialsOnSameDomain: Bool {
+        let result = storedCredentials.filter { listCredentials in
+            credentials.account.domain == listCredentials.account.domain
+        }
+
+        return result.count > 0
+    }
+    
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws {
         try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
     }
+
     
     func test() {
         vaultManager.autofillUserScript(autofillScript, didRequestAccountsForDomain: accountDomain) { accounts in

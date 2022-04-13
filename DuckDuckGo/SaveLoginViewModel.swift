@@ -40,18 +40,18 @@ final class SaveLoginViewModel: ObservableObject {
     var isUpdatingLogin: Bool {
         false
     }
-    
-    var isSavingAdditionalLogin: Bool {
-        false
-    }
-    
+
     var isFirstTimeUser: Bool {
         false
     }
     
-    var layoutType: SaveLoginView.LayoutType {
+    lazy var layoutType: SaveLoginView.LayoutType = {
         if isFirstTimeUser {
             return .newUser
+        }
+        
+        if credentialManager.hasMoreCredentialsOnSameDomain {
+            return .saveAdditionalLogin
         }
         
         if credentialManager.isPasswordOnlyAccount {
@@ -65,13 +65,9 @@ final class SaveLoginViewModel: ObservableObject {
         if isUpdatingPassword {
             return .updatePassword
         }
-        
-        if isSavingAdditionalLogin {
-            return .saveAdditionalLogin
-        }
 
         return .saveLogin
-    }
+    }()
 
     internal init(credentialManager: AutofillCredentialManager) {
     self.credentialManager = credentialManager

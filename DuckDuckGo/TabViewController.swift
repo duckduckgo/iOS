@@ -1928,10 +1928,12 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     }
     
     func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        viewController.dismiss(animated: true)
         saveCredentials(credentials, withSuccessMessage: "Login Saved")
     }
     
     func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        viewController.dismiss(animated: true)
         saveCredentials(credentials, withSuccessMessage: "Login Updated")
     }
     

@@ -1878,8 +1878,8 @@ extension NSError {
 extension TabViewController: SecureVaultManagerDelegate {
     
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
+
         let manager = AutofillCredentialManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
-        manager.test()
         
         let saveLoginController = SaveLoginViewController(credentialManager: manager)
         saveLoginController.delegate = self
@@ -1918,7 +1918,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
         do {
            try AutofillCredentialManager.saveCredentials(credentials, with: SecureVaultFactory.default)
-            ActionMessageView.present(message: message, actionTitle: "SHOW") {
+            ActionMessageView.present(message: message, actionTitle: UserText.autofillLoginSaveToastActionButton) {
                 Swift.print("Show login")
             }
 
@@ -1929,12 +1929,12 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     
     func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials) {
         viewController.dismiss(animated: true)
-        saveCredentials(credentials, withSuccessMessage: "Login Saved")
+        saveCredentials(credentials, withSuccessMessage: UserText.autofillLoginSavedToastMessage)
     }
     
     func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials) {
         viewController.dismiss(animated: true)
-        saveCredentials(credentials, withSuccessMessage: "Login Updated")
+        saveCredentials(credentials, withSuccessMessage: UserText.autofillLoginUpdatedToastMessage)
     }
     
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {

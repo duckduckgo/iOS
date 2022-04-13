@@ -38,28 +38,28 @@ struct SaveLoginView: View {
     private var title: String {
         switch layoutType {
         case .newUser:
-            return UserText.loginPlusSaveLoginTitleNewUser
+            return UserText.autofillSaveLoginTitleNewUser
         case .saveLogin, .saveAdditionalLogin:
-            return UserText.loginPlusSaveLoginTitle
+            return UserText.autofillSaveLoginTitle
         case .savePassword:
-            return UserText.loginPlusSavePasswordTitle
+            return UserText.autofillSavePasswordTitle
         case .updateUsername:
-            return UserText.loginPlusUpdateUsernameTitle
+            return UserText.autofillUpdateUsernameTitle
         case .updatePassword:
-            return UserText.loginPlusUpdatePasswordTitle
+            return UserText.autofillUpdatePasswordTitle
         }
     }
     
     private var confirmButton: String {
         switch layoutType {
         case .newUser, .saveLogin, .saveAdditionalLogin:
-            return UserText.loginPlusSaveLoginSaveCTA
+            return UserText.autofillSaveLoginSaveCTA
         case .savePassword:
-            return UserText.loginPlusSavePasswordSaveCTA
+            return UserText.autofillSavePasswordSaveCTA
         case .updateUsername:
-            return UserText.loginPlusUpdateLoginSaveCTA
+            return UserText.autofillUpdateLoginSaveCTA
         case .updatePassword:
-            return UserText.loginPlusUpdatePasswordSaveCTA
+            return UserText.autofillUpdatePasswordSaveCTA
         }
     }
     
@@ -135,7 +135,7 @@ struct SaveLoginView: View {
     
     var ctaView: some View {
         SaveLoginCTAStackView(confirmLabel: confirmButton,
-                              cancelLabel: UserText.loginPlusSaveLoginNotNowCTA,
+                              cancelLabel: UserText.autofillSaveLoginNotNowCTA,
                               confirmAction: {
             viewModel.save()
         }, cancelAction: {
@@ -158,7 +158,7 @@ struct SaveLoginView: View {
     }
     
     private var newUserContentView: some View {
-        Text(UserText.loginPlusSaveLoginMessageNewUser)
+        Text(UserText.autofillSaveLoginMessageNewUser)
             .font(Const.Fonts.subtitle)
             .foregroundColor(Const.Colors.SecondaryTextColor)
             .frame(maxWidth: .infinity)
@@ -183,7 +183,7 @@ struct SaveLoginView: View {
     }
     
     private var additionalLoginContentView: some View {
-        Text(verbatim: UserText.loginPlusAdditionalLoginInfoMessage)
+        Text(verbatim: UserText.autofillAdditionalLoginInfoMessage)
             .font(Const.Fonts.subtitle)
             .foregroundColor(Const.Colors.SecondaryTextColor)
             .frame(maxWidth: .infinity)

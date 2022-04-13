@@ -86,23 +86,4 @@ struct AutofillCredentialManager {
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws {
         try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
     }
-
-    
-    func test() {
-        vaultManager.autofillUserScript(autofillScript, didRequestAccountsForDomain: accountDomain) { accounts in
-            accounts.forEach { account in
-                print("ACCOUNT \(account.username) DOMAIN \(account.domain)")
-                
-                if let accountID = account.id {
-                    vaultManager.autofillUserScript(autofillScript, didRequestCredentialsForAccount: accountID) { credential in
-                      
-                        if let credential = credential {
-                            let pass = String(data: credential.password, encoding: .utf8) ?? ""
-                            print("USER \(credential.account.username) PASS \(pass)")
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

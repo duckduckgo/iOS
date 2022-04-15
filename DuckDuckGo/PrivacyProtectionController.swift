@@ -22,6 +22,7 @@ import Core
 import BrowserServicesKit
 import WebKit
 import PrivacyDashboard
+import RandomRestaurant
 
 protocol PrivacyProtectionDelegate: AnyObject {
 
@@ -61,7 +62,11 @@ class SimpleWebViewController: UIViewController {
     }
 
     private func load(url: URL) {
-        webView?.load(URLRequest.userInitiated(url))
+        if url.isFileURL {
+            webView?.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent().deletingLastPathComponent())
+        } else {
+            webView?.load(URLRequest.userInitiated(url))
+        }
     }
 }
 
@@ -105,14 +110,31 @@ class PrivacyProtectionController: ThemableNavigationController {
     }
 
     private func showInitialScreen() {
-        let u = Bundle.privacyDashboard.startPageURL
-
-        let controller = SimpleWebViewController()
-        controller.url = u
-        print(u?.absoluteString ?? "")
+//        let url = Bundle.privacyDashboard.startPageURL
+//        let url = Bundle.privacyDashboard.privacyDashboardURL
+//        let url = Bundle.randomRestaurant.menuPageURL
+//        let url = RandomRestaurant.startingURL
+            
+//        let url = Bundle.privacyDashboardURL
         
+        let dashboardNeue = PrivacyDashboardViewController()
+        
+//        print(url?.absoluteString ?? "")
+        
+//        let restaurant = RandomRestaurant()
+//        restaurant.showWelcomeMessage()
+//
+//        print(restaurant.serve(edible: RandomPlant.apple))
+//        print(restaurant.serve(edible: RandomMeal.salad))
+//        print(restaurant.serve(edible: RandomPlant.avocado))
+        
+        let restaurant = RandomDesktopRestaurant()
+        
+        restaurant.prepare(.steak)
+        restaurant.prepare(.burger)
+        restaurant.prepare(.hotdog)
                 
-        pushViewController(controller, animated: true)
+        pushViewController(dashboardNeue, animated: true)
         updateViewControllers()
     }
 
@@ -185,3 +207,16 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
 }
 
 extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate { }
+
+extension PrivacyDashboardViewController: PrivacyProtectionInfoDisplaying {
+    
+    func using(siteRating: SiteRating, config: PrivacyConfiguration) {
+        var trackerInfo = TrackerInfo()
+        
+        siteRating.trackersDetected.forEach { trackerInfo.add(detectedTracker: $0) }
+        siteRating.installedSurrogates.forEach { trackerInfo.add(installedSurrogateHost: $0) }
+        
+        updateTrackerInfo(siteRating.url, trackerInfo: trackerInfo)
+    }
+ 
+}

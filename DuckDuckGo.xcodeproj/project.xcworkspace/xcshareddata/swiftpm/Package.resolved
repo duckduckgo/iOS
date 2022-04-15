@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": null,
-          "revision": "f3329f14ecef45dc22fe8f2486f31f268d1b0527",
-          "version": "12.2.0"
+          "revision": "e65500ba7a34e3044fd434c597750906393a72b1",
+          "version": "12.2.1"
         }
       },
       {
@@ -52,6 +52,15 @@
         "state": {
           "branch": "master",
           "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
+          "version": null
+        }
+      },
+      {
+        "package": "RandomRestaurant",
+        "repositoryURL": "https://github.com/miasma13/RandomRestaurant",
+        "state": {
+          "branch": "reordered",
+          "revision": "4115d7bd081c7f6bb59ccf99a0254be3a7297c93",
           "version": null
         }
       },

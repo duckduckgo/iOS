@@ -28,25 +28,7 @@ struct HomeMessageStorage {
     }
     
     var messagesToBeShown: [HomeMessage] {
-        var messages = [HomeMessage]()
-        if shouldShowWidgetEducation {
-            messages.append(.widgetEducation)
-        }
+        let messages: [HomeMessage] = []
         return messages
-    }
-    
-    // MARK: - Widget Education
-    
-    @UserDefaultsWrapper(key: .homeWidgetEducationMessageDismissed, defaultValue: false)
-    private var widgetEducationMessageDismissed: Bool
-    
-    mutating func hideWidgetEducation() {
-        widgetEducationMessageDismissed = true
-    }
-    
-    private var shouldShowWidgetEducation: Bool {
-        guard #available(iOS 14, *), let variantManager = variantManager else { return false }
-        let isFeatureSupported = variantManager.isSupported(feature: .widgetEducation)
-        return isFeatureSupported && !widgetEducationMessageDismissed
     }
 }

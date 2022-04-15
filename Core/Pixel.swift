@@ -167,10 +167,6 @@ public enum PixelName: String {
     case textSizeSettingsShown = "m_text_size_settings_shown"
     case textSizeSettingsChanged = "m_text_size_settings_changed"
     
-    case widgetEducationOpenedFromHomeScreen = "m_widget_education_opened_from_home"
-    case widgetEducationOpenedFromSettings = "m_widget_education_opened_from_settings"
-    case widgetEducationDismissed = "m_widget_education_dismissed"
-    
     case downloadStarted = "m_download_started"
     case downloadStartedDueToUnhandledMIMEType = "m_download_started_due_to_unhandled_mime_type"
     case downloadTriedToPresentPreviewWithoutTab = "m_download_tried_to_present_preview_without_tab"

@@ -55,8 +55,6 @@ public struct UserDefaultsWrapper<T> {
 
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
         
-        case homeWidgetEducationMessageDismissed = "com.duckduckgo.ios.homeMessage.widgetEducation.dismissed"
-
         case lastConfigurationRefreshDate = "com.duckduckgo.ios.lastConfigurationRefreshDate"
         
         case doNotSell = "com.duckduckgo.ios.sendDoNotSell"

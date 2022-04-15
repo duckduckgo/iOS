@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": null,
-          "revision": "e65500ba7a34e3044fd434c597750906393a72b1",
-          "version": "12.2.1"
+          "branch": "sam/password-generation-updated",
+          "revision": "229202bf4c11b9edd2583605aacafd80e51fae5b",
+          "version": null
         }
       },
       {
@@ -71,15 +71,6 @@
           "branch": null,
           "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
           "version": "1.5.0"
-        }
-      },
-      {
-        "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
-        "state": {
-          "branch": null,
-          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
-          "version": "1.0.3"
         }
       }
     ]

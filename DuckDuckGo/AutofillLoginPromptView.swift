@@ -33,7 +33,6 @@ struct AutofillLoginPromptView: View {
     }
     
     //TODO can we tell if a user swiped up/expoanded? cos then we should show the full list
-    //Need to disable swipe to expand when less than 3?
     //also special behabiour for when swipe up and there's more
     
     private func mainView() -> some View {

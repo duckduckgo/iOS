@@ -249,7 +249,7 @@ class TabViewController: UIViewController {
             
             if #available(iOS 15.0, *) {
                 if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                    presentationController.detents = [.medium(), .large()]
+                    presentationController.detents = accounts.count > 3 ? [.medium(), .large()] : [.medium()]
                 }
             }
             self.present(autofillPromptViewController, animated: true, completion: nil)

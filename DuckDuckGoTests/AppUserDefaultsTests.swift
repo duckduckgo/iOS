@@ -25,6 +25,7 @@ class AppUserDefaultsTests: XCTestCase {
     let testGroupName = "test"
 
     override func setUp() {
+        super.setUp()
         UserDefaults(suiteName: testGroupName)?.removePersistentDomain(forName: testGroupName)
     }
 

@@ -132,7 +132,7 @@ public class BookmarksCoreDataStorage {
             context.perform {
                 handler(context)
                 self.storeLoadedCondition.resolve()
-            }            
+            }
         }
     }
 }
@@ -422,7 +422,7 @@ extension BookmarksCoreDataStorage {
         loadStore()
     }
     
-    public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {        
+    public func favoritesUncachedForWidget(completion: @escaping ([BookmarkManagedObject]) -> Void) {
         Task {
             guard await hasTopLevelFolder() else {
                 completion([])

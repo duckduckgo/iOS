@@ -341,7 +341,7 @@ class TrackerNetworkPillView: UIView {
 
 }
 
-fileprivate extension PPTrackerNetwork {
+private extension PPTrackerNetwork {
 
     var image: UIImage {
         let currentTrackerData = ContentBlocking.contentBlockingManager.currentTDSRules?.trackerData

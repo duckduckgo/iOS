@@ -40,12 +40,12 @@ struct AnyDownloadListRepresentable: DownloadListRepresentable, Comparable {
       self.wrappedRepresentable = representable
     }
     
-    public var id: String { filename}
+    public var id: String { filename }
     var filename: String { wrappedRepresentable.filename }
     var creationDate: Date { wrappedRepresentable.creationDate }
     var fileSize: Int { wrappedRepresentable.fileSize }
     var type: DownloadListRepresentableType { wrappedRepresentable.type }
-    var filePath: String { wrappedRepresentable.filePath}
+    var filePath: String { wrappedRepresentable.filePath }
         
     static func < (lhs: AnyDownloadListRepresentable, rhs: AnyDownloadListRepresentable) -> Bool {
         lhs.creationDate < rhs.creationDate

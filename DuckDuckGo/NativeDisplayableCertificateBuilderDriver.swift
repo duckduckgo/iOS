@@ -45,7 +45,7 @@ class NativeDisplayableCertificateBuilderDriver: DisplayableCertificateBuilderDr
 
 }
 
-fileprivate extension SecCertificate {
+private extension SecCertificate {
 
     func toDisplayable() -> DisplayableCertificate {
         let displayable = DisplayableCertificate()
@@ -85,7 +85,7 @@ fileprivate extension SecCertificate {
 
 }
 
-fileprivate extension SecKey {
+private extension SecKey {
 
     func toDisplayable() -> DisplayableKey {
         var key = DisplayableKey()

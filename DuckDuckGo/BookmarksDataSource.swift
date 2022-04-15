@@ -139,8 +139,7 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
             bookmarksManager.convertFavoriteToBookmark(item.objectID, newIndex: destinationIndexPath.row)
         } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
             guard let bookmark = item as? Bookmark else {
-                // Folders aren't allowed in favourites. We shouldn't be able to get here
-                fatalError()
+                fatalError("Folders aren't allowed in favorites. We shouldn't be able to get here")
             }
             bookmarksManager.convertBookmarkToFavorite(bookmark.objectID, newIndex: destinationIndexPath.row)
         }

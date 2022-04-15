@@ -49,7 +49,7 @@ class MockBookmark: Bookmark {
     }
     
     var objectID: NSManagedObjectID {
-        fatalError()
+        fatalError("objectID should exist")
     }
     
     var parentFolder: BookmarkFolder?
@@ -79,6 +79,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     }
     
     override func setUp() {
+        super.setUp()
+        
         simpleStore.bookmarks = [MockBookmark(title: Entry.b1.rawValue, url: url, isFavorite: false),
                                  MockBookmark(title: Entry.b2.rawValue, url: url, isFavorite: false),
                                  MockBookmark(title: Entry.b12.rawValue, url: url, isFavorite: false),
@@ -310,6 +312,6 @@ class BookmarksCachingSearchTests: XCTestCase {
             expectation4.fulfill()
         }
         
-        waitForExpectations(timeout: 5) 
+        waitForExpectations(timeout: 5)
     }
 }

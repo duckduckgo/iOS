@@ -127,7 +127,7 @@ struct AutofillLoginPromptView: View {
     
     private func accountButton(for accountViewModel: AccountViewModel, style: AccountButtonStyle) -> some View {
         Button {
-            viewModel.dismissView() // TODO actual action
+            viewModel.didSelectAccount(accountViewModel.account)
         } label: {
             Text(accountViewModel.displayString) // TODO email formatting
                 .font(.CTA)

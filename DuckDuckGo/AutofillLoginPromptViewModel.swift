@@ -24,6 +24,7 @@ import BrowserServicesKit
 protocol AutofillLoginPromptViewModelDelegate: AnyObject {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount)
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel)
+    func autofillLoginPromptViewModelDidRequestExpansion(_ viewModel: AutofillLoginPromptViewModel)
 }
 
 struct AccountViewModel: Hashable {
@@ -43,13 +44,15 @@ struct AccountViewModel: Hashable {
 }
 
 class AutofillLoginPromptViewModel: ObservableObject {
-    
+
     weak var delegate: AutofillLoginPromptViewModelDelegate?
     
     @Published var accountsViewModels: [AccountViewModel] = []
     @Published var faviconImage = UIImage(named: "Logo")!
     private(set) var domain: String
-
+    
+    @Published var expanded = false
+    
     var message: String {
         return "Use Saved Login?" //TODO string
     }
@@ -87,6 +90,12 @@ class AutofillLoginPromptViewModel: ObservableObject {
     
     func didSelectAccount(_ account: SecureVaultModels.WebsiteAccount) {
         delegate?.autofillLoginPromptViewModel(self, didSelectAccount: account)
+    }
+    
+    func didExpand() {
+        delegate?.autofillLoginPromptViewModelDidRequestExpansion(self)
+        expanded = true //TODO, possibly view controller shoul dbe doing this
+        //TODO also, need to handle iOS 14 and if it's expanded to start with. At the moment we're not initialisng this correctly (I assume)
     }
 }
 

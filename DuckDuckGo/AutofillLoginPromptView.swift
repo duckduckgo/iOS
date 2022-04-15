@@ -31,6 +31,15 @@ struct AutofillLoginPromptView: View {
     
     //TODO can we tell if a user swiped up/expoanded? cos then we should show the full list
     //also special behabiour for when swipe up and there's more
+    //TODO gonna have to test 14
+    //what should happen if we're exapended and a user tries to make the sheet smaller? We could just not allow it, or we could unexpand. At the moment it just leaves all the scroll view, which is fine?
+    
+    //damn scroll bar in wrong place
+    
+    //I should also check the exact type of blur
+    
+    //We should start considering rollout plan, pixels, etc. Maybe once we've started the settings page.
+    //I could look at what we did for email.
     
     private func mainView() -> some View {
         ZStack {
@@ -113,9 +122,18 @@ struct AutofillLoginPromptView: View {
                     accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
                 }
             } else {
-                accountButton(for: viewModel.accountsViewModels[0], style: .primary)
-                accountButton(for: viewModel.accountsViewModels[0], style: .secondary)
-                moreOptionsButton
+                if !viewModel.expanded {
+                    accountButton(for: viewModel.accountsViewModels[0], style: .primary)
+                    accountButton(for: viewModel.accountsViewModels[1], style: .secondary)
+                    moreOptionsButton
+                } else {
+                    ScrollView {
+                        ForEach(viewModel.accountsViewModels.indices, id: \.self) { index in
+                            let accountViewModel = viewModel.accountsViewModels[index]
+                            accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
+                        }
+                    }
+                }
             }
         }
     }
@@ -142,7 +160,7 @@ struct AutofillLoginPromptView: View {
     
     var moreOptionsButton: some View {
         Button {
-            viewModel.dismissView() // TODO actual action
+            viewModel.didExpand()
         } label: {
             Text(viewModel.moreOptionsButtonString) // TODO email formatting
                 .font(.CTA)

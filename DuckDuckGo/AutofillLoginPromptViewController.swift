@@ -102,4 +102,14 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
         delegate?.autoFillLoginPromptViewControllerDidCancel(self)
         dismiss(animated: true, completion: nil)
     }
+    
+    func autofillLoginPromptViewModelDidRequestExpansion(_ viewModel: AutofillLoginPromptViewModel) {
+        if #available(iOS 15.0, *) {
+            if let presentationController = presentationController as? UISheetPresentationController {
+                presentationController.animateChanges {
+                    presentationController.selectedDetentIdentifier = .large
+                }
+            }
+        }
+    }
 }

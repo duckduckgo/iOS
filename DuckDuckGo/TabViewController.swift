@@ -189,6 +189,11 @@ class TabViewController: UIViewController {
         return manager
     }()
     
+    lazy var autofillUserScript: AutofillUserScript = {
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
+        let autofillUserScript = AutofillUserScript(scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager, properties: prefs))
+        return autofillUserScript
+    }()
     
     private var userScripts: [UserScript] = []
     
@@ -235,6 +240,20 @@ class TabViewController: UIViewController {
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
+        
+        let domain = url?.host ?? ""
+        vaultManager.autofillUserScript(autofillUserScript, didRequestAccountsForDomain: domain) { accounts in
+            Swift.print("Stored accounts: \(accounts)")
+            
+            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts)
+            
+            if #available(iOS 15.0, *) {
+                if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
+                    presentationController.detents = [.medium(), .large()]
+                }
+            }
+            self.present(autofillPromptViewController, animated: true, completion: nil)
+        }
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -266,11 +285,6 @@ class TabViewController: UIViewController {
                                                                  trackerDataManager: ContentBlocking.trackerDataManager,
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
-        
-        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
-        let autofillUserScript = AutofillUserScript(
-            scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
-                                                                properties: prefs))
         
         userScripts = [
             debugScript,

@@ -635,6 +635,7 @@ class MainViewController: UIViewController {
 
     private func addToView(controller: UIViewController) {
         addChild(controller)
+        containerView.subviews.forEach { $0.removeFromSuperview() }
         containerView.addSubview(controller.view)
         controller.view.frame = containerView.bounds
         controller.didMove(toParent: self)

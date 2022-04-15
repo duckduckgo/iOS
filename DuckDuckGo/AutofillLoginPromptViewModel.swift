@@ -30,7 +30,7 @@ struct AccountViewModel: Hashable {
     
     let account: SecureVaultModels.WebsiteAccount
     var displayString: String {
-        return account.username //TODO email formatting
+        return account.username //TODO email formatting //TODO should be title, or username?
     }
     
     static func == (lhs: AccountViewModel, rhs: AccountViewModel) -> Bool {
@@ -52,6 +52,10 @@ class AutofillLoginPromptViewModel: ObservableObject {
 
     var message: String {
         return "Use Saved Login?" //TODO string
+    }
+    
+    var moreOptionsButtonString: String {
+        return "More Options" //TODO string
     }
     
     internal init?(accounts: [SecureVaultModels.WebsiteAccount]) {

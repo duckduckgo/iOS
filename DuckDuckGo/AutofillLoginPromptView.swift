@@ -20,16 +20,13 @@
 import SwiftUI
 import BrowserServicesKit
 
+@available(iOS 14.0, *)
 struct AutofillLoginPromptView: View {
     @ObservedObject var viewModel: AutofillLoginPromptViewModel
     
     var body: some View {
-        if #available(iOS 14.0, *) {
-           mainView()
-                .ignoresSafeArea()
-        } else {
-            mainView()
-        }
+        mainView()
+            .ignoresSafeArea()
     }
     
     //TODO can we tell if a user swiped up/expoanded? cos then we should show the full list
@@ -176,6 +173,7 @@ private extension Color {
     static let keyboardColor = Color("AutofillPromptKeyboard")
 }
 
+@available(iOS 14.0, *)
 private extension AutofillLoginPromptView {
     private struct Constants {
         static let formPadding: CGFloat = 45
@@ -239,6 +237,7 @@ private extension Font {
 
 // MARK: - Preview
 
+@available(iOS 14.0, *)
 struct AutofillLoginPromptView_Previews: PreviewProvider {
     static var previews: some View {
         AutofillLoginPromptView(viewModel: AutofillLoginPromptViewModel.preview).preferredColorScheme(.light)

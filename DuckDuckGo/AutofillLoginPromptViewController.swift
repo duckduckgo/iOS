@@ -21,11 +21,13 @@ import UIKit
 import SwiftUI
 import BrowserServicesKit
 
+@available(iOS 14.0, *)
 protocol AutofillLoginPromptViewControllerDelegate: AnyObject {
     func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, didSelectAccount account: SecureVaultModels.WebsiteAccount)
     func autoFillLoginPromptViewControllerDidCancel(_ viewController: AutofillLoginPromptViewController)
 }
 
+@available(iOS 14.0, *)
 class AutofillLoginPromptViewController: UIViewController {
     
     weak var delegate: AutofillLoginPromptViewControllerDelegate?
@@ -80,6 +82,7 @@ class AutofillLoginPromptViewController: UIViewController {
     }
 }
 
+@available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         print("dismiss")
@@ -88,6 +91,7 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
     }
 }
 
+@available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegate {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
         delegate?.autofillLoginPromptViewController(self, didSelectAccount: account)

@@ -260,7 +260,7 @@
 "dax.hide.title" = "Hide remaining tips?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous and I never store your search history.  Ever. 🙌";
+"dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous and I never save your search history. Ever. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Phew!";

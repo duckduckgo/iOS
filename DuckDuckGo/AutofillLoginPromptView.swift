@@ -33,9 +33,7 @@ struct AutofillLoginPromptView: View {
     //also special behabiour for when swipe up and there's more
     //TODO gonna have to test 14
     //what should happen if we're exapended and a user tries to make the sheet smaller? We could just not allow it, or we could unexpand. At the moment it just leaves all the scroll view, which is fine?
-    
-    //damn scroll bar in wrong place
-    
+        
     //I should also check the exact type of blur
     
     //We should start considering rollout plan, pixels, etc. Maybe once we've started the settings page.
@@ -52,7 +50,6 @@ struct AutofillLoginPromptView: View {
                 accountButtons
                 Spacer()
             }
-            .frame(width: Const.Size.contentWidth)
             .padding(.top, 43)
                 
             keyboardButtonFooter
@@ -133,6 +130,8 @@ struct AutofillLoginPromptView: View {
                             accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
                         }
                     }
+                    .padding(.trailing, 8)
+                    .padding(.leading, 8)
                 }
             }
         }
@@ -144,17 +143,24 @@ struct AutofillLoginPromptView: View {
     }
     
     private func accountButton(for accountViewModel: AccountViewModel, style: AccountButtonStyle) -> some View {
-        Button {
-            viewModel.didSelectAccount(accountViewModel.account)
-        } label: {
-            Text(accountViewModel.displayString) // TODO email formatting
-                .font(.CTA)
-                .foregroundColor(style == .primary ? Const.Colors.CTAPrimaryForeground : Const.Colors.CTASecondaryForeground)
-                .padding()
-                .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Constants.CTAButtonMaxHeight)
-                .background(style == .primary ? Const.Colors.CTAPrimaryBackground : Const.Colors.CTASecondaryBackground)
-                .foregroundColor(.primary)
-                .cornerRadius(Constants.CTAButtonCornerRadius)
+        HStack {
+            Spacer()
+            
+            Button {
+                viewModel.didSelectAccount(accountViewModel.account)
+            } label: {
+                Text(accountViewModel.displayString) // TODO email formatting
+                    .font(.CTA)
+                    .foregroundColor(style == .primary ? Const.Colors.CTAPrimaryForeground : Const.Colors.CTASecondaryForeground)
+                    .padding()
+                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Constants.CTAButtonMaxHeight)
+                    .background(style == .primary ? Const.Colors.CTAPrimaryBackground : Const.Colors.CTASecondaryBackground)
+                    .foregroundColor(.primary)
+                    .cornerRadius(Constants.CTAButtonCornerRadius)
+            }
+            .frame(width: Const.Size.contentWidth)
+            
+            Spacer()
         }
     }
     

@@ -115,7 +115,7 @@ struct AutofillLoginPromptView: View {
             } else {
                 accountButton(for: viewModel.accountsViewModels[0], style: .primary)
                 accountButton(for: viewModel.accountsViewModels[0], style: .secondary)
-                //TODO other button
+                moreOptionsButton
             }
         }
     }
@@ -135,6 +135,21 @@ struct AutofillLoginPromptView: View {
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Constants.CTAButtonMaxHeight)
                 .background(style == .primary ? Const.Colors.CTAPrimaryBackground : Const.Colors.CTASecondaryBackground)
+                .foregroundColor(.primary)
+                .cornerRadius(Constants.CTAButtonCornerRadius)
+        }
+    }
+    
+    var moreOptionsButton: some View {
+        Button {
+            viewModel.dismissView() // TODO actual action
+        } label: {
+            Text(viewModel.moreOptionsButtonString) // TODO email formatting
+                .font(.CTA)
+                .foregroundColor(Const.Colors.CTASecondaryForeground)
+                .padding()
+                .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Constants.CTAButtonMaxHeight)
+                .background(Color.clear)
                 .foregroundColor(.primary)
                 .cornerRadius(Constants.CTAButtonCornerRadius)
         }

@@ -1896,11 +1896,10 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
-        if let credentials = data.credentials {
+        
+        if let credentials = data.credentials, appSettings.autofill {
             presentSavePasswordModal(with: vault, credentials: credentials)
         }
-        Swift.print("PROMPT")
-        
     }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {

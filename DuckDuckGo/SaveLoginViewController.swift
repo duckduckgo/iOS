@@ -24,7 +24,6 @@ import BrowserServicesKit
 protocol SaveLoginViewControllerDelegate: AnyObject {
     func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials)
     func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials)
-
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController)
 }
 

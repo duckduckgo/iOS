@@ -19,6 +19,7 @@
 
 import UIKit
 import BrowserServicesKit
+import Core
 
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
@@ -26,6 +27,11 @@ protocol SaveLoginViewModelDelegate: AnyObject {
 }
 
 final class SaveLoginViewModel: ObservableObject {
+    @UserDefaultsWrapper(key: .autofillSaveModalRejectionCount, defaultValue: 0)
+    private var autofillSaveModalRejectionCount: Int
+    
+    private let numberOfRejectionsToTurnOffAutofill = 3
+    
     @Published var faviconImage = UIImage(systemName: "globe")!
     weak var delegate: SaveLoginViewModelDelegate?
     private let credentialManager: AutofillCredentialManager
@@ -84,12 +90,19 @@ final class SaveLoginViewModel: ObservableObject {
         }
     }
     
+    private func updateRejectionCount() {
+        autofillSaveModalRejectionCount += 1
+        if autofillSaveModalRejectionCount >= numberOfRejectionsToTurnOffAutofill {
+            AppDependencyProvider.shared.appSettings.autofill = false
+        }
+    }
+    
     func cancel() {
+        updateRejectionCount()
         delegate?.saveLoginViewModelDidCancel(self)
     }
     
     func save() {
         delegate?.saveLoginViewModelDidSave(self)
     }
-    
 }

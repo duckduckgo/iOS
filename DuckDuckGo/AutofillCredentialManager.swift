@@ -49,7 +49,7 @@ struct AutofillCredentialManager {
         !visiblePassword.isEmpty && username.isEmpty
     }
     
-    private var storedCredentials: [SecureVaultModels.WebsiteCredentials] {
+    private var domainStoredCredentials: [SecureVaultModels.WebsiteCredentials] {
         let semaphore = DispatchSemaphore(value: 0)
         var result = [SecureVaultModels.WebsiteCredentials]()
         
@@ -72,12 +72,8 @@ struct AutofillCredentialManager {
         return result
     }
     
-    var hasMoreCredentialsOnSameDomain: Bool {
-        let result = storedCredentials.filter { listCredentials in
-            credentials.account.domain == listCredentials.account.domain
-        }
-
-        return result.count > 0
+    var hasOtherCredentialsOnSameDomain: Bool {
+        domainStoredCredentials.count > 0
     }
     
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws {

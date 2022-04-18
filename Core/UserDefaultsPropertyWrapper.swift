@@ -73,6 +73,7 @@ public struct UserDefaultsWrapper<T> {
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
         case autofill = "com.duckduckgo.ios.autofill"
         case autofillSaveModalRejectionCount = "com.duckduckgo.ios.autofillSaveModalRejectionCount"
+        case autofillFirstTimeUser = "com.duckduckgo.ios.autofillFirstTimeUser"
 
     }
 

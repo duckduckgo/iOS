@@ -317,6 +317,7 @@ class TabViewController: UIViewController {
         contentBlockerRulesScript.delegate = self
         autofillUserScript.emailDelegate = emailManager
         autofillUserScript.vaultDelegate = vaultManager
+        
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }

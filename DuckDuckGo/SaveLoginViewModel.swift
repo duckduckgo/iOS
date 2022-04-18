@@ -27,15 +27,18 @@ protocol SaveLoginViewModelDelegate: AnyObject {
 }
 
 final class SaveLoginViewModel: ObservableObject {
+    @Published var faviconImage = UIImage(systemName: "globe")!
+
     @UserDefaultsWrapper(key: .autofillSaveModalRejectionCount, defaultValue: 0)
     private var autofillSaveModalRejectionCount: Int
     
+    @UserDefaultsWrapper(key: .autofillFirstTimeUser, defaultValue: true)
+    private var autofillFirstTimeUser: Bool
+
     private let numberOfRejectionsToTurnOffAutofill = 3
     private let maximumPasswordDisplayCount = 40
-
-    @Published var faviconImage = UIImage(systemName: "globe")!
-    weak var delegate: SaveLoginViewModelDelegate?
     private let credentialManager: AutofillCredentialManager
+    weak var delegate: SaveLoginViewModelDelegate?
 
     var accountDomain: String {
         credentialManager.accountDomain
@@ -48,11 +51,7 @@ final class SaveLoginViewModel: ObservableObject {
     var isUpdatingUsername: Bool {
         credentialManager.isPasswordOnlyAccount
     }
-    
-    var isFirstTimeUser: Bool {
-        false
-    }
-    
+
     var hiddenPassword: String {
         // swiftlint:disable:next line_length
         let passwordCount = credentialManager.visiblePassword.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : credentialManager.visiblePassword.count
@@ -64,11 +63,11 @@ final class SaveLoginViewModel: ObservableObject {
     }
     
     lazy var layoutType: SaveLoginView.LayoutType = {
-        if isFirstTimeUser {
+        if autofillFirstTimeUser {
             return .newUser
         }
         
-        if credentialManager.hasMoreCredentialsOnSameDomain {
+        if credentialManager.hasOtherCredentialsOnSameDomain {
             return .saveAdditionalLogin
         }
         
@@ -138,6 +137,7 @@ final class SaveLoginViewModel: ObservableObject {
     }
     
     func save() {
+        autofillFirstTimeUser = false
         delegate?.saveLoginViewModelDidSave(self)
     }
 }

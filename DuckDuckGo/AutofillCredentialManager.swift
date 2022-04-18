@@ -24,7 +24,7 @@ struct AutofillCredentialManager {
     let credentials: SecureVaultModels.WebsiteCredentials
     let vaultManager: SecureVaultManager
     let autofillScript: AutofillUserScript
-
+    
     var username: String {
         credentials.account.username
     }
@@ -36,15 +36,11 @@ struct AutofillCredentialManager {
         credentials.account.id == nil
     }
     
-    var hiddenPassword: String {
-        String(visiblePassword.map { _ in "*" })
-    }
-    
     var accountDomain: String {
         credentials.account.domain
     }
-    
-    var isLoginOnlyAccount: Bool {
+
+    var isUsernameOnlyAccount: Bool {
         visiblePassword.isEmpty && !username.isEmpty
     }
     

@@ -173,8 +173,9 @@ struct SaveLoginView: View {
     }
     
     private var updateContentView: some View {
-        Text(verbatim: "me@email.com")
+        Text(verbatim: layoutType == .updatePassword ? viewModel.hiddenPassword : viewModel.username)
             .font(Const.Fonts.userInfo)
+            .lineLimit(1)
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 30)

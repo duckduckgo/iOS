@@ -31,24 +31,36 @@ final class SaveLoginViewModel: ObservableObject {
     private var autofillSaveModalRejectionCount: Int
     
     private let numberOfRejectionsToTurnOffAutofill = 3
-    
+    private let maximumPasswordDisplayCount = 40
+
     @Published var faviconImage = UIImage(systemName: "globe")!
     weak var delegate: SaveLoginViewModelDelegate?
     private let credentialManager: AutofillCredentialManager
+
     var accountDomain: String {
         credentialManager.accountDomain
     }
     
     var isUpdatingPassword: Bool {
+        credentialManager.isUsernameOnlyAccount
+    }
+    
+    var isUpdatingUsername: Bool {
+        credentialManager.isPasswordOnlyAccount
+    }
+    
+    var isFirstTimeUser: Bool {
         false
     }
     
-    var isUpdatingLogin: Bool {
-        false
+    var hiddenPassword: String {
+        // swiftlint:disable:next line_length
+        let passwordCount = credentialManager.visiblePassword.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : credentialManager.visiblePassword.count
+        return String(repeating: "•", count: passwordCount)
     }
-
-    var isFirstTimeUser: Bool {
-        false
+    
+    var username: String {
+        truncatedEmail(credentialManager.username)
     }
     
     lazy var layoutType: SaveLoginView.LayoutType = {
@@ -64,7 +76,7 @@ final class SaveLoginViewModel: ObservableObject {
             return .savePassword
         }
         
-        if isUpdatingLogin {
+        if isUpdatingUsername {
             return .updateUsername
         }
         
@@ -74,12 +86,35 @@ final class SaveLoginViewModel: ObservableObject {
 
         return .saveLogin
     }()
-
+    
     internal init(credentialManager: AutofillCredentialManager) {
-    self.credentialManager = credentialManager
+        self.credentialManager = credentialManager
         loadFavicon()
     }
+    
+    private func truncatedEmail(_ login: String) -> String {
+        let maximumLoginDisplayCount = 36
         
+        let emailComponents = login.components(separatedBy: "@")
+        if emailComponents.count > 1 && login.count > maximumLoginDisplayCount {
+            let ellipsis = "..."
+            let minimumPrefixSize = 3
+            
+            let difference = login.count - maximumLoginDisplayCount + ellipsis.count
+            if let username = emailComponents.first,
+               let domain = emailComponents.last {
+                
+                var prefixCount = username.count - difference
+                prefixCount = prefixCount < 0 ? minimumPrefixSize : prefixCount
+                let prefix = username.prefix(prefixCount)
+                
+                return "\(prefix)\(ellipsis)@\(domain)"
+            }
+        }
+        
+        return login
+    }
+    
     private func loadFavicon() {
         FaviconsHelper.loadFaviconSync(forDomain: credentialManager.accountDomain,
                                        usingCache: .tabs,

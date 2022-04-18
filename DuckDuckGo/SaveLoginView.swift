@@ -199,15 +199,23 @@ struct SaveLoginView: View {
     }
 }
 
-#warning("Create LoginPlusCredentialManager protocol and send mock data here")
-//struct SaveLoginView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let websiteAccount = SecureVaultModels.WebsiteAccount(title: "Test", username: "test", domain: "www.dax.com")
-//        let credentials = SecureVaultModels.WebsiteCredentials(account: websiteAccount, password: Data("test".utf8))
-//        let viewModel = SaveLoginViewModel(credentials: credentials)
-//        SaveLoginView(viewModel: viewModel)
-//    }
-//}
+struct SaveLoginView_Previews: PreviewProvider {
+    private struct MockManager: AutofillCredentialManagerProtocol {
+        var username: String { "dax" }
+        var visiblePassword: String { "duck" }
+        var isNewAccount: Bool { true }
+        var accountDomain: String { "duck.com" }
+        var isUsernameOnlyAccount: Bool { false }
+        var isPasswordOnlyAccount: Bool { false }
+        var hasOtherCredentialsOnSameDomain: Bool { false }
+        static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws { }
+    }
+    
+    static var previews: some View {
+        let viewModel = SaveLoginViewModel(credentialManager: MockManager())
+        SaveLoginView(viewModel: viewModel)
+    }
+}
 
 private enum Const {
     enum Fonts {

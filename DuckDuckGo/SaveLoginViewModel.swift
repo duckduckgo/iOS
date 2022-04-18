@@ -37,7 +37,7 @@ final class SaveLoginViewModel: ObservableObject {
 
     private let numberOfRejectionsToTurnOffAutofill = 3
     private let maximumPasswordDisplayCount = 40
-    private let credentialManager: AutofillCredentialManager
+    private let credentialManager: AutofillCredentialManagerProtocol
     weak var delegate: SaveLoginViewModelDelegate?
 
     var accountDomain: String {
@@ -86,7 +86,7 @@ final class SaveLoginViewModel: ObservableObject {
         return .saveLogin
     }()
     
-    internal init(credentialManager: AutofillCredentialManager) {
+    internal init(credentialManager: AutofillCredentialManagerProtocol) {
         self.credentialManager = credentialManager
         loadFavicon()
     }

@@ -20,7 +20,20 @@
 import Foundation
 import BrowserServicesKit
 
-struct AutofillCredentialManager {
+protocol AutofillCredentialManagerProtocol {
+    
+    var username: String { get }
+    var visiblePassword: String { get }
+    var isNewAccount: Bool { get }
+    var accountDomain: String { get }
+    var isUsernameOnlyAccount: Bool { get }
+    var isPasswordOnlyAccount: Bool { get }
+    var hasOtherCredentialsOnSameDomain: Bool { get }
+    
+    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws
+}
+
+struct AutofillCredentialManager: AutofillCredentialManagerProtocol {
     let credentials: SecureVaultModels.WebsiteCredentials
     let vaultManager: SecureVaultManager
     let autofillScript: AutofillUserScript

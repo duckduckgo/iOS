@@ -28,6 +28,7 @@ struct AutofillCredentialManager {
     var username: String {
         credentials.account.username
     }
+    
     var visiblePassword: String {
         String(data: credentials.password, encoding: .utf8) ?? ""
     }

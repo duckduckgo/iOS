@@ -201,9 +201,9 @@ struct SaveLoginView: View {
 
 struct SaveLoginView_Previews: PreviewProvider {
     private struct MockManager: AutofillCredentialManagerProtocol {
-        var username: String { "dax" }
-        var visiblePassword: String { "duck" }
-        var isNewAccount: Bool { true }
+        var username: String { "dax@duck.com" }
+        var visiblePassword: String { "supersecurepasswordquack" }
+        var isNewAccount: Bool { false }
         var accountDomain: String { "duck.com" }
         var isUsernameOnlyAccount: Bool { false }
         var isPasswordOnlyAccount: Bool { false }
@@ -212,8 +212,32 @@ struct SaveLoginView_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        let viewModel = SaveLoginViewModel(credentialManager: MockManager())
-        SaveLoginView(viewModel: viewModel)
+        Group {
+            VStack {
+                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .newUser)
+                SaveLoginView(viewModel: viewModel)
+                
+                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveLogin)
+                SaveLoginView(viewModel: viewModel)
+            }
+            
+            VStack {
+                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .updatePassword)
+                SaveLoginView(viewModel: viewModel)
+                
+                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .updateUsername)
+                SaveLoginView(viewModel: viewModel)
+            }
+            
+            VStack {
+                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveAdditionalLogin)
+                SaveLoginView(viewModel: viewModel)
+                
+                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .savePassword)
+                SaveLoginView(viewModel: viewModel)
+            }
+        }
+        
     }
 }
 

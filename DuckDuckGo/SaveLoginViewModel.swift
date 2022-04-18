@@ -21,12 +21,16 @@ import UIKit
 import BrowserServicesKit
 import Core
 
+protocol SaveLoginViewModelProtocol {
+    var faviconImage: UIImage { get }
+}
+
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
 }
 
-final class SaveLoginViewModel: ObservableObject {
+final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
     @Published var faviconImage = UIImage(systemName: "globe")!
 
     @UserDefaultsWrapper(key: .autofillSaveModalRejectionCount, defaultValue: 0)
@@ -63,6 +67,10 @@ final class SaveLoginViewModel: ObservableObject {
     }
     
     lazy var layoutType: SaveLoginView.LayoutType = {
+        if let attributedLayoutType = attributedLayoutType {
+            return attributedLayoutType
+        }
+        
         if autofillFirstTimeUser {
             return .newUser
         }
@@ -86,8 +94,11 @@ final class SaveLoginViewModel: ObservableObject {
         return .saveLogin
     }()
     
-    internal init(credentialManager: AutofillCredentialManagerProtocol) {
+    private var attributedLayoutType: SaveLoginView.LayoutType?
+    
+    internal init(credentialManager: AutofillCredentialManagerProtocol, layoutType: SaveLoginView.LayoutType? = nil) {
         self.credentialManager = credentialManager
+        self.attributedLayoutType = layoutType
         loadFavicon()
     }
     

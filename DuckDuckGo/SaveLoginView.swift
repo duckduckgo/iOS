@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DuckUI
 import BrowserServicesKit
 
 struct SaveLoginView: View {
@@ -134,13 +135,20 @@ struct SaveLoginView: View {
     }
     
     var ctaView: some View {
-        SaveLoginCTAStackView(confirmLabel: confirmButton,
-                              cancelLabel: UserText.autofillSaveLoginNotNowCTA,
-                              confirmAction: {
-            viewModel.save()
-        }, cancelAction: {
-            viewModel.cancel()
-        })
+        VStack {
+            Button {
+                viewModel.save()
+            } label: {
+                Text(confirmButton)
+            }.buttonStyle(PrimaryButtonStyle())
+            
+            Button {
+                viewModel.cancel()
+            } label: {
+                Text(UserText.autofillSaveLoginNotNowCTA)
+            }
+            .buttonStyle(SecondaryButtonStyle())
+        }
     }
     
     @ViewBuilder
@@ -248,8 +256,6 @@ private enum Const {
         static let updatedInfo = Font.system(size: 16)
         static let titleCaption = Font.system(size: 13)
         static let userInfo = Font.system(size: 13).weight(.bold)
-        static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
-        
     }
     
     enum CornerRadius {
@@ -257,10 +263,6 @@ private enum Const {
     }
     
     enum Colors {
-        static let CTAPrimaryBackground = Color("CTAPrimaryBackground")
-        static let CTASecondaryBackground = Color("CTASecondaryBackground")
-        static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
-        static let CTASecondaryForeground = Color("CTASecondaryForeground")
         static let SecondaryTextColor = Color("SecondaryTextColor")
     }
     
@@ -271,8 +273,6 @@ private enum Const {
     }
     
     enum Size {
-        static let CTAButtonCornerRadius: CGFloat = 12
-        static let CTAButtonMaxHeight: CGFloat = 50
         static let contentWidth: CGFloat = 286
         static let closeButtonSize: CGFloat = 13
         static let closeButtonTappableArea: CGFloat = 44
@@ -285,47 +285,4 @@ private enum Const {
 extension Color {
     static let textPrimary = Color("TextPrimary")
     static let textSecondary = Color("TextSecondary")
-}
-
-private struct SaveLoginCTAStackView: View {
-    let confirmLabel: String
-    let cancelLabel: String
-    let confirmAction: () -> Void
-    let cancelAction: () -> Void
-    
-    var body: some View {
-        VStack {
-            Button {
-                confirmAction()
-            } label: {
-                Text(confirmLabel)
-                    .font(Const.Fonts.CTA)
-                    .foregroundColor(Const.Colors.CTAPrimaryForeground)
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
-                    .background(Const.Colors.CTAPrimaryBackground)
-                    .foregroundColor(.primary)
-                    .cornerRadius(Const.CornerRadius.CTA)
-            }
-            
-            Button {
-                cancelAction()
-            } label: {
-                Text(cancelLabel)
-                    .font(Const.Fonts.CTA)
-                    .foregroundColor(Const.Colors.CTASecondaryForeground)
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
-                    .background(Const.Colors.CTASecondaryBackground)
-                    .foregroundColor(.primary)
-                    .cornerRadius(Const.CornerRadius.CTA)
-            }
-        }
-    }
-}
-
-struct SaveLoginCTAStackView_Previews: PreviewProvider {
-    static var previews: some View {
-        SaveLoginCTAStackView(confirmLabel: "Save Login", cancelLabel: "Not Now", confirmAction: {}, cancelAction: {})
-    }
 }

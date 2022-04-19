@@ -689,7 +689,7 @@
 "fireButtonAnimation.fireRising.name" = "Инферно";
 
 /* No comment provided by engineer. */
-"fireButtonAnimation.none.name" = "Отсутствуют";
+"fireButtonAnimation.none.name" = "Без анимации";
 
 /* No comment provided by engineer. */
 "fireButtonAnimation.waterSwirl.name" = "Водоворот";

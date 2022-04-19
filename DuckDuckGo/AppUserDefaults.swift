@@ -149,7 +149,7 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .doNotSell, defaultValue: true)
     var sendDoNotSell: Bool
     
-    @UserDefaultsWrapper(key: .voiceSearch, defaultValue: true)
+    @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: true)
     var voiceSearchEnabled: Bool
     
     var currentFireButtonAnimation: FireButtonAnimationType {

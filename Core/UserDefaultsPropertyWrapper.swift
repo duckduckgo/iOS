@@ -73,8 +73,7 @@ public struct UserDefaultsWrapper<T> {
         
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
-        case voiceSearch = "com.duckduckgo.app.voiceSearch"
-
+        case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
     }
 
     private let key: Key

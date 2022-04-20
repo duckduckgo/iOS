@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Sijainti";
 
-/* More options button text */
-"bookmark.moreButton" = "lisää";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Verkkosivuston nimi";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Kirjanmerkit";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Emme voineet viedä kirjanmerkkejäsi. Yritä uudelleen.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Kirjanmerkkisi on viety.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Kirjanmerkkisi on jaettu.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Vie HTML-tiedosto";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "Valitettavasti emme voi tuoda tätä tiedostoa.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Kirjanmerkkisi on tuotu.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "Tuo HTML-tiedosto";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Tuo kirjanmerkkitiedosto toisesta selaimesta";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Tuo HTML-kirjanmerkkitiedosto toisesta selaimesta tai vie olemassa olevat kirjanmerkkisi.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentit eivät latautuneet";

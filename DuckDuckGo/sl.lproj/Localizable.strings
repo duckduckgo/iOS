@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Lokacija";
 
-/* More options button text */
-"bookmark.moreButton" = "Več";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Naslov spletnega mesta";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Zaznamki";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Vaših zaznamkov ni bilo mogoče izvoziti, poskusite znova.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Vaši zaznamki so uspešno izvoženi.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Vaši zaznamki so v skupni rabi.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Izvoz datoteke HTML";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "Te datoteke žal ne moremo uvoziti.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Vaši zaznamki so uspešno uvoženi.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "Uvoz datoteke HTML";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Uvoz datoteke z zaznamki iz drugega brskalnika";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Uvozite datoteko HTML z zaznamki iz drugega brskalnika ali pa izvozite vaše obstoječe zaznamke.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentarji se niso naložili";

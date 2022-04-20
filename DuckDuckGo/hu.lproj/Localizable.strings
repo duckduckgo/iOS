@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Hely";
 
-/* More options button text */
-"bookmark.moreButton" = "többet";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Weboldal címe";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Könyvjelzők";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Nem sikerült exportálni a könyvjelzőket. Próbálkozz újra.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "A könyvjelzők exportálva lettek.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "A könyvjelzők meg lettek osztva.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "HTML-fájl exportálása";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "Nem sikerült importálni a fájlt.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "A könyvjelzők importálva lettek.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "HTML-fájl importálása";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Könyvjelzőfájl importálása másik böngészőből";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Könyvjelzőket tartalmazó HTML-fájl importálása másik gépről, vagy a meglévő könyvjelzők exportálása.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "A megjegyzések nem töltődtek be";
@@ -812,7 +782,7 @@
 "navigation.title.edit" = "Szerkesztés";
 
 /* Do not translate - stringsdict entry */
-"number.of.tabs" = "number.of.tabs";
+"number.of.tabs" = "lapok.száma";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Minialkalmazás hozzáadása";

@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Геопозиция";
 
-/* More options button text */
-"bookmark.moreButton" = "больше";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Название сайта";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Закладки";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Экспортировать закладки не удалось. Пожалуйста, повторите попытку.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Закладки экспортированы.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Закладки переданы.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Экспорт в файл HTML";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "К сожалению, мы не можем импортировать данный файл.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Закладки импортированы.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "Импорт из файла HTML";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Импортировать закладки из другого браузера";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Импортировать файл HTML с закладками из другого браузера или экспортировать свои закладки.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Не загружаются комментарии";

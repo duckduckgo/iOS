@@ -212,8 +212,4 @@ extension BookmarksManager {
     func allBookmarksAndFavoritesFlat(completion: @escaping ([BookmarkManagedObject]) -> Void) {
         coreDataStorage.allBookmarksAndFavoritesFlat(completion: completion)
     }
-
-    func allBookmarksAndFavoritesFlat() async -> [BookmarkManagedObject] {
-        return await coreDataStorage.allBookmarksAndFavoritesFlat()
-    }
 }

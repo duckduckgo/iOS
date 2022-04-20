@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Locație";
 
-/* More options button text */
-"bookmark.moreButton" = "Mai Multe";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titlul site-ului web";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Semne de carte";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Nu am putut exporta marcajele tale, încearcă din nou.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Marcajele tale au fost exportate.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Marcajele tale au fost distribuite.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Exportă fișierul HTML";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "Ne pare rău, nu putem importa acest fișier.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Marcajele tale au fost importate.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "Importă fișierul HTML";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Importă fișierul de marcaje dintr-un alt browser";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Importă un fișier HTML sau marcaje dintr-un alt browser sau exportă marcajele tale existente.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Comentariile nu s-au încărcat";

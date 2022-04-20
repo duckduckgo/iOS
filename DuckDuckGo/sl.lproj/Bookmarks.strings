@@ -28,6 +28,9 @@
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "rT4-Yr-P8D"; */
 "rT4-Yr-P8D.placeholder" = "Naslov";
 
+/* Class = "UIBarButtonItem"; title = "Add Folder"; ObjectID = "ToB-IA-MxG"; */
+"ToB-IA-MxG.title" = "Dodaj mapo";
+
 /* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
 "tVt-jc-YaY.title" = "Zaznamki";
 

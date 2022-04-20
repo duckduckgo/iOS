@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Localização";
 
-/* More options button text */
-"bookmark.moreButton" = "Mais";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Título do website";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Marcadores";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Não foi possível exportar os seus marcadores, tente novamente.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Os seus marcadores foram exportados.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Os seus marcadores foram partilhados.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Exportar ficheiro HTML";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "Lamentamos, mas não conseguimos importar este ficheiro.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Os seus marcadores foram importados.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "Importar Ficheiro HTML";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Importar ficheiro de marcador de outro navegador";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Importe um ficheiro HTML de marcadores de outro navegador ou exporte os seus marcadores existentes.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Os comentários não carregaram";

@@ -20,7 +20,11 @@
 import Foundation
 @testable import Core
 
-final class JsonTestDataLoader: TestDataLoader {
+class JsonTestDataLoader {
+
+    func empty() -> Data {
+        return "".data(using: .utf16)!
+    }
 
     func invalid() -> Data {
         return "{[}".data(using: .utf16)!
@@ -38,5 +42,9 @@ final class JsonTestDataLoader: TestDataLoader {
             fatalError("Unable to load \(fileName)")
         }
         return data
+    }
+
+    private var bundle: Bundle {
+        return Bundle(for: type(of: self))
     }
 }

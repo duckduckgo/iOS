@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Posisjon";
 
-/* More options button text */
-"bookmark.moreButton" = "Mer";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Nettsidetittel";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Bokmerker";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Vi kunne ikke eksportere bokmerkene dine. Prøv igjen.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Bokmerkene er eksportert.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Bokmerkene er delt.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Eksporter HTML-fil";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "Beklager, vi kan ikke importere denne filen.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Bokmerkene er importert.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "Importer HTML-fil";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Importer bokmerkefil fra en annen nettleser";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Importer en HTML-fil med bokmerker fra en annen nettleser, eller eksporter dine eksisterende bokmerker.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentarene ble ikke lastet inn";

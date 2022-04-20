@@ -4,6 +4,9 @@
 /* Buton label for Edit action */
 "action.generic.edit" = "Bewerken";
 
+/* Button label for a generic show action */
+"action.generic.show" = "Tonen";
+
 /* Button label for Undo action */
 "action.generic.undo" = "Ongedaan maken";
 
@@ -27,6 +30,9 @@
 
 /* Disable protection action */
 "action.title.disable.protection" = "Privacybescherming uitschakelen";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Downloads";
 
 /* Edit Bookmark action */
 "action.title.edit.bookmark" = "Bladwijzer bewerken";
@@ -235,6 +241,18 @@
 /* Broken Site Section Title */
 "brokensite.sectionTitle" = "BESCHRIJF WAT ER IS GEBEURD";
 
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Afgelopen maand";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Afgelopen week";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Vandaag";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Gisteren";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Tips voor altijd verbergen";
 
@@ -318,6 +336,54 @@
 
 /* No comment provided by engineer. */
 "donotsell.info.headertext" = "Veel trackers worden automatisch geblokkeerd door DuckDuckGo. Met Global Privacy Control (GPC) kun je deelnemende websites ook vragen om je persoonsgegevens niet te verkopen aan of te delen met andere bedrijven.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Opslaan in downloads";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Annuleren";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Weet je zeker dat je deze download wilt annuleren?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Hervatten";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Downloaden annuleren?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Alles verwijderen";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Nog geen bestanden gedownload";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Downloaden - %1$@ van %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Downloaden - %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Downloads";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Hiermee worden ook lopende downloads geannuleerd";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Alle bestanden verwijderd";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "%@ is gedownload";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "%@ verwijderd";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Downloaden mislukt. Controleer uw internetverbinding.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Downloaden gestart voor %@";
 
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuleren";

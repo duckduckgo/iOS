@@ -33,6 +33,8 @@ class StatisticsUserDefaultsTests: XCTestCase {
     var testee: StatisticsUserDefaults!
 
     override func setUp() {
+        super.setUp()
+        
         UserDefaults().removePersistentDomain(forName: Constants.userDefaultsSuit)
         testee = StatisticsUserDefaults(groupName: Constants.userDefaultsSuit)
     }

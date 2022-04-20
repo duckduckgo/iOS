@@ -635,6 +635,7 @@ class MainViewController: UIViewController {
 
     private func addToView(controller: UIViewController) {
         addChild(controller)
+        containerView.subviews.forEach { $0.removeFromSuperview() }
         containerView.addSubview(controller.view)
         controller.view.frame = containerView.bounds
         controller.didMove(toParent: self)
@@ -797,6 +798,10 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
+    fileprivate func launchDownloads() {
+        performSegue(withIdentifier: "Downloads", sender: self)
+    }
+    
     fileprivate func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
     }
@@ -935,33 +940,6 @@ class MainViewController: UIViewController {
         let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: nil)
 
         alertController.addAction(openSettingsButton)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func displayVoiceSearchPrivacyAlertIfNecessary(completion: @escaping(Bool) -> Void) {
-        if AppDependencyProvider.shared.voiceSearchHelper.privacyAlertWasConfirmed {
-            completion(true)
-            return
-        }
-        
-        let alertController = UIAlertController(title: UserText.voiceSearchPrivacyAcknowledgmentTitle,
-                                                message: UserText.voiceSearchPrivacyAcknowledgmentMessage,
-                                                preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
-
-        let confirmButton = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentAcceptButton, style: .default) { _ in
-            AppDependencyProvider.shared.voiceSearchHelper.markPrivacyAlertAsConfirmed()
-            Pixel.fire(pixel: .voiceSearchPrivacyDialogAccepted)
-            completion(true)
-        }
-        let cancelAction = UIAlertAction(title: UserText.voiceSearchPrivacyAcknowledgmentRejectButton, style: .cancel) { _ in
-            Pixel.fire(pixel: .voiceSearchPrivacyDialogRejected)
-            completion(false)
-        }
-
-        alertController.addAction(confirmButton)
         alertController.addAction(cancelAction)
         
         present(alertController, animated: true, completion: nil)
@@ -1212,17 +1190,12 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onVoiceSearchPressed() {
-
-        displayVoiceSearchPrivacyAlertIfNecessary { result in
-            guard result else { return }
-            
-            SpeechRecognizer.requestMicAccess { permission in
-                DispatchQueue.main.async {
-                    if permission {
-                        self.showVoiceSearch()
-                    } else {
-                        self.showNoMicrophonePermissionAlert()
-                    }
+        SpeechRecognizer.requestMicAccess { permission in
+            DispatchQueue.main.async {
+                if permission {
+                    self.showVoiceSearch()
+                } else {
+                    self.showNoMicrophonePermissionAlert()
                 }
             }
         }
@@ -1422,6 +1395,10 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestEditBookmark(tab: TabViewController) {
         onBookmarkEdit()
+    }
+    
+    func tabDidRequestDownloads(tab: TabViewController) {
+        launchDownloads()
     }
 
     func tabDidRequestSettings(tab: TabViewController) {
@@ -1654,16 +1631,23 @@ extension MainViewController: AutoClearWorker {
         }
     }
     
+    func stopAllOngoingDownloads() {
+        AppDependencyProvider.shared.downloadManager.cancelAllDownloads()
+    }
+    
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
         
+        tabManager.prepareAllTabsExceptCurrentForDataClearing()
+        
         fireButtonAnimator?.animate {
-            self.tabManager.prepareTabsForDataClearing {
-                self.forgetData()
-                DaxDialogs.shared.resumeRegularFlow()
-                self.forgetTabs()
-            }
+            self.tabManager.prepareCurrentTabForDataClearing()
+            
+            self.stopAllOngoingDownloads()
+            self.forgetData()
+            DaxDialogs.shared.resumeRegularFlow()
+            self.forgetTabs()
         } onTransitionCompleted: {
             ActionMessageView.present(message: UserText.actionForgetAllDone)
             transitionCompletion?()

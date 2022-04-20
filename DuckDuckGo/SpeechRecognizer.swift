@@ -21,18 +21,48 @@ import Foundation
 import Speech
 import Accelerate
 
-class SpeechRecognizer: SpeechRecognizerProtocol {
-    private var audioEngine = AVAudioEngine()
+protocol SpeechRecognizerDelegate: AnyObject {
+    func speechRecognizer(_ speechRecognizer: SpeechRecognizer, availabilityDidChange available: Bool)
+}
+
+final class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
+    weak var delegate: SpeechRecognizerDelegate?
+    private var audioEngine: AVAudioEngine?
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
-    private let speechRecognizer = SFSpeechRecognizer()
+    private let speechRecognizer: SFSpeechRecognizer?
+    private let operationQueue: OperationQueue
     
-    var isAvailable: Bool {
-        // https://app.asana.com/0/1201011656765697/1201271104639596
-        if #available(iOS 15.0, *) {
-            return (speechRecognizer?.isAvailable ?? false) && supportsOnDeviceRecognition
-        } else {
-            return false
+    private(set) var isAvailable = false {
+        didSet {
+            delegate?.speechRecognizer(self, availabilityDidChange: isAvailable)
+        }
+    }
+    
+    override init() {
+        operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .userInteractive
+        
+        speechRecognizer = SFSpeechRecognizer()
+        speechRecognizer?.queue = operationQueue
+        
+        super.init()
+        
+        speechRecognizer?.delegate = self
+        updateAvailabilityFlag()
+    }
+    
+    private func updateAvailabilityFlag() {
+        // https://app.asana.com/0/0/1201701558793614/1201934552312834
+        
+        operationQueue.addOperation { [weak self] in
+            guard let self = self else { return }
+            // https://app.asana.com/0/1201011656765697/1201271104639596
+            if #available(iOS 15.0, *) {
+                self.isAvailable = self.supportsOnDeviceRecognition && (self.speechRecognizer?.isAvailable ?? false)
+            } else {
+                self.isAvailable = false
+            }
         }
     }
     
@@ -47,7 +77,6 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     }
     
     private func convertArr<T>(count: Int, data: UnsafePointer<T>) -> [T] {
-
         let buffer = UnsafeBufferPointer(start: data, count: count)
         return Array(buffer)
     }
@@ -59,7 +88,7 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
         let silenceThreshold: Float = 0.0030
         let loudThreshold: Float = 0.07
         
-        let sumChannelData = channelDataArray.reduce(0) {$0 + abs($1)}
+        let sumChannelData = channelDataArray.reduce(0) { $0 + abs($1) }
         var channelAverage = sumChannelData / Float(channelDataArray.count)
         channelAverage = min(channelAverage, loudThreshold)
         channelAverage = max(channelAverage, silenceThreshold)
@@ -75,8 +104,11 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
                                                   _ speechDidFinish: Bool) -> Void,
                         volumeCallback: @escaping(_ volume: Float) -> Void) {
         
-        self.recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
-        guard let recognitionRequest = self.recognitionRequest else {
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        audioEngine = AVAudioEngine()
+
+        guard let recognitionRequest = self.recognitionRequest,
+        let audioEngine = audioEngine else {
             resultHandler(nil, nil, true)
             return
         }
@@ -136,12 +168,18 @@ class SpeechRecognizer: SpeechRecognizerProtocol {
     private func reset() {
         try? AVAudioSession.sharedInstance().setActive(false)
         recognitionTask?.cancel()
-        audioEngine.stop()
+        audioEngine?.stop()
         recognitionRequest = nil
         recognitionTask = nil
     }
     
     deinit {
         reset()
+    }
+}
+
+extension SpeechRecognizer: SFSpeechRecognizerDelegate {
+    func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+        isAvailable = supportsOnDeviceRecognition && available
     }
 }

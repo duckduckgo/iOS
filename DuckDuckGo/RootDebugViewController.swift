@@ -153,8 +153,8 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
         }
 
         let processedCookies = cookies
-            .sorted(by: {$0.domain < $1.domain})
-            .sorted(by: {$0.name < $1.name})
+            .sorted(by: { $0.domain < $1.domain })
+            .sorted(by: { $0.name < $1.name })
             .map { $0.debugString }
 
         return (["## Cookie Report"] + timeout + processedCookies).joined(separator: "\n")
@@ -169,7 +169,7 @@ class DiagnosticReportDataSource: UIActivityItemProvider {
 
 }
 
-fileprivate extension ImageCache {
+private extension ImageCache {
 
     var count: Int {
         let url = diskStorage.directoryURL
@@ -183,7 +183,7 @@ fileprivate extension ImageCache {
 
 }
 
-fileprivate extension HTTPCookie {
+private extension HTTPCookie {
 
     var debugString: String {
         """

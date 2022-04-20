@@ -55,13 +55,9 @@ public struct UserDefaultsWrapper<T> {
 
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
         
-        case homeWidgetEducationMessageDismissed = "com.duckduckgo.ios.homeMessage.widgetEducation.dismissed"
-
         case lastConfigurationRefreshDate = "com.duckduckgo.ios.lastConfigurationRefreshDate"
         
         case doNotSell = "com.duckduckgo.ios.sendDoNotSell"
-
-        case showWaitlistNotification = "com.duckduckgo.ios.showWaitlistNotification"
 
         case backgroundFetchTaskDuration = "com.duckduckgo.app.bgFetchTaskDuration"
         case downloadedHTTPSBloomFilterSpecCount = "com.duckduckgo.app.downloadedHTTPSBloomFilterSpecCount"
@@ -70,9 +66,12 @@ public struct UserDefaultsWrapper<T> {
         case downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
-        case voiceSearchPrivacyAlertWasConfirmed = "com.duckduckgo.app.voiceSearchPrivacyAlertWasConfirmed"
         case bookmarksMigratedFromUserDefaultsToCD = "com.duckduckgo.app.bookmarksMigratedFromUserDefaultsToCoreData"
         case textSize = "com.duckduckgo.ios.textSize"
+        
+        case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
+        case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
+
     }
 
     private let key: Key

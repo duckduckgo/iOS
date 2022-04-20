@@ -51,7 +51,8 @@ class PrivacyProtectionPracticesController: UIViewController {
     var rows = [Row]()
 
     override func viewDidLoad() {
-
+        super.viewDidLoad()
+        
         Pixel.fire(pixel: .privacyDashboardPrivacyPractices)
         
         initTable()
@@ -89,7 +90,7 @@ class PrivacyProtectionPracticesController: UIViewController {
         domainLabel.text = siteRating.domain
     }
 
-    private func updateReasons() {            
+    private func updateReasons() {
         let goodReasons = siteRating.privacyPractice.goodReasons
         let badReasons = siteRating.privacyPractice.badReasons
         let goodRows = goodReasons.map({ Row(text: $0.capitalizingFirstLetter(), good: true) })
@@ -210,7 +211,7 @@ class PrivacyProtectionNoPracticesCell: UITableViewCell {
 }
 
 // Credit: https://stackoverflow.com/a/26306372/73479
-fileprivate extension String {
+private extension String {
     func capitalizingFirstLetter() -> String {
         return prefix(1).uppercased() + dropFirst()
     }

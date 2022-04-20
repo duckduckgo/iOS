@@ -129,7 +129,8 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
             case .shouldNotifyWhenAvailable:
                 // Not using `bool(forKey:)` as it's useful to tell whether a value has been set at all, and `bool(forKey:)` returns false by default.
-                if let shouldNotify = UserDefaults.standard.value(forKey: UserDefaultsWrapper<Any>.Key.showWaitlistNotification.rawValue) as? Bool {
+                let key = UserDefaultsWrapper<Any>.Key.emailWaitlistShouldReceiveNotifications.rawValue
+                if let shouldNotify = UserDefaults.standard.value(forKey: key) as? Bool {
                     cell.detailTextLabel?.text = shouldNotify ? "Yes" : "No"
                 } else {
                     cell.detailTextLabel?.text = "TBD"
@@ -200,8 +201,8 @@ final class EmailWaitlistDebugViewController: UITableViewController {
 
 extension UserDefaultsWrapper {
 
-    public static func clearWaitlistValues() {
-        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper.Key.showWaitlistNotification.rawValue)
+    fileprivate static func clearWaitlistValues() {
+        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper.Key.emailWaitlistShouldReceiveNotifications.rawValue)
     }
 
 }

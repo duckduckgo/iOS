@@ -5,6 +5,7 @@
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.duckduckgo.app.waitlistStatus</string>
+		<string>com.duckduckgo.app.macBrowserWaitlistStatus</string>
 		<string>com.duckduckgo.app.configurationRefresh</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
@@ -217,6 +218,10 @@
 	<array>
 		<string>arm64</string>
 	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIStatusBarStyle</key>

@@ -48,6 +48,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return self }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeEmptyEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
+        var onReloadState: OmniBarState { return HomeEmptyEditingState() }
     }
 
     struct HomeTextEditingState: OmniBarState {
@@ -76,6 +77,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeTextEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
+        var onReloadState: OmniBarState { return HomeTextEditingState() }
     }
 
     struct HomeNonEditingState: OmniBarState {
@@ -104,6 +106,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.HomeNonEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
+        var onReloadState: OmniBarState { return HomeNonEditingState() }
     }
 
     struct BrowsingEmptyEditingState: OmniBarState {
@@ -132,6 +135,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingEmptyEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
+        var onReloadState: OmniBarState { return BrowsingEmptyEditingState() }
     }
 
     struct BrowsingTextEditingState: OmniBarState {
@@ -160,6 +164,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
+        var onReloadState: OmniBarState { return BrowsingTextEditingState() }
     }
 
     struct BrowsingNonEditingState: OmniBarState {
@@ -188,6 +193,7 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeNonEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingNonEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
+        var onReloadState: OmniBarState { return BrowsingNonEditingState() }
     }
     
     struct BrowsingTextEditingStartedState: OmniBarState {
@@ -216,5 +222,6 @@ struct SmallOmniBarState {
         var onBrowsingStoppedState: OmniBarState { return HomeEmptyEditingState() }
         var onEnterPadState: OmniBarState { return LargeOmniBarState.BrowsingTextEditingState() }
         var onEnterPhoneState: OmniBarState { return self }
+        var onReloadState: OmniBarState { return BrowsingTextEditingStartedState() }
     }
 }

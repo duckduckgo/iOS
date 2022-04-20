@@ -105,7 +105,7 @@ class AddOrEditBookmarkViewController: UIViewController {
     }
 }
 
-extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDelegate {    
+extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDelegate {
     
     func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource,
                                              textFieldDidChangeWithTitleText titleText: String?,

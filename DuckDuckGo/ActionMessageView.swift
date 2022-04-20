@@ -29,10 +29,17 @@ class ActionMessageView: UIView {
         static var maxWidth: CGFloat = 346
         static var minimumHorizontalPadding: CGFloat = 20
         static var cornerRadius: CGFloat = 10
-        static var windowBottomPadding: CGFloat = 70
         
         static var animationDuration: TimeInterval = 0.2
         static var duration: TimeInterval = 3.0
+        
+        static var windowBottomPadding: CGFloat {
+            if UIDevice.current.userInterfaceIdiom == .phone && !isPortrait {
+                return 40
+            }
+            
+            return 70
+        }
     }
     
     @IBOutlet weak var message: UILabel!
@@ -55,14 +62,24 @@ class ActionMessageView: UIView {
         layer.cornerRadius = Constants.cornerRadius
     }
     
+    static func present(message: NSAttributedString, numberOfLines: Int = 0, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
+        let messageView = loadFromXib()
+        messageView.message.attributedText = message
+        messageView.message.numberOfLines = numberOfLines
+        ActionMessageView.present(messageView: messageView, actionTitle: actionTitle, onAction: onAction)
+    }
+    
     static func present(message: String, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
+        let messageView = loadFromXib()
+        messageView.message.setAttributedTextString(message)
+        ActionMessageView.present(messageView: messageView, actionTitle: actionTitle, onAction: onAction)
+    }
+    
+    private static func present(messageView: ActionMessageView, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
         guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
         
         dismissAllMessages()
-        
-        let messageView = loadFromXib()
-        messageView.message.setAttributedTextString(message)
-        
+                
         if let actionTitle = actionTitle, let title = messageView.actionButton.attributedTitle(for: .normal) {
             messageView.actionButton.setAttributedTitle(title.withText(actionTitle.uppercased()), for: .normal)
             messageView.action = onAction
@@ -93,7 +110,7 @@ class ActionMessageView: UIView {
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.duration, execute: workItem)
         presentedMessages.append(messageView)
     }
-    
+
     static func dismissAllMessages() {
         presentedMessages.forEach { $0.dismissAndFadeOut() }
     }
@@ -114,5 +131,6 @@ class ActionMessageView: UIView {
     
     @IBAction func onButtonTap() {
         action()
+        dismissAndFadeOut()
     }
 }

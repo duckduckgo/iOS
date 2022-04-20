@@ -42,7 +42,7 @@ class AppRatingPrompt {
     func registerUsage(onDate date: Date = Date()) {
         if !date.isSameDay(storage.lastAccess) {
             storage.uniqueAccessDays += 1
-        }        
+        }
         storage.lastAccess = date
     }
     
@@ -65,7 +65,7 @@ class AppRatingPromptCoreDataStorage: AppRatingPromptStorage {
         
         set {
             entity().lastAccess = newValue
-            try? context.save() 
+            try? context.save()
         }
     }
     

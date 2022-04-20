@@ -27,7 +27,7 @@ struct FileItem {
     let isDirectory: Bool
     let size: Int?
     
-    var isEmpty: Bool { (size ?? 0) == 0}
+    var isEmpty: Bool { (size ?? 0) == 0 }
 }
 
 class FileSizeDebugViewController: UITableViewController {
@@ -160,7 +160,7 @@ class FileSizeDebugViewController: UITableViewController {
     }
 }
 
-fileprivate extension URL {
+private extension URL {
     
     var isDirectory: Bool {
         let urlForDirectory = (try? resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? false

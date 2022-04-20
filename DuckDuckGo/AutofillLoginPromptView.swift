@@ -37,7 +37,14 @@ struct AutofillLoginPromptView: View {
     //I should also check the exact type of blur
     
     //We should start considering rollout plan, pixels, etc. Maybe once we've started the settings page.
+    //What info are we trying to get that we wont' get from a PFR?
+    //ad hoc might be a pain if people's devices aren't registered
+    //test flight a bit of a pain and accounts have to be registered, but not many people did it for email
     //I could look at what we did for email.
+    
+    //large model doesn't have blur?
+    
+    //TODO steal fernando's email trimming logic
     
     private func mainView() -> some View {
         ZStack {

@@ -39,6 +39,12 @@ class AutofillLoginPromptViewController: UIViewController {
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         return blurEffectView
     }()
+    
+    private lazy var expandedBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "AutofillPromptLargeBackground")
+        return view
+    }()
 
     internal init(accounts: [SecureVaultModels.WebsiteAccount]) {
         self.accounts = accounts
@@ -57,6 +63,8 @@ class AutofillLoginPromptViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = UIColor.clear
         view.addSubview(blurView)
+        view.addSubview(expandedBackgroundView)
+        expandedBackgroundView.alpha = isExpanded ? 1 : 0
         
         let viewModel = AutofillLoginPromptViewModel(accounts: accounts)
         guard let viewModel = viewModel else {
@@ -75,6 +83,20 @@ class AutofillLoginPromptViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         blurView.frame = self.view.frame
+        expandedBackgroundView.frame = self.view.frame
+    }
+    
+    private var isExpanded: Bool {
+        if #available(iOS 15.0, *),
+           let presentationController = presentationController as? UISheetPresentationController {
+            if presentationController.selectedDetentIdentifier == nil &&
+                presentationController.detents.contains(.medium()) {
+                return false
+            } else if presentationController.selectedDetentIdentifier == .medium {
+                return false
+            }
+        }
+        return true
     }
     
     deinit {
@@ -88,6 +110,13 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
         print("dismiss")
         delegate?.autoFillLoginPromptViewControllerDidCancel(self)
         //TODO probs need to call delegate here (and make sure happens in all cases
+    }
+    
+    @available(iOS 15.0, *)
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        UIView.animate(withDuration: 0.2) {
+            self.expandedBackgroundView.alpha = self.isExpanded ? 1 : 0
+        }
     }
 }
 
@@ -108,6 +137,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             if let presentationController = presentationController as? UISheetPresentationController {
                 presentationController.animateChanges {
                     presentationController.selectedDetentIdentifier = .large
+                    expandedBackgroundView.alpha = 1
                 }
             }
         }

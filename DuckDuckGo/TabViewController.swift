@@ -243,12 +243,14 @@ class TabViewController: UIViewController {
         
         let domain = url?.host ?? ""
         
-//        let account = SecureVaultModels.WebsiteAccount(title: nil, username: "pig", domain: domain)
-//        let creds = SecureVaultModels.WebsiteCredentials(account: account, password: "pig".data(using: .utf8)!)
-//        do {
-//            try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(creds)
-//        } catch {
-//            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+//        for i in 0...10 {
+//            let account = SecureVaultModels.WebsiteAccount(title: nil, username: "pig" + String(i), domain: domain)
+//            let creds = SecureVaultModels.WebsiteCredentials(account: account, password: "pig".data(using: .utf8)!)
+//            do {
+//                try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(creds)
+//            } catch {
+//                os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+//            }
 //        }
         
         if #available(iOS 14, *) {

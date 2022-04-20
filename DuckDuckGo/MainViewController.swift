@@ -920,6 +920,7 @@ class MainViewController: UIViewController {
         UIMenuController.shared.hideMenu()
         omniBar.removeTextSelection()
         
+        Pixel.fire(pixel: .openVoiceSearch)
         let voiceSearchController = VoiceSearchViewController()
         voiceSearchController.delegate = self
         voiceSearchController.modalTransitionStyle = .crossDissolve

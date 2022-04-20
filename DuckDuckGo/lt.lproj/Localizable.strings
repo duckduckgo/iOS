@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Vieta";
 
-/* More options button text */
-"bookmark.moreButton" = "Daugiau";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Svetainės pavadinimas";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Žymės";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Nepavyko eksportuoti jūsų žymelių, pabandykite iš naujo.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Jūsų žymelės eksportuotos.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Jūsų žymelės bendrintos.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Eksportuoti HTML failą";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "Deja, negalime importuoti šį failą.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Jūsų žymelės importuotos.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "Importuoti HTML failą";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Importuoti žymelės failą iš kitos naršyklės";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Eksportuoti HTML žymelių failą iš kitos naršyklės arba eksportuoti esamas žymeles.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentarai neįkelti";

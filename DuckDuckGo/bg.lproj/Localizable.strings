@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Местоположение";
 
-/* More options button text */
-"bookmark.moreButton" = "Повече";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Заглавие на уебсайт";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Отметки";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Не успяхме да експортираме вашите отметки, моля, опитайте отново.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Вашите отметки са експортирани.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Вашите отметки са споделени.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "Експортиране на HTML файл";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "За съжаление не успяхме да импортираме този файл.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Вашите отметки са импортирани.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "Импортиране на HTML файл";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Импортиране на файл с отметки от друг браузър";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Импортирайте HTML файл с отметки от друг браузър или експортирайте съществуващите отметки.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Коментарите не се зареждат";

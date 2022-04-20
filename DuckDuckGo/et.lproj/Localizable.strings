@@ -196,9 +196,6 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Asukoht";
 
-/* More options button text */
-"bookmark.moreButton" = "Rohkem";
-
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Veebisaidi pealkiri";
 
@@ -213,33 +210,6 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Järjehoidjad";
-
-/* Failure message when bookmarks failed to export */
-"bookmarks.export.failed.message" = "Järjehoidjate eksport ei õnnestunud, palun proovi uuesti.";
-
-/* Confirmation message that bookmarks have been exported to the file system */
-"bookmarks.export.files.success.message" = "Sinu järjehoidjad on eksporditud.";
-
-/* Confirmation message that bookmarks have been shared successfully to another app */
-"bookmarks.export.share.success.message" = "Sinu järjehoidjad on jagatud.";
-
-/* Title of option to export HTML */
-"bookmarks.exportAction.title" = "HTML-faili eksport";
-
-/* Failure message when bookmarks failed to import */
-"bookmarks.import.failed.message" = "Kahjuks ei saa me seda faili importida.";
-
-/* Confirmation message that bookmarks have been imported */
-"bookmarks.import.success.message" = "Sinu järjehoidjad on imporditud.";
-
-/* Title of option to import HTML */
-"bookmarks.importAction.title" = "HTML-faili import";
-
-/* Import bookmark file button text */
-"bookmarks.importExport.footer.button.title" = "Järjehoidja faili importimine teisest brauserist";
-
-/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
-"bookmarks.importExport.title" = "Impordi järjehoidjate HTML-fail teisest brauserist või ekspordi oma olemas olevad järjehoidjad.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentaare ei laaditud";

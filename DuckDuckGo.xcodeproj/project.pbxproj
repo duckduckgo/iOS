@@ -6837,8 +6837,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
-				branch = "ema/fix-autofill-on-catalina";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.2.6;
 			};
 		};
 		F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {

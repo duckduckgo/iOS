@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "ema/fix-autofill-on-catalina",
-          "revision": "b462685c3549f360d520f3ada2cde85919aaa68b",
-          "version": null
+          "branch": null,
+          "revision": "114c739843e4a12fe2a2c512dbad637be8b4bfb4",
+          "version": "12.2.6"
         }
       },
       {

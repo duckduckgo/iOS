@@ -23,8 +23,8 @@ import BrowserServicesKit
 final class AppTrackerDataSetProvider: EmbeddedDataProvider {
 
     public struct Constants {
-        public static let embeddedDataSetETag = "\"b5a369bfb768bc327fb22575c792a348\""
-        public static let embeddedDataSetSHA = "b85c321da42d5f2286982e1242d2d1985307d443a7e3c2d195fda92d012f77ef"
+        public static let embeddedDataSetETag = "\"a35d1e99b37b78f616ea38a99428180f\""
+        public static let embeddedDataSetSHA = "55b9e5e5a1ac3f91a90221f743a95cc514f61b15cfebc3842702fd69db540374"
     }
 
     var embeddedDataEtag: String {

@@ -142,7 +142,10 @@ public class Favicons {
         guard let domain = domain,
             let resource = defaultResource(forDomain: domain),
             (Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)),
-            let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
+            let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else {
+                loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
+                return
+            }
 
         let replace = {
             Constants.bookmarksCache.removeImage(forKey: resource.cacheKey)
@@ -214,6 +217,7 @@ public class Favicons {
                             fromURL url: URL? = nil,
                             intoCache targetCacheType: CacheType,
                             fromCache: CacheType? = nil,
+                            queue: DispatchQueue? = OperationQueue.current?.underlyingQueue,
                             completion: ((UIImage?) -> Void)? = nil) {
 
         guard let domain = domain,
@@ -229,7 +233,7 @@ public class Favicons {
             return
         }
 
-        guard let queue = OperationQueue.current?.underlyingQueue else { return }
+        guard let queue = queue else { return }
 
         func complete(withImage image: UIImage?) {
             queue.async {

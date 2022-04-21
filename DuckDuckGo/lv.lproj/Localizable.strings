@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Atrašanās vieta";
 
+/* More options button text */
+"bookmark.moreButton" = "Vairāk";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Vietnes nosaukums";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Grāmatzīmes";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Mums neizdevās eksportēt tavas grāmatzīmes. Lūdzu, mēģini vēlreiz.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Tavas grāmatzīmes ir eksportētas.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Tavas grāmatzīmes ir kopīgotas.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Eksportēt HTML failu";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Diemžēl mēs nevaram importēt šo failu.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Tavas grāmatzīmes ir importētas.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Importēt HTML failu";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Importēt grāmatzīmju failu no citas pārlūkprogrammas";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importē grāmatzīmju HTML failu no citas pārlūkprogrammas vai eksportē esošās grāmatzīmes.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentāri netika ielādēti";

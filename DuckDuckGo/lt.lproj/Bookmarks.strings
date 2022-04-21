@@ -28,9 +28,6 @@
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "rT4-Yr-P8D"; */
 "rT4-Yr-P8D.placeholder" = "Pavadinimas";
 
-/* Class = "UIBarButtonItem"; title = "Add Folder"; ObjectID = "ToB-IA-MxG"; */
-"ToB-IA-MxG.title" = "Pridėti aplanką";
-
 /* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
 "tVt-jc-YaY.title" = "Žymės";
 

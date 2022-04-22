@@ -627,6 +627,9 @@
 		F41C2DA526C1975E00F9A760 /* BookmarksCoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */; };
 		F42EF9312614BABE00101FB9 /* ActionSheetDaxDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */; };
 		F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */; };
+		F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D279727F331BB0037F371 /* AutofillLoginPromptView.swift */; };
+		F44D279E27F331BB0037F371 /* AutofillLoginPromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D279927F331BB0037F371 /* AutofillLoginPromptViewModel.swift */; };
+		F44D279F27F331BB0037F371 /* AutofillLoginPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44D279A27F331BB0037F371 /* AutofillLoginPromptViewController.swift */; };
 		F456B3B525810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456B3B425810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift */; };
 		F45B37762760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B37752760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift */; };
 		F45B37792760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B37782760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift */; };
@@ -2022,6 +2025,9 @@
 		F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCoreDataStorage.swift; sourceTree = "<group>"; };
 		F42EF9302614BABD00101FB9 /* ActionSheetDaxDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetDaxDialogViewController.swift; sourceTree = "<group>"; };
 		F446B9B4251150AC00324016 /* HomeMessageViewSectionRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMessageViewSectionRenderer.swift; sourceTree = "<group>"; };
+		F44D279727F331BB0037F371 /* AutofillLoginPromptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillLoginPromptView.swift; sourceTree = "<group>"; };
+		F44D279927F331BB0037F371 /* AutofillLoginPromptViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillLoginPromptViewModel.swift; sourceTree = "<group>"; };
+		F44D279A27F331BB0037F371 /* AutofillLoginPromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutofillLoginPromptViewController.swift; sourceTree = "<group>"; };
 		F456B3B425810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireButtonAnimationSettingsViewController.swift; sourceTree = "<group>"; };
 		F45B37752760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkItemDetailsDataSource.swift; sourceTree = "<group>"; };
 		F45B37782760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFoldersSectionDataSource.swift; sourceTree = "<group>"; };
@@ -2259,18 +2265,6 @@
 				31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */,
 			);
 			name = VoiceSearch;
-			sourceTree = "<group>";
-		};
-		3157B43127F497D10042D3D7 /* LoginPlus */ = {
-			isa = PBXGroup;
-			children = (
-				3157B43227F497E90042D3D7 /* SaveLoginView.swift */,
-				3157B43427F497F50042D3D7 /* SaveLoginViewController.swift */,
-				31669B9928020A460071CC18 /* SaveLoginViewModel.swift */,
-				31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */,
-				31C70B5A2804C61000FB6AD1 /* AutofillCredentialManager.swift */,
-			);
-			name = LoginPlus;
 			sourceTree = "<group>";
 		};
 		3157B43627F4C8380042D3D7 /* Favicons */ = {
@@ -2562,6 +2556,7 @@
 				F1C5ECF31E37812900C599A4 /* Application */,
 				9817C9C121EF58BA00884F65 /* AutoClear */,
 				F15D43211E70849A00BF2CDC /* Autocomplete */,
+				F44D279327F331930037F371 /* Autofill */,
 				F1668BCC1E798025008CBA04 /* Bookmarks */,
 				9830A05725ED0C5D00DB64DE /* BrowsingMenu */,
 				310D09192799EF5C00DC0060 /* Downloads */,
@@ -2572,7 +2567,6 @@
 				84E341A11E2F7EFB00BDBA6F /* Info.plist */,
 				98B001B1251EABB40090EC07 /* InfoPlist.strings */,
 				85DFEDEB24C7CC7600973FE7 /* iPad */,
-				3157B43127F497D10042D3D7 /* LoginPlus */,
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
 				85AE668C20971FCA0014CF04 /* Notifications */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
@@ -4064,6 +4058,26 @@
 			name = Licensed;
 			sourceTree = "<group>";
 		};
+		F407605328131910006B1E0B /* AutofillLoginUI */ = {
+			isa = PBXGroup;
+			children = (
+				F44D279727F331BB0037F371 /* AutofillLoginPromptView.swift */,
+				F44D279A27F331BB0037F371 /* AutofillLoginPromptViewController.swift */,
+				F44D279927F331BB0037F371 /* AutofillLoginPromptViewModel.swift */,
+			);
+			name = AutofillLoginUI;
+			sourceTree = "<group>";
+		};
+		F407605428131923006B1E0B /* SaveLoginUI */ = {
+			isa = PBXGroup;
+			children = (
+				3157B43227F497E90042D3D7 /* SaveLoginView.swift */,
+				3157B43427F497F50042D3D7 /* SaveLoginViewController.swift */,
+				31669B9928020A460071CC18 /* SaveLoginViewModel.swift */,
+			);
+			name = SaveLoginUI;
+			sourceTree = "<group>";
+		};
 		F4118EC32761721D00CA91CA /* BookmarkDataSources */ = {
 			isa = PBXGroup;
 			children = (
@@ -4071,6 +4085,17 @@
 				F4118EC42761725800CA91CA /* BookmarkSectionDataSources.swift */,
 			);
 			name = BookmarkDataSources;
+			sourceTree = "<group>";
+		};
+		F44D279327F331930037F371 /* Autofill */ = {
+			isa = PBXGroup;
+			children = (
+				31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */,
+				31C70B5A2804C61000FB6AD1 /* AutofillCredentialManager.swift */,
+				F407605328131910006B1E0B /* AutofillLoginUI */,
+				F407605428131923006B1E0B /* SaveLoginUI */,
+			);
+			name = Autofill;
 			sourceTree = "<group>";
 		};
 		F45B37772760275E00CDCCA9 /* BookmarkDetailsDataSources */ = {
@@ -4807,6 +4832,7 @@
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
 				31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */,
 				9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */,
+				F44D279E27F331BB0037F371 /* AutofillLoginPromptViewModel.swift in Sources */,
 				3151F0F02735802800226F58 /* VoiceSearchViewController.swift in Sources */,
 				85BDC310243359040053DB07 /* FindInPageUserScript.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewGridCell.swift in Sources */,
@@ -4821,6 +4847,7 @@
 				4B6484F027FD1E350050A7A1 /* FontExtension.swift in Sources */,
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkFolderViewController.swift in Sources */,
 				8539D9F71FA756AD00BE8746 /* PrivacyProtectionController.swift in Sources */,
+				F44D279F27F331BB0037F371 /* AutofillLoginPromptViewController.swift in Sources */,
 				F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */,
 				1E8AD1C727BE9B2900ABA377 /* DownloadsListDataSource.swift in Sources */,
 				3157B43527F497F50042D3D7 /* SaveLoginViewController.swift in Sources */,
@@ -5007,6 +5034,7 @@
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,
 				4B15817626706A2200F34D16 /* EmailProtectionViewController.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
+				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,
 				F103076B1E800DC30059FEC7 /* BookmarksManager.swift in Sources */,
 				CBD4F13E279EBFAB00B20FD7 /* HomeMessageView.swift in Sources */,
 				851DFD87212C39D300D95F20 /* TabSwitcherButton.swift in Sources */,

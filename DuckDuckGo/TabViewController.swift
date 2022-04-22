@@ -22,6 +22,7 @@ import Core
 import StoreKit
 import os.log
 import BrowserServicesKit
+import SwiftUI
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -141,7 +142,7 @@ class TabViewController: UIViewController {
         return errorMessage.text
     }
     
-    public var link: Link? {
+    public var link: Core.Link? {
         if isError {
             if let url = url ?? webView.url ?? URL(string: "") {
                 return Link(title: errorText, url: url)
@@ -251,6 +252,33 @@ class TabViewController: UIViewController {
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
+        
+        let domain = url?.host ?? ""
+        
+//        for i in 0...10 {
+//            let account = SecureVaultModels.WebsiteAccount(title: nil, username: "pig" + String(i), domain: domain)
+//            let creds = SecureVaultModels.WebsiteCredentials(account: account, password: "pig".data(using: .utf8)!)
+//            do {
+//                try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(creds)
+//            } catch {
+//                os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+//            }
+//        }
+        
+        if #available(iOS 14, *) {
+            vaultManager.autofillUserScript(autofillUserScript, didRequestAccountsForDomain: domain) { accounts in
+                Swift.print("Stored accounts: \(accounts)")
+                
+                let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts)
+                
+                if #available(iOS 15.0, *) {
+                    if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
+                        presentationController.detents = accounts.count > 3 ? [.medium(), .large()] : [.medium()]
+                    }
+                }
+                self.present(autofillPromptViewController, animated: true, completion: nil)
+            }
+        }
     }
 
     override func buildActivities() -> [UIActivity] {
@@ -283,11 +311,6 @@ class TabViewController: UIViewController {
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
         
-        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
-        let autofillUserScript = AutofillUserScript(
-            scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
-                                                                properties: prefs))
-        
         userScripts = [
             debugScript,
             textSizeUserScript,
@@ -317,7 +340,6 @@ class TabViewController: UIViewController {
         contentBlockerRulesScript.delegate = self
         autofillUserScript.emailDelegate = emailManager
         autofillUserScript.vaultDelegate = vaultManager
-        
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }

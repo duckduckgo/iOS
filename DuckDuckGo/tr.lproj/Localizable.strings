@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Konum";
 
+/* More options button text */
+"bookmark.moreButton" = "Daha fazla";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Web sitesi başlığı";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Yer İmleri";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Yer işaretlerinizi dışarı aktaramadık. Lütfen tekrar deneyin.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Yer işaretleriniz dışarı aktarıldı.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Yer işaretleriniz paylaşıldı.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "HTML Dosyasını Dışarı Aktar";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Ne yazık ki bu dosya içeri aktarılamıyor.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Yer işaretleriniz içeri aktarıldı.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "HTML Dosyasını İçeri Aktar";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Başka bir tarayıcıdan yer işaretleri dosyasını içeri aktarma";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Yer işaretleri HTML dosyasını başka bir tarayıcıdan içeri aktarın veya mevcut yer işaretlerinizi dışarı aktarın.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Yorumlar yüklenmedi";

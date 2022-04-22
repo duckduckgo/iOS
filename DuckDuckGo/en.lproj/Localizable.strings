@@ -190,6 +190,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Location";
 
+/* More options button text */
+"bookmark.moreButton" = "More";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Website title";
 
@@ -204,6 +207,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Bookmarks";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "We couldn’t export your bookmarks, please try again.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Your bookmarks have been exported.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Your bookmarks have been shared.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Export HTML File";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Sorry, we aren’t able to import this file.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Your bookmarks have been imported.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Import HTML File";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Import bookmark file from another browser";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Import an HTML file of bookmarks from another browser, or export your existing bookmarks.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Comments didn’t load";
@@ -260,7 +290,7 @@
 "dax.hide.title" = "Hide remaining tips?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous and I never store your search history.  Ever. 🙌";
+"dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous and I never save your search history. Ever. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Phew!";

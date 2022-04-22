@@ -56,7 +56,7 @@
 "BGs-JL-4ib.footerTitle" = "Данные и/или вкладки будут сброшены при следующем запуске приложения.";
 
 /* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
-"bIg-0T-UWq.text" = "Предлагать обезопасить сайты при входе";
+"bIg-0T-UWq.text" = "Предлагать сделать сайты огнеупорными при входе";
 
 /* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
 "bJo-qn-f57.title" = "Защита почты (бета)";
@@ -137,7 +137,7 @@
 "Fxu-zn-51Z.text" = "Добавьте виджет на домашний экран";
 
 /* Class = "UILabel"; text = "Fire Button Animation"; ObjectID = "gBo-Cu-e2k"; Note = "Fire button animation settings item"; */
-"gBo-Cu-e2k.text" = "Анимация кнопки «Пожар»";
+"gBo-Cu-e2k.text" = "Aнимация кнопки «Огонь»";
 
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "По умолчанию";
@@ -212,7 +212,7 @@
 "U8i-cQ-5WW.text" = "Показать предложения автозаполнения";
 
 /* Class = "UINavigationItem"; title = "Fire Button Animation"; ObjectID = "uns-8w-IwL"; Note = "Fire button animation setting page title"; */
-"uns-8w-IwL.title" = "Анимация кнопки «Пожар»";
+"uns-8w-IwL.title" = "Анимация кнопки «Огонь»";
 
 /* Class = "UILabel"; text = "Remove All Fireproof Sites"; ObjectID = "UZx-52-aer"; */
 "UZx-52-aer.text" = "Удалить все огнеупорные сайты";

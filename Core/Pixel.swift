@@ -151,7 +151,9 @@ public enum PixelName: String {
     case emailTooltipDismissed = "email_tooltip_dismissed"
     
     case voiceSearchDone = "m_voice_search_done"
-    
+    case openVoiceSearch = "m_open_voice_search"
+    case voiceSearchCancelled = "m_voice_search_cancelled"
+
     case emailDidShowWaitlistDialog = "email_did_show_waitlist_dialog"
     case emailDidPressWaitlistDialogDismiss = "email_did_press_waitlist_dialog_dismiss"
     case emailDidPressWaitlistDialogNotifyMe = "email_did_press_waitlist_dialog_notify_me"
@@ -164,6 +166,11 @@ public enum PixelName: String {
     case bookmarkEditedAtTopLevel = "m_bookmark_edited_at_top_level"
     case bookmarkEditedInSubfolder = "m_bookmark_edited_in_subfolder"
     
+    case bookmarkImportSuccess = "m_bi_s"
+    case bookmarkImportFailure = "m_bi_e"
+    case bookmarkExportSuccess = "m_be_a"
+    case bookmarkExportFailure = "m_be_e"
+
     case textSizeSettingsShown = "m_text_size_settings_shown"
     case textSizeSettingsChanged = "m_text_size_settings_changed"
     
@@ -312,6 +319,7 @@ public struct PixelParameters {
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
     public static let statusCode = "status_code"
     
+    public static let bookmarkCount = "bco"
 }
 
 public struct PixelValues {

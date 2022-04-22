@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Τοποθεσία";
 
+/* More options button text */
+"bookmark.moreButton" = "Περισσότερα";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Τίτλος ιστότοπου";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Σελιδοδείκτες";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Δεν καταφέραμε να κάνουμε εξαγωγή των σελιδοδεικτών σας. Προσπαθήστε ξανά.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Η εξαγωγή των σελιδοδεικτών σας έχει πραγματοποιηθεί.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Η κοινοποίηση των σελιδοδεικτών σας έχει πραγματοποιηθεί.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Εξαγωγή αρχείου HTML";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Δυστυχώς, δεν μπορούμε να κάνουμε εισαγωγή αυτού του αρχείου.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Η εισαγωγή των σελιδοδεικτών σας έχει πραγματοποιηθεί.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Εισαγωγή αρχείου HTML";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Εισαγωγή αρχείου με σελιδοδείκτες από άλλο πρόγραμμα περιήγησης";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Κάντε εισαγωγή ενός αρχείου HTML με σελιδοδείκτες από άλλο πρόγραμμα περιήγησης, ή κάντε εξαγωγή των σελιδοδεικτών που διαθέτετε ήδη.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Τα σχόλια δεν φορτώθηκαν";

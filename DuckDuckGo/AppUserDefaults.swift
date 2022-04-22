@@ -167,6 +167,9 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
     
+    @UserDefaultsWrapper(key: .autofill, defaultValue: true)
+    var autofill: Bool
+    
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

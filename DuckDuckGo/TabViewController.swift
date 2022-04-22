@@ -180,6 +180,19 @@ class TabViewController: UIViewController {
         return emailManager
     }()
     
+    lazy var vaultManager: SecureVaultManager = {
+        let manager = SecureVaultManager()
+        manager.delegate = self
+        return manager
+    }()
+    
+    lazy var autofillUserScript: BrowserServicesKit.AutofillUserScript = {
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
+        let provider = DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager, properties: prefs)
+        let autofillUserScript = AutofillUserScript(scriptSourceProvider: provider)
+        return autofillUserScript
+    }()
+    
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
         let domainEvent: PixelName
         switch event {
@@ -195,6 +208,7 @@ class TabViewController: UIViewController {
         LinkProtection(privacyManager: ContentBlocking.privacyConfigurationManager,
                        contentBlockingManager: ContentBlocking.contentBlockingManager,
                        errorReporting: Self.debugEvents)
+
     }()
     
     private var userScripts: [UserScript] = []
@@ -302,6 +316,8 @@ class TabViewController: UIViewController {
         surrogatesScript.delegate = self
         contentBlockerRulesScript.delegate = self
         autofillUserScript.emailDelegate = emailManager
+        autofillUserScript.vaultDelegate = vaultManager
+        
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }
@@ -1857,7 +1873,73 @@ extension NSError {
     var failedUrl: URL? {
         return userInfo[NSURLErrorFailingURLErrorKey] as? URL
     }
+    
+}
 
+extension TabViewController: SecureVaultManagerDelegate {
+    
+    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
+
+        let manager = AutofillCredentialManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
+        
+        let saveLoginController = SaveLoginViewController(credentialManager: manager)
+        saveLoginController.delegate = self
+        if #available(iOS 15.0, *) {
+            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium(), .large()]
+            }
+        }
+        present(saveLoginController, animated: true, completion: nil)
+    }
+    
+    func secureVaultInitFailed(_ error: SecureVaultError) {
+        SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
+    }
+    
+    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
+        
+        if let credentials = data.credentials, appSettings.autofill {
+            presentSavePasswordModal(with: vault, credentials: credentials)
+        }
+    }
+
+    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
+        #warning("Add pixel here?")
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
+        // We don't have auth yet
+    }
+}
+
+extension TabViewController: SaveLoginViewControllerDelegate {
+    
+    private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
+        do {
+           try AutofillCredentialManager.saveCredentials(credentials, with: SecureVaultFactory.default)
+            ActionMessageView.present(message: message, actionTitle: UserText.autofillLoginSaveToastActionButton) {
+                Swift.print("Show login")
+            }
+
+        } catch {
+            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        }
+    }
+    
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        viewController.dismiss(animated: true)
+        saveCredentials(credentials, withSuccessMessage: UserText.autofillLoginSavedToastMessage)
+    }
+    
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        viewController.dismiss(animated: true)
+        saveCredentials(credentials, withSuccessMessage: UserText.autofillLoginUpdatedToastMessage)
+    }
+    
+    func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
+        viewController.dismiss(animated: true)
+    }
 }
 
 // swiftlint:enable file_length

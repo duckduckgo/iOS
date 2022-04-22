@@ -1,5 +1,5 @@
 //
-//  AppSettings.swift
+//  Text.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -17,23 +17,20 @@
 //  limitations under the License.
 //
 
-protocol AppSettings: AnyObject {
-    var autocomplete: Bool { get set }
-    var currentThemeName: ThemeName { get set }
-    
-    var autoClearAction: AutoClearSettingsModel.Action { get set }
-    var autoClearTiming: AutoClearSettingsModel.Timing { get set }
+import SwiftUI
 
-    var longPressPreviews: Bool { get set }
+public struct SecondaryTextStyle: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
+    
+    public init() {}
+    public func body(content: Content) -> some View {
+        content
+            .foregroundColor(colorScheme == .light ? .gray70 : .gray20)
+    }
+}
 
-    var allowUniversalLinks: Bool { get set }
-    
-    var sendDoNotSell: Bool { get set }
-    
-    var currentFireButtonAnimation: FireButtonAnimationType { get set }
-    
-    var textSize: Int { get set }
-    
-    var autofill: Bool { get set }
-
+public extension View {
+  func secondaryTextStyle() -> some View {
+    modifier(SecondaryTextStyle())
+  }
 }

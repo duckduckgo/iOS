@@ -30,5 +30,6 @@ class MockAppSettings: AppSettings {
     var sendDoNotSell: Bool = true
     var currentFireButtonAnimation: FireButtonAnimationType = FireButtonAnimationType.fireRising
     var textSize: Int = 100
+    var autofill: Bool = true
     
 }

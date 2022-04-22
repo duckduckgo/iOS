@@ -486,6 +486,25 @@ public struct UserText {
     
     public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
     
+    public static let autofillSaveLoginTitleNewUser = NSLocalizedString("autofill.save-login.new-user.title", value: "Do you want DuckDuckGo to save your Login?", comment: "Title displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
+    public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
+
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
+   
+    public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
+    public static let autofillUpdatePasswordTitle = NSLocalizedString("autofill.update-password.title", value: "Update Password?", comment: "Title displayed on modal asking for the user to update the password")
+    public static let autofillSaveLoginSaveCTA = NSLocalizedString("autofill.save-login.save.CTA", value: "Save Login", comment: "Confirm CTA displayed on modal asking for the user to save the login")
+    public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
+    public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
+    public static let autofillUpdateLoginSaveCTA = NSLocalizedString("autofill.update-login.save.CTA", value: "Update Login", comment: "Confirm CTA displayed on modal asking for the user to update the login")
+    public static let autofillAdditionalLoginInfoMessage = NSLocalizedString("autofill.save-login.additional-login.message", value: "This will save an additional Login for this site.", comment: "Message displayed on modal explaining that an additional login will be saved.")
+    public static let autofillLoginSavedToastMessage = NSLocalizedString("autofill.login-saved.toast", value: "Login Saved", comment: "Message displayed after saving an autofill login")
+    public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login Updated", comment: "Message displayed after updating an autofill login")
+    public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "SHOW", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
+
+
     // MARK: - Mac Waitlist
     
     static let macWaitlistTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
@@ -593,5 +612,4 @@ public struct UserText {
 
         return localized.format(arguments: code)
     }
-    
 }

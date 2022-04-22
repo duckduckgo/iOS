@@ -110,7 +110,6 @@ class AutofillLoginPromptViewController: UIViewController {
 @available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        print("dismiss")
         delegate?.autoFillLoginPromptViewControllerDidCancel(self)
         //TODO Need to make sure this delgate is called in call dismiss cases
     }

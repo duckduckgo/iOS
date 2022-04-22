@@ -28,9 +28,15 @@ protocol AutofillLoginPromptViewControllerDelegate: AnyObject {
 }
 
 @available(iOS 14.0, *)
+protocol AutofillLoginPromptViewControllerExpansionResponseDelegate: AnyObject {
+    func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, isExpanded: Bool)
+}
+
+@available(iOS 14.0, *)
 class AutofillLoginPromptViewController: UIViewController {
     
     weak var delegate: AutofillLoginPromptViewControllerDelegate?
+    weak var expansionResponseDelegate: AutofillLoginPromptViewControllerExpansionResponseDelegate?
     
     private let accounts: [SecureVaultModels.WebsiteAccount]
     
@@ -66,12 +72,13 @@ class AutofillLoginPromptViewController: UIViewController {
         view.addSubview(expandedBackgroundView)
         expandedBackgroundView.alpha = isExpanded ? 1 : 0
         
-        let viewModel = AutofillLoginPromptViewModel(accounts: accounts)
+        let viewModel = AutofillLoginPromptViewModel(accounts: accounts, isExpanded: isExpanded)
         guard let viewModel = viewModel else {
             return
         }
         
         viewModel.delegate = self
+        expansionResponseDelegate = viewModel
         
         let view = AutofillLoginPromptView(viewModel: viewModel)
         let controller = UIHostingController(rootView: view)
@@ -117,6 +124,7 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
         UIView.animate(withDuration: 0.2) {
             self.expandedBackgroundView.alpha = self.isExpanded ? 1 : 0
         }
+        expansionResponseDelegate?.autofillLoginPromptViewController(self, isExpanded: isExpanded)
     }
 }
 
@@ -139,6 +147,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
                     presentationController.selectedDetentIdentifier = .large
                     expandedBackgroundView.alpha = 1
                 }
+                expansionResponseDelegate?.autofillLoginPromptViewController(self, isExpanded: true)
             }
         }
     }

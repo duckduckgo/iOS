@@ -61,11 +61,12 @@ class AutofillLoginPromptViewModel: ObservableObject {
         return "More Options" //TODO string
     }
     
-    internal init?(accounts: [SecureVaultModels.WebsiteAccount]) {
+    internal init?(accounts: [SecureVaultModels.WebsiteAccount], isExpanded: Bool) {
         guard let firstAccount = accounts.first else {
             return nil
         }
         self.domain = firstAccount.domain
+        self.expanded = isExpanded
         setUpAccountsViewModels(accounts: accounts)
         loadFavicon()
     }
@@ -94,14 +95,22 @@ class AutofillLoginPromptViewModel: ObservableObject {
     
     func didExpand() {
         delegate?.autofillLoginPromptViewModelDidRequestExpansion(self)
-        expanded = true //TODO, possibly view controller shoul dbe doing this
-        //TODO also, need to handle iOS 14 and if it's expanded to start with. At the moment we're not initialisng this correctly (I assume)
     }
 }
 
 internal extension AutofillLoginPromptViewModel {
     static var preview: AutofillLoginPromptViewModel {
         let account = SecureVaultModels.WebsiteAccount(title: "Title", username: "test@duck.com", domain: "example.com")
-        return AutofillLoginPromptViewModel(accounts: [account])!
+        return AutofillLoginPromptViewModel(accounts: [account], isExpanded: false)!
+    }
+}
+
+@available(iOS 14.0, *)
+extension AutofillLoginPromptViewModel: AutofillLoginPromptViewControllerExpansionResponseDelegate {
+    func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, isExpanded: Bool) {
+//        if self.expanded {
+//            return // Never collapse after expanding
+//        }
+        self.expanded = isExpanded
     }
 }

@@ -32,20 +32,9 @@ struct AutofillLoginPromptView: View {
     //TODO can we tell if a user swiped up/expoanded? cos then we should show the full list
     //also special behabiour for when swipe up and there's more
     //TODO gonna have to test 14
-    //what should happen if we're exapended and a user tries to make the sheet smaller? We could just not allow it, or we could unexpand. At the moment it just leaves all the scroll view, which is fine?
         
-    //I should also check the exact type of blur
-    
-    //We should start considering rollout plan, pixels, etc. Maybe once we've started the settings page.
-    //What info are we trying to get that we wont' get from a PFR?
-    //ad hoc might be a pain if people's devices aren't registered
-    //test flight a bit of a pain and accounts have to be registered, but not many people did it for email
-    //I could look at what we did for email.
-    
-    //large model doesn't have blur?
-    
     //TODO steal fernando's email trimming logic
-    
+        
     private func mainView() -> some View {
         ZStack {
             closeButtonHeader

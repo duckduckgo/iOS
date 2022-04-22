@@ -108,9 +108,9 @@ internal extension AutofillLoginPromptViewModel {
 @available(iOS 14.0, *)
 extension AutofillLoginPromptViewModel: AutofillLoginPromptViewControllerExpansionResponseDelegate {
     func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, isExpanded: Bool) {
-//        if self.expanded {
-//            return // Never collapse after expanding
-//        }
+        if self.expanded {
+            return // Never collapse after expanding
+        }
         self.expanded = isExpanded
     }
 }

@@ -121,9 +121,11 @@ struct AutofillLoginPromptView: View {
                     moreOptionsButton
                 } else {
                     ScrollView {
-                        ForEach(viewModel.accountsViewModels.indices, id: \.self) { index in
-                            let accountViewModel = viewModel.accountsViewModels[index]
-                            accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
+                        VStack {
+                            ForEach(viewModel.accountsViewModels.indices, id: \.self) { index in
+                                let accountViewModel = viewModel.accountsViewModels[index]
+                                accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
+                            }
                         }
                     }
                     .padding(.trailing, 8)

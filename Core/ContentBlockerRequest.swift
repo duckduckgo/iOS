@@ -76,9 +76,9 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         if etag == nil {
             switch configuration {
             case .trackerDataSet:
-                etag = AppTrackerDataSetProvider.Constants.embeddedDataSetETag
+                etag = AppTrackerDataSetProvider.Constants.embeddedDataETag
             case .privacyConfiguration:
-                etag = AppPrivacyConfigurationDataProvider.Constants.embeddedConfigETag
+                etag = AppPrivacyConfigurationDataProvider.Constants.embeddedDataETag
             default:
                 break
             }

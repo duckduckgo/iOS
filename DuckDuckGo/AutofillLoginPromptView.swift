@@ -29,8 +29,6 @@ struct AutofillLoginPromptView: View {
             .ignoresSafeArea()
     }
     
-    //TODO can we tell if a user swiped up/expoanded? cos then we should show the full list
-    //also special behabiour for when swipe up and there's more
     //TODO gonna have to test 14
         
     //TODO steal fernando's email trimming logic
@@ -102,9 +100,8 @@ struct AutofillLoginPromptView: View {
             .foregroundColor(.black)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
-            .background(Color.saveButton)
             .foregroundColor(.primary)
-            .cornerRadius(Const.CornerRadius.CTA)
+            .cornerRadius(Const.Size.CTAButtonCornerRadius)
     }
     
     var accountButtons: some View {
@@ -148,13 +145,13 @@ struct AutofillLoginPromptView: View {
                 viewModel.didSelectAccount(accountViewModel.account)
             } label: {
                 Text(accountViewModel.displayString) // TODO email formatting
-                    .font(.CTA)
+                    .font(Const.Fonts.CTA)
                     .foregroundColor(style == .primary ? Const.Colors.CTAPrimaryForeground : Const.Colors.CTASecondaryForeground)
                     .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Constants.CTAButtonMaxHeight)
+                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
                     .background(style == .primary ? Const.Colors.CTAPrimaryBackground : Const.Colors.CTASecondaryBackground)
                     .foregroundColor(.primary)
-                    .cornerRadius(Constants.CTAButtonCornerRadius)
+                    .cornerRadius(Const.Size.CTAButtonCornerRadius)
             }
             .frame(width: Const.Size.contentWidth)
             
@@ -167,20 +164,20 @@ struct AutofillLoginPromptView: View {
             viewModel.didExpand()
         } label: {
             Text(viewModel.moreOptionsButtonString) // TODO email formatting
-                .font(.CTA)
+                .font(Const.Fonts.CTA)
                 .foregroundColor(Const.Colors.CTASecondaryForeground)
                 .padding()
-                .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Constants.CTAButtonMaxHeight)
+                .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
                 .background(Color.clear)
                 .foregroundColor(.primary)
-                .cornerRadius(Constants.CTAButtonCornerRadius)
+                .cornerRadius(Const.Size.CTAButtonCornerRadius)
         }
     }
     
     var keyboardButtonFooter: some View {
         HStack {
             keyboardButton
-                .padding(.leading, 20)//8.5)
+                .padding(.leading, 20)
                 .padding(.bottom, 18)
             Spacer()
         }
@@ -194,45 +191,20 @@ struct AutofillLoginPromptView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: Const.Size.keyboardButtonWidth, height: Const.Size.keyboardButtonHeight)
-                .foregroundColor(.keyboardColor)
+                .foregroundColor(Const.Colors.keyboardColor)
         }
-        .frame(width: Const.Size.closeButtonTappableArea, height: Const.Size.closeButtonTappableArea)
+        .frame(width: Const.Size.keyboardButtonTappableArea, height: Const.Size.keyboardButtonTappableArea)
         .contentShape(Rectangle())
     }
 }
 
 // MARK: - Constants
 
-private extension Color {
-    static let saveButton = Color("CTAPrimaryColor")
-    static let cancelButton = Color("FormSecondaryBackgroundColor")
-    static let formBackground = Color("FormSecondaryBackgroundColor")
-    static let keyboardColor = Color("AutofillPromptKeyboard")
-}
-
-@available(iOS 14.0, *)
-private extension AutofillLoginPromptView {
-    private struct Constants {
-        static let formPadding: CGFloat = 45
-        static let formBackgroundCornerRadius: CGFloat = 13
-        static let CTAButtonCornerRadius: CGFloat = 12
-        static let CTAButtonMaxHeight: CGFloat = 50
-    }
-}
-
 private enum Const {
     enum Fonts {
         static let title = Font.system(size: 20).weight(.bold)
-        static let subtitle = Font.system(size: 13.0)
-        static let updatedInfo = Font.system(size: 16)
         static let titleCaption = Font.system(size: 13)
-        static let userInfo = Font.system(size: 13).weight(.bold)
         static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
-        
-    }
-    
-    enum CornerRadius {
-        static let CTA: CGFloat = 12
     }
     
     enum Colors {
@@ -241,12 +213,7 @@ private enum Const {
         static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
         static let CTASecondaryForeground = Color("CTASecondaryForeground")
         static let SecondaryTextColor = Color("SecondaryTextColor")
-    }
-    
-    enum Margin {
-        static var closeButtonMargin: CGFloat {
-            Const.Size.closeButtonOffset - 21
-        }
+        static let keyboardColor = Color("AutofillPromptKeyboard")
     }
     
     enum Size {
@@ -255,21 +222,10 @@ private enum Const {
         static let contentWidth: CGFloat = 286
         static let closeButtonSize: CGFloat = 13
         static let closeButtonTappableArea: CGFloat = 44
-        static var closeButtonOffset: CGFloat {
-            closeButtonTappableArea - closeButtonSize
-        }
         static let keyboardButtonWidth: CGFloat = 30
         static let keyboardButtonHeight: CGFloat = 26
+        static let keyboardButtonTappableArea: CGFloat = 44
     }
-}
-
-extension Color {
-    static let textPrimary = Color("TextPrimary")
-    static let textSecondary = Color("TextSecondary")
-}
-
-private extension Font {
-    static let CTA = Font(uiFont: UIFont.boldAppFont(ofSize: 16))
 }
 
 // MARK: - Preview

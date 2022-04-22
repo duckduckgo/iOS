@@ -46,11 +46,24 @@ public extension Color {
     static let blue10 = Color.init(0xADC2FC)
     static let blue0 = Color.init(0xADC2FC)
     
+    static let black = Color.init(0x000000)
+    static let gray95 = Color.init(0x111111)
+    static let gray90 = Color.init(0x222222)
+    static let gray85 = Color.init(0x333333)
+    static let gray80 = Color.init(0x444444)
+    static let gray70 = Color.init(0x666666)
+    static let gray60 = Color.init(0x888888)
+    static let gray55 = Color.init(0x999999)
+    static let gray50 = Color.init(0xAAAAAA)
+    static let gray40 = Color.init(0xCCCCCC)
+    static let gray30 = Color.init(0xDDDDDD)
+    static let gray25 = Color.init(0xE5E5E5)
+    static let gray20 = Color.init(0xEEEEEE)
+    static let gray10 = Color.init(0xF5F5F5)
+    static let gray0 = Color.init(0xFAFAFA)
+    static let white = Color.init(0xFFFFFF)
+    
     static let deprecatedBlue =  Color.init(0x678FFF)
-    
-    static let gray70 =  Color.init(0x666666)
-    
-    static let fontDark =  Color.init(0x494949)
 }
 
 private extension Color {

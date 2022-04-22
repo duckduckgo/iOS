@@ -118,10 +118,11 @@ struct SaveLoginView: View {
                 Image(uiImage: viewModel.faviconImage)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 20, height: 20)
+                    .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
                 Text(viewModel.accountDomain)
+                    .secondaryTextStyle()
                     .font(Const.Fonts.titleCaption)
-                    .foregroundColor(Const.Colors.SecondaryTextColor)
+                    
             }
             
             VStack {
@@ -168,7 +169,7 @@ struct SaveLoginView: View {
     private var newUserContentView: some View {
         Text(UserText.autofillSaveLoginMessageNewUser)
             .font(Const.Fonts.subtitle)
-            .foregroundColor(Const.Colors.SecondaryTextColor)
+            .secondaryTextStyle()
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.horizontal, isSmallFrame ? 28 : 30)
@@ -194,7 +195,7 @@ struct SaveLoginView: View {
     private var additionalLoginContentView: some View {
         Text(verbatim: UserText.autofillAdditionalLoginInfoMessage)
             .font(Const.Fonts.subtitle)
-            .foregroundColor(Const.Colors.SecondaryTextColor)
+            .secondaryTextStyle()
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.top, 56)
@@ -203,7 +204,7 @@ struct SaveLoginView: View {
     
     // We have specific layouts for the smaller iPhones
     private var isSmallFrame: Bool {
-        frame.width <= 320 || frame.height <= 320
+        frame.width <= Const.Size.smallDevice || frame.height <= Const.Size.smallDevice
     }
 }
 
@@ -227,7 +228,15 @@ struct SaveLoginView_Previews: PreviewProvider {
                 
                 let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveLogin)
                 SaveLoginView(viewModel: viewModel)
-            }
+            }.preferredColorScheme(.dark)
+            
+            VStack {
+                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .newUser)
+                SaveLoginView(viewModel: viewModel)
+                
+                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveLogin)
+                SaveLoginView(viewModel: viewModel)
+            }.preferredColorScheme(.light)
             
             VStack {
                 let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .updatePassword)
@@ -257,15 +266,7 @@ private enum Const {
         static let titleCaption = Font.system(size: 13)
         static let userInfo = Font.system(size: 13).weight(.bold)
     }
-    
-    enum CornerRadius {
-        static let CTA: CGFloat = 12
-    }
-    
-    enum Colors {
-        static let SecondaryTextColor = Color("SecondaryTextColor")
-    }
-    
+
     enum Margin {
         static var closeButtonMargin: CGFloat {
             Const.Size.closeButtonOffset - 21
@@ -276,13 +277,10 @@ private enum Const {
         static let contentWidth: CGFloat = 286
         static let closeButtonSize: CGFloat = 13
         static let closeButtonTappableArea: CGFloat = 44
+        static let logoImage: CGFloat = 20
+        static let smallDevice: CGFloat = 320
         static var closeButtonOffset: CGFloat {
             closeButtonTappableArea - closeButtonSize
         }
     }
-}
-
-extension Color {
-    static let textPrimary = Color("TextPrimary")
-    static let textSecondary = Color("TextSecondary")
 }

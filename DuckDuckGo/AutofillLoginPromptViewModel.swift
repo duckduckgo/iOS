@@ -49,9 +49,17 @@ class AutofillLoginPromptViewModel: ObservableObject {
     
     @Published var accountsViewModels: [AccountViewModel] = []
     @Published var faviconImage = UIImage(named: "Logo")!
-    private(set) var domain: String
+    @Published var showMoreOptions = false
+    @Published var shouldUseScrollView = false
     
-    @Published var expanded = false
+    private(set) var domain: String
+    private var accounts: [SecureVaultModels.WebsiteAccount]
+    
+    private var expanded = false {
+        didSet {
+            setUpAccountsViewModels(accounts: accounts)
+        }
+    }
     
     var message: String {
         return "Use Saved Login?" //TODO string
@@ -67,12 +75,21 @@ class AutofillLoginPromptViewModel: ObservableObject {
         }
         self.domain = firstAccount.domain
         self.expanded = isExpanded
+        self.accounts = accounts
         setUpAccountsViewModels(accounts: accounts)
         loadFavicon()
     }
     
     private func setUpAccountsViewModels(accounts: [SecureVaultModels.WebsiteAccount]) {
-        accountsViewModels = accounts.map { AccountViewModel(account: $0) }
+        let accountsToShow: [SecureVaultModels.WebsiteAccount]
+        shouldUseScrollView = expanded
+        if expanded || accounts.count <= 3 {
+            accountsToShow = accounts
+        } else {
+            accountsToShow = Array(accounts[0...1])
+            showMoreOptions = true
+        }
+        accountsViewModels = accountsToShow.map { AccountViewModel(account: $0) }
     }
     
     private func loadFavicon() {

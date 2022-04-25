@@ -41,7 +41,7 @@ struct AutofillLoginPromptView: View {
             VStack(spacing: 0) {
                 titleHeaderView
                 Spacer()
-                accountButtons
+                accountButtonsContainer
                 Spacer()
             }
             .padding(.top, 43)
@@ -104,30 +104,26 @@ struct AutofillLoginPromptView: View {
             .cornerRadius(Const.Size.CTAButtonCornerRadius)
     }
     
+    var accountButtonsContainer: some View {
+        if viewModel.shouldUseScrollView {
+            return AnyView(ScrollView {
+                accountButtons
+            }
+            .padding(.trailing, 8)
+            .padding(.leading, 8))
+        } else {
+            return AnyView(accountButtons)
+        }
+    }
+    
     var accountButtons: some View {
         VStack {
-            if viewModel.accountsViewModels.count <= 3 {
-                ForEach(viewModel.accountsViewModels.indices, id: \.self) { index in
-                    let accountViewModel = viewModel.accountsViewModels[index]
-                    accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
-                }
-            } else {
-                if !viewModel.expanded {
-                    accountButton(for: viewModel.accountsViewModels[0], style: .primary)
-                    accountButton(for: viewModel.accountsViewModels[1], style: .secondary)
-                    moreOptionsButton
-                } else {
-                    ScrollView {
-                        VStack {
-                            ForEach(viewModel.accountsViewModels.indices, id: \.self) { index in
-                                let accountViewModel = viewModel.accountsViewModels[index]
-                                accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
-                            }
-                        }
-                    }
-                    .padding(.trailing, 8)
-                    .padding(.leading, 8)
-                }
+            ForEach(viewModel.accountsViewModels.indices, id: \.self) { index in
+                let accountViewModel = viewModel.accountsViewModels[index]
+                accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)
+            }
+            if viewModel.showMoreOptions {
+                moreOptionsButton
             }
         }
     }

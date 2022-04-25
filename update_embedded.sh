@@ -6,20 +6,24 @@ TEMP_ETAG_FILENAME="embedded_new_etag"
 rm -f "$TEMP_FILENAME"
 rm -f "$TEMP_ETAG_FILENAME"
 
-# parameters: url, provider file path, data file path
 performUpdate() {
+  if [ "$#" -ne 3 ]; then
+    printf "Function expects 3 paramters: url, provider file path and data file path\n"
+    exit 1
+  fi
+
   FILE_URL=$1
   PROVIDER_PATH=$2
   DATA_PATH=$3
   printf "Processing: %s\n" "${FILE_URL}"
 
   if test ! -f "$DATA_PATH"; then
-    printf "Error: Missing %s\n" "${DATA_PATH}"
+    printf "Error: %s does not exist\n" "${DATA_PATH}"
     exit 1
   fi
 
   if test ! -f "$PROVIDER_PATH"; then
-    printf "Error: Missing %s\n" "${PROVIDER_PATH}"
+    printf "Error: %s does not exist\n" "${PROVIDER_PATH}"
     exit 1
   fi
 

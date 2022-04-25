@@ -203,6 +203,7 @@ class BookmarksViewController: UITableViewController {
         if #available(iOS 14, *) {
             importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
             importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
+            importFooterButton.titleLabel?.textAlignment = .center
 
             importFooterButton.addAction(UIAction { [weak self] _ in
                 self?.presentDocumentPicker()

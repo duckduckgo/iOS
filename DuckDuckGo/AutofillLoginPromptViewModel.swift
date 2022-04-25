@@ -85,6 +85,7 @@ class AutofillLoginPromptViewModel: ObservableObject {
         shouldUseScrollView = expanded
         if expanded || accounts.count <= 3 {
             accountsToShow = accounts
+            showMoreOptions = false
         } else {
             accountsToShow = Array(accounts[0...1])
             showMoreOptions = true

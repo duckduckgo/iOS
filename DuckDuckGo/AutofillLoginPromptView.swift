@@ -105,19 +105,20 @@ struct AutofillLoginPromptView: View {
     }
     
     var accountButtonsContainer: some View {
-        if viewModel.shouldUseScrollView {
-            return AnyView(ScrollView {
+        GeometryReader { geometry in
+            ScrollView(showsIndicators: viewModel.shouldUseScrollView) {
+                VStack {
                 accountButtons
+                }
+                .frame(minHeight: geometry.size.height)
             }
             .padding(.trailing, 8)
-            .padding(.leading, 8))
-        } else {
-            return AnyView(accountButtons)
+            .padding(.leading, 8)
         }
     }
     
     var accountButtons: some View {
-        VStack {
+        Group {
             ForEach(viewModel.accountsViewModels.indices, id: \.self) { index in
                 let accountViewModel = viewModel.accountsViewModels[index]
                 accountButton(for: accountViewModel, style: index == 0 ? .primary : .secondary)

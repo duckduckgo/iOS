@@ -22,12 +22,6 @@ import SwiftUI
 import BrowserServicesKit
 
 @available(iOS 14.0, *)
-protocol AutofillLoginPromptViewControllerDelegate: AnyObject {
-    func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, didSelectAccount account: SecureVaultModels.WebsiteAccount)
-    func autoFillLoginPromptViewControllerDidCancel(_ viewController: AutofillLoginPromptViewController)
-}
-
-@available(iOS 14.0, *)
 protocol AutofillLoginPromptViewControllerExpansionResponseDelegate: AnyObject {
     func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, isExpanded: Bool)
 }
@@ -35,7 +29,6 @@ protocol AutofillLoginPromptViewControllerExpansionResponseDelegate: AnyObject {
 @available(iOS 14.0, *)
 class AutofillLoginPromptViewController: UIViewController {
     
-    weak var delegate: AutofillLoginPromptViewControllerDelegate?
     weak var expansionResponseDelegate: AutofillLoginPromptViewControllerExpansionResponseDelegate?
     let completion: ((SecureVaultModels.WebsiteAccount?) -> Void)?
     
@@ -112,9 +105,8 @@ class AutofillLoginPromptViewController: UIViewController {
 @available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        delegate?.autoFillLoginPromptViewControllerDidCancel(self)
         completion?(nil)
-        //TODO Need to make sure this delgate is called in call dismiss cases
+        //TODO Need to make sure this is called in all dismiss cases
     }
     
     @available(iOS 15.0, *)
@@ -129,13 +121,11 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
 @available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegate {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
-        delegate?.autofillLoginPromptViewController(self, didSelectAccount: account)
         completion?(account)
         dismiss(animated: true, completion: nil)
     }
     
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel) {
-        delegate?.autoFillLoginPromptViewControllerDidCancel(self)
         completion?(nil)
         dismiss(animated: true, completion: nil)
     }

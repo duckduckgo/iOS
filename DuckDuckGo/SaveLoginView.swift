@@ -222,36 +222,33 @@ struct SaveLoginView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
+            let viewModelNewUser = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .newUser)
+            let viewModelSaveLogin = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveLogin)
+
             VStack {
-                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .newUser)
-                SaveLoginView(viewModel: viewModel)
-                
-                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveLogin)
-                SaveLoginView(viewModel: viewModel)
+                SaveLoginView(viewModel: viewModelNewUser)
+                SaveLoginView(viewModel: viewModelSaveLogin)
             }.preferredColorScheme(.dark)
             
             VStack {
-                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .newUser)
-                SaveLoginView(viewModel: viewModel)
-                
-                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveLogin)
-                SaveLoginView(viewModel: viewModel)
+                SaveLoginView(viewModel: viewModelNewUser)
+                SaveLoginView(viewModel: viewModelSaveLogin)
             }.preferredColorScheme(.light)
             
             VStack {
-                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .updatePassword)
-                SaveLoginView(viewModel: viewModel)
+                let viewModelUpdatePassword = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .updatePassword)
+                SaveLoginView(viewModel: viewModelUpdatePassword)
                 
-                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .updateUsername)
-                SaveLoginView(viewModel: viewModel)
+                let viewModelUpdateUsername = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .updateUsername)
+                SaveLoginView(viewModel: viewModelUpdateUsername)
             }
             
             VStack {
-                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveAdditionalLogin)
-                SaveLoginView(viewModel: viewModel)
+                let viewModelAdditionalLogin = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .saveAdditionalLogin)
+                SaveLoginView(viewModel: viewModelAdditionalLogin)
                 
-                let viewModel = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .savePassword)
-                SaveLoginView(viewModel: viewModel)
+                let viewModelSavePassword = SaveLoginViewModel(credentialManager: MockManager(), layoutType: .savePassword)
+                SaveLoginView(viewModel: viewModelSavePassword)
             }
         }
         

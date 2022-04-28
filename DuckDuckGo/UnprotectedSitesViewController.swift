@@ -134,9 +134,11 @@ class UnprotectedSitesViewController: UITableViewController {
             } else {
                 refreshToolbarItems(animated: true)
             }
+            
+            tableView.reloadData()
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-
-        tableView.reloadData()
     }
 
     // MARK: actions
@@ -169,23 +171,26 @@ class UnprotectedSitesViewController: UITableViewController {
     }
     
     @IBAction func startEditing() {
-        // Fix glitch happening when there's cell that is already in the editing state (swiped to reveal delete button) and user presses 'Edit'.
-        tableView.isEditing = false
-        tableView.isEditing = true
-        tableView.reloadData()
-        refreshToolbarItems(animated: true)
-        
+        navigationItem.setHidesBackButton(true, animated: true)
         hiddenNavBarItems = navigationItem.rightBarButtonItems
         navigationItem.setRightBarButtonItems(nil, animated: true)
+        
+        // Fix glitch happening when there's cell that is already in the editing state (swiped to reveal delete button) and user presses 'Edit'.
+        tableView.setEditing(false, animated: true)
+        tableView.setEditing(true, animated: true)
+        
+        refreshToolbarItems(animated: true)
     }
     
     @IBAction func endEditing() {
-        tableView.isEditing = false
-        tableView.reloadData()
+        navigationItem.setHidesBackButton(false, animated: true)
+        if let hiddenNavBarItems = hiddenNavBarItems {
+            navigationItem.setRightBarButtonItems(hiddenNavBarItems, animated: true)
+        }
+        
+        tableView.setEditing(false, animated: true)
         
         refreshToolbarItems(animated: true)
-        
-        navigationItem.setRightBarButtonItems(hiddenNavBarItems, animated: true)
     }
 
     // MARK: private

@@ -175,6 +175,7 @@ class UnprotectedSitesViewController: UITableViewController {
         hiddenNavBarItems = navigationItem.rightBarButtonItems
         navigationItem.setRightBarButtonItems(nil, animated: true)
         
+        // Fix glitch happening when there's cell that is already in the editing state (swiped to reveal delete button) and user presses 'Edit'.
         tableView.setEditing(false, animated: true)
         tableView.setEditing(true, animated: true)
         

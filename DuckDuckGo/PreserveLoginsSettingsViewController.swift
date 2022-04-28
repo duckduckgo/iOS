@@ -49,6 +49,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         navigationItem.setHidesBackButton(true, animated: true)
         navigationItem.setRightBarButton(doneButton, animated: true)
 
+        // Fix glitch happening when there's cell that is already in the editing state (swiped to reveal delete button) and user presses 'Edit'.
         tableView.setEditing(false, animated: true)
         tableView.setEditing(true, animated: true)
         

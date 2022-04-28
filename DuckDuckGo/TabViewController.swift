@@ -252,33 +252,6 @@ class TabViewController: UIViewController {
         resetNavigationBar()
         delegate?.tabDidRequestShowingMenuHighlighter(tab: self)
         tabModel.viewed = true
-        
-        let domain = url?.host ?? ""
-        
-//        for i in 0...10 {
-//            let account = SecureVaultModels.WebsiteAccount(title: nil, username: "pig" + String(i), domain: domain)
-//            let creds = SecureVaultModels.WebsiteCredentials(account: account, password: "pig".data(using: .utf8)!)
-//            do {
-//                try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(creds)
-//            } catch {
-//                os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
-//            }
-//        }
-        
-        if #available(iOS 14, *) {
-            vaultManager.autofillUserScript(autofillUserScript, didRequestAccountsForDomain: domain) { accounts in
-                Swift.print("Stored accounts: \(accounts)")
-                
-                let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts)
-                
-                if #available(iOS 15.0, *) {
-                    if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
-                        presentationController.detents = accounts.count > 3 ? [.medium(), .large()] : [.medium()]
-                    }
-                }
-                self.present(autofillPromptViewController, animated: true, completion: nil)
-            }
-        }
     }
 
     override func buildActivities() -> [UIActivity] {

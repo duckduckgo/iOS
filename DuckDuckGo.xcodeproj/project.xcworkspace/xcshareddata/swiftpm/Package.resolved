@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "bartek/normalize-exception-domains",
-          "revision": "f7237eb79e6202cbc9f6e4ca7725b34ed7e450fa",
-          "version": null
+          "branch": null,
+          "revision": "e05c62161b3fcabf42e93ad9cffc26c19b803ba9",
+          "version": "12.2.8"
         }
       },
       {
@@ -80,6 +80,15 @@
           "branch": null,
           "revision": "13ba661fd1146967270fca92ce8195b223631436",
           "version": "2.3.8"
+        }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "state": {
+          "branch": null,
+          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
+          "version": "1.0.3"
         }
       }
     ]

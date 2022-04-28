@@ -506,6 +506,10 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
+#warning("REMOVE")
+        let test = AutofillLoginListViewController()
+        self.present(test, animated: true, completion: nil)
+#warning("REMOVE")
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {

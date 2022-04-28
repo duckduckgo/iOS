@@ -1872,7 +1872,7 @@ extension NSError {
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
-    
+ 
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
 
         let manager = AutofillCredentialManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)

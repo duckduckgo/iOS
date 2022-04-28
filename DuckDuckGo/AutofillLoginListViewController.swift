@@ -28,16 +28,17 @@ final class AutofillLoginListViewController: UIViewController {
 
         do {
             let viewModel = try AutofillLoginListViewModel()
-            print("ACCOUNTS \(viewModel.accounts)")
-            installContentView()
-
+            if #available(iOS 14.0, *) {
+                installContentView(with: viewModel)
+            }
         } catch {
-            
+            print("add error ui")
         }
     }
 
-    private func installContentView() {
-        let contentView = AutofillLoginListView()
+    @available(iOS 14.0, *)
+    private func installContentView(with viewModel: AutofillLoginListViewModel) {
+        let contentView = AutofillLoginListView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: contentView)
         installChildViewController(hostingController)
     }

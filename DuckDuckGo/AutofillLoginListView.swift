@@ -19,14 +19,35 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct AutofillLoginListView: View {
+    let viewModel: AutofillLoginListViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List(viewModel.items) { item in
+                Section {
+                    NavigationLink(destination: Text(item.title)) {
+                        HStack {
+                            Image(systemName: "globe")
+                            VStack(alignment: .leading) {
+                                Text(item.title)
+                                Text(item.subtitle)
+                            }
+                        }
+                    }
+                } header: {
+                    Text("Test")
+                }
+            }.listStyle(.insetGrouped)
+        }.navigationTitle("Autofill Logins")
     }
 }
 
+@available(iOS 14.0, *)
 struct AutofillLoginListView_Previews: PreviewProvider {
     static var previews: some View {
-        AutofillLoginListView()
+        let viewModel = try! AutofillLoginListViewModel()
+        AutofillLoginListView(viewModel: viewModel)
     }
 }

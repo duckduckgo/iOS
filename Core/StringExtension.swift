@@ -18,7 +18,6 @@
 //
 
 import Foundation
-import Punycode
 import BrowserServicesKit
 
 extension String {

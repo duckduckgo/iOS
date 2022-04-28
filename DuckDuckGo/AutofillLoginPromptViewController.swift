@@ -37,6 +37,7 @@ class AutofillLoginPromptViewController: UIViewController {
     
     weak var delegate: AutofillLoginPromptViewControllerDelegate?
     weak var expansionResponseDelegate: AutofillLoginPromptViewControllerExpansionResponseDelegate?
+    let completion: ((SecureVaultModels.WebsiteAccount?) -> Void)?
     
     private let accounts: [SecureVaultModels.WebsiteAccount]
     
@@ -52,8 +53,9 @@ class AutofillLoginPromptViewController: UIViewController {
         return view
     }()
 
-    internal init(accounts: [SecureVaultModels.WebsiteAccount]) {
+    internal init(accounts: [SecureVaultModels.WebsiteAccount], completion: ((SecureVaultModels.WebsiteAccount?) -> Void)? = nil) {
         self.accounts = accounts
+        self.completion = completion
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -111,6 +113,7 @@ class AutofillLoginPromptViewController: UIViewController {
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         delegate?.autoFillLoginPromptViewControllerDidCancel(self)
+        completion?(nil)
         //TODO Need to make sure this delgate is called in call dismiss cases
     }
     
@@ -127,11 +130,13 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
 extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegate {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
         delegate?.autofillLoginPromptViewController(self, didSelectAccount: account)
+        completion?(account)
         dismiss(animated: true, completion: nil)
     }
     
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel) {
         delegate?.autoFillLoginPromptViewControllerDidCancel(self)
+        completion?(nil)
         dismiss(animated: true, completion: nil)
     }
     

@@ -1924,6 +1924,27 @@ extension TabViewController: SecureVaultManagerDelegate {
             presentSavePasswordModal(with: vault, credentials: credentials)
         }
     }
+    
+    func secureVaultManager(_: SecureVaultManager,
+                            promptUserToAutofillCredentialsForDomain domain: String,
+                            withAccounts accounts: [SecureVaultModels.WebsiteAccount],
+                            completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
+  
+        if #available(iOS 14, *) {
+            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account in
+                completionHandler(account)
+            }
+            
+            if #available(iOS 15.0, *) {
+                if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
+                    presentationController.detents = accounts.count > 3 ? [.medium(), .large()] : [.medium()]
+                }
+            }
+            self.present(autofillPromptViewController, animated: true, completion: nil)
+        } else {
+            completionHandler(nil)
+        }
+    }
 
     func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
         #warning("Add pixel here?")

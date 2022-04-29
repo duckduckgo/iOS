@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "brad/config-v2",
-          "revision": "5f392cd034a7ab32b07f5be89cd1f73f89340d4c",
-          "version": null
+          "branch": null,
+          "revision": "e05c62161b3fcabf42e93ad9cffc26c19b803ba9",
+          "version": "12.2.8"
         }
       },
       {
@@ -50,9 +50,9 @@
         "package": "Punycode",
         "repositoryURL": "https://github.com/gumob/PunycodeSwift.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
-          "version": null
+          "version": "2.1.0"
         }
       },
       {

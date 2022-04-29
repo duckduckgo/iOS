@@ -626,7 +626,6 @@
 		F46FEC5727987A5F0061D9DF /* KeychainItemsDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46FEC5627987A5F0061D9DF /* KeychainItemsDebugViewController.swift */; };
 		F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E53D8250A97330037C686 /* OnboardingDefaultBroswerViewController.swift */; };
 		F47E53DB250A9A1C0037C686 /* Onboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */; };
-		F486D306250697AF002D07D7 /* Punnycode in Frameworks */ = {isa = PBXBuildFile; productRef = F486D305250697AF002D07D7 /* Punnycode */; };
 		F486D31D2506980E002D07D7 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = F486D31C2506980E002D07D7 /* Swifter */; };
 		F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F486D33325069BBB002D07D7 /* Kingfisher */; };
 		F486D3362506A037002D07D7 /* OHHTTPStubs in Frameworks */ = {isa = PBXBuildFile; productRef = F486D3352506A037002D07D7 /* OHHTTPStubs */; };
@@ -2108,7 +2107,6 @@
 				4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */,
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
 				4BE86C5D2633DBD8001C0E77 /* BrowserServicesKit in Frameworks */,
-				F486D306250697AF002D07D7 /* Punnycode in Frameworks */,
 				C14882ED27F211A000D59F0C /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4270,7 +4268,6 @@
 			);
 			name = Core;
 			packageProductDependencies = (
-				F486D305250697AF002D07D7 /* Punnycode */,
 				F486D33325069BBB002D07D7 /* Kingfisher */,
 				4B82E97F25B634B800656FE7 /* TrackerRadarKit */,
 				4BE86C5C2633DBD8001C0E77 /* BrowserServicesKit */,
@@ -4386,7 +4383,6 @@
 			mainGroup = 84E341891E2F7EFB00BDBA6F;
 			packageReferences = (
 				F486D2EF25069482002D07D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				F486D2FA25069613002D07D7 /* XCRemoteSwiftPackageReference "PunycodeSwift" */,
 				F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */,
 				F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */,
 				F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */,
@@ -6906,7 +6902,7 @@
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 12.2.7;
+				minimumVersion = 12.2.8;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -6923,14 +6919,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 7.1.0;
-			};
-		};
-		F486D2FA25069613002D07D7 /* XCRemoteSwiftPackageReference "PunycodeSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gumob/PunycodeSwift.git";
-			requirement = {
-				branch = master;
-				kind = branch;
 			};
 		};
 		F486D2FD25069744002D07D7 /* XCRemoteSwiftPackageReference "OHHTTPStubs" */ = {
@@ -6974,11 +6962,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
-		};
-		F486D305250697AF002D07D7 /* Punnycode */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F486D2FA25069613002D07D7 /* XCRemoteSwiftPackageReference "PunycodeSwift" */;
-			productName = Punnycode;
 		};
 		F486D31C2506980E002D07D7 /* Swifter */ = {
 			isa = XCSwiftPackageProductDependency;

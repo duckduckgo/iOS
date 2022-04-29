@@ -26,7 +26,9 @@ class FaviconsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        UserDefaults.clearStandard()
+        UserDefaults.app.removePersistentDomain(forName: #file)
+        UserDefaults.app = UserDefaults(suiteName: #file)!
+
         BookmarkUserDefaults().bookmarks = []
         BookmarkUserDefaults().favorites = []
         

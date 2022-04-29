@@ -45,7 +45,9 @@ class DaxDialogTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        UserDefaults.clearStandard()
+        UserDefaults.app.removePersistentDomain(forName: #file)
+        UserDefaults.app = UserDefaults(suiteName: #file)!
+
         
         guard Self.rulesManager == nil else { return }
         

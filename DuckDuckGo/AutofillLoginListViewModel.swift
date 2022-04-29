@@ -28,6 +28,6 @@ final class AutofillLoginListViewModel {
         secureVault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         let accounts = try secureVault.accounts()
     
-        items = accounts.map { AutofillLoginListItemViewModel(webAccount: $0) }
+        items = accounts.map { AutofillLoginListItemViewModel(account: $0) }
     }
 }

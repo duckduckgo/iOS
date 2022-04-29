@@ -27,7 +27,7 @@ struct AutofillLoginListView: View {
         NavigationView {
             List(viewModel.items) { item in
                 Section {
-                    NavigationLink(destination: Text(item.title)) {
+                    NavigationLink(destination: AutofillLoginDetailsView(viewModel: AutofillLoginDetailsViewModel(account: item.account))) {
                         HStack {
                             Image(systemName: "globe")
                             VStack(alignment: .leading) {
@@ -39,8 +39,10 @@ struct AutofillLoginListView: View {
                 } header: {
                     Text("Test")
                 }
-            }.listStyle(.insetGrouped)
-        }.navigationTitle("Autofill Logins")
+            }
+            .listStyle(.insetGrouped)
+            .navigationTitle("Autofill Logins")
+        }
     }
 }
 

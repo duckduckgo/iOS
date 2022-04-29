@@ -21,14 +21,14 @@ import Foundation
 import BrowserServicesKit
 
 final class AutofillLoginListItemViewModel: Identifiable {
-    private let webAccount: SecureVaultModels.WebsiteAccount
+    let account: SecureVaultModels.WebsiteAccount
     let title: String
     let subtitle: String
     let id = UUID()
 
-    internal init(webAccount: SecureVaultModels.WebsiteAccount) {
-        self.webAccount = webAccount
-        title = webAccount.domain
-        subtitle = webAccount.username
+    internal init(account: SecureVaultModels.WebsiteAccount) {
+        self.account = account
+        title = account.domain
+        subtitle = account.username
     }
 }

@@ -29,7 +29,7 @@ protocol SaveLoginViewControllerDelegate: AnyObject {
 
 class SaveLoginViewController: UIViewController {
     weak var delegate: SaveLoginViewControllerDelegate?
-    private let credentialManager: AutofillCredentialManager
+    private let credentialManager: SaveAutofillLoginManager
 
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemMaterial)
@@ -37,7 +37,7 @@ class SaveLoginViewController: UIViewController {
         return blurEffectView
     }()
 
-    internal init(credentialManager: AutofillCredentialManager) {
+    internal init(credentialManager: SaveAutofillLoginManager) {
         self.credentialManager = credentialManager
         super.init(nibName: nil, bundle: nil)
     }

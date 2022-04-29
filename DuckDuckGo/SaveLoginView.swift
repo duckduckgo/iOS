@@ -209,7 +209,7 @@ struct SaveLoginView: View {
 }
 
 struct SaveLoginView_Previews: PreviewProvider {
-    private struct MockManager: AutofillCredentialManagerProtocol {
+    private struct MockManager: SaveAutofillLoginManagerProtocol {
         var username: String { "dax@duck.com" }
         var visiblePassword: String { "supersecurepasswordquack" }
         var isNewAccount: Bool { false }

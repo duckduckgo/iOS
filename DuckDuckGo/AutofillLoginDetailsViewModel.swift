@@ -33,6 +33,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     
     func save() {
         print("USER \(username) PASS \(password)")
+
         do {
             if let accountID = account.id {
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)

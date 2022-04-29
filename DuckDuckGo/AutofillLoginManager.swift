@@ -1,5 +1,5 @@
 //
-//  AutofillLoginListViewModel.swift
+//  AutofillLoginManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -18,20 +18,8 @@
 //
 
 import Foundation
-import BrowserServicesKit
 
-final class AutofillLoginListViewModel {
-    let secureVault: SecureVault
-    let items: [AutofillLoginListItemViewModel]
-
-    init() throws {
-        secureVault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-        let accounts = try secureVault.accounts()
+final class AutofillLoginManager {
     
-        items = accounts.map { AutofillLoginListItemViewModel(account: $0) }
-    }
     
-    func update() {
-        
-    }
 }

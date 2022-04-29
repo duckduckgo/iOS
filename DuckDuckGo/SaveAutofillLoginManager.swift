@@ -1,5 +1,5 @@
 //
-//  AutofillCredentialManager.swift
+//  SaveAutofillLoginManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -20,7 +20,7 @@
 import Foundation
 import BrowserServicesKit
 
-protocol AutofillCredentialManagerProtocol {
+protocol SaveAutofillLoginManagerProtocol {
     
     var username: String { get }
     var visiblePassword: String { get }
@@ -33,7 +33,7 @@ protocol AutofillCredentialManagerProtocol {
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws
 }
 
-struct AutofillCredentialManager: AutofillCredentialManagerProtocol {
+struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     let credentials: SecureVaultModels.WebsiteCredentials
     let vaultManager: SecureVaultManager
     let autofillScript: AutofillUserScript

@@ -1875,7 +1875,7 @@ extension TabViewController: SecureVaultManagerDelegate {
  
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
 
-        let manager = AutofillCredentialManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
+        let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         
         let saveLoginController = SaveLoginViewController(credentialManager: manager)
         saveLoginController.delegate = self
@@ -1933,7 +1933,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     
     private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
         do {
-           try AutofillCredentialManager.saveCredentials(credentials, with: SecureVaultFactory.default)
+           try SaveAutofillLoginManager.saveCredentials(credentials, with: SecureVaultFactory.default)
             ActionMessageView.present(message: message, actionTitle: UserText.autofillLoginSaveToastActionButton) {
                 Swift.print("Show login")
             }

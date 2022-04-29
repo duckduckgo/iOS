@@ -1,15 +1,20 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1649791126759,
+    "version": 1650981913382,
     "features": {
         "ampLinks": {
-            "exceptions": [],
+            "exceptions": [
+                {
+                    "domain": "freecodecamp.org",
+                    "reason": "sign-up issues"
+                }
+            ],
             "settings": {
                 "deepExtractionEnabled": true,
                 "deepExtractionTimeout": 1500,
                 "linkFormats": [
                     "^https?:\\/\\/(?:w{3}\\.)?google\\.\\S{2,}\\/amp\\/s\\/(\\S+)$",
-                    "^https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)$"
+                    "^https?:\\/\\/\\S+ampproject\\.org\\/\\S\\/s\\/(\\S+)$"
                 ],
                 "keywords": [
                     "=amp",
@@ -98,6 +103,10 @@
             "state": "enabled",
             "exceptions": [
                 {
+                    "domain": "video.corriere.it",
+                    "reason": "Video not playing"
+                },
+                {
                     "domain": "wp.pl",
                     "reason": "Adblocker wall"
                 },
@@ -157,6 +166,9 @@
             "state": "enabled"
         },
         "fingerprintingCanvas": {
+            "settings": {
+                "webGl": "enabled"
+            },
             "exceptions": [
                 {
                     "domain": "adidas.com",
@@ -195,6 +207,10 @@
         },
         "fingerprintingHardware": {
             "exceptions": [
+                {
+                    "domain": "accounts.nintendo.com",
+                    "reason": "broken login"
+                },
                 {
                     "domain": "gamestop.com",
                     "reason": "broken add to cart"
@@ -255,7 +271,7 @@
             "exceptions": [],
             "state": "enabled"
         },
-        "floc": {
+        "googleRejected": {
             "exceptions": [],
             "state": "disabled"
         },
@@ -281,16 +297,17 @@
             "state": "enabled",
             "exceptions": []
         },
-        "navigatorCredentials": {
-            "exceptions": [],
-            "state": "disabled"
-        },
         "navigatorInterface": {
             "exceptions": [],
             "state": "enabled"
         },
         "referrer": {
-            "exceptions": [],
+            "exceptions": [
+                {
+                    "domain": "apple.com",
+                    "reason": "Login issues"
+                }
+            ],
             "state": "disabled"
         },
         "trackerAllowlist": {
@@ -519,9 +536,10 @@
                             {
                                 "rule": "mpsnare.iesnare.com/snare.js",
                                 "domains": [
-                                    "rei.com"
+                                    "rei.com",
+                                    "ups.com"
                                 ],
-                                "reason": "adwall"
+                                "reason": "adwall, login issues"
                             }
                         ]
                     },
@@ -576,6 +594,17 @@
                                     "emol.com"
                                 ],
                                 "reason": "widget blocked"
+                            }
+                        ]
+                    },
+                    "segment.io": {
+                        "rules": [
+                            {
+                                "rule": "cdn.segment.com/analytics.js/v1/4I2fAtE5IxTlczNT3F91OckHtI5wfR7g/analytics.min.js",
+                                "domains": [
+                                    "foxnews.com"
+                                ],
+                                "reason": "user cannot access create account page from sign up page"
                             }
                         ]
                     },
@@ -864,6 +893,10 @@
                     "reason": "Breaks images on deezer"
                 }
             ],
+            "state": "disabled"
+        },
+        "webCompat": {
+            "exceptions": [],
             "state": "disabled"
         }
     },

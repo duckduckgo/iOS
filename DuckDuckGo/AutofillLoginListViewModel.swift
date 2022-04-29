@@ -20,18 +20,22 @@
 import Foundation
 import BrowserServicesKit
 
-final class AutofillLoginListViewModel {
+final class AutofillLoginListViewModel: ObservableObject {
     let secureVault: SecureVault
-    let items: [AutofillLoginListItemViewModel]
+    @Published var items: [AutofillLoginListItemViewModel]
 
     init() throws {
         secureVault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
         let accounts = try secureVault.accounts()
-    
+        
         items = accounts.map { AutofillLoginListItemViewModel(account: $0) }
     }
     
     func update() {
+        if let accounts = try? secureVault.accounts() {
+            
+            items = accounts.map { AutofillLoginListItemViewModel(account: $0) }
+        }
         
     }
 }

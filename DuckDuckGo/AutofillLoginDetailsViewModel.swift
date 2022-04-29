@@ -24,9 +24,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     let account: SecureVaultModels.WebsiteAccount
     @Published var username: String
     @Published var password: String
+    let loginSaved: () -> Void
     
-    internal init(account: SecureVaultModels.WebsiteAccount) {
+    internal init(account: SecureVaultModels.WebsiteAccount,  loginSaved: @escaping () -> Void) {
         self.account = account
+        self.loginSaved = loginSaved
         self.username = account.username
         self.password = ""
     }
@@ -41,6 +43,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 if var credential = try vault.websiteCredentialsFor(accountId: accountID) {
                     credential.account.username = username
                     try vault.storeWebsiteCredentials(credential)
+                    self.loginSaved()
                 }
             }
             

@@ -21,13 +21,13 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct AutofillLoginListView: View {
-    let viewModel: AutofillLoginListViewModel
+    @ObservedObject var viewModel: AutofillLoginListViewModel
     
     var body: some View {
         NavigationView {
             List(viewModel.items) { item in
                 Section {
-                    NavigationLink(destination: AutofillLoginDetailsView(viewModel: AutofillLoginDetailsViewModel(account: item.account))) {
+                    NavigationLink(destination: destinationView(with: item)) {
                         HStack {
                             Image(systemName: "globe")
                             VStack(alignment: .leading) {
@@ -43,6 +43,12 @@ struct AutofillLoginListView: View {
             .listStyle(.insetGrouped)
             .navigationTitle("Autofill Logins")
         }
+    }
+    
+    func destinationView(with item: AutofillLoginListItemViewModel) -> some View {
+        AutofillLoginDetailsView(viewModel: AutofillLoginDetailsViewModel(account: item.account, loginSaved: {
+            viewModel.update()
+        }))
     }
 }
 

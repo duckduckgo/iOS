@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import DuckUI
 
 @available(iOS 14.0, *)
 struct AutofillLoginDetailsView: View {
@@ -28,25 +29,19 @@ struct AutofillLoginDetailsView: View {
     var body: some View {
         List {
             Section {
-                Text("Test")
-            }
-            Section {
-                VStack(alignment: .leading) {
-                    Text("Username")
-                        .bold()
-                    TextField("", text: $viewModel.username)
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("Password")
-                        .bold()
-                    TextField("", text: $viewModel.password)
-                    
-                }
+                editableCell("Login Name", subtitle: $viewModel.title)
             }
             
             Section {
-                Text("Test2")
+                editableCell("Address", subtitle: $viewModel.address)
+            }
+            Section {
+                editableCell("Username", subtitle: $viewModel.username)
+                editableCell("Password", subtitle: $viewModel.password)
+            }
+            
+            Section {
+                editableCell("Notes", subtitle: $viewModel.username)
             }
         }
         .listStyle(.insetGrouped)
@@ -68,6 +63,45 @@ struct AutofillLoginDetailsView: View {
                 }
             }
         }
+    }
+    
+    private func editableCell(_ title: String, subtitle: Binding<String>) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .label3AltStyle()
+            
+            HStack {
+                ClearTextField(text: subtitle)
+                .label4Style()
+            }
+        }.frame(height: 50)
+    }
+}
+
+struct ClearTextField: View {
+    @Binding var text: String
+    @State private var closeButtonVisible = false
+    
+    var body: some View {
+        HStack {
+            TextField("", text: $text) { editing in
+                closeButtonVisible = editing
+            } onCommit: {
+                closeButtonVisible = false
+            }
+            Spacer()
+            Image(systemName: "multiply.circle.fill")
+                .foregroundColor(.secondary)
+                .opacity(closeButtonOpacity)
+                .onTapGesture { self.text = "" }
+        }
+    }
+    
+    private var closeButtonOpacity: Double {
+        if text == "" || !closeButtonVisible {
+            return 0
+        }
+        return 1
     }
 }
 

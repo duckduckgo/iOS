@@ -19,6 +19,28 @@
 
 import SwiftUI
 
+public struct Label3AltStyle: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
+    public init() {}
+    
+    public func body(content: Content) -> some View {
+        content
+            .font(Font(uiFont: UIFont.semiBoldAppFont(ofSize: 16)))
+            .foregroundColor(colorScheme == .light ? .black : .white)
+    }
+}
+
+public struct Label4Style: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
+    public init() {}
+    
+    public func body(content: Content) -> some View {
+        content
+            .font(Font(uiFont: UIFont.appFont(ofSize: 16)))
+            .foregroundColor(colorScheme == .light ? .gray50 : .gray20)
+    }
+}
+
 public struct SecondaryTextStyle: ViewModifier {
     @Environment(\.colorScheme) private var colorScheme
     
@@ -30,7 +52,21 @@ public struct SecondaryTextStyle: ViewModifier {
 }
 
 public extension View {
-  func secondaryTextStyle() -> some View {
-    modifier(SecondaryTextStyle())
-  }
+    func secondaryTextStyle() -> some View {
+        modifier(SecondaryTextStyle())
+    }
+    
+    func label3AltStyle() -> some View {
+        modifier(Label3AltStyle())
+    }
+    
+    func label4Style() -> some View {
+        modifier(Label4Style())
+    }
+}
+
+extension Font {
+    init(uiFont: UIFont) {
+        self = Font(uiFont as CTFont)
+    }
 }

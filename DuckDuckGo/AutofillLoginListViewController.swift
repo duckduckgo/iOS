@@ -25,7 +25,8 @@ final class AutofillLoginListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        title = "Autofill Logins"
+        
         do {
             let viewModel = try AutofillLoginListViewModel()
             if #available(iOS 14.0, *) {
@@ -34,12 +35,32 @@ final class AutofillLoginListViewController: UIViewController {
         } catch {
             print("add error ui")
         }
+        
+        
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+
     }
 
+    deinit {
+        print("DEINIT LIST")
+    }
+    
     @available(iOS 14.0, *)
     private func installContentView(with viewModel: AutofillLoginListViewModel) {
-        let contentView = AutofillLoginListView(viewModel: viewModel)
+        let contentView = AutofillLoginListView(viewModel: viewModel) { [weak self] selectedModel in
+            self?.showLoginDetails(with: selectedModel.account)
+        }
         let hostingController = UIHostingController(rootView: contentView)
         installChildViewController(hostingController)
+    }
+    
+    @available(iOS 14.0, *)
+    private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
+        let detailsController = AutofillLoginDetailsViewController(account: account)
+        navigationController?.pushViewController(detailsController, animated: true)
     }
 }

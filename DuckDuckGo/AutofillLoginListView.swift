@@ -22,33 +22,38 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct AutofillLoginListView: View {
     @ObservedObject var viewModel: AutofillLoginListViewModel
+    @State private var selectedItem: AutofillLoginListItemViewModel? {
+        didSet {
+            if let itemSelected = itemSelected,
+                let selectedItem = selectedItem {
+                itemSelected(selectedItem)
+            }
+        }
+    }
+    var itemSelected: ((AutofillLoginListItemViewModel) -> Void)?
     
     var body: some View {
-        NavigationView {
             List(viewModel.items) { item in
                 Section {
-                    NavigationLink(destination: destinationView(with: item)) {
                         HStack {
                             Image(systemName: "globe")
                             VStack(alignment: .leading) {
                                 Text(item.title)
                                 Text(item.subtitle)
                             }
+                        }.onTapGesture {
+                            self.selectedItem = item
                         }
-                    }
+                    
                 } header: {
                     Text("Test")
                 }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("Autofill Logins")
-        }
     }
     
     func destinationView(with item: AutofillLoginListItemViewModel) -> some View {
-        AutofillLoginDetailsView(viewModel: AutofillLoginDetailsViewModel(account: item.account, loginSaved: {
-            viewModel.update()
-        }))
+        AutofillLoginDetailsView(viewModel: AutofillLoginDetailsViewModel(account: item.account))
     }
 }
 

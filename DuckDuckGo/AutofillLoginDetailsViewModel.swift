@@ -19,23 +19,43 @@
 
 import Foundation
 import BrowserServicesKit
+import SwiftUI
+
+protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
+    func autofillLoginDetailsViewModelDidSave()
+}
+
 
 final class AutofillLoginDetailsViewModel: ObservableObject {
+    enum ViewMode {
+        case edit
+        case view
+    }
+    
+    weak var delegate: AutofillLoginDetailsViewModelDelegate?
     let account: SecureVaultModels.WebsiteAccount
     @Published var username: String
     @Published var password: String
     @Published var address: String
     @Published var title: String
+    @Published var viewMode: ViewMode = .view
     
-    let loginSaved: () -> Void
-    
-    internal init(account: SecureVaultModels.WebsiteAccount, loginSaved: @escaping () -> Void) {
+    internal init(account: SecureVaultModels.WebsiteAccount) {
         self.account = account
-        self.loginSaved = loginSaved
         self.username = account.username
         self.address = account.domain
         self.title = account.title ?? ""
         self.password = ""
+    }
+    
+    func toggleEditMode() {
+        withAnimation {
+            if viewMode == .edit {
+                viewMode = .view
+            } else {
+                viewMode = .edit
+            }
+        }
     }
     
     func save() {
@@ -50,7 +70,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.title = title
                     credential.account.domain = address
                     try vault.storeWebsiteCredentials(credential)
-                    self.loginSaved()
+                    delegate?.autofillLoginDetailsViewModelDidSave()
                 }
             }
             

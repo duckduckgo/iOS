@@ -20,7 +20,8 @@
 import Foundation
 import BrowserServicesKit
 
-final class AutofillLoginListItemViewModel: Identifiable {
+final class AutofillLoginListItemViewModel: Identifiable, Hashable {
+  
     let account: SecureVaultModels.WebsiteAccount
     let title: String
     let subtitle: String
@@ -30,5 +31,13 @@ final class AutofillLoginListItemViewModel: Identifiable {
         self.account = account
         title = account.domain
         subtitle = account.username
+    }
+    
+    static func == (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {
+        lhs.account.id == rhs.account.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(account.id)
     }
 }

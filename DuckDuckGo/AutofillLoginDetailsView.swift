@@ -27,6 +27,46 @@ struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     
     var body: some View {
+        contentView
+        .navigationTitle(isOnEditMode ? "Edit Login" : "Login")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigation) {
+                if isOnEditMode {
+                    Button("Save") {
+                        print("Save Pressed")
+                        toggleEditMode()
+                        viewModel.save()
+                    }
+                } else {
+                    Button("Edit") {
+                        print("Edit Pressed")
+                        toggleEditMode()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func toggleEditMode() {
+        withAnimation {
+            isOnEditMode.toggle()
+        }
+    }
+    
+    @ViewBuilder
+    private var contentView: some View {
+        Group {
+            switch viewModel.viewMode {
+            case .edit:
+                editModeContentView
+            case .view:
+                viewModeContentView
+            }
+        }.transition(.opacity)
+    }
+    
+    private var editModeContentView: some View {
         List {
             Section {
                 editableCell("Login Name", subtitle: $viewModel.title)
@@ -45,24 +85,28 @@ struct AutofillLoginDetailsView: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle(isOnEditMode ? "Edit Login" : "Login")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigation) {
-                if isOnEditMode {
-                    Button("Save") {
-                        print("Save Pressed")
-                        isOnEditMode.toggle()
-                        viewModel.save()
-                    }
-                } else {
-                    Button("Edit") {
-                        print("Edit Pressed")
-                        isOnEditMode.toggle()
-                    }
-                }
+    }
+    
+    private var viewModeContentView: some View {
+        List {
+            Section {
+                editableCell("Login Name", subtitle: $viewModel.title)
+            }
+            
+            Section {
+                editableCell("Username", subtitle: $viewModel.username)
+                editableCell("Password", subtitle: $viewModel.password)
+            }
+            
+            Section {
+                editableCell("Address", subtitle: $viewModel.address)
+            }
+            
+            Section {
+                editableCell("Notes", subtitle: $viewModel.username)
             }
         }
+        .listStyle(.insetGrouped)
     }
     
     private func editableCell(_ title: String, subtitle: Binding<String>) -> some View {

@@ -508,7 +508,9 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
 #warning("REMOVE")
         let test = AutofillLoginListViewController()
-        self.present(test, animated: true, completion: nil)
+        let navigationcontroller = UINavigationController(rootViewController: test)
+        
+        self.present(navigationcontroller, animated: true, completion: nil)
 #warning("REMOVE")
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         

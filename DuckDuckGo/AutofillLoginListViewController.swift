@@ -22,22 +22,20 @@ import SwiftUI
 import BrowserServicesKit
 
 final class AutofillLoginListViewController: UIViewController {
+    private var viewModel: AutofillLoginListViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Autofill Logins"
         
         do {
-            let viewModel = try AutofillLoginListViewModel()
+            self.viewModel = try AutofillLoginListViewModel()
             if #available(iOS 14.0, *) {
-                installContentView(with: viewModel)
+                installContentView(with: viewModel!)
             }
         } catch {
             print("add error ui")
         }
-        
-        
-
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -61,6 +59,14 @@ final class AutofillLoginListViewController: UIViewController {
     @available(iOS 14.0, *)
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
         let detailsController = AutofillLoginDetailsViewController(account: account)
+        detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: true)
+    }
+}
+
+@available(iOS 14.0, *)
+extension AutofillLoginListViewController: AutofillLoginDetailsViewControllerDelegate {
+    func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController) {
+        viewModel?.update()
     }
 }

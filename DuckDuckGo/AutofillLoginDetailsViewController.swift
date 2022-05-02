@@ -23,7 +23,13 @@ import BrowserServicesKit
 import Combine
 
 @available(iOS 14.0, *)
+protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
+    func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController)
+}
+
+@available(iOS 14.0, *)
 class AutofillLoginDetailsViewController: UIViewController {
+    weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
 
@@ -68,7 +74,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         switch viewModel.viewMode {
         case .edit:
             title = "Edit Login"
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(toggleEditMode))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
 
         case .view:
             title = "Login"
@@ -79,6 +85,12 @@ class AutofillLoginDetailsViewController: UIViewController {
     
     @objc private func toggleEditMode() {
         viewModel.toggleEditMode()
+    }
+    
+    @objc private func save() {
+        viewModel.save()
+        viewModel.toggleEditMode()
+        delegate?.autofillLoginDetailsViewControllerDidSave(self)
     }
 }
 

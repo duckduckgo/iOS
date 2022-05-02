@@ -33,9 +33,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     func update() {
         if let accounts = try? secureVault.accounts() {
-            
             items = accounts.map { AutofillLoginListItemViewModel(account: $0) }
-        }
-        
+        }        
     }
 }

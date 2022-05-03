@@ -22,6 +22,7 @@ import Core
 import StoreKit
 import os.log
 import BrowserServicesKit
+import PrivacyDashboard
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -623,6 +624,7 @@ class TabViewController: UIViewController {
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
             controller.omniBarText = chromeDelegate.omniBar.textField.text
             controller.siteRating = siteRating
+            controller.privacyInfo = tabModel.privacyInfo
             controller.errorText = isError ? errorText : nil
         }
         
@@ -736,8 +738,10 @@ class TabViewController: UIViewController {
     private func resetSiteRating() {
         if let url = url {
             siteRating = makeSiteRating(url: url)
+            tabModel.privacyInfo = makePrivacyInfo(url: url)
         } else {
             siteRating = nil
+            tabModel.privacyInfo = nil
         }
         onSiteRatingChanged()
     }
@@ -753,7 +757,14 @@ class TabViewController: UIViewController {
                           entityMapping: entityMapping,
                           privacyPractices: privacyPractices)
     }
-
+    
+    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+        guard let host = url.host, let entity = EntityMapping().findEntity(forHost: host)
+        else { return nil }
+        
+        return PrivacyInfo(url: url, parentEntity: entity)
+    }
+ 
     private func updateSiteRating() {
         if isError {
             siteRating = nil
@@ -1692,6 +1703,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
         }
 
         siteRating?.trackerDetected(tracker)
+        tabModel.privacyInfo?.trackerInfo.add(detectedTracker: tracker)
         onSiteRatingChanged()
 
         if !pageHasTrackers {
@@ -1720,6 +1732,7 @@ extension TabViewController: SurrogatesUserScriptDelegate {
                               withSurrogate host: String) {
         if siteRating?.url.absoluteString == tracker.pageUrl {
             siteRating?.surrogateInstalled(host)
+            tabModel.privacyInfo?.trackerInfo.add(installedSurrogateHost: host)
         }
         userScriptDetectedTracker(tracker)
     }

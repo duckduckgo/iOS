@@ -76,6 +76,8 @@ class PrivacyProtectionController: ThemableNavigationController {
 
     weak var omniDelegate: OmniBarDelegate!
     weak var siteRating: SiteRating?
+    weak var privacyInfo: PrivacyInfo?
+    
     var omniBarText: String?
     var errorText: String?
   
@@ -117,7 +119,7 @@ class PrivacyProtectionController: ThemableNavigationController {
             
 //        let url = Bundle.privacyDashboardURL
         
-        let dashboardNeue = PrivacyDashboardViewController()
+        let dashboardNeue = PrivacyDashboardViewController(privacyInfo: privacyInfo)
         
 //        print(url?.absoluteString ?? "")
         
@@ -207,16 +209,3 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
 }
 
 extension PrivacyProtectionController: UIPopoverPresentationControllerDelegate { }
-
-extension PrivacyDashboardViewController: PrivacyProtectionInfoDisplaying {
-    
-    func using(siteRating: SiteRating, config: PrivacyConfiguration) {
-        var trackerInfo = TrackerInfo()
-        
-        siteRating.trackersDetected.forEach { trackerInfo.add(detectedTracker: $0) }
-        siteRating.installedSurrogates.forEach { trackerInfo.add(installedSurrogateHost: $0) }
-        
-        updateTrackerInfo(siteRating.url, trackerInfo: trackerInfo)
-    }
- 
-}

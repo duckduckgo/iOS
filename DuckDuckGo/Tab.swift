@@ -18,6 +18,7 @@
 //
 
 import Core
+import PrivacyDashboard
 
 protocol TabObserver: AnyObject {
  
@@ -59,6 +60,8 @@ public class Tab: NSObject, NSCoding {
             notifyObservers()
         }
     }
+    
+    var privacyInfo: PrivacyInfo?
 
     public init(uid: String? = nil,
                 link: Link? = nil,

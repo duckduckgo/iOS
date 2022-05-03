@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import Core
 import UIKit
 
 protocol VoiceSearchFeedbackViewModelDelegate: AnyObject {
@@ -111,6 +112,7 @@ class VoiceSearchFeedbackViewModel: ObservableObject {
     }
     
     func cancel() {
+        Pixel.fire(pixel: .voiceSearchCancelled)
         delegate?.voiceSearchFeedbackViewModel(self, didFinishQuery: nil)
     }
     

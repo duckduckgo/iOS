@@ -33,7 +33,7 @@ class UnprotectedSitesViewController: UITableViewController {
     private var hiddenNavBarItem: UIBarButtonItem?
     private var hiddenNavBarItems: [UIBarButtonItem]?
     
-    private let protectionStore: DomainsProtectionStore = DomainsProtectionUserDefaultsStore()
+    private let privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
     
     var showBackButton = false
     var enforceLightTheme = false
@@ -74,7 +74,7 @@ class UnprotectedSitesViewController: UITableViewController {
             setToolbarItems([flexibleSpace, editButton], animated: animated)
         }
         
-        editButton.isEnabled = protectionStore.unprotectedDomains.count > 0
+        editButton.isEnabled = privacyConfig.userUnprotectedDomains.count > 0
     }
     
     private func configureBackButton() {
@@ -99,7 +99,7 @@ class UnprotectedSitesViewController: UITableViewController {
     // MARK: UITableView data source
 
     private var unprotectedDomains: [String] {
-        return protectionStore.unprotectedDomains.sorted()
+        return privacyConfig.userUnprotectedDomains.sorted()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -123,7 +123,7 @@ class UnprotectedSitesViewController: UITableViewController {
         guard editingStyle == .delete else { return }
 
         let domain = unprotectedDomains[indexPath.row]
-        protectionStore.enableProtection(forDomain: domain)
+        privacyConfig.userEnabledProtection(forDomain: domain)
 
         if unprotectedDomains.count == 0 {
             if tableView.isEditing {
@@ -134,9 +134,11 @@ class UnprotectedSitesViewController: UITableViewController {
             } else {
                 refreshToolbarItems(animated: true)
             }
+            
+            tableView.reloadData()
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-
-        tableView.reloadData()
     }
 
     // MARK: actions
@@ -169,23 +171,26 @@ class UnprotectedSitesViewController: UITableViewController {
     }
     
     @IBAction func startEditing() {
-        // Fix glitch happening when there's cell that is already in the editing state (swiped to reveal delete button) and user presses 'Edit'.
-        tableView.isEditing = false
-        tableView.isEditing = true
-        tableView.reloadData()
-        refreshToolbarItems(animated: true)
-        
+        navigationItem.setHidesBackButton(true, animated: true)
         hiddenNavBarItems = navigationItem.rightBarButtonItems
         navigationItem.setRightBarButtonItems(nil, animated: true)
+        
+        // Fix glitch happening when there's cell that is already in the editing state (swiped to reveal delete button) and user presses 'Edit'.
+        tableView.setEditing(false, animated: true)
+        tableView.setEditing(true, animated: true)
+        
+        refreshToolbarItems(animated: true)
     }
     
     @IBAction func endEditing() {
-        tableView.isEditing = false
-        tableView.reloadData()
+        navigationItem.setHidesBackButton(false, animated: true)
+        if let hiddenNavBarItems = hiddenNavBarItems {
+            navigationItem.setRightBarButtonItems(hiddenNavBarItems, animated: true)
+        }
+        
+        tableView.setEditing(false, animated: true)
         
         refreshToolbarItems(animated: true)
-        
-        navigationItem.setRightBarButtonItems(hiddenNavBarItems, animated: true)
     }
 
     // MARK: private
@@ -193,7 +198,7 @@ class UnprotectedSitesViewController: UITableViewController {
     private func addSite(from controller: UIAlertController) {
         guard let field = controller.textFields?[0] else { return }
         guard let domain = domain(from: field) else { return }
-        protectionStore.disableProtection(forDomain: domain)
+        privacyConfig.userDisabledProtection(forDomain: domain)
         tableView.reloadData()
         refreshToolbarItems(animated: true)
     }

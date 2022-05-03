@@ -50,9 +50,9 @@
         "package": "Punycode",
         "repositoryURL": "https://github.com/gumob/PunycodeSwift.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
-          "version": null
+          "version": "2.1.0"
         }
       },
       {
@@ -71,6 +71,24 @@
           "branch": null,
           "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
           "version": "1.5.0"
+        }
+      },
+      {
+        "package": "SwiftSoup",
+        "repositoryURL": "https://github.com/scinfu/SwiftSoup",
+        "state": {
+          "branch": null,
+          "revision": "13ba661fd1146967270fca92ce8195b223631436",
+          "version": "2.3.8"
+        }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "state": {
+          "branch": null,
+          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
+          "version": "1.0.3"
         }
       }
     ]

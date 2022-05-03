@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Poloha";
 
+/* More options button text */
+"bookmark.moreButton" = "Viac na";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Názov webovej stránky";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Záložky";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Vaše záložky sa nepodarilo exportovať, skúste to znova.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Všetky záložky boli vyexportované.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Vaše záložky sú zdieľané.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Exportovať súbor HTML";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Ľutujeme, tento súbor nie je možné importovať.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Vaše záložky boli importované.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Importovať súbor HTML";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Importujte súbor so záložkami z iného prehliadača";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importujte súbor HTML so záložkami z iného prehliadača alebo exportujte svoje existujúce záložky.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Komentáre sa nepodarilo načítať";

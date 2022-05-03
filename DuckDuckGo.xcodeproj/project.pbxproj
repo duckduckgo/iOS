@@ -39,7 +39,7 @@
 		1E8AD1D927C4FEC100ABA377 /* DownloadsListSectioningHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1D827C4FEC100ABA377 /* DownloadsListSectioningHelper.swift */; };
 		1E8AD1DB27C51AE000ABA377 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1DA27C51AE000ABA377 /* TimeIntervalExtension.swift */; };
 		1E8AD1DD27C653F800ABA377 /* Downloads.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E8AD1DC27C653F800ABA377 /* Downloads.xcassets */; };
-		1ED7D90328213F420064AFB8 /* PrivacyDashboard in Frameworks */ = {isa = PBXBuildFile; productRef = 1ED7D90228213F420064AFB8 /* PrivacyDashboard */; };
+		1ED7D9062821B4D30064AFB8 /* PrivacyDashboard in Frameworks */ = {isa = PBXBuildFile; productRef = 1ED7D9052821B4D30064AFB8 /* PrivacyDashboard */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
 		1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC460527A9499600E75FCB /* DownloadsList.swift */; };
 		1EEFD2D52758E31600B1393B /* textsize.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFD2D42758E31600B1393B /* textsize.js */; };
@@ -779,7 +779,6 @@
 		1E8AD1D827C4FEC100ABA377 /* DownloadsListSectioningHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListSectioningHelper.swift; sourceTree = "<group>"; };
 		1E8AD1DA27C51AE000ABA377 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		1E8AD1DC27C653F800ABA377 /* Downloads.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Downloads.xcassets; sourceTree = "<group>"; };
-		1ED7D90128213F100064AFB8 /* duckduckgo-privacy-dashboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "duckduckgo-privacy-dashboard"; path = "../duckduckgo-privacy-dashboard"; sourceTree = "<group>"; };
 		1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeDebugViewController.swift; sourceTree = "<group>"; };
 		1EEC460527A9499600E75FCB /* DownloadsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadsList.swift; sourceTree = "<group>"; };
 		1EEFD2D42758E31600B1393B /* textsize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = textsize.js; sourceTree = "<group>"; };
@@ -2037,7 +2036,7 @@
 			files = (
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
-				1ED7D90328213F420064AFB8 /* PrivacyDashboard in Frameworks */,
+				1ED7D9062821B4D30064AFB8 /* PrivacyDashboard in Frameworks */,
 				F4D1BFA42587EA0600469046 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2122,14 +2121,6 @@
 				02DC6A51255D8C0A00B03BC2 /* fingerprint.js */,
 			);
 			name = fingerprinting;
-			sourceTree = "<group>";
-		};
-		1E31847728213B5400E7928D /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				1ED7D90128213F100064AFB8 /* duckduckgo-privacy-dashboard */,
-			);
-			name = Packages;
 			sourceTree = "<group>";
 		};
 		1E4DCF4227B6A29D00961E25 /* View */ = {
@@ -2464,7 +2455,6 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
-				1E31847728213B5400E7928D /* Packages */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				84E341941E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E51E4A4CD400CFDE3A /* Core */,
@@ -4098,7 +4088,7 @@
 			name = DuckDuckGo;
 			packageProductDependencies = (
 				F4D1BFA32587EA0600469046 /* Lottie */,
-				1ED7D90228213F420064AFB8 /* PrivacyDashboard */,
+				1ED7D9052821B4D30064AFB8 /* PrivacyDashboard */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -4351,6 +4341,7 @@
 				F4D1BFA22587EA0600469046 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */,
 				4BE86C5B2633DBD7001C0E77 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
+				1ED7D9042821B4D30064AFB8 /* XCRemoteSwiftPackageReference "duckduckgo-privacy-dashboard" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -6844,6 +6835,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1ED7D9042821B4D30064AFB8 /* XCRemoteSwiftPackageReference "duckduckgo-privacy-dashboard" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/more-duckduckgo-org/duckduckgo-privacy-dashboard";
+			requirement = {
+				branch = "michal/spm-distribution";
+				kind = branch;
+			};
+		};
 		4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/TrackerRadarKit.git";
@@ -6903,8 +6902,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1ED7D90228213F420064AFB8 /* PrivacyDashboard */ = {
+		1ED7D9052821B4D30064AFB8 /* PrivacyDashboard */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 1ED7D9042821B4D30064AFB8 /* XCRemoteSwiftPackageReference "duckduckgo-privacy-dashboard" */;
 			productName = PrivacyDashboard;
 		};
 		4B82E97F25B634B800656FE7 /* TrackerRadarKit */ = {

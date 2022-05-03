@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "PrivacyDashboard",
+        "repositoryURL": "https://github.com/more-duckduckgo-org/duckduckgo-privacy-dashboard",
+        "state": {
+          "branch": "michal/spm-distribution",
+          "revision": "9f416b92fb9b660af53728d5010b52c803427404",
+          "version": null
+        }
+      },
+      {
         "package": "GRDB",
         "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {

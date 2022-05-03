@@ -22,7 +22,6 @@ import Core
 import BrowserServicesKit
 import WebKit
 import PrivacyDashboard
-import RandomRestaurant
 
 protocol PrivacyProtectionDelegate: AnyObject {
 
@@ -112,30 +111,8 @@ class PrivacyProtectionController: ThemableNavigationController {
     }
 
     private func showInitialScreen() {
-//        let url = Bundle.privacyDashboard.startPageURL
-//        let url = Bundle.privacyDashboard.privacyDashboardURL
-//        let url = Bundle.randomRestaurant.menuPageURL
-//        let url = RandomRestaurant.startingURL
-            
-//        let url = Bundle.privacyDashboardURL
-        
         let dashboardNeue = PrivacyDashboardViewController(privacyInfo: privacyInfo)
         
-//        print(url?.absoluteString ?? "")
-        
-//        let restaurant = RandomRestaurant()
-//        restaurant.showWelcomeMessage()
-//
-//        print(restaurant.serve(edible: RandomPlant.apple))
-//        print(restaurant.serve(edible: RandomMeal.salad))
-//        print(restaurant.serve(edible: RandomPlant.avocado))
-        
-        let restaurant = RandomDesktopRestaurant()
-        
-        restaurant.prepare(.steak)
-        restaurant.prepare(.burger)
-        restaurant.prepare(.hotdog)
-                
         pushViewController(dashboardNeue, animated: true)
         updateViewControllers()
     }

@@ -56,15 +56,6 @@
         }
       },
       {
-        "package": "RandomRestaurant",
-        "repositoryURL": "https://github.com/miasma13/RandomRestaurant",
-        "state": {
-          "branch": "reordered",
-          "revision": "4115d7bd081c7f6bb59ccf99a0254be3a7297c93",
-          "version": null
-        }
-      },
-      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {

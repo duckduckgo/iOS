@@ -49,10 +49,16 @@ class AutofillLoginDetailsViewController: UIViewController {
         installContentView()
         setupNavigationBar()
         setupCancellables()
+        setupTableViewAppearance()
     }
     
     deinit {
         print("DEINIT DETAILS")
+    }
+    
+    private func setupTableViewAppearance() {
+        let appearance = UITableView.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
+        appearance.backgroundColor = .listBackgroundColor
     }
     
     private func setupCancellables() {

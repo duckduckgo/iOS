@@ -20,7 +20,9 @@
 import UIKit
 import SwiftUI
 import BrowserServicesKit
+import DuckUI
 
+@available(iOS 14.0, *)
 final class AutofillLoginListViewController: UIViewController {
     private var viewModel: AutofillLoginListViewModel?
     
@@ -30,19 +32,24 @@ final class AutofillLoginListViewController: UIViewController {
         
         do {
             self.viewModel = try AutofillLoginListViewModel()
-            if #available(iOS 14.0, *) {
-                installContentView(with: viewModel!)
-            }
+            installContentView(with: viewModel!)
+            
         } catch {
             print("add error ui")
         }
+        setupTableViewAppearance()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-
     }
-
+    
+    private func setupTableViewAppearance() {
+        let appearance = UITableView.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
+        appearance.backgroundColor = .listBackgroundColor
+    }
+    
     deinit {
         print("DEINIT LIST")
     }

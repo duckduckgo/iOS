@@ -41,13 +41,14 @@ struct AutofillLoginDetailsView: View {
             Section {
                 editableCell("Login Name", subtitle: $viewModel.title)
             }
-            
-            Section {
-                editableCell("Address", subtitle: $viewModel.address)
-            }
+    
             Section {
                 editableCell("Username", subtitle: $viewModel.username)
                 editableCell("Password", subtitle: $viewModel.password)
+            }
+            
+            Section {
+                editableCell("Address", subtitle: $viewModel.address)
             }
             
             Section {
@@ -89,7 +90,7 @@ struct AutofillLoginDetailsView: View {
     }
     
     private func editableCell(_ title: String, subtitle: Binding<String>) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 5) {
             Text(title)
                 .label3AltStyle()
             
@@ -97,7 +98,7 @@ struct AutofillLoginDetailsView: View {
                 ClearTextField(text: subtitle)
                 .label4Style()
             }
-        }.frame(height: 50)
+        }.frame(height: 60)
     }
     
     private func copyableCell(_ title: String, subtitle: String, menuAction: @escaping () -> Void) -> some View {

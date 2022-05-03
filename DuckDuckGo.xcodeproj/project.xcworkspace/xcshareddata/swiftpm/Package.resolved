@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "BrowserServicesKit",
-        "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
-        "state": {
-          "branch": null,
-          "revision": "e65500ba7a34e3044fd434c597750906393a72b1",
-          "version": "12.2.1"
-        }
-      },
-      {
         "package": "PrivacyDashboard",
         "repositoryURL": "https://github.com/more-duckduckgo-org/duckduckgo-privacy-dashboard",
         "state": {

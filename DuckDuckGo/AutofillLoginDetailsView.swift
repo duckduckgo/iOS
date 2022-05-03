@@ -61,24 +61,28 @@ struct AutofillLoginDetailsView: View {
         List {
             Section {
                 editableCell("Login Name", subtitle: $viewModel.title)
+                    .disabled(true)
             }
             
             Section {
                 copyableCell("Username", subtitle: viewModel.username) {
-                    print("Copy username")
+                    viewModel.copyToPasteboard(.username)
                 }
                 
                 copyableCell("Password", subtitle: viewModel.password) {
-                    print("Copy password")
+                    viewModel.copyToPasteboard(.password)
                 }
             }
             
             Section {
-                editableCell("Address", subtitle: $viewModel.address)
+                copyableCell("Address", subtitle: viewModel.address) {
+                    viewModel.copyToPasteboard(.address)
+                }
             }
             
             Section {
                 editableCell("Notes", subtitle: $viewModel.username)
+                    .disabled(true)
             }
         }
         .listStyle(.insetGrouped)

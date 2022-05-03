@@ -32,12 +32,18 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case view
     }
     
+    enum PasteboardCopyAction {
+        case username
+        case password
+        case address
+    }
+    
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
     let account: SecureVaultModels.WebsiteAccount
-    @Published var username: String
-    @Published var password: String
-    @Published var address: String
-    @Published var title: String
+    @Published var username = ""
+    @Published var password = ""
+    @Published var address = ""
+    @Published var title = ""
     @Published var viewMode: ViewMode = .view
     
     internal init(account: SecureVaultModels.WebsiteAccount) {
@@ -45,7 +51,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.username = account.username
         self.address = account.domain
         self.title = account.title ?? ""
-        self.password = ""
+        setupPassword(with: account)
     }
     
     func toggleEditMode() {
@@ -58,9 +64,34 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
+    func copyToPasteboard(_ action: PasteboardCopyAction) {
+        switch action {
+        case .username:
+            UIPasteboard.general.string = username
+        case .password:
+            UIPasteboard.general.string = "123"
+        case .address:
+            UIPasteboard.general.string = address
+        }
+    }
+    
+    private func setupPassword(with account: SecureVaultModels.WebsiteAccount) {
+        do {
+            if let accountID = account.id {
+                let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+                                                                 
+                if let credential = try vault.websiteCredentialsFor(accountId: accountID) {
+                    self.password = String(data: credential.password, encoding: .utf8) ?? ""
+                }
+            }
+            
+        } catch {
+            print("Can't retrieve password")
+        }
+        
+    }
+    
     func save() {
-        print("USER \(username) PASS \(password)")
-
         do {
             if let accountID = account.id {
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
@@ -69,6 +100,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = address
+                    credential.password = password.data(using: .utf8)!
+
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
                 }

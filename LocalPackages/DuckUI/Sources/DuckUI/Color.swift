@@ -62,14 +62,8 @@ public extension Color {
     static let gray10 = Color.init(0xF5F5F5)
     static let gray0 = Color.init(0xFAFAFA)
     static let white = Color.init(0xFFFFFF)
-    
-    static let deprecatedBlue =  Color.init(0x678FFF)
-    static let listBackgroundColor = Color("ListBackgroundColor")
-}
 
-@available(iOS 14.0, *)
-public extension UIColor {
-    static let listBackgroundColor = UIColor(Color.listBackgroundColor)
+    static let deprecatedBlue =  Color.init(0x678FFF)
 }
 
 private extension Color {

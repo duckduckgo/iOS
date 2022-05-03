@@ -33,11 +33,12 @@ final class AutofillLoginListViewController: UIViewController {
         do {
             self.viewModel = try AutofillLoginListViewModel()
             installContentView(with: viewModel!)
-            
         } catch {
             print("add error ui")
         }
+        
         setupTableViewAppearance()
+        setupNavigationBarAppearance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,16 +46,19 @@ final class AutofillLoginListViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    private func setupNavigationBarAppearance() {
+        navigationController?.navigationBar.tintColor = UIColor(named: "NavigationBarTint")
+    }
+    
     private func setupTableViewAppearance() {
-        let appearance = UITableView.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
-        appearance.backgroundColor = .listBackgroundColor
+        let appearance = UITableView.appearance(whenContainedInInstancesOf: [AutofillLoginListViewController.self])
+        appearance.backgroundColor = UIColor(named: "ListBackground")
     }
     
     deinit {
         print("DEINIT LIST")
     }
     
-    @available(iOS 14.0, *)
     private func installContentView(with viewModel: AutofillLoginListViewModel) {
         let contentView = AutofillLoginListView(viewModel: viewModel) { [weak self] selectedModel in
             self?.showLoginDetails(with: selectedModel.account)
@@ -63,7 +67,6 @@ final class AutofillLoginListViewController: UIViewController {
         installChildViewController(hostingController)
     }
     
-    @available(iOS 14.0, *)
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
         let detailsController = AutofillLoginDetailsViewController(account: account)
         detailsController.delegate = self

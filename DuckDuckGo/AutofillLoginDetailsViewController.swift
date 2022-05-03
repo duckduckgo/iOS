@@ -57,8 +57,8 @@ class AutofillLoginDetailsViewController: UIViewController {
     }
     
     private func setupTableViewAppearance() {
-        let appearance = UITableView.appearance(whenContainedInInstancesOf: [DownloadsListHostingController.self])
-        appearance.backgroundColor = .listBackgroundColor
+        let appearance = UITableView.appearance(whenContainedInInstancesOf: [AutofillLoginDetailsViewController.self])
+        appearance.backgroundColor = UIColor(named: "ListBackground")
     }
     
     private func setupCancellables() {

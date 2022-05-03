@@ -22,40 +22,10 @@ import DuckUI
 
 @available(iOS 14.0, *)
 struct AutofillLoginDetailsView: View {
-    @State var text: String = ""
-    @State var isOnEditMode = false
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
-    
+    @State private var cellMaxWidth: CGFloat?
+
     var body: some View {
-        contentView
-        .navigationTitle(isOnEditMode ? "Edit Login" : "Login")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigation) {
-                if isOnEditMode {
-                    Button("Save") {
-                        print("Save Pressed")
-                        toggleEditMode()
-                        viewModel.save()
-                    }
-                } else {
-                    Button("Edit") {
-                        print("Edit Pressed")
-                        toggleEditMode()
-                    }
-                }
-            }
-        }
-    }
-    
-    private func toggleEditMode() {
-        withAnimation {
-            isOnEditMode.toggle()
-        }
-    }
-    
-    @ViewBuilder
-    private var contentView: some View {
         Group {
             switch viewModel.viewMode {
             case .edit:
@@ -94,8 +64,13 @@ struct AutofillLoginDetailsView: View {
             }
             
             Section {
-                editableCell("Username", subtitle: $viewModel.username)
-                editableCell("Password", subtitle: $viewModel.password)
+                copyableCell("Username", subtitle: viewModel.username) {
+                    print("Copy username")
+                }
+                
+                copyableCell("Password", subtitle: viewModel.password) {
+                    print("Copy password")
+                }
             }
             
             Section {
@@ -119,6 +94,27 @@ struct AutofillLoginDetailsView: View {
                 .label4Style()
             }
         }.frame(height: 50)
+    }
+    
+    private func copyableCell(_ title: String, subtitle: String, menuAction: @escaping () -> Void) -> some View {
+
+        
+        HStack {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(title)
+                    .label3AltStyle()
+                    .disabled(true)
+                
+                HStack {
+                    Text(subtitle)
+                        .label4Style()
+                }
+            }
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 60)
+        .menuController("Copy \(title)", action: menuAction)
     }
 }
 

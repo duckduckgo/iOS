@@ -36,7 +36,6 @@ extension View {
     
     func menuController(_ title: String, action: @escaping () -> Void) -> some View {
         MenuControllerView(content: self, title: title, action: action)
-            .fixedSize()
     }
 
 }

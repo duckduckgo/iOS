@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": null,
-          "revision": "80a5ce3088aa5af288c86a2a9dd73295d6f037e7",
-          "version": "12.2.9"
+          "branch": "brad/ua-config",
+          "revision": "c3a7c095ebf6f08b416e3e0db5c5ebc24dfd1d76",
+          "version": null
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/scinfu/SwiftSoup",
         "state": {
           "branch": null,
-          "revision": "13ba661fd1146967270fca92ce8195b223631436",
-          "version": "2.3.8"
+          "revision": "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
+          "version": "2.4.2"
         }
       },
       {

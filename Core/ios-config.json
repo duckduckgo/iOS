@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1650981913382,
+    "version": 1651676553929,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -75,6 +75,10 @@
                 {
                     "domain": "n-tv.de",
                     "reason": "broken scrolling"
+                },
+                {
+                    "domain": "concursolutions.com",
+                    "reason": "blank page during opt-out"
                 }
             ],
             "settings": {
@@ -147,6 +151,19 @@
                     "reason": "content not loading"
                 }
             ]
+        },
+        "customUserAgent": {
+            "settings": {
+                "omitApplicationSites": [
+                    "cvs.com",
+                    "sovietgames.su",
+                    "accounts.google.com",
+                    "facebook.com"
+                ],
+                "omitVersionSites": []
+            },
+            "exceptions": [],
+            "state": "enabled"
         },
         "fingerprintingAudio": {
             "state": "disabled",

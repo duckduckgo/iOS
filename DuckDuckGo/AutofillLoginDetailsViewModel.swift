@@ -75,12 +75,23 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
+    #warning("Refactor, copied from SaveLoginViewModel")
+    var hiddenPassword: String {
+         let maximumPasswordDisplayCount = 40
+
+        // swiftlint:disable:next line_length
+        let passwordCount = password.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : password.count
+        return String(repeating: "•", count: passwordCount)
+    }
+    
+    
     private func setupPassword(with account: SecureVaultModels.WebsiteAccount) {
         do {
             if let accountID = account.id {
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
                                                                  
-                if let credential = try vault.websiteCredentialsFor(accountId: accountID) {
+                if let credential = try
+                    vault.websiteCredentialsFor(accountId: accountID) {
                     self.password = String(data: credential.password, encoding: .utf8) ?? ""
                 }
             }
@@ -101,7 +112,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.title = title
                     credential.account.domain = address
                     credential.password = password.data(using: .utf8)!
-
+                    
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
                 }

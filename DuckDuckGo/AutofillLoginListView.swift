@@ -33,23 +33,18 @@ struct AutofillLoginListView: View {
     var itemSelected: ((AutofillLoginListItemViewModel) -> Void)?
     
     var body: some View {
-            List(viewModel.items) { item in
-                Section {
-                        HStack {
-                            Image(systemName: "globe")
-                            VStack(alignment: .leading) {
-                                Text(item.title)
-                                Text(item.subtitle)
-                            }
-                        }.onTapGesture {
-                            self.selectedItem = item
-                        }
-                    
-                } header: {
-                    Text("Test")
-                }
+        List(viewModel.items) { item in
+            Section {
+                ImageTitleSubtitleListItemView(viewModel: item)
+                    .onTapGesture {
+                        self.selectedItem = item
+                    }
+                
+            } header: {
+                Text("Test")
             }
-            .listStyle(.insetGrouped)
+        }
+        .listStyle(.insetGrouped)
     }
     
     func destinationView(with item: AutofillLoginListItemViewModel) -> some View {

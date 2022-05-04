@@ -19,21 +19,34 @@
 
 import Foundation
 import BrowserServicesKit
+import UIKit
 
 final class AutofillLoginListViewModel: ObservableObject {
     let secureVault: SecureVault
-    @Published var items: [AutofillLoginListItemViewModel]
+    @Published var items = [AutofillLoginListItemViewModel]()
 
     init() throws {
         secureVault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-        let accounts = try secureVault.accounts()
-        
-        items = accounts.map { AutofillLoginListItemViewModel(account: $0) }
+        update()
     }
     
     func update() {
         if let accounts = try? secureVault.accounts() {
-            items = accounts.map { AutofillLoginListItemViewModel(account: $0) }
+            items = accounts.map { account in
+                AutofillLoginListItemViewModel(account: account) { completion in
+                    FaviconsHelper.loadFaviconSync(forDomain: account.domain,
+                                                   usingCache: .tabs,
+                                                   useFakeFavicon: true) { image, _ in
+                        
+                        if let image = image {
+                            completion(image)
+                        } else {
+                            completion(UIImage(systemName: "globle")!)
+                        }
+                    }
+                }
+            
+            }
         }        
     }
 }

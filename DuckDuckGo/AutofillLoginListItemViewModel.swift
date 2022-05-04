@@ -19,18 +19,29 @@
 
 import Foundation
 import BrowserServicesKit
+import UIKit
 
-final class AutofillLoginListItemViewModel: Identifiable, Hashable {
-  
+final class AutofillLoginListItemViewModel: ImageTitleSubtitleListItemViewModelProtocol, Identifiable, Hashable {
+    @Published var image = UIImage(systemName: "globe")!
     let account: SecureVaultModels.WebsiteAccount
     let title: String
     let subtitle: String
     let id = UUID()
+    var loadImage: LoadImageClosure
 
-    internal init(account: SecureVaultModels.WebsiteAccount) {
+    internal init(account: SecureVaultModels.WebsiteAccount, loadImage:  @escaping LoadImageClosure) {
         self.account = account
-        title = account.domain
-        subtitle = account.username
+        self.title = account.name
+        self.subtitle = account.username
+        self.loadImage = loadImage
+        
+        fetchImage()
+    }
+    
+    private func fetchImage() {
+        loadImage { image in
+            self.image = image
+        }
     }
     
     static func == (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {

@@ -23,6 +23,7 @@ import UIKit
 
 final class AutofillLoginListItemViewModel: ImageTitleSubtitleListItemViewModelProtocol, Identifiable, Hashable {
     @Published var image = UIImage(systemName: "globe")!
+    
     let account: SecureVaultModels.WebsiteAccount
     let title: String
     let subtitle: String

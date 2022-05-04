@@ -20,8 +20,8 @@
 import SwiftUI
 import DuckUI
 
-struct ImageTitleSubtitleListItemView: View {
-    let viewModel: ImageTitleSubtitleListItemViewModelProtocol
+struct ImageTitleSubtitleListItemView<ViewModel>: View where ViewModel: ImageTitleSubtitleListItemViewModelProtocol {
+    @ObservedObject var viewModel: ViewModel
     
     var body: some View {
         HStack(spacing: 10) {

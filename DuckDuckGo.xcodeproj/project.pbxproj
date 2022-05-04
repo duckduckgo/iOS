@@ -2337,13 +2337,13 @@
 			name = Alerts;
 			sourceTree = "<group>";
 		};
-		31951E9328230D8900CAF535 /* SharedUI */ = {
+		31951E9328230D8900CAF535 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
 				31951E8D2823003200CAF535 /* ImageTitleSubtitleListItemView.swift */,
 				31951E9128230BB500CAF535 /* ImageTitleSubtitleListItemViewModelProtocol.swift */,
 			);
-			name = SharedUI;
+			name = Shared;
 			sourceTree = "<group>";
 		};
 		31C138A127A334F600FFD4B2 /* Downloads */ = {
@@ -4155,7 +4155,7 @@
 			children = (
 				31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */,
 				31951E94282310FF00CAF535 /* WebsiteAccountExtension.swift */,
-				31951E9328230D8900CAF535 /* SharedUI */,
+				31951E9328230D8900CAF535 /* Shared */,
 				310C4B4A281B69BC00BA79A9 /* Management */,
 				F407605328131910006B1E0B /* AutofillLoginUI */,
 				F407605428131923006B1E0B /* SaveLogin */,

@@ -37,7 +37,6 @@ final class AutofillLoginListViewModel: ObservableObject {
                     FaviconsHelper.loadFaviconSync(forDomain: account.domain,
                                                    usingCache: .tabs,
                                                    useFakeFavicon: true) { image, _ in
-                        
                         if let image = image {
                             completion(image)
                         } else {
@@ -45,8 +44,7 @@ final class AutofillLoginListViewModel: ObservableObject {
                         }
                     }
                 }
-            
             }
-        }        
+        }
     }
 }

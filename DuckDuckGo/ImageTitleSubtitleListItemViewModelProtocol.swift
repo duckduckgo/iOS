@@ -20,7 +20,7 @@
 import Foundation
 import UIKit
 
-protocol ImageTitleSubtitleListItemViewModelProtocol {
+protocol ImageTitleSubtitleListItemViewModelProtocol: ObservableObject {
     typealias LoadImageClosure = ((@escaping (UIImage) -> Void) -> Void)
 
     var title: String { get }

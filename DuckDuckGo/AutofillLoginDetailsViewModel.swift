@@ -45,14 +45,31 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     @Published var address = ""
     @Published var title = ""
     @Published var viewMode: ViewMode = .view
+    var lastUpdatedAt = ""
+    @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     
     internal init(account: SecureVaultModels.WebsiteAccount) {
         self.account = account
         self.username = account.username
         self.address = account.domain
-        self.title = account.title ?? ""
+        self.title = account.name
+        self.lastUpdatedAt = account.lastUpdated.debugDescription
+        
+        self.headerViewModel = AutofillLoginDetailsHeaderViewModel(title: account.name, subtitle: lastUpdatedAt, loadImage: { completion in
+            FaviconsHelper.loadFaviconSync(forDomain: account.domain,
+                                           usingCache: .tabs,
+                                           useFakeFavicon: true) { image, _ in
+                if let image = image {
+                    completion(image)
+                } else {
+                    completion(UIImage(systemName: "globle")!)
+                }
+            }
+        })
+        
         setupPassword(with: account)
     }
+    
     
     func toggleEditMode() {
         withAnimation {
@@ -102,6 +119,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         
     }
     
+    private func updateHeaderModel(with credential: SecureVaultModels.WebsiteCredentials) {
+        self.headerViewModel.title = credential.account.name
+        self.headerViewModel.subtitle = credential.account.lastUpdated.debugDescription
+    }
+    
     func save() {
         do {
             if let accountID = account.id {
@@ -115,11 +137,32 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
+                    
+                    //Refetch after save to get updated properties like "lastUpdated"
+                    if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
+                        updateHeaderModel(with: newCredential)
+                    }
                 }
             }
-            
         } catch {
             
+        }
+    }
+}
+
+final class AutofillLoginDetailsHeaderViewModel: ImageTitleSubtitleListItemViewModelProtocol {
+    @Published var title: String
+    var subtitle: String
+    var loadImage: LoadImageClosure
+    @Published var image = UIImage(systemName: "globe")!
+
+    internal init(title: String, subtitle: String, loadImage: @escaping AutofillLoginDetailsHeaderViewModel.LoadImageClosure) {
+        self.title = title
+        self.subtitle = subtitle
+        self.loadImage = loadImage
+        
+        self.loadImage { image in
+            self.image = image
         }
     }
 }

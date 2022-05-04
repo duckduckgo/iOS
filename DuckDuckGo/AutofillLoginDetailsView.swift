@@ -61,8 +61,7 @@ struct AutofillLoginDetailsView: View {
     private var viewModeContentView: some View {
         List {
             Section {
-                editableCell("Login Name", subtitle: $viewModel.title)
-                    .disabled(true)
+                ImageTitleSubtitleListItemView(viewModel: viewModel.headerViewModel)
             }
             
             Section {

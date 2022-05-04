@@ -44,7 +44,7 @@ struct AutofillLoginDetailsView: View {
     
             Section {
                 editableCell("Username", subtitle: $viewModel.username)
-                editableCell("Password", subtitle: $viewModel.password)
+                editableCell("Password", subtitle: $viewModel.password, secure: true)
             }
             
             Section {
@@ -70,7 +70,7 @@ struct AutofillLoginDetailsView: View {
                     viewModel.copyToPasteboard(.username)
                 }
                 
-                copyableCell("Password", subtitle: viewModel.password) {
+                secureCopyableCell("Password", subtitle: $viewModel.password) {
                     viewModel.copyToPasteboard(.password)
                 }
             }
@@ -89,21 +89,24 @@ struct AutofillLoginDetailsView: View {
         .listStyle(.insetGrouped)
     }
     
-    private func editableCell(_ title: String, subtitle: Binding<String>) -> some View {
+    private func editableCell(_ title: String, subtitle: Binding<String>, secure: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(title)
                 .label3AltStyle()
             
             HStack {
-                ClearTextField(text: subtitle)
-                .label4Style()
+                if secure {
+                    SecureField("", text: subtitle)
+                        .label4Style()
+                } else {
+                    ClearTextField(text: subtitle)
+                        .label4Style()
+                }
             }
         }.frame(height: 60)
     }
     
     private func copyableCell(_ title: String, subtitle: String, menuAction: @escaping () -> Void) -> some View {
-
-        
         HStack {
             VStack(alignment: .leading, spacing: 6) {
                 Text(title)
@@ -113,6 +116,27 @@ struct AutofillLoginDetailsView: View {
                 HStack {
                     Text(subtitle)
                         .label4Style()
+                }
+            }
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 60)
+        .menuController("Copy \(title)", action: menuAction)
+    }
+    
+    #warning("refactor this pasta")
+    private func secureCopyableCell(_ title: String, subtitle: Binding<String>, menuAction: @escaping () -> Void) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(title)
+                    .label3AltStyle()
+                    .disabled(true)
+                
+                HStack {
+                    SecureField("", text: subtitle)
+                        .label4Style()
+                        .disabled(true)
                 }
             }
             Spacer()

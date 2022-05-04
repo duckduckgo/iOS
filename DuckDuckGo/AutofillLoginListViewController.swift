@@ -41,12 +41,8 @@ final class AutofillLoginListViewController: UIViewController {
         setupNavigationBarAppearance()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
     private func setupNavigationBarAppearance() {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         navigationController?.navigationBar.tintColor = UIColor(named: "NavigationBarTint")
     }
     

@@ -1,0 +1,55 @@
+name: Pull Request Checks
+
+on: 
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+
+jobs:
+  swiftlint:
+
+    name: Run SwiftLint
+
+    if: github.event_name == 'pull_request'
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3
+    - name: Fetch PR's target branch
+      run: git fetch --no-tags --prune --depth=1 origin ${{ github.base_ref }}
+    - name: Run SwiftLint on files changed in the PR
+      uses: norio-nomura/action-swiftlint@3.2.1
+      with:
+        args: --strict --force-exclude
+      env:
+        DIFF_BASE: ${{ github.base_ref }}
+
+  unit-tests:
+
+    name: Run Unit Tests
+
+    runs-on: macos-11
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Build and test
+      run: |
+        xcodebuild test \
+          -scheme "DuckDuckGo" \
+          -destination "platform=iOS Simulator,name=iPhone 8" \
+          | xcpretty -r junit -o unittests.xml
+
+    - name: Publish unit tests report
+      uses: mikepenz/action-junit-report@v3
+      if: always() # always run even if the previous step fails
+      with:
+        report_paths: unittests.xml
+

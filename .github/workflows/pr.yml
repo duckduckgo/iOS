@@ -10,7 +10,7 @@ on:
 jobs:
   swiftlint:
 
-    name: Run SwiftLint
+    name: SwiftLint
 
     if: github.event_name == 'pull_request'
 
@@ -19,8 +19,10 @@ jobs:
     steps:
     - name: Check out the code
       uses: actions/checkout@v3
+
     - name: Fetch PR's target branch
       run: git fetch --no-tags --prune --depth=1 origin ${{ github.base_ref }}
+
     - name: Run SwiftLint on files changed in the PR
       uses: norio-nomura/action-swiftlint@3.2.1
       with:
@@ -30,7 +32,7 @@ jobs:
 
   unit-tests:
 
-    name: Run Unit Tests
+    name: Unit Tests
 
     runs-on: macos-11
 
@@ -46,6 +48,8 @@ jobs:
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 8" \
           | xcpretty -r junit -o unittests.xml
+      env:
+        NSUnbufferedIO: YES
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3

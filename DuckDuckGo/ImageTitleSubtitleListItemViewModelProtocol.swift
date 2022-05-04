@@ -25,6 +25,7 @@ protocol ImageTitleSubtitleListItemViewModelProtocol: ObservableObject {
 
     var title: String { get }
     var subtitle: String { get }
+    #warning("does this needs to be a property here? maybe only image is good enough")
     var loadImage: LoadImageClosure { get set }
     var image: UIImage { get }
 }

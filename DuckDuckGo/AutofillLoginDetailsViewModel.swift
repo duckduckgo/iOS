@@ -86,7 +86,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .username:
             UIPasteboard.general.string = username
         case .password:
-            UIPasteboard.general.string = "123"
+            UIPasteboard.general.string = password
         case .address:
             UIPasteboard.general.string = address
         }

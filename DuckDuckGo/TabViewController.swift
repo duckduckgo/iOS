@@ -1071,7 +1071,7 @@ extension TabViewController: WKNavigationDelegate {
         
             decisionHandler(.cancel)
         } else {
-            // MIME should trigger download but no 2xx status code
+            // MIME type should trigger download but response has no 2xx status code
             decisionHandler(.allow)
         }
     }

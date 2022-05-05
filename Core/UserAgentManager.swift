@@ -20,9 +20,19 @@
 import Foundation
 import WebKit
 
-public class UserAgentManager {
+public protocol UserAgentManager {
+
+    func update(request: inout URLRequest, isDesktop: Bool)
+
+    func update(webView: WKWebView, isDesktop: Bool, url: URL?)
+
+    func userAgent(isDesktop: Bool) -> String
     
-    public static let shared = UserAgentManager()
+}
+
+public class DefaultUserAgentManager: UserAgentManager {
+    
+    public static let shared: UserAgentManager = DefaultUserAgentManager()
 
     private var userAgent = UserAgent()
     

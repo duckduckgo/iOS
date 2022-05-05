@@ -103,7 +103,9 @@ public class Favicons {
     
     let sourcesProvider: FaviconSourcesProvider
     let bookmarksStore: BookmarkStore
-    
+
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+
     init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(), bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
         self.sourcesProvider = sourcesProvider
         self.bookmarksStore = bookmarksStore
@@ -354,7 +356,7 @@ public class Favicons {
     private func loadImage(url: URL) -> UIImage? {
         var image: UIImage?
         var request = URLRequest.userInitiated(url)
-        UserAgentManager.shared.update(request: &request, isDesktop: false)
+        userAgentManager.update(request: &request, isDesktop: false)
 
         let group = DispatchGroup()
         group.enter()

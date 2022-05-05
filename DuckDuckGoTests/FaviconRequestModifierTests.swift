@@ -24,7 +24,7 @@ class FaviconRequestModifierTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        _ = UserAgentManager.shared
+        _ = DefaultUserAgentManager.shared
     }
     
     func test() {

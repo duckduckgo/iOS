@@ -26,6 +26,7 @@ import WebKit
 
 class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
 
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
     let appUrls = AppUrls()
 
     @IBOutlet var webView: WKWebView!
@@ -89,7 +90,7 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
 
     func updateContentMode() {
         webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
-        UserAgentManager.shared.update(webView: webView, isDesktop: false, url: nil)
+        userAgentManager.update(webView: webView, isDesktop: false, url: nil)
     }
 
     // MARK: - WKNavigationDelegate

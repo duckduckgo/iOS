@@ -35,7 +35,7 @@ class FaviconsTests: XCTestCase {
         Favicons.Constants.bookmarksCache.clearDiskCache()
         Favicons.Constants.bookmarksCache.clearMemoryCache()
         
-        _ = UserAgentManager.shared
+        _ = DefaultUserAgentManager.shared
     }
     
     func testWhenFreshInstallThenNeedsMigration() {

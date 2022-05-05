@@ -106,7 +106,9 @@ class TabViewController: UIViewController {
     
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
-    
+
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+
     public var url: URL? {
         didSet {
             updateTabModel()
@@ -1450,7 +1452,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if allowPolicy != WKNavigationActionPolicy.cancel {
-            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
+            userAgentManager.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
         }
         
         if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {

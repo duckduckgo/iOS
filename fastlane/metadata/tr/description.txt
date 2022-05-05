@@ -1,24 +1,28 @@
-Gizlilik, basitleştirildi.
+İnternette izlenmekten bıktınız mı? Size yardım edebiliriz.
 
-DuckDuckGo olarak, internetin böylesine tedirginlik yaratmaması gerektiğine inanıyoruz. Hak ettiğiniz çevrimiçi gizliliği elde etmek, perdeyi çekmek kadar basit olmalı. 
+DuckDuckGo, internet etkinliğinizi korumaya yardımcı olan hepsi bir arada gizlilik uygulamasıdır. Tek bir indirmeyle, arama yaparken ve gezinirken üçüncü taraf izleyicilerden sorunsuz koruma sağlayan ve hatta e-posta alırken de izleme korumalarına erişim sağlayan yeni bir günlük tarayıcıya sahip olursunuz. DuckDuckGo ile gizlilik varsayılan olabilir.
 
-İnternette nereye giderseniz gidin, arama yaparken ve gezinirken kişisel bilgilerinizin kontrolünü rahatça elinize almanız için gerekli temel gizlilik özelliklerini sağlıyoruz:
-• Reklam Takip Ağlarından Kaçının — Gizlilik Korumamız bulabildiğimiz tüm gizli takip programlarını engeller, zaman içerisinde sizi takip eden başlıca reklam ağlarını teşhir eder; böylelikle sizi takip etmeye çalışanları siz takip edebilirsiniz.
-• Şifreleme Korumasını Artırın — Mümkün olduğunda siteleri şifreli bağlantı kullanmak zorunda bırakır, İnternet Servis Sağlayıcıları gibi meraklı gözlerden verilerinizi koruruz.
-• Aramanızı Gizli Yapın — Finans, sağlık ve politika gibi konulardaki sorularınız dolayısıyla son derece kişisel bilgilerinizi arama motorunuzla paylaşırsınız. Neyi aradığınız sizi ilgilendirir. İşte bu yüzden DuckDuckGo sizi takip etmez. Asla.
-• Gizlilik Politikalarını Deşifre Edin — Terms of Service; Didn't Read (ToS;DR) ile işbirliğine giderek, mümkün olan yerlerde web sitesi kullanım koşulları ve gizlilik politikalarına ilişkin puanlarını ve etiketlerini dahil ediyoruz. 
+Özel Arama - DuckDuckGo'da Private Search yerleşik bir özellik olduğundan, web'de takip edilmeden arama yapabilirsiniz.
 
-Arama yaparken ve gezinirken bir web sitesini ziyaret ettiğinizde DuckDuckGo size bir Gizlilik Notu derecelendirmesi gösterir (A-F). Bu derecelendirme sayesinde korunma düzeyinizi bir bakışta görür, sizi takip etmeye çalışırken yakaladıklarımızın detaylarına girebilir ve altta yatan sitenin gizlilik önlemlerini nasıl geliştirdiğimizi öğrenebilirsiniz. Gizlilik Notu; gizli takip ağları bulunması, şifreleme kullanımı ve web sitesi gizlilik uygulamaları esasında otomatik olarak verilir.
+Web Sitesi İzlemesinden Kaçın - Tracker Radar gizli üçüncü taraf izleyicileri otomatik olarak engeller. DuckDuckGo'da ziyaret ettiğiniz web sitelerindeki izleyicileri tespit ederiz. Bu sayede bu izleyicilerin arkasındaki şirketler verilerinizi toplayamaz veya satamaz.
 
-Uygulamamız; sekmeler, yer imleri ve otomatik tamamlama gibi standart tarayıcı işlevlerini sunar. Yukarıda açıklanan güçlü Gizlilik Korumasının yanı sıra, tarayıcıya başka gizlilik özellikleri de ekledik:
-• Ateş Butonu — Tüm sekmelerinizi ve verilerinizi tek dokunuşta temizleyin.
-• Uygulama Kilidi — Uygulamayı, Dokunmatik Kimlik veya Yüz Kimliği ile güvenceye alın.
+Şifrelemeyi Zorunlu Kılma - Smarter Encryption, DuckDuckGo'da ziyaret ettiğiniz siteleri mevcut olduğunda şifreli (HTTPS) bağlantısını kullanmaya zorlar ve verilerinizi meraklı gözlerden korur.
 
-Çok fazla kişi internette gizlilik beklenemeyeceğine inanıyor. Biz bunu değiştirmek için mücadele ediyoruz ve yeni bir çevrimiçi güven standardını misyon belledik. DuckDuckGo yükleyin, gizliliğinizi geri kazanın!
+E-posta İzleyicilerini Engelleme - E-postaların %70'i açtığınız anda sizi takip eder. Email Protection'ı etkinleştirmek, e-posta izleyicileri engellemenin ve hizmetleri değiştirmeden adresinizi gizlemenin kolay bir yoludur. Uygulama ayarları menüsünden ücretsiz beta sürümü için özel bekleme listesine katılın.
 
-Hakkımızda: https://duckduckgo.com/about/
-Cihaz Gizlilik İpuçları: https://spreadprivacy.com/tag/device-privacy-tips/
-Gizlilik Hakkında Daha Fazla Eğitim: https://spreadprivacy.com/tag/privacy-newsletter/
-Gizlilik Politikamız: https://duckduckgo.com/privacy/
+DuckDuckGo uygulaması sekmeler ve yer işaretleri gibi standart tarama özelliklerinin yanı sıra çok beğeneceğiniz gizlilik kontrolleri sunar. Gizliliğinizin kontrolünü ele almak için diğer konularda ödün vermeniz gerekmez.
 
-Açık kaynak adresi: https://github.com/duckduckgo/iOS.
+Fire Button'a Dokunarak Verileri Yakın - Fire Button'a tek dokunuşla sekmeleri ve gezinme verilerinizi temizleyin.
+
+Gizlilik Tercihinizi GPC ile İletin - Uygulamada yerleşik olarak bulunan Global Privacy Control (GPC), yasal devre dışı bırakma haklarınızı otomatik olarak ifade etmenize yardımcı olur. Bu, web sitelerine kişisel bilgilerinizi çeşitli eyaletlerde veya ülkelerde gelecekteki yasal çerçeveler (örneğin CCPA, GDPR) kapsamında satmaması veya paylaşmaması gerektiğini belirtir.
+
+Gizliliğinizi geri almak için beklemenize gerek yok. DuckDuckGo kullanan milyonlarca insana katılın ve tek bir uygulama ile internetteki günlük etkinliklerinizin çoğunu koruyun. Gizlilik, basitleştirildi.
+
+
+
+Hakkımızda: https://duckduckgo.com/about
+İşleyiş Şekli: https://duckduckgo.com/app
+Gizlilik Bülteni: https://duckduckgo.com/newsletter
+Gizlilik Politikası: https://duckduckgo.com/privacy
+Açık Kaynak: https://github.com/duckduckgo/Android
+

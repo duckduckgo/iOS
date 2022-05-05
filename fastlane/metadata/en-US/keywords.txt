@@ -1,1 +1,1 @@
-ddg,duckduckgo,duck duck go,web search,search,browser,dictionary,answers,reference,internet
+ddg,duckduckgo,duck duck go,web search,search,browser,browsing,dictionary,answers,reference,internet

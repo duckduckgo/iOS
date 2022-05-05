@@ -24,5 +24,5 @@ Hakkımızda: https://duckduckgo.com/about
 İşleyiş Şekli: https://duckduckgo.com/app
 Gizlilik Bülteni: https://duckduckgo.com/newsletter
 Gizlilik Politikası: https://duckduckgo.com/privacy
-Açık Kaynak: https://github.com/duckduckgo/Android
+Açık Kaynak: https://github.com/duckduckgo/iOS
 

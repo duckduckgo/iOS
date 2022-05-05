@@ -24,4 +24,4 @@ Om oss: https://duckduckgo.com/about
 Hur det fungerar: https://duckduckgo.com/app
 Nyhetsbrev om integritet: https://duckduckgo.com/newsletter
 Integritetspolicy: https://duckduckgo.com/privacy
-Öppen källkod: https://github.com/duckduckgo/Android
+Öppen källkod: https://github.com/duckduckgo/iOS

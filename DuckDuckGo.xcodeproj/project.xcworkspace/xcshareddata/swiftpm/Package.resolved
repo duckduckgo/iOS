@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "BrowserServicesKit",
-        "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
+        "package": "Autofill",
+        "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
-          "branch": null,
-          "revision": "80a5ce3088aa5af288c86a2a9dd73295d6f037e7",
-          "version": "12.2.9"
+          "branch": "jkt/apple-package-play2",
+          "revision": "0718ff844302768011dfb7c893251553979d3ac1",
+          "version": null
         }
       },
       {

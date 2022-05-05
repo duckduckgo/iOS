@@ -20,12 +20,12 @@
 import Foundation
 import WebKit
 import Core
+
 protocol FindInPageDelegate: NSObjectProtocol {
     
     func updated(findInPage: FindInPage)
 
 }
-
 
 class FindInPage: NSObject {
 

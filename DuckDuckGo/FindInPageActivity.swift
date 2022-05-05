@@ -20,9 +20,9 @@
 import UIKit
 import Core
 
-class FindInPageActivity : UIActivity {
+class FindInPageActivity: UIActivity {
 
-    weak var controller : TabViewController?
+    weak var controller: TabViewController?
 
     override var activityTitle: String? {
         return UserText.findInPage

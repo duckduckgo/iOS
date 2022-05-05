@@ -21,8 +21,7 @@ import Core
 import WebKit
 import os.log
 
-class TabManager
-{
+class TabManager {
 
     private(set) var model: TabsModel
     

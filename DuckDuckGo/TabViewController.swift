@@ -1033,11 +1033,6 @@ extension TabViewController: WKNavigationDelegate {
             url = webView.url
             decisionHandler(.allow)
         } else if isSuccessfulResponse {
-            if let httpResponse = navigationResponse.response as? HTTPURLResponse {
-                Pixel.fire(pixel: .downloadPreparingToStart,
-                           withAdditionalParameters: [PixelParameters.statusCode: String(httpResponse.statusCode)])
-            }
-                           
             let downloadManager = AppDependencyProvider.shared.downloadManager
             
             let startDownload: () -> Download? = {

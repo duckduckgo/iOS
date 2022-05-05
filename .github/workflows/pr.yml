@@ -34,7 +34,7 @@ jobs:
 
     name: Unit Tests
 
-    runs-on: macos-11
+    runs-on: macos-12
 
     steps:
     - name: Check out the code

@@ -55,17 +55,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.title = account.name
         self.lastUpdatedAt = account.lastUpdated.debugDescription
         
-        self.headerViewModel = AutofillLoginDetailsHeaderViewModel(title: account.name, subtitle: lastUpdatedAt, loadImage: { completion in
-            FaviconsHelper.loadFaviconSync(forDomain: account.domain,
-                                           usingCache: .tabs,
-                                           useFakeFavicon: true) { image, _ in
-                if let image = image {
-                    completion(image)
-                } else {
-                    completion(UIImage(systemName: "globle")!)
-                }
-            }
-        })
+        self.headerViewModel = AutofillLoginDetailsHeaderViewModel(title: account.name, subtitle: lastUpdatedAt, domain: account.domain)
         
         setupPassword(with: account)
     }
@@ -153,16 +143,24 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
 final class AutofillLoginDetailsHeaderViewModel: ImageTitleSubtitleListItemViewModelProtocol {
     @Published var title: String
     var subtitle: String
-    var loadImage: LoadImageClosure
     @Published var image = UIImage(systemName: "globe")!
 
-    internal init(title: String, subtitle: String, loadImage: @escaping AutofillLoginDetailsHeaderViewModel.LoadImageClosure) {
+    internal init(title: String, subtitle: String, domain: String) {
         self.title = title
         self.subtitle = subtitle
-        self.loadImage = loadImage
         
-        self.loadImage { image in
-            self.image = image
+        fetchImage(with: domain)
+    }
+    
+    private func fetchImage(with domain: String) {
+        FaviconsHelper.loadFaviconSync(forDomain: domain,
+                                       usingCache: .tabs,
+                                       useFakeFavicon: true) { image, _ in
+            if let image = image {
+                self.image = image
+            } else {
+                self.image = UIImage(systemName: "globle")!
+            }
         }
     }
 }

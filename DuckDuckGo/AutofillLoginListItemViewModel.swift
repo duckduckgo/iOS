@@ -28,20 +28,24 @@ final class AutofillLoginListItemViewModel: ImageTitleSubtitleListItemViewModelP
     let title: String
     let subtitle: String
     let id = UUID()
-    var loadImage: LoadImageClosure
 
-    internal init(account: SecureVaultModels.WebsiteAccount, loadImage:  @escaping LoadImageClosure) {
+    internal init(account: SecureVaultModels.WebsiteAccount) {
         self.account = account
         self.title = account.name
         self.subtitle = account.username
-        self.loadImage = loadImage
         
         fetchImage()
     }
     
     private func fetchImage() {
-        loadImage { image in
-            self.image = image
+        FaviconsHelper.loadFaviconSync(forDomain: account.domain,
+                                       usingCache: .tabs,
+                                       useFakeFavicon: true) { image, _ in
+            if let image = image {
+                self.image = image
+            } else {
+                self.image = UIImage(systemName: "globle")!
+            }
         }
     }
     

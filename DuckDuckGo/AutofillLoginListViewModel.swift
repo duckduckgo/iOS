@@ -33,17 +33,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     func update() {
         if let accounts = try? secureVault.accounts() {
             items = accounts.map { account in
-                AutofillLoginListItemViewModel(account: account) { completion in
-                    FaviconsHelper.loadFaviconSync(forDomain: account.domain,
-                                                   usingCache: .tabs,
-                                                   useFakeFavicon: true) { image, _ in
-                        if let image = image {
-                            completion(image)
-                        } else {
-                            completion(UIImage(systemName: "globle")!)
-                        }
-                    }
-                }
+                AutofillLoginListItemViewModel(account: account)
             }
         }
     }

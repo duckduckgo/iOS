@@ -30,13 +30,9 @@ final class AutofillLoginListViewController: UIViewController {
         super.viewDidLoad()
         title = "Autofill Logins"
         
-        do {
-            self.viewModel = try AutofillLoginListViewModel()
-            installContentView(with: viewModel!)
-        } catch {
-            print("add error ui")
-        }
-        
+        self.viewModel = AutofillLoginListViewModel()
+        installContentView(with: viewModel!)
+
         setupTableViewAppearance()
         setupNavigationBarAppearance()
     }

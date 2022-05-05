@@ -22,26 +22,19 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct AutofillLoginListView: View {
     @ObservedObject var viewModel: AutofillLoginListViewModel
-    @State private var selectedItem: AutofillLoginListItemViewModel? {
-        didSet {
-            if let itemSelected = itemSelected,
-                let selectedItem = selectedItem {
-                itemSelected(selectedItem)
-            }
-        }
-    }
     var itemSelected: ((AutofillLoginListItemViewModel) -> Void)?
     
     var body: some View {
-        List(viewModel.items) { item in
+        List(viewModel.sections) { section in
             Section {
-                ImageTitleSubtitleListItemView(viewModel: item)
-                    .onTapGesture {
-                        self.selectedItem = item
-                    }
-                
+                ForEach(section.items) { item in
+                    ImageTitleSubtitleListItemView(viewModel: item)
+                        .onTapGesture {
+                            self.selectItem(item)
+                        }
+                }
             } header: {
-                Text("Test")
+                Text(section.title)
             }
         }
         .listStyle(.insetGrouped)
@@ -49,6 +42,12 @@ struct AutofillLoginListView: View {
     
     func destinationView(with item: AutofillLoginListItemViewModel) -> some View {
         AutofillLoginDetailsView(viewModel: AutofillLoginDetailsViewModel(account: item.account))
+    }
+    
+    private func selectItem(_ item: AutofillLoginListItemViewModel) {
+        if let itemSelected = itemSelected {
+            itemSelected(item)
+        }
     }
 }
 

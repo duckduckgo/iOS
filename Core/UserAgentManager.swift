@@ -19,6 +19,7 @@
 
 import Foundation
 import WebKit
+import BrowserServicesKit
 
 public protocol UserAgentManager {
 
@@ -107,10 +108,11 @@ struct UserAgent {
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
     }
     
-    public func agent(forUrl url: URL?, isDesktop: Bool) -> String {
-        let uaSettings = ContentBlocking.privacyConfigurationManager.privacyConfig.settings(for: .customUserAgent)
+    public func agent(forUrl url: URL?, isDesktop: Bool,
+                      privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> String {
+        let uaSettings = privacyConfig.settings(for: .customUserAgent)
         let omittedSites = uaSettings[Constants.uaOmitSitesConfigKey] as? [String] ?? []
-        let customUAEnabled = ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .customUserAgent)
+        let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
         let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
             url?.isPart(ofDomain: domain) ?? false
         }

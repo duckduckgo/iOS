@@ -19,6 +19,7 @@
 
 import WebKit
 import XCTest
+import BrowserServicesKit
 @testable import Core
 
 class UserAgentTests: XCTestCase {
@@ -51,43 +52,108 @@ class UserAgentTests: XCTestCase {
         static let noAppSubdomainUrl = URL(string: "http://subdomain.cvs.com/index.html")
     }
     
+    let testConfig = """
+    {
+        "features": {
+            "customUserAgent": {
+                "state": "enabled",
+                "settings": {
+                    "omitApplicationSites": [
+                        "cvs.com"
+                    ]
+                },
+                "exceptions": []
+            }
+        },
+        "unprotectedTemporary": []
+    }
+    """.data(using: .utf8)!
+    
+    private var privacyConfig: PrivacyConfiguration!
+    
+    override func setUp() {
+        super.setUp()
+        
+        let mockEmbeddedData = MockEmbeddedDataProvider(data: testConfig, etag: "test")
+        let mockProtectionStore = MockDomainsProtectionStore()
+
+        let manager = PrivacyConfigurationManager(fetchedETag: nil,
+                                                  fetchedData: nil,
+                                                  embeddedDataProvider: mockEmbeddedData,
+                                                  localProtection: mockProtectionStore)
+
+        privacyConfig = manager.privacyConfig
+    }
+    
     func testWhenMobileUaAndDektopFalseThenMobileAgentCreatedWithApplicationAndSafariSuffix() {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
-        XCTAssertEqual(ExpectedAgent.mobile, testee.agent(forUrl: Constants.url, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.mobile, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: privacyConfig))
     }
     
     func testWhenMobileUaAndDektopTrueThenDesktopAgentCreatedWithApplicationAndSafariSuffix() {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
-        XCTAssertEqual(ExpectedAgent.desktop, testee.agent(forUrl: Constants.url, isDesktop: true))
+        XCTAssertEqual(ExpectedAgent.desktop, testee.agent(forUrl: Constants.url, isDesktop: true, privacyConfig: privacyConfig))
     }
     
     func testWhenTabletUaAndDektopFalseThenTabletAgentCreatedWithApplicationAndSafariSuffix() {
         let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
-        XCTAssertEqual(ExpectedAgent.tablet, testee.agent(forUrl: Constants.url, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.tablet, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: privacyConfig))
     }
     
     func testWhenTabletUaAndDektopTrueThenDesktopAgentCreatedWithApplicationAndSafariSuffix() {
         let testee = UserAgent(defaultAgent: DefaultAgent.tablet)
-        XCTAssertEqual(ExpectedAgent.desktop, testee.agent(forUrl: Constants.url, isDesktop: true))
+        XCTAssertEqual(ExpectedAgent.desktop, testee.agent(forUrl: Constants.url, isDesktop: true, privacyConfig: privacyConfig))
     }
     
     func testWhenNoUaAndDesktopFalseThenFallbackMobileAgentIsUsed() {
         let testee = UserAgent()
-        XCTAssertEqual(ExpectedAgent.mobileFallback, testee.agent(forUrl: Constants.url, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.mobileFallback, testee.agent(forUrl: Constants.url, isDesktop: false, privacyConfig: privacyConfig))
     }
     
     func testWhenNoUaAndDesktopTrueThenFallbackDesktopAgentIsUsed() {
         let testee = UserAgent()
-        XCTAssertEqual(ExpectedAgent.desktopFallback, testee.agent(forUrl: Constants.url, isDesktop: true))
+        XCTAssertEqual(ExpectedAgent.desktopFallback, testee.agent(forUrl: Constants.url, isDesktop: true, privacyConfig: privacyConfig))
     }
     
     func testWhenDomainDoesNotSupportApplicationComponentThenApplicationIsOmittedFromUa() {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
-        XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forUrl: Constants.noAppUrl, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forUrl: Constants.noAppUrl, isDesktop: false, privacyConfig: privacyConfig))
     }
     
     func testWhenSubdomainDoesNotSupportApplicationComponentThenApplicationIsOmittedFromUa() {
         let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
-        XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forUrl: Constants.noAppSubdomainUrl, isDesktop: false))
+        XCTAssertEqual(ExpectedAgent.mobileNoApplication,
+                       testee.agent(forUrl: Constants.noAppSubdomainUrl, isDesktop: false, privacyConfig: privacyConfig))
+    }
+    
+    func testWhenCustomUserAgentIsDisabledThenApplicationIsOmittedFromUa() {
+        let disabledConfig = """
+        {
+            "features": {
+                "customUserAgent": {
+                    "state": "disabled",
+                    "settings": {
+                        "omitApplicationSites": [
+                            "cvs.com"
+                        ]
+                    },
+                    "exceptions": []
+                }
+            },
+            "unprotectedTemporary": []
+        }
+        """.data(using: .utf8)!
+        
+        let mockEmbeddedData = MockEmbeddedDataProvider(data: disabledConfig, etag: "test")
+        let mockProtectionStore = MockDomainsProtectionStore()
+
+        let manager = PrivacyConfigurationManager(fetchedETag: nil,
+                                                  fetchedData: nil,
+                                                  embeddedDataProvider: mockEmbeddedData,
+                                                  localProtection: mockProtectionStore)
+        
+        let testee = UserAgent(defaultAgent: DefaultAgent.mobile)
+        XCTAssertEqual(ExpectedAgent.mobileNoApplication, testee.agent(forUrl: Constants.url, isDesktop: false,
+                                                                       privacyConfig: manager.privacyConfig))
     }
 }

@@ -203,9 +203,12 @@
                     "reason": "Broken login"
                 }
             ],
-            "state": "disabled"
+            "state": "enabled"
         },
         "fingerprintingHardware": {
+            "settings": {
+                "deviceMemory": 12
+            },
             "exceptions": [
                 {
                     "domain": "accounts.nintendo.com",
@@ -240,7 +243,7 @@
                     "reason": "site breakage"
                 }
             ],
-            "state": "disabled"
+            "state": "enabled"
         },
         "fingerprintingScreenSize": {
             "exceptions": [
@@ -308,7 +311,7 @@
                     "reason": "Login issues"
                 }
             ],
-            "state": "disabled"
+            "state": "enabled"
         },
         "trackerAllowlist": {
             "state": "enabled",

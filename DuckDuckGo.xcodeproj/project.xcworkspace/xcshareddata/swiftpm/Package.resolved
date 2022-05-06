@@ -2,11 +2,20 @@
   "object": {
     "pins": [
       {
+        "package": "ContentScopeScripts",
+        "repositoryURL": "https://github.com/duckduckgo/content-scope-scripts.git",
+        "state": {
+          "branch": "jkt/remote-values",
+          "revision": "0155aa1279347f4c7f4f61751422283b324f153a",
+          "version": null
+        }
+      },
+      {
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": "jkt/apple-package-play2",
-          "revision": "0718ff844302768011dfb7c893251553979d3ac1",
+          "revision": "295746485c8db3a68dcf65c6c876d0ee4f4eae7e",
           "version": null
         }
       },

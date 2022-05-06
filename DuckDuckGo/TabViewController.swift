@@ -162,7 +162,6 @@ class TabViewController: UIViewController {
     
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
-    private var fingerprintScript = FingerprintUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
     private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
@@ -274,14 +273,16 @@ class TabViewController: UIViewController {
             scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
                                                                 properties: prefs))
         
+        let contentScopeUserScript = ContentScopeUserScript(ContentBlocking.privacyConfigurationManager, properties: prefs)
+        
         userScripts = [
             debugScript,
+            contentScopeUserScript,
             textSizeUserScript,
             findInPageScript,
             navigatorPatchScript,
             surrogatesScript,
             contentBlockerRulesScript,
-            fingerprintScript,
             faviconScript,
             fullScreenVideoScript,
             autofillUserScript,

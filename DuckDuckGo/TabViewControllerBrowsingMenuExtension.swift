@@ -77,12 +77,23 @@ extension TabViewController {
                 self?.onReportBrokenSiteAction()
             }))
             
+            entries.append(.separator)
+
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
                                                      image: UIImage(named: "MenuDownloads")!,
                                                      showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
                                                      action: { [weak self] in
                 self?.onOpenDownloadsAction()
             }))
+            
+
+            if #available(iOS 14, *) {
+                entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
+                                                         image: UIImage(named: "MenuAutofill")!,
+                                                         action: { [weak self] in
+                    self?.onOpenAutofillLoginsAction()
+                }))
+            }
             
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
                                                      image: UIImage(named: "MenuSettings")!,
@@ -353,6 +364,11 @@ extension TabViewController {
         Pixel.fire(pixel: .downloadsListOpened,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
         delegate?.tabDidRequestDownloads(tab: self)
+    }
+    
+    private func onOpenAutofillLoginsAction() {
+        #warning("Add pixel here?")
+        delegate?.tabDidRequestAutofillLogins(tab: self)
     }
     
     private func onBrowsingSettingsAction() {

@@ -506,14 +506,6 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func onFirePressed() {
-#warning("REMOVE")
-        if #available(iOS 14.0, *) {
-            let test = AutofillLoginListViewController()
-            let navigationcontroller = UINavigationController(rootViewController: test)
-            
-            self.present(navigationcontroller, animated: true, completion: nil)
-        }
-#warning("REMOVE")
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
@@ -808,6 +800,13 @@ class MainViewController: UIViewController {
     
     fileprivate func launchDownloads() {
         performSegue(withIdentifier: "Downloads", sender: self)
+    }
+    
+    @available(iOS 14.0, *)
+    fileprivate func launchAutofillLogins() {
+        let test = AutofillLoginListViewController()
+        let navigationcontroller = UINavigationController(rootViewController: test)
+        self.present(navigationcontroller, animated: true, completion: nil)
     }
     
     fileprivate func launchSettings() {
@@ -1408,6 +1407,12 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestDownloads(tab: TabViewController) {
         launchDownloads()
+    }
+    
+    func tabDidRequestAutofillLogins(tab: TabViewController) {
+        if #available(iOS 14.0, *) {
+            launchAutofillLogins()
+        }
     }
 
     func tabDidRequestSettings(tab: TabViewController) {

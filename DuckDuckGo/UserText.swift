@@ -504,6 +504,7 @@ public struct UserText {
     public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login Updated", comment: "Message displayed after updating an autofill login")
     public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "SHOW", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
 
+    public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
 
     // MARK: - Mac Waitlist
     

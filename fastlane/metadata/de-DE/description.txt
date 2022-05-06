@@ -8,7 +8,7 @@ DuckDuckGo ist die umfassende Datenschutz-App, die dir hilft, deine Online-Aktiv
 
  • Verschlüsselung erzwingen - Smarter Encryption zwingt Websites, die du über DuckDuckGo besuchst, wenn möglich eine verschlüsselte (HTTPS) Verbindung zu nutzen, um deine Daten vor neugierigen Blicken zu schützen.
 
- • Email-Tracker blockieren (Beta) - 70 % der E-Mails tracken dich, sobald du sie öffnest. Das Einschalten der Email Protection ist der einfache Weg, E-Mail-Tracker zu blockieren und deine Adresse zu verbergen, ohne den Dienst zu wechseln. Trag dich über das Einstellungsmenü der App in die private Warteliste für die kostenlose Beta-Version ein.
+ • Email-Tracker blockieren - 70 % der E-Mails tracken dich, sobald du sie öffnest. Das Einschalten der Email Protection ist der einfache Weg, E-Mail-Tracker zu blockieren und deine Adresse zu verbergen, ohne den Dienst zu wechseln. Trag dich über das Einstellungsmenü der App in die private Warteliste für die kostenlose Beta-Version ein.
 
 Die DuckDuckGo-App bietet die Browserfunktionen, die du erwartest, wie Tabs und Lesezeichen, sowie Datenschutz-Einstellungen, die du lieben wirst. Um deine Privatsphäre zu schützen, musst du keine Kompromisse eingehen.
 

@@ -25,7 +25,6 @@ protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
 }
 
-
 final class AutofillLoginDetailsViewModel: ObservableObject {
     enum ViewMode {
         case edit
@@ -40,23 +39,29 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
     let account: SecureVaultModels.WebsiteAccount
+    var lastUpdatedAt = ""
+    
+    @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var username = ""
     @Published var password = ""
     @Published var address = ""
     @Published var title = ""
     @Published var viewMode: ViewMode = .view
-    var lastUpdatedAt = ""
-    @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
+
+    private var dateFormatter: DateFormatter = {
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = .medium
+        dateformatter.timeStyle = .short
+        return dateformatter
+    }()
     
     internal init(account: SecureVaultModels.WebsiteAccount) {
         self.account = account
         self.username = account.username
         self.address = account.domain
         self.title = account.name
-        self.lastUpdatedAt = account.lastUpdated.debugDescription
-        
+        self.lastUpdatedAt = "Login last updated \(dateFormatter.string(from: account.lastUpdated))"
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel(title: account.name, subtitle: lastUpdatedAt, domain: account.domain)
-        
         setupPassword(with: account)
     }
     
@@ -72,14 +77,20 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
     
     func copyToPasteboard(_ action: PasteboardCopyAction) {
+        var itemName = ""
         switch action {
         case .username:
+            itemName = "Username"
             UIPasteboard.general.string = username
         case .password:
+            itemName = "Password"
             UIPasteboard.general.string = password
         case .address:
+            itemName = "Address"
             UIPasteboard.general.string = address
         }
+        
+        presentCopyConfirmation(message: "\(itemName) copied")
     }
     
     #warning("Refactor, copied from SaveLoginViewModel")
@@ -91,6 +102,13 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         return String(repeating: "•", count: passwordCount)
     }
     
+    private func presentCopyConfirmation(message: String) {
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: message,
+                                      actionTitle: "",
+                                      onAction: {})
+        }
+    }
     
     private func setupPassword(with account: SecureVaultModels.WebsiteAccount) {
         do {

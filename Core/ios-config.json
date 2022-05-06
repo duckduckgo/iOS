@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1650981913382,
+    "version": 1651754979979,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -75,6 +75,10 @@
                 {
                     "domain": "n-tv.de",
                     "reason": "broken scrolling"
+                },
+                {
+                    "domain": "concursolutions.com",
+                    "reason": "blank page during opt-out"
                 }
             ],
             "settings": {

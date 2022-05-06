@@ -30,6 +30,21 @@ public struct Label3AltStyle: ViewModifier {
     }
 }
 
+public struct Label3Style: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
+    private let design: Font.Design
+    
+    public init(design: Font.Design = .default) {
+        self.design = design
+    }
+    
+    public func body(content: Content) -> some View {
+        content
+            .font(.system(size: 17, design: design))
+            .foregroundColor(colorScheme == .light ? .gray50 : .gray20)
+    }
+}
+
 public struct Label4Style: ViewModifier {
     @Environment(\.colorScheme) private var colorScheme
     public init() {}
@@ -58,6 +73,10 @@ public extension View {
     
     func label3AltStyle() -> some View {
         modifier(Label3AltStyle())
+    }
+    
+    func label3Style(design: Font.Design = .default) -> some View {
+        modifier(Label3Style(design: design))
     }
     
     func label4Style() -> some View {

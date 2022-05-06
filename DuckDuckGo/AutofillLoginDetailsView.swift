@@ -24,7 +24,8 @@ import DuckUI
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     @State private var cellMaxWidth: CGFloat?
-
+    @State private var isShowingPassword: Bool = false
+    
     var body: some View {
         Group {
             switch viewModel.viewMode {
@@ -96,7 +97,7 @@ struct AutofillLoginDetailsView: View {
             HStack {
                 if secure {
                     SecureField("", text: subtitle)
-                        .label4Style()
+                        .label3Style(design: .monospaced)
                 } else {
                     ClearTextField(text: subtitle)
                         .label4Style()
@@ -124,25 +125,51 @@ struct AutofillLoginDetailsView: View {
         .menuController("Copy \(title)", action: menuAction)
     }
     
-    #warning("refactor this pasta")
+#warning("refactor this pasta")
     private func secureCopyableCell(_ title: String, subtitle: Binding<String>, menuAction: @escaping () -> Void) -> some View {
         HStack {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(title)
-                    .label3AltStyle()
-                    .disabled(true)
-                
+            ZStack {
                 HStack {
-                    SecureField("", text: subtitle)
-                        .label4Style()
-                        .disabled(true)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(title)
+                            .label3AltStyle()
+                            .disabled(true)
+                        
+                        HStack {
+                            if isShowingPassword {
+                                Text(title)
+                                    .label3Style(design: .monospaced)
+                                    .disabled(true)
+                            } else {
+                                SecureField("", text: subtitle)
+                                    .label3Style(design: .monospaced)
+                                    .disabled(true)
+                            }
+                        }
+                    }
+                    Spacer()
                 }
+                
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .menuController("Copy \(title)", action: menuAction)
             }
-            Spacer()
+            
+            HStack {
+                Button {
+                    isShowingPassword.toggle()
+                } label: {
+                    HStack {
+                        Spacer()
+                        Image(isShowingPassword ? "HidePasswordEye" : "ShowPasswordEye")
+                    }
+                    .contentShape(Rectangle())
+                }.buttonStyle(.plain)
+                
+            }.frame(width: 50, height: 50)
         }
         .frame(maxWidth: .infinity)
         .frame(height: 60)
-        .menuController("Copy \(title)", action: menuAction)
     }
 }
 

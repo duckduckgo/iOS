@@ -1021,6 +1021,9 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
         
+        let httpResponse = navigationResponse.response as? HTTPURLResponse
+        let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
+        
         if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
             Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
         }
@@ -1029,12 +1032,7 @@ extension TabViewController: WKNavigationDelegate {
             setupOrClearTemporaryDownload(for: navigationResponse)
             url = webView.url
             decisionHandler(.allow)
-        } else {
-            if let httpResponse = navigationResponse.response as? HTTPURLResponse {
-                Pixel.fire(pixel: .downloadPreparingToStart,
-                           withAdditionalParameters: [PixelParameters.statusCode: String(httpResponse.statusCode)])
-            }
-                           
+        } else if isSuccessfulResponse {
             let downloadManager = AppDependencyProvider.shared.downloadManager
             
             let startDownload: () -> Download? = {
@@ -1072,6 +1070,9 @@ extension TabViewController: WKNavigationDelegate {
             }
         
             decisionHandler(.cancel)
+        } else {
+            // MIME type should trigger download but response has no 2xx status code
+            decisionHandler(.allow)
         }
     }
     

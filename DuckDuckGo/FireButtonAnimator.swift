@@ -138,8 +138,8 @@ class FireButtonAnimator {
             onTransitionCompleted()
         }
         
-        animationView.play(fromFrame: 0, toFrame: CGFloat(currentAnimation.endFrame.floatValue)) { _ in
-            animationView.removeFromSuperview()
+        animationView.play(fromFrame: 0, toFrame: CGFloat(currentAnimation.endFrame.floatValue)) { [weak animationView] _ in
+            animationView?.removeFromSuperview()
             completion()
         }
 

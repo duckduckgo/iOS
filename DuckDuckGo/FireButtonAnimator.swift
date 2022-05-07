@@ -42,7 +42,7 @@ enum FireButtonAnimationType: String, CaseIterable {
     
     var composition: Animation? {
         guard let fileName = fileName else { return nil }
-        return Animation.named(fileName)
+        return Animation.named(fileName, animationCache: LRUAnimationCache.sharedCache)
     }
 
     var transition: Double {

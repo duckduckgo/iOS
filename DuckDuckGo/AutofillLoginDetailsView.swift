@@ -193,13 +193,15 @@ private struct CopyablePasswordCell: View {
                     }
                     .contentShape(Rectangle())
                     .frame(width: 50, height: 50)
-                    
                 }
-                .buttonStyle(.borderless)
+                .buttonStyle(.plain)
+                .background(BackgroundColor(isSelected: selectedCell == id).color)
+                // Prevent taps from being forwarded
             }
         }
         .selectableBackground(isSelected: selectedCell == id)
     }
+
 }
 
 private struct CopyableCell: View {
@@ -237,15 +239,7 @@ private struct SelectableBackground: ViewModifier {
     
     public func body(content: Content) -> some View {
         content
-            .listRowBackground(listRowBackgroundColor)
-    }
-    
-    private var listRowBackgroundColor: Color {
-        if isSelected {
-            return Color("AutofillCellSelectedBackground")
-        } else {
-            return Color("AutofillCellBackground")
-        }
+            .listRowBackground(BackgroundColor(isSelected: isSelected).color)
     }
 }
 
@@ -289,5 +283,17 @@ private extension View {
     
     func selectableBackground(isSelected: Bool) -> some View {
         modifier(SelectableBackground(isSelected: isSelected))
+    }
+}
+
+private struct BackgroundColor {
+    let isSelected: Bool
+    
+    var color: Color {
+        if isSelected {
+            return Color("AutofillCellSelectedBackground")
+        } else {
+            return Color("AutofillCellBackground")
+        }
     }
 }

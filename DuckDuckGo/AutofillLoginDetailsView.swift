@@ -61,7 +61,6 @@ struct AutofillLoginDetailsView: View {
                 editableCell("Notes", subtitle: $viewModel.username)
             }
         }
-        
     }
     
     private var viewModeContentView: some View {
@@ -83,10 +82,6 @@ struct AutofillLoginDetailsView: View {
                     viewModel.copyToPasteboard(.password)
                     viewModel.selectedCell = nil
                 }
-//                secureCopyableCell("Password", subtitle: $viewModel.password) {
-//                    viewModel.copyToPasteboard(.password)
-//                    viewModel.selectedCell = nil
-//                }
             }
             
             Section {
@@ -179,11 +174,11 @@ private struct CopyablePasswordCell: View {
                 }
                 Spacer()
             }
-            .modifier(Copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: {
+            .copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: {
                 self.action()
             }, tapAction: {
                 self.selectedCell = self.id
-            }))
+            })
             
             HStack {
                 Spacer()
@@ -198,7 +193,7 @@ private struct CopyablePasswordCell: View {
                 .buttonStyle(.borderless)
             }
         }
-        .modifier(SelectableBackground(isSelected: selectedCell == id))
+        .selectableBackground(isSelected: selectedCell == id)
     }
 }
 
@@ -223,23 +218,12 @@ private struct CopyableCell: View {
             }
             Spacer()
         }
-        .modifier(Copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: {
+        .copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: {
             self.action()
         }, tapAction: {
             self.selectedCell = self.id
-        }))
-        .modifier(SelectableBackground(isSelected: selectedCell == id))
-    }
-}
-
-extension CopyableCell: Equatable, Hashable {
-    
-    static func == (lhs: CopyableCell, rhs: CopyableCell) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+        })
+        .selectableBackground(isSelected: selectedCell == id)
     }
 }
 
@@ -272,7 +256,7 @@ private struct Copyable: ViewModifier {
         self.menuAction = menuAction
         self.tapAction = tapAction
     }
-
+    
     public func body(content: Content) -> some View {
         ZStack {
             Rectangle()
@@ -280,15 +264,24 @@ private struct Copyable: ViewModifier {
                 .menuController("Copy \(menuTitle)", action: menuAction)
             
             content
-            .contentShape(Rectangle())
-            .frame(maxWidth: .infinity)
-            .frame(height: 60)
-     
+                .contentShape(Rectangle())
+                .frame(maxWidth: .infinity)
+                .frame(height: 60)
+            
         }
         .highPriorityGesture(
             TapGesture().onEnded({ _ in
                 tapAction()
             }))
     }
+}
 
+private extension View {
+    func copyable(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, tapAction: @escaping () -> Void) -> some View {
+        modifier(Copyable(isSelected: isSelected, menuTitle: menuTitle, menuAction: menuAction, tapAction: tapAction))
+    }
+    
+    func selectableBackground(isSelected: Bool) -> some View {
+        modifier(SelectableBackground(isSelected: isSelected))
+    }
 }

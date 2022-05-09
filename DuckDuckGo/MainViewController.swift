@@ -804,7 +804,7 @@ class MainViewController: UIViewController {
     
     @available(iOS 14.0, *)
     fileprivate func launchAutofillLogins() {
-        let test = AutofillLoginListViewController()
+        let test = AutofillLoginListTableViewController()
         let navigationcontroller = UINavigationController(rootViewController: test)
         self.present(navigationcontroller, animated: true, completion: nil)
     }

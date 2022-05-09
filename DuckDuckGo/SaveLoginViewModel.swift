@@ -57,9 +57,7 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
     }
 
     var hiddenPassword: String {
-        // swiftlint:disable:next line_length
-        let passwordCount = credentialManager.visiblePassword.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : credentialManager.visiblePassword.count
-        return String(repeating: "•", count: passwordCount)
+        PasswordHider(password: credentialManager.visiblePassword).hiddenPassword
     }
     
     var username: String {

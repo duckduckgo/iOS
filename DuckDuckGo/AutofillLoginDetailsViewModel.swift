@@ -39,11 +39,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
     let account: SecureVaultModels.WebsiteAccount
-    var lastUpdatedAt = ""
-    
-    var userVisiblePassword: String {
-        isPasswordHidden ? hiddenPassword : password
-    }
     
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
@@ -51,34 +46,31 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     @Published var password = ""
     @Published var address = ""
     @Published var title = ""
+    @Published var selectedCell: UUID?
     @Published var viewMode: ViewMode = .view {
         didSet {
             selectedCell = nil
         }
     }
-    @Published var selectedCell: UUID? {
-        didSet {
-            print("SET CELL")
-        }
+    
+    var userVisiblePassword: String {
+        let passwordHider = PasswordHider(password: password)
+        return isPasswordHidden ? passwordHider.hiddenPassword : passwordHider.password
     }
 
-    private var dateFormatter: DateFormatter = {
-        let dateformatter = DateFormatter()
-        dateformatter.dateStyle = .medium
-        dateformatter.timeStyle = .short
-        return dateformatter
-    }()
-    
     internal init(account: SecureVaultModels.WebsiteAccount) {
         self.account = account
+        self.headerViewModel = AutofillLoginDetailsHeaderViewModel()
+        self.updateData(with: account)
+    }
+    
+    private func updateData(with account: SecureVaultModels.WebsiteAccount) {
         self.username = account.username
         self.address = account.domain
         self.title = account.name
-        self.lastUpdatedAt = "Login last updated \(dateFormatter.string(from: account.lastUpdated))"
-        self.headerViewModel = AutofillLoginDetailsHeaderViewModel(title: account.name, subtitle: lastUpdatedAt, domain: account.domain)
+        self.headerViewModel.updateData(with: account)
         setupPassword(with: account)
     }
-    
     
     func toggleEditMode() {
         withAnimation {
@@ -107,13 +99,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         presentCopyConfirmation(message: "\(itemName) copied")
     }
     
-    #warning("Refactor, copied from SaveLoginViewModel")
-    var hiddenPassword: String {
-         let maximumPasswordDisplayCount = 40
-        let passwordCount = password.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : password.count
-        return String(repeating: "•", count: passwordCount)
-    }
-    
     private func presentCopyConfirmation(message: String) {
         DispatchQueue.main.async {
             ActionMessageView.present(message: message,
@@ -126,29 +111,22 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         do {
             if let accountID = account.id {
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-                                                                 
+                
                 if let credential = try
                     vault.websiteCredentialsFor(accountId: accountID) {
                     self.password = String(data: credential.password, encoding: .utf8) ?? ""
                 }
             }
-            
         } catch {
             print("Can't retrieve password")
         }
-        
     }
-    
-    private func updateHeaderModel(with credential: SecureVaultModels.WebsiteCredentials) {
-        self.headerViewModel.title = credential.account.name
-        self.headerViewModel.subtitle = credential.account.lastUpdated.debugDescription
-    }
-    
+
     func save() {
         do {
             if let accountID = account.id {
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-                                                                 
+                
                 if var credential = try vault.websiteCredentialsFor(accountId: accountID) {
                     credential.account.username = username
                     credential.account.title = title
@@ -158,9 +136,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
                     
-                    //Refetch after save to get updated properties like "lastUpdated"
+                    // Refetch after save to get updated properties like "lastUpdated"
                     if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
-                        updateHeaderModel(with: newCredential)
+                        self.updateData(with: newCredential.account)
                     }
                 }
             }
@@ -171,15 +149,23 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
 }
 
 final class AutofillLoginDetailsHeaderViewModel: ImageTitleSubtitleListItemViewModelProtocol {
-    @Published var title: String
-    var subtitle: String
+    private var dateFormatter: DateFormatter = {
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = .medium
+        dateformatter.timeStyle = .short
+        return dateformatter
+    }()
+    
+    
+    @Published var title: String = ""
+    @Published var subtitle: String = ""
     @Published var image = UIImage(systemName: "globe")!
+    
+    func updateData(with account: SecureVaultModels.WebsiteAccount) {
+        self.title = account.name
+        self.subtitle = "Login last updated \(dateFormatter.string(from: account.lastUpdated))"
 
-    internal init(title: String, subtitle: String, domain: String) {
-        self.title = title
-        self.subtitle = subtitle
-        
-        fetchImage(with: domain)
+        fetchImage(with: account.domain)
     }
     
     private func fetchImage(with domain: String) {

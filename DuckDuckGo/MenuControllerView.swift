@@ -35,7 +35,11 @@ struct MenuControllerItem {
 extension View {
     
     func menuController(_ title: String, action: @escaping () -> Void) -> some View {
-        MenuControllerView(content: self, title: title, action: action)
+        MenuControllerView(content: self, title: title, display: false, action: action)
+    }
+    
+    func menuController(_ title: String, display: Bool, action: @escaping () -> Void) -> some View {
+        MenuControllerView(content: self, title: title, display: display, action: action)
     }
 
 }
@@ -46,10 +50,11 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
     
     let content: Content
     let title: String
+    let display: Bool
     let action: () -> Void
-
+    
     func makeCoordinator() -> Coordinator<Content> {
-        Coordinator(title: title, action: action)
+        Coordinator(title: title, display: display, action: action)
     }
     
     func makeUIViewController(context: Context) -> UIHostingController<Content> {
@@ -59,24 +64,53 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
         coordinator.responder = hostingController
         
         let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.tap))
-        hostingController.view.addGestureRecognizer(tap)
+       // hostingController.view.addGestureRecognizer(tap)
         
+
         return hostingController
     }
     
-    func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: Context) { }
+    func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: Context) {
+        let coordinator = context.coordinator
+
+        if display {
+            DispatchQueue.main.async {
+            coordinator.displayMenu(view: uiViewController.view)
+            }
+        } else {
+            
+        }
+    }
     
     class Coordinator<Content: View>: NSObject {
         var responder: UIResponder?
         
         private let title: String
+        private let display: Bool
         private let action: () -> Void
         
-        init(title: String, action: @escaping () -> Void) {
+        init(title: String, display: Bool, action: @escaping () -> Void) {
             self.title = title
+            self.display = display
             self.action = action
         }
         
+        func displayMenu(view: UIView) {
+            guard let responder = responder else {
+                return
+            }
+
+            responder.becomeFirstResponder()
+            let menu = UIMenuController.shared
+
+            menu.menuItems = [
+                UIMenuItem(title: self.title, action: #selector(HostingController<Content>.menuItemAction(_:)))
+            ]
+
+            menu.showMenu(from: view, rect: view.bounds)
+            
+        }
+   
         @objc func tap(_ gestureRecognizer: UILongPressGestureRecognizer) {
             let menu = UIMenuController.shared
 

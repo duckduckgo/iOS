@@ -10,6 +10,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Autofill Logins";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Bookmark";
 

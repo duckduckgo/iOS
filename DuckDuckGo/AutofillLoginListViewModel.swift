@@ -29,9 +29,27 @@ struct AutofillLoginListSection: Identifiable {
 
 final class AutofillLoginListViewModel: ObservableObject {
     @Published var sections = [AutofillLoginListSection]()
-
+    private(set) var indexes = [String]()
     init() {
         update()
+    }
+    
+    func delete(at indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        let item = section.items[indexPath.row]
+        delete(item.account)
+        update()
+    }
+    
+    private func delete(_ account: SecureVaultModels.WebsiteAccount) {
+        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
+        let accountID = account.id else { return }
+        
+        do {
+            try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
+        } catch {
+            print("ERROR")
+        }
     }
     
     func update() {
@@ -67,6 +85,8 @@ final class AutofillLoginListViewModel: ObservableObject {
             self.sections.sort(by: { leftSection, rightSection in
                 leftSection.title < rightSection.title
             })
+            
+            indexes = self.sections.map { $0.title.uppercased() }
         }
     }
 }

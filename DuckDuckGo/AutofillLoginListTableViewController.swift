@@ -23,7 +23,6 @@ import UIKit
 class AutofillLoginListTableViewController: UITableViewController {
     private let viewModel = AutofillLoginListViewModel()
     
-    
     init() {
         super.init(style: .insetGrouped)
     }
@@ -46,6 +45,21 @@ class AutofillLoginListTableViewController: UITableViewController {
             detailsController.delegate = self
             navigationController?.pushViewController(detailsController, animated: true)
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let section = viewModel.sections[indexPath.section]
+            let shouldDeleteSection = section.items.count == 1
+            
+            viewModel.delete(at: indexPath)
+            
+            if shouldDeleteSection {
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            } else {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -67,23 +81,9 @@ class AutofillLoginListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         viewModel.sections[section].title
     }
-}
-
-#warning("move to its own file")
-extension UITableView {
-    func dequeueCell<CellType: UITableViewCell>(ofType: CellType.Type, for indexPath: IndexPath) -> CellType {
-        
-        let reuseIdentifier = "\(CellType.self)"
-        let someCell = self.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        guard let cell = someCell as? CellType else {
-            fatalError("Could not dequeue cell of type \(CellType.self)")
-        }
-        return cell
-    }
     
-    func registerCell<CellType: UITableViewCell>(ofType: CellType.Type) {
-        let reuseIdentifier = "\(CellType.self)"
-        self.register(CellType.self, forCellReuseIdentifier: reuseIdentifier)
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        viewModel.indexes
     }
 }
 

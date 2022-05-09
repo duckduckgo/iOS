@@ -27,18 +27,23 @@ struct AutofillLoginDetailsView: View {
     @State private var isShowingPassword: Bool = false
     
     var body: some View {
-        Group {
+        List {
             switch viewModel.viewMode {
             case .edit:
                 editModeContentView
             case .view:
                 viewModeContentView
             }
-        }.transition(.opacity)
+        }
+        .simultaneousGesture(
+            DragGesture().onChanged({_ in
+                viewModel.selectedCell = nil
+                print("Gesture")
+            }))
     }
     
     private var editModeContentView: some View {
-        List {
+        Group {
             Section {
                 editableCell("Login Name", subtitle: $viewModel.title)
             }
@@ -56,28 +61,38 @@ struct AutofillLoginDetailsView: View {
                 editableCell("Notes", subtitle: $viewModel.username)
             }
         }
-        .listStyle(.insetGrouped)
+        
     }
     
     private var viewModeContentView: some View {
-        List {
+        Group {
             Section {
                 ImageTitleSubtitleListItemView(viewModel: viewModel.headerViewModel)
             }
             
             Section {
-                copyableCell("Username", subtitle: viewModel.username) {
+                CopyableCell(title: "Username", subtitle: viewModel.username, selectedCell: $viewModel.selectedCell) {
                     viewModel.copyToPasteboard(.username)
+                    viewModel.selectedCell = nil
                 }
-                
-                secureCopyableCell("Password", subtitle: $viewModel.password) {
+
+                CopyablePasswordCell(title: "Password", password: viewModel.userVisiblePassword,
+                                     selectedCell: $viewModel.selectedCell,
+                                     isPasswordHidden: $viewModel.isPasswordHidden) {
+                    
                     viewModel.copyToPasteboard(.password)
+                    viewModel.selectedCell = nil
                 }
+//                secureCopyableCell("Password", subtitle: $viewModel.password) {
+//                    viewModel.copyToPasteboard(.password)
+//                    viewModel.selectedCell = nil
+//                }
             }
             
             Section {
-                copyableCell("Address", subtitle: viewModel.address) {
+                CopyableCell(title: "Address", subtitle: viewModel.address, selectedCell: $viewModel.selectedCell) {
                     viewModel.copyToPasteboard(.address)
+                    viewModel.selectedCell = nil
                 }
             }
             
@@ -86,7 +101,6 @@ struct AutofillLoginDetailsView: View {
                     .disabled(true)
             }
         }
-        .listStyle(.insetGrouped)
     }
     
     private func editableCell(_ title: String, subtitle: Binding<String>, secure: Bool = false) -> some View {
@@ -104,72 +118,6 @@ struct AutofillLoginDetailsView: View {
                 }
             }
         }.frame(height: 60)
-    }
-    
-    private func copyableCell(_ title: String, subtitle: String, menuAction: @escaping () -> Void) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(title)
-                    .label3AltStyle()
-                    .disabled(true)
-                
-                HStack {
-                    Text(subtitle)
-                        .label4Style()
-                }
-            }
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: 60)
-        .menuController("Copy \(title)", action: menuAction)
-    }
-    
-#warning("refactor this pasta")
-    private func secureCopyableCell(_ title: String, subtitle: Binding<String>, menuAction: @escaping () -> Void) -> some View {
-        HStack {
-            ZStack {
-                HStack {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(title)
-                            .label3AltStyle()
-                            .disabled(true)
-                        
-                        HStack {
-                            if isShowingPassword {
-                                Text(title)
-                                    .label3Style(design: .monospaced)
-                                    .disabled(true)
-                            } else {
-                                SecureField("", text: subtitle)
-                                    .label3Style(design: .monospaced)
-                                    .disabled(true)
-                            }
-                        }
-                    }
-                    Spacer()
-                }
-                
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .menuController("Copy \(title)", action: menuAction)
-            }
-            
-            HStack {
-                Button {
-                    isShowingPassword.toggle()
-                } label: {
-                    HStack {
-                        Spacer()
-                        Image(isShowingPassword ? "HidePasswordEye" : "ShowPasswordEye")
-                    }
-                    .contentShape(Rectangle())
-                }.buttonStyle(.plain)
-                
-            }.frame(width: 50, height: 50)
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: 60)
     }
 }
 
@@ -207,3 +155,140 @@ struct ClearTextField: View {
 //        AutofillLoginDetailsView()
 //    }
 //}
+
+private struct CopyablePasswordCell: View {
+    @State private var id = UUID()
+    let title: String
+    let password: String
+    @Binding var selectedCell: UUID?
+    @Binding var isPasswordHidden: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        ZStack {
+            HStack {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(title)
+                        .label3AltStyle()
+                        .disabled(true)
+                    
+                    HStack {
+                        Text(password)
+                            .label3Style(design: .monospaced)
+                    }
+                }
+                Spacer()
+            }
+            .modifier(Copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: {
+                self.action()
+            }, tapAction: {
+                self.selectedCell = self.id
+            }))
+            
+            HStack {
+                Spacer()
+                Button {
+                    isPasswordHidden.toggle()
+                } label: {
+                    Image(isPasswordHidden ? "ShowPasswordEye": "HidePasswordEye")
+                        .foregroundColor(.primary)
+                        .contentShape(Rectangle())
+                        .frame(width: 40, height: 50)
+                }
+                .buttonStyle(.borderless)
+            }
+        }
+        .modifier(SelectableBackground(isSelected: selectedCell == id))
+    }
+}
+
+private struct CopyableCell: View {
+    @State private var id = UUID()
+    let title: String
+    let subtitle: String
+    @Binding var selectedCell: UUID?
+    let action: () -> Void
+        
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(title)
+                    .label3AltStyle()
+                    .disabled(true)
+                
+                HStack {
+                    Text(subtitle)
+                        .label4Style()
+                }
+            }
+            Spacer()
+        }
+        .modifier(Copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: {
+            self.action()
+        }, tapAction: {
+            self.selectedCell = self.id
+        }))
+        .modifier(SelectableBackground(isSelected: selectedCell == id))
+    }
+}
+
+extension CopyableCell: Equatable, Hashable {
+    
+    static func == (lhs: CopyableCell, rhs: CopyableCell) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+private struct SelectableBackground: ViewModifier {
+    var isSelected: Bool
+    
+    public func body(content: Content) -> some View {
+        content
+            .listRowBackground(listRowBackgroundColor)
+    }
+    
+    private var listRowBackgroundColor: Color {
+        if isSelected {
+            return Color("AutofillCellSelectedBackground")
+        } else {
+            return Color("AutofillCellBackground")
+        }
+    }
+}
+
+private struct Copyable: ViewModifier {
+    var isSelected: Bool
+    var menuTitle: String
+    let menuAction: () -> Void
+    let tapAction: () -> Void
+    
+    internal init(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, tapAction: @escaping () -> Void) {
+        self.isSelected = isSelected
+        self.menuTitle = menuTitle
+        self.menuAction = menuAction
+        self.tapAction = tapAction
+    }
+
+    public func body(content: Content) -> some View {
+        ZStack {
+            Rectangle()
+                .foregroundColor(.clear)
+                .menuController("Copy \(menuTitle)", display: isSelected, action: menuAction)
+            
+            content
+            .contentShape(Rectangle())
+            .frame(maxWidth: .infinity)
+            .frame(height: 60)
+     
+        }
+        .highPriorityGesture(
+            TapGesture().onEnded({ _ in
+                tapAction()
+            }))
+    }
+
+}

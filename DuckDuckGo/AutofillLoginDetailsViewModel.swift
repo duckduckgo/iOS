@@ -41,12 +41,26 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     let account: SecureVaultModels.WebsiteAccount
     var lastUpdatedAt = ""
     
+    var userVisiblePassword: String {
+        isPasswordHidden ? hiddenPassword : password
+    }
+    
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
+    @Published var isPasswordHidden = true
     @Published var username = ""
     @Published var password = ""
     @Published var address = ""
     @Published var title = ""
-    @Published var viewMode: ViewMode = .view
+    @Published var viewMode: ViewMode = .view {
+        didSet {
+            selectedCell = nil
+        }
+    }
+    @Published var selectedCell: UUID? {
+        didSet {
+            print("SET CELL")
+        }
+    }
 
     private var dateFormatter: DateFormatter = {
         let dateformatter = DateFormatter()
@@ -96,8 +110,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     #warning("Refactor, copied from SaveLoginViewModel")
     var hiddenPassword: String {
          let maximumPasswordDisplayCount = 40
-
-        // swiftlint:disable:next line_length
         let passwordCount = password.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : password.count
         return String(repeating: "•", count: passwordCount)
     }

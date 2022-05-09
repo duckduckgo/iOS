@@ -277,7 +277,7 @@ private struct Copyable: ViewModifier {
         ZStack {
             Rectangle()
                 .foregroundColor(.clear)
-                .menuController("Copy \(menuTitle)", display: isSelected, action: menuAction)
+                .menuController("Copy \(menuTitle)", action: menuAction)
             
             content
             .contentShape(Rectangle())

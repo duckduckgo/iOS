@@ -184,11 +184,16 @@ private struct CopyablePasswordCell: View {
                 Spacer()
                 Button {
                     isPasswordHidden.toggle()
+                    self.selectedCell = nil
                 } label: {
-                    Image(isPasswordHidden ? "ShowPasswordEye": "HidePasswordEye")
-                        .foregroundColor(.primary)
-                        .contentShape(Rectangle())
-                        .frame(width: 40, height: 50)
+                    HStack {
+                        Spacer()
+                        Image(isPasswordHidden ? "ShowPasswordEye": "HidePasswordEye")
+                            .foregroundColor(.primary)
+                    }
+                    .contentShape(Rectangle())
+                    .frame(width: 50, height: 50)
+                    
                 }
                 .buttonStyle(.borderless)
             }
@@ -264,6 +269,7 @@ private struct Copyable: ViewModifier {
                 .menuController("Copy \(menuTitle)", action: menuAction)
             
             content
+                .allowsHitTesting(false)
                 .contentShape(Rectangle())
                 .frame(maxWidth: .infinity)
                 .frame(height: 60)

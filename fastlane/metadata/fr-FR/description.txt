@@ -1,24 +1,28 @@
-La confidentialité simplifiée.
+Marre d'être suivi(e) en ligne ? Nous pouvons vous aider.
 
-Chez DuckDuckGo, nous pensons qu’Internet ne devrait pas être si effrayant, et que protéger vos données personnelles en ligne devrait être aussi simple que de fermer un store. 
+DuckDuckGo est l'application de confidentialité tout-en-un qui permet de protéger vos activités en ligne. Il suffit d'un téléchargement pour profiter d'un nouveau navigateur qui vous offrira au quotidien une protection en continu contre les traqueurs tiers lorsque vous effectuerez des recherches, naviguerez sur le Web, et même lorsque vous recevrez des e-mails. Avec DuckDuckGo, la confidentialité va de soi.
 
-Nous fournissons l’essentiel de la confidentialité dont vous avez besoin pour contrôler vos informations personnelles lorsque vous effectuez une recherche et naviguez sur le Web, quel que soit l’endroit où vous mène Internet :
-• Échapper aux réseaux de pistage publicitaire — Notre fonctionnalité de protection de la vie privée bloquera tous les traqueurs cachés que nous pouvons déceler, exposant ainsi les principaux réseaux publicitaires qui vous pistent au fil du temps, de sorte que vous puissiez savoir qui tente de vous pister.
-• Augmenter la protection par cryptage — Nous forçons les sites à utiliser une connexion cryptée dans la mesure du possible, protégeant ainsi vos données des regards indiscrets (par ex. les fournisseurs de services Internet).
-• Recherche privée — Vous partagez vos informations les plus personnelles, qu’elles soient financières, médicales ou politiques, avec votre moteur de recherche. Ce que vous recherchez ne concerne que vous, c’est pourquoi le moteur de recherche DuckDuckGo ne vous piste jamais.
-• Décoder les politiques de confidentialité — Nous avons établi un partenariat avec Terms of Service Didn't Read pour inclure, le cas échéant, leurs notes et leurs classifications des conditions d’utilisation et des politiques de confidentialité des sites Web. 
+ • Vos recherches web incognito - La fonction DuckDuckGo Private Search est intégrée pour vous permettre d'effectuer des recherches sur le Web sans être traqué.
 
-Lorsque vous effectuez une recherche, naviguez ou visitez un site Web, DuckDuckGo vous indique une note de confidentialité allant de A à F. Cette note vous permet de connaître votre niveau de protection en un coup d'œil, de savoir qui nous avons surpris en train de vous pister et d’apprendre comment nous avons amélioré les mesures de confidentialité du site en question. La note de confidentialité est automatiquement calculée en fonction de la prévalence des réseaux de pistage cachés, de la disponibilité du chiffrement et des pratiques des sites Web en matière de confidentialité.
+ • Échappez au tracking des sites Web - DuckDuckGo Tracker Radar bloque automatiquement les traqueurs tiers cachés qui rôdent parfois sur les sites Web que vous visitez, ce qui empêche les entreprises derrière ces traqueurs de collecter et de vendre vos données.
 
-Notre application fournit des fonctionnalités de navigation standard, telles que les onglets, les signets et la saisie semi-automatique. Outre l’excellente protection de la vie privée décrite ci-dessus, nous avons également inclus des fonctionnalités de confidentialité supplémentaires dans le navigateur lui-même :
-• Bouton Feu — Effacez tous vos onglets et toutes vos données en un clin d’œil.
-• Verrouillage d’application — Sécurisez l'application avec Touch ID ou Face ID.
+ • Navigation cryptée - Smarter Encryption oblige les sites que vous visitez via DuckDuckGo à utiliser une connexion chiffrée (HTTPS) dès que possible, protégeant ainsi vos données des regards indiscrets.
 
-Trop de gens pensent qu’il est impossible d’avoir une vie privée sur Internet. Nous nous battons pour changer cela, et nous nous sommes donné pour mission de rétablir la confiance en ligne. Installez DuckDuckGo et reprenez le contrôle de votre vie privée !
+ • Bloquez les traqueurs mails - 70 % des e-mails vous traquent lorsque vous les ouvrez. Activer Email Protection est le moyen le plus simple de bloquer ces traqueurs et de masquer votre adresse sans changer de fournisseur. Inscrivez-vous sur la liste d'attente et accédez gratuitement à la version beta en vous rendant dans les paramètres de l'application.
 
-Qui sommes-nous ? : https://duckduckgo.com/about/
-Confidentialité des appareils : https://spreadprivacy.com/tag/device-privacy-tips/
-Plus d’informations sur la confidentialité : https://spreadprivacy.com/tag/privacy-newsletter/
-Notre politique de confidentialité : https://duckduckgo.com/privacy/
+L'appli DuckDuckGo dispose des fonctionnalités de navigation courantes, comme les onglets et l'ajout de favoris, ainsi que les outils essentiels pour protéger votre vie privée. Agissez pour votre droit à la confidentialité, sans faire de compromis.
 
-Code source libre à l’adresse https://github.com/duckduckgo/iOS.
+ • Avec le Fire Button, effacez vos traces - Vos onglets et vos données de navigation disparaissent en un seul clic.
+
+ • Signalez vos préférences de confidentialité avec GPC - Intégré à l'appli, Global Privacy Control (GPC) vous aide à appliquer automatiquement votre droit de retrait pour la collecte de vos données. Une fois GPC activé, les sites Web ne pourront pas vendre ni partager vos informations personnelles conformément aux cadres juridiques (p. ex. CCPA, RGPD) mis en place dans différents pays.
+
+Inutile d'attendre pour reprendre le contrôle de votre vie privée. Rejoignez les millions de personnes qui utilisent DuckDuckGo et protégez vos activités en ligne au quotidien grâce à une seule application. La confidentialité, simplifiée.
+
+
+
+À propos de nous : https://duckduckgo.com/about
+Comment ça marche ? : https://duckduckgo.com/app
+Privacy Newsletter : https://duckduckgo.com/newsletter
+Politique de confidentialité : https://duckduckgo.com/privacy
+Open Source : https://github.com/duckduckgo/iOS
+

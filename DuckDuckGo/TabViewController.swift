@@ -619,6 +619,10 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceView = siteRatingView
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
+            
+            if let domain = tabModel.link?.url.host, let trust = ServerTrustCache.shared.get(forDomain: domain) {
+                tabModel.privacyInfo?.serverTrust = ServerTrust(host: domain, secTrust: trust)
+            }
 
             controller.privacyProtectionDelegate = self
             privacyController = controller
@@ -979,8 +983,10 @@ extension TabViewController: WKNavigationDelegate {
             completionHandler(.performDefaultHandling, nil)
             guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
             ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
-            
-            tabModel.privacyInfo?.serverTrust = ServerTrust(host: challenge.protectionSpace.host, secTrust: serverTrust)
+                        
+//            if let host = webView.url?.host, let serverTrust = challenge.protectionSpace.serverTrust, host == challenge.protectionSpace.host {
+//                tabModel.privacyInfo?.serverTrust = ServerTrust(host: host, secTrust: serverTrust)
+//            }
         }
     }
     

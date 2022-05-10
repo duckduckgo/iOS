@@ -399,6 +399,7 @@ class TabViewController: UIViewController {
     private func load(url: URL, didUpgradeURL: Bool) {
         if !didUpgradeURL {
             lastUpgradedURL = nil
+            tabModel.privacyInfo?.connectionUpgradedTo = nil
         }
         
         if !url.isBookmarklet() {
@@ -1397,6 +1398,7 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
+            tabModel.privacyInfo?.connectionUpgradedTo = nil
         }
         
         guard navigationAction.request.mainDocumentURL != nil else {
@@ -1490,6 +1492,7 @@ extension TabViewController: WKNavigationDelegate {
                 if lastUpgradedURL != upgradedUrl {
                     NetworkLeaderboard.shared.incrementHttpsUpgrades()
                     lastUpgradedURL = upgradedUrl
+                    tabModel.privacyInfo?.connectionUpgradedTo = upgradedUrl
                     load(url: upgradedUrl, didUpgradeURL: true)
                     completion(.cancel)
                 } else {

@@ -162,6 +162,10 @@ extension AutofillLoginListTableViewController: Themable {
     func decorate(with theme: Theme) {
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
+
+        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
+        
         tableView.reloadData()
     }
 }

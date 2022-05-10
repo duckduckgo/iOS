@@ -975,6 +975,8 @@ extension TabViewController: WKNavigationDelegate {
             completionHandler(.performDefaultHandling, nil)
             guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
             ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
+            
+            tabModel.privacyInfo?.serverTrust = ServerTrust(host: challenge.protectionSpace.host, secTrust: serverTrust)
         }
     }
     

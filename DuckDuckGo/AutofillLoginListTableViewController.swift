@@ -35,8 +35,9 @@ class AutofillLoginListTableViewController: UITableViewController {
         super.viewDidLoad()
          self.navigationItem.rightBarButtonItem = self.editButtonItem
         title = "Autofill Logins"
-        tableView.rowHeight = 60
+        tableView.estimatedRowHeight = 60
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
+        tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -87,12 +88,21 @@ class AutofillLoginListTableViewController: UITableViewController {
         return cell
     }
     
-    private func enableAutofillCell(for tableView: UITableView, indexPath: IndexPath) -> AutofillListItemTableViewCell {
-        let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
+    private func enableAutofillCell(for tableView: UITableView, indexPath: IndexPath) -> EnableAutofillSettingsTableViewCell {
+        let cell = tableView.dequeueCell(ofType: EnableAutofillSettingsTableViewCell.self, for: indexPath)
         return cell
     }
 
     // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch viewModel.sections[indexPath.section] {
+        case .enableAutofill:
+            return 44
+        case .credentials:
+            return 60
+        }
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.sections.count

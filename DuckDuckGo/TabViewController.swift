@@ -764,7 +764,10 @@ class TabViewController: UIViewController {
         
         let entity = EntityMapping().findEntity(forHost: host)
         
-        return PrivacyInfo(url: url, parentEntity: entity)
+        let config = ContentBlocking.privacyConfigurationManager.privacyConfig
+        let isProtected = !config.isUserUnprotected(domain: host)
+        
+        return PrivacyInfo(url: url, parentEntity: entity, isProtected: isProtected)
     }
  
     private func updateSiteRating() {

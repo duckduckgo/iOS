@@ -759,8 +759,9 @@ class TabViewController: UIViewController {
     }
     
     private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
-        guard let host = url.host, let entity = EntityMapping().findEntity(forHost: host)
-        else { return nil }
+        guard let host = url.host else { return nil }
+        
+        let entity = EntityMapping().findEntity(forHost: host)
         
         return PrivacyInfo(url: url, parentEntity: entity)
     }
@@ -1276,6 +1277,7 @@ extension TabViewController: WKNavigationDelegate {
         guard let url = webView.url else { return }
         self.url = url
         self.siteRating = makeSiteRating(url: url)
+        self.tabModel.privacyInfo = makePrivacyInfo(url: url)
         updateSiteRating()
         checkLoginDetectionAfterNavigation()
     }

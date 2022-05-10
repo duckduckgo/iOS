@@ -21,9 +21,10 @@ import UIKit
 
 @available(iOS 14.0, *)
 class AutofillLoginListTableViewController: UITableViewController {
-    private let viewModel = AutofillLoginListViewModel()
+    private let viewModel: AutofillLoginListViewModel
     
-    init() {
+    init(appSettings: AppSettings) {
+        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings)
         super.init(style: .insetGrouped)
     }
     
@@ -38,6 +39,8 @@ class AutofillLoginListTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 60
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
+        applyTheme(ThemeManager.shared.currentTheme)
+
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -80,7 +83,6 @@ class AutofillLoginListTableViewController: UITableViewController {
         }
     }
     
-    
     private func credentialCell(for tableView: UITableView, item: AutofillLoginListItemViewModel, indexPath: IndexPath) -> AutofillListItemTableViewCell {
         let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
         cell.viewModel = item
@@ -90,9 +92,13 @@ class AutofillLoginListTableViewController: UITableViewController {
     
     private func enableAutofillCell(for tableView: UITableView, indexPath: IndexPath) -> EnableAutofillSettingsTableViewCell {
         let cell = tableView.dequeueCell(ofType: EnableAutofillSettingsTableViewCell.self, for: indexPath)
+        cell.delegate = self
+        cell.isToggleOn = viewModel.isAutofillEnabled
+        cell.theme = ThemeManager.shared.currentTheme
         return cell
     }
 
+    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -139,6 +145,23 @@ class AutofillLoginListTableViewController: UITableViewController {
 extension AutofillLoginListTableViewController: AutofillLoginDetailsViewControllerDelegate {
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController) {
         viewModel.update()
+        tableView.reloadData()
+    }
+}
+
+@available(iOS 14.0, *)
+extension AutofillLoginListTableViewController: EnableAutofillSettingsTableViewCellDelegate {
+    func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
+        viewModel.isAutofillEnabled = value
+    }
+}
+
+@available(iOS 14.0, *)
+extension AutofillLoginListTableViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        tableView.backgroundColor = theme.backgroundColor
+        tableView.separatorColor = theme.tableCellSeparatorColor
         tableView.reloadData()
     }
 }

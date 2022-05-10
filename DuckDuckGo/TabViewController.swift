@@ -226,6 +226,10 @@ class TabViewController: UIViewController {
         controller.tabModel = model
         return controller
     }
+    
+    private var isAutofillEnabled: Bool {
+        appSettings.autofill
+    }
 
     required init?(coder aDecoder: NSCoder) {
         tabModel = Tab(link: nil)
@@ -1874,7 +1878,10 @@ extension NSError {
 extension TabViewController: SecureVaultManagerDelegate {
  
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
-
+        if !isAutofillEnabled {
+            return
+        }
+        
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         
         let saveLoginController = SaveLoginViewController(credentialManager: manager)
@@ -1892,8 +1899,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
-        
-        if let credentials = data.credentials, appSettings.autofill {
+        if let credentials = data.credentials, isAutofillEnabled {
             presentSavePasswordModal(with: vault, credentials: credentials)
         }
     }
@@ -1903,6 +1909,11 @@ extension TabViewController: SecureVaultManagerDelegate {
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
+        if !isAutofillEnabled {
+            completionHandler(nil)
+            return
+        }
+        
         if #available(iOS 14, *) {
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account in
                 completionHandler(account)

@@ -21,7 +21,6 @@ import Foundation
 import BrowserServicesKit
 import UIKit
 
-
 enum AutofillLoginListSectionType {
     case enableAutofill
     case credentials(title: String, items: [AutofillLoginListItemViewModel])
@@ -39,10 +38,21 @@ struct AutofillLoginListSection: Identifiable {
 }
 
 final class AutofillLoginListViewModel: ObservableObject {
-    var sections = [AutofillLoginListSectionType]()
-    
+    private(set) var sections = [AutofillLoginListSectionType]()
     private(set) var indexes = [String]()
-    init() {
+    var isAutofillEnabled: Bool {
+        get {
+            appSettings.autofill
+        }
+        
+        set {
+            appSettings.autofill = newValue
+        }
+    }
+    private var appSettings: AppSettings
+    
+    init(appSettings: AppSettings) {
+        self.appSettings = appSettings
         update()
     }
     
@@ -74,7 +84,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         do {
             try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
         } catch {
-            print("ERROR")
+            #warning("Pixel?")
         }
     }
     

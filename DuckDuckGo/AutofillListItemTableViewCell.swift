@@ -38,8 +38,8 @@ class AutofillListItemTableViewCell: UITableViewCell {
     }()
     
     private lazy var iconImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect.zero)
-        imageView.contentMode = .scaleAspectFit
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -55,7 +55,6 @@ class AutofillListItemTableViewCell: UITableViewCell {
         let stackView = UIStackView(arrangedSubviews: [iconImageView, textStackView])
         stackView.axis = .horizontal
         stackView.spacing = 10
-        stackView.distribution = .fillProportionally
         return stackView
     }()
     
@@ -90,7 +89,6 @@ class AutofillListItemTableViewCell: UITableViewCell {
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
-            iconImageView.heightAnchor.constraint(equalToConstant: imageSize),
             iconImageView.widthAnchor.constraint(equalToConstant: imageSize),
             
             contentStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),

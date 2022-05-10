@@ -21,14 +21,26 @@ import Foundation
 import BrowserServicesKit
 import UIKit
 
+
+enum AutofillLoginListSectionType {
+    case enableAutofill
+    case credentials(title: String, items: [AutofillLoginListItemViewModel])
+}
+
 struct AutofillLoginListSection: Identifiable {
+    enum SectionType {
+        case credentials
+        case enableAutofill
+    }
+    
     let id = UUID()
     let title: String
     var items: [AutofillLoginListItemViewModel]
 }
 
 final class AutofillLoginListViewModel: ObservableObject {
-    @Published var sections = [AutofillLoginListSection]()
+    var sections = [AutofillLoginListSectionType]()
+    
     private(set) var indexes = [String]()
     init() {
         update()
@@ -36,9 +48,23 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     func delete(at indexPath: IndexPath) {
         let section = sections[indexPath.section]
-        let item = section.items[indexPath.row]
-        delete(item.account)
-        update()
+        switch section {
+        case .credentials(_, let items):
+            let item = items[indexPath.row]
+            delete(item.account)
+            update()
+        default:
+            break
+        }
+    }
+    
+    func rowsInSection(_ section: Int) -> Int {
+        switch self.sections[section] {
+        case .enableAutofill:
+            return 1
+        case .credentials(_, let items):
+            return items.count
+        }
     }
     
     private func delete(_ account: SecureVaultModels.WebsiteAccount) {
@@ -56,37 +82,47 @@ final class AutofillLoginListViewModel: ObservableObject {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else { return }
 
         sections.removeAll()
+        indexes.removeAll()
+        
+        sections.append(.enableAutofill)
 
         #warning("REFACTOR THIS")
         if let accounts = try? secureVault.accounts() {
-            var sections = [String: AutofillLoginListSection]()
+            var sections = [String: [AutofillLoginListItemViewModel]]()
             
             for account in accounts {
                 print("ACCOUNT \(account.name) \(account.domain)")
                 
                 if let first = account.name.first?.lowercased() {
                     if sections[first] != nil {
-                        sections[first]?.items.append(AutofillLoginListItemViewModel(account: account))
+                        sections[first]?.append(AutofillLoginListItemViewModel(account: account))
                     } else {
                         let newSection = [AutofillLoginListItemViewModel(account: account)]
-                        sections[first] = AutofillLoginListSection(title: String(first), items: newSection)
+                        sections[first] = newSection
                     }
                 }
             }
             
-            for (_, var value) in sections {
-                value.items.sort { leftItem, rightItem in
+            for (key, var value) in sections {
+                value.sort { leftItem, rightItem in
                     leftItem.title.lowercased() < rightItem.title.lowercased()
                 }
                 
-                self.sections.append(value)
+                self.sections.append(.credentials(title: key, items: value))
+                indexes.append(key.uppercased())
             }
             
             self.sections.sort(by: { leftSection, rightSection in
-                leftSection.title < rightSection.title
+                if case .credentials(let left, _) = leftSection,
+                   case .credentials(let right, _) = rightSection {
+                    return left < right
+                }
+                return false
             })
             
-            indexes = self.sections.map { $0.title.uppercased() }
+            self.indexes.sort(by: { lhs, rhs in
+                lhs < rhs
+            })
         }
     }
 }

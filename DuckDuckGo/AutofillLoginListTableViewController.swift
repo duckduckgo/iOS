@@ -40,25 +40,56 @@ class AutofillLoginListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            let item = viewModel.sections[indexPath.section].items[indexPath.row]
+        switch viewModel.sections[indexPath.section] {
+        case .credentials(_, let items):
+            let item = items[indexPath.row]
             let detailsController = AutofillLoginDetailsViewController(account: item.account)
             detailsController.delegate = self
             navigationController?.pushViewController(detailsController, animated: true)
+            
+        default:
+            break
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        switch viewModel.sections[indexPath.section] {
+        case .credentials:
+            return true
+        default :
+            return false
+        }
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let section = viewModel.sections[indexPath.section]
-            let shouldDeleteSection = section.items.count == 1
-            
-            viewModel.delete(at: indexPath)
-            
-            if shouldDeleteSection {
-                tableView.deleteSections([indexPath.section], with: .automatic)
-            } else {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+        switch viewModel.sections[indexPath.section] {
+        case .credentials(_, let items):
+            if editingStyle == .delete {
+                let shouldDeleteSection = items.count == 1
+                viewModel.delete(at: indexPath)
+                
+                if shouldDeleteSection {
+                    tableView.deleteSections([indexPath.section], with: .automatic)
+                } else {
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
             }
+        default:
+            break
         }
+    }
+    
+    
+    private func credentialCell(for tableView: UITableView, item: AutofillLoginListItemViewModel, indexPath: IndexPath) -> AutofillListItemTableViewCell {
+        let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
+        cell.viewModel = item
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+    
+    private func enableAutofillCell(for tableView: UITableView, indexPath: IndexPath) -> AutofillListItemTableViewCell {
+        let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
+        return cell
     }
 
     // MARK: - Table view data source
@@ -68,18 +99,25 @@ class AutofillLoginListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.sections[section].items.count
+        return viewModel.rowsInSection(section)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueCell(ofType: AutofillListItemTableViewCell.self, for: indexPath)
-        cell.viewModel = viewModel.sections[indexPath.section].items[indexPath.row]
-        cell.accessoryType = .disclosureIndicator
-        return cell
+        switch viewModel.sections[indexPath.section] {
+        case .enableAutofill:
+            return enableAutofillCell(for: tableView, indexPath: indexPath)
+        case .credentials(_, let items):
+            return credentialCell(for: tableView, item: items[indexPath.row], indexPath: indexPath)
+        }
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        viewModel.sections[section].title
+        switch viewModel.sections[section] {
+        case .enableAutofill:
+            return nil
+        case .credentials(let title, _):
+            return title
+        }
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {

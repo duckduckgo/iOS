@@ -25,7 +25,6 @@ public enum FeatureName: String {
 
     // Used for unit tests
     case dummy
-    case widgetEducation
 }
 
 public struct Variant {
@@ -46,13 +45,6 @@ public struct Variant {
             }
             return false
         }
-        
-        static let supportsWidgets = { () -> Bool in
-            if #available(iOS 14, *) {
-                return true
-            }
-            return false
-        }
     }
     
     static let doNotAllocate = 0
@@ -63,10 +55,8 @@ public struct Variant {
         // SERP testing
         Variant(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
         Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: []),
+        Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
         
-        Variant(name: "me", weight: 1, isIncluded: When.supportsWidgets, features: [.widgetEducation]),
-        Variant(name: "mf", weight: 1, isIncluded: When.supportsWidgets, features: [])
     ]
     
     public let name: String
@@ -158,6 +148,7 @@ public class Arc4RandomUniformVariantRNG: VariantRNG {
     public init() { }
     
     public func nextInt(upperBound: Int) -> Int {
+        // swiftlint:disable:next legacy_random
         return Int(arc4random_uniform(UInt32(upperBound)))
     }
     

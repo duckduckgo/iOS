@@ -151,7 +151,9 @@ public enum PixelName: String {
     case emailTooltipDismissed = "email_tooltip_dismissed"
     
     case voiceSearchDone = "m_voice_search_done"
-    
+    case openVoiceSearch = "m_open_voice_search"
+    case voiceSearchCancelled = "m_voice_search_cancelled"
+
     case emailDidShowWaitlistDialog = "email_did_show_waitlist_dialog"
     case emailDidPressWaitlistDialogDismiss = "email_did_press_waitlist_dialog_dismiss"
     case emailDidPressWaitlistDialogNotifyMe = "email_did_press_waitlist_dialog_notify_me"
@@ -164,12 +166,13 @@ public enum PixelName: String {
     case bookmarkEditedAtTopLevel = "m_bookmark_edited_at_top_level"
     case bookmarkEditedInSubfolder = "m_bookmark_edited_in_subfolder"
     
+    case bookmarkImportSuccess = "m_bi_s"
+    case bookmarkImportFailure = "m_bi_e"
+    case bookmarkExportSuccess = "m_be_a"
+    case bookmarkExportFailure = "m_be_e"
+
     case textSizeSettingsShown = "m_text_size_settings_shown"
     case textSizeSettingsChanged = "m_text_size_settings_changed"
-    
-    case widgetEducationOpenedFromHomeScreen = "m_widget_education_opened_from_home"
-    case widgetEducationOpenedFromSettings = "m_widget_education_opened_from_settings"
-    case widgetEducationDismissed = "m_widget_education_dismissed"
     
     case downloadStarted = "m_download_started"
     case downloadStartedDueToUnhandledMIMEType = "m_download_started_due_to_unhandled_mime_type"
@@ -184,7 +187,6 @@ public enum PixelName: String {
     
     case downloadsSharingPredownloadedLocalFile = "m_downloads_sharing_predownloaded_local_file"
     
-    case downloadPreparingToStart = "m_download_preparing_to_start"
     case downloadAttemptToOpenBLOB = "m_download_attempt_to_open_blob"
 
     case jsAlertShown = "m_js_alert_shown"
@@ -314,8 +316,8 @@ public struct PixelParameters {
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
-    public static let statusCode = "status_code"
     
+    public static let bookmarkCount = "bco"
 }
 
 public struct PixelValues {

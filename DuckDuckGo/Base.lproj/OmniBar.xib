@@ -195,7 +195,7 @@
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ita-iD-8ad" userLabel="Voice Button">
                                     <rect key="frame" x="375" y="8" width="30" height="24"/>
-                                    <accessibility key="accessibilityConfiguration" label="Clear Text"/>
+                                    <accessibility key="accessibilityConfiguration" label="Voice Search"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="80Y-p8-kj7"/>
                                     </constraints>

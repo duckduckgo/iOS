@@ -20,5 +20,5 @@
 import Foundation
 
 enum HomeMessage {
-    case widgetEducation
+    case placeholder
 }

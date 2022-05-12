@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "BrowserServicesKit",
+        "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
+        "state": {
+          "branch": null,
+          "revision": "71752606e1c665e8dc009b1549c9888a154e50b3",
+          "version": "12.3.0"
+        }
+      },
+      {
         "package": "GRDB",
         "repositoryURL": "https://github.com/duckduckgo/GRDB.swift.git",
         "state": {
@@ -50,9 +59,9 @@
         "package": "Punycode",
         "repositoryURL": "https://github.com/gumob/PunycodeSwift.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "4356ec54e073741449640d3d50a1fd24fd1e1b8b",
-          "version": null
+          "version": "2.1.0"
         }
       },
       {
@@ -71,6 +80,15 @@
           "branch": null,
           "revision": "9483a5d459b45c3ffd059f7b55f9638e268632fd",
           "version": "1.5.0"
+        }
+      },
+      {
+        "package": "SwiftSoup",
+        "repositoryURL": "https://github.com/scinfu/SwiftSoup",
+        "state": {
+          "branch": null,
+          "revision": "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
+          "version": "2.4.2"
         }
       },
       {

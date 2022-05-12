@@ -26,7 +26,7 @@ class AppPrivacyConfigurationTests: XCTestCase {
         let data = AppPrivacyConfigurationDataProvider.loadEmbeddedAsData()
 
         XCTAssertEqual(data.sha256,
-                       AppPrivacyConfigurationDataProvider.Constants.embeddedConfigurationSHA,
+                       AppPrivacyConfigurationDataProvider.Constants.embeddedDataSHA,
                        "Error: please update SHA and ETag when changing embedded config")
     }
 

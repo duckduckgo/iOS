@@ -18,7 +18,7 @@
 //
 
 import Foundation
-import Punycode
+import BrowserServicesKit
 
 extension String {
 
@@ -99,13 +99,6 @@ extension String {
         let hostPathSeparator = !encodedPath.isEmpty || hasSuffix("/") ? "/" : ""
         let url = originalScheme + host + hostPathSeparator + encodedPath + query
         return URL(string: url)
-    }
-    
-    public var punycodeEncodedHostname: String {
-        return self.split(separator: ".")
-            .map { String($0) }
-            .map { $0.idnaEncoded ?? $0 }
-            .joined(separator: ".")
     }
 
     public func sha256() -> String {

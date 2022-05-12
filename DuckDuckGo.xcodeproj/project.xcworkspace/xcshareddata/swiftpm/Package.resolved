@@ -2,21 +2,21 @@
   "object": {
     "pins": [
       {
-        "package": "PrivacyDashboard",
-        "repositoryURL": "https://github.com/more-duckduckgo-org/duckduckgo-privacy-dashboard",
-        "state": {
-          "branch": "michal/spm-distribution",
-          "revision": "9f416b92fb9b660af53728d5010b52c803427404",
-          "version": null
-        }
-      },
-      {
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": null,
           "revision": "71752606e1c665e8dc009b1549c9888a154e50b3",
           "version": "12.3.0"
+        }
+      },
+      {
+        "package": "PrivacyDashboard",
+        "repositoryURL": "https://github.com/more-duckduckgo-org/duckduckgo-privacy-dashboard",
+        "state": {
+          "branch": "michal/spm-distribution",
+          "revision": "70ef13073e78085927b2ce3bf85199c371192b7d",
+          "version": null
         }
       },
       {

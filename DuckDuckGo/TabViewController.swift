@@ -620,10 +620,14 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
             }
             
-            if let domain = tabModel.link?.url.host, let trust = ServerTrustCache.shared.get(forDomain: domain) {
+//            if let domain = tabModel.link?.url.host, let trust = ServerTrustCache.shared.get(forDomain: domain) {
+//                tabModel.privacyInfo?.serverTrust = ServerTrust(host: domain, secTrust: trust)
+//            }
+
+            if let domain = tabModel.link?.url.host, let trust = webView.serverTrust {
                 tabModel.privacyInfo?.serverTrust = ServerTrust(host: domain, secTrust: trust)
             }
-
+            
             controller.privacyProtectionDelegate = self
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate

@@ -1,0 +1,27 @@
+Tired of being tracked online? We can help.
+
+DuckDuckGo is the all-in-one privacy app that helps protect your online activities. With one download you get a new everyday browser that offers seamless protections from third-party trackers while you search and browse, and even access to tracking protections when receiving email. With DuckDuckGo, privacy can be your default.
+
+ • Search Privately - DuckDuckGo Private Search comes built-in so you can search the web without being tracked.
+
+ • Escape Website Tracking - Tracker Radar automatically blocks hidden third-party trackers we can find lurking on websites you visit in DuckDuckGo, which stops the companies behind those trackers from collecting and selling your data.
+
+ • Enforce Encryption - Smarter Encryption forces sites you visit in DuckDuckGo to use an encrypted (HTTPS) connection where available, protecting your data from prying eyes.
+
+ • Block Email Trackers - 70% of emails track you as soon as you open them. Enabling Email Protection is the easy way to block email trackers and hide your address without switching services. Join the private waitlist for the free beta version through the app settings menu.
+
+The DuckDuckGo app has the browsing features you expect, like tabs and bookmarks, plus privacy controls you'll love. Taking control of your privacy doesn't have to mean making tradeoffs.
+
+ • Tap Fire Button, Burn Data - Clear your tabs and browsing data with one tap of the Fire Button.
+
+ • Signal Your Privacy Preference with GPC - Built into the app, Global Privacy Control (GPC) intends to help you express your legal opt-out rights automatically. This will tell websites not to sell or share your personal information under future legal frameworks (e.g., CCPA, GDPR) in various states or countries.
+
+You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+
+
+
+About Us: https://duckduckgo.com/about/
+How It Works: https://duckduckgo.com/app
+Privacy Newsletter: https://duckduckgo.com/newsletter
+Privacy Policy: https://duckduckgo.com/privacy/
+Open Source: https://github.com/duckduckgo/iOS

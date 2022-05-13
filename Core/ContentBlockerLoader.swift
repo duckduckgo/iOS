@@ -94,6 +94,11 @@ public class ContentBlockerLoader {
                 return
             }
             
+            if etag == nil {
+                let params = [PixelParameters.configuration: configuration.rawValue]
+                Pixel.fire(pixel: .configDownloadMissingETag, withAdditionalParameters: params)
+            }
+            
             let isCached = etag != nil && self.etagStorage.etag(for: configuration) == etag
             self.etags[configuration] = etag
             

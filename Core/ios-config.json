@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1651754979979,
+    "version": 1652440687364,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -400,6 +400,13 @@
                                     "winnipegfreepress.com"
                                 ],
                                 "reason": "content not loading"
+                            },
+                            {
+                                "rule": "cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js",
+                                "domains": [
+                                    "fortnitetracker.com"
+                                ],
+                                "reason": "content not loading"
                             }
                         ]
                     },
@@ -575,6 +582,17 @@
                                     "joann.com"
                                 ],
                                 "reason": "site not loading"
+                            }
+                        ]
+                    },
+                    "ltwebstatic.com": {
+                        "rules": [
+                            {
+                                "rule": "sheinsz.ltwebstatic.com/she_dist/libs/geetest/fullpage.1.1.9.js",
+                                "domains": [
+                                    "shein.com"
+                                ],
+                                "reason": "login issues"
                             }
                         ]
                     },

@@ -143,7 +143,6 @@ public class Favicons {
             let resource = defaultResource(forDomain: domain),
             (Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)),
             let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else {
-                loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
                 return
             }
 
@@ -264,6 +263,23 @@ public class Favicons {
 
         }
 
+    }
+    
+    @discardableResult
+    public func loadFavicon(forDomain domain: String?,
+                            fromURL url: URL? = nil,
+                            intoCache targetCacheType: CacheType,
+                            fromCache: CacheType? = nil,
+                            queue: DispatchQueue? = OperationQueue.current?.underlyingQueue) async -> UIImage? {
+        await withCheckedContinuation { continuation in
+            loadFavicon(forDomain: domain,
+                        fromURL: url,
+                        intoCache: targetCacheType,
+                        fromCache: fromCache,
+                        queue: queue) { image in
+                continuation.resume(returning: image)
+            }
+        }
     }
 
     private func loadImageFromNetwork(_ imageUrl: URL?,

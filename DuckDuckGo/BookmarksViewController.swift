@@ -365,7 +365,15 @@ class BookmarksViewController: UITableViewController {
             case .success:
                 dataSource.bookmarksManager.reloadWidgets()
 
-                let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
+                let bookmarks = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat()
+                for bookmark in bookmarks {
+                    if let domain = bookmark.url?.host {
+                        await Favicons.shared.loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
+                    }
+                }
+                tableView.reloadData()
+
+                let bookmarkCountAfterImport = bookmarks.count
                 let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
                 Pixel.fire(pixel: .bookmarkImportSuccess,
                            withAdditionalParameters: [PixelParameters.bookmarkCount: "\(bookmarksImported)"])

@@ -19,6 +19,7 @@
 
 import UIKit
 import SwiftUI
+import LocalAuthentication
 import BrowserServicesKit
 
 @available(iOS 14.0, *)
@@ -121,8 +122,32 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
 @available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegate {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
-        completion?(account)
-        dismiss(animated: true, completion: nil)
+        
+        let context = LAContext()
+        context.localizedCancelTitle = "custom cancel" //TODO strings
+        context.localizedReason = "custom reason"
+        context.localizedFallbackTitle = "custom fallback"
+        
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            let reason = "Custom reason text"
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
+            
+                DispatchQueue.main.async { [weak self] in
+                    if success {
+                        self?.completion?(account)
+                    } else {
+                        print(error?.localizedDescription ?? "Failed to authenticate but error nil")
+                        self?.completion?(nil)
+                    }
+                    self?.dismiss(animated: true, completion: nil)
+                }
+            }
+        } else {
+            // When system authentication isn't available, proceed without requiring it
+            completion?(account)
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel) {

@@ -226,6 +226,10 @@ class TabViewController: UIViewController {
         controller.tabModel = model
         return controller
     }
+    
+    private var isAutofillEnabled: Bool {
+        appSettings.autofill
+    }
 
     required init?(coder aDecoder: NSCoder) {
         tabModel = Tab(link: nil)
@@ -1872,10 +1876,13 @@ extension NSError {
 }
 
 extension TabViewController: SecureVaultManagerDelegate {
-    
+ 
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
-
-        let manager = AutofillCredentialManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
+        if !isAutofillEnabled {
+            return
+        }
+        
+        let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         
         let saveLoginController = SaveLoginViewController(credentialManager: manager)
         saveLoginController.delegate = self
@@ -1892,8 +1899,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
-        
-        if let credentials = data.credentials, appSettings.autofill {
+        if let credentials = data.credentials, isAutofillEnabled {
             presentSavePasswordModal(with: vault, credentials: credentials)
         }
     }
@@ -1903,6 +1909,11 @@ extension TabViewController: SecureVaultManagerDelegate {
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
+        if !isAutofillEnabled {
+            completionHandler(nil)
+            return
+        }
+        
         if #available(iOS 14, *), accounts.count > 0 {
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account in
                 completionHandler(account)
@@ -1933,7 +1944,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     
     private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
         do {
-           try AutofillCredentialManager.saveCredentials(credentials, with: SecureVaultFactory.default)
+           try SaveAutofillLoginManager.saveCredentials(credentials, with: SecureVaultFactory.default)
             ActionMessageView.present(message: message, actionTitle: UserText.autofillLoginSaveToastActionButton) {
                 Swift.print("Show login")
             }

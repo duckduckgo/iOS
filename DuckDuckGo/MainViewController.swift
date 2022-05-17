@@ -802,6 +802,14 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "Downloads", sender: self)
     }
     
+    @available(iOS 14.0, *)
+    fileprivate func launchAutofillLogins() {
+        let appSettings = AppDependencyProvider.shared.appSettings
+        let test = AutofillLoginListTableViewController(appSettings: appSettings)
+        let navigationcontroller = UINavigationController(rootViewController: test)
+        self.present(navigationcontroller, animated: true, completion: nil)
+    }
+    
     fileprivate func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
     }
@@ -1400,6 +1408,12 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestDownloads(tab: TabViewController) {
         launchDownloads()
+    }
+    
+    func tabDidRequestAutofillLogins(tab: TabViewController) {
+        if #available(iOS 14.0, *) {
+            launchAutofillLogins()
+        }
     }
 
     func tabDidRequestSettings(tab: TabViewController) {

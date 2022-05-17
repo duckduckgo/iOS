@@ -31,7 +31,7 @@ struct AccountViewModel: Hashable {
     
     let account: SecureVaultModels.WebsiteAccount
     var displayString: String {
-        return account.username //TODO email formatting //TODO should be title, or username?
+        AutofillInterfaceEmailTruncator.truncateEmail(account.username, maxLength: 36)
     }
     
     static func == (lhs: AccountViewModel, rhs: AccountViewModel) -> Bool {

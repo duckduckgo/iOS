@@ -41,7 +41,7 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
 
     private let numberOfRejectionsToTurnOffAutofill = 3
     private let maximumPasswordDisplayCount = 40
-    private let credentialManager: AutofillCredentialManagerProtocol
+    private let credentialManager: SaveAutofillLoginManagerProtocol
     weak var delegate: SaveLoginViewModelDelegate?
 
     var accountDomain: String {
@@ -57,13 +57,11 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
     }
 
     var hiddenPassword: String {
-        // swiftlint:disable:next line_length
-        let passwordCount = credentialManager.visiblePassword.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : credentialManager.visiblePassword.count
-        return String(repeating: "•", count: passwordCount)
+        PasswordHider(password: credentialManager.visiblePassword).hiddenPassword
     }
     
     var username: String {
-        truncatedEmail(credentialManager.username)
+        AutofillInterfaceEmailTruncator.truncateEmail(credentialManager.username, maxLength: 36)
     }
     
     lazy var layoutType: SaveLoginView.LayoutType = {
@@ -96,33 +94,10 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
     
     private var attributedLayoutType: SaveLoginView.LayoutType?
     
-    internal init(credentialManager: AutofillCredentialManagerProtocol, layoutType: SaveLoginView.LayoutType? = nil) {
+    internal init(credentialManager: SaveAutofillLoginManagerProtocol, layoutType: SaveLoginView.LayoutType? = nil) {
         self.credentialManager = credentialManager
         self.attributedLayoutType = layoutType
         loadFavicon()
-    }
-    
-    private func truncatedEmail(_ login: String) -> String {
-        let maximumLoginDisplayCount = 36
-        
-        let emailComponents = login.components(separatedBy: "@")
-        if emailComponents.count > 1 && login.count > maximumLoginDisplayCount {
-            let ellipsis = "..."
-            let minimumPrefixSize = 3
-            
-            let difference = login.count - maximumLoginDisplayCount + ellipsis.count
-            if let username = emailComponents.first,
-               let domain = emailComponents.last {
-                
-                var prefixCount = username.count - difference
-                prefixCount = prefixCount < 0 ? minimumPrefixSize : prefixCount
-                let prefix = username.prefix(prefixCount)
-                
-                return "\(prefix)\(ellipsis)@\(domain)"
-            }
-        }
-        
-        return login
     }
     
     private func loadFavicon() {

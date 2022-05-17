@@ -30,9 +30,7 @@ struct AutofillLoginPromptView: View {
     }
     
     //TODO gonna have to test 14
-        
-    //TODO steal fernando's email trimming logic
-        
+                
     private func mainView() -> some View {
         ZStack {
             closeButtonHeader
@@ -141,8 +139,9 @@ struct AutofillLoginPromptView: View {
             Button {
                 viewModel.didSelectAccount(accountViewModel.account)
             } label: {
-                Text(accountViewModel.displayString) // TODO email formatting
+                Text(accountViewModel.displayString)
                     .font(Const.Fonts.CTA)
+                    .minimumScaleFactor(0.7)
                     .foregroundColor(style == .primary ? Const.Colors.CTAPrimaryForeground : Const.Colors.CTASecondaryForeground)
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)

@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": null,
-          "revision": "71752606e1c665e8dc009b1549c9888a154e50b3",
-          "version": "12.3.0"
+          "branch": "brad/param-redirects",
+          "revision": "fdeae8f21a68fd8a481f599d0bd58593a850b7fc",
+          "version": null
         }
       },
       {

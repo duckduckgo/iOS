@@ -1903,7 +1903,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
-        if #available(iOS 14, *) {
+        if #available(iOS 14, *), accounts.count > 0 {
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account in
                 completionHandler(account)
             }

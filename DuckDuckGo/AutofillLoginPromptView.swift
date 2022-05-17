@@ -28,9 +28,7 @@ struct AutofillLoginPromptView: View {
         mainView()
             .ignoresSafeArea()
     }
-    
-    //TODO gonna have to test 14
-                
+                    
     private func mainView() -> some View {
         ZStack {
             closeButtonHeader
@@ -95,7 +93,7 @@ struct AutofillLoginPromptView: View {
     var messageView: some View {
         Text(viewModel.message)
             .font(Const.Fonts.title)
-            .foregroundColor(.black)
+            .foregroundColor(Const.Colors.PrimaryTextColor)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
             .foregroundColor(.primary)
@@ -208,6 +206,7 @@ private enum Const {
         static let CTASecondaryBackground = Color("CTASecondaryBackground")
         static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
         static let CTASecondaryForeground = Color("CTASecondaryForeground")
+        static let PrimaryTextColor = Color("PrimaryTextColor")
         static let SecondaryTextColor = Color("SecondaryTextColor")
         static let keyboardColor = Color("AutofillPromptKeyboard")
     }

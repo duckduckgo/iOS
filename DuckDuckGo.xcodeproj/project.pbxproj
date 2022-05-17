@@ -2311,7 +2311,6 @@
 			isa = PBXGroup;
 			children = (
 				989DF82722C628DC0077AA55 /* API */,
-				830FA79D1F8E82C500FCE105 /* Domain */,
 				830FA79E1F8E82DB00FCE105 /* Store */,
 				830FA79C1F8E820B00FCE105 /* Converters */,
 				85C271DA1FD0366F007216B4 /* HTTPSUpgradeTests.swift */,
@@ -2326,13 +2325,6 @@
 				9847C00327A419D500DB07AA /* WebViewTestHelper.swift */,
 			);
 			name = Converters;
-			sourceTree = "<group>";
-		};
-		830FA79D1F8E82C500FCE105 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Domain;
 			sourceTree = "<group>";
 		};
 		830FA79E1F8E82DB00FCE105 /* Store */ = {
@@ -3182,13 +3174,6 @@
 			name = WidgetEducation;
 			sourceTree = "<group>";
 		};
-		CB9B873A278C8FD5001F4906 /* AddWidget */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = AddWidget;
-			sourceTree = "<group>";
-		};
 		CBAA195627BFDD9800A4BD49 /* SmarterEncryption */ = {
 			isa = PBXGroup;
 			children = (
@@ -3319,7 +3304,6 @@
 		F11CEF581EBB66C80088E4D7 /* Tutorials */ = {
 			isa = PBXGroup;
 			children = (
-				CB9B873A278C8FD5001F4906 /* AddWidget */,
 				858650CF2469BCC100C36F8A /* DaxOnboarding */,
 				85EE7F53224667C3000FE757 /* WebContainer */,
 				85C11E4A209084DE00BFFEB4 /* HomeRow */,
@@ -3327,13 +3311,6 @@
 				F186421A1E94A3F900B2A911 /* Support */,
 			);
 			name = Tutorials;
-			sourceTree = "<group>";
-		};
-		F11E22E91ED31CA000523BC9 /* Parser */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Parser;
 			sourceTree = "<group>";
 		};
 		F11E23051ED33D8B00523BC9 /* API */ = {
@@ -3494,7 +3471,6 @@
 				F143C2E71E4A4CD400CFDE3A /* Info.plist */,
 				98B001AE251EABB40090EC07 /* InfoPlist.strings */,
 				F18608DE1E5E648100361C30 /* Javascript */,
-				F11E22E91ED31CA000523BC9 /* Parser */,
 				F1CE42A21ECA08E60074A8DF /* SiteMonitoring */,
 				F1134EA71F3E2B3500B73467 /* Statistics */,
 				F143C3191E4A99DD00CFDE3A /* Utilities */,
@@ -3572,7 +3548,6 @@
 			children = (
 				F17922D31E7109C4006E3D97 /* API */,
 				F17922DC1E717C91006E3D97 /* Domain */,
-				F16394031ECCC28200DDD653 /* Parser */,
 				F17922D41E7109DB006E3D97 /* UI */,
 			);
 			name = Autocomplete;
@@ -3605,13 +3580,6 @@
 			isa = PBXGroup;
 			children = (
 				830C37621F6C482E00E317A7 /* TermsOfServiceListParser.swift */,
-			);
-			name = Parser;
-			sourceTree = "<group>";
-		};
-		F16394031ECCC28200DDD653 /* Parser */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			name = Parser;
 			sourceTree = "<group>";
@@ -3971,18 +3939,10 @@
 				85D2186E24BF24BA004373D2 /* Favicons */,
 				F16393F31ECCA83F00DDD653 /* SiteMonitoring */,
 				F1134EC91F40E74800B73467 /* Statistics */,
-				F1E092BF1E92A6EA00732CCC /* UserInterface */,
 				F198D78F1E3976300088DA8A /* Utilities */,
 				F198D7961E3A45C00088DA8A /* Web */,
 			);
 			name = Core;
-			sourceTree = "<group>";
-		};
-		F1E092BF1E92A6EA00732CCC /* UserInterface */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UserInterface;
 			sourceTree = "<group>";
 		};
 		F1E249411EF2075C008C947A /* SiteMonitoring */ = {

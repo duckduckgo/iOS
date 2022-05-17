@@ -169,6 +169,10 @@ class MockContentBlockingRequest: ContentBlockerRemoteDataSource {
         
         completion(response)
     }
+    
+    func request(_ configuration: ContentBlockerRequest.Configuration, validatePresenceOfEtag: Bool, completion: @escaping (ContentBlockerRequest.Response) -> Void) {
+        
+    }
 }
 
 class MockStorageCache: StorageCacheUpdating {

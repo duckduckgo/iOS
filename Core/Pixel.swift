@@ -297,6 +297,7 @@ public struct PixelParameters {
     public static let etag = "et"
     
     public static let configuration = "configuration"
+    public static let responseCode = "responseCode"
 
     public static let emailCohort = "cohort"
     public static let emailLastUsed = "duck_address_last_used"

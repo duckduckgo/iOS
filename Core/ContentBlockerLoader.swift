@@ -84,7 +84,7 @@ public class ContentBlockerLoader {
                              with contentBlockerRequest: ContentBlockerRemoteDataSource,
                              _ semaphore: DispatchSemaphore,
                              _ progress: ContentBlockerLoaderProgress? = nil) {
-        contentBlockerRequest.request(configuration) { response in
+        contentBlockerRequest.request(configuration, validatePresenceOfEtag: true) { response in
             defer {
                 progress?(configuration)
             }
@@ -92,11 +92,6 @@ public class ContentBlockerLoader {
             guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
                 semaphore.signal()
                 return
-            }
-            
-            if etag == nil {
-                let params = [PixelParameters.configuration: configuration.rawValue]
-                Pixel.fire(pixel: .configDownloadMissingETag, withAdditionalParameters: params)
             }
             
             let isCached = etag != nil && self.etagStorage.etag(for: configuration) == etag

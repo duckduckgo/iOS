@@ -24,7 +24,7 @@ jobs:
       run: git fetch --no-tags --prune --depth=1 origin ${{ github.base_ref }}
 
     - name: Run SwiftLint on files changed in the PR
-      uses: norio-nomura/action-swiftlint@3.2.1
+      uses: ayoy/action-swiftlint@3.2.2
       with:
         args: --strict --force-exclude
       env:

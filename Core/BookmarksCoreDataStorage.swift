@@ -706,6 +706,32 @@ extension BookmarksCoreDataStorage {
         })
     }
 
+    internal func containsDomain(_ domain: String,
+                                 completion: @escaping BookmarkExistsMainThreadCompletion) {
+        viewContext.perform {
+            let fetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
+            fetchRequest.fetchLimit = 1
+
+            fetchRequest.predicate = NSPredicate(format: "%K CONTAINS %@",
+                    #keyPath(BookmarkManagedObject.url.host),
+                    domain)
+
+            guard let result = try? self.viewContext.count(for: fetchRequest) else {
+                completion(false)
+                return
+            }
+            completion(result > 0)
+        }
+    }
+
+    func containsDomain(_ domain: String) async -> Bool {
+        return await withCheckedContinuation({ continuation in
+            containsDomain(domain) { exists in
+                return continuation.resume(returning: exists)
+            }
+        })
+    }
+
     private func getTopLevelFolder(isFavorite: Bool,
                                    onContext context: NSManagedObjectContext,
                                    completion: @escaping (BookmarkFolderManagedObject) -> Void) {

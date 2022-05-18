@@ -219,6 +219,32 @@ class BookmarksCoreDataStorageTests: XCTestCase {
         let allBookmarksAfter = await storage.allBookmarksAndFavoritesFlat()
         XCTAssertEqual(allBookmarksAfter.count, 1)
     }
+
+    func test_WhenSaveBookmarkInFolder_ThenDomainExists() async throws {
+        guard let topLevelBookMarksFolder = storage.topLevelBookmarksFolder else {
+            XCTFail("must have topLevelBookMarkFolder")
+            return
+        }
+
+        let allBookmarksBefore = await storage.allBookmarksAndFavoritesFlat()
+        XCTAssertEqual(allBookmarksBefore.count, 0)
+
+        let folderManagedObjectID = try await storage.saveNewFolder(withTitle: "AFolder", parentID: topLevelBookMarksFolder.objectID)
+        XCTAssertNotNil(folderManagedObjectID)
+
+        let bookmarkManagedObjectID = try await storage.saveNewBookmark(withTitle: Constants.bookmarkTitle,
+                                                                        url: Constants.bookmarkURL,
+                                                                        parentID: folderManagedObjectID)
+        XCTAssertNotNil(bookmarkManagedObjectID)
+
+        guard let host = Constants.bookmarkURL.host else {
+            XCTFail("Must have host")
+            return
+        }
+
+        let contains = await storage.containsDomain(host)
+        XCTAssertTrue(contains)
+    }
 }
 
 private extension BookmarksCoreDataStorageTests {

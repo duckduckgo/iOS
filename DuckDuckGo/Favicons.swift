@@ -35,7 +35,8 @@ public class Favicons {
         static let tabsCache = CacheType.tabs.create()
         static let appUrls = AppUrls()
         static let targetImageSizePoints: CGFloat = 64
-        
+        static let bookmarksCoreDataStorage = BookmarksCoreDataStorage.shared
+
         public static let caches = [
             CacheType.bookmarks: bookmarksCache,
             CacheType.tabs: tabsCache
@@ -138,14 +139,15 @@ public class Favicons {
     }
     
     func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
-        
+
         guard let domain = domain,
-            let resource = defaultResource(forDomain: domain),
-            (Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)),
-            let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else {
-                loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
-                return
-            }
+              let resource = defaultResource(forDomain: domain),
+              let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
+
+        if !isFaviconCachedForBookmarks(forDomain: domain, resource: resource) {
+            loadFaviconForBookmarks(forDomain: domain)
+            return
+        }
 
         let replace = {
             Constants.bookmarksCache.removeImage(forKey: resource.cacheKey)
@@ -168,7 +170,22 @@ public class Favicons {
             }
         }
     }
- 
+
+    func isFaviconCachedForBookmarks(forDomain domain: String, resource: ImageResource) -> Bool {
+        return Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)
+    }
+
+    func loadFaviconForBookmarks(forDomain domain: String) {
+        // If the favicon is not cached for bookmarks, we need to:
+        // 1. check if a bookmark exists for the domain
+        // 2. if it does, we need to load the favicon for the domain
+        Task {
+            if await Constants.bookmarksCoreDataStorage.containsDomain(domain) {
+                loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
+            }
+        }
+    }
+
     public func clearCache(_ cacheType: CacheType) {
         Constants.caches[cacheType]?.clearDiskCache()
     }

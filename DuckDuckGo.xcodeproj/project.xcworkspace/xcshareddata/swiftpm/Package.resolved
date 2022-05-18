@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": null,
-          "revision": "4be0daeedc2a2ce90f5db5702f6e921ae38205e3",
-          "version": "12.3.1"
+          "branch": "brad/update-trk",
+          "revision": "3522010aef62b00a969b3d6b4127f86e5d038294",
+          "version": null
         }
       },
       {
@@ -95,9 +95,9 @@
         "package": "TrackerRadarKit",
         "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
         "state": {
-          "branch": null,
-          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
-          "version": "1.0.3"
+          "branch": "brad/cname-load-types",
+          "revision": "12c88a8b38db878668de6c3593d010af7145e534",
+          "version": null
         }
       }
     ]

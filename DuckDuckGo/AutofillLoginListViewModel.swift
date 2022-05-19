@@ -46,7 +46,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     private(set) var sections = [AutofillLoginListSectionType]()
     private(set) var indexes = [String]()
-    private (set) var viewState: ViewState = .showItems
+    private (set) var viewState: ViewState = .authLocked
     
     var isAutofillEnabled: Bool {
         get {

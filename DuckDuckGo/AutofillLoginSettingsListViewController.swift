@@ -22,7 +22,8 @@ import UIKit
 @available(iOS 14.0, *)
 final class AutofillLoginSettingsListViewController: UIViewController {
     private let viewModel: AutofillLoginListViewModel
-    private let emptyView = EmptyAutofillItemsView()
+    private let emptyView = AutofillItemsEmptyView()
+    private let lockedView = AutofillItemsLockedView()
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -63,20 +64,23 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     // MARK: Subviews Setup
     
     private func updateViewState() {
-        emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
         
         switch viewModel.viewState {
         case .showItems :
             emptyView.isHidden = true
             tableView.isHidden = false
+            lockedView.isHidden = true
             navigationItem.rightBarButtonItem?.isEnabled = true
         case .authLocked:
             emptyView.isHidden = true
-            tableView.isHidden = false
+            tableView.isHidden = true
+            lockedView.isHidden = false
             navigationItem.rightBarButtonItem?.isEnabled = false
         case .empty:
+            emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
+            lockedView.isHidden = true
             navigationItem.rightBarButtonItem?.isEnabled = false
         }
     }
@@ -88,11 +92,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func installSubviews() {
         view.addSubview(tableView)
         tableView.addSubview(emptyView)
+        
+        view.addSubview(lockedView)
     }
     
     private func installConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         emptyView.translatesAutoresizingMaskIntoConstraints = false
+        lockedView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
@@ -103,7 +110,12 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptyView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
             emptyView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
             emptyView.widthAnchor.constraint(equalToConstant: 225),
-            emptyView.heightAnchor.constraint(equalToConstant: 235)
+            emptyView.heightAnchor.constraint(equalToConstant: 235),
+            
+            lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            lockedView.heightAnchor.constraint(equalToConstant: 140)
         ])
     }
 

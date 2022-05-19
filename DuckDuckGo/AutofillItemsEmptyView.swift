@@ -1,5 +1,5 @@
 //
-//  EmptyAutofillItemsView.swift
+//  AutofillItemsEmptyView.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -21,7 +21,7 @@ import UIKit
 import DuckUI
 
 @available(iOS 14.0, *)
-final class EmptyAutofillItemsView: UIView {
+class AutofillItemsEmptyView: UIView {
     
     enum ViewState {
         case autofillEnabled
@@ -92,7 +92,7 @@ final class EmptyAutofillItemsView: UIView {
         addSubview(subtitle)
     }
     
-    private func updateLabels(with state: EmptyAutofillItemsView.ViewState) {
+    private func updateLabels(with state: AutofillItemsEmptyView.ViewState) {
         switch state {
         case .autofillDisabled:
             title.text = "Enable Autofill to start saving Logins."
@@ -103,20 +103,16 @@ final class EmptyAutofillItemsView: UIView {
     
     private func installConstraints() {
         stackContentView.translatesAutoresizingMaskIntoConstraints = false
-     //   imageView.translatesAutoresizingMaskIntoConstraints = false
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-//            imageView.heightAnchor.constraint(equalToConstant: 87),
-//            imageView.widthAnchor.constraint(equalToConstant: 87),
-//
             stackContentView.topAnchor.constraint(equalTo: topAnchor),
             stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackContentView.widthAnchor.constraint(equalTo: widthAnchor),
             
             subtitle.centerXAnchor.constraint(equalTo: centerXAnchor),
             subtitle.widthAnchor.constraint(equalTo: widthAnchor),
-            subtitle.bottomAnchor.constraint(equalTo: bottomAnchor),
+            subtitle.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }

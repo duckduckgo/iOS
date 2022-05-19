@@ -22,14 +22,27 @@ import XCTest
 import Kingfisher
 
 class FaviconsTests: XCTestCase {
-    
+
+    private var favicons: Favicons!
+
     override func setUp() {
         super.setUp()
         
         UserDefaults.clearStandard()
         BookmarkUserDefaults().bookmarks = []
         BookmarkUserDefaults().favorites = []
-        
+
+        let storage = MockBookmarksCoreDataStore()
+        _ = BookmarksCoreDataStorage.rootFolderManagedObject(storage.viewContext)
+        _ = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(storage.viewContext)
+
+        storage.saveContext()
+        storage.loadStoreAndCaches { _ in }
+
+        favicons = Favicons(sourcesProvider: DefaultFaviconSourcesProvider(),
+                            bookmarksStore: BookmarkUserDefaults(),
+                            bookmarksCoreDataStorage: storage)
+
         Favicons.Constants.tabsCache.clearDiskCache()
         Favicons.Constants.tabsCache.clearMemoryCache()
         Favicons.Constants.bookmarksCache.clearDiskCache()
@@ -37,20 +50,26 @@ class FaviconsTests: XCTestCase {
         
         _ = UserAgentManager.shared
     }
-    
+
+    override func tearDownWithError() throws {
+        favicons = nil
+
+        try super.tearDownWithError()
+    }
+
     func testWhenFreshInstallThenNeedsMigration() {
-        XCTAssertTrue(Favicons.shared.needsMigration)
+        XCTAssertTrue(favicons.needsMigration)
         let migrationExpectation = expectation(description: "migrateIfNeeded")
-        Favicons.shared.migrateIfNeeded {
+        favicons.migrateIfNeeded {
             migrationExpectation.fulfill()
         }
         waitForExpectations(timeout: 5.0, handler: nil)
-        XCTAssertFalse(Favicons.shared.needsMigration)
+        XCTAssertFalse(favicons.needsMigration)
     }
     
     func testWhenGeneratingKingfisherOptionsThenOptionsAreConfiguredCorrectly() {
         
-        let options = Favicons.shared.kfOptions(forDomain: Constants.exampleDomain, usingCache: .tabs)
+        let options = favicons.kfOptions(forDomain: Constants.exampleDomain, usingCache: .tabs)
           
         switch options?[0] {
         case .downloader(let downloader):
@@ -98,7 +117,7 @@ class FaviconsTests: XCTestCase {
     
     func testWhenGeneratingKingfisherResourceThenCorrectKeyAndURLAreGenerated() {
         
-        let resource = Favicons.shared.defaultResource(forDomain: Constants.exampleDomain)
+        let resource = favicons.defaultResource(forDomain: Constants.exampleDomain)
         XCTAssertEqual(resource?.cacheKey, "\(Favicons.Constants.salt)\(Constants.exampleDomain)".sha256())
         XCTAssertEqual(resource?.downloadURL, URL(string: "https://example.com/apple-touch-icon.png"))
         
@@ -107,26 +126,22 @@ class FaviconsTests: XCTestCase {
     func testWhenDomainIsBookmarkThenIsFaviconCached() {
         let expectation = self.expectation(description: "isFaviconCachedForBookmarks")
 
-        let fileName = "MockFiles/DDG-icon_256x256.png"
-
-        guard let imageData = try? FileLoader().load(fileName: fileName, fromBundle: Bundle(for: type(of: self))),
-              let image = UIImage(data: imageData),
-              let resource = Favicons.shared.defaultResource(forDomain: Constants.exampleDomain) else {
+        guard let image = UIImage(named: "Logo"),
+              let resource = favicons.defaultResource(forDomain: Constants.exampleDomain) else {
             XCTFail("Failed to load data needed for test")
             return
         }
 
-        XCTAssertFalse(Favicons.shared.isFaviconCachedForBookmarks(forDomain: Constants.exampleDomain, resource: resource))
+        XCTAssertFalse(favicons.isFaviconCachedForBookmarks(forDomain: Constants.exampleDomain, resource: resource))
 
         Favicons.Constants.bookmarksCache.store(image, forKey: resource.cacheKey) { _ in
             XCTAssertTrue(Favicons.Constants.bookmarksCache.isCached(forKey: resource.cacheKey))
-            XCTAssertTrue(Favicons.shared.isFaviconCachedForBookmarks(forDomain: Constants.exampleDomain, resource: resource))
+            XCTAssertTrue(self.favicons.isFaviconCachedForBookmarks(forDomain: Constants.exampleDomain, resource: resource))
             expectation.fulfill()
         }
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
-    
 }
 
 struct MockSourcesProvider: FaviconSourcesProvider {

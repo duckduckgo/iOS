@@ -35,7 +35,6 @@ public class Favicons {
         static let tabsCache = CacheType.tabs.create()
         static let appUrls = AppUrls()
         static let targetImageSizePoints: CGFloat = 64
-        static let bookmarksCoreDataStorage = BookmarksCoreDataStorage.shared
 
         public static let caches = [
             CacheType.bookmarks: bookmarksCache,
@@ -104,10 +103,12 @@ public class Favicons {
     
     let sourcesProvider: FaviconSourcesProvider
     let bookmarksStore: BookmarkStore
+    let bookmarksCoreDataStorage: BookmarksCoreDataStorage
     
-    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(), bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
+    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(), bookmarksStore: BookmarkStore = BookmarkUserDefaults(), bookmarksCoreDataStorage: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
         self.sourcesProvider = sourcesProvider
         self.bookmarksStore = bookmarksStore
+        self.bookmarksCoreDataStorage = bookmarksCoreDataStorage
 
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.bookmarksCache)
@@ -180,7 +181,7 @@ public class Favicons {
         // 1. check if a bookmark exists for the domain
         // 2. if it does, we need to load the favicon for the domain
         Task {
-            if await Constants.bookmarksCoreDataStorage.containsDomain(domain) {
+            if await bookmarksCoreDataStorage.containsDomain(domain) {
                 loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
             }
         }

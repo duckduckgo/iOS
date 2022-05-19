@@ -5,9 +5,18 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "brad/param-redirects",
-          "revision": "fdeae8f21a68fd8a481f599d0bd58593a850b7fc",
-          "version": null
+          "branch": null,
+          "revision": "7365786eb05d76d8b2ea16367c3c87698513cb86",
+          "version": "12.4.0"
+        }
+      },
+      {
+        "package": "Autofill",
+        "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
+        "state": {
+          "branch": null,
+          "revision": "bc91503bc5e94251e9f3186523862c2bf2e76345",
+          "version": "4.4.0"
         }
       },
       {

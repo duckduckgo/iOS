@@ -46,7 +46,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     private(set) var sections = [AutofillLoginListSectionType]()
     private(set) var indexes = [String]()
-    private (set) var viewState: ViewState = .authLocked
+   @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     
     var isAutofillEnabled: Bool {
         get {
@@ -61,6 +61,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
+        
         update()
     }
     
@@ -73,6 +74,16 @@ final class AutofillLoginListViewModel: ObservableObject {
             update()
         default:
             break
+        }
+    }
+    
+    func authenticate() {
+        AutofillLoginListAuthenticator().authenticate { error in
+            if let error = error {
+                self.viewState = .authLocked
+            } else {
+                self.viewState = .showItems
+            }
         }
     }
     

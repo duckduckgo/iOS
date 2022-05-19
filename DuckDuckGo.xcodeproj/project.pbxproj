@@ -53,6 +53,7 @@
 		310ECFDD282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310ECFDC282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift */; };
 		311BD1AD2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311BD1AC2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift */; };
 		311BD1AF2836BB4200AEF6C1 /* AutofillItemsLockedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311BD1AE2836BB4200AEF6C1 /* AutofillItemsLockedView.swift */; };
+		311BD1B12836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311BD1B02836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift */; };
 		3132FA2627A0784600DD7A12 /* FilePreviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3132FA2527A0784600DD7A12 /* FilePreviewHelper.swift */; };
 		3132FA2827A0788400DD7A12 /* PassKitPreviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3132FA2727A0788400DD7A12 /* PassKitPreviewHelper.swift */; };
 		3132FA2A27A0788F00DD7A12 /* QuickLookPreviewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3132FA2927A0788F00DD7A12 /* QuickLookPreviewHelper.swift */; };
@@ -828,6 +829,7 @@
 		310ECFDC282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableAutofillSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		311BD1AC2836BB3900AEF6C1 /* AutofillItemsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillItemsEmptyView.swift; sourceTree = "<group>"; };
 		311BD1AE2836BB4200AEF6C1 /* AutofillItemsLockedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillItemsLockedView.swift; sourceTree = "<group>"; };
+		311BD1B02836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginListAuthenticator.swift; sourceTree = "<group>"; };
 		3132FA2527A0784600DD7A12 /* FilePreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePreviewHelper.swift; sourceTree = "<group>"; };
 		3132FA2727A0788400DD7A12 /* PassKitPreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassKitPreviewHelper.swift; sourceTree = "<group>"; };
 		3132FA2927A0788F00DD7A12 /* QuickLookPreviewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLookPreviewHelper.swift; sourceTree = "<group>"; };
@@ -2322,6 +2324,7 @@
 				319A37132829A5450079FBCE /* Table */,
 				31584619281B08F5004ADB8B /* AutofillLoginListViewModel.swift */,
 				31EF52E0281B3BDC0034796E /* AutofillLoginListItemViewModel.swift */,
+				311BD1B02836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -5099,6 +5102,7 @@
 				85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */,
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
 				1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */,
+				311BD1B12836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
 				AA4D6A6A23DB87B1007E8790 /* AppIconManager.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,

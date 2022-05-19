@@ -18,13 +18,15 @@
 //
 
 import UIKit
+import Combine
 
 @available(iOS 14.0, *)
 final class AutofillLoginSettingsListViewController: UIViewController {
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
-    
+    private var cancellables: Set<AnyCancellable> = []
+
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.delegate = self
@@ -47,12 +49,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Autofill Logins"
-
+        setupCancellables()
         installSubviews()
         installConstraints()
         installNavigationBarButtons()
         applyTheme(ThemeManager.shared.currentTheme)
         updateViewState()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.authenticate()
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -60,6 +67,16 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         tableView.setEditing(editing, animated: animated)
     }
+    
+    private func setupCancellables() {
+        viewModel.$viewState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateViewState()
+            }
+            .store(in: &cancellables)
+    }
+    
     
     // MARK: Subviews Setup
     

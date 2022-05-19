@@ -38,8 +38,16 @@ struct AutofillLoginListSection: Identifiable {
 }
 
 final class AutofillLoginListViewModel: ObservableObject {
+    enum ViewState {
+        case authLocked
+        case empty
+        case showItems
+    }
+    
     private(set) var sections = [AutofillLoginListSectionType]()
     private(set) var indexes = [String]()
+    private (set) var viewState: ViewState = .showItems
+    
     var isAutofillEnabled: Bool {
         get {
             appSettings.autofill

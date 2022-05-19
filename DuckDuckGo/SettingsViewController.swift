@@ -232,7 +232,7 @@ class SettingsViewController: UITableViewController {
     
     private func showAutofill() {
         if #available(iOS 14.0, *) {
-            let autofillController = AutofillLoginListTableViewController(appSettings: appSettings)
+            let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
             navigationController?.pushViewController(autofillController, animated: true)
         }
     }

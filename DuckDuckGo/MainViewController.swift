@@ -805,9 +805,9 @@ class MainViewController: UIViewController {
     @available(iOS 14.0, *)
     fileprivate func launchAutofillLogins() {
         let appSettings = AppDependencyProvider.shared.appSettings
-        let test = AutofillLoginListTableViewController(appSettings: appSettings)
-        let navigationcontroller = UINavigationController(rootViewController: test)
-        self.present(navigationcontroller, animated: true, completion: nil)
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     fileprivate func launchSettings() {

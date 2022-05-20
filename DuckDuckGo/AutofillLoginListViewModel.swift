@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import UIKit
+import Combine
 
 enum AutofillLoginListSectionType {
     case enableAutofill
@@ -46,7 +47,11 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     private(set) var sections = [AutofillLoginListSectionType]()
     private(set) var indexes = [String]()
-   @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
+    private var cancellables: Set<AnyCancellable> = []
+
+    @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
+    
+    private let authenticator = AutofillLoginListAuthenticator()
     
     var isAutofillEnabled: Bool {
         get {
@@ -62,9 +67,11 @@ final class AutofillLoginListViewModel: ObservableObject {
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
         
-        update()
+        updateData()
+        setupCancellables()
     }
     
+ 
     func delete(at indexPath: IndexPath) {
         let section = sections[indexPath.section]
         switch section {
@@ -77,13 +84,36 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
+    func lockUI() {
+        authenticator.logOut()
+    }
+    
     func authenticate() {
-        AutofillLoginListAuthenticator().authenticate { error in
+        if viewState != .authLocked {
+            return
+        }
+        
+        authenticator.authenticate { error in
             if let error = error {
-                self.viewState = .authLocked
-            } else {
-                self.viewState = .showItems
+                print("ERROR \(error)")
             }
+        }
+    }
+    
+    private func setupCancellables() {
+        authenticator.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.update()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func updateViewState() {
+        if authenticator.state == .loggedOut {
+            self.viewState = .authLocked
+        } else {
+            self.viewState = self.sections.count > 1 ? .showItems : .empty
         }
     }
     
@@ -98,24 +128,24 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     private func delete(_ account: SecureVaultModels.WebsiteAccount) {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
-        let accountID = account.id else { return }
+              let accountID = account.id else { return }
         
         do {
             try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
         } catch {
-            #warning("Pixel?")
+#warning("Pixel?")
         }
     }
     
-    func update() {
+    func updateData() {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else { return }
-
+        
         sections.removeAll()
         indexes.removeAll()
         
         sections.append(.enableAutofill)
-
-        #warning("REFACTOR THIS")
+        
+#warning("REFACTOR THIS")
         if let accounts = try? secureVault.accounts() {
             var sections = [String: [AutofillLoginListItemViewModel]]()
             
@@ -152,6 +182,8 @@ final class AutofillLoginListViewModel: ObservableObject {
             self.indexes.sort(by: { lhs, rhs in
                 lhs < rhs
             })
+            
+            updateViewState()
         }
     }
 }

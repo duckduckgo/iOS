@@ -55,6 +55,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         installNavigationBarButtons()
         applyTheme(ThemeManager.shared.currentTheme)
         updateViewState()
+        configureNotification()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,6 +78,24 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    private func configureNotification() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self,
+                                       selector: #selector(appWillMoveToForegroundCallback),
+                                       name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        notificationCenter.addObserver(self,
+                                       selector: #selector(appWillMoveToBackgroundCallback),
+                                       name: UIApplication.willResignActiveNotification, object: nil)
+    }
+    
+    @objc private func appWillMoveToForegroundCallback() {
+        viewModel.authenticate()
+    }
+    
+    @objc private func appWillMoveToBackgroundCallback() {
+        viewModel.lockUI()
+    }
     
     // MARK: Subviews Setup
     

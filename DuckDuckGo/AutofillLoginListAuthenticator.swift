@@ -20,14 +20,25 @@
 import Foundation
 import LocalAuthentication
 
-struct AutofillLoginListAuthenticator {
+final class AutofillLoginListAuthenticator {
     enum AuthError {
         case noAuthAvailable
         case failedToAuthenticate
     }
     
-    func authenticate(completion: @escaping(AuthError?)-> Void) {
-        let context = LAContext()
+    enum AuthenticationState {
+        case loggedIn, loggedOut
+    }
+    
+    private var context = LAContext()
+    @Published private(set) var state = AuthenticationState.loggedOut
+        
+    func logOut() {
+        state = .loggedOut
+    }
+    
+    func authenticate(completion: @escaping(AuthError?) -> Void) {
+        context = LAContext()
         context.localizedCancelTitle = "custom cancel" //TODO strings
         context.localizedReason = "custom reason"
         context.localizedFallbackTitle = "custom fallback"
@@ -39,6 +50,7 @@ struct AutofillLoginListAuthenticator {
             
                 DispatchQueue.main.async {
                     if success {
+                        self.state = .loggedIn
                         completion(nil)
                     } else {
                         print(error?.localizedDescription ?? "Failed to authenticate but error nil")

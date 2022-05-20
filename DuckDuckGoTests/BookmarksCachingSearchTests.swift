@@ -21,7 +21,7 @@ import XCTest
 import CoreData
 
 @testable import Core
-@testable import DuckDuckGo
+//@testable import DuckDuckGo
 
 class MockBookmarkSearchStore: BookmarksSearchStore {
     var hasData: Bool {

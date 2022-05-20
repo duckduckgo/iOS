@@ -17,25 +17,24 @@
 //  limitations under the License.
 //
 
-import Core
 import Foundation
 
-protocol BookmarksSearchStore {
+public protocol BookmarksSearchStore {
     var hasData: Bool { get }
     func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void)
 }
 
 extension BookmarksCoreDataStorage: BookmarksSearchStore {
-    var hasData: Bool {
+    public var hasData: Bool {
         !topLevelBookmarksItems.isEmpty || !favorites.isEmpty
     }
     
-    func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
+    public func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
         allBookmarksAndFavoritesFlat(completion: completion)
     }
 }
 
-class BookmarksCachingSearch {
+public class BookmarksCachingSearch {
     
     private class ScoredBookmark {
         let bookmark: Bookmark
@@ -48,13 +47,13 @@ class BookmarksCachingSearch {
     }
     
     private let bookmarksStore: BookmarksSearchStore
-    
-    init(bookmarksStore: BookmarksSearchStore = BookmarksCoreDataStorage.shared) {
+
+    public init(bookmarksStore: BookmarksSearchStore = BookmarksCoreDataStorage.shared) {
         self.bookmarksStore = bookmarksStore
         loadCache()
     }
-    
-    var hasData: Bool {
+
+    public var hasData: Bool {
         return bookmarksStore.hasData
     }
     
@@ -123,8 +122,8 @@ class BookmarksCachingSearch {
         }
     }
     // swiftlint:enable cyclomatic_complexity
-    
-    func search(query: String, sortByRelevance: Bool = true, completion: @escaping ([Bookmark]) -> Void) {
+
+    public func search(query: String, sortByRelevance: Bool = true, completion: @escaping ([Bookmark]) -> Void) {
         guard hasData else {
             completion([])
             return

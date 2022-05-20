@@ -32,7 +32,6 @@ class AutofillItemsLockedView: UIView {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
-        label.textColor = .gray90
         return label
     }()
 
@@ -72,5 +71,14 @@ class AutofillItemsLockedView: UIView {
             stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+    }
+
+}
+
+@available(iOS 14.0, *)
+extension AutofillItemsLockedView: Themable {
+    
+    func decorate(with theme: Theme) {
+        title.textColor = theme.textFieldFontColor
     }
 }

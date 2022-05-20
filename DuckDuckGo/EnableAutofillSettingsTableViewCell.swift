@@ -34,10 +34,10 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
     }
     var isToggleOn: Bool {
         get {
-            toggleSwith.isOn
+            toggleSwitch.isOn
         }
         set {
-            toggleSwith.isOn = newValue
+            toggleSwitch.isOn = newValue
         }
     }
     
@@ -49,7 +49,7 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var toggleSwith: UISwitch = {
+    private lazy var toggleSwitch: UISwitch = {
         let toggle = UISwitch(frame: CGRect.zero)
         toggle.addTarget(self, action: #selector(onToggleValueChanged(_:)), for: .valueChanged)
         return toggle
@@ -72,7 +72,7 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
     
     private func installSubviews() {
         contentView.addSubview(titleLabel)
-        contentView.addSubview(toggleSwith)
+        contentView.addSubview(toggleSwitch)
     }
     
     private func updateTheme() {
@@ -80,21 +80,22 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
             return
         }
 
-        toggleSwith.onTintColor = theme.buttonTintColor
+        toggleSwitch.onTintColor = theme.buttonTintColor
+        titleLabel.textColor = theme.textFieldFontColor
     }
     
     private func installConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        toggleSwith.translatesAutoresizingMaskIntoConstraints = false
+        toggleSwitch.translatesAutoresizingMaskIntoConstraints = false
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalToSystemSpacingAfter: toggleSwith.leadingAnchor, multiplier: 1),
+            titleLabel.trailingAnchor.constraint(equalToSystemSpacingAfter: toggleSwitch.leadingAnchor, multiplier: 1),
             titleLabel.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
             
-            toggleSwith.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
-            toggleSwith.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
+            toggleSwitch.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
+            toggleSwitch.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
         ])
     }
     

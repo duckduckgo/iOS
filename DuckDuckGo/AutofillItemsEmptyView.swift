@@ -116,3 +116,11 @@ class AutofillItemsEmptyView: UIView {
         ])
     }
 }
+
+@available(iOS 14.0, *)
+extension AutofillItemsEmptyView: Themable {
+    
+    func decorate(with theme: Theme) {
+        title.textColor = theme.textFieldFontColor
+    }
+}

@@ -189,6 +189,8 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         switch viewModel.sections[indexPath.section] {
         case .credentials(_, let items):
             let item = items[indexPath.row]
@@ -270,7 +272,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
 @available(iOS 14.0, *)
 extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewControllerDelegate {
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController) {
-        viewModel.update()
+        viewModel.updateData()
         tableView.reloadData()
     }
 }

@@ -71,14 +71,15 @@ final class AutofillLoginListViewModel: ObservableObject {
         setupCancellables()
     }
     
- 
+ // MARK: Public Methods
+    
     func delete(at indexPath: IndexPath) {
         let section = sections[indexPath.section]
         switch section {
         case .credentials(_, let items):
             let item = items[indexPath.row]
             delete(item.account)
-            update()
+            updateData()
         default:
             break
         }
@@ -99,41 +100,13 @@ final class AutofillLoginListViewModel: ObservableObject {
             }
         }
     }
-    
-    private func setupCancellables() {
-        authenticator.$state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.update()
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func updateViewState() {
-        if authenticator.state == .loggedOut {
-            self.viewState = .authLocked
-        } else {
-            self.viewState = self.sections.count > 1 ? .showItems : .empty
-        }
-    }
-    
+
     func rowsInSection(_ section: Int) -> Int {
         switch self.sections[section] {
         case .enableAutofill:
             return 1
         case .credentials(_, let items):
             return items.count
-        }
-    }
-    
-    private func delete(_ account: SecureVaultModels.WebsiteAccount) {
-        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
-              let accountID = account.id else { return }
-        
-        do {
-            try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
-        } catch {
-#warning("Pixel?")
         }
     }
     
@@ -184,6 +157,43 @@ final class AutofillLoginListViewModel: ObservableObject {
             })
             
             updateViewState()
+        }
+    }
+    
+    // MARK: Private Methods
+
+    private func setupCancellables() {
+        authenticator.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateViewState()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func updateViewState() {
+        var newViewState: AutofillLoginListViewModel.ViewState
+        
+        if authenticator.state == .loggedOut {
+            newViewState = .authLocked
+        } else {
+            newViewState = self.sections.count > 1 ? .showItems : .empty
+        }
+        
+        // Avoid unnecessary updates
+        if newViewState != viewState {
+            viewState = newViewState
+        }
+    }
+    
+    private func delete(_ account: SecureVaultModels.WebsiteAccount) {
+        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
+              let accountID = account.id else { return }
+        
+        do {
+            try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
+        } catch {
+#warning("Pixel?")
         }
     }
 }

@@ -43,13 +43,20 @@ final class AutofillLoginListViewModel: ObservableObject {
         case authLocked
         case empty
         case showItems
+        case searching
     }
     
-    private(set) var sections = [AutofillLoginListSectionType]()
+    
     private(set) var indexes = [String]()
     private var cancellables: Set<AnyCancellable> = []
-
+    var isSearching: Bool = false {
+        didSet {
+            updateData()
+        }
+    }
+    
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
+    @Published private(set) var sections = [AutofillLoginListSectionType]()
     
     private let authenticator = AutofillLoginListAuthenticator()
     
@@ -72,6 +79,10 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
  // MARK: Public Methods
+
+    func filterData(with query: String) {
+        updateData(with: query)
+    }
     
     func delete(at indexPath: IndexPath) {
         let section = sections[indexPath.section]
@@ -110,41 +121,53 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    func updateData() {
+    func updateData(with query: String? = nil) {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else { return }
-        
+        var newSections = [AutofillLoginListSectionType]()
+
         sections.removeAll()
         indexes.removeAll()
         
-        sections.append(.enableAutofill)
+        if !isSearching {
+            newSections.append(.enableAutofill)
+        }
         
 #warning("REFACTOR THIS")
         if let accounts = try? secureVault.accounts() {
-            var sections = [String: [AutofillLoginListItemViewModel]]()
-            
+            var sectionsDictionary = [String: [AutofillLoginListItemViewModel]]()
+
             for account in accounts {
                 print("ACCOUNT \(account.name) \(account.domain)")
+               
+                if let query = query, query.count > 0 {
+                    if !account.name.lowercased().contains(query.lowercased()) &&
+                        !account.domain.lowercased().contains(query.lowercased()) &&
+                        !account.username.lowercased().contains(query.lowercased()) {
+                        continue
+                    }
+                }
+                
                 
                 if let first = account.name.first?.lowercased() {
-                    if sections[first] != nil {
-                        sections[first]?.append(AutofillLoginListItemViewModel(account: account))
+                    if sectionsDictionary[first] != nil {
+                        sectionsDictionary[first]?.append(AutofillLoginListItemViewModel(account: account))
                     } else {
                         let newSection = [AutofillLoginListItemViewModel(account: account)]
-                        sections[first] = newSection
+                        sectionsDictionary[first] = newSection
                     }
                 }
             }
             
-            for (key, var value) in sections {
+            for (key, var value) in sectionsDictionary {
                 value.sort { leftItem, rightItem in
                     leftItem.title.lowercased() < rightItem.title.lowercased()
                 }
                 
-                self.sections.append(.credentials(title: key, items: value))
+                newSections.append(.credentials(title: key, items: value))
                 indexes.append(key.uppercased())
             }
             
-            self.sections.sort(by: { leftSection, rightSection in
+            newSections.sort(by: { leftSection, rightSection in
                 if case .credentials(let left, _) = leftSection,
                    case .credentials(let right, _) = rightSection {
                     return left < right
@@ -156,6 +179,7 @@ final class AutofillLoginListViewModel: ObservableObject {
                 lhs < rhs
             })
             
+            self.sections = newSections
             updateViewState()
         }
     }
@@ -176,6 +200,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         
         if authenticator.state == .loggedOut {
             newViewState = .authLocked
+        } else if isSearching {
+            newViewState = .searching
         } else {
             newViewState = self.sections.count > 1 ? .showItems : .empty
         }

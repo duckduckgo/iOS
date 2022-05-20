@@ -26,6 +26,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
     private var cancellables: Set<AnyCancellable> = []
+    private lazy var searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Logins"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        return searchController
+    }()
+
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
@@ -56,6 +67,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
         updateViewState()
         configureNotification()
+        navigationItem.searchController = searchController
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,6 +87,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateViewState()
+            }
+            .store(in: &cancellables)
+        
+        viewModel.$sections
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
             }
             .store(in: &cancellables)
     }
@@ -118,6 +138,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.isHidden = false
             lockedView.isHidden = true
             navigationItem.rightBarButtonItem?.isEnabled = false
+        case .searching:
+            emptyView.isHidden = true
+            tableView.isHidden = false
+            lockedView.isHidden = true
+            navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }
     
@@ -304,5 +329,19 @@ extension AutofillLoginSettingsListViewController: Themable {
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
         
         tableView.reloadData()
+    }
+}
+
+// MARK: UISearchControllerDelegate
+
+@available(iOS 14.0, *)
+extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        viewModel.isSearching = searchController.isActive
+        if let query = searchController.searchBar.text {
+            viewModel.filterData(with: query)
+        }
+        
     }
 }

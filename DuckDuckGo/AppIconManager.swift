@@ -29,10 +29,6 @@ class AppIconManager {
         UIApplication.shared.supportsAlternateIcons
     }
 
-    enum AppIconManagerError: Error {
-        case changeNotSupported
-    }
-
     func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)? = nil) {
         if self.appIcon == appIcon {
             completionHandler?(nil)

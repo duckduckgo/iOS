@@ -28,11 +28,6 @@ protocol ActionSheetDaxDialogDelegate: NSObjectProtocol {
 
 class ActionSheetDaxDialogViewController: UIViewController {
 
-    struct Constants {
-        
-        static let defaultCTAHeight: CGFloat = 100
-        
-    }
     @IBOutlet weak var highlightCutOutView: HighlightCutOutView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     

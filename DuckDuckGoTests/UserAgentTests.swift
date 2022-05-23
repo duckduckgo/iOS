@@ -137,7 +137,10 @@ class UserAgentTests: XCTestCase {
                     "state": "disabled",
                     "settings": {
                         "omitApplicationSites": [
-                            "cvs.com"
+                            {
+                                "domain": "cvs.com",
+                                "reason": "Site breakage"
+                            }
                         ]
                     },
                     "exceptions": []

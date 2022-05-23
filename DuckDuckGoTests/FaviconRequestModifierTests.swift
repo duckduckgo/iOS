@@ -41,7 +41,10 @@ class FaviconRequestModifierTests: XCTestCase {
                 "state": "enabled",
                 "settings": {
                     "omitApplicationSites": [
-                        "cvs.com"
+                        {
+                            "domain": "cvs.com",
+                            "reason": "Site breakage"
+                        }
                     ]
                 },
                 "exceptions": []

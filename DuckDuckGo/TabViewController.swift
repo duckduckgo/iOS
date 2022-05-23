@@ -269,7 +269,9 @@ class TabViewController: UIViewController {
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
         
-        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                           sessionKey: UUID().uuidString,
+                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
         let autofillUserScript = AutofillUserScript(
             scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
                                                                 properties: prefs))

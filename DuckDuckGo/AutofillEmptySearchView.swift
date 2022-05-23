@@ -52,7 +52,11 @@ class AutofillEmptySearchView: UIView {
     
     var query: String = "" {
         didSet {
-            subtitle.text = "for '\(query)'"
+            if query.count > 0 {
+                subtitle.text = "for '\(query)'"
+            } else {
+                subtitle.text = ""
+            }
         }
     }
     

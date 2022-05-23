@@ -450,6 +450,10 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func startEditing() {
+        guard !tableView.isEditing else {
+            return
+        }
+
         // necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
         tableView.isEditing = false
         
@@ -462,6 +466,10 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func finishEditing() {
+        guard tableView.isEditing else {
+            return
+        }
+
         tableView.isEditing = false
         refreshEditButton()
         enableDoneButton()

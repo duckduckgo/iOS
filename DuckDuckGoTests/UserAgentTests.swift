@@ -59,7 +59,10 @@ class UserAgentTests: XCTestCase {
                 "state": "enabled",
                 "settings": {
                     "omitApplicationSites": [
-                        "cvs.com"
+                        {
+                            "domain": "cvs.com",
+                            "reason": "Site reports browser not supported"
+                        }
                     ]
                 },
                 "exceptions": []

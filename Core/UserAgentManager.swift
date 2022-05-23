@@ -86,6 +86,7 @@ struct UserAgent {
         static let fallbackVersionComponent = "Version/13.1.1"
         
         static let uaOmitSitesConfigKey = "omitApplicationSites"
+        static let uaOmitDomainConfigKey = "domain"
         // swiftlint:enable line_length
     }
     
@@ -108,10 +109,16 @@ struct UserAgent {
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
     }
     
+    private func omitApplicationSites(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let omitApplicationObjs = uaSettings[Constants.uaOmitSitesConfigKey] as? [[String: String]] ?? []
+        
+        return omitApplicationObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+    }
+    
     public func agent(forUrl url: URL?, isDesktop: Bool,
                       privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> String {
-        let uaSettings = privacyConfig.settings(for: .customUserAgent)
-        let omittedSites = uaSettings[Constants.uaOmitSitesConfigKey] as? [String] ?? []
+        let omittedSites = omitApplicationSites(forConfig: privacyConfig)
         let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
         let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
             url?.isPart(ofDomain: domain) ?? false

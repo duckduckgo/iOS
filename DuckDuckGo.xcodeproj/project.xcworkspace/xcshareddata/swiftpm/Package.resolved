@@ -6,8 +6,17 @@
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": "brad/ua-config",
-          "revision": "c3a7c095ebf6f08b416e3e0db5c5ebc24dfd1d76",
+          "revision": "66d522c1a89b963ebec6492474da1d7655b12549",
           "version": null
+        }
+      },
+      {
+        "package": "Autofill",
+        "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
+        "state": {
+          "branch": null,
+          "revision": "bc91503bc5e94251e9f3186523862c2bf2e76345",
+          "version": "4.4.0"
         }
       },
       {
@@ -24,17 +33,17 @@
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {
           "branch": null,
-          "revision": "32e4acdf6971f58f5ad552389cf2d7d016334eaf",
-          "version": "7.2.0"
+          "revision": "59eb199fdb8dd47733624e8b0277822d0232579e",
+          "version": "7.2.2"
         }
       },
       {
         "package": "Lottie",
-        "repositoryURL": "https://github.com/duckduckgo/lottie-ios.git",
+        "repositoryURL": "https://github.com/airbnb/lottie-ios.git",
         "state": {
-          "branch": "2.5.3/spm",
-          "revision": "58eabd4767dcd4862d0e0a6a93e08ff0746141c6",
-          "version": null
+          "branch": null,
+          "revision": "4a6058cbbdfe4f74aeae92c8bd51ad3b0de2a1ee",
+          "version": "3.3.0"
         }
       },
       {
@@ -80,6 +89,15 @@
           "branch": null,
           "revision": "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
           "version": "2.4.2"
+        }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "state": {
+          "branch": null,
+          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
+          "version": "1.0.3"
         }
       }
     ]

@@ -1104,6 +1104,7 @@ extension TabViewController: WKNavigationDelegate {
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
+        linkProtection.setMainFrameUrl(webView.url)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1115,6 +1116,7 @@ extension TabViewController: WKNavigationDelegate {
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
         updatePreview()
+        linkProtection.setMainFrameUrl(nil)
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1226,6 +1228,7 @@ extension TabViewController: WKNavigationDelegate {
         webpageDidFailToLoad()
         checkForReloadOnError()
         scheduleTrackerNetworksAnimation(collapsing: true)
+        linkProtection.setMainFrameUrl(nil)
     }
 
     private func webpageDidFailToLoad() {
@@ -1240,6 +1243,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
+        linkProtection.setMainFrameUrl(nil)
         lastError = error
         let error = error as NSError
 

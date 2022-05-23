@@ -44,6 +44,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         case empty
         case showItems
         case searching
+        case searchingNoResults
     }
     
     
@@ -82,6 +83,7 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     func filterData(with query: String) {
         updateData(with: query)
+  
     }
     
     func delete(at indexPath: IndexPath) {
@@ -201,7 +203,11 @@ final class AutofillLoginListViewModel: ObservableObject {
         if authenticator.state == .loggedOut {
             newViewState = .authLocked
         } else if isSearching {
-            newViewState = .searching
+            if sections.count == 0 {
+                newViewState = .searchingNoResults
+            } else {
+                newViewState = .searching
+            }
         } else {
             newViewState = self.sections.count > 1 ? .showItems : .empty
         }

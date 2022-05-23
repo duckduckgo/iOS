@@ -124,3 +124,4 @@ extension AutofillItemsEmptyView: Themable {
         title.textColor = theme.textFieldFontColor
     }
 }
+

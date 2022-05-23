@@ -25,6 +25,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
+    private let emptySearchView = AutofillEmptySearchView()
+    
     private var cancellables: Set<AnyCancellable> = []
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -127,22 +129,32 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
+            emptySearchView.isHidden = true
             navigationItem.rightBarButtonItem?.isEnabled = true
         case .authLocked:
             emptyView.isHidden = true
             tableView.isHidden = true
             lockedView.isHidden = false
+            emptySearchView.isHidden = true
             navigationItem.rightBarButtonItem?.isEnabled = false
         case .empty:
             emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
             lockedView.isHidden = true
+            emptySearchView.isHidden = true
             navigationItem.rightBarButtonItem?.isEnabled = false
         case .searching:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
+            emptySearchView.isHidden = true
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        case .searchingNoResults:
+            emptyView.isHidden = true
+            tableView.isHidden = false
+            lockedView.isHidden = true
+            emptySearchView.isHidden = false
             navigationItem.rightBarButtonItem?.isEnabled = true
         }
     }
@@ -154,13 +166,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func installSubviews() {
         view.addSubview(tableView)
         tableView.addSubview(emptyView)
-        
+        tableView.addSubview(emptySearchView)
         view.addSubview(lockedView)
     }
     
     private func installConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         emptyView.translatesAutoresizingMaskIntoConstraints = false
+        emptySearchView.translatesAutoresizingMaskIntoConstraints = false
         lockedView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -173,6 +186,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptyView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
             emptyView.widthAnchor.constraint(equalToConstant: 225),
             emptyView.heightAnchor.constraint(equalToConstant: 235),
+            
+            emptySearchView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            emptySearchView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 80),
+            emptySearchView.widthAnchor.constraint(equalToConstant: 225),
+            emptySearchView.heightAnchor.constraint(equalToConstant: 130),
             
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
@@ -342,7 +360,7 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
         viewModel.isSearching = searchController.isActive
         if let query = searchController.searchBar.text {
             viewModel.filterData(with: query)
+            emptySearchView.query = query
         }
-        
     }
 }

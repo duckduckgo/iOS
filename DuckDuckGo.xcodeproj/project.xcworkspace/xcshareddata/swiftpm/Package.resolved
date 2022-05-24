@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": "elle/autofill-feature-toggles",
-          "revision": "8a842e3008995a01e6683cfda74d71a5ed474a59",
+          "revision": "9548245e7d1b9d8ac8c7f4f830622298f4ebe654",
           "version": null
         }
       },
@@ -14,9 +14,9 @@
         "package": "Autofill",
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
-          "branch": "shane/feature-toggles-impl",
-          "revision": "820a2029a9f7373197345f2c29af65a22bfb95e5",
-          "version": null
+          "branch": null,
+          "revision": "bc91503bc5e94251e9f3186523862c2bf2e76345",
+          "version": "4.4.0"
         }
       },
       {
@@ -89,6 +89,15 @@
           "branch": null,
           "revision": "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
           "version": "2.4.2"
+        }
+      },
+      {
+        "package": "TrackerRadarKit",
+        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
+        "state": {
+          "branch": null,
+          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
+          "version": "1.0.3"
         }
       }
     ]

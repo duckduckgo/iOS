@@ -102,16 +102,13 @@ final class AutofillLoginListViewModel: ObservableObject {
         authenticator.logOut()
     }
     
-    func authenticate() {
+    func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
         if viewState != .authLocked {
+            completion(nil)
             return
         }
         
-        authenticator.authenticate { error in
-            if let error = error {
-                print("ERROR \(error)")
-            }
-        }
+        authenticator.authenticate(completion: completion)
     }
 
     func rowsInSection(_ section: Int) -> Int {

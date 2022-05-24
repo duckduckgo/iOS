@@ -806,6 +806,7 @@ class MainViewController: UIViewController {
     fileprivate func launchAutofillLogins() {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
         self.present(navigationController, animated: true, completion: nil)
     }
@@ -1791,6 +1792,14 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
             Pixel.fire(pixel: .voiceSearchDone)
             loadQuery(query)
         }
+    }
+}
+
+// MARK: - AutofillLoginSettingsListViewControllerDelegate
+@available(iOS 14.0, *)
+extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
+    func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
+        controller.dismiss(animated: true)
     }
 }
 

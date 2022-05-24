@@ -233,6 +233,7 @@ class SettingsViewController: UITableViewController {
     private func showAutofill() {
         if #available(iOS 14.0, *) {
             let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+            autofillController.delegate = self
             navigationController?.pushViewController(autofillController, animated: true)
         }
     }
@@ -456,6 +457,15 @@ extension SettingsViewController {
         default:
             return 13
         }
+    }
+}
+
+// MARK: - AutofillLoginSettingsListViewControllerDelegate
+
+@available(iOS 14.0, *)
+extension SettingsViewController: AutofillLoginSettingsListViewControllerDelegate {
+    func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
+        navigationController?.popViewController(animated: true)
     }
 }
 // swiftlint:enable file_length type_body_length

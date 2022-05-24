@@ -21,7 +21,13 @@ import UIKit
 import Combine
 
 @available(iOS 14.0, *)
+protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
+    func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
+}
+
+@available(iOS 14.0, *)
 final class AutofillLoginSettingsListViewController: UIViewController {
+    weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
@@ -76,7 +82,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.authenticate()
+        authenticate()
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -113,11 +119,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
     
     @objc private func appWillMoveToForegroundCallback() {
-        viewModel.authenticate()
+        authenticate()
     }
     
     @objc private func appWillMoveToBackgroundCallback() {
         viewModel.lockUI()
+    }
+    
+    private func authenticate() {
+        viewModel.authenticate {[weak self] error in
+            guard let self = self else { return }
+            if error != nil {
+                self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
+            }
+        }
     }
     
     // MARK: Subviews Setup

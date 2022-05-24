@@ -73,7 +73,7 @@ class BookmarksViewController: UITableViewController {
     
     fileprivate lazy var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource(alertDelegate: self)
     fileprivate var searchDataSource = SearchBookmarksDataSource()
-    private var bookmarksCachingSearch: BookmarksCachingSearch?
+    private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
     
     fileprivate var onDidAppearAction: () -> Void = {}
         
@@ -357,6 +357,10 @@ class BookmarksViewController: UITableViewController {
     }
 
     func importBookmarks(fromHtml html: String) {
+        // pre-emptively deregisterForNotifications so that bookmarksCachingSearch is not saturated with notification events
+        // and constantly rebuilding while bookmarks are being imported (bookmark files could be very large)
+        bookmarksCachingSearch.deregisterForNotifications()
+
         Task {
             let bookmarkCountBeforeImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
 
@@ -364,6 +368,9 @@ class BookmarksViewController: UITableViewController {
             switch result {
             case .success:
                 dataSource.bookmarksManager.reloadWidgets()
+
+                // force refresh of cached data and re-enable notification observer
+                bookmarksCachingSearch.refreshCache()
 
                 let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
                 let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
@@ -613,10 +620,6 @@ class BookmarksViewController: UITableViewController {
 
 extension BookmarksViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        bookmarksCachingSearch = BookmarksCachingSearch()
-    }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             if tableView.dataSource !== dataSource {
@@ -630,8 +633,7 @@ extension BookmarksViewController: UISearchBarDelegate {
             tableView.dataSource = searchDataSource
         }
 
-        let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksSearch) {
+        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksCachingSearch) {
             self.tableView.reloadData()
         }
     }

@@ -21,7 +21,6 @@ import XCTest
 import CoreData
 
 @testable import Core
-//@testable import DuckDuckGo
 
 class MockBookmarkSearchStore: BookmarksSearchStore {
     var hasData: Bool {
@@ -61,6 +60,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     let simpleStore = MockBookmarkSearchStore()
     
     let urlStore = MockBookmarkSearchStore()
+
+    private var storage: MockBookmarksCoreDataStore!
     
     enum Entry: String {
         case b1 = "bookmark test 1"
@@ -96,6 +97,12 @@ class BookmarksCachingSearchTests: XCTestCase {
             MockBookmark(title: Entry.urlExample2.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
             MockBookmark(title: Entry.urlNasa.rawValue, url: URL(string: "https://www.nasa.gov")!, isFavorite: true),
             MockBookmark(title: Entry.urlDDG.rawValue, url: url, isFavorite: true)]
+
+        storage = MockBookmarksCoreDataStore()
+        _ = BookmarksCoreDataStorage.rootFolderManagedObject(storage.viewContext)
+        _ = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(storage.viewContext)
+        storage.saveContext()
+        storage.loadStoreAndCaches { _ in }
     }
 
     func testWhenSearchingThenOnlyBeginingsOfWordsAreMatched() throws {
@@ -313,5 +320,46 @@ class BookmarksCachingSearchTests: XCTestCase {
         }
         
         waitForExpectations(timeout: 5)
+    }
+
+    func testWhenBookmarkExistsThenContainsDomain() throws {
+        let engineUrlStore = BookmarksCachingSearch(bookmarksStore: urlStore)
+        XCTAssertTrue(engineUrlStore.containsDomain("duckduckgo.com"))
+
+        let engineSimpleStore = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        XCTAssertTrue(engineSimpleStore.containsDomain("duckduckgo.com"))
+    }
+
+    func testWhenBookmarkSavedThenContainsDomain() async throws {
+        let bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: storage)
+
+        guard let topLevelBookMarksFolder = storage.topLevelBookmarksFolder else {
+            XCTFail("must have topLevelBookMarkFolder")
+            return
+        }
+
+        let managedObjectID = try await storage.saveNewBookmark(withTitle: Constants.bookmarkTitle,
+                                                                url: Constants.bookmarkURL,
+                                                                parentID: topLevelBookMarksFolder.objectID)
+        XCTAssertNotNil(managedObjectID)
+
+        guard let bookmarkManagedObject = await storage.bookmark(forURL: Constants.bookmarkURL) else {
+            XCTFail("bookmark should exist")
+            return
+        }
+
+        XCTAssertNotNil(bookmarkManagedObject)
+        XCTAssertEqual(bookmarkManagedObject.title, Constants.bookmarkTitle)
+        XCTAssertEqual(bookmarkManagedObject.parentFolder?.objectID, topLevelBookMarksFolder.objectID)
+        XCTAssertEqual(bookmarkManagedObject.url, Constants.bookmarkURL)
+
+        XCTAssertTrue(bookmarksCachingSearch.containsDomain("www.apple.com"))
+    }
+}
+
+private extension BookmarksCachingSearchTests {
+    enum Constants {
+        static let bookmarkTitle = "my bookmark"
+        static let bookmarkURL = URL(string: "https://www.apple.com")!
     }
 }

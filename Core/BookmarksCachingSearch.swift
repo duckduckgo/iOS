@@ -35,7 +35,7 @@ extension BookmarksCoreDataStorage: BookmarksSearchStore {
 }
 
 public class BookmarksCachingSearch {
-    
+
     private class ScoredBookmark {
         let bookmark: Bookmark
         var score: Int
@@ -58,12 +58,15 @@ public class BookmarksCachingSearch {
     }
     
     private var cachedBookmarksAndFavorites: [Bookmark]?
-    private let cacheLoadedCondition = RunLoop.ResumeCondition()
+    private var cacheLoadedCondition = RunLoop.ResumeCondition()
     
     private func loadCache() {
+        deregisterForNotifications()
+
         bookmarksStore.bookmarksAndFavorites { bookmarks in
             self.cachedBookmarksAndFavorites = bookmarks
             self.cacheLoadedCondition.resolve()
+            self.registerForNotifications()
         }
     }
     
@@ -71,7 +74,34 @@ public class BookmarksCachingSearch {
         RunLoop.current.run(until: cacheLoadedCondition)
         return cachedBookmarksAndFavorites ?? []
     }
-    
+
+    public func containsDomain(_ domain: String) -> Bool {
+        return bookmarksAndFavorites.contains { $0.url?.host == domain }
+    }
+
+    private func registerForNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(dataDidChange),
+                                               name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                               object: nil)
+    }
+
+    public func deregisterForNotifications() {
+        NotificationCenter.default.removeObserver(self,
+                name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                object: nil)
+    }
+
+    public func refreshCache() {
+        // setting cacheLoadedCondition back to initialized state
+        cacheLoadedCondition = RunLoop.ResumeCondition()
+        loadCache()
+    }
+
+    @objc func dataDidChange(notification: Notification) {
+        refreshCache()
+    }
+
     // swiftlint:disable cyclomatic_complexity
     private func score(query: String, results: [ScoredBookmark]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }

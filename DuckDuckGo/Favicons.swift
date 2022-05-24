@@ -103,12 +103,14 @@ public class Favicons {
     
     let sourcesProvider: FaviconSourcesProvider
     let bookmarksStore: BookmarkStore
-    let bookmarksCoreDataStorage: BookmarksCoreDataStorage
-    
-    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(), bookmarksStore: BookmarkStore = BookmarkUserDefaults(), bookmarksCoreDataStorage: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
+    let bookmarksCachingSearch: BookmarksCachingSearch
+
+    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
+         bookmarksStore: BookmarkStore = BookmarkUserDefaults(),
+         bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch) {
         self.sourcesProvider = sourcesProvider
         self.bookmarksStore = bookmarksStore
-        self.bookmarksCoreDataStorage = bookmarksCoreDataStorage
+        self.bookmarksCachingSearch = bookmarksCachingSearch
 
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.bookmarksCache)
@@ -180,10 +182,8 @@ public class Favicons {
         // If the favicon is not cached for bookmarks, we need to:
         // 1. check if a bookmark exists for the domain
         // 2. if it does, we need to load the favicon for the domain
-        Task {
-            if await bookmarksCoreDataStorage.containsDomain(domain) {
-                loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
-            }
+        if bookmarksCachingSearch.containsDomain(domain) {
+            loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
         }
     }
 

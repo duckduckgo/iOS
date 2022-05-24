@@ -32,16 +32,14 @@ class FaviconsTests: XCTestCase {
         BookmarkUserDefaults().bookmarks = []
         BookmarkUserDefaults().favorites = []
 
-        let storage = MockBookmarksCoreDataStore()
-        _ = BookmarksCoreDataStorage.rootFolderManagedObject(storage.viewContext)
-        _ = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(storage.viewContext)
-
-        storage.saveContext()
-        storage.loadStoreAndCaches { _ in }
+        let url = URL(string: "http://duckduckgo.com")!
+        let simpleStore = MockBookmarkSearchStore()
+        simpleStore.bookmarks = [MockBookmark(title: "bookmark test 1", url: url, isFavorite: false)]
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
 
         favicons = Favicons(sourcesProvider: DefaultFaviconSourcesProvider(),
                             bookmarksStore: BookmarkUserDefaults(),
-                            bookmarksCoreDataStorage: storage)
+                            bookmarksCachingSearch: engine)
 
         Favicons.Constants.tabsCache.clearDiskCache()
         Favicons.Constants.tabsCache.clearMemoryCache()

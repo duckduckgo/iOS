@@ -21,7 +21,7 @@ import Foundation
 import BrowserServicesKit
 import UIKit
 
-final class AutofillLoginListItemViewModel: ImageTitleSubtitleListItemViewModelProtocol, Identifiable, Hashable {
+final class AutofillLoginListItemViewModel :Identifiable, Hashable {
     @Published var image = UIImage(systemName: "globe")!
     
     let account: SecureVaultModels.WebsiteAccount

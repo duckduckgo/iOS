@@ -66,7 +66,7 @@ struct AutofillLoginDetailsView: View {
     private var viewModeContentView: some View {
         Group {
             Section {
-                ImageTitleSubtitleListItemView(viewModel: viewModel.headerViewModel)
+                AutofillLoginDetailsHeaderView(viewModel: viewModel.headerViewModel)
             }
             
             Section {

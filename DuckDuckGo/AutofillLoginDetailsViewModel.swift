@@ -148,7 +148,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 }
 
-final class AutofillLoginDetailsHeaderViewModel: ImageTitleSubtitleListItemViewModelProtocol {
+final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     private var dateFormatter: DateFormatter = {
         let dateformatter = DateFormatter()
         dateformatter.dateStyle = .medium
@@ -175,7 +175,7 @@ final class AutofillLoginDetailsHeaderViewModel: ImageTitleSubtitleListItemViewM
             if let image = image {
                 self.image = image
             } else {
-                self.image = UIImage(systemName: "globle")!
+                self.image = UIImage(systemName: "globe")!
             }
         }
     }

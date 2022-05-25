@@ -22,6 +22,8 @@ import Core
 import BrowserServicesKit
 import simd
 
+// swiftlint:disable file_length
+
 extension TabViewController {
     
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
@@ -409,3 +411,5 @@ extension TabViewController {
         }
     }
 }
+
+// swiftlint:enable file_length

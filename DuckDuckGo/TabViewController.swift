@@ -1537,6 +1537,18 @@ extension TabViewController: WKNavigationDelegate {
         webpageDidFailToLoad()
         checkForReloadOnError()
     }
+    
+    @available(iOS 14.0, *)
+    private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
+        let autofill = AutofillLoginDetailsViewController(account: account)
+        let navigationController = UINavigationController(rootViewController: autofill)
+        autofill.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissLoginDetails))
+        self.present(navigationController, animated: true)
+    }
+    
+    @objc private func dismissLoginDetails() {
+        dismiss(animated: true)
+    }
 }
 
 extension TabViewController: PrivacyProtectionDelegate {
@@ -1940,14 +1952,25 @@ extension TabViewController: SecureVaultManagerDelegate {
 }
 
 extension TabViewController: SaveLoginViewControllerDelegate {
-    
+
     private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
         do {
-           try SaveAutofillLoginManager.saveCredentials(credentials, with: SecureVaultFactory.default)
-            ActionMessageView.present(message: message, actionTitle: UserText.autofillLoginSaveToastActionButton) {
-                Swift.print("Show login")
+            let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
+                                                                            with: SecureVaultFactory.default)
+            
+            let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            
+            if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: message,
+                                              actionTitle: UserText.autofillLoginSaveToastActionButton) {
+                        
+                        if #available(iOS 14.0, *) {
+                            self.showLoginDetails(with: newCredential.account)
+                        }
+                    }
+                }
             }
-
         } catch {
             os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
         }

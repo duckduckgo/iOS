@@ -217,7 +217,7 @@ struct SaveLoginView_Previews: PreviewProvider {
         var isUsernameOnlyAccount: Bool { false }
         var isPasswordOnlyAccount: Bool { false }
         var hasOtherCredentialsOnSameDomain: Bool { false }
-        static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws { }
+        static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64 { return 0 }
     }
     
     static var previews: some View {

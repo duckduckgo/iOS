@@ -30,7 +30,7 @@ protocol SaveAutofillLoginManagerProtocol {
     var isPasswordOnlyAccount: Bool { get }
     var hasOtherCredentialsOnSameDomain: Bool { get }
     
-    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws
+    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64
 }
 
 struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
@@ -89,7 +89,12 @@ struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         domainStoredCredentials.count > 0
     }
     
-    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws {
-        try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+    static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64 {
+        
+        do {
+            return try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared).storeWebsiteCredentials(credentials)
+        } catch {
+            throw error
+        }
     }
 }

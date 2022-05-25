@@ -29,11 +29,14 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif
         switch error {
-        case .initFailed, .failedToOpenDatabase:
-            fatalError()
+        case .initFailed:
+            fatalError("SecureVaultError initFailed")
+        case .failedToOpenDatabase:
+            fatalError("SecureVaultError failedToOpenDatabase")
             #warning("Do we need pixels here like macOS?")
         default:
-            fatalError()
+            fatalError("SecureVaultError default")
+
         }
     }
 }

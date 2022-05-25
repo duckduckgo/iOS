@@ -35,7 +35,7 @@ struct AccountViewModel: Hashable {
     }
     
     static func == (lhs: AccountViewModel, rhs: AccountViewModel) -> Bool {
-        return lhs.account.id == rhs.account.id //TODO should make SecureVaultModels.WebsiteAccount actually do this conforming
+        return lhs.account.id == rhs.account.id // TODO should make SecureVaultModels.WebsiteAccount actually do this conforming
     }
     
     func hash(into hasher: inout Hasher) {
@@ -62,11 +62,11 @@ class AutofillLoginPromptViewModel: ObservableObject {
     }
     
     var message: String {
-        return "Use Saved Login?" //TODO string
+        return "Use Saved Login?" // TODO string
     }
     
     var moreOptionsButtonString: String {
-        return "More Options" //TODO string
+        return "More Options" // TODO string
     }
     
     internal init?(accounts: [SecureVaultModels.WebsiteAccount], isExpanded: Bool) {

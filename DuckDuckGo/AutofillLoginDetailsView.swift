@@ -38,7 +38,6 @@ struct AutofillLoginDetailsView: View {
         .simultaneousGesture(
             DragGesture().onChanged({_ in
                 viewModel.selectedCell = nil
-                print("Gesture")
             }))
     }
     

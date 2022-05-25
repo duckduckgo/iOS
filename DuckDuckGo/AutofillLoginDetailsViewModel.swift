@@ -150,10 +150,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
 
 final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     private var dateFormatter: DateFormatter = {
-        let dateformatter = DateFormatter()
-        dateformatter.dateStyle = .medium
-        dateformatter.timeStyle = .short
-        return dateformatter
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        return dateFormatter
     }()
     
     

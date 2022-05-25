@@ -107,7 +107,7 @@ class AutofillLoginPromptViewController: UIViewController {
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         completion?(nil)
-        //TODO Need to make sure this is called in all dismiss cases
+        // TODO Need to make sure this is called in all dismiss cases
     }
     
     @available(iOS 15.0, *)
@@ -124,7 +124,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
         
         let context = LAContext()
-        context.localizedCancelTitle = "custom cancel" //TODO strings
+        context.localizedCancelTitle = "custom cancel" // TODO strings
         context.localizedReason = "custom reason"
         context.localizedFallbackTitle = "custom fallback"
         

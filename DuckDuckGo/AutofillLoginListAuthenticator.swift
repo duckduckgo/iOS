@@ -39,7 +39,7 @@ final class AutofillLoginListAuthenticator {
     
     func authenticate(completion: @escaping(AuthError?) -> Void) {
         context = LAContext()
-        context.localizedCancelTitle = "custom cancel" //TODO strings
+        context.localizedCancelTitle = "custom cancel" // TODO strings
         context.localizedReason = "custom reason"
         context.localizedFallbackTitle = "custom fallback"
         

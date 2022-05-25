@@ -267,7 +267,6 @@ class TabViewController: UIViewController {
         return activities
     }
 
-    // swiftlint:disable function_body_length
     func initUserScripts() {
         
         let currentTDSRules = ContentBlocking.contentBlockingManager.currentTDSRules

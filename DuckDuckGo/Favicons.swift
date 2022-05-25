@@ -29,7 +29,6 @@ public class Favicons {
 
         static let salt = "DDGSalt:"
         static let faviconsFolderName = "Favicons"
-        static let downloader = NotFoundCachingDownloader()
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = CacheType.bookmarks.create()
         static let tabsCache = CacheType.tabs.create()
@@ -104,13 +103,16 @@ public class Favicons {
     let sourcesProvider: FaviconSourcesProvider
     let bookmarksStore: BookmarkStore
     let bookmarksCachingSearch: BookmarksCachingSearch
+    let downloader: NotFoundCachingDownloader
 
     init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
          bookmarksStore: BookmarkStore = BookmarkUserDefaults(),
-         bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch) {
+         bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch,
+         downloader: NotFoundCachingDownloader = NotFoundCachingDownloader()) {
         self.sourcesProvider = sourcesProvider
         self.bookmarksStore = bookmarksStore
         self.bookmarksCachingSearch = bookmarksCachingSearch
+        self.downloader = downloader
 
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.bookmarksCache)
@@ -288,7 +290,7 @@ public class Favicons {
                                       _ domain: String,
                                       _ completion: @escaping (UIImage?) -> Void) {
 
-        guard Constants.downloader.shouldDownload(forDomain: domain) else {
+      guard downloader.shouldDownload(forDomain: domain) else {
             completion(nil)
             return
         }
@@ -388,11 +390,7 @@ public class Favicons {
     }
 
     public func defaultResource(forDomain domain: String?) -> ImageResource? {
-        guard let domain = domain,
-            let source = sourcesProvider.mainSource(forDomain: domain) else { return nil }
-        
-        let key = Self.createHash(ofDomain: domain)
-        return ImageResource(downloadURL: source, cacheKey: key)
+        return FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)
     }
 
     public func kfOptions(forDomain domain: String?, withURL url: URL? = nil, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
@@ -419,7 +417,7 @@ public class Favicons {
         let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(isDebugBuild ? .seconds(60) : .days(7))
 
         return [
-            .downloader(Constants.downloader),
+            .downloader(downloader),
             .requestModifier(Constants.requestModifier),
             .targetCache(cache),
             expiry,

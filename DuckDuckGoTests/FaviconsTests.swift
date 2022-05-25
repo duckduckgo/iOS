@@ -39,7 +39,8 @@ class FaviconsTests: XCTestCase {
 
         favicons = Favicons(sourcesProvider: DefaultFaviconSourcesProvider(),
                             bookmarksStore: BookmarkUserDefaults(),
-                            bookmarksCachingSearch: engine)
+                            bookmarksCachingSearch: engine,
+                            downloader: NotFoundCachingDownloader())
 
         Favicons.Constants.tabsCache.clearDiskCache()
         Favicons.Constants.tabsCache.clearMemoryCache()
@@ -68,10 +69,10 @@ class FaviconsTests: XCTestCase {
     func testWhenGeneratingKingfisherOptionsThenOptionsAreConfiguredCorrectly() {
         
         let options = favicons.kfOptions(forDomain: Constants.exampleDomain, usingCache: .tabs)
-          
+
         switch options?[0] {
         case .downloader(let downloader):
-            XCTAssertTrue(downloader === Favicons.Constants.downloader)
+            XCTAssertTrue(downloader === favicons.downloader)
 
         default:
             XCTFail("Unexpected option")

@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": "elle/autofill-feature-toggles",
-          "revision": "9548245e7d1b9d8ac8c7f4f830622298f4ebe654",
-          "version": null
+          "branch": null,
+          "revision": "6276a40510b10eecdef67cab37571fcb6468ba9a",
+          "version": "13.0.0"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "bc91503bc5e94251e9f3186523862c2bf2e76345",
-          "version": "4.4.0"
+          "revision": "a4bff09eb0f3b14005c3960c590ec4efb9c5a23c",
+          "version": "4.5.0"
         }
       },
       {

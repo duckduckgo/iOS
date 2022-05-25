@@ -228,6 +228,7 @@ class TabViewController: UIViewController {
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
         addTextSizeObserver()
+        addDuckDuckGoEmailSignOutObserver()
         registerForNotifications()
     }
 
@@ -672,6 +673,13 @@ class TabViewController: UIViewController {
                                                name: AppUserDefaults.Notifications.textSizeChange,
                                                object: nil)
     }
+
+    private func addDuckDuckGoEmailSignOutObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDuckDuckGoEmailSignOut),
+                                               name: .emailDidSignOut,
+                                               object: nil)
+    }
     
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
@@ -714,6 +722,13 @@ class TabViewController: UIViewController {
     @objc func onTextSizeChange() {
         webView.adjustTextSize(appSettings.textSize)
         reloadUserScripts()
+    }
+
+    @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
+        guard let url = webView.url else { return }
+        if AppUrls().isDuckDuckGoEmailProtection(url: url) {
+            webView.evaluateJavaScript("window.postMessage({ emailProtectionSignedOut: true }, window.origin);")
+        }
     }
 
     private func resetNavigationBar() {
@@ -1102,6 +1117,7 @@ extension TabViewController: WKNavigationDelegate {
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
+        linkProtection.setMainFrameUrl(webView.url)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1113,6 +1129,7 @@ extension TabViewController: WKNavigationDelegate {
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
         updatePreview()
+        linkProtection.setMainFrameUrl(nil)
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1224,6 +1241,7 @@ extension TabViewController: WKNavigationDelegate {
         webpageDidFailToLoad()
         checkForReloadOnError()
         scheduleTrackerNetworksAnimation(collapsing: true)
+        linkProtection.setMainFrameUrl(nil)
     }
 
     private func webpageDidFailToLoad() {
@@ -1238,6 +1256,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
+        linkProtection.setMainFrameUrl(nil)
         lastError = error
         let error = error as NSError
 

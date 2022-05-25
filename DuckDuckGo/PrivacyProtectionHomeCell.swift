@@ -22,10 +22,6 @@ import Core
 
 class PrivacyProtectionHomeCell: UICollectionViewCell {
     
-    struct Constants {
-        static let cellHeight: CGFloat = 73
-    }
-    
     @IBOutlet weak var protectionImage: UIImageView!
     @IBOutlet weak var disclosureIndicator: UIImageView!
     @IBOutlet weak var descriptionLabel: UILabel!

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1652440687364,
+    "version": 1653330021224,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -152,6 +152,31 @@
                 }
             ]
         },
+        "customUserAgent": {
+            "settings": {
+                "omitApplicationSites": [
+                    {
+                        "domain": "cvs.com",
+                        "reason": "Site reports browser not supported"
+                    },
+                    {
+                        "domain": "sovietgames.su",
+                        "reason": "Wordpress plugin reports our browser as a bot"
+                    },
+                    {
+                        "domain": "accounts.google.com",
+                        "reason": "Site reports browser not supported"
+                    },
+                    {
+                        "domain": "facebook.com",
+                        "reason": "Site reports browser not supported"
+                    }
+                ],
+                "omitVersionSites": []
+            },
+            "exceptions": [],
+            "state": "enabled"
+        },
         "fingerprintingAudio": {
             "state": "disabled",
             "exceptions": [
@@ -213,6 +238,10 @@
             "exceptions": [
                 {
                     "domain": "accounts.nintendo.com",
+                    "reason": "broken login"
+                },
+                {
+                    "domain": "clearpay.co.uk",
                     "reason": "broken login"
                 },
                 {
@@ -369,6 +398,17 @@
                             }
                         ]
                     },
+                    "alicdn.com": {
+                        "rules": [
+                            {
+                                "rule": "alicdn.com",
+                                "domains": [
+                                    "aliexpress.com"
+                                ],
+                                "reason": "content not loading"
+                            }
+                        ]
+                    },
                     "amazon-adsystem.com": {
                         "rules": [
                             {
@@ -504,6 +544,17 @@
                             }
                         ]
                     },
+                    "google-analytics.com": {
+                        "rules": [
+                            {
+                                "rule": "google-analytics.com/analytics.js",
+                                "domains": [
+                                    "easyjet.com"
+                                ],
+                                "reason": "broken form"
+                            }
+                        ]
+                    },
                     "googlesyndication.com": {
                         "rules": [
                             {
@@ -590,6 +641,7 @@
                             {
                                 "rule": "sheinsz.ltwebstatic.com/she_dist/libs/geetest/fullpage.1.1.9.js",
                                 "domains": [
+                                    "shein.co.uk",
                                     "shein.com"
                                 ],
                                 "reason": "login issues"

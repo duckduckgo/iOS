@@ -34,7 +34,7 @@ public class Favicons {
         static let tabsCache = CacheType.tabs.create()
         static let appUrls = AppUrls()
         static let targetImageSizePoints: CGFloat = 64
-
+        
         public static let caches = [
             CacheType.bookmarks: bookmarksCache,
             CacheType.tabs: tabsCache
@@ -105,6 +105,8 @@ public class Favicons {
     let bookmarksCachingSearch: BookmarksCachingSearch
     let downloader: NotFoundCachingDownloader
 
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+
     init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
          bookmarksStore: BookmarkStore = BookmarkUserDefaults(),
          bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch,
@@ -144,7 +146,7 @@ public class Favicons {
     }
     
     func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
-
+        
         guard let domain = domain,
               let resource = defaultResource(forDomain: domain),
               let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
@@ -374,7 +376,7 @@ public class Favicons {
     private func loadImage(url: URL) -> UIImage? {
         var image: UIImage?
         var request = URLRequest.userInitiated(url)
-        UserAgentManager.shared.update(request: &request, isDesktop: false)
+        userAgentManager.update(request: &request, isDesktop: false)
 
         let group = DispatchGroup()
         group.enter()

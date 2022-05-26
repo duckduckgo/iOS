@@ -18,18 +18,63 @@
 //
 
 import XCTest
+import BrowserServicesKit
 @testable import Core
+
+class MockEmbeddedDataProvider: EmbeddedDataProvider {
+    var embeddedDataEtag: String
+
+    var embeddedData: Data
+
+    init(data: Data, etag: String) {
+        embeddedData = data
+        embeddedDataEtag = etag
+    }
+}
 
 class FaviconRequestModifierTests: XCTestCase {
     
+    let testConfig = """
+    {
+        "features": {
+            "customUserAgent": {
+                "state": "enabled",
+                "settings": {
+                    "omitApplicationSites": [
+                        {
+                            "domain": "cvs.com",
+                            "reason": "Site breakage"
+                        }
+                    ]
+                },
+                "exceptions": []
+            }
+        },
+        "unprotectedTemporary": []
+    }
+    """.data(using: .utf8)!
+    
+    private var userAgentManager: UserAgentManager!
+    
     override func setUp() {
         super.setUp()
-        _ = UserAgentManager.shared
+        
+        let mockEmbeddedData = MockEmbeddedDataProvider(data: testConfig, etag: "test")
+        let mockProtectionStore = MockDomainsProtectionStore()
+
+        let manager = PrivacyConfigurationManager(fetchedETag: nil,
+                                                  fetchedData: nil,
+                                                  embeddedDataProvider: mockEmbeddedData,
+                                                  localProtection: mockProtectionStore)
+
+        let config = manager.privacyConfig
+        
+        userAgentManager = MockUserAgentManager(privacyConfig: config)
     }
     
     func test() {
         let request = URLRequest(url: URL(string: "https://www.example.com")!)
-        let result = FaviconRequestModifier().modified(for: request)
+        let result = FaviconRequestModifier(userAgentManager: userAgentManager).modified(for: request)
         XCTAssertTrue(result?.allHTTPHeaderFields?["User-Agent"]?.contains("DuckDuckGo") ?? false)
     }
     

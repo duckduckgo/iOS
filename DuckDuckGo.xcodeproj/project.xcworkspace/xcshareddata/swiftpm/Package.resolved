@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": null,
-          "revision": "7365786eb05d76d8b2ea16367c3c87698513cb86",
-          "version": "12.4.0"
+          "revision": "40a3e9a73b25b851d397d0c8685ab459d21bb6ec",
+          "version": "13.0.1"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": null,
-          "revision": "bc91503bc5e94251e9f3186523862c2bf2e76345",
-          "version": "4.4.0"
+          "revision": "a4bff09eb0f3b14005c3960c590ec4efb9c5a23c",
+          "version": "4.5.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
         "state": {
           "branch": null,
-          "revision": "32e4acdf6971f58f5ad552389cf2d7d016334eaf",
-          "version": "7.2.0"
+          "revision": "59eb199fdb8dd47733624e8b0277822d0232579e",
+          "version": "7.2.2"
         }
       },
       {

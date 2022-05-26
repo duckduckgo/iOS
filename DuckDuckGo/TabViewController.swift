@@ -106,7 +106,9 @@ class TabViewController: UIViewController {
     
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
-    
+
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+
     public var url: URL? {
         didSet {
             updateTabModel()
@@ -270,7 +272,9 @@ class TabViewController: UIViewController {
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
         
-        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                           sessionKey: UUID().uuidString,
+                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
         let autofillUserScript = AutofillUserScript(
             scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
                                                                 properties: prefs))
@@ -1470,7 +1474,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if allowPolicy != WKNavigationActionPolicy.cancel {
-            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
+            userAgentManager.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
         }
         
         if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {

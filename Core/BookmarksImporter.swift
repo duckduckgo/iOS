@@ -29,6 +29,11 @@ public enum BookmarksImportError: Error {
 
 final public class BookmarksImporter {
 
+    public enum Notifications {
+        public static let importDidBegin = Notification.Name("com.duckduckgo.app.BookmarksImportDidBegin")
+        public static let importDidEnd = Notification.Name("com.duckduckgo.app.BookmarksImportDidEnd")
+    }
+
     private(set) var importedBookmarks: [BookmarkOrFolder] = []
     private(set) var coreDataStorage: BookmarksCoreDataStorage
 
@@ -46,15 +51,21 @@ final public class BookmarksImporter {
     }
 
     public func parseAndSave(html: String) async -> Result<[BookmarkOrFolder], BookmarksImportError> {
+        NotificationCenter.default.post(name: Notifications.importDidBegin, object: nil)
+
         do {
             try await parseHtml(html)
             try await saveBookmarks(importedBookmarks)
+            NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
             return .success(importedBookmarks)
         } catch BookmarksImportError.invalidHtml {
+            NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
             return .failure(.invalidHtml)
         } catch BookmarksImportError.saveFailure {
+            NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
             return .failure(.saveFailure)
         } catch {
+            NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
             return .failure(.unknown)
         }
     }

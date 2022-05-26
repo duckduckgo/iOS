@@ -357,10 +357,6 @@ class BookmarksViewController: UITableViewController {
     }
 
     func importBookmarks(fromHtml html: String) {
-        // pre-emptively deregisterForNotifications so that bookmarksCachingSearch is not saturated with notification events
-        // and constantly rebuilding while bookmarks are being imported (bookmark files could be very large)
-        bookmarksCachingSearch.deregisterForNotifications()
-
         Task {
             let bookmarkCountBeforeImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
 
@@ -368,9 +364,6 @@ class BookmarksViewController: UITableViewController {
             switch result {
             case .success:
                 dataSource.bookmarksManager.reloadWidgets()
-
-                // force refresh of cached data and re-enable notification observer
-                bookmarksCachingSearch.refreshCache()
 
                 let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
                 let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport

@@ -51,6 +51,7 @@ public class BookmarksCachingSearch {
     public init(bookmarksStore: BookmarksSearchStore = BookmarksCoreDataStorage.shared) {
         self.bookmarksStore = bookmarksStore
         loadCache()
+        registerForNotifications()
     }
 
     public var hasData: Bool {
@@ -61,12 +62,9 @@ public class BookmarksCachingSearch {
     private var cacheLoadedCondition = RunLoop.ResumeCondition()
     
     private func loadCache() {
-        deregisterForNotifications()
-
         bookmarksStore.bookmarksAndFavorites { bookmarks in
             self.cachedBookmarksAndFavorites = bookmarks
             self.cacheLoadedCondition.resolve()
-            self.registerForNotifications()
         }
     }
     
@@ -80,16 +78,22 @@ public class BookmarksCachingSearch {
     }
 
     private func registerForNotifications() {
+        registerForCoreDataStorageNotifications()
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(dataDidChange),
-                                               name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                               selector: #selector(importDidBegin),
+                                               name: BookmarksImporter.Notifications.importDidBegin,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(importDidEnd),
+                                               name: BookmarksImporter.Notifications.importDidEnd,
                                                object: nil)
     }
 
-    public func deregisterForNotifications() {
-        NotificationCenter.default.removeObserver(self,
-                name: BookmarksCoreDataStorage.Notifications.dataDidChange,
-                object: nil)
+    public func registerForCoreDataStorageNotifications() {
+        NotificationCenter.default.addObserver(self,
+											   selector: #selector(dataDidChange),
+											   name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+											   object: nil)
     }
 
     public func refreshCache() {
@@ -100,6 +104,20 @@ public class BookmarksCachingSearch {
 
     @objc func dataDidChange(notification: Notification) {
         refreshCache()
+    }
+
+    @objc func importDidBegin(notification: Notification) {
+        // pre-emptively deregisterForNotifications so that bookmarksCachingSearch is not saturated with notification events
+        // and constantly rebuilding while bookmarks are being imported (bookmark files could be very large)
+        NotificationCenter.default.removeObserver(self,
+												  name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+												  object: nil)
+    }
+
+    @objc func importDidEnd(notification: Notification) {
+        // force refresh of cached data and re-enable notification observer
+        refreshCache()
+        registerForCoreDataStorageNotifications()
     }
 
     // swiftlint:disable cyclomatic_complexity

@@ -47,10 +47,10 @@
 "AtR-nS-Gun.text" = "Анимация";
 
 /* Class = "UIViewController"; title = "Email Protection (Beta)"; ObjectID = "b9u-ZD-F95"; */
-"b9u-ZD-F95.title" = "Защита почты (бета)";
+"b9u-ZD-F95.title" = "Защита эл. почты (бета)";
 
 /* Class = "UILabel"; text = "Email Protection"; ObjectID = "bAK-LL-HUH"; */
-"bAK-LL-HUH.text" = "Защита электронной почты";
+"bAK-LL-HUH.text" = "Защита эл. почты";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Данные и/или вкладки будут сброшены при следующем запуске приложения.";
@@ -59,10 +59,10 @@
 "bIg-0T-UWq.text" = "Предлагать сделать сайты огнеупорными при входе";
 
 /* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
-"bJo-qn-f57.title" = "Защита почты (бета)";
+"bJo-qn-f57.title" = "Защита эл. почты (бета)";
 
 /* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "Br7-C6-EmT"; */
-"Br7-C6-EmT.title" = "Защита почты (бета)";
+"Br7-C6-EmT.title" = "Защита эл. почты (бета)";
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "Значок приложения";
@@ -173,16 +173,16 @@
 "NRb-Cc-1d6.footerTitle" = "При активации этой функции сайты будут автоматически открываться в DuckDuckGo.";
 
 /* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
-"OfP-Kw-IOk.text" = "Огнеупорных сайтов нет";
+"OfP-Kw-IOk.text" = "Огнеупорных сайтов пока нет";
 
 /* Class = "UINavigationItem"; title = "Unprotected Sites"; ObjectID = "OHV-qC-tL9"; */
 "OHV-qC-tL9.title" = "Незащищенные сайты";
 
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
-"oM7-1o-9oY.text" = "Несколько слов о DuckDuckGo";
+"oM7-1o-9oY.text" = "Информация о DuckDuckGo";
 
 /* Class = "UITextView"; text = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com."; ObjectID = "pT6-FQ-9d9"; */
-"pT6-FQ-9d9.text" = "Снятие почтовой защиты на данном устройстве лишит вас возможности вносить свой личный адрес на Duck или свежесгенерированный приватный адрес Duck в поле для электронной почты при посещении сайтов.<br/><br/>Если вы хотите полностью удалить свои адреса Duck, задать нам вопрос или отправить отзывы и предложения, пишите нам: support@duck.com.";
+"pT6-FQ-9d9.text" = "Снятие защиты эл. почты на данном устройстве лишит вас возможности вносить свой личный адрес на Duck или свежесгенерированный приватный адрес Duck в поле для эл. почты при посещении сайтов.<br/><br/>Если вы хотите полностью удалить свои адреса Duck, задать нам вопрос или отправить обратную связь, пишите нам: support@duck.com.";
 
 /* Class = "UILabel"; text = "Remove from Device"; ObjectID = "qEh-V1-QaM"; */
 "qEh-V1-QaM.text" = "Удалить с этого устройства";
@@ -197,7 +197,7 @@
 "ssa-zd-L3T.title" = "Размер текста";
 
 /* Class = "UITableViewController"; title = "Email Protection"; ObjectID = "TC3-Kg-XJt"; */
-"TC3-Kg-XJt.title" = "Защита электронной почты";
+"TC3-Kg-XJt.title" = "Защита эл. почты";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Показывать клавиатуру";
@@ -224,7 +224,7 @@
 "vSJ-YJ-bBs.footerTitle" = "Под выходом из приложения подразумевается закрытие свайпом, а под бездействием — работа в фоновом режиме.";
 
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
-"vSJ-YJ-bBs.headerTitle" = "Предпочитаемое время";
+"vSJ-YJ-bBs.headerTitle" = "Предпочтительное время";
 
 /* Class = "UIButton"; normalTitle = "Action button"; ObjectID = "VvN-QG-WsD"; */
 "VvN-QG-WsD.normalTitle" = "Кнопка действий";

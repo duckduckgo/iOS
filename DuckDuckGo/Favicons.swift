@@ -29,7 +29,6 @@ public class Favicons {
 
         static let salt = "DDGSalt:"
         static let faviconsFolderName = "Favicons"
-        static let downloader = NotFoundCachingDownloader()
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = CacheType.bookmarks.create()
         static let tabsCache = CacheType.tabs.create()
@@ -103,12 +102,19 @@ public class Favicons {
     
     let sourcesProvider: FaviconSourcesProvider
     let bookmarksStore: BookmarkStore
+    let bookmarksCachingSearch: BookmarksCachingSearch
+    let downloader: NotFoundCachingDownloader
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
-    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(), bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
+    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
+         bookmarksStore: BookmarkStore = BookmarkUserDefaults(),
+         bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch,
+         downloader: NotFoundCachingDownloader = NotFoundCachingDownloader()) {
         self.sourcesProvider = sourcesProvider
         self.bookmarksStore = bookmarksStore
+        self.bookmarksCachingSearch = bookmarksCachingSearch
+        self.downloader = downloader
 
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.bookmarksCache)
@@ -142,12 +148,13 @@ public class Favicons {
     func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
         
         guard let domain = domain,
-            let resource = defaultResource(forDomain: domain),
-            (Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)),
-            let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else {
-                loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
-                return
-            }
+              let resource = defaultResource(forDomain: domain),
+              let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
+
+        if !isFaviconCachedForBookmarks(forDomain: domain, resource: resource) {
+            loadFaviconForBookmarks(forDomain: domain)
+            return
+        }
 
         let replace = {
             Constants.bookmarksCache.removeImage(forKey: resource.cacheKey)
@@ -170,7 +177,20 @@ public class Favicons {
             }
         }
     }
- 
+
+    func isFaviconCachedForBookmarks(forDomain domain: String, resource: ImageResource) -> Bool {
+        return Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)
+    }
+
+    func loadFaviconForBookmarks(forDomain domain: String) {
+        // If the favicon is not cached for bookmarks, we need to:
+        // 1. check if a bookmark exists for the domain
+        // 2. if it does, we need to load the favicon for the domain
+        if bookmarksCachingSearch.containsDomain(domain) {
+            loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
+        }
+    }
+
     public func clearCache(_ cacheType: CacheType) {
         Constants.caches[cacheType]?.clearDiskCache()
     }
@@ -272,7 +292,7 @@ public class Favicons {
                                       _ domain: String,
                                       _ completion: @escaping (UIImage?) -> Void) {
 
-        guard Constants.downloader.shouldDownload(forDomain: domain) else {
+      guard downloader.shouldDownload(forDomain: domain) else {
             completion(nil)
             return
         }
@@ -372,11 +392,7 @@ public class Favicons {
     }
 
     public func defaultResource(forDomain domain: String?) -> ImageResource? {
-        guard let domain = domain,
-            let source = sourcesProvider.mainSource(forDomain: domain) else { return nil }
-        
-        let key = Self.createHash(ofDomain: domain)
-        return ImageResource(downloadURL: source, cacheKey: key)
+        return FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)
     }
 
     public func kfOptions(forDomain domain: String?, withURL url: URL? = nil, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
@@ -403,7 +419,7 @@ public class Favicons {
         let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(isDebugBuild ? .seconds(60) : .days(7))
 
         return [
-            .downloader(Constants.downloader),
+            .downloader(downloader),
             .requestModifier(Constants.requestModifier),
             .targetCache(cache),
             expiry,

@@ -706,6 +706,12 @@ extension BookmarksCoreDataStorage {
         })
     }
 
+    // MainActor added - crashes when called from Favicons without using main thread
+    @MainActor func containsDomain(_ domain: String) async -> Bool {
+        let bookmarks = await allBookmarksAndFavoritesFlat()
+        return bookmarks.first(where: { $0.url?.host == domain }) != nil
+    }
+
     private func getTopLevelFolder(isFavorite: Bool,
                                    onContext context: NSManagedObjectContext,
                                    completion: @escaping (BookmarkFolderManagedObject) -> Void) {

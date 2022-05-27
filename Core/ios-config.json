@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1653330021224,
+    "version": 1653502015972,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -333,6 +333,13 @@
         "navigatorInterface": {
             "exceptions": [],
             "state": "enabled"
+        },
+        "nonTracking3pCookies": {
+            "settings": {
+                "excludedCookieDomains": []
+            },
+            "exceptions": [],
+            "state": "disabled"
         },
         "referrer": {
             "exceptions": [

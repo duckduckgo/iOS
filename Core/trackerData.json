@@ -78,6 +78,11 @@
                     "rule": "2020mustang\\.com\\/as\\/im",
                     "fingerprinting": 1,
                     "cookies": 0.0000136
+                },
+                {
+                    "rule": "2020mustang\\.com\\/jquery-plugins\\/modernizr-2\\.6\\.2-respond-1\\.1\\.0\\.min\\.js",
+                    "fingerprinting": 2,
+                    "cookies": 0
                 }
             ]
         },
@@ -320,6 +325,11 @@
                     "rule": "4strokemedia\\.com\\/prebid4\\.43\\.4\\.js",
                     "fingerprinting": 3,
                     "cookies": 0
+                },
+                {
+                    "rule": "4strokemedia\\.com\\/prebid6\\.19\\.0\\.js",
+                    "fingerprinting": 3,
+                    "cookies": 0.000201
                 }
             ]
         },
@@ -9856,6 +9866,37 @@
                 }
             ]
         },
+        "google.co.uk": {
+            "domain": "google.co.uk",
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google",
+                "privacyPolicy": "https://policies.google.com/privacy?hl=en&gl=us",
+                "url": "http://google.com"
+            },
+            "prevalence": 0.000327,
+            "fingerprinting": 1,
+            "cookies": 0.0000204,
+            "categories": [],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "google\\.co\\.uk\\/ads\\/ga-audiences",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.co\\.uk\\/pagead\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.co\\.uk\\/ddm\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                }
+            ]
+        },
         "google.com": {
             "domain": "google.com",
             "owner": {
@@ -9874,6 +9915,16 @@
             "default": "ignore",
             "rules": [
                 {
+                    "rule": "google\\.com\\/ads\\/ga-audiences",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.com\\/pagead\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
                     "rule": "google\\.com\\/js\\/th\\/-fGfix5ZuJUOVczo_kjURdYiDBKCRn1s8SwuZEgz-mU\\.js",
                     "fingerprinting": 3,
                     "cookies": 0
@@ -9881,6 +9932,11 @@
                 {
                     "rule": "google\\.com\\/js\\/th\\/ZDKn9Ao6LrwgLr6Bhp-GsoMP53s4KpZzcjXXH8E2ORI\\.js",
                     "fingerprinting": 3,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.com\\/ddm\\/",
+                    "fingerprinting": 0,
                     "cookies": 0
                 },
                 {
@@ -9946,6 +10002,37 @@
                 {
                     "rule": "google\\.com\\/js\\/th\\/mz7NBNV2Cg_tP0eo8e_kKg8I5SIuzjUX-Ml401fNPCc\\.js",
                     "fingerprinting": 3,
+                    "cookies": 0
+                }
+            ]
+        },
+        "google.nl": {
+            "domain": "google.nl",
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google",
+                "privacyPolicy": "https://policies.google.com/privacy?hl=en&gl=us",
+                "url": "http://google.com"
+            },
+            "prevalence": 0.000204,
+            "fingerprinting": 1,
+            "cookies": 0.00000681,
+            "categories": [],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "google\\.nl\\/ads\\/ga-audiences",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.nl\\/pagead\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.nl\\/ddm\\/",
+                    "fingerprinting": 0,
                     "cookies": 0
                 }
             ]
@@ -20655,6 +20742,11 @@
                     "rule": "streamrail\\.com\\/cs-config\\/cs\\.html",
                     "fingerprinting": 1,
                     "cookies": 0.0000885
+                },
+                {
+                    "rule": "streamrail\\.com\\/blade\\/sr\\.bladex\\.js",
+                    "fingerprinting": 2,
+                    "cookies": 0
                 }
             ]
         },
@@ -24685,6 +24777,21 @@
             "default": "ignore",
             "rules": [
                 {
+                    "rule": "google\\.com\\.au\\/ads\\/ga-audiences",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.com\\.au\\/pagead\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.com\\.au\\/ddm\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
                     "rule": "google\\.com\\.au\\/maps\\/api\\/js",
                     "fingerprinting": 1,
                     "cookies": 0
@@ -24916,35 +25023,6 @@
                 }
             ]
         },
-        "adventori.com": {
-            "domain": "adventori.com",
-            "owner": {
-                "name": "Adventori",
-                "displayName": "Adventori"
-            },
-            "prevalence": 0.00372,
-            "fingerprinting": 1,
-            "cookies": 0.00372,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "adventori\\.com\\/16248447\\/2021_Hurrah_Acquisition_Cards_TWINS-COUPLE_300x600\\/ad\\/script",
-                    "fingerprinting": 1,
-                    "cookies": 0.00121
-                },
-                {
-                    "rule": "adventori\\.com\\/16248447\\/2021_Hurrah_Acquisition_Cards_TWINS-ARTHUR_728x90\\/ad\\/script",
-                    "fingerprinting": 1,
-                    "cookies": 0.000201
-                },
-                {
-                    "rule": "adventori\\.com\\/16248447\\/2021_Hurrah_Acquisition_Cards_BERENICE-ARTHUR_728x90\\/ad\\/script",
-                    "fingerprinting": 1,
-                    "cookies": 0.000201
-                }
-            ]
-        },
         "ch.ch": {
             "domain": "ch.ch",
             "owner": {
@@ -24988,6 +25066,80 @@
                 {
                     "rule": "d2v4ffmk60pnnm\\.cloudfront\\.net\\/services\\/wix-perf-measure\\/1\\.741\\.0\\/wix-perf-measure\\.bundle\\.min\\.js",
                     "fingerprinting": 3,
+                    "cookies": 0
+                }
+            ]
+        },
+        "getback.ch": {
+            "domain": "getback.ch",
+            "owner": {
+                "name": "adfocus GmbH",
+                "displayName": "adfocus"
+            },
+            "prevalence": 0.00412,
+            "fingerprinting": 2,
+            "cookies": 0.00372,
+            "categories": [],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "getback\\.ch\\/clients\\/_0eSO\\.js",
+                    "fingerprinting": 2,
+                    "cookies": 0.000201
+                },
+                {
+                    "rule": "getback\\.ch\\/clients\\/tBvN2\\.js",
+                    "fingerprinting": 2,
+                    "cookies": 0.000201
+                }
+            ]
+        },
+        "google.ch": {
+            "domain": "google.ch",
+            "owner": {
+                "name": "Google LLC",
+                "displayName": "Google",
+                "privacyPolicy": "https://policies.google.com/privacy?hl=en&gl=us",
+                "url": "http://google.com"
+            },
+            "prevalence": 0.388,
+            "fingerprinting": 1,
+            "cookies": 0.000101,
+            "categories": [],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "google\\.ch\\/ads\\/ga-audiences",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.ch\\/pagead\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.ch\\/ddm\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                }
+            ]
+        },
+        "sedo.com": {
+            "domain": "sedo.com",
+            "owner": {
+                "name": "United Internet AG",
+                "displayName": "United Internet"
+            },
+            "prevalence": 0.000302,
+            "fingerprinting": 2,
+            "cookies": 0.000302,
+            "categories": [],
+            "default": "ignore",
+            "rules": [
+                {
+                    "rule": "sedo\\.com\\/cdn-cgi\\/bm\\/cv\\/669835187\\/api\\.js",
+                    "fingerprinting": 2,
                     "cookies": 0
                 }
             ]
@@ -25173,25 +25325,6 @@
                 }
             ]
         },
-        "sedo.com": {
-            "domain": "sedo.com",
-            "owner": {
-                "name": "United Internet AG",
-                "displayName": "United Internet"
-            },
-            "prevalence": 0.00191,
-            "fingerprinting": 2,
-            "cookies": 0.00191,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "sedo\\.com\\/cdn-cgi\\/bm\\/cv\\/669835187\\/api\\.js",
-                    "fingerprinting": 2,
-                    "cookies": 0
-                }
-            ]
-        },
         "twiago.com": {
             "domain": "twiago.com",
             "owner": {
@@ -25270,29 +25403,6 @@
                     "rule": "affilae\\.com\\/ae-v3\\.2\\.js",
                     "fingerprinting": 1,
                     "cookies": 0.0001
-                }
-            ]
-        },
-        "dcniko1cv0rz.cloudfront.net": {
-            "domain": "dcniko1cv0rz.cloudfront.net",
-            "owner": {
-                "name": "Amazon Technologies, Inc.",
-                "displayName": "Amazon.com",
-                "privacyPolicy": "https://www.amazon.com/gp/help/customer/display.html?nodeId=468496",
-                "url": "http://amazon.com"
-            },
-            "prevalence": 0.000201,
-            "fingerprinting": 1,
-            "cookies": 0.000201,
-            "categories": [
-                "CDN"
-            ],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "dcniko1cv0rz\\.cloudfront\\.net\\/realytics-1\\.2\\.min\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.000201
                 }
             ]
         },
@@ -25397,25 +25507,6 @@
                 }
             ]
         },
-        "realytics.net": {
-            "domain": "realytics.net",
-            "owner": {
-                "name": "Realytics SAS",
-                "displayName": "Realytics"
-            },
-            "prevalence": 0.00231,
-            "fingerprinting": 1,
-            "cookies": 0.00211,
-            "categories": [],
-            "default": "ignore",
-            "rules": [
-                {
-                    "rule": "realytics\\.net\\/realytics-1\\.2\\.min\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.00211
-                }
-            ]
-        },
         "d3jruqy3qmm3fd.cloudfront.net": {
             "domain": "d3jruqy3qmm3fd.cloudfront.net",
             "owner": {
@@ -25439,22 +25530,34 @@
                 }
             ]
         },
-        "tradedoubler.com": {
-            "domain": "tradedoubler.com",
+        "google.no": {
+            "domain": "google.no",
             "owner": {
-                "name": "TradeDoubler AB",
-                "displayName": "TradeDoubler"
+                "name": "Google LLC",
+                "displayName": "Google",
+                "privacyPolicy": "https://policies.google.com/privacy?hl=en&gl=us",
+                "url": "http://google.com"
             },
-            "prevalence": 0.00482,
+            "prevalence": 0.357,
             "fingerprinting": 1,
-            "cookies": 0.00412,
+            "cookies": 0.000201,
             "categories": [],
             "default": "ignore",
             "rules": [
                 {
-                    "rule": "tradedoubler\\.com\\/tr_sdk\\.js",
-                    "fingerprinting": 1,
-                    "cookies": 0.0001
+                    "rule": "google\\.no\\/ads\\/ga-audiences",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.no\\/pagead\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
+                },
+                {
+                    "rule": "google\\.no\\/ddm\\/",
+                    "fingerprinting": 0,
+                    "cookies": 0
                 }
             ]
         },
@@ -29699,6 +29802,13 @@
             "prevalence": 0.0116,
             "displayName": "Adventive"
         },
+        "Adventori": {
+            "domains": [
+                "adventori.com"
+            ],
+            "prevalence": 0.0034,
+            "displayName": "Adventori"
+        },
         "Verizon Media": {
             "domains": [
                 "24-7.pet",
@@ -31963,14 +32073,6 @@
             "prevalence": 0.049,
             "displayName": "Dianomi"
         },
-        "Advertise me": {
-            "domains": [
-                "coreg-feed.com",
-                "digital-metric.com"
-            ],
-            "prevalence": 0.0027,
-            "displayName": "Advertise me"
-        },
         "DigitalOcean, LLC": {
             "domains": [
                 "digitalocean.com",
@@ -33043,13 +33145,6 @@
             ],
             "prevalence": 0.395,
             "displayName": "Gemius"
-        },
-        "adfocus GmbH": {
-            "domains": [
-                "getback.ch"
-            ],
-            "prevalence": 0.0034,
-            "displayName": "adfocus"
         },
         "getblue": {
             "domains": [
@@ -35751,17 +35846,6 @@
             "prevalence": 0.0048,
             "displayName": "ItaliaOnLine"
         },
-        "Polar": {
-            "domains": [
-                "mediavoice.com",
-                "plrsrvcs.com",
-                "polarcdn-pentos.com",
-                "polarcdn-terrax.com",
-                "polarcdn.com"
-            ],
-            "prevalence": 0.0708,
-            "displayName": "Polar"
-        },
         "Ano Nymous": {
             "domains": [
                 "909c.fr",
@@ -36166,6 +36250,14 @@
             ],
             "prevalence": 0.0667,
             "displayName": "Mindscape"
+        },
+        "Realytics SAS": {
+            "domains": [
+                "realytics.io",
+                "realytics.net"
+            ],
+            "prevalence": 0.0082,
+            "displayName": "Realytics"
         },
         "Lantirn Incorporated": {
             "domains": [
@@ -38358,6 +38450,17 @@
             "prevalence": 0.0116,
             "displayName": "Zucks"
         },
+        "Polar": {
+            "domains": [
+                "mediavoice.com",
+                "plrsrvcs.com",
+                "polarcdn-pentos.com",
+                "polarcdn-terrax.com",
+                "polarcdn.com"
+            ],
+            "prevalence": 0.0708,
+            "displayName": "Polar"
+        },
         "Searchanise": {
             "domains": [
                 "searchanise.com"
@@ -38466,13 +38569,6 @@
             "prevalence": 0.0603,
             "displayName": "Bundesamt für Informatik und Telekommunikation BIT"
         },
-        "Adventori": {
-            "domains": [
-                "adventori.com"
-            ],
-            "prevalence": 0.0034,
-            "displayName": "Adventori"
-        },
         "Schweizerische Bundeskanzlei": {
             "domains": [
                 "ch.ch"
@@ -38480,12 +38576,46 @@
             "prevalence": 0.0302,
             "displayName": "Schweizerische Bundeskanzlei"
         },
+        "adfocus GmbH": {
+            "domains": [
+                "getback.ch"
+            ],
+            "prevalence": 0.0034,
+            "displayName": "adfocus"
+        },
         "Guuru": {
             "domains": [
                 "guuru.com"
             ],
             "prevalence": 0.0034,
             "displayName": "Guuru"
+        },
+        "United Internet AG": {
+            "domains": [
+                "1and1.com",
+                "1and1.fr",
+                "1und1.de",
+                "gmx.at",
+                "gmx.ch",
+                "gmx.com",
+                "gmx.fr",
+                "gmx.net",
+                "ionos.com",
+                "log-in-web.de",
+                "mail.com",
+                "profiseller.de",
+                "sedo.com",
+                "static-1and1.com",
+                "tifbs.net",
+                "ui-portal.com",
+                "ui-portal.de",
+                "uicdn.com",
+                "uicdn.net",
+                "uimserv.net",
+                "web.de"
+            ],
+            "prevalence": 0.0157,
+            "displayName": "United Internet"
         },
         "Emego GmbH": {
             "domains": [
@@ -38565,33 +38695,6 @@
             "prevalence": 0.0027,
             "displayName": "Expert Systems"
         },
-        "United Internet AG": {
-            "domains": [
-                "1and1.com",
-                "1and1.fr",
-                "1und1.de",
-                "gmx.at",
-                "gmx.ch",
-                "gmx.com",
-                "gmx.fr",
-                "gmx.net",
-                "ionos.com",
-                "log-in-web.de",
-                "mail.com",
-                "profiseller.de",
-                "sedo.com",
-                "static-1and1.com",
-                "tifbs.net",
-                "ui-portal.com",
-                "ui-portal.de",
-                "uicdn.com",
-                "uicdn.net",
-                "uimserv.net",
-                "web.de"
-            ],
-            "prevalence": 0.0157,
-            "displayName": "United Internet"
-        },
         "AVM Computersysteme Vertriebs GmbH": {
             "domains": [
                 "avm.de",
@@ -38659,14 +38762,6 @@
             ],
             "prevalence": 0.0014,
             "displayName": "Public-Id&Atilde;&copy;es"
-        },
-        "Realytics SAS": {
-            "domains": [
-                "realytics.io",
-                "realytics.net"
-            ],
-            "prevalence": 0.0082,
-            "displayName": "Realytics"
         },
         "TradeDoubler AB": {
             "domains": [
@@ -40413,6 +40508,7 @@
         "mobiquity.com": "Mobiquity Inc.",
         "mobiquityinc.com": "Mobiquity Inc.",
         "adventive.com": "Adventive, Inc.",
+        "adventori.com": "Adventori",
         "24-7.pet": "Verizon Media",
         "247.vacations": "Verizon Media",
         "5min.com": "Verizon Media",
@@ -41561,8 +41657,6 @@
         "snapsort.com": "Snapsort Inc.",
         "dhresource.com": "Century Fuxuan Software & Technology Development (Beijing) Co. L",
         "dianomi.com": "Dianomi Ltd",
-        "coreg-feed.com": "Advertise me",
-        "digital-metric.com": "Advertise me",
         "digitalocean.com": "DigitalOcean, LLC",
         "digitaloceanspaces.com": "DigitalOcean, LLC",
         "digitaltarget.ru": "LLC \"AmberData\"",
@@ -42162,7 +42256,6 @@
         "geetest.com": "Wuhan Jiyi Network Technology Co., Ltd.",
         "geistm.com": "GeistM",
         "gemius.pl": "Gemius S.A.",
-        "getback.ch": "adfocus GmbH",
         "getblue.io": "getblue",
         "getbread.com": "Bread",
         "candid.io": "FIVEACES INC",
@@ -43393,11 +43486,6 @@
         "plug.it": "ItaliaOnLine SpA",
         "quifinanza.it": "ItaliaOnLine SpA",
         "virgilio.it": "ItaliaOnLine SpA",
-        "mediavoice.com": "Polar",
-        "plrsrvcs.com": "Polar",
-        "polarcdn-pentos.com": "Polar",
-        "polarcdn-terrax.com": "Polar",
-        "polarcdn.com": "Polar",
         "909c.fr": "Ano Nymous",
         "adala-news.fr": "Ano Nymous",
         "anikawa.fr": "Ano Nymous",
@@ -43551,6 +43639,8 @@
         "sentry-cdn.com": "Functional Software, Inc.",
         "sentry.io": "Functional Software, Inc.",
         "raygun.io": "Mindscape Limited",
+        "realytics.io": "Realytics SAS",
+        "realytics.net": "Realytics SAS",
         "reamaze.com": "Lantirn Incorporated",
         "reamaze.io": "Lantirn Incorporated",
         "recruitics.com": "Recruitics LLC",
@@ -44338,6 +44428,11 @@
         "zprk.io": "Near Pte. Ltd.",
         "zimg.jp": "Zucks,Inc.",
         "zucks.net": "Zucks,Inc.",
+        "mediavoice.com": "Polar",
+        "plrsrvcs.com": "Polar",
+        "polarcdn-pentos.com": "Polar",
+        "polarcdn-terrax.com": "Polar",
+        "polarcdn.com": "Polar",
         "searchanise.com": "Searchanise",
         "webclicks24.com": "webclicks24.com",
         "ihs.com": "Markit Group Limited",
@@ -44374,9 +44469,30 @@
         "adbutter.net": "Gamned SAS",
         "admeira.ch": "Admeira Broadcast AG",
         "admin.ch": "Bundesamt für Informatik und Telekommunikation BIT",
-        "adventori.com": "Adventori",
         "ch.ch": "Schweizerische Bundeskanzlei",
+        "getback.ch": "adfocus GmbH",
         "guuru.com": "Guuru",
+        "1and1.com": "United Internet AG",
+        "1and1.fr": "United Internet AG",
+        "1und1.de": "United Internet AG",
+        "gmx.at": "United Internet AG",
+        "gmx.ch": "United Internet AG",
+        "gmx.com": "United Internet AG",
+        "gmx.fr": "United Internet AG",
+        "gmx.net": "United Internet AG",
+        "ionos.com": "United Internet AG",
+        "log-in-web.de": "United Internet AG",
+        "mail.com": "United Internet AG",
+        "profiseller.de": "United Internet AG",
+        "sedo.com": "United Internet AG",
+        "static-1and1.com": "United Internet AG",
+        "tifbs.net": "United Internet AG",
+        "ui-portal.com": "United Internet AG",
+        "ui-portal.de": "United Internet AG",
+        "uicdn.com": "United Internet AG",
+        "uicdn.net": "United Internet AG",
+        "uimserv.net": "United Internet AG",
+        "web.de": "United Internet AG",
         "usemax.de": "Emego GmbH",
         "usemaxserver.de": "Emego GmbH",
         "visx.net": "YOC AG",
@@ -44401,27 +44517,6 @@
         "media01.eu": "Dynamic 1001 GmbH",
         "nexx.cloud": "nexx.tv GmbH",
         "provenexpert.com": "Expert Systems AG",
-        "1and1.com": "United Internet AG",
-        "1and1.fr": "United Internet AG",
-        "1und1.de": "United Internet AG",
-        "gmx.at": "United Internet AG",
-        "gmx.ch": "United Internet AG",
-        "gmx.com": "United Internet AG",
-        "gmx.fr": "United Internet AG",
-        "gmx.net": "United Internet AG",
-        "ionos.com": "United Internet AG",
-        "log-in-web.de": "United Internet AG",
-        "mail.com": "United Internet AG",
-        "profiseller.de": "United Internet AG",
-        "sedo.com": "United Internet AG",
-        "static-1and1.com": "United Internet AG",
-        "tifbs.net": "United Internet AG",
-        "ui-portal.com": "United Internet AG",
-        "ui-portal.de": "United Internet AG",
-        "uicdn.com": "United Internet AG",
-        "uicdn.net": "United Internet AG",
-        "uimserv.net": "United Internet AG",
-        "web.de": "United Internet AG",
         "avm.de": "AVM Computersysteme Vertriebs GmbH",
         "myfritz.net": "AVM Computersysteme Vertriebs GmbH",
         "twiago.com": "twiago GmbH",
@@ -44436,8 +44531,6 @@
         "framasoft.org": "Alexis Kauffmann",
         "leadsmonitor.io": "REEPERF",
         "logbor.com": "Public-Id&Atilde;&copy;es SA",
-        "realytics.io": "Realytics SAS",
-        "realytics.net": "Realytics SAS",
         "heias.com": "TradeDoubler AB",
         "tradedoubler.com": "TradeDoubler AB",
         "do-not-tracker.org": "EFF Test Trackers",

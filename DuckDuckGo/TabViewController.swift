@@ -107,6 +107,16 @@ class TabViewController: UIViewController {
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
     
+    var contentBlockingAssetsInstalled: Bool {
+//        ContentBlocking.contentBlockingManager.currentTDSRules != nil
+        didCompileRules
+    }
+    
+    private var didCompileRules: Bool = false
+    
+    private typealias NotificationCheckedContinuation = CheckedContinuation<AnyObject?, Never>
+    private var notificationContinuation: NotificationCheckedContinuation?
+    
     public var url: URL? {
         didSet {
             updateTabModel()
@@ -680,6 +690,13 @@ class TabViewController: UIViewController {
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
         if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
            ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                self.didCompileRules = true
+                self.notificationContinuation?.resume(returning: nil)
+                self.notificationContinuation = nil
+            }
+
             webView.configuration.userContentController.removeAllContentRuleLists()
             webView.configuration.userContentController.add(rules.rulesList)
             
@@ -1308,73 +1325,76 @@ extension TabViewController: WKNavigationDelegate {
         }
         return nil
     }
-            
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationAction: WKNavigationAction,
-                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+    
+    @MainActor
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+        Swift.print("OMG1")
+        await awaitContentBlockingAssetsInstalled()
+        Swift.print("OMG2")
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
-            let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
-                                                                           navigationAction: navigationAction,
-                                                                           onStartExtracting: { showProgressIndicator() },
-                                                                           onFinishExtracting: { },
-                                                                           onLinkRewrite: { [weak self] newURL, navigationAction in
+            let navigationActionPolicy = await linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
+                                                                                         navigationAction: navigationAction,
+                                                                                         onStartExtracting: { showProgressIndicator() },
+                                                                                         onFinishExtracting: { },
+                                                                                         onLinkRewrite: { [weak self] newURL, navigationAction in
                 guard let self = self else { return }
                 if self.isNewTargetBlankRequest(navigationAction: navigationAction) {
                     self.delegate?.tab(self, didRequestNewTabForUrl: newURL, openedByPage: true)
                 } else {
                     self.load(url: newURL)
                 }
-            },
-                                                                           policyDecisionHandler: decisionHandler)
+            })
             
-            if didRewriteLink {
-                return
+            if let navigationActionPolicy = navigationActionPolicy, navigationActionPolicy == .cancel {
+                return navigationActionPolicy
             }
         }
-
+        
         if navigationAction.isTargetingMainFrame(),
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
            let request = requestForDoNotSell(basedOn: navigationAction.request) {
-            
-            decisionHandler(.cancel)
             load(urlRequest: request)
-            return
+            return .cancel
         }
-            
+        
         if navigationAction.navigationType == .linkActivated,
            let url = navigationAction.request.url,
            let modifierFlags = delegate?.tabWillRequestNewTab(self) {
 
             if modifierFlags.contains(.command) {
                 if modifierFlags.contains(.shift) {
-                    decisionHandler(.cancel)
                     delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
-                    return
+                    return .cancel
                 } else {
-                    decisionHandler(.cancel)
                     delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
-                    return
+                    return .cancel
                 }
             }
         }
         
-        decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let url = navigationAction.request.url, decision != .cancel {
-                if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
-                    StatisticsLoader.shared.refreshSearchRetentionAtb()
-                }
-                
-                self?.findInPage?.done()
+        let decision = await decidePolicyFor(navigationAction: navigationAction)
+        if let url = navigationAction.request.url, decision != .cancel {
+            if appUrls.isDuckDuckGoSearch(url: url) {
+                StatisticsLoader.shared.refreshSearchRetentionAtb()
             }
-            decisionHandler(decision)
+            findInPage?.done()
         }
+        return decision
     }
     
-    private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
+    private func awaitContentBlockingAssetsInstalled() async {
+        Swift.print("3")
+        guard !contentBlockingAssetsInstalled else { return }
+        showProgressIndicator()
+        _ = await withCheckedContinuation({ (continuation: NotificationCheckedContinuation) in
+            self.notificationContinuation = continuation
+        })
+    }
+            
+    private func decidePolicyFor(navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
         let allowPolicy = determineAllowPolicy()
         
         let tld = storageCache.tld
@@ -1385,36 +1405,31 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         guard navigationAction.request.mainDocumentURL != nil else {
-            completion(allowPolicy)
-            return
+            return allowPolicy
         }
         
         guard let url = navigationAction.request.url else {
-            completion(allowPolicy)
-            return
+            return allowPolicy
         }
 
         if url.isBookmarklet() {
-            completion(.cancel)
-
             if let js = url.toDecodedBookmarklet() {
-                webView.evaluateJavaScript(js)
+                try? await webView.evaluateJavaScript(js)
             }
-            return
+            return .cancel
         }
         
         let schemeType = SchemeHandler.schemeType(for: url)
         
         switch schemeType {
         case .navigational:
-            performNavigationFor(url: url,
-                                 navigationAction: navigationAction,
-                                 allowPolicy: allowPolicy,
-                                 completion: completion)
+            return await performNavigation(for: url,
+                                           navigationAction: navigationAction,
+                                           allowPolicy: allowPolicy)
             
         case .external(let action):
             performExternalNavigationFor(url: url, action: action)
-            completion(.cancel)
+            return .cancel
             
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
@@ -1422,68 +1437,57 @@ extension TabViewController: WKNavigationDelegate {
             } else {
                 presentOpenInExternalAppAlert(url: url)
             }
-            completion(.cancel)
+            return .cancel
         }
     }
     
-    private func performNavigationFor(url: URL,
-                                      navigationAction: WKNavigationAction,
-                                      allowPolicy: WKNavigationActionPolicy,
-                                      completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+    private func performNavigation(for url: URL,
+                                   navigationAction: WKNavigationAction,
+                                   allowPolicy: WKNavigationActionPolicy) async -> WKNavigationActionPolicy {
+        let policy: WKNavigationActionPolicy
         if shouldReissueSearch(for: url) {
             reissueSearchWithRequiredParams(for: url)
-            completion(.cancel)
-            return
-        }
-        
-        if shouldReissueDDGStaticNavigation(for: url) {
+            policy = .cancel
+        } else if shouldReissueDDGStaticNavigation(for: url) {
             reissueNavigationWithSearchHeaderParams(for: url)
-            completion(.cancel)
-            return
-        }
-        
-        if isNewTargetBlankRequest(navigationAction: navigationAction) {
+            policy = .cancel
+        } else if isNewTargetBlankRequest(navigationAction: navigationAction) {
             delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true)
-            completion(.cancel)
-            return
-        }
-        
-        if allowPolicy != WKNavigationActionPolicy.cancel {
-            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
-        }
-        
-        if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {
-            completion(allowPolicy)
-            return
-        }
-
-        if shouldUpgradeToHttps(url: url, navigationAction: navigationAction) {
-            upgradeToHttps(url: url, allowPolicy: allowPolicy, completion: completion)
+            policy = .cancel
         } else {
-            completion(allowPolicy)
+            if allowPolicy != .cancel {
+                UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
+            }
+            
+            if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {
+                policy = allowPolicy
+            } else if shouldUpgradeToHttps(url: url, navigationAction: navigationAction) {
+                policy = await upgradeToHttps(url: url, allowPolicy: allowPolicy)
+            } else {
+                policy = allowPolicy
+            }
         }
+        return policy
     }
     
     private func upgradeToHttps(url: URL,
-                                allowPolicy: WKNavigationActionPolicy,
-                                completion: @escaping (WKNavigationActionPolicy) -> Void) {
-        Task {
-            let result = await PrivacyFeatures.httpsUpgrade.upgrade(url: url)
-            switch result {
-            case let .success(upgradedUrl):
-                if lastUpgradedURL != upgradedUrl {
-                    NetworkLeaderboard.shared.incrementHttpsUpgrades()
-                    lastUpgradedURL = upgradedUrl
-                    load(url: upgradedUrl, didUpgradeURL: true)
-                    completion(.cancel)
-                } else {
-                    completion(allowPolicy)
-                }
-            case .failure:
-                completion(allowPolicy)
+                                allowPolicy: WKNavigationActionPolicy) async -> WKNavigationActionPolicy {
+        let result = await PrivacyFeatures.httpsUpgrade.upgrade(url: url)
+        let policy: WKNavigationActionPolicy
+        switch result {
+        case let .success(upgradedUrl):
+            if lastUpgradedURL != upgradedUrl {
+                NetworkLeaderboard.shared.incrementHttpsUpgrades()
+                lastUpgradedURL = upgradedUrl
+                load(url: upgradedUrl, didUpgradeURL: true)
+                policy = .cancel
+            } else {
+                policy = allowPolicy
             }
+        case .failure:
+            policy = allowPolicy
         }
+        return policy
     }
     
     private func shouldUpgradeToHttps(url: URL, navigationAction: WKNavigationAction) -> Bool {

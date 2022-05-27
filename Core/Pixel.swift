@@ -249,6 +249,11 @@ public enum PixelName: String {
 
     case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
     case cachedTabPreviewRemovalError = "m_d_tpre"
+    
+    case waitResultTabClosed = "m_wait_result_tab_closed"
+    case waitResultAppQuit = "m_wait_result_app_quit"
+    case waitResultSuccess = "m_wait_result_success"
+    
 }
 // swiftlint:enable identifier_name
 

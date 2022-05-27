@@ -147,9 +147,11 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
                 }
             }
         } else {
-            // When system authentication isn't available, proceed without requiring it
-            completion?(account, .none)
-            dismiss(animated: true, completion: nil)
+            // When system authentication isn't available, for now just fail silently and show the keyboard instead
+            completion?(nil, .presentKeyboard)
+            dismiss(animated: true) {
+                completion?(nil, .presentKeyboard)
+            }
         }
     }
     

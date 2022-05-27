@@ -31,7 +31,9 @@ protocol AutofillLoginPromptViewControllerExpansionResponseDelegate: AnyObject {
 class AutofillLoginPromptViewController: UIViewController {
     
     weak var expansionResponseDelegate: AutofillLoginPromptViewControllerExpansionResponseDelegate?
-    let completion: ((SecureVaultModels.WebsiteAccount?) -> Void)?
+    
+    typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?, PromptUserToAutofillCredentialsCompletionAction) -> Void)
+    let completion: AutofillLoginPromptViewControllerCompletion?
     
     private let accounts: [SecureVaultModels.WebsiteAccount]
     
@@ -47,7 +49,9 @@ class AutofillLoginPromptViewController: UIViewController {
         return view
     }()
 
-    internal init(accounts: [SecureVaultModels.WebsiteAccount], completion: ((SecureVaultModels.WebsiteAccount?) -> Void)? = nil) {
+    
+    internal init(accounts: [SecureVaultModels.WebsiteAccount],
+                  completion: AutofillLoginPromptViewControllerCompletion? = nil) {
         self.accounts = accounts
         self.completion = completion
         super.init(nibName: nil, bundle: nil)
@@ -106,8 +110,7 @@ class AutofillLoginPromptViewController: UIViewController {
 @available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        completion?(nil)
-        // TODO Need to make sure this is called in all dismiss cases
+        completion?(nil, .presentKeyboard)
     }
     
     @available(iOS 15.0, *)
@@ -135,24 +138,25 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             
                 DispatchQueue.main.async { [weak self] in
                     if success {
-                        self?.completion?(account)
+                        self?.completion?(account, .none)
                     } else {
                         print(error?.localizedDescription ?? "Failed to authenticate but error nil")
-                        self?.completion?(nil)
+                        self?.completion?(nil, .none)
                     }
                     self?.dismiss(animated: true, completion: nil)
                 }
             }
         } else {
             // When system authentication isn't available, proceed without requiring it
-            completion?(account)
+            completion?(account, .none)
             dismiss(animated: true, completion: nil)
         }
     }
     
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel) {
-        completion?(nil)
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            self.completion?(nil, .presentKeyboard)
+        }
     }
     
     func autofillLoginPromptViewModelDidRequestExpansion(_ viewModel: AutofillLoginPromptViewModel) {

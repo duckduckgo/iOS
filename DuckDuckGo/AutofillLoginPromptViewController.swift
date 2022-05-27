@@ -150,7 +150,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             // When system authentication isn't available, for now just fail silently and show the keyboard instead
             completion?(nil, .presentKeyboard)
             dismiss(animated: true) {
-                completion?(nil, .presentKeyboard)
+                self.completion?(nil, .presentKeyboard)
             }
         }
     }

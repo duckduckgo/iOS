@@ -195,7 +195,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureVersionText() {
-        versionText.text = versionProvider.localized
+        versionText.text = versionProvider.versionAndBuildNumber
     }
     
     private func configureUniversalLinksToggle() {

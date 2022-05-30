@@ -133,22 +133,22 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
         
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            let completion = self.completion
+            dismiss(animated: true, completion: nil)
             let reason = "Custom reason text"
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
             
-                DispatchQueue.main.async { [weak self] in
+                DispatchQueue.main.async {
                     if success {
-                        self?.completion?(account, .none)
+                        completion?(account, .none)
                     } else {
                         print(error?.localizedDescription ?? "Failed to authenticate but error nil")
-                        self?.completion?(nil, .none)
+                        completion?(nil, .none)
                     }
-                    self?.dismiss(animated: true, completion: nil)
                 }
             }
         } else {
             // When system authentication isn't available, for now just fail silently and show the keyboard instead
-            completion?(nil, .presentKeyboard)
             dismiss(animated: true) {
                 self.completion?(nil, .presentKeyboard)
             }

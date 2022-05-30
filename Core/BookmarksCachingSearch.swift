@@ -91,9 +91,9 @@ public class BookmarksCachingSearch {
 
     public func registerForCoreDataStorageNotifications() {
         NotificationCenter.default.addObserver(self,
-											   selector: #selector(dataDidChange),
-											   name: BookmarksCoreDataStorage.Notifications.dataDidChange,
-											   object: nil)
+                                               selector: #selector(dataDidChange),
+                                               name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                               object: nil)
     }
 
     public func refreshCache() {
@@ -110,8 +110,8 @@ public class BookmarksCachingSearch {
         // pre-emptively deregisterForNotifications so that bookmarksCachingSearch is not saturated with notification events
         // and constantly rebuilding while bookmarks are being imported (bookmark files could be very large)
         NotificationCenter.default.removeObserver(self,
-												  name: BookmarksCoreDataStorage.Notifications.dataDidChange,
-												  object: nil)
+                                                  name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                                  object: nil)
     }
 
     @objc func importDidEnd(notification: Notification) {

@@ -317,12 +317,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        switch viewModel.sections[indexPath.section] {
-        case .credentials:
-            return true
-        default :
-            return false
-        }
+       false
     }
 }
 

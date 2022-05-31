@@ -26,9 +26,10 @@ protocol SaveAutofillLoginManagerProtocol {
     var visiblePassword: String { get }
     var isNewAccount: Bool { get }
     var accountDomain: String { get }
-    var isUsernameOnlyAccount: Bool { get }
     var isPasswordOnlyAccount: Bool { get }
     var hasOtherCredentialsOnSameDomain: Bool { get }
+    var hasSavedMatchingPassword: Bool { get }
+    var hasSavedMatchingUsername: Bool { get }
     
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64
 }
@@ -54,12 +55,18 @@ struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         credentials.account.domain
     }
 
-    var isUsernameOnlyAccount: Bool {
-        visiblePassword.isEmpty && !username.isEmpty
-    }
-    
     var isPasswordOnlyAccount: Bool {
         !visiblePassword.isEmpty && username.isEmpty
+    }
+    
+    var hasSavedMatchingPassword: Bool {
+        let credentialsWithSamePassword = domainStoredCredentials.filter { $0.password == credentials.password }
+        return credentialsWithSamePassword.count > 0
+    }
+    
+    var hasSavedMatchingUsername: Bool {
+        let credentialsWithSamePassword = domainStoredCredentials.filter { $0.account.username == credentials.account.username }
+        return credentialsWithSamePassword.count > 0
     }
     
     private var domainStoredCredentials: [SecureVaultModels.WebsiteCredentials] {

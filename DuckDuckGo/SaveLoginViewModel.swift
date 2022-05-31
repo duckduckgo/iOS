@@ -49,11 +49,11 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
     }
     
     var isUpdatingPassword: Bool {
-        credentialManager.isUsernameOnlyAccount
+        credentialManager.hasSavedMatchingUsername
     }
     
     var isUpdatingUsername: Bool {
-        credentialManager.isPasswordOnlyAccount
+        credentialManager.hasSavedMatchingPassword
     }
 
     var hiddenPassword: String {
@@ -73,10 +73,6 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
             return .newUser
         }
         
-        if credentialManager.hasOtherCredentialsOnSameDomain {
-            return .saveAdditionalLogin
-        }
-        
         if credentialManager.isPasswordOnlyAccount {
             return .savePassword
         }
@@ -87,6 +83,10 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
         
         if isUpdatingPassword {
             return .updatePassword
+        }
+
+        if credentialManager.hasOtherCredentialsOnSameDomain {
+            return .saveAdditionalLogin
         }
 
         return .saveLogin

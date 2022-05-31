@@ -210,13 +210,16 @@ struct SaveLoginView: View {
 
 struct SaveLoginView_Previews: PreviewProvider {
     private struct MockManager: SaveAutofillLoginManagerProtocol {
+        
         var username: String { "dax@duck.com" }
         var visiblePassword: String { "supersecurepasswordquack" }
         var isNewAccount: Bool { false }
         var accountDomain: String { "duck.com" }
-        var isUsernameOnlyAccount: Bool { false }
         var isPasswordOnlyAccount: Bool { false }
         var hasOtherCredentialsOnSameDomain: Bool { false }
+        var hasSavedMatchingPassword: Bool { false }
+        var hasSavedMatchingUsername: Bool { false }
+        
         static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64 { return 0 }
     }
     

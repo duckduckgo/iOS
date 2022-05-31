@@ -285,6 +285,10 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        tableView.isEditing ? .delete : .none
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch viewModel.sections[indexPath.section] {
         case .credentials(_, let items):
@@ -317,7 +321,12 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-       false
+        switch viewModel.sections[indexPath.section] {
+        case .credentials:
+            return true
+        default :
+            return false
+        }
     }
 }
 

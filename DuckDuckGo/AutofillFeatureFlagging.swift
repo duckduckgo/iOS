@@ -23,7 +23,7 @@ import BrowserServicesKit
 extension ContentScopeFeatureToggles {
     
     static let supportedFeaturesOniOS = ContentScopeFeatureToggles(emailProtection: true,
-                                                                   credentialsAutofill: false,
+                                                                   credentialsAutofill: true,
                                                                    identitiesAutofill: false,
                                                                    creditCardsAutofill: false,
                                                                    credentialsSaving: false,

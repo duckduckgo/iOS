@@ -73,7 +73,7 @@ class BookmarksViewController: UITableViewController {
     
     fileprivate lazy var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource(alertDelegate: self)
     fileprivate var searchDataSource = SearchBookmarksDataSource()
-    private var bookmarksCachingSearch: BookmarksCachingSearch?
+    private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
     
     fileprivate var onDidAppearAction: () -> Void = {}
         
@@ -203,6 +203,7 @@ class BookmarksViewController: UITableViewController {
         if #available(iOS 14, *) {
             importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
             importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
+            importFooterButton.titleLabel?.textAlignment = .center
 
             importFooterButton.addAction(UIAction { [weak self] _ in
                 self?.presentDocumentPicker()
@@ -449,6 +450,10 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func startEditing() {
+        guard !tableView.isEditing else {
+            return
+        }
+
         // necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
         tableView.isEditing = false
         
@@ -461,6 +466,10 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func finishEditing() {
+        guard tableView.isEditing else {
+            return
+        }
+
         tableView.isEditing = false
         refreshEditButton()
         enableDoneButton()
@@ -604,10 +613,6 @@ class BookmarksViewController: UITableViewController {
 
 extension BookmarksViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        bookmarksCachingSearch = BookmarksCachingSearch()
-    }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             if tableView.dataSource !== dataSource {
@@ -621,8 +626,7 @@ extension BookmarksViewController: UISearchBarDelegate {
             tableView.dataSource = searchDataSource
         }
 
-        let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksSearch) {
+        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksCachingSearch) {
             self.tableView.reloadData()
         }
     }

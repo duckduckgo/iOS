@@ -31,7 +31,8 @@ class RequeryLogic {
         case sameQuery
         case changedQuery
     }
-    
+
+    private let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
     private let appUrls = AppUrls()
     private var serpState: SerpState = .notLoaded
 
@@ -75,7 +76,7 @@ class RequeryLogic {
         }
         
         var headers = APIHeaders().defaultHeaders
-        headers[APIHeaders.Name.userAgent] = UserAgentManager.shared.userAgent(isDesktop: false)
+        headers[APIHeaders.Name.userAgent] = userAgentManager.userAgent(isDesktop: false)
         
         Pixel.fire(pixel: pixel, forDeviceType: nil, withHeaders: headers, onComplete: { _ in })
     }

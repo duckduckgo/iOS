@@ -57,7 +57,12 @@ class FindInPage: NSObject {
     func search(forText text: String) -> Bool {
         guard text != searchTerm else { return false }
         searchTerm = text
-        webView.evaluateJavaScript("window.__firefox__.find('\(text)')")
+        
+        let escaped =
+        text.replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\'", with: "\\\'")
+        
+        webView.evaluateJavaScript("window.__firefox__.find('\(escaped)')")
         
         return true
     }

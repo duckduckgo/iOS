@@ -84,7 +84,7 @@ public class ContentBlockerLoader {
                              with contentBlockerRequest: ContentBlockerRemoteDataSource,
                              _ semaphore: DispatchSemaphore,
                              _ progress: ContentBlockerLoaderProgress? = nil) {
-        contentBlockerRequest.request(configuration) { response in
+        contentBlockerRequest.request(configuration, validatePresenceOfEtag: true) { response in
             defer {
                 progress?(configuration)
             }

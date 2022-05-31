@@ -29,6 +29,7 @@ extension View {
 }
 
 struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
+
     let content: Content
     let title: String
     let action: () -> Void

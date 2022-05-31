@@ -19,10 +19,21 @@
 
 import Foundation
 import WebKit
+import BrowserServicesKit
 
-public class UserAgentManager {
+public protocol UserAgentManager {
+
+    func update(request: inout URLRequest, isDesktop: Bool)
+
+    func update(webView: WKWebView, isDesktop: Bool, url: URL?)
+
+    func userAgent(isDesktop: Bool) -> String
     
-    public static let shared = UserAgentManager()
+}
+
+public class DefaultUserAgentManager: UserAgentManager {
+    
+    public static let shared: UserAgentManager = DefaultUserAgentManager()
 
     private var userAgent = UserAgent()
     
@@ -73,6 +84,9 @@ struct UserAgent {
         static let fallbackDefaultAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/\(fallbackWekKitVersion) (KHTML, like Gecko) Mobile/15E148"
         static let desktopPrefixComponent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15)"
         static let fallbackVersionComponent = "Version/13.1.1"
+        
+        static let uaOmitSitesConfigKey = "omitApplicationSites"
+        static let uaOmitDomainConfigKey = "domain"
         // swiftlint:enable line_length
     }
     
@@ -81,13 +95,6 @@ struct UserAgent {
         static let webKitVersion = "AppleWebKit/([^ ]+) "
         static let osVersion = " OS ([0-9_]+)"
     }
-    
-    private static let sitesThatOmitApplication = [
-        "cvs.com",
-        "sovietgames.su",
-        "accounts.google.com",
-        "facebook.com"
-    ]
     
     private let baseAgent: String
     private let baseDesktopAgent: String
@@ -102,8 +109,18 @@ struct UserAgent {
         safariComponent = UserAgent.createSafariComponent(fromAgent: baseAgent)
     }
     
-    public func agent(forUrl url: URL?, isDesktop: Bool) -> String {
-        let omitApplicationComponent = UserAgent.sitesThatOmitApplication.contains { domain in
+    private func omitApplicationSites(forConfig config: PrivacyConfiguration) -> [String] {
+        let uaSettings = config.settings(for: .customUserAgent)
+        let omitApplicationObjs = uaSettings[Constants.uaOmitSitesConfigKey] as? [[String: String]] ?? []
+        
+        return omitApplicationObjs.map { $0[Constants.uaOmitDomainConfigKey] ?? "" }
+    }
+    
+    public func agent(forUrl url: URL?, isDesktop: Bool,
+                      privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> String {
+        let omittedSites = omitApplicationSites(forConfig: privacyConfig)
+        let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
+        let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
             url?.isPart(ofDomain: domain) ?? false
         }
         

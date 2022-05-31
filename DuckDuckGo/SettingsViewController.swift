@@ -57,6 +57,7 @@ class SettingsViewController: UITableViewController {
     
     private let defaultBrowserSectionIndex = 0
     private let autofillSectionIndex = 1
+
     private lazy var emailManager = EmailManager()
     
     private lazy var versionProvider: AppVersion = AppVersion.shared
@@ -89,7 +90,7 @@ class SettingsViewController: UITableViewController {
         super.viewDidLoad()
 
         configureVersionCell()
-        configureDefaultBroswerCell()
+        configureDefaultBrowserCell()
         configureWidgetEducationCell()
         configureAutofillCell()
         configureThemeCellAccessory()
@@ -142,7 +143,7 @@ class SettingsViewController: UITableViewController {
         versionCell.isUserInteractionEnabled = isDebugBuild
     }
 
-    private func configureDefaultBroswerCell() {
+    private func configureDefaultBrowserCell() {
         defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
     }
     
@@ -207,7 +208,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureVersionText() {
-        versionText.text = versionProvider.localized
+        versionText.text = versionProvider.versionAndBuildNumber
     }
     
     private func configureUniversalLinksToggle() {
@@ -228,8 +229,7 @@ class SettingsViewController: UITableViewController {
         guard isDebugBuild else { return }
         performSegue(withIdentifier: "Debug", sender: nil)
     }
-    
-    
+        
     private func showAutofill() {
         if #available(iOS 14.0, *) {
             let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
@@ -284,7 +284,7 @@ class SettingsViewController: UITableViewController {
             
         case versionCell:
             showDebug()
-            
+
         case autofillCell:
             showAutofill()
             

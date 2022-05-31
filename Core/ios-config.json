@@ -1,15 +1,20 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1649791126759,
+    "version": 1653502015972,
     "features": {
         "ampLinks": {
-            "exceptions": [],
+            "exceptions": [
+                {
+                    "domain": "freecodecamp.org",
+                    "reason": "sign-up issues"
+                }
+            ],
             "settings": {
                 "deepExtractionEnabled": true,
                 "deepExtractionTimeout": 1500,
                 "linkFormats": [
                     "^https?:\\/\\/(?:w{3}\\.)?google\\.\\S{2,}\\/amp\\/s\\/(\\S+)$",
-                    "^https?:\\/\\/\\S+ampproject\\.org\\/v\\/s\\/(\\S+)$"
+                    "^https?:\\/\\/\\S+ampproject\\.org\\/\\S\\/s\\/(\\S+)$"
                 ],
                 "keywords": [
                     "=amp",
@@ -70,6 +75,10 @@
                 {
                     "domain": "n-tv.de",
                     "reason": "broken scrolling"
+                },
+                {
+                    "domain": "concursolutions.com",
+                    "reason": "blank page during opt-out"
                 }
             ],
             "settings": {
@@ -97,6 +106,10 @@
         "contentBlocking": {
             "state": "enabled",
             "exceptions": [
+                {
+                    "domain": "video.corriere.it",
+                    "reason": "Video not playing"
+                },
                 {
                     "domain": "wp.pl",
                     "reason": "Adblocker wall"
@@ -139,6 +152,31 @@
                 }
             ]
         },
+        "customUserAgent": {
+            "settings": {
+                "omitApplicationSites": [
+                    {
+                        "domain": "cvs.com",
+                        "reason": "Site reports browser not supported"
+                    },
+                    {
+                        "domain": "sovietgames.su",
+                        "reason": "Wordpress plugin reports our browser as a bot"
+                    },
+                    {
+                        "domain": "accounts.google.com",
+                        "reason": "Site reports browser not supported"
+                    },
+                    {
+                        "domain": "facebook.com",
+                        "reason": "Site reports browser not supported"
+                    }
+                ],
+                "omitVersionSites": []
+            },
+            "exceptions": [],
+            "state": "enabled"
+        },
         "fingerprintingAudio": {
             "state": "disabled",
             "exceptions": [
@@ -157,6 +195,9 @@
             "state": "enabled"
         },
         "fingerprintingCanvas": {
+            "settings": {
+                "webGl": "enabled"
+            },
             "exceptions": [
                 {
                     "domain": "adidas.com",
@@ -195,6 +236,14 @@
         },
         "fingerprintingHardware": {
             "exceptions": [
+                {
+                    "domain": "accounts.nintendo.com",
+                    "reason": "broken login"
+                },
+                {
+                    "domain": "clearpay.co.uk",
+                    "reason": "broken login"
+                },
                 {
                     "domain": "gamestop.com",
                     "reason": "broken add to cart"
@@ -255,7 +304,7 @@
             "exceptions": [],
             "state": "enabled"
         },
-        "floc": {
+        "googleRejected": {
             "exceptions": [],
             "state": "disabled"
         },
@@ -281,16 +330,24 @@
             "state": "enabled",
             "exceptions": []
         },
-        "navigatorCredentials": {
-            "exceptions": [],
-            "state": "disabled"
-        },
         "navigatorInterface": {
             "exceptions": [],
             "state": "enabled"
         },
-        "referrer": {
+        "nonTracking3pCookies": {
+            "settings": {
+                "excludedCookieDomains": []
+            },
             "exceptions": [],
+            "state": "disabled"
+        },
+        "referrer": {
+            "exceptions": [
+                {
+                    "domain": "apple.com",
+                    "reason": "Login issues"
+                }
+            ],
             "state": "disabled"
         },
         "trackerAllowlist": {
@@ -348,6 +405,17 @@
                             }
                         ]
                     },
+                    "alicdn.com": {
+                        "rules": [
+                            {
+                                "rule": "alicdn.com",
+                                "domains": [
+                                    "aliexpress.com"
+                                ],
+                                "reason": "content not loading"
+                            }
+                        ]
+                    },
                     "amazon-adsystem.com": {
                         "rules": [
                             {
@@ -377,6 +445,13 @@
                                 "rule": "cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.8.6/fingerprint2.min.js",
                                 "domains": [
                                     "winnipegfreepress.com"
+                                ],
+                                "reason": "content not loading"
+                            },
+                            {
+                                "rule": "cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js",
+                                "domains": [
+                                    "fortnitetracker.com"
                                 ],
                                 "reason": "content not loading"
                             }
@@ -476,6 +551,17 @@
                             }
                         ]
                     },
+                    "google-analytics.com": {
+                        "rules": [
+                            {
+                                "rule": "google-analytics.com/analytics.js",
+                                "domains": [
+                                    "easyjet.com"
+                                ],
+                                "reason": "broken form"
+                            }
+                        ]
+                    },
                     "googlesyndication.com": {
                         "rules": [
                             {
@@ -519,9 +605,10 @@
                             {
                                 "rule": "mpsnare.iesnare.com/snare.js",
                                 "domains": [
-                                    "rei.com"
+                                    "rei.com",
+                                    "ups.com"
                                 ],
-                                "reason": "adwall"
+                                "reason": "adwall, login issues"
                             }
                         ]
                     },
@@ -556,6 +643,18 @@
                             }
                         ]
                     },
+                    "ltwebstatic.com": {
+                        "rules": [
+                            {
+                                "rule": "sheinsz.ltwebstatic.com/she_dist/libs/geetest/fullpage.1.1.9.js",
+                                "domains": [
+                                    "shein.co.uk",
+                                    "shein.com"
+                                ],
+                                "reason": "login issues"
+                            }
+                        ]
+                    },
                     "mailgun.com": {
                         "rules": [
                             {
@@ -576,6 +675,17 @@
                                     "emol.com"
                                 ],
                                 "reason": "widget blocked"
+                            }
+                        ]
+                    },
+                    "segment.io": {
+                        "rules": [
+                            {
+                                "rule": "cdn.segment.com/analytics.js/v1/4I2fAtE5IxTlczNT3F91OckHtI5wfR7g/analytics.min.js",
+                                "domains": [
+                                    "foxnews.com"
+                                ],
+                                "reason": "user cannot access create account page from sign up page"
                             }
                         ]
                     },
@@ -864,6 +974,10 @@
                     "reason": "Breaks images on deezer"
                 }
             ],
+            "state": "disabled"
+        },
+        "webCompat": {
+            "exceptions": [],
             "state": "disabled"
         }
     },

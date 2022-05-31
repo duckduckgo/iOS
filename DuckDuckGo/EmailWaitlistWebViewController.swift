@@ -26,6 +26,7 @@ import WebKit
 
 class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
 
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
     let appUrls = AppUrls()
 
     @IBOutlet var webView: WKWebView!
@@ -40,7 +41,9 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
 
     private lazy var autofillUserScript: AutofillUserScript = {
         // GPC value doesn't matter here as the Autofill script doesn't use it
-        let prefs = ContentScopeProperties(gpcEnabled: true, sessionKey: UUID().uuidString)
+        let prefs = ContentScopeProperties(gpcEnabled: true,
+                                           sessionKey: UUID().uuidString,
+                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
         let script = AutofillUserScript(
             scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
                                                                 properties: prefs))
@@ -89,7 +92,7 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
 
     func updateContentMode() {
         webView.configuration.defaultWebpagePreferences.preferredContentMode = .mobile
-        UserAgentManager.shared.update(webView: webView, isDesktop: false, url: nil)
+        userAgentManager.update(webView: webView, isDesktop: false, url: nil)
     }
 
     // MARK: - WKNavigationDelegate

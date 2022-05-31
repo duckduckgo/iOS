@@ -68,5 +68,10 @@ class MockBookmarksCoreDataStore: BookmarksCoreDataStorage {
     override func loadStoreAndCaches(andMigrate handler: @escaping (NSManagedObjectContext) -> Void) {
         cacheReadOnlyTopLevelBookmarksFolder()
         cacheReadOnlyTopLevelFavoritesFolder()
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(objectsDidChange),
+                                               name: .NSManagedObjectContextObjectsDidChange,
+                                               object: nil)
     }
 }

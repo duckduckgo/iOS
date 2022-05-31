@@ -1,8 +1,8 @@
 //
-//  WebCacheSummary.swift
+//  CoreDependencyProvider.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,11 +19,14 @@
 
 import Foundation
 
-public struct WebCacheSummary {
+public protocol CoreDependencyProvided {
+    var bookmarksCachingSearch: BookmarksCachingSearch { get }
+}
 
-    public let count: Int
+/// Provides dependencies for objects that are not directly instantiated
+/// through `init` call
+public class CoreDependencyProvider: CoreDependencyProvided {
+    public static var shared: CoreDependencyProvided = CoreDependencyProvider()
 
-    public init(count: Int) {
-        self.count = count
-    }
+    public let bookmarksCachingSearch = BookmarksCachingSearch()
 }

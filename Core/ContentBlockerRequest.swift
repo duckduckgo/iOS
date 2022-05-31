@@ -23,7 +23,12 @@ protocol ContentBlockerRemoteDataSource {
     
     var requestCount: Int { get }
     
-    func request(_ configuration: ContentBlockerRequest.Configuration, completion:@escaping (ContentBlockerRequest.Response) -> Void)
+    func request(_ configuration: ContentBlockerRequest.Configuration,
+                 completion:@escaping (ContentBlockerRequest.Response) -> Void)
+    
+    func request(_ configuration: ContentBlockerRequest.Configuration,
+                 validatePresenceOfEtag: Bool,
+                 completion:@escaping (ContentBlockerRequest.Response) -> Void)
 }
 
 public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
@@ -50,6 +55,10 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
     }
     
     func request(_ configuration: Configuration, completion: @escaping (Response) -> Void) {
+        request(configuration, validatePresenceOfEtag: false, completion: completion)
+    }
+    
+    func request(_ configuration: Configuration, validatePresenceOfEtag: Bool, completion: @escaping (Response) -> Void) {
         requestCount += 1
         
         let spid = Instruments.shared.startTimedEvent(.fetchingContentBlockerData, info: configuration.rawValue)
@@ -67,6 +76,20 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
             }
 
             Instruments.shared.endTimedEvent(for: spid, result: "success")
+            
+            if validatePresenceOfEtag && response.etag == nil {
+                let httpResponse = response.urlResponse as? HTTPURLResponse
+                let statusCode: String
+                if let code = httpResponse?.statusCode {
+                    statusCode = String(code)
+                } else {
+                    statusCode = "nil"
+                }
+                let params = [PixelParameters.configuration: configuration.rawValue,
+                              PixelParameters.responseCode: statusCode]
+                Pixel.fire(pixel: .configDownloadMissingETag, withAdditionalParameters: params)
+            }
+            
             completion(.success(etag: response.etag, data: data))
         }
     }
@@ -76,9 +99,9 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         if etag == nil {
             switch configuration {
             case .trackerDataSet:
-                etag = AppTrackerDataSetProvider.Constants.embeddedDataSetETag
+                etag = AppTrackerDataSetProvider.Constants.embeddedDataETag
             case .privacyConfiguration:
-                etag = AppPrivacyConfigurationDataProvider.Constants.embeddedConfigETag
+                etag = AppPrivacyConfigurationDataProvider.Constants.embeddedDataETag
             default:
                 break
             }

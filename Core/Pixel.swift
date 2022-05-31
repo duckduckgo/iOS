@@ -187,7 +187,6 @@ public enum PixelName: String {
     
     case downloadsSharingPredownloadedLocalFile = "m_downloads_sharing_predownloaded_local_file"
     
-    case downloadPreparingToStart = "m_download_preparing_to_start"
     case downloadAttemptToOpenBLOB = "m_download_attempt_to_open_blob"
 
     case jsAlertShown = "m_js_alert_shown"
@@ -235,6 +234,8 @@ public enum PixelName: String {
     
     case contentBlockingErrorReportingIssue = "m_content_blocking_error_reporting_issue"
     case contentBlockingCompilationTime = "m_content_blocking_compilation_time"
+    
+    case configDownloadMissingETag = "m_d_config_download_missing_etag2"
 
     case ampBlockingRulesCompilationFailed = "m_debug_amp_rules_compilation_failed"
 
@@ -294,6 +295,9 @@ public struct PixelParameters {
     public static let tabPreviewCountDelta = "cd"
     
     public static let etag = "et"
+    
+    public static let configuration = "configuration"
+    public static let responseCode = "responseCode"
 
     public static let emailCohort = "cohort"
     public static let emailLastUsed = "duck_address_last_used"
@@ -317,7 +321,6 @@ public struct PixelParameters {
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
-    public static let statusCode = "status_code"
     
     public static let bookmarkCount = "bco"
 }

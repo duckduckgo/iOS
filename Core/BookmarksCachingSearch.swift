@@ -17,26 +17,25 @@
 //  limitations under the License.
 //
 
-import Core
 import Foundation
 
-protocol BookmarksSearchStore {
+public protocol BookmarksSearchStore {
     var hasData: Bool { get }
     func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void)
 }
 
 extension BookmarksCoreDataStorage: BookmarksSearchStore {
-    var hasData: Bool {
+    public var hasData: Bool {
         !topLevelBookmarksItems.isEmpty || !favorites.isEmpty
     }
     
-    func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
+    public func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
         allBookmarksAndFavoritesFlat(completion: completion)
     }
 }
 
-class BookmarksCachingSearch {
-    
+public class BookmarksCachingSearch {
+
     private class ScoredBookmark {
         let bookmark: Bookmark
         var score: Int
@@ -48,18 +47,19 @@ class BookmarksCachingSearch {
     }
     
     private let bookmarksStore: BookmarksSearchStore
-    
-    init(bookmarksStore: BookmarksSearchStore = BookmarksCoreDataStorage.shared) {
+
+    public init(bookmarksStore: BookmarksSearchStore = BookmarksCoreDataStorage.shared) {
         self.bookmarksStore = bookmarksStore
         loadCache()
+        registerForNotifications()
     }
-    
-    var hasData: Bool {
+
+    public var hasData: Bool {
         return bookmarksStore.hasData
     }
     
     private var cachedBookmarksAndFavorites: [Bookmark]?
-    private let cacheLoadedCondition = RunLoop.ResumeCondition()
+    private var cacheLoadedCondition = RunLoop.ResumeCondition()
     
     private func loadCache() {
         bookmarksStore.bookmarksAndFavorites { bookmarks in
@@ -72,7 +72,54 @@ class BookmarksCachingSearch {
         RunLoop.current.run(until: cacheLoadedCondition)
         return cachedBookmarksAndFavorites ?? []
     }
-    
+
+    public func containsDomain(_ domain: String) -> Bool {
+        return bookmarksAndFavorites.contains { $0.url?.host == domain }
+    }
+
+    private func registerForNotifications() {
+        registerForCoreDataStorageNotifications()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(importDidBegin),
+                                               name: BookmarksImporter.Notifications.importDidBegin,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(importDidEnd),
+                                               name: BookmarksImporter.Notifications.importDidEnd,
+                                               object: nil)
+    }
+
+    public func registerForCoreDataStorageNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(dataDidChange),
+                                               name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                               object: nil)
+    }
+
+    public func refreshCache() {
+        // setting cacheLoadedCondition back to initialized state
+        cacheLoadedCondition = RunLoop.ResumeCondition()
+        loadCache()
+    }
+
+    @objc func dataDidChange(notification: Notification) {
+        refreshCache()
+    }
+
+    @objc func importDidBegin(notification: Notification) {
+        // pre-emptively deregisterForNotifications so that bookmarksCachingSearch is not saturated with notification events
+        // and constantly rebuilding while bookmarks are being imported (bookmark files could be very large)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                                  object: nil)
+    }
+
+    @objc func importDidEnd(notification: Notification) {
+        // force refresh of cached data and re-enable notification observer
+        refreshCache()
+        registerForCoreDataStorageNotifications()
+    }
+
     // swiftlint:disable cyclomatic_complexity
     private func score(query: String, results: [ScoredBookmark]) {
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
@@ -123,8 +170,8 @@ class BookmarksCachingSearch {
         }
     }
     // swiftlint:enable cyclomatic_complexity
-    
-    func search(query: String, sortByRelevance: Bool = true, completion: @escaping ([Bookmark]) -> Void) {
+
+    public func search(query: String, sortByRelevance: Bool = true, completion: @escaping ([Bookmark]) -> Void) {
         guard hasData else {
             completion([])
             return

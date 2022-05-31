@@ -32,7 +32,8 @@ class AutofillLoginPromptViewController: UIViewController {
     
     weak var expansionResponseDelegate: AutofillLoginPromptViewControllerExpansionResponseDelegate?
     
-    typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?, PromptUserToAutofillCredentialsCompletionAction) -> Void)
+    typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?,
+                                                              PromptUserToAutofillCredentialsCompletionAction) -> Void)
     let completion: AutofillLoginPromptViewControllerCompletion?
     
     private let accounts: [SecureVaultModels.WebsiteAccount]

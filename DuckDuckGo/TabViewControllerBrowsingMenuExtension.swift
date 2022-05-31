@@ -81,14 +81,7 @@ extension TabViewController {
             
             entries.append(.separator)
 
-            entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
-                                                     image: UIImage(named: "MenuDownloads")!,
-                                                     showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
-                                                     action: { [weak self] in
-                self?.onOpenDownloadsAction()
-            }))
             
-
             if #available(iOS 14, *) {
                 entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
                                                          image: UIImage(named: "MenuAutofill")!,
@@ -97,6 +90,13 @@ extension TabViewController {
                 }))
             }
             
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
+                                                     image: UIImage(named: "MenuDownloads")!,
+                                                     showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
+                                                     action: { [weak self] in
+                self?.onOpenDownloadsAction()
+            }))
+
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
                                                      image: UIImage(named: "MenuSettings")!,
                                                      action: { [weak self] in

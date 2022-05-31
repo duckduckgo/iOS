@@ -1042,6 +1042,13 @@ extension TabViewController: WKNavigationDelegate {
         
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
+        let featureFlagging = DefaultFeatureFlagging()
+        let didMarkInternal = featureFlagging.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
+        Swift.print("Woofwoofwoofwoof")
+        Swift.print(didMarkInternal)
+        if didMarkInternal {
+            Swift.print("OH NO! 123456")
+        }
         
         if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
             Pixel.fire(pixel: .downloadAttemptToOpenBLOB)

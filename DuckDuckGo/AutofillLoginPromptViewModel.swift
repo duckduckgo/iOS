@@ -31,7 +31,13 @@ struct AccountViewModel: Hashable {
     
     let account: SecureVaultModels.WebsiteAccount
     var displayString: String {
-        AutofillInterfaceEmailTruncator.truncateEmail(account.username, maxLength: 36)
+        if account.username.count > 0 {
+            return AutofillInterfaceEmailTruncator.truncateEmail(account.username, maxLength: 36)
+        } else {
+            let urlString = URL(string: account.domain)?.absoluteString.dropPrefix(prefix: "www.")
+            let string = urlString ?? account.domain
+            return "Login for \(string)"
+        }
     }
     
     static func == (lhs: AccountViewModel, rhs: AccountViewModel) -> Bool {

@@ -253,7 +253,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         switch viewModel.sections[indexPath.section] {
         case .credentials(_, let items):
             let item = items[indexPath.row]
-            let detailsController = AutofillLoginDetailsViewController(account: item.account)
+            let detailsController = AutofillLoginDetailsViewController(account: item.account, authenticator: viewModel.authenticator)
             detailsController.delegate = self
             navigationController?.pushViewController(detailsController, animated: true)
             

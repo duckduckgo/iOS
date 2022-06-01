@@ -44,7 +44,7 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
             if let image = image {
                 self.image = image
             } else {
-                self.image = UIImage(systemName: "globle")!
+                self.image = UIImage(systemName: "globe")!
             }
         }
     }

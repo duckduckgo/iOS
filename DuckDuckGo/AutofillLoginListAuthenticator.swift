@@ -37,7 +37,14 @@ final class AutofillLoginListAuthenticator {
         state = .loggedOut
     }
     
+    
     func authenticate(completion: @escaping(AuthError?) -> Void) {
+       
+        if state == .loggedIn {
+            completion(nil)
+            return
+        }
+        
         context = LAContext()
         context.localizedCancelTitle = "Cancel"
         let reason = "Unlock To Use Saved Login"

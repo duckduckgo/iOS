@@ -59,7 +59,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]()
     
-    private let authenticator = AutofillLoginListAuthenticator()
+    let authenticator = AutofillLoginListAuthenticator()
     
     var isAutofillEnabled: Bool {
         get {

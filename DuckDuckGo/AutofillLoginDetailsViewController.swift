@@ -32,9 +32,13 @@ class AutofillLoginDetailsViewController: UIViewController {
     weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
+    private var authenticator = AutofillLoginListAuthenticator()
+    private let lockedView = AutofillItemsLockedView()
+    private var contentView: UIView?
 
-    init(account: SecureVaultModels.WebsiteAccount) {
+    init(account: SecureVaultModels.WebsiteAccount, authenticator: AutofillLoginListAuthenticator) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account)
+        self.authenticator = authenticator
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
 
@@ -46,15 +50,46 @@ class AutofillLoginDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        installContentView()
+        
+        installSubviews()
         setupNavigationBar()
         setupCancellables()
         setupTableViewAppearance()
+        applyTheme(ThemeManager.shared.currentTheme)
+        installConstraints()
     }
     
     deinit {
         print("DEINIT DETAILS")
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        authenticate()
+    }
+    
+    private func authenticate() {
+        authenticator.authenticate { error in
+            print("ERROR \(String(describing: error))")
+        }
+    }
+
+    private func installSubviews() {
+        installContentView()
+        view.addSubview(lockedView)
+    }
+
+    private func installConstraints() {
+        lockedView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            lockedView.heightAnchor.constraint(equalToConstant: 140)
+        ])
+    }
+
     
     private func setupTableViewAppearance() {
         let appearance = UITableView.appearance(whenContainedInInstancesOf: [AutofillLoginDetailsViewController.self])
@@ -68,12 +103,31 @@ class AutofillLoginDetailsViewController: UIViewController {
                 self?.setupNavigationBar()
             }
             .store(in: &cancellables)
+        
+        authenticator.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateAuthViews()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func updateAuthViews() {
+        switch authenticator.state {
+        case .loggedOut:
+            lockedView.isHidden = false
+            self.contentView?.isHidden = true
+        case .loggedIn:
+            lockedView.isHidden = true
+            self.contentView?.isHidden = false
+        }
     }
     
     private func installContentView() {
         let contentView = AutofillLoginDetailsView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: contentView)
         installChildViewController(hostingController)
+        self.contentView = hostingController.view
     }
     
     private func setupNavigationBar() {
@@ -104,5 +158,22 @@ class AutofillLoginDetailsViewController: UIViewController {
 extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDelegate {
     func autofillLoginDetailsViewModelDidSave() {
         
+    }
+}
+
+// MARK: Themable
+
+@available(iOS 14.0, *)
+extension AutofillLoginDetailsViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        lockedView.decorate(with: theme)
+        lockedView.backgroundColor = theme.backgroundColor
+        
+        view.backgroundColor = theme.backgroundColor
+
+        navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
+        navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
+
     }
 }

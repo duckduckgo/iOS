@@ -5,9 +5,9 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": null,
-          "revision": "40a3e9a73b25b851d397d0c8685ab459d21bb6ec",
-          "version": "13.0.1"
+          "branch": "dominik/domains",
+          "revision": "e2517837cfbb6b3e6dfa74130e4f049d65a2618a",
+          "version": null
         }
       },
       {
@@ -74,6 +74,15 @@
         }
       },
       {
+        "package": "DomainParser",
+        "repositoryURL": "https://github.com/ayoy/SwiftDomainParser.git",
+        "state": {
+          "branch": null,
+          "revision": "e353aeacfe9a19bd39c5ea3a5301fc4fb321d2a4",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "Swifter",
         "repositoryURL": "https://github.com/httpswift/swifter.git",
         "state": {
@@ -89,15 +98,6 @@
           "branch": null,
           "revision": "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
           "version": "2.4.2"
-        }
-      },
-      {
-        "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
-        "state": {
-          "branch": null,
-          "revision": "5f4caf35b8418700a48c64c7c61eb43308c8dacc",
-          "version": "1.0.3"
         }
       }
     ]

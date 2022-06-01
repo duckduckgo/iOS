@@ -50,11 +50,14 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var textSizeCell: UITableViewCell!
     @IBOutlet weak var textSizeAccessoryText: UILabel!
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
+    @IBOutlet weak var autofillCell: UITableViewCell!
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    private let defaultBroswerSectionIndex = 0
+    private let defaultBrowserSectionIndex = 0
+    private let autofillSectionIndex = 1
+
     private lazy var emailManager = EmailManager()
     
     private lazy var versionProvider: AppVersion = AppVersion.shared
@@ -74,6 +77,10 @@ class SettingsViewController: UITableViewController {
         return true
     }()
     
+    private lazy var shouldShowAutofillCell: Bool = {
+        return false // Hardcoded false until feature is done
+    }()
+    
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
@@ -82,8 +89,9 @@ class SettingsViewController: UITableViewController {
         super.viewDidLoad()
 
         configureVersionCell()
-        configureDefaultBroswerCell()
+        configureDefaultBrowserCell()
         configureWidgetEducationCell()
+        configureAutofillCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -134,12 +142,16 @@ class SettingsViewController: UITableViewController {
         versionCell.isUserInteractionEnabled = isDebugBuild
     }
 
-    private func configureDefaultBroswerCell() {
+    private func configureDefaultBrowserCell() {
         defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
     }
     
     private func configureWidgetEducationCell() {
         widgetEducationCell.isHidden = !shouldShowWidgetEducationCell
+    }
+    
+    private func configureAutofillCell() {
+        autofillCell.isHidden = !shouldShowAutofillCell
     }
 
     private func configureThemeCellAccessory() {
@@ -195,7 +207,7 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureVersionText() {
-        versionText.text = versionProvider.localized
+        versionText.text = versionProvider.versionAndBuildNumber
     }
     
     private func configureUniversalLinksToggle() {
@@ -215,6 +227,10 @@ class SettingsViewController: UITableViewController {
         // Use the "AdhocDebug" scheme when archiving to create a compatible adhoc build
         guard isDebugBuild else { return }
         performSegue(withIdentifier: "Debug", sender: nil)
+    }
+    
+    private func showAutofill() {
+        // Open Autofill
     }
 
     private func configureEmailProtectionAccessoryText() {
@@ -264,6 +280,9 @@ class SettingsViewController: UITableViewController {
         case versionCell:
             showDebug()
 
+        case autofillCell:
+            showAutofill()
+            
         default: break
         }
 
@@ -308,8 +327,10 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
-        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+        if defaultBrowserSectionIndex == section, !showDefaultBrowserSection {
             return 22.0
+        } else if autofillSectionIndex == section && !shouldShowAutofillCell {
+            return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForHeaderInSection: section)
         }
@@ -317,7 +338,9 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
-        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+        if defaultBrowserSectionIndex == section, !showDefaultBrowserSection {
+            return CGFloat.leastNonzeroMagnitude
+        } else if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)
@@ -326,7 +349,7 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
-        if defaultBroswerSectionIndex == section, !showDefaultBrowserSection {
+        if defaultBrowserSectionIndex == section, !showDefaultBrowserSection {
             return nil
         } else {
             return super.tableView(tableView, titleForFooterInSection: section)

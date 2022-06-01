@@ -31,8 +31,7 @@ public protocol FeatureFlaggerInternalUserDecider {
     
     var isInternalUser: Bool { get }
     
-    @discardableResult
-    func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool
+    func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?)
 }
 
 public class DefaultFeatureFlagger: FeatureFlagger {
@@ -61,14 +60,12 @@ extension DefaultFeatureFlagger: FeatureFlaggerInternalUserDecider {
     
     private static let internalUserVerificationURLHost = "login.duckduckgo.com"
     
-    @discardableResult
-    public func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {
+    public func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) {
         if isInternalUser { // If we're already an internal user, we don't need to do anything
-            return true
+            return
         }
         
         didVerifyInternalUser = shouldMarkUserAsInternal(forUrl: url, response: response)
-        return didVerifyInternalUser
     }
     
     func shouldMarkUserAsInternal(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {

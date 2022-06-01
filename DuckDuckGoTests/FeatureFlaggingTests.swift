@@ -28,7 +28,6 @@ class DefaultFeatureFlaggerTests: XCTestCase {
     func testShouldMarkUserAsInternalWhenURLAndStatusCodeCorrectThenReturnsTrue() {
         let featureFlagger = DefaultFeatureFlagger()
         let response = HTTPURLResponse(url: correctURL, statusCode: correctStatusCode, httpVersion: nil, headerFields: nil)
-        //let response = MockHTTPURLResponse(statusCode: correctStatusCode)
         let result = featureFlagger.shouldMarkUserAsInternal(forUrl: correctURL, response: response)
         XCTAssertTrue(result)
     }
@@ -57,20 +56,3 @@ class DefaultFeatureFlaggerTests: XCTestCase {
     }
 }
 
-//class MockHTTPURLResponse: HTTPURLResponse {
-//
-//    let mockStatusCode: Int
-//
-//    override var statusCode: Int {
-//        return mockStatusCode
-//    }
-//
-//    init?(statusCode: Int) {
-//        self.mockStatusCode = statusCode
-//        super.init(url: <#T##URL#>, statusCode: <#T##Int#>, httpVersion: <#T##String?#>, headerFields: <#T##[String : String]?#>)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}

@@ -65,12 +65,12 @@ extension DefaultFeatureFlagger: FeatureFlaggerInternalUserDecider {
             return
         }
         
-        didVerifyInternalUser = shouldMarkUserAsInternal(forUrl: url, response: response)
+        didVerifyInternalUser = shouldMarkUserAsInternal(forUrl: url, statusCode: response?.statusCode)
     }
     
-    func shouldMarkUserAsInternal(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {
-        if let response = response,
-           response.statusCode == 200,
+    func shouldMarkUserAsInternal(forUrl url: URL?, statusCode: Int?) -> Bool {
+        if let statusCode = statusCode,
+           statusCode == 200,
            let url = url,
            url.host == DefaultFeatureFlagger.internalUserVerificationURLHost {
             

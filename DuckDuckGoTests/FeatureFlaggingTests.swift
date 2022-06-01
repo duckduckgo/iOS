@@ -27,31 +27,27 @@ class DefaultFeatureFlaggerTests: XCTestCase {
     
     func testShouldMarkUserAsInternalWhenURLAndStatusCodeCorrectThenReturnsTrue() {
         let featureFlagger = DefaultFeatureFlagger()
-        let response = HTTPURLResponse(url: correctURL, statusCode: correctStatusCode, httpVersion: nil, headerFields: nil)
-        let result = featureFlagger.shouldMarkUserAsInternal(forUrl: correctURL, response: response)
+        let result = featureFlagger.shouldMarkUserAsInternal(forUrl: correctURL, statusCode: correctStatusCode)
         XCTAssertTrue(result)
     }
 
     func testShouldMarkUserAsInternalWhenURLIsCorrectAndStatusCodeisIncorrectThenReturnsFalse() {
         let featureFlagger = DefaultFeatureFlagger()
-        let response = HTTPURLResponse(url: correctURL, statusCode: 300, httpVersion: nil, headerFields: nil)
-        let result = featureFlagger.shouldMarkUserAsInternal(forUrl: correctURL, response: response)
+        let result = featureFlagger.shouldMarkUserAsInternal(forUrl: correctURL, statusCode: 300)
         XCTAssertFalse(result)
     }
 
     func testShouldMarkUserAsInternalWhenURLIsIncorrectButSubdomainIsCorrectAndStatusCodeIsCorrectThenReturnsFalse() {
         let featureFlagger = DefaultFeatureFlagger()
         let url = URL(string: "login.fishtown.com")!
-        let response = HTTPURLResponse(url: url, statusCode: correctStatusCode, httpVersion: nil, headerFields: nil)
-        let result = featureFlagger.shouldMarkUserAsInternal(forUrl: url, response: response)
+        let result = featureFlagger.shouldMarkUserAsInternal(forUrl: url, statusCode: correctStatusCode)
         XCTAssertFalse(result)
     }
 
     func testShouldMarkUserAsInternalWhenURLIsIncorrectButdomainIsCorrectAndStatusCodeIsCorrectThenReturnsFalse() {
         let featureFlagger = DefaultFeatureFlagger()
         let url = URL(string: "sso.duckduckgo.com")!
-        let response = HTTPURLResponse(url: url, statusCode: correctStatusCode, httpVersion: nil, headerFields: nil)
-        let result = featureFlagger.shouldMarkUserAsInternal(forUrl: url, response: response)
+        let result = featureFlagger.shouldMarkUserAsInternal(forUrl: url, statusCode: correctStatusCode)
         XCTAssertFalse(result)
     }
 }

@@ -55,4 +55,3 @@ class DefaultFeatureFlaggerTests: XCTestCase {
         XCTAssertFalse(result)
     }
 }
-

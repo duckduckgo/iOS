@@ -39,7 +39,7 @@ class AutofillLoginPromptViewController: UIViewController {
     private let accounts: [SecureVaultModels.WebsiteAccount]
     
     private lazy var blurView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemThinMaterial)
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         return blurEffectView
     }()

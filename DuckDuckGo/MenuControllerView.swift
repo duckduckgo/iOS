@@ -20,18 +20,6 @@
 import SwiftUI
 import UIKit
 
-struct MenuControllerItem {
-
-    public let title: String
-    public let action: () -> Void
-    
-    public init(_ title: String, action: @escaping () -> Void) {
-        self.title = title
-        self.action = action
-    }
-
-}
-
 extension View {
     
     func menuController(_ title: String, action: @escaping () -> Void) -> some View {
@@ -43,8 +31,6 @@ extension View {
 
 struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
 
-    typealias Item = MenuControllerItem
-    
     let content: Content
     let title: String
     let action: () -> Void

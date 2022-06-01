@@ -235,7 +235,7 @@ public enum PixelName: String {
     case contentBlockingErrorReportingIssue = "m_content_blocking_error_reporting_issue"
     case contentBlockingCompilationTime = "m_content_blocking_compilation_time"
     
-    case configDownloadMissingETag = "m_d_config_download_missing_etag"
+    case configDownloadMissingETag = "m_d_config_download_missing_etag2"
 
     case ampBlockingRulesCompilationFailed = "m_debug_amp_rules_compilation_failed"
 
@@ -297,6 +297,7 @@ public struct PixelParameters {
     public static let etag = "et"
     
     public static let configuration = "configuration"
+    public static let responseCode = "responseCode"
 
     public static let emailCohort = "cohort"
     public static let emailLastUsed = "duck_address_last_used"

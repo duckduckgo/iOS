@@ -73,7 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _ in }
-            BookmarksCoreDataStorage.shared.loadStoreAndCaches { _ in }
+            BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
+                _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
+            }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }

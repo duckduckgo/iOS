@@ -28,7 +28,7 @@ protocol SaveAutofillLoginManagerProtocol {
     var accountDomain: String { get }
     var isPasswordOnlyAccount: Bool { get }
     var hasOtherCredentialsOnSameDomain: Bool { get }
-    var hasSavedMatchingPassword: Bool { get }
+    var hasSavedMatchingPasswordWithoutUsername: Bool { get }
     var hasSavedMatchingUsername: Bool { get }
     
     static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64
@@ -47,10 +47,11 @@ struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         useStoredCredentialIfNecessary()
     }
     
-    // If we have stored credential with the same password we want to update it instead of creating a new one
+    // If we have a stored credential with the same password on an empty username account
+    // we want to update it instead of creating a new one
     private mutating func useStoredCredentialIfNecessary() {
-        if savedMatchingPasswordCredential != nil {
-            var storedCredential = savedMatchingPasswordCredential!
+        if savedMatchingPasswordCredentialWithoutUsername != nil {
+            var storedCredential = savedMatchingPasswordCredentialWithoutUsername!
             storedCredential.account.username = credentials.account.username
             credentials = storedCredential
         }
@@ -76,16 +77,16 @@ struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
         !visiblePassword.isEmpty && username.isEmpty
     }
     
-    var hasSavedMatchingPassword: Bool {
-        savedMatchingPasswordCredential != nil
+    var hasSavedMatchingPasswordWithoutUsername: Bool {
+        savedMatchingPasswordCredentialWithoutUsername != nil
     }
     
     var hasSavedMatchingUsername: Bool {
         savedMatchingUsernameCredential != nil
     }
     
-    private var savedMatchingPasswordCredential: SecureVaultModels.WebsiteCredentials? {
-        let credentialsWithSamePassword = domainStoredCredentials.filter { $0.password == credentials.password }
+    private var savedMatchingPasswordCredentialWithoutUsername: SecureVaultModels.WebsiteCredentials? {
+        let credentialsWithSamePassword = domainStoredCredentials.filter { $0.password == credentials.password && $0.account.username.count == 0 }
         return credentialsWithSamePassword.first
     }
     

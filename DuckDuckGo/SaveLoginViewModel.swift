@@ -53,7 +53,7 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
     }
     
     var isUpdatingUsername: Bool {
-        credentialManager.hasSavedMatchingPassword
+        credentialManager.hasSavedMatchingPasswordWithoutUsername
     }
 
     var hiddenPassword: String {

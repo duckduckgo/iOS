@@ -84,23 +84,24 @@ public class ContentBlockerLoader {
                              with contentBlockerRequest: ContentBlockerRemoteDataSource,
                              _ semaphore: DispatchSemaphore,
                              _ progress: ContentBlockerLoaderProgress? = nil) {
-        contentBlockerRequest.request(configuration, validatePresenceOfEtag: true) { response in
+        contentBlockerRequest.request(configuration) { response in
             defer {
                 progress?(configuration)
             }
-
-            guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
+            
+            guard case ContentBlockerRequest.Response.success(let etag, let data) = response,
+                  let etag = etag else {
                 semaphore.signal()
                 return
             }
             
-            let isCached = etag != nil && self.etagStorage.etag(for: configuration) == etag
+            let isCached = self.etagStorage.etag(for: configuration) == etag
             self.etags[configuration] = etag
             
             if !isCached || !self.fileStore.hasData(forConfiguration: configuration) {
                 self.newData[configuration] = data
             }
-
+            
             semaphore.signal()
         }
     }

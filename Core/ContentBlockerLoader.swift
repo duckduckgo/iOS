@@ -152,13 +152,14 @@ public class ContentBlockerLoader {
             defer {
                 progress?(.httpsExcludedDomains)
             }
-
-            guard case ContentBlockerRequest.Response.success(let etag, let data) = response else {
+            
+            guard case ContentBlockerRequest.Response.success(let etag, let data) = response,
+                  let etag = etag else {
                 semaphore.signal()
                 return
             }
             
-            let isCached = etag != nil && self.etagStorage.etag(for: .httpsExcludedDomains) == etag
+            let isCached = self.etagStorage.etag(for: .httpsExcludedDomains) == etag
             
             if !isCached, let excludedDomains = try? HTTPSUpgradeParser.convertExcludedDomainsData(data) {
                 self.newData[.httpsExcludedDomains] = excludedDomains

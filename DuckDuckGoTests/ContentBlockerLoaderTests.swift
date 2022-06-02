@@ -78,21 +78,13 @@ class ContentBlockerLoaderTests: XCTestCase {
         XCTAssertNotNil(mockStorageCache.processedUpdates[.privacyConfiguration])
     }
 
-    func testWhenEtagIsMissingThenResponseIsStored() {
+    func testWhenEtagIsMissingThenResponseIsNotStored() {
         
         mockRequest.mockResponse = .success(etag: nil, data: Data())
         mockEtagStorage.set(etag: "test", for: .surrogates)
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
-        
-        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
-        
-        loader.applyUpdate(to: mockStorageCache)
-        
-        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
-        
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
+        XCTAssertFalse(loader.checkForUpdates(dataSource: mockRequest))
     }
     
     func testWhenStoringFailsThenEtagIsNotStored() {

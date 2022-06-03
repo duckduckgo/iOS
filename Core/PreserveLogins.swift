@@ -48,9 +48,9 @@ public class PreserveLogins {
     }
 
     init() {
-        UserDefaults.standard.removeObject(forKey: Keys.legacyUserDecision)
-        UserDefaults.standard.removeObject(forKey: Keys.legacyUserPrompted)
-        UserDefaults.standard.removeObject(forKey: Keys.legacyDetectedDomains)
+        UserDefaults.app.removeObject(forKey: Keys.legacyUserDecision)
+        UserDefaults.app.removeObject(forKey: Keys.legacyUserPrompted)
+        UserDefaults.app.removeObject(forKey: Keys.legacyDetectedDomains)
     }
     
     public func addToAllowed(domain: String) {
@@ -75,7 +75,7 @@ public class PreserveLogins {
     
     public func clearLegacyAllowedDomains() {
         // This doesn't get cleared in init because it might need to be migrated
-        UserDefaults.standard.removeObject(forKey: Keys.legacyAllowedDomains)
+        UserDefaults.app.removeObject(forKey: Keys.legacyAllowedDomains)
     }
     
     public func isAllowed(fireproofDomain domain: String) -> Bool {

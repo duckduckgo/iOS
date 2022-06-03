@@ -45,7 +45,7 @@ class ThemeManagerTests: XCTestCase {
         let mockRootControllerProvider = MockRootControllersProvider()
         mockRootControllerProvider.rootControllers = [mockRootController]
         
-        let manager = ThemeManager(settings: AppUserDefaults(),
+        let manager = ThemeManager(settings: AppUserDefaults(groupName: "com.duckduckgo.mobile.ios.Tests"),
                                    rootProvider: mockRootControllerProvider)
         manager.enableTheme(with: .light)
         manager.enableTheme(with: .dark)

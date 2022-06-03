@@ -78,21 +78,13 @@ class ContentBlockerLoaderTests: XCTestCase {
         XCTAssertNotNil(mockStorageCache.processedUpdates[.privacyConfiguration])
     }
 
-    func testWhenEtagIsMissingThenResponseIsStored() {
+    func testWhenEtagIsMissingThenResponseIsNotStored() {
         
         mockRequest.mockResponse = .success(etag: nil, data: Data())
         mockEtagStorage.set(etag: "test", for: .surrogates)
         
         let loader = ContentBlockerLoader(etagStorage: mockEtagStorage)
-        XCTAssertTrue(loader.checkForUpdates(dataSource: mockRequest))
-        
-        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
-        
-        loader.applyUpdate(to: mockStorageCache)
-        
-        XCTAssertEqual(mockEtagStorage.etags[.surrogates], "test")
-        
-        XCTAssertNotNil(mockStorageCache.processedUpdates[.surrogates])
+        XCTAssertFalse(loader.checkForUpdates(dataSource: mockRequest))
     }
     
     func testWhenStoringFailsThenEtagIsNotStored() {
@@ -162,10 +154,6 @@ class MockContentBlockingRequest: ContentBlockerRemoteDataSource {
     var mockResponse: ContentBlockerRequest.Response?
     
     func request(_ configuration: ContentBlockerRequest.Configuration, completion: @escaping (ContentBlockerRequest.Response) -> Void) {
-        request(configuration, validatePresenceOfEtag: false, completion: completion)
-    }
-    
-    func request(_ configuration: ContentBlockerRequest.Configuration, validatePresenceOfEtag: Bool, completion: @escaping (ContentBlockerRequest.Response) -> Void) {
         guard let response = mockResponse else {
             fatalError("No mock response set")
         }

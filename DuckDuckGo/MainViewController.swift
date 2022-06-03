@@ -507,6 +507,8 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
+        wakeLazyFireButtonAnimator()
+        
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
@@ -518,10 +520,18 @@ class MainViewController: UIViewController {
     }
     
     func onQuickFirePressed() {
+        wakeLazyFireButtonAnimator()
+        
         self.forgetAllWithAnimation {}
         self.dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
             self.enterSearch()
+        }
+    }
+    
+    private func wakeLazyFireButtonAnimator() {
+        DispatchQueue.main.async {
+            _ = self.fireButtonAnimator
         }
     }
 

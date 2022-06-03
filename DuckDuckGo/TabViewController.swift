@@ -106,7 +106,9 @@ class TabViewController: UIViewController {
     
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
-    
+
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+
     public var url: URL? {
         didSet {
             updateTabModel()
@@ -228,6 +230,7 @@ class TabViewController: UIViewController {
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
         addTextSizeObserver()
+        addDuckDuckGoEmailSignOutObserver()
         registerForNotifications()
     }
 
@@ -269,7 +272,9 @@ class TabViewController: UIViewController {
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
         
-        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                           sessionKey: UUID().uuidString,
+                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
         let autofillUserScript = AutofillUserScript(
             scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
                                                                 properties: prefs))
@@ -672,6 +677,13 @@ class TabViewController: UIViewController {
                                                name: AppUserDefaults.Notifications.textSizeChange,
                                                object: nil)
     }
+
+    private func addDuckDuckGoEmailSignOutObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDuckDuckGoEmailSignOut),
+                                               name: .emailDidSignOut,
+                                               object: nil)
+    }
     
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
@@ -714,6 +726,13 @@ class TabViewController: UIViewController {
     @objc func onTextSizeChange() {
         webView.adjustTextSize(appSettings.textSize)
         reloadUserScripts()
+    }
+
+    @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
+        guard let url = webView.url else { return }
+        if AppUrls().isDuckDuckGoEmailProtection(url: url) {
+            webView.evaluateJavaScript("window.postMessage({ emailProtectionSignedOut: true }, window.origin);")
+        }
     }
 
     private func resetNavigationBar() {
@@ -1021,6 +1040,9 @@ extension TabViewController: WKNavigationDelegate {
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
         
+        let httpResponse = navigationResponse.response as? HTTPURLResponse
+        let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
+        
         if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
             Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
         }
@@ -1029,12 +1051,7 @@ extension TabViewController: WKNavigationDelegate {
             setupOrClearTemporaryDownload(for: navigationResponse)
             url = webView.url
             decisionHandler(.allow)
-        } else {
-            if let httpResponse = navigationResponse.response as? HTTPURLResponse {
-                Pixel.fire(pixel: .downloadPreparingToStart,
-                           withAdditionalParameters: [PixelParameters.statusCode: String(httpResponse.statusCode)])
-            }
-                           
+        } else if isSuccessfulResponse {
             let downloadManager = AppDependencyProvider.shared.downloadManager
             
             let startDownload: () -> Download? = {
@@ -1072,6 +1089,9 @@ extension TabViewController: WKNavigationDelegate {
             }
         
             decisionHandler(.cancel)
+        } else {
+            // MIME type should trigger download but response has no 2xx status code
+            decisionHandler(.allow)
         }
     }
     
@@ -1101,6 +1121,7 @@ extension TabViewController: WKNavigationDelegate {
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
+        linkProtection.setMainFrameUrl(webView.url)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1112,6 +1133,7 @@ extension TabViewController: WKNavigationDelegate {
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
         updatePreview()
+        linkProtection.setMainFrameUrl(nil)
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1223,6 +1245,7 @@ extension TabViewController: WKNavigationDelegate {
         webpageDidFailToLoad()
         checkForReloadOnError()
         scheduleTrackerNetworksAnimation(collapsing: true)
+        linkProtection.setMainFrameUrl(nil)
     }
 
     private func webpageDidFailToLoad() {
@@ -1237,6 +1260,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
+        linkProtection.setMainFrameUrl(nil)
         lastError = error
         let error = error as NSError
 
@@ -1450,7 +1474,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if allowPolicy != WKNavigationActionPolicy.cancel {
-            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
+            userAgentManager.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
         }
         
         if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {

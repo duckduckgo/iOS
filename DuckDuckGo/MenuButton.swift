@@ -54,7 +54,7 @@ class MenuButton: UIView {
     
     private let bookmarksIconView = UIImageView()
 
-    let anim = LOTAnimationView(name: "menu_light")
+    let anim = AnimationView(name: "menu_light")
     let pointerView: UIView = UIView(frame: CGRect(x: 0,
                                                    y: 0,
                                                    width: Constants.pointerViewWidth,
@@ -62,7 +62,7 @@ class MenuButton: UIView {
     
     var hasUnread: Bool = false {
         didSet {
-            anim.animationProgress = hasUnread ? 1.0 : 0.0
+            anim.currentProgress = hasUnread ? 1.0 : 0.0
         }
     }
     
@@ -149,7 +149,7 @@ class MenuButton: UIView {
             if animated {
                 anim.play()
             } else {
-                anim.animationProgress = 1.0
+                anim.currentProgress = 1.0
             }
         case .menuImage:
             bookmarksIconView.isHidden = true
@@ -157,10 +157,10 @@ class MenuButton: UIView {
             if animated {
                 // Work around a bug that caused glitches when rapidly toggling button
                 anim.stop()
-                anim.animationProgress = 1.0
-                anim.play(fromProgress: 1.0, toProgress: 0, withCompletion: nil)
+                anim.currentProgress = 1.0
+                anim.play(fromProgress: 1.0, toProgress: 0, loopMode: nil, completion: nil)
             } else {
-                anim.animationProgress = 0.0
+                anim.currentProgress = 0.0
             }
         case .bookmarksImage:
             bookmarksIconView.isHidden = false
@@ -192,14 +192,13 @@ extension MenuButton: Themable {
 
         switch theme.currentImageSet {
         case .light:
-            anim.setAnimation(named: "menu_light")
+            anim.animation = Animation.named("menu_light")
         case .dark:
-            anim.setAnimation(named: "menu_dark")
-            
+            anim.animation = Animation.named("menu_dark")
         }
         
         if currentState == State.closeImage {
-            anim.animationProgress = 1.0
+            anim.currentProgress = 1.0
         }
 
         addSubview(anim)

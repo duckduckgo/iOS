@@ -30,11 +30,6 @@ protocol FullscreenDaxDialogDelegate: NSObjectProtocol {
 
 class FullscreenDaxDialogViewController: UIViewController {
 
-    struct Constants {
-        
-        static let defaultCTAHeight: CGFloat = 100
-        
-    }
     @IBOutlet weak var highlightCutOutView: HighlightCutOutView!
     @IBOutlet weak var containerHeight: NSLayoutConstraint!
     

@@ -26,7 +26,10 @@ class NotFoundCachingDownloader: ImageDownloader {
     @UserDefaultsWrapper(key: .notFoundCache, defaultValue: [:])
     var notFoundCache: [String: TimeInterval]
 
-    init() {
+    let sourcesProvider: FaviconSourcesProvider
+
+    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider()) {
+        self.sourcesProvider = sourcesProvider
         super.init(name: String(describing: Self.Type.self))
     }
 
@@ -43,7 +46,7 @@ class NotFoundCachingDownloader: ImageDownloader {
     }
 
     func noFaviconsFound(forDomain domain: String) {
-        guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return }
+        guard let hashedKey = FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)?.cacheKey else { return }
         notFoundCache[hashedKey] = Date().timeIntervalSince1970
     }
     
@@ -53,7 +56,7 @@ class NotFoundCachingDownloader: ImageDownloader {
     }
 
     func shouldDownload(forDomain domain: String, referenceDate: Date = Date()) -> Bool {
-        guard let hashedKey = Favicons.shared.defaultResource(forDomain: domain)?.cacheKey else { return false }
+        guard let hashedKey = FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)?.cacheKey else { return false }
         if let cacheAddTime = notFoundCache[hashedKey],
             referenceDate.timeIntervalSince1970 - cacheAddTime < Self.expiry {
             return false

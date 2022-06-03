@@ -103,7 +103,7 @@ class MainViewController: UIViewController {
     
     let gestureBookmarksButton = GestureToolbarButton()
     
-    private var fireButtonAnimator: FireButtonAnimator?
+    private lazy var fireButtonAnimator: FireButtonAnimator =  = FireButtonAnimator(appSettings: appSettings)
     
     private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
 
@@ -140,7 +140,6 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
-        fireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -1636,7 +1635,7 @@ extension MainViewController: AutoClearWorker {
         
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
-        fireButtonAnimator?.animate {
+        fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             
             self.stopAllOngoingDownloads()

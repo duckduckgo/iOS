@@ -83,7 +83,6 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     func filterData(with query: String) {
         updateData(with: query)
-  
     }
     
     func delete(at indexPath: IndexPath) {

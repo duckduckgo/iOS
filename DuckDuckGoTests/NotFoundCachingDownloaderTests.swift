@@ -26,7 +26,8 @@ class NotFoundCachingDownloaderTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        UserDefaults.clearStandard()
+        UserDefaults.app.removePersistentDomain(forName: #file)
+        UserDefaults.app = UserDefaults(suiteName: #file)!
 
         downloader = NotFoundCachingDownloader(sourcesProvider: DefaultFaviconSourcesProvider())
     }
@@ -40,7 +41,7 @@ class NotFoundCachingDownloaderTests: XCTestCase {
     func testWhenURLSavedNotStoredInPlainText() {
         downloader.noFaviconsFound(forDomain: "example.com")
 
-        guard let domains: [String: TimeInterval] = UserDefaults.standard.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
+        guard let domains: [String: TimeInterval] = UserDefaults.app.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
             as? [String: TimeInterval] else {
                 XCTFail("Failed to load not found cache")
                 return
@@ -59,7 +60,7 @@ class NotFoundCachingDownloaderTests: XCTestCase {
         let moreThanAWeekFromNow = Date().addingTimeInterval(60 * 60 * 24 * 8)
         XCTAssertTrue(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!, referenceDate: moreThanAWeekFromNow))
         
-        guard let domains: [String: TimeInterval] = UserDefaults.standard.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
+        guard let domains: [String: TimeInterval] = UserDefaults.app.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
             as? [String: TimeInterval] else {
                 XCTFail("Failed to load not found cache")
                 return

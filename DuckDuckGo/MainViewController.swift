@@ -103,7 +103,7 @@ class MainViewController: UIViewController {
     
     let gestureBookmarksButton = GestureToolbarButton()
     
-    private lazy var fireButtonAnimator: FireButtonAnimator =  = FireButtonAnimator(appSettings: appSettings)
+    private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
     private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
 

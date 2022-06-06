@@ -22,7 +22,7 @@ import XCTest
 
 class DefaultFeatureFlaggerTests: XCTestCase {
     
-    let correctURL = URL(string: "login.duckduckgo.com")!
+    let correctURL = URL(string: "http://login.duckduckgo.com")!
     let correctStatusCode = 200
     
     func testShouldMarkUserAsInternalWhenURLAndStatusCodeCorrectThenReturnsTrue() {

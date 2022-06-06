@@ -40,7 +40,7 @@ struct DefaultTutorialSettings: TutorialSettings {
     }
 
     private func userDefaults() -> UserDefaults {
-        return UserDefaults.standard
+        return UserDefaults.app
     }
 
     public var lastVersionSeen: Int {

@@ -500,9 +500,9 @@ public struct UserText {
     public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
     public static let autofillUpdateLoginSaveCTA = NSLocalizedString("autofill.update-login.save.CTA", value: "Update Login", comment: "Confirm CTA displayed on modal asking for the user to update the login")
     public static let autofillAdditionalLoginInfoMessage = NSLocalizedString("autofill.save-login.additional-login.message", value: "This will save an additional Login for this site.", comment: "Message displayed on modal explaining that an additional login will be saved.")
-    public static let autofillLoginSavedToastMessage = NSLocalizedString("autofill.login-saved.toast", value: "Login Saved", comment: "Message displayed after saving an autofill login")
-    public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login Updated", comment: "Message displayed after updating an autofill login")
-    public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "SHOW", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
+    public static let autofillLoginSavedToastMessage = NSLocalizedString("autofill.login-saved.toast", value: "Login saved", comment: "Message displayed after saving an autofill login")
+    public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login updated", comment: "Message displayed after updating an autofill login")
+    public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "View", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
 

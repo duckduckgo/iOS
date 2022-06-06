@@ -158,13 +158,13 @@
 "autoclear.on" = "On";
 
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
-"autofill.login-save-action-button.toast" = "SHOW";
+"autofill.login-save-action-button.toast" = "View";
 
 /* Message displayed after saving an autofill login */
-"autofill.login-saved.toast" = "Login Saved";
+"autofill.login-saved.toast" = "Login saved";
 
 /* Message displayed after updating an autofill login */
-"autofill.login-updated.toast" = "Login Updated";
+"autofill.login-updated.toast" = "Login updated";
 
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "This will save an additional Login for this site.";

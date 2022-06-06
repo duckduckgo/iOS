@@ -78,9 +78,9 @@ class SaveLoginViewController: UIViewController {
 extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel) {
         switch viewModel.layoutType {
-        case .updatePassword, .updateUsername, .saveAdditionalLogin:
+        case .saveAdditionalLogin, .saveLogin, .savePassword, .newUser:
             delegate?.saveLoginViewController(self, didSaveCredentials: credentialManager.credentials)
-        default:
+        case .updatePassword, .updateUsername:
             delegate?.saveLoginViewController(self, didUpdateCredentials: credentialManager.credentials)
         }
     }

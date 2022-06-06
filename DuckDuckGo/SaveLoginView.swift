@@ -187,7 +187,7 @@ struct SaveLoginView: View {
             .lineLimit(1)
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 10)
             .padding(.top, 56)
             .padding(.bottom, 56)
     }

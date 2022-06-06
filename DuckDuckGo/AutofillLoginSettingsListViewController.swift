@@ -172,6 +172,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptySearchView.isHidden = false
             navigationItem.rightBarButtonItem?.isEnabled = true
         }
+        tableView.reloadData()
     }
     
     private func installNavigationBarButtons() {
@@ -253,7 +254,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         switch viewModel.sections[indexPath.section] {
         case .credentials(_, let items):
             let item = items[indexPath.row]
-            let detailsController = AutofillLoginDetailsViewController(account: item.account)
+            let detailsController = AutofillLoginDetailsViewController(account: item.account, authenticator: viewModel.authenticator)
             detailsController.delegate = self
             navigationController?.pushViewController(detailsController, animated: true)
             
@@ -317,7 +318,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
     }
     
     func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        viewModel.indexes
+        viewModel.viewState == .showItems ? viewModel.indexes : []
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

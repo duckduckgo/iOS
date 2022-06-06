@@ -37,15 +37,22 @@ final class AutofillLoginListAuthenticator {
         state = .loggedOut
     }
     
+    
     func authenticate(completion: @escaping(AuthError?) -> Void) {
+       
+        if state == .loggedIn {
+            completion(nil)
+            return
+        }
+        
         context = LAContext()
-        context.localizedCancelTitle = "custom cancel" // TODO strings
-        context.localizedReason = "custom reason"
-        context.localizedFallbackTitle = "custom fallback"
+        context.localizedCancelTitle = "Cancel"
+        let reason = "Unlock To Use Saved Login"
+        context.localizedReason = reason
         
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            let reason = "Custom reason text"
+            let reason = reason
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
             
                 DispatchQueue.main.async {

@@ -59,7 +59,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]()
     
-    private let authenticator = AutofillLoginListAuthenticator()
+    let authenticator = AutofillLoginListAuthenticator()
     
     var isAutofillEnabled: Bool {
         get {
@@ -83,7 +83,6 @@ final class AutofillLoginListViewModel: ObservableObject {
 
     func filterData(with query: String) {
         updateData(with: query)
-  
     }
     
     func delete(at indexPath: IndexPath) {

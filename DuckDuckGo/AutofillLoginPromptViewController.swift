@@ -128,15 +128,15 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
         
         let context = LAContext()
-        context.localizedCancelTitle = "custom cancel" // TODO strings
-        context.localizedReason = "custom reason"
-        context.localizedFallbackTitle = "custom fallback"
+        context.localizedCancelTitle = "Cancel"
+        let reason = "Unlock To Use Saved Login"
+        context.localizedReason = reason
         
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
             let completion = self.completion
             dismiss(animated: true, completion: nil)
-            let reason = "Custom reason text"
+            let reason = reason
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
             
                 DispatchQueue.main.async {

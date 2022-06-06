@@ -217,7 +217,7 @@ struct SaveLoginView_Previews: PreviewProvider {
         var accountDomain: String { "duck.com" }
         var isPasswordOnlyAccount: Bool { false }
         var hasOtherCredentialsOnSameDomain: Bool { false }
-        var hasSavedMatchingPassword: Bool { false }
+        var hasSavedMatchingPasswordWithoutUsername: Bool { false }
         var hasSavedMatchingUsername: Bool { false }
         
         static func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, with factory: SecureVaultFactory) throws -> Int64 { return 0 }

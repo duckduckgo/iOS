@@ -27,6 +27,5 @@ extension ContentScopeFeatureToggles {
                                                                    identitiesAutofill: false,
                                                                    creditCardsAutofill: false,
                                                                    credentialsSaving: true,
-                                                                   passwordGeneration: false
-                                                                   inlineIconCredentials: false)
+                                                                   passwordGeneration: false)
 }

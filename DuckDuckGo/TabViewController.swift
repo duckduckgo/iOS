@@ -1945,17 +1945,16 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
-                            completionHandler: @escaping (SecureVaultModels.WebsiteAccount?,
-                                                          PromptUserToAutofillCredentialsCompletionAction) -> Void) {
+                            completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
         if !isAutofillEnabled {
-            completionHandler(nil, .none)
+            completionHandler(nil)
             return
         }
         
         if #available(iOS 14, *), accounts.count > 0 {
-            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account, action in
-                completionHandler(account, action)
+            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account in
+                completionHandler(account)
             }
             
             if #available(iOS 15.0, *) {
@@ -1965,7 +1964,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             }
             self.present(autofillPromptViewController, animated: true, completion: nil)
         } else {
-            completionHandler(nil, .presentKeyboard)
+            completionHandler(nil)
         }
     }
 

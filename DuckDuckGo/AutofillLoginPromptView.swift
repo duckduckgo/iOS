@@ -42,7 +42,7 @@ struct AutofillLoginPromptView: View {
             }
             .padding(.top, 43)
                 
-            keyboardButtonFooter
+            footer
             }
         }
     }
@@ -168,27 +168,11 @@ struct AutofillLoginPromptView: View {
         }
     }
     
-    var keyboardButtonFooter: some View {
+    var footer: some View {
         HStack {
-            keyboardButton
-                .padding(.leading, 20)
-                .padding(.bottom, 18)
             Spacer()
+                .padding(.bottom, 62)
         }
-    }
-    
-    private var keyboardButton: some View {
-        Button {
-            viewModel.dismissView()
-        } label: {
-            Image(systemName: "keyboard")
-                .resizable()
-                .scaledToFit()
-                .frame(width: Const.Size.keyboardButtonWidth, height: Const.Size.keyboardButtonHeight)
-                .foregroundColor(Const.Colors.keyboardColor)
-        }
-        .frame(width: Const.Size.keyboardButtonTappableArea, height: Const.Size.keyboardButtonTappableArea)
-        .contentShape(Rectangle())
     }
 }
 
@@ -208,7 +192,6 @@ private enum Const {
         static let CTASecondaryForeground = Color("CTASecondaryForeground")
         static let PrimaryTextColor = Color("PrimaryTextColor")
         static let SecondaryTextColor = Color("SecondaryTextColor")
-        static let keyboardColor = Color("AutofillPromptKeyboard")
     }
     
     enum Size {
@@ -217,9 +200,6 @@ private enum Const {
         static let contentWidth: CGFloat = 286
         static let closeButtonSize: CGFloat = 13
         static let closeButtonTappableArea: CGFloat = 44
-        static let keyboardButtonWidth: CGFloat = 30
-        static let keyboardButtonHeight: CGFloat = 26
-        static let keyboardButtonTappableArea: CGFloat = 44
     }
 }
 

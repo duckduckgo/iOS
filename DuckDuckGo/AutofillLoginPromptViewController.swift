@@ -32,8 +32,7 @@ class AutofillLoginPromptViewController: UIViewController {
     
     weak var expansionResponseDelegate: AutofillLoginPromptViewControllerExpansionResponseDelegate?
     
-    typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?,
-                                                              PromptUserToAutofillCredentialsCompletionAction) -> Void)
+    typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?) -> Void)
     let completion: AutofillLoginPromptViewControllerCompletion?
     
     private let accounts: [SecureVaultModels.WebsiteAccount]
@@ -111,7 +110,7 @@ class AutofillLoginPromptViewController: UIViewController {
 @available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        completion?(nil, .presentKeyboard)
+        completion?(nil)
     }
     
     @available(iOS 15.0, *)
@@ -141,24 +140,24 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             
                 DispatchQueue.main.async {
                     if success {
-                        completion?(account, .none)
+                        completion?(account)
                     } else {
                         print(error?.localizedDescription ?? "Failed to authenticate but error nil")
-                        completion?(nil, .none)
+                        completion?(nil)
                     }
                 }
             }
         } else {
             // When system authentication isn't available, for now just fail silently and show the keyboard instead
             dismiss(animated: true) {
-                self.completion?(nil, .presentKeyboard)
+                self.completion?(nil)
             }
         }
     }
     
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel) {
         dismiss(animated: true) {
-            self.completion?(nil, .presentKeyboard)
+            self.completion?(nil)
         }
     }
     

@@ -21,24 +21,22 @@ import Foundation
 import BrowserServicesKit
 import UIKit
 import Combine
-
-enum AutofillLoginListSectionType {
-    case enableAutofill
-    case credentials(title: String, items: [AutofillLoginListItemViewModel])
-}
-
-struct AutofillLoginListSection: Identifiable {
-    enum SectionType {
-        case credentials
-        case enableAutofill
-    }
-    
-    let id = UUID()
-    let title: String
-    var items: [AutofillLoginListItemViewModel]
-}
+import os.log
 
 final class AutofillLoginListViewModel: ObservableObject {
+    
+    enum AutofillLoginListSectionType: Comparable {
+        case enableAutofill
+        case credentials(title: String, items: [AutofillLoginListItemViewModel])
+        
+        static func < (lhs: AutofillLoginListSectionType, rhs: AutofillLoginListSectionType) -> Bool {
+            if case .credentials(let left, _) = lhs,
+               case .credentials(let right, _) = rhs {
+                return left < right
+            }
+            return true
+        }
+    }
     enum ViewState {
         case authLocked
         case empty
@@ -47,44 +45,32 @@ final class AutofillLoginListViewModel: ObservableObject {
         case searchingNoResults
     }
     
-    
-    private(set) var indexes = [String]()
+    let authenticator = AutofillLoginListAuthenticator()
+    var isSearching: Bool = false
+    private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
-    var isSearching: Bool = false {
-        didSet {
-            updateData()
-        }
-    }
+    private var appSettings: AppSettings
     
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
-    @Published private(set) var sections = [AutofillLoginListSectionType]()
-    
-    let authenticator = AutofillLoginListAuthenticator()
-    
-    var isAutofillEnabled: Bool {
-        get {
-            appSettings.autofill
-        }
-        
-        set {
-            appSettings.autofill = newValue
+    @Published private(set) var sections = [AutofillLoginListSectionType]() {
+        didSet {
+            updateViewState()
         }
     }
-    private var appSettings: AppSettings
+    
+    var isAutofillEnabled: Bool {
+        get { appSettings.autofill }
+        set { appSettings.autofill = newValue }
+    }
     
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
-        
         updateData()
         setupCancellables()
     }
     
  // MARK: Public Methods
 
-    func filterData(with query: String) {
-        updateData(with: query)
-    }
-    
     func delete(at indexPath: IndexPath) {
         let section = sections[indexPath.section]
         switch section {
@@ -119,71 +105,62 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    func updateData(with query: String? = nil) {
-        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else { return }
+    func updateData() {
+        self.accounts = fetchAccounts()
+        self.sections = makeSections(with: accounts)
+    }
+    
+    func filterData(with query: String? = nil) {
+        var filteredAccounts = self.accounts
+        
+        if let query = query, query.count > 0 {
+            filteredAccounts = filteredAccounts.filter { account in
+                if !account.name.lowercased().contains(query.lowercased()) &&
+                    !account.domain.lowercased().contains(query.lowercased()) &&
+                    !account.username.lowercased().contains(query.lowercased()) {
+                    return false
+                }
+                return true
+            }
+        }
+        self.sections = makeSections(with: filteredAccounts)
+    }
+    
+    
+    // MARK: Private Methods
+    
+    private func fetchAccounts() -> [SecureVaultModels.WebsiteAccount] {
+        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
+            os_log("Failed to make vault")
+            return []
+        }
+        
+        do {
+            return try secureVault.accounts()
+        } catch {
+            os_log("Failed to fetch accounts")
+            return []
+        }
+    }
+    
+    private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
         var newSections = [AutofillLoginListSectionType]()
 
-        sections.removeAll()
-        indexes.removeAll()
-        
         if !isSearching {
             newSections.append(.enableAutofill)
         }
         
-#warning("REFACTOR THIS")
-        if let accounts = try? secureVault.accounts() {
-            var sectionsDictionary = [String: [AutofillLoginListItemViewModel]]()
-
-            for account in accounts {
-                print("ACCOUNT \(account.name) \(account.domain)")
-               
-                if let query = query, query.count > 0 {
-                    if !account.name.lowercased().contains(query.lowercased()) &&
-                        !account.domain.lowercased().contains(query.lowercased()) &&
-                        !account.username.lowercased().contains(query.lowercased()) {
-                        continue
-                    }
-                }
-                
-                
-                if let first = account.name.first?.lowercased() {
-                    if sectionsDictionary[first] != nil {
-                        sectionsDictionary[first]?.append(AutofillLoginListItemViewModel(account: account))
-                    } else {
-                        let newSection = [AutofillLoginListItemViewModel(account: account)]
-                        sectionsDictionary[first] = newSection
-                    }
-                }
-            }
-            
-            for (key, var value) in sectionsDictionary {
-                value.sort { leftItem, rightItem in
-                    leftItem.title.lowercased() < rightItem.title.lowercased()
-                }
-                
-                newSections.append(.credentials(title: key, items: value))
-                indexes.append(key.uppercased())
-            }
-            
-            newSections.sort(by: { leftSection, rightSection in
-                if case .credentials(let left, _) = leftSection,
-                   case .credentials(let right, _) = rightSection {
-                    return left < right
-                }
-                return false
-            })
-            
-            self.indexes.sort(by: { lhs, rhs in
-                lhs < rhs
-            })
-            
-            self.sections = newSections
-            updateViewState()
-        }
+        let accountSections = accounts.reduce(into: [:]) { result, account in
+            return result[account.name.first?.lowercased() ?? "", default: []].append(AutofillLoginListItemViewModel(account: account))
+        }.map { dictionaryItem -> AutofillLoginListSectionType in
+            AutofillLoginListSectionType.credentials(title: dictionaryItem.key,
+                                                     items: dictionaryItem.value.sorted())
+        }.sorted()
+        
+        newSections.append(contentsOf: accountSections)
+        return newSections
     }
     
-    // MARK: Private Methods
-
     private func setupCancellables() {
         authenticator.$state
             .receive(on: DispatchQueue.main)
@@ -223,5 +200,11 @@ final class AutofillLoginListViewModel: ObservableObject {
         } catch {
 #warning("Pixel?")
         }
+    }
+}
+
+extension AutofillLoginListItemViewModel: Comparable {
+    static func < (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {
+        lhs.title < rhs.title
     }
 }

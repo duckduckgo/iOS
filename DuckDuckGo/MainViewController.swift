@@ -103,7 +103,7 @@ class MainViewController: UIViewController {
     
     let gestureBookmarksButton = GestureToolbarButton()
     
-    private var fireButtonAnimator: FireButtonAnimator?
+    private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
     private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
 
@@ -140,7 +140,6 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
-        fireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -508,6 +507,8 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
+        wakeLazyFireButtonAnimator()
+        
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
@@ -519,10 +520,18 @@ class MainViewController: UIViewController {
     }
     
     func onQuickFirePressed() {
+        wakeLazyFireButtonAnimator()
+        
         self.forgetAllWithAnimation {}
         self.dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
             self.enterSearch()
+        }
+    }
+    
+    private func wakeLazyFireButtonAnimator() {
+        DispatchQueue.main.async {
+            _ = self.fireButtonAnimator
         }
     }
 
@@ -1651,7 +1660,7 @@ extension MainViewController: AutoClearWorker {
         
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
-        fireButtonAnimator?.animate {
+        fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             
             self.stopAllOngoingDownloads()

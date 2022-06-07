@@ -1,5 +1,5 @@
 //
-//  AutofillFeatureFlagging.swift
+//  AutofillContentScopeFeatureToggles.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -27,5 +27,6 @@ extension ContentScopeFeatureToggles {
                                                                    identitiesAutofill: false,
                                                                    creditCardsAutofill: false,
                                                                    credentialsSaving: true,
-                                                                   passwordGeneration: false)
+                                                                   passwordGeneration: false
+                                                                   inlineIconCredentials: false)
 }

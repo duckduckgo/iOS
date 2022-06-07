@@ -25,8 +25,10 @@ class KeyboardSettingsTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<String>.Key.keyboardOnAppLaunch.rawValue)
-        UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<String>.Key.keyboardOnNewTab.rawValue)
+        
+        UserDefaults.app = UserDefaults(suiteName: #file)!
+        UserDefaults.app.removeObject(forKey: UserDefaultsWrapper<String>.Key.keyboardOnAppLaunch.rawValue)
+        UserDefaults.app.removeObject(forKey: UserDefaultsWrapper<String>.Key.keyboardOnNewTab.rawValue)
     }
     
     func testWhenNewThenDefaultLayoutIsNavigationBarAndFavoritesIsOn() {

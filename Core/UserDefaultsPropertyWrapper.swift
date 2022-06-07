@@ -71,9 +71,12 @@ public struct UserDefaultsWrapper<T> {
         
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
+
         case autofill = "com.duckduckgo.ios.autofill"
         case autofillSaveModalRejectionCount = "com.duckduckgo.ios.autofillSaveModalRejectionCount"
         case autofillFirstTimeUser = "com.duckduckgo.ios.autofillFirstTimeUser"
+        
+        case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
 
     }
 
@@ -89,18 +92,18 @@ public struct UserDefaultsWrapper<T> {
 
     public var wrappedValue: T {
         get {
-            if let storedValue = UserDefaults.standard.object(forKey: key.rawValue) as? T {
+            if let storedValue = UserDefaults.app.object(forKey: key.rawValue) as? T {
                 return storedValue
             }
             
             if setIfEmpty {
-                UserDefaults.standard.set(defaultValue, forKey: key.rawValue)
+                UserDefaults.app.set(defaultValue, forKey: key.rawValue)
             }
             
             return defaultValue
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: key.rawValue)
+            UserDefaults.app.set(newValue, forKey: key.rawValue)
         }
     }
 }

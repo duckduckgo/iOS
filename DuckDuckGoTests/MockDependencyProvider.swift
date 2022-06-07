@@ -24,6 +24,8 @@ import Core
 class MockDependencyProvider: DependencyProvider {
     var appSettings: AppSettings
     var variantManager: VariantManager
+    var featureFlagger: FeatureFlagger
+    var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider
     var homePageConfiguration: HomePageConfiguration
     var storageCache: StorageCacheProvider
     var voiceSearchHelper: VoiceSearchHelperProtocol
@@ -33,6 +35,8 @@ class MockDependencyProvider: DependencyProvider {
         let defaultProvider = AppDependencyProvider()
         appSettings = defaultProvider.appSettings
         variantManager = defaultProvider.variantManager
+        featureFlagger = defaultProvider.featureFlagger
+        featureFlaggerInternalUserDecider = defaultProvider.featureFlaggerInternalUserDecider
         homePageConfiguration = defaultProvider.homePageConfiguration
         storageCache = defaultProvider.storageCache
         voiceSearchHelper = defaultProvider.voiceSearchHelper

@@ -75,6 +75,8 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     
+    private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
+    
     lazy var bookmarksManager = BookmarksManager()
 
     private(set) var siteRating: SiteRating?
@@ -1056,7 +1058,8 @@ extension TabViewController: WKNavigationDelegate {
         
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
-        
+        featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
+
         if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
             Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
         }

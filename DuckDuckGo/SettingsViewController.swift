@@ -51,12 +51,14 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var textSizeAccessoryText: UILabel!
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
     @IBOutlet weak var autofillCell: UITableViewCell!
+    @IBOutlet weak var debugCell: UITableViewCell!
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
     private let defaultBrowserSectionIndex = 0
     private let autofillSectionIndex = 1
+    private let debugSectionIndex = 7
 
     private lazy var emailManager = EmailManager()
     
@@ -64,12 +66,17 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var privacyStore = PrivacyUserDefaults()
     fileprivate lazy var appSettings = AppDependencyProvider.shared.appSettings
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
+    fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
     private static var shouldShowDefaultBrowserSection: Bool {
         if #available(iOS 14, *) {
             return true
         }
         return false
+    }
+    
+    private var shouldShowDebugCell: Bool {
+        return featureFlagger.isFeatureOn(.debugMenu)
     }
     
     private lazy var shouldShowWidgetEducationCell: Bool = {
@@ -89,7 +96,6 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureVersionCell()
         configureDefaultBrowserCell()
         configureWidgetEducationCell()
         configureAutofillCell()
@@ -102,6 +108,7 @@ class SettingsViewController: UITableViewController {
         configureUniversalLinksToggle()
         configureLinkPreviewsToggle()
         configureRememberLogins()
+        configureDebugCell()
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -137,10 +144,6 @@ class SettingsViewController: UITableViewController {
                 segue.destination.modalPresentationStyle = .formSheet
             }
         }
-    }
-
-    private func configureVersionCell() {
-        versionCell.isUserInteractionEnabled = isDebugBuild
     }
 
     private func configureDefaultBrowserCell() {
@@ -223,11 +226,9 @@ class SettingsViewController: UITableViewController {
     private func configureMacBrowserWaitlistCell() {
         macBrowserWaitlistCell.detailTextLabel?.text = MacBrowserWaitlist.shared.settingsSubtitle()
     }
-
-    private func showDebug() {
-        // Use the "AdhocDebug" scheme when archiving to create a compatible adhoc build
-        guard isDebugBuild else { return }
-        performSegue(withIdentifier: "Debug", sender: nil)
+    
+    private func configureDebugCell() {
+        debugCell.isHidden = !shouldShowDebugCell
     }
         
     private func showAutofill() {
@@ -281,9 +282,6 @@ class SettingsViewController: UITableViewController {
             
         case macBrowserWaitlistCell:
             showDesktopBrowserWaitlistViewController()
-            
-        case versionCell:
-            showDebug()
 
         case autofillCell:
             showAutofill()
@@ -336,6 +334,8 @@ class SettingsViewController: UITableViewController {
             return 22.0
         } else if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
+        } else if debugSectionIndex == section && !shouldShowDebugCell {
+            return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForHeaderInSection: section)
         }
@@ -346,6 +346,8 @@ class SettingsViewController: UITableViewController {
         if defaultBrowserSectionIndex == section, !showDefaultBrowserSection {
             return CGFloat.leastNonzeroMagnitude
         } else if autofillSectionIndex == section && !shouldShowAutofillCell {
+            return CGFloat.leastNonzeroMagnitude
+        } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
         } else {
             return super.tableView(tableView, heightForFooterInSection: section)

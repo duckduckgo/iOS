@@ -5,7 +5,7 @@
         "package": "BrowserServicesKit",
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
-          "branch": null,
+          "branch": "elle/autofill-logins-ios",
           "revision": "2ffae9b1a1aaa7d0c3c6c0bfe669aaef71d1d42d",
           "version": null
         }

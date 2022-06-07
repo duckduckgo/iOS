@@ -75,6 +75,7 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     
+    internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
     
     lazy var bookmarksManager = BookmarksManager()
@@ -234,7 +235,7 @@ class TabViewController: UIViewController {
     }
     
     private var isAutofillEnabled: Bool {
-        appSettings.autofill
+        appSettings.autofill && featureFlagger.isFeatureOn(.autofill)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -85,8 +85,7 @@ class SettingsViewController: UITableViewController {
     }()
     
     private lazy var shouldShowAutofillCell: Bool = {
-        guard #available(iOS 14, *) else { return false }
-        return true
+        return featureFlagger.isFeatureOn(.autofill)
     }()
     
     static func loadFromStoryboard() -> UIViewController {

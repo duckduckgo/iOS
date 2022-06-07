@@ -21,6 +21,7 @@ import Foundation
 
 public enum Feature: String {
     case debugMenu
+    case autofill
 }
 
 public protocol FeatureFlagger {
@@ -42,6 +43,12 @@ public class DefaultFeatureFlagger: FeatureFlagger {
         switch feature {
         case .debugMenu:
             return isInternalUser
+        case .autofill:
+            if #available(iOS 14, *), isInternalUser {
+                return true
+            } else {
+                return false
+            }
         }
     }
     

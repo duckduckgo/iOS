@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/duckduckgo/BrowserServicesKit.git",
         "state": {
           "branch": "elle/autofill-logins-ios",
-          "revision": "2ffae9b1a1aaa7d0c3c6c0bfe669aaef71d1d42d",
+          "revision": "9c28154e6a64111032d2958410dca368a1bb590d",
           "version": null
         }
       },
@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/duckduckgo/duckduckgo-autofill.git",
         "state": {
           "branch": "main",
-          "revision": "d17e4ba8896a08a8730e38569ab1929700df6406",
+          "revision": "a54edc337cacdf469af288ac1c4fa51344fd30d8",
           "version": null
         }
       },
@@ -89,15 +89,6 @@
           "branch": null,
           "revision": "41e7c263fb8c277e980ebcb9b0b5f6031d3d4886",
           "version": "2.4.2"
-        }
-      },
-      {
-        "package": "TrackerRadarKit",
-        "repositoryURL": "https://github.com/duckduckgo/TrackerRadarKit.git",
-        "state": {
-          "branch": null,
-          "revision": "f4f31cf466f78d9e85bd1c0fae85fd4f66e93347",
-          "version": "1.0.4"
         }
       }
     ]

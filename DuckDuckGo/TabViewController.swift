@@ -1954,6 +1954,12 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         
         if #available(iOS 14, *), accounts.count > 0 {
+            if !AutofillLoginPromptViewController.canAuthenticate {
+                Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
+                completionHandler(nil)
+                return
+            }
+            
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account in
                 completionHandler(account)
             }

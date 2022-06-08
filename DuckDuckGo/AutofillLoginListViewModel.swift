@@ -22,6 +22,7 @@ import BrowserServicesKit
 import UIKit
 import Combine
 import os.log
+import Core
 
 final class AutofillLoginListViewModel: ObservableObject {
     
@@ -198,7 +199,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         do {
             try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
         } catch {
-#warning("Pixel?")
+            Pixel.fire(pixel: .secureVaultError)
         }
     }
 }

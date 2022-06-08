@@ -368,7 +368,6 @@ extension TabViewController {
     }
     
     private func onOpenAutofillLoginsAction() {
-        #warning("Add pixel here?")
         delegate?.tabDidRequestAutofillLogins(tab: self)
     }
     

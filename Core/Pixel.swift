@@ -203,7 +203,7 @@ public enum PixelName: String {
     case autofillLoginsSavePasswordModalConfirmed = "m_autofill_logins_save_password_inline_confirmed"
     
     case autofillLoginsUpdatePasswordModalDisplayed = "m_autofill_logins_update_password_inline_displayed"
-    case autofillLoginsUpdatePasswordModalConfirmed = " m_autofill_logins_update_password_inline_confirmed"
+    case autofillLoginsUpdatePasswordModalConfirmed = "m_autofill_logins_update_password_inline_confirmed"
     
     case autofillLoginsUpdateUsernameModelDisplayed = "m_autofill_logins_update_username_inline_displayed"
     case autofillLoginsUpdateUsernameModelConfirmed = "m_autofill_logins_update_username_inline_confirmed"

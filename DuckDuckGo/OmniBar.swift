@@ -221,10 +221,12 @@ class OmniBar: UIView {
     
     public func cancelAllAnimations() {
         trackersAnimator.cancelAnimations(in: self)
+        privacyInfoContainer.cancelAllAnimations()
     }
     
     public func completeAnimations() {
         trackersAnimator.completeAnimations(in: self)
+        privacyInfoContainer.completeAnimations()
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
@@ -235,12 +237,15 @@ class OmniBar: UIView {
             }
             state = newState
             trackersAnimator.cancelAnimations(in: self)
+            privacyInfoContainer.cancelAllAnimations()
         }
         
         if state.showSiteRating {
             searchFieldContainer.revealSiteRatingView()
+            privacyInfoContainer.isHidden = false
         } else {
             searchFieldContainer.hideSiteRatingView(state)
+            privacyInfoContainer.isHidden = true
         }
 
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)

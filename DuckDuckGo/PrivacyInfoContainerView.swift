@@ -92,8 +92,19 @@ class PrivacyInfoContainerView: UIView {
 //            currentShieldAnimation.isHidden = true
             currentShieldAnimation.setHiddenWithAnimation(true)
         }
+    }
+    
+    public func cancelAllAnimations() {
+        trackersAnimation.stop()
+        shieldAnimation.stop()
+        shieldDotAnimation.stop()
         
-        
+        shieldAnimation.isHidden = true
+        shieldDotAnimation.isHidden = true
+    }
+    
+    public func completeAnimations() {
+        cancelAllAnimations()
     }
 }
 

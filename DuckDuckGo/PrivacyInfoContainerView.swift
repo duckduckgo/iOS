@@ -22,7 +22,7 @@ import Lottie
 
 class PrivacyInfoContainerView: UIView {
     
-    @IBOutlet var shieldButton: UIImageView!
+    @IBOutlet var shieldButton: PrivacyIconView!
     @IBOutlet var maskingView: UIView!
     
     let shieldAnimation = AnimationView(name: "shield")

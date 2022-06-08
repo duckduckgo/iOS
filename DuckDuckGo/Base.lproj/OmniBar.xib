@@ -102,8 +102,11 @@
                                                         <constraint firstAttribute="width" constant="30" id="73T-PN-GzL"/>
                                                     </constraints>
                                                 </view>
-                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Shield" translatesAutoresizingMaskIntoConstraints="NO" id="SjY-UZ-mrD">
+                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Shield" translatesAutoresizingMaskIntoConstraints="NO" id="SjY-UZ-mrD" customClass="PrivacyIconView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="-7" y="0.0" width="43" height="40"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" button="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="43" id="9eJ-CP-jlw"/>
                                                     </constraints>

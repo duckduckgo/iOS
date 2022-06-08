@@ -20,6 +20,7 @@
 import UIKit
 import SwiftUI
 import BrowserServicesKit
+import Core
 
 protocol SaveLoginViewControllerDelegate: AnyObject {
     func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials)
@@ -55,6 +56,10 @@ class SaveLoginViewController: UIViewController {
         setupSaveLoginView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         blurView.frame = self.view.frame
@@ -72,6 +77,20 @@ class SaveLoginViewController: UIViewController {
         let controller = UIHostingController(rootView: saveLoginView)
         controller.view.backgroundColor = .clear
         installChildViewController(controller)
+        switch saveViewModel.layoutType {
+        case .newUser:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalOnboardingDisplayed)
+        case .saveLogin:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
+        case .savePassword:
+            Pixel.fire(pixel: .autofillLoginsSavePasswordModalDisplayed)
+        case .saveAdditionalLogin:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
+        case .updateUsername:
+            Pixel.fire(pixel: .autofillLoginsUpdateUsernameModelDisplayed)
+        case .updatePassword:
+            Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalDisplayed)
+        }
     }
 }
 
@@ -79,8 +98,18 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel) {
         switch viewModel.layoutType {
         case .saveAdditionalLogin, .saveLogin, .savePassword, .newUser:
+            if viewModel.layoutType == .savePassword {
+                Pixel.fire(pixel: .autofillLoginsSaveLoginModalConfirmed)
+            } else {
+                Pixel.fire(pixel: .autofillLoginsSavePasswordModalConfirmed)
+            }
             delegate?.saveLoginViewController(self, didSaveCredentials: credentialManager.credentials)
         case .updatePassword, .updateUsername:
+            if viewModel.layoutType == .updatePassword {
+                Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalConfirmed)
+            } else {
+                Pixel.fire(pixel: .autofillLoginsUpdateUsernameModelConfirmed)
+            }
             delegate?.saveLoginViewController(self, didUpdateCredentials: credentialManager.credentials)
         }
     }

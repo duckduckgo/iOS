@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import Core
 
 final class SecureVaultErrorReporter: SecureVaultErrorReporting {
     static let shared = SecureVaultErrorReporter()
@@ -29,13 +30,10 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif
         switch error {
-        case .initFailed:
-            fatalError("SecureVaultError initFailed")
-        case .failedToOpenDatabase:
-            fatalError("SecureVaultError failedToOpenDatabase")
-            #warning("Do we need pixels here like macOS?")
+        case .initFailed, .failedToOpenDatabase:
+            Pixel.fire(pixel: .secureVaultInitError)
         default:
-            fatalError("SecureVaultError default")
+            Pixel.fire(pixel: .secureVaultError)
 
         }
     }

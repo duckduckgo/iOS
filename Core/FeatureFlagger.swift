@@ -72,7 +72,10 @@ extension DefaultFeatureFlagger: FeatureFlaggerInternalUserDecider {
             return
         }
         
-        didVerifyInternalUser = shouldMarkUserAsInternal(forUrl: url, statusCode: response?.statusCode)
+        if shouldMarkUserAsInternal(forUrl: url, statusCode: response?.statusCode) {
+            didVerifyInternalUser = true
+            Pixel.fire(pixel: .featureFlaggingInternalUserAuthenticated)
+        }
     }
     
     func shouldMarkUserAsInternal(forUrl url: URL?, statusCode: Int?) -> Bool {

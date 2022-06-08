@@ -19,6 +19,7 @@
 
 import UIKit
 import Combine
+import Core
 
 @available(iOS 14.0, *)
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
@@ -82,6 +83,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        Pixel.fire(pixel: .autofillSettingsOpened)
         authenticate()
     }
 

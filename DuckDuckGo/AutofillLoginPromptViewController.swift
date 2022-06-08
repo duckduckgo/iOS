@@ -21,6 +21,7 @@ import UIKit
 import SwiftUI
 import LocalAuthentication
 import BrowserServicesKit
+import Core
 
 @available(iOS 14.0, *)
 protocol AutofillLoginPromptViewControllerExpansionResponseDelegate: AnyObject {
@@ -86,6 +87,11 @@ class AutofillLoginPromptViewController: UIViewController {
         presentationController?.delegate = self
         installChildViewController(controller)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisplayed)
+    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -126,6 +132,8 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
 extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegate {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
         
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineConfirmed)
+        
         let context = LAContext()
         context.localizedCancelTitle = "Cancel"
         let reason = "Unlock To Use Saved Login"
@@ -140,15 +148,18 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             
                 DispatchQueue.main.async {
                     if success {
+                        Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated)
                         completion?(account)
                     } else {
+                        Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed)
                         print(error?.localizedDescription ?? "Failed to authenticate but error nil")
                         completion?(nil)
                     }
                 }
             }
         } else {
-            // When system authentication isn't available, for now just fail silently and show the keyboard instead
+            // When system authentication isn't available, for now just fail silently
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
             dismiss(animated: true) {
                 self.completion?(nil)
             }

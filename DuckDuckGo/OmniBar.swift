@@ -35,6 +35,7 @@ class OmniBar: UIView {
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
     @IBOutlet weak var siteRatingContainer: SiteRatingContainerView!
+    @IBOutlet weak var privacyInfoContainer: PrivacyInfoContainerView!
     @IBOutlet weak var textField: TextFieldWithInsets!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
@@ -87,6 +88,9 @@ class OmniBar: UIView {
         refreshState(state)
         enableInteractionsWithPointer()
         observeSafeAreaInsets()
+        
+        siteRatingContainer.isHidden = true
+        privacyInfoContainer.isHidden = !siteRatingContainer.isHidden
     }
     
     private func registerNotifications() {
@@ -212,6 +216,7 @@ class OmniBar: UIView {
         }
         
         trackersAnimator.startAnimating(in: self)
+        privacyInfoContainer.startTrackerAnimation()
     }
     
     public func cancelAllAnimations() {

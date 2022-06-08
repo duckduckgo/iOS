@@ -99,9 +99,9 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         switch viewModel.layoutType {
         case .saveAdditionalLogin, .saveLogin, .savePassword, .newUser:
             if viewModel.layoutType == .savePassword {
-                Pixel.fire(pixel: .autofillLoginsSaveLoginModalConfirmed)
-            } else {
                 Pixel.fire(pixel: .autofillLoginsSavePasswordModalConfirmed)
+            } else {
+                Pixel.fire(pixel: .autofillLoginsSaveLoginModalConfirmed)
             }
             delegate?.saveLoginViewController(self, didSaveCredentials: credentialManager.credentials)
         case .updatePassword, .updateUsername:

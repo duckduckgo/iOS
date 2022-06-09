@@ -142,14 +142,6 @@ struct ClearTextField: View {
     }
 }
 
-#warning("Fix preview with protocol")
-// @available(iOS 14.0, *)
-// struct AutofillLoginDetailsView_Previews: PreviewProvider {
-//     static var previews: some View {
-//         AutofillLoginDetailsView()
-//     }
-// }
- 
 private struct CopyablePasswordCell: View {
     @State private var id = UUID()
     let title: String

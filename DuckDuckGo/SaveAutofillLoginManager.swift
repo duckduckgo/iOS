@@ -50,8 +50,8 @@ struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     // If we have a stored credential with the same password on an empty username account
     // we want to update it instead of creating a new one
     private mutating func useStoredCredentialIfNecessary() {
-        if savedMatchingPasswordCredentialWithoutUsername != nil {
-            var storedCredential = savedMatchingPasswordCredentialWithoutUsername!
+        if savedMatchingPasswordWithoutUsername != nil {
+            var storedCredential = savedMatchingPasswordWithoutUsername!
             storedCredential.account.username = credentials.account.username
             credentials = storedCredential
         }
@@ -78,14 +78,14 @@ struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     }
     
     var hasSavedMatchingPasswordWithoutUsername: Bool {
-        savedMatchingPasswordCredentialWithoutUsername != nil
+        savedMatchingPasswordWithoutUsername != nil
     }
     
     var hasSavedMatchingUsername: Bool {
         savedMatchingUsernameCredential != nil
     }
     
-    private var savedMatchingPasswordCredentialWithoutUsername: SecureVaultModels.WebsiteCredentials? {
+    private var savedMatchingPasswordWithoutUsername: SecureVaultModels.WebsiteCredentials? {
         let credentialsWithSamePassword = domainStoredCredentials.filter { $0.password == credentials.password && $0.account.username.count == 0 }
         return credentialsWithSamePassword.first
     }

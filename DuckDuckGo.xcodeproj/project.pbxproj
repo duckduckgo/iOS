@@ -50,6 +50,9 @@
 		1EEF12492850A923003DDE57 /* shield-mouse-over.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EEF12442850A923003DDE57 /* shield-mouse-over.json */; };
 		1EEF124C2850A93F003DDE57 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EEF124B2850A93F003DDE57 /* Trackers.xcassets */; };
 		1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEF124D2850EADE003DDE57 /* PrivacyIconView.swift */; };
+		1EEF12502851016B003DDE57 /* PrivacyIconAndTrackersAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEF124F2851016B003DDE57 /* PrivacyIconAndTrackersAnimator.swift */; };
+		1EEF12532851D32B003DDE57 /* trackers-2.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EEF12512851D32A003DDE57 /* trackers-2.json */; };
+		1EEF12542851D32B003DDE57 /* trackers-1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EEF12522851D32A003DDE57 /* trackers-1.json */; };
 		1EEFD2D52758E31600B1393B /* textsize.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFD2D42758E31600B1393B /* textsize.js */; };
 		1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */; };
 		1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */; };
@@ -842,6 +845,9 @@
 		1EEF12442850A923003DDE57 /* shield-mouse-over.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "shield-mouse-over.json"; sourceTree = "<group>"; };
 		1EEF124B2850A93F003DDE57 /* Trackers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trackers.xcassets; sourceTree = "<group>"; };
 		1EEF124D2850EADE003DDE57 /* PrivacyIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyIconView.swift; sourceTree = "<group>"; };
+		1EEF124F2851016B003DDE57 /* PrivacyIconAndTrackersAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyIconAndTrackersAnimator.swift; sourceTree = "<group>"; };
+		1EEF12512851D32A003DDE57 /* trackers-2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "trackers-2.json"; sourceTree = "<group>"; };
+		1EEF12522851D32A003DDE57 /* trackers-1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "trackers-1.json"; sourceTree = "<group>"; };
 		1EEFD2D42758E31600B1393B /* textsize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = textsize.js; sourceTree = "<group>"; };
 		1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalSlider.swift; sourceTree = "<group>"; };
 		1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsDeleteHelper.swift; sourceTree = "<group>"; };
@@ -2309,6 +2315,8 @@
 				1EEF12422850A922003DDE57 /* shield-dot.json */,
 				1EEF12442850A923003DDE57 /* shield-mouse-over.json */,
 				1EEF12402850A922003DDE57 /* shield.json */,
+				1EEF12522851D32A003DDE57 /* trackers-1.json */,
+				1EEF12512851D32A003DDE57 /* trackers-2.json */,
 				1EEF12412850A922003DDE57 /* trackers-3.json */,
 			);
 			name = Animations;
@@ -3991,6 +3999,7 @@
 				1EEF124D2850EADE003DDE57 /* PrivacyIconView.swift */,
 				988CF20B2451A4A400B06CCD /* SiteRatingContainerView.swift */,
 				98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */,
+				1EEF124F2851016B003DDE57 /* PrivacyIconAndTrackersAnimator.swift */,
 				1EEF124B2850A93F003DDE57 /* Trackers.xcassets */,
 				1EEF124A2850A92B003DDE57 /* Animations */,
 			);
@@ -4703,6 +4712,7 @@
 				984147B724F0268D00362052 /* PrivacyProtection.storyboard in Resources */,
 				986B16C525E92DF0007D23E8 /* BrowsingMenuViewController.xib in Resources */,
 				AA4D6AA723DE4CC4007E8790 /* AppIconBlue60x60@2x.png in Resources */,
+				1EEF12532851D32B003DDE57 /* trackers-2.json in Resources */,
 				F176699F1E40BC86003D3222 /* Settings.storyboard in Resources */,
 				1E8AD1DD27C653F800ABA377 /* Downloads.xcassets in Resources */,
 				F1F533841F26ABAC00D80D4F /* Localizable.strings in Resources */,
@@ -4733,6 +4743,7 @@
 				AA4D6A9323DE49A5007E8790 /* AppIconBlack76x76@2x.png in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 				AA4D6AA323DE4CC4007E8790 /* AppIconBlue40x40@3x.png in Resources */,
+				1EEF12542851D32B003DDE57 /* trackers-1.json in Resources */,
 				AAF2E28123E0495400962AF8 /* AppIconBlack83.5x83.5@2x.png in Resources */,
 				AA4D6ABF23DE4D15007E8790 /* AppIconYellow40x40@3x.png in Resources */,
 				AA4D6A8F23DE49A5007E8790 /* AppIconBlack29x29@3x.png in Resources */,
@@ -5058,6 +5069,7 @@
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
 				CB2A7EEF283D185100885F67 /* RulesCompilationMonitor.swift in Sources */,
+				1EEF12502851016B003DDE57 /* PrivacyIconAndTrackersAnimator.swift in Sources */,
 				31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */,
 				319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */,
 				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,

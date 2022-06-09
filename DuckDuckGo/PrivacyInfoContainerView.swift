@@ -30,8 +30,6 @@ class PrivacyInfoContainerView: UIView {
     
     let trackersAnimation = AnimationView(name: "trackers-3")
     
-    var trackerimage = UIImage(named: "amazon")?.cgImage
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -49,7 +47,6 @@ class PrivacyInfoContainerView: UIView {
         addSubview(shieldAnimation)
         addSubview(shieldDotAnimation)
         
-        
         bringSubviewToFront(maskingView)
         bringSubviewToFront(shieldButton)
         bringSubviewToFront(shieldAnimation)
@@ -58,7 +55,6 @@ class PrivacyInfoContainerView: UIView {
         
     private func configureAnimationView() {
         // Trackers
-        trackersAnimation.imageProvider = self
         trackersAnimation.contentMode = .scaleAspectFill
         
         trackersAnimation.frame = CGRect(x: 0, y: 0, width: 158, height: 40)
@@ -70,41 +66,6 @@ class PrivacyInfoContainerView: UIView {
             animationView.center = CGPoint(x: bounds.midX - 9, y: bounds.midY)
             animationView.isHidden = true
         }
-    }
-    
-    public func startTrackerAnimation() {
-        let showDot = false
-        
-        shieldAnimation.isHidden = showDot
-        shieldDotAnimation.isHidden = !showDot
-//        shieldButton.isHidden = true
-        shieldButton.setHiddenWithAnimation(true)
-        
-        shieldButton.image = UIImage(named: "Shield")
-        
-        let currentShieldAnimation = (showDot ? shieldDotAnimation : shieldAnimation)
-        
-        trackersAnimation.play()
-        currentShieldAnimation.play { [weak self] _ in
-            self?.shieldButton.image = showDot ? UIImage(named: "ShieldDot") : UIImage(named: "Shield")
-            self?.shieldButton.isHidden = false
-//            self?.shieldButton.setHiddenWithAnimation(false)
-//            currentShieldAnimation.isHidden = true
-            currentShieldAnimation.setHiddenWithAnimation(true)
-        }
-    }
-    
-    public func cancelAllAnimations() {
-        trackersAnimation.stop()
-        shieldAnimation.stop()
-        shieldDotAnimation.stop()
-        
-        shieldAnimation.isHidden = true
-        shieldDotAnimation.isHidden = true
-    }
-    
-    public func completeAnimations() {
-        cancelAllAnimations()
     }
 }
 
@@ -121,16 +82,5 @@ extension UIView {
             self.alpha = 1.0
         }
 
-    }
-}
-
-extension PrivacyInfoContainerView: AnimationImageProvider {
-    
-    func imageForAsset(asset: ImageAsset) -> CGImage? {
-        if asset.name == "img_3.png" {
-            return nil
-        }
-        
-        return trackerimage
     }
 }

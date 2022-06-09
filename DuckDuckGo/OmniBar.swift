@@ -68,6 +68,8 @@ class OmniBar: UIView {
     private var safeAreaInsetsObservation: NSKeyValueObservation?
     
     private(set) var trackersAnimator = TrackersAnimator()
+    private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
+    
     
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
@@ -215,18 +217,23 @@ class OmniBar: UIView {
             return
         }
         
+        guard privacyIconAndTrackersAnimator.configure(privacyInfoContainer, toDisplay: trackers, shouldCollapse: collapsing) else {
+            privacyIconAndTrackersAnimator.cancelAnimations(in: privacyInfoContainer)
+            return
+        }
+        
         trackersAnimator.startAnimating(in: self)
-        privacyInfoContainer.startTrackerAnimation()
+        privacyIconAndTrackersAnimator.startAnimating(in: privacyInfoContainer)
     }
     
     public func cancelAllAnimations() {
         trackersAnimator.cancelAnimations(in: self)
-        privacyInfoContainer.cancelAllAnimations()
+        privacyIconAndTrackersAnimator.cancelAnimations(in: privacyInfoContainer)
     }
     
     public func completeAnimations() {
         trackersAnimator.completeAnimations(in: self)
-        privacyInfoContainer.completeAnimations()
+        privacyIconAndTrackersAnimator.completeAnimations(in: privacyInfoContainer)
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
@@ -237,7 +244,7 @@ class OmniBar: UIView {
             }
             state = newState
             trackersAnimator.cancelAnimations(in: self)
-            privacyInfoContainer.cancelAllAnimations()
+            privacyIconAndTrackersAnimator.cancelAnimations(in: privacyInfoContainer)
         }
         
         if state.showSiteRating {

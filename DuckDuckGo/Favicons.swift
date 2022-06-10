@@ -158,13 +158,10 @@ public class Favicons {
                 return
             }
 
-            let group = DispatchGroup()
             files.forEach { file in
-                group.enter()
                 guard let data = (try? Data(contentsOf: file)),
                       let image = UIImage(data: data),
                       !self.isValidImage(image, forMaxSize: size) else {
-                    group.leave()
                     return
                 }
 
@@ -172,9 +169,7 @@ public class Favicons {
                 if let data = resizedImage.pngData() {
                     try? data.write(to: file)
                 }
-                group.leave()
             }
-            group.wait()
 
             Constants.bookmarksCache.clearMemoryCache()
             self.sizeNeedsMigration = false

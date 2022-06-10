@@ -128,7 +128,7 @@
                                             </constraints>
                                             <connections>
                                                 <outlet property="maskingView" destination="9cx-oo-bpe" id="ChF-SL-hTW"/>
-                                                <outlet property="shieldButton" destination="SjY-UZ-mrD" id="460-JY-BW6"/>
+                                                <outlet property="privacyIcon" destination="SjY-UZ-mrD" id="TH4-i7-rwb"/>
                                             </connections>
                                         </view>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-px-Ypi" customClass="SiteRatingContainerView" customModule="DuckDuckGo" customModuleProvider="target">
@@ -424,7 +424,7 @@
     </objects>
     <designables>
         <designable name="fqM-N4-jNd">
-            <size key="intrinsicContentSize" width="10" height="18.5"/>
+            <size key="intrinsicContentSize" width="5" height="17.5"/>
         </designable>
     </designables>
     <resources>

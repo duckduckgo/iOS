@@ -1464,7 +1464,8 @@ extension MainViewController: TabDelegate {
              didRequestPresentingTrackerAnimation siteRating: SiteRating,
              isCollapsing: Bool) {
         guard tabManager.current === tab else { return }
-        omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: isCollapsing)
+//        omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: isCollapsing)
+        omniBar?.startTrackersAnimation(siteRating, collapsing: isCollapsing)
     }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {

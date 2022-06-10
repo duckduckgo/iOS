@@ -20,13 +20,39 @@
 import Foundation
 import UIKit
 
+enum PrivacyIcon {
+    case daxLogo, shield, shieldWithDot
+}
+
 class PrivacyIconView: UIImageView {
     
+    private lazy var daxLogoIcon = UIImage(named: "LogoIcon")
+    private lazy var shieldIcon = UIImage(named: "Shield")
+    private lazy var shieldWithDotIcon = UIImage(named: "ShieldDot")
+    
     public required init?(coder aDecoder: NSCoder) {
+        icon = .shield
+        
         super.init(coder: aDecoder)
         
         if #available(iOS 13.4, *) {
             addInteraction(UIPointerInteraction(delegate: self))
+        }
+    }
+    
+    var icon: PrivacyIcon {
+        didSet {
+            switch icon {
+            case .daxLogo:
+                image = daxLogoIcon
+                contentMode = .center
+            case .shield:
+                image = shieldIcon
+                contentMode = .scaleAspectFill
+            case .shieldWithDot:
+                image = shieldWithDotIcon
+                contentMode = .scaleAspectFill
+            }
         }
     }
 }

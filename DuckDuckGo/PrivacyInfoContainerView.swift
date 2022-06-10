@@ -22,7 +22,7 @@ import Lottie
 
 class PrivacyInfoContainerView: UIView {
     
-    @IBOutlet var shieldButton: PrivacyIconView!
+    @IBOutlet var privacyIcon: PrivacyIconView!
     @IBOutlet var maskingView: UIView!
     
     let shieldAnimation = AnimationView(name: "shield")
@@ -48,7 +48,7 @@ class PrivacyInfoContainerView: UIView {
         addSubview(shieldDotAnimation)
         
         bringSubviewToFront(maskingView)
-        bringSubviewToFront(shieldButton)
+        bringSubviewToFront(privacyIcon)
         bringSubviewToFront(shieldAnimation)
         bringSubviewToFront(shieldDotAnimation)
     }

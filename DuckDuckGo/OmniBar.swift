@@ -209,22 +209,33 @@ class OmniBar: UIView {
     
     public func startLoadingAnimation(for url: URL?) {
         trackersAnimator.startLoadingAnimation(in: self, for: url)
+        privacyIconAndTrackersAnimator.startLoadingAnimation(in: privacyInfoContainer, for: url)
     }
     
-    public func startTrackersAnimation(_ trackers: [DetectedRequest], collapsing: Bool) {
-        guard trackersAnimator.configure(self, toDisplay: trackers, shouldCollapse: collapsing), state.allowsTrackersAnimation else {
-            trackersAnimator.cancelAnimations(in: self)
-            return
-        }
+    public func startTrackersAnimation(_ rating: SiteRating, collapsing: Bool) {
+        let model = PrivacyIconAndTrackersAnimationModel(rating: rating, pauseForOnboarding: !collapsing)
         
-        guard privacyIconAndTrackersAnimator.configure(privacyInfoContainer, toDisplay: trackers, shouldCollapse: collapsing) else {
-            privacyIconAndTrackersAnimator.cancelAnimations(in: privacyInfoContainer)
-            return
-        }
+        privacyIconAndTrackersAnimator.configure(privacyInfoContainer, with: model)
         
-        trackersAnimator.startAnimating(in: self)
-        privacyIconAndTrackersAnimator.startAnimating(in: privacyInfoContainer)
+        if model.willAnimateTrackers {
+            privacyIconAndTrackersAnimator.startAnimating(in: self, with: model)
+        }
     }
+    
+//    public func startTrackersAnimation(_ trackers: [DetectedTracker], collapsing: Bool) {
+//        guard trackersAnimator.configure(self, toDisplay: trackers, shouldCollapse: collapsing), state.allowsTrackersAnimation else {
+//            trackersAnimator.cancelAnimations(in: self)
+//            return
+//        }
+    
+//        guard privacyIconAndTrackersAnimator.configure(privacyInfoContainer, toDisplay: trackers, shouldCollapse: collapsing) else {
+//            privacyIconAndTrackersAnimator.cancelAnimations(in: privacyInfoContainer)
+//            return
+//        }
+//
+//        trackersAnimator.startAnimating(in: self)
+//        privacyIconAndTrackersAnimator.startAnimating(in: privacyInfoContainer)
+//    }
     
     public func cancelAllAnimations() {
         trackersAnimator.cancelAnimations(in: self)

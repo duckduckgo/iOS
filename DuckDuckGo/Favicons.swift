@@ -34,6 +34,7 @@ public class Favicons {
         static let tabsCache = CacheType.tabs.create()
         static let appUrls = AppUrls()
         static let targetImageSizePoints: CGFloat = 64
+        public static let maxFaviconSize: CGSize = CGSize(width: 192, height: 192)
         
         public static let caches = [
             CacheType.bookmarks: bookmarksCache,
@@ -99,7 +100,10 @@ public class Favicons {
 
     @UserDefaultsWrapper(key: .faviconsNeedMigration, defaultValue: true)
     var needsMigration: Bool
-    
+
+    @UserDefaultsWrapper(key: .faviconSizeNeedsMigration, defaultValue: true)
+    var sizeNeedsMigration: Bool
+
     let sourcesProvider: FaviconSourcesProvider
     let bookmarksStore: BookmarkStore
     let bookmarksCachingSearch: BookmarksCachingSearch
@@ -144,7 +148,57 @@ public class Favicons {
         }
         
     }
-    
+
+    public func migrateFavicons(to size: CGSize, afterMigrationHandler: @escaping () -> Void) {
+        guard sizeNeedsMigration else { return }
+
+        DispatchQueue.global(qos: .utility).async {
+            guard let files = try? FileManager.default.contentsOfDirectory(at: Constants.bookmarksCache.diskStorage.directoryURL,
+                    includingPropertiesForKeys: nil) else {
+                return
+            }
+
+            let group = DispatchGroup()
+            files.forEach { file in
+                group.enter()
+                guard let data = (try? Data(contentsOf: file)),
+                      let image = UIImage(data: data),
+                      !self.isValidImage(image, forMaxSize: size) else {
+                    group.leave()
+                    return
+                }
+
+                let resizedImage = self.resizedImage(image, toSize: size)
+                if let data = resizedImage.pngData() {
+                    try? data.write(to: file)
+                }
+                group.leave()
+            }
+            group.wait()
+
+            Constants.bookmarksCache.clearMemoryCache()
+            self.sizeNeedsMigration = false
+            afterMigrationHandler()
+        }
+    }
+
+    internal func isValidImage(_ image: UIImage, forMaxSize size: CGSize) -> Bool {
+        if image.size.width > size.width || image.size.height > size.height {
+            return false
+        }
+        return true
+    }
+
+    internal func resizedImage(_ image: UIImage, toSize size: CGSize) -> UIImage {
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
+        return renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+
     func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
         
         guard let domain = domain,
@@ -259,7 +313,10 @@ public class Favicons {
 
         func complete(withImage image: UIImage?) {
             queue.async {
-                if let image = image {
+                if var image = image {
+                    if !self.isValidImage(image, forMaxSize: Constants.maxFaviconSize) {
+                        image = self.resizedImage(image, toSize: Constants.maxFaviconSize)
+                    }
                     targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
                 }
                 completion?(image)

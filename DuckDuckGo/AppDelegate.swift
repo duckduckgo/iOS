@@ -97,7 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        
+
+        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
+            if #available(iOS 14, *) {
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        }
+
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"

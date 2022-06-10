@@ -60,12 +60,15 @@ final public class BookmarksImporter {
             return .success(importedBookmarks)
         } catch BookmarksImportError.invalidHtml {
             NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
+            Pixel.fire(pixel: .bookmarkImportFailureParsing)
             return .failure(.invalidHtml)
         } catch BookmarksImportError.saveFailure {
             NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
+            Pixel.fire(pixel: .bookmarkImportFailureSaving)
             return .failure(.saveFailure)
         } catch {
             NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
+            Pixel.fire(pixel: .bookmarkImportFailureUnknown)
             return .failure(.unknown)
         }
     }

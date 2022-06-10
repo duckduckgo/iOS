@@ -168,6 +168,9 @@ public enum PixelName: String {
     
     case bookmarkImportSuccess = "m_bi_s"
     case bookmarkImportFailure = "m_bi_e"
+	case bookmarkImportFailureParsing = "m_bi_e_p"
+	case bookmarkImportFailureSaving = "m_bi_e_s"
+	case bookmarkImportFailureUnknown = "m_bi_e_u"
     case bookmarkExportSuccess = "m_be_a"
     case bookmarkExportFailure = "m_be_e"
 

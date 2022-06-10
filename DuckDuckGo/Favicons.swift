@@ -189,7 +189,7 @@ public class Favicons {
         return true
     }
 
-	internal func resizedImage(_ image: UIImage, toSize size: CGSize) -> UIImage {
+    internal func resizedImage(_ image: UIImage, toSize size: CGSize) -> UIImage {
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1
 

@@ -98,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        Favicons.shared.migrateFaviconsWith(size: Favicons.Constants.maxFaviconSize) {
+        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             if #available(iOS 14, *) {
                 WidgetCenter.shared.reloadAllTimelines()
             }

@@ -149,7 +149,7 @@ public class Favicons {
         
     }
 
-    public func migrateFaviconsWith(size: CGSize, afterMigrationHandler: @escaping () -> Void) {
+    public func migrateFavicons(to size: CGSize, afterMigrationHandler: @escaping () -> Void) {
         guard sizeNeedsMigration else { return }
 
         DispatchQueue.global(qos: .utility).async {
@@ -168,7 +168,7 @@ public class Favicons {
                     return
                 }
 
-                let resizedImage = self.resizeImage(image, toSize: size)
+                let resizedImage = self.resizedImage(image, toSize: size)
                 if let data = resizedImage.pngData() {
                     try? data.write(to: file)
                 }
@@ -182,14 +182,14 @@ public class Favicons {
         }
     }
 
-    func isValidImage(_ image: UIImage, forMaxSize size: CGSize) -> Bool {
+    internal func isValidImage(_ image: UIImage, forMaxSize size: CGSize) -> Bool {
         if image.size.width > size.width || image.size.height > size.height {
             return false
         }
         return true
     }
 
-    func resizeImage(_ image: UIImage, toSize size: CGSize) -> UIImage {
+	internal func resizedImage(_ image: UIImage, toSize size: CGSize) -> UIImage {
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1
 
@@ -315,7 +315,7 @@ public class Favicons {
             queue.async {
                 if var image = image {
                     if !self.isValidImage(image, forMaxSize: Constants.maxFaviconSize) {
-                        image = self.resizeImage(image, toSize: Constants.maxFaviconSize)
+                        image = self.resizedImage(image, toSize: Constants.maxFaviconSize)
                     }
                     targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
                 }

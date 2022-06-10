@@ -163,7 +163,7 @@ class FaviconsTests: XCTestCase {
 		let size = CGSize(width: 64, height: 64)
 		XCTAssertTrue(image.size != size)
 
-		let resizedImage = favicons.resizeImage(image, toSize: size)
+		let resizedImage = favicons.resizedImage(image, toSize: size)
 		XCTAssertTrue(resizedImage.size == size)
 	}
 

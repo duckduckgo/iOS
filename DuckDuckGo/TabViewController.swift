@@ -903,6 +903,7 @@ class TabViewController: UIViewController {
     }
     
     deinit {
+        temporaryDownloadForPreviewedFile?.cancel()
         removeMessageHandlers()
         removeObservers()
     }

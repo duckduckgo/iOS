@@ -242,15 +242,13 @@ class SettingsViewController: UITableViewController {
         }
     }
 
-    private func showEmailProtectionViewController() {
-        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
-        let viewController = storyboard.instantiateViewController(identifier: "EmailProtectionViewController")
-        navigationController?.pushViewController(viewController, animated: true)
+    private func showEmailWebDashboard() {
+//        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
+//        let viewController = storyboard.instantiateViewController(identifier: "EmailProtectionViewController")
+//        navigationController?.pushViewController(viewController, animated: true)
+        print("Open dashboard")
     }
 
-    private func showEmailWaitlistViewController() {
-        navigationController?.pushViewController(EmailWaitlistViewController.loadFromStoryboard(), animated: true)
-    }
     
     private func showDesktopBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
@@ -269,11 +267,7 @@ class SettingsViewController: UITableViewController {
             UIApplication.shared.open(url)
             
         case emailProtectionCell:
-            if emailManager.isSignedIn {
-                showEmailProtectionViewController()
-            } else {
-                showEmailWaitlistViewController()
-            }
+            showEmailWebDashboard()
             
         case macBrowserWaitlistCell:
             showDesktopBrowserWaitlistViewController()

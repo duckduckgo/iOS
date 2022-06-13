@@ -124,7 +124,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-        EmailWaitlist.shared.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
@@ -185,13 +184,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        EmailWaitlist.shared.emailManager.fetchInviteCodeIfAvailable { result in
-            switch result {
-            case .success: EmailWaitlist.shared.sendInviteCodeAvailableNotification()
-            case .failure: break
-            }
-        }
-        
         MacBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
             guard error == nil else { return }
             MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
@@ -346,11 +338,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if !hasConfigurationTask {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
             }
-
-            let hasEmailWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
-            if !hasEmailWaitlistTask {
-                EmailWaitlist.shared.scheduleBackgroundRefreshTask()
-            }
         }
     }
     
@@ -489,17 +476,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if response.notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
                 Pixel.fire(pixel: .macBrowserWaitlistNotificationLaunched)
                 presentMacBrowserWaitlistSettingsModal()
-            } else if response.notification.request.identifier == EmailWaitlist.Constants.notificationIdentitier {
-                presentEmailWaitlistSettingsModal()
             }
         }
 
         completionHandler()
-    }
-
-    private func presentEmailWaitlistSettingsModal() {
-        let waitlistViewController = EmailWaitlistViewController.loadFromStoryboard()
-        presentSettings(with: waitlistViewController)
     }
     
     private func presentMacBrowserWaitlistSettingsModal() {

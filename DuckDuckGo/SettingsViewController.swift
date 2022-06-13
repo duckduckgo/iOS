@@ -242,11 +242,9 @@ class SettingsViewController: UITableViewController {
         }
     }
 
-    private func showEmailWebDashboard() {
-//        let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
-//        let viewController = storyboard.instantiateViewController(identifier: "EmailProtectionViewController")
-//        navigationController?.pushViewController(viewController, animated: true)
-        print("Open dashboard")
+    private func showEmailWebDashboard() {        
+        let webDashboardURL = URL(string: "ddgQuickLink://https://quackdev.duckduckgo.com/email")!
+        UIApplication.shared.open(webDashboardURL, options: [:], completionHandler: nil)
     }
 
     

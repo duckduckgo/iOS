@@ -212,13 +212,11 @@ class OmniBar: UIView {
         privacyIconAndTrackersAnimator.startLoadingAnimation(in: privacyInfoContainer, for: url)
     }
     
-    public func startTrackersAnimation(_ rating: SiteRating, collapsing: Bool) {
-        let model = PrivacyIconAndTrackersAnimationModel(rating: rating, pauseForOnboarding: !collapsing)
+    public func startTrackersAnimation(_ siteRating: SiteRating, collapsing: Bool) {
+        privacyIconAndTrackersAnimator.configure(privacyInfoContainer, for: siteRating)
         
-        privacyIconAndTrackersAnimator.configure(privacyInfoContainer, with: model)
-        
-        if model.willAnimateTrackers {
-            privacyIconAndTrackersAnimator.startAnimating(in: self, with: model)
+        if siteRating.willAnimateTrackers {
+            privacyIconAndTrackersAnimator.startAnimating(in: self, with: siteRating)
         }
     }
     
@@ -330,6 +328,10 @@ class OmniBar: UIView {
 
     func updateSiteRating(_ siteRating: SiteRating?, with config: PrivacyConfiguration?) {
         siteRatingView.update(siteRating: siteRating, with: config)
+        
+        if let siteRating = siteRating {
+            privacyIconAndTrackersAnimator.updatePrivacyIcon(in: privacyInfoContainer, for: siteRating)
+        }
     }
 
     private func clear() {

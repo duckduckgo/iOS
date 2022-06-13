@@ -1112,6 +1112,7 @@ extension TabViewController: WKNavigationDelegate {
                                                                              cookieStore: cookieStore,
                                                                              temporary: true)
         } else {
+            temporaryDownloadForPreviewedFile?.cancel()
             temporaryDownloadForPreviewedFile = nil
         }
     }

@@ -20,6 +20,7 @@
 import UIKit
 import Social
 import Core
+import os.log
 
 class ShareViewController: SLComposeServiceViewController {
 
@@ -71,7 +72,11 @@ class ShareViewController: SLComposeServiceViewController {
     private func loadText(fromTextProvider textProvider: NSItemProvider) {
         textProvider.loadItem(forTypeIdentifier: Identifier.text, options: nil) { [weak self] (item, _) in
             guard let query = item as? String else { return }
-            self?.open(url: AppUrls().url(forQuery: query))
+            guard let url = AppUrls().url(forQuery: query) else {
+                os_log("Couldn‘t form URL for query “%s”", log: lifecycleLog, type: .error, query)
+                return
+            }
+            self?.open(url: url)
         }
     }
 

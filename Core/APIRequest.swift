@@ -94,16 +94,27 @@ public class APIRequest {
                                httpBody: Data? = nil,
                                timeoutInterval: TimeInterval = 60.0,
                                callBackOnMainThread: Bool = false,
-                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask {
+                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask? {
         os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
-        
-        let urlRequest = urlRequestFor(url: url,
-                                       method: method,
-                                       parameters: parameters,
-                                       headers: headers,
-                                       httpBody: httpBody,
-                                       timeoutInterval: timeoutInterval)
-        
+
+        let urlRequest: URLRequest
+        do {
+            urlRequest = try urlRequestFor(url: url,
+                                           method: method,
+                                           parameters: parameters,
+                                           headers: headers,
+                                           httpBody: httpBody,
+                                           timeoutInterval: timeoutInterval)
+        } catch {
+            os_log("Couldn‘t form a request for %s (%s) with parameters: %s",
+                   log: generalLog,
+                   type: .debug,
+                   url.absoluteString,
+                   error.localizedDescription,
+                   parameters?.description ?? "<nil>")
+            completion(nil, error)
+            return nil
+        }
         let session = callBackOnMainThread ? mainThreadCallbackSession : defaultSession
 
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
@@ -139,8 +150,8 @@ public class APIRequest {
                                      parameters: [String: String]? = nil,
                                      headers: HTTPHeaders = APIHeaders().defaultHeaders,
                                      httpBody: Data? = nil,
-                                     timeoutInterval: TimeInterval = 60.0) -> URLRequest {
-        let url = url.addParams(parameters ?? [:])
+                                     timeoutInterval: TimeInterval = 60.0) throws -> URLRequest {
+        let url = try url.addParameters(parameters ?? [:])
         var urlRequest = URLRequest.developerInitiated(url)
         urlRequest.allHTTPHeaderFields = headers
         urlRequest.httpMethod = method.rawValue

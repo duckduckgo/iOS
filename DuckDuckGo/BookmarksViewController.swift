@@ -50,17 +50,17 @@ class BookmarksViewController: UITableViewController {
 
     private lazy var addFolderBarButtonItem = UIBarButtonItem(customView: addFolderButton)
 
-    @available(iOS 14.0, *)
     private lazy var moreButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(UserText.moreBookmarkButton, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.sizeToFit()
-        button.showsMenuAsPrimaryAction = true
+        if #available(iOS 14.0, *) {
+            button.showsMenuAsPrimaryAction = true
+        }
         return button
     }()
 
-    @available(iOS 14.0, *)
     private lazy var moreBarButtonItem = UIBarButtonItem(customView: moreButton)
 
     private var bookmarksMenu: UIMenu {

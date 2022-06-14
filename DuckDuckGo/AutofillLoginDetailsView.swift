@@ -55,10 +55,6 @@ struct AutofillLoginDetailsView: View {
             Section {
                 editableCell("Address", subtitle: $viewModel.address)
             }
-            
-//            Section {
-//                editableCell("Notes", subtitle: $viewModel.username)
-//            }
         }
     }
     
@@ -89,11 +85,6 @@ struct AutofillLoginDetailsView: View {
                     viewModel.selectedCell = nil
                 }
             }
-            
-//            Section {
-//                editableCell("Notes", subtitle: $viewModel.username)
-//                    .disabled(true)
-//            }
         }
     }
     

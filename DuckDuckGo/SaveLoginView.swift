@@ -71,6 +71,7 @@ struct SaveLoginView: View {
     }
     
     private func makeBodyView(_ geometry: GeometryProxy) -> some View {
+        // Workaround for the isSmallFrame property to return the correct value
         DispatchQueue.main.async { self.frame = geometry.size }
         
         return ZStack {

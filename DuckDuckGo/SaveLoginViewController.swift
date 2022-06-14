@@ -77,6 +77,7 @@ class SaveLoginViewController: UIViewController {
         let controller = UIHostingController(rootView: saveLoginView)
         controller.view.backgroundColor = .clear
         installChildViewController(controller)
+        
         switch saveViewModel.layoutType {
         case .newUser:
             Pixel.fire(pixel: .autofillLoginsSaveLoginModalOnboardingDisplayed)

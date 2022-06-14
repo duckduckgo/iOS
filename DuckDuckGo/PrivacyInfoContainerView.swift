@@ -28,7 +28,9 @@ class PrivacyInfoContainerView: UIView {
     let shieldAnimation = AnimationView(name: "shield")
     let shieldDotAnimation = AnimationView(name: "shield-dot")
     
-    let trackersAnimation = AnimationView(name: "trackers-3")
+    let trackers1Animation = AnimationView(name: "trackers-1")
+    let trackers2Animation = AnimationView(name: "trackers-2")
+    let trackers3Animation = AnimationView(name: "trackers-3")
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,7 +45,9 @@ class PrivacyInfoContainerView: UIView {
     }
     
     private func addAndOrderSubviews() {
-        addSubview(trackersAnimation)
+        addSubview(trackers1Animation)
+        addSubview(trackers2Animation)
+        addSubview(trackers3Animation)
         addSubview(shieldAnimation)
         addSubview(shieldDotAnimation)
         
@@ -55,14 +59,17 @@ class PrivacyInfoContainerView: UIView {
         
     private func configureAnimationView() {
         // Trackers
-        trackersAnimation.contentMode = .scaleAspectFill
+        [trackers1Animation, trackers2Animation, trackers3Animation].forEach { trackersAnimation in
+            trackersAnimation.contentMode = .scaleAspectFill
+            
+            trackersAnimation.frame = CGRect(x: 0, y: 0, width: 158, height: 40)
+            trackersAnimation.center = CGPoint(x: bounds.midX - 4, y: bounds.midY)
+        }
         
-        trackersAnimation.frame = CGRect(x: 0, y: 0, width: 158, height: 40)
-        trackersAnimation.center = CGPoint(x: bounds.midX - 4, y: bounds.midY)
         
         // Shield animations
         [shieldAnimation, shieldDotAnimation].forEach { animationView in
-            animationView.frame = trackersAnimation.frame
+            animationView.frame = trackers3Animation.frame
             animationView.center = CGPoint(x: bounds.midX - 9, y: bounds.midY)
             animationView.isHidden = true
         }

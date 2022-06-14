@@ -147,8 +147,6 @@ private struct CopyablePasswordCell: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(title)
                         .label3AltStyle()
-                        .disabled(true)
-                    
                     HStack {
                         Text(password)
                             .label3Style(design: .monospaced)
@@ -198,8 +196,6 @@ private struct CopyableCell: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text(title)
                     .label3AltStyle()
-                    .disabled(true)
-                
                 HStack {
                     Text(subtitle)
                         .label4Style()

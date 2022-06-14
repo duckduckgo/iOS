@@ -595,7 +595,11 @@ class MainViewController: UIViewController {
 
     fileprivate func loadQuery(_ query: String) {
         guard let url = appUrls.url(forQuery: query, queryContext: currentTab?.url) else {
-            os_log("Couldn‘t form URL for query “%s” with context “%s”", log: lifecycleLog, type: .error, query, currentTab?.url?.absoluteString ?? "<nil>")
+            os_log("Couldn‘t form URL for query “%s” with context “%s”",
+                   log: lifecycleLog,
+                   type: .error,
+                   query,
+                   currentTab?.url?.absoluteString ?? "<nil>")
             return
         }
         loadUrl(url)

@@ -527,6 +527,7 @@ extension OmniBar: Themable {
         siteRatingContainer.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
         privacyInfoContainer.maskingView.backgroundColor = theme.searchBarBackgroundColor
+        privacyInfoContainer.decorate(with: theme)
         
         searchStackContainer?.tintColor = theme.barTintColor
         

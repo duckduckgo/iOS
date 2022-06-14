@@ -22,15 +22,17 @@ import Lottie
 
 class PrivacyInfoContainerView: UIView {
     
+    var currentlyLoadedStyle: ThemeManager.ImageSet!
+    
     @IBOutlet var privacyIcon: PrivacyIconView!
     @IBOutlet var maskingView: UIView!
     
-    let shieldAnimation = AnimationView(name: "shield")
-    let shieldDotAnimation = AnimationView(name: "shield-dot")
+    let shieldAnimation = AnimationView()
+    let shieldDotAnimation = AnimationView()
     
-    let trackers1Animation = AnimationView(name: "trackers-1")
-    let trackers2Animation = AnimationView(name: "trackers-2")
-    let trackers3Animation = AnimationView(name: "trackers-3")
+    let trackers1Animation = AnimationView()
+    let trackers2Animation = AnimationView()
+    var trackers3Animation = AnimationView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,6 +44,7 @@ class PrivacyInfoContainerView: UIView {
         
         addAndOrderSubviews()
         configureAnimationView()
+        loadAnimations(for: ThemeManager.shared.currentTheme)
     }
     
     private func addAndOrderSubviews() {
@@ -74,6 +77,20 @@ class PrivacyInfoContainerView: UIView {
             animationView.isHidden = true
         }
     }
+    
+    private func loadAnimations(for theme: Theme) {
+        let style = theme.currentImageSet
+        let cache = LRUAnimationCache.sharedCache
+        
+        shieldAnimation.animation = Animation.named(style == .light ? "shield" : "dark-shield", animationCache: cache)
+        shieldDotAnimation.animation = Animation.named(style == .light ? "shield-dot" : "dark-shield-dot", animationCache: cache)
+        
+        trackers1Animation.animation = Animation.named(style == .light ? "trackers-1" : "dark-trackers-1", animationCache: cache)
+        trackers2Animation.animation = Animation.named(style == .light ? "trackers-2" : "dark-trackers-2", animationCache: cache)
+        trackers3Animation.animation = Animation.named(style == .light ? "trackers-3" : "dark-trackers-3", animationCache: cache)
+        
+        currentlyLoadedStyle = style
+    }
 }
 
 extension UIView {
@@ -89,5 +106,15 @@ extension UIView {
             self.alpha = 1.0
         }
 
+    }
+}
+
+extension PrivacyInfoContainerView: Themable {
+    
+    func decorate(with theme: Theme) {
+        
+        if theme.currentImageSet != currentlyLoadedStyle {
+            loadAnimations(for: theme)
+        }
     }
 }

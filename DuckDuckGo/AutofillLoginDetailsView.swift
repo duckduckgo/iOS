@@ -174,9 +174,9 @@ private struct CopyablePasswordCell: View {
                     .contentShape(Rectangle())
                     .frame(width: 50, height: 50)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
                 .background(BackgroundColor(isSelected: selectedCell == id).color)
-                // Prevent taps from being forwarded
+                
             }
         }
         .selectableBackground(isSelected: selectedCell == id)

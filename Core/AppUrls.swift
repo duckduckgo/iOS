@@ -49,15 +49,7 @@ public struct AppUrls {
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@"
 
-        static var emailProtectionLink = "https://duckduckgo.com/email"
-        static var loginQuickLink = "https://duckduckgo.com/email/login"
-        static var emailPrivacyGuarantees = "https://duckduckgo.com/email/privacy-guarantees"
-        static var addressBlogPostQuickLink = "https://duckduckgo.com/email/learn-more"
-        static var emailLoginQuickLink = "https://duckduckgo.com/email/login"
-        static var signUpQuickLink = "https://duckduckgo.com/email/start"
-        static func signUpWithCodeQuickLink(code: String) -> String {
-            return "https://duckduckgo.com/email/start?inviteCode=\(code)"
-        }
+        static var emailProtectionLink = "ddgQuickLink://https://duckduckgo.com/email"
     }
     
     private enum DDGStaticURL: String {
@@ -269,30 +261,10 @@ public struct AppUrls {
         return URL(string: Url.httpsExcludedDomains)!
     }
 
-    public var loginQuickLink: URL {
-        return URL(string: Url.loginQuickLink)!
+    public var emailProtectionQuickLink: URL {
+        return URL(string: Url.emailProtectionLink)!
     }
 
-    public var signUpQuickLink: URL {
-        return URL(string: Url.signUpQuickLink)!
-    }
-
-    public func signUpWithCodeQuickLink(code: String) -> URL {
-        return URL(string: Url.signUpWithCodeQuickLink(code: code))!
-    }
-
-    public var emailPrivacyGuarantees: URL {
-        return URL(string: Url.emailPrivacyGuarantees)!
-    }
-
-    public var addressBlogPostQuickLink: URL {
-        return URL(string: Url.addressBlogPostQuickLink)!
-    }
-
-    public var emailLoginQuickLink: URL {
-        return URL(string: Url.emailLoginQuickLink)!
-    }
-    
     public var macBrowserDownloadURL: URL {
         return URL(string: "https://duckduckgo.com/mac")!
     }

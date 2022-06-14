@@ -242,12 +242,10 @@ class SettingsViewController: UITableViewController {
         }
     }
 
-    private func showEmailWebDashboard() {        
-        let webDashboardURL = URL(string: "ddgQuickLink://https://quackdev.duckduckgo.com/email")!
-        UIApplication.shared.open(webDashboardURL, options: [:], completionHandler: nil)
+    private func showEmailWebDashboard() {
+        UIApplication.shared.open(AppUrls().emailProtectionQuickLink, options: [:], completionHandler: nil)
     }
 
-    
     private func showDesktopBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }

@@ -80,11 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        if !Database.shared.isDatabaseFileInitialized {
-            let autofillStorage = EmailKeychainManager()
-            autofillStorage.deleteAuthenticationState()
-            autofillStorage.deleteWaitlistState()
-        }
+        removeEmailWaitlistState()
         
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
@@ -406,6 +402,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear?.applicationWillMoveToForeground()
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {
             mainViewController?.loadQueryInNewTab(query)
+        }
+    }
+    
+    private func removeEmailWaitlistState() {
+        EmailWaitlist.shared.removeEmailState()
+
+        let autofillStorage = EmailKeychainManager()
+        autofillStorage.deleteWaitlistState()
+        
+        if !Database.shared.isDatabaseFileInitialized {
+            autofillStorage.deleteAuthenticationState()
         }
     }
 

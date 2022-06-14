@@ -51,7 +51,7 @@ extension PrivacyIcon {
 
 final class PrivacyIconAndTrackersAnimator {
     
-    var trackerimage = UIImage(named: "amazon")?.cgImage
+    let trackerAnimationImageProvider = TrackerAnimationImageProvider()
     
     func startLoadingAnimation(in container: PrivacyInfoContainerView, for url: URL?) {
         guard let url = url, !AppUrls().isDuckDuckGoSearch(url: url) else {
@@ -73,7 +73,8 @@ final class PrivacyIconAndTrackersAnimator {
         container.shieldDotAnimation.currentFrame = 0
         
         if siteRating.willAnimateTrackers {
-            container.trackersAnimation.imageProvider = self
+            trackerAnimationImageProvider.loadTrackerImages(from: siteRating)
+            container.trackersAnimation.imageProvider = trackerAnimationImageProvider
             container.trackersAnimation.reloadImages()
             container.privacyIcon.icon = .shield
         } else {
@@ -143,17 +144,5 @@ final class PrivacyIconAndTrackersAnimator {
     
     func completeAnimations(in privacyContainerView: PrivacyInfoContainerView) {
  
-    }
-}
-
-
-extension PrivacyIconAndTrackersAnimator: AnimationImageProvider {
-    
-    func imageForAsset(asset: ImageAsset) -> CGImage? {
-        if asset.name == "img_3.png" {
-            return nil
-        }
-        
-        return trackerimage
     }
 }

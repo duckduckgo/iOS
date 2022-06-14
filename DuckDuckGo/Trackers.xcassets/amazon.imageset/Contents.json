@@ -3,6 +3,16 @@
     {
       "filename" : "Amazon.svg",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "AmazonDark.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {

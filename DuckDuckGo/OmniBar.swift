@@ -526,6 +526,8 @@ extension OmniBar: Themable {
         siteRatingContainer.tintColor = theme.barTintColor
         siteRatingContainer.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
+        privacyInfoContainer.maskingView.backgroundColor = theme.searchBarBackgroundColor
+        
         searchStackContainer?.tintColor = theme.barTintColor
         
         if let url = textField.text?.punycodedUrl {

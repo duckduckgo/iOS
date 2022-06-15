@@ -1946,15 +1946,17 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
-        
-        let saveLoginController = SaveLoginViewController(credentialManager: manager)
-        saveLoginController.delegate = self
-        if #available(iOS 15.0, *) {
-            if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
-                presentationController.detents = [.medium(), .large()]
+        manager.prepareData { [weak self] in
+
+            let saveLoginController = SaveLoginViewController(credentialManager: manager)
+            saveLoginController.delegate = self
+            if #available(iOS 15.0, *) {
+                if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+                    presentationController.detents = [.medium(), .large()]
+                }
             }
+            self?.present(saveLoginController, animated: true, completion: nil)
         }
-        present(saveLoginController, animated: true, completion: nil)
     }
     
     func secureVaultInitFailed(_ error: SecureVaultError) {

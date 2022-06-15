@@ -34,15 +34,15 @@ struct AutofillLoginPromptView: View {
             closeButtonHeader
             
             VStack {
-            VStack(spacing: 0) {
-                titleHeaderView
-                Spacer()
-                accountButtonsContainer
-                Spacer()
-            }
-            .padding(.top, 43)
-                
-            footer
+                VStack(spacing: 0) {
+                    titleHeaderView
+                    Spacer()
+                    accountButtonsContainer
+                    Spacer()
+                }
+                .padding(.top, 43)
+                    
+                footer
             }
         }
     }

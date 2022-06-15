@@ -104,7 +104,7 @@ struct AutofillLoginPromptView: View {
         GeometryReader { geometry in
             ScrollView(showsIndicators: viewModel.shouldUseScrollView) {
                 VStack {
-                accountButtons
+                    accountButtons
                 }
                 .frame(minHeight: geometry.size.height)
             }

@@ -41,7 +41,7 @@ struct AccountViewModel: Hashable {
     }
     
     static func == (lhs: AccountViewModel, rhs: AccountViewModel) -> Bool {
-        return lhs.account.id == rhs.account.id // TODO should make SecureVaultModels.WebsiteAccount actually do this conforming
+        return lhs.account.id == rhs.account.id
     }
     
     func hash(into hasher: inout Hasher) {

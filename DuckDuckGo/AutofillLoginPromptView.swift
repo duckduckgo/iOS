@@ -157,7 +157,7 @@ struct AutofillLoginPromptView: View {
         Button {
             viewModel.didExpand()
         } label: {
-            Text(viewModel.moreOptionsButtonString) // TODO email formatting
+            Text(viewModel.moreOptionsButtonString)
                 .font(Const.Fonts.CTA)
                 .foregroundColor(Const.Colors.CTASecondaryForeground)
                 .padding()

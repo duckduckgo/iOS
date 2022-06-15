@@ -176,6 +176,7 @@ class TabViewController: UIViewController {
     private var fullScreenVideoScript = FullScreenVideoUserScript()
     private var printingUserScript = PrintingUserScript()
     private var textSizeUserScript = TextSizeUserScript()
+    private lazy var autofillUserScript = createAutofillUserScript()
     private var debugScript = DebugUserScript()
     private var shouldBlockJSAlert = false
 
@@ -190,15 +191,6 @@ class TabViewController: UIViewController {
         let manager = SecureVaultManager()
         manager.delegate = self
         return manager
-    }()
-    
-    lazy var autofillUserScript: BrowserServicesKit.AutofillUserScript = {
-        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
-                                           sessionKey: UUID().uuidString,
-                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
-        let provider = DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager, properties: prefs)
-        let autofillUserScript = AutofillUserScript(scriptSourceProvider: provider)
-        return autofillUserScript
     }()
     
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
@@ -294,6 +286,7 @@ class TabViewController: UIViewController {
                                                                  trackerDataManager: ContentBlocking.trackerDataManager,
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
+        autofillUserScript = createAutofillUserScript()
         
         userScripts = [
             debugScript,
@@ -327,7 +320,19 @@ class TabViewController: UIViewController {
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }
-    // swiftlint:enable function_body_length
+    
+    private func createAutofillUserScript() -> BrowserServicesKit.AutofillUserScript {
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                           sessionKey: UUID().uuidString,
+                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
+        let provider = DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager, properties: prefs)
+        let autofillUserScript = AutofillUserScript(scriptSourceProvider: provider)
+        return autofillUserScript
+    }
+    
+    private func refreshAutofillUserScript() {
+        autofillUserScript = createAutofillUserScript()
+    }
     
     func updateTabModel() {
         if let url = url {
@@ -600,6 +605,7 @@ class TabViewController: UIViewController {
         removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
         webView.configuration.userContentController.removeAllUserScripts()
         
+        refreshAutofillUserScript()
         initUserScripts()
         
         userScripts.forEach { script in
@@ -1052,6 +1058,7 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
 
+    // swiftlint:disable function_body_length
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
@@ -1059,7 +1066,11 @@ extension TabViewController: WKNavigationDelegate {
         
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
-        featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
+        
+        let didMarkAsInternal = featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
+        if didMarkAsInternal {
+            reloadUserScripts()
+        }
 
         if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
             Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
@@ -1112,6 +1123,7 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
+    // swiftlint:enable function_body_length
     
     /*
      Some files might be previewed by webkit but in order to share them

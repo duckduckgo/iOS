@@ -639,4 +639,9 @@ public struct UserText {
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
         "Login last updated \(date))"
     } // Message displaying when the login was last updated by
+    public static let autofillLoginListAuthenticationCancelButton = "Cancel" // Cancel button for auth when opening login list
+    public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
+    public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
+    public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
+
 }

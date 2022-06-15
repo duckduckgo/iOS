@@ -129,11 +129,11 @@ class AutofillLoginDetailsViewController: UIViewController {
     private func setupNavigationBar() {
         switch viewModel.viewMode {
         case .edit:
-            title = "Edit Login"
+            title = UserText.autofillLoginDetailsEditTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
 
         case .view:
-            title = "Login"
+            title = UserText.autofillLoginDetailsDefaultTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
         }
     }

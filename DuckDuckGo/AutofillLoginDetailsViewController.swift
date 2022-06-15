@@ -61,15 +61,9 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        authenticate()
+        authenticator.authenticate()
     }
     
-    private func authenticate() {
-        authenticator.authenticate { error in
-            print("ERROR \(String(describing: error))")
-        }
-    }
-
     private func installSubviews() {
         installContentView()
         view.addSubview(lockedView)

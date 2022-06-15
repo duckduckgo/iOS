@@ -39,10 +39,10 @@ final class AutofillLoginListAuthenticator {
         state = .loggedOut
     }
     
-    func authenticate(completion: @escaping(AuthError?) -> Void) {
+    func authenticate(completion: ((AuthError?) -> Void)? = nil) {
        
         if state == .loggedIn {
-            completion(nil)
+            completion?(nil)
             return
         }
         
@@ -59,15 +59,15 @@ final class AutofillLoginListAuthenticator {
                 DispatchQueue.main.async {
                     if success {
                         self.state = .loggedIn
-                        completion(nil)
+                        completion?(nil)
                     } else {
                         os_log("Failed to authenticate: %s", log: generalLog, type: .debug, error?.localizedDescription ?? "nil error")
-                        completion(.failedToAuthenticate)
+                        completion?(.failedToAuthenticate)
                     }
                 }
             }
         } else {
-            completion(.noAuthAvailable)
+            completion?(.noAuthAvailable)
         }
     }
 }

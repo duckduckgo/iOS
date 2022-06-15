@@ -23,19 +23,17 @@ import BackgroundTasks
 import BrowserServicesKit
 
 struct EmailWaitlist {
-
-    static var shared = EmailWaitlist()
     
-    func removeEmailState() {
+    static func removeEmailState() {
         removeEmailUserDefaultsValues()
         cancelBackgroundRefreshTask()
     }
 
-    func removeEmailUserDefaultsValues() {
+    private static func removeEmailUserDefaultsValues() {
         UserDefaults.standard.removeObject(forKey: UserDefaultsWrapper<Any>.Key.emailWaitlistShouldReceiveNotifications.rawValue)
     }
     
-    func cancelBackgroundRefreshTask() {
+    private static func cancelBackgroundRefreshTask() {
         BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: "com.duckduckgo.app.waitlistStatus")
     }
 

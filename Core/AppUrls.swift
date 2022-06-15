@@ -49,7 +49,8 @@ public struct AppUrls {
         static let pixelBase = ProcessInfo.processInfo.environment["PIXEL_BASE_URL", default: "https://improving.duckduckgo.com"]
         static let pixel = "\(pixelBase)/t/%@"
 
-        static var emailProtectionLink = "ddgQuickLink://https://duckduckgo.com/email/"
+        // This should be replaced with a non-quackdev version before release.
+        static var emailProtectionLink = "ddgQuickLink://https://quackdev.duckduckgo.com/email/"
     }
     
     private enum DDGStaticURL: String {

@@ -406,11 +406,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func removeEmailWaitlistState() {
-        EmailWaitlist.shared.removeEmailState()
+        EmailWaitlist.removeEmailState()
 
         let autofillStorage = EmailKeychainManager()
         autofillStorage.deleteWaitlistState()
         
+        // Remove the authentication state if this is a fresh install.
         if !Database.shared.isDatabaseFileInitialized {
             autofillStorage.deleteAuthenticationState()
         }

@@ -119,14 +119,7 @@ struct UserAgent {
     public func agent(forUrl url: URL?, isDesktop: Bool,
                       privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> String {
         let omittedSites = omitApplicationSites(forConfig: privacyConfig)
-        
-        let customUAEnabled: Bool
-        
-        if let url = url {
-            customUAEnabled = AppUrls().isDuckDuckGo(url: url) || privacyConfig.isEnabled(featureKey: .customUserAgent)
-        } else {
-            customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
-        }
+        let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
 
         let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
             url?.isPart(ofDomain: domain) ?? false

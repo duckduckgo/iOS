@@ -25,8 +25,7 @@ struct AutofillLoginDetailsHeaderView: View {
     
     var body: some View {
         HStack(spacing: Constants.horizontalStackSpacing) {
-            Image(uiImage: viewModel.image)
-                .resizable()
+            FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain))
                 .scaledToFit()
                 .frame(width: Constants.imageSize, height: Constants.imageSize)
             

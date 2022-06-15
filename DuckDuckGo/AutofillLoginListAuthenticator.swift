@@ -19,6 +19,8 @@
 
 import Foundation
 import LocalAuthentication
+import os.log
+import Core
 
 final class AutofillLoginListAuthenticator {
     enum AuthError {
@@ -37,17 +39,16 @@ final class AutofillLoginListAuthenticator {
         state = .loggedOut
     }
     
-    
-    func authenticate(completion: @escaping(AuthError?) -> Void) {
+    func authenticate(completion: ((AuthError?) -> Void)? = nil) {
        
         if state == .loggedIn {
-            completion(nil)
+            completion?(nil)
             return
         }
         
         context = LAContext()
-        context.localizedCancelTitle = "Cancel"
-        let reason = "Unlock To Use Saved Login"
+        context.localizedCancelTitle = UserText.autofillLoginListAuthenticationCancelButton
+        let reason = UserText.autofillLoginListAuthenticationReason
         context.localizedReason = reason
         
         var error: NSError?
@@ -58,15 +59,15 @@ final class AutofillLoginListAuthenticator {
                 DispatchQueue.main.async {
                     if success {
                         self.state = .loggedIn
-                        completion(nil)
+                        completion?(nil)
                     } else {
-                        print(error?.localizedDescription ?? "Failed to authenticate but error nil")
-                        completion(.failedToAuthenticate)
+                        os_log("Failed to authenticate: %s", log: generalLog, type: .debug, error?.localizedDescription ?? "nil error")
+                        completion?(.failedToAuthenticate)
                     }
                 }
             }
         } else {
-            completion(.noAuthAvailable)
+            completion?(.noAuthAvailable)
         }
     }
 }

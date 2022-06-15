@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import SwiftUI
+import Core
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
@@ -83,20 +84,20 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
     
     func copyToPasteboard(_ action: PasteboardCopyAction) {
-        var itemName = ""
+        var message = ""
         switch action {
         case .username:
-            itemName = "Username"
+            message = UserText.autofillCopyToastUsernameCopied
             UIPasteboard.general.string = username
         case .password:
-            itemName = "Password"
+            message = UserText.autofillCopyToastPasswordCopied
             UIPasteboard.general.string = password
         case .address:
-            itemName = "Address"
+            message = UserText.autofillCopyToastAddressCopied
             UIPasteboard.general.string = address
         }
         
-        presentCopyConfirmation(message: "\(itemName) copied")
+        presentCopyConfirmation(message: message)
     }
     
     private func presentCopyConfirmation(message: String) {
@@ -118,7 +119,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 }
             }
         } catch {
-            print("Can't retrieve password")
+            Pixel.fire(pixel: .secureVaultError)
         }
     }
 
@@ -143,7 +144,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 }
             }
         } catch {
-            
+            Pixel.fire(pixel: .secureVaultError)
         }
     }
 }
@@ -159,24 +160,12 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     
     @Published var title: String = ""
     @Published var subtitle: String = ""
-    @Published var image = UIImage(systemName: "globe")!
+    @Published var domain: String = ""
     
     func updateData(with account: SecureVaultModels.WebsiteAccount) {
         self.title = account.name
-        self.subtitle = "Login last updated \(dateFormatter.string(from: account.lastUpdated))"
+        self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
+        self.domain = account.domain
+    }
 
-        fetchImage(with: account.domain)
-    }
-    
-    private func fetchImage(with domain: String) {
-        FaviconsHelper.loadFaviconSync(forDomain: domain,
-                                       usingCache: .tabs,
-                                       useFakeFavicon: true) { image, _ in
-            if let image = image {
-                self.image = image
-            } else {
-                self.image = UIImage(systemName: "globe")!
-            }
-        }
-    }
 }

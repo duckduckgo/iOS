@@ -39,7 +39,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Logins"
+        searchController.searchBar.placeholder = UserText.autofillLoginListSearchPlaceholder
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
@@ -69,7 +69,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Autofill Logins"
+        title = UserText.autofillLoginListTitle
         setupCancellables()
         installSubviews()
         installConstraints()

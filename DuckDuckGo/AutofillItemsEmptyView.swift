@@ -65,7 +65,7 @@ class AutofillItemsEmptyView: UIView {
         label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .footnote, compatibleWith: nil)
         label.textColor = .gray70
-        label.text = "Logins are stored securely on this device only."
+        label.text = UserText.autofillEmptyViewSubtitle
 
         return label
     }()
@@ -95,9 +95,9 @@ class AutofillItemsEmptyView: UIView {
     private func updateLabels(with state: AutofillItemsEmptyView.ViewState) {
         switch state {
         case .autofillDisabled:
-            title.text = "Enable Autofill to start saving Logins."
+            title.text = UserText.autofillEmptyViewTitleDisabled
         case .autofillEnabled:
-            title.text = "No logins saved yet."
+            title.text = UserText.autofillEmptyViewTitle
         }
     }
     

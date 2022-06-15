@@ -58,22 +58,12 @@ class AutofillLoginDetailsViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
         installConstraints()
     }
-    
-    deinit {
-        print("DEINIT DETAILS")
-    }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        authenticate()
+        authenticator.authenticate()
     }
     
-    private func authenticate() {
-        authenticator.authenticate { error in
-            print("ERROR \(String(describing: error))")
-        }
-    }
-
     private func installSubviews() {
         installContentView()
         view.addSubview(lockedView)
@@ -133,11 +123,11 @@ class AutofillLoginDetailsViewController: UIViewController {
     private func setupNavigationBar() {
         switch viewModel.viewMode {
         case .edit:
-            title = "Edit Login"
+            title = UserText.autofillLoginDetailsEditTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
 
         case .view:
-            title = "Login"
+            title = UserText.autofillLoginDetailsDefaultTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
         }
     }

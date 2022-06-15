@@ -25,7 +25,7 @@ class AutofillEmptySearchView: UIView {
         let label = UILabel(frame: CGRect.zero)
 
         label.font = .systemFont(ofSize: 24)
-        label.text = "No Results"
+        label.text = UserText.autofillSearchNoResultTitle
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
@@ -36,7 +36,7 @@ class AutofillEmptySearchView: UIView {
         let label = UILabel(frame: CGRect.zero)
 
         label.font = .systemFont(ofSize: 16)
-        label.text = "Unlock Autofill"
+        label.text = ""
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
@@ -53,7 +53,7 @@ class AutofillEmptySearchView: UIView {
     var query: String = "" {
         didSet {
             if query.count > 0 {
-                subtitle.text = "for '\(query)'"
+                subtitle.text = UserText.autofillSearchNoResultSubtitle(for: query)
             } else {
                 subtitle.text = ""
             }

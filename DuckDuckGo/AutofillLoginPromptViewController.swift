@@ -141,8 +141,8 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
         Pixel.fire(pixel: .autofillLoginsFillLoginInlineConfirmed)
         
         let context = LAContext()
-        context.localizedCancelTitle = "Cancel"
-        let reason = "Unlock To Use Saved Login"
+        context.localizedCancelTitle = UserText.autofillLoginPromptAuthenticationCancelButton
+        let reason = UserText.autofillLoginPromptAuthenticationReason
         context.localizedReason = reason
         
         var error: NSError?

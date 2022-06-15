@@ -75,8 +75,7 @@ struct AutofillLoginPromptView: View {
     var titleHeaderView: some View {
         VStack(spacing: 12) {
             HStack {
-                Image(uiImage: viewModel.faviconImage)
-                    .resizable()
+                FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain))
                     .scaledToFit()
                     .frame(width: 20, height: 20)
                 Text(viewModel.domain)

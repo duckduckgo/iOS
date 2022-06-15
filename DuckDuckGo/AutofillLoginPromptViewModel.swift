@@ -54,7 +54,6 @@ class AutofillLoginPromptViewModel: ObservableObject {
     weak var delegate: AutofillLoginPromptViewModelDelegate?
     
     @Published var accountsViewModels: [AccountViewModel] = []
-    @Published var faviconImage = UIImage(named: "Logo")!
     @Published var showMoreOptions = false
     @Published var shouldUseScrollView = false
     
@@ -67,13 +66,8 @@ class AutofillLoginPromptViewModel: ObservableObject {
         }
     }
     
-    var message: String {
-        return "Use Saved Login?" // TODO string
-    }
-    
-    var moreOptionsButtonString: String {
-        return "More Options" // TODO string
-    }
+    let message = UserText.autofillLoginPromptTitle
+    let moreOptionsButtonString = UserText.autofillLoginPromptMoreOptions
     
     internal init?(accounts: [SecureVaultModels.WebsiteAccount], isExpanded: Bool) {
         guard let firstAccount = accounts.first else {
@@ -83,7 +77,6 @@ class AutofillLoginPromptViewModel: ObservableObject {
         self.expanded = isExpanded
         self.accounts = accounts
         setUpAccountsViewModels(accounts: accounts)
-        loadFavicon()
     }
     
     private func setUpAccountsViewModels(accounts: [SecureVaultModels.WebsiteAccount]) {
@@ -97,16 +90,6 @@ class AutofillLoginPromptViewModel: ObservableObject {
             showMoreOptions = true
         }
         accountsViewModels = accountsToShow.map { AccountViewModel(account: $0) }
-    }
-    
-    private func loadFavicon() {
-        FaviconsHelper.loadFaviconSync(forDomain: domain,
-                                       usingCache: .tabs,
-                                       useFakeFavicon: true) { image, _ in
-            if let image = image {
-                self.faviconImage = image
-            }
-        }
     }
     
     func dismissView() {

@@ -45,7 +45,7 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
         let label = UILabel(frame: CGRect.zero)
         label.font = .systemFont(ofSize: 16)
         label.textColor = .gray90
-        label.text = "Save and Autofill Logins"
+        label.text = UserText.autofillEnableSettings
         return label
     }()
     

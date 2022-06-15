@@ -28,7 +28,7 @@ class AutofillItemsLockedView: UIView {
 
         let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title3)
         label.font = UIFont.systemFont(ofSize: descriptor.pointSize, weight: .semibold)
-        label.text = "Unlock Autofill"
+        label.text = UserText.autofillLockedViewTitle
         label.numberOfLines = 0
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping

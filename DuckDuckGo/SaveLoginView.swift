@@ -72,6 +72,8 @@ struct SaveLoginView: View {
     
     private func makeBodyView(_ geometry: GeometryProxy) -> some View {
         // Workaround for the isSmallFrame property to return the correct value
+        // .async to fix the "Modifying state during view update, this will cause undefined behavior." issue
+        // TODO remove this for V2
         DispatchQueue.main.async { self.frame = geometry.size }
         
         return ZStack {
@@ -116,8 +118,7 @@ struct SaveLoginView: View {
     var titleHeaderView: some View {
         VStack {
             HStack {
-                Image(uiImage: viewModel.faviconImage)
-                    .resizable()
+                FaviconView(viewModel: FaviconViewModel(domain: viewModel.accountDomain))
                     .scaledToFit()
                     .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
                 Text(viewModel.accountDomain)

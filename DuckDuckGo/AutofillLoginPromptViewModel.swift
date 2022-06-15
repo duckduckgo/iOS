@@ -66,13 +66,8 @@ class AutofillLoginPromptViewModel: ObservableObject {
         }
     }
     
-    var message: String {
-        return "Use Saved Login?" // TODO string
-    }
-    
-    var moreOptionsButtonString: String {
-        return "More Options" // TODO string
-    }
+    let message = UserText.autofillLoginPromptTitle
+    let moreOptionsButtonString = UserText.autofillLoginPromptMoreOptions
     
     internal init?(accounts: [SecureVaultModels.WebsiteAccount], isExpanded: Bool) {
         guard let firstAccount = accounts.first else {

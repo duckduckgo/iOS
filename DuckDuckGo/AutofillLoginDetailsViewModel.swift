@@ -83,20 +83,20 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
     
     func copyToPasteboard(_ action: PasteboardCopyAction) {
-        var itemName = ""
+        var message = ""
         switch action {
         case .username:
-            itemName = "Username"
+            message = UserText.autofillCopyToastUsernameCopied
             UIPasteboard.general.string = username
         case .password:
-            itemName = "Password"
+            message = UserText.autofillCopyToastPasswordCopied
             UIPasteboard.general.string = password
         case .address:
-            itemName = "Address"
+            message = UserText.autofillCopyToastAddressCopied
             UIPasteboard.general.string = address
         }
         
-        presentCopyConfirmation(message: "\(itemName) copied")
+        presentCopyConfirmation(message: message)
     }
     
     private func presentCopyConfirmation(message: String) {
@@ -163,7 +163,7 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     
     func updateData(with account: SecureVaultModels.WebsiteAccount) {
         self.title = account.name
-        self.subtitle = "Login last updated \(dateFormatter.string(from: account.lastUpdated))"
+        self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain
     }
 

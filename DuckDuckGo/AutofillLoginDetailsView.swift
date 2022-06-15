@@ -44,16 +44,22 @@ struct AutofillLoginDetailsView: View {
     private var editModeContentView: some View {
         Group {
             Section {
-                editableCell("Login Name", subtitle: $viewModel.title)
+                editableCell(UserText.autofillLoginDetailsLoginName,
+                             subtitle: $viewModel.title)
             }
     
             Section {
-                editableCell("Username", subtitle: $viewModel.username)
-                editableCell("Password", subtitle: $viewModel.password, secure: true)
+                editableCell(UserText.autofillLoginDetailsUsername,
+                             subtitle: $viewModel.username)
+                
+                editableCell(UserText.autofillLoginDetailsPassword,
+                             subtitle: $viewModel.password,
+                             secure: true)
             }
             
             Section {
-                editableCell("Address", subtitle: $viewModel.address)
+                editableCell(UserText.autofillLoginDetailsAddress,
+                             subtitle: $viewModel.address)
             }
         }
     }
@@ -65,12 +71,13 @@ struct AutofillLoginDetailsView: View {
             }
             
             Section {
-                CopyableCell(title: "Username", subtitle: viewModel.username, selectedCell: $viewModel.selectedCell) {
+                CopyableCell(title: UserText.autofillLoginDetailsUsername, subtitle: viewModel.username, selectedCell: $viewModel.selectedCell) {
                     viewModel.copyToPasteboard(.username)
                     viewModel.selectedCell = nil
                 }
 
-                CopyablePasswordCell(title: "Password", password: viewModel.userVisiblePassword,
+                CopyablePasswordCell(title: UserText.autofillLoginDetailsPassword,
+                                     password: viewModel.userVisiblePassword,
                                      selectedCell: $viewModel.selectedCell,
                                      isPasswordHidden: $viewModel.isPasswordHidden) {
                     
@@ -80,7 +87,9 @@ struct AutofillLoginDetailsView: View {
             }
             
             Section {
-                CopyableCell(title: "Address", subtitle: viewModel.address, selectedCell: $viewModel.selectedCell) {
+                CopyableCell(title: UserText.autofillLoginDetailsAddress,
+                             subtitle: viewModel.address,
+                             selectedCell: $viewModel.selectedCell) {
                     viewModel.copyToPasteboard(.address)
                     viewModel.selectedCell = nil
                 }

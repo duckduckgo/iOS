@@ -58,11 +58,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
         installConstraints()
     }
-    
-    deinit {
-        print("DEINIT DETAILS")
-    }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         authenticate()

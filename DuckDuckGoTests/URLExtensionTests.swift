@@ -24,7 +24,7 @@ import XCTest
 class URLExtensionTests: XCTestCase {
     
     func testWhenHostnameHasMultiplePunycodedPartsThenItIsConsideredValid() {
-        XCTAssertTrue(URL.isValidHostname("82.xn--b1aew.xn--p1ai"))
+        XCTAssertTrue("82.xn--b1aew.xn--p1ai".isValidHostname)
     }
 
     func testWhenUrlHasHttpSchemeThenToHttpsUpdatesItToHttps() {

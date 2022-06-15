@@ -84,7 +84,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     func updateFor(favorite: Bookmark) {
         self.favorite = favorite
         
-        let host = favorite.url?.host?.dropPrefix(prefix: "www.") ?? ""
+        let host = favorite.url?.host?.droppingWwwPrefix() ?? ""
         
         isAccessibilityElement = true
         accessibilityTraits = .button
@@ -93,7 +93,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         titleLabel.text = favorite.displayTitle
         iconBackground.backgroundColor = UIColor.forDomain(host)
         
-        if let domain = favorite.url?.host?.dropPrefix(prefix: "www."),
+        if let domain = favorite.url?.host?.droppingWwwPrefix(),
            let fakeFavicon = UIImageView.createFakeFavicon(forDomain: favorite.url?.host ?? "",
                                                            backgroundColor: UIColor.forDomain(domain),
                                                            bold: false) {

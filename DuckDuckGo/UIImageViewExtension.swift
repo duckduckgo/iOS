@@ -130,7 +130,7 @@ extension UIImageView {
             label.font = bold ? UIFont.boldAppFont(ofSize: fontSize) : UIFont.appFont(ofSize: fontSize)
             label.textColor = UIColor.white
             label.textAlignment = .center
-            label.text = String(domain.dropPrefix(prefix: "www.").prefix(1).uppercased())
+            label.text = String(domain.droppingWwwPrefix().prefix(1).uppercased())
             label.sizeToFit()
              
             context.translateBy(x: (imageRect.width - label.bounds.width) / 2,

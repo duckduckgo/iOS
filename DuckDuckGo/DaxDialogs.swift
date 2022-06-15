@@ -293,7 +293,7 @@ class DaxDialogs {
             let entityPrevalence = majorTrackerEntity.prevalence else { return nil }
         settings.browsingMajorTrackingSiteShown = true
         settings.browsingWithoutTrackersShown = true
-        return BrowsingSpec.siteOwnedByMajorTracker.format(args: host.dropPrefix(prefix: "www."),
+        return BrowsingSpec.siteOwnedByMajorTracker.format(args: host.droppingWwwPrefix(),
                                                            entityName,
                                                            entityPrevalence)
     }

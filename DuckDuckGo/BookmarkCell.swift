@@ -45,7 +45,7 @@ class BookmarkCell: UITableViewCell {
                 if let linkTitle = bookmark.title?.trimWhitespace(), !linkTitle.isEmpty {
                     title.text = linkTitle
                 } else {
-                    title.text = bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
+                    title.text = bookmark.url?.host?.droppingWwwPrefix() ?? ""
                 }
                 
                 accessoryView = nil

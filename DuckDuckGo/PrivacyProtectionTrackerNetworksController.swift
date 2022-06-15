@@ -196,7 +196,7 @@ struct SiteRatingTrackerNetworkSectionBuilder {
             guard let domain = tracker.domain else { continue }
             let networkName = tracker.networkNameForDisplay
 
-            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain.dropPrefix(prefix: "www."),
+            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain.droppingWwwPrefix(),
                                                                      value: tracker.knownTracker?.category ?? "")
 
             if let sectionIndex = sections.firstIndex(where: { $0.name == networkName }) {

@@ -47,11 +47,11 @@ class StringExtensionTests: XCTestCase {
     }
     
     func testWhenDropPrefixIsCalledWithoutMatchingPrefixThenStringIsUnchanged() {
-        XCTAssertEqual("subdomain.example.com", "subdomain.example.com".dropPrefix(prefix: "www."))
+        XCTAssertEqual("subdomain.example.com", "subdomain.example.com".droppingWwwPrefix())
     }
 
     func testWhenDropPrefixIsCalledWithMatchingPrefixThenItIsDropped() {
-        XCTAssertEqual("example.com", "www.example.com".dropPrefix(prefix: "www."))
+        XCTAssertEqual("example.com", "www.example.com".droppingWwwPrefix())
     }
     
     func testTrimWhitespaceRemovesLeadingSpaces() {
@@ -181,6 +181,14 @@ class StringExtensionTests: XCTestCase {
             XCTAssertEqual(attachments[1].bounds, expectedRect)
         }
     }
+}
+
+extension String {
+
+    var punycodedUrl: URL? {
+        URL(trimmedAddressBarString: self.trimWhitespace())
+    }
+
 }
 
 extension UIImage {

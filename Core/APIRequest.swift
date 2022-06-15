@@ -125,7 +125,7 @@ public class APIRequest {
                 var etag = httpResponse?.headerValue(for: APIHeaders.Name.etag)
                 
                 // Handle weak etags
-                etag = etag?.dropPrefix(prefix: "W/")
+                etag = etag?.dropping(prefix: "W/")
                 completion(Response(data: data, etag: etag, urlResponse: response), nil)
             }
         }

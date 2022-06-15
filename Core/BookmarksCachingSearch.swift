@@ -137,7 +137,7 @@ public class BookmarksCachingSearch {
                 entry.score += 100
             }
             
-            let domain = entry.bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
+            let domain = entry.bookmark.url?.host?.droppingWwwPrefix() ?? ""
             
             // Tokenized matches
             

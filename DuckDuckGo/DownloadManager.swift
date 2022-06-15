@@ -162,7 +162,7 @@ extension DownloadManager {
         var fileExtension = downloadsDirectory.appendingPathComponent(filename).pathExtension
         fileExtension = fileExtension.count > 0 ? ".\(fileExtension)" : ""
         
-        let filePrefix = filename.drop(suffix: fileExtension)
+        let filePrefix = filename.dropping(suffix: fileExtension)
 
         let newFilename = counter > 0 ? "\(filePrefix) \(counter)\(fileExtension)" : filename
         

@@ -19,6 +19,7 @@
 
 import Foundation
 import JavaScriptCore
+import BrowserServicesKit
 
 extension URL {
 
@@ -28,8 +29,8 @@ extension URL {
 
     public func toDesktopUrl() -> URL {
         guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return self }
-        components.host = components.host?.dropPrefix(prefix: "m.")
-        components.host = components.host?.dropPrefix(prefix: "mobile.")
+        components.host = components.host?.dropping(prefix: "m.")
+        components.host = components.host?.dropping(prefix: "mobile.")
         return components.url ?? self
     }
 
@@ -115,7 +116,7 @@ extension URL {
         guard scheme == URLProtocol.http.rawValue || scheme == URLProtocol.https.rawValue else { return false }
         guard url.user == nil else { return false }
         guard let host = url.host else { return false }
-        guard isValidHost(host) else { return false }
+        guard host.isValidHost else { return false }
         return true
     }
 
@@ -128,26 +129,6 @@ extension URL {
             return path
         }
         return "\(URLProtocol.http.scheme)\(path)"
-    }
-
-    private static func isValidHost(_ host: String) -> Bool {
-        return isValidHostname(host) || isValidIpHost(host)
-    }
-
-    public static func isValidHostname(_ host: String) -> Bool {
-        if host == Host.localhost.rawValue {
-            return true
-        }
-
-        // from https://stackoverflow.com/a/25717506/73479
-        let hostNameRegex = "^(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z0-9-]{2,63})$"
-        return host.matches(pattern: hostNameRegex)
-    }
-
-    public static func isValidIpHost(_ host: String) -> Bool {
-        // from https://stackoverflow.com/a/30023010/73479
-        let ipRegex = "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-        return host.matches(pattern: ipRegex)
     }
 
     /// Uses JavaScriptCore to determine if the bookmarklet is valid JavaScript

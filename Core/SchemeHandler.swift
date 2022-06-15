@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 public class SchemeHandler {
     
@@ -32,17 +33,7 @@ public class SchemeHandler {
         case external(Action)
         case unknown
     }
-    
-    private enum NavigationalScheme: String {
-        case http
-        case https
-        case ftp
-        case file
-        case data
-        case blob
-        case about
-    }
-    
+
     private enum PlatformScheme: String {
         case tel
         case mailto
@@ -68,7 +59,7 @@ public class SchemeHandler {
             return .external(.cancel)
         }
         
-        guard NavigationalScheme(rawValue: schemeString) == nil else {
+        if URL.NavigationalScheme.navigationalSchemes.contains(.init(rawValue: schemeString)) {
             return .navigational
         }
         

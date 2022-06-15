@@ -43,7 +43,7 @@ extension TabViewController {
             self?.onShareAction(forUrl: url, atPoint: nil)
         })
 
-        return UIMenu(title: url.host?.dropPrefix(prefix: "www.") ?? "", children: items + providedElements)
+        return UIMenu(title: url.host?.droppingWwwPrefix() ?? "", children: items + providedElements)
     }
     
     func buildLongPressMenu(atPoint point: Point, forUrl url: URL) -> UIAlertController {

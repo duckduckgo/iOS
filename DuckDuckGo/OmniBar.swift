@@ -368,7 +368,7 @@ class OmniBar: UIView {
             }
             resignFirstResponder()
 
-            if let url = query.punycodedUrl {
+            if let url = URL(trimmedAddressBarString: query), url.isValid {
                 omniDelegate?.onOmniQuerySubmitted(url.absoluteString)
             } else {
                 omniDelegate?.onOmniQuerySubmitted(query)
@@ -499,7 +499,7 @@ extension OmniBar: Themable {
         
         searchStackContainer?.tintColor = theme.barTintColor
         
-        if let url = textField.text?.punycodedUrl {
+        if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimWhitespace()) }) {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
         textField.textColor = theme.searchBarTextColor

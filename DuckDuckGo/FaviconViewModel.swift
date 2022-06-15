@@ -21,8 +21,8 @@ import SwiftUI
 import Core
 
 final class FaviconViewModel {
-    @Published var image = UIImage(systemName: "globe")!
-    
+    @Published var image = UIImage(named: "Logo")!
+
     private let domain: String
     private let useFakeFavicon: Bool
     private let cacheType: Favicons.CacheType

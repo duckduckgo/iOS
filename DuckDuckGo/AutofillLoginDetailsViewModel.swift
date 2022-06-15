@@ -159,24 +159,12 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     
     @Published var title: String = ""
     @Published var subtitle: String = ""
-    @Published var image = UIImage(systemName: "globe")!
+    @Published var domain: String = ""
     
     func updateData(with account: SecureVaultModels.WebsiteAccount) {
         self.title = account.name
         self.subtitle = "Login last updated \(dateFormatter.string(from: account.lastUpdated))"
+        self.domain = account.domain
+    }
 
-        fetchImage(with: account.domain)
-    }
-    
-    private func fetchImage(with domain: String) {
-        FaviconsHelper.loadFaviconSync(forDomain: domain,
-                                       usingCache: .tabs,
-                                       useFakeFavicon: true) { image, _ in
-            if let image = image {
-                self.image = image
-            } else {
-                self.image = UIImage(systemName: "globe")!
-            }
-        }
-    }
 }

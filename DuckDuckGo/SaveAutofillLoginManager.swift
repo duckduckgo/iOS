@@ -50,8 +50,7 @@ struct SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
     // If we have a stored credential with the same password on an empty username account
     // we want to update it instead of creating a new one
     private mutating func useStoredCredentialIfNecessary() {
-        if savedMatchingPasswordWithoutUsername != nil {
-            var storedCredential = savedMatchingPasswordWithoutUsername!
+        if var storedCredential = savedMatchingPasswordWithoutUsername {
             storedCredential.account.username = credentials.account.username
             credentials = storedCredential
         }

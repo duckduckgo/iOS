@@ -247,6 +247,7 @@ class TabViewController: UIViewController {
         addDoNotSellObserver()
         addTextSizeObserver()
         addDuckDuckGoEmailSignOutObserver()
+        addAutofillEnabledObserver()
         registerForNotifications()
     }
 
@@ -708,6 +709,13 @@ class TabViewController: UIViewController {
                                                object: nil)
     }
     
+    private func addAutofillEnabledObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onAutofillEnabledChange),
+                                               name: AppUserDefaults.Notifications.autofillEnabledChange,
+                                               object: nil)
+    }
+    
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
     }
@@ -756,6 +764,10 @@ class TabViewController: UIViewController {
         if AppUrls().isDuckDuckGoEmailProtection(url: url) {
             webView.evaluateJavaScript("window.postMessage({ emailProtectionSignedOut: true }, window.origin);")
         }
+    }
+    
+    @objc func onAutofillEnabledChange() {
+        reloadUserScripts()
     }
 
     private func resetNavigationBar() {

@@ -61,7 +61,10 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     var isAutofillEnabled: Bool {
         get { appSettings.autofill }
-        set { appSettings.autofill = newValue }
+        set {
+            appSettings.autofill = newValue
+            NotificationCenter.default.post(name: AppUserDefaults.Notifications.autofillEnabledChange, object: self)
+        }
     }
     
     init(appSettings: AppSettings) {

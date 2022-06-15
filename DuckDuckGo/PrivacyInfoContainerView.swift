@@ -78,18 +78,17 @@ class PrivacyInfoContainerView: UIView {
         }
     }
     
-    private func loadAnimations(for theme: Theme) {
-        let style = theme.currentImageSet
-        let cache = LRUAnimationCache.sharedCache
+    private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
+        let useLightStyle = theme.currentImageSet == .light
         
-        shieldAnimation.animation = Animation.named(style == .light ? "shield" : "dark-shield", animationCache: cache)
-        shieldDotAnimation.animation = Animation.named(style == .light ? "shield-dot" : "dark-shield-dot", animationCache: cache)
+        shieldAnimation.animation = Animation.named(useLightStyle ? "shield" : "dark-shield", animationCache: cache)
+        shieldDotAnimation.animation = Animation.named(useLightStyle ? "shield-dot" : "dark-shield-dot", animationCache: cache)
         
-        trackers1Animation.animation = Animation.named(style == .light ? "trackers-1" : "dark-trackers-1", animationCache: cache)
-        trackers2Animation.animation = Animation.named(style == .light ? "trackers-2" : "dark-trackers-2", animationCache: cache)
-        trackers3Animation.animation = Animation.named(style == .light ? "trackers-3" : "dark-trackers-3", animationCache: cache)
+        trackers1Animation.animation = Animation.named(useLightStyle ? "trackers-1" : "dark-trackers-1", animationCache: cache)
+        trackers2Animation.animation = Animation.named(useLightStyle ? "trackers-2" : "dark-trackers-2", animationCache: cache)
+        trackers3Animation.animation = Animation.named(useLightStyle ? "trackers-3" : "dark-trackers-3", animationCache: cache)
         
-        currentlyLoadedStyle = style
+        currentlyLoadedStyle = theme.currentImageSet
     }
 }
 

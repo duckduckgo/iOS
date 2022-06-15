@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import SwiftUI
+import Core
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
@@ -118,7 +119,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 }
             }
         } catch {
-            print("Can't retrieve password")
+            Pixel.fire(pixel: .secureVaultError)
         }
     }
 
@@ -143,7 +144,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 }
             }
         } catch {
-            
+            Pixel.fire(pixel: .secureVaultError)
         }
     }
 }

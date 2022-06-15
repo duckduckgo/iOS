@@ -21,18 +21,12 @@ import UIKit
 import BrowserServicesKit
 import Core
 
-protocol SaveLoginViewModelProtocol {
-    var faviconImage: UIImage { get }
-}
-
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
 }
 
-final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
-    @Published var faviconImage = UIImage(systemName: "globe")!
-
+final class SaveLoginViewModel: ObservableObject {
     @UserDefaultsWrapper(key: .autofillSaveModalRejectionCount, defaultValue: 0)
     private var autofillSaveModalRejectionCount: Int
     
@@ -97,17 +91,6 @@ final class SaveLoginViewModel: SaveLoginViewModelProtocol, ObservableObject {
     internal init(credentialManager: SaveAutofillLoginManagerProtocol, layoutType: SaveLoginView.LayoutType? = nil) {
         self.credentialManager = credentialManager
         self.attributedLayoutType = layoutType
-        loadFavicon()
-    }
-    
-    private func loadFavicon() {
-        FaviconsHelper.loadFaviconSync(forDomain: credentialManager.accountDomain,
-                                       usingCache: .tabs,
-                                       useFakeFavicon: true) { image, _ in
-            if let image = image {
-                self.faviconImage = image
-            }
-        }
     }
     
     private func updateRejectionCount() {

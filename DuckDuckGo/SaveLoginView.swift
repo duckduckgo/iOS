@@ -118,8 +118,7 @@ struct SaveLoginView: View {
     var titleHeaderView: some View {
         VStack {
             HStack {
-                Image(uiImage: viewModel.faviconImage)
-                    .resizable()
+                FaviconView(viewModel: FaviconViewModel(domain: viewModel.accountDomain))
                     .scaledToFit()
                     .frame(width: Const.Size.logoImage, height: Const.Size.logoImage)
                 Text(viewModel.accountDomain)

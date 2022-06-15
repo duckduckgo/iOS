@@ -296,7 +296,7 @@
 "dax.hide.title" = "Dölj återstående tips?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Dina DuckDuckGo-sökningar är anonyma och jag lagrar aldrig din sökhistorik. Någonsin. 🙌";
+"dax.onboarding.browsing.after.search" = "Dina DuckDuckGo-sökningar är anonyma. Alltid. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";

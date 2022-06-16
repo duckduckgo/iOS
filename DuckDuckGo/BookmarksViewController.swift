@@ -270,18 +270,20 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func configureToolbarMoreItem() {
-        if #available(iOS 14, *) {
-            if tableView.isEditing {
-                if toolbarItems?.count ?? 0 >= 5 {
-                    toolbarItems?.remove(at: 4)
-                    toolbarItems?.remove(at: 3)
-                }
-            } else {
+        guard #available(iOS 14, *) else { return }
+
+        if tableView.isEditing {
+            if toolbarItems?.count ?? 0 >= 5 {
+                toolbarItems?.remove(at: 4)
+                toolbarItems?.remove(at: 3)
+            }
+        } else {
+            if toolbarItems?.contains(moreBarButtonItem) == false {
                 let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
                 toolbarItems?.insert(flexibleSpace, at: 3)
                 toolbarItems?.insert(moreBarButtonItem, at: 4)
-                refreshMoreButton()
             }
+            refreshMoreButton()
         }
     }
 

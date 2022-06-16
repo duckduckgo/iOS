@@ -164,4 +164,8 @@ final class PrivacyIconAndTrackersAnimator {
     func completeAnimations(in privacyContainerView: PrivacyInfoContainerView) {
  
     }
+    
+    func resetImageProvider() {
+        trackerAnimationImageProvider.reset()
+    }
 }

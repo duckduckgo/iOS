@@ -40,23 +40,24 @@ extension TrackerAnimationImageProvider: AnimationImageProvider {
 
 final class TrackerAnimationImageProvider {
     
-    private var lastTrackerImages = [CGImage]()
     public var trackerImagesCount: Int { lastTrackerImages.count }
+    
+    private var lastTrackerImages = [CGImage]()
+    private let trackerImageCache = TrackerImageCache()
+    
+    public func reset() {
+        trackerImageCache.resetCache()
+    }
     
     public func loadTrackerImages(from siteRating: SiteRating) {
         let sortedEntities = sortedEntities(from: siteRating).prefix(Const.maxNumberOfIcons)
         
         var images: [CGImage] = sortedEntities.map {
-            if let logo = logos[$0] {
-                return logo
-            } else if let letter = letters[$0[$0.startIndex]] {
-                return letter
-            } else {
-                return blankTrackerImage
-            }
+            trackerImageCache.trackerImage(for: $0)
         }
+        
         if images.count == Const.maxNumberOfIcons {
-            images[Const.maxNumberOfIcons - 1] = shadowTrackerImage
+            images[Const.maxNumberOfIcons - 1] = trackerImageCache.shadowTrackerImage
         }
         
         lastTrackerImages = images
@@ -93,86 +94,4 @@ final class TrackerAnimationImageProvider {
                 return "aeiou".contains(r[r.startIndex])
             }
     }
-    
-    // MARK: - Images
-    
-    var shadowTrackerImage: CGImage { UIImage(named: "shadowtracker")!.cgImage! }
-    var blankTrackerImage: CGImage { UIImage(named: "blanktracker")!.cgImage! }
-    
-    var letters: [Character: CGImage] {
-        return [
-            "a": UIImage(named: "a")!.cgImage!,
-            "b": UIImage(named: "b")!.cgImage!,
-            "c": UIImage(named: "c")!.cgImage!,
-            "d": UIImage(named: "d")!.cgImage!,
-            "e": UIImage(named: "e")!.cgImage!,
-            "f": UIImage(named: "f")!.cgImage!,
-            "g": UIImage(named: "g")!.cgImage!,
-            "h": UIImage(named: "h")!.cgImage!,
-            "i": UIImage(named: "i")!.cgImage!,
-            "j": UIImage(named: "j")!.cgImage!,
-            "k": UIImage(named: "k")!.cgImage!,
-            "l": UIImage(named: "l")!.cgImage!,
-            "m": UIImage(named: "m")!.cgImage!,
-            "n": UIImage(named: "n")!.cgImage!,
-            "o": UIImage(named: "o")!.cgImage!,
-            "p": UIImage(named: "p")!.cgImage!,
-            "q": UIImage(named: "q")!.cgImage!,
-            "r": UIImage(named: "r")!.cgImage!,
-            "s": UIImage(named: "s")!.cgImage!,
-            "t": UIImage(named: "t")!.cgImage!,
-            "u": UIImage(named: "u")!.cgImage!,
-            "v": UIImage(named: "v")!.cgImage!,
-            "w": UIImage(named: "w")!.cgImage!,
-            "x": UIImage(named: "x")!.cgImage!,
-            "y": UIImage(named: "y")!.cgImage!,
-            "z": UIImage(named: "z")!.cgImage!
-        ]
-    }
-    
-    var logos: [String: CGImage] {
-        return [
-            "adform": UIImage(named: "adform")!.cgImage!,
-            "adobe": UIImage(named: "adobe")!.cgImage!,
-            "amazon": UIImage(named: "amazon")!.cgImage!,
-            "amobee": UIImage(named: "amobee")!.cgImage!,
-            "appnexus": UIImage(named: "appnexus")!.cgImage!,
-            "centro": UIImage(named: "centro")!.cgImage!,
-            "cloudflare": UIImage(named: "cloudflare")!.cgImage!,
-            "comscore": UIImage(named: "comscore")!.cgImage!,
-            "conversant": UIImage(named: "conversant")!.cgImage!,
-            "criteo": UIImage(named: "criteo")!.cgImage!,
-            "dataxu": UIImage(named: "dataxu")!.cgImage!,
-            "facebook": UIImage(named: "facebook")!.cgImage!,
-            "google": UIImage(named: "google")!.cgImage!,
-            "hotjar": UIImage(named: "hotjar")!.cgImage!,
-            "indexexchange": UIImage(named: "indexexchange")!.cgImage!,
-            "iponweb": UIImage(named: "iponweb")!.cgImage!,
-            "linkedin": UIImage(named: "linkedin")!.cgImage!,
-            "lotame": UIImage(named: "lotame")!.cgImage!,
-            "mediamath": UIImage(named: "mediamath")!.cgImage!,
-            "neustar": UIImage(named: "neustar")!.cgImage!,
-            "newrelic": UIImage(named: "newrelic")!.cgImage!,
-            "nielsen": UIImage(named: "nielsen")!.cgImage!,
-            "openx": UIImage(named: "openx")!.cgImage!,
-            "oracle": UIImage(named: "oracle")!.cgImage!,
-            "pubmatic": UIImage(named: "pubmatic")!.cgImage!,
-            "qwantcast": UIImage(named: "qwantcast")!.cgImage!,
-            "rubicon": UIImage(named: "rubicon")!.cgImage!,
-            "salesforce": UIImage(named: "salesforce")!.cgImage!,
-            "smartadserver": UIImage(named: "smartadserver")!.cgImage!,
-            "spotx": UIImage(named: "spotx")!.cgImage!,
-            "stackpath": UIImage(named: "stackpath")!.cgImage!,
-            "taboola": UIImage(named: "taboola")!.cgImage!,
-            "tapad": UIImage(named: "tapad")!.cgImage!,
-            "the trade desk": UIImage(named: "thetradedesk")!.cgImage!,
-            "towerdata": UIImage(named: "towerdata")!.cgImage!,
-            "twitter": UIImage(named: "twitter")!.cgImage!,
-            "verizon media": UIImage(named: "verizonmedia")!.cgImage!,
-            "windows": UIImage(named: "windows")!.cgImage!,
-            "xaxis": UIImage(named: "xaxis")!.cgImage!
-        ]
-    }
-    
-   
 }

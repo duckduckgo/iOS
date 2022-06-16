@@ -296,7 +296,7 @@
 "dax.hide.title" = "Скрий оставащите съвети?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Търсенията ви в DuckDuckGo са анонимни и никога не съхранявам историята на вашите търсения. Никога. 🙌";
+"dax.onboarding.browsing.after.search" = "Търсенето в DuckDuckGo е анонимно. Винаги. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Слава Богу!";

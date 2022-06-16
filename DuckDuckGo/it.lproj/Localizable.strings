@@ -296,7 +296,7 @@
 "dax.hide.title" = "Nascondere i suggerimenti rimanenti?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Le tue ricerche su DuckDuckGo sono anonime e non salvo mai la cronologia delle ricerche. Mai. 🙌";
+"dax.onboarding.browsing.after.search" = "Le tue ricerche su DuckDuckGo sono anonime. Sempre. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Accidenti!";

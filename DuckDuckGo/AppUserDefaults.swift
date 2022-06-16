@@ -26,6 +26,7 @@ public class AppUserDefaults: AppSettings {
         public static let doNotSellStatusChange = Notification.Name("com.duckduckgo.app.DoNotSellStatusChange")
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
         public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
+        public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
     }
 
     private let groupName: String
@@ -166,6 +167,9 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
+    
+    @UserDefaultsWrapper(key: .autofill, defaultValue: true)
+    var autofill: Bool
     
 }
 

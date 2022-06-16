@@ -810,6 +810,15 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "Downloads", sender: self)
     }
     
+    @available(iOS 14.0, *)
+    fileprivate func launchAutofillLogins() {
+        let appSettings = AppDependencyProvider.shared.appSettings
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        autofillSettingsViewController.delegate = self
+        let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
     fileprivate func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
     }
@@ -1404,6 +1413,12 @@ extension MainViewController: TabDelegate {
     func tabDidRequestDownloads(tab: TabViewController) {
         launchDownloads()
     }
+    
+    func tabDidRequestAutofillLogins(tab: TabViewController) {
+        if #available(iOS 14.0, *) {
+            launchAutofillLogins()
+        }
+    }
 
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
@@ -1780,6 +1795,14 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
             Pixel.fire(pixel: .voiceSearchDone)
             loadQuery(query)
         }
+    }
+}
+
+// MARK: - AutofillLoginSettingsListViewControllerDelegate
+@available(iOS 14.0, *)
+extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
+    func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
+        controller.dismiss(animated: true)
     }
 }
 

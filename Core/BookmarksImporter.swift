@@ -22,7 +22,9 @@ import SwiftSoup
 import os.log
 
 public enum BookmarksImportError: Error {
-    case invalidHtml
+    case invalidHtmlNoDLTag
+    case invalidHtmlNoBodyTag
+    case safariTransformFailure
     case saveFailure
     case unknown
 }
@@ -58,10 +60,18 @@ final public class BookmarksImporter {
             try await saveBookmarks(importedBookmarks)
             NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
             return .success(importedBookmarks)
-        } catch BookmarksImportError.invalidHtml {
+        } catch BookmarksImportError.invalidHtmlNoDLTag {
             NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
-            Pixel.fire(pixel: .bookmarkImportFailureParsing)
-            return .failure(.invalidHtml)
+            Pixel.fire(pixel: .bookmarkImportFailureParsingDL)
+            return .failure(.invalidHtmlNoDLTag)
+        } catch BookmarksImportError.invalidHtmlNoBodyTag {
+            NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
+            Pixel.fire(pixel: .bookmarkImportFailureParsingBody)
+            return .failure(.invalidHtmlNoBodyTag)
+        } catch BookmarksImportError.safariTransformFailure {
+            NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
+            Pixel.fire(pixel: .bookmarkImportFailureTransformingSafari)
+            return .failure(.safariTransformFailure)
         } catch BookmarksImportError.saveFailure {
             NotificationCenter.default.post(name: Notifications.importDidEnd, object: nil)
             Pixel.fire(pixel: .bookmarkImportFailureSaving)
@@ -76,25 +86,21 @@ final public class BookmarksImporter {
     func parseHtml(_ htmlContent: String) async throws {
         let document: Document = try SwiftSoup.parse(htmlContent)
 
-        do {
-            if isDocumentInSafariFormat(document) {
-                guard let newDocument = try transformSafariDocument(document: document) else {
-                    os_log("Safari format could not be handled", type: .debug)
-                    throw BookmarksImportError.invalidHtml
-                }
-                try parse(documentElement: newDocument, importedBookmark: nil)
-            } else {
-                try parse(documentElement: document, importedBookmark: nil)
+        if isDocumentInSafariFormat(document) {
+            guard let newDocument = try transformSafariDocument(document: document) else {
+                os_log("Safari format could not be handled", type: .debug)
+                throw BookmarksImportError.safariTransformFailure
             }
-        } catch {
-            throw BookmarksImportError.invalidHtml
+            try parse(documentElement: newDocument, importedBookmark: nil)
+        } else {
+            try parse(documentElement: document, importedBookmark: nil)
         }
     }
 
     /// transform Safari document into a standard bookmark html format
     func transformSafariDocument(document: Document) throws -> Document? {
         guard let body = try document.select("body").first() else {
-            throw BookmarksImportError.invalidHtml
+            throw BookmarksImportError.invalidHtmlNoBodyTag
         }
 
         let newDocument: Document = Document("")
@@ -126,7 +132,7 @@ final public class BookmarksImporter {
 
     func parse(documentElement: Element, importedBookmark: BookmarkOrFolder?, inFavorite: Bool = false) throws {
         guard let firstDL = try documentElement.select("DL").first() else {
-            throw BookmarksImportError.invalidHtml
+            throw BookmarksImportError.invalidHtmlNoDLTag
         }
         try firstDL.children()
                 .filter({ try $0.select("DT").hasText() })

@@ -97,7 +97,7 @@ class BookmarksImporterTests: XCTestCase {
             try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_invalid.html"))
             XCTFail("Expected parsing of HTML to fail, but succeeded")
         } catch {
-            XCTAssertEqual(error as? BookmarksImportError, .invalidHtml)
+            XCTAssertEqual(error as? BookmarksImportError, .invalidHtmlNoDLTag)
         }
     }
 

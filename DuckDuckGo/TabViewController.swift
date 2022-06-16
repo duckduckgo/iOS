@@ -903,6 +903,7 @@ class TabViewController: UIViewController {
     }
     
     deinit {
+        temporaryDownloadForPreviewedFile?.cancel()
         removeMessageHandlers()
         removeObservers()
     }
@@ -1112,6 +1113,7 @@ extension TabViewController: WKNavigationDelegate {
                                                                              cookieStore: cookieStore,
                                                                              temporary: true)
         } else {
+            temporaryDownloadForPreviewedFile?.cancel()
             temporaryDownloadForPreviewedFile = nil
         }
     }

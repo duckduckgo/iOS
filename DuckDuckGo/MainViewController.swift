@@ -118,7 +118,6 @@ class MainViewController: UIViewController {
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
                 

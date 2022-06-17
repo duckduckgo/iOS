@@ -64,7 +64,10 @@ public class BookmarksCachingSearch {
     private func loadCache() {
         bookmarksStore.bookmarksAndFavorites { bookmarks in
             self.cachedBookmarksAndFavorites = bookmarks
-            self.cacheLoadedCondition.resolve()
+            if !self.cacheLoadedCondition.isResolved {
+                self.cacheLoadedCondition.resolve()
+            }
+            
         }
     }
     

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1653502015972,
+    "version": 1654870517289,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -151,6 +151,10 @@
                     "reason": "content not loading"
                 }
             ]
+        },
+        "cookie": {
+            "exceptions": [],
+            "state": "disabled"
         },
         "customUserAgent": {
             "settings": {
@@ -593,10 +597,11 @@
                                 "rule": "googletagmanager.com/gtm.js",
                                 "domains": [
                                     "ah.nl",
+                                    "dailyherald.com",
                                     "iltalehti.fi",
                                     "rbcroyalbank.com"
                                 ],
-                                "reason": "page not loading, video not loading, internal ads blocked"
+                                "reason": "page/video/image not loading, internal ads blocked"
                             }
                         ]
                     },

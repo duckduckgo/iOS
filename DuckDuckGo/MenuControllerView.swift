@@ -21,10 +21,9 @@ import SwiftUI
 import UIKit
 
 extension View {
-    
+
     func menuController(_ title: String, action: @escaping () -> Void) -> some View {
         MenuControllerView(content: self, title: title, action: action)
-            .fixedSize()
     }
 
 }
@@ -34,7 +33,7 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
     let content: Content
     let title: String
     let action: () -> Void
-
+    
     func makeCoordinator() -> Coordinator<Content> {
         Coordinator(title: title, action: action)
     }
@@ -63,7 +62,7 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
             self.title = title
             self.action = action
         }
-        
+   
         @objc func tap(_ gestureRecognizer: UILongPressGestureRecognizer) {
             let menu = UIMenuController.shared
 
@@ -79,7 +78,6 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
 
             menu.showMenu(from: view, rect: view.bounds)
         }
-
     }
     
     class HostingController<Content: View>: UIHostingController<Content> {

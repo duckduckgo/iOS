@@ -296,7 +296,7 @@
 "dax.hide.title" = "Vai paslēpt pārējos padomus?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Tavi DuckDuckGo meklējumi ir anonīmi, un es nekad neuzglabāju tavu meklēšanas vēsturi. Nekad. 🙌";
+"dax.onboarding.browsing.after.search" = "Tavi DuckDuckGo meklējumi ir anonīmi. Vienmēr. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pē!";

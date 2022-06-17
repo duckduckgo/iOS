@@ -168,6 +168,11 @@ public enum PixelName: String {
     
     case bookmarkImportSuccess = "m_bi_s"
     case bookmarkImportFailure = "m_bi_e"
+    case bookmarkImportFailureParsingDL = "m_bi_e_parsing_dl"
+    case bookmarkImportFailureParsingBody = "m_bi_e_parsing_body"
+    case bookmarkImportFailureTransformingSafari = "m_bi_e_transforming_safari"
+    case bookmarkImportFailureSaving = "m_bi_e_saving"
+    case bookmarkImportFailureUnknown = "m_bi_e_unknown"
     case bookmarkExportSuccess = "m_be_a"
     case bookmarkExportFailure = "m_be_e"
 
@@ -191,6 +196,35 @@ public enum PixelName: String {
 
     case jsAlertShown = "m_js_alert_shown"
     case jsAlertBlocked = "m_js_alert_blocked"
+    
+    case featureFlaggingInternalUserAuthenticated = "m_internal-user_authenticated"
+
+    case autofillLoginsSaveLoginModalOnboardingDisplayed = "m_autofill_logins_save_login_onboarding_inline_displayed"
+    
+    case autofillLoginsSaveLoginModalDisplayed = "m_autofill_logins_save_login_inline_displayed"
+    case autofillLoginsSaveLoginModalConfirmed = "m_autofill_logins_save_login_inline_confirmed"
+    
+    case autofillLoginsSavePasswordModalDisplayed = "m_autofill_logins_save_password_inline_displayed"
+    case autofillLoginsSavePasswordModalConfirmed = "m_autofill_logins_save_password_inline_confirmed"
+    
+    case autofillLoginsUpdatePasswordModalDisplayed = "m_autofill_logins_update_password_inline_displayed"
+    case autofillLoginsUpdatePasswordModalConfirmed = "m_autofill_logins_update_password_inline_confirmed"
+    
+    case autofillLoginsUpdateUsernameModelDisplayed = "m_autofill_logins_update_username_inline_displayed"
+    case autofillLoginsUpdateUsernameModelConfirmed = "m_autofill_logins_update_username_inline_confirmed"
+
+    case autofillLoginsFillLoginInlineDisplayed = "m_autofill_logins_fill_login_inline_displayed"
+    case autofillLoginsFillLoginInlineConfirmed = "m_autofill_logins_fill_login_inline_confirmed"
+    case autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated =
+            "m_autofill_logins_fill_login_inline_authentication_device-auth_authenticated"
+    case autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed = "m_autofill_logins_fill_login_inline_authentication_device-auth_failed"
+    case autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable =
+            "m_autofill_logins_fill_login_inline_authentication_device-auth_unavailable"
+
+    case autofillSettingsOpened = "m_autofill_settings_opened"
+
+    case secureVaultInitError = "m_secure_vault_init_error"
+    case secureVaultError = "m_secure_vault_error"
 
     // MARK: SERP pixels
     
@@ -234,8 +268,6 @@ public enum PixelName: String {
     
     case contentBlockingErrorReportingIssue = "m_content_blocking_error_reporting_issue"
     case contentBlockingCompilationTime = "m_content_blocking_compilation_time"
-    
-    case configDownloadMissingETag = "m_d_config_download_missing_etag2"
 
     case ampBlockingRulesCompilationFailed = "m_debug_amp_rules_compilation_failed"
 
@@ -295,9 +327,6 @@ public struct PixelParameters {
     public static let tabPreviewCountDelta = "cd"
     
     public static let etag = "et"
-    
-    public static let configuration = "configuration"
-    public static let responseCode = "responseCode"
 
     public static let emailCohort = "cohort"
     public static let emailLastUsed = "duck_address_last_used"

@@ -18,7 +18,8 @@ Tandai Preferensi Privasi Anda dengan GPC - Di dalam aplikasi, Global Privacy Co
 
 Anda tidak perlu menunggu untuk mengambil kembali privasi Anda. Bergabunglah dengan jutaan orang yang menggunakan DuckDuckGo dan lindungi banyak aktivitas online Anda sehari-hari dengan satu aplikasi. Ini privasi, disederhanakan.
 
-
+Note about our tracker blocking for 3rd-party sites and emails:
+DuckDuckGo never tracks you. When you leave our search engine to use other sites, we aim to block as many hidden trackers as possible, but we can't block them all for a few reasons. New trackers emerge all the time, so first we need to find them. Then, blocking these trackers can sometimes break functionality, so we need to develop new approaches without hurting usability. Additionally, in our app we offer a specific type of protection that stops scripts from even loading on 3rd-party sites, which isn’t offered on most popular browsers by default. Currently, this one loading protection doesn't apply to Microsoft scripts on 3rd-party sites due to contractual restrictions. However, our other tracker blocking methods (like 3rd-party cookie blocking) are unrestricted and continue to work against these trackers to protect your privacy online.
 
 Tentang Kami: https://duckduckgo.com/about/
 Cara Kerjanya: https://duckduckgo.com/app

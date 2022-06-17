@@ -1796,11 +1796,14 @@ extension MainViewController {
         guard let currentTab = currentTab, #available(iOS 14.0, *) else {
             return
         }
-        omniBar.backButton.menu = historyMenu(with: currentTab.webView.backForwardList.backList.reversed())
-        backButton.menu = historyMenu(with: currentTab.webView.backForwardList.backList.reversed())
         
-        omniBar.forwardButton.menu = historyMenu(with: currentTab.webView.backForwardList.forwardList)
-        forwardButton.menu = historyMenu(with: currentTab.webView.backForwardList.forwardList)
+        let backMenu = historyMenu(with: currentTab.webView.backForwardList.backList.reversed())
+        omniBar.backButton.menu = backMenu
+        backButton.menu = backMenu
+        
+        let forwardMenu = historyMenu(with: currentTab.webView.backForwardList.forwardList)
+        omniBar.forwardButton.menu = forwardMenu
+        forwardButton.menu = forwardMenu
     }
 
     @available(iOS 14.0, *)

@@ -1831,8 +1831,7 @@ extension MainViewController {
             }
         }
         
-        let maxNumberOfItems = 6
-        return Array(menuItems.suffix(maxNumberOfItems))
+        return menuItems
     }
 }
 // swiftlint:enable file_length

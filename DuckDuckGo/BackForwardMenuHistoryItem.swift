@@ -38,11 +38,12 @@ struct BackForwardMenuHistoryItem {
 struct BackForwardMenuHistoryItemURLSanitizer {
     
     static func sanitizedURLForDisplay(_ url: URL) -> String {
-        guard let components = URLComponents(string: url.absoluteString) else {
+        guard let punyURL = url.absoluteString.punycodedUrl,
+              let components = URLComponents(string: punyURL.absoluteString) else {
             return "\(url)"
         }
         
-        var displayURL = url.absoluteString
+        var displayURL = punyURL.absoluteString
 
         if let scheme = components.scheme {
             displayURL = displayURL.replacingOccurrences(of: scheme, with: "")

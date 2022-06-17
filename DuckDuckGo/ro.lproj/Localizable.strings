@@ -296,7 +296,7 @@
 "dax.hide.title" = "Ascunzi sfaturile rămase?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Căutările tale DuckDuckGo sunt anonime și nu îți voi stoca niciodată istoricul căutării. Niciodată. 🙌";
+"dax.onboarding.browsing.after.search" = "Căutările DuckDuckGo sunt anonime. Întotdeauna. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfiu!";

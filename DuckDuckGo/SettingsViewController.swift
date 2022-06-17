@@ -85,7 +85,7 @@ class SettingsViewController: UITableViewController {
     }()
     
     private lazy var shouldShowAutofillCell: Bool = {
-        return false // Hardcoded false until feature is done
+        return featureFlagger.isFeatureOn(.autofill)
     }()
     
     static func loadFromStoryboard() -> UIViewController {
@@ -229,9 +229,13 @@ class SettingsViewController: UITableViewController {
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
-    
+        
     private func showAutofill() {
-        // Open Autofill
+        if #available(iOS 14.0, *) {
+            let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+            autofillController.delegate = self
+            navigationController?.pushViewController(autofillController, animated: true)
+        }
     }
 
     private func configureEmailProtectionAccessoryText() {
@@ -256,7 +260,7 @@ class SettingsViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath)
 
         switch cell {
-
+            
         case defaultBrowserCell:
             Pixel.fire(pixel: .defaultBrowserButtonPressedSettings)
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
@@ -273,7 +277,7 @@ class SettingsViewController: UITableViewController {
             
         default: break
         }
-
+        
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -444,6 +448,15 @@ extension SettingsViewController {
         default:
             return 13
         }
+    }
+}
+
+// MARK: - AutofillLoginSettingsListViewControllerDelegate
+
+@available(iOS 14.0, *)
+extension SettingsViewController: AutofillLoginSettingsListViewControllerDelegate {
+    func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
+        navigationController?.popViewController(animated: true)
     }
 }
 // swiftlint:enable file_length type_body_length

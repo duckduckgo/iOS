@@ -68,7 +68,5 @@ extension KeyboardSettingsViewController: Themable {
         tableView.separatorColor = theme.tableCellSeparatorColor
         
         tableView.reloadData()
-
     }
-    
 }

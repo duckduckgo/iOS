@@ -296,7 +296,7 @@
 "dax.hide.title" = "Slėpti likusius patarimus?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "„DuckDuckGo“ paieškos yra anoniminės ir niekada nekaupiu jūsų paieškos istorijos. Niekada. 🙌";
+"dax.onboarding.browsing.after.search" = "Jūsų „DuckDuckGo“ paieškos yra anoniminės. Visada. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Oi!";

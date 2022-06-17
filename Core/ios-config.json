@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1654870517289,
+    "version": 1655387185511,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -208,6 +208,10 @@
                     "reason": "Broken add to cart"
                 },
                 {
+                    "domain": "hm.com",
+                    "reason": "Broken add to cart"
+                },
+                {
                     "domain": "notebooksbilliger.de",
                     "reason": "Broken add to cart"
                 },
@@ -409,6 +413,17 @@
                             }
                         ]
                     },
+                    "aldi-digital.co.uk": {
+                        "rules": [
+                            {
+                                "rule": "assets.aldi-digital.co.uk/assets/050b4966c22c430e5c9308903ebb87e1/dist/scripts/main.js",
+                                "domains": [
+                                    "aldi.co.uk"
+                                ],
+                                "reason": "product images missing"
+                            }
+                        ]
+                    },
                     "alicdn.com": {
                         "rules": [
                             {
@@ -552,6 +567,39 @@
                                     "crunchyroll.com"
                                 ],
                                 "reason": "video not loading"
+                            }
+                        ]
+                    },
+                    "facebook.net": {
+                        "rules": [
+                            {
+                                "rule": "connect.facebook.net/en_US/sdk.js",
+                                "domains": [
+                                    "grubhub.com"
+                                ],
+                                "reason": "broken login"
+                            }
+                        ]
+                    },
+                    "fwmrm.net": {
+                        "rules": [
+                            {
+                                "rule": "2a7e9.v.fwmrm.net/ad/g/1",
+                                "domains": [
+                                    "channel4.com"
+                                ],
+                                "reason": "adwall"
+                            }
+                        ]
+                    },
+                    "gigya.com": {
+                        "rules": [
+                            {
+                                "rule": "gigya.com/js/gigya.services.plugins.base.min.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "login content not loading"
                             }
                         ]
                     },
@@ -728,6 +776,17 @@
                                     "eonline.com"
                                 ],
                                 "reason": "video not loading"
+                            }
+                        ]
+                    },
+                    "tiqcdn.com": {
+                        "rules": [
+                            {
+                                "rule": "tags.tiqcdn.com/utag/agl/community/prod/utag.sync.js",
+                                "domains": [
+                                    "agl.com.au"
+                                ],
+                                "reason": "site loading delayed"
                             }
                         ]
                     },

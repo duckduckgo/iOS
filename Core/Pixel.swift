@@ -22,6 +22,7 @@ import os.log
 
 // swiftlint:disable file_length
 // swiftlint:disable identifier_name
+// swiftlint:disable type_body_length
 public enum PixelName: String {
     
     case appLaunch = "ml"
@@ -288,6 +289,7 @@ public enum PixelName: String {
     case cachedTabPreviewsExceedsTabCount = "m_d_tpetc"
     case cachedTabPreviewRemovalError = "m_d_tpre"
 }
+// swiftlint:enable type_body_length
 // swiftlint:enable identifier_name
 
 public struct PixelParameters {

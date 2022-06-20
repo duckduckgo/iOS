@@ -23,11 +23,7 @@ import Core
 class OnboardingViewController: UIViewController, Onboarding {
         
     private lazy var controllerNames: [String] = {
-        if #available(iOS 14, *) {
-            return ["onboardingDefaultBrowser"]
-        } else {
-            return ["onboardingHomeRow"]
-        }
+        return ["onboardingDefaultBrowser"]
     }()
     
     @IBOutlet weak var header: UILabel!

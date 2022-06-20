@@ -815,7 +815,15 @@ class MainViewController: UIViewController {
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
+        autofillSettingsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: UserText.autofillNavigationButtonItemTitleClose,
+                                                                                          style: .plain,
+                                                                                          target: self,
+                                                                                          action: #selector(closeAutofillModal))
         self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    @objc private func closeAutofillModal() {
+        dismiss(animated: true)
     }
     
     fileprivate func launchSettings() {

@@ -20,6 +20,7 @@
 import UIKit
 import Combine
 import Core
+import BrowserServicesKit
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
@@ -89,6 +90,12 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         super.setEditing(editing, animated: animated)
 
         tableView.setEditing(editing, animated: animated)
+    }
+    
+    func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
+        let detailsController = AutofillLoginDetailsViewController(account: account, authenticator: viewModel.authenticator)
+        detailsController.delegate = self
+        navigationController?.pushViewController(detailsController, animated: animated)
     }
     
     private func setupCancellables() {
@@ -253,10 +260,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         switch viewModel.sections[indexPath.section] {
         case .credentials(_, let items):
             let item = items[indexPath.row]
-            let detailsController = AutofillLoginDetailsViewController(account: item.account, authenticator: viewModel.authenticator)
-            detailsController.delegate = self
-            navigationController?.pushViewController(detailsController, animated: true)
-            
+            showAccountDetails(item.account)
         default:
             break
         }

@@ -95,40 +95,71 @@
                                             <rect key="frame" x="2" y="0.0" width="138" height="40"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cx-oo-bpe">
-                                                    <rect key="frame" x="-4.5" y="7.5" width="30" height="25"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <rect key="frame" x="-3.5" y="7.5" width="30" height="25"/>
+                                                    <color key="backgroundColor" systemColor="systemYellowColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="70i-Wj-DR0"/>
                                                         <constraint firstAttribute="width" constant="30" id="73T-PN-GzL"/>
                                                     </constraints>
                                                 </view>
-                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Shield" translatesAutoresizingMaskIntoConstraints="NO" id="SjY-UZ-mrD" customClass="PrivacyIconView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="-7" y="0.0" width="43" height="40"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99p-YW-bjm" customClass="PrivacyIconView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="-8" y="0.0" width="43" height="40"/>
+                                                    <subviews>
+                                                        <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-pm-Da8" customClass="AnimationView" customModule="Lottie">
+                                                            <rect key="frame" x="-12" y="0.0" width="158" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="158" id="3PW-3m-tHd"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="D46-aN-352" customClass="AnimationView" customModule="Lottie">
+                                                            <rect key="frame" x="-12" y="0.0" width="158" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="158" id="pMj-lD-s5z"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eoZ-Ly-QHi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="43" height="40"/>
+                                                        </imageView>
+                                                    </subviews>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" button="YES"/>
                                                     </accessibility>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="43" id="9eJ-CP-jlw"/>
+                                                        <constraint firstItem="eoZ-Ly-QHi" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="2K9-i4-lfC"/>
+                                                        <constraint firstAttribute="trailing" secondItem="eoZ-Ly-QHi" secondAttribute="trailing" id="3ae-7C-euU"/>
+                                                        <constraint firstItem="D46-aN-352" firstAttribute="centerX" secondItem="dqb-pm-Da8" secondAttribute="centerX" id="9Vf-4L-bNW"/>
+                                                        <constraint firstItem="dqb-pm-Da8" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="DRy-Dd-EPX"/>
+                                                        <constraint firstAttribute="bottom" secondItem="eoZ-Ly-QHi" secondAttribute="bottom" id="Dbo-hu-FiF"/>
+                                                        <constraint firstItem="D46-aN-352" firstAttribute="centerY" secondItem="dqb-pm-Da8" secondAttribute="centerY" id="E3L-gG-MSH"/>
+                                                        <constraint firstAttribute="bottom" secondItem="dqb-pm-Da8" secondAttribute="bottom" id="Lra-Q2-VJd"/>
+                                                        <constraint firstAttribute="width" constant="43" id="QTw-yw-ZiM"/>
+                                                        <constraint firstItem="D46-aN-352" firstAttribute="width" secondItem="dqb-pm-Da8" secondAttribute="width" id="ROX-Ek-fHz"/>
+                                                        <constraint firstItem="eoZ-Ly-QHi" firstAttribute="leading" secondItem="99p-YW-bjm" secondAttribute="leading" id="VgX-60-gzX"/>
+                                                        <constraint firstItem="dqb-pm-Da8" firstAttribute="leading" secondItem="99p-YW-bjm" secondAttribute="leading" constant="-12" id="Vl4-Mi-X96"/>
+                                                        <constraint firstItem="D46-aN-352" firstAttribute="height" secondItem="dqb-pm-Da8" secondAttribute="height" id="aK3-HD-XTV"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="nY1-b0-uYS"/>
+                                                        <outlet property="shieldAnimationView" destination="dqb-pm-Da8" id="m3S-lp-2hi"/>
+                                                        <outlet property="shieldDotAnimationView" destination="D46-aN-352" id="yuP-Tc-fZl"/>
+                                                        <outlet property="shieldImageView" destination="eoZ-Ly-QHi" id="PTJ-rR-w2n"/>
+                                                        <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="3xf-ou-ORG"/>
                                                     </connections>
-                                                </imageView>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemGreenColor"/>
                                             <constraints>
-                                                <constraint firstItem="SjY-UZ-mrD" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="17m-7p-BDc"/>
-                                                <constraint firstItem="9cx-oo-bpe" firstAttribute="centerY" secondItem="SjY-UZ-mrD" secondAttribute="centerY" id="41O-Xq-nh3"/>
                                                 <constraint firstAttribute="width" constant="138" id="5h0-qa-R1c"/>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="138" id="8Ts-e7-w2H"/>
-                                                <constraint firstItem="9cx-oo-bpe" firstAttribute="centerX" secondItem="SjY-UZ-mrD" secondAttribute="centerX" constant="-4" id="HJ9-CB-azS"/>
-                                                <constraint firstItem="SjY-UZ-mrD" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" constant="-7" id="Hre-Od-dEg"/>
-                                                <constraint firstAttribute="bottom" secondItem="SjY-UZ-mrD" secondAttribute="bottom" id="IYg-hv-Bey"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" constant="-8" id="GAx-rD-lZc"/>
                                                 <constraint firstAttribute="height" constant="40" id="LSj-2a-VE0"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="centerX" secondItem="9cx-oo-bpe" secondAttribute="centerX" constant="2" id="Ugc-cl-4dt"/>
+                                                <constraint firstAttribute="bottom" secondItem="99p-YW-bjm" secondAttribute="bottom" id="aem-pq-tV0"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="bmH-ac-kEx"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="centerY" secondItem="9cx-oo-bpe" secondAttribute="centerY" id="iCu-xb-Cyh"/>
                                             </constraints>
                                             <connections>
                                                 <outlet property="maskingView" destination="9cx-oo-bpe" id="ChF-SL-hTW"/>
-                                                <outlet property="privacyIcon" destination="SjY-UZ-mrD" id="TH4-i7-rwb"/>
+                                                <outlet property="privacyIcon" destination="99p-YW-bjm" id="Yqa-NH-yN7"/>
                                             </connections>
                                         </view>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-px-Ypi" customClass="SiteRatingContainerView" customModule="DuckDuckGo" customModuleProvider="target">
@@ -424,7 +455,7 @@
     </objects>
     <designables>
         <designable name="fqM-N4-jNd">
-            <size key="intrinsicContentSize" width="5" height="17.5"/>
+            <size key="intrinsicContentSize" width="10" height="18.5"/>
         </designable>
     </designables>
     <resources>
@@ -439,13 +470,12 @@
         <image name="PP Network Icon yahoo!" width="24" height="24"/>
         <image name="Refresh" width="24" height="24"/>
         <image name="Settings" width="24" height="24"/>
-        <image name="Shield" width="32" height="32"/>
         <image name="SuggestLoupe" width="24" height="24"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

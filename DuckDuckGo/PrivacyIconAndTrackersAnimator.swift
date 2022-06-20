@@ -67,8 +67,8 @@ final class PrivacyIconAndTrackersAnimator {
         container.trackers1Animation.currentFrame = 0
         container.trackers2Animation.currentFrame = 0
         container.trackers3Animation.currentFrame = 0
-        container.shieldAnimation.currentFrame = 0
-        container.shieldDotAnimation.currentFrame = 0
+        container.privacyIcon.shieldAnimationView.currentFrame = 0
+        container.privacyIcon.shieldDotAnimationView.currentFrame = 0
         
         if siteRating.willAnimateTrackers {
             trackerAnimationImageProvider.loadTrackerImages(from: siteRating)
@@ -116,13 +116,11 @@ final class PrivacyIconAndTrackersAnimator {
         
         let showDot = (privacyIcon == .shieldWithDot)
         
-        container.shieldAnimation.isHidden = showDot
-        container.shieldDotAnimation.isHidden = !showDot
-        container.privacyIcon.setHiddenWithAnimation(true)
-        
-//        container.privacyIcon.image = UIImage(named: "Shield")
-        
-        let currentShieldAnimation = (showDot ? container.shieldDotAnimation : container.shieldAnimation)
+        container.privacyIcon.shieldAnimationView.isHidden = showDot
+        container.privacyIcon.shieldDotAnimationView.isHidden = !showDot
+        container.privacyIcon.shieldImageView.setHiddenWithAnimation(true)
+
+        let currentShieldAnimation = (showDot ? container.privacyIcon.shieldDotAnimationView : container.privacyIcon.shieldAnimationView)
         
         UIView.animate(withDuration: 0.2) {
             omniBar.textField.alpha = 0
@@ -133,21 +131,15 @@ final class PrivacyIconAndTrackersAnimator {
 //        container.trackersAnimation.play()
         currentTrackerAnimation?.play()
         
-        currentShieldAnimation.play { [weak container] _ in
+        currentShieldAnimation?.play { [weak container] _ in
             container?.privacyIcon.icon = privacyIcon
-            container?.privacyIcon.isHidden = false
-            currentShieldAnimation.setHiddenWithAnimation(true)
+            container?.privacyIcon.shieldImageView.isHidden = false
+            currentShieldAnimation?.setHiddenWithAnimation(true)
             
             UIView.animate(withDuration: 0.2) {
                 omniBar.textField.alpha = 1
             }
         }
-        
-//        let animationDuration = currentTrackerAnimation?.animation?.duration ?? 0
-//
-//        UIView.animate(withDuration: 0.2, delay: animationDuration) {
-//            omniBar.textField.alpha = 1
-//        }
     }
     
     func startAnimationForDaxDialog(in omniBar: OmniBar, with siteRating: SiteRating) {
@@ -157,8 +149,8 @@ final class PrivacyIconAndTrackersAnimator {
         
         let showDot = (privacyIcon == .shieldWithDot)
         
-        container.shieldAnimation.isHidden = showDot
-        container.shieldDotAnimation.isHidden = !showDot
+        container.privacyIcon.shieldAnimationView.isHidden = showDot
+        container.privacyIcon.shieldDotAnimationView.isHidden = !showDot
         container.privacyIcon.setHiddenWithAnimation(true)
         
         container.privacyIcon.icon = privacyIcon
@@ -180,7 +172,7 @@ final class PrivacyIconAndTrackersAnimator {
         
         let currentTrackerAnimation = currentTrackerAnimationView(in: container,
                                                                   for: trackerAnimationImageProvider.trackerImagesCount)
-        let currentShieldAnimation = [container.shieldAnimation, container.shieldDotAnimation].first { !$0.isHidden }
+        let currentShieldAnimation = [container.privacyIcon.shieldAnimationView, container.privacyIcon.shieldDotAnimationView].first { !$0.isHidden }
         
         currentTrackerAnimation?.play()
         currentShieldAnimation?.play(completion: { [weak container] _ in
@@ -209,11 +201,11 @@ final class PrivacyIconAndTrackersAnimator {
         container.trackers1Animation.stop()
         container.trackers2Animation.stop()
         container.trackers3Animation.stop()
-        container.shieldAnimation.stop()
-        container.shieldDotAnimation.stop()
+        container.privacyIcon.shieldAnimationView.stop()
+        container.privacyIcon.shieldDotAnimationView.stop()
         
-        container.shieldAnimation.isHidden = true
-        container.shieldDotAnimation.isHidden = true
+        container.privacyIcon.shieldAnimationView.isHidden = true
+        container.privacyIcon.shieldDotAnimationView.isHidden = true
     }
     
     func resetImageProvider() {

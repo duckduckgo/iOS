@@ -19,16 +19,22 @@
 
 import Foundation
 import UIKit
+import Lottie
 
 enum PrivacyIcon {
     case daxLogo, shield, shieldWithDot
 }
 
-class PrivacyIconView: UIImageView {
+class PrivacyIconView: UIView {
     
     private lazy var daxLogoIcon = UIImage(named: "LogoIcon")
     private lazy var shieldIcon = UIImage(named: "Shield")
     private lazy var shieldWithDotIcon = UIImage(named: "ShieldDot")
+    
+    
+    @IBOutlet var shieldImageView: UIImageView!
+    @IBOutlet var shieldAnimationView: AnimationView!
+    @IBOutlet var shieldDotAnimationView: AnimationView!
     
     public required init?(coder aDecoder: NSCoder) {
         icon = .shield
@@ -40,20 +46,37 @@ class PrivacyIconView: UIImageView {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+  
+        loadAnimations(for: ThemeManager.shared.currentTheme)
+    }
+    
+    func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
+        let useLightStyle = theme.currentImageSet == .light
+        
+        shieldAnimationView.animation = Animation.named(useLightStyle ? "shield" : "dark-shield", animationCache: cache)
+        shieldDotAnimationView.animation = Animation.named(useLightStyle ? "shield-dot" : "dark-shield-dot", animationCache: cache)
+    }
+    
     var icon: PrivacyIcon {
         didSet {
             switch icon {
             case .daxLogo:
-                image = daxLogoIcon
-                contentMode = .center
+                shieldImageView.image = daxLogoIcon
+                shieldImageView.contentMode = .center
             case .shield:
-                image = shieldIcon
-                contentMode = .scaleAspectFill
+                shieldImageView.image = shieldIcon
+                shieldImageView.contentMode = .scaleAspectFill
             case .shieldWithDot:
-                image = shieldWithDotIcon
-                contentMode = .scaleAspectFill
+                shieldImageView.image = shieldWithDotIcon
+                shieldImageView.contentMode = .scaleAspectFill
             }
         }
+    }
+    
+    var isAnimationPlaying: Bool {
+        shieldAnimationView.isAnimationPlaying || shieldDotAnimationView.isAnimationPlaying
     }
 }
 

@@ -213,9 +213,7 @@ class OmniBar: UIView {
     }
     
     public func startTrackersAnimation(_ siteRating: SiteRating, collapsing: Bool) {
-        guard !privacyInfoContainer.shieldAnimation.isAnimationPlaying, !privacyInfoContainer.shieldDotAnimation.isAnimationPlaying,
-              !privacyInfoContainer.trackers1Animation.isAnimationPlaying, !privacyInfoContainer.trackers2Animation.isAnimationPlaying,
-              !privacyInfoContainer.trackers3Animation.isAnimationPlaying
+        guard !privacyInfoContainer.isAnimationPlaying
         else {
             print("trying to start animation while its running!")
             return
@@ -523,7 +521,6 @@ extension OmniBar: Themable {
         siteRatingContainer.tintColor = theme.barTintColor
         siteRatingContainer.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
-        privacyInfoContainer.maskingView.backgroundColor = theme.searchBarBackgroundColor
         privacyInfoContainer.decorate(with: theme)
         privacyIconAndTrackersAnimator.resetImageProvider()
         

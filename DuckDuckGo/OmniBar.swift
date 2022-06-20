@@ -207,42 +207,39 @@ class OmniBar: UIView {
         textField.selectedTextRange = nil
     }
     
-    public func startLoadingAnimation(for url: URL?) {
-        trackersAnimator.startLoadingAnimation(in: self, for: url)
-        privacyIconAndTrackersAnimator.startLoadingAnimation(in: privacyInfoContainer, for: url)
+    public func updatePrivacyIcon(for url: URL?) {
+//        trackersAnimator.startLoadingAnimation(in: self, for: url)
+        privacyIconAndTrackersAnimator.resetPrivacyIcon(in: privacyInfoContainer, for: url)
     }
     
     public func startTrackersAnimation(_ siteRating: SiteRating, collapsing: Bool) {
+        guard !privacyInfoContainer.shieldAnimation.isAnimationPlaying, !privacyInfoContainer.shieldDotAnimation.isAnimationPlaying,
+              !privacyInfoContainer.trackers1Animation.isAnimationPlaying, !privacyInfoContainer.trackers2Animation.isAnimationPlaying,
+              !privacyInfoContainer.trackers3Animation.isAnimationPlaying
+        else {
+            print("trying to start animation while its running!")
+            return
+        }
+        
         privacyIconAndTrackersAnimator.configure(privacyInfoContainer, for: siteRating)
         
         if siteRating.willAnimateTrackers {
-            privacyIconAndTrackersAnimator.startAnimating(in: self, with: siteRating)
+            if collapsing {
+                privacyIconAndTrackersAnimator.startAnimating(in: self, with: siteRating)
+            } else {
+                privacyIconAndTrackersAnimator.startAnimationForDaxDialog(in: self, with: siteRating)
+            }
         }
     }
     
-//    public func startTrackersAnimation(_ trackers: [DetectedTracker], collapsing: Bool) {
-//        guard trackersAnimator.configure(self, toDisplay: trackers, shouldCollapse: collapsing), state.allowsTrackersAnimation else {
-//            trackersAnimator.cancelAnimations(in: self)
-//            return
-//        }
-    
-//        guard privacyIconAndTrackersAnimator.configure(privacyInfoContainer, toDisplay: trackers, shouldCollapse: collapsing) else {
-//            privacyIconAndTrackersAnimator.cancelAnimations(in: privacyInfoContainer)
-//            return
-//        }
-//
-//        trackersAnimator.startAnimating(in: self)
-//        privacyIconAndTrackersAnimator.startAnimating(in: privacyInfoContainer)
-//    }
-    
     public func cancelAllAnimations() {
-        trackersAnimator.cancelAnimations(in: self)
-        privacyIconAndTrackersAnimator.cancelAnimations(in: privacyInfoContainer)
+//        trackersAnimator.cancelAnimations(in: self)
+        privacyIconAndTrackersAnimator.cancelAnimations(in: self)
     }
     
     public func completeAnimations() {
-        trackersAnimator.completeAnimations(in: self)
-        privacyIconAndTrackersAnimator.completeAnimations(in: privacyInfoContainer)
+//        trackersAnimator.completeAnimations(in: self)
+        privacyIconAndTrackersAnimator.completeAnimationForDaxDialog(in: self)
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
@@ -253,7 +250,7 @@ class OmniBar: UIView {
             }
             state = newState
             trackersAnimator.cancelAnimations(in: self)
-            privacyIconAndTrackersAnimator.cancelAnimations(in: privacyInfoContainer)
+            privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         }
         
         if state.showSiteRating {

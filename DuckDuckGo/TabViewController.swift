@@ -1141,7 +1141,7 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
-        chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
+        chromeDelegate?.omniBar.updatePrivacyIcon(for: webView.url)
         linkProtection.cancelOngoingExtraction()
         linkProtection.setMainFrameUrl(webView.url)
         adClickAttributionDetection.onStartNavigation(url: webView.url)

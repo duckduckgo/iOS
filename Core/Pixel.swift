@@ -382,7 +382,7 @@ public class Pixel {
     private init() {
     }
     
-    public static func fire(pixel: PixelName,
+    public static func fire(pixel: Pixel.Event,
                             forDeviceType deviceType: UIUserInterfaceIdiom? = UIDevice.current.userInterfaceIdiom,
                             withAdditionalParameters params: [String: String] = [:],
                             withHeaders headers: HTTPHeaders = APIHeaders().defaultHeaders,
@@ -400,16 +400,16 @@ public class Pixel {
         let url: URL
         if let deviceType = deviceType {
             let formFactor = deviceType == .pad ? Constants.tablet : Constants.phone
-            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue,
+            url = appUrls.pixelUrl(forPixelNamed: pixel.name,
                                    formFactor: formFactor,
                                    includeATB: includedParameters.contains(.atb))
         } else {
-            url = appUrls.pixelUrl(forPixelNamed: pixel.rawValue, includeATB: includedParameters.contains(.atb) )
+            url = appUrls.pixelUrl(forPixelNamed: pixel.name, includeATB: includedParameters.contains(.atb) )
         }
         
         APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in
             
-            os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.rawValue, "\(params)")
+            os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.name, "\(params)")
             onComplete(error)
         }
     }
@@ -418,7 +418,7 @@ public class Pixel {
 
 extension Pixel {
     
-    public static func fire(pixel: PixelName,
+    public static func fire(pixel: Pixel.Event,
                             error: Error,
                             withAdditionalParameters params: [String: String] = [:],
                             onComplete: @escaping (Error?) -> Void = { _ in }) {
@@ -440,10 +440,10 @@ extension Pixel {
 
 public class TimedPixel {
     
-    let pixel: PixelName
+    let pixel: Pixel.Event
     let date: Date
     
-    public init(_ pixel: PixelName, date: Date = Date()) {
+    public init(_ pixel: Pixel.Event, date: Date = Date()) {
         self.pixel = pixel
         self.date = date
     }

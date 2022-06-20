@@ -22,11 +22,13 @@ import Core
 
 final class RulesCompilationMonitor {
     
+    static let shared = RulesCompilationMonitor()
+    
     private var didReport = false
     private var waitStart: TimeInterval?
     private var waiters = NSMapTable<TabViewController, NSNumber>.init(keyOptions: .weakMemory, valueOptions: .strongMemory)
     
-    init() {
+    private init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(applicationWillTerminate(_:)),
                                                name: UIApplication.willTerminateNotification,
@@ -54,6 +56,11 @@ final class RulesCompilationMonitor {
         await reportWaitTime(CACurrentMediaTime() - waitStart, result: .waitResultSuccess)
     }
     
+    func reportNavigationDidNotWaitForRules() async {
+        guard !didReport else { return }
+        await reportWaitTime(0, result: .waitResultSuccess)
+    }
+    
     /// If Tab is going to close while the rules are still being compiled: report wait time with Tab .closed argument
     func tabWillClose(_ tab: TabViewController) async {
         defer { waiters.removeObject(forKey: tab) }
@@ -75,7 +82,7 @@ final class RulesCompilationMonitor {
         await reportWaitTime(CACurrentMediaTime() - waitStart, result: .waitResultAppQuit)
     }
     
-    private func reportWaitTime(_ waitTime: TimeInterval, result: PixelName) async {
+    private func reportWaitTime(_ waitTime: TimeInterval, result: Pixel.Event) async {
         didReport = true
         await Pixel.fire(pixel: result, withAdditionalParameters: ["waitTime": String(waitTime)])
     }
@@ -84,7 +91,7 @@ final class RulesCompilationMonitor {
 
 private extension Pixel {
     
-    static func fire(pixel: PixelName, withAdditionalParameters params: [String: String] = [:]) async {
+    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String] = [:]) async {
         return await withCheckedContinuation { continuation in
             fire(pixel: pixel, withAdditionalParameters: params) { _ in
                 continuation.resume()
@@ -93,6 +100,7 @@ private extension Pixel {
     }
     
     enum CompileRulesWaitTime: String, CustomStringConvertible {
+        
         var description: String { rawValue }
 
         case noWait = "0"
@@ -121,13 +129,16 @@ private extension Pixel {
                 self = .more
             }
         }
+        
     }
     
     enum AppState: String, CustomStringConvertible {
+        
         var description: String { rawValue }
 
         case onboarding
         case regular
+        
     }
     
 }

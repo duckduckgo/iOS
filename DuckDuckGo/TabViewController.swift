@@ -112,12 +112,9 @@ class TabViewController: UIViewController {
     var mostRecentAutoPreviewDownloadID: UUID?
     
     var contentBlockingAssetsInstalled: Bool {
-//        ContentBlocking.contentBlockingManager.currentTDSRules != nil
-        didCompileRules
+        ContentBlocking.contentBlockingManager.currentTDSRules != nil
     }
-    
-    private var didCompileRules: Bool = false
-    
+        
     private typealias NotificationCheckedContinuation = CheckedContinuation<AnyObject?, Never>
     private var notificationContinuation: NotificationCheckedContinuation?
     
@@ -204,7 +201,7 @@ class TabViewController: UIViewController {
     }()
     
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
-        let domainEvent: PixelName
+        let domainEvent: Pixel.Event
         switch event {
         case .ampBlockingRulesCompilationFailed:
             domainEvent = .ampBlockingRulesCompilationFailed
@@ -226,6 +223,8 @@ class TabViewController: UIViewController {
     private var canDisplayJavaScriptAlert: Bool {
         return !shouldBlockJSAlert && presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
     }
+    
+    private let rulesCompilationMonitor = RulesCompilationMonitor.shared
     
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -736,11 +735,8 @@ class TabViewController: UIViewController {
         if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
            ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-                self.didCompileRules = true
-                self.notificationContinuation?.resume(returning: nil)
-                self.notificationContinuation = nil
-            }
+            self.notificationContinuation?.resume(returning: nil)
+            self.notificationContinuation = nil
 
             webView.configuration.userContentController.removeAllContentRuleLists()
             webView.configuration.userContentController.add(rules.rulesList)
@@ -1397,10 +1393,14 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     @MainActor
+    // swiftlint:disable:next cyclomatic_complexity
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-        Swift.print("OMG1")
-        await awaitContentBlockingAssetsInstalled()
-        Swift.print("OMG2")
+        
+        if let url = navigationAction.request.url, !appUrls.isDuckDuckGoSearch(url: url) {
+            await awaitContentBlockingAssetsInstalled()
+            await rulesCompilationMonitor.reportWaitTimeForTabFinishedWaitingForRules(self)
+        }
+        
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
@@ -1456,12 +1456,15 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func awaitContentBlockingAssetsInstalled() async {
-        Swift.print("3")
-        guard !contentBlockingAssetsInstalled else { return }
-        showProgressIndicator()
-        _ = await withCheckedContinuation({ (continuation: NotificationCheckedContinuation) in
-            self.notificationContinuation = continuation
-        })
+        if contentBlockingAssetsInstalled {
+            await rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
+        } else {
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
+            showProgressIndicator()
+            _ = await withCheckedContinuation({ (continuation: NotificationCheckedContinuation) in
+                self.notificationContinuation = continuation
+            })
+        }
     }
             
     private func decidePolicyFor(navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
@@ -1484,7 +1487,7 @@ extension TabViewController: WKNavigationDelegate {
 
         if url.isBookmarklet() {
             if let js = url.toDecodedBookmarklet() {
-                try? await webView.evaluateJavaScript(js)
+                _ = try? await webView.evaluateJavaScript(js)
             }
             return .cancel
         }
@@ -1514,7 +1517,7 @@ extension TabViewController: WKNavigationDelegate {
     private func performNavigation(for url: URL,
                                    navigationAction: WKNavigationAction,
                                    allowPolicy: WKNavigationActionPolicy) async -> WKNavigationActionPolicy {
-        let policy: WKNavigationActionPolicy
+        var policy: WKNavigationActionPolicy
         if shouldReissueSearch(for: url) {
             reissueSearchWithRequiredParams(for: url)
             policy = .cancel
@@ -1523,34 +1526,21 @@ extension TabViewController: WKNavigationDelegate {
             policy = .cancel
         } else if isNewTargetBlankRequest(navigationAction: navigationAction) {
             delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true)
-            completion(.cancel)
-            return
+            policy = .cancel
         }
         
-        if allowPolicy != WKNavigationActionPolicy.cancel {
+        if allowPolicy != .cancel {
             userAgentManager.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
         }
         
         if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {
-            completion(allowPolicy)
-            return
+            policy = allowPolicy
+        } else if shouldUpgradeToHttps(url: url, navigationAction: navigationAction) {
+            policy = await upgradeToHttps(url: url, allowPolicy: allowPolicy)
+        } else {
+            policy = allowPolicy
         }
 
-        if shouldUpgradeToHttps(url: url, navigationAction: navigationAction) {
-            upgradeToHttps(url: url, allowPolicy: allowPolicy, completion: completion)
-        } else {
-            if allowPolicy != .cancel {
-                UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
-            }
-            
-            if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {
-                policy = allowPolicy
-            } else if shouldUpgradeToHttps(url: url, navigationAction: navigationAction) {
-                policy = await upgradeToHttps(url: url, allowPolicy: allowPolicy)
-            } else {
-                policy = allowPolicy
-            }
-        }
         return policy
     }
     

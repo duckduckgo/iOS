@@ -328,7 +328,10 @@ class TabViewController: UIViewController {
 
     // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
-    func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
+    func attachWebView(configuration: WKWebViewConfiguration,
+                       andLoadRequest request: URLRequest?,
+                       consumeCookies: Bool,
+                       loadedByParentTab: Bool = false) {
         instrumentation.willPrepareWebView()
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -349,14 +352,18 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let request = request {
-            if let url = request.url {
-                linkProtection.getCleanURL(from: url,
-                                           onStartExtracting: { showProgressIndicator() },
-                                           onFinishExtracting: { },
-                                           completion: { [weak self] cleanURL in self?.load(urlRequest: .userInitiated(cleanURL)) })
-            } else {
-                load(urlRequest: request)
+        } else if let url = request?.url {
+            var loadingStopped = false
+            linkProtection.getCleanURL(from: url) { [weak self] in
+                if loadedByParentTab {
+                    loadingStopped = true
+                    self?.webView.stopLoading()
+                }
+                showProgressIndicator()
+            } onFinishExtracting: {
+            } completion: { [weak self] cleanURL in
+                guard url != cleanURL || !loadedByParentTab || loadingStopped else { return }
+                self?.load(urlRequest: .userInitiated(cleanURL))
             }
         }
     }
@@ -1630,6 +1637,19 @@ extension TabViewController: WKUIDelegate {
             completionHandler(nil)
         }
     }
+
+//    @objc(_webView:printFrame:)
+//    func webView(_ webView: WKWebView, printFrame handle: Any) {
+////        webView.tab?.print(frame: handle)
+//    }
+
+//    @objc(_webView:printFrame:pdfFirstPageSize:completionHandler:)
+//    func webView(_ webView: WKWebView, printFrame handle: Any, pdfFirstPageSize size: CGSize, completionHandler: () -> Void) {
+//        self.webView(webView, printFrame: handle)
+//        completionHandler()
+//    }
+
+
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {

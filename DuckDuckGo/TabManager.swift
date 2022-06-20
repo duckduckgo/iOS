@@ -111,7 +111,10 @@ class TabManager {
         model.select(tabAt: model.currentIndex + 1)
 
         let controller = TabViewController.loadFromStoryboard(model: tab)
-        controller.attachWebView(configuration: configCopy, andLoadRequest: request, consumeCookies: !model.hasActiveTabs)
+        controller.attachWebView(configuration: configCopy,
+                                 andLoadRequest: request,
+                                 consumeCookies: !model.hasActiveTabs,
+                                 loadedByParentTab: true)
         controller.delegate = delegate
         controller.loadViewIfNeeded()
         tabControllerCache.append(controller)

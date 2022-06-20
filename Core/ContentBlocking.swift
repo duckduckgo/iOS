@@ -161,7 +161,8 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
     public private(set) var unprotectedDomains: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.unprotectedDomains) else { return Set<String>() }
-            guard let unprotectedDomains = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSSet.self, from: data) as? Set<String> else {
+            guard let unprotectedDomains = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSSet.self, NSString.self],
+                                                                                   from: data) as? Set<String> else {
                 return Set<String>()
             }
             return unprotectedDomains

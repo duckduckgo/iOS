@@ -486,6 +486,26 @@ public struct UserText {
     
     public static let emptyDownloads = NSLocalizedString("downloads.downloads-list.empty", value: "No files downloaded yet", comment: "Empty downloads list placholder")
     
+    public static let autofillSaveLoginTitleNewUser = NSLocalizedString("autofill.save-login.new-user.title", value: "Do you want DuckDuckGo to save your Login?", comment: "Title displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
+    public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
+
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
+   
+    public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
+    public static let autofillUpdatePasswordTitle = NSLocalizedString("autofill.update-password.title", value: "Update Password?", comment: "Title displayed on modal asking for the user to update the password")
+    public static let autofillSaveLoginSaveCTA = NSLocalizedString("autofill.save-login.save.CTA", value: "Save Login", comment: "Confirm CTA displayed on modal asking for the user to save the login")
+    public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
+    public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
+    public static let autofillUpdateLoginSaveCTA = NSLocalizedString("autofill.update-login.save.CTA", value: "Update Login", comment: "Confirm CTA displayed on modal asking for the user to update the login")
+    public static let autofillAdditionalLoginInfoMessage = NSLocalizedString("autofill.save-login.additional-login.message", value: "This will save an additional Login for this site.", comment: "Message displayed on modal explaining that an additional login will be saved.")
+    public static let autofillLoginSavedToastMessage = NSLocalizedString("autofill.login-saved.toast", value: "Login saved", comment: "Message displayed after saving an autofill login")
+    public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login updated", comment: "Message displayed after updating an autofill login")
+    public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "View", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
+
+    public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
+
     // MARK: - Mac Waitlist
     
     static let macWaitlistTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
@@ -594,4 +614,34 @@ public struct UserText {
         return localized.format(arguments: code)
     }
     
+    public static let autofillLoginDetailsLoginName = "Login Name" // Login name label for login details on autofill
+    public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
+    public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
+    public static let autofillLoginDetailsAddress = "Address" // Address label for login details on autofill
+    public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
+    public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins." // Title for view displayed when autofill is disabled and has no items
+    public static let autofillEmptyViewTitle = "No logins saved yet." // Title for view displayed when autofill has no items
+    public static let autofillEmptyViewSubtitle = "Logins are stored securely on this device only" // Subtitle for view displayed when autofill has no items
+    public static let autofillSearchNoResultTitle = "No Results" // Title displayed when there are no results on Autofill search
+    public static func autofillSearchNoResultSubtitle(for query: String) -> String {
+        "for '\(query)'"
+    } // Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)
+    public static let autofillEnableSettings = "Save and Autofill Logins" // Title for a toggle that enables autofill
+    public static let autofillLoginListTitle = "Autofill Logins" // Title for screen listing autofill logins
+    public static let autofillLoginListSearchPlaceholder = "Search Logins" // Placeholder for search field on autofill login listing
+    public static let autofillLoginPromptAuthenticationCancelButton = "Cancel" // Cancel button for auth during login prompt
+    public static let autofillLoginPromptAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth during login prompt
+    public static let autofillLoginPromptTitle = "Use Saved Login?" // Title for autofill login prompt
+    public static let autofillLoginPromptMoreOptions = "More Options" // Button title for autofill login prompt if more options are available
+    public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
+    public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
+    public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
+        "Login last updated \(date))"
+    } // Message displaying when the login was last updated by
+    public static let autofillLoginListAuthenticationCancelButton = "Cancel" // Cancel button for auth when opening login list
+    public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
+    public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
+    public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
+
 }

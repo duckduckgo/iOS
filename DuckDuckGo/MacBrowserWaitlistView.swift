@@ -215,6 +215,7 @@ struct MacBrowserWaitlistInvitedView: View {
                             .menuController(UserText.macWaitlistCopy) {
                                 action(.copyDownloadURLToPasteboard)
                             }
+                            .fixedSize()
                             .padding(.top, 6)
                     } else {
                         Text("duckduckgo.com/mac")
@@ -239,6 +240,7 @@ struct MacBrowserWaitlistInvitedView: View {
                             .menuController(UserText.macWaitlistCopy) {
                                 action(.copyInviteCodeToPasteboard)
                             }
+                            .fixedSize()
                             .padding(.top, 28)
                     } else {
                         InviteCodeView(inviteCode: inviteCode)

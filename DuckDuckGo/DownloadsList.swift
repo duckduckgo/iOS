@@ -84,18 +84,9 @@ struct DownloadsList: View {
                     toolbarButtons
                 }
             }
-        } else if #available(iOS 14.0, *) {
+        } else {
             list.toolbar {
                 toolbarContent
-            }
-        } else {
-            // Due to no proper toolbar support in SwiftUI for iOS 13
-            VStack {
-                list
-                HStack {
-                    toolbarButtons
-                }
-                .padding()
             }
         }
     }

@@ -206,15 +206,13 @@ class SettingsViewController: UITableViewController {
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
-        
+    
     private func showAutofill() {
-        if #available(iOS 14.0, *) {
-            let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
-            autofillController.delegate = self
-            navigationController?.pushViewController(autofillController, animated: true)
-        }
+        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        autofillController.delegate = self
+        navigationController?.pushViewController(autofillController, animated: true)
     }
-
+    
     private func configureEmailProtectionAccessoryText() {
         if let userEmail = emailManager.userEmail {
             emailProtectionAccessoryText.text = userEmail

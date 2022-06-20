@@ -1414,11 +1414,9 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestAutofillLogins(tab: TabViewController) {
-        if #available(iOS 14.0, *) {
-            launchAutofillLogins()
-        }
+        launchAutofillLogins()
     }
-
+    
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
     }

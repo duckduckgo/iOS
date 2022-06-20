@@ -99,9 +99,7 @@ class BookmarksViewController: UITableViewController {
         }
         refreshEditButton()
         refreshFooterView()
-        if #available(iOS 14.0, *) {
-            refreshMoreButton()
-        }
+        refreshMoreButton()
     }
     
     func openEditFormWhenPresented(bookmark: Bookmark) {

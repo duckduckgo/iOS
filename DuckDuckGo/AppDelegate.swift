@@ -434,7 +434,7 @@ extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
 extension AppDelegate: UIScreenshotServiceDelegate {
     func screenshotService(_ screenshotService: UIScreenshotService,
                            generatePDFRepresentationWithCompletion completionHandler: @escaping (Data?, Int, CGRect) -> Void) {
-        guard #available(iOS 14.0, *), let webView = mainViewController?.currentTab?.webView else {
+        guard let webView = mainViewController?.currentTab?.webView else {
             completionHandler(nil, 0, .zero)
             return
         }
@@ -465,11 +465,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             Pixel.fire(pixel: .macBrowserWaitlistNotificationShown)
         }
         
-        if #available(iOS 14.0, *) {
-            completionHandler(.banner)
-        } else {
-            completionHandler(.alert)
-        }
+        completionHandler(.banner)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,

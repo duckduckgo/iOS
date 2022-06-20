@@ -2031,9 +2031,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                     ActionMessageView.present(message: message,
                                               actionTitle: UserText.autofillLoginSaveToastActionButton) {
                         
-                        if #available(iOS 14.0, *) {
-                            self.showLoginDetails(with: newCredential.account)
-                        }
+                        self.showLoginDetails(with: newCredential.account)
                     }
                 }
             }

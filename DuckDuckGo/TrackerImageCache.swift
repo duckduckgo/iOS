@@ -78,6 +78,7 @@ final class TrackerImageCache {
         case "linkedin": return UIImage(named: "linkedin")!.cgImage!
         case "lotame": return UIImage(named: "lotame")!.cgImage!
         case "mediamath": return UIImage(named: "mediamath")!.cgImage!
+        case "microsoft": return UIImage(named: "microsoft")!.cgImage!
         case "neustar": return UIImage(named: "neustar")!.cgImage!
         case "newrelic": return UIImage(named: "newrelic")!.cgImage!
         case "nielsen": return UIImage(named: "nielsen")!.cgImage!

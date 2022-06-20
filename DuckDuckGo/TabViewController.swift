@@ -617,8 +617,7 @@ class TabViewController: UIViewController {
                                                                                    injectionTime: script.injectionTime,
                                                                                    forMainFrameOnly: script.forMainFrameOnly))
             
-            if #available(iOS 14, *),
-               let replyHandler = script as? WKScriptMessageHandlerWithReply {
+            if let replyHandler = script as? WKScriptMessageHandlerWithReply {
                 script.messageNames.forEach { messageName in
                     webView.configuration.userContentController.addScriptMessageHandler(replyHandler, contentWorld: .page, name: messageName)
                 }
@@ -1594,7 +1593,6 @@ extension TabViewController: WKNavigationDelegate {
         checkForReloadOnError()
     }
     
-    @available(iOS 14.0, *)
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
         let autofill = AutofillLoginDetailsViewController(account: account, authenticator: AutofillLoginListAuthenticator())
         let navigationController = UINavigationController(rootViewController: autofill)
@@ -1983,7 +1981,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             return
         }
         
-        if #available(iOS 14, *), accounts.count > 0 {
+        if accounts.count > 0 {
             if !AutofillLoginPromptViewController.canAuthenticate {
                 Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
                 completionHandler(nil)

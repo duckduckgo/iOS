@@ -20,7 +20,6 @@
 import SwiftUI
 import BrowserServicesKit
 
-@available(iOS 14.0, *)
 struct AutofillLoginPromptView: View {
     @ObservedObject var viewModel: AutofillLoginPromptViewModel
     
@@ -204,7 +203,6 @@ private enum Const {
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
 struct AutofillLoginPromptView_Previews: PreviewProvider {
     static var previews: some View {
         AutofillLoginPromptView(viewModel: AutofillLoginPromptViewModel.preview).preferredColorScheme(.light)

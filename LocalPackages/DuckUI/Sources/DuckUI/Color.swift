@@ -66,7 +66,6 @@ public extension Color {
     static let deprecatedBlue =  Color.init(0x678FFF)
 }
 
-@available(iOS 14.0, *)
 public extension UIColor {
     static let red100 = UIColor(.red100)
     static let red90 = UIColor(.red90)

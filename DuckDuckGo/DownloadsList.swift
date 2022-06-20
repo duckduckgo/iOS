@@ -116,7 +116,6 @@ struct DownloadsList: View {
             .buttonStyle(.plain)
     }
     
-    @available(iOS 14.0, *)
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         // Required due to iOS 14 issue of buttons ignoring styling

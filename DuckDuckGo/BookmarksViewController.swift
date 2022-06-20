@@ -50,7 +50,6 @@ class BookmarksViewController: UITableViewController {
 
     private lazy var addFolderBarButtonItem = UIBarButtonItem(customView: addFolderButton)
 
-    @available(iOS 14.0, *)
     private lazy var moreButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(UserText.moreBookmarkButton, for: .normal)
@@ -60,7 +59,6 @@ class BookmarksViewController: UITableViewController {
         return button
     }()
 
-    @available(iOS 14.0, *)
     private lazy var moreBarButtonItem = UIBarButtonItem(customView: moreButton)
 
     private var bookmarksMenu: UIMenu {
@@ -199,17 +197,15 @@ class BookmarksViewController: UITableViewController {
         if dataSource.folder != nil {
             tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: CGFloat.leastNormalMagnitude))
         }
-
-        if #available(iOS 14, *) {
-            importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
-            importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
-            importFooterButton.titleLabel?.textAlignment = .center
-
-            importFooterButton.addAction(UIAction { [weak self] _ in
-                self?.presentDocumentPicker()
-            }, for: .touchUpInside)
-        }
-
+        
+        importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
+        importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
+        importFooterButton.titleLabel?.textAlignment = .center
+        
+        importFooterButton.addAction(UIAction { [weak self] _ in
+            self?.presentDocumentPicker()
+        }, for: .touchUpInside)
+        
         refreshFooterView()
     }
     
@@ -268,20 +264,18 @@ class BookmarksViewController: UITableViewController {
         }
         refreshEditButton()
     }
-
+    
     private func configureToolbarMoreItem() {
-        if #available(iOS 14, *) {
-            if tableView.isEditing {
-                if toolbarItems?.count ?? 0 >= 5 {
-                    toolbarItems?.remove(at: 4)
-                    toolbarItems?.remove(at: 3)
-                }
-            } else {
-                let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-                toolbarItems?.insert(flexibleSpace, at: 3)
-                toolbarItems?.insert(moreBarButtonItem, at: 4)
-                refreshMoreButton()
+        if tableView.isEditing {
+            if toolbarItems?.count ?? 0 >= 5 {
+                toolbarItems?.remove(at: 4)
+                toolbarItems?.remove(at: 3)
             }
+        } else {
+            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+            toolbarItems?.insert(flexibleSpace, at: 3)
+            toolbarItems?.insert(moreBarButtonItem, at: 4)
+            refreshMoreButton()
         }
     }
 
@@ -301,7 +295,6 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
-    @available(iOS 14.0, *)
     private func refreshMoreButton() {
         if tableView.isEditing || currentDataSource === searchDataSource  || dataSource.folder != nil {
             disableMoreButton()
@@ -311,12 +304,8 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func refreshFooterView() {
-        if #available(iOS 14, *) {
-            if dataSource.folder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
-                enableFooterView()
-            } else {
-                disableFooterView()
-            }
+        if dataSource.folder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
+            enableFooterView()
         } else {
             disableFooterView()
         }
@@ -432,9 +421,7 @@ class BookmarksViewController: UITableViewController {
         }
 
         if let popover = activity.popoverPresentationController {
-            if #available(iOS 14, *) {
-                popover.sourceView = moreBarButtonItem.customView
-            }
+            popover.sourceView = moreBarButtonItem.customView
         }
         present(activity, animated: true, completion: nil)
     }
@@ -459,12 +446,10 @@ class BookmarksViewController: UITableViewController {
         
         tableView.isEditing = true
         changeEditButtonToDone()
-        if #available(iOS 14, *) {
-            configureToolbarMoreItem()
-            refreshFooterView()
-        }
+        configureToolbarMoreItem()
+        refreshFooterView()
     }
-
+    
     private func finishEditing() {
         guard tableView.isEditing else {
             return
@@ -473,10 +458,8 @@ class BookmarksViewController: UITableViewController {
         tableView.isEditing = false
         refreshEditButton()
         enableDoneButton()
-        if #available(iOS 14, *) {
-            configureToolbarMoreItem()
-            refreshFooterView()
-        }
+        configureToolbarMoreItem()
+        refreshFooterView()
     }
 
     private func enableEditButton() {
@@ -509,13 +492,11 @@ class BookmarksViewController: UITableViewController {
         doneButton.isEnabled = true
     }
     
-    @available(iOS 14.0, *)
     private func enableMoreButton() {
         moreButton.menu = bookmarksMenu
         moreButton.isEnabled = true
     }
 
-    @available(iOS 14.0, *)
     private func disableMoreButton() {
         moreButton.isEnabled = false
     }

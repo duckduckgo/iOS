@@ -810,7 +810,6 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "Downloads", sender: self)
     }
     
-    @available(iOS 14.0, *)
     fileprivate func launchAutofillLogins() {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
@@ -1799,7 +1798,6 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
 }
 
 // MARK: - AutofillLoginSettingsListViewControllerDelegate
-@available(iOS 14.0, *)
 extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         controller.dismiss(animated: true)

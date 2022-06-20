@@ -23,12 +23,10 @@ import LocalAuthentication
 import BrowserServicesKit
 import Core
 
-@available(iOS 14.0, *)
 protocol AutofillLoginPromptViewControllerExpansionResponseDelegate: AnyObject {
     func autofillLoginPromptViewController(_ viewController: AutofillLoginPromptViewController, isExpanded: Bool)
 }
 
-@available(iOS 14.0, *)
 class AutofillLoginPromptViewController: UIViewController {
     
     static var canAuthenticate: Bool {
@@ -119,7 +117,6 @@ class AutofillLoginPromptViewController: UIViewController {
     }
 }
 
-@available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         completion?(nil)
@@ -134,7 +131,6 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
     }
 }
 
-@available(iOS 14.0, *)
 extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegate {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
         

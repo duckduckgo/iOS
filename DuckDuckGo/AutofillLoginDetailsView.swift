@@ -20,7 +20,6 @@
 import SwiftUI
 import DuckUI
 
-@available(iOS 14.0, *)
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     @State private var cellMaxWidth: CGFloat?

@@ -21,6 +21,7 @@ import UIKit
 import Core
 import MobileCoreServices
 import os.log
+import UniformTypeIdentifiers
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -336,8 +337,8 @@ class BookmarksViewController: UITableViewController {
     }
 
     func presentDocumentPicker() {
-        let docTypes = [String(kUTTypeHTML)]
-        let docPicker = UIDocumentPickerViewController(documentTypes: docTypes, in: .import)
+        let docTypes = [UTType.html]
+        let docPicker = UIDocumentPickerViewController(forOpeningContentTypes: docTypes)
         docPicker.delegate = self
         docPicker.allowsMultipleSelection = false
         present(docPicker, animated: true)

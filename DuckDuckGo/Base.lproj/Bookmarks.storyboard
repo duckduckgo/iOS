@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -50,6 +50,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="aFD-Ru-lID">
+                            <rect key="frame" x="0.0" y="234.5" width="375" height="82"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="pyc-rk-XMJ">
+                                    <rect key="frame" x="19" y="30" width="337" height="31"/>
+                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Import bookmark file from another browser"/>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="pyc-rk-XMJ" secondAttribute="bottom" constant="21" id="34R-fO-s9K"/>
+                                <constraint firstItem="pyc-rk-XMJ" firstAttribute="leading" secondItem="aFD-Ru-lID" secondAttribute="leading" constant="19" id="ESW-ZJ-Lxd"/>
+                                <constraint firstItem="pyc-rk-XMJ" firstAttribute="top" secondItem="aFD-Ru-lID" secondAttribute="top" constant="30" id="ems-wV-pnF"/>
+                                <constraint firstAttribute="trailing" secondItem="pyc-rk-XMJ" secondAttribute="trailing" constant="19" id="gek-yu-opF"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" id="hZu-lD-OW9" customClass="BookmarkCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="49.5" width="375" height="43.5"/>
@@ -70,13 +88,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="744" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lqe-Wh-Evj">
-                                                    <rect key="frame" x="32" y="0.0" width="264.5" height="24"/>
+                                                    <rect key="frame" x="32" y="0.0" width="263.5" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vil-gw-sgh" userLabel="NumberOfChildren">
-                                                    <rect key="frame" x="304.5" y="0.0" width="38.5" height="24"/>
+                                                    <rect key="frame" x="303.5" y="0.0" width="39.5" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" name="TableCellAccessoryTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -188,11 +206,6 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Add Folder" id="ToB-IA-MxG">
-                            <connections>
-                                <action selector="onAddFolderPressed:" destination="aqL-Wl-TTD" id="LDq-yz-GBf"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem title="Edit" id="pwj-Ie-VbJ">
                             <connections>
                                 <action selector="onEditPressed:" destination="aqL-Wl-TTD" id="UdP-p0-rRw"/>
@@ -208,9 +221,9 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
-                        <outlet property="addFolderButton" destination="ToB-IA-MxG" id="cqd-PX-XKF"/>
                         <outlet property="doneButton" destination="1oZ-re-yKW" id="bf8-Mw-vOB"/>
                         <outlet property="editButton" destination="pwj-Ie-VbJ" id="XgF-gG-JUa"/>
+                        <outlet property="importFooterButton" destination="pyc-rk-XMJ" id="WQc-P7-BgJ"/>
                         <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddOrEditBookmarkFolder" id="sRH-zl-JOW"/>
                         <segue destination="tP5-Vr-ZSr" kind="presentation" identifier="AddOrEditBookmark" id="0Pu-sx-KUz"/>
                     </connections>
@@ -509,7 +522,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="zyO-WQ-z92"/>
-        <segue reference="bDN-md-SJE"/>
+        <segue reference="sRH-zl-JOW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="DisclosureIndicator" width="8" height="13"/>

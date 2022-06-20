@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Plats";
 
+/* More options button text */
+"bookmark.moreButton" = "Mer";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Webbplatsens rubrik";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Bokmärken";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Vi kunde inte exportera dina bokmärken, försök igen.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Dina bokmärken har exporterats.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Dina bokmärken har delats.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Exportera HTML-fil";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Tyvärr kan vi inte importera den här filen.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Dina bokmärken har importerats.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Importera HTML-fil";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Importera bokmärkesfil från en annan webbläsare";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importera en HTML-fil med bokmärken från en annan webbläsare eller exportera dina befintliga bokmärken.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentarer laddades inte";
@@ -266,7 +296,7 @@
 "dax.hide.title" = "Dölj återstående tips?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Dina DuckDuckGo-sökningar är anonyma och jag lagrar aldrig din sökhistorik. Någonsin. 🙌";
+"dax.onboarding.browsing.after.search" = "Dina DuckDuckGo-sökningar är anonyma. Alltid. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";

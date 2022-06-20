@@ -10,6 +10,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Autofill Logins";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Bookmark";
 
@@ -154,6 +157,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "View";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Login saved";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Login updated";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "This will save an additional Login for this site.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Do you want DuckDuckGo to save your Login?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Not Now";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Save Login";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Save Login?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Save Password";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Save Password?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Update Login";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Update Password";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Update Password?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Update Username?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Add Bookmark";
 
@@ -190,6 +238,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Location";
 
+/* More options button text */
+"bookmark.moreButton" = "More";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Website title";
 
@@ -204,6 +255,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Bookmarks";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "We couldn’t export your bookmarks, please try again.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Your bookmarks have been exported.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Your bookmarks have been shared.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Export HTML File";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Sorry, we aren’t able to import this file.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Your bookmarks have been imported.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Import HTML File";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Import bookmark file from another browser";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Import an HTML file of bookmarks from another browser, or export your existing bookmarks.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Comments didn’t load";
@@ -260,7 +338,7 @@
 "dax.hide.title" = "Hide remaining tips?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous and I never save your search history. Ever. 🙌";
+"dax.onboarding.browsing.after.search" = "Your DuckDuckGo searches are anonymous. Always. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Phew!";

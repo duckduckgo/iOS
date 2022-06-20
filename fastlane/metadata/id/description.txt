@@ -1,24 +1,28 @@
-Privasi, disederhanakan.
+Bosan dilacak secara online? Kami dapat membantu.
 
-Di DuckDuckGo, kami percaya Internet tidak seharusnya menakutkan, dan mendapatkan privasi yang pantas Anda dapatkan seharusnya semudah menutup tirai. 
+DuckDuckGo adalah aplikasi privasi lengkap yang membantu melindungi aktivitas online Anda. Dengan satu unduhan, Anda mendapatkan peramban harian baru yang menawarkan perlindungan tanpa batas dari pelacak pihak ketiga saat Anda mencari dan menjelajah, dan bahkan akses ke perlindungan pelacakan saat menerima email. Dengan DuckDuckGo, privasi dapat menjadi standar Anda.
 
-Kami menyediakan hal-hal dasar privasi yang Anda butuhkan untuk mengendalikan informasi pribadi saat melakukan pencarian dan penelusuran web, ke mana pun Internet membawa Anda:
-• Hindari Jaringan Pelacak Iklan — Perlindungan Privasi kami akan memblokir semua pelacak tersembunyi yang dapat kami temukan, dan mengungkap jaringan iklan besar yang melacak Anda seiring waktu, sehingga Anda bisa melacak pihak-pihak yang mencoba untuk melacak Anda.
-• Tingkatkan Perlindungan Enkripsi — Kami memaksa situs untuk menggunakan koneksi terenkripsi apabila ada, yang melindungi data Anda dari pihak yang memata-matai, seperti Penyedia Layanan Internet.
-• Pencarian Pribadi — Anda berbagi informasi paling pribadi dengan mesin pencari Anda, seperti pertanyaan tentang keuangan, medis, dan politik. Apa pun yang Anda cari itu adalah urusan Anda sendiri, itulah sebabnya pencarian DuckDuckGo tidak melacak Anda. Selamanya.
-• Memahami Kebijakan Privasi — Kami bermitra dengan Terms of Service Didn't Read untuk menyertakan skor dan label mereka atas ketentuan layanan dan kebijakan situs web, apabila ada. 
+Cari Secara Pribadi - DuckDuckGo Private Search sudah ada di dalamnya sehingga Anda dapat melakukan pencarian di web tanpa dilacak.
 
-Saat Anda melakukan pencarian dan penelusuran, DuckDuckGo menunjukkan peringkat Kelas Privasi ketika Anda mengunjungi suatu situs (A-F). Peringkat ini memungkinkan Anda untuk melihat secara sekilas seberapa terlindungi diri Anda, mengetahui secara detail siapa yang ketahuan mencoba melacak Anda, dan mempelajari bagaimana kami meningkatkan upaya privasi dasar situs. Kelas Privasi dinilai secara otomatis berdasarkan prevalensi jaringan pelacak tersembunyi, ketersediaan enkripsi, dan praktik privasi situs web.
+Menghindar dari Pelacakan Situs Web - Tracker Radar secara otomatis memblokir pelacak pihak ketiga yang tersembunyi yang dapat kami temukan bersembunyi di situs web yang Anda kunjungi di DuckDuckGo, yang menghentikan perusahaan di belakang pelacak tersebut mengumpulkan dan menjual data Anda.
 
-Aplikasi kami menyediakan fungsi penelusuran internet standar termasuk tab, bookmark, dan autocomplete. Selain Perlindungan Privasi yang kuat seperti telah dijelaskan di atas, kami juga menghadirkan beberapa fitur privasi tambahan di dalam browser:
-• Fire Button — Hapus semua tab dan data Anda dengan satu ketukan.
-• Application Lock — Amankan aplikasi dengan Touch ID atau Face ID.
+Terapkan Enkripsi - Smarter Encryption memaksa situs yang Anda kunjungi di DuckDuckGo untuk menggunakan koneksi terenkripsi (HTTPS) jika tersedia, melindungi data Anda dari mata-mata.
 
-Terlalu banyak orang meyakini bahwa Anda tidak bisa mengharapkan privasi di Internet. Kami berjuang untuk mengubah hal itu, dan menjadikannya misi kami untuk menetapkan standar kepercayaan online yang baru. Pasang DuckDuckGo dan dapatkan kembali privasi Anda!
+Blokir Pelacak Email - 70% email melacak Anda segera setelah Anda membukanya. Mengaktifkan Email Protection adalah cara mudah untuk memblokir pelacak email dan menyembunyikan alamat Anda tanpa berpindah layanan. Bergabunglah dengan daftar tunggu pribadi untuk versi beta gratis melalui menu pengaturan aplikasi.
+
+Aplikasi DuckDuckGo memiliki fitur penjelajahan yang Anda harapkan, seperti tab dan bookmark, ditambah kontrol privasi yang akan Anda sukai. Mengambil kendali atas privasi Anda tidak harus berarti melakukan pengorbanan.
+
+Ketuk Fire Button, Burn Data - Hapus tab dan data penjelajahan Anda dengan satu ketukan Fire Button.
+
+Tandai Preferensi Privasi Anda dengan GPC - Di dalam aplikasi, Global Privacy Control (GPC) dibuat untuk membantu Anda mengekspresikan hak memilih keluar hukum Anda secara otomatis. Ini akan menginformasikan kepada situs web agar ke depannya tidak menjual atau membagikan informasi pribadi Anda di bawah kerangka hukum (misalnya CCPA, GDPR) di berbagai negara bagian atau negara.
+
+Anda tidak perlu menunggu untuk mengambil kembali privasi Anda. Bergabunglah dengan jutaan orang yang menggunakan DuckDuckGo dan lindungi banyak aktivitas online Anda sehari-hari dengan satu aplikasi. Ini privasi, disederhanakan.
+
+Note about our tracker blocking for 3rd-party sites and emails:
+DuckDuckGo never tracks you. When you leave our search engine to use other sites, we aim to block as many hidden trackers as possible, but we can't block them all for a few reasons. New trackers emerge all the time, so first we need to find them. Then, blocking these trackers can sometimes break functionality, so we need to develop new approaches without hurting usability. Additionally, in our app we offer a specific type of protection that stops scripts from even loading on 3rd-party sites, which isn’t offered on most popular browsers by default. Currently, this one loading protection doesn't apply to Microsoft scripts on 3rd-party sites due to contractual restrictions. However, our other tracker blocking methods (like 3rd-party cookie blocking) are unrestricted and continue to work against these trackers to protect your privacy online.
 
 Tentang Kami: https://duckduckgo.com/about/
-Kiat Privasi Perangkat: https://spreadprivacy.com/tag/device-privacy-tips/
-Selengkapnya tentang Pendidikan Privasi: https://spreadprivacy.com/tag/privacy-newsletter/
-Kebijakan Privasi Kami: https://duckduckgo.com/privacy/
-
-Sumber terbuka di https://github.com/duckduckgo/iOS.
+Cara Kerjanya: https://duckduckgo.com/app
+Nawala Privasi: https://duckduckgo.com/newsletter
+Kebijakan Privasi: https://duckduckgo.com/privacy/
+Sumber Terbuka: https://github.com/duckduckgo/iOS

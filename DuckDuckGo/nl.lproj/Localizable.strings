@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Locatie";
 
+/* More options button text */
+"bookmark.moreButton" = "Meer";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Websitetitel";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Bladwijzers";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "We kunnen je bladwijzers niet exporteren. Probeer het opnieuw.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Je bladwijzers zijn geëxporteerd.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Je bladwijzers zijn gedeeld.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "HTML-bestand exporteren";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Sorry, we kunnen dit bestand niet importeren.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Je bladwijzers zijn geïmporteerd.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "HTML-bestand importeren";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Bladwijzerbestand importeren vanuit een andere browser";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importeer een HTML-bestand met bladwijzers uit een andere browser of exporteer je bestaande bladwijzers.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Opmerkingen zijn niet geladen";
@@ -266,7 +296,7 @@
 "dax.hide.title" = "Resterende tips verbergen?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Je DuckDuckGo-zoekopdrachten zijn anoniem en ik sla je zoekgeschiedenis nooit op. Nooit. 🙌";
+"dax.onboarding.browsing.after.search" = "Je DuckDuckGo zoekopdrachten zijn anoniem. Altijd. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Opluchting!";

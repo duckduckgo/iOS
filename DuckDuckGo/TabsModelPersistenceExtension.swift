@@ -26,17 +26,17 @@ extension TabsModel {
     }
 
     public static func get() -> TabsModel? {
-        guard let data = UserDefaults.standard.object(forKey: Constants.key) as? Data else { return nil }
+        guard let data = UserDefaults.app.object(forKey: Constants.key) as? Data else { return nil }
         return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? TabsModel
     }
 
     public static func clear() {
-         UserDefaults.standard.removeObject(forKey: Constants.key)
+         UserDefaults.app.removeObject(forKey: Constants.key)
     }
 
     func save() {
         guard let data = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false) else { return }
-        UserDefaults.standard.set(data, forKey: Constants.key)
+        UserDefaults.app.set(data, forKey: Constants.key)
     }
     
 }

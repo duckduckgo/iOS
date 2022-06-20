@@ -26,7 +26,7 @@ public class PrivacyUserDefaults: PrivacyStore {
     }
 
     private var userDefaults: UserDefaults {
-        return UserDefaults.standard
+        return UserDefaults.app
     }
 
     public init() {}

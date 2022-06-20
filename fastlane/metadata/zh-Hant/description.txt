@@ -1,24 +1,28 @@
-保障私隱，從此簡單容易。
+厭倦上網時被追蹤嗎？我們可以助你一臂之力。
 
-DuckDuckGo 深信互聯網不應該是危機四伏的世界。在網絡世界保護你的私隱，應該簡單容易、一按即可。我們提供最全面的私隱保障工具，無論在網絡上的任何地域都可以有效控制你的個人資料：
+DuckDuckGo 是多功能隱私保護應用程式，保障你的上網安全。只要下載一次，就能取得可以每天使用的全新瀏覽器，提供萬無一失的保護，防範第三方追蹤器，讓你放心搜尋與瀏覽，甚至是在收取電子郵件時，也可以使用追蹤防護。選擇 DuckDuckGo，讓隱私保障成為優先預設。
 
-•	攔截廣告追蹤器網絡 —— 我們的保護私隱工具能徹底搜尋和封鎖所有隱藏追蹤器，經過一段時間會披露追蹤你的主要廣告網絡，讓你知道誰在暗中追蹤你。
-•	升級加密保護 —— 我們強制網站使用加密連接（如適用），保護你的資料免受網絡供應商等的監視。
-•	隱藏搜尋 —— 你最個人的資料會傳送至你的搜尋引擎，例如你的財務、醫療和政治問題等。你所搜尋的東西只是與你有關，所以 DuckDuckGo 搜尋絕對不會追蹤你。
-•	解碼私隱政策 —— 我們與 Terms of Service Didn’t Read 合作，納入全部現存的網站服務條款及私隱政策評分和標籤。
+私密搜尋 - DuckDuckGo Private Search 為內建功能，讓你可以安心地在網路上搜尋，不用擔心遭到追蹤。
 
-當你搜尋和瀏覽網絡的時候，DuckDuckGo 會顯示你所瀏覽網站的私隱評分（A-F），讓你知道你的私隱獲得多大保障，然後深入每個細節，瞭解甚麼人士正在嘗試追蹤你，讓你知道我們如何加強底層網站的私隱措施。我們的系統會自動計算私隱評級，評分基準包括隱藏追蹤器網絡的普及程度、加密功能的可用性以及網站的私隱措施。
+避免網站追蹤 - 當你透過 DuckDuckGo 造訪網站時，Tracker Radar 會偵測潛藏的第三方追蹤器並自動封鎖，放置這些追蹤器的公司便無從收集和銷售你的資料。
 
-我們的應用程式提供多個標準瀏覽功能，涵蓋分頁、書籤和自動填寫功能。此外，上述的強化版私隱保護組合會在瀏覽器加裝多個額外私隱保護工具：
+加密執行程式 - 使用 DuckDuckGo 造訪網站時，如有加密連線 (HTTPS) 選擇，Smarter Encryption 會強迫該網站使用，保護你的資料不受窺視。
 
-•	防火按鍵（Fire Button） — 點撃一下即時清除所有分頁和數據
-•	應用程式鎖（Application Lock） — 用 Touch ID 或 Face ID 保護應用程式
+封鎖電子郵件追蹤器 - 70% 的電子郵件都會在你打開信的瞬間開始追蹤。啟用 Email Protection 是封鎖電子郵件追蹤器並隱藏你的電子郵件地址最簡單的方法，無需切換服務。透過應用程式設定選單，即可加入免費測試版的私密等候清單。
 
-很多人認為在網絡世界享有私隱是不可能的，而我們正在努力改變這種情況，並致力建立網絡互信的新標準。立即安裝 DuckDuckGo，收復你的私隱失地！
+DuckDuckGo 應用程式具備你所需的瀏覽功能，例如分頁和書籤，並增加了你會喜愛的隱私權控制功能。想控制隱私權，不必犧牲實用功能。
+
+點按 Fire Button，燒毀資料 - 點按一下 Fire Button，即可清除分頁和瀏覽資料。
+
+以 GPC 來表示隱私權偏好 - Global Privacy Control (GPC) 為內建應用程式，能自動為你表達選擇退出的法律權益。這會讓網站知道根據未來的法律規範架構（例如 CCPA 和 GDPR），不能在各州或各國出售或分享你的個人資訊。
+
+重奪隱私權，無需再等待。加入數百萬 DuckDuckGo 使用者，只要一個應用程式，就能保護你的日常線上活動。保護隱私，化繁為簡。
+
+Note about our tracker blocking for 3rd-party sites and emails:
+DuckDuckGo never tracks you. When you leave our search engine to use other sites, we aim to block as many hidden trackers as possible, but we can't block them all for a few reasons. New trackers emerge all the time, so first we need to find them. Then, blocking these trackers can sometimes break functionality, so we need to develop new approaches without hurting usability. Additionally, in our app we offer a specific type of protection that stops scripts from even loading on 3rd-party sites, which isn’t offered on most popular browsers by default. Currently, this one loading protection doesn't apply to Microsoft scripts on 3rd-party sites due to contractual restrictions. However, our other tracker blocking methods (like 3rd-party cookie blocking) are unrestricted and continue to work against these trackers to protect your privacy online.
 
 關於我們：https://duckduckgo.com/about/
-流動裝置私隱貼士：https://spreadprivacy.com/tag/device-privacy-tips/
-更多私隱教學資訊：https://spreadprivacy.com/tag/privacy-newsletter/
-我們的私隱政策：https://duckduckgo.com/privacy/
-
-開放資源：https://github.com/duckduckgo/iOS.
+運作方式：https://duckduckgo.com/app
+隱私電子報：https://duckduckgo.com/newsletter
+隱私政策：https://duckduckgo.com/privacy/
+開放原始碼：https://github.com/duckduckgo/iOS

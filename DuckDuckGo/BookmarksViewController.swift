@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import MobileCoreServices
 import os.log
 
 // swiftlint:disable file_length
@@ -26,16 +27,53 @@ import os.log
 
 class BookmarksViewController: UITableViewController {
 
-    @IBOutlet weak var addFolderButton: UIBarButtonItem!
+    private enum Constants {
+        static var saveToFiles = "com.apple.DocumentManagerUICore.SaveToFiles"
+        static var bookmarksFileName = "DuckDuckGo Bookmarks.html"
+        static var importBookmarkImage = "BookmarksImport"
+        static var exportBookmarkImage = "BookmarksExport"
+    }
+
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
-    
+    @IBOutlet weak var importFooterButton: UIButton!
+
+    /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
+    private lazy var addFolderButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(UserText.addbookmarkFolderButton, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+        button.sizeToFit()
+        button.addTarget(self, action: #selector(onAddFolderPressed(_:)), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var addFolderBarButtonItem = UIBarButtonItem(customView: addFolderButton)
+
+    @available(iOS 14.0, *)
+    private lazy var moreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(UserText.moreBookmarkButton, for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .body)
+        button.sizeToFit()
+        button.showsMenuAsPrimaryAction = true
+        return button
+    }()
+
+    @available(iOS 14.0, *)
+    private lazy var moreBarButtonItem = UIBarButtonItem(customView: moreButton)
+
+    private var bookmarksMenu: UIMenu {
+        return UIMenu(title: UserText.importExportBookmarksTitle,
+                      children: [exportAction(), importAction()])
+    }
+
     private var searchController: UISearchController?
     weak var delegate: BookmarksDelegate?
     
     fileprivate lazy var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource(alertDelegate: self)
     fileprivate var searchDataSource = SearchBookmarksDataSource()
-    private var bookmarksCachingSearch: BookmarksCachingSearch?
+    private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
     
     fileprivate var onDidAppearAction: () -> Void = {}
         
@@ -62,6 +100,10 @@ class BookmarksViewController: UITableViewController {
             finishEditing()
         }
         refreshEditButton()
+        refreshFooterView()
+        if #available(iOS 14.0, *) {
+            refreshMoreButton()
+        }
     }
     
     func openEditFormWhenPresented(bookmark: Bookmark) {
@@ -157,6 +199,18 @@ class BookmarksViewController: UITableViewController {
         if dataSource.folder != nil {
             tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: CGFloat.leastNormalMagnitude))
         }
+
+        if #available(iOS 14, *) {
+            importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
+            importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
+            importFooterButton.titleLabel?.textAlignment = .center
+
+            importFooterButton.addAction(UIAction { [weak self] _ in
+                self?.presentDocumentPicker()
+            }, for: .touchUpInside)
+        }
+
+        refreshFooterView()
     }
     
     private func configureSearchIfNeeded() {
@@ -200,15 +254,35 @@ class BookmarksViewController: UITableViewController {
     @objc func onApplicationBecameActive(notification: NSNotification) {
         tableView.reloadData()
     }
-    
+
     private func configureBars() {
         self.navigationController?.setToolbarHidden(false, animated: true)
+        toolbarItems?.insert(addFolderBarButtonItem, at: 0)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
         toolbarItems?.insert(flexibleSpace, at: 1)
+        // Edit button is at position 2
+        configureToolbarMoreItem()
+
         if let dataSourceTitle = dataSource.navigationTitle {
             title = dataSourceTitle
         }
         refreshEditButton()
+    }
+
+    private func configureToolbarMoreItem() {
+        if #available(iOS 14, *) {
+            if tableView.isEditing {
+                if toolbarItems?.count ?? 0 >= 5 {
+                    toolbarItems?.remove(at: 4)
+                    toolbarItems?.remove(at: 3)
+                }
+            } else {
+                let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+                toolbarItems?.insert(flexibleSpace, at: 3)
+                toolbarItems?.insert(moreBarButtonItem, at: 4)
+                refreshMoreButton()
+            }
+        }
     }
 
     private func refreshEditButton() {
@@ -224,6 +298,27 @@ class BookmarksViewController: UITableViewController {
             disableAddFolderButton()
         } else {
             enableAddFolderButton()
+        }
+    }
+
+    @available(iOS 14.0, *)
+    private func refreshMoreButton() {
+        if tableView.isEditing || currentDataSource === searchDataSource  || dataSource.folder != nil {
+            disableMoreButton()
+        } else {
+            enableMoreButton()
+        }
+    }
+
+    private func refreshFooterView() {
+        if #available(iOS 14, *) {
+            if dataSource.folder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
+                enableFooterView()
+            } else {
+                disableFooterView()
+            }
+        } else {
+            disableFooterView()
         }
     }
 
@@ -243,18 +338,145 @@ class BookmarksViewController: UITableViewController {
         dismiss()
     }
 
+    // MARK: Import bookmarks
+
+    func importAction() -> UIAction {
+        return UIAction(title: UserText.importBookmarksActionTitle,
+                        image: UIImage(named: Constants.importBookmarkImage)
+        ) { [weak self] _ in
+            self?.presentDocumentPicker()
+        }
+    }
+
+    func presentDocumentPicker() {
+        let docTypes = [String(kUTTypeHTML)]
+        let docPicker = UIDocumentPickerViewController(documentTypes: docTypes, in: .import)
+        docPicker.delegate = self
+        docPicker.allowsMultipleSelection = false
+        present(docPicker, animated: true)
+    }
+
+    func importBookmarks(fromHtml html: String) {
+        Task {
+            let bookmarkCountBeforeImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
+
+            let result = await BookmarksImporter().parseAndSave(html: html)
+            switch result {
+            case .success:
+                dataSource.bookmarksManager.reloadWidgets()
+
+                let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
+                let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
+                Pixel.fire(pixel: .bookmarkImportSuccess,
+                           withAdditionalParameters: [PixelParameters.bookmarkCount: "\(bookmarksImported)"])
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.importBookmarksSuccessMessage)
+                }
+            case .failure(let bookmarksImportError):
+                os_log("Bookmarks import error %s", type: .debug, bookmarksImportError.localizedDescription)
+                Pixel.fire(pixel: .bookmarkImportFailure)
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
+                }
+            }
+        }
+    }
+
+    // MARK: Export bookmarks
+
+    func exportAction() -> UIAction {
+        return UIAction(title: UserText.exportBookmarksActionTitle,
+                image: UIImage(named: Constants.exportBookmarkImage),
+                attributes: currentDataSource.isEmpty ? .disabled : []) { [weak self] _ in
+            self?.exportHtmlFile()
+        }
+    }
+
+    func exportHtmlFile() {
+        // create file to export
+        let tempFileUrl = FileManager.default.temporaryDirectory.appendingPathComponent(Constants.bookmarksFileName)
+        do {
+            try BookmarksExporter().exportBookmarksTo(url: tempFileUrl)
+        } catch {
+            os_log("bookmarks failed to export %s", type: .debug, error.localizedDescription)
+            ActionMessageView.present(message: UserText.exportBookmarksFailedMessage)
+            return
+        }
+
+        // create activityViewController with exported file
+        let activity = UIActivityViewController(activityItems: [tempFileUrl], applicationActivities: nil)
+        activity.completionWithItemsHandler = {[weak self] (activityType: UIActivity.ActivityType?, completed: Bool, _: [Any]?, error: Error?) in
+            guard error == nil else {
+                // this trips if user cancelled Save to Files but they are still in the UIActivityViewController so
+                // can still choose to share to another app so in this case we don't want to delete the bookmarks file yet
+                if let error = error as NSError?, error.code == NSUserCancelledError {
+                    return
+                }
+
+                Pixel.fire(pixel: .bookmarkExportFailure)
+                self?.presentActionMessageView(withMessage: UserText.exportBookmarksFailedMessage)
+                self?.cleanupTempFile(tempFileUrl)
+                return
+            }
+
+            if completed && activityType != nil {
+                if let activityTypeStr = activityType?.rawValue, activityTypeStr == Constants.saveToFiles {
+                    self?.presentActionMessageView(withMessage: UserText.exportBookmarksFilesSuccessMessage)
+                } else {
+                    self?.presentActionMessageView(withMessage: UserText.exportBookmarksShareSuccessMessage)
+                }
+                Pixel.fire(pixel: .bookmarkExportSuccess)
+            }
+
+            self?.cleanupTempFile(tempFileUrl)
+        }
+
+        if let popover = activity.popoverPresentationController {
+            if #available(iOS 14, *) {
+                popover.sourceView = moreBarButtonItem.customView
+            }
+        }
+        present(activity, animated: true, completion: nil)
+    }
+
+    func cleanupTempFile(_ tempFileUrl: URL) {
+        try? FileManager.default.removeItem(at: tempFileUrl)
+    }
+
+    func presentActionMessageView(withMessage message: String) {
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: message)
+        }
+    }
+
     private func startEditing() {
+        guard !tableView.isEditing else {
+            return
+        }
+
         // necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
         tableView.isEditing = false
         
         tableView.isEditing = true
         changeEditButtonToDone()
+        if #available(iOS 14, *) {
+            configureToolbarMoreItem()
+            refreshFooterView()
+        }
     }
 
     private func finishEditing() {
+        guard tableView.isEditing else {
+            return
+        }
+
         tableView.isEditing = false
         refreshEditButton()
         enableDoneButton()
+        if #available(iOS 14, *) {
+            configureToolbarMoreItem()
+            refreshFooterView()
+        }
     }
 
     private func enableEditButton() {
@@ -263,18 +485,17 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func disableEditButton() {
-        editButton.title = ""
+        editButton.title = UserText.navigationTitleEdit
         editButton.isEnabled = false
     }
     
     private func enableAddFolderButton() {
-        addFolderButton.title = UserText.addbookmarkFolderButton
-        addFolderButton.isEnabled = true
+        addFolderBarButtonItem.title = UserText.addbookmarkFolderButton
+        addFolderBarButtonItem.isEnabled = true
     }
     
     private func disableAddFolderButton() {
-        addFolderButton.title = ""
-        addFolderButton.isEnabled = false
+        addFolderBarButtonItem.isEnabled = false
     }
     
     private func changeEditButtonToDone() {
@@ -288,6 +509,27 @@ class BookmarksViewController: UITableViewController {
         doneButton.isEnabled = true
     }
     
+    @available(iOS 14.0, *)
+    private func enableMoreButton() {
+        moreButton.menu = bookmarksMenu
+        moreButton.isEnabled = true
+    }
+
+    @available(iOS 14.0, *)
+    private func disableMoreButton() {
+        moreButton.isEnabled = false
+    }
+
+    private func enableFooterView() {
+        importFooterButton.isHidden = false
+        importFooterButton.isEnabled = true
+    }
+
+    private func disableFooterView() {
+        importFooterButton.isHidden = true
+        importFooterButton.isEnabled = false
+    }
+
     private func prepareForSearching() {
         finishEditing()
         disableEditButton()
@@ -371,10 +613,6 @@ class BookmarksViewController: UITableViewController {
 
 extension BookmarksViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        bookmarksCachingSearch = BookmarksCachingSearch()
-    }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
             if tableView.dataSource !== dataSource {
@@ -388,8 +626,7 @@ extension BookmarksViewController: UISearchBarDelegate {
             tableView.dataSource = searchDataSource
         }
 
-        let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksSearch) {
+        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksCachingSearch) {
             self.tableView.reloadData()
         }
     }
@@ -427,6 +664,17 @@ extension BookmarksViewController: Themable {
         navigationController?.view.backgroundColor = tableView.backgroundColor
         
         tableView.reloadData()
+    }
+}
+
+extension BookmarksViewController: UIDocumentPickerDelegate {
+
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let url = urls.first, let data = try? Data(contentsOf: url), let contents = String(data: data, encoding: .utf8) else {
+            ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
+            return
+        }
+        importBookmarks(fromHtml: contents)
     }
 }
 

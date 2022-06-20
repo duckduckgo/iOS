@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Localisation";
 
+/* More options button text */
+"bookmark.moreButton" = "Plus";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titre du site Web";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Signets";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Nous n'avons pas pu exporter vos signets ; veuillez réessayer.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Vos signets ont bien été exportés.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Vos signets ont bien été partagés.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Exporter un fichier HTML";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Malheureusement, nous ne sommes pas en mesure d'importer ce fichier.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Vos signets ont bien été importés.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Importer un fichier HTML";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Importer un fichier de signets à partir d'un autre navigateur";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importez un fichier HTML de signets à partir d'un autre navigateur, ou exportez vos signets existants.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Les commentaires n'ont pas pu être chargés";
@@ -266,7 +296,7 @@
 "dax.hide.title" = "Masquer les conseils restants ?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Les recherches effectuées sur DuckDuckGo sont anonymes et je ne conserve jamais votre historique de recherche. Jamais. 🙌";
+"dax.onboarding.browsing.after.search" = "Vos recherches sur DuckDuckGo sont anonymes. Toujours. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Ouf !";

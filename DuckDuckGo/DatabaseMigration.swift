@@ -210,10 +210,3 @@ class DatabaseMigration {
         }
     }
 }
-
-private class MigrationPersistentContainer: NSPersistentContainer {
-
-    override public class func defaultDirectoryURL() -> URL {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!
-    }
-}

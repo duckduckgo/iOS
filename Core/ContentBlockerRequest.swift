@@ -23,7 +23,8 @@ protocol ContentBlockerRemoteDataSource {
     
     var requestCount: Int { get }
     
-    func request(_ configuration: ContentBlockerRequest.Configuration, completion:@escaping (ContentBlockerRequest.Response) -> Void)
+    func request(_ configuration: ContentBlockerRequest.Configuration,
+                 completion:@escaping (ContentBlockerRequest.Response) -> Void)
 }
 
 public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
@@ -53,7 +54,8 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
         requestCount += 1
         
         let spid = Instruments.shared.startTimedEvent(.fetchingContentBlockerData, info: configuration.rawValue)
-        let cacheHeaders = APIHeaders().defaultHeaders(with: etagStorage.etag(for: configuration))
+        
+        let cacheHeaders = APIHeaders().defaultHeaders(with: etag(for: configuration))
 
         APIRequest.request(url: url(for: configuration), headers: cacheHeaders) { (response, error) in
             
@@ -68,6 +70,21 @@ public class ContentBlockerRequest: ContentBlockerRemoteDataSource {
             Instruments.shared.endTimedEvent(for: spid, result: "success")
             completion(.success(etag: response.etag, data: data))
         }
+    }
+    
+    private func etag(for configuration: Configuration) -> String? {
+        var etag = etagStorage.etag(for: configuration)
+        if etag == nil {
+            switch configuration {
+            case .trackerDataSet:
+                etag = AppTrackerDataSetProvider.Constants.embeddedDataETag
+            case .privacyConfiguration:
+                etag = AppPrivacyConfigurationDataProvider.Constants.embeddedDataETag
+            default:
+                break
+            }
+        }
+        return etag
     }
     
     private func url(for list: Configuration) -> URL {

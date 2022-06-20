@@ -29,12 +29,12 @@ public class Favicons {
 
         static let salt = "DDGSalt:"
         static let faviconsFolderName = "Favicons"
-        static let downloader = NotFoundCachingDownloader()
         static let requestModifier = FaviconRequestModifier()
         static let bookmarksCache = CacheType.bookmarks.create()
         static let tabsCache = CacheType.tabs.create()
         static let appUrls = AppUrls()
         static let targetImageSizePoints: CGFloat = 64
+        public static let maxFaviconSize: CGSize = CGSize(width: 192, height: 192)
         
         public static let caches = [
             CacheType.bookmarks: bookmarksCache,
@@ -100,13 +100,25 @@ public class Favicons {
 
     @UserDefaultsWrapper(key: .faviconsNeedMigration, defaultValue: true)
     var needsMigration: Bool
-    
+
+    @UserDefaultsWrapper(key: .faviconSizeNeedsMigration, defaultValue: true)
+    var sizeNeedsMigration: Bool
+
     let sourcesProvider: FaviconSourcesProvider
     let bookmarksStore: BookmarkStore
-    
-    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(), bookmarksStore: BookmarkStore = BookmarkUserDefaults()) {
+    let bookmarksCachingSearch: BookmarksCachingSearch
+    let downloader: NotFoundCachingDownloader
+
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+
+    init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
+         bookmarksStore: BookmarkStore = BookmarkUserDefaults(),
+         bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch,
+         downloader: NotFoundCachingDownloader = NotFoundCachingDownloader()) {
         self.sourcesProvider = sourcesProvider
         self.bookmarksStore = bookmarksStore
+        self.bookmarksCachingSearch = bookmarksCachingSearch
+        self.downloader = downloader
 
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.bookmarksCache)
@@ -136,13 +148,62 @@ public class Favicons {
         }
         
     }
-    
+
+    public func migrateFavicons(to size: CGSize, afterMigrationHandler: @escaping () -> Void) {
+        guard sizeNeedsMigration else { return }
+
+        DispatchQueue.global(qos: .utility).async {
+            guard let files = try? FileManager.default.contentsOfDirectory(at: Constants.bookmarksCache.diskStorage.directoryURL,
+                    includingPropertiesForKeys: nil) else {
+                return
+            }
+
+            files.forEach { file in
+                guard let data = (try? Data(contentsOf: file)),
+                      let image = UIImage(data: data),
+                      !self.isValidImage(image, forMaxSize: size) else {
+                    return
+                }
+
+                let resizedImage = self.resizedImage(image, toSize: size)
+                if let data = resizedImage.pngData() {
+                    try? data.write(to: file)
+                }
+            }
+
+            Constants.bookmarksCache.clearMemoryCache()
+            self.sizeNeedsMigration = false
+            afterMigrationHandler()
+        }
+    }
+
+    internal func isValidImage(_ image: UIImage, forMaxSize size: CGSize) -> Bool {
+        if image.size.width > size.width || image.size.height > size.height {
+            return false
+        }
+        return true
+    }
+
+    internal func resizedImage(_ image: UIImage, toSize size: CGSize) -> UIImage {
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
+        return renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+
     func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
         
         guard let domain = domain,
-            let resource = defaultResource(forDomain: domain),
-            (Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)),
-            let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
+              let resource = defaultResource(forDomain: domain),
+              let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
+
+        if !isFaviconCachedForBookmarks(forDomain: domain, resource: resource) {
+            loadFaviconForBookmarks(forDomain: domain)
+            return
+        }
 
         let replace = {
             Constants.bookmarksCache.removeImage(forKey: resource.cacheKey)
@@ -165,7 +226,20 @@ public class Favicons {
             }
         }
     }
- 
+
+    func isFaviconCachedForBookmarks(forDomain domain: String, resource: ImageResource) -> Bool {
+        return Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)
+    }
+
+    func loadFaviconForBookmarks(forDomain domain: String) {
+        // If the favicon is not cached for bookmarks, we need to:
+        // 1. check if a bookmark exists for the domain
+        // 2. if it does, we need to load the favicon for the domain
+        if bookmarksCachingSearch.containsDomain(domain) {
+            loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
+        }
+    }
+
     public func clearCache(_ cacheType: CacheType) {
         Constants.caches[cacheType]?.clearDiskCache()
     }
@@ -214,6 +288,7 @@ public class Favicons {
                             fromURL url: URL? = nil,
                             intoCache targetCacheType: CacheType,
                             fromCache: CacheType? = nil,
+                            queue: DispatchQueue? = OperationQueue.current?.underlyingQueue,
                             completion: ((UIImage?) -> Void)? = nil) {
 
         guard let domain = domain,
@@ -229,11 +304,14 @@ public class Favicons {
             return
         }
 
-        guard let queue = OperationQueue.current?.underlyingQueue else { return }
+        guard let queue = queue else { return }
 
         func complete(withImage image: UIImage?) {
             queue.async {
-                if let image = image {
+                if var image = image {
+                    if !self.isValidImage(image, forMaxSize: Constants.maxFaviconSize) {
+                        image = self.resizedImage(image, toSize: Constants.maxFaviconSize)
+                    }
                     targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
                 }
                 completion?(image)
@@ -266,7 +344,7 @@ public class Favicons {
                                       _ domain: String,
                                       _ completion: @escaping (UIImage?) -> Void) {
 
-        guard Constants.downloader.shouldDownload(forDomain: domain) else {
+      guard downloader.shouldDownload(forDomain: domain) else {
             completion(nil)
             return
         }
@@ -350,7 +428,7 @@ public class Favicons {
     private func loadImage(url: URL) -> UIImage? {
         var image: UIImage?
         var request = URLRequest.userInitiated(url)
-        UserAgentManager.shared.update(request: &request, isDesktop: false)
+        userAgentManager.update(request: &request, isDesktop: false)
 
         let group = DispatchGroup()
         group.enter()
@@ -366,11 +444,7 @@ public class Favicons {
     }
 
     public func defaultResource(forDomain domain: String?) -> ImageResource? {
-        guard let domain = domain,
-            let source = sourcesProvider.mainSource(forDomain: domain) else { return nil }
-        
-        let key = Self.createHash(ofDomain: domain)
-        return ImageResource(downloadURL: source, cacheKey: key)
+        return FaviconsHelper.defaultResource(forDomain: domain, sourcesProvider: sourcesProvider)
     }
 
     public func kfOptions(forDomain domain: String?, withURL url: URL? = nil, usingCache cacheType: CacheType) -> KingfisherOptionsInfo? {
@@ -397,7 +471,7 @@ public class Favicons {
         let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(isDebugBuild ? .seconds(60) : .days(7))
 
         return [
-            .downloader(Constants.downloader),
+            .downloader(downloader),
             .requestModifier(Constants.requestModifier),
             .targetCache(cache),
             expiry,

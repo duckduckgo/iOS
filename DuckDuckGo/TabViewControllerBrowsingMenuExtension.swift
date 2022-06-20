@@ -22,6 +22,8 @@ import Core
 import BrowserServicesKit
 import simd
 
+// swiftlint:disable file_length
+
 extension TabViewController {
     
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
@@ -77,13 +79,24 @@ extension TabViewController {
                 self?.onReportBrokenSiteAction()
             }))
             
+            entries.append(.separator)
+
+            
+            if self.featureFlagger.isFeatureOn(.autofill) {
+                entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
+                                                         image: UIImage(named: "MenuAutofill")!,
+                                                         action: { [weak self] in
+                    self?.onOpenAutofillLoginsAction()
+                }))
+            }
+            
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
                                                      image: UIImage(named: "MenuDownloads")!,
                                                      showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
                                                      action: { [weak self] in
                 self?.onOpenDownloadsAction()
             }))
-            
+
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
                                                      image: UIImage(named: "MenuSettings")!,
                                                      action: { [weak self] in
@@ -144,7 +157,6 @@ extension TabViewController {
     }
     
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
-        guard #available(iOS 13, *) else { return nil }
         guard let domain = link.url.host, !appUrls.isDuckDuckGo(url: link.url) else { return nil }
         let isFireproofed = PreserveLogins.shared.isAllowed(cookieDomain: domain)
         
@@ -355,6 +367,10 @@ extension TabViewController {
         delegate?.tabDidRequestDownloads(tab: self)
     }
     
+    private func onOpenAutofillLoginsAction() {
+        delegate?.tabDidRequestAutofillLogins(tab: self)
+    }
+    
     private func onBrowsingSettingsAction() {
         Pixel.fire(pixel: .browsingMenuSettings)
         delegate?.tabDidRequestSettings(tab: self)
@@ -393,3 +409,5 @@ extension TabViewController {
         }
     }
 }
+
+// swiftlint:enable file_length

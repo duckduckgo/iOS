@@ -165,22 +165,25 @@ class BookmarksManager {
     
     func delete(_ bookmarkItem: BookmarkItem, completion: BookmarkItemDeletedBackgroundThreadCompletion? = nil) {
         var reloadWidget = false
+        var bookmarkURL: URL?
         if let bookmark = bookmarkItem as? Bookmark {
-            removeFavicon(forBookmark: bookmark)
             if bookmark.isFavorite {
                 reloadWidget = true
             }
+            bookmarkURL = bookmark.url
         }
-        coreDataStorage.delete(bookmarkItem.objectID) { success, error in
+        coreDataStorage.delete(bookmarkItem.objectID) { [weak self] success, error in
+            guard let self = self else { return }
             if reloadWidget {
                 self.reloadWidgets()
             }
+            self.removeFavicon(forBookmarkURL: bookmarkURL)
             completion?(success, error)
         }
     }
     
-    private func removeFavicon(forBookmark bookmark: Bookmark?) {
-        guard let domain = bookmark?.url?.host else { return }
+    private func removeFavicon(forBookmarkURL url: URL?) {
+        guard let domain = url?.host else { return }
         
         coreDataStorage.allBookmarksAndFavoritesFlat { bookmarks in
             let matchesDomain: ((Bookmark) -> Bool) = { $0.url?.host == domain }
@@ -193,7 +196,7 @@ class BookmarksManager {
     
     private func updateFaviconIfNeeded(_ old: Bookmark, _ newURL: URL) {
         guard old.url?.host != newURL.host else { return }
-        removeFavicon(forBookmark: old)
+        removeFavicon(forBookmarkURL: old.url)
         Favicons.shared.loadFavicon(forDomain: newURL.host, intoCache: .bookmarks)
     }
 
@@ -211,5 +214,9 @@ extension BookmarksManager {
 
     func allBookmarksAndFavoritesFlat(completion: @escaping ([BookmarkManagedObject]) -> Void) {
         coreDataStorage.allBookmarksAndFavoritesFlat(completion: completion)
+    }
+
+    func allBookmarksAndFavoritesFlat() async -> [BookmarkManagedObject] {
+        return await coreDataStorage.allBookmarksAndFavoritesFlat()
     }
 }

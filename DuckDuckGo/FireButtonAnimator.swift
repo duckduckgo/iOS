@@ -40,9 +40,9 @@ enum FireButtonAnimationType: String, CaseIterable {
         }
     }
     
-    var composition: LOTComposition? {
+    var composition: Animation? {
         guard let fileName = fileName else { return nil }
-        return LOTComposition(name: fileName)
+        return Animation.named(fileName, animationCache: LRUAnimationCache.sharedCache)
     }
 
     var transition: Double {
@@ -92,7 +92,7 @@ enum FireButtonAnimationType: String, CaseIterable {
 class FireButtonAnimator {
     
     private let appSettings: AppSettings
-    private var preLoadedComposition: LOTComposition?
+    private var preLoadedComposition: Animation?
     
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
@@ -123,23 +123,23 @@ class FireButtonAnimator {
         
         window.addSubview(snapshot)
         
-        let animationView = LOTAnimationView(model: composition, in: nil)
+        let animationView = AnimationView(animation: composition)
         let currentAnimation = appSettings.currentFireButtonAnimation
         let speed = currentAnimation.speed
         animationView.contentMode = .scaleAspectFill
         animationView.animationSpeed = CGFloat(speed)
         animationView.frame = window.frame
         window.addSubview(animationView)
-        
-        let duration = Double(animationView.animationDuration) / speed
+
+        let duration = Double(composition.duration) / speed
         let delay = duration * currentAnimation.transition
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             snapshot.removeFromSuperview()
             onTransitionCompleted()
         }
         
-        animationView.play(fromFrame: 0, toFrame: currentAnimation.endFrame) { _ in
-            animationView.removeFromSuperview()
+        animationView.play(fromProgress: 0, toProgress: 1) { [weak animationView] _ in
+            animationView?.removeFromSuperview()
             completion()
         }
 

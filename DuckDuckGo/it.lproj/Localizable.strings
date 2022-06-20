@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Posizione";
 
+/* More options button text */
+"bookmark.moreButton" = "Informazioni";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titolo del sito";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Segnalibri";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Impossibile esportare i segnalibri. Riprova.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "I tuoi segnalibri sono stati esportati.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "I tuoi segnalibri sono stati condivisi.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Esporta file HTML";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Siamo spiacenti, non riusciamo a importare questo file.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "I segnalibri sono stati importati.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Importa file HTML";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Importa file segnalibro da un altro browser";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importa un file HTML di segnalibri da un altro browser o esporta i segnalibri esistenti.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "I commenti non sono stati caricati";
@@ -266,7 +296,7 @@
 "dax.hide.title" = "Nascondere i suggerimenti rimanenti?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Le tue ricerche su DuckDuckGo sono anonime e non salvo mai la cronologia delle ricerche. Mai. 🙌";
+"dax.onboarding.browsing.after.search" = "Le tue ricerche su DuckDuckGo sono anonime. Sempre. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Accidenti!";

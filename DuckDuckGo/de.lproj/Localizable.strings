@@ -196,6 +196,9 @@
 /* Header for folder selection for bookmarks */
 "bookmark.folderSelect.title" = "Standort";
 
+/* More options button text */
+"bookmark.moreButton" = "Mehr";
+
 /* Placeholder in the add bookmark form */
 "bookmark.title.placeholder" = "Titel der Website";
 
@@ -210,6 +213,33 @@
 
 /* No comment provided by engineer. */
 "bookmarks.button.hint" = "Lesezeichen";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Deine Lesezeichen konnten nicht exportiert werden. Bitte versuche es erneut.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Deine Lesezeichen wurden exportiert.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Deine Lesezeichen wurden geteilt.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "HTML-Datei exportieren";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "Leider können wir diese Datei nicht importieren.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Deine Lesezeichen wurden importiert.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "HTML-Datei importieren";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Lesezeichendatei aus einem anderen Browser importieren";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Importiere eine HTML-Datei mit Lesezeichen aus einem anderen Browser oder exportieren deine vorhandenen Lesezeichen.";
 
 /* Broken Site Category */
 "brokensite.category.comments" = "Kommentare wurden nicht geladen";
@@ -266,7 +296,7 @@
 "dax.hide.title" = "Verbleibende Tipps ausblenden?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Deine DuckDuckGo-Suchanfragen sind anonym und ich speichere niemals deinen Suchverlauf. Nie. 🙌";
+"dax.onboarding.browsing.after.search" = "Deine DuckDuckGo-Suchanfragen sind anonym. Immer. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";

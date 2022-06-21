@@ -105,7 +105,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99p-YW-bjm" customClass="PrivacyIconView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="-8" y="0.0" width="43" height="40"/>
                                                     <subviews>
-                                                        <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-pm-Da8" customClass="AnimationView" customModule="Lottie">
+                                                        <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-pm-Da8" customClass="AnimationView" customModule="Lottie">
                                                             <rect key="frame" x="-12" y="0.0" width="158" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="158" id="3PW-3m-tHd"/>
@@ -113,9 +113,6 @@
                                                         </view>
                                                         <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="D46-aN-352" customClass="AnimationView" customModule="Lottie">
                                                             <rect key="frame" x="-12" y="0.0" width="158" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="158" id="pMj-lD-s5z"/>
-                                                            </constraints>
                                                         </view>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eoZ-Ly-QHi">
                                                             <rect key="frame" x="0.0" y="0.0" width="43" height="40"/>

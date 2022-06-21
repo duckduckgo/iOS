@@ -699,7 +699,8 @@ class MainViewController: UIViewController {
         }
 
         omniBar.refreshText(forUrl: tab.url)
-        updateSiteRating(tab.siteRating)
+//        updateSiteRating(tab.siteRating) //
+//        omniBar.updatePrivacyIcon(for: tab.url)
         omniBar.startBrowsing()
     }
     

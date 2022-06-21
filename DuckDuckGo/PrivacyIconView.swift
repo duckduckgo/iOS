@@ -50,6 +50,7 @@ class PrivacyIconView: UIView {
         super.awakeFromNib()
   
         loadAnimations(for: ThemeManager.shared.currentTheme)
+        updateShieldImageView(for: icon)
     }
     
     func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
@@ -60,18 +61,28 @@ class PrivacyIconView: UIView {
     }
     
     var icon: PrivacyIcon {
-        didSet {
-            switch icon {
-            case .daxLogo:
-                shieldImageView.image = daxLogoIcon
-                shieldImageView.contentMode = .center
-            case .shield:
-                shieldImageView.image = shieldIcon
-                shieldImageView.contentMode = .scaleAspectFill
-            case .shieldWithDot:
-                shieldImageView.image = shieldWithDotIcon
-                shieldImageView.contentMode = .scaleAspectFill
+        willSet {
+            if newValue != icon {
+                UIView.transition(with: shieldImageView,
+                                  duration: 0.2,
+                                  options: .transitionCrossDissolve,
+                                  animations: { self.updateShieldImageView(for: newValue) },
+                                  completion: nil)
             }
+        }
+    }
+    
+    private func updateShieldImageView(for icon: PrivacyIcon) {
+        switch icon {
+        case .daxLogo:
+            shieldImageView.image = daxLogoIcon
+            shieldImageView.contentMode = .center
+        case .shield:
+            shieldImageView.image = shieldIcon
+            shieldImageView.contentMode = .scaleAspectFill
+        case .shieldWithDot:
+            shieldImageView.image = shieldWithDotIcon
+            shieldImageView.contentMode = .scaleAspectFill
         }
     }
     

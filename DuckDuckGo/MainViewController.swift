@@ -453,20 +453,17 @@ class MainViewController: UIViewController {
         }
     }
 
-    @available(iOS 13.4, *)
     func handlePressEvent(event: UIPressesEvent?) {
         keyModifierFlags = event?.modifierFlags
     }
 
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         super.pressesBegan(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
         handlePressEvent(event: event)
     }
     
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         super.pressesEnded(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
         handlePressEvent(event: event)
     }
 

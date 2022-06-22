@@ -425,6 +425,12 @@ class TabViewController: UIViewController {
         load(url: url, didUpgradeURL: false)
     }
     
+    public func load(backForwardListItem: WKBackForwardListItem) {
+        webView.stopLoading()
+        updateContentMode()
+        webView.go(to: backForwardListItem)
+    }
+    
     private func load(url: URL, didUpgradeURL: Bool) {
         if !didUpgradeURL {
             lastUpgradedURL = nil

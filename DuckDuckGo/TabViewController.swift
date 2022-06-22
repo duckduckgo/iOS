@@ -735,8 +735,8 @@ class TabViewController: UIViewController {
         if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
            ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
             
-            self.notificationContinuation?.resume(returning: nil)
-            self.notificationContinuation = nil
+            notificationContinuation?.resume(returning: nil)
+            notificationContinuation = nil
 
             webView.configuration.userContentController.removeAllContentRuleLists()
             webView.configuration.userContentController.add(rules.rulesList)
@@ -1398,7 +1398,7 @@ extension TabViewController: WKNavigationDelegate {
         
         if let url = navigationAction.request.url, !appUrls.isDuckDuckGoSearch(url: url) {
             await awaitContentBlockingAssetsInstalled()
-            await rulesCompilationMonitor.reportWaitTimeForTabFinishedWaitingForRules(self)
+            await rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
         }
         
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`

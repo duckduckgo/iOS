@@ -46,19 +46,19 @@ final class RulesCompilationMonitor {
     }
     
     /// Called when Rules compilation finishes
-    func reportWaitTimeForTabFinishedWaitingForRules(_ tab: TabViewController) async {
+    func reportTabFinishedWaitingForRules(_ tab: TabViewController) async {
         defer { waiters.removeObject(forKey: tab) }
         guard waiters.object(forKey: tab) != nil,
               !didReport,
               let waitStart = waitStart
         else { return }
 
-        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .waitResultSuccess)
+        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .success)
     }
     
     func reportNavigationDidNotWaitForRules() async {
         guard !didReport else { return }
-        await reportWaitTime(0, result: .waitResultSuccess)
+        await reportWaitTime(0, result: .success)
     }
     
     /// If Tab is going to close while the rules are still being compiled: report wait time with Tab .closed argument
@@ -69,7 +69,7 @@ final class RulesCompilationMonitor {
               let waitStart = waitStart
         else { return }
 
-        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .waitResultTabClosed)
+        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .tabClosed)
     }
     
     /// If App is going to close while the rules are still being compiled: report wait time with .quit argument
@@ -79,12 +79,15 @@ final class RulesCompilationMonitor {
               let waitStart = waitStart
         else { return }
 
-        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .waitResultAppQuit)
+        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .appQuit)
     }
     
-    private func reportWaitTime(_ waitTime: TimeInterval, result: Pixel.Event) async {
+    private func reportWaitTime(_ waitTime: TimeInterval, result: Pixel.Event.CompileRulesResult) async {
         didReport = true
-        await Pixel.fire(pixel: result, withAdditionalParameters: ["waitTime": String(waitTime)])
+        await Pixel.fire(pixel: .compilationResult(result: result,
+                                                   waitTime: Pixel.Event.CompileRulesWaitTime(waitTime: waitTime),
+                                                   appState: .regular),
+                         withAdditionalParameters: ["waitTime": String(waitTime)])
     }
     
 }
@@ -97,48 +100,6 @@ private extension Pixel {
                 continuation.resume()
             }
         }
-    }
-    
-    enum CompileRulesWaitTime: String, CustomStringConvertible {
-        
-        var description: String { rawValue }
-
-        case noWait = "0"
-        case lessThan1s = "1"
-        case lessThan5s = "5"
-        case lessThan10s = "10"
-        case lessThan20s = "20"
-        case lessThan40s = "40"
-        case more
-        
-        init(waitTime: TimeInterval) {
-            switch waitTime {
-            case 0:
-                self = .noWait
-            case ...1:
-                self = .lessThan1s
-            case ...5:
-                self = .lessThan5s
-            case ...10:
-                self = .lessThan10s
-            case ...20:
-                self = .lessThan20s
-            case ...40:
-                self = .lessThan40s
-            default:
-                self = .more
-            }
-        }
-        
-    }
-    
-    enum AppState: String, CustomStringConvertible {
-        
-        var description: String { rawValue }
-
-        case onboarding
-        case regular
-        
     }
     
 }

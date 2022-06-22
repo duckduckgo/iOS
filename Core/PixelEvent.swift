@@ -289,9 +289,7 @@ extension Pixel {
         case cachedTabPreviewsExceedsTabCount
         case cachedTabPreviewRemovalError
         
-        case waitResultTabClosed
-        case waitResultAppQuit
-        case waitResultSuccess
+        case compilationResult(result: CompileRulesResult, waitTime: CompileRulesWaitTime, appState: AppState)
         
     }
     
@@ -569,11 +567,65 @@ extension Pixel.Event {
         case .cachedTabPreviewsExceedsTabCount: return "m_d_tpetc"
         case .cachedTabPreviewRemovalError: return "m_d_tpre"
             
-        case .waitResultTabClosed: return "m_wait_result_tab_closed"
-        case .waitResultAppQuit: return "m_wait_result_app_quit"
-        case .waitResultSuccess: return "m_wait_result_success"
-            
+        case .compilationResult(result: let result, waitTime: let waitTime, appState: let appState):
+            return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"
         }
+        
+    }
+    
+}
+
+extension Pixel.Event {
+    
+    public enum CompileRulesWaitTime: String, CustomStringConvertible {
+        
+        public var description: String { rawValue }
+        
+        case noWait = "0"
+        case lessThan1s = "1"
+        case lessThan5s = "5"
+        case lessThan10s = "10"
+        case lessThan20s = "20"
+        case lessThan40s = "40"
+        case more
+        
+        public init(waitTime: TimeInterval) {
+            switch waitTime {
+            case 0:
+                self = .noWait
+            case ...1:
+                self = .lessThan1s
+            case ...5:
+                self = .lessThan5s
+            case ...10:
+                self = .lessThan10s
+            case ...20:
+                self = .lessThan20s
+            case ...40:
+                self = .lessThan40s
+            default:
+                self = .more
+            }
+        }
+        
+    }
+    
+    public enum CompileRulesResult: String, CustomStringConvertible {
+        
+        public var description: String { rawValue }
+        
+        case tabClosed = "tab_closed"
+        case appQuit = "app_quit"
+        case success
+        
+    }
+    
+    public enum AppState: String, CustomStringConvertible {
+        
+        public var description: String { rawValue }
+        
+        case onboarding
+        case regular
         
     }
     

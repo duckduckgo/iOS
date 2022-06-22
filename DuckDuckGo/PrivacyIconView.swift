@@ -60,15 +60,24 @@ class PrivacyIconView: UIView {
         shieldDotAnimationView.animation = Animation.named(useLightStyle ? "shield-dot" : "dark-shield-dot", animationCache: cache)
     }
     
-    var icon: PrivacyIcon {
+    private(set) var icon: PrivacyIcon {
         willSet {
-            if newValue != icon {
-                UIView.transition(with: shieldImageView,
-                                  duration: 0.2,
-                                  options: .transitionCrossDissolve,
-                                  animations: { self.updateShieldImageView(for: newValue) },
-                                  completion: nil)
-            }
+            guard newValue != icon else { return }
+            updateShieldImageView(for: newValue)
+        }
+    }
+    
+    func updateIcon(_ newIcon: PrivacyIcon, animated: Bool) {
+        guard icon != newIcon else { return }
+        
+        if animated {
+            UIView.transition(with: shieldImageView,
+                              duration: 0.2,
+                              options: .transitionCrossDissolve,
+                              animations: { self.icon = newIcon },
+                              completion: nil)
+        } else {
+            self.icon = newIcon
         }
     }
     

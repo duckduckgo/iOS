@@ -51,15 +51,16 @@ final class PrivacyIconAndTrackersAnimator {
     
     func resetPrivacyIcon(in container: PrivacyInfoContainerView, for url: URL?) {
         guard let url = url, !AppUrls().isDuckDuckGoSearch(url: url) else {
-            container.privacyIcon.icon = .daxLogo
+            container.privacyIcon.updateIcon(.daxLogo, animated: true)
             return
         }
         
-        container.privacyIcon.icon = .shield
+        container.privacyIcon.updateIcon(.shield, animated: true)
     }
     
     func updatePrivacyIcon(in container: PrivacyInfoContainerView, for siteRating: SiteRating) {
-        container.privacyIcon.icon = siteRating.willAnimateTrackers ? .shield : siteRating.privacyIcon
+        let icon = siteRating.willAnimateTrackers ? .shield : siteRating.privacyIcon
+        container.privacyIcon.updateIcon(icon, animated: true)
     }
     
     func configure(_ container: PrivacyInfoContainerView, for siteRating: SiteRating) {
@@ -77,10 +78,10 @@ final class PrivacyIconAndTrackersAnimator {
                 trackerAnimationView.reloadImages()
             }
             
-            container.privacyIcon.icon = .shield
+            container.privacyIcon.updateIcon(.shield, animated: true)
         } else {
             // No animation directly set icon
-            container.privacyIcon.icon = siteRating.privacyIcon
+            container.privacyIcon.updateIcon(siteRating.privacyIcon, animated: true)
         }
     }
     
@@ -112,7 +113,7 @@ final class PrivacyIconAndTrackersAnimator {
         
         let currentShieldAnimation = (showDot ? container.privacyIcon.shieldDotAnimationView : container.privacyIcon.shieldAnimationView)
         currentShieldAnimation?.play { [weak container] _ in
-            container?.privacyIcon.icon = privacyIcon
+            container?.privacyIcon.updateIcon(privacyIcon, animated: false)
             container?.privacyIcon.shieldImageView.isHidden = false
             currentShieldAnimation?.isHidden = true
             
@@ -132,7 +133,7 @@ final class PrivacyIconAndTrackersAnimator {
         container.privacyIcon.shieldDotAnimationView.isHidden = !showDot
         container.privacyIcon.shieldImageView.isHidden = true
         
-        container.privacyIcon.icon = privacyIcon
+        container.privacyIcon.updateIcon(privacyIcon, animated: true)
                 
         UIView.animate(withDuration: 0.2) {
             omniBar.textField.alpha = 0

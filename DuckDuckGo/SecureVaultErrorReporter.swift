@@ -30,8 +30,10 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif
         switch error {
-        case .initFailed, .failedToOpenDatabase:
-            Pixel.fire(pixel: .secureVaultInitError)
+        case .initFailed(let error):
+            Pixel.fire(pixel: .secureVaultInitFailedError, error: error)
+        case .failedToOpenDatabase(let error):
+            Pixel.fire(pixel: .secureVaultFailedToOpenDatabaseError, error: error)
         default:
             Pixel.fire(pixel: .secureVaultError)
 

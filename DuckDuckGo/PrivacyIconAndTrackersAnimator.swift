@@ -163,16 +163,19 @@ final class PrivacyIconAndTrackersAnimator {
     
     func cancelAnimations(in omniBar: OmniBar) {
         guard let container = omniBar.privacyInfoContainer else { return }
-        
         container.trackers1Animation.stop()
         container.trackers2Animation.stop()
         container.trackers3Animation.stop()
+        
         container.privacyIcon.shieldAnimationView.stop()
         container.privacyIcon.shieldDotAnimationView.stop()
         
         container.privacyIcon.shieldAnimationView.isHidden = true
         container.privacyIcon.shieldDotAnimationView.isHidden = true
         container.privacyIcon.shieldImageView.isHidden = false
+        
+        omniBar.textField.layer.removeAllAnimations()
+        omniBar.textField.alpha = 1
     }
     
     func resetImageProvider() {

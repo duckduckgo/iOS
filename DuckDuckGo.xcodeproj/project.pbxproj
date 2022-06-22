@@ -147,7 +147,7 @@
 		838306E320C733010045E854 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 838306E120C733010045E854 /* InfoPlist.strings */; };
 		8390446F20BDCE10006461CD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8390446E20BDCE10006461CD /* ShareViewController.swift */; };
 		8390447220BDCE10006461CD /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8390447020BDCE10006461CD /* MainInterface.storyboard */; };
-		8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8390446C20BDCE10006461CD /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8390447620BDCE10006461CD /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8390446C20BDCE10006461CD /* ShareExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83B8BDAF20AB14A70076D6A1 /* APIHeadersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B8BDAD20AB0DA90076D6A1 /* APIHeadersTests.swift */; };
 		83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BE9BC2215D69C1009844D9 /* AppConfigurationFetch.swift */; };
 		83D306A41F6D500B00ED7CE2 /* tosdr.json in Resources */ = {isa = PBXBuildFile; fileRef = 83D306A31F6D500B00ED7CE2 /* tosdr.json */; };
@@ -179,7 +179,7 @@
 		8512EA5124ED30D20073EE19 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8512EA5024ED30D20073EE19 /* SwiftUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8512EA5324ED30D20073EE19 /* Widgets.swift */; };
 		8512EA5724ED30D30073EE19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8512EA5624ED30D30073EE19 /* Assets.xcassets */; };
-		8512EA5D24ED30D30073EE19 /* WidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8512EA5D24ED30D30073EE19 /* WidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8512EA4D24ED30D20073EE19 /* WidgetsExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8512EA9D24EEA6820073EE19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F143C2B11E49D78C00CFDE3A /* Assets.xcassets */; };
 		8517D98B221783A0006A8DD0 /* FindInPage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8517D98A221783A0006A8DD0 /* FindInPage.xcassets */; };
 		851B1283221FE65E004781BC /* ImproveOnboardingExperiment1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851B1281221FE64E004781BC /* ImproveOnboardingExperiment1Tests.swift */; };
@@ -238,7 +238,7 @@
 		8544C37C250B827300A0FE73 /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8544C37A250B823600A0FE73 /* UserText.swift */; };
 		85482D8D2462DCD100EDEDD1 /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */; };
 		85482D902462DCD100EDEDD1 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85482D8E2462DCD100EDEDD1 /* MainInterface.storyboard */; };
-		85482D942462DCD100EDEDD1 /* OpenAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 85482D882462DCD100EDEDD1 /* OpenAction.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		85482D942462DCD100EDEDD1 /* OpenAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 85482D882462DCD100EDEDD1 /* OpenAction.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		85482D992462F1C600EDEDD1 /* ActionIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85482D982462F1C600EDEDD1 /* ActionIcons.xcassets */; };
 		8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8548D95D25262B1B005AAE49 /* ViewHighlighter.swift */; };
 		8548D96825262C33005AAE49 /* view_highlight.json in Resources */ = {isa = PBXBuildFile; fileRef = 8548D96725262C33005AAE49 /* view_highlight.json */; };
@@ -872,6 +872,8 @@
 		31C70B5428045E3500FB6AD1 /* SecureVaultErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureVaultErrorReporter.swift; sourceTree = "<group>"; };
 		31C70B5A2804C61000FB6AD1 /* SaveAutofillLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAutofillLoginManager.swift; sourceTree = "<group>"; };
 		31C7D71B27515A6300A95D0A /* MockVoiceSearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVoiceSearchHelper.swift; sourceTree = "<group>"; };
+		31CA9D9728632C3D00709B71 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
+		31CA9D9828632C3D00709B71 /* OpenAction.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenAction.entitlements; sourceTree = "<group>"; };
 		31CB4250273AF50700FA0F3F /* SpeechRecognizerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerProtocol.swift; sourceTree = "<group>"; };
 		31CC224828369B38001654A4 /* AutofillLoginSettingsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginSettingsListViewController.swift; sourceTree = "<group>"; };
 		31DD208327395A5A008FB313 /* VoiceSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSearchHelper.swift; sourceTree = "<group>"; };
@@ -2536,6 +2538,7 @@
 		8390446D20BDCE10006461CD /* ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
+				31CA9D9728632C3D00709B71 /* ShareExtension.entitlements */,
 				8390446E20BDCE10006461CD /* ShareViewController.swift */,
 				8390447020BDCE10006461CD /* MainInterface.storyboard */,
 				8390447320BDCE10006461CD /* Info.plist */,
@@ -2841,6 +2844,7 @@
 		85482D892462DCD100EDEDD1 /* OpenAction */ = {
 			isa = PBXGroup;
 			children = (
+				31CA9D9828632C3D00709B71 /* OpenAction.entitlements */,
 				85482D8C2462DCD100EDEDD1 /* ActionViewController.swift */,
 				85482D8E2462DCD100EDEDD1 /* MainInterface.storyboard */,
 				85482D912462DCD100EDEDD1 /* Info.plist */,
@@ -5458,6 +5462,7 @@
 		};
 		8390447520BDCE10006461CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 8390446B20BDCE10006461CD /* ShareExtension */;
 			targetProxy = 8390447420BDCE10006461CD /* PBXContainerItemProxy */;
 		};
@@ -5468,11 +5473,13 @@
 		};
 		8512EA5C24ED30D30073EE19 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 8512EA4C24ED30D20073EE19 /* WidgetsExtension */;
 			targetProxy = 8512EA5B24ED30D30073EE19 /* PBXContainerItemProxy */;
 		};
 		85482D932462DCD100EDEDD1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 85482D872462DCD100EDEDD1 /* OpenAction */;
 			targetProxy = 85482D922462DCD100EDEDD1 /* PBXContainerItemProxy */;
 		};
@@ -6396,6 +6403,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -6411,6 +6419,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -6423,6 +6432,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -6438,6 +6448,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -6495,6 +6506,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -6551,6 +6563,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -6567,18 +6580,27 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = B2RUA6XMHC;
+				GROUP_ID_PREFIX = group.dev.bunn;
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.bunn.ddg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -6588,17 +6610,26 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = DuckDuckGo/DuckDuckGo.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B2RUA6XMHC;
+				GROUP_ID_PREFIX = group.dev.bunn;
 				INFOPLIST_FILE = DuckDuckGo/Info.plist;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_ID)";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.bunn.ddg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};
@@ -6668,6 +6699,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -6702,6 +6734,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -6715,6 +6748,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenAction/OpenAction.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -6732,6 +6766,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -6745,6 +6780,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = OpenAction/OpenAction.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -6761,6 +6797,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -6907,6 +6944,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -6925,10 +6963,10 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -6940,6 +6978,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 0;
 				DEFINES_MODULE = YES;
@@ -6957,9 +6996,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

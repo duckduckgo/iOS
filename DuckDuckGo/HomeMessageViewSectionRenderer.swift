@@ -151,6 +151,12 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     private var isPad: Bool {
+#if targetEnvironment(macCatalyst)
+        return true
+        
+#else
         return controller?.traitCollection.horizontalSizeClass == .regular
+#endif
+        
     }
 }

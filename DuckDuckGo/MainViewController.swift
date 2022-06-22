@@ -414,7 +414,7 @@ class MainViewController: UIViewController {
 
     private func configureTabManager() {
 
-        let isPadDevice = UIDevice.current.userInterfaceIdiom == .pad
+        let isPadDevice = self.isPad
 
         let tabsModel: TabsModel
         let shouldClearTabsModelOnStartup = AutoClearSettingsModel(settings: appSettings) != nil

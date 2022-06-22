@@ -31,7 +31,15 @@ public class AppWidthObserver {
     public static let shared = AppWidthObserver()
 
     // mutable for testing
-    var isPad = UIDevice.current.userInterfaceIdiom == .pad
+    var isPad: Bool {
+#if targetEnvironment(macCatalyst)
+        return true
+#else
+        return UIDevice.current.userInterfaceIdiom == .pad
+#endif
+    }
+    
+
     var currentWidth: CGFloat = 0
     
     public var isLargeWidth: Bool {

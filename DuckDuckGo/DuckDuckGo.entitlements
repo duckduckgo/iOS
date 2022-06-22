@@ -2,14 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>com.apple.developer.web-browser</key>
-	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>$(GROUP_ID_PREFIX).bookmarks</string>
-		<string>$(GROUP_ID_PREFIX).contentblocker</string>
-		<string>$(GROUP_ID_PREFIX).statistics</string>
-		<string>$(GROUP_ID_PREFIX).database</string>
+		<string>group.dev.bunn.contentblocker</string>
+		<string>group.dev.bunn.ddg</string>
+		<string>group.dev.bunn.database</string>
 	</array>
+	<key>com.apple.security.personal-information.photos-library</key>
+	<true/>
 </dict>
 </plist>

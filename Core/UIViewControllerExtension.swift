@@ -27,7 +27,13 @@ extension UIViewController {
     }
     
     var isPad: Bool {
-        return traitCollection.horizontalSizeClass == .regular
+#if targetEnvironment(macCatalyst)
+        return true
+        
+#else
+        return controller?.traitCollection.horizontalSizeClass == .regular
+#endif
+        
     }
 
     @objc func buildActivities() -> [UIActivity] {

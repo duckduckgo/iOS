@@ -52,7 +52,12 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private let cellHeight: CGFloat
     
     var isPad: Bool {
+        #if targetEnvironment(macCatalyst)
+        return true
+        
+        #else
         return controller?.traitCollection.horizontalSizeClass == .regular
+#endif
     }
 
     init(allowsEditing: Bool = true, bookmarksManager: BookmarksManager = BookmarksManager()) {

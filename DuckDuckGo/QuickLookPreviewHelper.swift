@@ -41,7 +41,8 @@ class QuickLookPreviewHelper: FilePreview {
     
     static func canPreview(_ url: URL) -> Bool {
         let previewItem = url as NSURL
-        return QLPreviewController.canPreview(previewItem)
+      //  return QLPreviewController.canPreview(previewItem)
+        return true
     }
 }
 

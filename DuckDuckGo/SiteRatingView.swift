@@ -53,7 +53,7 @@ public class SiteRatingView: UIView {
         self.addSubview(view)
         view.frame = self.bounds
         
-        addInteraction(UIPointerInteraction(delegate: self))        
+        addInteraction(UIPointerInteraction(delegate: self))
     }
 
     public func update(siteRating: SiteRating?, with config: PrivacyConfiguration?) {

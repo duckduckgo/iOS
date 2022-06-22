@@ -179,7 +179,6 @@ class OnboardingViewController: UIViewController, Onboarding {
         let skipButtonTitle = nextScreen.skipButtonTitle
         skipButton.setTitle(skipButtonTitle, for: .normal)
         skipButton.setTitle(skipButtonTitle, for: .disabled)
-        skipButton.isHidden = (nextScreen is OnboardingHomeRowViewController)
     }
     
     func done() {

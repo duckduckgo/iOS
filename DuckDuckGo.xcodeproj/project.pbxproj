@@ -361,7 +361,6 @@
 		980891A92238504B00313A70 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980891A82238504B00313A70 /* UILabelExtension.swift */; };
 		9813F79822BA71AA00A80EDB /* StorageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9813F79722BA71AA00A80EDB /* StorageCache.swift */; };
 		9817C9C321EF594700884F65 /* AutoClear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9817C9C221EF594700884F65 /* AutoClear.swift */; };
-		98196CFA23AA75D0007809AC /* OnboardingHomeRowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98196CF923AA75D0007809AC /* OnboardingHomeRowViewController.swift */; };
 		981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981CA7E92617797500E119D5 /* MainViewController+AddFavoriteFlow.swift */; };
 		981FED692201FE69008488D7 /* AutoClearSettingsScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED682201FE69008488D7 /* AutoClearSettingsScreenTests.swift */; };
 		981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981FED6C22025151008488D7 /* BlankSnapshotViewController.swift */; };
@@ -1179,7 +1178,6 @@
 		981685572521EEF600FA91A1 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		981685A825221ACF00FA91A1 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nb; path = nb.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		9817C9C221EF594700884F65 /* AutoClear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClear.swift; sourceTree = "<group>"; };
-		98196CF923AA75D0007809AC /* OnboardingHomeRowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingHomeRowViewController.swift; sourceTree = "<group>"; };
 		981CA7E92617797500E119D5 /* MainViewController+AddFavoriteFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+AddFavoriteFlow.swift"; sourceTree = "<group>"; };
 		981DCA922521EFAB00CD4C18 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		981DCA932521EFAB00CD4C18 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3921,7 +3919,6 @@
 			children = (
 				984147AA24F0259000362052 /* Onboarding.storyboard */,
 				851B128722200575004781BC /* Onboarding.swift */,
-				98196CF923AA75D0007809AC /* OnboardingHomeRowViewController.swift */,
 				F47E53D8250A97330037C686 /* OnboardingDefaultBroswerViewController.swift */,
 				F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */,
 				F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */,
@@ -4933,7 +4930,6 @@
 				F1BE54581E69DE1000FCF649 /* TutorialSettings.swift in Sources */,
 				858650D12469BCDE00C36F8A /* DaxDialogs.swift in Sources */,
 				310D091B2799F54900DC0060 /* DownloadManager.swift in Sources */,
-				98196CFA23AA75D0007809AC /* OnboardingHomeRowViewController.swift in Sources */,
 				98D98A7425ED88D100D8E3DF /* BrowsingMenuEntryViewCell.swift in Sources */,
 				98F3A1D8217B37010011A0D4 /* Theme.swift in Sources */,
 				CB9B873C278C8FEA001F4906 /* WidgetEducationView.swift in Sources */,

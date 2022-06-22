@@ -94,6 +94,35 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGG-5L-D8Q" customClass="PrivacyInfoContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="2" y="0.0" width="138" height="40"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qa-DK-tfO" userLabel="Trackers Animation Wrapper">
+                                                    <rect key="frame" x="-15" y="0.0" width="158" height="40"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xsT-yZ-wg7" customClass="AnimationView" customModule="Lottie">
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHJ-ya-QS7" customClass="AnimationView" customModule="Lottie">
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8n-8r-JML" customClass="AnimationView" customModule="Lottie">
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="E8n-8r-JML" secondAttribute="bottom" id="1fX-TB-gbx"/>
+                                                        <constraint firstAttribute="bottom" secondItem="xsT-yZ-wg7" secondAttribute="bottom" id="2VD-00-BAH"/>
+                                                        <constraint firstItem="E8n-8r-JML" firstAttribute="top" secondItem="7qa-DK-tfO" secondAttribute="top" id="A7K-v5-7cG"/>
+                                                        <constraint firstItem="xsT-yZ-wg7" firstAttribute="top" secondItem="7qa-DK-tfO" secondAttribute="top" id="COl-0P-yYq"/>
+                                                        <constraint firstAttribute="trailing" secondItem="jHJ-ya-QS7" secondAttribute="trailing" id="EYf-cT-l0L"/>
+                                                        <constraint firstItem="E8n-8r-JML" firstAttribute="leading" secondItem="7qa-DK-tfO" secondAttribute="leading" id="Erm-aL-mht"/>
+                                                        <constraint firstAttribute="width" constant="158" id="OzJ-RV-nEh"/>
+                                                        <constraint firstAttribute="trailing" secondItem="xsT-yZ-wg7" secondAttribute="trailing" id="Pxm-B7-Ivi"/>
+                                                        <constraint firstItem="xsT-yZ-wg7" firstAttribute="leading" secondItem="7qa-DK-tfO" secondAttribute="leading" id="gG9-dQ-2Co"/>
+                                                        <constraint firstItem="jHJ-ya-QS7" firstAttribute="leading" secondItem="7qa-DK-tfO" secondAttribute="leading" id="jhN-sl-duj"/>
+                                                        <constraint firstAttribute="bottom" secondItem="jHJ-ya-QS7" secondAttribute="bottom" id="lvF-xs-Vhp"/>
+                                                        <constraint firstAttribute="trailing" secondItem="E8n-8r-JML" secondAttribute="trailing" id="qiR-YC-cty"/>
+                                                        <constraint firstItem="jHJ-ya-QS7" firstAttribute="top" secondItem="7qa-DK-tfO" secondAttribute="top" id="u06-Te-up6"/>
+                                                    </constraints>
+                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cx-oo-bpe">
                                                     <rect key="frame" x="-3.5" y="7.5" width="30" height="25"/>
                                                     <color key="backgroundColor" systemColor="systemYellowColor"/>
@@ -148,15 +177,21 @@
                                                 <constraint firstAttribute="width" constant="138" id="5h0-qa-R1c"/>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="138" id="8Ts-e7-w2H"/>
                                                 <constraint firstItem="99p-YW-bjm" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" constant="-8" id="GAx-rD-lZc"/>
+                                                <constraint firstAttribute="bottom" secondItem="7qa-DK-tfO" secondAttribute="bottom" id="KZY-PZ-Iwo"/>
                                                 <constraint firstAttribute="height" constant="40" id="LSj-2a-VE0"/>
                                                 <constraint firstItem="99p-YW-bjm" firstAttribute="centerX" secondItem="9cx-oo-bpe" secondAttribute="centerX" constant="2" id="Ugc-cl-4dt"/>
+                                                <constraint firstItem="7qa-DK-tfO" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="WCV-DY-APL"/>
                                                 <constraint firstAttribute="bottom" secondItem="99p-YW-bjm" secondAttribute="bottom" id="aem-pq-tV0"/>
                                                 <constraint firstItem="99p-YW-bjm" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="bmH-ac-kEx"/>
                                                 <constraint firstItem="99p-YW-bjm" firstAttribute="centerY" secondItem="9cx-oo-bpe" secondAttribute="centerY" id="iCu-xb-Cyh"/>
+                                                <constraint firstItem="7qa-DK-tfO" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" constant="-15" id="tG4-A7-Swk"/>
                                             </constraints>
                                             <connections>
                                                 <outlet property="maskingView" destination="9cx-oo-bpe" id="ChF-SL-hTW"/>
                                                 <outlet property="privacyIcon" destination="99p-YW-bjm" id="Yqa-NH-yN7"/>
+                                                <outlet property="trackers1Animation" destination="xsT-yZ-wg7" id="4by-KL-flD"/>
+                                                <outlet property="trackers2Animation" destination="jHJ-ya-QS7" id="a4W-MS-j43"/>
+                                                <outlet property="trackers3Animation" destination="E8n-8r-JML" id="txQ-Qp-gP8"/>
                                             </connections>
                                         </view>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-px-Ypi" customClass="SiteRatingContainerView" customModule="DuckDuckGo" customModuleProvider="target">

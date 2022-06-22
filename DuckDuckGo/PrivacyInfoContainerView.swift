@@ -27,10 +27,9 @@ class PrivacyInfoContainerView: UIView {
     @IBOutlet var privacyIcon: PrivacyIconView!
     @IBOutlet var maskingView: UIView!
     
-    
-    let trackers1Animation = AnimationView()
-    let trackers2Animation = AnimationView()
-    var trackers3Animation = AnimationView()
+    @IBOutlet var trackers1Animation: AnimationView!
+    @IBOutlet var trackers2Animation: AnimationView!
+    @IBOutlet var trackers3Animation: AnimationView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,29 +38,11 @@ class PrivacyInfoContainerView: UIView {
         
         maskingView.round(corners: .allCorners, radius: 75)
         
-        addAndOrderSubviews()
-        configureAnimationView()
-        loadAnimations(for: ThemeManager.shared.currentTheme)
-    }
-    
-    private func addAndOrderSubviews() {
-        addSubview(trackers1Animation)
-        addSubview(trackers2Animation)
-        addSubview(trackers3Animation)
-   
-        bringSubviewToFront(maskingView)
-
-        bringSubviewToFront(privacyIcon)
-    }
+        trackers1Animation.contentMode = .scaleAspectFill
+        trackers2Animation.contentMode = .scaleAspectFill
+        trackers3Animation.contentMode = .scaleAspectFill
         
-    private func configureAnimationView() {
-        // Trackers
-        [trackers1Animation, trackers2Animation, trackers3Animation].forEach { trackersAnimation in
-            trackersAnimation.contentMode = .scaleAspectFill
-            
-            trackersAnimation.frame = CGRect(x: 0, y: 0, width: 158, height: 40)
-            trackersAnimation.center = CGPoint(x: bounds.midX - 4, y: bounds.midY)
-        }
+        loadAnimations(for: ThemeManager.shared.currentTheme)
     }
     
     private func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
@@ -79,22 +60,6 @@ class PrivacyInfoContainerView: UIView {
     var isAnimationPlaying: Bool {
         privacyIcon.isAnimationPlaying || trackers1Animation.isAnimationPlaying ||
         trackers2Animation.isAnimationPlaying || trackers3Animation.isAnimationPlaying
-    }
-}
-
-extension UIView {
-    
-    public func setHiddenWithAnimation(_ hidden: Bool, duration: TimeInterval = 0.25) {
-        self.isHidden = false
-        self.alpha = hidden ? 1.0 : 0.0
-        
-        UIView.animate(withDuration: duration) {
-            self.alpha = hidden ? 0.0 : 1.0
-        } completion: { _ in
-            self.isHidden = hidden
-            self.alpha = 1.0
-        }
-
     }
 }
 

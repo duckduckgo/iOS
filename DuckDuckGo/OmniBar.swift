@@ -91,8 +91,7 @@ class OmniBar: UIView {
         enableInteractionsWithPointer()
         observeSafeAreaInsets()
         
-        siteRatingContainer.isHidden = true
-        privacyInfoContainer.isHidden = !siteRatingContainer.isHidden
+        privacyInfoContainer.isHidden = true
     }
     
     private func registerNotifications() {
@@ -247,18 +246,13 @@ class OmniBar: UIView {
                 clear()
             }
             state = newState
-            trackersAnimator.cancelAnimations(in: self)
+//            trackersAnimator.cancelAnimations(in: self)
             privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         }
         
-        if state.showSiteRating {
-            searchFieldContainer.revealSiteRatingView()
-            privacyInfoContainer.isHidden = false
-        } else {
-            searchFieldContainer.hideSiteRatingView(state)
-            privacyInfoContainer.isHidden = true
-        }
-
+        searchFieldContainer.adjustTextFieldOffset(for: state)
+        
+        setVisibility(privacyInfoContainer, hidden: !state.showSiteRating)
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)
@@ -322,7 +316,7 @@ class OmniBar: UIView {
     }
 
     func updateSiteRating(_ siteRating: SiteRating?, with config: PrivacyConfiguration?) {
-        siteRatingView.update(siteRating: siteRating, with: config)
+//        siteRatingView.update(siteRating: siteRating, with: config)
         
         if let siteRating = siteRating {
             privacyIconAndTrackersAnimator.updatePrivacyIcon(in: privacyInfoContainer, for: siteRating)
@@ -417,7 +411,7 @@ class OmniBar: UIView {
     }
 
     @IBAction func onTrackersViewPressed(_ sender: Any) {
-        trackersAnimator.cancelAnimations(in: self)
+//        trackersAnimator.cancelAnimations(in: self)
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         textField.becomeFirstResponder()
     }
@@ -432,7 +426,7 @@ class OmniBar: UIView {
     
     @IBAction func onRefreshPressed(_ sender: Any) {
         Pixel.fire(pixel: .refreshPressed)
-        trackersAnimator.cancelAnimations(in: self)
+//        trackersAnimator.cancelAnimations(in: self)
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         omniDelegate?.onRefreshPressed()
     }
@@ -518,10 +512,6 @@ extension OmniBar: Themable {
 
         editingBackground?.backgroundColor = theme.searchBarBackgroundColor
         editingBackground?.borderColor = theme.searchBarBackgroundColor
-
-        siteRatingView.circleIndicator.tintColor = theme.barTintColor
-        siteRatingContainer.tintColor = theme.barTintColor
-        siteRatingContainer.crossOutBackgroundColor = theme.searchBarBackgroundColor
         
         privacyInfoContainer.decorate(with: theme)
         privacyIconAndTrackersAnimator.resetImageProvider()

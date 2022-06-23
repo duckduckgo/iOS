@@ -676,9 +676,9 @@ class TabViewController: UIViewController {
         if let controller = segue.destination as? PrivacyProtectionController {
             controller.popoverPresentationController?.delegate = controller
 
-            if let siteRatingView = chromeDelegate.omniBar.siteRatingContainer.siteRatingView {
-                controller.popoverPresentationController?.sourceView = siteRatingView
-                controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
+            if let iconView = chromeDelegate.omniBar.privacyInfoContainer.privacyIcon {
+                controller.popoverPresentationController?.sourceView = iconView
+                controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
 
             controller.privacyProtectionDelegate = self

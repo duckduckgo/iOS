@@ -23,19 +23,28 @@ import WebKit
 @testable import DuckDuckGo
 
 class MockDownloadSession: DownloadSession {
+    var delegate: DuckDuckGo.DownloadSessionDelegate?
+
     var temporaryFilePath: URL?
     var error: Error?
     var delaySeconds: TimeInterval = 0
-    
-    override func start() {
-        let session = URLSession.shared
-        let task = session.downloadTask(with: URL(string: "https://duck.com")!)
+    var isRunning: Bool = false
 
+    init(_ url: URL? = nil) {}
+
+    func start() {
+        self.isRunning = true
         DispatchQueue.main.asyncAfter(deadline: .now() + delaySeconds) { [self] in
-            delegate?.urlSession(session, downloadTask: task, didFinishDownloadingTo: temporaryFilePath!)
-            delegate?.urlSession(URLSession.shared, task: task, didCompleteWithError: error)
+            delegate?.downloadSession(self, didFinishDownloadingTo: temporaryFilePath!)
+            if let error = error {
+                delegate?.downloadSession(self, didFailWith: error)
+            }
+            self.isRunning = false
         }
+    }
 
+    func cancel() {
+        fatalError("not implemented")
     }
 }
 

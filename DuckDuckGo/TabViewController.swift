@@ -289,7 +289,7 @@ class TabViewController: UIViewController {
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
         autofillUserScript = createAutofillUserScript()
-        
+
         userScripts = [
             debugScript,
             textSizeUserScript,
@@ -973,7 +973,8 @@ class TabViewController: UIViewController {
     
     @objc private func downloadDidStart(_ notification: Notification) {
         guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download,
-                  !download.temporary else { return }
+              !download.temporary
+        else { return }
         
         let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(for: download)
         
@@ -1001,6 +1002,7 @@ class TabViewController: UIViewController {
     }
 }
 
+// MARK: - LoginFormDetectionDelegate
 extension TabViewController: LoginFormDetectionDelegate {
     
     func loginFormDetectionUserScriptDetectedLoginForm(_ script: LoginFormDetectionUserScript) {
@@ -1009,6 +1011,7 @@ extension TabViewController: LoginFormDetectionDelegate {
     
 }
 
+// MARK: - WKNavigationDelegate
 extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView,
@@ -1041,7 +1044,7 @@ extension TabViewController: WKNavigationDelegate {
         if let url = webView.url {
             instrumentation.willLoad(url: url)
         }
-                
+
         url = webView.url
         let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
@@ -1078,7 +1081,7 @@ extension TabViewController: WKNavigationDelegate {
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
-        
+
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
         
@@ -1090,9 +1093,9 @@ extension TabViewController: WKNavigationDelegate {
         if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
             Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
         }
-      
+
         if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-            setupOrClearTemporaryDownload(for: navigationResponse)
+            setupOrClearTemporaryDownload(for: navigationResponse.response)
             url = webView.url
             decisionHandler(.allow)
         } else if isSuccessfulResponse {
@@ -1100,21 +1103,30 @@ extension TabViewController: WKNavigationDelegate {
             
             let startDownload: () -> Download? = {
                 let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-                if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
+
+                // reuse temporary download for blob:// initiated by navigationRequest
+                if let download = self.temporaryDownloadForPreviewedFile,
+                   download.temporary,
+                   download.url == navigationResponse.response.url {
+                    self.temporaryDownloadForPreviewedFile = nil
+                    download.temporary = FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType)
+                    downloadManager.startDownload(download)
+                    return download
+                } else if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
                     downloadManager.startDownload(download)
                     return download
                 } else {
                     return nil
                 }
             }
-            
+
             if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
                 let download = startDownload()
                 mostRecentAutoPreviewDownloadID = download?.id
                 Pixel.fire(pixel: .downloadStarted,
                            withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
             } else {
-                if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
+                if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse.response) {
                     let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
                         _ = startDownload()
                         Pixel.fire(pixel: .downloadStarted,
@@ -1131,7 +1143,7 @@ extension TabViewController: WKNavigationDelegate {
                     }
                 }
             }
-        
+
             decisionHandler(.cancel)
         } else {
             // MIME type should trigger download but response has no 2xx status code
@@ -1145,18 +1157,107 @@ extension TabViewController: WKNavigationDelegate {
      we need to download them first.
      This method stores the temporary download or clears it if necessary
      */
-    private func setupOrClearTemporaryDownload(for navigationResponse: WKNavigationResponse) {
+    private func setupOrClearTemporaryDownload(for response: URLResponse) {
         let downloadManager = AppDependencyProvider.shared.downloadManager
-        
-        if let downloadMetaData = downloadManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
-            let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-            temporaryDownloadForPreviewedFile = downloadManager.makeDownload(navigationResponse: navigationResponse,
-                                                                             cookieStore: cookieStore,
-                                                                             temporary: true)
-        } else {
+        guard let url = response.url,
+              let downloadMetaData = downloadManager.downloadMetaData(for: response),
+              !downloadMetaData.mimeType.isHTML
+        else {
             temporaryDownloadForPreviewedFile?.cancel()
             temporaryDownloadForPreviewedFile = nil
+            return
         }
+        guard SchemeHandler.schemeType(for: url) != .blob else { return }
+
+        let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+        temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
+                                                                         cookieStore: cookieStore,
+                                                                         temporary: true)
+    }
+
+    private static let legacyBlobDownloadScript = """
+        let blob = await fetch(url).then(r => r.blob())
+        let data = await new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+          fileReader.onerror = (e) => reject(fileReader.error);
+          fileReader.onloadend = (e) => {
+            resolve(e.target.result.split(",")[1])
+          };
+          fileReader.readAsDataURL(blob);
+        })
+        return {
+            mimeType: blob.type,
+            size: blob.size,
+            data: data
+        }
+    """
+    private func setupLegacyTemporaryDownloadForBlob(url: URL, sourceFrame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        guard #available(iOS 14.0, *) else {
+            completionHandler()
+            return
+        }
+        webView.callAsyncJavaScript(Self.legacyBlobDownloadScript,
+                                    arguments: ["url": url.absoluteString],
+                                    in: sourceFrame,
+                                    in: .page) { [weak self] result in
+            defer {
+                completionHandler()
+            }
+
+            guard let dict = try? result.get() as? [String: Any],
+                  let mimeType = dict["mimeType"] as? String,
+                  let size = dict["size"] as? Int,
+                  let data = dict["data"] as? String
+            else {
+                return
+            }
+
+            let downloadManager = AppDependencyProvider.shared.downloadManager
+            let downloadSession = Base64DownloadSession(base64: data)
+            let response = URLResponse(url: url, mimeType: mimeType, expectedContentLength: size, textEncodingName: nil)
+            self?.temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
+                                                                                   downloadSession: downloadSession,
+                                                                                   cookieStore: nil,
+                                                                                   temporary: true)
+        }
+    }
+
+    private func setupTemporaryDownloadForBlob(url: URL, sourceFrame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        guard #available(iOS 18.5, *) else {
+            setupLegacyTemporaryDownloadForBlob(url: url, sourceFrame: sourceFrame, completionHandler: completionHandler)
+            return
+        }
+
+        webView.startDownload(using: URLRequest(url: url), completionHandler: { [weak self] download in
+            let delegate = InlineWKDownloadDelegate()
+
+            delegate.decideDestinationCallback = { [weak self] _, response, suggestedFilename in
+                withExtendedLifetime(delegate) {
+                    let downloadManager = AppDependencyProvider.shared.downloadManager
+                    let downloadSession = WKDownloadSession(download)
+                    self?.temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
+                                                                                           suggestedFilename: suggestedFilename,
+                                                                                           downloadSession: downloadSession,
+                                                                                           cookieStore: nil,
+                                                                                           temporary: true)
+                    completionHandler()
+
+                    delegate.downloadDidFailCallback = nil
+                    delegate.downloadDidFailCallback = nil
+
+                    return downloadSession.localURL
+                }
+            }
+            delegate.downloadDidFailCallback = { _, _, _ in
+                withExtendedLifetime(delegate) {
+                    completionHandler()
+
+                    delegate.downloadDidFailCallback = nil
+                    delegate.downloadDidFailCallback = nil
+                }
+            }
+            download.delegate = delegate
+        })
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
@@ -1222,9 +1323,9 @@ extension TabViewController: WKNavigationDelegate {
 
         guard let siteRating = self.siteRating,
               !isShowingFullScreenDaxDialog else {
-                            
-                scheduleTrackerNetworksAnimation(collapsing: true)
-                return
+
+            scheduleTrackerNetworksAnimation(collapsing: true)
+            return
         }
         
         if let url = link?.url, AppUrls().isDuckDuckGoEmailProtection(url: url) {
@@ -1316,8 +1417,8 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if let url = url,
-            let domain = url.host,
-            error.code == Constants.frameLoadInterruptedErrorCode {
+           let domain = url.host,
+           error.code == Constants.frameLoadInterruptedErrorCode {
             // prevent loops where a site keeps redirecting to itself (e.g. bbc)
             failingUrls.insert(domain)
 
@@ -1378,11 +1479,11 @@ extension TabViewController: WKNavigationDelegate {
         }
         return nil
     }
-            
+
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
@@ -1414,7 +1515,7 @@ extension TabViewController: WKNavigationDelegate {
             load(urlRequest: request)
             return
         }
-            
+
         if navigationAction.navigationType == .linkActivated,
            let url = navigationAction.request.url,
            let modifierFlags = delegate?.tabWillRequestNewTab(self) {
@@ -1443,7 +1544,7 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(decision)
         }
     }
-    
+
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
         
@@ -1485,7 +1586,12 @@ extension TabViewController: WKNavigationDelegate {
         case .external(let action):
             performExternalNavigationFor(url: url, action: action)
             completion(.cancel)
-            
+
+        case .blob:
+            setupTemporaryDownloadForBlob(url: url, sourceFrame: navigationAction.sourceFrame) {
+                completion(.allow)
+            }
+
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
@@ -1495,7 +1601,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
-    
+
     private func performNavigationFor(url: URL,
                                       navigationAction: WKNavigationAction,
                                       allowPolicy: WKNavigationActionPolicy,
@@ -1607,12 +1713,14 @@ extension TabViewController: WKNavigationDelegate {
     }
 }
 
+// MARK: - PrivacyProtectionDelegate
 extension TabViewController: PrivacyProtectionDelegate {
     func omniBarTextTapped() {
         chromeDelegate?.omniBar.becomeFirstResponder()
     }
 }
 
+// MARK: - WKUIDelegate
 extension TabViewController: WKUIDelegate {
 
     public func webView(_ webView: WKWebView,
@@ -1687,6 +1795,7 @@ extension TabViewController: WKUIDelegate {
     }
 }
 
+// MARK: - UIPopoverPresentationControllerDelegate
 extension TabViewController: UIPopoverPresentationControllerDelegate {
 
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
@@ -1694,6 +1803,7 @@ extension TabViewController: UIPopoverPresentationControllerDelegate {
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
 extension TabViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if isShowBarsTap(gestureRecognizer) {
@@ -1752,6 +1862,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 }
 
+// MARK: - ContentBlockerRulesUserScriptDelegate
 extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
     func contentBlockerRulesUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
@@ -1791,6 +1902,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     }
 }
 
+// MARK: - SurrogatesUserScriptDelegate
 extension TabViewController: SurrogatesUserScriptDelegate {
 
     func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
@@ -1808,6 +1920,7 @@ extension TabViewController: SurrogatesUserScriptDelegate {
 
 }
 
+// MARK: - FaviconUserScriptDelegate
 extension TabViewController: FaviconUserScriptDelegate {
     
     func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String? {
@@ -1820,6 +1933,7 @@ extension TabViewController: FaviconUserScriptDelegate {
     
 }
 
+// MARK: - PrintingUserScriptDelegate
 extension TabViewController: PrintingUserScriptDelegate {
 
     func printingUserScriptDidRequestPrintController(_ script: PrintingUserScript) {
@@ -1830,6 +1944,7 @@ extension TabViewController: PrintingUserScriptDelegate {
 
 }
 
+// MARK: - EmailManagerAliasPermissionDelegate
 extension TabViewController: EmailManagerAliasPermissionDelegate {
 
     func emailManager(_ emailManager: EmailManager,
@@ -1891,6 +2006,7 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 
 }
 
+// MARK: - EmailManagerRequestDelegate
 extension TabViewController: EmailManagerRequestDelegate {
 
     // swiftlint:disable function_parameter_count
@@ -1916,6 +2032,7 @@ extension TabViewController: EmailManagerRequestDelegate {
 
 }
 
+// MARK: - Themable
 extension TabViewController: Themable {
 
     func decorate(with theme: Theme) {
@@ -1934,6 +2051,7 @@ extension TabViewController: Themable {
     
 }
 
+// MARK: - NSError+failedUrl
 extension NSError {
 
     var failedUrl: URL? {

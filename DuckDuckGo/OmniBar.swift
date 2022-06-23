@@ -200,8 +200,14 @@ class OmniBar: UIView {
         textField.selectedTextRange = nil
     }
     
-    public func updatePrivacyIcon(for url: URL?) {
+    func resetPrivacyIcon(for url: URL?) {
         privacyIconAndTrackersAnimator.resetPrivacyIcon(in: privacyInfoContainer, for: url)
+    }
+    
+    func updatePrivacyIcon(_ siteRating: SiteRating?, with config: PrivacyConfiguration?) {
+        guard let siteRating = siteRating else { return }
+
+        privacyIconAndTrackersAnimator.updatePrivacyIcon(in: privacyInfoContainer, for: siteRating)
     }
     
     public func startTrackersAnimation(_ siteRating: SiteRating, collapsing: Bool) {
@@ -303,12 +309,6 @@ class OmniBar: UIView {
 
     @discardableResult override func resignFirstResponder() -> Bool {
         return textField.resignFirstResponder()
-    }
-
-    func updateSiteRating(_ siteRating: SiteRating?, with config: PrivacyConfiguration?) {
-        guard let siteRating = siteRating else { return }
-
-        privacyIconAndTrackersAnimator.updatePrivacyIcon(in: privacyInfoContainer, for: siteRating)
     }
 
     private func clear() {

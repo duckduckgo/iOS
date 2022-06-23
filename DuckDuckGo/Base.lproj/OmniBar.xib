@@ -203,68 +203,6 @@
                                                 <outlet property="trackers3Animation" destination="E8n-8r-JML" id="txQ-Qp-gP8"/>
                                             </connections>
                                         </view>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-px-Ypi" customClass="SiteRatingContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="340" height="40"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon more" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-5H-Wed">
-                                                    <rect key="frame" x="91" y="0.0" width="44" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" priority="999" constant="44" id="tni-MT-xSK"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon yahoo!" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-ih-Wyc">
-                                                    <rect key="frame" x="60" y="0.0" width="26" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" priority="999" constant="26" id="Apc-Zx-Y0T"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon google" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-Lo-c9m">
-                                                    <rect key="frame" x="31" y="0.0" width="26" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" priority="999" constant="26" id="bIP-ra-VYG"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="siteRating">
-                                                        <accessibilityTraits key="traits" notEnabled="YES"/>
-                                                        <bool key="isElement" value="NO"/>
-                                                    </accessibility>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" priority="900" constant="30" id="vqc-wd-f2C"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="rMk-3Z-VLM"/>
-                                                    </connections>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstItem="0eq-5H-Wed" firstAttribute="top" secondItem="4JV-px-Ypi" secondAttribute="top" id="4UG-2d-2Rr"/>
-                                                <constraint firstAttribute="bottom" secondItem="tlF-fr-tSl" secondAttribute="bottom" id="7GM-ZS-eeM"/>
-                                                <constraint firstAttribute="width" constant="340" id="9Gj-UT-Uea"/>
-                                                <constraint firstAttribute="bottom" secondItem="oPd-Lo-c9m" secondAttribute="bottom" id="JfC-hY-SUd"/>
-                                                <constraint firstItem="oPd-Lo-c9m" firstAttribute="leading" secondItem="4JV-px-Ypi" secondAttribute="leading" constant="31" id="ZkR-Hh-a4K"/>
-                                                <constraint firstItem="tlF-fr-tSl" firstAttribute="top" secondItem="4JV-px-Ypi" secondAttribute="top" id="jzN-gl-Aaj"/>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="tlF-fr-tSl" secondAttribute="width" priority="750" id="moU-7N-CsC"/>
-                                                <constraint firstItem="oPd-Lo-c9m" firstAttribute="top" secondItem="4JV-px-Ypi" secondAttribute="top" id="nIo-bT-tA9"/>
-                                                <constraint firstItem="0eq-5H-Wed" firstAttribute="leading" secondItem="4JV-px-Ypi" secondAttribute="leading" constant="91" id="nZr-Xv-4SO"/>
-                                                <constraint firstItem="Zez-ih-Wyc" firstAttribute="leading" secondItem="4JV-px-Ypi" secondAttribute="leading" constant="60" id="niU-W1-lpz"/>
-                                                <constraint firstAttribute="bottom" secondItem="Zez-ih-Wyc" secondAttribute="bottom" id="oqI-6s-OMR"/>
-                                                <constraint firstItem="tlF-fr-tSl" firstAttribute="leading" secondItem="4JV-px-Ypi" secondAttribute="leading" id="oyw-z6-jyV"/>
-                                                <constraint firstAttribute="bottom" secondItem="0eq-5H-Wed" secondAttribute="bottom" id="qgs-Gt-EdK"/>
-                                                <constraint firstItem="Zez-ih-Wyc" firstAttribute="top" secondItem="4JV-px-Ypi" secondAttribute="top" id="y6t-LZ-jbJ"/>
-                                            </constraints>
-                                            <connections>
-                                                <outlet property="siteRatingView" destination="tlF-fr-tSl" id="Bnn-u3-oIX"/>
-                                                <outletCollection property="trackerIcons" destination="oPd-Lo-c9m" collectionClass="NSMutableArray" id="21D-KI-RpJ"/>
-                                                <outletCollection property="trackerIcons" destination="Zez-ih-Wyc" collectionClass="NSMutableArray" id="Z8p-3z-DEX"/>
-                                                <outletCollection property="trackerIcons" destination="0eq-5H-Wed" collectionClass="NSMutableArray" id="JlK-xq-P3R"/>
-                                                <outletCollection property="trackerIconConstraints" destination="ZkR-Hh-a4K" collectionClass="NSMutableArray" id="axq-Fz-Cuq"/>
-                                                <outletCollection property="trackerIconConstraints" destination="niU-W1-lpz" collectionClass="NSMutableArray" id="h1P-Jy-zwp"/>
-                                                <outletCollection property="trackerIconConstraints" destination="nZr-Xv-4SO" collectionClass="NSMutableArray" id="Y5X-nB-a50"/>
-                                            </connections>
-                                        </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="30" y="0.0" width="315" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -294,17 +232,13 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="fqM-N4-jNd" secondAttribute="bottom" id="1UK-P3-SRc"/>
                                         <constraint firstItem="yGG-5L-D8Q" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" constant="2" id="EJL-WX-9M4"/>
-                                        <constraint firstAttribute="bottom" secondItem="4JV-px-Ypi" secondAttribute="bottom" id="W9k-IB-cgh"/>
                                         <constraint firstAttribute="bottom" secondItem="yGG-5L-D8Q" secondAttribute="bottom" id="b8i-Js-e1Z"/>
-                                        <constraint firstItem="4JV-px-Ypi" firstAttribute="top" secondItem="sek-4Y-GoT" secondAttribute="top" id="hRW-VV-aIL"/>
-                                        <constraint firstItem="4JV-px-Ypi" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" id="k7i-Ra-Rtw"/>
                                         <constraint firstItem="yGG-5L-D8Q" firstAttribute="top" secondItem="sek-4Y-GoT" secondAttribute="top" id="nq3-Zw-TIq"/>
                                         <constraint firstItem="fqM-N4-jNd" firstAttribute="top" secondItem="sek-4Y-GoT" secondAttribute="top" id="x9M-BQ-esy"/>
                                         <constraint firstItem="fqM-N4-jNd" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" constant="30" id="xbK-P6-01p"/>
                                         <constraint firstAttribute="trailing" secondItem="fqM-N4-jNd" secondAttribute="trailing" id="zci-q3-cEm"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="privacyViewWidth" destination="9Gj-UT-Uea" id="Io2-PS-NXZ"/>
                                         <outlet property="textFieldOffset" destination="xbK-P6-01p" id="HPr-xK-Kj1"/>
                                         <outletCollection property="gestureRecognizers" destination="N3q-x6-xYr" appends="YES" id="oez-nJ-1QO"/>
                                     </connections>
@@ -471,7 +405,6 @@
                 <outlet property="separatorView" destination="hD7-j4-fpl" id="xlg-WZ-peq"/>
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="shareButton" destination="hor-Jd-3kw" id="tc5-Us-Mba"/>
-                <outlet property="siteRatingContainer" destination="4JV-px-Ypi" id="VRT-kc-Ijt"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
                 <outlet property="voiceSearchButton" destination="ita-iD-8ad" id="6ms-wg-lln"/>
             </connections>
@@ -506,9 +439,6 @@
         <image name="ClearText" width="24" height="24"/>
         <image name="MenuShare" width="24" height="24"/>
         <image name="MicrophoneSolid" width="24" height="24"/>
-        <image name="PP Network Icon google" width="24" height="24"/>
-        <image name="PP Network Icon more" width="22" height="22"/>
-        <image name="PP Network Icon yahoo!" width="24" height="24"/>
         <image name="Refresh" width="24" height="24"/>
         <image name="Settings" width="24" height="24"/>
         <image name="SuggestLoupe" width="24" height="24"/>

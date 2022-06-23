@@ -390,8 +390,8 @@ class OmniBar: UIView {
         refreshState(state.onTextClearedState)
     }
 
-    @IBAction func onSiteRatingPressed(_ sender: Any) {
-        omniDelegate?.onSiteRatingPressed()
+    @IBAction func onPrivacyIconPressed(_ sender: Any) {
+        omniDelegate?.onPrivacyIconPressed()
     }
 
     @IBAction func onMenuButtonPressed(_ sender: UIButton) {

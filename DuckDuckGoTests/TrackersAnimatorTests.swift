@@ -40,7 +40,7 @@ class TrackersAnimatorTests: XCTestCase {
 //        super.tearDown()
 //
 //        omniBar = nil
-    }
+//    }
     
     func testWhenNoTrackersWereFoundThenThereIsNoConfigNeeded() {
 //        XCTAssertFalse(omniBar.trackersAnimator.configure(omniBar,

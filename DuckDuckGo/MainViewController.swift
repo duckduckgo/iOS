@@ -1111,8 +1111,9 @@ extension MainViewController: OmniBarDelegate {
         showHomeRowReminder()
     }
 
-    func onSiteRatingPressed() {
-        if isSERPPresented { return }
+    func onPrivacyIconPressed() {
+        guard !isSERPPresented else { return }
+
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }

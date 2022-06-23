@@ -20,7 +20,7 @@
 import Foundation
 import WebKit
 
-@available(iOS 18.5, *)
+@available(iOS 14.5, *)
 final class InlineWKDownloadDelegate: NSObject, WKDownloadDelegate {
 
     var decideDestinationCallback: ((WKDownload, URLResponse, String) -> URL?)?

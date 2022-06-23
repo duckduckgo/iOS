@@ -1223,7 +1223,7 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func setupTemporaryDownloadForBlob(url: URL, sourceFrame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-        guard #available(iOS 18.5, *) else {
+        guard #available(iOS 14.5, *) else {
             setupLegacyTemporaryDownloadForBlob(url: url, sourceFrame: sourceFrame, completionHandler: completionHandler)
             return
         }

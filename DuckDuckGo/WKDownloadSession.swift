@@ -20,7 +20,7 @@
 import Foundation
 import WebKit
 
-@available(iOS 18.5, *)
+@available(iOS 14.5, *)
 final class WKDownloadSession: NSObject, DownloadSession {
     weak var download: WKDownload?
     weak var delegate: DownloadSessionDelegate?
@@ -70,7 +70,7 @@ final class WKDownloadSession: NSObject, DownloadSession {
     
 }
 
-@available(iOS 18.5, *)
+@available(iOS 14.5, *)
 extension WKDownloadSession: WKDownloadDelegate {
 
     func download(_ download: WKDownload,

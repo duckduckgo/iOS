@@ -134,14 +134,27 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99p-YW-bjm" customClass="PrivacyIconView" customModule="DuckDuckGo" customModuleProvider="target">
                                                     <rect key="frame" x="-8" y="0.0" width="43" height="40"/>
                                                     <subviews>
-                                                        <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-pm-Da8" customClass="AnimationView" customModule="Lottie">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmK-n8-JJZ" userLabel="Shield Animations Wrapper">
                                                             <rect key="frame" x="-12" y="0.0" width="158" height="40"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-pm-Da8" customClass="AnimationView" customModule="Lottie">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                                </view>
+                                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="D46-aN-352" customClass="AnimationView" customModule="Lottie">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                                </view>
+                                                            </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="158" id="3PW-3m-tHd"/>
+                                                                <constraint firstItem="D46-aN-352" firstAttribute="leading" secondItem="TmK-n8-JJZ" secondAttribute="leading" id="MDs-1F-iVW"/>
+                                                                <constraint firstAttribute="trailing" secondItem="dqb-pm-Da8" secondAttribute="trailing" id="QWr-Ix-s3j"/>
+                                                                <constraint firstAttribute="trailing" secondItem="D46-aN-352" secondAttribute="trailing" id="WPX-7x-Ywz"/>
+                                                                <constraint firstAttribute="bottom" secondItem="dqb-pm-Da8" secondAttribute="bottom" id="WrP-ph-vmL"/>
+                                                                <constraint firstAttribute="bottom" secondItem="D46-aN-352" secondAttribute="bottom" id="iK1-Nd-eNx"/>
+                                                                <constraint firstItem="dqb-pm-Da8" firstAttribute="leading" secondItem="TmK-n8-JJZ" secondAttribute="leading" id="iei-vU-evI"/>
+                                                                <constraint firstItem="D46-aN-352" firstAttribute="top" secondItem="TmK-n8-JJZ" secondAttribute="top" id="q2q-mq-fty"/>
+                                                                <constraint firstItem="dqb-pm-Da8" firstAttribute="top" secondItem="TmK-n8-JJZ" secondAttribute="top" id="qHI-aQ-SBa"/>
+                                                                <constraint firstAttribute="width" constant="158" id="yFt-j7-mPi"/>
                                                             </constraints>
-                                                        </view>
-                                                        <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="D46-aN-352" customClass="AnimationView" customModule="Lottie">
-                                                            <rect key="frame" x="-12" y="0.0" width="158" height="40"/>
                                                         </view>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eoZ-Ly-QHi">
                                                             <rect key="frame" x="0.0" y="0.0" width="43" height="40"/>
@@ -153,16 +166,12 @@
                                                     <constraints>
                                                         <constraint firstItem="eoZ-Ly-QHi" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="2K9-i4-lfC"/>
                                                         <constraint firstAttribute="trailing" secondItem="eoZ-Ly-QHi" secondAttribute="trailing" id="3ae-7C-euU"/>
-                                                        <constraint firstItem="D46-aN-352" firstAttribute="centerX" secondItem="dqb-pm-Da8" secondAttribute="centerX" id="9Vf-4L-bNW"/>
-                                                        <constraint firstItem="dqb-pm-Da8" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="DRy-Dd-EPX"/>
+                                                        <constraint firstItem="TmK-n8-JJZ" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="AQ7-2Q-kEO"/>
                                                         <constraint firstAttribute="bottom" secondItem="eoZ-Ly-QHi" secondAttribute="bottom" id="Dbo-hu-FiF"/>
-                                                        <constraint firstItem="D46-aN-352" firstAttribute="centerY" secondItem="dqb-pm-Da8" secondAttribute="centerY" id="E3L-gG-MSH"/>
-                                                        <constraint firstAttribute="bottom" secondItem="dqb-pm-Da8" secondAttribute="bottom" id="Lra-Q2-VJd"/>
+                                                        <constraint firstAttribute="bottom" secondItem="TmK-n8-JJZ" secondAttribute="bottom" id="Duu-07-es7"/>
                                                         <constraint firstAttribute="width" constant="43" id="QTw-yw-ZiM"/>
-                                                        <constraint firstItem="D46-aN-352" firstAttribute="width" secondItem="dqb-pm-Da8" secondAttribute="width" id="ROX-Ek-fHz"/>
+                                                        <constraint firstItem="TmK-n8-JJZ" firstAttribute="leading" secondItem="99p-YW-bjm" secondAttribute="leading" constant="-12" id="RUr-2B-PAB"/>
                                                         <constraint firstItem="eoZ-Ly-QHi" firstAttribute="leading" secondItem="99p-YW-bjm" secondAttribute="leading" id="VgX-60-gzX"/>
-                                                        <constraint firstItem="dqb-pm-Da8" firstAttribute="leading" secondItem="99p-YW-bjm" secondAttribute="leading" constant="-12" id="Vl4-Mi-X96"/>
-                                                        <constraint firstItem="D46-aN-352" firstAttribute="height" secondItem="dqb-pm-Da8" secondAttribute="height" id="aK3-HD-XTV"/>
                                                     </constraints>
                                                     <connections>
                                                         <outlet property="shieldAnimationView" destination="dqb-pm-Da8" id="m3S-lp-2hi"/>

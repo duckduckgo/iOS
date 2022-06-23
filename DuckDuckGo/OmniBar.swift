@@ -34,7 +34,6 @@ class OmniBar: UIView {
     @IBOutlet weak var searchContainer: UIView!
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
-    @IBOutlet weak var siteRatingContainer: SiteRatingContainerView!
     @IBOutlet weak var privacyInfoContainer: PrivacyInfoContainerView!
     @IBOutlet weak var textField: TextFieldWithInsets!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
@@ -67,16 +66,11 @@ class OmniBar: UIView {
     private lazy var appUrls: AppUrls = AppUrls()
     private var safeAreaInsetsObservation: NSKeyValueObservation?
     
-    private(set) var trackersAnimator = TrackersAnimator()
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
     
     
     static func loadFromXib() -> OmniBar {
         return OmniBar.load(nibName: "OmniBar")
-    }
-    
-    var siteRatingView: SiteRatingView {
-        return siteRatingContainer.siteRatingView
     }
 
     override func awakeFromNib() {
@@ -207,7 +201,6 @@ class OmniBar: UIView {
     }
     
     public func updatePrivacyIcon(for url: URL?) {
-//        trackersAnimator.startLoadingAnimation(in: self, for: url)
         privacyIconAndTrackersAnimator.resetPrivacyIcon(in: privacyInfoContainer, for: url)
     }
     
@@ -230,12 +223,10 @@ class OmniBar: UIView {
     }
     
     public func cancelAllAnimations() {
-//        trackersAnimator.cancelAnimations(in: self)
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
     }
     
     public func completeAnimations() {
-//        trackersAnimator.completeAnimations(in: self)
         privacyIconAndTrackersAnimator.completeAnimationForDaxDialog(in: self)
     }
 
@@ -246,7 +237,6 @@ class OmniBar: UIView {
                 clear()
             }
             state = newState
-//            trackersAnimator.cancelAnimations(in: self)
             privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         }
         
@@ -316,11 +306,9 @@ class OmniBar: UIView {
     }
 
     func updateSiteRating(_ siteRating: SiteRating?, with config: PrivacyConfiguration?) {
-//        siteRatingView.update(siteRating: siteRating, with: config)
-        
-        if let siteRating = siteRating {
-            privacyIconAndTrackersAnimator.updatePrivacyIcon(in: privacyInfoContainer, for: siteRating)
-        }
+        guard let siteRating = siteRating else { return }
+
+        privacyIconAndTrackersAnimator.updatePrivacyIcon(in: privacyInfoContainer, for: siteRating)
     }
 
     private func clear() {
@@ -411,7 +399,6 @@ class OmniBar: UIView {
     }
 
     @IBAction func onTrackersViewPressed(_ sender: Any) {
-//        trackersAnimator.cancelAnimations(in: self)
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         textField.becomeFirstResponder()
     }
@@ -426,7 +413,6 @@ class OmniBar: UIView {
     
     @IBAction func onRefreshPressed(_ sender: Any) {
         Pixel.fire(pixel: .refreshPressed)
-//        trackersAnimator.cancelAnimations(in: self)
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         omniDelegate?.onRefreshPressed()
     }

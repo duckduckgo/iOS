@@ -433,7 +433,6 @@
 		9888F77B2224980500C46159 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888F77A2224980500C46159 /* FeedbackViewController.swift */; };
 		988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */; };
 		988AC355257E47C100793C64 /* RequeryLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988AC354257E47C100793C64 /* RequeryLogic.swift */; };
-		988CF20C2451A4A400B06CCD /* SiteRatingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988CF20B2451A4A400B06CCD /* SiteRatingContainerView.swift */; };
 		988F3DCF237D5C0F00AEE34C /* SchemeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */; };
 		988F3DD3237DE8D900AEE34C /* ForgetDataAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988F3DD2237DE8D900AEE34C /* ForgetDataAlert.swift */; };
 		9896632422C56716007BE4FE /* EtagStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9896632322C56716007BE4FE /* EtagStorage.swift */; };
@@ -475,7 +474,6 @@
 		98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */; };
 		98F6EA472863124100720957 /* ContentBlockerRulesLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F6EA462863124100720957 /* ContentBlockerRulesLists.swift */; };
 		98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */; };
-		98FA4BB52440AA1A00894CD8 /* TrackersAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */; };
 		98FA4BB72440D0A800894CD8 /* PrivacyProtectionIconSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */; };
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
 		AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */; };
@@ -1817,7 +1815,6 @@
 		9888F77A2224980500C46159 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		988971A122C2DB95009DC1D6 /* StorageCacheProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCacheProvider.swift; sourceTree = "<group>"; };
 		988AC354257E47C100793C64 /* RequeryLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequeryLogic.swift; sourceTree = "<group>"; };
-		988CF20B2451A4A400B06CCD /* SiteRatingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRatingContainerView.swift; sourceTree = "<group>"; };
 		988F3DCE237D5C0F00AEE34C /* SchemeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemeHandler.swift; sourceTree = "<group>"; };
 		988F3DD2237DE8D900AEE34C /* ForgetDataAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetDataAlert.swift; sourceTree = "<group>"; };
 		9896632322C56716007BE4FE /* EtagStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtagStorage.swift; sourceTree = "<group>"; };
@@ -1909,7 +1906,6 @@
 		98F3A1DB217B373E0011A0D4 /* DarkTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkTheme.swift; sourceTree = "<group>"; };
 		98F6EA462863124100720957 /* ContentBlockerRulesLists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerRulesLists.swift; sourceTree = "<group>"; };
 		98F78B8D22419093007CACF4 /* ThemableNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemableNavigationController.swift; sourceTree = "<group>"; };
-		98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersAnimator.swift; sourceTree = "<group>"; };
 		98FA4BB62440D0A800894CD8 /* PrivacyProtectionIconSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionIconSource.swift; sourceTree = "<group>"; };
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
 		AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsCell.swift; sourceTree = "<group>"; };
@@ -4028,8 +4024,6 @@
 				85DFEDEE24C7EA3B00973FE7 /* SmallOmniBarState.swift */,
 				98AA92B22456FBE100ED4B9E /* SearchFieldContainerView.swift */,
 				1EEF123E2850A68A003DDE57 /* PrivacyInfoContainerView.swift */,
-				988CF20B2451A4A400B06CCD /* SiteRatingContainerView.swift */,
-				98FA4BB42440AA1A00894CD8 /* TrackersAnimator.swift */,
 				1EE411F42857C5130003FE64 /* PrivacyIconAndTrackers */,
 			);
 			name = OmniBar;
@@ -5094,7 +5088,6 @@
 				1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
 				98999D5922FDA41500CBBE1B /* BasicAuthenticationAlert.swift in Sources */,
-				98FA4BB52440AA1A00894CD8 /* TrackersAnimator.swift in Sources */,
 				F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */,
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
@@ -5153,7 +5146,6 @@
 				98F0FC2021FF18E700CE77AB /* AutoClearSettingsViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,
 				4B6484F127FD1E350050A7A1 /* MacBrowserWaitlistStorage.swift in Sources */,
-				988CF20C2451A4A400B06CCD /* SiteRatingContainerView.swift in Sources */,
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
 				986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,

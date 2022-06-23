@@ -26,7 +26,7 @@ class SearchFieldContainerView: UIView {
     func adjustTextFieldOffset(for state: OmniBarState) {
         let offset: CGFloat
         
-        if state.showSiteRating {
+        if state.showPrivacyIcon {
             offset = 30
         } else {
             offset = state.showSearchLoupe ? 0 : 8

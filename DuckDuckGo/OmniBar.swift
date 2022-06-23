@@ -248,7 +248,7 @@ class OmniBar: UIView {
         
         searchFieldContainer.adjustTextFieldOffset(for: state)
         
-        setVisibility(privacyInfoContainer, hidden: !state.showSiteRating)
+        setVisibility(privacyInfoContainer, hidden: !state.showPrivacyIcon)
         setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
         setVisibility(clearButton, hidden: !state.showClear)
         setVisibility(menuButton, hidden: !state.showMenu)

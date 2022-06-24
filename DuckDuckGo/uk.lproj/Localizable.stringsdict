@@ -35,27 +35,27 @@
 			<key>one</key>
 			<string>*%2$@, %3$@* та *ще один* намагалися відстежити вас тут.
 
-I blocked them!
+Я їх заблокував!
 
-☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
+☝️ Ви можете перевірити адресний рядок, щоб побачити, хто намагається відстежити вас, коли ви відвідуєте новий сайт.</string>
 			<key>few</key>
 			<string>*%2$@, %3$@* та *%d інші* намагалися відстежити вас тут.
 
-I blocked them!
+Я їх заблокував!
 
-☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
+☝️ Ви можете перевірити адресний рядок, щоб побачити, хто намагається відстежити вас, коли ви відвідуєте новий сайт.</string>
 			<key>many</key>
 			<string>*%2$@, %3$@* та *%d інших* намагалися відстежити вас тут.
 
-I blocked them!
+Я їх заблокував!
 
-☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
+☝️ Ви можете перевірити адресний рядок, щоб побачити, хто намагається відстежити вас, коли ви відвідуєте новий сайт.</string>
 			<key>other</key>
 			<string>*%2$@, %3$@* та *%d інших* намагалися відстежити вас тут.
 
-I blocked them!
+Я їх заблокував!
 
-☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
+☝️ Ви можете перевірити адресний рядок, щоб побачити, хто намагається відстежити вас, коли ви відвідуєте новий сайт.</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.found</key>

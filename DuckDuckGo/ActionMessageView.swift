@@ -22,23 +22,24 @@ import UIKit
 extension ActionMessageView: NibLoading {}
 
 class ActionMessageView: UIView {
-    
+
     enum PresentationLocation {
         case withBottomBar
         case withoutBottomBar
     }
-    
+
     private static var presentedMessages = [ActionMessageView]()
-    
+
     private enum Constants {
         static var maxWidth: CGFloat = 346
         static var minimumHorizontalPadding: CGFloat = 20
         static var cornerRadius: CGFloat = 10
-        
+
         static var animationDuration: TimeInterval = 0.2
         static var duration: TimeInterval = 3.0
-        
-        static var windowBottomPaddingWithBottomBar: CGFloat {
+
+        static let paddingFromNavBar: CGFloat = 30
+        static var windowBottomPadding: CGFloat {
             if UIDevice.current.userInterfaceIdiom == .phone && !isPortrait {
                 return 40
             }
@@ -48,27 +49,18 @@ class ActionMessageView: UIView {
         static var windowBottomPaddingWithoutBottomBar: CGFloat {
             return 0
         }
-        
+
     }
-    
-    private static func bottomPadding(for location: PresentationLocation) -> CGFloat {
-        switch location {
-        case .withBottomBar:
-            return Constants.windowBottomPaddingWithBottomBar
-        case .withoutBottomBar:
-            return Constants.windowBottomPaddingWithoutBottomBar
-        }
-    }
-    
+
     @IBOutlet weak var message: UILabel!
     @IBOutlet weak var actionButton: UIButton!
-    
+
     @IBOutlet var labelToButton: NSLayoutConstraint!
     @IBOutlet var labelToTrailing: NSLayoutConstraint!
-    
+
     private var action: () -> Void = {}
     private var onDidDismiss: () -> Void = {}
-    
+
     private var dismissWorkItem: DispatchWorkItem?
     
     static func loadFromXib() -> ActionMessageView {
@@ -132,11 +124,26 @@ class ActionMessageView: UIView {
             messageView.actionButton.isHidden = true
         }
         messageView.onDidDismiss = onDidDismiss
-        
+
         window.addSubview(messageView)
-        window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor,
-                                                           constant: bottomPadding(for: presentationLocation)).isActive = true
-        
+
+//        window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor,
+//                                                           constant: bottomPadding(for: presentationLocation)).isActive = true
+
+        if window.rootViewController?.presentedViewController == nil,
+           let viewController = window.rootViewController?.children.first(where: { $0 is TabViewController }) {
+            window.addConstraint(NSLayoutConstraint(item: viewController.view!,
+                                                    attribute: .bottom,
+                                                    relatedBy: .equal,
+                                                    toItem: messageView,
+                                                    attribute: .bottom,
+                                                    multiplier: 1,
+                                                    constant: Constants.paddingFromNavBar))
+        } else {
+            window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor,
+                                                               constant: Constants.windowBottomPadding).isActive = true
+        }
+
         let messageViewWidth = window.frame.width <= Constants.maxWidth ? window.frame.width - Constants.minimumHorizontalPadding : Constants.maxWidth
         messageView.widthAnchor.constraint(equalToConstant: messageViewWidth).isActive = true
         messageView.centerXAnchor.constraint(equalTo: window.centerXAnchor).isActive = true

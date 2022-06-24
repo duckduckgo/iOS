@@ -22,59 +22,22 @@ import Lottie
 import Core
 import BrowserServicesKit
 
-extension SiteRating {
-    var privacyIcon: PrivacyIcon {
-        let icon: PrivacyIcon
-        
-        if AppUrls().isDuckDuckGoSearch(url: url) {
-            icon = .daxLogo
-        } else {
-            let config = ContentBlocking.privacyConfigurationManager.privacyConfig
-            let isUserUnprotected = config.isUserUnprotected(domain: url.host)
- 
-            let notFullyProtected = !https || isMajorTrackerNetwork || isUserUnprotected
-            
-            icon = notFullyProtected ? .shieldWithDot : .shield
-        }
-        
-        return icon
-    }
-    
-    var willAnimateTrackers: Bool {
-        !trackersBlocked.isEmpty
-    }
+enum TrackersAnimationState {
+    case noAnimations, beforeAnimations, afterAnimations, animatingForDaxDialog
 }
 
 final class PrivacyIconAndTrackersAnimator {
 
-    private enum AnimationsState {
-        case noAnimations, beforeAnimations, afterAnimations, animatingForDaxDialog
-    }
-
     private let trackerAnimationImageProvider = TrackerAnimationImageProvider()
-    private var animationState: AnimationsState = .noAnimations
+    private(set) var animationState: TrackersAnimationState = .noAnimations
     
-    func resetPrivacyIcon(in container: PrivacyInfoContainerView, for url: URL?) {
-        guard let url = url, !AppUrls().isDuckDuckGoSearch(url: url) else {
-            container.privacyIcon.updateIcon(.daxLogo, animated: true)
-            return
-        }
-        
-        container.privacyIcon.updateIcon(.shield, animated: true)
-        
-        animationState = .noAnimations
-    }
     
-    func updatePrivacyIcon(in container: PrivacyInfoContainerView, for siteRating: SiteRating) {
+    func updateAnimationState(for siteRating: SiteRating) {
         guard animationState != .animatingForDaxDialog else { return }
         
-        if animationState == .noAnimations && siteRating.willAnimateTrackers {
+        if animationState == .noAnimations && TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating) {
             animationState = .beforeAnimations
         }
-        
-        let icon = (siteRating.willAnimateTrackers && animationState == .beforeAnimations) ? .shield : siteRating.privacyIcon
-        
-        container.privacyIcon.updateIcon(icon, animated: true)
     }
     
     func configure(_ container: PrivacyInfoContainerView, for siteRating: SiteRating) {
@@ -84,7 +47,7 @@ final class PrivacyIconAndTrackersAnimator {
         container.privacyIcon.shieldAnimationView.currentFrame = 0
         container.privacyIcon.shieldDotAnimationView.currentFrame = 0
         
-        if siteRating.willAnimateTrackers {
+        if TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating) {
             trackerAnimationImageProvider.loadTrackerImages(from: siteRating)
       
             if let trackerAnimationView = currentTrackerAnimationView(in: container, for: trackerAnimationImageProvider.trackerImagesCount) {
@@ -95,7 +58,8 @@ final class PrivacyIconAndTrackersAnimator {
             container.privacyIcon.updateIcon(.shield, animated: true)
         } else {
             // No animation directly set icon
-            container.privacyIcon.updateIcon(siteRating.privacyIcon, animated: true)
+            let icon = PrivacyIconLogic.privacyIcon(for: siteRating)
+            container.privacyIcon.updateIcon(icon, animated: true)
         }
     }
     
@@ -111,7 +75,7 @@ final class PrivacyIconAndTrackersAnimator {
     func startAnimating(in omniBar: OmniBar, with siteRating: SiteRating) {
         guard let container = omniBar.privacyInfoContainer else { return }
         
-        let privacyIcon = siteRating.privacyIcon
+        let privacyIcon = PrivacyIconLogic.privacyIcon(for: siteRating)
         let showDot = (privacyIcon == .shieldWithDot)
         
         container.privacyIcon.shieldAnimationView.isHidden = showDot
@@ -144,7 +108,7 @@ final class PrivacyIconAndTrackersAnimator {
         
         animationState = .animatingForDaxDialog
         
-        let privacyIcon = siteRating.privacyIcon
+        let privacyIcon = PrivacyIconLogic.privacyIcon(for: siteRating)
         let showDot = (privacyIcon == .shieldWithDot)
         
         container.privacyIcon.shieldAnimationView.isHidden = showDot
@@ -184,6 +148,7 @@ final class PrivacyIconAndTrackersAnimator {
     
     func cancelAnimations(in omniBar: OmniBar) {
         guard let container = omniBar.privacyInfoContainer else { return }
+        
         container.trackers1Animation.stop()
         container.trackers2Animation.stop()
         container.trackers3Animation.stop()
@@ -197,6 +162,8 @@ final class PrivacyIconAndTrackersAnimator {
         
         omniBar.textField.layer.removeAllAnimations()
         omniBar.textField.alpha = 1
+        
+        animationState = .noAnimations
     }
     
     func resetImageProvider() {

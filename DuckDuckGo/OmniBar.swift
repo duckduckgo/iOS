@@ -201,29 +201,34 @@ class OmniBar: UIView {
     }
     
     public func resetPrivacyIcon(for url: URL?) {
-        privacyIconAndTrackersAnimator.resetPrivacyIcon(in: privacyInfoContainer, for: url)
+        privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        
+        let icon = PrivacyIconLogic.privacyIcon(for: url)
+        privacyInfoContainer.privacyIcon.updateIcon(icon, animated: true)
     }
     
     public func updatePrivacyIcon(for siteRating: SiteRating?) {
-        guard let siteRating = siteRating else { return }
+        guard let siteRating = siteRating,
+              privacyIconAndTrackersAnimator.animationState != .animatingForDaxDialog
+        else { return }
 
-        privacyIconAndTrackersAnimator.updatePrivacyIcon(in: privacyInfoContainer, for: siteRating)
+        privacyIconAndTrackersAnimator.updateAnimationState(for: siteRating)
+        
+        let icon = PrivacyIconLogic.privacyIcon(for: siteRating,
+                                                in: privacyIconAndTrackersAnimator.animationState)
+        privacyInfoContainer.privacyIcon.updateIcon(icon, animated: true)
     }
     
-    public func startTrackersAnimation(_ siteRating: SiteRating, collapsing: Bool) {
-        guard state.allowsTrackersAnimation, !privacyInfoContainer.isAnimationPlaying
-        else {
-            print("trying to start animation while its running!")
-            return
-        }
+    public func startTrackersAnimation(_ siteRating: SiteRating, forDaxDialog: Bool) {
+        guard state.allowsTrackersAnimation, !privacyInfoContainer.isAnimationPlaying else { return }
         
         privacyIconAndTrackersAnimator.configure(privacyInfoContainer, for: siteRating)
         
-        if siteRating.willAnimateTrackers {
-            if collapsing {
-                privacyIconAndTrackersAnimator.startAnimating(in: self, with: siteRating)
-            } else {
+        if TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating) {
+            if forDaxDialog {
                 privacyIconAndTrackersAnimator.startAnimationForDaxDialog(in: self, with: siteRating)
+            } else {
+                privacyIconAndTrackersAnimator.startAnimating(in: self, with: siteRating)
             }
         }
     }

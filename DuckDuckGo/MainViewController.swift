@@ -695,7 +695,13 @@ class MainViewController: UIViewController {
         }
 
         omniBar.refreshText(forUrl: tab.url)
-        omniBar.resetPrivacyIcon(for: tab.url)
+
+        if let siteRating = tab.siteRating {
+            omniBar.updatePrivacyIcon(for: siteRating)
+        } else {
+            omniBar.resetPrivacyIcon(for: tab.url)
+        }
+        
         omniBar.startBrowsing()
     }
 
@@ -1457,7 +1463,7 @@ extension MainViewController: TabDelegate {
              didRequestPresentingTrackerAnimation siteRating: SiteRating,
              isCollapsing: Bool) {
         guard tabManager.current === tab else { return }
-        omniBar?.startTrackersAnimation(siteRating, collapsing: isCollapsing)
+        omniBar?.startTrackersAnimation(siteRating, forDaxDialog: !isCollapsing)
     }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {

@@ -1396,7 +1396,7 @@ extension MainViewController: TabDelegate {
 
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
         if currentTab == tab {
-            omniBar.updatePrivacyIcon(siteRating, with: ContentBlocking.privacyConfigurationManager.privacyConfig)
+            omniBar.updatePrivacyIcon(for: siteRating)
         }
     }
 

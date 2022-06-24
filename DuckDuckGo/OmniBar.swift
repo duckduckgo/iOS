@@ -200,11 +200,11 @@ class OmniBar: UIView {
         textField.selectedTextRange = nil
     }
     
-    func resetPrivacyIcon(for url: URL?) {
+    public func resetPrivacyIcon(for url: URL?) {
         privacyIconAndTrackersAnimator.resetPrivacyIcon(in: privacyInfoContainer, for: url)
     }
     
-    func updatePrivacyIcon(_ siteRating: SiteRating?, with config: PrivacyConfiguration?) {
+    public func updatePrivacyIcon(for siteRating: SiteRating?) {
         guard let siteRating = siteRating else { return }
 
         privacyIconAndTrackersAnimator.updatePrivacyIcon(in: privacyInfoContainer, for: siteRating)
@@ -232,7 +232,7 @@ class OmniBar: UIView {
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
     }
     
-    public func completeAnimations() {
+    public func completeAnimationForDaxDialog() {
         privacyIconAndTrackersAnimator.completeAnimationForDaxDialog(in: self)
     }
 

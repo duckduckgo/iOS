@@ -34,6 +34,15 @@ class ThemeManager {
     enum ImageSet {
         case light
         case dark
+        
+        var trait: UITraitCollection {
+            switch self {
+            case .light:
+                return UITraitCollection(userInterfaceStyle: .light)
+            case .dark:
+                return UITraitCollection(userInterfaceStyle: .dark)
+            }
+        }
     }
     
     public static let shared = ThemeManager()

@@ -1,0 +1,1279 @@
+/* Buton label for Edit action */
+"action.generic.edit" = "Редагувати";
+
+/* Button label for a generic show action */
+"action.generic.show" = "Показати";
+
+/* Button label for Undo action */
+"action.generic.undo" = "Скасувати";
+
+/* Add action - button shown in alert */
+"action.title.add" = "Додати";
+
+/* Confirmation of Bookmark action in add to bookmark alert */
+"action.title.bookmark" = "Закладка";
+
+/* Button: Open bookmarks list */
+"action.title.bookmarks" = "Закладки";
+
+/* Cancel action - button shown in alert */
+"action.title.cancel" = "Скасувати";
+
+/* Copy action */
+"action.title.copy" = "Копіювати";
+
+/* Floating message indicating URL has been copied */
+"action.title.copy.message" = "URL-адресу скопійовано";
+
+/* Disable protection action */
+"action.title.disable.protection" = "Вимкнути захист конфіденційності";
+
+/* Downloads menu item opening the downlods list */
+"action.title.downloads" = "Завантаження";
+
+/* Edit Bookmark action */
+"action.title.edit.bookmark" = "Редагувати закладку";
+
+/* Enable protection action */
+"action.title.enable.protection" = "Увімкнути захист конфіденційності";
+
+/* No comment provided by engineer. */
+"action.title.forgetAll" = "Закрити вкладки та очистити дані";
+
+/* Confirmation message */
+"action.title.forgetAllDone" = "Вкладки та дані очищено";
+
+/* Open in New Background Tab action */
+"action.title.newBackgroundTabForUrl" = "Відкрити у фоновому режимі";
+
+/* Create New Tab action */
+"action.title.newTabAction" = "Новий";
+
+/* Open in New Tab action */
+"action.title.newTabForUrl" = "Відкрити в новій вкладці";
+
+/* Open action */
+"action.title.open" = "Відкрити";
+
+/* Paste and Go action */
+"action.title.pasteAndGo" = "Вставити та перейти";
+
+/* Print action */
+"action.title.print" = "Друк";
+
+/* Refresh action - button shown in alert */
+"action.title.refresh" = "Оновити";
+
+/* Remove Favorite action */
+"action.title.remove.favorite" = "Видалити Вибране";
+
+/* Report broken site action */
+"action.title.reportBrokenSite" = "Повідомити про зламаний сайт";
+
+/* Action to reload current page in desktop mode */
+"action.title.request.desktop.site" = "Настільний сайт";
+
+/* Action to reload current page in mobile mode */
+"action.title.request.mobile.site" = "Мобільний сайт";
+
+/* Save action - button shown in alert */
+"action.title.save" = "Зберегти";
+
+/* Add to Bookmarks action */
+"action.title.save.bookmark" = "Додати закладку";
+
+/* Add to Favorites action */
+"action.title.save.favorite" = "Додати вибране";
+
+/* Settings action */
+"action.title.settings" = "Параметри";
+
+/* Share action */
+"action.title.share" = "Поділитися";
+
+/* No comment provided by engineer. */
+"addWidget.button" = "Додати Віджет";
+
+/* No comment provided by engineer. */
+"addWidget.description" = "Отримайте швидкий доступ до приватного пошуку та улюблених сайтів.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.firstParagraph" = "Натисніть і утримуйте на головному екрані, щоб увійти у режим редагування.";
+
+/* Replacement string is a plus button icon. */
+"addWidget.settings.secondParagraph.%@" = "Торкніться кнопки додати %@.";
+
+/* No comment provided by engineer. */
+"addWidget.settings.title" = "Знайдіть і виберіть DuckDuckGo. Потім виберіть віджет.";
+
+/* No comment provided by engineer. */
+"addWidget.title" = "Один дотик до ваших улюблених сайтів.";
+
+/* No comment provided by engineer. */
+"alert.message.bookmarkAll" = "Існуючі закладки не дублюватимуться.";
+
+/* Question from confirmation dialog */
+"alert.title.bookmarkAll" = "Додати всі вкладки в закладки?";
+
+/* Disable protection alert */
+"alert.title.disable.protection" = "Додати до незахищених сайтів";
+
+/* Disable potection alert placeholder - leave as it is */
+"alert.title.disable.protection.placeholder" = "www.example.com";
+
+/* Save Bookmark action */
+"alert.title.save.bookmark" = "Зберегти закладку";
+
+/* Save Favorite action */
+"alert.title.save.favorite" = "Зберегти в Улюблені";
+
+/* Shown on authentication screen */
+"app.authentication.unlock" = "Розблокуйте DuckDuckGo.";
+
+/* Authentication Alert Sign In Button */
+"auth.alert.login.button" = "Увійти";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.encrypted" = "Увійдіть до %@. Ваша інформація для входу буде надіслана безпечно.";
+
+/* Authentication Alert - populated with a domain name */
+"auth.alert.message.plain" = "Увійдіть до %@. Ваш пароль буде надіслано небезпечно, оскільки з’єднання незашифроване.";
+
+/* Authentication Password field placeholder */
+"auth.alert.password.placeholder" = "Пароль";
+
+/* Authentication Alert Title */
+"auth.alert.title" = "Потрібна аутентифікація";
+
+/* Authentication User name field placeholder */
+"auth.alert.username.placeholder" = "Ім'я користувача";
+
+/* No comment provided by engineer. */
+"autoclear.off" = "Вимкнено";
+
+/* No comment provided by engineer. */
+"autoclear.on" = "Увімкнено";
+
+/* Add bookmark screen title */
+"bookmark.addBookmark.title" = "Додати закладку";
+
+/* Add favorite screen title */
+"bookmark.addFavorite.title" = "Додати у вибране";
+
+/* Add folder screen title */
+"bookmark.addFolder.title" = "Додати теку";
+
+/* Add bookmark folder button text */
+"bookmark.addFolderButton" = "Додати теку";
+
+/* Placeholder in the add bookmark form */
+"bookmark.address.placeholder" = "www.example.com";
+
+/* Delete bookmark folder alert delete button */
+"bookmark.deleteFolderAlert.deleteButton" = "Видалити";
+
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
+
+/* Delete bookmark folder alert title */
+"bookmark.deleteFolderAlert.title" = "Видалити %@?";
+
+/* Edit bookmark screen title */
+"bookmark.editBookmark.title" = "Редагувати закладку";
+
+/* Edit favorite screen title */
+"bookmark.editFavorite.title" = "Редагувати вибране";
+
+/* Edit folder screen title */
+"bookmark.editFolder.title" = "Редагувати теку";
+
+/* Header for folder selection for bookmarks */
+"bookmark.folderSelect.title" = "Розташування";
+
+/* More options button text */
+"bookmark.moreButton" = "Більше";
+
+/* Placeholder in the add bookmark form */
+"bookmark.title.placeholder" = "Назва вебсайту";
+
+/* Top level bookmarks folder title */
+"bookmark.topLevelFolder.title" = "Закладки";
+
+/* Info message after selecting Bookmark All button */
+"bookmarkAll.tabs.failed" = "Додано нові закладки для всіх вкладок";
+
+/* Confirmation message after selecting Bookmark All button */
+"bookmarkAll.tabs.saved" = "Усі вкладки додано до закладок";
+
+/* No comment provided by engineer. */
+"bookmarks.button.hint" = "Закладки";
+
+/* Failure message when bookmarks failed to export */
+"bookmarks.export.failed.message" = "Не вдалося експортувати ваші закладки, спробуйте ще раз.";
+
+/* Confirmation message that bookmarks have been exported to the file system */
+"bookmarks.export.files.success.message" = "Ваші закладки експортовано.";
+
+/* Confirmation message that bookmarks have been shared successfully to another app */
+"bookmarks.export.share.success.message" = "Ваші закладки опубліковано.";
+
+/* Title of option to export HTML */
+"bookmarks.exportAction.title" = "Експортувати файл HTML";
+
+/* Failure message when bookmarks failed to import */
+"bookmarks.import.failed.message" = "На жаль, ми не можемо імпортувати цей файл.";
+
+/* Confirmation message that bookmarks have been imported */
+"bookmarks.import.success.message" = "Ваші закладки імпортовано.";
+
+/* Title of option to import HTML */
+"bookmarks.importAction.title" = "Імпортувати файл HTML";
+
+/* Import bookmark file button text */
+"bookmarks.importExport.footer.button.title" = "Імпортувати файл закладок з іншого браузера";
+
+/* Title of prompt for users where they can choose to import or export an HTML file containing webpage bookmarks */
+"bookmarks.importExport.title" = "Імпортувати HTML-файл закладок з іншого браузера, або експортуйте наявні закладки.";
+
+/* Broken Site Category */
+"brokensite.category.comments" = "Коментарі не завантажилися";
+
+/* Broken Site Category */
+"brokensite.category.content" = "Вміст відсутній";
+
+/* Broken Site Category */
+"brokensite.category.images" = "Зображення не завантажилися";
+
+/* Broken Site Category */
+"brokensite.category.links" = "Посилання або кнопки не працюють";
+
+/* Broken Site Category */
+"brokensite.category.login" = "Я не можу ввійти";
+
+/* Broken Site Category */
+"brokensite.category.other" = "Щось ще";
+
+/* Broken Site Category */
+"brokensite.category.paywall" = "Сайт попросив мене відключити";
+
+/* Broken Site Category */
+"brokensite.category.unsupported" = "Браузер несумісний";
+
+/* Broken Site Category */
+"brokensite.category.videos" = "Відео не відтворилося";
+
+/* Broken Site Section Title */
+"brokensite.sectionTitle" = "ОПИШІТЬ, ЩО СТАЛОСЯ";
+
+/* Title for a section containing only items from past month */
+"date.range.past-month" = "Минулого місяця";
+
+/* Title for a section containing only items from past week */
+"date.range.past-week" = "Минулого тижня";
+
+/* Title for a section containing only items from today */
+"date.range.today" = "Сьогодні";
+
+/* Title for a section containing only items from yesterday */
+"date.range.yesterday" = "Вчора";
+
+/* No comment provided by engineer. */
+"dax.hide.button" = "Приховати Поради Назавжди";
+
+/* No comment provided by engineer. */
+"dax.hide.cancel" = "Скасувати";
+
+/* Subtitle in Hide Dax dialog */
+"dax.hide.message" = "Їх лише кілька, і ми постаралися зробити їх інформативними.";
+
+/* Title in Hide Dax dialog */
+"dax.hide.title" = "Приховати поради, що залишилися?";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search" = "Ваші пошукові запити DuckDuckGo анонімні. Завжди. 🙌";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.after.search.cta" = "Супер!";
+
+/* First parameter is a count of additional trackers, second and third are names of the tracker networks (strings) */
+"dax.onboarding.browsing.multiple.trackers" = "dax.onboarding.browsing.multiple.trackers";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.multiple.trackers.cta" = "Дай П'ять!";
+
+/* Parameter is domain name (string) */
+"dax.onboarding.browsing.one.tracker" = "*%1$@* намагався відстежити вас тут.\n\nЯ їх заблокував!\n\n☝️ Ви можете перевірити адресний рядок, щоб побачити, хто намагається відстежити вас, коли ви відвідуєте новий сайт.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.one.tracker.cta" = "Дай П'ять!";
+
+/* First paramter is a string - network name, 2nd parameter is a string - domain name */
+"dax.onboarding.browsing.site.is.major.tracker" = "Увага! Я не можу завадити %1$@ бачити вашу активність на %2$@.\n\nАле переглядайте зі мною, і я зможу зменшити те, що %1$@ знає про вас загалом, заблокувавши їхні трекери на багатьох інших сайтах.";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.site.is.major.tracker.cta" = "Зрозуміло";
+
+/* Parameters are domain names (strings) */
+"dax.onboarding.browsing.site.owned.by.major.tracker" = "?Голова вгору?! Оскільки %2$@ володіє %1$@, я не можу заборонити їм бачити вашу діяльність тут.\n\nАле переглядайте зі мною, і я зможу зменшити те, що %2$@ знає про вас загалом, заблокувавши їхні трекери на багатьох інших сайтах.";
+
+/* Got It */
+"dax.onboarding.browsing.site.owned.by.major.tracker.cta" = "Зрозуміло";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers" = "Коли ви торкаєтесь і прокручуєте, я блокую докучливі трекери.\n\nПродовжуйте переглядати!";
+
+/* No comment provided by engineer. */
+"dax.onboarding.browsing.without.trackers.cta" = "Зрозуміло";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button" = "Персональні дані можуть накопичуватися у вашому браузері. Гидота. Використовуйте кнопку Вогню, щоб спалити все це. Спробуйте зараз! 👇";
+
+/* Cancel action */
+"dax.onboarding.fire.button.cancelAction" = "Скасувати";
+
+/* Encourage user to try clearing data with the fire button */
+"dax.onboarding.fire.button.confirmAction" = "Закрити вкладки та очистити дані";
+
+/* Encourage user to add favorite site using the browsing menu. */
+"dax.onboarding.home.add.favorite" = "Відвідайте улюблені сайти миттєво!\n\nПерейдіть на сайт, який вам подобається. Потім торкніться значка \"⋯\" та виберіть *Додати до вибраного*.";
+
+/* Accessible version of dax.onboarding.home.add.favorite */
+"dax.onboarding.home.add.favorite.accessible" = "Відвідайте улюблені сайти миттєво! Відвідайте один із ваших улюблених сайтів. Потім торкніться кнопки «Відкрити меню» та виберіть «Додати до вибраного».";
+
+/* No comment provided by engineer. */
+"dax.onboarding.home.initial" = "Далі спробуйте відвідати один із ваших улюблених сайтів!\n\nЯ заблокую трекери, щоб вони не шпигували за вами. Я також підвищу рівень безпеки вашого з’єднання, якщо це можливо. 🔒";
+
+/* ad = advertisment */
+"dax.onboarding.home.subsequent" = "Ви зробили це!\n\nПам’ятайте: щоразу, коли ви переглядаєте сторінку зі мною, моторошна реклама втрачає свої крила. 👍";
+
+/* No comment provided by engineer. */
+"dax.onboarding.message" = "Інтернет може бути моторошним.\n\nНе хвилюйся! Шукати й переглядати приватно простіше, ніж ви думаєте.";
+
+/* GPC Setting state */
+"donotsell.disabled" = "Вимкнено";
+
+/* No comment provided by engineer. */
+"donotsell.disclaimer.learnmore" = "Дізнатися більше";
+
+/* GPC Setting state */
+"donotsell.enabled" = "Увімкнено";
+
+/* No comment provided by engineer. */
+"donotsell.info.headertext" = "DuckDuckGo автоматично блокує багато трекерів. За допомогою Global Privacy Control (GPC) ви також можете попросити веб-сайти-учасники обмежити продаж або передачу ваших особистих даних іншим компаніям.";
+
+/* Alert action for starting a file dowload */
+"downloads.alert.action.save-to-downloads" = "Зберегти до завантажень";
+
+/* Cancel download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.cancel" = "Скасувати";
+
+/* Message for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.message" = "Ви впевнені, що хочете скасувати це завантаження?";
+
+/* Resume download action for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.resume" = "Резюме";
+
+/* Title for alert when trying to cancel the file download */
+"downloads.cancel-download.alert.title" = "Скасувати завантаження?";
+
+/* Button for deleting all items on downloads list */
+"downloads.downloads-list.delete-all" = "Видалити все";
+
+/* Empty downloads list placholder */
+"downloads.downloads-list.empty" = "Немає завантажених файлів";
+
+/* Label displaying file download progress. Both parameters are formatted data size measurements e.g. 5MB. First parameter is data size currently downloaded. Second parameter is total expected data size of the file. */
+"downloads.downloads-list.row.downloading" = "Завантаження - %1$@ з %2$@";
+
+/* Label displaying file download progress. The parameter is formatted data size measurements currently downloaded e.g. 5MB. */
+"downloads.downloads-list.row.downloadingUnknownTotalSize" = "Завантаження - %@";
+
+/* Downloads list screen title */
+"downloads.downloads-list.title" = "Завантаження";
+
+/* Additional alert message shown when there are active downloads when using the fire button */
+"downloads.fire-button.alert.message" = "Це також скасує поточні завантаження";
+
+/* Message confirming that all files on the downloads list have been deleted */
+"downloads.message.all-files-deleted" = "Усі файли видалено";
+
+/* Message confirming that the download process has completed. Parameter is downloaded file's filename */
+"downloads.message.download-complete" = "Завантаження завершено для %@";
+
+/* Message confirming the file was deleted. Parameter is file's filename */
+"downloads.message.download-deleted" = "Видалено %@";
+
+/* Message informing that the download has failed due to connection issues */
+"downloads.message.download-failed" = "Не вдалося завантажити. Перевірте підключення до Інтернету.";
+
+/* Message confirming that the download process has started. Parameter is downloaded file's filename */
+"downloads.message.download-started" = "Завантаження почалося для %@";
+
+/* Cancel option for the email alias alert */
+"email.aliasAlert.decline" = "Скасувати";
+
+/* Option for generating a private email address */
+"email.aliasAlert.generatePrivateAddress" = "Згенеруйте приватну адресу";
+
+/* Title for the email alias selection alert */
+"email.aliasAlert.title" = "Блокуйте трекери електронної пошти за допомогою Duck Address";
+
+/* Parameter is an email address (string) */
+"email.aliasAlert.useUserAddress" = "Використовуйте %@";
+
+/* Title for the email copy browsing menu alert */
+"email.browsingMenu.alert" = "Нова адреса скопійована в буфер обміну";
+
+/* Email option title in the browsing menu */
+"email.browsingMenu.useNewDuckAddress" = "Створіть Duck адресу";
+
+/* Signed in state for the email feature */
+"email.settings.enabled" = "Увімкнено";
+
+/* Footer text for the email feature */
+"email.settings.footer" = "Зняття захисту електронної пошти з цього пристрою виключає можливість заповнювати вашу особисту Duck адресу або щойно створену приватну Duck адресу в полях електронної пошти під час перегляду веб-сторінок.\n\nЩоб повністю видалити свої Duck адреси, або для будь-яких інших запитань чи відгуків, зв’яжіться з нами за адресою support@duck.com.";
+
+/* Signed out state for the email feature */
+"email.settings.off" = "Вимкнено";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Блокуйте трекери електронної пошти та приховуйте свою адресу";
+
+/* Cancel option for the email sign out alert */
+"email.signOutAlert.cancel" = "Скасувати";
+
+/* Description for the email sign out alert */
+"email.signOutAlert.description" = "Примітка. Зняття захисту електронної пошти з цього пристрою не призведе до видалення вашої Duck адресу.";
+
+/* Remove option for the email sign out alert */
+"email.signOutAlert.remove" = "Видалити";
+
+/* Title for the email sign out alert */
+"email.signOutAlert.title" = "Зняти захист електронної пошти?";
+
+/* Error text when failing to join the waitlist */
+"email.waitlist.error-joining" = "Під час приєднання до списку очікування сталася помилка. Спробуйте пізніше";
+
+/* Action button text for the email waitlist */
+"email.waitlist.get-started" = "Розпочати";
+
+/* Invite code button text for the email waitlist */
+"email.waitlist.have-invite-code" = "У мене є код запрошення";
+
+/* Header text for the email waitlist */
+"email.waitlist.invited" = "Вас запросили!";
+
+/* Action button text for the email waitlist */
+"email.waitlist.join" = "Приєднуйтесь до приватного списку очікування";
+
+/* Header text for the email waitlist */
+"email.waitlist.joined" = "Ви в списку очікування!";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"email.waitlist.joined.no-notification" = "Ваше запрошення з’явиться тут, коли ми будемо готові до вас. Хочете %1$@ коли він вийде? %2$@ про захист електронної пошти.";
+
+/* Notification text for the email waitlist */
+"email.waitlist.joined.no-notification.get-notification" = "отримати сповіщення";
+
+/* Description text for the email waitlist. Parameter is 'Learn more.' */
+"email.waitlist.joined.notification" = "Ми надішлемо вам сповіщення, коли захист електронної пошти буде готовий для вас. %@.";
+
+/* Footer text for the email waitlist */
+"email.waitlist.learn-more" = "Дізнатися більше";
+
+/* Body text for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.body" = "Ми надішлемо вам сповіщення, коли ви зможете почати використовувати захист електронної пошти.";
+
+/* Title for the permission notification for the email waitlist */
+"email.waitlist.notification-permission.title" = "Хочете, щоб ми сповістили вас, коли настане ваша черга?";
+
+/* Body text for the email waitlist notification */
+"email.waitlist.notification.body" = "Ви приєдналися до списку очікування та попросили нас повідомити вас, коли настане ваша черга спробувати наш захист електронної пошти.";
+
+/* Decline option for the permission notification for the email waitlist */
+"email.waitlist.notification.no-thanks" = "Ні, дякую";
+
+/* Accept option for the permission notification for the email waitlist */
+"email.waitlist.notification.notify-me" = "Повідомити мене";
+
+/* Title for the email waitlist notification */
+"email.waitlist.notification.title" = "Ваше запрошення для захисту електронної пошти тут!";
+
+/* Footer text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.privacy-guarantee" = "Ми не зберігаємо ваші електронні адреси. %@.";
+
+/* Header text for the email waitlist */
+"email.waitlist.privacy-simplified" = "Конфіденційність електронної пошти, спрощено.";
+
+/* Description text for the email waitlist. Parameter is 'Learn more'. */
+"email.waitlist.summary" = "Блокуйте трекери електронної пошти та приховуйте свою адресу, не змінюючи постачальника послуг електронної пошти. %@.";
+
+/* Empty list state placholder */
+"empty.bookmarks" = "Ще не додано жодної закладки";
+
+/* Empty list state placholder */
+"empty.favorites" = "Вибране ще не додано";
+
+/* Empty search placeholder on bookmarks search */
+"empty.search" = "Збігів не знайдено";
+
+/* No comment provided by engineer. */
+"favorite" = "Вибране";
+
+/* No comment provided by engineer. */
+"favorite.menu.delete" = "Видалити";
+
+/* No comment provided by engineer. */
+"favorite.menu.edit" = "Редагувати";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.ads" = "Блокування реклами та спливаючих вікон";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.bookmarks" = "Створення закладок і керування ними";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.caption" = "Яку функцію перегляду ми можемо додати чи покращити?";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.description" = "Проблеми з функціями браузера";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.entry" = "Функції перегляду відсутні або розчаровують";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.images" = "Взаємодія з зображеннями";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.navigation" = "Переміщення вперед, назад та/або оновлення";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.other" = "Ніщо з цього";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.tabs" = "Створення та керування вкладками";
+
+/* No comment provided by engineer. */
+"feedback.browserFeatures.videos" = "Перегляд відео";
+
+/* No comment provided by engineer. */
+"feedback.customization.bookmarks" = "Як відображаються закладки";
+
+/* No comment provided by engineer. */
+"feedback.customization.caption" = "Який параметр налаштування ми можемо додати чи покращити?";
+
+/* No comment provided by engineer. */
+"feedback.customization.description" = "Проблеми з налаштуванням";
+
+/* No comment provided by engineer. */
+"feedback.customization.entry" = "Недостатньо способів налаштувати програму";
+
+/* No comment provided by engineer. */
+"feedback.customization.homeScreen" = "Конфігурація головного екрану";
+
+/* No comment provided by engineer. */
+"feedback.customization.other" = "Ніщо з цього";
+
+/* No comment provided by engineer. */
+"feedback.customization.tabs" = "Як відображаються вкладки";
+
+/* No comment provided by engineer. */
+"feedback.customization.ui" = "Як виглядає додаток";
+
+/* No comment provided by engineer. */
+"feedback.customization.whatIsCleared" = "Які дані очищаються";
+
+/* No comment provided by engineer. */
+"feedback.customization.whenIsCleared" = "Коли дані очищаються";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.autocomplete" = "Краще автозаповнення";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.caption" = "Яку функцію пошуку ми можемо додати чи покращити?";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.description" = "Проблеми пошуку DuckDuckGo";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.entry" = "Пошук DuckDuckGo недостатньо хороший";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.languageOrRegion" = "Пошук певною мовою чи регіоном";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.layout" = "Макет має бути більше схожим на Google";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.loadTime" = "Швидший час завантаження";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.other" = "Ніщо з цього";
+
+/* No comment provided by engineer. */
+"feedback.ddgSearch.technical" = "Програмування?/технічний пошук";
+
+/* No comment provided by engineer. */
+"feedback.form.caption" = "Підкажіть, будь ласка, що ми можемо покращити";
+
+/* Confirmation button */
+"feedback.form.submit" = "Подати";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.genericPlaceholder" = "Будь ласка, будьте максимально конкретними";
+
+/* No comment provided by engineer. */
+"feedback.negative.form.placeholder" = "Чи є якісь особливості, які ви хотіли б включити?";
+
+/* No comment provided by engineer. */
+"feedback.negative.header" = "Нам шкода це чути";
+
+/* No comment provided by engineer. */
+"feedback.negative.supplementary" = "З чим найбільше пов’язане ваше розчарування?";
+
+/* No comment provided by engineer. */
+"feedback.other.description" = "Інші питання";
+
+/* No comment provided by engineer. */
+"feedback.other.entry" = "Ніщо з цього";
+
+/* No comment provided by engineer. */
+"feedback.performance.caption" = "Яку проблему ви відчуваєте?";
+
+/* No comment provided by engineer. */
+"feedback.performance.crashes" = "Програма виходить з ладу або зависає";
+
+/* No comment provided by engineer. */
+"feedback.performance.description" = "Проблеми з продуктивністю";
+
+/* No comment provided by engineer. */
+"feedback.performance.entry" = "Додаток працює повільно, працює з помилками або виходить з ладу";
+
+/* No comment provided by engineer. */
+"feedback.performance.other" = "Ніщо з цього";
+
+/* No comment provided by engineer. */
+"feedback.performance.playback" = "Помилки відтворення відео або медіа";
+
+/* No comment provided by engineer. */
+"feedback.performance.slowLoading" = "Вебсторінка або результати пошуку завантажуються повільно";
+
+/* Header above input field */
+"feedback.positive.form.header" = "Поділитися деталями";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.placeholder" = "Що вам найбільше сподобалось?";
+
+/* No comment provided by engineer. */
+"feedback.positive.form.supplementary" = "Чи є якісь деталі, якими ви хотіли б поділитися з командою?";
+
+/* No comment provided by engineer. */
+"feedback.positive.header" = "Чудово чути!";
+
+/* No comment provided by engineer. */
+"feedback.positive.noThanks" = "Ні, дякую! У мене все";
+
+/* Button encouraging uses to share details aboout their feedback */
+"feedback.positive.submit" = "Поділитися деталями";
+
+/* No comment provided by engineer. */
+"feedback.start.footer" = "Ваш анонімний відгук важливий для нас.";
+
+/* No comment provided by engineer. */
+"feedback.start.header" = "Розпочнім!";
+
+/* No comment provided by engineer. */
+"feedback.start.supplementary" = "Як би ви класифікували свій відгук?";
+
+/* No comment provided by engineer. */
+"feedback.submitted.confirmation" = "Дякуємо Вам! Відгук надіслано.";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.description" = "Проблеми із завантаженням вебсайту";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.entry" = "Деякі вебсайти завантажуються неправильно";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.placeholder" = "На який контент це вплинуло?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.supplementary" = "Де ви бачите ці проблеми?";
+
+/* No comment provided by engineer. */
+"feedback.websiteLoading.form.urlPlaceholder" = "Який вебсайт має проблеми?";
+
+/* Used to indicate number of entries found and position of the currently viewed one: e.g. 1 of 10 */
+"findinpage.count" = "%1$d з %2$d";
+
+/* No comment provided by engineer. */
+"findinpage.title" = "Знайти на сторінці";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.airstream.name" = "Повітряний потік";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.fireRising.name" = "Вогонь";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.none.name" = "Жодна";
+
+/* No comment provided by engineer. */
+"fireButtonAnimation.waterSwirl.name" = "Змив";
+
+/* No comment provided by engineer. */
+"home.row.onboarding.header" = "Додайте DuckDuckGo на свій головний екран!";
+
+/* No comment provided by engineer. */
+"home.row.reminder.message" = "Додайте DuckDuckGo у свій док для легкого доступу!";
+
+/* Home is this context is the bottom home row (dock) */
+"home.row.reminder.title" = "Встановіть DuckDuckGo на головний екран";
+
+/* This describes empty tab */
+"homeTab.searchAndFavorites" = "Шукайте або введіть адресу";
+
+/* Home tab title */
+"homeTab.title" = "Головна";
+
+/* No comment provided by engineer. */
+"keyCommandAddBookmark" = "Додати закладку";
+
+/* No comment provided by engineer. */
+"keyCommandAddFavorite" = "Додати у вибране";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserBack" = "Перейти назад";
+
+/* No comment provided by engineer. */
+"keyCommandBrowserForward" = "Перейти вперед";
+
+/* No comment provided by engineer. */
+"keyCommandClose" = "Закрити";
+
+/* No comment provided by engineer. */
+"keyCommandCloseTab" = "Закрити вкладку";
+
+/* No comment provided by engineer. */
+"keyCommandFind" = "Знайти на сторінці";
+
+/* No comment provided by engineer. */
+"keyCommandFindNext" = "Знайти Наступне";
+
+/* No comment provided by engineer. */
+"keyCommandFindPrevious" = "Знайти Попереднє";
+
+/* No comment provided by engineer. */
+"keyCommandFire" = "Очистити всі вкладки та дані";
+
+/* No comment provided by engineer. */
+"keyCommandLocation" = "Шукайте або введіть адресу";
+
+/* No comment provided by engineer. */
+"keyCommandNewTab" = "Нова Вкладка";
+
+/* No comment provided by engineer. */
+"keyCommandNextTab" = "Наступна Вкладка";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewBackgroundTab" = "Відкрийте Посилання У Фоновому Режимі";
+
+/* No comment provided by engineer. */
+"keyCommandOpenInNewTab" = "Відкрийте Посилання В Новій Вкладці";
+
+/* No comment provided by engineer. */
+"keyCommandPreviousTab" = "Попередня Вкладка";
+
+/* No comment provided by engineer. */
+"keyCommandPrint" = "Друк";
+
+/* No comment provided by engineer. */
+"keyCommandReload" = "Перезавантажити";
+
+/* No comment provided by engineer. */
+"keyCommandSelect" = "Вибрати";
+
+/* No comment provided by engineer. */
+"keyCommandShowAllTabs" = "Показати Всі Вкладки";
+
+/* Please preserve newline character */
+"launchscreenWelcomeMessage" = "Ласкаво просимо до\nDuckDuckGo!";
+
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Код запрошення";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Ваше запрошення з’явиться тут, коли ми будемо готові до вас. Хочете %1$@, коли він вийде? %2$@ про бета-версію браузера macOS.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "отримати сповіщення";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Ми надішлемо вам сповіщення, коли будемо готові до вас. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Ваше запрошення спробувати DuckDuckGo для Mac надійде сюди. Перевірте незабаром, або ми можемо надіслати вам сповіщення, коли настане ваша черга.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Ми надішлемо вам сповіщення, коли ваша копія DuckDuckGo для Mac буде готова до завантаження.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ про бета-версію.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Додаток DuckDuckGo Privacy для Mac має потрібну швидкість, очікувані функції перегляду та містить найкращі в своєму класі засоби захисту конфіденційності.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Відкрийте своє запрошення";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo для Mac готовий!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Копіювати";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Відвідайте цю URL-адресу на своєму Mac, щоб завантажити:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Крок 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Відкрийте файл для встановлення, а потім введіть код запрошення, щоб розблокувати.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Крок 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Готові почати приватний перегляд на Mac?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Ти запрошений!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Приєднуйтесь до приватного списку очікування";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Приєднання до списку очікування...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Спробуйте DuckDuckGo для Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Windows незабаром!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Ми можемо сповістити вас, коли настане ваша черга, але сповіщення наразі вимкнено для DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Вам не потрібно буде ділитися будь-якою особистою інформацією, щоб приєднатися до списку очікування. Ви забезпечите своє місце відповідно до позначки часу, яка існує виключно на вашому пристрої, щоб ми могли сповістити вас, коли настане ваша черга.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Ви в списку!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Доступно для завантаження на Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Переглядайте приватно за допомогою нашої програми для Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Ви в списку!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Ти запрошений!
+
+Готові почати приватний перегляд на Mac?
+
+Крок 1
+Відвідайте цю URL-адресу на своєму Mac, щоб завантажити:
+https://duckduckgo.com/mac
+
+Крок 2
+Відкрийте файл для встановлення, а потім введіть код запрошення, щоб розблокувати.
+
+Код запрошення: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Ви запрошені!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "Настільний додаток DuckDuckGo";
+
+/* No comment provided by engineer. */
+"menu.button.hint" = "Меню перегляду";
+
+/* Finish editing bookmarks button */
+"navigation.title.done" = "Готово";
+
+/* Edit button */
+"navigation.title.edit" = "Редагувати";
+
+/* Do not translate - stringsdict entry */
+"number.of.tabs" = "number.of.tabs";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.continueButton" = "Додати Віджет";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.header" = "Користуватися DuckDuckGo стало простіше.";
+
+/* No comment provided by engineer. */
+"onboarding.widgets.skipButton" = "Можливо пізніше";
+
+/* No comment provided by engineer. */
+"onboardingContinue" = "Продовжити";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserMaybeLater" = "Можливо пізніше";
+
+/* No comment provided by engineer. */
+"onboardingDefaultBrowserTitle" = "Зробіть DuckDuckGo браузером за замовчуванням.";
+
+/* No comment provided by engineer. */
+"onboardingSetAsDefaultBrowser" = "Встановити як браузер за замовчуванням";
+
+/* No comment provided by engineer. */
+"onboardingSkip" = "Пропустити";
+
+/* This is on a button presented on the last of the onboarding screens. */
+"onboardingStartBrowsing" = "Почніть перегляд";
+
+/* No comment provided by engineer. */
+"onboardingWelcomeHeader" = "Ласкаво просимо до DuckDuckGo!";
+
+/* ’Link’ is link on a website */
+"open.externally.failed" = "Не вдається знайти програму, необхідну для відкриття цього посилання";
+
+/* No comment provided by engineer. */
+"preserveLogins.domain.list.footer" = "Вебсайти покладаються на файли cookie, щоб ви залишалися в системі. Коли ви захищаєте сайт від вогнетривкості, файли cookie не видаляються, і ви залишаєтеся в системі навіть після використання Кнопки Вогню. Ми все ще блокуємо сторонні трекери, знайдені на вогнетривких вебсайтах.";
+
+/* Section header above Fireproofed websites list */
+"preserveLogins.domain.list.title" = "Вогнетривкі Сайти";
+
+/* Alert message explaining to users that the benefit of fireproofing a site is that they will be kept signed in */
+"preserveLogins.fireproof.message" = "Зробивши цей сайт вогнетривким дозволить вам ввійти в систему після використання Кнопки Вогню.";
+
+/* Parameter is a string - domain name. Alert title prompting user to fireproof a site so they can stay signed in */
+"preserveLogins.fireproof.title" = "Зробити %@ вогнетривким для того щоб залишатись в системі?";
+
+/* Confirm fireproofing action */
+"preserveLogins.menu.confirm" = "Вогнетривкий";
+
+/* Parameter is a website URL. Messege confirms that given website has been fireproofed. */
+"preserveLogins.menu.confirm.message" = "%@ тепер Вогнетривкий";
+
+/* Deny fireproofing action */
+"preserveLogins.menu.defer" = "Не Зараз";
+
+/* Disable fireproofing for site */
+"preserveLogins.menu.disable" = "Зняти Вогнетривкість?";
+
+/* Enable fireproofing for site */
+"preserveLogins.menu.enable" = "Зробити Цей Сайт Вогнетривким";
+
+/*  Messege confirms that website is no longer fireproofed. */
+"preserveLogins.menu.removal.message" = "Вогнетривкість знято";
+
+/* Alert title */
+"preserveLogins.remove.all" = "Видалити все";
+
+/* Confirmation button in alert */
+"preserveLogins.remove.all.ok" = "Гаразд";
+
+/* Part of certificate info */
+"privacy.protection.encryption.algorithm" = "Алгоритм";
+
+/* Certificate Key size info - number (integer) of bits */
+"privacy.protection.encryption.bits" = "%d bit";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.cert.error" = "Помилка видобування сертифіката";
+
+/* Part of certificate info */
+"privacy.protection.encryption.common.name" = "Звичайне Ім'я";
+
+/* Part of certificate info */
+"privacy.protection.encryption.effective.size" = "Ефективний Розмір";
+
+/* Part of certificate info */
+"privacy.protection.encryption.email" = "Електронна адреса";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.encrypted.heading" = "Зашифроване З'єднання";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading" = "Примусове Шифрування";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.message" = "Ми змусили цей сайт використовувати зашифроване з’єднання, запобігаючи підслуховуванню будь-якої особистої інформації, яку ви йому надсилаєте.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.header" = "Зашифроване з’єднання запобігає підслуховуванню будь-якої особистої інформації, яку ви надсилаєте на вебсайт.";
+
+/* Part of certificate info */
+"privacy.protection.encryption.id" = "Ідентифікатор ключа теми?";
+
+/* Part of certificate info */
+"privacy.protection.encryption.issuer" = "Видавець";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key" = "Відкритий Ключ";
+
+/* Part of certificate info */
+"privacy.protection.encryption.key.size" = "Розмір Ключа";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.heading" = "Змішане Шифрування";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.mixed.message" = "Цей сайт має змішане шифрування, оскільки деякий вміст обслуговується через незашифровані з’єднання.";
+
+/* Info that certificate is not permanent */
+"privacy.protection.encryption.no" = "Ні";
+
+/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
+"privacy.protection.encryption.permanent" = "Постійний";
+
+/* Public Key of a certficate */
+"privacy.protection.encryption.public.key" = "Відкритий Ключ";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.standard.message" = "Зашифроване з’єднання запобігає підслуховуванню будь-якої особистої інформації, яку ви надсилаєте на вебсайт.";
+
+/* Header of a section that provides infomration about certificate issuer */
+"privacy.protection.encryption.subject.name" = "Назва предмету?";
+
+/* Part of certificate info */
+"privacy.protection.encryption.summary" = "Резюме";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted" = "Будьте обережні, вводячи особисту інформацію на цьому сайті.";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unencrypted.heading" = "Незашифроване з'єднання";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.unknown" = "Невідомо";
+
+/* Part of certificate info */
+"privacy.protection.encryption.usage" = "Використання";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.decrypt" = "Розшифрувати";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.derive" = "Вивести";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.encrypt" = "Шифрувати";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.sign" = "Підписати";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.unwrap" = "Розгорнути";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.verify" = "Перевірити";
+
+/* Usage of a certificate */
+"privacy.protection.encryption.usage.wrap" = "Загорнути";
+
+/* Confirmation that certificate is permanent */
+"privacy.protection.encryption.yes" = "Так";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.disabled" = "ЗАХИСТ САЙТУ ВИМКНЕНО";
+
+/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
+"privacy.protection.main.enhanced" = "ВДОСКОНАЛЕНО ВІД $1 TO $2";
+
+/* No comment provided by engineer. */
+"privacy.protection.main.grade" = "СТУПІНЬ КОНФІДЕНЦІЙНОСТІ";
+
+/* Major trackers blocked */
+"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
+
+/* Major trackers found */
+"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
+
+/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
+"privacy.protection.network.leaderboard" = "Мережі трекерів були знайдені на %1$@%% вебсайтах, які ви відвідували з %2$@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.network.leaderboard.gathering" = "Ми все ще збираємо дані, щоб показати, скільки\nтрекерів ми заблокували.";
+
+/* ToS;DR is an organization */
+"privacy.protection.practices.footer.info" = "Практика конфіденційності від ToS;DR.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.header.info" = "Практика конфіденційності вказує, наскільки захищена особиста інформація, якою ви ділитеся з веб-сайтом.";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.reviewed.info" = "Цей веб-сайт повідомить вас перед передачею вашої інформації у разі злиття або поглинання";
+
+/* No comment provided by engineer. */
+"privacy.protection.practices.unknown.info" = "Практика конфіденційності цього веб-сайту не була перевірена.";
+
+/* Replacement string is a single letter: A/B/C/D */
+"privacy.protection.site.grade" = "Оцінка конфіденційності %@";
+
+/* No comment provided by engineer. */
+"privacy.protection.site.hint" = "Натисніть, щоб відкрити екран Захисту Конфіденційності";
+
+/* No comment provided by engineer. */
+"privacy.protection.top.offenders.info" = "Ця статистика зберігається лише на вашому пристрої і нікуди не надсилається. Ніколи.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.good" = "Належна Практика Конфіденційності";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.mixed" = "Змішана Практика Конфіденційності";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.poor" = "Погана Практика Конфіденційності";
+
+/* No comment provided by engineer. */
+"privacy.protection.tos.unknown" = "Невідомі Правила Конфіденційності";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info" = "Мережі трекерів об’єднують вашу історію веб-пошуку в профіль даних про вас. Основні мережі трекерів є більш шкідливими, оскільки вони можуть відстежувати та націлювати вас у більшій частині Інтернету.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* Deny action */
+"prompt.custom.url.scheme.dontopen" = "Скасувати";
+
+/* Confirm action */
+"prompt.custom.url.scheme.open" = "Відкрити";
+
+/* No comment provided by engineer. */
+"prompt.custom.url.scheme.prompt" = "Ви хочете залишити DuckDuckGo, щоб переглянути цей вміст?";
+
+/* Alert title */
+"prompt.custom.url.scheme.title" = "Відкрити в іншій програмі?";
+
+/* No comment provided by engineer. */
+"report.brokensite.header" = "Надсилання анонімного звіту про непрацездатний сайт допомагає нам усунути цю проблему та покращити програму.";
+
+/* No comment provided by engineer. */
+"search.hint.duckduckgo" = "Шукайте або введіть адресу";
+
+/* No comment provided by engineer. */
+"section.title.bookmarks" = "Закладки";
+
+/* No comment provided by engineer. */
+"section.title.favorites" = "Вибране";
+
+/* No comment provided by engineer. */
+"settings.about.text" = "У DuckDuckGo ми встановлюємо новий стандарт довіри в Інтернеті.\n\nDuckDuckGo Privacy Browser надає все необхідне для захисту конфіденційності під час пошуку та перегляду веб-сторінок, включаючи блокування трекерів, більш розумне шифрування та приватний пошук DuckDuckGo.\n\nЗрештою, Інтернет не повинен бути таким жахливим, а отримати в Інтернеті заслуговувану конфіденційність має бути так само просто, як закрити жалюзі.";
+
+/* Report a Broken Site screen confirmation button */
+"siteFeedback.buttonText" = "Подати Звіт";
+
+/* Domain is an URL address */
+"siteFeedback.domainInfo" = "Домен Зламаного Сайту:";
+
+/* No comment provided by engineer. */
+"siteFeedback.messagePlaceholder" = "Який вміст або функція не працює?";
+
+/* No comment provided by engineer. */
+"siteFeedback.subtitle" = "Повідомлення про зламаний сайт є повністю анонімним і допомагає нам покращувати програму!";
+
+/* This is a form title */
+"siteFeedback.title" = "Повідомити про не справний сайт";
+
+/* No comment provided by engineer. */
+"siteFeedback.urlPlaceholder" = "Який вебсайт має проблеми?";
+
+/* Accessibility label on remove button */
+"tab.close.home" = "Закрити головну вкладку";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.close.with.title.and.address" = "Закрити \"%1$@\" з %2$@";
+
+/* Accessibility label on tab cell */
+"tab.open.home" = "Відкрийте головну вкладку";
+
+/* Accesibility label: first string is website title, second is address */
+"tab.open.with.title.and.address" = "Відкрти \"%1$@\" з %2$@";
+
+/* Tab Switcher Accessibility Label */
+"tab.switcher.accessibility.label" = "Перемикач вкладок";
+
+/* Description text for the text size adjustment setting */
+"textSize.description" = "Виберіть бажаний розмір тексту. Вебсайти, які ви переглядаєте в DuckDuckGo, адаптуються до цього.";
+
+/* Replacement string is a current percent value e.g. '120%' */
+"textSize.footer" = "Розмір тексту - %@";
+
+/* Dark Theme entry */
+"theme.acc.dark" = "Темна";
+
+/* Short entry for Default System theme */
+"theme.acc.default" = "Системна";
+
+/* Light Theme entry */
+"theme.acc.light" = "Світла";
+
+/* Dark Theme entry */
+"theme.name.dark" = "Темна";
+
+/* Entry for Default System theme */
+"theme.name.default" = "Системна за замовчуванням";
+
+/* Light Theme entry */
+"theme.name.light" = "Світла";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.disabled" = "Захист конфіденційності вимкнено для %@";
+
+/* Confirmation of an action - populated with a domain name */
+"toast.protection.enabled" = "Захист конфіденційності ввімкнено для %@";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Сталася невідома помилка.";
+
+/* No microphone permission alert action button to open the settings app */
+"voiceSearch.alert.no-permission.action.settings" = "Параметри";
+
+/* Message for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.message" = "Будь ласка, надайте доступ до мікрофона в налаштуваннях системи iOS для DuckDuckGo, щоб використовувати голосові функції.";
+
+/* Title for alert warning the user about missing microphone permission */
+"voiceSearch.alert.no-permission.title" = "Потрібен Доступ До Мікрофона";
+
+/* Cancel button for voice search */
+"voiceSearch.cancel" = "Скасувати";
+
+/* Voice-search footer note with on-device privacy warning */
+"voiceSearch.footer.note" = "Аудіо обробляється на пристрої. Воно не зберігається і не надається нікому, включаючи DuckDuckGo.";
+
+/* Confirmation message */
+"web.url.remove.favorite.done" = "Вибране видалено";
+
+/* Confirmation message */
+"web.url.save.bookmark.done" = "Додано закладку";
+
+/* Floating Info message */
+"web.url.save.bookmark.exists" = "Закладка вже збережена";
+
+/* Floating message indicating failure */
+"web.url.save.bookmark.none" = "Немає вебсторінки для закладки";
+
+/* Confirmation message */
+"web.url.save.favorite.done" = "Вибране додано";
+
+/* Block Alerts button for JavaScript alerts */
+"webJSAlert.block-alerts.button" = "Блокувати Сповіщення";
+
+/* Cancel button for JavaScript alerts */
+"webJSAlert.cancel.button" = "Скасувати";
+
+/* OK button for JavaScript alerts */
+"webJSAlert.OK.button" = "Гаразд";

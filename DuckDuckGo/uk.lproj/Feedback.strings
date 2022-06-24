@@ -1,0 +1,68 @@
+/* Class = "UIImageView"; accessibilityLabel = "Negative Feedback"; ObjectID = "1RQ-bi-6hU"; */
+"1RQ-bi-6hU.accessibilityLabel" = "Негативний Відгук";
+
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
+"46v-cB-2YV.title" = "Надіслати Відгук";
+
+/* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
+"7zN-Xh-yYi.normalTitle" = "Надіслати Відгук";
+
+/* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
+"A1s-GY-hbq.normalTitle" = "Ні, дякую! У мене все";
+
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "D8A-B7-Dqu"; */
+"D8A-B7-Dqu.title" = "Надіслати Відгук";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "JF8-Ow-zXL"; */
+"JF8-Ow-zXL.title" = "Назад";
+
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "Rvx-dM-etJ"; */
+"Rvx-dM-etJ.title" = "Надіслати Відгук";
+
+/* Class = "UITextField"; placeholder = "Which website is broken?"; ObjectID = "TMj-NM-j3b"; */
+"TMj-NM-j3b.placeholder" = "Який вебсайт має проблеми?";
+
+/* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
+"WjT-HM-yim.title" = "Повідомити про не справний сайт";
+
+/* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
+"Wx3-Vb-ItS.text" = "Причина  не справності сайту";
+
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
+"Xb0-Zu-opM.title" = "Надіслати Відгук";
+
+/* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "cZl-qB-kSL"; */
+"cZl-qB-kSL.title" = "Закрити";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "epz-Ta-KQ7"; */
+"epz-Ta-KQ7.title" = "Назад";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "h2M-TW-0QG"; */
+"h2M-TW-0QG.title" = "Назад";
+
+/* Class = "UITextView"; accessibilityHint = "Your feedback."; ObjectID = "iVe-E1-jAH"; */
+"iVe-E1-jAH.accessibilityHint" = "Ваш відгук.";
+
+/* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "jr6-Al-4fr"; */
+"jr6-Al-4fr.title" = "Надіслати";
+
+/* Class = "UITableViewController"; title = "Share Feedback"; ObjectID = "lY6-5c-iu4"; */
+"lY6-5c-iu4.title" = "Надіслати Відгук";
+
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "lsB-Kq-U8p"; */
+"lsB-Kq-U8p.normalTitle" = "Надіслати";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "m0a-EJ-h27"; */
+"m0a-EJ-h27.title" = "Назад";
+
+/* Class = "UIButton"; accessibilityLabel = "Negative"; ObjectID = "msl-mT-bMG"; */
+"msl-mT-bMG.accessibilityLabel" = "Негативний";
+
+/* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "oHj-cX-c6z"; */
+"oHj-cX-c6z.title" = "Надіслати Відгук";
+
+/* Class = "UIViewController"; title = "Share Feedback"; ObjectID = "rAY-cv-mjl"; */
+"rAY-cv-mjl.title" = "Надіслати Відгук";
+
+/* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
+"ze4-T7-OFN.accessibilityLabel" = "Позитивний";

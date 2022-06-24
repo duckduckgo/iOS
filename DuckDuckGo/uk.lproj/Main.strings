@@ -1,0 +1,20 @@
+/* Class = "UIBarButtonItem"; title = "Tab Switcher"; ObjectID = "K7o-WL-SC5"; */
+"K7o-WL-SC5.title" = "Перемикач вкладок";
+
+/* Class = "UIBarButtonItem"; title = "Browse Back"; ObjectID = "Kc6-IR-lKx"; */
+"Kc6-IR-lKx.title" = "Перейти назад";
+
+/* Class = "UIBarButtonItem"; title = "Bookmarks"; ObjectID = "M7u-mw-fly"; */
+"M7u-mw-fly.title" = "Закладки";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "X8N-Ee-U1n"; */
+"X8N-Ee-U1n.normalTitle" = "Готово";
+
+/* Class = "UIBarButtonItem"; title = "Browse Forward"; ObjectID = "cUp-YP-aMf"; */
+"cUp-YP-aMf.title" = "Перейти вперед";
+
+/* Class = "UIBarButtonItem"; title = "Close all tabs and clear data"; ObjectID = "ntb-c7-mjV"; */
+"ntb-c7-mjV.title" = "Закрити всі вкладки та очистити дані";
+
+/* Class = "UILabel"; text = "1 of 12"; ObjectID = "rSE-zZ-iud"; */
+"rSE-zZ-iud.text" = "1 з 12";

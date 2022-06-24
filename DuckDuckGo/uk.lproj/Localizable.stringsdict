@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bookmark.deleteFolderAlert.message</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@items@</string>
+		<key>items</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Ви впевнені, що хочете видалити цю папку та один елемент?</string>
+			<key>few</key>
+			<string>Ви впевнені, що хочете видалити цю папку та %d елементи?</string>
+			<key>many</key>
+			<string>Ви впевнені, що хочете видалити цю папку та %d елементів?</string>
+			<key>other</key>
+			<string>Ви впевнені, що хочете видалити цю папку та %d елементів?</string>
+		</dict>
+	</dict>
+	<key>dax.onboarding.browsing.multiple.trackers</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%1#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>*%2$@, %3$@* та *ще один* намагалися відстежити вас тут.
+
+I blocked them!
+
+☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
+			<key>few</key>
+			<string>*%2$@, %3$@* та *%d інші* намагалися відстежити вас тут.
+
+I blocked them!
+
+☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
+			<key>many</key>
+			<string>*%2$@, %3$@* та *%d інших* намагалися відстежити вас тут.
+
+I blocked them!
+
+☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
+			<key>other</key>
+			<string>*%2$@, %3$@* та *%d інших* намагалися відстежити вас тут.
+
+I blocked them!
+
+☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Важливий Трекер Знайдено</string>
+			<key>few</key>
+			<string>%d Важливі Трекери Знайдено</string>
+			<key>many</key>
+			<string>%d Важливих Трекерів Знайдено</string>
+			<key>other</key>
+			<string>%d Важливих Трекерів Знайдено</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Важливий Трекер Заблоковано</string>
+			<key>few</key>
+			<string>%d Важливі Трекери Заблоковано</string>
+			<key>many</key>
+			<string>%d Важливих Трекерів Заблоковано</string>
+			<key>other</key>
+			<string>%d Важливих Трекерів Заблоковано</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Трекер Знайдено</string>
+			<key>few</key>
+			<string>%d Трекери Знайдено</string>
+			<key>many</key>
+			<string>%d Трекерів Знайдено</string>
+			<key>other</key>
+			<string>%d Трекерів Знайдено</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Трекер Заблоковано</string>
+			<key>few</key>
+			<string>%d Трекери Заблоковано</string>
+			<key>many</key>
+			<string>%d Трекерів Заблоковано</string>
+			<key>other</key>
+			<string>%d Трекерів Заблоковано</string>
+		</dict>
+	</dict>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Приватна Вкладка</string>
+			<key>few</key>
+			<string>%d Приватні Вкладки</string>
+			<key>many</key>
+			<string>%d Приватних Вкладок</string>
+			<key>other</key>
+			<string>%d Приватних Вкладок</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

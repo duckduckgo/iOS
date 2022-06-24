@@ -1,0 +1,8 @@
+/* Class = "UILabel"; text = "Search or enter address"; ObjectID = "73D-OT-n1K"; */
+"73D-OT-n1K.text" = "Шукайте або введіть адресу";
+
+/* Class = "UIView"; accessibilityLabel = "Search or enter address"; ObjectID = "7Jf-KE-oXj"; */
+"7Jf-KE-oXj.accessibilityLabel" = "Шукайте або введіть адресу";
+
+/* Class = "UIButton"; accessibilityLabel = "Settings"; ObjectID = "kcN-YB-mZi"; */
+"kcN-YB-mZi.accessibilityLabel" = "Параметри";

@@ -1,21 +1,21 @@
 /* Description of search and favorites widget in widget gallery */
-"widget.gallery.search.and.favorites.description" = "Search or visit your favorite sites privately with just one tap.";
+"widget.gallery.search.and.favorites.description" = "Шукайте або відвідуйте улюблені сайти лише одним дотиком.";
 
 /* Display name for search and favorites widget in widget gallery */
-"widget.gallery.search.and.favorites.display.name" = "Search and Favorites";
+"widget.gallery.search.and.favorites.display.name" = "Пошук і Вибране";
 
 /* Description of search only widget in widget gallery */
-"widget.gallery.search.description" = "Quickly launch a private search in DuckDuckGo.";
+"widget.gallery.search.description" = "Швидко запустіть приватний пошук у DuckDuckGo.";
 
 /* Display name for search only widget in widget gallery */
-"widget.gallery.search.display.name" = "Search";
+"widget.gallery.search.display.name" = "Пошук";
 
 /* CTA shown in the favorites widget empty state. */
-"widget.no.favorites.cta" = "Add Favorites";
+"widget.no.favorites.cta" = "Додати Вибране";
 
 /* Message shown in the favorites widget empty state. */
-"widget.no.favorites.message" = "Quickly visit your favorite sites.";
+"widget.no.favorites.message" = "Швидко відвідуйте улюблені сайти.";
 
 /* Placeholder text in search field on the search and favorites widget */
-"widget.search.duckduckgo" = "Search DuckDuckGo";
+"widget.search.duckduckgo" = "Пошук DuckDuckGo";
 

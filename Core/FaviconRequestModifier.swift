@@ -21,9 +21,15 @@ import Kingfisher
 
 class FaviconRequestModifier: ImageDownloadRequestModifier {
 
+    let userAgentManager: UserAgentManager
+
+    init(userAgentManager: UserAgentManager = DefaultUserAgentManager.shared) {
+        self.userAgentManager = userAgentManager
+    }
+
     func modified(for request: URLRequest) -> URLRequest? {
         var r = request
-        UserAgentManager.shared.update(request: &r, isDesktop: false)
+        userAgentManager.update(request: &r, isDesktop: false)
         return r
     }
 

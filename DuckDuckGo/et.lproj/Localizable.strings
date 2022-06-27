@@ -296,7 +296,7 @@
 "dax.hide.title" = "Kas peita allesjäänud näpunäited?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Teie DuckDuckGo otsingud on anonüümsed ja ma ei salvesta kunagi teie otsinguajalugu. Mitte kunagi. 🙌";
+"dax.onboarding.browsing.after.search" = "Sinu DuckDuckGo otsingud on anonüümsed. Alati. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Huh!";

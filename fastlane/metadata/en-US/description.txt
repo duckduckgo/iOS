@@ -4,11 +4,13 @@ DuckDuckGo is the all-in-one privacy app that helps protect your online activiti
 
  • Search Privately - DuckDuckGo Private Search comes built-in so you can search the web without being tracked.
 
- • Escape Website Tracking - Tracker Radar automatically blocks hidden third-party trackers we can find lurking on websites you visit in DuckDuckGo, which stops the companies behind those trackers from collecting and selling your data.
+ • Block Tracking Cookies — Prevent most 3rd-party cookies from tracking you as you browse from site to site.
 
- • Enforce Encryption - Smarter Encryption forces sites you visit in DuckDuckGo to use an encrypted (HTTPS) connection where available, protecting your data from prying eyes.
+ • Escape Website Tracking - Tracker Radar automatically blocks most hidden 3rd-party tracking scripts lurking on websites you visit in DuckDuckGo, which stops the companies behind those trackers from collecting and selling your data. See notes and links below for more information.
 
- • Block Email Trackers - 70% of emails track you as soon as you open them. Enabling Email Protection is the easy way to block email trackers and hide your address without switching services. Join the private waitlist for the free beta version through the app settings menu.
+ • Enforce Encryption - Smarter Encryption forces many sites you visit in DuckDuckGo to use an encrypted (HTTPS) connection where available, protecting your data from prying eyes.
+
+ • Block Email Trackers - 70% of emails track you as soon as you open them. Enabling Email Protection is the easy way to block most email trackers and hide your address without switching services. Join the private waitlist for the free beta version through the app settings menu.
 
 The DuckDuckGo app has the browsing features you expect, like tabs and bookmarks, plus privacy controls you'll love. Taking control of your privacy doesn't have to mean making tradeoffs.
 
@@ -18,6 +20,8 @@ The DuckDuckGo app has the browsing features you expect, like tabs and bookmarks
 
 You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
 
+Note about our tracker blocking for 3rd-party sites and emails:
+DuckDuckGo never tracks you. When you leave our search engine to use other sites, we aim to block as many hidden trackers as possible, but we can't block them all for a few reasons. New trackers emerge all the time, so first we need to find them. Then, blocking these trackers can sometimes break functionality, so we need to develop new approaches without hurting usability. Additionally, in our app we offer a specific type of protection that stops scripts from even loading on 3rd-party sites, which isn’t offered on most popular browsers by default. Currently, this one loading protection doesn't apply to Microsoft scripts on 3rd-party sites due to contractual restrictions. However, our other tracker blocking methods (like 3rd-party cookie blocking) are unrestricted and continue to work against these trackers to protect your privacy online.
 
 
 About Us: https://duckduckgo.com/about/

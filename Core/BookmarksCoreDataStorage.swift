@@ -706,6 +706,12 @@ extension BookmarksCoreDataStorage {
         })
     }
 
+    // MainActor added - crashes when called from Favicons without using main thread
+    @MainActor func containsDomain(_ domain: String) async -> Bool {
+        let bookmarks = await allBookmarksAndFavoritesFlat()
+        return bookmarks.first(where: { $0.url?.host == domain }) != nil
+    }
+
     private func getTopLevelFolder(isFavorite: Bool,
                                    onContext context: NSManagedObjectContext,
                                    completion: @escaping (BookmarkFolderManagedObject) -> Void) {
@@ -931,6 +937,15 @@ public class BookmarksCoreDataStorageMigration {
         }
         
         context.performAndWait {
+            let countRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: BookmarksCoreDataStorage.Constants.folderClassName)
+            countRequest.fetchLimit = 1
+            let result = (try? context.count(for: countRequest)) ?? 0
+            
+            guard result == 0 else {
+                // Already migrated
+                return
+            }
+            
             let favoritesFolder = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(context)
             let bookmarksFolder = BookmarksCoreDataStorage.rootFolderManagedObject(context)
             

@@ -68,11 +68,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         clearTmp()
 
-        _ = UserAgentManager.shared
+        _ = DefaultUserAgentManager.shared
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
-            _ = UserAgentManager.shared
+            _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _ in }
+            BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
+                _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
+            }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }
@@ -94,7 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        
+
+        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
+            if #available(iOS 14, *) {
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        }
+
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"

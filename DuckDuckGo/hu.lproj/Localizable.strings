@@ -296,7 +296,7 @@
 "dax.hide.title" = "Elrejti a többi tippet?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "A DuckDuckGo keresések névtelenek, és én soha nem tárolom el a keresési előzményeket. Soha. 🙌";
+"dax.onboarding.browsing.after.search" = "A DuckDuckGo keresések névtelenek. Mindig. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pfuj!";

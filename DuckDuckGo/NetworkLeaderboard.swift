@@ -56,7 +56,7 @@ class NetworkLeaderboard {
         return try? context.fetch(request).first
     }
     
-    init(userDefaults: UserDefaults = UserDefaults.standard) {
+    init(userDefaults: UserDefaults = UserDefaults.app) {
         self.userDefaults = userDefaults
         if pageStats == nil || needsDataReset {
             reset()

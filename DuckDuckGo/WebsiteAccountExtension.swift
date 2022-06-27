@@ -1,8 +1,8 @@
 //
-//  OnboardingPadViewController.swift
+//  WebsiteAccountExtension.swift
 //  DuckDuckGo
 //
-//  Copyright © 2019 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,16 +17,15 @@
 //  limitations under the License.
 //
 
-import UIKit
+import Foundation
+import BrowserServicesKit
 
-class OnboardingPadViewController: UIViewController, Onboarding {
-
-    weak var delegate: OnboardingDelegate?
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if var onboarding = segue.destination as? Onboarding {
-            onboarding.delegate = delegate
+extension SecureVaultModels.WebsiteAccount {
+    var name: String {
+        if let title = self.title, !title.isEmpty {
+            return title
+        } else {
+            return self.domain.dropPrefix(prefix: "www.")
         }
     }
-
 }

@@ -22,16 +22,26 @@ import XCTest
 
 class NotFoundCachingDownloaderTests: XCTestCase {
 
+    private var downloader: NotFoundCachingDownloader!
+
     override func setUp() {
         super.setUp()
-        UserDefaults.clearStandard()
+        UserDefaults.app.removePersistentDomain(forName: #file)
+        UserDefaults.app = UserDefaults(suiteName: #file)!
+
+        downloader = NotFoundCachingDownloader(sourcesProvider: DefaultFaviconSourcesProvider())
     }
-    
+
+    override func tearDown() {
+        downloader = nil
+
+        super.tearDown()
+    }
+
     func testWhenURLSavedNotStoredInPlainText() {
-        let downloader = NotFoundCachingDownloader()
         downloader.noFaviconsFound(forDomain: "example.com")
 
-        guard let domains: [String: TimeInterval] = UserDefaults.standard.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
+        guard let domains: [String: TimeInterval] = UserDefaults.app.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
             as? [String: TimeInterval] else {
                 XCTFail("Failed to load not found cache")
                 return
@@ -45,13 +55,12 @@ class NotFoundCachingDownloaderTests: XCTestCase {
     }
         
     func testWhenDomainMarkedAsDomainExpiresThenShouldDownload() {
-        let downloader = NotFoundCachingDownloader()
         downloader.noFaviconsFound(forDomain: "example.com")
         
         let moreThanAWeekFromNow = Date().addingTimeInterval(60 * 60 * 24 * 8)
         XCTAssertTrue(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!, referenceDate: moreThanAWeekFromNow))
         
-        guard let domains: [String: TimeInterval] = UserDefaults.standard.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
+        guard let domains: [String: TimeInterval] = UserDefaults.app.object(forKey: UserDefaultsWrapper<Any>.Key.notFoundCache.rawValue)
             as? [String: TimeInterval] else {
                 XCTFail("Failed to load not found cache")
                 return
@@ -61,13 +70,11 @@ class NotFoundCachingDownloaderTests: XCTestCase {
     }
 
     func testWhenMarkingDomainAsNotFoundThenShouldNotDownload() {
-        let downloader = NotFoundCachingDownloader()
         downloader.noFaviconsFound(forDomain: "example.com")
         XCTAssertFalse(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!))
     }
 
     func testWhenDomainNotMarkedAsNotFoundThenShouldNotDownload() {
-        let downloader = NotFoundCachingDownloader()
         XCTAssertTrue(downloader.shouldDownload(URL(string: "https://example.com/path/to/image.png")!))
     }
 

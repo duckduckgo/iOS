@@ -1,8 +1,8 @@
 //
-//  WebCacheSummary.swift
+//  FaviconView.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,13 +17,19 @@
 //  limitations under the License.
 //
 
-import Foundation
+import SwiftUI
 
-public struct WebCacheSummary {
+struct FaviconView: View {
+    let viewModel: FaviconViewModel
+    
+    var body: some View {
+        Image(uiImage: viewModel.image)
+            .resizable()
+    }
+}
 
-    public let count: Int
-
-    public init(count: Int) {
-        self.count = count
+struct FaviconView_Previews: PreviewProvider {
+    static var previews: some View {
+        FaviconView(viewModel: FaviconViewModel(domain: "www.duckduckgo.com"))
     }
 }

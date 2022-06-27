@@ -22,6 +22,7 @@ import Core
 import StoreKit
 import os.log
 import BrowserServicesKit
+import SwiftUI
 import PrivacyDashboard
 
 // swiftlint:disable file_length
@@ -75,6 +76,9 @@ class TabViewController: UIViewController {
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
     
+    internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
+    private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
+    
     lazy var bookmarksManager = BookmarksManager()
 
     private(set) var siteRating: SiteRating?
@@ -107,7 +111,9 @@ class TabViewController: UIViewController {
     
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
-    
+
+    let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+
     public var url: URL? {
         didSet {
             updateTabModel()
@@ -142,7 +148,7 @@ class TabViewController: UIViewController {
         return errorMessage.text
     }
     
-    public var link: Link? {
+    public var link: Core.Link? {
         if isError {
             if let url = url ?? webView.url ?? URL(string: "") {
                 return Link(title: errorText, url: url)
@@ -171,6 +177,7 @@ class TabViewController: UIViewController {
     private var fullScreenVideoScript = FullScreenVideoUserScript()
     private var printingUserScript = PrintingUserScript()
     private var textSizeUserScript = TextSizeUserScript()
+    private lazy var autofillUserScript = createAutofillUserScript()
     private var debugScript = DebugUserScript()
     private var shouldBlockJSAlert = false
 
@@ -179,6 +186,12 @@ class TabViewController: UIViewController {
         emailManager.aliasPermissionDelegate = self
         emailManager.requestDelegate = self
         return emailManager
+    }()
+    
+    lazy var vaultManager: SecureVaultManager = {
+        let manager = SecureVaultManager()
+        manager.delegate = self
+        return manager
     }()
     
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
@@ -196,6 +209,7 @@ class TabViewController: UIViewController {
         LinkProtection(privacyManager: ContentBlocking.privacyConfigurationManager,
                        contentBlockingManager: ContentBlocking.contentBlockingManager,
                        errorReporting: Self.debugEvents)
+
     }()
     
     private var userScripts: [UserScript] = []
@@ -211,6 +225,10 @@ class TabViewController: UIViewController {
         }
         controller.tabModel = model
         return controller
+    }
+    
+    private var isAutofillEnabled: Bool {
+        appSettings.autofill && featureFlagger.isFeatureOn(.autofill)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -229,6 +247,8 @@ class TabViewController: UIViewController {
         addLoginDetectionStateObserver()
         addDoNotSellObserver()
         addTextSizeObserver()
+        addDuckDuckGoEmailSignOutObserver()
+        addAutofillEnabledObserver()
         registerForNotifications()
     }
 
@@ -248,7 +268,7 @@ class TabViewController: UIViewController {
 
         return activities
     }
-
+    
     // swiftlint:disable function_body_length
     func initUserScripts() {
         
@@ -269,11 +289,7 @@ class TabViewController: UIViewController {
                                                                  trackerDataManager: ContentBlocking.trackerDataManager,
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
-        
-        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell, sessionKey: UUID().uuidString)
-        let autofillUserScript = AutofillUserScript(
-            scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
-                                                                properties: prefs))
+        autofillUserScript = createAutofillUserScript()
         
         userScripts = [
             debugScript,
@@ -303,10 +319,24 @@ class TabViewController: UIViewController {
         surrogatesScript.delegate = self
         contentBlockerRulesScript.delegate = self
         autofillUserScript.emailDelegate = emailManager
+        autofillUserScript.vaultDelegate = vaultManager
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
     }
     // swiftlint:enable function_body_length
+    
+    private func createAutofillUserScript() -> BrowserServicesKit.AutofillUserScript {
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                           sessionKey: UUID().uuidString,
+                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
+        let provider = DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager, properties: prefs)
+        let autofillUserScript = AutofillUserScript(scriptSourceProvider: provider)
+        return autofillUserScript
+    }
+    
+    private func refreshAutofillUserScript() {
+        autofillUserScript = createAutofillUserScript()
+    }
     
     func updateTabModel() {
         if let url = url {
@@ -394,6 +424,12 @@ class TabViewController: UIViewController {
     
     public func load(url: URL) {
         load(url: url, didUpgradeURL: false)
+    }
+    
+    public func load(backForwardListItem: WKBackForwardListItem) {
+        webView.stopLoading()
+        updateContentMode()
+        webView.go(to: backForwardListItem)
     }
     
     private func load(url: URL, didUpgradeURL: Bool) {
@@ -580,6 +616,7 @@ class TabViewController: UIViewController {
         removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
         webView.configuration.userContentController.removeAllUserScripts()
         
+        refreshAutofillUserScript()
         initUserScripts()
         
         userScripts.forEach { script in
@@ -683,6 +720,20 @@ class TabViewController: UIViewController {
                                                name: AppUserDefaults.Notifications.textSizeChange,
                                                object: nil)
     }
+
+    private func addDuckDuckGoEmailSignOutObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onDuckDuckGoEmailSignOut),
+                                               name: .emailDidSignOut,
+                                               object: nil)
+    }
+    
+    private func addAutofillEnabledObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(onAutofillEnabledChange),
+                                               name: AppUserDefaults.Notifications.autofillEnabledChange,
+                                               object: nil)
+    }
     
     @objc func onLoginDetectionStateChanged() {
         reload(scripts: true)
@@ -724,6 +775,17 @@ class TabViewController: UIViewController {
     
     @objc func onTextSizeChange() {
         webView.adjustTextSize(appSettings.textSize)
+        reloadUserScripts()
+    }
+
+    @objc func onDuckDuckGoEmailSignOut(_ notification: Notification) {
+        guard let url = webView.url else { return }
+        if AppUrls().isDuckDuckGoEmailProtection(url: url) {
+            webView.evaluateJavaScript("window.postMessage({ emailProtectionSignedOut: true }, window.origin);")
+        }
+    }
+    
+    @objc func onAutofillEnabledChange() {
         reloadUserScripts()
     }
 
@@ -906,6 +968,7 @@ class TabViewController: UIViewController {
     }
     
     deinit {
+        temporaryDownloadForPreviewedFile?.cancel()
         removeMessageHandlers()
         removeObservers()
     }
@@ -1044,6 +1107,7 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
 
+    // swiftlint:disable function_body_length
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
@@ -1052,6 +1116,11 @@ extension TabViewController: WKNavigationDelegate {
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
         
+        let didMarkAsInternal = featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
+        if didMarkAsInternal {
+            reloadUserScripts()
+        }
+
         if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
             Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
         }
@@ -1103,6 +1172,7 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(.allow)
         }
     }
+    // swiftlint:enable function_body_length
     
     /*
      Some files might be previewed by webkit but in order to share them
@@ -1118,6 +1188,7 @@ extension TabViewController: WKNavigationDelegate {
                                                                              cookieStore: cookieStore,
                                                                              temporary: true)
         } else {
+            temporaryDownloadForPreviewedFile?.cancel()
             temporaryDownloadForPreviewedFile = nil
         }
     }
@@ -1130,6 +1201,7 @@ extension TabViewController: WKNavigationDelegate {
         showProgressIndicator()
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
+        linkProtection.setMainFrameUrl(webView.url)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -1141,6 +1213,7 @@ extension TabViewController: WKNavigationDelegate {
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil
         updatePreview()
+        linkProtection.setMainFrameUrl(nil)
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1252,6 +1325,7 @@ extension TabViewController: WKNavigationDelegate {
         webpageDidFailToLoad()
         checkForReloadOnError()
         scheduleTrackerNetworksAnimation(collapsing: true)
+        linkProtection.setMainFrameUrl(nil)
     }
 
     private func webpageDidFailToLoad() {
@@ -1266,6 +1340,7 @@ extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         hideProgressIndicator()
+        linkProtection.setMainFrameUrl(nil)
         lastError = error
         let error = error as NSError
 
@@ -1481,7 +1556,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if allowPolicy != WKNavigationActionPolicy.cancel {
-            UserAgentManager.shared.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
+            userAgentManager.update(webView: webView, isDesktop: tabModel.isDesktop, url: url)
         }
         
         if !ContentBlocking.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {
@@ -1554,6 +1629,21 @@ extension TabViewController: WKNavigationDelegate {
 
         webpageDidFailToLoad()
         checkForReloadOnError()
+    }
+    
+    @available(iOS 14.0, *)
+    private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
+        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+           let settingsController = navController.topViewController as? SettingsViewController {
+            settingsController.loadViewIfNeeded()
+            
+            settingsController.showAutofillAccountDetails(account, animated: false)
+            self.present(navController, animated: true)
+        }
+    }
+    
+    @objc private func dismissLoginDetails() {
+        dismiss(animated: true)
     }
 }
 
@@ -1891,7 +1981,124 @@ extension NSError {
     var failedUrl: URL? {
         return userInfo[NSURLErrorFailingURLErrorKey] as? URL
     }
+    
+}
 
+extension TabViewController: SecureVaultManagerDelegate {
+ 
+    private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
+        if !isAutofillEnabled {
+            return
+        }
+        
+        let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
+        manager.prepareData { [weak self] in
+
+            let saveLoginController = SaveLoginViewController(credentialManager: manager)
+            saveLoginController.delegate = self
+            if #available(iOS 15.0, *) {
+                if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
+                    presentationController.detents = [.medium(), .large()]
+                }
+            }
+            self?.present(saveLoginController, animated: true, completion: nil)
+        }
+    }
+    
+    func secureVaultInitFailed(_ error: SecureVaultError) {
+        SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
+    }
+    
+    func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
+        if let credentials = data.credentials, isAutofillEnabled {
+            presentSavePasswordModal(with: vault, credentials: credentials)
+        }
+    }
+    
+    func secureVaultManager(_: SecureVaultManager,
+                            promptUserToAutofillCredentialsForDomain domain: String,
+                            withAccounts accounts: [SecureVaultModels.WebsiteAccount],
+                            completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
+  
+        if !isAutofillEnabled {
+            completionHandler(nil)
+            return
+        }
+        
+        if #available(iOS 14, *), accounts.count > 0 {
+            if !AutofillLoginPromptViewController.canAuthenticate {
+                Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
+                completionHandler(nil)
+                return
+            }
+            
+            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account in
+                completionHandler(account)
+            }
+            
+            if #available(iOS 15.0, *) {
+                if let presentationController = autofillPromptViewController.presentationController as? UISheetPresentationController {
+                    presentationController.detents = accounts.count > 3 ? [.medium(), .large()] : [.medium()]
+                }
+            }
+            self.present(autofillPromptViewController, animated: true, completion: nil)
+        } else {
+            completionHandler(nil)
+        }
+    }
+
+    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
+        // No-op, don't need to do anything here
+    }
+    
+    func secureVaultManagerShouldAutomaticallyUpdateCredentialsWithoutUsername(_: SecureVaultManager) -> Bool {
+        false
+    }
+    
+    // swiftlint:disable:next identifier_name
+    func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
+        // We don't have auth yet
+    }
+}
+
+extension TabViewController: SaveLoginViewControllerDelegate {
+
+    private func saveCredentials(_ credentials: SecureVaultModels.WebsiteCredentials, withSuccessMessage message: String) {
+        do {
+            let credentialID = try SaveAutofillLoginManager.saveCredentials(credentials,
+                                                                            with: SecureVaultFactory.default)
+            
+            let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+            
+            if let newCredential = try vault.websiteCredentialsFor(accountId: credentialID) {
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: message,
+                                              actionTitle: UserText.autofillLoginSaveToastActionButton) {
+                        
+                        if #available(iOS 14.0, *) {
+                            self.showLoginDetails(with: newCredential.account)
+                        }
+                    }
+                }
+            }
+        } catch {
+            os_log("%: failed to store credentials %s", type: .error, #function, error.localizedDescription)
+        }
+    }
+    
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        viewController.dismiss(animated: true)
+        saveCredentials(credentials, withSuccessMessage: UserText.autofillLoginSavedToastMessage)
+    }
+    
+    func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials) {
+        viewController.dismiss(animated: true)
+        saveCredentials(credentials, withSuccessMessage: UserText.autofillLoginUpdatedToastMessage)
+    }
+    
+    func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
+        viewController.dismiss(animated: true)
+    }
 }
 
 // swiftlint:enable file_length

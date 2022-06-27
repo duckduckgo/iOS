@@ -20,21 +20,11 @@
 import Foundation
 @testable import Core
 
-extension UserDefaults {
-
-    static func clearStandard() {
-        if let bundleID = Bundle.main.bundleIdentifier {
-            UserDefaults.standard.removePersistentDomain(forName: bundleID)
-        }
-    }
-
-}
-
 extension UserDefaultsWrapper {
     
     public static func clearAll() {
         Key.allCases.forEach { key in
-            UserDefaults.standard.removeObject(forKey: key.rawValue)
+            UserDefaults.app.removeObject(forKey: key.rawValue)
         }
     }
     

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1651754979979,
+    "version": 1655387185511,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -152,6 +152,35 @@
                 }
             ]
         },
+        "cookie": {
+            "exceptions": [],
+            "state": "disabled"
+        },
+        "customUserAgent": {
+            "settings": {
+                "omitApplicationSites": [
+                    {
+                        "domain": "cvs.com",
+                        "reason": "Site reports browser not supported"
+                    },
+                    {
+                        "domain": "sovietgames.su",
+                        "reason": "Wordpress plugin reports our browser as a bot"
+                    },
+                    {
+                        "domain": "accounts.google.com",
+                        "reason": "Site reports browser not supported"
+                    },
+                    {
+                        "domain": "facebook.com",
+                        "reason": "Site reports browser not supported"
+                    }
+                ],
+                "omitVersionSites": []
+            },
+            "exceptions": [],
+            "state": "enabled"
+        },
         "fingerprintingAudio": {
             "state": "disabled",
             "exceptions": [
@@ -176,6 +205,10 @@
             "exceptions": [
                 {
                     "domain": "adidas.com",
+                    "reason": "Broken add to cart"
+                },
+                {
+                    "domain": "hm.com",
                     "reason": "Broken add to cart"
                 },
                 {
@@ -213,6 +246,10 @@
             "exceptions": [
                 {
                     "domain": "accounts.nintendo.com",
+                    "reason": "broken login"
+                },
+                {
+                    "domain": "clearpay.co.uk",
                     "reason": "broken login"
                 },
                 {
@@ -305,6 +342,13 @@
             "exceptions": [],
             "state": "enabled"
         },
+        "nonTracking3pCookies": {
+            "settings": {
+                "excludedCookieDomains": []
+            },
+            "exceptions": [],
+            "state": "disabled"
+        },
         "referrer": {
             "exceptions": [
                 {
@@ -369,6 +413,28 @@
                             }
                         ]
                     },
+                    "aldi-digital.co.uk": {
+                        "rules": [
+                            {
+                                "rule": "assets.aldi-digital.co.uk/assets/050b4966c22c430e5c9308903ebb87e1/dist/scripts/main.js",
+                                "domains": [
+                                    "aldi.co.uk"
+                                ],
+                                "reason": "product images missing"
+                            }
+                        ]
+                    },
+                    "alicdn.com": {
+                        "rules": [
+                            {
+                                "rule": "alicdn.com",
+                                "domains": [
+                                    "aliexpress.com"
+                                ],
+                                "reason": "content not loading"
+                            }
+                        ]
+                    },
                     "amazon-adsystem.com": {
                         "rules": [
                             {
@@ -398,6 +464,13 @@
                                 "rule": "cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.8.6/fingerprint2.min.js",
                                 "domains": [
                                     "winnipegfreepress.com"
+                                ],
+                                "reason": "content not loading"
+                            },
+                            {
+                                "rule": "cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js",
+                                "domains": [
+                                    "fortnitetracker.com"
                                 ],
                                 "reason": "content not loading"
                             }
@@ -497,6 +570,50 @@
                             }
                         ]
                     },
+                    "facebook.net": {
+                        "rules": [
+                            {
+                                "rule": "connect.facebook.net/en_US/sdk.js",
+                                "domains": [
+                                    "grubhub.com"
+                                ],
+                                "reason": "broken login"
+                            }
+                        ]
+                    },
+                    "fwmrm.net": {
+                        "rules": [
+                            {
+                                "rule": "2a7e9.v.fwmrm.net/ad/g/1",
+                                "domains": [
+                                    "channel4.com"
+                                ],
+                                "reason": "adwall"
+                            }
+                        ]
+                    },
+                    "gigya.com": {
+                        "rules": [
+                            {
+                                "rule": "gigya.com/js/gigya.services.plugins.base.min.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "login content not loading"
+                            }
+                        ]
+                    },
+                    "google-analytics.com": {
+                        "rules": [
+                            {
+                                "rule": "google-analytics.com/analytics.js",
+                                "domains": [
+                                    "easyjet.com"
+                                ],
+                                "reason": "broken form"
+                            }
+                        ]
+                    },
                     "googlesyndication.com": {
                         "rules": [
                             {
@@ -528,10 +645,11 @@
                                 "rule": "googletagmanager.com/gtm.js",
                                 "domains": [
                                     "ah.nl",
+                                    "dailyherald.com",
                                     "iltalehti.fi",
                                     "rbcroyalbank.com"
                                 ],
-                                "reason": "page not loading, video not loading, internal ads blocked"
+                                "reason": "page/video/image not loading, internal ads blocked"
                             }
                         ]
                     },
@@ -575,6 +693,18 @@
                                     "joann.com"
                                 ],
                                 "reason": "site not loading"
+                            }
+                        ]
+                    },
+                    "ltwebstatic.com": {
+                        "rules": [
+                            {
+                                "rule": "sheinsz.ltwebstatic.com/she_dist/libs/geetest/fullpage.1.1.9.js",
+                                "domains": [
+                                    "shein.co.uk",
+                                    "shein.com"
+                                ],
+                                "reason": "login issues"
                             }
                         ]
                     },
@@ -646,6 +776,17 @@
                                     "eonline.com"
                                 ],
                                 "reason": "video not loading"
+                            }
+                        ]
+                    },
+                    "tiqcdn.com": {
+                        "rules": [
+                            {
+                                "rule": "tags.tiqcdn.com/utag/agl/community/prod/utag.sync.js",
+                                "domains": [
+                                    "agl.com.au"
+                                ],
+                                "reason": "site loading delayed"
                             }
                         ]
                     },

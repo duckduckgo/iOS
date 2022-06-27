@@ -103,9 +103,9 @@ class MainViewController: UIViewController {
     
     let gestureBookmarksButton = GestureToolbarButton()
     
-    private var fireButtonAnimator: FireButtonAnimator?
+    private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
-    private var bookmarksCachingSearch: BookmarksCachingSearch?
+    private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
 
     fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
@@ -117,7 +117,7 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -140,7 +140,6 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
-        fireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -508,6 +507,8 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
+        wakeLazyFireButtonAnimator()
+        
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
@@ -519,10 +520,18 @@ class MainViewController: UIViewController {
     }
     
     func onQuickFirePressed() {
+        wakeLazyFireButtonAnimator()
+        
         self.forgetAllWithAnimation {}
         self.dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
             self.enterSearch()
+        }
+    }
+    
+    private func wakeLazyFireButtonAnimator() {
+        DispatchQueue.main.async {
+            _ = self.fireButtonAnimator
         }
     }
 
@@ -586,9 +595,21 @@ class MainViewController: UIViewController {
     }
 
     func loadUrl(_ url: URL) {
+        prepareTabForRequest {
+            currentTab?.load(url: url)
+        }
+    }
+    
+    private func loadBackForwardItem(_ item: WKBackForwardListItem) {
+        prepareTabForRequest {
+            currentTab?.load(backForwardListItem: item)
+        }
+    }
+    
+    private func prepareTabForRequest(request: () -> Void) {
         customNavigationBar.alpha = 1
         allowContentUnderflow = false
-        currentTab?.load(url: url)
+        request()
         guard let tab = currentTab else { fatalError("no tab") }
         select(tab: tab)
         dismissOmniBar()
@@ -656,6 +677,7 @@ class MainViewController: UIViewController {
         refreshMenuIcon()
         refreshOmniBar()
         refreshBackForwardButtons()
+        refreshBackForwardMenuItems()
     }
 
     private func refreshTabIcon() {
@@ -691,7 +713,6 @@ class MainViewController: UIViewController {
         omniBar.resignFirstResponder()
         hideSuggestionTray()
         refreshOmniBar()
-        bookmarksCachingSearch = nil
     }
 
     fileprivate func refreshBackForwardButtons() {
@@ -701,7 +722,7 @@ class MainViewController: UIViewController {
         omniBar.backButton.isEnabled = backButton.isEnabled
         omniBar.forwardButton.isEnabled = forwardButton.isEnabled
     }
-    
+  
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -800,6 +821,23 @@ class MainViewController: UIViewController {
     
     fileprivate func launchDownloads() {
         performSegue(withIdentifier: "Downloads", sender: self)
+    }
+    
+    @available(iOS 14.0, *)
+    fileprivate func launchAutofillLogins() {
+        let appSettings = AppDependencyProvider.shared.appSettings
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        autofillSettingsViewController.delegate = self
+        let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
+        autofillSettingsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: UserText.autofillNavigationButtonItemTitleClose,
+                                                                                          style: .plain,
+                                                                                          target: self,
+                                                                                          action: #selector(closeAutofillModal))
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    @objc private func closeAutofillModal() {
+        dismiss(animated: true)
     }
     
     fileprivate func launchSettings() {
@@ -1074,8 +1112,7 @@ extension MainViewController: OmniBarDelegate {
                 }
             }
         } else {
-            let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-            tryToShowSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksSearch))
+            tryToShowSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksCachingSearch))
         }
         
     }
@@ -1152,14 +1189,10 @@ extension MainViewController: OmniBarDelegate {
     }
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar) {
-        if bookmarksCachingSearch == nil {
-            bookmarksCachingSearch = BookmarksCachingSearch()
-        }
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
-            let bookmarksSearch = bookmarksCachingSearch ?? BookmarksCachingSearch()
-            tryToShowSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksSearch))
+            tryToShowSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksCachingSearch))
         } else {
             tryToShowSuggestionTray(.favorites)
         }
@@ -1400,6 +1433,12 @@ extension MainViewController: TabDelegate {
     
     func tabDidRequestDownloads(tab: TabViewController) {
         launchDownloads()
+    }
+    
+    func tabDidRequestAutofillLogins(tab: TabViewController) {
+        if #available(iOS 14.0, *) {
+            launchAutofillLogins()
+        }
     }
 
     func tabDidRequestSettings(tab: TabViewController) {
@@ -1642,7 +1681,7 @@ extension MainViewController: AutoClearWorker {
         
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
-        fireButtonAnimator?.animate {
+        fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             
             self.stopAllOngoingDownloads()
@@ -1779,5 +1818,61 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
         }
     }
 }
+
+// MARK: - History UIMenu Methods
+
+extension MainViewController {
+
+    private func refreshBackForwardMenuItems() {
+        guard let currentTab = currentTab, #available(iOS 14.0, *) else {
+            return
+        }
+        
+        let backMenu = historyMenu(with: currentTab.webView.backForwardList.backList.reversed())
+        omniBar.backButton.menu = backMenu
+        backButton.menu = backMenu
+        
+        let forwardMenu = historyMenu(with: currentTab.webView.backForwardList.forwardList)
+        omniBar.forwardButton.menu = forwardMenu
+        forwardButton.menu = forwardMenu
+    }
+
+    @available(iOS 14.0, *)
+    private func historyMenu(with backForwardList: [WKBackForwardListItem]) -> UIMenu {
+        let historyItemList = backForwardList.map { BackForwardMenuHistoryItem(backForwardItem: $0) }
+        let actions = historyMenuButton(with: historyItemList)
+        return UIMenu(title: "", children: actions)
+    }
+    
+    @available(iOS 14.0, *)
+    private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
+        let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
+            
+            if #available(iOS 15.0, *) {
+                return UIAction(title: historyItem.title,
+                                subtitle: historyItem.sanitizedURLForDisplay,
+                                discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                    self?.loadBackForwardItem(historyItem.backForwardItem)
+                }
+            } else {
+                return  UIAction(title: historyItem.title,
+                                 discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                    self?.loadBackForwardItem(historyItem.backForwardItem)
+                }
+            }
+        }
+        
+        return menuItems
+    }
+}
+
+// MARK: - AutofillLoginSettingsListViewControllerDelegate
+@available(iOS 14.0, *)
+extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
+    func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
+        controller.dismiss(animated: true)
+    }
+}
+
 
 // swiftlint:enable file_length

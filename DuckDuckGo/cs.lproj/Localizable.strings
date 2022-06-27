@@ -296,7 +296,7 @@
 "dax.hide.title" = "Skrýt zbývající tipy?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Vaše vyhledávání DuckDuckGo jsou anonymní a historii Vašeho vyhledávání nikdy nikam neukládáme. Vůbec nikdy. 🙌";
+"dax.onboarding.browsing.after.search" = "Tvoje vyhledávání v DuckDuckGo je anonymní. Vždycky. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pche!";

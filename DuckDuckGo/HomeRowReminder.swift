@@ -108,7 +108,7 @@ public class UserDefaultsHomeRowReminderStorage: HomeRowReminderStorage {
 
     private let userDefaults: UserDefaults
 
-    public init(userDefaults: UserDefaults = UserDefaults.standard) {
+    public init(userDefaults: UserDefaults = UserDefaults.app) {
         self.userDefaults = userDefaults
     }
 

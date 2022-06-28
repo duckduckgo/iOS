@@ -1638,18 +1638,6 @@ extension TabViewController: WKUIDelegate {
         }
     }
 
-//    @objc(_webView:printFrame:)
-//    func webView(_ webView: WKWebView, printFrame handle: Any) {
-////        webView.tab?.print(frame: handle)
-//    }
-
-//    @objc(_webView:printFrame:pdfFirstPageSize:completionHandler:)
-//    func webView(_ webView: WKWebView, printFrame handle: Any, pdfFirstPageSize size: CGSize, completionHandler: () -> Void) {
-//        self.webView(webView, printFrame: handle)
-//        completionHandler()
-//    }
-
-
 }
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {

@@ -338,7 +338,7 @@ class BookmarksViewController: UITableViewController {
 
     func presentDocumentPicker() {
         let docTypes = [UTType.html]
-        let docPicker = UIDocumentPickerViewController(forOpeningContentTypes: docTypes)
+        let docPicker = UIDocumentPickerViewController(forOpeningContentTypes: docTypes, asCopy: true)
         docPicker.delegate = self
         docPicker.allowsMultipleSelection = false
         present(docPicker, animated: true)

@@ -66,7 +66,7 @@ extension DefaultFeatureFlagger: FeatureFlaggerInternalUserDecider {
         return didVerifyInternalUser
     }
     
-    private static let internalUserVerificationURLHost = "login.duckduckgo.com"
+    private static let internalUserVerificationURLHost = "use-login.duckduckgo.com"
     
     @discardableResult
     public func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {

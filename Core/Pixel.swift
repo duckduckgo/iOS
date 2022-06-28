@@ -224,8 +224,10 @@ public enum PixelName: String {
 
     case autofillSettingsOpened = "m_autofill_settings_opened"
 
-    case secureVaultInitError = "m_secure_vault_init_error"
-    case secureVaultError = "m_secure_vault_error"
+    case secureVaultError = "m_secure-vault_error-unspecified"
+    
+    case secureVaultInitFailedError = "m_secure-vault_error_init-failed"
+    case secureVaultFailedToOpenDatabaseError = "m_secure-vault_error_failed-to-open-database"
 
     // MARK: SERP pixels
     

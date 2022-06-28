@@ -95,7 +95,7 @@ class BookmarksViewController: UITableViewController {
     
     @objc func dataDidChange(notification: Notification) {
         tableView.reloadData()
-        if currentDataSource.isEmpty && tableView.isEditing {
+        if currentDataSource.isEmpty && isEditingBookmarks {
             finishEditing()
         }
         refreshEditButton()
@@ -122,7 +122,7 @@ class BookmarksViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let item = currentDataSource.item(at: indexPath) else { return }
         
-        if tableView.isEditing {
+        if isEditingBookmarks {
             tableView.deselectRow(at: indexPath, animated: true)
             if let bookmark = item as? Bookmark {
                 performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
@@ -263,25 +263,28 @@ class BookmarksViewController: UITableViewController {
         }
         refreshEditButton()
     }
-    
+
     private func configureToolbarMoreItem() {
-        if tableView.isEditing {
+
+        if isEditingBookmarks {
             if toolbarItems?.count ?? 0 >= 5 {
                 toolbarItems?.remove(at: 4)
                 toolbarItems?.remove(at: 3)
             }
         } else {
-            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
-            toolbarItems?.insert(flexibleSpace, at: 3)
-            toolbarItems?.insert(moreBarButtonItem, at: 4)
+            if toolbarItems?.contains(moreBarButtonItem) == false {
+                let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+                toolbarItems?.insert(flexibleSpace, at: 3)
+                toolbarItems?.insert(moreBarButtonItem, at: 4)
+            }
             refreshMoreButton()
         }
     }
 
     private func refreshEditButton() {
-        if (currentDataSource.isEmpty && !tableView.isEditing) || currentDataSource === searchDataSource {
+        if (currentDataSource.isEmpty && !isEditingBookmarks) || currentDataSource === searchDataSource {
             disableEditButton()
-        } else if !tableView.isEditing {
+        } else if !isEditingBookmarks {
             enableEditButton()
         }
     }
@@ -295,13 +298,13 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func refreshMoreButton() {
-        if tableView.isEditing || currentDataSource === searchDataSource  || dataSource.folder != nil {
+        if isEditingBookmarks || currentDataSource === searchDataSource  || dataSource.folder != nil {
             disableMoreButton()
         } else {
             enableMoreButton()
         }
     }
-
+    
     private func refreshFooterView() {
         if dataSource.folder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
             enableFooterView()
@@ -315,7 +318,7 @@ class BookmarksViewController: UITableViewController {
     }
     
     @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
-        if tableView.isEditing {
+        if isEditingBookmarks {
             finishEditing()
         } else {
             startEditing()
@@ -435,26 +438,28 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
+    // when swipe-to-delete control is shown tableView.isEditing is true
+    private var isEditingBookmarks: Bool = false
     private func startEditing() {
-        guard !tableView.isEditing else {
-            return
-        }
+        assert(!isEditingBookmarks)
 
         // necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
         tableView.isEditing = false
         
         tableView.isEditing = true
+        self.isEditingBookmarks = true
         changeEditButtonToDone()
         configureToolbarMoreItem()
         refreshFooterView()
     }
-    
+
     private func finishEditing() {
         guard tableView.isEditing else {
             return
         }
 
         tableView.isEditing = false
+        self.isEditingBookmarks = false
         refreshEditButton()
         enableDoneButton()
         configureToolbarMoreItem()

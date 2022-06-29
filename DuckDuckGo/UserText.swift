@@ -600,5 +600,5 @@ public struct UserText {
     public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
     public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
     public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
-
+    public static let autofillNavigationButtonItemTitleClose = "Close" // Title for close navigation button
 }

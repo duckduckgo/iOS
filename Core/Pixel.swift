@@ -22,7 +22,6 @@ import os.log
 
 // swiftlint:disable file_length
 // swiftlint:disable identifier_name
-// swiftlint:disable type_body_length
 public enum PixelName: String {
     
     case appLaunch = "ml"

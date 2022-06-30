@@ -228,6 +228,11 @@ public enum PixelName: String {
     
     case secureVaultInitFailedError = "m_secure-vault_error_init-failed"
     case secureVaultFailedToOpenDatabaseError = "m_secure-vault_error_failed-to-open-database"
+    
+    // The pixels are for debugging a specific problem and should be removed when resolved
+    // https://app.asana.com/0/0/1202498365125439/f
+    case secureVaultIsEnabledCheckedWhenEnabled = "m_secure-vault_is-enabled-checked_when-enabled"
+    case secureVaultIsEnabledCheckedWhenDisabled = "m_secure-vault_is-enabled-checked_when-disabled"
 
     // MARK: SERP pixels
     
@@ -356,6 +361,8 @@ public struct PixelParameters {
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
     
     public static let bookmarkCount = "bco"
+    
+    public static let isBackgrounded = "is_backgrounded"
 }
 
 public struct PixelValues {

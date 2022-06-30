@@ -8,8 +8,9 @@
 	<array>
 		<string>$(GROUP_ID_PREFIX).bookmarks</string>
 		<string>$(GROUP_ID_PREFIX).contentblocker</string>
-		<string>$(GROUP_ID_PREFIX).statistics</string>
 		<string>$(GROUP_ID_PREFIX).database</string>
+		<string>$(GROUP_ID_PREFIX).statistics</string>
+		<string>group.com.duckduckgo.vault</string>
 	</array>
 </dict>
 </plist>

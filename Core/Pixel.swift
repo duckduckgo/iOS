@@ -363,6 +363,8 @@ public struct PixelParameters {
     public static let bookmarkCount = "bco"
     
     public static let isBackgrounded = "is_backgrounded"
+    
+    public static let isInternalUser = "is_internal_user"
 }
 
 public struct PixelValues {
@@ -376,6 +378,10 @@ public class Pixel {
     private struct Constants {
         static let tablet = "tablet"
         static let phone = "phone"
+    }
+    
+    private static var isInternalUser: Bool {
+        DefaultFeatureFlagger().isInternalUser
     }
 
     public enum QueryParameters {
@@ -399,6 +405,9 @@ public class Pixel {
         }
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
+        }
+        if isInternalUser {
+            newParams[PixelParameters.isInternalUser] = "true"
         }
         
         let url: URL
@@ -438,6 +447,10 @@ extension Pixel {
             newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
             newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
         }
+        if isInternalUser {
+            newParams[PixelParameters.isInternalUser] = "true"
+        }
+        
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
     }
 }

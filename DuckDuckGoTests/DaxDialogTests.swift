@@ -64,7 +64,7 @@ class DaxDialogTests: XCTestCase {
                                       localProtection: DomainsProtectionUserDefaultsStore(),
                                       errorReporting: nil)
         
-        let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManger: trackerDataManager)
+        let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManager: trackerDataManager)
         let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
 
         let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,

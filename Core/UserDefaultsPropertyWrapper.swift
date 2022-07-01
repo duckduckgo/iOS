@@ -74,7 +74,7 @@ public struct UserDefaultsWrapper<T> {
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
 
         case autofill = "com.duckduckgo.ios.autofill"
-        case autofillSaveModalRejectionCount = "com.duckduckgo.ios.autofillSaveModalRejectionCount"
+        case autofillSaveModalFirstTimeRejectionCount = "com.duckduckgo.ios.autofillSaveModalFirstTimeRejectionCount"
         case autofillFirstTimeUser = "com.duckduckgo.ios.autofillFirstTimeUser"
         
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"

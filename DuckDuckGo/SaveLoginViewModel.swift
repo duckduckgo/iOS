@@ -27,8 +27,8 @@ protocol SaveLoginViewModelDelegate: AnyObject {
 }
 
 final class SaveLoginViewModel: ObservableObject {
-    @UserDefaultsWrapper(key: .autofillSaveModalRejectionCount, defaultValue: 0)
-    private var autofillSaveModalRejectionCount: Int
+    @UserDefaultsWrapper(key: .autofillSaveModalFirstTimeRejectionCount, defaultValue: 0)
+    private var autofillSaveModalFirstTimeRejectionCount: Int
     
     @UserDefaultsWrapper(key: .autofillFirstTimeUser, defaultValue: true)
     private var autofillFirstTimeUser: Bool
@@ -94,8 +94,12 @@ final class SaveLoginViewModel: ObservableObject {
     }
     
     private func updateRejectionCount() {
-        autofillSaveModalRejectionCount += 1
-        if autofillSaveModalRejectionCount >= numberOfRejectionsToTurnOffAutofill {
+        // We only want to disable autofill if it's a new user rejecting it 3x in a row
+        guard autofillFirstTimeUser else { return }
+        
+        autofillSaveModalFirstTimeRejectionCount += 1
+        
+        if autofillSaveModalFirstTimeRejectionCount >= numberOfRejectionsToTurnOffAutofill {
             AppDependencyProvider.shared.appSettings.autofill = false
         }
     }

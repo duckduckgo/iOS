@@ -530,6 +530,9 @@
 		C1963863283794A000298D4D /* BookmarksCachingSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1963862283794A000298D4D /* BookmarksCachingSearch.swift */; };
 		C196387F283AAE1500298D4D /* CoreDependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C196387E283AAE1500298D4D /* CoreDependencyProvider.swift */; };
 		C1CCCBA7283E101500CF3791 /* FaviconsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CCCBA6283E101500CF3791 /* FaviconsHelper.swift */; };
+		CB2A7EEF283D185100885F67 /* RulesCompilationMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A7EEE283D185100885F67 /* RulesCompilationMonitor.swift */; };
+		CB2A7EF128410DF700885F67 /* PixelEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A7EF028410DF700885F67 /* PixelEvent.swift */; };
+		CB2A7EF4285383B300885F67 /* AppLastCompiledRulesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A7EF3285383B300885F67 /* AppLastCompiledRulesStore.swift */; };
 		CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B8738278C8E72001F4906 /* WidgetEducationViewController.swift */; };
 		CB9B873C278C8FEA001F4906 /* WidgetEducationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9B873B278C8FEA001F4906 /* WidgetEducationView.swift */; };
 		CB9B873E278C93C2001F4906 /* HomeMessage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB9B873D278C93C2001F4906 /* HomeMessage.xcassets */; };
@@ -1938,6 +1941,9 @@
 		C196387E283AAE1500298D4D /* CoreDependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDependencyProvider.swift; sourceTree = "<group>"; };
 		C1CCCBA6283E101500CF3791 /* FaviconsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaviconsHelper.swift; sourceTree = "<group>"; };
 		CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICollectionViewCell.swift; sourceTree = "<group>"; };
+		CB2A7EEE283D185100885F67 /* RulesCompilationMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesCompilationMonitor.swift; sourceTree = "<group>"; };
+		CB2A7EF028410DF700885F67 /* PixelEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelEvent.swift; sourceTree = "<group>"; };
+		CB2A7EF3285383B300885F67 /* AppLastCompiledRulesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLastCompiledRulesStore.swift; sourceTree = "<group>"; };
 		CB9B8738278C8E72001F4906 /* WidgetEducationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEducationViewController.swift; sourceTree = "<group>"; };
 		CB9B873B278C8FEA001F4906 /* WidgetEducationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetEducationView.swift; sourceTree = "<group>"; };
 		CB9B873D278C93C2001F4906 /* HomeMessage.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeMessage.xcassets; sourceTree = "<group>"; };
@@ -2535,6 +2541,7 @@
 				9896632322C56716007BE4FE /* EtagStorage.swift */,
 				85BA79901F6FF75000F59015 /* ContentBlockerStoreConstants.swift */,
 				85A53EC9200D1FA20010D13F /* FileStore.swift */,
+				CB2A7EF3285383B300885F67 /* AppLastCompiledRulesStore.swift */,
 			);
 			name = Store;
 			sourceTree = "<group>";
@@ -3374,6 +3381,7 @@
 				F1134EAE1F40AB2300B73467 /* Parser */,
 				F1134EA91F3E2BA700B73467 /* Store */,
 				853A717520F62FE800FE60BC /* Pixel.swift */,
+				CB2A7EF028410DF700885F67 /* PixelEvent.swift */,
 			);
 			name = Statistics;
 			sourceTree = "<group>";
@@ -3576,6 +3584,7 @@
 				984147C224F026A300362052 /* Tab.storyboard */,
 				F1386BA31E6846C40062FC3C /* TabDelegate.swift */,
 				F159BDA31F0BDB5A00B4A01D /* TabViewController.swift */,
+				CB2A7EEE283D185100885F67 /* RulesCompilationMonitor.swift */,
 				9820EAF422613CD30089094D /* WebProgressWorker.swift */,
 				83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */,
 				83004E872193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift */,
@@ -5006,6 +5015,7 @@
 				3157B43327F497E90042D3D7 /* SaveLoginView.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
 				8528AE7C212EF4A200D0BD74 /* AppRatingPrompt.swift in Sources */,
+				CB2A7EEF283D185100885F67 /* RulesCompilationMonitor.swift in Sources */,
 				31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */,
 				319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */,
 				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,
@@ -5397,6 +5407,7 @@
 				9813F79822BA71AA00A80EDB /* StorageCache.swift in Sources */,
 				C196387F283AAE1500298D4D /* CoreDependencyProvider.swift in Sources */,
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
+				CB2A7EF4285383B300885F67 /* AppLastCompiledRulesStore.swift in Sources */,
 				4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */,
 				9847C00027A2DDBB00DB07AA /* AppPrivacyConfigurationDataProvider.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
@@ -5434,6 +5445,7 @@
 				F143C3181E4A99D200CFDE3A /* Link.swift in Sources */,
 				1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */,
 				F1CE42A61ECA0A460074A8DF /* BookmarkUserDefaults.swift in Sources */,
+				CB2A7EF128410DF700885F67 /* PixelEvent.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				85D2187624BF6164004373D2 /* FaviconSourcesProvider.swift in Sources */,
 				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,
@@ -7103,7 +7115,7 @@
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
 				kind = exactVersion;
-				version = 17.0.1;
+				version = 17.0.2;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

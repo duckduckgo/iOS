@@ -1390,6 +1390,9 @@ extension TabViewController: WKNavigationDelegate {
         return nil
     }
     
+    
+    // swiftlint:disable function_body_length
+    // swiftlint:disable cyclomatic_complexity
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -1458,6 +1461,8 @@ extension TabViewController: WKNavigationDelegate {
             decisionHandler(decision)
         }
     }
+    // swiftlint:enable function_body_length
+    // swiftlint:enable cyclomatic_complexity
     
     private func waitUntilRulesAreCompiled() {
         if contentBlockingAssetsInstalled {

@@ -432,6 +432,12 @@ class TabViewController: UIViewController {
         load(url: url, didUpgradeURL: false)
     }
     
+    public func load(backForwardListItem: WKBackForwardListItem) {
+        webView.stopLoading()
+        updateContentMode()
+        webView.go(to: backForwardListItem)
+    }
+    
     private func load(url: URL, didUpgradeURL: Bool) {
         if !didUpgradeURL {
             lastUpgradedURL = nil
@@ -1633,10 +1639,13 @@ extension TabViewController: WKNavigationDelegate {
     
     @available(iOS 14.0, *)
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
-        let autofill = AutofillLoginDetailsViewController(account: account, authenticator: AutofillLoginListAuthenticator())
-        let navigationController = UINavigationController(rootViewController: autofill)
-        autofill.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissLoginDetails))
-        self.present(navigationController, animated: true)
+        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+           let settingsController = navController.topViewController as? SettingsViewController {
+            settingsController.loadViewIfNeeded()
+            
+            settingsController.showAutofillAccountDetails(account, animated: false)
+            self.present(navController, animated: true)
+        }
     }
     
     @objc private func dismissLoginDetails() {
@@ -2002,6 +2011,18 @@ extension TabViewController: SecureVaultManagerDelegate {
     
     func secureVaultInitFailed(_ error: SecureVaultError) {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
+    }
+    
+    func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
+        let isEnabled = featureFlagger.isFeatureOn(.autofill)
+        let isBackgrounded = UIApplication.shared.applicationState == .background
+        let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
+        if isEnabled {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
+        } else {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenDisabled, withAdditionalParameters: pixelParams)
+        }
+        return isEnabled
     }
     
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {

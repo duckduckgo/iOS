@@ -45,10 +45,9 @@ class DaxDialogTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        UserDefaults.app.removePersistentDomain(forName: #file)
-        UserDefaults.app = UserDefaults(suiteName: #file)!
-
         
+        setupUserDefault(with: #file)
+
         guard Self.rulesManager == nil else { return }
         
         let contentBlockingUpdating = ContentBlockingUpdating()

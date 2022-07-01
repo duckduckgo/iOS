@@ -224,8 +224,15 @@ public enum PixelName: String {
 
     case autofillSettingsOpened = "m_autofill_settings_opened"
 
-    case secureVaultInitError = "m_secure_vault_init_error"
-    case secureVaultError = "m_secure_vault_error"
+    case secureVaultError = "m_secure-vault_error-unspecified"
+    
+    case secureVaultInitFailedError = "m_secure-vault_error_init-failed"
+    case secureVaultFailedToOpenDatabaseError = "m_secure-vault_error_failed-to-open-database"
+    
+    // The pixels are for debugging a specific problem and should be removed when resolved
+    // https://app.asana.com/0/0/1202498365125439/f
+    case secureVaultIsEnabledCheckedWhenEnabled = "m_secure-vault_is-enabled-checked_when-enabled"
+    case secureVaultIsEnabledCheckedWhenDisabled = "m_secure-vault_is-enabled-checked_when-disabled"
 
     // MARK: SERP pixels
     
@@ -359,6 +366,10 @@ public struct PixelParameters {
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
     
     public static let bookmarkCount = "bco"
+    
+    public static let isBackgrounded = "is_backgrounded"
+    
+    public static let isInternalUser = "is_internal_user"
 }
 
 public struct PixelValues {
@@ -372,6 +383,10 @@ public class Pixel {
     private struct Constants {
         static let tablet = "tablet"
         static let phone = "phone"
+    }
+    
+    private static var isInternalUser: Bool {
+        DefaultFeatureFlagger().isInternalUser
     }
 
     public enum QueryParameters {
@@ -395,6 +410,9 @@ public class Pixel {
         }
         if isDebugBuild {
             newParams[PixelParameters.test] = PixelValues.test
+        }
+        if isInternalUser {
+            newParams[PixelParameters.isInternalUser] = "true"
         }
         
         let url: URL
@@ -434,6 +452,10 @@ extension Pixel {
             newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
             newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
         }
+        if isInternalUser {
+            newParams[PixelParameters.isInternalUser] = "true"
+        }
+        
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
     }
 }

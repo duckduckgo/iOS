@@ -25,9 +25,19 @@ extension XCTestCase {
         guard let lastPathComponent = NSURL(fileURLWithPath: filePath).lastPathComponent else {
             fatalError("Path should have a last path component")
         }
-        let temporaryPath = "/var/tmp/"
         
-        return "\(temporaryPath)\(lastPathComponent)"
+        do {
+            let temporaryDirectory = try FileManager.default.url(
+                for: .itemReplacementDirectory,
+                in: .userDomainMask,
+                appropriateFor: FileManager.default.temporaryDirectory,
+                create: true
+            )
+            
+            return "\(temporaryDirectory)\(lastPathComponent)"
+        } catch {
+            fatalError("temporary directory should always be created")
+        }
     }
     
     func setupUserDefault(with path: String) {

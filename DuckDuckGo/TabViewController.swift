@@ -958,6 +958,7 @@ class TabViewController: UIViewController {
         temporaryDownloadForPreviewedFile?.cancel()
         removeMessageHandlers()
         removeObservers()
+        rulesCompilationMonitor.tabWillClose(self)
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
@@ -1472,9 +1473,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func waitUntilRulesAreCompiled() {
         if contentBlockingAssetsInstalled {
-            Task {
-                await rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
-            }
+            rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
         } else {
             rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
             showProgressIndicator()
@@ -1482,9 +1481,7 @@ extension TabViewController: WKNavigationDelegate {
                 RunLoop.current.run(until: rulesCompiledCondition)
             }
         }
-        Task {
-            await rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
-        }
+        rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {

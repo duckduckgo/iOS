@@ -46,60 +46,48 @@ final class RulesCompilationMonitor {
     }
     
     /// Called when Rules compilation finishes
-    func reportTabFinishedWaitingForRules(_ tab: TabViewController) async {
+    func reportTabFinishedWaitingForRules(_ tab: TabViewController) {
         defer { waiters.removeObject(forKey: tab) }
         guard waiters.object(forKey: tab) != nil,
               !didReport,
               let waitStart = waitStart
         else { return }
 
-        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .success)
+        reportWaitTime(CACurrentMediaTime() - waitStart, result: .success)
     }
     
-    func reportNavigationDidNotWaitForRules() async {
+    func reportNavigationDidNotWaitForRules() {
         guard !didReport else { return }
-        await reportWaitTime(0, result: .success)
+        reportWaitTime(0, result: .success)
     }
     
     /// If Tab is going to close while the rules are still being compiled: report wait time with Tab .closed argument
-    func tabWillClose(_ tab: TabViewController) async {
+    func tabWillClose(_ tab: TabViewController) {
         defer { waiters.removeObject(forKey: tab) }
         guard waiters.object(forKey: tab) != nil,
               !didReport,
               let waitStart = waitStart
         else { return }
 
-        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .tabClosed)
+        reportWaitTime(CACurrentMediaTime() - waitStart, result: .tabClosed)
     }
     
     /// If App is going to close while the rules are still being compiled: report wait time with .quit argument
-    @objc func applicationWillTerminate(_: Notification) async {
+    @objc func applicationWillTerminate(_: Notification) {
         guard !didReport,
               waiters.count > 0,
               let waitStart = waitStart
         else { return }
 
-        await reportWaitTime(CACurrentMediaTime() - waitStart, result: .appQuit)
+        reportWaitTime(CACurrentMediaTime() - waitStart, result: .appQuit)
     }
     
-    private func reportWaitTime(_ waitTime: TimeInterval, result: Pixel.Event.CompileRulesResult) async {
+    private func reportWaitTime(_ waitTime: TimeInterval, result: Pixel.Event.CompileRulesResult) {
         didReport = true
-        await Pixel.fire(pixel: .compilationResult(result: result,
-                                                   waitTime: Pixel.Event.CompileRulesWaitTime(waitTime: waitTime),
-                                                   appState: .regular),
-                         withAdditionalParameters: ["waitTime": String(waitTime)])
-    }
-    
-}
-
-private extension Pixel {
-    
-    static func fire(pixel: Pixel.Event, withAdditionalParameters params: [String: String] = [:]) async {
-        return await withCheckedContinuation { continuation in
-            fire(pixel: pixel, withAdditionalParameters: params) { _ in
-                continuation.resume()
-            }
-        }
+        Pixel.fire(pixel: .compilationResult(result: result,
+                                             waitTime: Pixel.Event.CompileRulesWaitTime(waitTime: waitTime),
+                                             appState: .regular),
+                   withAdditionalParameters: ["waitTime": String(waitTime)])
     }
     
 }

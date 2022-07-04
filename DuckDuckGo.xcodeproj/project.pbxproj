@@ -7114,8 +7114,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit.git";
 			requirement = {
-				branch = "revert-113-elle/move-secure-vault-to-group";
-				kind = branch;
+				kind = exactVersion;
+				version = 18.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

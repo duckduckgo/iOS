@@ -510,11 +510,6 @@ extension Pixel.Event {
             
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
-        
-        // The pixels are for debugging a specific problem and should be removed when resolved
-        // https://app.asana.com/0/0/1202498365125439/f
-        case .secureVaultIsEnabledCheckedWhenEnabled: return "m_secure-vault_is-enabled-checked_when-enabled"
-        case .secureVaultIsEnabledCheckedWhenDisabled: return "m_secure-vault_is-enabled-checked_when-disabled"
             
         // MARK: SERP pixels
             

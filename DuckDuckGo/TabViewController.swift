@@ -2010,18 +2010,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
-    func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
-        let isEnabled = featureFlagger.isFeatureOn(.autofill)
-        let isBackgrounded = UIApplication.shared.applicationState == .background
-        let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
-        if isEnabled {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
-        } else {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenDisabled, withAdditionalParameters: pixelParams)
-        }
-        return isEnabled
-    }
-    
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
         if let credentials = data.credentials, isAutofillEnabled {
             presentSavePasswordModal(with: vault, credentials: credentials)

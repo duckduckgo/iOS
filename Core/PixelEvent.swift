@@ -230,11 +230,6 @@ extension Pixel {
         case secureVaultInitFailedError
         case secureVaultFailedToOpenDatabaseError
         
-        // The pixels are for debugging a specific problem and should be removed when resolved
-        // https://app.asana.com/0/0/1202498365125439/f
-        case secureVaultIsEnabledCheckedWhenEnabled
-        case secureVaultIsEnabledCheckedWhenDisabled
-        
         // MARK: SERP pixels
         
         case serpRequerySame

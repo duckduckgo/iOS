@@ -130,27 +130,19 @@ final class JSAlertController: UIViewController {
 
     @IBAction func okAction(_ sender: UIButton) {
         dismiss(animated: true) { [alert=self.alert, text=self.textField.text] in
-            alert?.complete(with: true, blockAlerts: false, text: text)
+            alert?.complete(with: true, text: text)
         }
     }
 
     @IBAction func cancelAction(_ sender: Any) {
         dismiss(animated: true) { [alert=self.alert] in
-            alert?.complete(with: false, blockAlerts: false, text: nil)
+            alert?.complete(with: false, text: nil)
         }
     }
 
     @IBAction func backgroundTapAction(_ sender: UITapGestureRecognizer) {
         Pixel.fire(pixel: .jsAlertBackgroundTap)
         cancelAction(sender)
-    }
-
-    @IBAction func blockAction(_ sender: UIButton) {
-        Pixel.fire(pixel: .jsAlertBlocked)
-
-        dismiss(animated: true) { [alert=self.alert] in
-            alert?.complete(with: false, blockAlerts: true, text: nil)
-        }
     }
 
 }

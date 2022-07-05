@@ -23,9 +23,9 @@ import Core
 class WebJSAlert {
 
     enum JSAlertType {
-        case confirm(handler: (_ blockAlerts: Bool, _ confirm: Bool) -> Void)
-        case text(handler: (_ blockAlerts: Bool, _ text: String?) -> Void, defaultText: String?)
-        case alert(handler: (_ blockAlerts: Bool) -> Void)
+        case confirm(handler: (_ confirm: Bool) -> Void)
+        case text(handler: (_ text: String?) -> Void, defaultText: String?)
+        case alert(handler: () -> Void)
     }
     
     let message: String
@@ -47,22 +47,22 @@ class WebJSAlert {
         self.alertType = alertType
     }
 
-    func complete(with result: Bool, blockAlerts: Bool, text: String?) {
+    func complete(with result: Bool, text: String?) {
         handlerCalled = true
 
         switch alertType {
         case .confirm(handler: let handler):
-            handler(blockAlerts, result)
+            handler(result)
         case .text(handler: let handler, defaultText: _):
-            handler(blockAlerts, text)
+            handler(text)
         case .alert(handler: let handler):
-            handler(blockAlerts)
+            handler()
         }
     }
 
     deinit {
         if !handlerCalled {
-            complete(with: false, blockAlerts: false, text: nil)
+            complete(with: false, text: nil)
         }
     }
 

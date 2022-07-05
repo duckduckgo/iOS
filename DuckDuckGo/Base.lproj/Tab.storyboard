@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21169.4"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -195,14 +194,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="403"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nwz-Vs-EX4" userLabel="Alert">
-                                                <rect key="frame" x="20" y="33" width="315" height="337"/>
+                                                <rect key="frame" x="20" y="99" width="315" height="205"/>
                                                 <subviews>
                                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="IRr-e5-RBE">
-                                                        <rect key="frame" x="16" y="18" width="283" height="121"/>
+                                                        <rect key="frame" x="16" y="18" width="283" height="51"/>
                                                         <subviews>
-                                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="1000" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmI-1g-rf4">
-                                                                <rect key="frame" x="0.0" y="0.0" width="283" height="255"/>
-                                                                <mutableString key="text">Some javascript alert message text displayed with multiline word wrapping Some javascript alert message text displayed with multiline word wrapping Some javascript alert message text displayed with multiline word wrapping Some javascript alert message text displayed with multiline word wrapping Some javascript alert message text displayed with multiline word wrapping Some javascript alert message text displayed with multiline word wrapping Some javascript alert message text displayed with multiline word wrapping </mutableString>
+                                                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="1000" text="Some javascript alert message text displayed with multiline word wrapping" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmI-1g-rf4">
+                                                                <rect key="frame" x="0.0" y="0.0" width="283" height="51"/>
                                                                 <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -221,34 +219,15 @@
                                                         <viewLayoutGuide key="frameLayoutGuide" id="Pom-ol-2OT"/>
                                                     </scrollView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="flI-KP-naP">
-                                                        <rect key="frame" x="16" y="155" width="283" height="158"/>
+                                                        <rect key="frame" x="16" y="85" width="283" height="96"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="29Z-R3-6Lj">
                                                                 <rect key="frame" x="0.0" y="0.0" width="283" height="34"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgk-gh-INJ" userLabel="Block alerts Button">
-                                                                <rect key="frame" x="0.0" y="52" width="283" height="44"/>
-                                                                <color key="backgroundColor" name="DownloadsListDestructiveColor"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="44" id="11i-fp-ve1"/>
-                                                                </constraints>
-                                                                <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="15"/>
-                                                                <state key="normal" title="Block alerts">
-                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                        <integer key="value" value="22"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                                <connections>
-                                                                    <action selector="blockAction:" destination="yf4-q9-yrl" eventType="touchUpInside" id="3DV-md-kYa"/>
-                                                                </connections>
-                                                            </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vuI-qC-YBO">
-                                                                <rect key="frame" x="0.0" y="114" width="283" height="44"/>
+                                                                <rect key="frame" x="0.0" y="52" width="283" height="44"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvq-U0-iGm">
                                                                         <rect key="frame" x="0.0" y="0.0" width="137.5" height="44"/>
@@ -350,6 +329,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="XDW-bC-MES"/>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="E3F-OM-WGY"/>
                         <keyboardLayoutGuide key="keyboard" id="4li-nc-Gkb"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -369,7 +349,6 @@
                         <outlet property="alertOutOfScreenConstraint" destination="Sgs-OD-AQd" id="0Hq-dN-NCG"/>
                         <outlet property="alertView" destination="nwz-Vs-EX4" id="USl-He-dsj"/>
                         <outlet property="backgroundView" destination="xrE-Wx-GQ1" id="g4z-uE-LNx"/>
-                        <outlet property="blockButton" destination="tgk-gh-INJ" id="LBy-L3-DJf"/>
                         <outlet property="cancelButton" destination="pvq-U0-iGm" id="XaJ-xk-sf9"/>
                         <outlet property="messageLabel" destination="VmI-1g-rf4" id="vuu-wy-rbi"/>
                         <outlet property="okButton" destination="45B-IT-R1W" id="TaK-fM-eT3"/>
@@ -389,9 +368,6 @@
     </scenes>
     <resources>
         <image name="ErrorInfoDark" width="375" height="280"/>
-        <namedColor name="DownloadsListDestructiveColor">
-            <color red="0.92549019607843142" green="0.21568627450980393" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

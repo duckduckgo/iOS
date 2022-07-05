@@ -1713,10 +1713,7 @@ extension TabViewController: WKUIDelegate {
                   completionHandler: @escaping () -> Void) {
         if canDisplayJavaScriptAlert {
 
-            let alert = WebJSAlert(message: message, alertType: .alert(handler: { _ in
-                completionHandler()
-            }))
-
+            let alert = WebJSAlert(message: message, alertType: .alert(handler: completionHandler))
             self.present(alert)
         } else {
             completionHandler()
@@ -1729,11 +1726,7 @@ extension TabViewController: WKUIDelegate {
                   completionHandler: @escaping (Bool) -> Void) {
         
         if canDisplayJavaScriptAlert {
-            let alert = WebJSAlert(message: message,
-                                   alertType: .confirm(handler: { _, confirm in
-                completionHandler(confirm)
-            }))
-            
+            let alert = WebJSAlert(message: message, alertType: .confirm(handler: completionHandler))
             self.present(alert)
         } else {
             completionHandler(false)
@@ -1746,11 +1739,7 @@ extension TabViewController: WKUIDelegate {
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (String?) -> Void) {
         if canDisplayJavaScriptAlert {
-            let alert = WebJSAlert(message: prompt,
-                                   alertType: .text(handler: { _, text in
-                completionHandler(text)
-            }, defaultText: defaultText))
-            
+            let alert = WebJSAlert(message: prompt, alertType: .text(handler: completionHandler, defaultText: defaultText))
             self.present(alert)
         } else {
             completionHandler(nil)

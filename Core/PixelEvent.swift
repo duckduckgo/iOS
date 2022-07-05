@@ -199,7 +199,8 @@ extension Pixel {
         
         case jsAlertShown
         case jsAlertBlocked
-        
+        case jsAlertBackgroundTap
+
         case featureFlaggingInternalUserAuthenticated
 
         case autofillLoginsSaveLoginModalOnboardingDisplayed
@@ -477,6 +478,7 @@ extension Pixel.Event {
             
         case .jsAlertShown: return "m_js_alert_shown"
         case .jsAlertBlocked: return "m_js_alert_blocked"
+        case .jsAlertBackgroundTap: return "m_js_alert_bg_tap"
             
         case .featureFlaggingInternalUserAuthenticated: return "m_internal-user_authenticated"
 

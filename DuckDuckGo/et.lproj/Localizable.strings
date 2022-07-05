@@ -1183,9 +1183,6 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Lemmik lisatud";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blokeerige märguanded";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Tühista";
 

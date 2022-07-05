@@ -70,33 +70,33 @@ class TabViewController: UIViewController {
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
     private weak var privacyController: PrivacyProtectionController?
-    
+
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
-    
+
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
-    
+
     lazy var bookmarksManager = BookmarksManager()
 
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
-    
+
     private let requeryLogic = RequeryLogic()
-    
+
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
-    
+
     private var trackerNetworksDetectedOnPage = Set<String>()
     private var pageHasTrackers = false
-    
+
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
-    
+
     private var trackersInfoWorkItem: DispatchWorkItem?
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
@@ -182,7 +182,6 @@ class TabViewController: UIViewController {
     private var textSizeUserScript = TextSizeUserScript()
     private lazy var autofillUserScript = createAutofillUserScript()
     private var debugScript = DebugUserScript()
-    private var shouldBlockJSAlert = false
 
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
@@ -218,7 +217,13 @@ class TabViewController: UIViewController {
     private var userScripts: [UserScript] = []
     
     private var canDisplayJavaScriptAlert: Bool {
-        return !shouldBlockJSAlert && presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
+        return presentedViewController == nil
+            && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
+            && !self.jsAlertController.isShown
+    }
+
+    func present(_ alert: WebJSAlert) {
+        self.jsAlertController.present(alert)
     }
     
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
@@ -429,11 +434,20 @@ class TabViewController: UIViewController {
     }
     
     public func load(url: URL) {
+        webView.stopLoading()
+        if jsAlertController.isShown {
+            jsAlertController.dismiss(animated: false)
+        }
+
         load(url: url, didUpgradeURL: false)
     }
     
     public func load(backForwardListItem: WKBackForwardListItem) {
         webView.stopLoading()
+        if jsAlertController.isShown {
+            jsAlertController.dismiss(animated: false)
+        }
+
         updateContentMode()
         webView.go(to: backForwardListItem)
     }
@@ -586,6 +600,10 @@ class TabViewController: UIViewController {
     }
     
     func goBack() {
+        if jsAlertController.isShown {
+            jsAlertController.dismiss(animated: false)
+        }
+
         if isError {
             hideErrorMessage()
             url = webView.url
@@ -600,6 +618,10 @@ class TabViewController: UIViewController {
     }
     
     func goForward() {
+        if jsAlertController.isShown {
+            jsAlertController.dismiss(animated: false)
+        }
+
         if webView.goForward() != nil {
             chromeDelegate?.omniBar.resignFirstResponder()
         }
@@ -681,7 +703,14 @@ class TabViewController: UIViewController {
         }
         
     }
-    
+
+    private var jsAlertController: JSAlertController!
+    @IBSegueAction
+    func createJSAlertController(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> JSAlertController? {
+        self.jsAlertController = JSAlertController(coder: coder)!
+        return self.jsAlertController
+    }
+
     private func addLoginDetectionStateObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onLoginDetectionStateChanged),
@@ -1205,6 +1234,8 @@ extension TabViewController: WKNavigationDelegate {
             guard let webView = self?.webView else { completion(nil); return }
             UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
             webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+            self?.jsAlertController.view.drawHierarchy(in: self!.jsAlertController.view.bounds,
+                                                       afterScreenUpdates: false)
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             completion(image)
@@ -1403,11 +1434,11 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+
         if let url = navigationAction.request.url, !appUrls.isDuckDuckGoSearch(url: url) {
             waitUntilRulesAreCompiled()
         }
-        
+
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
@@ -1675,18 +1706,18 @@ extension TabViewController: WKUIDelegate {
         Pixel.fire(pixel: .webKitDidTerminate)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
-    
+
      func webView(_ webView: WKWebView,
                   runJavaScriptAlertPanelWithMessage message: String,
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping () -> Void) {
         if canDisplayJavaScriptAlert {
-            let alertController = WebJSAlert(message: message, alertType: .alert(handler: { [weak self] blockAlerts in
-                self?.shouldBlockJSAlert = blockAlerts
+
+            let alert = WebJSAlert(message: message, alertType: .alert(handler: { _ in
                 completionHandler()
-            })).createAlertController()
-            
-            self.present(alertController, animated: true, completion: nil)
+            }))
+
+            self.present(alert)
         } else {
             completionHandler()
         }
@@ -1698,13 +1729,12 @@ extension TabViewController: WKUIDelegate {
                   completionHandler: @escaping (Bool) -> Void) {
         
         if canDisplayJavaScriptAlert {
-            let alertController = WebJSAlert(message: message,
-                                             alertType: .confirm(handler: { [weak self] blockAlerts, confirm in
-                self?.shouldBlockJSAlert = blockAlerts
+            let alert = WebJSAlert(message: message,
+                                   alertType: .confirm(handler: { _, confirm in
                 completionHandler(confirm)
-            })).createAlertController()
+            }))
             
-            self.present(alertController, animated: true, completion: nil)
+            self.present(alert)
         } else {
             completionHandler(false)
         }
@@ -1716,14 +1746,12 @@ extension TabViewController: WKUIDelegate {
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (String?) -> Void) {
         if canDisplayJavaScriptAlert {
-            let alertController = WebJSAlert(message: prompt,
-                                             alertType: .text(handler: { [weak self] blockAlerts, text in
-                
-                self?.shouldBlockJSAlert = blockAlerts
+            let alert = WebJSAlert(message: prompt,
+                                   alertType: .text(handler: { _, text in
                 completionHandler(text)
-            }, defaultText: defaultText)).createAlertController()
+            }, defaultText: defaultText))
             
-            self.present(alertController, animated: true, completion: nil)
+            self.present(alert)
         } else {
             completionHandler(nil)
         }
@@ -1784,6 +1812,10 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func refresh() {
+        if jsAlertController.isShown {
+            jsAlertController.dismiss(animated: false)
+        }
+
         requeryLogic.onRefresh()
         if isError {
             if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {

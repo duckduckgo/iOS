@@ -1317,9 +1317,6 @@ Invite code: %@";
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorite added";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Block Alerts";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancel";
 

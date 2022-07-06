@@ -110,7 +110,11 @@ class TabViewController: UIViewController {
     
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
-
+    
+    var contentBlockingAssetsInstalled: Bool {
+        ContentBlocking.contentBlockingManager.currentTDSRules != nil
+    }
+    
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
     public var url: URL? {
@@ -194,7 +198,7 @@ class TabViewController: UIViewController {
     }()
     
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
-        let domainEvent: PixelName
+        let domainEvent: Pixel.Event
         switch event {
         case .ampBlockingRulesCompilationFailed:
             domainEvent = .ampBlockingRulesCompilationFailed
@@ -216,6 +220,9 @@ class TabViewController: UIViewController {
     private var canDisplayJavaScriptAlert: Bool {
         return !shouldBlockJSAlert && presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
     }
+    
+    private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
+    private let rulesCompilationMonitor = RulesCompilationMonitor.shared
     
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -423,6 +430,12 @@ class TabViewController: UIViewController {
     
     public func load(url: URL) {
         load(url: url, didUpgradeURL: false)
+    }
+    
+    public func load(backForwardListItem: WKBackForwardListItem) {
+        webView.stopLoading()
+        updateContentMode()
+        webView.go(to: backForwardListItem)
     }
     
     private func load(url: URL, didUpgradeURL: Bool) {
@@ -725,6 +738,10 @@ class TabViewController: UIViewController {
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
         if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
            ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+            
+            rulesCompiledCondition?.resolve()
+            rulesCompiledCondition = nil
+
             webView.configuration.userContentController.removeAllContentRuleLists()
             webView.configuration.userContentController.add(rules.rulesList)
             
@@ -941,6 +958,7 @@ class TabViewController: UIViewController {
         temporaryDownloadForPreviewedFile?.cancel()
         removeMessageHandlers()
         removeObservers()
+        rulesCompilationMonitor.tabWillClose(self)
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
@@ -1480,9 +1498,15 @@ extension TabViewController: WKNavigationDelegate {
         return nil
     }
 
+    // swiftlint:disable function_body_length
+    // swiftlint:disable cyclomatic_complexity
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        if let url = navigationAction.request.url, !appUrls.isDuckDuckGoSearch(url: url) {
+            waitUntilRulesAreCompiled()
+        }
 
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
@@ -1543,6 +1567,21 @@ extension TabViewController: WKNavigationDelegate {
             }
             decisionHandler(decision)
         }
+    }
+    // swiftlint:enable function_body_length
+    // swiftlint:enable cyclomatic_complexity
+
+    private func waitUntilRulesAreCompiled() {
+        if contentBlockingAssetsInstalled {
+            rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
+        } else {
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
+            showProgressIndicator()
+            if let rulesCompiledCondition = rulesCompiledCondition {
+                RunLoop.current.run(until: rulesCompiledCondition)
+            }
+        }
+        rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
     }
 
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -1702,10 +1741,13 @@ extension TabViewController: WKNavigationDelegate {
     
     @available(iOS 14.0, *)
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
-        let autofill = AutofillLoginDetailsViewController(account: account, authenticator: AutofillLoginListAuthenticator())
-        let navigationController = UINavigationController(rootViewController: autofill)
-        autofill.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissLoginDetails))
-        self.present(navigationController, animated: true)
+        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+           let settingsController = navController.topViewController as? SettingsViewController {
+            settingsController.loadViewIfNeeded()
+            
+            settingsController.showAutofillAccountDetails(account, animated: false)
+            self.present(navController, animated: true)
+        }
     }
     
     @objc private func dismissLoginDetails() {

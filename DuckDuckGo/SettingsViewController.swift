@@ -230,11 +230,20 @@ class SettingsViewController: UITableViewController {
         debugCell.isHidden = !shouldShowDebugCell
     }
         
-    private func showAutofill() {
+    private func showAutofill(animated: Bool = true) {
         if #available(iOS 14.0, *) {
             let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
             autofillController.delegate = self
-            navigationController?.pushViewController(autofillController, animated: true)
+            navigationController?.pushViewController(autofillController, animated: animated)
+        }
+    }
+    
+    func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
+        if #available(iOS 14.0, *) {
+            let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+            autofillController.delegate = self
+            navigationController?.pushViewController(autofillController, animated: animated)
+            autofillController.showAccountDetails(account, animated: animated)
         }
     }
 

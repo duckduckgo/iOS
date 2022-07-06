@@ -105,7 +105,7 @@ class DaxDialogs {
         let message: String
         let cta: String
         let highlightAddressBar: Bool
-        let pixelName: PixelName
+        let pixelName: Pixel.Event
         let type: SpecType
         
         func format(args: CVarArg...) -> BrowsingSpec {
@@ -131,9 +131,9 @@ class DaxDialogs {
         let cancelAction: String
         let isConfirmActionDestructive: Bool
         
-        let displayedPixelName: PixelName
-        let confirmActionPixelName: PixelName
-        let cancelActionPixelName: PixelName
+        let displayedPixelName: Pixel.Event
+        let confirmActionPixelName: Pixel.Event
+        let cancelActionPixelName: Pixel.Event
     }
 
     public static let shared = DaxDialogs()

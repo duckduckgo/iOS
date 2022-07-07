@@ -147,6 +147,7 @@ class SettingsViewController: UITableViewController {
     
     private func configureVoiceSearchCell() {
         voiceSearchCell.isHidden = !shouldShowVoiceSearchCell
+        voiceSearchToggle.isOn = appSettings.voiceSearchEnabled
     }
 
     private func configureThemeCellAccessory() {
@@ -349,7 +350,7 @@ class SettingsViewController: UITableViewController {
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
-        
+        AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(sender.isOn)
     }
     
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {

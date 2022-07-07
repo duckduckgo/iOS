@@ -23,7 +23,7 @@ import WebKit
 @available(iOS 14.5, *)
 final class InlineWKDownloadDelegate: NSObject, WKDownloadDelegate {
 
-    var decideDestinationCallback: ((WKDownload, URLResponse, String) -> URL?)?
+    var decideDestinationCallback: ((WKDownload, URLResponse, String, @escaping (URL?) -> Void) -> Void)?
     var downloadDidFinishCallback: ((WKDownload) -> Void)?
     var downloadDidFailCallback: ((WKDownload, Error, Data?) -> Void)?
 
@@ -31,7 +31,7 @@ final class InlineWKDownloadDelegate: NSObject, WKDownloadDelegate {
                   decideDestinationUsing response: URLResponse,
                   suggestedFilename: String,
                   completionHandler: @escaping (URL?) -> Void) {
-        completionHandler(self.decideDestinationCallback?(download, response, suggestedFilename))
+        self.decideDestinationCallback?(download, response, suggestedFilename, completionHandler)
     }
 
     func downloadDidFinish(_ download: WKDownload) {

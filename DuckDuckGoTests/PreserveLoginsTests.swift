@@ -24,7 +24,7 @@ class PreserveLoginsTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        UserDefaults.app = UserDefaults(suiteName: #file)!
+        setupUserDefault(with: #file)
         UserDefaultsWrapper<Any>.clearAll()
     }
     

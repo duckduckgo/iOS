@@ -101,20 +101,15 @@ struct FeedbackSubmitter: FeedbackSender {
     }
     
     public func fireNegativeSentimentPixel(with model: Feedback.Model) {
-        guard let category = model.category else { return }
-        
-        var rawPixel = PixelName.feedbackNegativePrefix.rawValue + category.component
-        
+        guard var category = model.category?.component else { return }
+                
         if let subcategory = model.subcategory {
-            rawPixel += "_" + subcategory.component
+            category += "_" + subcategory.component
         } else {
-            rawPixel += "_submit"
+            category += "_submit"
         }
         
-        guard let pixel = PixelName(rawValue: rawPixel) else {
-            fatalError("Could not match feedback components with Pixel")
-        }
-        
+        let pixel = Pixel.Event.feedbackNegativePrefix(category: category)
         Pixel.fire(pixel: pixel)
     }
 }

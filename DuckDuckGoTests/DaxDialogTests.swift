@@ -45,10 +45,9 @@ class DaxDialogTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        UserDefaults.app.removePersistentDomain(forName: #file)
-        UserDefaults.app = UserDefaults(suiteName: #file)!
-
         
+        setupUserDefault(with: #file)
+
         guard Self.rulesManager == nil else { return }
         
         let contentBlockingUpdating = ContentBlockingUpdating()
@@ -65,7 +64,7 @@ class DaxDialogTests: XCTestCase {
                                       localProtection: DomainsProtectionUserDefaultsStore(),
                                       errorReporting: nil)
         
-        let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManger: trackerDataManager)
+        let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManager: trackerDataManager)
         let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
 
         let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,

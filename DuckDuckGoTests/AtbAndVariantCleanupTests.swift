@@ -36,8 +36,7 @@ class AtbAndVariantCleanupTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        UserDefaults.app.removePersistentDomain(forName: #file)
-        UserDefaults.app = UserDefaults(suiteName: #file)!
+        setupUserDefault(with: #file)
     }
 
     func testWhenAtbHasVariantThenAtbStoredWithVariantRemoved() {

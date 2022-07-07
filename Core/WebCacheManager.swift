@@ -65,25 +65,16 @@ public class WebCacheManager {
             completion()
             return
         }
-        
-        let group = DispatchGroup()
-        
-        var consumedCookiesCount = 0
-        
-        for cookie in cookies {
-            group.enter()
-            consumedCookiesCount += 1
-            httpCookieStore.setCookie(cookie) {
-                group.leave()
-            }
-        }
-        
-        Pixel.fire(pixel: .legacyCookieMigration, withAdditionalParameters: [
-            PixelParameters.count: "\(consumedCookiesCount)"
-        ])
-        
+                
         DispatchQueue.global(qos: .userInitiated).async {
-            group.wait()
+            /// This function will only return after all blocks' execution finish, and there is no escaping block inside so after return everything is 100% done.
+            DispatchQueue.concurrentPerform(iterations: cookies.count) { index in
+                httpCookieStore.setCookie(cookies[index], completionHandler: nil)
+            }
+            
+            Pixel.fire(pixel: .legacyCookieMigration, withAdditionalParameters: [
+                PixelParameters.count: "\(cookies.count)"
+            ])
             
             DispatchQueue.main.async {
                 cookieStorage.clear()

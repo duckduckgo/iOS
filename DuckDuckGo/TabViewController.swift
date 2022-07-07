@@ -630,8 +630,7 @@ class TabViewController: UIViewController {
                                                                                    injectionTime: script.injectionTime,
                                                                                    forMainFrameOnly: script.forMainFrameOnly))
             
-            if #available(iOS 14, *),
-               let replyHandler = script as? WKScriptMessageHandlerWithReply {
+            if let replyHandler = script as? WKScriptMessageHandlerWithReply {
                 script.messageNames.forEach { messageName in
                     webView.configuration.userContentController.addScriptMessageHandler(replyHandler, contentWorld: .page, name: messageName)
                 }
@@ -1085,8 +1084,9 @@ extension TabViewController: WKNavigationDelegate {
         NetworkLeaderboard.shared.incrementPagesLoaded()
         
         appRatingPrompt.registerUsage()
-        if appRatingPrompt.shouldPrompt() {
-            SKStoreReviewController.requestReview()
+        
+        if let scene = self.view.window?.windowScene, appRatingPrompt.shouldPrompt() {
+            SKStoreReviewController.requestReview(in: scene)
             appRatingPrompt.shown()
         }
     }
@@ -1634,7 +1634,6 @@ extension TabViewController: WKNavigationDelegate {
         checkForReloadOnError()
     }
     
-    @available(iOS 14.0, *)
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
         if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
            let settingsController = navController.topViewController as? SettingsViewController {
@@ -2026,7 +2025,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             return
         }
         
-        if #available(iOS 14, *), accounts.count > 0 {
+        if accounts.count > 0 {
             if !AutofillLoginPromptViewController.canAuthenticate {
                 Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
                 completionHandler(nil)
@@ -2076,9 +2075,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                     ActionMessageView.present(message: message,
                                               actionTitle: UserText.autofillLoginSaveToastActionButton) {
                         
-                        if #available(iOS 14.0, *) {
-                            self.showLoginDetails(with: newCredential.account)
-                        }
+                        self.showLoginDetails(with: newCredential.account)
                     }
                 }
             }

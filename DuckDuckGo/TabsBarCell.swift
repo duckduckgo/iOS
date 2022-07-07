@@ -45,15 +45,12 @@ class TabsBarCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        if #available(iOS 13.4, *) {
-            removeButton.isPointerInteractionEnabled = true
-            removeButton.pointerStyleProvider = { button, effect, _ -> UIPointerStyle? in
-                return .init(effect: .lift(.init(view: button)))
-            }
-            
-            contentView.addInteraction(UIPointerInteraction(delegate: self))
+        removeButton.isPointerInteractionEnabled = true
+        removeButton.pointerStyleProvider = { button, effect, _ -> UIPointerStyle? in
+            return .init(effect: .lift(.init(view: button)))
         }
         
+        contentView.addInteraction(UIPointerInteraction(delegate: self))
     }
     
     @IBAction func onRemovePressed() {
@@ -128,7 +125,6 @@ extension TabsBarCell: TabObserver {
     }
 }
 
-@available(iOS 13.4, *)
 extension TabsBarCell: UIPointerInteractionDelegate {
     
     func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {

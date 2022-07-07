@@ -22,12 +22,10 @@ import Combine
 import Core
 import BrowserServicesKit
 
-@available(iOS 14.0, *)
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
 }
 
-@available(iOS 14.0, *)
 final class AutofillLoginSettingsListViewController: UIViewController {
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
     private let viewModel: AutofillLoginListViewModel
@@ -245,7 +243,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
 // MARK: UITableViewDelegate
 
-@available(iOS 14.0, *)
 extension AutofillLoginSettingsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -272,7 +269,6 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
 
 // MARK: UITableViewDataSource
 
-@available(iOS 14.0, *)
 extension AutofillLoginSettingsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -339,7 +335,6 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
 
 // MARK: AutofillLoginDetailsViewControllerDelegate
 
-@available(iOS 14.0, *)
 extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewControllerDelegate {
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController) {
         viewModel.updateData()
@@ -349,7 +344,6 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 
 // MARK: EnableAutofillSettingsTableViewCellDelegate
 
-@available(iOS 14.0, *)
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
         viewModel.isAutofillEnabled = value
@@ -359,7 +353,6 @@ extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableVi
 
 // MARK: Themable
 
-@available(iOS 14.0, *)
 extension AutofillLoginSettingsListViewController: Themable {
 
     func decorate(with theme: Theme) {
@@ -379,7 +372,6 @@ extension AutofillLoginSettingsListViewController: Themable {
 
 // MARK: UISearchControllerDelegate
 
-@available(iOS 14.0, *)
 extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {

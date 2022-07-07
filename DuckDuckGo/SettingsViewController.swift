@@ -52,6 +52,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
     @IBOutlet weak var autofillCell: UITableViewCell!
     @IBOutlet weak var debugCell: UITableViewCell!
+    @IBOutlet weak var voiceSearchCell: UITableViewCell!
+    @IBOutlet weak var voiceSearchToggle: UISwitch!
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -69,6 +71,14 @@ class SettingsViewController: UITableViewController {
 
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu)
+    }
+    
+    private var shouldShowVoiceSearchCell: Bool {
+        if #available(iOS 15.0, *) {
+            return true
+        } else {
+            return false
+        }
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
@@ -93,6 +103,7 @@ class SettingsViewController: UITableViewController {
         configureLinkPreviewsToggle()
         configureRememberLogins()
         configureDebugCell()
+        configureVoiceSearchCell()
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -132,6 +143,10 @@ class SettingsViewController: UITableViewController {
 
     private func configureAutofillCell() {
         autofillCell.isHidden = !shouldShowAutofillCell
+    }
+    
+    private func configureVoiceSearchCell() {
+        voiceSearchCell.isHidden = !shouldShowVoiceSearchCell
     }
 
     private func configureThemeCellAccessory() {
@@ -333,6 +348,10 @@ class SettingsViewController: UITableViewController {
         return super.tableView(tableView, titleForFooterInSection: section)
     }
 
+    @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
+        
+    }
+    
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }
@@ -374,6 +393,7 @@ extension SettingsViewController: Themable {
         authenticationToggle.onTintColor = theme.buttonTintColor
         openUniversalLinksToggle.onTintColor = theme.buttonTintColor
         longPressPreviewsToggle.onTintColor = theme.buttonTintColor
+        voiceSearchToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

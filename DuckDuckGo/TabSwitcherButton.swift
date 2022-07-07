@@ -89,10 +89,7 @@ class TabSwitcherButton: UIView {
         addSubview(label)
         
         configureAnimationView()
-        
-        if #available(iOS 13.4, *) {
-            addInteraction(UIPointerInteraction(delegate: self))
-        }
+        addInteraction(UIPointerInteraction(delegate: self))
     }
 
     override func layoutSubviews() {
@@ -212,7 +209,6 @@ extension TabSwitcherButton: Themable {
     }
 }
 
-@available(iOS 13.4, *)
 extension TabSwitcherButton: UIPointerInteractionDelegate {
     
     func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {

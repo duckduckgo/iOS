@@ -20,7 +20,6 @@
 import UIKit
 import DuckUI
 
-@available(iOS 14.0, *)
 class AutofillItemsLockedView: UIView {
    
     private lazy var title: UILabel = {
@@ -75,7 +74,6 @@ class AutofillItemsLockedView: UIView {
 
 }
 
-@available(iOS 14.0, *)
 extension AutofillItemsLockedView: Themable {
     
     func decorate(with theme: Theme) {

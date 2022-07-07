@@ -296,7 +296,7 @@
 "dax.hide.title" = "Skjule gjenværende tips?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "DuckDuckGo-søkene dine er anonyme, jeg lagrer aldri søkehistorikken din. Noensinne. 🙌";
+"dax.onboarding.browsing.after.search" = "DuckDuckGo-søkene dine er anonyme. Alltid. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";

@@ -18,7 +18,8 @@ Fire Buttonをタップしてデータを消去 - Fire Buttonボタンのワン�
 
 今こそ自分のプライバシーを取り戻すべきタイミングです。DuckDuckGoを使用する数百万人のユーザーに加わり、日々のオンライン活動の多くを1つのアプリで保護しましょう。それこそ、シンプルさを極めたプライバシーです。
 
-
+Note about our tracker blocking for 3rd-party sites and emails:
+DuckDuckGo never tracks you. When you leave our search engine to use other sites, we aim to block as many hidden trackers as possible, but we can't block them all for a few reasons. New trackers emerge all the time, so first we need to find them. Then, blocking these trackers can sometimes break functionality, so we need to develop new approaches without hurting usability. Additionally, in our app we offer a specific type of protection that stops scripts from even loading on 3rd-party sites, which isn’t offered on most popular browsers by default. Currently, this one loading protection doesn't apply to Microsoft scripts on 3rd-party sites due to contractual restrictions. However, our other tracker blocking methods (like 3rd-party cookie blocking) are unrestricted and continue to work against these trackers to protect your privacy online.
 
 当社について：https://duckduckgo.com/about
 仕組み : https://duckduckgo.com/app

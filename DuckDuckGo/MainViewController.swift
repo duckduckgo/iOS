@@ -103,7 +103,7 @@ class MainViewController: UIViewController {
     
     let gestureBookmarksButton = GestureToolbarButton()
     
-    private var fireButtonAnimator: FireButtonAnimator?
+    private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
     private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
 
@@ -117,7 +117,7 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -140,7 +140,6 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
-        fireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -454,20 +453,17 @@ class MainViewController: UIViewController {
         }
     }
 
-    @available(iOS 13.4, *)
     func handlePressEvent(event: UIPressesEvent?) {
         keyModifierFlags = event?.modifierFlags
     }
 
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         super.pressesBegan(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
         handlePressEvent(event: event)
     }
     
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         super.pressesEnded(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
         handlePressEvent(event: event)
     }
 
@@ -508,6 +504,8 @@ class MainViewController: UIViewController {
     @IBAction func onFirePressed() {
         Pixel.fire(pixel: .forgetAllPressedBrowsing)
         
+        wakeLazyFireButtonAnimator()
+        
         if let spec = DaxDialogs.shared.fireButtonEducationMessage() {
             performSegue(withIdentifier: "ActionSheetDaxDialog", sender: spec)
         } else {
@@ -519,10 +517,18 @@ class MainViewController: UIViewController {
     }
     
     func onQuickFirePressed() {
+        wakeLazyFireButtonAnimator()
+        
         self.forgetAllWithAnimation {}
         self.dismiss(animated: true)
         if KeyboardSettings().onAppLaunch {
             self.enterSearch()
+        }
+    }
+    
+    private func wakeLazyFireButtonAnimator() {
+        DispatchQueue.main.async {
+            _ = self.fireButtonAnimator
         }
     }
 
@@ -586,9 +592,21 @@ class MainViewController: UIViewController {
     }
 
     func loadUrl(_ url: URL) {
+        prepareTabForRequest {
+            currentTab?.load(url: url)
+        }
+    }
+    
+    private func loadBackForwardItem(_ item: WKBackForwardListItem) {
+        prepareTabForRequest {
+            currentTab?.load(backForwardListItem: item)
+        }
+    }
+    
+    private func prepareTabForRequest(request: () -> Void) {
         customNavigationBar.alpha = 1
         allowContentUnderflow = false
-        currentTab?.load(url: url)
+        request()
         guard let tab = currentTab else { fatalError("no tab") }
         select(tab: tab)
         dismissOmniBar()
@@ -656,6 +674,7 @@ class MainViewController: UIViewController {
         refreshMenuIcon()
         refreshOmniBar()
         refreshBackForwardButtons()
+        refreshBackForwardMenuItems()
     }
 
     private func refreshTabIcon() {
@@ -700,7 +719,7 @@ class MainViewController: UIViewController {
         omniBar.backButton.isEnabled = backButton.isEnabled
         omniBar.forwardButton.isEnabled = forwardButton.isEnabled
     }
-    
+  
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -799,6 +818,22 @@ class MainViewController: UIViewController {
     
     fileprivate func launchDownloads() {
         performSegue(withIdentifier: "Downloads", sender: self)
+    }
+    
+    fileprivate func launchAutofillLogins() {
+        let appSettings = AppDependencyProvider.shared.appSettings
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        autofillSettingsViewController.delegate = self
+        let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
+        autofillSettingsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: UserText.autofillNavigationButtonItemTitleClose,
+                                                                                          style: .plain,
+                                                                                          target: self,
+                                                                                          action: #selector(closeAutofillModal))
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    @objc private func closeAutofillModal() {
+        dismiss(animated: true)
     }
     
     fileprivate func launchSettings() {
@@ -1395,7 +1430,11 @@ extension MainViewController: TabDelegate {
     func tabDidRequestDownloads(tab: TabViewController) {
         launchDownloads()
     }
-
+    
+    func tabDidRequestAutofillLogins(tab: TabViewController) {
+        launchAutofillLogins()
+    }
+    
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
     }
@@ -1636,7 +1675,7 @@ extension MainViewController: AutoClearWorker {
         
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         
-        fireButtonAnimator?.animate {
+        fireButtonAnimator.animate {
             self.tabManager.prepareCurrentTabForDataClearing()
             
             self.stopAllOngoingDownloads()
@@ -1773,5 +1812,60 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
         }
     }
 }
+
+// MARK: - History UIMenu Methods
+
+extension MainViewController {
+
+    private func refreshBackForwardMenuItems() {
+        guard let currentTab = currentTab, #available(iOS 14.0, *) else {
+            return
+        }
+        
+        let backMenu = historyMenu(with: currentTab.webView.backForwardList.backList.reversed())
+        omniBar.backButton.menu = backMenu
+        backButton.menu = backMenu
+        
+        let forwardMenu = historyMenu(with: currentTab.webView.backForwardList.forwardList)
+        omniBar.forwardButton.menu = forwardMenu
+        forwardButton.menu = forwardMenu
+    }
+
+    @available(iOS 14.0, *)
+    private func historyMenu(with backForwardList: [WKBackForwardListItem]) -> UIMenu {
+        let historyItemList = backForwardList.map { BackForwardMenuHistoryItem(backForwardItem: $0) }
+        let actions = historyMenuButton(with: historyItemList)
+        return UIMenu(title: "", children: actions)
+    }
+    
+    @available(iOS 14.0, *)
+    private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
+        let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
+            
+            if #available(iOS 15.0, *) {
+                return UIAction(title: historyItem.title,
+                                subtitle: historyItem.sanitizedURLForDisplay,
+                                discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                    self?.loadBackForwardItem(historyItem.backForwardItem)
+                }
+            } else {
+                return  UIAction(title: historyItem.title,
+                                 discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                    self?.loadBackForwardItem(historyItem.backForwardItem)
+                }
+            }
+        }
+        
+        return menuItems
+    }
+}
+
+// MARK: - AutofillLoginSettingsListViewControllerDelegate
+extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
+    func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
+        controller.dismiss(animated: true)
+    }
+}
+
 
 // swiftlint:enable file_length

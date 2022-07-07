@@ -201,9 +201,7 @@ class BookmarksManager {
     }
 
     func reloadWidgets() {
-        if #available(iOS 14, *) {
-            WidgetCenter.shared.reloadAllTimelines()
-        }
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
 }

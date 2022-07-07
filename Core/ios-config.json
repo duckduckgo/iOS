@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1653502015972,
+    "version": 1656685470898,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -111,10 +111,6 @@
                     "reason": "Video not playing"
                 },
                 {
-                    "domain": "wp.pl",
-                    "reason": "Adblocker wall"
-                },
-                {
                     "domain": "magicgameworld.com",
                     "reason": "Adblocker wall"
                 },
@@ -152,6 +148,10 @@
                 }
             ]
         },
+        "cookie": {
+            "exceptions": [],
+            "state": "disabled"
+        },
         "customUserAgent": {
             "settings": {
                 "omitApplicationSites": [
@@ -164,12 +164,20 @@
                         "reason": "Wordpress plugin reports our browser as a bot"
                     },
                     {
+                        "domain": "thingiverse.com",
+                        "reason": "Site loads blank"
+                    },
+                    {
                         "domain": "accounts.google.com",
                         "reason": "Site reports browser not supported"
                     },
                     {
                         "domain": "facebook.com",
                         "reason": "Site reports browser not supported"
+                    },
+                    {
+                        "domain": "qubushotel.com",
+                        "reason": "Site UI elements are not interactable"
                     }
                 ],
                 "omitVersionSites": []
@@ -201,6 +209,14 @@
             "exceptions": [
                 {
                     "domain": "adidas.com",
+                    "reason": "When adding an item to the cart, there is an error 'An unexpected problem occurred' and the item is not added to the cart."
+                },
+                {
+                    "domain": "adidas.co.uk",
+                    "reason": "When adding an item to the cart, there is an error 'An unexpected problem occurred' and the item is not added to the cart."
+                },
+                {
+                    "domain": "hm.com",
                     "reason": "Broken add to cart"
                 },
                 {
@@ -405,6 +421,17 @@
                             }
                         ]
                     },
+                    "aldi-digital.co.uk": {
+                        "rules": [
+                            {
+                                "rule": "assets.aldi-digital.co.uk/assets/050b4966c22c430e5c9308903ebb87e1/dist/scripts/main.js",
+                                "domains": [
+                                    "aldi.co.uk"
+                                ],
+                                "reason": "product images missing"
+                            }
+                        ]
+                    },
                     "alicdn.com": {
                         "rules": [
                             {
@@ -491,9 +518,10 @@
                             {
                                 "rule": "pubads.g.doubleclick.net/gampad/ads",
                                 "domains": [
-                                    "nhl.com"
+                                    "nhl.com",
+                                    "viki.com"
                                 ],
-                                "reason": "videos not loading"
+                                "reason": "nhl.com - videos not loading; viki.com - after a video has played for a few seconds an adwall pops up. Clicking 'I've turned off my adblocker' resets the video, then after a few seconds the adwall pops up again."
                             },
                             {
                                 "rule": "securepubads.g.doubleclick.net/tag/js/gpt.js",
@@ -551,6 +579,39 @@
                             }
                         ]
                     },
+                    "facebook.net": {
+                        "rules": [
+                            {
+                                "rule": "connect.facebook.net/en_US/sdk.js",
+                                "domains": [
+                                    "grubhub.com"
+                                ],
+                                "reason": "broken login"
+                            }
+                        ]
+                    },
+                    "fwmrm.net": {
+                        "rules": [
+                            {
+                                "rule": "2a7e9.v.fwmrm.net/ad/g/1",
+                                "domains": [
+                                    "channel4.com"
+                                ],
+                                "reason": "adwall"
+                            }
+                        ]
+                    },
+                    "gigya.com": {
+                        "rules": [
+                            {
+                                "rule": "gigya.com/js/gigya.services.plugins.base.min.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "login content not loading"
+                            }
+                        ]
+                    },
                     "google-analytics.com": {
                         "rules": [
                             {
@@ -593,10 +654,11 @@
                                 "rule": "googletagmanager.com/gtm.js",
                                 "domains": [
                                     "ah.nl",
+                                    "dailyherald.com",
                                     "iltalehti.fi",
                                     "rbcroyalbank.com"
                                 ],
-                                "reason": "page not loading, video not loading, internal ads blocked"
+                                "reason": "page/video/image not loading, internal ads blocked"
                             }
                         ]
                     },
@@ -726,6 +788,17 @@
                             }
                         ]
                     },
+                    "tiqcdn.com": {
+                        "rules": [
+                            {
+                                "rule": "tags.tiqcdn.com/utag/agl/community/prod/utag.sync.js",
+                                "domains": [
+                                    "agl.com.au"
+                                ],
+                                "reason": "site loading delayed"
+                            }
+                        ]
+                    },
                     "twitter.com": {
                         "rules": [
                             {
@@ -798,10 +871,6 @@
                         "reason": "Site breakage"
                     },
                     {
-                        "domain": "accounts.google.com",
-                        "reason": "SSO which needs cookies for auth"
-                    },
-                    {
                         "domain": "googleapis.com",
                         "reason": "Site breakage"
                     },
@@ -811,10 +880,6 @@
                     },
                     {
                         "domain": "apis.google.com",
-                        "reason": "Site breakage"
-                    },
-                    {
-                        "domain": "pay.google.com",
                         "reason": "Site breakage"
                     },
                     {

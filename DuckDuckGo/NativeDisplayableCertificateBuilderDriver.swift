@@ -64,7 +64,7 @@ private extension SecCertificate {
         guard errSecSuccess == SecTrustCreateWithCertificates(self, SecPolicyCreateBasicX509(), &secTrust),
             let certTrust = secTrust else { return nil }
 
-        return SecTrustCopyPublicKey(certTrust)?.toDisplayable()
+        return SecTrustCopyKey(certTrust)?.toDisplayable()
     }
 
     private func extractSummary() -> String {

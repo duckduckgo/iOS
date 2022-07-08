@@ -45,7 +45,7 @@ public class DefaultFeatureFlagger: FeatureFlagger {
         case .debugMenu:
             return isInternalUser
         case .autofill:
-            if #available(iOS 14, *), isInternalUser {
+            if isInternalUser {
                 return true
             } else {
                 return false

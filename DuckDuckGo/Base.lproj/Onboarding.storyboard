@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Z3L-XQ-lW0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Z3L-XQ-lW0">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -46,7 +46,7 @@
                                 <rect key="frame" x="0.0" y="88.000000000000014" width="414" height="132.33333333333337"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Welcome to DuckDuckGo!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7Q-MU-drX">
-                                        <rect key="frame" x="20" y="54.666666666666664" width="374" height="74.666666666666686"/>
+                                        <rect key="frame" x="20" y="65.333333333333343" width="374" height="64"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" staticText="YES" header="YES"/>
                                         </accessibility>
@@ -129,7 +129,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1y-Qk-FSX">
-                                <rect key="frame" x="30" y="822" width="354" height="32"/>
+                                <rect key="frame" x="30" y="825" width="354" height="29"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Skip"/>
                                 <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="17"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -179,73 +179,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zla-3r-77o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-484.05797101449281" y="184.82142857142856"/>
-        </scene>
-        <!--Search and browse privately, every day.-->
-        <scene sceneID="Yxp-L7-vF3">
-            <objects>
-                <viewController storyboardIdentifier="onboardingHomeRow" id="Xjr-gI-tDG" customClass="OnboardingHomeRowViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <string key="title">Search and browse privately,
-every day.</string>
-                    <view key="view" contentMode="scaleToFill" id="VId-rQ-yCx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nh7-i9-URZ" userLabel="Container">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8a-8P-yOi" userLabel="Video Container View" customClass="VideoContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="bez-4m-Uxg" appends="YES" id="QeZ-Ju-4IY"/>
-                                        </connections>
-                                    </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlayButton" translatesAutoresizingMaskIntoConstraints="NO" id="tdp-Ll-Fyc">
-                                        <rect key="frame" x="110" y="88" width="100" height="100"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
-                                        </accessibility>
-                                        <gestureRecognizers/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="IHY-Vp-fop"/>
-                                            <constraint firstAttribute="width" constant="100" id="ek7-Gc-y9Y"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="E8a-8P-yOi" firstAttribute="height" secondItem="Nh7-i9-URZ" secondAttribute="height" id="1zF-g7-VeB"/>
-                                    <constraint firstItem="tdp-Ll-Fyc" firstAttribute="centerY" secondItem="E8a-8P-yOi" secondAttribute="centerY" id="6zg-xh-hDv"/>
-                                    <constraint firstItem="E8a-8P-yOi" firstAttribute="centerX" secondItem="Nh7-i9-URZ" secondAttribute="centerX" id="OMZ-M1-SOa"/>
-                                    <constraint firstItem="E8a-8P-yOi" firstAttribute="width" secondItem="Nh7-i9-URZ" secondAttribute="width" id="WQt-SV-gRK"/>
-                                    <constraint firstItem="E8a-8P-yOi" firstAttribute="top" secondItem="Nh7-i9-URZ" secondAttribute="top" id="apL-Lw-ewA"/>
-                                    <constraint firstItem="tdp-Ll-Fyc" firstAttribute="centerX" secondItem="E8a-8P-yOi" secondAttribute="centerX" id="eLL-vd-O6H"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Ko7-GM-i4t"/>
-                        <constraints>
-                            <constraint firstItem="Nh7-i9-URZ" firstAttribute="centerX" secondItem="Ko7-GM-i4t" secondAttribute="centerX" id="0lF-zt-4Jx"/>
-                            <constraint firstItem="Nh7-i9-URZ" firstAttribute="width" secondItem="VId-rQ-yCx" secondAttribute="width" id="XZq-IE-Lbg"/>
-                            <constraint firstItem="Nh7-i9-URZ" firstAttribute="centerY" secondItem="VId-rQ-yCx" secondAttribute="centerY" id="dk2-An-k0W"/>
-                            <constraint firstItem="Nh7-i9-URZ" firstAttribute="height" secondItem="VId-rQ-yCx" secondAttribute="height" id="kQy-n1-T0v"/>
-                        </constraints>
-                    </view>
-                    <size key="freeformSize" width="320" height="276"/>
-                    <connections>
-                        <outlet property="playButton" destination="tdp-Ll-Fyc" id="4Tk-Yh-1zb"/>
-                        <outlet property="videoContainerView" destination="E8a-8P-yOi" id="0Tk-OJ-gbi"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Z9U-mp-8lf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="bez-4m-Uxg">
-                    <connections>
-                        <action selector="playVideo" destination="Xjr-gI-tDG" id="ZKW-jB-Q5c"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="351" y="358"/>
         </scene>
         <!--Open links with peace of mind, every time.-->
         <scene sceneID="sXM-7r-JHN">
@@ -514,7 +447,6 @@ every day.</string>
         <image name="OnboardingDefaultBrowserImage" width="259" height="266"/>
         <image name="OnboardingWidgetImage" width="345" height="270"/>
         <image name="OnboardingWidgetInstructionsImage" width="1084" height="608"/>
-        <image name="PlayButton" width="80" height="80"/>
         <namedColor name="AccentColor">
             <color red="0.40400001406669617" green="0.56099998950958252" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

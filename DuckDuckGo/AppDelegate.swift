@@ -88,18 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
             if BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context) {
-                if #available(iOS 14, *) {
-                    WidgetCenter.shared.reloadAllTimelines()
-                }
-            }
-        }
-
-        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
-            if #available(iOS 14, *) {
                 WidgetCenter.shared.reloadAllTimelines()
             }
         }
-
+        
+        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+        
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"
@@ -194,40 +190,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func fireAppLaunchPixel() {
-
-        if #available(iOS 14, *) {
-            WidgetCenter.shared.getCurrentConfigurations { result in
-
-                let paramKeys: [WidgetFamily: String] = [
-                    .systemSmall: PixelParameters.widgetSmall,
-                    .systemMedium: PixelParameters.widgetMedium,
-                    .systemLarge: PixelParameters.widgetLarge
-                ]
-
-                switch result {
-                case .failure(let error):
-                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
-                        PixelParameters.widgetError: "1",
-                        PixelParameters.widgetErrorCode: "\((error as NSError).code)",
-                        PixelParameters.widgetErrorDomain: (error as NSError).domain
-                    ])
-
-                case .success(let widgetInfo):
-                    let params = widgetInfo.reduce([String: String]()) {
-                        var result = $0
-                        if let key = paramKeys[$1.family] {
-                            result[key] = "1"
-                        }
-                        return result
+        
+        WidgetCenter.shared.getCurrentConfigurations { result in
+            let paramKeys: [WidgetFamily: String] = [
+                .systemSmall: PixelParameters.widgetSmall,
+                .systemMedium: PixelParameters.widgetMedium,
+                .systemLarge: PixelParameters.widgetLarge
+            ]
+            
+            switch result {
+            case .failure(let error):
+                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
+                    PixelParameters.widgetError: "1",
+                    PixelParameters.widgetErrorCode: "\((error as NSError).code)",
+                    PixelParameters.widgetErrorDomain: (error as NSError).domain
+                ])
+                
+            case .success(let widgetInfo):
+                let params = widgetInfo.reduce([String: String]()) {
+                    var result = $0
+                    if let key = paramKeys[$1.family] {
+                        result[key] = "1"
                     }
-                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                    return result
                 }
-
+                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
             }
-        } else {
-            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetUnavailable: "1"])
+            
         }
-
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {
@@ -439,7 +429,7 @@ extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
 extension AppDelegate: UIScreenshotServiceDelegate {
     func screenshotService(_ screenshotService: UIScreenshotService,
                            generatePDFRepresentationWithCompletion completionHandler: @escaping (Data?, Int, CGRect) -> Void) {
-        guard #available(iOS 14.0, *), let webView = mainViewController?.currentTab?.webView else {
+        guard let webView = mainViewController?.currentTab?.webView else {
             completionHandler(nil, 0, .zero)
             return
         }
@@ -470,11 +460,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             Pixel.fire(pixel: .macBrowserWaitlistNotificationShown)
         }
         
-        if #available(iOS 14.0, *) {
-            completionHandler(.banner)
-        } else {
-            completionHandler(.alert)
-        }
+        completionHandler(.banner)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,

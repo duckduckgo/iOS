@@ -110,7 +110,11 @@ class TabViewController: UIViewController {
     
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
-
+    
+    var contentBlockingAssetsInstalled: Bool {
+        ContentBlocking.contentBlockingManager.currentTDSRules != nil
+    }
+    
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
     public var url: URL? {
@@ -194,7 +198,7 @@ class TabViewController: UIViewController {
     }()
     
     private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
-        let domainEvent: PixelName
+        let domainEvent: Pixel.Event
         switch event {
         case .ampBlockingRulesCompilationFailed:
             domainEvent = .ampBlockingRulesCompilationFailed
@@ -216,6 +220,9 @@ class TabViewController: UIViewController {
     private var canDisplayJavaScriptAlert: Bool {
         return !shouldBlockJSAlert && presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
     }
+    
+    private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
+    private let rulesCompilationMonitor = RulesCompilationMonitor.shared
     
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -623,8 +630,7 @@ class TabViewController: UIViewController {
                                                                                    injectionTime: script.injectionTime,
                                                                                    forMainFrameOnly: script.forMainFrameOnly))
             
-            if #available(iOS 14, *),
-               let replyHandler = script as? WKScriptMessageHandlerWithReply {
+            if let replyHandler = script as? WKScriptMessageHandlerWithReply {
                 script.messageNames.forEach { messageName in
                     webView.configuration.userContentController.addScriptMessageHandler(replyHandler, contentWorld: .page, name: messageName)
                 }
@@ -731,6 +737,10 @@ class TabViewController: UIViewController {
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
         if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
            ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+            
+            rulesCompiledCondition?.resolve()
+            rulesCompiledCondition = nil
+
             webView.configuration.userContentController.removeAllContentRuleLists()
             webView.configuration.userContentController.add(rules.rulesList)
             
@@ -947,6 +957,7 @@ class TabViewController: UIViewController {
         temporaryDownloadForPreviewedFile?.cancel()
         removeMessageHandlers()
         removeObservers()
+        rulesCompilationMonitor.tabWillClose(self)
     }
     
     @objc private func downloadDidFinish(_ notification: Notification) {
@@ -1073,8 +1084,9 @@ extension TabViewController: WKNavigationDelegate {
         NetworkLeaderboard.shared.incrementPagesLoaded()
         
         appRatingPrompt.registerUsage()
-        if appRatingPrompt.shouldPrompt() {
-            SKStoreReviewController.requestReview()
+        
+        if let scene = self.view.window?.windowScene, appRatingPrompt.shouldPrompt() {
+            SKStoreReviewController.requestReview(in: scene)
             appRatingPrompt.shown()
         }
     }
@@ -1384,10 +1396,17 @@ extension TabViewController: WKNavigationDelegate {
         }
         return nil
     }
-            
+    
+    
+    // swiftlint:disable function_body_length
+    // swiftlint:disable cyclomatic_complexity
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        
+        if let url = navigationAction.request.url, !appUrls.isDuckDuckGoSearch(url: url) {
+            waitUntilRulesAreCompiled()
+        }
         
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
@@ -1448,6 +1467,21 @@ extension TabViewController: WKNavigationDelegate {
             }
             decisionHandler(decision)
         }
+    }
+    // swiftlint:enable function_body_length
+    // swiftlint:enable cyclomatic_complexity
+    
+    private func waitUntilRulesAreCompiled() {
+        if contentBlockingAssetsInstalled {
+            rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
+        } else {
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
+            showProgressIndicator()
+            if let rulesCompiledCondition = rulesCompiledCondition {
+                RunLoop.current.run(until: rulesCompiledCondition)
+            }
+        }
+        rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
     }
     
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
@@ -1600,7 +1634,6 @@ extension TabViewController: WKNavigationDelegate {
         checkForReloadOnError()
     }
     
-    @available(iOS 14.0, *)
     private func showLoginDetails(with account: SecureVaultModels.WebsiteAccount) {
         if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
            let settingsController = navController.topViewController as? SettingsViewController {
@@ -1992,7 +2025,7 @@ extension TabViewController: SecureVaultManagerDelegate {
             return
         }
         
-        if #available(iOS 14, *), accounts.count > 0 {
+        if accounts.count > 0 {
             if !AutofillLoginPromptViewController.canAuthenticate {
                 Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
                 completionHandler(nil)
@@ -2042,9 +2075,7 @@ extension TabViewController: SaveLoginViewControllerDelegate {
                     ActionMessageView.present(message: message,
                                               actionTitle: UserText.autofillLoginSaveToastActionButton) {
                         
-                        if #available(iOS 14.0, *) {
-                            self.showLoginDetails(with: newCredential.account)
-                        }
+                        self.showLoginDetails(with: newCredential.account)
                     }
                 }
             }

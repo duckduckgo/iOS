@@ -21,7 +21,6 @@ import Foundation
 
 // swiftlint:disable file_length
 // swiftlint:disable identifier_name
-// swiftlint:disable type_body_length
 extension Pixel {
     
     public enum Event {
@@ -155,10 +154,6 @@ extension Pixel {
         case voiceSearchDone
         case openVoiceSearch
         case voiceSearchCancelled
-        
-        case emailDidShowWaitlistDialog
-        case emailDidPressWaitlistDialogDismiss
-        case emailDidPressWaitlistDialogNotifyMe
         
         case bookmarksFolderCreated
         
@@ -433,10 +428,6 @@ extension Pixel.Event {
         case .voiceSearchDone: return "m_voice_search_done"
         case .openVoiceSearch: return "m_open_voice_search"
         case .voiceSearchCancelled: return "m_voice_search_cancelled"
-            
-        case .emailDidShowWaitlistDialog: return "email_did_show_waitlist_dialog"
-        case .emailDidPressWaitlistDialogDismiss: return "email_did_press_waitlist_dialog_dismiss"
-        case .emailDidPressWaitlistDialogNotifyMe: return "email_did_press_waitlist_dialog_notify_me"
             
         case .bookmarksFolderCreated: return "m_bookmarks_folder_created"
             

@@ -74,11 +74,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private var shouldShowVoiceSearchCell: Bool {
-        if #available(iOS 15.0, *) {
-            return true
-        } else {
-            return false
-        }
+        AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
@@ -350,7 +346,25 @@ class SettingsViewController: UITableViewController {
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
-        AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(sender.isOn)
+        var enableVoiceSearch = sender.isOn
+        let isFirstTimeAskingForPermission = SpeechRecognizer.recordPermission == .undetermined
+        
+        SpeechRecognizer.requestMicAccess { permission in
+            if !permission {
+                enableVoiceSearch = false
+                sender.setOn(false, animated: true)
+                if !isFirstTimeAskingForPermission {
+                    self.showNoMicrophonePermissionAlert()
+                }
+            }
+            
+            AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(enableVoiceSearch)
+        }
+    }
+    
+    private func showNoMicrophonePermissionAlert() {
+        let alertController = NoMicPermissionAlert.buildAlert()
+        present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {

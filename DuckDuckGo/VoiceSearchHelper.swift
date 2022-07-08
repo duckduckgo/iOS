@@ -25,6 +25,7 @@ protocol VoiceSearchHelperProtocol {
     var isVoiceSearchEnabled: Bool { get }
     
     func enableVoiceSearch(_ enable: Bool)
+    func migrateSettingsFlagIfNecessary()
 }
 
 class VoiceSearchHelper: VoiceSearchHelperProtocol {
@@ -52,6 +53,18 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
         }
     }
     
+    func migrateSettingsFlagIfNecessary() {
+        // Users that allowed mic permission before we added voice search settings
+        // should be migrated to an enabled settings
+        // https://app.asana.com/0/0/1202533216912528/1202573665735222/f
+        
+        let settings = UserDefaults.app.object(forKey: UserDefaultsWrapper<Any>.Key.voiceSearchEnabled.rawValue) as? Bool
+    
+        if settings == nil && SpeechRecognizer.recordPermission == .granted {
+            enableVoiceSearch(true)
+        }
+    }
+    
     func enableVoiceSearch(_ enable: Bool) {
         AppDependencyProvider.shared.appSettings.voiceSearchEnabled = enable
         notifyAvailabilityChange()
@@ -76,3 +89,4 @@ extension VoiceSearchHelper: SpeechRecognizerDelegate {
 extension Notification.Name {
     public static let speechRecognizerDidChangeAvailability = Notification.Name("com.duckduckgo.app.SpeechRecognizerDidChangeAvailability")
 }
+

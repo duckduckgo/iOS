@@ -89,4 +89,3 @@ extension VoiceSearchHelper: SpeechRecognizerDelegate {
 extension Notification.Name {
     public static let speechRecognizerDidChangeAvailability = Notification.Name("com.duckduckgo.app.SpeechRecognizerDidChangeAvailability")
 }
-

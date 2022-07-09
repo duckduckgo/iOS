@@ -102,31 +102,19 @@ public class WebCacheManager {
         }
 
         cookieStore.getAllCookies { cookies in
-            let group = DispatchGroup()
-            cookies.forEach { cookie in
-                if domains.contains(where: { self.isCookie(cookie, matchingDomain: $0) }) {
-                    group.enter()
-                    cookieStore.delete(cookie) {
-                        group.leave()
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                DispatchQueue.concurrentPerform(iterations: cookies.count) { index in
+                    if domains.contains(where: { self.isCookie(cookies[index], matchingDomain: $0) }) {
+                        cookieStore.delete(cookies[index], completionHandler: nil)
                     }
                 }
-            }
-
-            DispatchQueue.global(qos: .userInitiated).async {
-                let result = group.wait(timeout: .now() + 5)
-
-                if result == .timedOut {
-                    Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
-                        PixelParameters.removeCookiesTimedOut: "1"
-                    ])
-                }
-
+                
                 DispatchQueue.main.async {
                     completion()
                 }
             }
         }
-
     }
 
     public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),

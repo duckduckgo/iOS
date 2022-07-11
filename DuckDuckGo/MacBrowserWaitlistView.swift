@@ -208,21 +208,14 @@ struct MacBrowserWaitlistInvitedView: View {
                         .foregroundColor(.macWaitlistText)
                         .lineSpacing(6)
                     
-                    if #available(iOS 14.0, *) {
-                        Text("duckduckgo.com/mac")
-                            .font(.proximaNovaBold17)
-                            .foregroundColor(.blue)
-                            .menuController(UserText.macWaitlistCopy) {
-                                action(.copyDownloadURLToPasteboard)
-                            }
-                            .fixedSize()
-                            .padding(.top, 6)
-                    } else {
-                        Text("duckduckgo.com/mac")
-                            .font(.proximaNovaBold17)
-                            .foregroundColor(.blue)
-                            .padding(.top, 6)
-                    }
+                    Text("duckduckgo.com/mac")
+                        .font(.proximaNovaBold17)
+                        .foregroundColor(.blue)
+                        .menuController(UserText.macWaitlistCopy) {
+                            action(.copyDownloadURLToPasteboard)
+                        }
+                        .fixedSize()
+                        .padding(.top, 6)
                     
                     Text(UserText.macWaitlistInviteScreenStep2Title)
                         .font(.proximaNovaBold17)
@@ -235,18 +228,12 @@ struct MacBrowserWaitlistInvitedView: View {
                         .foregroundColor(.macWaitlistText)
                         .lineSpacing(6)
                     
-                    if #available(iOS 14.0, *) {
-                        InviteCodeView(inviteCode: inviteCode)
-                            .menuController(UserText.macWaitlistCopy) {
-                                action(.copyInviteCodeToPasteboard)
-                            }
-                            .fixedSize()
-                            .padding(.top, 28)
-                    } else {
-                        InviteCodeView(inviteCode: inviteCode)
-                            .padding(.top, 28)
-                    }
-
+                    InviteCodeView(inviteCode: inviteCode)
+                        .menuController(UserText.macWaitlistCopy) {
+                            action(.copyInviteCodeToPasteboard)
+                        }
+                        .fixedSize()
+                        .padding(.top, 28)
                     
                     Spacer(minLength: 24)
                     
@@ -369,35 +356,31 @@ private struct ActivityIndicator: UIViewRepresentable {
 private struct MacBrowserWaitlistView_Previews: PreviewProvider {
     
     static var previews: some View {
-        if #available(iOS 14.0, *) {
-            Group {
-                PreviewView("Sign Up") {
-                    MacBrowserWaitlistSignUpView(requestInFlight: false) { _ in }
-                }
-                
-                PreviewView("Sign Up (API Request In Progress)") {
-                    MacBrowserWaitlistSignUpView(requestInFlight: true) { _ in }
-                }
-
-                PreviewView("Joined Waitlist (Notifications Allowed)") {
-                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationAllowed) { _ in }
-                }
-                
-                PreviewView("Joined Waitlist (Notifications Not Allowed)") {
-                    MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationsDisabled) { _ in }
-                }
-                
-                PreviewView("Invite Screen With Code") {
-                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
-                }
-                
-                if #available(iOS 15.0, *) {
-                    MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
-                    .previewInterfaceOrientation(.landscapeLeft)
-                }
+        Group {
+            PreviewView("Sign Up") {
+                MacBrowserWaitlistSignUpView(requestInFlight: false) { _ in }
             }
-        } else {
-            Text("Use iOS 14+ simulator")
+            
+            PreviewView("Sign Up (API Request In Progress)") {
+                MacBrowserWaitlistSignUpView(requestInFlight: true) { _ in }
+            }
+            
+            PreviewView("Joined Waitlist (Notifications Allowed)") {
+                MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationAllowed) { _ in }
+            }
+            
+            PreviewView("Joined Waitlist (Notifications Not Allowed)") {
+                MacBrowserWaitlistJoinedWaitlistView(notificationState: .notificationsDisabled) { _ in }
+            }
+            
+            PreviewView("Invite Screen With Code") {
+                MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
+            }
+            
+            if #available(iOS 15.0, *) {
+                MacBrowserWaitlistInvitedView(inviteCode: "T3STC0DE") { _ in }
+                    .previewInterfaceOrientation(.landscapeLeft)
+            }
         }
     }
     
@@ -412,15 +395,10 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
         
         var body: some View {
             NavigationView {
-                if #available(iOS 14.0, *) {
-                    content()
-                        .navigationTitle("DuckDuckGo Desktop App")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .overlay(Divider(), alignment: .top)
-                } else {
-                    content()
-                }
-
+                content()
+                    .navigationTitle("DuckDuckGo Desktop App")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .overlay(Divider(), alignment: .top)
             }
             .previewDisplayName(title)
         }

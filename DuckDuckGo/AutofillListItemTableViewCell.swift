@@ -21,7 +21,6 @@ import UIKit
 import SwiftUI
 import DuckUI
 
-@available(iOS 14.0, *)
 class AutofillListItemTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)

@@ -108,7 +108,6 @@ class OmniBar: UIView {
     }
     
     private func enableInteractionsWithPointer() {
-        guard #available(iOS 13.4, *) else { return }
         backButton.isPointerInteractionEnabled = true
         forwardButton.isPointerInteractionEnabled = true
         settingsButton.isPointerInteractionEnabled = true

@@ -28,7 +28,8 @@ class FaviconsTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        UserDefaults.clearStandard()
+        setupUserDefault(with: #file)
+
         BookmarkUserDefaults().bookmarks = []
         BookmarkUserDefaults().favorites = []
 
@@ -141,6 +142,30 @@ class FaviconsTests: XCTestCase {
 
         waitForExpectations(timeout: 10.0, handler: nil)
     }
+
+	func testWhenProvidedImageThenSizeIsValid() {
+		guard let image = UIImage(named: "Logo") else {
+			XCTFail("Failed to load image needed for test")
+			return
+		}
+
+		XCTAssertTrue(favicons.isValidImage(image, forMaxSize: CGSize(width: 128.0, height: 128.0)))
+		XCTAssertFalse(favicons.isValidImage(image, forMaxSize: CGSize(width: 64.0, height: 64.0)))
+	}
+
+	func testWhenProvidedImageThenImageIsResized() {
+		guard let image = UIImage(named: "Logo") else {
+			XCTFail("Failed to load image needed for test")
+			return
+		}
+
+		let size = CGSize(width: 64, height: 64)
+		XCTAssertTrue(image.size != size)
+
+		let resizedImage = favicons.resizedImage(image, toSize: size)
+		XCTAssertTrue(resizedImage.size == size)
+	}
+
 }
 
 struct MockSourcesProvider: FaviconSourcesProvider {

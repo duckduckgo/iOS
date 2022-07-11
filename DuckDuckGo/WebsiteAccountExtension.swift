@@ -1,5 +1,5 @@
 //
-//  AutofillFeatureFlagging.swift
+//  WebsiteAccountExtension.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -20,12 +20,12 @@
 import Foundation
 import BrowserServicesKit
 
-extension ContentScopeFeatureToggles {
-    
-    static let supportedFeaturesOniOS = ContentScopeFeatureToggles(emailProtection: true,
-                                                                   credentialsAutofill: false,
-                                                                   identitiesAutofill: false,
-                                                                   creditCardsAutofill: false,
-                                                                   credentialsSaving: false,
-                                                                   passwordGeneration: false)
+extension SecureVaultModels.WebsiteAccount {
+    var name: String {
+        if let title = self.title, !title.isEmpty {
+            return title
+        } else {
+            return self.domain.dropPrefix(prefix: "www.")
+        }
+    }
 }

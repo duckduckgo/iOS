@@ -48,7 +48,7 @@ public class CookieStorage {
         return storedCookies
     }
 
-    public init(userDefaults: UserDefaults = UserDefaults.standard) {
+    public init(userDefaults: UserDefaults = UserDefaults.app) {
         self.userDefaults = userDefaults
     }
 

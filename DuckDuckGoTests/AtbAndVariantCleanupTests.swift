@@ -36,7 +36,7 @@ class AtbAndVariantCleanupTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        UserDefaults.clearStandard()
+        setupUserDefault(with: #file)
     }
 
     func testWhenAtbHasVariantThenAtbStoredWithVariantRemoved() {

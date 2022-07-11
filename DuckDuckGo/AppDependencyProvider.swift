@@ -23,6 +23,8 @@ import Core
 protocol DependencyProvider {
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
+    var featureFlagger: FeatureFlagger { get }
+    var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider { get }
     var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCacheProvider { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
@@ -36,6 +38,15 @@ class AppDependencyProvider: DependencyProvider {
     
     let appSettings: AppSettings = AppUserDefaults()
     let variantManager: VariantManager = DefaultVariantManager()
+    
+    private let defaultFeatureFlagger = DefaultFeatureFlagger()
+    var featureFlagger: FeatureFlagger {
+        return defaultFeatureFlagger
+    }
+    var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider {
+        return defaultFeatureFlagger
+    }
+    
     lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager)
     let storageCache = StorageCacheProvider()
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()

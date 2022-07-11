@@ -937,6 +937,15 @@ public class BookmarksCoreDataStorageMigration {
         }
         
         context.performAndWait {
+            let countRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: BookmarksCoreDataStorage.Constants.folderClassName)
+            countRequest.fetchLimit = 1
+            let result = (try? context.count(for: countRequest)) ?? 0
+            
+            guard result == 0 else {
+                // Already migrated
+                return
+            }
+            
             let favoritesFolder = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(context)
             let bookmarksFolder = BookmarksCoreDataStorage.rootFolderManagedObject(context)
             

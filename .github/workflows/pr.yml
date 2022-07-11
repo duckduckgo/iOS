@@ -44,7 +44,6 @@ jobs:
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3
-      if: always() # always run even if the previous step fails
       with:
         report_paths: unittests.xml
 

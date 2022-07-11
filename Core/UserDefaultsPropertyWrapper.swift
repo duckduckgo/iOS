@@ -73,6 +73,12 @@ public struct UserDefaultsWrapper<T> {
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"
         case unseenDownloadsAvailable = "com.duckduckgo.app.unseenDownloadsAvailable"
         
+        case lastCompiledRules = "com.duckduckgo.app.lastCompiledRules"
+
+        case autofill = "com.duckduckgo.ios.autofill"
+        case autofillSaveModalRejectionCount = "com.duckduckgo.ios.autofillSaveModalRejectionCount"
+        case autofillFirstTimeUser = "com.duckduckgo.ios.autofillFirstTimeUser"
+        
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
 
     }

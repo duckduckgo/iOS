@@ -296,7 +296,7 @@
 "dax.hide.title" = "Kalan ipuçları gizlensin mi?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "DuckDuckGo aramalarınız anonimdir ve arama geçmişiniz asla saklanmaz. Asla. 🙌";
+"dax.onboarding.browsing.after.search" = "DuckDuckGo aramalarınız anonimdir. Her zaman. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Uf!";

@@ -296,7 +296,7 @@
 "dax.hide.title" = "Verbleibende Tipps ausblenden?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Deine DuckDuckGo-Suchanfragen sind anonym und ich speichere niemals deinen Suchverlauf. Nie. 🙌";
+"dax.onboarding.browsing.after.search" = "Deine DuckDuckGo-Suchanfragen sind anonym. Immer. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Puh!";

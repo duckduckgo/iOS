@@ -21,6 +21,7 @@ import Foundation
 
 public enum Feature: String {
     case debugMenu
+    case autofill
 }
 
 public protocol FeatureFlagger {
@@ -31,7 +32,8 @@ public protocol FeatureFlaggerInternalUserDecider {
     
     var isInternalUser: Bool { get }
     
-    func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?)
+    @discardableResult
+    func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool
 }
 
 public class DefaultFeatureFlagger: FeatureFlagger {
@@ -42,6 +44,12 @@ public class DefaultFeatureFlagger: FeatureFlagger {
         switch feature {
         case .debugMenu:
             return isInternalUser
+        case .autofill:
+            if isInternalUser {
+                return true
+            } else {
+                return false
+            }
         }
     }
     
@@ -58,14 +66,20 @@ extension DefaultFeatureFlagger: FeatureFlaggerInternalUserDecider {
         return didVerifyInternalUser
     }
     
-    private static let internalUserVerificationURLHost = "login.duckduckgo.com"
+    private static let internalUserVerificationURLHost = "use-login.duckduckgo.com"
     
-    public func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) {
+    @discardableResult
+    public func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {
         if isInternalUser { // If we're already an internal user, we don't need to do anything
-            return
+            return false
         }
         
-        didVerifyInternalUser = shouldMarkUserAsInternal(forUrl: url, statusCode: response?.statusCode)
+        if shouldMarkUserAsInternal(forUrl: url, statusCode: response?.statusCode) {
+            didVerifyInternalUser = true
+            Pixel.fire(pixel: .featureFlaggingInternalUserAuthenticated)
+            return true
+        }
+        return false
     }
     
     func shouldMarkUserAsInternal(forUrl url: URL?, statusCode: Int?) -> Bool {

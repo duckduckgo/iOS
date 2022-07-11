@@ -22,11 +22,20 @@ import BrowserServicesKit
 
 extension ContentScopeFeatureToggles {
     
-    static let supportedFeaturesOniOS = ContentScopeFeatureToggles(emailProtection: true,
-                                                                   credentialsAutofill: false,
-                                                                   identitiesAutofill: false,
-                                                                   creditCardsAutofill: false,
-                                                                   credentialsSaving: false,
-                                                                   passwordGeneration: false,
-                                                                   inlineIconCredentials: false)
+    static let featureFlagger = AppDependencyProvider.shared.featureFlagger
+    static let appSettings = AppDependencyProvider.shared.appSettings
+    
+    static var isCredentialsAutofillEnabled: Bool {
+        featureFlagger.isFeatureOn(.autofill) && appSettings.autofill
+    }
+    
+    static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
+        ContentScopeFeatureToggles(emailProtection: true,
+                                   credentialsAutofill: isCredentialsAutofillEnabled,
+                                   identitiesAutofill: false,
+                                   creditCardsAutofill: false,
+                                   credentialsSaving: isCredentialsAutofillEnabled,
+                                   passwordGeneration: false,
+                                   inlineIconCredentials: false)
+    }
 }

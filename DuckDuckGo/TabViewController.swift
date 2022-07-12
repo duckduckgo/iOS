@@ -110,7 +110,8 @@ class TabViewController: UIViewController {
     
     var temporaryDownloadForPreviewedFile: Download?
     var mostRecentAutoPreviewDownloadID: UUID?
-    
+    private var blobDownloadTargetFrame: WKFrameInfo?
+
     var contentBlockingAssetsInstalled: Bool {
         ContentBlocking.contentBlockingManager.currentTDSRules != nil
     }
@@ -255,7 +256,7 @@ class TabViewController: UIViewController {
         addTextSizeObserver()
         addDuckDuckGoEmailSignOutObserver()
         addAutofillEnabledObserver()
-        registerForNotifications()
+        registerForDownloadsNotifications()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -296,7 +297,7 @@ class TabViewController: UIViewController {
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
         autofillUserScript = createAutofillUserScript()
-        
+
         userScripts = [
             debugScript,
             textSizeUserScript,
@@ -398,17 +399,6 @@ class TabViewController: UIViewController {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
-    }
-    
-    private func registerForNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(downloadDidStart),
-                                               name: .downloadStarted,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self, selector:
-                                                #selector(downloadDidFinish),
-                                               name: .downloadFinished,
-                                               object: nil)
     }
 
     private func consumeCookiesThenLoadRequest(_ request: URLRequest?) {
@@ -959,65 +949,10 @@ class TabViewController: UIViewController {
         removeObservers()
         rulesCompilationMonitor.tabWillClose(self)
     }
-    
-    @objc private func downloadDidFinish(_ notification: Notification) {
-        if let error = notification.userInfo?[DownloadManager.UserInfoKeys.error] as? Error {
-            let nserror = error as NSError
-            let downloadWasCancelled = nserror.domain == "NSURLErrorDomain" && nserror.code == -999
-            
-            if !downloadWasCancelled {
-                ActionMessageView.present(message: UserText.messageDownloadFailed)
-            }
-            
-            return
-        }
-        
-        guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download else { return }
-        
-        DispatchQueue.main.async {
-            if !download.temporary {
-                let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(for: download)
-                ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow) {
-                    Pixel.fire(pixel: .downloadsListOpened,
-                               withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
-                    self.delegate?.tabDidRequestDownloads(tab: self)
-                }
-            } else {
-                self.previewDownloadedFileIfNecessary(download)
-            }
-        }
-    }
-    
-    @objc private func downloadDidStart(_ notification: Notification) {
-        guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download,
-                  !download.temporary else { return }
-        
-        let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(for: download)
-        
-        DispatchQueue.main.async {
-            ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow) {
-                Pixel.fire(pixel: .downloadsListOpened,
-                           withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
-                self.delegate?.tabDidRequestDownloads(tab: self)
-            }
-        }
-    }
 
-    private func previewDownloadedFileIfNecessary(_ download: Download) {
-        guard let delegate = self.delegate,
-              delegate.tabCheckIfItsBeingCurrentlyPresented(self),
-              FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
-              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self)
-        else { return }
-        
-        if mostRecentAutoPreviewDownloadID == download.id {
-            fileHandler.preview()
-        } else {
-            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
-        }
-    }
 }
 
+// MARK: - LoginFormDetectionDelegate
 extension TabViewController: LoginFormDetectionDelegate {
     
     func loginFormDetectionUserScriptDetectedLoginForm(_ script: LoginFormDetectionUserScript) {
@@ -1026,6 +961,7 @@ extension TabViewController: LoginFormDetectionDelegate {
     
 }
 
+// MARK: - WKNavigationDelegate
 extension TabViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView,
@@ -1058,7 +994,7 @@ extension TabViewController: WKNavigationDelegate {
         if let url = webView.url {
             instrumentation.willLoad(url: url)
         }
-                
+
         url = webView.url
         let tld = storageCache.tld
         let httpsForced = tld.domain(lastUpgradedURL?.host) == tld.domain(webView.url?.host)
@@ -1091,89 +1027,47 @@ extension TabViewController: WKNavigationDelegate {
         }
     }
 
-    // swiftlint:disable function_body_length
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
-        
+
         let httpResponse = navigationResponse.response as? HTTPURLResponse
         let isSuccessfulResponse = (httpResponse?.validateStatusCode(statusCode: 200..<300) == nil)
-        
+
         let didMarkAsInternal = featureFlaggerInternalUserDecider.markUserAsInternalIfNeeded(forUrl: webView.url, response: httpResponse)
         if didMarkAsInternal {
             reloadUserScripts()
         }
 
-        if let scheme = navigationResponse.response.url?.scheme, scheme.hasPrefix("blob") {
-            Pixel.fire(pixel: .downloadAttemptToOpenBLOB)
-        }
-      
         if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-            setupOrClearTemporaryDownload(for: navigationResponse)
-            url = webView.url
-            decisionHandler(.allow)
+            self.url = webView.url
+            setupOrClearTemporaryDownload(for: navigationResponse.response, completion: decisionHandler)
+
         } else if isSuccessfulResponse {
-            let downloadManager = AppDependencyProvider.shared.downloadManager
-            
-            let startDownload: () -> Download? = {
-                let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-                if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
-                    downloadManager.startDownload(download)
-                    return download
-                } else {
-                    return nil
-                }
-            }
-            
             if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-                let download = startDownload()
+                let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
                 mostRecentAutoPreviewDownloadID = download?.id
                 Pixel.fire(pixel: .downloadStarted,
                            withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "1"])
-            } else {
-                if let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse) {
-                    let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
-                        _ = startDownload()
-                        Pixel.fire(pixel: .downloadStarted,
-                                   withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "0"])
-                        
-                        if downloadMetadata.mimeType != .octetStream {
-                            let mimeType = downloadMetadata.mimeTypeSource
-                            Pixel.fire(pixel: .downloadStartedDueToUnhandledMIMEType,
-                                       withAdditionalParameters: [PixelParameters.mimeType: mimeType])
-                        }
-                    }
-                    DispatchQueue.main.async {
-                        self.present(alert, animated: true, completion: nil)
-                    }
+            } else if #available(iOS 14.5, *),
+                      let url = navigationResponse.response.url,
+                      case .blob = SchemeHandler.schemeType(for: url) {
+                decisionHandler(.download)
+
+            } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager
+                .downloadMetaData(for: navigationResponse.response) {
+
+                self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                    self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+                } cancelHandler: {
+                    decisionHandler(.cancel)
                 }
             }
-        
-            decisionHandler(.cancel)
+
         } else {
             // MIME type should trigger download but response has no 2xx status code
             decisionHandler(.allow)
-        }
-    }
-    // swiftlint:enable function_body_length
-    
-    /*
-     Some files might be previewed by webkit but in order to share them
-     we need to download them first.
-     This method stores the temporary download or clears it if necessary
-     */
-    private func setupOrClearTemporaryDownload(for navigationResponse: WKNavigationResponse) {
-        let downloadManager = AppDependencyProvider.shared.downloadManager
-        
-        if let downloadMetaData = downloadManager.downloadMetaData(for: navigationResponse), !downloadMetaData.mimeType.isHTML {
-            let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
-            temporaryDownloadForPreviewedFile = downloadManager.makeDownload(navigationResponse: navigationResponse,
-                                                                             cookieStore: cookieStore,
-                                                                             temporary: true)
-        } else {
-            temporaryDownloadForPreviewedFile?.cancel()
-            temporaryDownloadForPreviewedFile = nil
         }
     }
     
@@ -1240,9 +1134,9 @@ extension TabViewController: WKNavigationDelegate {
 
         guard let siteRating = self.siteRating,
               !isShowingFullScreenDaxDialog else {
-                            
-                scheduleTrackerNetworksAnimation(collapsing: true)
-                return
+
+            scheduleTrackerNetworksAnimation(collapsing: true)
+            return
         }
         
         if let url = link?.url, AppUrls().isDuckDuckGoEmailProtection(url: url) {
@@ -1334,8 +1228,8 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if let url = url,
-            let domain = url.host,
-            error.code == Constants.frameLoadInterruptedErrorCode {
+           let domain = url.host,
+           error.code == Constants.frameLoadInterruptedErrorCode {
             // prevent loops where a site keeps redirecting to itself (e.g. bbc)
             failingUrls.insert(domain)
 
@@ -1396,18 +1290,17 @@ extension TabViewController: WKNavigationDelegate {
         }
         return nil
     }
-    
-    
+
     // swiftlint:disable function_body_length
     // swiftlint:disable cyclomatic_complexity
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
+
         if let url = navigationAction.request.url, !appUrls.isDuckDuckGoSearch(url: url) {
             waitUntilRulesAreCompiled()
         }
-        
+
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
         if navigationAction.navigationType == .linkActivated {
@@ -1439,7 +1332,7 @@ extension TabViewController: WKNavigationDelegate {
             load(urlRequest: request)
             return
         }
-            
+
         if navigationAction.navigationType == .linkActivated,
            let url = navigationAction.request.url,
            let modifierFlags = delegate?.tabWillRequestNewTab(self) {
@@ -1470,7 +1363,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     // swiftlint:enable function_body_length
     // swiftlint:enable cyclomatic_complexity
-    
+
     private func waitUntilRulesAreCompiled() {
         if contentBlockingAssetsInstalled {
             rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
@@ -1483,7 +1376,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
     }
-    
+
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
         
@@ -1514,7 +1407,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         let schemeType = SchemeHandler.schemeType(for: url)
-        
+        self.blobDownloadTargetFrame = nil
         switch schemeType {
         case .navigational:
             performNavigationFor(url: url,
@@ -1525,7 +1418,10 @@ extension TabViewController: WKNavigationDelegate {
         case .external(let action):
             performExternalNavigationFor(url: url, action: action)
             completion(.cancel)
-            
+
+        case .blob:
+            performBlobNavigation(navigationAction, completion: completion)
+
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
                 openExternally(url: url)
@@ -1535,7 +1431,7 @@ extension TabViewController: WKNavigationDelegate {
             completion(.cancel)
         }
     }
-    
+
     private func performNavigationFor(url: URL,
                                       navigationAction: WKNavigationAction,
                                       allowPolicy: WKNavigationActionPolicy,
@@ -1649,12 +1545,324 @@ extension TabViewController: WKNavigationDelegate {
     }
 }
 
+// MARK: - Downloads
+extension TabViewController {
+
+    private func performBlobNavigation(_ navigationAction: WKNavigationAction,
+                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard #available(iOS 14.5, *) else {
+            Pixel.fire(pixel: .downloadAttemptToOpenBLOBviaJS)
+            self.legacySetupBlobDownload(for: navigationAction) {
+                completion(.allow)
+            }
+            return
+        }
+
+        self.blobDownloadTargetFrame = navigationAction.targetFrame
+        completion(.allow)
+    }
+
+    @discardableResult
+    private func startDownload(with navigationResponse: WKNavigationResponse,
+                               decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) -> Download? {
+        let downloadManager = AppDependencyProvider.shared.downloadManager
+        let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+        let url = navigationResponse.response.url!
+
+        if case .blob = SchemeHandler.schemeType(for: url) {
+            if #available(iOS 14.5, *) {
+                decisionHandler(.download)
+
+                return nil
+
+            // [iOS<14.5 legacy] reuse temporary download for blob: initiated by WKNavigationAction
+            } else if let download = self.temporaryDownloadForPreviewedFile,
+                      download.temporary,
+                      download.url == navigationResponse.response.url {
+                self.temporaryDownloadForPreviewedFile = nil
+                download.temporary = FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType)
+                downloadManager.startDownload(download)
+
+                decisionHandler(.cancel)
+
+                return download
+            }
+        } else if let download = downloadManager.makeDownload(navigationResponse: navigationResponse, cookieStore: cookieStore) {
+            downloadManager.startDownload(download)
+            decisionHandler(.cancel)
+
+            return download
+        }
+
+        decisionHandler(.cancel)
+        return nil
+    }
+
+    /*
+     Some files might be previewed by webkit but in order to share them
+     we need to download them first.
+     This method stores the temporary download or clears it if necessary
+     */
+    private func setupOrClearTemporaryDownload(for response: URLResponse,
+                                               completion: @escaping (WKNavigationResponsePolicy) -> Void) {
+        let downloadManager = AppDependencyProvider.shared.downloadManager
+        guard let url = response.url,
+              let downloadMetaData = downloadManager.downloadMetaData(for: response),
+              !downloadMetaData.mimeType.isHTML
+        else {
+            temporaryDownloadForPreviewedFile?.cancel()
+            temporaryDownloadForPreviewedFile = nil
+            completion(.allow)
+            return
+        }
+        guard SchemeHandler.schemeType(for: url) != .blob else {
+            // suggestedFilename is empty for blob: downloads unless handled via completion(.download)
+            // WKNavigationResponse._downloadAttribute private API could be used instead of it :(
+            if #available(iOS 14.5, *),
+               // if temporary download not setup yet, preview otherwise
+               self.temporaryDownloadForPreviewedFile?.url != url {
+                // calls webView:navigationAction:didBecomeDownload:
+                completion(.download)
+            } else {
+                completion(.allow)
+                self.blobDownloadTargetFrame = nil
+            }
+            return
+        }
+
+        let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
+        temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
+                                                                         cookieStore: cookieStore,
+                                                                         temporary: true)
+        completion(.allow)
+    }
+
+    @available(iOS 14.5, *)
+    func webView(_ webView: WKWebView, navigationResponse: WKNavigationResponse, didBecome download: WKDownload) {
+        let delegate = InlineWKDownloadDelegate()
+        // temporary delegate held strongly in callbacks
+        // after destination decision WKDownload delegate will be set
+        // to a WKDownloadSession and passed to Download Manager
+        delegate.decideDestinationCallback = { [weak self] _, response, suggestedFilename, callback in
+            withExtendedLifetime(delegate) {
+                let downloadManager = AppDependencyProvider.shared.downloadManager
+                guard let self = self,
+                      let downloadMetadata = downloadManager.downloadMetaData(for: navigationResponse.response,
+                                                                              suggestedFilename: suggestedFilename)
+                else {
+                    callback(nil)
+                    return
+                }
+
+                let isTemporary = navigationResponse.canShowMIMEType
+                    || FilePreviewHelper.canAutoPreviewMIMEType(downloadMetadata.mimeType)
+                if isTemporary {
+                    // restart blob request loading for preview that was interrupted by .download callback
+                    if navigationResponse.canShowMIMEType {
+                        self.webView.load(navigationResponse.response.url!, in: self.blobDownloadTargetFrame)
+                    }
+                    callback(self.transfer(download,
+                                           to: downloadManager,
+                                           with: navigationResponse.response,
+                                           suggestedFilename: suggestedFilename,
+                                           isTemporary: isTemporary))
+
+                } else {
+                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                        callback(self.transfer(download,
+                                               to: downloadManager,
+                                               with: navigationResponse.response,
+                                               suggestedFilename: suggestedFilename,
+                                               isTemporary: isTemporary))
+                    } cancelHandler: {
+                        callback(nil)
+                    }
+
+                    self.temporaryDownloadForPreviewedFile = nil
+                }
+
+                delegate.decideDestinationCallback = nil
+                delegate.downloadDidFailCallback = nil
+                self.blobDownloadTargetFrame = nil
+            }
+        }
+        delegate.downloadDidFailCallback = { _, _, _ in
+            withExtendedLifetime(delegate) {
+                delegate.decideDestinationCallback = nil
+                delegate.downloadDidFailCallback = nil
+            }
+        }
+        download.delegate = delegate
+    }
+
+    @available(iOS 14.5, *)
+    private func transfer(_ download: WKDownload,
+                          to downloadManager: DownloadManager,
+                          with response: URLResponse,
+                          suggestedFilename: String,
+                          isTemporary: Bool) -> URL? {
+
+        let downloadSession = WKDownloadSession(download)
+        let download = downloadManager.makeDownload(response: response,
+                                                    suggestedFilename: suggestedFilename,
+                                                    downloadSession: downloadSession,
+                                                    cookieStore: nil,
+                                                    temporary: isTemporary)
+
+        self.temporaryDownloadForPreviewedFile = isTemporary ? download : nil
+        if let download = download {
+            downloadManager.startDownload(download)
+        }
+
+        return downloadSession.localURL
+    }
+
+    private func presentSaveToDownloadsAlert(with downloadMetadata: DownloadMetadata,
+                                             saveToDownloadsHandler: @escaping () -> Void,
+                                             cancelHandler: @escaping (() -> Void)) {
+        let alert = SaveToDownloadsAlert.makeAlert(downloadMetadata: downloadMetadata) {
+            Pixel.fire(pixel: .downloadStarted,
+                       withAdditionalParameters: [PixelParameters.canAutoPreviewMIMEType: "0"])
+
+            if downloadMetadata.mimeType != .octetStream {
+                let mimeType = downloadMetadata.mimeTypeSource
+                Pixel.fire(pixel: .downloadStartedDueToUnhandledMIMEType,
+                           withAdditionalParameters: [PixelParameters.mimeType: mimeType])
+            }
+
+            saveToDownloadsHandler()
+        } cancelHandler: {
+            cancelHandler()
+        }
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+
+    private func legacySetupBlobDownload(for navigationAction: WKNavigationAction, completion: @escaping () -> Void) {
+        guard #available(iOS 14.0, *) else { completion(); return }
+
+        let url = navigationAction.request.url!
+        let legacyBlobDownloadScript = """
+            let blob = await fetch(url).then(r => r.blob())
+            let data = await new Promise((resolve, reject) => {
+              const fileReader = new FileReader();
+              fileReader.onerror = (e) => reject(fileReader.error);
+              fileReader.onloadend = (e) => {
+                resolve(e.target.result.split(",")[1])
+              };
+              fileReader.readAsDataURL(blob);
+            })
+            return {
+                mimeType: blob.type,
+                size: blob.size,
+                data: data
+            }
+        """
+        webView.callAsyncJavaScript(legacyBlobDownloadScript,
+                                    arguments: ["url": url.absoluteString],
+                                    in: navigationAction.sourceFrame,
+                                    in: .page) { [weak self] result in
+            guard let self = self,
+                  let dict = try? result.get() as? [String: Any],
+                  let mimeType = dict["mimeType"] as? String,
+                  let size = dict["size"] as? Int,
+                  let data = dict["data"] as? String
+            else {
+                completion()
+                return
+            }
+
+            let downloadManager = AppDependencyProvider.shared.downloadManager
+            let downloadSession = Base64DownloadSession(base64: data)
+            let response = URLResponse(url: url, mimeType: mimeType, expectedContentLength: size, textEncodingName: nil)
+            self.temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
+                                                                                  downloadSession: downloadSession,
+                                                                                  cookieStore: nil,
+                                                                                  temporary: true)
+            completion()
+        }
+    }
+
+    private func registerForDownloadsNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(downloadDidStart),
+                                               name: .downloadStarted,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector:
+                                                #selector(downloadDidFinish),
+                                               name: .downloadFinished,
+                                               object: nil)
+    }
+
+    @objc private func downloadDidStart(_ notification: Notification) {
+        guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download,
+              !download.temporary
+        else { return }
+
+        let attributedMessage = DownloadActionMessageViewHelper.makeDownloadStartedMessage(for: download)
+
+        DispatchQueue.main.async {
+            ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow) {
+                Pixel.fire(pixel: .downloadsListOpened,
+                           withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
+                self.delegate?.tabDidRequestDownloads(tab: self)
+            }
+        }
+    }
+
+    @objc private func downloadDidFinish(_ notification: Notification) {
+        if let error = notification.userInfo?[DownloadManager.UserInfoKeys.error] as? Error {
+            let nserror = error as NSError
+            let downloadWasCancelled = nserror.domain == "NSURLErrorDomain" && nserror.code == -999
+
+            if !downloadWasCancelled {
+                ActionMessageView.present(message: UserText.messageDownloadFailed)
+            }
+
+            return
+        }
+
+        guard let download = notification.userInfo?[DownloadManager.UserInfoKeys.download] as? Download else { return }
+
+        DispatchQueue.main.async {
+            if !download.temporary {
+                let attributedMessage = DownloadActionMessageViewHelper.makeDownloadFinishedMessage(for: download)
+                ActionMessageView.present(message: attributedMessage, numberOfLines: 2, actionTitle: UserText.actionGenericShow) {
+                    Pixel.fire(pixel: .downloadsListOpened,
+                               withAdditionalParameters: [PixelParameters.originatedFromMenu: "0"])
+                    self.delegate?.tabDidRequestDownloads(tab: self)
+                }
+            } else {
+                self.previewDownloadedFileIfNecessary(download)
+            }
+        }
+    }
+
+    private func previewDownloadedFileIfNecessary(_ download: Download) {
+        guard let delegate = self.delegate,
+              delegate.tabCheckIfItsBeingCurrentlyPresented(self),
+              FilePreviewHelper.canAutoPreviewMIMEType(download.mimeType),
+              let fileHandler = FilePreviewHelper.fileHandlerForDownload(download, viewController: self)
+        else { return }
+
+        if mostRecentAutoPreviewDownloadID == download.id {
+            fileHandler.preview()
+        } else {
+            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
+        }
+    }
+
+}
+
+// MARK: - PrivacyProtectionDelegate
 extension TabViewController: PrivacyProtectionDelegate {
     func omniBarTextTapped() {
         chromeDelegate?.omniBar.becomeFirstResponder()
     }
 }
 
+// MARK: - WKUIDelegate
 extension TabViewController: WKUIDelegate {
 
     public func webView(_ webView: WKWebView,
@@ -1729,6 +1937,7 @@ extension TabViewController: WKUIDelegate {
     }
 }
 
+// MARK: - UIPopoverPresentationControllerDelegate
 extension TabViewController: UIPopoverPresentationControllerDelegate {
 
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
@@ -1736,6 +1945,7 @@ extension TabViewController: UIPopoverPresentationControllerDelegate {
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
 extension TabViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if isShowBarsTap(gestureRecognizer) {
@@ -1794,6 +2004,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 }
 
+// MARK: - ContentBlockerRulesUserScriptDelegate
 extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
     func contentBlockerRulesUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
@@ -1833,6 +2044,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     }
 }
 
+// MARK: - SurrogatesUserScriptDelegate
 extension TabViewController: SurrogatesUserScriptDelegate {
 
     func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
@@ -1850,6 +2062,7 @@ extension TabViewController: SurrogatesUserScriptDelegate {
 
 }
 
+// MARK: - FaviconUserScriptDelegate
 extension TabViewController: FaviconUserScriptDelegate {
     
     func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String? {
@@ -1862,6 +2075,7 @@ extension TabViewController: FaviconUserScriptDelegate {
     
 }
 
+// MARK: - PrintingUserScriptDelegate
 extension TabViewController: PrintingUserScriptDelegate {
 
     func printingUserScriptDidRequestPrintController(_ script: PrintingUserScript) {
@@ -1872,6 +2086,7 @@ extension TabViewController: PrintingUserScriptDelegate {
 
 }
 
+// MARK: - EmailManagerAliasPermissionDelegate
 extension TabViewController: EmailManagerAliasPermissionDelegate {
 
     func emailManager(_ emailManager: EmailManager,
@@ -1933,6 +2148,7 @@ extension TabViewController: EmailManagerAliasPermissionDelegate {
 
 }
 
+// MARK: - EmailManagerRequestDelegate
 extension TabViewController: EmailManagerRequestDelegate {
 
     // swiftlint:disable function_parameter_count
@@ -1958,6 +2174,7 @@ extension TabViewController: EmailManagerRequestDelegate {
 
 }
 
+// MARK: - Themable
 extension TabViewController: Themable {
 
     func decorate(with theme: Theme) {
@@ -1976,6 +2193,7 @@ extension TabViewController: Themable {
     
 }
 
+// MARK: - NSError+failedUrl
 extension NSError {
 
     var failedUrl: URL? {
@@ -2097,6 +2315,15 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
         viewController.dismiss(animated: true)
     }
+}
+
+extension WKWebView {
+
+    @available(iOS 14.0, *)
+    func load(_ url: URL, in frame: WKFrameInfo?) {
+        evaluateJavaScript("window.location.href='" + url.absoluteString + "'", in: frame, in: .page)
+    }
+
 }
 
 // swiftlint:enable file_length

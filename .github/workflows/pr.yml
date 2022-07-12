@@ -37,7 +37,7 @@ jobs:
 
     - name: Build and test
       run: |
-        xcodebuild test \
+        set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 8" \
           | xcpretty -r junit -o unittests.xml

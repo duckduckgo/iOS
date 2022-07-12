@@ -1818,7 +1818,7 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
 extension MainViewController {
 
     private func refreshBackForwardMenuItems() {
-        guard let currentTab = currentTab, #available(iOS 14.0, *) else {
+        guard let currentTab = currentTab else {
             return
         }
         
@@ -1831,14 +1831,12 @@ extension MainViewController {
         forwardButton.menu = forwardMenu
     }
 
-    @available(iOS 14.0, *)
     private func historyMenu(with backForwardList: [WKBackForwardListItem]) -> UIMenu {
         let historyItemList = backForwardList.map { BackForwardMenuHistoryItem(backForwardItem: $0) }
         let actions = historyMenuButton(with: historyItemList)
         return UIMenu(title: "", children: actions)
     }
     
-    @available(iOS 14.0, *)
     private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
         let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
             

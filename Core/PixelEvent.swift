@@ -195,7 +195,7 @@ extension Pixel {
         case downloadsSharingPredownloadedLocalFile
         
         case downloadPreparingToStart
-        case downloadAttemptToOpenBLOB
+        case downloadAttemptToOpenBLOBviaJS
         
         case jsAlertShown
         case jsAlertBlocked
@@ -473,7 +473,7 @@ extension Pixel.Event {
         case .downloadsSharingPredownloadedLocalFile: return "m_downloads_sharing_predownloaded_local_file"
             
         case .downloadPreparingToStart: return "m_download_preparing_to_start"
-        case .downloadAttemptToOpenBLOB: return "m_download_attempt_to_open_blob"
+        case .downloadAttemptToOpenBLOBviaJS: return "m_download_attempt_to_open_blob_js"
             
         case .jsAlertShown: return "m_js_alert_shown"
         case .jsAlertBlocked: return "m_js_alert_blocked"

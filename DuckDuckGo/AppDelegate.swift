@@ -129,7 +129,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.shared.updateUserInterfaceStyle(window: window)
 
         appIsLaunching = true
-        
         return true
     }
     // swiftlint:enable function_body_length

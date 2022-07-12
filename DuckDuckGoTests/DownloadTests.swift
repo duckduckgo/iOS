@@ -29,7 +29,7 @@ class DownloadTests: XCTestCase {
     }
     
     func testTemporaryDownload() {
-        let mockSession = MockDownloadSession(        downloadManagerTestsHelper.mockURL)
+        let mockSession = MockDownloadSession(downloadManagerTestsHelper.mockURL)
         
         let tmpName = "MOCK_\(UUID().uuidString).tmp"
         let filename = "\(UUID().uuidString).zip"
@@ -41,7 +41,11 @@ class DownloadTests: XCTestCase {
         
         mockSession.temporaryFilePath = path
         
-        let temporaryDownload = Download(filename: filename, mimeType: .passbook, temporary: true, downloadSession: mockSession)
+        let temporaryDownload = Download(url: downloadManagerTestsHelper.mockURL,
+                                         filename: filename,
+                                         mimeType: .passbook,
+                                         temporary: true,
+                                         downloadSession: mockSession)
         
         let expectation = expectation(description: "Download finish")
         temporaryDownload.start()
@@ -67,7 +71,11 @@ class DownloadTests: XCTestCase {
         
         mockSession.temporaryFilePath = path
         
-        let temporaryDownload = Download(filename: filename, mimeType: .passbook, temporary: false, downloadSession: mockSession)
+        let temporaryDownload = Download(url: downloadManagerTestsHelper.mockURL,
+                                         filename: filename,
+                                         mimeType: .passbook,
+                                         temporary: false,
+                                         downloadSession: mockSession)
         
         let expectation = expectation(description: "Download finish")
         temporaryDownload.start()

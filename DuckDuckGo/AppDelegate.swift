@@ -130,8 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appIsLaunching = true
         
-        invalidFunctionCall()
-        
         return true
     }
     // swiftlint:enable function_body_length

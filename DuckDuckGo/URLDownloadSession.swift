@@ -24,6 +24,7 @@ class URLDownloadSession: NSObject, DownloadSession {
     private var session: URLSession?
     private var cookieStore: WKHTTPCookieStore?
     private(set) var task: URLSessionDownloadTask?
+    private var location: URL?
     weak var delegate: DownloadSessionDelegate?
 
     var isRunning: Bool {
@@ -62,12 +63,16 @@ class URLDownloadSession: NSObject, DownloadSession {
 extension URLDownloadSession: URLSessionTaskDelegate, URLSessionDownloadDelegate {
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        delegate?.downloadSession(self, didFinishDownloadingTo: location)
+        self.location = location
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         self.finishTasksAndInvalidate()
-        delegate?.downloadSession(self, didFailWith: error)
+        if error == nil, let location = location {
+            delegate?.downloadSession(self, didFinishWith: .success(location))
+        } else {
+            delegate?.downloadSession(self, didFinishWith: .failure(error ?? CancellationError()))
+        }
     }
 
     func urlSession(_ session: URLSession,

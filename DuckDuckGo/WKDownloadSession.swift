@@ -58,9 +58,9 @@ final class WKDownloadSession: NSObject, DownloadSession {
         case .started:
             break
         case .finished:
-            delegate?.downloadSession(self, didFinishDownloadingTo: localURL)
+            delegate?.downloadSession(self, didFinishWith: .success(localURL))
         case .failed(let error):
-            delegate?.downloadSession(self, didFailWith: error)
+            delegate?.downloadSession(self, didFinishWith: .failure(error))
         }
     }
 
@@ -83,14 +83,14 @@ extension WKDownloadSession: WKDownloadDelegate {
 
     func downloadDidFinish(_ download: WKDownload) {
         if case .started = state {
-            delegate?.downloadSession(self, didFinishDownloadingTo: localURL)
+            delegate?.downloadSession(self, didFinishWith: .success(localURL))
         }
         self.state = .finished
     }
 
     func download(_ download: WKDownload, didFailWithError error: Error, resumeData: Data?) {
         if case .started = state {
-            delegate?.downloadSession(self, didFailWith: error)
+            delegate?.downloadSession(self, didFinishWith: .failure(error))
         }
         self.state = .failed(error)
     }

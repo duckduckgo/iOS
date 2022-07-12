@@ -28,14 +28,9 @@ final class Base64DownloadSession: DownloadSession {
         self.base64 = base64
     }
 
-    enum DownloadError: Error {
-        case cancelled
-        case noData
-    }
-
     func start() {
         guard let base64 = base64 else {
-            self.delegate?.downloadSession(self, didFailWith: CancellationError())
+            self.delegate?.downloadSession(self, didFinishWith: .failure(CancellationError()))
             return
         }
         self.isRunning = true
@@ -49,12 +44,12 @@ final class Base64DownloadSession: DownloadSession {
                 try data.write(to: localURL)
 
                 DispatchQueue.main.async {
-                    self.delegate?.downloadSession(self, didFinishDownloadingTo: localURL)
+                    self.delegate?.downloadSession(self, didFinishWith: .success(localURL))
                     self.isRunning = false
                 }
             } catch {
                 DispatchQueue.main.async {
-                    self.delegate?.downloadSession(self, didFailWith: error)
+                    self.delegate?.downloadSession(self, didFinishWith: .failure(error))
                     self.isRunning = false
                 }
             }

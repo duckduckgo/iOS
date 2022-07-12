@@ -107,15 +107,16 @@ extension Download: DownloadSessionDelegate {
         self.totalBytesExpectedToWrite = totalBytesExpectedToWrite
     }
 
-    func downloadSession(_ session: DownloadSession, didFinishDownloadingTo location: URL) {
-        self.location = renameFile(location, newFilename: filename)
-        delegate?.downloadDidFinish(self, error: nil)
-        completionBlock?(nil)
-    }
-
-    func downloadSession(_ session: DownloadSession, didFailWith error: Error?) {
-        delegate?.downloadDidFinish(self, error: error)
-        completionBlock?(error)
+    func downloadSession(_ session: DownloadSession, didFinishWith result: Result<URL, Error>) {
+        switch result {
+        case .success(let location):
+            self.location = renameFile(location, newFilename: filename)
+            delegate?.downloadDidFinish(self, error: nil)
+            completionBlock?(nil)
+        case .failure(let error):
+            delegate?.downloadDidFinish(self, error: error)
+            completionBlock?(error)
+        }
     }
 
 }

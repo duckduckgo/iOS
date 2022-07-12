@@ -26,9 +26,7 @@ protocol DownloadSessionDelegate: AnyObject {
                          totalBytesWritten: Int64,
                          totalBytesExpectedToWrite: Int64)
 
-    func downloadSession(_ session: DownloadSession, didFinishDownloadingTo location: URL)
-
-    func downloadSession(_ session: DownloadSession, didFailWith error: Error?)
+    func downloadSession(_ session: DownloadSession, didFinishWith result: Result<URL, Error>)
 
 }
 

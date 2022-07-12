@@ -35,9 +35,10 @@ class MockDownloadSession: DownloadSession {
     func start() {
         self.isRunning = true
         DispatchQueue.main.asyncAfter(deadline: .now() + delaySeconds) { [self] in
-            delegate?.downloadSession(self, didFinishDownloadingTo: temporaryFilePath!)
             if let error = error {
-                delegate?.downloadSession(self, didFailWith: error)
+                delegate?.downloadSession(self, didFinishWith: .failure(error))
+            } else {
+                delegate?.downloadSession(self, didFinishWith: .success(temporaryFilePath!))
             }
             self.isRunning = false
         }

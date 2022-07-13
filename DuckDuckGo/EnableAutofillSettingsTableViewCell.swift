@@ -19,12 +19,10 @@
 
 import UIKit
 
-@available(iOS 14.0, *)
 protocol EnableAutofillSettingsTableViewCellDelegate: AnyObject {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool)
 }
 
-@available(iOS 14.0, *)
 class EnableAutofillSettingsTableViewCell: UITableViewCell {
     weak var delegate: EnableAutofillSettingsTableViewCellDelegate?
     var theme: Theme? {

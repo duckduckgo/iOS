@@ -4,7 +4,7 @@ DuckDuckGo is the all-in-one privacy app that helps protect your online activiti
 
  • Search Privately - DuckDuckGo Private Search comes built-in so you can search the web without being tracked.
 
- • Block Tracking Cookies — prevent most cross-site (aka 3rd-party) cookies from tracking you as you browse from site to site. We also help prevent websites from tracking you with their own cookies by automatically expiring those first-party cookies after 7 days. 
+ • Block Tracking Cookies — Prevent most 3rd-party cookies from tracking you as you browse from site to site.
 
  • Escape Website Tracking - Tracker Radar automatically blocks most hidden 3rd-party tracking scripts lurking on websites you visit in DuckDuckGo, which stops the companies behind those trackers from collecting and selling your data. See notes and links below for more information.
 

@@ -144,10 +144,6 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     func reset() {
         animator.revealBars(animated: true)
     }
-    
-    func refresh() {
-        animator.refresh()
-    }
 }
 
 private class BarsAnimator {
@@ -324,12 +320,6 @@ private class BarsAnimator {
         transitionProgress = 1.0
         
         delegate?.setBarsVisibility(0, animated: animated)
-    }
-    
-    func refresh() {
-        guard barsState != .transitioning else { return }
-        let percent: CGFloat = barsState == .hidden ? 0 : 1
-        delegate?.setBarsVisibility(percent, animated: false)
     }
 }
 

@@ -20,7 +20,6 @@
 import UIKit
 import SwiftUI
 
-@available(iOS 14.0, *)
 final class WidgetEducationViewController: UIViewController {
     
     private let host = UIHostingController(rootView: WidgetEducationView())

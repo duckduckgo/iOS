@@ -20,7 +20,6 @@
 import UIKit
 import DuckUI
 
-@available(iOS 14.0, *)
 class AutofillItemsEmptyView: UIView {
     
     enum ViewState {
@@ -117,7 +116,6 @@ class AutofillItemsEmptyView: UIView {
     }
 }
 
-@available(iOS 14.0, *)
 extension AutofillItemsEmptyView: Themable {
     
     func decorate(with theme: Theme) {

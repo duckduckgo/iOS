@@ -22,6 +22,6 @@ import BrowserServicesKit
 public final class PrivacyFeatures {
     
     public static let httpsUpgradeStore = AppHTTPSUpgradeStore()
-    public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.privacyConfigurationManager)
+    public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.shared.privacyConfigurationManager)
     
 }

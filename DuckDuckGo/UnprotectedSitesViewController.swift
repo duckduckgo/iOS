@@ -33,7 +33,7 @@ class UnprotectedSitesViewController: UITableViewController {
     private var hiddenNavBarItem: UIBarButtonItem?
     private var hiddenNavBarItems: [UIBarButtonItem]?
     
-    private let privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
+    private let privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
     
     var showBackButton = false
     var enforceLightTheme = false

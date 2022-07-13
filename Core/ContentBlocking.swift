@@ -21,36 +21,40 @@ import BrowserServicesKit
 import Combine
 import os.log
 
-// ContentBlocking.trackerDataManager
-// ContentBlocking.contentBlockingManager
 public final class ContentBlocking {
-    
-    public static let privacyConfigurationManager
-    = PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().etag(for: .privacyConfiguration),
-                                  fetchedData: FileStore().loadAsData(forConfiguration: .privacyConfiguration),
-                                  embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
-                                  localProtection: DomainsProtectionUserDefaultsStore(),
-                                  errorReporting: debugEvents)
-        
-    public static let trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet),
-                                                              data: FileStore().loadAsData(forConfiguration: .trackerDataSet),
-                                                              embeddedDataProvider: AppTrackerDataSetProvider(),
-                                                              errorReporting: debugEvents)
-    
-    private static let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManager: trackerDataManager)
-    private static let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
-    
-    
-    private static let lastCompiledRulesStore = AppLastCompiledRulesStore()
-    public static let contentBlockingUpdating = ContentBlockingUpdating()
-    
-    public static let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,
-                                                                          exceptionsSource: exceptionsSource,
-                                                                          lastCompiledRulesStore: lastCompiledRulesStore,
-                                                                          updateListener: contentBlockingUpdating,
-                                                                          errorReporting: debugEvents,
-                                                                          logger: contentBlockingLog)
-    
+    public static let shared = ContentBlocking()
+
+    public let privacyConfigurationManager: PrivacyConfigurationManager
+    public let trackerDataManager: TrackerDataManager
+    public let contentBlockingManager: ContentBlockerRulesManager
+    private let contentBlockerRulesSource: DefaultContentBlockerRulesListsSource
+    private let exceptionsSource: DefaultContentBlockerRulesExceptionsSource
+    private let lastCompiledRulesStore: AppLastCompiledRulesStore
+
+    private init() {
+        privacyConfigurationManager = PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().etag(for: .privacyConfiguration),
+                                                                  fetchedData: FileStore().loadAsData(forConfiguration: .privacyConfiguration),
+                                                                  embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
+                                                                  localProtection: DomainsProtectionUserDefaultsStore(),
+                                                                  errorReporting: Self.debugEvents)
+
+        trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet),
+                                                data: FileStore().loadAsData(forConfiguration: .trackerDataSet),
+                                                embeddedDataProvider: AppTrackerDataSetProvider(),
+                                                errorReporting: Self.debugEvents)
+
+        contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManager: trackerDataManager)
+
+        exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
+        lastCompiledRulesStore = AppLastCompiledRulesStore()
+
+        contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,
+                                                            exceptionsSource: exceptionsSource,
+                                                            lastCompiledRulesStore: lastCompiledRulesStore,
+                                                            errorReporting: Self.debugEvents,
+                                                            logger: contentBlockingLog)
+    }
+
     private static let debugEvents = EventMapping<ContentBlockerDebugEvents> { event, scope, error, parameters, onComplete in
         let domainEvent: Pixel.Event
         switch event {
@@ -125,25 +129,6 @@ public final class ContentBlocking {
     }
 }
 
-public struct ContentBlockerProtectionChangedNotification {
-    public static let name = Notification.Name(rawValue: "com.duckduckgo.contentblocker.storeChanged")
-    
-    public static let diffKey = "ContentBlockingDiff"
-}
-
-public final class ContentBlockingUpdating: ContentBlockerRulesUpdating {
-    
-    public func rulesManager(_ manager: ContentBlockerRulesManager,
-                             didUpdateRules rules: [ContentBlockerRulesManager.Rules],
-                             changes: [String: ContentBlockerRulesIdentifier.Difference],
-                             completionTokens: [ContentBlockerRulesManager.CompletionToken]) {
-        NotificationCenter.default.post(name: ContentBlockerProtectionChangedNotification.name,
-                                        object: self,
-                                        userInfo: [ContentBlockerProtectionChangedNotification.diffKey: changes])
-    }
-    
-}
-
 public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
     
     private struct Keys {
@@ -190,7 +175,7 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
     }
     
     private func onStoreChanged() {
-        ContentBlocking.contentBlockingManager.scheduleCompilation()
+//        ContentBlocking.contentBlockingManager.scheduleCompilation()
     }
     
 }

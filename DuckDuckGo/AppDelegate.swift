@@ -177,7 +177,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         AppConfigurationFetch().start { newData in
             if newData {
-                ContentBlocking.contentBlockingManager.scheduleCompilation()
+                ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
             }
         }
 

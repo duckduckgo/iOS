@@ -45,7 +45,7 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
                                            sessionKey: UUID().uuidString,
                                            featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
         let script = AutofillUserScript(
-            scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
+            scriptSourceProvider: DefaultAutofillSourceProvider(privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
                                                                 properties: prefs))
         script.emailDelegate = self.emailManager
         return script

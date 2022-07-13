@@ -34,7 +34,7 @@ class PrivacyProtectionScoreCardController: UITableViewController {
     @IBOutlet var onHeaderCellTapped: UITapGestureRecognizer!
     
     private var siteRating: SiteRating!
-    private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
+    private var privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
 
     override func viewDidLoad() {
         super.viewDidLoad()

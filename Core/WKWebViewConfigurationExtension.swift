@@ -52,8 +52,8 @@ extension WKWebViewConfiguration {
             self.userContentController.add(rules)
         }
         
-        if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
-           ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+        if let rules = ContentBlocking.shared.contentBlockingManager.currentTDSRules,
+           ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
             addRulesToController(rules: rules.rulesList)
         }
     }

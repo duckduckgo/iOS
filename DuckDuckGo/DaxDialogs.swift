@@ -147,7 +147,7 @@ class DaxDialogs {
 
     /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(),
-         contentBlockingRulesManager: ContentBlockerRulesManager = ContentBlocking.contentBlockingManager,
+         contentBlockingRulesManager: ContentBlockerRulesManager = ContentBlocking.shared.contentBlockingManager,
          variantManager: VariantManager = DefaultVariantManager()) {
         self.settings = settings
         self.contentBlockingRulesManager = contentBlockingRulesManager

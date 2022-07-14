@@ -146,7 +146,7 @@ class BrowserChromeManager: NSObject, UIScrollViewDelegate {
     }
 }
 
-private class BarsAnimator {
+class BarsAnimator {
     
     weak var delegate: BrowserChromeDelegate?
     
@@ -177,16 +177,6 @@ private class BarsAnimator {
     
     func didStartScrolling(in scrollView: UIScrollView) {
         draggingStartPosY = scrollView.contentOffset.y
-    }
-    
-    func calculateTransitionRatio(for contentOffset: CGFloat) -> CGFloat {
-        let distance = contentOffset - transitionStartPosY
-        let barsHeight = delegate?.barsMaxHeight ?? CGFloat.infinity
-        
-        let cumulativeDistance = (barsHeight * transitionProgress) + distance
-        let normalizedDistance = max(cumulativeDistance, 0)
-        
-        return min(normalizedDistance / barsHeight, 1.0)
     }
     
     func didScroll(in scrollView: UIScrollView) {
@@ -267,6 +257,16 @@ private class BarsAnimator {
         let ratio = calculateTransitionRatio(for: scrollView.contentOffset.y)
         delegate?.setBarsVisibility(1.0 - ratio, animated: false)
         transitionProgress = ratio
+    }
+
+    private func calculateTransitionRatio(for contentOffset: CGFloat) -> CGFloat {
+        let distance = contentOffset - transitionStartPosY
+        let barsHeight = delegate?.barsMaxHeight ?? CGFloat.infinity
+
+        let cumulativeDistance = (barsHeight * transitionProgress) + distance
+        let normalizedDistance = max(cumulativeDistance, 0)
+
+        return min(normalizedDistance / barsHeight, 1.0)
     }
     
     func didFinishScrolling(in scrollView: UIScrollView, velocity: CGFloat) {

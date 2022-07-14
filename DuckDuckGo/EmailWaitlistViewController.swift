@@ -96,7 +96,7 @@ class EmailWaitlistViewController: UIViewController {
 
         let linkAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: 16,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.emailWaitlistLinkColor
         ]
 
@@ -139,7 +139,9 @@ class EmailWaitlistViewController: UIViewController {
         headerImageView.image = Constants.contactUsImage
 
         headerTitleLabel.text = UserText.emailWaitlistPrivacySimplified
+        headerDescriptionTextView.linkTextAttributes = textViewLinkAttributes()
         headerDescriptionTextView.attributedText = createAttributedWaitlistSummary()
+        footerTextView.linkTextAttributes = textViewLinkAttributes()
         footerTextView.attributedText = createAttributedPrivacyGuaranteeString()
 
         waitlistActionButton.isEnabled = true
@@ -156,11 +158,14 @@ class EmailWaitlistViewController: UIViewController {
         headerTitleLabel.text = UserText.emailWaitlistJoinedWaitlist
 
         if EmailWaitlist.shared.showWaitlistNotification {
+            headerDescriptionTextView.linkTextAttributes = textViewLinkAttributes()
             headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithNotificationSummary()
         } else {
+            headerDescriptionTextView.linkTextAttributes = textViewLinkAttributes()
             headerDescriptionTextView.attributedText = createAttributedWaitlistJoinedWithoutNotificationSummary()
         }
 
+        footerTextView.linkTextAttributes = textViewLinkAttributes()
         footerTextView.attributedText = createAttributedPrivacyGuaranteeString()
 
         waitlistActionButton.isHidden = true
@@ -171,7 +176,9 @@ class EmailWaitlistViewController: UIViewController {
         headerImageView.image = Constants.contactUsImage
 
         headerTitleLabel.text = UserText.emailWaitlistInvited
+        headerDescriptionTextView.linkTextAttributes = textViewLinkAttributes()
         headerDescriptionTextView.attributedText = createAttributedWaitlistInvitedSummary()
+        footerTextView.linkTextAttributes = textViewLinkAttributes()
         footerTextView.attributedText = createAttributedPrivacyGuaranteeString()
 
         waitlistActionButton.isEnabled = true

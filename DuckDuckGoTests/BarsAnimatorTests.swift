@@ -111,6 +111,25 @@ class BarsAnimatorTests: XCTestCase {
                                                    .setBarsVisibility(1.0),
                                                    .setBarsVisibility(1.0)])
     }
+
+    func testBarStateRevealedWhenScrollUpDoNotChangeCurrentState() {
+        let (sut, delegate) = makeSUT()
+        let scrollView = mockScrollView()
+
+        scrollView.contentOffset.y = 100
+        sut.didStartScrolling(in: scrollView)
+        XCTAssertEqual(sut.barsState, .revealed)
+
+        scrollView.contentOffset.y = 50
+        sut.didScroll(in: scrollView)
+        XCTAssertEqual(sut.barsState, .revealed)
+
+        scrollView.contentOffset.y = -50
+        sut.didScroll(in: scrollView)
+        XCTAssertEqual(sut.barsState, .revealed)
+
+        XCTAssertEqual(delegate.receivedMessages, [])
+    }
 }
 
 // MARK: - Helpers

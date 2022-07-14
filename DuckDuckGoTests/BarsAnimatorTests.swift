@@ -80,6 +80,37 @@ class BarsAnimatorTests: XCTestCase {
         XCTAssertEqual(delegate.receivedMessages, [.setBarsVisibility(0.0),
                                                    .setBarsVisibility(0.0)])
     }
+
+    func testBarStateHiddenWhenScrollUpUpdatesToRevealedState() {
+        let (sut, delegate) = makeSUT()
+        let scrollView = mockScrollView()
+
+        scrollView.contentOffset.y = 100
+        sut.didStartScrolling(in: scrollView)
+        XCTAssertEqual(sut.barsState, .revealed)
+
+        scrollView.contentOffset.y = 200
+        sut.didScroll(in: scrollView)
+        XCTAssertEqual(sut.barsState, .transitioning)
+
+        scrollView.contentOffset.y = 400
+        sut.didScroll(in: scrollView)
+        XCTAssertEqual(sut.barsState, .hidden)
+
+        scrollView.contentOffset.y = -100
+        sut.didStartScrolling(in: scrollView)
+        sut.didScroll(in: scrollView)
+        XCTAssertEqual(sut.barsState, .transitioning)
+
+        scrollView.contentOffset.y = -150
+        sut.didScroll(in: scrollView)
+        XCTAssertEqual(sut.barsState, .revealed)
+
+        XCTAssertEqual(delegate.receivedMessages, [.setBarsVisibility(0.0),
+                                                   .setBarsVisibility(0.0),
+                                                   .setBarsVisibility(1.0),
+                                                   .setBarsVisibility(1.0)])
+    }
 }
 
 // MARK: - Helpers

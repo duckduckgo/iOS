@@ -2229,7 +2229,11 @@ extension TabViewController: SecureVaultManagerDelegate {
     
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
         if let credentials = data.credentials, isAutofillEnabled {
-            presentSavePasswordModal(with: vault, credentials: credentials)
+            // Add a delay to allow propagation of pointer events to the page
+            // see https://app.asana.com/0/1202427674957632/1202532842924584/f
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.presentSavePasswordModal(with: vault, credentials: credentials)
+            }
         }
     }
     

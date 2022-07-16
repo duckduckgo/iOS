@@ -130,28 +130,16 @@ public class WebCacheManager {
             let cookieClearingSummary = WebStoreCookieClearingSummary()
 
             cookieStore.getAllCookies { cookies in
-                let group = DispatchGroup()
                 let cookiesToRemove = cookies.filter { !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain }
                 let protectedCookiesCount = cookies.count - cookiesToRemove.count
                 
                 cookieClearingSummary.storeInitialCount = cookies.count
                 cookieClearingSummary.storeProtectedCount = protectedCookiesCount
-                
-                for cookie in cookiesToRemove {
-                    group.enter()
-                    cookieStore.delete(cookie) {
-                        group.leave()
-                    }
-                }
-
+                                
                 DispatchQueue.global(qos: .userInitiated).async {
-                    let result = group.wait(timeout: .now() + 5)
-
-                    if result == .timedOut {
-                        cookieClearingSummary.didStoreDeletionTimeOut = true
-                        Pixel.fire(pixel: .cookieDeletionTimedOut, withAdditionalParameters: [
-                            PixelParameters.clearWebDataTimedOut: "1"
-                        ])
+                    
+                    DispatchQueue.concurrentPerform(iterations: cookiesToRemove.count) { index in
+                        cookieStore.delete(cookiesToRemove[index], completionHandler: nil)
                     }
                     
                     // Remove legacy HTTPCookieStorage cookies

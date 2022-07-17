@@ -183,4 +183,3 @@ private class BrowserChromeDelegateMock: BrowserChromeDelegate {
 
     var tabsBar: UIView! = UIView()
 }
-

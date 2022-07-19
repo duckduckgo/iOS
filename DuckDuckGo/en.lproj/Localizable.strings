@@ -1320,6 +1320,12 @@ Invite code: %@";
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancel";
 
+/* “Close this tab” button for JavaScript alerts */
+"webJSAlert.close.tab.button" = "Close this tab";
+
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the mssage is shown by a website */
+"webJSAlert.website-message.format" = "A message from [%@]:";
 

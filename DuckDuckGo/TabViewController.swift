@@ -1712,8 +1712,12 @@ extension TabViewController: WKUIDelegate {
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping () -> Void) {
         if canDisplayJavaScriptAlert {
-
-            let alert = WebJSAlert(message: message, alertType: .alert(handler: completionHandler))
+            let alert = WebJSAlert(domain: frame.request.url?.host ?? webView.url?.host ?? "",
+                                   message: message,
+                                   alertType: .alert(handler: completionHandler,
+                                                     closeTab: { [weak self] in
+                self?.delegate?.tabDidRequestClose(self!)
+            }))
             self.present(alert)
         } else {
             completionHandler()
@@ -1726,7 +1730,11 @@ extension TabViewController: WKUIDelegate {
                   completionHandler: @escaping (Bool) -> Void) {
         
         if canDisplayJavaScriptAlert {
-            let alert = WebJSAlert(message: message, alertType: .confirm(handler: completionHandler))
+            let alert = WebJSAlert(domain: frame.request.url?.host ?? webView.url?.host ?? "",
+                                   message: message,
+                                   alertType: .confirm(handler: completionHandler, closeTab: { [weak self] in
+                self?.delegate?.tabDidRequestClose(self!)
+            }))
             self.present(alert)
         } else {
             completionHandler(false)
@@ -1739,7 +1747,13 @@ extension TabViewController: WKUIDelegate {
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (String?) -> Void) {
         if canDisplayJavaScriptAlert {
-            let alert = WebJSAlert(message: prompt, alertType: .text(handler: completionHandler, defaultText: defaultText))
+            let alert = WebJSAlert(domain: frame.request.url?.host ?? webView.url?.host ?? "",
+                                   message: prompt,
+                                   alertType: .text(handler: completionHandler,
+                                                    defaultText: defaultText,
+                                                    closeTab: { [weak self] in
+                self?.delegate?.tabDidRequestClose(self!)
+            }))
             self.present(alert)
         } else {
             completionHandler(nil)

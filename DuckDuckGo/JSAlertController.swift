@@ -25,11 +25,14 @@ final class JSAlertController: UIViewController {
     @IBOutlet var alertView: UIView!
     @IBOutlet var alertOutOfScreenConstraint: NSLayoutConstraint!
     @IBOutlet var backgroundView: UIView!
+    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var okButton: UIButton!
     @IBOutlet var cancelButton: UIButton!
-    @IBOutlet var blockButton: UIButton!
+    @IBOutlet var cancelButtonSeparator: UIView!
+    @IBOutlet var closeTabButton: UIButton!
     @IBOutlet var textField: UITextField!
+    @IBOutlet var textFieldBox: UIView!
 
     private var alert: WebJSAlert? {
         didSet {
@@ -113,19 +116,21 @@ final class JSAlertController: UIViewController {
 
         okButton.setTitle(UserText.webJSAlertOKButton, for: .normal)
         cancelButton.setTitle(UserText.webJSAlertCancelButton, for: .normal)
-        blockButton.isHidden = true
+        closeTabButton.setTitle(UserText.webJSAlertCloseTabButton, for: .normal)
 
+        titleLabel.text = String(format: UserText.webJSAlertWebsiteMessageFormat, alert.domain)
         messageLabel.text = alert.message
 
         if let text = alert.text {
             textField.placeholder = text
             textField.text = text
-            textField.isHidden = false
+            textFieldBox.isHidden = false
         } else {
-            textField.isHidden = true
+            textFieldBox.isHidden = true
         }
 
         cancelButton.isHidden = !alert.isConfirm
+        cancelButtonSeparator.isHidden = !alert.isConfirm
     }
 
     @IBAction func okAction(_ sender: UIButton) {
@@ -140,9 +145,10 @@ final class JSAlertController: UIViewController {
         }
     }
 
-    @IBAction func backgroundTapAction(_ sender: UITapGestureRecognizer) {
-        Pixel.fire(pixel: .jsAlertBackgroundTap)
-        cancelAction(sender)
+    @IBAction func closeTabAction(_ sender: Any) {
+        dismiss(animated: true) { [alert=self.alert] in
+            alert?.closeTab()
+        }
     }
 
 }

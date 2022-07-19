@@ -26,7 +26,7 @@ public protocol CoreDependencyProvided {
 /// Provides dependencies for objects that are not directly instantiated
 /// through `init` call
 public class CoreDependencyProvider: CoreDependencyProvided {
-    public static var shared: CoreDependencyProvided = CoreDependencyProvider()
+    public static let shared: CoreDependencyProvided = CoreDependencyProvider()
 
     public let bookmarksCachingSearch = BookmarksCachingSearch()
 }

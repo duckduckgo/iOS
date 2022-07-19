@@ -78,16 +78,11 @@ class EmailWaitlistWebViewController: UIViewController, WKNavigationDelegate {
         webView.configuration.userContentController.addUserScript(WKUserScript(source: script.source,
                                                                                injectionTime: script.injectionTime,
                                                                                forMainFrameOnly: script.forMainFrameOnly))
-
-        if #available(iOS 14, *) {
-            script.messageNames.forEach { messageName in
-                webView.configuration.userContentController.addScriptMessageHandler(script, contentWorld: .page, name: messageName)
-            }
-        } else {
-            script.messageNames.forEach { messageName in
-                webView.configuration.userContentController.add(script, name: messageName)
-            }
+        
+        script.messageNames.forEach { messageName in
+            webView.configuration.userContentController.addScriptMessageHandler(script, contentWorld: .page, name: messageName)
         }
+        
     }
 
     func updateContentMode() {

@@ -453,20 +453,17 @@ class MainViewController: UIViewController {
         }
     }
 
-    @available(iOS 13.4, *)
     func handlePressEvent(event: UIPressesEvent?) {
         keyModifierFlags = event?.modifierFlags
     }
 
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         super.pressesBegan(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
         handlePressEvent(event: event)
     }
     
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         super.pressesEnded(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
         handlePressEvent(event: event)
     }
 
@@ -823,7 +820,6 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "Downloads", sender: self)
     }
     
-    @available(iOS 14.0, *)
     fileprivate func launchAutofillLogins() {
         let appSettings = AppDependencyProvider.shared.appSettings
         let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
@@ -1436,11 +1432,9 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestAutofillLogins(tab: TabViewController) {
-        if #available(iOS 14.0, *) {
-            launchAutofillLogins()
-        }
+        launchAutofillLogins()
     }
-
+    
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
     }
@@ -1824,7 +1818,7 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
 extension MainViewController {
 
     private func refreshBackForwardMenuItems() {
-        guard let currentTab = currentTab, #available(iOS 14.0, *) else {
+        guard let currentTab = currentTab else {
             return
         }
         
@@ -1837,14 +1831,12 @@ extension MainViewController {
         forwardButton.menu = forwardMenu
     }
 
-    @available(iOS 14.0, *)
     private func historyMenu(with backForwardList: [WKBackForwardListItem]) -> UIMenu {
         let historyItemList = backForwardList.map { BackForwardMenuHistoryItem(backForwardItem: $0) }
         let actions = historyMenuButton(with: historyItemList)
         return UIMenu(title: "", children: actions)
     }
     
-    @available(iOS 14.0, *)
     private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
         let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
             
@@ -1867,7 +1859,6 @@ extension MainViewController {
 }
 
 // MARK: - AutofillLoginSettingsListViewControllerDelegate
-@available(iOS 14.0, *)
 extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         controller.dismiss(animated: true)

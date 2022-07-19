@@ -22,8 +22,8 @@ import UIKit
 struct SaveToDownloadsAlert {
     
     static func makeAlert(downloadMetadata: DownloadMetadata,
-                          cancelHandler: (() -> Void)? = nil,
-                          saveToDownloadsHandler: @escaping () -> Void) -> UIAlertController {
+                          saveToDownloadsHandler: @escaping () -> Void,
+                          cancelHandler: (() -> Void)? = nil) -> UIAlertController {
         
         let style: UIAlertController.Style = UIDevice.current.userInterfaceIdiom == .pad ? .alert : .actionSheet
         let title = SaveToDownloadsAlert.makeTitle(downloadMetadata: downloadMetadata)

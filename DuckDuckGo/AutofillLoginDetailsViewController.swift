@@ -22,12 +22,10 @@ import SwiftUI
 import BrowserServicesKit
 import Combine
 
-@available(iOS 14.0, *)
 protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController)
 }
 
-@available(iOS 14.0, *)
 class AutofillLoginDetailsViewController: UIViewController {
     weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
@@ -144,7 +142,6 @@ class AutofillLoginDetailsViewController: UIViewController {
     }
 }
 
-@available(iOS 14.0, *)
 extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDelegate {
     func autofillLoginDetailsViewModelDidSave() {
         
@@ -153,7 +150,6 @@ extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDeleg
 
 // MARK: Themable
 
-@available(iOS 14.0, *)
 extension AutofillLoginDetailsViewController: Themable {
 
     func decorate(with theme: Theme) {

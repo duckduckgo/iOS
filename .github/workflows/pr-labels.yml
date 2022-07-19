@@ -1,6 +1,9 @@
 name: PR Labels
 
 on:
+  push:
+    branches:
+      - 'release/**'
   pull_request:
     types: [labeled, unlabeled, opened, edited, synchronize]
 
@@ -12,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: yogevbd/enforce-label-action@2.2.2
+    - if: github.event_name == 'pull_request'
+      uses: yogevbd/enforce-label-action@2.2.2
       with:
         BANNED_LABELS: "DO NOT MERGE,HOTFIX DO NOT MERGE,Pending Product Review,Under Internal Review,Work In Progress"

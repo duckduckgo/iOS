@@ -1104,6 +1104,11 @@
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoLightText" translatesAutoresizingMaskIntoConstraints="NO" id="iNd-oh-m3g">
                                                 <rect key="frame" x="127" y="32" width="160" height="160"/>
+                                                <accessibility key="accessibilityConfiguration" label="DuckDuckGo">
+                                                    <accessibilityTraits key="traits"/>
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
+
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="160" id="gk3-qY-2ME">
                                                         <variation key="heightClass=compact" constant="100"/>

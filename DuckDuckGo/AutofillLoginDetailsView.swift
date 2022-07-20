@@ -167,7 +167,7 @@ private struct CopyablePasswordCell: View {
             }, tapAction: {
                 self.selectedCell = self.id
             })
-            
+
             HStack {
                 Spacer()
                 Button {
@@ -184,7 +184,8 @@ private struct CopyablePasswordCell: View {
                 }
                 .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
                 .background(BackgroundColor(isSelected: selectedCell == id).color)
-                
+                .accessibilityLabel(isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword)
+
             }
         }
         .selectableBackground(isSelected: selectedCell == id)
@@ -247,13 +248,13 @@ private struct Copyable: ViewModifier {
             Rectangle()
                 .foregroundColor(.clear)
                 .menuController("Copy \(menuTitle)", action: menuAction)
-            
+
             content
                 .allowsHitTesting(false)
                 .contentShape(Rectangle())
                 .frame(maxWidth: .infinity)
                 .frame(height: 60)
-            
+
         }
         .highPriorityGesture(
             TapGesture().onEnded({ _ in

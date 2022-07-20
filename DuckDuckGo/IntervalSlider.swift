@@ -22,15 +22,13 @@ import UIKit
 class IntervalSlider: UISlider {
     
     private enum Constants {
-        static var minAllowedSteps: Int = 2
         static var markWidth: CGFloat = 3.0
         static var markHeight: CGFloat = 9.0
         static var markCornerRadius: CGFloat = 5.0
     }
     
-    var steps: Int = Constants.minAllowedSteps {
+    var steps: [Int] = [] {
         didSet {
-            if steps < Constants.minAllowedSteps { steps = Constants.minAllowedSteps }
             setNeedsDisplay()
         }
     }
@@ -50,9 +48,10 @@ class IntervalSlider: UISlider {
 
         color.set()
         bpath.fill()
-        
-        for i in 0...steps-1 {
-            let x = newTrackRect.minX + newTrackRect.width/CGFloat(steps-1) * CGFloat(i) - Constants.markWidth/2
+
+        guard steps.count > 1 else { return }
+        for i in 0...steps.count-1 {
+            let x = newTrackRect.minX + newTrackRect.width/CGFloat(steps.count-1) * CGFloat(i) - Constants.markWidth/2
             let xRounded = Darwin.round(x / 0.5) * 0.5
             
             let markRect = CGRect(x: xRounded, y: newTrackRect.midY - Constants.markHeight/2,
@@ -64,4 +63,14 @@ class IntervalSlider: UISlider {
             markPath.fill()
         }
     }
+
+    override var accessibilityValue: String? {
+        set {}
+        get {
+            let index = Int(self.value)
+            guard steps.indices.contains(index) else { return "" }
+            return "\(steps[index])%"
+        }
+    }
+
 }

@@ -54,6 +54,9 @@
                                             </userDefinedRuntimeAttributes>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="yvj-LL-MiR" style="IBUITableViewCellStyleDefault" id="pfh-oL-Cic" userLabel="AddToDock Cell">
                                         <rect key="frame" x="0.0" y="61.666667938232422" width="414" height="43.666667938232422"/>
@@ -1278,6 +1281,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="3WZ-Fi-HIH" style="IBUITableViewCellStyleDefault" id="Wbg-9K-KAV">
                                         <rect key="frame" x="0.0" y="164" width="414" height="43.666667938232422"/>
@@ -1296,6 +1302,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -1318,6 +1327,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="ElX-yE-4PX" style="IBUITableViewCellStyleDefault" id="GCM-aF-lOt">
                                         <rect key="frame" x="0.0" y="308.33333587646484" width="414" height="43.666667938232422"/>
@@ -1336,6 +1348,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="D0R-jp-UY8" style="IBUITableViewCellStyleDefault" id="m5g-dd-bHa">
                                         <rect key="frame" x="0.0" y="352.00000381469727" width="414" height="43.666667938232422"/>
@@ -1354,6 +1369,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="5Yd-7i-bey" style="IBUITableViewCellStyleDefault" id="6j9-ls-Ghf">
                                         <rect key="frame" x="0.0" y="395.66667175292969" width="414" height="43.666667938232422"/>
@@ -1372,6 +1390,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="9EC-lx-77p" style="IBUITableViewCellStyleDefault" id="V2P-3X-jSs">
                                         <rect key="frame" x="0.0" y="439.33333969116211" width="414" height="43.666667938232422"/>
@@ -1390,6 +1411,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
                                 </cells>
                                 <attributedString key="userComments">
@@ -1661,6 +1685,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                </accessibility>
                                 <connections>
                                     <outlet property="themeNameLabel" destination="qeN-SV-zy7" id="F70-Rc-Ag2"/>
                                 </connections>
@@ -1804,6 +1831,9 @@ After all, the internet shouldn’t feel so creepy, and getting the privacy you 
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                </accessibility>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -2427,6 +2457,9 @@ To delete your Duck Addresses entirely, or for any other questions or feedback, 
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                </accessibility>
                                 <connections>
                                     <outlet property="nameLabel" destination="CR5-Al-WIW" id="4A9-Re-hj5"/>
                                 </connections>

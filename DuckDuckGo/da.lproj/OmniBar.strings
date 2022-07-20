@@ -19,8 +19,8 @@
 /* Class = "UIButton"; accessibilityLabel = "Bookmarks"; ObjectID = "ii4-Sq-bD1"; */
 "ii4-Sq-bD1.accessibilityLabel" = "Bogmærker";
 
-/* Class = "UIButton"; accessibilityLabel = "Clear Text"; ObjectID = "ita-iD-8ad"; */
-"ita-iD-8ad.accessibilityLabel" = "Slet teksten";
+/* Class = "UIButton"; accessibilityLabel = "Voice Search"; ObjectID = "ita-iD-8ad"; */
+"ita-iD-8ad.accessibilityLabel" = "Stemmesøgning";
 
 /* Class = "UIButton"; accessibilityLabel = "Browsing Menu"; ObjectID = "nJo-2d-gri"; */
 "nJo-2d-gri.accessibilityLabel" = "Browsingmenu";

@@ -1919,7 +1919,11 @@ extension TabViewController: WKUIDelegate {
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping () -> Void) {
         if canDisplayJavaScriptAlert {
-            let alert = WebJSAlert(domain: frame.request.url?.host ?? webView.url?.host ?? "",
+            let alert = WebJSAlert(domain: frame.request.url?.host
+                                   // in case the web view is navigating to another host
+                                   ?? webView.backForwardList.currentItem?.url.host
+                                   ?? self.url?.absoluteString
+                                   ?? "",
                                    message: message,
                                    alertType: .alert(handler: completionHandler,
                                                      closeTab: { [weak self] in
@@ -1937,7 +1941,11 @@ extension TabViewController: WKUIDelegate {
                   completionHandler: @escaping (Bool) -> Void) {
         
         if canDisplayJavaScriptAlert {
-            let alert = WebJSAlert(domain: frame.request.url?.host ?? webView.url?.host ?? "",
+            let alert = WebJSAlert(domain: frame.request.url?.host
+                                   // in case the web view is navigating to another host
+                                   ?? webView.backForwardList.currentItem?.url.host
+                                   ?? self.url?.absoluteString
+                                   ?? "",
                                    message: message,
                                    alertType: .confirm(handler: completionHandler, closeTab: { [weak self] in
                 self?.delegate?.tabDidRequestClose(self!)
@@ -1954,7 +1962,11 @@ extension TabViewController: WKUIDelegate {
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (String?) -> Void) {
         if canDisplayJavaScriptAlert {
-            let alert = WebJSAlert(domain: frame.request.url?.host ?? webView.url?.host ?? "",
+            let alert = WebJSAlert(domain: frame.request.url?.host
+                                   // in case the web view is navigating to another host
+                                   ?? webView.backForwardList.currentItem?.url.host
+                                   ?? self.url?.absoluteString
+                                   ?? "",
                                    message: prompt,
                                    alertType: .text(handler: completionHandler,
                                                     defaultText: defaultText,

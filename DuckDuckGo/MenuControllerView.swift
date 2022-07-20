@@ -22,8 +22,8 @@ import UIKit
 
 extension View {
 
-    func menuController(_ title: String, action: @escaping () -> Void) -> some View {
-        MenuControllerView(content: self, title: title, action: action)
+    func menuController(_ title: String, action: @escaping () -> Void, onOpen: (() -> Void)? = nil, onClose: (() -> Void)? = nil) -> some View {
+        MenuControllerView(content: self, title: title, action: action, onOpen: onOpen, onClose: onClose)
     }
 
 }
@@ -33,9 +33,11 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
     let content: Content
     let title: String
     let action: () -> Void
-    
+    let onOpen: (() -> Void)?
+    let onClose: (() -> Void)?
+
     func makeCoordinator() -> Coordinator<Content> {
-        Coordinator(title: title, action: action)
+        Coordinator(title: title, action: action, onOpen: onOpen, onClose: onClose)
     }
     
     func makeUIViewController(context: Context) -> UIHostingController<Content> {
@@ -54,13 +56,17 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
     
     class Coordinator<Content: View>: NSObject {
         var responder: UIResponder?
-        
+        var observer: Any?
         private let title: String
         private let action: () -> Void
+        private let onOpen: (() -> Void)?
+        private let onClose: (() -> Void)?
         
-        init(title: String, action: @escaping () -> Void) {
+        init(title: String, action: @escaping () -> Void, onOpen: (() -> Void)?, onClose: (() -> Void)?) {
             self.title = title
             self.action = action
+            self.onOpen = onOpen
+            self.onClose = onClose
         }
    
         @objc func tap(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -77,6 +83,23 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
             ]
 
             menu.showMenu(from: view, rect: view.bounds)
+
+            observer = NotificationCenter.default.addObserver(forName: UIMenuController.willHideMenuNotification,
+                                                              object: nil,
+                                                              queue: nil) { [weak self] _ in
+                if let observer = self?.observer {
+                    NotificationCenter.default.removeObserver(observer)
+                }
+                self?.responder?.resignFirstResponder()
+                self?.onClose?()
+            }
+            onOpen?()
+        }
+
+        deinit {
+            if let observer = observer {
+                NotificationCenter.default.removeObserver(observer)
+            }
         }
     }
     

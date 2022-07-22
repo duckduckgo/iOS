@@ -82,7 +82,6 @@ class MainViewController: UIViewController {
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
-    var browsingMenu: BrowsingMenuViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
@@ -390,14 +389,6 @@ class MainViewController: UIViewController {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
         }
-        
-        if let menu = browsingMenu {
-            if AppWidthObserver.shared.isLargeWidth {
-                refreshConstraintsForTablet(browsingMenu: menu)
-            } else {
-                refreshConstraintsForPhone(browsingMenu: menu)
-            }
-        }
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -626,8 +617,6 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func select(tab: TabViewController) {
-        dismissBrowsingMenu()
-
         if tab.link == nil {
             attachHomeScreen()
         } else {
@@ -762,7 +751,20 @@ class MainViewController: UIViewController {
             self.refreshMenuButtonState()
         }
     }
-    
+
+    func refreshMenuButtonState() {
+        let expectedState: MenuButton.State
+        if homeController != nil {
+            expectedState = .bookmarksImage
+        } else if presentedViewController is BrowsingMenuViewController {
+            expectedState = .closeImage
+        } else {
+            expectedState = .menuImage
+        }
+        presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
+        presentedMenuButton.setState(expectedState, animated: false)
+    }
+
     private func applyWidthToTrayController() {
         if AppWidthObserver.shared.isLargeWidth {
             self.suggestionTrayController?.float(withWidth: self.omniBar.searchStackContainer.frame.width + 24)
@@ -920,7 +922,6 @@ class MainViewController: UIViewController {
         }
         DaxDialogs.shared.fireButtonPulseCancelled()
         hideSuggestionTray()
-        dismissBrowsingMenu()
         currentTab?.dismiss()
 
         if reuseExisting, let existing = tabManager.firstHomeTab() {
@@ -1124,7 +1125,28 @@ extension MainViewController: OmniBarDelegate {
         }
         hideSuggestionTray()
         ActionMessageView.dismissAllMessages()
-        launchBrowsingMenu()
+        Task {
+            await launchBrowsingMenu()
+        }
+    }
+
+    @MainActor
+    private func launchBrowsingMenu() async {
+        guard let tab = currentTab else { return }
+
+        let entries = await tab.buildBrowsingMenu()
+        let controller = BrowsingMenuViewController.instantiate(headerEntries: tab.buildBrowsingMenuHeaderContent(),
+                                                                menuEntries: entries)
+
+        controller.modalPresentationStyle = .custom
+        self.present(controller, animated: true) {
+            if self.canDisplayAddFavoriteVisualIndicator {
+                controller.highlightCell(atIndex: IndexPath(row: tab.favoriteEntryIndex, section: 0))
+            }
+        }
+
+        self.presentedMenuButton.setState(.closeImage, animated: true)
+        tab.didLaunchBrowsingMenu()
     }
     
     @objc func onBookmarksPressed() {
@@ -1533,7 +1555,6 @@ extension MainViewController: TabSwitcherDelegate {
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
-        dismissBrowsingMenu()
         tabManager.remove(at: index)
         updateCurrentTab()
     }
@@ -1616,18 +1637,17 @@ extension MainViewController: GestureToolbarButtonDelegate {
 }
 
 extension MainViewController: AutoClearWorker {
-    
+
     func clearNavigationStack() {
         dismissOmniBar()
-        dismissBrowsingMenu()
-        
+
         if let presented = presentedViewController {
             presented.dismiss(animated: false) { [weak self] in
                 self?.clearNavigationStack()
             }
         }
     }
-    
+
     func forgetTabs() {
         DaxDialogs.shared.resumeRegularFlow()
         findInPageView?.done()

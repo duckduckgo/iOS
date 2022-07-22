@@ -19,6 +19,9 @@
 /* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "pwj-Ie-VbJ"; */
 "pwj-Ie-VbJ.title" = "Modifica";
 
+/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "pyc-rk-XMJ"; */
+"pyc-rk-XMJ.normalTitle" = "Importa file segnalibro da un altro browser";
+
 /* Class = "UINavigationItem"; title = "Add Bookmark"; ObjectID = "qA0-bu-lRC"; */
 "qA0-bu-lRC.title" = "Aggiungi ai segnalibri";
 

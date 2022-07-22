@@ -963,20 +963,7 @@ class MainViewController: UIViewController {
     }
     
     private func showNoMicrophonePermissionAlert() {
-        let alertController = UIAlertController(title: UserText.noVoicePermissionAlertTitle,
-                                                message: UserText.noVoicePermissionAlertMessage,
-                                                preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
-
-        let openSettingsButton = UIAlertAction(title: UserText.noVoicePermissionActionSettings, style: .default) { _ in
-            let url = URL(string: UIApplication.openSettingsURLString)!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-        let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: nil)
-
-        alertController.addAction(openSettingsButton)
-        alertController.addAction(cancelAction)
-        
+        let alertController = NoMicPermissionAlert.buildAlert()
         present(alertController, animated: true, completion: nil)
     }
 }
@@ -1221,12 +1208,10 @@ extension MainViewController: OmniBarDelegate {
     
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
-            DispatchQueue.main.async {
-                if permission {
-                    self.showVoiceSearch()
-                } else {
-                    self.showNoMicrophonePermissionAlert()
-                }
+            if permission {
+                self.showVoiceSearch()
+            } else {
+                self.showNoMicrophonePermissionAlert()
             }
         }
     }

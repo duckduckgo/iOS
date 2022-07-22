@@ -22,18 +22,24 @@ import Core
 
 protocol VoiceSearchHelperProtocol {
     var isSpeechRecognizerAvailable: Bool { get }
+    var isVoiceSearchEnabled: Bool { get }
+    
+    func enableVoiceSearch(_ enable: Bool)
+    func migrateSettingsFlagIfNecessary()
 }
 
 class VoiceSearchHelper: VoiceSearchHelperProtocol {
-    private(set) var isSpeechRecognizerAvailable: Bool = false {
-        didSet {
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
-            }
-        }
+    private let speechRecognizer = SpeechRecognizer()
+    
+    var isVoiceSearchEnabled: Bool {
+        isSpeechRecognizerAvailable && AppDependencyProvider.shared.appSettings.voiceSearchEnabled
     }
     
-    private let speechRecognizer = SpeechRecognizer()
+    private(set) var isSpeechRecognizerAvailable: Bool = false {
+        didSet {
+            notifyAvailabilityChange()
+        }
+    }
     
     init() {
         // https://app.asana.com/0/1201011656765697/1201271104639596
@@ -44,6 +50,29 @@ class VoiceSearchHelper: VoiceSearchHelperProtocol {
             speechRecognizer.delegate = self
             isSpeechRecognizerAvailable = speechRecognizer.isAvailable
 #endif
+        }
+    }
+    
+    func migrateSettingsFlagIfNecessary() {
+        // Users that allowed mic permission before we added voice search settings
+        // should be migrated to an enabled settings
+        // https://app.asana.com/0/0/1202533216912528/1202573665735222/f
+        
+        let settings = UserDefaults.app.object(forKey: UserDefaultsWrapper<Any>.Key.voiceSearchEnabled.rawValue) as? Bool
+    
+        if settings == nil && SpeechRecognizer.recordPermission == .granted {
+            enableVoiceSearch(true)
+        }
+    }
+    
+    func enableVoiceSearch(_ enable: Bool) {
+        AppDependencyProvider.shared.appSettings.voiceSearchEnabled = enable
+        notifyAvailabilityChange()
+    }
+    
+    private func notifyAvailabilityChange() {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .speechRecognizerDidChangeAvailability, object: self)
         }
     }
 }

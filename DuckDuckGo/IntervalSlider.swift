@@ -65,12 +65,12 @@ class IntervalSlider: UISlider {
     }
 
     override var accessibilityValue: String? {
-        set {}
         get {
             let index = Int(self.value)
             guard steps.indices.contains(index) else { return "" }
             return "\(steps[index])%"
         }
+        set {}
     }
 
 }

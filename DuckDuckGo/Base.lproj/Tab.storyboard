@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21208.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -384,10 +384,9 @@
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="E3F-OM-WGY"/>
-                        <keyboardLayoutGuide key="keyboard" id="4li-nc-Gkb"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="4li-nc-Gkb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="yh6-Sh-xgH" secondAttribute="bottom" id="57G-2R-GFy"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yh6-Sh-xgH" secondAttribute="bottom" id="57G-2R-GFy"/>
                             <constraint firstAttribute="trailing" secondItem="yh6-Sh-xgH" secondAttribute="trailing" id="61S-AP-mRh"/>
                             <constraint firstItem="yh6-Sh-xgH" firstAttribute="top" secondItem="Fdh-DJ-MnG" secondAttribute="top" id="Aan-fq-aOY"/>
                             <constraint firstItem="yh6-Sh-xgH" firstAttribute="leading" secondItem="Fdh-DJ-MnG" secondAttribute="leading" id="E5k-17-jzz"/>
@@ -406,8 +405,10 @@
                         <outlet property="cancelButton" destination="pvq-U0-iGm" id="XaJ-xk-sf9"/>
                         <outlet property="cancelButtonSeparator" destination="W8d-WP-B7b" id="SWz-Cm-cXY"/>
                         <outlet property="closeTabButton" destination="CXg-sc-2nh" id="5DS-PA-9Hh"/>
+                        <outlet property="keyboardConstraint" destination="57G-2R-GFy" id="zNf-Hk-ZhW"/>
                         <outlet property="messageLabel" destination="VmI-1g-rf4" id="vuu-wy-rbi"/>
                         <outlet property="okButton" destination="45B-IT-R1W" id="TaK-fM-eT3"/>
+                        <outlet property="scrollView" destination="yh6-Sh-xgH" id="lgB-wN-sbq"/>
                         <outlet property="textField" destination="29Z-R3-6Lj" id="w8B-1o-Ttu"/>
                         <outlet property="textFieldBox" destination="VYW-gI-Rwm" id="mqf-aI-BNV"/>
                         <outlet property="titleLabel" destination="e34-7t-Ubh" id="IKK-rL-VrM"/>

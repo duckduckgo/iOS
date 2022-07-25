@@ -23,7 +23,9 @@ import Core
 final class JSAlertController: UIViewController {
 
     @IBOutlet var alertView: UIView!
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var alertOutOfScreenConstraint: NSLayoutConstraint!
+    @IBOutlet var keyboardConstraint: NSLayoutConstraint!
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var messageLabel: UILabel!
@@ -50,6 +52,9 @@ final class JSAlertController: UIViewController {
 
         self.alertView.alpha = 0.0
         self.backgroundView.alpha = 0.0
+
+        self.keyboardConstraint.constant = 0
+        self.registerForKeyboardNotifications()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -82,6 +87,9 @@ final class JSAlertController: UIViewController {
     }
 
     override func dismiss(animated: Bool, completion: (() -> Void)? = nil) {
+        if self.textField.isFirstResponder {
+            self.textField.resignFirstResponder()
+        }
         guard animated else {
             self.alert = nil
             self.view.superview?.isHidden = true
@@ -148,6 +156,48 @@ final class JSAlertController: UIViewController {
     @IBAction func closeTabAction(_ sender: Any) {
         dismiss(animated: true) { [alert=self.alert] in
             alert?.closeTab()
+        }
+    }
+
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardDidShow),
+                                               name: UIResponder.keyboardDidShowNotification,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+    }
+
+    @objc private func keyboardDidShow(notification: NSNotification) {
+        guard let isLocalUserInfoKey = notification.userInfo?[UIResponder.keyboardIsLocalUserInfoKey] as? NSNumber,
+              isLocalUserInfoKey == true,
+              let intersection = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?
+                  .intersection(self.view.convert(view.bounds, to: view.window)),
+              self.keyboardConstraint.constant != intersection.height
+        else {
+            return
+        }
+
+        UIView.animate(withDuration: 0.3) {
+            self.keyboardConstraint.constant = intersection.height
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        guard let isLocalUserInfoKey = notification.userInfo?[UIResponder.keyboardIsLocalUserInfoKey] as? NSNumber,
+              isLocalUserInfoKey == true,
+              self.keyboardConstraint.constant != 0
+        else {
+            return
+        }
+
+        UIView.animate(withDuration: 0.3) {
+            self.keyboardConstraint.constant = 0
+            self.view.layoutSubviews()
         }
     }
 

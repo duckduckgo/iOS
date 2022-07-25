@@ -804,11 +804,13 @@ class MainViewController: UIViewController {
             }
         }
         suggestionTrayContainer.isHidden = false
+        currentTab?.webView.accessibilityElementsHidden = true
     }
     
     func hideSuggestionTray() {
         omniBar.showSeparator()
         suggestionTrayContainer.isHidden = true
+        currentTab?.webView.accessibilityElementsHidden = false
         suggestionTrayController?.didHide()
     }
     

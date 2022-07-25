@@ -947,6 +947,8 @@ class MainViewController: UIViewController {
     func updateFindInPage() {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
+        // hide toolbar on iPhone
+        toolbar.accessibilityElementsHidden = !AppWidthObserver.shared.isLargeWidth
     }
     
     private func showVoiceSearch() {
@@ -993,6 +995,7 @@ extension MainViewController: FindInPageViewDelegate {
     
     func done(findInPageView: FindInPageView) {
         currentTab?.findInPage = nil
+        toolbar.accessibilityElementsHidden = false
     }
     
 }

@@ -80,7 +80,8 @@ public struct UserDefaultsWrapper<T> {
         case autofillFirstTimeUser = "com.duckduckgo.ios.autofillFirstTimeUser"
         
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
-
+        
+        case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
     }
 
     private let key: Key

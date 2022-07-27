@@ -96,7 +96,7 @@ class EmailWaitlistViewController: UIViewController {
 
         let linkAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: 16,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.emailWaitlistLinkColor
         ]
 

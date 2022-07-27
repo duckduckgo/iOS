@@ -725,8 +725,16 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
-        if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
-           ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+        guard ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) else {
+            webView.configuration.userContentController.removeAllContentRuleLists()
+            
+            rulesCompiledCondition?.resolve()
+            rulesCompiledCondition = nil
+            
+            return
+        }
+        
+        if let rules = ContentBlocking.contentBlockingManager.currentTDSRules {
             
             rulesCompiledCondition?.resolve()
             rulesCompiledCondition = nil
@@ -747,8 +755,6 @@ class TabViewController: UIViewController {
                 reloadUserScripts()
             }
 
-        } else {
-            webView.configuration.userContentController.removeAllContentRuleLists()
         }
     }
 

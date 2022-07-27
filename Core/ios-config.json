@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1657810774696,
+    "version": 1658496463463,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -147,8 +147,16 @@
                     "reason": "When adding an item to the cart, there is an error 'An unexpected problem occurred' and the item is not added to the cart."
                 },
                 {
+                    "domain": "emirates.com",
+                    "reason": "After filling out flight information and clicking 'Search flights', a blank page is shown for several seconds before the page redirects."
+                },
+                {
                     "domain": "hm.com",
                     "reason": "When adding an item to cart, there is an error 'something went wrong', and the item does not get added to the cart."
+                },
+                {
+                    "domain": "ikea.com",
+                    "reason": "When creating an account, after filling out details and going to e-mail confirmation, there is an error 'Something went wrong', and the e-mail may not be received. Clicking 'Send new code' appears successful, but after entering the code there is often another account creation error."
                 },
                 {
                     "domain": "spirit.com",
@@ -259,6 +267,20 @@
                     "adsafeprotected.com": {
                         "rules": [
                             {
+                                "rule": "static.adsafeprotected.com/favicon.ico",
+                                "domains": [
+                                    "tf1info.fr"
+                                ],
+                                "reason": "Adwall displays over video and prevents video from being played."
+                            },
+                            {
+                                "rule": "static.adsafeprotected.com/iasPET.1.js",
+                                "domains": [
+                                    "corriere.it"
+                                ],
+                                "reason": "Example URL: https://www.corriere.it/video-articoli/2022/07/13/missione-wwf-liberare-mare-plastica/9abb64de-029d-11ed-a0cc-ad3c68cacbae.shtml; Clicking on the video to play causes a still frame to show and the video does not continue."
+                            },
+                            {
                                 "rule": "static.adsafeprotected.com/vans-adapter-google-ima.js",
                                 "domains": [
                                     "nhl.com"
@@ -294,10 +316,11 @@
                             {
                                 "rule": "c.amazon-adsystem.com/aax2/apstag.js",
                                 "domains": [
+                                    "corriere.it",
                                     "eurogamer.net",
                                     "seattletimes.com"
                                 ],
-                                "reason": "An unskippable adwall appears which prevents interaction with the page."
+                                "reason": "corriere.it -  Example URL: https://www.corriere.it/video-articoli/2022/07/13/missione-wwf-liberare-mare-plastica/9abb64de-029d-11ed-a0cc-ad3c68cacbae.shtml; Clicking on the video to play causes a still frame to show and the video does not continue. eurogamer.net, seattletimes.com - An unskippable adwall appears which prevents interaction with the page."
                             }
                         ]
                     },
@@ -309,6 +332,63 @@
                                     "chipotle.com"
                                 ],
                                 "reason": "Site loads blank and cannot be interacted with."
+                            }
+                        ]
+                    },
+                    "bc0a.com": {
+                        "rules": [
+                            {
+                                "rule": "marvel-b1-cdn.bc0a.com/f00000000269380/www.beretta.com/assets/",
+                                "domains": [
+                                    "beretta.com"
+                                ],
+                                "reason": "Example URL1: https://www.beretta.com/en-us/womens-clothing/caps-and-hats/; Example URL2: https://www.beretta.com/en-us/mens-clothing/caps-and-hats/lp-trucker-hat/; Various product and product-related images do not render - e.g., main product images on product pages, product images in product listings, etc."
+                            }
+                        ]
+                    },
+                    "bing.com": {
+                        "rules": [
+                            {
+                                "rule": "r.bing.com/rp/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. These requests are associated with map/location functionality on websites."
+                            },
+                            {
+                                "rule": "th.bing.com/th",
+                                "domains": [
+                                    "drudgereport.com"
+                                ],
+                                "reason": "On the homepage (drudgereport.com), some images are fetched from bing.com. When we block these requests, the images do not render, and the page appears to have blank boxes. Note that requests can be of the form th.bing.com/th?id=... or th.bing.com/th/id/..., hence we unblock the common path here."
+                            },
+                            {
+                                "rule": "www.bing.com/api/maps/mapcontrol",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. This request is associated with map/location functionality on websites."
+                            },
+                            {
+                                "rule": "www.bing.com/api/v6/Places/AutoSuggest",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. This request is associated with map/location auto-suggest functionality on websites."
+                            },
+                            {
+                                "rule": "www.bing.com/maps/sdkrelease/mapcontrol",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. This request is associated with map/location functionality on websites."
+                            },
+                            {
+                                "rule": "www.bing.com/rp/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. These requests are associated with map/location functionality on websites."
                             }
                         ]
                     },
@@ -389,10 +469,11 @@
                             {
                                 "rule": "connect.facebook.net/en_US/sdk.js",
                                 "domains": [
+                                    "bandsintown.com",
                                     "nextdoor.co.uk",
                                     "nextdoor.com"
                                 ],
-                                "reason": "Facebook login option appears greyed out and cannot be clicked."
+                                "reason": "bandsintown.com - Ticket page renders blank. With this exception the page redirects to ticketspice.com. nextdoor.co.uk, nextdoor.com - Facebook login option appears greyed out and cannot be clicked."
                             }
                         ]
                     },
@@ -412,9 +493,17 @@
                             {
                                 "rule": "google-analytics.com/analytics.js",
                                 "domains": [
+                                    "doterra.com",
                                     "easyjet.com"
                                 ],
-                                "reason": "Clicking 'Show Worldwide flights' after entering parameters for a worldwide flight in the flight viewing form does nothing."
+                                "reason": "doterra.com - For doterra.com/login/loading, the page shows a loading indicator and never redirects. easyjet.com - Clicking 'Show Worldwide flights' after entering parameters for a worldwide flight in the flight viewing form does nothing."
+                            },
+                            {
+                                "rule": "www.google-analytics.com/plugins/ua/ecommerce.js",
+                                "domains": [
+                                    "doterra.com"
+                                ],
+                                "reason": "For doterra.com/login/loading, the page shows a loading indicator and never redirects."
                             }
                         ]
                     },
@@ -444,10 +533,11 @@
                                 "domains": [
                                     "ah.nl",
                                     "dailyherald.com",
+                                    "emirates.com",
                                     "iltalehti.fi",
                                     "rbcroyalbank.com"
                                 ],
-                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. dailyherald.com - Article images render as grey boxes. iltalehti.fi - Article video renders as a blank box. rbcroyalbank.com - Investments page renders blank."
+                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. dailyherald.com - Article images render as grey boxes. emirates.com - After filling out login details and clicking to proceed, a loading spinners shows on the proceed button and the login does not progress. iltalehti.fi - Article video renders as a blank box. rbcroyalbank.com - Investments page renders blank."
                             }
                         ]
                     },

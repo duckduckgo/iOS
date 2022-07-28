@@ -18,7 +18,21 @@
 //
 
 import UIKit
+import SwiftUI
 import BrowserServicesKit
+
+struct EmailProtectionView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> EmailProtectionViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "EmailProtectionViewController",
+                                       creator: EmailProtectionViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: EmailProtectionViewController, context: Context) {
+    }
+
+}
 
 final class EmailProtectionViewController: UITableViewController {
 

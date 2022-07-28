@@ -19,6 +19,20 @@
 
 import UIKit
 import Core
+import SwiftUI
+
+struct FireproofSitesView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> PreserveLoginsSettingsViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "PreserveLoginsSettingsViewController",
+                                       creator: PreserveLoginsSettingsViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: PreserveLoginsSettingsViewController, context: Context) {
+    }
+
+}
 
 class PreserveLoginsSettingsViewController: UITableViewController {
     

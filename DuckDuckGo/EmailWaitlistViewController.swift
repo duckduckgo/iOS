@@ -18,9 +18,22 @@
 //
 
 import UIKit
+import SwiftUI
 import Core
 import BrowserServicesKit
 import UserNotifications
+
+// swiftlint:disable file_length
+struct EmailWaitlistView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> EmailWaitlistViewController {
+        EmailWaitlistViewController.loadFromStoryboard()
+    }
+
+    func updateUIViewController(_ uiViewController: EmailWaitlistViewController, context: Context) {
+    }
+
+}
 
 class EmailWaitlistViewController: UIViewController {
 
@@ -30,9 +43,10 @@ class EmailWaitlistViewController: UIViewController {
         static var showWaitlistNotificationPrompt = URL(string: "ddgAction://showWaitlistNotificationPrompt")!
     }
 
-    static func loadFromStoryboard() -> UIViewController {
+    static func loadFromStoryboard() -> EmailWaitlistViewController {
         let storyboard = UIStoryboard(name: "Settings", bundle: Bundle.main)
-        return storyboard.instantiateViewController(identifier: "EmailWaitlistViewController")
+        return storyboard.instantiateViewController(identifier: "EmailWaitlistViewController",
+                                                    creator: EmailWaitlistViewController.init(coder:))
     }
 
     @IBOutlet weak var headerImageView: UIImageView!

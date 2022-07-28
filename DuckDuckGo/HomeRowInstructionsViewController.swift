@@ -20,6 +20,19 @@
 import UIKit
 import AVKit
 import Core
+import SwiftUI
+
+struct HomeRowView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> HomeRowInstructionsViewController {
+        UIStoryboard(name: "HomeRow", bundle: nil)
+            .instantiateInitialViewController(creator: HomeRowInstructionsViewController.init(coder:))!
+    }
+
+    func updateUIViewController(_ uiViewController: HomeRowInstructionsViewController, context: Context) {
+    }
+
+}
 
 class HomeRowInstructionsViewController: UIViewController {
 

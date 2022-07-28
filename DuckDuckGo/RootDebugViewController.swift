@@ -18,10 +18,24 @@
 //
 
 import UIKit
+import SwiftUI
 import LinkPresentation
 import Core
 import Kingfisher
 import WebKit
+
+struct DebugMenuView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> RootDebugViewController {
+        UIStoryboard(name: "Debug", bundle: nil)
+            .instantiateViewController(identifier: "DebugMenu",
+                                       creator: RootDebugViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: RootDebugViewController, context: Context) {
+    }
+
+}
 
 class RootDebugViewController: UITableViewController {
 

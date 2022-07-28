@@ -18,7 +18,21 @@
 //
 
 import UIKit
+import SwiftUI
 import Core
+
+struct AboutView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> AboutViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "AboutViewController",
+                                       creator: AboutViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: AboutViewController, context: Context) {
+    }
+
+}
 
 class AboutViewController: UIViewController {
 

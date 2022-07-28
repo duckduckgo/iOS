@@ -19,6 +19,20 @@
 
 import UIKit
 import Core
+import SwiftUI
+
+struct AppIconSettingsView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> AppIconSettingsViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "AppIconSettingsViewController",
+                                       creator: AppIconSettingsViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: AppIconSettingsViewController, context: Context) {
+    }
+
+}
 
 class AppIconSettingsViewController: UICollectionViewController {
     

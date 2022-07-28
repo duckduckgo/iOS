@@ -20,10 +20,22 @@
 import UIKit
 import Combine
 import Core
+import SwiftUI
 import BrowserServicesKit
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
+}
+
+struct AutofillLoginSettingsView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> AutofillLoginSettingsListViewController {
+        AutofillLoginSettingsListViewController(appSettings: AppDependencyProvider.shared.appSettings)
+    }
+
+    func updateUIViewController(_ uiViewController: AutofillLoginSettingsListViewController, context: Context) {
+    }
+
 }
 
 final class AutofillLoginSettingsListViewController: UIViewController {

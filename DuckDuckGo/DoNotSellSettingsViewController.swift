@@ -19,6 +19,20 @@
 
 import UIKit
 import Core
+import SwiftUI
+
+struct GPCSettingsView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> DoNotSellSettingsViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "DoNotSellSettingsViewController",
+                                       creator: DoNotSellSettingsViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: DoNotSellSettingsViewController, context: Context) {
+    }
+
+}
 
 class DoNotSellSettingsViewController: UITableViewController {
 

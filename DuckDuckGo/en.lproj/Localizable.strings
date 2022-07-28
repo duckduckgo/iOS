@@ -1219,7 +1219,100 @@ Invite code: %@";
 "section.title.favorites" = "Favorites";
 
 /* No comment provided by engineer. */
+"settings" = "Settings";
+
+/* No comment provided by engineer. */
+"settings.about" = "About";
+
+/* No comment provided by engineer. */
 "settings.about.text" = "At DuckDuckGo, we’re setting the new standard of trust online.\n\nDuckDuckGo Privacy Browser provides all the privacy essentials you need to protect yourself as you search and browse the web, including tracker blocking, smarter encryption, and DuckDuckGo private search.\n\nAfter all, the Internet shouldn’t feel so creepy, and getting the privacy you deserve online should be as simple as closing the blinds.";
+
+/* No comment provided by engineer. */
+"settings.add.to.dock" = "Add App to Your Dock";
+
+/* No comment provided by engineer. */
+"settings.add.widget" = "Add Widget to Home Screen";
+
+/* No comment provided by engineer. */
+"settings.application.lock" = "Application Lock";
+
+/* No comment provided by engineer. */
+"settings.autocomplete.suggestions" = "Autocomplete Suggestions";
+
+/* No comment provided by engineer. */
+"settings.automatic.clear" = "Automatically Clear Data";
+
+/* No comment provided by engineer. */
+"settings.desktop.app" = "DuckDuckGo Desktop App";
+
+/* No comment provided by engineer. */
+"settings.desktop.app.description" = "Browse privately with our app for Mac";
+
+/* No comment provided by engineer. */
+"settings.email.protection" = "Email Protection";
+
+/* No comment provided by engineer. */
+"settings.email.protection.description" = "Block email trackers and hide your address";
+
+/* No comment provided by engineer. */
+"settings.fire.button.animation" = "Fire Button Animation";
+
+/* No comment provided by engineer. */
+"settings.gpc" = "Global Privacy Control (GPC)";
+
+/* No comment provided by engineer. */
+"settings.icon" = "App Icon";
+
+/* No comment provided by engineer. */
+"settings.keyboard" = "Keyboard";
+
+/* No comment provided by engineer. */
+"settings.long.press.previews" = "Long-Press Previews";
+
+/* No comment provided by engineer. */
+"settings.open.links.in.associated.apps" = "Open Links in Associated Apps";
+
+/* No comment provided by engineer. */
+"settings.private.voice.search" = "Private Voice Search";
+
+/* No comment provided by engineer. */
+"settings.section.about" = "ABOUT";
+
+/* No comment provided by engineer. */
+"settings.section.appearance" = "APPEARANCE";
+
+/* No comment provided by engineer. */
+"settings.section.customize" = "CUSTOMIZE";
+
+/* No comment provided by engineer. */
+"settings.section.customize.footer" = "Disable to prevent links from automatically opening in other installed apps.";
+
+/* No comment provided by engineer. */
+"settings.section.more" = "MORE FROM DUCKDUCKGO";
+
+/* No comment provided by engineer. */
+"settings.section.privacy" = "PRIVACY";
+
+/* No comment provided by engineer. */
+"settings.section.privacy.footer" = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening.";
+
+/* No comment provided by engineer. */
+"settings.set.default" = "Set as Default Browser";
+
+/* No comment provided by engineer. */
+"settings.share.feedback" = "Share Feedback";
+
+/* No comment provided by engineer. */
+"settings.text.size" = "Text Size";
+
+/* No comment provided by engineer. */
+"settings.theme" = "Theme";
+
+/* No comment provided by engineer. */
+"settings.unprotected.sites" = "Unprotected Sites";
+
+/* No comment provided by engineer. */
+"settings.version" = "Version";
 
 /* Report a Broken Site screen confirmation button */
 "siteFeedback.buttonText" = "Submit Report";

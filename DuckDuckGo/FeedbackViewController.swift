@@ -18,6 +18,19 @@
 //
 
 import UIKit
+import SwiftUI
+
+struct FeedbackView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> FeedbackViewController {
+        UIStoryboard(name: "Feedback", bundle: nil)
+            .instantiateInitialViewController(creator: FeedbackViewController.init(coder:))!
+    }
+
+    func updateUIViewController(_ uiViewController: FeedbackViewController, context: Context) {
+    }
+
+}
 
 class FeedbackViewController: UIViewController {
     

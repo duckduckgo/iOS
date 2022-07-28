@@ -19,7 +19,21 @@
 
 import UIKit
 import MessageUI
+import SwiftUI
 import Core
+
+struct AutoClearSettingsView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> AutoClearSettingsViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "AutoClearSettingsViewController",
+                                       creator: AutoClearSettingsViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: AutoClearSettingsViewController, context: Context) {
+    }
+
+}
 
 class AutoClearSettingsViewController: UITableViewController {
     

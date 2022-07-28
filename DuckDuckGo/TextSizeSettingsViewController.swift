@@ -19,8 +19,21 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 import Core
 
+struct TextSizeSettingsView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> TextSizeSettingsViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "TextSizeSettingsViewController",
+                                       creator: TextSizeSettingsViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: TextSizeSettingsViewController, context: Context) {
+    }
+
+}
 class TextSizeSettingsViewController: UITableViewController {
     
     @IBOutlet var customBackBarButtonItem: UIBarButtonItem!

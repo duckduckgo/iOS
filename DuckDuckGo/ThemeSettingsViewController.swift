@@ -19,6 +19,37 @@
 
 import UIKit
 import Core
+import SwiftUI
+
+struct ThemeSettingsView: UIViewControllerRepresentable {
+
+    var body: some View {
+        List {
+            Section(header: Text(UserText.settingsShowKeyboardOnSection)) {
+
+                Toggle(isOn: $settings.onNewTab) {
+                    Text(UserText.settingsShowKeyboardOnNewTab)
+                }
+
+                Toggle(isOn: $settings.onAppLaunch) {
+                    Text(UserText.settingsShowKeyboardOnAppLaunch)
+                }
+
+            }
+        }
+        .listStyle(.insetGrouped)
+    }
+    
+    func makeUIViewController(context: Context) -> ThemeSettingsViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "ThemeSettingsViewController",
+                                       creator: ThemeSettingsViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: ThemeSettingsViewController, context: Context) {
+    }
+
+}
 
 class ThemeSettingsViewController: UITableViewController {
     

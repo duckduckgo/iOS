@@ -80,7 +80,7 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowAutofillCell: Bool = {
         return featureFlagger.isFeatureOn(.autofill)
     }()
-    
+
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }

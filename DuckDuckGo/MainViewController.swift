@@ -22,6 +22,7 @@ import WebKit
 import Core
 import Lottie
 import Kingfisher
+import SwiftUI
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -837,7 +838,8 @@ class MainViewController: UIViewController {
     }
     
     fileprivate func launchSettings() {
-        performSegue(withIdentifier: "Settings", sender: self)
+        let settings = UIHostingController(rootView: SettingsView())
+        self.present(settings, animated: true)
     }
 
     fileprivate func launchInstructions() {

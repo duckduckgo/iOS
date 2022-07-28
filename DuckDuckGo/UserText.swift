@@ -590,7 +590,54 @@ public struct UserText {
     public static let macWaitlistSettingsOnTheList = NSLocalizedString("mac-waitlist.settings.on-the-list", value: "You’re on the list!", comment: "Title for the settings subtitle")
     
     public static let macWaitlistBrowsePrivately = NSLocalizedString("mac-waitlist.settings.browse-privately", value: "Browse privately with our app for Mac", comment: "Title for the settings subtitle")
-    
+
+    public static let settings = NSLocalizedString("settings", value: "Settings", comment: "")
+
+    public static let settingsSetAsDefault = NSLocalizedString("settings.set.default", value: "Set as Default Browser", comment: "")
+    public static let settingsAddToDock = NSLocalizedString("settings.add.to.dock", value: "Add App to Your Dock", comment: "")
+    public static let settingsAddWidget = NSLocalizedString("settings.add.widget", value: "Add Widget to Home Screen", comment: "")
+
+    public static let settingsSectionAppearance = NSLocalizedString("settings.section.appearance", value: "APPEARANCE", comment: "")
+    public static let settingsTheme = NSLocalizedString("settings.theme", value: "Theme", comment: "")
+    public static let settingsAppIcon = NSLocalizedString("settings.icon", value: "App Icon", comment: "")
+    public static let settingsFireButtonAnimation = NSLocalizedString("settings.fire.button.animation", value: "Fire Button Animation", comment: "")
+    public static let settingsTextSize = NSLocalizedString("settings.text.size", value: "Text Size", comment: "")
+
+    public static let settingsSectionPrivacy = NSLocalizedString("settings.section.privacy", value: "PRIVACY", comment: "")
+    public static let settingsSectionPrivacyFooter = NSLocalizedString("settings.section.privacy.footer", value: """
+        If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening.
+        """, comment: "")
+    public static let settingsGPC = NSLocalizedString("settings.gpc", value: "Global Privacy Control (GPC)", comment: "")
+    public static let settingsUnprotectedSites = NSLocalizedString("settings.unprotected.sites", value: "Unprotected Sites", comment: "")
+    public static let settingsAutomaticClear = NSLocalizedString("settings.automatic.clear", value: "Automatically Clear Data", comment: "")
+    public static let settingsApplicationLock = NSLocalizedString("settings.application.lock", value: "Application Lock", comment: "")
+
+    public static let settingsSectionCustomize = NSLocalizedString("settings.section.customize", value: "CUSTOMIZE", comment: "")
+    public static let settingsSectionCustomizeFooter = NSLocalizedString("settings.section.customize.footer", value: """
+        Disable to prevent links from automatically opening in other installed apps.
+        """, comment: "")
+    public static let settingsKeyboard = NSLocalizedString("settings.keyboard", value: "Keyboard", comment: "")
+
+    public static let settingsShowKeyboardOnSection = NSLocalizedString("settings.keyboard.section", value: "SHOW KEYBOARD ON", comment: "")
+    public static let settingsShowKeyboardOnNewTab = NSLocalizedString("settings.show.keyboard.on.new.tab", value: "New Tab", comment: "")
+    public static let settingsShowKeyboardOnAppLaunch = NSLocalizedString("settings.show.keyboard.on.app.launch", value: "App Launch", comment: "")
+
+    public static let settingsAutocompleteSuggestions = NSLocalizedString("settings.autocomplete.suggestions", value: "Autocomplete Suggestions", comment: "")
+    public static let settingsPrivateVoiceSearch = NSLocalizedString("settings.private.voice.search", value: "Private Voice Search", comment: "")
+    public static let settingsLongPressPreviews = NSLocalizedString("settings.long.press.previews", value: "Long-Press Previews", comment: "")
+    public static let settingsOpenLinksInApps = NSLocalizedString("settings.open.links.in.associated.apps", value: "Open Links in Associated Apps", comment: "")
+
+    public static let settingsSectionMore = NSLocalizedString("settings.section.more", value: "MORE FROM DUCKDUCKGO", comment: "")
+    public static let settingsEmailProtection = NSLocalizedString("settings.email.protection", value: "Email Protection", comment: "")
+    public static let settingsEmailProtectionDescription = NSLocalizedString("settings.email.protection.description", value: "Block email trackers and hide your address", comment: "")
+    public static let settingsDesktopApp = NSLocalizedString("settings.desktop.app", value: "DuckDuckGo Desktop App", comment: "")
+    public static let settingsDesktopAppDescription = NSLocalizedString("settings.desktop.app.description", value: "Browse privately with our app for Mac", comment: "")
+
+    public static let settingsSectionAbout = NSLocalizedString("settings.section.about", value: "ABOUT", comment: "")
+    public static let settingsAbout = NSLocalizedString("settings.about", value: "About", comment: "")
+    public static let settingsVersion = NSLocalizedString("settings.version", value: "Version", comment: "")
+    public static let settingsShareFeedback = NSLocalizedString("settings.share.feedback", value: "Share Feedback", comment: "")
+
     // MARK: Share Sheet
     
     public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "You’re Invited!", comment: "Title for the share sheet entry")

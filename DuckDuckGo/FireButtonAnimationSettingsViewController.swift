@@ -19,6 +19,20 @@
 
 import UIKit
 import Core
+import SwiftUI
+
+struct FireButtonAnimationView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> FireButtonAnimationSettingsViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "FireButtonAnimationSettingsViewController",
+                                       creator: FireButtonAnimationSettingsViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: FireButtonAnimationSettingsViewController, context: Context) {
+    }
+
+}
 
 class FireButtonAnimationSettingsViewController: UITableViewController {
          

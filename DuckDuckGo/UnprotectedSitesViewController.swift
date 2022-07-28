@@ -18,8 +18,22 @@
 //
 
 import UIKit
+import SwiftUI
 import Core
 import BrowserServicesKit
+
+struct UnprotectedSitesView: UIViewControllerRepresentable {
+
+    func makeUIViewController(context: Context) -> UnprotectedSitesViewController {
+        UIStoryboard(name: "Settings", bundle: nil)
+            .instantiateViewController(identifier: "Unprotected Sites",
+                                       creator: UnprotectedSitesViewController.init(coder:))
+    }
+
+    func updateUIViewController(_ uiViewController: UnprotectedSitesViewController, context: Context) {
+    }
+
+}
 
 class UnprotectedSitesViewController: UITableViewController {
     

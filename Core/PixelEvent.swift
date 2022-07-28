@@ -292,6 +292,8 @@ extension Pixel {
         case cachedTabPreviewsExceedsTabCount
         case cachedTabPreviewRemovalError
         
+        case missingDownloadedFile
+        
         case compilationResult(result: CompileRulesResult, waitTime: CompileRulesWaitTime, appState: AppState)
         
     }
@@ -572,6 +574,8 @@ extension Pixel.Event {
             
         case .cachedTabPreviewsExceedsTabCount: return "m_d_tpetc"
         case .cachedTabPreviewRemovalError: return "m_d_tpre"
+            
+        case .missingDownloadedFile: return "m_missing_downloaded_file"
             
         case .compilationResult(result: let result, waitTime: let waitTime, appState: let appState):
             return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"

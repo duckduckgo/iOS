@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Core
 import Foundation
 import WebKit
 
@@ -68,6 +69,8 @@ extension URLDownloadSession: URLSessionTaskDelegate, URLSessionDownloadDelegate
             try FileManager.default.moveItem(at: location, to: tmpURL)
             self.location = tmpURL
         } catch {
+            Pixel.fire(pixel: .missingDownloadedFile, error: error)
+            assertionFailure("Failed to rename file in temp dir - downloaded file is missing")
         }
     }
 

@@ -63,7 +63,12 @@ class URLDownloadSession: NSObject, DownloadSession {
 extension URLDownloadSession: URLSessionTaskDelegate, URLSessionDownloadDelegate {
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        self.location = location
+        let tmpURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        do {
+            try FileManager.default.moveItem(at: location, to: tmpURL)
+            self.location = tmpURL
+        } catch {
+        }
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {

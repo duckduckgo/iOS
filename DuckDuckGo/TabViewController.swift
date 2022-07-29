@@ -1069,6 +1069,9 @@ extension TabViewController: WKNavigationDelegate {
                 } cancelHandler: {
                     decisionHandler(.cancel)
                 }
+            } else {
+                Pixel.fire(pixel: .unhandledDownload)
+                decisionHandler(.cancel)
             }
 
         } else {

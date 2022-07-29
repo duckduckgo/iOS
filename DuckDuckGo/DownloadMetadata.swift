@@ -26,21 +26,13 @@ struct DownloadMetadata {
     let mimeType: MIMEType
     let url: URL
     
-    init?(_ response: URLResponse, filename: String? = nil) {
-        guard let mimeType = response.mimeType,
-              let url = response.url else {
-                  return nil
-              }
-        
-        if let name = filename {
-            self.filename = name
-        } else {
-            self.filename = response.suggestedFilename ?? "unknown"
-        }
-        
+    init?(_ response: URLResponse, filename: String) {
+        guard let url = response.url else { return nil }
+
+        self.filename = filename
         self.expectedContentLength = response.expectedContentLength
-        self.mimeTypeSource = mimeType
-        self.mimeType = MIMEType(rawValue: mimeType) ?? .unknown
+        self.mimeTypeSource = response.mimeType ?? ""
+        self.mimeType = MIMEType(from: response.mimeType)
         self.url = url
     }
 }

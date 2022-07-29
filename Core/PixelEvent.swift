@@ -297,6 +297,8 @@ extension Pixel {
         
         case compilationResult(result: CompileRulesResult, waitTime: CompileRulesWaitTime, appState: AppState)
         
+        case emailAutofillKeychainError
+        
     }
     
 }
@@ -581,6 +583,8 @@ extension Pixel.Event {
             
         case .compilationResult(result: let result, waitTime: let waitTime, appState: let appState):
             return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"
+            
+        case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
         }
         
     }

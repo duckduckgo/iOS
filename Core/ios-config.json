@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1658496463463,
+    "version": 1659011934066,
     "features": {
         "ampLinks": {
             "exceptions": [
@@ -170,6 +170,18 @@
             "state": "disabled"
         },
         "fingerprintingHardware": {
+            "settings": {
+                "keyboard": {
+                    "type": "undefined"
+                },
+                "hardwareConcurrency": {
+                    "type": "number",
+                    "value": 4
+                },
+                "deviceMemory": {
+                    "type": "undefined"
+                }
+            },
             "exceptions": [
                 {
                     "domain": "gamestop.com",
@@ -192,9 +204,27 @@
                     "reason": "Site loads blank and does not proceed."
                 }
             ],
-            "state": "disabled"
+            "state": "enabled"
         },
         "fingerprintingScreenSize": {
+            "settings": {
+                "availTop": {
+                    "type": "number",
+                    "value": 0
+                },
+                "availLeft": {
+                    "type": "number",
+                    "value": 0
+                },
+                "colorDepth": {
+                    "type": "number",
+                    "value": 24
+                },
+                "pixelDepth": {
+                    "type": "number",
+                    "value": 24
+                }
+            },
             "exceptions": [
                 {
                     "domain": "gamestop.com",

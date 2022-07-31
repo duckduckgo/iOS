@@ -54,7 +54,7 @@ class PrivacyProtectionIconSource {
         return iconImageTemplate(withString: networkSymbol, iconSize: iconSize)
     }
     
-    /// Create icon template image: circle with text of zero opaciy inside.
+    /// Create icon template image: circle with text of zero opacity inside.
     ///
     /// Notes:
     ///    - Text is not scaled, typically you'd use it to present one or two characters.

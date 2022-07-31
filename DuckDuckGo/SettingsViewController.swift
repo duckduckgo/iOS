@@ -115,7 +115,7 @@ class SettingsViewController: UITableViewController {
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
         
-        // Make sure muliline labels are correctly presented
+        // Make sure multiline labels are correctly presented
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
     }

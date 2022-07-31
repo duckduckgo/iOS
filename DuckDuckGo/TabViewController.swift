@@ -608,7 +608,7 @@ class TabViewController: UIViewController {
     }
     
     private func reloadUserScripts() {
-        removeMessageHandlers() // incoming config might be a copy of an existing confg with handlers
+        removeMessageHandlers() // incoming config might be a copy of an existing config with handlers
         webView.configuration.userContentController.removeAllUserScripts()
         
         refreshAutofillUserScript()

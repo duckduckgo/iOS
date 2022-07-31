@@ -253,7 +253,7 @@ class BookmarksCachingSearchTests: XCTestCase {
         let expectation1 = expectation(description: "te bo")
         engine.search(query: "te bo") { result in
             XCTAssertEqual(result.count, 4)
-            // Prioritize if first word match the begining of the title
+            // Prioritize if first word match the beginning of the title
             XCTAssertEqual(result[0].title, Entry.b2.rawValue)
             XCTAssertEqual(result[1].title, Entry.b12a.rawValue)
             XCTAssertEqual(result[2].title, Entry.b1.rawValue)

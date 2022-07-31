@@ -127,7 +127,7 @@ class UnprotectedSitesViewController: UITableViewController {
 
         if unprotectedDomains.count == 0 {
             if tableView.isEditing {
-                // According to documentation it is inivalid to call it synchronously here.
+                // According to documentation it is invalid to call it synchronously here.
                 DispatchQueue.main.async {
                     self.endEditing()
                 }

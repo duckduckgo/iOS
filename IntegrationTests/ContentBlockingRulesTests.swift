@@ -38,7 +38,7 @@ class ContentBlockingRulesTests: XCTestCase {
             XCTFail("Missing google ad services rule")
         }
         
-        // Test exceptiions are set to ignore previous rules
+        // Test exceptions are set to ignore previous rules
         if let rule = rules.findInIfDomain(domain: "duckduckgo.com") {
             XCTAssert(rule.action == .ignorePreviousRules())
         } else {

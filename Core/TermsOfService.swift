@@ -95,7 +95,7 @@ public struct TermsOfService: Decodable {
         
         var derived = 5
         
-        // asign a score value to the classes/scores provided in the JSON file
+        // assign a score value to the classes/scores provided in the JSON file
         if classification == .a {
             derived = 0
         } else if classification == .b {

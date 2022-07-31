@@ -45,10 +45,10 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var arrowView: UIView!
     
-    // Height to accomodate all content, can be constrained by parent view.
+    // Height to accommodate all content, can be constrained by parent view.
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     
-    // Width to accomodate all entries as a single line of text, can be constrained by parent view.
+    // Width to accommodate all entries as a single line of text, can be constrained by parent view.
     @IBOutlet weak var preferredWidth: NSLayoutConstraint!
     
     // Set to force recalculation

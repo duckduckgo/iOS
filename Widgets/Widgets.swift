@@ -117,7 +117,7 @@ struct Provider: TimelineProvider {
         let key = Favicons.createHash(ofDomain: domain)
         guard let cacheUrl = Favicons.CacheType.bookmarks.cacheLocation() else { return nil }
 
-        // Slight leap here to avoid loading Kingisher as a library for the widgets.
+        // Slight leap here to avoid loading Kingfisher as a library for the widgets.
         // Once dependency management is fixed, link it and use Favicons directly.
         let imageUrl = cacheUrl.appendingPathComponent("com.onevcat.Kingfisher.ImageCache.bookmarks").appendingPathComponent(key)
 

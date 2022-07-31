@@ -131,9 +131,9 @@ public class BookmarksCachingSearch {
             guard let title = entry.bookmark.displayTitle?.lowercased() else { continue }
             
             // Exact matches - full query
-            if title.starts(with: query) { // High score for exact match from the begining of the title
+            if title.starts(with: query) { // High score for exact match from the beginning of the title
                 entry.score += 200
-            } else if title.contains(" \(query)") { // Exact match from the begining of the word within string.
+            } else if title.contains(" \(query)") { // Exact match from the beginning of the word within string.
                 entry.score += 100
             }
             
@@ -144,7 +144,7 @@ public class BookmarksCachingSearch {
             if tokens.count > 1 {
                 var matchesAllTokens = true
                 for token in tokens {
-                    // Match only from the begining of the word to avoid unintuitive matches.
+                    // Match only from the beginning of the word to avoid unintuitive matches.
                     if !title.starts(with: token) && !title.contains(" \(token)") && !domain.starts(with: token) {
                         matchesAllTokens = false
                         break
@@ -159,7 +159,7 @@ public class BookmarksCachingSearch {
                     if let firstToken = tokens.first { // domain - high score boost
                         if domain.starts(with: firstToken) {
                             entry.score += 300
-                        } else if title.starts(with: firstToken) { // begining of the title - moderate score boost
+                        } else if title.starts(with: firstToken) { // beginning of the title - moderate score boost
                             entry.score += 50
                         }
                     }

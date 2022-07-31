@@ -24,7 +24,7 @@ protocol FeedbackEntry: FeedbackComponent {
     
     var userText: String { get }
     
-    // Generic entries are not used to populate details on last fedback form, as they do not provide a concrete example of what to improve
+    // Generic entries are not used to populate details on last feedback form, as they do not provide a concrete example of what to improve
     var isGeneric: Bool { get }
 }
 

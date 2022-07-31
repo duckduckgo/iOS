@@ -145,7 +145,7 @@ extension MainViewController {
             // Flexible width
             constraints.append(browsingMenu.view.leftAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leftAnchor, constant: 100))
         } else {
-            // Reguar sizing:
+            // Regular sizing:
             constraints.append(browsingMenu.view.bottomAnchor.constraint(equalTo: tab.webView.bottomAnchor, constant: 10))
             constraints.append(browsingMenu.view.topAnchor.constraint(greaterThanOrEqualTo: tab.webView.topAnchor, constant: 10))
             

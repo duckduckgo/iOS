@@ -106,7 +106,7 @@ extension Core.Bookmark {
     }
 }
 
-// Unfortuntely required to make methods available to objc
+// Unfortunately required to make methods available to objc
 extension Core.BookmarkManagedObject: UIActivityItemSource {
     
     @objc public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {

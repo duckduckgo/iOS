@@ -663,7 +663,7 @@
 		F45B37762760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B37752760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift */; };
 		F45B37792760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45B37782760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift */; };
 		F46FEC5727987A5F0061D9DF /* KeychainItemsDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46FEC5627987A5F0061D9DF /* KeychainItemsDebugViewController.swift */; };
-		F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E53D8250A97330037C686 /* OnboardingDefaultBroswerViewController.swift */; };
+		F47E53D9250A97330037C686 /* OnboardDefaultBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47E53D8250A97330037C686 /* OnboardDefaultBrowserViewController.swift */; };
 		F47E53DB250A9A1C0037C686 /* Onboarding.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */; };
 		F486D31D2506980E002D07D7 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = F486D31C2506980E002D07D7 /* Swifter */; };
 		F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F486D33325069BBB002D07D7 /* Kingfisher */; };
@@ -2090,7 +2090,7 @@
 		F45B37752760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkItemDetailsDataSource.swift; sourceTree = "<group>"; };
 		F45B37782760277500CDCCA9 /* BookmarkFoldersSectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFoldersSectionDataSource.swift; sourceTree = "<group>"; };
 		F46FEC5627987A5F0061D9DF /* KeychainItemsDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainItemsDebugViewController.swift; sourceTree = "<group>"; };
-		F47E53D8250A97330037C686 /* OnboardingDefaultBroswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingDefaultBroswerViewController.swift; sourceTree = "<group>"; };
+		F47E53D8250A97330037C686 /* OnboardDefaultBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardDefaultBrowserViewController.swift; sourceTree = "<group>"; };
 		F47E53DA250A9A1C0037C686 /* Onboarding.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Onboarding.xcassets; sourceTree = "<group>"; };
 		F4A96BDB284518E70025C8E0 /* FeatureFlagger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagger.swift; sourceTree = "<group>"; };
 		F4A96BE0284796A60025C8E0 /* FeatureFlaggingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlaggingTests.swift; sourceTree = "<group>"; };
@@ -3950,7 +3950,7 @@
 			children = (
 				984147AA24F0259000362052 /* Onboarding.storyboard */,
 				851B128722200575004781BC /* Onboarding.swift */,
-				F47E53D8250A97330037C686 /* OnboardingDefaultBroswerViewController.swift */,
+				F47E53D8250A97330037C686 /* OnboardDefaultBrowserViewController.swift */,
 				F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */,
 				F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */,
 				851B128B2220483A004781BC /* OnboardingViewController.swift */,
@@ -5002,7 +5002,7 @@
 				4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */,
 				1E8AD1D527C2E22900ABA377 /* DownloadsListSectionViewModel.swift in Sources */,
 				31584616281AFB46004ADB8B /* AutofillLoginDetailsViewController.swift in Sources */,
-				F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */,
+				F47E53D9250A97330037C686 /* OnboardDefaultBrowserViewController.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
 				1E8AD1C927BFAD1500ABA377 /* DirectoryMonitor.swift in Sources */,

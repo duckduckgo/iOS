@@ -47,7 +47,7 @@ class AutocompleteRequestTests: XCTestCase {
         request.execute { _, _ in
             expect.fulfill()
         }
-        waitForExpectations(timeout: 1.0, handler: nil)
+        waitForExpectations(timeout: 2.0, handler: nil)
     }
 
     func testWhenModernResponseThenURLsAreNotNilForPhrasesWithNav() throws {

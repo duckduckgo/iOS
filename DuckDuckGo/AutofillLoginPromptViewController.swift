@@ -173,9 +173,11 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
     
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel) {
         dismiss(animated: true) {
+            #if os(iOS)
             if self.isAutoprompt {
                 Pixel.fire(pixel: .autofillLoginsAutopromptDismissed)
             }
+            #endif
             
             self.completion?(nil)
         }

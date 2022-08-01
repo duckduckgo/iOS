@@ -41,6 +41,7 @@ class AutofillLoginPromptViewController: UIViewController {
     let completion: AutofillLoginPromptViewControllerCompletion?
     
     private let accounts: [SecureVaultModels.WebsiteAccount]
+    private let isAutoprompt: Bool
     
     private lazy var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .systemMaterial)
@@ -56,8 +57,10 @@ class AutofillLoginPromptViewController: UIViewController {
 
     
     internal init(accounts: [SecureVaultModels.WebsiteAccount],
+                  isAutoprompt: Bool,
                   completion: AutofillLoginPromptViewControllerCompletion? = nil) {
         self.accounts = accounts
+        self.isAutoprompt = isAutoprompt
         self.completion = completion
         super.init(nibName: nil, bundle: nil)
     }
@@ -170,6 +173,10 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
     
     func autofillLoginPromptViewModelDidCancel(_ viewModel: AutofillLoginPromptViewModel) {
         dismiss(animated: true) {
+            if self.isAutoprompt {
+                Pixel.fire(pixel: .autofillLoginsAutopromptDismissed)
+            }
+            
             self.completion?(nil)
         }
     }

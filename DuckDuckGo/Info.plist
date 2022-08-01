@@ -7,6 +7,7 @@
 		<string>com.duckduckgo.app.waitlistStatus</string>
 		<string>com.duckduckgo.app.macBrowserWaitlistStatus</string>
 		<string>com.duckduckgo.app.configurationRefresh</string>
+		<string>com.duckduckgo.app.remoteMessageRefresh</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

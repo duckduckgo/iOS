@@ -20,6 +20,7 @@
 import XCTest
 import BrowserServicesKit
 @testable import Core
+@testable import BrowserServicesKit
 
 // swiftlint:disable type_body_length
 class AppUrlsTests: XCTestCase {

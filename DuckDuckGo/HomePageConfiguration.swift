@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 import Core
 
 final class HomePageConfiguration {

@@ -20,6 +20,7 @@
 import XCTest
 @testable import TrackerRadarKit
 @testable import Core
+@testable import BrowserServicesKit
 
 class ContentBlockingRulesTests: XCTestCase {
 

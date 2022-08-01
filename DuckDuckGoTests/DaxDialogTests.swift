@@ -20,7 +20,7 @@
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
-import BrowserServicesKit
+@testable import BrowserServicesKit
 
 class DaxDialogTests: XCTestCase {
     

@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 @testable import DuckDuckGo
 
 class MockDependencyProvider: DependencyProvider {

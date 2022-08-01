@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import WidgetKit
 
 public class AppUserDefaults: AppSettings {
     
@@ -173,6 +174,19 @@ public class AppUserDefaults: AppSettings {
     
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool
+
+    func isWidgetInstalled() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            WidgetCenter.shared.getCurrentConfigurations { result in
+                switch result {
+                case .success(let configurations):
+                    continuation.resume(returning: configurations.count > 0)
+                case .failure:
+                    continuation.resume(returning: false)
+                }
+            }
+        }
+    }
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

@@ -69,7 +69,7 @@ struct HomeMessageView: View {
     }
     
     private var closeButton: some View {
-        Button(action: { viewModel.onDidClose() },
+        Button(action: { viewModel.onDidClose(.close) },
                label: { Image.dismiss })
             .layoutPriority(2)
             .offset(x: Const.Offset.closeButton,
@@ -91,9 +91,7 @@ struct HomeMessageView: View {
         Group {
             if let image = viewModel.image {
                 Image(image)
-                    .resizable()
                     .scaledToFit()
-                    .frame(maxWidth: Const.Size.maxImageWidth)
             } else {
                 EmptyView()
             }
@@ -103,7 +101,8 @@ struct HomeMessageView: View {
     private var title: some View {
         Text(viewModel.title)
             .font(Font(uiFont: Const.Font.title))
-    }
+            .fixedSize(horizontal: false, vertical: true)
+   }
     
     private var subtitle: some View {
         Text(viewModel.subtitle)
@@ -113,8 +112,8 @@ struct HomeMessageView: View {
     
     private var buttons: some View {
         ForEach(viewModel.buttons, id: \.title) {
-            let foreground: Color = $0.actionStyle == .default ? .white : .black
-            let background: Color = $0.actionStyle == .default ? .button : .gray
+            let foreground: Color = $0.actionStyle == .default ? .white : .cancelButtonForeground
+            let background: Color = $0.actionStyle == .default ? .button : .cancelButtonBackground
             Button($0.title, action: $0.action)
                 .font(Font(uiFont: Const.Font.button))
                 .buttonStyle(RoundedRectStyle(foregroundColor: foreground,
@@ -125,6 +124,8 @@ struct HomeMessageView: View {
 
 private extension Color {
     static let button = Color(UIColor.cornflowerBlue)
+    static let cancelButtonBackground = Color("CancelButtonBackgroundColor")
+    static let cancelButtonForeground = Color("CancelButtonForegroundColor")
     static let background = Color("HomeMessageBackgroundColor")
     static let shadow = Color("HomeMessageShadowColor")
 }
@@ -152,14 +153,14 @@ private enum Const {
     }
     
     enum Spacing {
-        static let imageAndTitle: CGFloat = 16
+        static let imageAndTitle: CGFloat = 8
         static let titleAndSubtitle: CGFloat = 8
         static let subtitleAndButtons: CGFloat = 16
         static let line: CGFloat = 4
     }
     
     enum Size {
-        static let maxImageWidth: CGFloat = 227
+        static let maxImageWidth: CGFloat = 64
         static let closeButtonWidth: CGFloat = 24
     }
     
@@ -171,13 +172,14 @@ private enum Const {
 
 struct HomeMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = HomeMessageViewModel(image: "home-screen",
-                                             topText: "TOP TEXT",
+        let viewModel = HomeMessageViewModel(image: "RemoteMessageDDGAnnouncement",
+                                             topText: "",
                                              title: "Placeholder Title",
                                              subtitle: "Body text goes here. This component can be used with one or two buttons.",
                                              buttons: [.init(title: "Button1", actionStyle: .cancel) {},
                                                        .init(title: "Button2") {}],
-                                             onDidClose: {})
+                                             onDidClose: { _ in })
         return HomeMessageView(viewModel: viewModel)
+            .padding(.horizontal)
     }
 }

@@ -243,6 +243,14 @@ extension Pixel {
         
         case macBrowserWaitlistNotificationShown
         case macBrowserWaitlistNotificationLaunched
+
+        // MARK: remote messaging pixels
+
+        case remoteMessageShown
+        case remoteMessageShownUnique
+        case remoteMessageDismissed
+        case remoteMessageShownPrimaryActionClicked
+        case remoteMessageShownSecondaryActionClicked
         
         // MARK: debug pixels
         
@@ -529,7 +537,15 @@ extension Pixel.Event {
             
         case .macBrowserWaitlistNotificationShown: return "m_notification_shown_mac_waitlist"
         case .macBrowserWaitlistNotificationLaunched: return "m_notification_launch_mac_waitlist"
-            
+
+        // MARK: remote messaging pixels
+
+        case .remoteMessageShown: return "m_remote_message_shown"
+        case .remoteMessageShownUnique: return "m_remote_message_shown_unique"
+        case .remoteMessageDismissed: return "m_remote_message_dismissed"
+        case .remoteMessageShownPrimaryActionClicked: return "m_remote_message_primary_action_clicked"
+        case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+
         // MARK: debug pixels
             
         case .dbMigrationError: return "m_d_dbme"

@@ -185,6 +185,13 @@ class DaxDialogs {
         return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
     }
 
+    func isStillOnboarding() -> Bool {
+        if settings.homeScreenMessagesSeen < 2 && !settings.isDismissed {
+            return true
+        }
+        return false
+    }
+
     func dismiss() {
         settings.isDismissed = true
     }

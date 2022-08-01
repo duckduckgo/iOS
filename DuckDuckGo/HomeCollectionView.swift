@@ -154,6 +154,11 @@ class HomeCollectionView: UICollectionView {
         }
         controller.collectionView.reloadData()
     }
+
+    func refreshHomeConfiguration() {
+        homePageConfiguration.refresh()
+        renderers.refresh()
+    }
 }
 
 extension HomeCollectionView: Themable {

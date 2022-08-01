@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import BrowserServicesKit
 
 // swiftlint:enable type_body_length
 // swiftlint:enable identifier_name
@@ -89,11 +90,13 @@ public struct PixelParameters {
     public static let isBackgrounded = "is_backgrounded"
     
     public static let isInternalUser = "is_internal_user"
-    
+
     // Email manager
     public static let emailKeychainAccessType = "access_type"
     public static let emailKeychainError = "error"
     public static let emailKeychainKeychainStatus = "keychain_status"
+
+    public static let ctaShown = "cta"
 }
 
 public struct PixelValues {

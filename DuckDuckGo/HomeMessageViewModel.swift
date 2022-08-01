@@ -19,17 +19,31 @@
 
 import Foundation
 
-struct HomeMessageViewModel {
+struct HomeMessageViewModel: Equatable {
+    enum ButtonAction {
+        case close
+        case primaryAction
+        case secondaryAction
+    }
+
     let image: String?
     let topText: String?
     let title: String
     let subtitle: String
     let buttons: [HomeMessageButtonViewModel]
     
-    let onDidClose: () -> Void
+    let onDidClose: (ButtonAction?) -> Void
+
+    static func ==(lhs: HomeMessageViewModel, rhs: HomeMessageViewModel) -> Bool {
+        return lhs.image == rhs.image &&
+               lhs.topText == rhs.topText &&
+               lhs.title == rhs.title &&
+               lhs.subtitle == rhs.subtitle &&
+               lhs.buttons == rhs.buttons
+    }
 }
 
-struct HomeMessageButtonViewModel {
+struct HomeMessageButtonViewModel: Equatable {
     enum ActionStyle {
         case `default`
         case cancel
@@ -38,4 +52,9 @@ struct HomeMessageButtonViewModel {
     let title: String
     var actionStyle: ActionStyle = .default
     let action: () -> Void
+
+    static func ==(lhs: HomeMessageButtonViewModel, rhs: HomeMessageButtonViewModel) -> Bool {
+        return lhs.title == rhs.title &&
+               lhs.actionStyle == rhs.actionStyle
+    }
 }

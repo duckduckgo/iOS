@@ -124,6 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         EmailWaitlist.shared.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
+        RemoteMessaging.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -249,10 +250,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         beginAuthentication()
         initialiseBackgroundFetch(application)
         applyAppearanceChanges()
+        refreshRemoteMessages()
     }
     
     private func applyAppearanceChanges() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
+    }
+
+    private func refreshRemoteMessages() {
+        Task {
+            try? await RemoteMessaging.fetchAndProcess()
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -342,6 +350,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let hasEmailWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
             if !hasEmailWaitlistTask {
                 EmailWaitlist.shared.scheduleBackgroundRefreshTask()
+            }
+
+            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessaging.Constants.backgroundRefreshTaskIdentifier }
+            if !hasRemoteMessageFetchTask {
+                RemoteMessaging.scheduleBackgroundRefreshTask()
             }
         }
     }

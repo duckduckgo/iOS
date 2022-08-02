@@ -46,6 +46,19 @@ private class EmailWaitlistRequestDelegate: EmailManagerRequestDelegate {
         }
     }
     // swiftlint:enable function_parameter_count
+    
+    func emailManagerKeychainAccessFailed(accessType: EmailKeychainAccessType, error: EmailKeychainAccessError) {
+        var parameters = [
+            PixelParameters.emailKeychainAccessType: accessType.rawValue,
+            PixelParameters.emailKeychainError: error.errorDescription
+        ]
+        
+        if case let .keychainAccessFailure(status) = error {
+            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+        }
+        
+        Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
+    }
 
 }
 

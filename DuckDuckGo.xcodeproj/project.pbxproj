@@ -132,6 +132,8 @@
 		4BDCECB92680333100F5C244 /* EmailWaitlistWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDCECB82680333100F5C244 /* EmailWaitlistWebViewController.swift */; };
 		4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE27566272F878F006B20B0 /* URLRequestExtension.swift */; };
 		4BE86C5D2633DBD8001C0E77 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE86C5C2633DBD8001C0E77 /* BrowserServicesKit */; };
+		6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6DAB228804F97002723C0 /* BarsAnimator.swift */; };
+		6AC98419288055C1005FA9CA /* BarsAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC98418288055C1005FA9CA /* BarsAnimatorTests.swift */; };
 		83004E802193BB8200DA013C /* WKNavigationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */; };
 		83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E852193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift */; };
 		83004E882193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83004E872193E8C700DA013C /* TabViewControllerLongPressMenuExtension.swift */; };
@@ -917,6 +919,8 @@
 		4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoopExtensionTests.swift; sourceTree = "<group>"; };
 		4BDCECB82680333100F5C244 /* EmailWaitlistWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailWaitlistWebViewController.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
+		6AC6DAB228804F97002723C0 /* BarsAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimator.swift; sourceTree = "<group>"; };
+		6AC98418288055C1005FA9CA /* BarsAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimatorTests.swift; sourceTree = "<group>"; };
 		6FB030C7234331B400A10DB9 /* Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Configuration.xcconfig; path = Configuration/Configuration.xcconfig; sourceTree = "<group>"; };
 		83004E7F2193BB8200DA013C /* WKNavigationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKNavigationExtension.swift; sourceTree = "<group>"; };
 		83004E832193E14C00DA013C /* UIAlertControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIAlertControllerExtension.swift; path = ../Core/UIAlertControllerExtension.swift; sourceTree = "<group>"; };
@@ -2758,6 +2762,7 @@
 			children = (
 				851DFD89212C5EE800D95F20 /* TabSwitcherButtonTests.swift */,
 				310742A92848E5B70012660B /* BackForwardMenuHistoryItemURLSanitizerTests.swift */,
+				6AC98418288055C1005FA9CA /* BarsAnimatorTests.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -4013,6 +4018,7 @@
 				310742A52848CD780012660B /* BackForwardMenuHistoryItem.swift */,
 				85864FBB24D31EF300E756FF /* SuggestionTrayViewController.swift */,
 				8577A1C4255D2C0D00D43FCD /* HitTestingToolbar.swift */,
+				6AC6DAB228804F97002723C0 /* BarsAnimator.swift */,
 				31B2F11E287846320040427A /* NoMicPermissionAlert.swift */,
 			);
 			name = Main;
@@ -5033,6 +5039,7 @@
 				319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */,
 				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,
 				F4C9FBF528340DDA002281CC /* AutofillInterfaceEmailTruncator.swift in Sources */,
+				6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
 				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
@@ -5322,6 +5329,7 @@
 				F1134ED61F40F29F00B73467 /* StatisticsUserDefaultsTests.swift in Sources */,
 				98EA2C3C218B9AAD0023E1DC /* ThemeManagerTests.swift in Sources */,
 				83B8BDAF20AB14A70076D6A1 /* APIHeadersTests.swift in Sources */,
+				6AC98419288055C1005FA9CA /* BarsAnimatorTests.swift in Sources */,
 				8536A1CA209AF6490050739E /* HomeRowReminderTests.swift in Sources */,
 				851DFD8A212C5EE800D95F20 /* TabSwitcherButtonTests.swift in Sources */,
 				98983096255B5019003339A2 /* BookmarksCachingSearchTests.swift in Sources */,

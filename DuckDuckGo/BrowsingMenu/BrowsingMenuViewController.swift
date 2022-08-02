@@ -195,6 +195,12 @@ class BrowsingMenuViewController: UIViewController, BrowsingMenu {
         targetView.addSubview(view)
     }
     
+    func removeGestureRecognizer() {
+        self.background?.gestureRecognizers?.forEach {
+            self.background?.removeGestureRecognizer($0)
+        }
+    }
+    
     @objc func backgroundTapped() {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()

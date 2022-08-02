@@ -45,7 +45,7 @@ public class DefaultFeatureFlagger: FeatureFlagger {
         case .debugMenu:
             return isInternalUser
         case .autofill:
-            if #available(iOS 14, *), isInternalUser {
+            if isInternalUser {
                 return true
             } else {
                 return false
@@ -66,7 +66,7 @@ extension DefaultFeatureFlagger: FeatureFlaggerInternalUserDecider {
         return didVerifyInternalUser
     }
     
-    private static let internalUserVerificationURLHost = "login.duckduckgo.com"
+    private static let internalUserVerificationURLHost = "use-login.duckduckgo.com"
     
     @discardableResult
     public func markUserAsInternalIfNeeded(forUrl url: URL?, response: HTTPURLResponse?) -> Bool {

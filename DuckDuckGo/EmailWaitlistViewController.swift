@@ -22,6 +22,7 @@ import Core
 import BrowserServicesKit
 import UserNotifications
 
+// swiftlint:disable file_length
 class EmailWaitlistViewController: UIViewController {
 
     private enum Constants {
@@ -96,7 +97,7 @@ class EmailWaitlistViewController: UIViewController {
 
         let linkAttributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.paragraphStyle: paragraphStyle,
-            NSAttributedString.Key.font: 16,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16),
             NSAttributedString.Key.foregroundColor: UIColor.emailWaitlistLinkColor
         ]
 
@@ -389,5 +390,19 @@ extension EmailWaitlistViewController: EmailManagerRequestDelegate {
         }
     }
     // swiftlint:enable function_parameter_count
+    
+    func emailManagerKeychainAccessFailed(accessType: EmailKeychainAccessType, error: EmailKeychainAccessError) {
+        var parameters = [
+            PixelParameters.emailKeychainAccessType: accessType.rawValue,
+            PixelParameters.emailKeychainError: error.errorDescription
+        ]
+        
+        if case let .keychainAccessFailure(status) = error {
+            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+        }
+        
+        Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
+    }
 
 }
+// swiftlint:enable file_length

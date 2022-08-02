@@ -67,7 +67,7 @@ class RequeryLogic {
     
     private func sendPixel(value: PixelValue) {
         
-        let pixel: PixelName
+        let pixel: Pixel.Event
         switch value {
         case .sameQuery:
             pixel = .serpRequerySame

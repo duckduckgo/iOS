@@ -52,11 +52,12 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
     @IBOutlet weak var autofillCell: UITableViewCell!
     @IBOutlet weak var debugCell: UITableViewCell!
+    @IBOutlet weak var voiceSearchCell: UITableViewCell!
+    @IBOutlet weak var voiceSearchToggle: UISwitch!
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    private let defaultBrowserSectionIndex = 0
     private let autofillSectionIndex = 1
     private let debugSectionIndex = 7
 
@@ -68,22 +69,14 @@ class SettingsViewController: UITableViewController {
     fileprivate lazy var variantManager = AppDependencyProvider.shared.variantManager
     fileprivate lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
 
-    private static var shouldShowDefaultBrowserSection: Bool {
-        if #available(iOS 14, *) {
-            return true
-        }
-        return false
-    }
-    
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu)
     }
     
-    private lazy var shouldShowWidgetEducationCell: Bool = {
-        guard #available(iOS 14, *) else { return false }
-        return true
-    }()
-    
+    private var shouldShowVoiceSearchCell: Bool {
+        AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
+    }
+
     private lazy var shouldShowAutofillCell: Bool = {
         return featureFlagger.isFeatureOn(.autofill)
     }()
@@ -95,8 +88,6 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureDefaultBrowserCell()
-        configureWidgetEducationCell()
         configureAutofillCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
@@ -108,6 +99,7 @@ class SettingsViewController: UITableViewController {
         configureLinkPreviewsToggle()
         configureRememberLogins()
         configureDebugCell()
+        configureVoiceSearchCell()
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -145,16 +137,13 @@ class SettingsViewController: UITableViewController {
         }
     }
 
-    private func configureDefaultBrowserCell() {
-        defaultBrowserCell.isHidden = !SettingsViewController.shouldShowDefaultBrowserSection
-    }
-    
-    private func configureWidgetEducationCell() {
-        widgetEducationCell.isHidden = !shouldShowWidgetEducationCell
-    }
-    
     private func configureAutofillCell() {
         autofillCell.isHidden = !shouldShowAutofillCell
+    }
+    
+    private func configureVoiceSearchCell() {
+        voiceSearchCell.isHidden = !shouldShowVoiceSearchCell
+        voiceSearchToggle.isOn = appSettings.voiceSearchEnabled
     }
 
     private func configureThemeCellAccessory() {
@@ -229,15 +218,20 @@ class SettingsViewController: UITableViewController {
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
-        
-    private func showAutofill() {
-        if #available(iOS 14.0, *) {
-            let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
-            autofillController.delegate = self
-            navigationController?.pushViewController(autofillController, animated: true)
-        }
+    
+    private func showAutofill(animated: Bool = true) {
+        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        autofillController.delegate = self
+        navigationController?.pushViewController(autofillController, animated: animated)
     }
-
+    
+    func showAutofillAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
+        let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        autofillController.delegate = self
+        navigationController?.pushViewController(autofillController, animated: animated)
+        autofillController.showAccountDetails(account, animated: animated)
+    }
+    
     private func configureEmailProtectionAccessoryText() {
         if let userEmail = emailManager.userEmail {
             emailProtectionAccessoryText.text = userEmail
@@ -328,10 +322,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
-        if defaultBrowserSectionIndex == section, !showDefaultBrowserSection {
-            return 22.0
-        } else if autofillSectionIndex == section && !shouldShowAutofillCell {
+        if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
@@ -341,10 +332,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
-        if defaultBrowserSectionIndex == section, !showDefaultBrowserSection {
-            return CGFloat.leastNonzeroMagnitude
-        } else if autofillSectionIndex == section && !shouldShowAutofillCell {
+        if autofillSectionIndex == section && !shouldShowAutofillCell {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
@@ -354,14 +342,31 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        let showDefaultBrowserSection = SettingsViewController.shouldShowDefaultBrowserSection
-        if defaultBrowserSectionIndex == section, !showDefaultBrowserSection {
-            return nil
-        } else {
-            return super.tableView(tableView, titleForFooterInSection: section)
-        }
+        return super.tableView(tableView, titleForFooterInSection: section)
     }
 
+    @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
+        var enableVoiceSearch = sender.isOn
+        let isFirstTimeAskingForPermission = SpeechRecognizer.recordPermission == .undetermined
+        
+        SpeechRecognizer.requestMicAccess { permission in
+            if !permission {
+                enableVoiceSearch = false
+                sender.setOn(false, animated: true)
+                if !isFirstTimeAskingForPermission {
+                    self.showNoMicrophonePermissionAlert()
+                }
+            }
+            
+            AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(enableVoiceSearch)
+        }
+    }
+    
+    private func showNoMicrophonePermissionAlert() {
+        let alertController = NoMicPermissionAlert.buildAlert()
+        present(alertController, animated: true, completion: nil)
+    }
+    
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }
@@ -403,6 +408,7 @@ extension SettingsViewController: Themable {
         authenticationToggle.onTintColor = theme.buttonTintColor
         openUniversalLinksToggle.onTintColor = theme.buttonTintColor
         longPressPreviewsToggle.onTintColor = theme.buttonTintColor
+        voiceSearchToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
@@ -463,7 +469,6 @@ extension SettingsViewController {
 
 // MARK: - AutofillLoginSettingsListViewControllerDelegate
 
-@available(iOS 14.0, *)
 extension SettingsViewController: AutofillLoginSettingsListViewControllerDelegate {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
         navigationController?.popViewController(animated: true)

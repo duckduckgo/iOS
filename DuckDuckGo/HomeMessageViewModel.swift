@@ -34,7 +34,7 @@ struct HomeMessageViewModel: Equatable {
     
     let onDidClose: (ButtonAction?) -> Void
 
-    static func ==(lhs: HomeMessageViewModel, rhs: HomeMessageViewModel) -> Bool {
+    static func == (lhs: HomeMessageViewModel, rhs: HomeMessageViewModel) -> Bool {
         return lhs.image == rhs.image &&
                lhs.topText == rhs.topText &&
                lhs.title == rhs.title &&
@@ -53,7 +53,7 @@ struct HomeMessageButtonViewModel: Equatable {
     var actionStyle: ActionStyle = .default
     let action: () -> Void
 
-    static func ==(lhs: HomeMessageButtonViewModel, rhs: HomeMessageButtonViewModel) -> Bool {
+    static func == (lhs: HomeMessageButtonViewModel, rhs: HomeMessageButtonViewModel) -> Bool {
         return lhs.title == rhs.title &&
                lhs.actionStyle == rhs.actionStyle
     }

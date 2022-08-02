@@ -105,8 +105,8 @@ struct RemoteMessaging {
         let isWidgetInstalled = await AppDependencyProvider.shared.appSettings.isWidgetInstalled()
 
         try await Self.fetchAndProcess(bookmarksCount: bookmarksCount,
-                                                  favoritesCount: favoritesCount,
-                                                  isWidgetInstalled: isWidgetInstalled)
+                                       favoritesCount: favoritesCount,
+                                       isWidgetInstalled: isWidgetInstalled)
     }
 
     static func fetchAndProcess(bookmarksCount: Int,
@@ -125,7 +125,8 @@ struct RemoteMessaging {
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
                     appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
                                                              variantManager: variantManager,
-                                                             flavor: DefaultFeatureFlagger().isInternalUser ? AppFlavor.flavorInternal : AppFlavor.flavorPublic),
+                                                             flavor: DefaultFeatureFlagger().isInternalUser ? AppFlavor.flavorInternal :
+                                                                AppFlavor.flavorPublic),
                     userAttributeMatcher: UserAttributeMatcher(statisticsStore: statisticsStore,
                                                                variantManager: variantManager,
                                                                bookmarksCount: bookmarksCount,

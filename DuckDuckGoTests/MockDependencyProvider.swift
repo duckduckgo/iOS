@@ -27,6 +27,7 @@ class MockDependencyProvider: DependencyProvider {
     var variantManager: VariantManager
     var featureFlagger: FeatureFlagger
     var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider
+    var remoteMessagingStore: RemoteMessagingStore
     var homePageConfiguration: HomePageConfiguration
     var storageCache: StorageCacheProvider
     var voiceSearchHelper: VoiceSearchHelperProtocol
@@ -38,6 +39,7 @@ class MockDependencyProvider: DependencyProvider {
         variantManager = defaultProvider.variantManager
         featureFlagger = defaultProvider.featureFlagger
         featureFlaggerInternalUserDecider = defaultProvider.featureFlaggerInternalUserDecider
+        remoteMessagingStore = defaultProvider.remoteMessagingStore
         homePageConfiguration = defaultProvider.homePageConfiguration
         storageCache = defaultProvider.storageCache
         voiceSearchHelper = defaultProvider.voiceSearchHelper

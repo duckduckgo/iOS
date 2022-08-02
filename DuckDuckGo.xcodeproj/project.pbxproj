@@ -539,7 +539,6 @@
 		C1B7B529289420830098FD6A /* RemoteMessaging.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B527289420830098FD6A /* RemoteMessaging.xcdatamodeld */; };
 		C1B7B52D2894469D0098FD6A /* DefaultVariantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B52C2894469D0098FD6A /* DefaultVariantManager.swift */; };
 		C1B7B53028944E390098FD6A /* RemoteMessagingStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B52F28944E390098FD6A /* RemoteMessagingStoreTests.swift */; };
-		C1B7B53228944EE00098FD6A /* MockRemoteMessagingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B53128944EE00098FD6A /* MockRemoteMessagingStore.swift */; };
 		C1B7B53428944EFA0098FD6A /* CoreDataTestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B7B53328944EFA0098FD6A /* CoreDataTestUtilities.swift */; };
 		C1CCCBA7283E101500CF3791 /* FaviconsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CCCBA6283E101500CF3791 /* FaviconsHelper.swift */; };
 		CB2A7EEF283D185100885F67 /* RulesCompilationMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A7EEE283D185100885F67 /* RulesCompilationMonitor.swift */; };
@@ -1957,10 +1956,8 @@
 		C1B7B52028941F2A0098FD6A /* RemoteMessageRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteMessageRequest.swift; sourceTree = "<group>"; };
 		C1B7B52128941F2A0098FD6A /* RemoteMessaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteMessaging.swift; sourceTree = "<group>"; };
 		C1B7B528289420830098FD6A /* RemoteMessaging.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RemoteMessaging.xcdatamodel; sourceTree = "<group>"; };
-		C1B7B52B289445970098FD6A /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		C1B7B52C2894469D0098FD6A /* DefaultVariantManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultVariantManager.swift; sourceTree = "<group>"; };
 		C1B7B52F28944E390098FD6A /* RemoteMessagingStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteMessagingStoreTests.swift; sourceTree = "<group>"; };
-		C1B7B53128944EE00098FD6A /* MockRemoteMessagingStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRemoteMessagingStore.swift; sourceTree = "<group>"; };
 		C1B7B53328944EFA0098FD6A /* CoreDataTestUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTestUtilities.swift; sourceTree = "<group>"; };
 		C1CCCBA6283E101500CF3791 /* FaviconsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaviconsHelper.swift; sourceTree = "<group>"; };
 		CB1AEFB02799AA940031AE3D /* SwiftUICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUICollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2642,7 +2639,6 @@
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
-				C1B7B52B289445970098FD6A /* BrowserServicesKit */,
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
 				84E341941E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E51E4A4CD400CFDE3A /* Core */,
@@ -3834,7 +3830,6 @@
 				F17669A71E412A12003D3222 /* MockBundle.swift */,
 				98B3128F218CCB2200E54DE1 /* MockDependencyProvider.swift */,
 				8521FDED238DD1B500A44CC3 /* MockEntityMapping.swift */,
-				C1B7B53128944EE00098FD6A /* MockRemoteMessagingStore.swift */,
 				F1134EBA1F40D3D000B73467 /* MockStatisticsStore.swift */,
 				026DABA328242BC80089E0B5 /* MockUserAgent.swift */,
 				8536A1C7209AF2410050739E /* MockVariantManager.swift */,
@@ -5354,7 +5349,6 @@
 				22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */,
 				9847C00527A41A0A00DB07AA /* WebViewTestHelper.swift in Sources */,
 				830C37671F6C4A6200E317A7 /* TermsOfServiceListParserTests.swift in Sources */,
-				C1B7B53228944EE00098FD6A /* MockRemoteMessagingStore.swift in Sources */,
 				3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */,
 				317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,

@@ -1267,6 +1267,9 @@ Invite code: %@";
 "settings.keyboard" = "Keyboard";
 
 /* No comment provided by engineer. */
+"settings.keyboard.section" = "SHOW KEYBOARD ON";
+
+/* No comment provided by engineer. */
 "settings.long.press.previews" = "Long-Press Previews";
 
 /* No comment provided by engineer. */
@@ -1301,6 +1304,12 @@ Invite code: %@";
 
 /* No comment provided by engineer. */
 "settings.share.feedback" = "Share Feedback";
+
+/* No comment provided by engineer. */
+"settings.show.keyboard.on.app.launch" = "App Launch";
+
+/* No comment provided by engineer. */
+"settings.show.keyboard.on.new.tab" = "New Tab";
 
 /* No comment provided by engineer. */
 "settings.text.size" = "Text Size";

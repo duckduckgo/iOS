@@ -26,7 +26,7 @@ final class PrivacyIconLogic {
         if let url = url, AppUrls().isDuckDuckGoSearch(url: url) {
             return .daxLogo
         } else {
-            return.shield
+            return .shield
         }
     }
     

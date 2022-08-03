@@ -55,11 +55,11 @@ final class PrivacyIconAndTrackersAnimator {
                 trackerAnimationView.reloadImages()
             }
             
-            container.privacyIcon.updateIcon(.shield, animated: true)
+            container.privacyIcon.updateIcon(.shield)
         } else {
             // No animation directly set icon
             let icon = PrivacyIconLogic.privacyIcon(for: siteRating)
-            container.privacyIcon.updateIcon(icon, animated: true)
+            container.privacyIcon.updateIcon(icon)
         }
     }
     
@@ -93,7 +93,7 @@ final class PrivacyIconAndTrackersAnimator {
         currentShieldAnimation?.play { [weak container] _ in
             self.animationState = .afterAnimations
             
-            container?.privacyIcon.updateIcon(privacyIcon, animated: false)
+            container?.privacyIcon.updateIcon(privacyIcon)
             
             UIView.animate(withDuration: 0.2) {
                 omniBar.textField.alpha = 1
@@ -113,7 +113,7 @@ final class PrivacyIconAndTrackersAnimator {
         container.privacyIcon.shieldDotAnimationView.isHidden = !showDot
         container.privacyIcon.daxLogoImageView.isHidden = true
         
-        container.privacyIcon.updateIcon(privacyIcon, animated: true)
+        container.privacyIcon.updateIcon(privacyIcon)
                 
         UIView.animate(withDuration: 0.2) {
             omniBar.textField.alpha = 0

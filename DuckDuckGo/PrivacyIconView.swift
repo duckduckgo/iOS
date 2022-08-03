@@ -67,24 +67,14 @@ class PrivacyIconView: UIView {
         staticShieldDotAnimationView.currentProgress = 1.0
     }
     
+    func updateIcon(_ newIcon: PrivacyIcon) {
+        icon = newIcon
+    }
+    
     private(set) var icon: PrivacyIcon {
         willSet {
             guard newValue != icon else { return }
             updateShieldImageView(for: newValue)
-        }
-    }
-    
-    func updateIcon(_ newIcon: PrivacyIcon, animated: Bool) {
-        guard icon != newIcon else { return }
-        
-        if animated {
-            UIView.transition(with: daxLogoImageView,
-                              duration: 0.2,
-                              options: .transitionCrossDissolve,
-                              animations: { self.icon = newIcon },
-                              completion: nil)
-        } else {
-            self.icon = newIcon
         }
     }
     

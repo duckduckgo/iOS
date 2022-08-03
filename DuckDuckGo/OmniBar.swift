@@ -202,6 +202,7 @@ class OmniBar: UIView {
     
     public func resetPrivacyIcon(for url: URL?) {
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        privacyInfoContainer.privacyIcon.isHidden = false
         
         let icon = PrivacyIconLogic.privacyIcon(for: url)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
@@ -211,7 +212,8 @@ class OmniBar: UIView {
         guard let siteRating = siteRating,
               privacyIconAndTrackersAnimator.animationState != .animatingForDaxDialog
         else { return }
-
+        
+        privacyInfoContainer.privacyIcon.isHidden = false
         privacyIconAndTrackersAnimator.updateAnimationState(for: siteRating)
         
         let icon = PrivacyIconLogic.privacyIcon(for: siteRating,
@@ -231,6 +233,10 @@ class OmniBar: UIView {
                 privacyIconAndTrackersAnimator.startAnimating(in: self, with: siteRating)
             }
         }
+    }
+    
+    public func hidePrivacyIcon() {
+        privacyInfoContainer.privacyIcon.isHidden = true
     }
     
     public func cancelAllAnimations() {

@@ -124,11 +124,11 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cx-oo-bpe">
-                                                    <rect key="frame" x="-3.5" y="7.5" width="30" height="25"/>
+                                                    <rect key="frame" x="-6.5" y="7.5" width="32" height="25"/>
                                                     <color key="backgroundColor" systemColor="systemYellowColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="70i-Wj-DR0"/>
-                                                        <constraint firstAttribute="width" constant="30" id="73T-PN-GzL"/>
+                                                        <constraint firstAttribute="width" constant="32" id="73T-PN-GzL"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99p-YW-bjm" customClass="PrivacyIconView" customModule="DuckDuckGo" customModuleProvider="target">
@@ -204,7 +204,7 @@
                                                 <constraint firstItem="99p-YW-bjm" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" constant="-8" id="GAx-rD-lZc"/>
                                                 <constraint firstAttribute="bottom" secondItem="7qa-DK-tfO" secondAttribute="bottom" id="KZY-PZ-Iwo"/>
                                                 <constraint firstAttribute="height" constant="40" id="LSj-2a-VE0"/>
-                                                <constraint firstItem="99p-YW-bjm" firstAttribute="centerX" secondItem="9cx-oo-bpe" secondAttribute="centerX" constant="2" id="Ugc-cl-4dt"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="centerX" secondItem="9cx-oo-bpe" secondAttribute="centerX" constant="4" id="Ugc-cl-4dt"/>
                                                 <constraint firstItem="7qa-DK-tfO" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="WCV-DY-APL"/>
                                                 <constraint firstAttribute="bottom" secondItem="99p-YW-bjm" secondAttribute="bottom" id="aem-pq-tV0"/>
                                                 <constraint firstItem="99p-YW-bjm" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="bmH-ac-kEx"/>

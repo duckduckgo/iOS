@@ -30,15 +30,6 @@ final class PrivacyIconLogic {
         }
     }
     
-    static func privacyIcon(for siteRating: SiteRating, in animationState: TrackersAnimationState) -> PrivacyIcon {
-        
-        if TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating) && animationState == .beforeAnimations {
-            return .shield
-        } else {
-            return privacyIcon(for: siteRating)
-        }
-    }
-    
     static func privacyIcon(for siteRating: SiteRating) -> PrivacyIcon {
         if AppUrls().isDuckDuckGoSearch(url: siteRating.url) {
             return .daxLogo

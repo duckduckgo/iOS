@@ -80,6 +80,9 @@ final class PrivacyIconAndTrackersAnimator {
         
         container.privacyIcon.shieldAnimationView.isHidden = showDot
         container.privacyIcon.shieldDotAnimationView.isHidden = !showDot
+
+        container.privacyIcon.staticShieldAnimationView.isHidden = true
+        container.privacyIcon.staticShieldDotAnimationView.isHidden = true
         container.privacyIcon.daxLogoImageView.isHidden = true
                 
         UIView.animate(withDuration: 0.2) {

@@ -200,6 +200,10 @@ class OmniBar: UIView {
         textField.selectedTextRange = nil
     }
     
+    public func hidePrivacyIcon() {
+        privacyInfoContainer.privacyIcon.isHidden = true
+    }
+    
     public func resetPrivacyIcon(for url: URL?) {
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
         privacyInfoContainer.privacyIcon.isHidden = false
@@ -232,10 +236,6 @@ class OmniBar: UIView {
                 privacyIconAndTrackersAnimator.startAnimating(in: self, with: siteRating)
             }
         }
-    }
-    
-    public func hidePrivacyIcon() {
-        privacyInfoContainer.privacyIcon.isHidden = true
     }
     
     public func cancelAllAnimations() {

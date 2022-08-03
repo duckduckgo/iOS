@@ -99,6 +99,28 @@ class PrivacyIconView: UIView {
         updateShieldImageView(for: icon)
     }
     
+    func prepareForAnimation(for icon: PrivacyIcon) {
+        let showDot = (icon == .shieldWithDot)
+        
+        shieldAnimationView.isHidden = showDot
+        shieldDotAnimationView.isHidden = !showDot
+
+        staticShieldAnimationView.isHidden = true
+        staticShieldDotAnimationView.isHidden = true
+        daxLogoImageView.isHidden = true
+    }
+    
+    func shieldAnimationView(for icon: PrivacyIcon) -> AnimationView? {
+        switch icon {
+        case .shield:
+            return shieldAnimationView
+        case .shieldWithDot:
+            return shieldDotAnimationView
+        default:
+            return nil
+        }
+    }
+    
     var isAnimationPlaying: Bool {
         shieldAnimationView.isAnimationPlaying || shieldDotAnimationView.isAnimationPlaying
     }

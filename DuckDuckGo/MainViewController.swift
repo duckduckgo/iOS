@@ -698,12 +698,10 @@ class MainViewController: UIViewController {
 
         if tab.isError {
             omniBar.hidePrivacyIcon()
+        } else if let siteRating = tab.siteRating, siteRating.url.host == tab.url?.host {
+            omniBar.updatePrivacyIcon(for: siteRating)
         } else {
-            if let siteRating = tab.siteRating, siteRating.url.host == tab.url?.host {
-                omniBar.updatePrivacyIcon(for: siteRating)
-            } else {
-                omniBar.resetPrivacyIcon(for: tab.url)
-            }
+            omniBar.resetPrivacyIcon(for: tab.url)
         }
             
         omniBar.startBrowsing()

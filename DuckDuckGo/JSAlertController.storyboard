@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21208.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yf4-q9-yrl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21219" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yf4-q9-yrl">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21200"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -28,35 +28,40 @@
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xrE-Wx-GQ1">
                                 <rect key="frame" x="0.0" y="0.0" width="355" height="403"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="displayP3"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yh6-Sh-xgH">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yh6-Sh-xgH">
                                 <rect key="frame" x="0.0" y="0.0" width="355" height="403"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eXJ-bo-n7t">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="403"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nwz-Vs-EX4" userLabel="Alert">
-                                                <rect key="frame" x="20" y="51" width="315" height="301"/>
+                                                <rect key="frame" x="52" y="50" width="251" height="303.5"/>
                                                 <subviews>
                                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x4E-3p-RVj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="315" height="301"/>
-                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0fd-78-Khe">
-                                                            <rect key="frame" x="0.0" y="0.0" width="315" height="301"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="251" height="303.5"/>
+                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0fd-78-Khe">
+                                                            <rect key="frame" x="0.0" y="0.0" width="251" height="303.5"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
-                                                        <blurEffect style="light"/>
+                                                        <blurEffect style="systemMaterial"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="effect._style">
+                                                                <integer key="value" value="4000"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </visualEffectView>
-                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="1000" text="A message from [website.com]:" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e34-7t-Ubh">
-                                                        <rect key="frame" x="16" y="18" width="283" height="15"/>
+                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="1000" text="A message from [website-domain.com]:" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e34-7t-Ubh">
+                                                        <rect key="frame" x="16" y="20" width="219" height="30"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="IRr-e5-RBE">
-                                                        <rect key="frame" x="16" y="55" width="283" height="51"/>
+                                                        <rect key="frame" x="16" y="59" width="219" height="51"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="1000" text="Some javascript alert message text displayed with multiline word wrapping" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmI-1g-rf4">
-                                                                <rect key="frame" x="0.0" y="0.0" width="283" height="51"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="219" height="51"/>
                                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -74,13 +79,13 @@
                                                         <viewLayoutGuide key="frameLayoutGuide" id="Pom-ol-2OT"/>
                                                     </scrollView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="flI-KP-naP">
-                                                        <rect key="frame" x="0.0" y="122" width="315" height="179"/>
+                                                        <rect key="frame" x="0.0" y="126" width="251" height="177.5"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VYW-gI-Rwm" userLabel="Text Field Box">
-                                                                <rect key="frame" x="0.0" y="0.0" width="315" height="44"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="251" height="44"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="29Z-R3-6Lj">
-                                                                        <rect key="frame" x="16" y="3" width="283" height="26"/>
+                                                                        <rect key="frame" x="16" y="3" width="219" height="26"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="26" id="Vng-0t-eF4"/>
                                                                         </constraints>
@@ -97,20 +102,24 @@
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hsq-SY-jhv" userLabel="Separator">
-                                                                <rect key="frame" x="0.0" y="44" width="315" height="1"/>
-                                                                <color key="backgroundColor" systemColor="separatorColor"/>
+                                                                <rect key="frame" x="0.0" y="44" width="251" height="0.5"/>
+                                                                <color key="backgroundColor" name="AlertSeparatorColor"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="1" id="kQI-0k-aOB"/>
+                                                                    <constraint firstAttribute="height" constant="0.5" id="kQI-0k-aOB"/>
                                                                 </constraints>
                                                             </view>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="45B-IT-R1W" userLabel="OK Button">
-                                                                <rect key="frame" x="0.0" y="45" width="315" height="44"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="45B-IT-R1W" userLabel="OK Button">
+                                                                <rect key="frame" x="0.0" y="44.5" width="251" height="44"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="44" id="KZX-p2-oEX"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" title="OK">
+                                                                    <color key="titleColor" name="AlertButtonTitleColor"/>
+                                                                </state>
+                                                                <state key="highlighted">
                                                                     <color key="titleColor" name="AlertButtonTitleColor"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
@@ -123,20 +132,24 @@
                                                                 </connections>
                                                             </button>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ubh-ZD-q1f" userLabel="Separator">
-                                                                <rect key="frame" x="0.0" y="89" width="315" height="1"/>
-                                                                <color key="backgroundColor" systemColor="separatorColor"/>
+                                                                <rect key="frame" x="0.0" y="88.5" width="251" height="0.5"/>
+                                                                <color key="backgroundColor" name="AlertSeparatorColor"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="1" id="vCf-Qr-McC"/>
+                                                                    <constraint firstAttribute="height" constant="0.5" id="vCf-Qr-McC"/>
                                                                 </constraints>
                                                             </view>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvq-U0-iGm">
-                                                                <rect key="frame" x="0.0" y="90" width="315" height="44"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvq-U0-iGm">
+                                                                <rect key="frame" x="0.0" y="89" width="251" height="44"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="44" id="qrV-D0-DUQ"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" title="Cancel">
+                                                                    <color key="titleColor" name="AlertButtonTitleColor"/>
+                                                                </state>
+                                                                <state key="highlighted">
                                                                     <color key="titleColor" name="AlertButtonTitleColor"/>
                                                                 </state>
                                                                 <userDefinedRuntimeAttributes>
@@ -149,20 +162,24 @@
                                                                 </connections>
                                                             </button>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8d-WP-B7b" userLabel="Separator">
-                                                                <rect key="frame" x="0.0" y="134" width="315" height="1"/>
-                                                                <color key="backgroundColor" systemColor="separatorColor"/>
+                                                                <rect key="frame" x="0.0" y="133" width="251" height="0.5"/>
+                                                                <color key="backgroundColor" name="AlertSeparatorColor"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="1" id="5ez-iG-TRK"/>
+                                                                    <constraint firstAttribute="height" constant="0.5" id="5ez-iG-TRK"/>
                                                                 </constraints>
                                                             </view>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CXg-sc-2nh">
-                                                                <rect key="frame" x="0.0" y="135" width="315" height="44"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" role="destructive" translatesAutoresizingMaskIntoConstraints="NO" id="CXg-sc-2nh">
+                                                                <rect key="frame" x="0.0" y="133.5" width="251" height="44"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="44" id="9kj-2K-edg"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" title="Close this tab">
+                                                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                                                </state>
+                                                                <state key="highlighted">
                                                                     <color key="titleColor" systemColor="systemRedColor"/>
                                                                 </state>
                                                                 <connections>
@@ -172,15 +189,15 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" name="AlertBackgroundColor"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstItem="flI-KP-naP" firstAttribute="leading" secondItem="nwz-Vs-EX4" secondAttribute="leading" id="7S1-IO-isJ"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="315" id="A8u-rv-NOh"/>
                                                     <constraint firstAttribute="trailing" secondItem="e34-7t-Ubh" secondAttribute="trailing" constant="16" id="H5X-D4-IDd"/>
                                                     <constraint firstItem="IRr-e5-RBE" firstAttribute="leading" secondItem="nwz-Vs-EX4" secondAttribute="leading" constant="16" id="HFE-gn-QqB"/>
                                                     <constraint firstItem="x4E-3p-RVj" firstAttribute="leading" secondItem="nwz-Vs-EX4" secondAttribute="leading" id="KT6-90-Giu"/>
-                                                    <constraint firstItem="e34-7t-Ubh" firstAttribute="top" secondItem="nwz-Vs-EX4" secondAttribute="top" constant="18" id="MBG-kz-CF1"/>
-                                                    <constraint firstItem="IRr-e5-RBE" firstAttribute="top" secondItem="e34-7t-Ubh" secondAttribute="bottom" constant="22" id="QeW-on-vqM"/>
+                                                    <constraint firstItem="e34-7t-Ubh" firstAttribute="top" secondItem="nwz-Vs-EX4" secondAttribute="top" constant="20" id="MBG-kz-CF1"/>
+                                                    <constraint firstItem="IRr-e5-RBE" firstAttribute="top" secondItem="e34-7t-Ubh" secondAttribute="bottom" constant="9" id="QeW-on-vqM"/>
+                                                    <constraint firstAttribute="width" priority="990" constant="270" id="bxg-qR-bt7"/>
                                                     <constraint firstAttribute="bottom" secondItem="flI-KP-naP" secondAttribute="bottom" id="cDs-HI-9hi"/>
                                                     <constraint firstAttribute="trailing" secondItem="flI-KP-naP" secondAttribute="trailing" id="dcj-R6-S1N"/>
                                                     <constraint firstItem="x4E-3p-RVj" firstAttribute="top" secondItem="nwz-Vs-EX4" secondAttribute="top" id="mdW-V4-8tl"/>
@@ -200,18 +217,12 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="nwz-Vs-EX4" firstAttribute="centerY" secondItem="eXJ-bo-n7t" secondAttribute="centerY" priority="900" id="5Tn-wP-giX"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nwz-Vs-EX4" secondAttribute="trailing" constant="20" id="FMi-aP-DWR"/>
-                                            <constraint firstItem="nwz-Vs-EX4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eXJ-bo-n7t" secondAttribute="leading" constant="20" id="P5s-FN-b4w"/>
-                                            <constraint firstItem="nwz-Vs-EX4" firstAttribute="top" secondItem="eXJ-bo-n7t" secondAttribute="bottom" constant="70" id="Sgs-OD-AQd"/>
+                                            <constraint firstItem="nwz-Vs-EX4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eXJ-bo-n7t" secondAttribute="leading" constant="52" id="5mf-y7-WFk"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nwz-Vs-EX4" secondAttribute="trailing" constant="52" id="NZu-fY-jtt"/>
                                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nwz-Vs-EX4" secondAttribute="bottom" priority="950" constant="20" id="V7f-gC-if5"/>
                                             <constraint firstItem="nwz-Vs-EX4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="eXJ-bo-n7t" secondAttribute="top" constant="20" id="Z74-5G-NE1"/>
                                             <constraint firstItem="nwz-Vs-EX4" firstAttribute="centerX" secondItem="eXJ-bo-n7t" secondAttribute="centerX" id="sdg-P6-fa0"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="Sgs-OD-AQd"/>
-                                            </mask>
-                                        </variation>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -243,7 +254,6 @@
                     </view>
                     <size key="freeformSize" width="355" height="403"/>
                     <connections>
-                        <outlet property="alertOutOfScreenConstraint" destination="Sgs-OD-AQd" id="0Hq-dN-NCG"/>
                         <outlet property="alertView" destination="nwz-Vs-EX4" id="USl-He-dsj"/>
                         <outlet property="backgroundView" destination="xrE-Wx-GQ1" id="g4z-uE-LNx"/>
                         <outlet property="cancelButton" destination="pvq-U0-iGm" id="XaJ-xk-sf9"/>
@@ -264,15 +274,12 @@
         </scene>
     </scenes>
     <resources>
-        <namedColor name="AlertBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="0.60000002384185791" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="AlertButtonTitleColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="separatorColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <namedColor name="AlertSeparatorColor">
+            <color red="0.86666673421859741" green="0.86666667461395264" blue="0.87023848295211792" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -20,11 +20,14 @@
 import UIKit
 import Core
 
+private extension UIImage {
+    static let highlightedAlertButtonTint = UIImage(named: "AlertButtonHighlightedTint")
+}
+
 final class JSAlertController: UIViewController {
 
     @IBOutlet var alertView: UIView!
     @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var alertOutOfScreenConstraint: NSLayoutConstraint!
     @IBOutlet var keyboardConstraint: NSLayoutConstraint!
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var titleLabel: UILabel!
@@ -70,18 +73,18 @@ final class JSAlertController: UIViewController {
 
         self.view.superview?.isHidden = false
         self.alertView.alpha = 0.0
+        self.alertView.transform = .init(scaleX: 1.15, y: 1.15)
         self.backgroundView.alpha = 0.0
 
-        self.alertOutOfScreenConstraint.isActive = true
-        self.alertView.superview?.layoutSubviews()
-
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
             self.alertView.alpha = 1.0
+            self.alertView.transform = .identity
             self.backgroundView.alpha = 1.0
-
-            self.alertOutOfScreenConstraint.isActive = false
-            self.alertView.superview?.layoutSubviews()
         } completion: { _ in
+
+            if !self.textFieldBox.isHidden {
+                self.textField.becomeFirstResponder()
+            }
             Pixel.fire(pixel: .jsAlertShown)
         }
     }
@@ -101,8 +104,6 @@ final class JSAlertController: UIViewController {
             self.backgroundView.alpha = 0.0
             self.alertView.alpha = 0.0
 
-            self.alertOutOfScreenConstraint.isActive = true
-            self.alertView.superview?.layoutSubviews()
         } completion: { [alert=self.alert] _ in
             if self.alert === alert {
                 self.alert = nil
@@ -123,8 +124,11 @@ final class JSAlertController: UIViewController {
         else { return }
 
         okButton.setTitle(UserText.webJSAlertOKButton, for: .normal)
+        okButton.setBackgroundImage(.highlightedAlertButtonTint, for: .highlighted)
         cancelButton.setTitle(UserText.webJSAlertCancelButton, for: .normal)
+        cancelButton.setBackgroundImage(.highlightedAlertButtonTint, for: .highlighted)
         closeTabButton.setTitle(UserText.webJSAlertCloseTabButton, for: .normal)
+        closeTabButton.setBackgroundImage(.highlightedAlertButtonTint, for: .highlighted)
 
         titleLabel.text = String(format: UserText.webJSAlertWebsiteMessageFormat, alert.domain)
         messageLabel.text = alert.message

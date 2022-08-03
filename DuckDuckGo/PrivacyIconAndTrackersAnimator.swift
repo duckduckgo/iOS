@@ -22,25 +22,14 @@ import Lottie
 import Core
 import BrowserServicesKit
 
-enum TrackersAnimationState {
-    case noAnimations, beforeAnimations, afterAnimations, animatingForDaxDialog
-}
-
 final class PrivacyIconAndTrackersAnimator {
 
     private let trackerAnimationImageProvider = TrackerAnimationImageProvider()
-    private(set) var animationState: TrackersAnimationState = .noAnimations
-    
-    
-    func updateAnimationState(for siteRating: SiteRating) {
-        guard animationState != .animatingForDaxDialog else { return }
-        
-        if animationState == .noAnimations && TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating) {
-            animationState = .beforeAnimations
-        }
-    }
+    private(set) var isAnimatingForDaxDialog: Bool = false
     
     func configure(_ container: PrivacyInfoContainerView, for siteRating: SiteRating) {
+        isAnimatingForDaxDialog = false
+        
         container.trackers1Animation.currentFrame = 0
         container.trackers2Animation.currentFrame = 0
         container.trackers3Animation.currentFrame = 0
@@ -94,8 +83,6 @@ final class PrivacyIconAndTrackersAnimator {
         
         let currentShieldAnimation = (showDot ? container.privacyIcon.shieldDotAnimationView : container.privacyIcon.shieldAnimationView)
         currentShieldAnimation?.play { [weak container] _ in
-            self.animationState = .afterAnimations
-            
             container?.privacyIcon.updateIcon(privacyIcon)
             
             UIView.animate(withDuration: 0.2) {
@@ -107,7 +94,7 @@ final class PrivacyIconAndTrackersAnimator {
     func startAnimationForDaxDialog(in omniBar: OmniBar, with siteRating: SiteRating) {
         guard let container = omniBar.privacyInfoContainer else { return }
         
-        animationState = .animatingForDaxDialog
+        isAnimatingForDaxDialog = true
         
         let privacyIcon = PrivacyIconLogic.privacyIcon(for: siteRating)
         let showDot = (privacyIcon == .shieldWithDot)
@@ -137,7 +124,7 @@ final class PrivacyIconAndTrackersAnimator {
         let currentShieldAnimation = [container.privacyIcon.shieldAnimationView, container.privacyIcon.shieldDotAnimationView].first { !$0.isHidden }
         currentShieldAnimation?.currentFrame = 45
         currentShieldAnimation?.play(completion: { [weak container] _ in
-            self.animationState = .afterAnimations
+            self.isAnimatingForDaxDialog = false
             
             container?.privacyIcon.refresh()
             
@@ -149,6 +136,8 @@ final class PrivacyIconAndTrackersAnimator {
     
     func cancelAnimations(in omniBar: OmniBar) {
         guard let container = omniBar.privacyInfoContainer else { return }
+        
+        isAnimatingForDaxDialog = false
         
         container.trackers1Animation.stop()
         container.trackers2Animation.stop()
@@ -164,8 +153,6 @@ final class PrivacyIconAndTrackersAnimator {
         
         omniBar.textField.layer.removeAllAnimations()
         omniBar.textField.alpha = 1
-        
-        animationState = .noAnimations
     }
     
     func resetImageProvider() {

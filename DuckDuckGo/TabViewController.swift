@@ -2262,7 +2262,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
-                            withIsAutoprompt isAutoprompt: Bool,
+                            withTrigger trigger: AutofillUserScript.GetTriggerType,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
         if !isAutofillEnabled {
@@ -2277,7 +2277,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                 return
             }
             
-            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, isAutoprompt: isAutoprompt) { account in
+            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, trigger: trigger) { account in
                 completionHandler(account)
             }
             

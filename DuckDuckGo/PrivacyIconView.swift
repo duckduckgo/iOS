@@ -26,13 +26,11 @@ enum PrivacyIcon {
 }
 
 class PrivacyIconView: UIView {
+
+    @IBOutlet var daxLogoImageView: UIImageView!
+    @IBOutlet var staticShieldAnimationView: AnimationView!
+    @IBOutlet var staticShieldDotAnimationView: AnimationView!
     
-    private lazy var daxLogoIcon = UIImage(named: "LogoIcon")
-    private lazy var shieldIcon = UIImage(named: "Shield")
-    private lazy var shieldWithDotIcon = UIImage(named: "ShieldDot")
-    
-    
-    @IBOutlet var shieldImageView: UIImageView!
     @IBOutlet var shieldAnimationView: AnimationView!
     @IBOutlet var shieldDotAnimationView: AnimationView!
     
@@ -40,6 +38,7 @@ class PrivacyIconView: UIView {
         icon = .shield
         
         super.init(coder: aDecoder)
+        
         
         if #available(iOS 13.4, *) {
             addInteraction(UIPointerInteraction(delegate: self))
@@ -50,14 +49,22 @@ class PrivacyIconView: UIView {
         super.awakeFromNib()
   
         loadAnimations(for: ThemeManager.shared.currentTheme)
+        
         updateShieldImageView(for: icon)
     }
     
     func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
         let useLightStyle = theme.currentImageSet == .light
         
-        shieldAnimationView.animation = Animation.named(useLightStyle ? "shield" : "dark-shield", animationCache: cache)
-        shieldDotAnimationView.animation = Animation.named(useLightStyle ? "shield-dot" : "dark-shield-dot", animationCache: cache)
+        let shieldAnimation = Animation.named(useLightStyle ? "shield" : "dark-shield", animationCache: cache)
+        shieldAnimationView.animation = shieldAnimation
+        staticShieldAnimationView.animation = shieldAnimation
+        staticShieldAnimationView.currentProgress = 0.0
+        
+        let shieldWithDotAnimation = Animation.named(useLightStyle ? "shield-dot" : "dark-shield-dot", animationCache: cache)
+        shieldDotAnimationView.animation = shieldWithDotAnimation
+        staticShieldDotAnimationView.animation = shieldWithDotAnimation
+        staticShieldDotAnimationView.currentProgress = 1.0
     }
     
     private(set) var icon: PrivacyIcon {
@@ -71,7 +78,7 @@ class PrivacyIconView: UIView {
         guard icon != newIcon else { return }
         
         if animated {
-            UIView.transition(with: shieldImageView,
+            UIView.transition(with: daxLogoImageView,
                               duration: 0.2,
                               options: .transitionCrossDissolve,
                               animations: { self.icon = newIcon },
@@ -84,20 +91,28 @@ class PrivacyIconView: UIView {
     private func updateShieldImageView(for icon: PrivacyIcon) {
         switch icon {
         case .daxLogo:
-            shieldImageView.image = daxLogoIcon
-            shieldImageView.contentMode = .center
+            daxLogoImageView.isHidden = false
+            staticShieldAnimationView.isHidden = true
+            staticShieldDotAnimationView.isHidden = true
         case .shield:
-            shieldImageView.image = shieldIcon
-            shieldImageView.contentMode = .scaleAspectFill
+            daxLogoImageView.isHidden = true
+            staticShieldAnimationView.isHidden = false
+            staticShieldDotAnimationView.isHidden = true
         case .shieldWithDot:
-            shieldImageView.image = shieldWithDotIcon
-            shieldImageView.contentMode = .scaleAspectFill
+            daxLogoImageView.isHidden = true
+            staticShieldAnimationView.isHidden = true
+            staticShieldDotAnimationView.isHidden = false
         }
+    }
+    
+    func refresh() {
+        updateShieldImageView(for: icon)
     }
     
     var isAnimationPlaying: Bool {
         shieldAnimationView.isAnimationPlaying || shieldDotAnimationView.isAnimationPlaying
     }
+    
 }
 
 @available(iOS 13.4, *)

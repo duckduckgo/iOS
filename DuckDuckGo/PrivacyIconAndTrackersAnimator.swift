@@ -80,7 +80,7 @@ final class PrivacyIconAndTrackersAnimator {
         
         container.privacyIcon.shieldAnimationView.isHidden = showDot
         container.privacyIcon.shieldDotAnimationView.isHidden = !showDot
-        container.privacyIcon.shieldImageView.isHidden = true
+        container.privacyIcon.daxLogoImageView.isHidden = true
                 
         UIView.animate(withDuration: 0.2) {
             omniBar.textField.alpha = 0
@@ -94,8 +94,6 @@ final class PrivacyIconAndTrackersAnimator {
             self.animationState = .afterAnimations
             
             container?.privacyIcon.updateIcon(privacyIcon, animated: false)
-            container?.privacyIcon.shieldImageView.isHidden = false
-            currentShieldAnimation?.isHidden = true
             
             UIView.animate(withDuration: 0.2) {
                 omniBar.textField.alpha = 1
@@ -113,7 +111,7 @@ final class PrivacyIconAndTrackersAnimator {
         
         container.privacyIcon.shieldAnimationView.isHidden = showDot
         container.privacyIcon.shieldDotAnimationView.isHidden = !showDot
-        container.privacyIcon.shieldImageView.isHidden = true
+        container.privacyIcon.daxLogoImageView.isHidden = true
         
         container.privacyIcon.updateIcon(privacyIcon, animated: true)
                 
@@ -137,8 +135,7 @@ final class PrivacyIconAndTrackersAnimator {
         currentShieldAnimation?.play(completion: { [weak container] _ in
             self.animationState = .afterAnimations
             
-            container?.privacyIcon.shieldImageView.isHidden = false
-            currentShieldAnimation?.isHidden = true
+            container?.privacyIcon.refresh()
             
             UIView.animate(withDuration: 0.2) {
                 omniBar.textField.alpha = 1
@@ -158,7 +155,8 @@ final class PrivacyIconAndTrackersAnimator {
         
         container.privacyIcon.shieldAnimationView.isHidden = true
         container.privacyIcon.shieldDotAnimationView.isHidden = true
-        container.privacyIcon.shieldImageView.isHidden = false
+        
+        container.privacyIcon.refresh()
         
         omniBar.textField.layer.removeAllAnimations()
         omniBar.textField.alpha = 1

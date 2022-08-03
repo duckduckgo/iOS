@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Přidat";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Automatické vyplňování přihlašovacích údajů";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Záložka";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aktivní";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Zobrazit";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Přihlašovací údaje uloženy";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Příhlašovací údaje aktualizovány";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Uloží se další přihlašovací údaje pro tenhle web.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Přihlašovací údaje jsou bezpečně uložené pouze v tomhle zařízení a dají se spravovat v nabídce Automatické vyplňování v Nastaveních.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Má DuckDuckGo uložit přihlašovací údaje?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Teď ne";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Uložit přihlašovací údaje";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Uložit přihlašovací údaje?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Uložit heslo";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Uložit heslo?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Aktualizovat přihlašovací údaje";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Aktualizuj si heslo";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Aktualizovat heslo?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Aktualizovat uživatelské jméno?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Přidat záložku";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Smazat";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Opravdu chceš odstranit tuto složku a položky (%i)?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Opravdu chceš odstranit tuto složku a %i položku?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Odstranit %@?";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Stahování souboru %@ bylo zahájeno";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Zrušit";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Vypnout";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blokování trackerů v e-mailu a skrytí adresy";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Zrušit";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vítejte na\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Zvací kód";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Tvoje pozvánka se tu objeví, až na tebe vyjde řada. Chceš %1$@, až dorazí? %2$@ o betaverzi prohlížeče pro macOS.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "dostat oznámení";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Dáme ti vědět, až na tebe vyjde řada. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Sem dostaneš pozvánku k vyzkoušení DuckDuckGo pro Mac. Zkus se sem brzy podívat znovu. Nebo ti můžeme dát vědět, až na tebe vyjde řada.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Dáme ti vědět, až bude tvoje kopie DuckDuckGo pro Mac připravená ke stažení.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ o betaverzi.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Aplikace DuckDuckGo Privacy pro Mac má rychlost, kterou potřebuješ, funkce prohlížeče, které očekáváš, a obsahuje naše nejlepší funkce na ochranu soukromí.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Otevřít pozvánku";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo pro Mac už čeká!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopírovat";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Aplikaci si do Macu stáhni z téhle URL:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1. krok";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Otevři instalační soubor a zvacím kódem ho odemkni.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2. krok";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Cítíš se na to začít si na Macu prohlížet web v naprostém soukromí?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Zveme tě!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Připojte se k soukromému pořadníku";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Zapiš se do pořadníku...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Vyzkoušej DuckDuckGo pro Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Verze pro Windows bude už brzo.";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Můžeme ti dát vědět, až budeš na řadě, ale aktuálně jsou oznámení pro DuckDuckGo vypnutá.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Kvůli zařazení do pořadníku není nutné sdílet žádné osobní údaje. Tvé místo se určuje podle časového razítka uloženého jen ve tvém zařízení tak, abychom tě mohli upozornit, až budeš na řadě.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Jsi v pořadníku!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Ke stažení pro Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Zajisti si soukromí při prohlížení webu – v naší aplikaci pro Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Jsi v pořadníku!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Zveme tě!\n\nCítíš se na to začít si na Macu prohlížet web v naprostém soukromí?\n\n1. krok\nAplikaci si do Macu stáhni z téhle URL:\nhttps://duckduckgo.com/mac\n\n2. krok\nOtevři instalační soubor a zvacím kódem ho odemkni.\n\nZvací kód: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Zveme tě!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo Desktop";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Procházení nabídky";
 
@@ -1149,18 +1290,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Je nutný přístup k mikrofonu";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "DOBŘE";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Zrušit";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikdy neposlouchá, co říkáš. Veškeré zpracování dat řeči při soukromém hlasovém vyhledávání probíhá přímo v zařízení.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Pro soukromé hlasové vyhledávání je nutný přístup k mikrofonu";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Zrušit";

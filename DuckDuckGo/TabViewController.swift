@@ -754,8 +754,16 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
-        if let rules = ContentBlocking.contentBlockingManager.currentTDSRules,
-           ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+        guard ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) else {
+            webView.configuration.userContentController.removeAllContentRuleLists()
+            
+            rulesCompiledCondition?.resolve()
+            rulesCompiledCondition = nil
+            
+            return
+        }
+        
+        if let rules = ContentBlocking.contentBlockingManager.currentTDSRules {
             
             rulesCompiledCondition?.resolve()
             rulesCompiledCondition = nil
@@ -776,8 +784,6 @@ class TabViewController: UIViewController {
                 reloadUserScripts()
             }
 
-        } else {
-            webView.configuration.userContentController.removeAllContentRuleLists()
         }
     }
 
@@ -1092,6 +1098,9 @@ extension TabViewController: WKNavigationDelegate {
                 } cancelHandler: {
                     decisionHandler(.cancel)
                 }
+            } else {
+                Pixel.fire(pixel: .unhandledDownload)
+                decisionHandler(.cancel)
             }
 
         } else {
@@ -2218,6 +2227,19 @@ extension TabViewController: EmailManagerRequestDelegate {
         }
     }
     // swiftlint:enable function_parameter_count
+    
+    func emailManagerKeychainAccessFailed(accessType: EmailKeychainAccessType, error: EmailKeychainAccessError) {
+        var parameters = [
+            PixelParameters.emailKeychainAccessType: accessType.rawValue,
+            PixelParameters.emailKeychainError: error.errorDescription
+        ]
+        
+        if case let .keychainAccessFailure(status) = error {
+            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+        }
+        
+        Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
+    }
 
 }
 

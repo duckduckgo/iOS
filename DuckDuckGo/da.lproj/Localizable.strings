@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Tilføj";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Automatisk udfyldning ved login";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Bogmærke";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Til";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Se";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Login er gemt";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Login er opdateret";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Dette vil gemme et ekstra login for dette websted.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Logins gemmes kun sikkert på denne enhed og kan administreres fra menuen Automatisk udfyldning i Indstillinger.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Ikke nu";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Gem login";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Gem login?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Gem adgangskode";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Gem adgangskode?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Opdater login";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Opdater adgangskode";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Opdater adgangskode?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Opdater brugernavn?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Tilføj bogmærke";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Slet";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Er du sikker på, at du vil slette denne mappe og %i elementer?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Er du sikker på, at du vil slette denne mappe og %i element?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Vil du slette %@?";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download startet for %@";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annullér";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Fra";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Bloker e-mailtrackere, og skjul din adresse";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Annullér";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Invitationskode";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Din invitation vises her, når vi er klar til dig. Vil du %1$@, når den ankommer? %2$@ om macOS-betabrowseren.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "have besked";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Vi sender dig en meddelelse, når vi er klar til dig. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Din invitation til at prøve DuckDuckGo til Mac sendes hertil. Kom snart tilbage. Vi kan også sende dig en meddelelse, når det er din tur.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Vi sender dig en meddelelse, når din kopi af DuckDuckGo til Mac er klar til download.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ om betaversionen.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Appen DuckDuckGo Privacy til Mac har den hastighed, du har brug for, de browsing-funktioner, du forventer, og er spækket med vores førsteklasses basale nødvendigheder til databeskyttelse.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Åbn din invitation";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo til Mac er klar!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopi";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Besøg denne URL på din Mac for at downloade:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Trin 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Åbn filen for at installere, og indtast derefter din invitationskode for at låse op.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Trin 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Er du klar til at begynde at browse privat på Mac?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Du er inviteret!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Slut dig til den private venteliste";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Tilmelder dig ventelisten ...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Prøv DuckDuckGo til Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Windows kommer snart!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Vi kan give dig besked, når det er din tur, men beskeder er i øjeblikket deaktiveret for DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Du behøver ikke at dele nogen personlige oplysninger for at komme på ventelisten. Du sikrer din plads i køen med et tidsstempel, der udelukkende findes på din enhed, så vi kan give dig besked, når det er din tur.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Du er på listen!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Kan downloades på Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Browse privat med vores app til Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Du er på listen!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Du er inviteret!\n\nEr du klar til at begynde at browse privat på Mac?\n\nTrin 1\nBesøg denne URL på din Mac for at downloade:\nhttps://duckduckgo.com/mac\n\nTrin 2\nÅbn filen for at installere, og indtast derefter din invitationskode for at låse op.\n\nInvitationskode: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Du er inviteret!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo skrivebordsapp";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Browsingmenu";
 
@@ -1149,18 +1290,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofonadgang påkrævet";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Okay";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Annullér";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo lytter aldrig til det, du siger. Al databehandling af tale til privat stemmesøgning sker på din enhed.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Mikrofonadgang påkrævet til privat stemmesøgning";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Annullér";

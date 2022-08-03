@@ -22,9 +22,18 @@ import Core
 @testable import DuckDuckGo
 
 class MockVoiceSearchHelper: VoiceSearchHelperProtocol {
+    var isVoiceSearchEnabled: Bool
     var isSpeechRecognizerAvailable: Bool
+
+    func enableVoiceSearch(_ enable: Bool) {}
+    func migrateSettingsFlagIfNecessary() {}
     
-    init(isSpeechRecognizerAvailable: Bool = true) {
+    init(isSpeechRecognizerAvailable: Bool = true, voiceSearchEnabled: Bool = true) {
         self.isSpeechRecognizerAvailable = isSpeechRecognizerAvailable
+        self.isVoiceSearchEnabled = voiceSearchEnabled
+        
+        if !isSpeechRecognizerAvailable {
+            self.isVoiceSearchEnabled = false
+        }
     }
 }

@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Aggiungi";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Compilazione automatica dei dati di accesso";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Segnalibro";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Visualizza";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Dati di accesso salvati";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Dati di accesso aggiornati";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "In questo modo vengono salvati ulteriori dati di accesso per questo sito.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "I dati di accesso sono archiviati in modo sicuro solo su questo dispositivo e possono essere gestiti dal menu Compilazione automatica, all'interno di Impostazioni.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Vuoi che DuckDuckGo salvi i dati di accesso?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Non adesso";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Salva dati di accesso";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Salvare dati di accesso?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Salva password";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Salvare password?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Aggiorna dati di accesso";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Aggiorna password";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Aggiornare password?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Aggiornare nome utente?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Aggiungi ai segnalibri";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Cancella";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Vuoi davvero eliminare questa cartella e %i elementi?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Vuoi davvero eliminare questa cartella e %i elemento?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Eliminare %@?";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download di %@ avviato";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annulla";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Off";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blocca i sistemi di tracciamento delle email e nascondi il tuo indirizzo";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Annulla";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo\nti dà il benvenuto!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Codice invito";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Vedrai il tuo invito qui quando saremo pronti per te. Vuoi %1$@ quando arriva? %2$@ sulla versione beta del browser macOS.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "ricevere una notifica";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Ti invieremo una notifica quando saremo pronti per te. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "L'invito a provare DuckDuckGo per Mac arriverà qui. Torna a trovarci a breve, oppure possiamo inviarti una notifica non appena sarà il tuo turno.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Ti invieremo una notifica quando la tua copia di DuckDuckGo per Mac sarà pronta per il download.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ sulla versione beta.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "L'app DuckDuckGo Privacy per Mac ti offre la velocità di cui hai bisogno, le funzioni di navigazione che desideri e i migliori strumenti per la privacy.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Apri il tuo invito";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo per Mac è adesso disponibile.";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Copia";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Visita questo URL sul tuo Mac per scaricare:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Passaggio 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Esegui il file da installare, poi inserisci il tuo codice di invito per sbloccare.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Passaggio 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Vuoi iniziare a navigare privatamente su Mac?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Hai ricevuto un invito!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Iscriviti alla lista d'attesa privata";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Iscrizione alla lista d'attesa...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Prova DuckDuckGo per Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "La versione per Windows arriverà presto!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Possiamo informarti non appena sarà il tuo turno, tuttavia le notifiche sono attualmente disabilitate per DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Per iscriverti alla lista d'attesa non dovrai comunicare alcuna informazione personale. Ti assicurerai un posto in fila con un timestamp presente esclusivamente sul tuo dispositivo, così potremo avvisarti quando sarà il tuo turno.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Sei in lista d'attesa.";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Disponibile per il download su Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Naviga in privato con la nostra app per Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Sei in lista d'attesa.";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Hai ricevuto un invito!\n\nVuoi iniziare a navigare privatamente su Mac?\n\nPassaggio 1\nVisita il seguente URL sul tuo Mac per scaricare:\nhttps://duckduckgo.com/mac\n\nPassaggio 2\nEsegui il file da installare, poi inserisci il tuo codice di invito per sbloccare.\n\nCodice invito: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Hai ricevuto un invito!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "App desktop DuckDuckGo";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menu di navigazione";
 
@@ -1149,18 +1290,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Accesso al microfono obbligatorio";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Annulla";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo non ascolta mai quello che dici. L'elaborazione di tutti i dati vocali per la Ricerca vocale privata ha luogo sul tuo dispositivo.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Accesso al microfono necessario per la Ricerca vocale privata";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Annulla";

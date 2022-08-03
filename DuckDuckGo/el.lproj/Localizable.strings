@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Προσθήκη";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Συνδέσεις αυτόματης συμπλήρωσης";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Σελιδοδείκτης";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ενεργό";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Προβολή";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Η σύνδεση αποθηκεύτηκε";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Η σύνδεση ενημερώθηκε";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Αυτό θα αποθηκεύσει μια πρόσθετη σύνδεση για τον συγκεκριμένο ιστότοπο.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Οι συνδέσεις αποθηκεύονται με ασφάλεια μόνο σε αυτή τη συσκευή και η διαχείρισή τους γίνεται από το μενού Αυτόματη συμπλήρωση, στις Ρυθμίσεις.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Θέλετε να αποθηκεύσει το DuckDuckGo τη σύνδεσή σας;";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Όχι τώρα";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Αποθήκευση σύνδεσης";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Αποθήκευση σύνδεσης;";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Αποθήκευση κωδικού πρόσβασης";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Αποθήκευση κωδικού πρόσβασης;";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Ενημέρωση σύνδεσης";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Ενημέρωση κωδικού πρόσβασης";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Ενημέρωση κωδικού πρόσβασης;";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Ενημέρωση ονόματος χρήστη;";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Προσθήκη σελιδοδείκτη";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Διαγραφή";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Θέλετε σίγουρα να διαγράψετε αυτόν τον φάκελο και %i αντικείμενα;";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Θέλετε σίγουρα να διαγράψετε αυτόν τον φάκελο και %i αντικείμενο;";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Διαγραφή %@;";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Άρχισε η λήψη για το αρχείο %@";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Ακύρωση";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Κλειστό";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Αποκλείστε εφαρμογές παρακολούθησης email και αποκρύψτε τη διεύθυνσή σας";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Ακύρωση";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Καλώς ορίσατε στο\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Κωδικός πρόσκλησης";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Η πρόσκλησή σας θα εμφανιστεί εδώ όταν θα είναι έτοιμη για εσάς. Θέλετε να %1$@ μόλις φτάσει; %2$@ σχετικά με το πρόγραμμα περιήγησης macOS σε beta.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "λάβετε ειδοποίηση";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Θα σας στείλουμε ειδοποίηση όταν θα είμαστε έτοιμοι για εσάς. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Η πρόσκλησή σας για να δοκιμάσετε το DuckDuckGo για Mac θα σταλεί εδώ. Ελέγξτε πάλι σύντομα. Διαφορετικά, μπορούμε να σας στείλουμε ειδοποίηση όταν έρθει η σειρά σας.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Θα σας στείλουμε ειδοποίηση όταν θα είναι έτοιμο προς λήψη το αντίγραφό σας DuckDuckGo για Mac.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ σχετικά με το beta.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Η εφαρμογή DuckDuckGo Privacy για Mac έχει την ταχύτητα που χρειάζεστε, τις λειτουργίες περιήγησης που αναμένετε και περιλαμβάνει τις καλύτερες δυνατότητες απορρήτου στην κατηγορία μας.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Ανοίξτε την πρόσκλησή σας";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "Το DuckDuckGo για Mac είναι έτοιμο!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Αντιγραφή";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Επισκεφτείτε αυτήν τη διεύθυνση URL στον Mac σας για να κάνετε λήψη:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Βήμα 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Ανοίξτε το αρχείο για εγκατάσταση κι έπειτα εισαγάγετε τον κωδικό πρόσκλησής σας για να το ξεκλειδώσετε.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Βήμα 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Είστε έτοιμοι να αρχίσετε μια ιδιωτική περιήγηση σε Mac;";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Έχετε προσκληθεί!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Εγγραφείτε στην Ιδιωτική λίστα αναμονής";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Εγγραφή στη λίστα αναμονής...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Δοκιμάστε το DuckDuckGo για Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Έρχεται σύντομα για Windows!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Μπορούμε να σας ειδοποιήσουμε όταν έρθει η σειρά σας, ωστόσο οι ειδοποιήσεις είναι προς το παρόν απενεργοποιημένες για το DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Δεν θα χρειαστεί να κοινοποιήσετε προσωπικά στοιχεία για εγγραφή στη λίστα αναμονής. Θα εξασφαλίσετε τη θέση σας στη λίστα αναμονής βάσει χρονικής σήμανσης που υπάρχει αποκλειστικά στη συσκευή σας, ώστε να μπορούμε να σας ειδοποιήσουμε μόλις έρθει η σειρά σας.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Βρίσκεστε στη λίστα!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Διαθέσιμο για λήψη σε Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Περιηγηθείτε ιδιωτικά με την εφαρμογή μας για Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Βρίσκεστε στη λίστα!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Έχετε προσκληθεί!\n\nΈτοιμοι να αρχίσετε μια ιδιωτική περιήγηση σε Mac; \n\n Βήμα 1 \n Επισκεφτείτε αυτήν τη διεύθυνση URL στο Mac σας για να πραγματοποιήσετε λήψη: \n https://duckduckgo.com/mac \n\nΒήμα 2\nΑνοίξτε το αρχείο για εγκατάσταση κι έπειτα εισαγάγετε τον κωδικό πρόσκλησής σας για να το ξεκλειδώσετε.\n\nΚωδικός πρόσκλησης: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Έχετε προσκληθεί!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "Εφαρμογή DuckDuckGo για υπολογιστές";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Μενού περιήγησης";
 
@@ -1149,18 +1290,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Απαιτείται πρόσβαση στο μικρόφωνο";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Εντάξει";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Ακύρωση";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "Το DuckDuckGo δεν ακούει ποτέ ό,τι λέτε. Όλη η επεξεργασία των δεδομένων ομιλίας για την Ιδιωτική φωνητική αναζήτηση πραγματοποιείται στη συσκευή σας.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Απαιτείται πρόσβαση στο μικρόφωνο για Ιδιωτική φωνητική αναζήτηση";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Ακύρωση";

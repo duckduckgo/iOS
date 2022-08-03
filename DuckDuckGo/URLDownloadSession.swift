@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Core
 import Foundation
 import WebKit
 
@@ -63,7 +64,14 @@ class URLDownloadSession: NSObject, DownloadSession {
 extension URLDownloadSession: URLSessionTaskDelegate, URLSessionDownloadDelegate {
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        self.location = location
+        let tmpURL = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        do {
+            try FileManager.default.moveItem(at: location, to: tmpURL)
+            self.location = tmpURL
+        } catch {
+            Pixel.fire(pixel: .missingDownloadedFile, error: error)
+            assertionFailure("Failed to rename file in temp dir - downloaded file is missing")
+        }
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {

@@ -32,7 +32,8 @@ class ActionMessageView: UIView {
         
         static var animationDuration: TimeInterval = 0.2
         static var duration: TimeInterval = 3.0
-        
+
+        static let paddingFromNavBar: CGFloat = 30
         static var windowBottomPadding: CGFloat {
             if UIDevice.current.userInterfaceIdiom == .phone && !isPortrait {
                 return 40
@@ -90,7 +91,19 @@ class ActionMessageView: UIView {
         }
         
         window.addSubview(messageView)
-        window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor, constant: Constants.windowBottomPadding).isActive = true
+        if window.rootViewController?.presentedViewController == nil,
+           let viewController = window.rootViewController?.children.first(where: { $0 is TabViewController }) {
+            window.addConstraint(NSLayoutConstraint(item: viewController.view!,
+                                                    attribute: .bottom,
+                                                    relatedBy: .equal,
+                                                    toItem: messageView,
+                                                    attribute: .bottom,
+                                                    multiplier: 1,
+                                                    constant: Constants.paddingFromNavBar))
+        } else {
+            window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor,
+                                                               constant: Constants.windowBottomPadding).isActive = true
+        }
         
         let messageViewWidth = window.frame.width <= Constants.maxWidth ? window.frame.width - Constants.minimumHorizontalPadding : Constants.maxWidth
         messageView.widthAnchor.constraint(equalToConstant: messageViewWidth).isActive = true

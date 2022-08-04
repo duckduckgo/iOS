@@ -177,7 +177,7 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" title="Close this tab">
-                                                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                                                    <color key="titleColor" name="AlertButtonDestructiveTitleColor"/>
                                                                 </state>
                                                                 <state key="highlighted">
                                                                     <color key="titleColor" systemColor="systemRedColor"/>
@@ -274,6 +274,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="AlertButtonDestructiveTitleColor">
+            <color red="0.92549019607843142" green="0.21568627450980393" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="AlertButtonTitleColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

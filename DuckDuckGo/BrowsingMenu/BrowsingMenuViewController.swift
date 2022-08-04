@@ -155,6 +155,8 @@ final class BrowsingMenuViewController: UIViewController {
 
         recalculatePreferredWidthConstraint()
         recalculateHeightConstraints()
+        webView.map(recalculateMenuConstraints(with:))
+
         if tableView.bounds.height < tableView.contentSize.height + tableView.contentInset.top + tableView.contentInset.bottom {
             tableView.isScrollEnabled = true
         } else {
@@ -162,8 +164,10 @@ final class BrowsingMenuViewController: UIViewController {
         }
     }
 
+    private weak var webView: UIView?
     private var webViewFrameObserver: NSKeyValueObservation?
     func bindConstraints(to webView: UIView?) {
+        self.webView = webView
         self.webViewFrameObserver = webView?.observe(\.frame, options: [.initial]) { [weak self] webView, _ in
             self?.recalculateMenuConstraints(with: webView)
         }

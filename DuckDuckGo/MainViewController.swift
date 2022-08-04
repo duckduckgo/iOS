@@ -287,19 +287,7 @@ class MainViewController: UIViewController {
             quickSaveBookmark()
         }
     }
-    
-    private func enableBookmarksButton() {
-        presentedMenuButton.setState(.bookmarksImage, animated: false)
-        lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
-        omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
-    }
-    
-    private func enableMenuButton() {
-        presentedMenuButton.setState(.menuImage, animated: false)
-        lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
-        omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
-    }
-    
+
     @objc func quickSaveBookmark() {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         guard currentTab != nil else {
@@ -660,7 +648,7 @@ class MainViewController: UIViewController {
 
     fileprivate func refreshControls() {
         refreshTabIcon()
-        refreshMenuIcon()
+        refreshMenuButtonState()
         refreshOmniBar()
         refreshBackForwardButtons()
         refreshBackForwardMenuItems()
@@ -670,14 +658,6 @@ class MainViewController: UIViewController {
         tabsButton.accessibilityHint = UserText.numberOfTabs(tabManager.count)
         tabSwitcherButton.tabCount = tabManager.count
         tabSwitcherButton.hasUnread = tabManager.hasUnread
-    }
-    
-    private func refreshMenuIcon() {
-        if homeController != nil {
-            enableBookmarksButton()
-        } else {
-            enableMenuButton()
-        }
     }
 
     private func refreshOmniBar() {
@@ -756,11 +736,19 @@ class MainViewController: UIViewController {
         let expectedState: MenuButton.State
         if homeController != nil {
             expectedState = .bookmarksImage
-        } else if presentedViewController is BrowsingMenuViewController {
-            expectedState = .closeImage
+            lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
+            omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
+
         } else {
-            expectedState = .menuImage
+            if presentedViewController is BrowsingMenuViewController {
+                expectedState = .closeImage
+            } else {
+                expectedState = .menuImage
+            }
+            lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
+            omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
         }
+
         presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
         presentedMenuButton.setState(expectedState, animated: false)
     }

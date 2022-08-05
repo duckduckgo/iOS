@@ -353,7 +353,7 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
         tabModel.toggleDesktopMode()
         updateContentMode()
-
+        
         if tabModel.isDesktop {
             load(url: url.toDesktopUrl())
         } else {

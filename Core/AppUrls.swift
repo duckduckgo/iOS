@@ -223,10 +223,8 @@ public struct AppUrls {
             return false
         }
         
-        for gpcHost in gpcUrls {
-            if url.isPart(ofDomain: gpcHost) {
-                return true
-            }
+        for gpcHost in gpcUrls where url.isPart(ofDomain: gpcHost) {
+            return true
         }
         
         return false

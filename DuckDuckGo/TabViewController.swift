@@ -80,10 +80,15 @@ class TabViewController: UIViewController {
     
     lazy var bookmarksManager = BookmarksManager()
 
+    private(set) var urlToSiteRating: [URL: SiteRating] = [:]
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
     
     private let requeryLogic = RequeryLogic()
+    
+    private static let tld = AppDependencyProvider.shared.storageCache.current.tld
+    private let adClickAttributionDetection = ContentBlocking.makeAdClickAttributionDetection(tld: tld)
+    let adClickAttributionLogic = ContentBlocking.makeAdClickAttributionLogic(tld: tld)
     
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
@@ -113,7 +118,7 @@ class TabViewController: UIViewController {
     private var blobDownloadTargetFrame: WKFrameInfo?
 
     var contentBlockingAssetsInstalled: Bool {
-        ContentBlocking.contentBlockingManager.currentTDSRules != nil
+        ContentBlocking.contentBlockingManager.currentMainRules != nil
     }
     
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
@@ -171,6 +176,7 @@ class TabViewController: UIViewController {
         return activeLink.merge(with: storedLink)
     }
     
+    private var contentBlockerUserScript: ContentBlockerRulesUserScript?
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var fingerprintScript = FingerprintUserScript()
@@ -198,7 +204,7 @@ class TabViewController: UIViewController {
         return manager
     }()
     
-    private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, _, onComplete in
+    private static let debugEvents = EventMapping<AMPProtectionDebugEvents> { event, _, _, onComplete in
         let domainEvent: Pixel.Event
         switch event {
         case .ampBlockingRulesCompilationFailed:
@@ -237,6 +243,10 @@ class TabViewController: UIViewController {
     private var isAutofillEnabled: Bool {
         appSettings.autofill && featureFlagger.isFeatureOn(.autofill)
     }
+    
+    private var userContentController: UserContentController {
+        (webView.configuration.userContentController as? UserContentController)!
+    }
 
     required init?(coder aDecoder: NSCoder) {
         tabModel = Tab(link: nil)
@@ -247,6 +257,7 @@ class TabViewController: UIViewController {
         super.viewDidLoad()
         
         preserveLoginsWorker = PreserveLoginsWorker(controller: self)
+        initAttributionLogic()
         initUserScripts()
         applyTheme(ThemeManager.shared.currentTheme)
         addContentBlockerConfigurationObserver()
@@ -276,23 +287,29 @@ class TabViewController: UIViewController {
         return activities
     }
     
+    func initAttributionLogic() {
+        adClickAttributionLogic.delegate = self
+        adClickAttributionDetection.delegate = adClickAttributionLogic
+    }
+    
     // swiftlint:disable function_body_length
     func initUserScripts() {
         
-        let currentTDSRules = ContentBlocking.contentBlockingManager.currentTDSRules
+        let currentMainRules = ContentBlocking.contentBlockingManager.currentMainRules
         let privacyConfig = ContentBlocking.privacyConfigurationManager.privacyConfig
         
         let contentBlockerConfig = DefaultContentBlockerUserScriptConfig(privacyConfiguration: privacyConfig,
-                                                                         trackerData: currentTDSRules?.trackerData,
+                                                                         trackerData: currentMainRules?.trackerData,
                                                                          ctlTrackerData: nil,
                                                                          trackerDataManager: ContentBlocking.trackerDataManager)
         let contentBlockerRulesScript = ContentBlockerRulesUserScript(configuration: contentBlockerConfig)
+        contentBlockerUserScript = contentBlockerRulesScript
         
         let surrogates = FileStore().loadAsString(forConfiguration: .surrogates) ?? ""
         let surrogatesConfig = DefaultSurrogatesUserScriptConfig(privacyConfig: privacyConfig,
                                                                  surrogates: surrogates,
-                                                                 trackerData: currentTDSRules?.trackerData,
-                                                                 encodedSurrogateTrackerData: currentTDSRules?.encodedTrackerData,
+                                                                 trackerData: currentMainRules?.trackerData,
+                                                                 encodedSurrogateTrackerData: currentMainRules?.encodedTrackerData,
                                                                  trackerDataManager: ContentBlocking.trackerDataManager,
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
@@ -356,13 +373,25 @@ class TabViewController: UIViewController {
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
+    
+    func applyInheritedAttribution(_ attribution: AdClickAttributionLogic.State?) {
+        adClickAttributionLogic.applyInheritedAttribution(state: attribution)
+    }
 
     // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
-    func attachWebView(configuration: WKWebViewConfiguration, andLoadRequest request: URLRequest?, consumeCookies: Bool) {
+    func attachWebView(configuration: WKWebViewConfiguration,
+                       andLoadRequest request: URLRequest?,
+                       consumeCookies: Bool) {
         instrumentation.willPrepareWebView()
+        
+        configuration.userContentController = UserContentController()
+        
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        // Reapply content blocking rules as we are using custom controller
+        applyCurrentContentBlockingRules()
         
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true
@@ -632,6 +661,7 @@ class TabViewController: UIViewController {
 
         }
 
+        adClickAttributionLogic.reapplyCurrentRules()
     }
     
     private func isDuckDuckGoUrl() -> Bool {
@@ -725,23 +755,10 @@ class TabViewController: UIViewController {
     }
     
     @objc func onContentBlockerConfigurationChanged(notification: Notification) {
-        guard ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) else {
-            webView.configuration.userContentController.removeAllContentRuleLists()
-            
-            rulesCompiledCondition?.resolve()
-            rulesCompiledCondition = nil
-            
-            return
-        }
-        
-        if let rules = ContentBlocking.contentBlockingManager.currentTDSRules {
-            
-            rulesCompiledCondition?.resolve()
-            rulesCompiledCondition = nil
-
-            webView.configuration.userContentController.removeAllContentRuleLists()
-            webView.configuration.userContentController.add(rules.rulesList)
-            
+        applyCurrentContentBlockingRules()
+                
+        if ContentBlocking.contentBlockingManager.currentMainRules != nil {
+                        
             let diffKey = ContentBlockerProtectionChangedNotification.diffKey
             let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
             
@@ -754,8 +771,28 @@ class TabViewController: UIViewController {
             } else {
                 reloadUserScripts()
             }
-
         }
+    }
+    
+    private func applyCurrentContentBlockingRules() {
+        guard ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) else {
+            userContentController.replaceRegularLists(with: [])
+            
+            rulesCompiledCondition?.resolve()
+            rulesCompiledCondition = nil
+            
+            return
+        }
+        
+        if let rules = ContentBlocking.contentBlockingManager.currentMainRules {
+            
+            rulesCompiledCondition?.resolve()
+            rulesCompiledCondition = nil
+
+            userContentController.replaceRegularLists(with: [rules.rulesList])
+        }
+                
+        adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.contentBlockingManager.currentRules)
     }
 
     @objc func onStorageCacheChange() {
@@ -800,10 +837,17 @@ class TabViewController: UIViewController {
         Pixel.fire(pixel: .privacyDashboardOpened)
         performSegue(withIdentifier: "PrivacyProtection", sender: self)
     }
+    
+    private var didGoBackForward: Bool = false
 
     private func resetSiteRating() {
         if let url = url {
-            siteRating = makeSiteRating(url: url)
+            if didGoBackForward, let siteRating = urlToSiteRating[url] {
+                self.siteRating = siteRating
+                didGoBackForward = false
+            } else {
+                siteRating = makeSiteRating(url: url)
+            }
         } else {
             siteRating = nil
         }
@@ -816,10 +860,13 @@ class TabViewController: UIViewController {
                                                 termsOfServiceStore: storageCache.termsOfServiceStore,
                                                 entityMapping: entityMapping)
         
-        return SiteRating(url: url,
-                          httpsForced: httpsForced,
-                          entityMapping: entityMapping,
-                          privacyPractices: privacyPractices)
+        let siteRating = SiteRating(url: url,
+                                    httpsForced: httpsForced,
+                                    entityMapping: entityMapping,
+                                    privacyPractices: privacyPractices)
+        urlToSiteRating[url] = siteRating
+        
+        return siteRating
     }
 
     private func updateSiteRating() {
@@ -915,7 +962,7 @@ class TabViewController: UIViewController {
                               blockedTrackerDomains: blockedTrackerDomains,
                               installedSurrogates: siteRating?.installedSurrogates.map { $0 } ?? [],
                               isDesktop: tabModel.isDesktop,
-                              tdsETag: ContentBlocking.contentBlockingManager.currentTDSRules?.etag ?? "",
+                              tdsETag: ContentBlocking.contentBlockingManager.currentMainRules?.etag ?? "",
                               ampUrl: linkProtection.lastAMPURLString,
                               urlParametersRemoved: linkProtection.urlParametersRemoved)
     }
@@ -1047,9 +1094,17 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
-            self.url = webView.url
-            setupOrClearTemporaryDownload(for: navigationResponse.response, completion: decisionHandler)
-
+            url = webView.url
+            if let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
+                decisionHandler(decision)
+            } else {
+                if navigationResponse.isForMainFrame && isSuccessfulResponse {
+                    adClickAttributionDetection.on2XXResponse(url: url)
+                }
+                adClickAttributionLogic.onProvisionalNavigation {
+                    decisionHandler(.allow)
+                }
+            }
         } else if isSuccessfulResponse {
             if FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
                 let download = self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
@@ -1089,9 +1144,12 @@ extension TabViewController: WKNavigationDelegate {
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
         linkProtection.setMainFrameUrl(webView.url)
+        adClickAttributionDetection.onStartNavigation(url: webView.url)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        adClickAttributionDetection.onDidFinishNavigation(url: webView.url)
+        adClickAttributionLogic.onDidFinishNavigation(host: webView.url?.host)
         hideProgressIndicator()
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
@@ -1208,6 +1266,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        adClickAttributionDetection.onDidFailNavigation()
         hideProgressIndicator()
         webpageDidFailToLoad()
         checkForReloadOnError()
@@ -1226,6 +1285,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        adClickAttributionDetection.onDidFailNavigation()
         hideProgressIndicator()
         linkProtection.setMainFrameUrl(nil)
         lastError = error
@@ -1309,6 +1369,8 @@ extension TabViewController: WKNavigationDelegate {
         if let url = navigationAction.request.url, !appUrls.isDuckDuckGoSearch(url: url) {
             waitUntilRulesAreCompiled()
         }
+        
+        didGoBackForward = (navigationAction.navigationType == .backForward)
 
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
@@ -1320,13 +1382,16 @@ extension TabViewController: WKNavigationDelegate {
                                                                            onLinkRewrite: { [weak self] newURL, navigationAction in
                 guard let self = self else { return }
                 if self.isNewTargetBlankRequest(navigationAction: navigationAction) {
-                    self.delegate?.tab(self, didRequestNewTabForUrl: newURL, openedByPage: true)
+                    self.delegate?.tab(self,
+                                       didRequestNewTabForUrl: newURL,
+                                       openedByPage: true,
+                                       inheritingAttribution: self.adClickAttributionLogic.state)
                 } else {
                     self.load(url: newURL)
                 }
             },
                                                                            policyDecisionHandler: decisionHandler)
-            
+
             if didRewriteLink {
                 return
             }
@@ -1349,11 +1414,14 @@ extension TabViewController: WKNavigationDelegate {
             if modifierFlags.contains(.command) {
                 if modifierFlags.contains(.shift) {
                     decisionHandler(.cancel)
-                    delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
+                    delegate?.tab(self,
+                                  didRequestNewTabForUrl: url,
+                                  openedByPage: false,
+                                  inheritingAttribution: adClickAttributionLogic.state)
                     return
                 } else {
                     decisionHandler(.cancel)
-                    delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
+                    delegate?.tab(self, didRequestNewBackgroundTabForUrl: url, inheritingAttribution: adClickAttributionLogic.state)
                     return
                 }
             }
@@ -1459,7 +1527,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
-            delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true)
+            delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true, inheritingAttribution: adClickAttributionLogic.state)
             completion(.cancel)
             return
         }
@@ -1607,13 +1675,14 @@ extension TabViewController {
         return nil
     }
 
-    /*
+    /**
      Some files might be previewed by webkit but in order to share them
      we need to download them first.
      This method stores the temporary download or clears it if necessary
+     
+     - Returns: Navigation policy or nil if it is not a download
      */
-    private func setupOrClearTemporaryDownload(for response: URLResponse,
-                                               completion: @escaping (WKNavigationResponsePolicy) -> Void) {
+    private func setupOrClearTemporaryDownload(for response: URLResponse) -> WKNavigationResponsePolicy? {
         let downloadManager = AppDependencyProvider.shared.downloadManager
         guard let url = response.url,
               let downloadMetaData = downloadManager.downloadMetaData(for: response),
@@ -1621,8 +1690,7 @@ extension TabViewController {
         else {
             temporaryDownloadForPreviewedFile?.cancel()
             temporaryDownloadForPreviewedFile = nil
-            completion(.allow)
-            return
+            return nil
         }
         guard SchemeHandler.schemeType(for: url) != .blob else {
             // suggestedFilename is empty for blob: downloads unless handled via completion(.download)
@@ -1631,19 +1699,18 @@ extension TabViewController {
                // if temporary download not setup yet, preview otherwise
                self.temporaryDownloadForPreviewedFile?.url != url {
                 // calls webView:navigationAction:didBecomeDownload:
-                completion(.download)
+                return .download
             } else {
-                completion(.allow)
                 self.blobDownloadTargetFrame = nil
+                return .allow
             }
-            return
         }
 
         let cookieStore = webView.configuration.websiteDataStore.httpCookieStore
         temporaryDownloadForPreviewedFile = downloadManager.makeDownload(response: response,
                                                                          cookieStore: cookieStore,
                                                                          temporary: true)
-        completion(.allow)
+        return .allow
     }
 
     @available(iOS 14.5, *)
@@ -1878,7 +1945,10 @@ extension TabViewController: WKUIDelegate {
                         createWebViewWith configuration: WKWebViewConfiguration,
                         for navigationAction: WKNavigationAction,
                         windowFeatures: WKWindowFeatures) -> WKWebView? {
-        return delegate?.tab(self, didRequestNewWebViewWithConfiguration: configuration, for: navigationAction)
+        return delegate?.tab(self,
+                             didRequestNewWebViewWithConfiguration: configuration,
+                             for: navigationAction,
+                             inheritingAttribution: adClickAttributionLogic.state)
     }
 
     func webViewDidClose(_ webView: WKWebView) {
@@ -2025,12 +2095,19 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     }
 
     func contentBlockerRulesUserScript(_ script: ContentBlockerRulesUserScript,
-                                       detectedTracker tracker: DetectedTracker) {
+                                       detectedTracker tracker: DetectedRequest) {
         userScriptDetectedTracker(tracker)
     }
+    
+    func contentBlockerRulesUserScript(_ script: ContentBlockerRulesUserScript,
+                                       detectedThirdPartyRequest request: DetectedRequest) {
+        siteRating?.thirdPartyRequestDetected(request)
+    }
 
-    fileprivate func userScriptDetectedTracker(_ tracker: DetectedTracker) {
-        if tracker.blocked && fireWoFollowUp {
+    fileprivate func userScriptDetectedTracker(_ tracker: DetectedRequest) {
+        adClickAttributionLogic.onRequestDetected(request: tracker)
+        
+        if tracker.isBlocked && fireWoFollowUp {
             fireWoFollowUp = false
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
         }
@@ -2043,7 +2120,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
             pageHasTrackers = true
         }
 
-        if let networkName = tracker.knownTracker?.owner?.name {
+        if let networkName = tracker.ownerName {
             if !trackerNetworksDetectedOnPage.contains(networkName) {
                 trackerNetworksDetectedOnPage.insert(networkName)
                 NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
@@ -2061,7 +2138,7 @@ extension TabViewController: SurrogatesUserScriptDelegate {
     }
 
     func surrogatesUserScript(_ script: SurrogatesUserScript,
-                              detectedTracker tracker: DetectedTracker,
+                              detectedTracker tracker: DetectedRequest,
                               withSurrogate host: String) {
         if siteRating?.url.absoluteString == tracker.pageUrl {
             siteRating?.surrogateInstalled(host)
@@ -2091,6 +2168,30 @@ extension TabViewController: PrintingUserScriptDelegate {
         let controller = UIPrintInteractionController.shared
         controller.printFormatter = webView.viewPrintFormatter()
         controller.present(animated: true, completionHandler: nil)
+    }
+
+}
+
+// MARK: - AdClickAttributionLogicDelegate
+extension TabViewController: AdClickAttributionLogicDelegate {
+    
+    func attributionLogic(_ logic: AdClickAttributionLogic,
+                          didRequestRuleApplication rules: ContentBlockerRulesManager.Rules?,
+                          forVendor vendor: String?) {
+        
+        guard ContentBlocking.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) else {
+            userContentController.replaceAttributedList(with: nil)
+            return
+        }
+        
+        userContentController.replaceAttributedList(with: rules?.rulesList)
+        
+        contentBlockerUserScript?.currentAdClickAttributionVendor = vendor
+        if let rules = rules {
+            contentBlockerUserScript?.supplementaryTrackerData = [rules.trackerData]
+        } else {
+            contentBlockerUserScript?.supplementaryTrackerData = []
+        }
     }
 
 }

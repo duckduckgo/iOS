@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "À propos de nos protections contre le suivi Web";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "À propos de nos protections des recherches et publicités";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Impact de nos publicités de recherche sur nos protections";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorithme";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Cryptage forcé";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Connexion chiffrée";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Nous avons obligé ce site à utiliser une connexion chiffrée, ce qui l'empêchera d'espionner les informations personnelles que vous lui enverrez.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Oui";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "PROTECTION DU SITE DÉSACTIVÉE";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Principaux réseaux de suivi trouvés";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Aucun réseau majeur de traqueurs trouvé";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Des réseaux de traqueurs ont été trouvés sur %1$@%% des sites Web que vous avez visités depuis le %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Nous recueillons toujours des données pour indiquer\nle nombre de traqueurs que nous avons bloqués.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Aucune demande tierce chargée";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Les demandes du domaine suivant ont été chargées car une publicité %@ sur DuckDuckGo a récemment fait l'objet d'un clic. Ces demandes permettent d'évaluer l'efficacité des publicités. Toutes les publicités sur DuckDuckGo sont sans profilage.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Les demandes du domaine suivant ont été chargées pour éviter toute coupure du site.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Les demandes du domaine suivant ont été chargées car elles sont associées à %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Les demandes des domaines tiers suivants ont été chargées. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil, bien que nos autres protections en matière de suivi sur Internet restent applicables.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Aucune demande tierce n'a vu son chargement bloqué car les protections sont désactivées pour ce site. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Les demandes de suivi des domaines suivants ont été chargées.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Les demandes du domaine suivant ont également été chargées.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Les demandes des domaines suivants ont été chargées.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Les demandes du domaine suivant ont été chargées.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Nous n'avons détecté aucune demande provenant de domaines tiers.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Demandes tierces chargées";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Remarque : les limites de la plateforme peuvent restreindre notre capacité à détecter toutes les demandes.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Absence de profilage";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Les pratiques de confidentialité de ToS;DR.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Pratiques de confidentialité inconnues";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Les réseaux de traqueurs regroupent votre historique Web dans un profil de données vous concernant. Les réseaux majeurs de traqueurs sont plus nuisibles, car ils peuvent vous suivre et vous cibler sur une plus grande partie du Web.";
+"privacy.protection.tracker.networks.info" = "Les traqueurs aident les entreprises à établir votre profil. Nous avons empêché ces traqueurs de charger et de surveiller votre activité sur cette page.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Aucune demande de suivi n'a vu son chargement bloqué car les protections sont désactivées pour ce site. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nous n'avons détecté aucune demande de suivi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Les demandes des domaines tiers suivants ont vu leur chargement bloqué, car elles ont été identifiées comme des demandes de suivi. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Demandes dont le chargement a été bloqué";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Demandes de suivi trouvées";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Aucune demande de suivi bloquée";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Aucune demande de suivi trouvée";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Annuler";

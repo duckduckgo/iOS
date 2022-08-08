@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Хорошо";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "О нашей защите от отслеживания онлайн";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "О рекламе и защите в поисковых системах";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "How our search ads impact our protections";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритм";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Принудительное шифрование";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Зашифрованное соединение";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Чтобы защитить вас от перехвата личной информации, мы заставили этот сайт зашифровать соединение.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Да";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "ЗАЩИТА САЙТА ОТКЛЮЧЕНА";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Обнаружены крупные сети трекеров";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Не обнаружено ни одной крупной сети трекеров";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Сети трекеров были обнаружены на %1$@%% сайтах, которые вы посетили с %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Мы все еще собираем данные\nо количестве заблокированных трекеров.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Не загружено ни одного стороннего запроса";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Запросы этого домена были загружены в результате недавнего нажатия на рекламу %@ в DuckDuckGo. Такие запросы помогают оценить эффективность рекламы. Рекламные объявления в DuckDuckGo не профилируют пользователей.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Запросы этого домена были загружены для предотвращения неполадок в работе сайта.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Запросы этого домена были загружены, так как они связаны с %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Ниже приведен список загруженных запросов сторонних доменов. Благодаря этим запросам компании могут вас профилировать, однако мы по-прежнему защищаем вас от отслеживания в Сети другими способами.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Мы не заблокировали ни одной загрузки сторонних запросов, так как защита на этом сайте отключена. Загруженные запросы позволяют компаниям вас профилировать.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Загружены трекинг-запросы следующих доменов.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Также загружены запросы следующего домена.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "The following domains’ requests were loaded.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "The following domain’s requests were loaded.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Запросов от сторонних доменов не обнаружено.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Загружены сторонние запросы";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Внимание: наши возможности обнаружения запросов зависят от ограничений платформы.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Без профилирования";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Стандарты конфиденциальности ToS;DR.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Уровень конфиденциальности неизвестен";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Сети трекеров собирают историю вашей активности в интернете и формируют ваш информационный профиль. Крупные сети трекеров более опасны, так как могут отслеживать вас и показывать адресную рекламу на большем количестве сайтов.";
+"privacy.protection.tracker.networks.info" = "Трекеры применяются для профилирования посетителей сайтов. Мы предотвратили загрузку этих трекеров и не дали им отследить ваши действия на данной странице.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Мы не заблокировали ни одного трекинг-запроса, так как защита на этом сайте отключена. Загруженные запросы позволяют компаниям вас профилировать.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Мы не обнаружили ни одного трекинг-запроса.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Мы заблокировали загрузку следующих запросов сторонних доменов, так как распознали в них трекинг-запросы. Загруженные запросы позволяют компаниям вас профилировать.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Заблокирована загрузка запросов";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Обнаружены трекинг-запросы";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Трекинг-запросы не заблокированы";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Трекинг-запросы не обнаружены";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Отменить";

@@ -1,7 +1,73 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1659011934066,
+    "version": 1659709712276,
     "features": {
+        "adClickAttribution": {
+            "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "linkFormats": [
+                    {
+                        "url": "duckduckgo.com/y.js",
+                        "parameterName": "u3",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "SERP Ads"
+                    },
+                    {
+                        "url": "www.search-company.site/y.js",
+                        "parameterName": "u3",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Test Domain"
+                    },
+                    {
+                        "url": "www.search-company.example/y.js",
+                        "parameterName": "u3",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Test Domain"
+                    },
+                    {
+                        "url": "links.duckduckgo.com/m.js",
+                        "parameterName": "dsl",
+                        "parameterValue": "1",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Shopping Ads"
+                    },
+                    {
+                        "url": "www.search-company.site/m.js",
+                        "parameterName": "dsl",
+                        "parameterValue": "1",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Test Domain"
+                    },
+                    {
+                        "url": "www.search-company.example/m.js",
+                        "parameterName": "dsl",
+                        "parameterValue": "1",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Test Domain"
+                    }
+                ],
+                "allowlist": [
+                    {
+                        "blocklistEntry": "bing.com",
+                        "host": "bat.bing.com"
+                    },
+                    {
+                        "blocklistEntry": "ad-company.site",
+                        "host": "convert.ad-company.site"
+                    },
+                    {
+                        "blocklistEntry": "ad-company.example",
+                        "host": "convert.ad-company.example"
+                    }
+                ],
+                "navigationExpiration": 1800,
+                "totalExpiration": 604800,
+                "heuristicDetection": "enabled",
+                "domainDetection": "enabled"
+            }
+        },
         "ampLinks": {
             "exceptions": [
                 {
@@ -294,6 +360,28 @@
             "state": "enabled",
             "settings": {
                 "allowlistedTrackers": {
+                    "4dex.io": {
+                        "rules": [
+                            {
+                                "rule": "mp.4dex.io/prebid",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
+                    "adform.net": {
+                        "rules": [
+                            {
+                                "rule": "adx.adform.net/adx/openrtb",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
                     "adsafeprotected.com": {
                         "rules": [
                             {
@@ -422,6 +510,17 @@
                             }
                         ]
                     },
+                    "casalemedia.com": {
+                        "rules": [
+                            {
+                                "rule": "htlb.casalemedia.com/cygnus",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
                     "cloudflare.com": {
                         "rules": [
                             {
@@ -437,6 +536,17 @@
                                     "2000mules.com"
                                 ],
                                 "reason": "Loading percentage hits 100% and the site does not proceed to display usual content."
+                            }
+                        ]
+                    },
+                    "criteo.com": {
+                        "rules": [
+                            {
+                                "rule": "bidder.criteo.com/cdb",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
                             }
                         ]
                     },
@@ -491,6 +601,17 @@
                                     "wunderground.com"
                                 ],
                                 "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. wunderground.com - Video element does not display."
+                            }
+                        ]
+                    },
+                    "fastly.net": {
+                        "rules": [
+                            {
+                                "rule": "mslc-prod-herokuapp-com.global.ssl.fastly.net/main.8736233213226195.js",
+                                "domains": [
+                                    "masslottery.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/332"
                             }
                         ]
                     },
@@ -670,6 +791,17 @@
                             }
                         ]
                     },
+                    "openx.net": {
+                        "rules": [
+                            {
+                                "rule": "venatusmedia-d.openx.net/w/1.0/arj",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
                     "opta.net": {
                         "rules": [
                             {
@@ -708,6 +840,28 @@
                                     "primaryarms.com"
                                 ],
                                 "reason": "Images in the large scrolling image banner on main page do not render. Note that this CNAMEs to marvel-b4-cdn.bc0a.com at time of mitigation."
+                            }
+                        ]
+                    },
+                    "pubmatic.com": {
+                        "rules": [
+                            {
+                                "rule": "hpopenbid.pubmatic.com/translator",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
+                    "quantserve.com": {
+                        "rules": [
+                            {
+                                "rule": "secure.quantserve.com/quant.js",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
                             }
                         ]
                     },

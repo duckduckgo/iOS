@@ -31,25 +31,28 @@ public final class ContentBlocking {
                                   embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
                                   localProtection: DomainsProtectionUserDefaultsStore(),
                                   errorReporting: debugEvents)
-    
-    public static let contentBlockingUpdating = ContentBlockingUpdating()
-    
+        
     public static let trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet),
                                                               data: FileStore().loadAsData(forConfiguration: .trackerDataSet),
                                                               embeddedDataProvider: AppTrackerDataSetProvider(),
                                                               errorReporting: debugEvents)
     
+    private static let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManager: trackerDataManager)
+    private static let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
+    
+    
+    private static let lastCompiledRulesStore = AppLastCompiledRulesStore()
+    public static let contentBlockingUpdating = ContentBlockingUpdating()
+    
     public static let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,
                                                                           exceptionsSource: exceptionsSource,
+                                                                          lastCompiledRulesStore: lastCompiledRulesStore,
                                                                           updateListener: contentBlockingUpdating,
                                                                           errorReporting: debugEvents,
                                                                           logger: contentBlockingLog)
     
-    private static let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManger: trackerDataManager)
-    private static let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
-    
     private static let debugEvents = EventMapping<ContentBlockerDebugEvents> { event, scope, error, parameters, onComplete in
-        let domainEvent: PixelName
+        let domainEvent: Pixel.Event
         switch event {
         case .trackerDataParseFailed:
             domainEvent = .trackerDataParseFailed

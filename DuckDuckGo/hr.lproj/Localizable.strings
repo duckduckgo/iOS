@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Automatsko popunjavanje prijave";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Knjižna oznaka";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Uključeno";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Pregled";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Prijava je spremljena";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Prijava je ažurirana";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Ovo će spremiti dodatnu prijavu za ovu stranicu.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Prijave se sigurno pohranjuju samo na ovom uređaju i njima se može upravljati iz izbornika Automatsko popunjavanje u Postavkama.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Želiš li da DuckDuckGo spremi tvoju prijavu?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Ne sada";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Spremi prijavu";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Želiš li spremiti prijavu?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Spremi lozinku";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Želiš li spremiti lozinku?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Ažuriraj prijavu";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Ažuriraj lozinku";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Želiš li ažurirati lozinku?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Želiš li ažurirati korisničko ime?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Dodaj knjižnu oznaku";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Izbriši";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Jeste li sigurni da želite izbrisati ovu mapu i %i stavki?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Jeste li sigurni da želite izbrisati ovu mapu i %i stavku?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Izbrisati %@?";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Preuzimanje je počelo za %@";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Otkaži";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Isključeno";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blokiraj programe za praćenje e-pošte i sakrij svoju adresu";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Otkaži";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobro došao/la u\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Pozivni kôd";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Vaša pozivnica pojavit će se ovdje kad budemo spremni za vas. Želite li %1$@ kad stigne? %2$@ o beta verziji preglednika macOS.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "primite obavijest";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Poslat ćemo vam obavijest kada budemo spremni za vas. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Vaša pozivnica da isprobate DuckDuckGo za Mac stići će ovdje. Provjerite ponovno uskoro, ili vam možemo poslati obavijest kada dođete na red.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Poslat ćemo vam obavijest kad vaš primjerak programa DuckDuckGo za Mac bude spreman za preuzimanje.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ o beta verziji.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Aplikacija DuckDuckGo Privacy za Mac pruža vam potrebnu brzinu i očekivane značajke pretraživanja, a isporučuje se s našim najboljim elementima za privatnost u svojoj klasi.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Otvori svoju pozivnicu";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo za Mac je spreman!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopiraj";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Posjetite ovaj URL na svom Macu za preuzimanje:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1. korak";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Otvorite datoteku za instalaciju, a zatim unesite pozivni kôd za otključavanje.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2. korak";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Jeste li spremni za početak privatnog pretraživanja na Macu?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Pozvani ste!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Pridružite se privatnoj listi čekanja";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Pridruživanje listi čekanja...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Isprobajte DuckDuckGo za Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Uskoro i za Windows!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Možemo vas obavijestiti kada dođete na red, ali obavijesti su trenutačno onemogućene za DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Nećete morati podijeliti nikakve osobne podatke za pridruživanje listi čekanja. Svoje ćete mjesto osigurati u skladu s vremenskom oznakom koja postoji samo na vašem uređaju kako bismo vas mogli obavijestiti kada na vas dođe red.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Na popisu ste!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Dostupno za preuzimanje na Macu";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Pretražujte privatno s našom aplikacijom za Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Na popisu ste!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Pozvani ste!\n\nJeste li spremni za početak privatnog pretraživanja na Macu? \n\n1. korak\n Posjetite ovaj URL na svom Macu za preuzimanje:\nhttps://duckduckgo.com/mac\n\n2. korak\nOtvorite datoteku za instalaciju, a zatim unesite pozivni kôd za otključavanje.\n\nPozivni kôd: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Pozvani ste!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo aplikacija za osobno računalo";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Izbornik pregledavanja";
 
@@ -1149,18 +1290,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Potreban je pristup mikrofonu";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "U redu";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Otkaži";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikad ne sluša što govorite. Sva obrada glasovnih podataka za Privatno glasovno pretraživanje odvija se na vašem uređaju.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Potreban je pristup mikrofonu za Privatno glasovno pretraživanje";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Otkaži";

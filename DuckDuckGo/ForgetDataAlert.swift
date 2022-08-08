@@ -43,7 +43,7 @@ class ForgetDataAlert {
     
     static private func ongoingDownloadsInProgress() -> Bool {
         let allDownloads = AppDependencyProvider.shared.downloadManager.downloadList
-        let ongoingDownloads = allDownloads.filter { $0.state == .running && !$0.temporary }
+        let ongoingDownloads = allDownloads.filter { $0.isRunning && !$0.temporary }
         return !ongoingDownloads.isEmpty
     }
 }

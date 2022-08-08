@@ -76,9 +76,7 @@ class MenuButton: UIView {
         configureAnimationView()
         configureBookmarksView()
         
-        if #available(iOS 13.4, *) {
-            addInteraction(UIPointerInteraction(delegate: self))
-        }
+        addInteraction(UIPointerInteraction(delegate: self))
     }
 
     override func layoutSubviews() {
@@ -206,7 +204,6 @@ extension MenuButton: Themable {
     }
 }
 
-@available(iOS 13.4, *)
 extension MenuButton: UIPointerInteractionDelegate {
     
     func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {

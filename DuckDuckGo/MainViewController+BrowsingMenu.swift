@@ -99,6 +99,7 @@ extension MainViewController {
         
         BrowsingMenuViewController.applyShadowTo(view: snapshot, for: ThemeManager.shared.currentTheme)
         
+        controller.removeGestureRecognizer()
         controller.view.alpha = 0
         
         UIView.animate(withDuration: 0.2, animations: {

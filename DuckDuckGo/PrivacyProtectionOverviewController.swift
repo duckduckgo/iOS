@@ -28,6 +28,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         case tempUnprotectedInfo
         case encryptionInfo
         case trackersInfo
+        case otherDomainsInfo
         case practicesInfo
         case protection
         case gatheringData
@@ -45,6 +46,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     @IBOutlet weak var encryptionCell: SummaryCell!
     @IBOutlet weak var trackersCell: SummaryCell!
+    @IBOutlet weak var otherDomainsCell: SummaryCell!
     @IBOutlet weak var privacyPracticesCell: SummaryCell!
     @IBOutlet weak var tempProtectionDisabledCell: UITableViewCell!
     
@@ -66,6 +68,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
     
     private var siteRating: SiteRating!
     private var privacyConfiguration: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
+    private let rulesManager: ContentBlockerRulesManager = ContentBlocking.contentBlockingManager
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +91,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
         
         if let unprotectedSitesController = segue.destination as? UnprotectedSitesViewController {
             unprotectedSitesController.enforceLightTheme = true
-            if isPad {
+            if AppWidthObserver.shared.isLargeWidth {
                 unprotectedSitesController.showBackButton = true
             }
             Pixel.fire(pixel: .privacyDashboardManageProtection)
@@ -115,7 +118,9 @@ class PrivacyProtectionOverviewController: UITableViewController {
         
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
         updateEncryption()
-        updateTrackers()
+        let state = SiteRating.State(siteRating: siteRating, config: privacyConfiguration)
+        updateTrackers(state: state)
+        updateOtherDomains(state: state)
         updatePrivacyPractices()
         updateProtectionToggle()
     }
@@ -153,14 +158,14 @@ class PrivacyProtectionOverviewController: UITableViewController {
         return privacyConfiguration.isProtected(domain: siteRating.domain)
     }
     
-    private func updateTrackers() {
-        trackersCell.summaryLabel.text = siteRating.networksText(config: privacyConfiguration)
-        
-        if isProtecting || siteRating.trackersDetected.count == 0 {
-            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks On")
-        } else {
-            trackersCell.summaryImage.image = #imageLiteral(resourceName: "PP Icon Major Networks Bad")
-        }
+    private func updateTrackers(state: SiteRating.State) {
+        trackersCell.summaryLabel.text = state.trackingRequestsText
+        trackersCell.summaryImage.image = state.trackingRequestsIcon
+    }
+    
+    private func updateOtherDomains(state: SiteRating.State) {
+        otherDomainsCell.summaryLabel.text = state.thirdPartyRequestsText
+        otherDomainsCell.summaryImage.image = state.thirdPartyRequestsIcon
     }
     
     private func updatePrivacyPractices() {
@@ -199,6 +204,7 @@ class PrivacyProtectionOverviewController: UITableViewController {
             privacyConfiguration.userDisabledProtection(forDomain: domain)
             ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
         }
+        rulesManager.scheduleCompilation()
         Pixel.fire(pixel: isProtected ? .privacyDashboardProtectionDisabled : .privacyDashboardProtectionEnabled)
     }
     
@@ -344,7 +350,7 @@ class TrackerNetworkPillView: UIView {
 private extension PPTrackerNetwork {
 
     var image: UIImage {
-        let currentTrackerData = ContentBlocking.contentBlockingManager.currentTDSRules?.trackerData
+        let currentTrackerData = ContentBlocking.contentBlockingManager.currentMainRules?.trackerData
         let name = currentTrackerData?.findEntity(byName: self.name ?? "")?.displayName ?? ""
         let imageName = "PP Pill \(name.lowercased())"
         return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")

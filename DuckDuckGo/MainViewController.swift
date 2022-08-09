@@ -22,6 +22,7 @@ import WebKit
 import Core
 import Lottie
 import Kingfisher
+import BrowserServicesKit
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -343,7 +344,7 @@ class MainViewController: UIViewController {
                let link = currentTab?.link {
                 controller.openEditFormWhenPresented(link: link)
             } else if segue.identifier == "BookmarksEdit",
-                        let bookmark = sender as? Bookmark {
+                      let bookmark = sender as? Core.Bookmark {
                 controller.openEditFormWhenPresented(bookmark: bookmark)
             }
             return
@@ -440,7 +441,7 @@ class MainViewController: UIViewController {
         launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
             guard let self = self, let url = URL(string: urlString) else { return }
 
-            self.loadUrlInNewTab(url)
+            self.loadUrlInNewTab(url, inheritedAttribution: nil)
         })
     }
 
@@ -557,10 +558,10 @@ class MainViewController: UIViewController {
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
         let url = appUrls.url(forQuery: query)
-        loadUrlInNewTab(url, reuseExisting: reuseExisting)
+        loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
     }
 
-    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false) {
+    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) {
         allowContentUnderflow = false
         customNavigationBar.alpha = 1
         loadViewIfNeeded()
@@ -571,7 +572,7 @@ class MainViewController: UIViewController {
             tabManager.selectTab(existing)
             loadUrl(url)
         } else {
-            addTab(url: url)
+            addTab(url: url, inheritedAttribution: inheritedAttribution)
         }
         refreshOmniBar()
         refreshTabIcon()
@@ -612,8 +613,8 @@ class MainViewController: UIViewController {
         dismissOmniBar()
     }
 
-    private func addTab(url: URL?) {
-        let tab = tabManager.add(url: url)
+    private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
+        let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
         dismissOmniBar()
         addToView(tab: tab)
     }
@@ -963,20 +964,7 @@ class MainViewController: UIViewController {
     }
     
     private func showNoMicrophonePermissionAlert() {
-        let alertController = UIAlertController(title: UserText.noVoicePermissionAlertTitle,
-                                                message: UserText.noVoicePermissionAlertMessage,
-                                                preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
-
-        let openSettingsButton = UIAlertAction(title: UserText.noVoicePermissionActionSettings, style: .default) { _ in
-            let url = URL(string: UIApplication.openSettingsURLString)!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-        let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: nil)
-
-        alertController.addAction(openSettingsButton)
-        alertController.addAction(cancelAction)
-        
+        let alertController = NoMicPermissionAlert.buildAlert()
         present(alertController, animated: true, completion: nil)
     }
 }
@@ -1221,12 +1209,10 @@ extension MainViewController: OmniBarDelegate {
     
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
-            DispatchQueue.main.async {
-                if permission {
-                    self.showVoiceSearch()
-                } else {
-                    self.showNoMicrophonePermissionAlert()
-                }
+            if permission {
+                self.showVoiceSearch()
+            } else {
+                self.showNoMicrophonePermissionAlert()
             }
         }
     }
@@ -1234,7 +1220,7 @@ extension MainViewController: OmniBarDelegate {
 
 extension MainViewController: FavoritesOverlayDelegate {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Bookmark) {
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Core.Bookmark) {
         guard let url = favorite.url else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
@@ -1302,7 +1288,7 @@ extension MainViewController: HomeControllerDelegate {
         loadUrl(url)
     }
     
-    func home(_ home: HomeViewController, didRequestEdit favorite: Bookmark) {
+    func home(_ home: HomeViewController, didRequestEdit favorite: Core.Bookmark) {
         performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
     }
     
@@ -1339,12 +1325,15 @@ extension MainViewController: TabDelegate {
     
     func tab(_ tab: TabViewController,
              didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
-             for navigationAction: WKNavigationAction) -> WKWebView? {
+             for navigationAction: WKNavigationAction,
+             inheritingAttribution: AdClickAttributionLogic.State?) -> WKWebView? {
 
         showBars()
         currentTab?.dismiss()
 
-        let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
+        let newTab = tabManager.addURLRequest(navigationAction.request,
+                                              with: configuration,
+                                              inheritedAttribution: inheritingAttribution)
         newTab.openedByPage = true
         newTab.openingTab = tab
         
@@ -1384,24 +1373,29 @@ extension MainViewController: TabDelegate {
         newTab()
     }
 
-    func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
-        _ = tabManager.add(url: url, inBackground: true)
+    func tab(_ tab: TabViewController,
+             didRequestNewBackgroundTabForUrl url: URL,
+             inheritingAttribution attribution: AdClickAttributionLogic.State?) {
+        _ = tabManager.add(url: url, inBackground: true, inheritedAttribution: attribution)
         animateBackgroundTab()
     }
 
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, openedByPage: Bool) {
+    func tab(_ tab: TabViewController,
+             didRequestNewTabForUrl url: URL,
+             openedByPage: Bool,
+             inheritingAttribution attribution: AdClickAttributionLogic.State?) {
         _ = findInPageView.resignFirstResponder()
 
         if openedByPage {
             showBars()
             newTabAnimation {
-                self.loadUrlInNewTab(url)
+                self.loadUrlInNewTab(url, inheritedAttribution: attribution)
                 self.tabManager.current?.openedByPage = true
                 self.tabManager.current?.openingTab = tab
             }
             tabSwitcherButton.incrementAnimated()
         } else {
-            loadUrlInNewTab(url)
+            loadUrlInNewTab(url, inheritedAttribution: attribution)
             self.tabManager.current?.openingTab = tab
         }
 
@@ -1562,7 +1556,7 @@ extension MainViewController: TabSwitcherDelegate {
 }
 
 extension MainViewController: BookmarksDelegate {
-    func bookmarksDidSelect(bookmark: Bookmark) {
+    func bookmarksDidSelect(bookmark: Core.Bookmark) {
         dismissOmniBar()
         if let url = bookmark.url {
             loadUrl(url)
@@ -1787,7 +1781,7 @@ extension MainViewController: UIDropInteractionDelegate {
         
         if session.canLoadObjects(ofClass: URL.self) {
             _ = session.loadObjects(ofClass: URL.self) { urls in
-                urls.forEach { self.loadUrlInNewTab($0) }
+                urls.forEach { self.loadUrlInNewTab($0, inheritedAttribution: nil) }
             }
             
         } else if session.canLoadObjects(ofClass: String.self) {
@@ -1818,7 +1812,7 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
 extension MainViewController {
 
     private func refreshBackForwardMenuItems() {
-        guard let currentTab = currentTab, #available(iOS 14.0, *) else {
+        guard let currentTab = currentTab else {
             return
         }
         
@@ -1831,14 +1825,12 @@ extension MainViewController {
         forwardButton.menu = forwardMenu
     }
 
-    @available(iOS 14.0, *)
     private func historyMenu(with backForwardList: [WKBackForwardListItem]) -> UIMenu {
         let historyItemList = backForwardList.map { BackForwardMenuHistoryItem(backForwardItem: $0) }
         let actions = historyMenuButton(with: historyItemList)
         return UIMenu(title: "", children: actions)
     }
     
-    @available(iOS 14.0, *)
     private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
         let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
             

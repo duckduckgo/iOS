@@ -18,8 +18,13 @@ Die DuckDuckGo-App bietet die Browserfunktionen, die du erwartest, wie Tabs und 
 
 Du musst nicht warten, um dir deine Privatsphäre zurückzuholen. Schließ dich Millionen von Menschen an, die DuckDuckGo nutzen, und schütze viele deiner täglichen Online-Aktivitäten mit einer einzigen App. Das ist Datenschutz, vereinfacht.
 
-Note about our tracker blocking for 3rd-party sites and emails:
-DuckDuckGo never tracks you. When you leave our search engine to use other sites, we aim to block as many hidden trackers as possible, but we can't block them all for a few reasons. New trackers emerge all the time, so first we need to find them. Then, blocking these trackers can sometimes break functionality, so we need to develop new approaches without hurting usability. Additionally, in our app we offer a specific type of protection that stops scripts from even loading on 3rd-party sites, which isn’t offered on most popular browsers by default. Currently, this one loading protection doesn't apply to Microsoft scripts on 3rd-party sites due to contractual restrictions. However, our other tracker blocking methods (like 3rd-party cookie blocking) are unrestricted and continue to work against these trackers to protect your privacy online.
+Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks:
+Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
+ 
+Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
+
+You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+
 
 Über uns: https://duckduckgo.com/about
 So funktioniert es: https://duckduckgo.com/app

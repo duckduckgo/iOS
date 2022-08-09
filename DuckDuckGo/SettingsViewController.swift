@@ -52,6 +52,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
     @IBOutlet weak var autofillCell: UITableViewCell!
     @IBOutlet weak var debugCell: UITableViewCell!
+    @IBOutlet weak var voiceSearchCell: UITableViewCell!
+    @IBOutlet weak var voiceSearchToggle: UISwitch!
     
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
@@ -69,6 +71,10 @@ class SettingsViewController: UITableViewController {
 
     private var shouldShowDebugCell: Bool {
         return featureFlagger.isFeatureOn(.debugMenu)
+    }
+    
+    private var shouldShowVoiceSearchCell: Bool {
+        AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
     }
 
     private lazy var shouldShowAutofillCell: Bool = {
@@ -93,6 +99,7 @@ class SettingsViewController: UITableViewController {
         configureLinkPreviewsToggle()
         configureRememberLogins()
         configureDebugCell()
+        configureVoiceSearchCell()
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -132,6 +139,11 @@ class SettingsViewController: UITableViewController {
 
     private func configureAutofillCell() {
         autofillCell.isHidden = !shouldShowAutofillCell
+    }
+    
+    private func configureVoiceSearchCell() {
+        voiceSearchCell.isHidden = !shouldShowVoiceSearchCell
+        voiceSearchToggle.isOn = appSettings.voiceSearchEnabled
     }
 
     private func configureThemeCellAccessory() {
@@ -323,6 +335,28 @@ class SettingsViewController: UITableViewController {
         return super.tableView(tableView, titleForFooterInSection: section)
     }
 
+    @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
+        var enableVoiceSearch = sender.isOn
+        let isFirstTimeAskingForPermission = SpeechRecognizer.recordPermission == .undetermined
+        
+        SpeechRecognizer.requestMicAccess { permission in
+            if !permission {
+                enableVoiceSearch = false
+                sender.setOn(false, animated: true)
+                if !isFirstTimeAskingForPermission {
+                    self.showNoMicrophonePermissionAlert()
+                }
+            }
+            
+            AppDependencyProvider.shared.voiceSearchHelper.enableVoiceSearch(enableVoiceSearch)
+        }
+    }
+    
+    private func showNoMicrophonePermissionAlert() {
+        let alertController = NoMicPermissionAlert.buildAlert()
+        present(alertController, animated: true, completion: nil)
+    }
+    
     @IBAction func onAuthenticationToggled(_ sender: UISwitch) {
         privacyStore.authenticationEnabled = sender.isOn
     }
@@ -364,6 +398,7 @@ extension SettingsViewController: Themable {
         authenticationToggle.onTintColor = theme.buttonTintColor
         openUniversalLinksToggle.onTintColor = theme.buttonTintColor
         longPressPreviewsToggle.onTintColor = theme.buttonTintColor
+        voiceSearchToggle.onTintColor = theme.buttonTintColor
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

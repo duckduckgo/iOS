@@ -353,7 +353,12 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
         tabModel.toggleDesktopMode()
         updateContentMode()
-        tabModel.isDesktop ? load(url: url.toDesktopUrl()) : reload(scripts: false)
+        
+        if tabModel.isDesktop {
+            load(url: url.toDesktopUrl())
+        } else {
+            reload(scripts: false)
+        }
     }
     
     private func onReportBrokenSiteAction() {
@@ -403,6 +408,8 @@ extension TabViewController {
         } else {
             message = UserText.messageProtectionEnabled.format(arguments: domain)
         }
+        
+        ContentBlocking.contentBlockingManager.scheduleCompilation()
         
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
             self?.togglePrivacyProtection(domain: domain)

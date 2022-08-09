@@ -27,13 +27,14 @@ public class SchemeHandler {
         case cancel
     }
     
-    public enum SchemeType {
+    public enum SchemeType: Equatable {
         case navigational
         case external(Action)
+        case blob
         case unknown
     }
     
-    private enum NavigationalScheme: String {
+    public enum NavigationalScheme: String {
         case http
         case https
         case ftp
@@ -67,8 +68,13 @@ public class SchemeHandler {
         guard BlockedScheme(rawValue: schemeString) == nil else {
             return .external(.cancel)
         }
-        
-        guard NavigationalScheme(rawValue: schemeString) == nil else {
+
+        switch NavigationalScheme(rawValue: schemeString) {
+        case .none:
+            break
+        case .blob:
+            return .blob
+        default:
             return .navigational
         }
         
@@ -85,19 +91,4 @@ public class SchemeHandler {
         return .unknown
     }
     
-}
-
-extension SchemeHandler.SchemeType: Equatable {
-    
-    static public func == (lhs: SchemeHandler.SchemeType,
-                           rhs: SchemeHandler.SchemeType) -> Bool {
-        switch (lhs, rhs) {
-        case (.unknown, .unknown):
-            return true
-        case (.external(let la), .external(let ra)):
-            return la == ra
-        default:
-            return false
-        }
-    }
 }

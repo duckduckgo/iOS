@@ -36,7 +36,7 @@ public struct AppUrls {
         
         static let surrogates = "\(staticBase)/surrogates.txt"
         static let privacyConfig = "\(staticBase)/trackerblocking/config/v2/ios-config.json"
-        static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/apple-tds.json"
+        static let trackerDataSet = "\(staticBase)/trackerblocking/v3/apple-tds.json"
         static let lastCompiledRules = "\(staticBase)/trackerblocking/last-compiled-rules"
 
         static let atb = "\(base)/atb.js\(devMode)"
@@ -216,10 +216,8 @@ public struct AppUrls {
             return false
         }
         
-        for gpcHost in gpcUrls {
-            if url.isPart(ofDomain: gpcHost) {
-                return true
-            }
+        for gpcHost in gpcUrls where url.isPart(ofDomain: gpcHost) {
+            return true
         }
         
         return false

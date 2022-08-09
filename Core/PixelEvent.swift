@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 // swiftlint:disable file_length
 // swiftlint:disable identifier_name
@@ -190,7 +191,7 @@ extension Pixel {
         case downloadsSharingPredownloadedLocalFile
         
         case downloadPreparingToStart
-        case downloadAttemptToOpenBLOB
+        case downloadAttemptToOpenBLOBviaJS
         
         case jsAlertShown
         case jsAlertBlocked
@@ -224,6 +225,11 @@ extension Pixel {
         
         case secureVaultInitFailedError
         case secureVaultFailedToOpenDatabaseError
+        
+        // MARK: Ad Click Attribution pixels
+        
+        case adClickAttributionDetected
+        case adClickAttributionActive
         
         // MARK: SERP pixels
         
@@ -259,11 +265,8 @@ extension Pixel {
         case privacyConfigurationParseFailed
         case privacyConfigurationCouldNotBeLoaded
         
-        case contentBlockingTDSCompilationFailed
-        case contentBlockingTempListCompilationFailed
-        case contentBlockingAllowListCompilationFailed
-        case contentBlockingUnpSitesCompilationFailed
-        case contentBlockingFallbackCompilationFailed
+        case contentBlockingCompilationFailed(listType: CompileRulesListType,
+                                              component: ContentBlockerDebugEvents.Component)
         
         case contentBlockingErrorReportingIssue
         case contentBlockingCompilationTime
@@ -287,7 +290,21 @@ extension Pixel {
         case cachedTabPreviewsExceedsTabCount
         case cachedTabPreviewRemovalError
         
+        case missingDownloadedFile
+        case unhandledDownload
+        
         case compilationResult(result: CompileRulesResult, waitTime: CompileRulesWaitTime, appState: AppState)
+        
+        case emailAutofillKeychainError
+
+        case adAttributionGlobalAttributedRulesDoNotExist
+        case adAttributionCompilationFailedForAttributedRulesList
+
+        case adAttributionLogicUnexpectedStateOnInheritedAttribution
+        case adAttributionLogicUnexpectedStateOnRulesCompiled
+        case adAttributionLogicUnexpectedStateOnRulesCompilationFailed
+        case adAttributionDetectionHeuristicsDidNotMatchDomain
+        case adAttributionDetectionInvalidDomainInParameter
         
     }
     
@@ -464,7 +481,7 @@ extension Pixel.Event {
         case .downloadsSharingPredownloadedLocalFile: return "m_downloads_sharing_predownloaded_local_file"
             
         case .downloadPreparingToStart: return "m_download_preparing_to_start"
-        case .downloadAttemptToOpenBLOB: return "m_download_attempt_to_open_blob"
+        case .downloadAttemptToOpenBLOBviaJS: return "m_download_attempt_to_open_blob_js"
             
         case .jsAlertShown: return "m_js_alert_shown"
         case .jsAlertBlocked: return "m_js_alert_blocked"
@@ -502,6 +519,11 @@ extension Pixel.Event {
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
+        // MARK: Ad Click Attribution pixels
+            
+        case .adClickAttributionDetected: return "m_ad_click_detected"
+        case .adClickAttributionActive: return "m_ad_click_active"
+            
         // MARK: SERP pixels
             
         case .serpRequerySame: return "rq_0"
@@ -536,11 +558,8 @@ extension Pixel.Event {
         case .privacyConfigurationParseFailed: return "m_d_pc_p"
         case .privacyConfigurationCouldNotBeLoaded: return "m_d_pc_l"
             
-        case .contentBlockingTDSCompilationFailed: return "m_d_cb_ct"
-        case .contentBlockingTempListCompilationFailed: return "m_d_cb_cl"
-        case .contentBlockingAllowListCompilationFailed: return "m_d_cb_ca"
-        case .contentBlockingUnpSitesCompilationFailed: return "m_d_cb_cu"
-        case .contentBlockingFallbackCompilationFailed: return "m_d_cb_cf"
+        case .contentBlockingCompilationFailed(let listType, let component):
+            return "m_d_content_blocking_\(listType)_\(component)_compilation_failed"
             
         case .contentBlockingErrorReportingIssue: return "m_content_blocking_error_reporting_issue"
         case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
@@ -564,8 +583,25 @@ extension Pixel.Event {
         case .cachedTabPreviewsExceedsTabCount: return "m_d_tpetc"
         case .cachedTabPreviewRemovalError: return "m_d_tpre"
             
+        case .missingDownloadedFile: return "m_d_missing_downloaded_file"
+        case .unhandledDownload: return "m_d_unhandled_download"
+            
         case .compilationResult(result: let result, waitTime: let waitTime, appState: let appState):
             return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"
+            
+        case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
+        
+        // MARK: Ad Attribution
+            
+        case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"
+        case .adAttributionCompilationFailedForAttributedRulesList: return "m_attribution_compilation_failed_for_attributed_rules_list"
+            
+        case .adAttributionLogicUnexpectedStateOnInheritedAttribution: return "m_attribution_unexpected_state_on_inherited_attribution"
+        case .adAttributionLogicUnexpectedStateOnRulesCompiled: return "m_attribution_unexpected_state_on_rules_compiled"
+        case .adAttributionLogicUnexpectedStateOnRulesCompilationFailed: return "m_attribution_unexpected_state_on_rules_compilation_failed"
+        case .adAttributionDetectionInvalidDomainInParameter: return "m_attribution_invalid_domain_in_parameter"
+        case .adAttributionDetectionHeuristicsDidNotMatchDomain: return "m_attribution_heuristics_did_not_match_domain"
+            
         }
         
     }
@@ -625,5 +661,15 @@ extension Pixel.Event {
         case regular
         
     }
+        
+    public enum CompileRulesListType: String, CustomStringConvertible {
     
+        public var description: String { rawValue }
+        
+        case tds
+        case blockingAttribution
+        case attributed
+        case unknown
+        
+    }
 }

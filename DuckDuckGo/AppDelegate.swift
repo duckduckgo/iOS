@@ -111,6 +111,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         clearLegacyAllowedDomainCookies()
+        
+        AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
@@ -290,7 +292,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.startAddFavoriteFlow()
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
-            mainViewController?.loadUrlInNewTab(url, reuseExisting: true)
+            mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
         }
         
         return true

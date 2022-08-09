@@ -50,7 +50,7 @@ class NewPrivacyDashboardViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
 
         setupWebView()
-
+        setupPrivacyDashboardLogicHandlers()
         privacyDashboardLogic.setup(for: webView)
     }
     
@@ -68,5 +68,21 @@ class NewPrivacyDashboardViewController: UIViewController {
 
         view.addSubview(webView)
         self.webView = webView
+    }
+    
+    private func setupPrivacyDashboardLogicHandlers() {
+        privacyDashboardLogic.onProtectionSwitchChange = privacyDashboardProtectionSwitchChangeHandler
+        privacyDashboardLogic.onCloseTapped = privacyDashboardCloseTappedHandler
+    }
+}
+
+private extension NewPrivacyDashboardViewController {
+    
+    func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
+        print("switch: \(enabled)")
+    }
+    
+    func privacyDashboardCloseTappedHandler() {
+        print("close")
     }
 }

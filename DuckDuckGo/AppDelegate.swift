@@ -305,7 +305,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.startAddFavoriteFlow()
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
-            mainViewController?.loadUrlInNewTab(url, reuseExisting: true)
+            mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
         }
         
         return true

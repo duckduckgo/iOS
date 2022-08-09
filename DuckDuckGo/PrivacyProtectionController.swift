@@ -111,12 +111,8 @@ class PrivacyProtectionController: ThemableNavigationController {
     }
 
     private func showInitialScreen() {
-//        guard let controller = storyboard?.instantiateViewController(withIdentifier: "InitialScreen") as? PrivacyProtectionOverviewController
-//        else { return }
-        
-        let controller = PrivacyDashboardViewController(privacyInfo: privacyInfo,
-                                                        themeName: ThemeManager.shared.currentTheme.name.rawValue)
-        
+        let controller = NewPrivacyDashboardViewController(privacyInfo: privacyInfo, themeName: ThemeManager.shared.currentTheme.name.rawValue)
+         
         pushViewController(controller, animated: true)
         updateViewControllers()
     }

@@ -310,6 +310,9 @@ extension Pixel {
         case adAttributionLogicUnexpectedStateOnRulesCompilationFailed
         case adAttributionDetectionHeuristicsDidNotMatchDomain
         case adAttributionDetectionInvalidDomainInParameter
+        case adAttributionLogicRequestingAttributionTimedOut
+        case adAttributionLogicWrongVendorOnSuccessfulCompilation
+        case adAttributionLogicWrongVendorOnFailedCompilation
         
     }
     
@@ -610,7 +613,9 @@ extension Pixel.Event {
         case .adAttributionLogicUnexpectedStateOnRulesCompilationFailed: return "m_attribution_unexpected_state_on_rules_compilation_failed"
         case .adAttributionDetectionInvalidDomainInParameter: return "m_attribution_invalid_domain_in_parameter"
         case .adAttributionDetectionHeuristicsDidNotMatchDomain: return "m_attribution_heuristics_did_not_match_domain"
-            
+        case .adAttributionLogicRequestingAttributionTimedOut: return "m_attribution_logic_requesting_attribution_timed_out"
+        case .adAttributionLogicWrongVendorOnSuccessfulCompilation: return "m_attribution_logic_wrong_vendor_on_successful_compilation"
+        case .adAttributionLogicWrongVendorOnFailedCompilation: return "m_attribution_logic_wrong_vendor_on_failed_compilation"
         }
         
     }

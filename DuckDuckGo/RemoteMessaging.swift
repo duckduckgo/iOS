@@ -109,12 +109,12 @@ struct RemoteMessaging {
                                        isWidgetInstalled: isWidgetInstalled)
     }
 
-    static func fetchAndProcess(bookmarksCount: Int,
-                                favoritesCount: Int,
-                                remoteMessagingStore: RemoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore,
-                                statisticsStore: StatisticsStore = StatisticsUserDefaults(),
-                                variantManager: VariantManager = DefaultVariantManager(),
-                                isWidgetInstalled: Bool) async throws {
+    static private func fetchAndProcess(bookmarksCount: Int,
+                                        favoritesCount: Int,
+                                        remoteMessagingStore: RemoteMessagingStore = AppDependencyProvider.shared.remoteMessagingStore,
+                                        statisticsStore: StatisticsStore = StatisticsUserDefaults(),
+                                        variantManager: VariantManager = DefaultVariantManager(),
+                                        isWidgetInstalled: Bool) async throws {
 
         let result = await Self.fetchRemoteMessages(remoteMessageRequest: RemoteMessageRequest())
 
@@ -125,8 +125,7 @@ struct RemoteMessaging {
             let remoteMessagingConfigMatcher = RemoteMessagingConfigMatcher(
                     appAttributeMatcher: AppAttributeMatcher(statisticsStore: statisticsStore,
                                                              variantManager: variantManager,
-                                                             flavor: DefaultFeatureFlagger().isInternalUser ? AppFlavor.flavorInternal :
-                                                                AppFlavor.flavorPublic),
+                                                             isInternalUser: DefaultFeatureFlagger().isInternalUser),
                     userAttributeMatcher: UserAttributeMatcher(statisticsStore: statisticsStore,
                                                                variantManager: variantManager,
                                                                bookmarksCount: bookmarksCount,

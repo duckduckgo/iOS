@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Over onze webtrackingbeveiliging";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Over onze zoekbescherming en advertenties";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "How our search ads impact our protections";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Geforceerde versleuteling";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Gecodeerde verbinding";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "We hebben deze site gedwongen om een versleutelde verbinding te gebruiken, om het afluisteren te voorkomen van persoonlijke gegevens die je verstuurt.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Ja";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "BESCHERMING VAN DE SITE UITGESCHAKELD";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Grote trackernetwerken gevonden";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Geen grote trackernetwerken gevonden";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Er zijn trackernetwerken gevonden op %1$@%% van de websites die je sinds %2$@ hebt bezocht.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "We verzamelen nog steeds gegevens om te laten zien\nhoeveel trackers we hebben geblokkeerd.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Geen verzoeken van derden geladen";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "De verzoeken van het volgende domein zijn geladen omdat er onlangs op een advertentie van %@ op DuckDuckGo is geklikt. Deze verzoeken helpen de effectiviteit van advertenties te evalueren. Geen enkele advertentie op DuckDuckGo maakt een profiel van je.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "De verzoeken van het volgende domein werden geladen om te voorkomen dat de site niet meer geladen zou worden.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "De verzoeken van het volgende domein zijn geladen omdat ze zijn gekoppeld aan %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "De volgende verzoeken van domeinen van derden zijn geladen. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken, hoewel onze andere beschermingen tegen webtracking nog steeds van toepassing zijn.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Verzoeken van derden werden niet verhinderd om te laden omdat beschermingen zijn uitgeschakeld voor deze site. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "De trackingverzoeken van de volgende domeinen zijn geladen.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "De verzoeken van het volgende domein zijn ook geladen.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "De aanvragen van de volgende domeinen zijn geladen.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "De verzoeken van het volgende domein werden geladen.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "We hebben geen verzoeken van domeinen van derden gedetecteerd.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Verzoeken van derden geladen";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Let op: beperkingen op het platform kunnen ons vermogen om alle verzoeken te detecteren beperken.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Geen profiel maken";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Privacypraktijken van ToS;DR.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Onbekende privacypraktijken";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Trackernetwerken voegen je webgeschiedenis samen tot een gegevensprofiel over jou. Grote trackernetwerken zijn schadelijker omdat ze je verder op het internet kunnen volgen en zich op je kunnen richten.";
+"privacy.protection.tracker.networks.info" = "Trackers helpen bedrijven om een profiel van je te maken. We hebben verhinderd dat deze trackers je activiteit op deze pagina laden en volgen.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Trackingverzoeken werden niet verhinderd om te laden omdat beschermingen zijn uitgeschakeld voor deze site. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "We hebben geen trackingverzoeken gedetecteerd.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "De volgende verzoeken van domeinen van derden werden geblokkeerd omdat ze werden geïdentificeerd als trackingverzoeken. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Verzoeken geblokkeerd bij laden";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Trackingverzoeken gevonden";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Geen trackingverzoeken geblokkeerd";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Geen trackingverzoeken gevonden";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Annuleren";

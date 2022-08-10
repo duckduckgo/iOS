@@ -49,8 +49,10 @@ public class SiteRating {
     
     public var hasOnlySecureContent: Bool
     public var finishedLoading = false
-    public private (set) var trackersDetected = Set<DetectedTracker>()
-    public private (set) var trackersBlocked = Set<DetectedTracker>()
+
+    public private (set) var trackers = Set<DetectedRequest>()
+    public private (set) var thirdPartyRequests = Set<DetectedRequest>()
+    
     public private (set) var installedSurrogates = Set<String>()
     
     private let grade = Grade()
@@ -64,7 +66,8 @@ public class SiteRating {
 
         os_log("new SiteRating(url: %s, httpsForced: %s)", log: lifecycleLog, type: .debug, url.absoluteString, String(describing: httpsForced))
 
-        if let host = url.host, let entity = entityMapping.findEntity(forHost: host) {
+        if let host = url.host, let entity = entityMapping.findEntity(forHost: host,
+                                                                      in: ContentBlocking.trackerDataManager.trackerData) {
             self.grade.setParentEntity(named: entity.displayName ?? "", withPrevalence: entity.prevalence ?? 0)
             self.entity = entity
         } else {
@@ -84,6 +87,29 @@ public class SiteRating {
         
     }
     
+    public var trackersBlocked: [DetectedRequest] {
+        trackers.filter { $0.state == .blocked }
+    }
+    
+    public var requestsAllowed: [DetectedRequest] {
+        trackers.filter { $0.state != .blocked }
+    }
+    
+    public var isAnyRequestLoaded: Bool {
+        !requestsAllowed.isEmpty || !thirdPartyRequests.isEmpty
+    }
+    
+    public func trackersAllowedForReason(_ reason: AllowReason) -> [DetectedRequest] {
+        return trackers.filter {
+            switch $0.state {
+            case let .allowed(trackerReason):
+                return trackerReason == reason
+            default:
+                return false
+            }
+        }
+    }
+    
     public var https: Bool {
         return url.isHttps
     }
@@ -99,47 +125,39 @@ public class SiteRating {
     }
 
     public var majorTrackerNetworksDetected: Int {
-        return trackersDetected.filter({ $0.entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence }).count
-    }
-
-    public var majorTrackerNetworksBlocked: Int {
-        return trackersBlocked.filter({ $0.entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence }).count
+        return requestsAllowed.filter({ $0.prevalence ?? 0 >= Constants.majorNetworkPrevalence }).count
     }
 
     public var trackerNetworksDetected: Int {
-        return trackersDetected.filter({ $0.entity?.prevalence ?? 0 < Constants.majorNetworkPrevalence }).count
-    }
-
-    public var uniqueTrackerNetworksBlocked: Int {
-        return trackersBlocked.filter({ $0.entity?.prevalence ?? 0 < Constants.majorNetworkPrevalence }).count
-    }
-
-    public var containsMajorTracker: Bool {
-        return majorTrackerNetworksBlocked > 0 || majorTrackerNetworksDetected > 0
+        return requestsAllowed.filter({ $0.prevalence ?? 0 < Constants.majorNetworkPrevalence }).count
     }
     
     public var isMajorTrackerNetwork: Bool {
         return entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence
     }
 
-    public func trackerDetected(_ tracker: DetectedTracker) {
+    public func trackerDetected(_ tracker: DetectedRequest) {
         guard tracker.pageUrl == url.absoluteString else { return }
-        let entity = tracker.entity
-        if tracker.blocked {
-            trackersBlocked.insert(tracker)
-            grade.addEntityBlocked(named: entity?.displayName ?? "", withPrevalence: entity?.prevalence ?? 0)
+         
+        trackers.insert(tracker)
+        
+        if tracker.isBlocked {
+            grade.addEntityBlocked(named: tracker.entityName ?? "", withPrevalence: tracker.prevalence ?? 0)
         } else {
-            trackersDetected.insert(tracker)
-            grade.addEntityNotBlocked(named: entity?.displayName ?? "", withPrevalence: entity?.prevalence ?? 0)
+            grade.addEntityNotBlocked(named: tracker.entityName ?? "", withPrevalence: tracker.prevalence ?? 0)
         }
     }
     
     public func surrogateInstalled(_ surrogateHost: String) {
         installedSurrogates.insert(surrogateHost)
     }
+    
+    public func thirdPartyRequestDetected(_ request: DetectedRequest) {
+        thirdPartyRequests.insert(request)
+    }
 
-    public var totalTrackersDetected: Int {
-        return trackersDetected.count
+    public var totalTrackersAllowed: Int {
+        return requestsAllowed.count
     }
 
     public var totalTrackersBlocked: Int {

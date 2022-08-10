@@ -21,8 +21,22 @@ import XCTest
 @testable import DuckDuckGo
 @testable import Core
 import BrowserServicesKit
+import TrackerRadarKit
 
-class DaxDialogTests: XCTestCase {
+private struct MockEntityProvider: EntityProviding {
+    
+    func entity(forHost host: String) -> Entity? {
+        let mapper = ["www.example.com": ("https://www.example.com", [], 1.0),
+                      "www.facebook.com": ("Facebook", [], 4.0),
+                      "www.google.com": ("Google", [], 5.0),
+                      "www.instagram.com": ("Facebook", ["facebook.com"], 4.0),
+                      "www.amazon.com": ("Amazon.com", [], 3.0),
+                      "www.1dmp.io": ("https://www.1dmp.io", [], 0.5)]
+        return Entity(displayName: mapper[host]!.0, domains: mapper[host]!.1, prevalence: mapper[host]!.2)
+    }
+}
+
+final class DaxDialog: XCTestCase {
     
     struct URLs {
         
@@ -38,47 +52,14 @@ class DaxDialogTests: XCTestCase {
     
     lazy var mockVariantManager = MockVariantManager(isSupportedReturns: true)
     lazy var onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(),
-                                     contentBlockingRulesManager: Self.rulesManager!,
+                                     entityProviding: MockEntityProvider(),
                                      variantManager: mockVariantManager)
+    private var entityProvider: EntityProviding!
     
-    static var rulesManager: ContentBlockerRulesManager?
-
     override func setUp() {
         super.setUp()
-        
         setupUserDefault(with: #file)
-
-        guard Self.rulesManager == nil else { return }
-        
-        let contentBlockingUpdating = ContentBlockingUpdating()
-
-        let trackerDataManager = TrackerDataManager(etag: nil,
-                                                    data: nil,
-                                                    embeddedDataProvider: AppTrackerDataSetProvider(),
-                                                    errorReporting: nil)
-        
-        let privacyConfigurationManager
-        = PrivacyConfigurationManager(fetchedETag: nil,
-                                      fetchedData: nil,
-                                      embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
-                                      localProtection: DomainsProtectionUserDefaultsStore(),
-                                      errorReporting: nil)
-        
-        let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManager: trackerDataManager)
-        let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
-
-        let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,
-                                                                       exceptionsSource: exceptionsSource,
-                                                                       updateListener: contentBlockingUpdating,
-                                                                       logger: contentBlockingLog)
-        
-        Self.rulesManager = contentBlockingManager
-        
-        let exp = expectation(forNotification: ContentBlockerProtectionChangedNotification.name,
-                              object: contentBlockingUpdating,
-                              handler: nil)
-        
-        wait(for: [exp], timeout: 15.0)
+        entityProvider = MockEntityProvider()
     }
     
     func testWhenResumingRegularFlowThenNextHomeMessageIsBlankUntilBrowsingMessagesShown() {
@@ -110,7 +91,9 @@ class DaxDialogTests: XCTestCase {
 
         testCases.forEach { testCase in
             
-            let onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(), variantManager: mockVariantManager)
+            let onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(),
+                                        entityProviding: MockEntityProvider(),
+                                        variantManager: mockVariantManager)
             let siteRating = SiteRating(url: URLs.example)
             
             testCase.urls.forEach { url in
@@ -274,7 +257,7 @@ class DaxDialogTests: XCTestCase {
         let settings = InMemoryDaxDialogsSettings()
         settings.isDismissed = true
         
-        let onboarding = DaxDialogs(settings: settings)
+        let onboarding = DaxDialogs(settings: settings, entityProviding: entityProvider)
         onboarding.primeForUse()
         XCTAssertFalse(settings.isDismissed)
     }
@@ -282,15 +265,20 @@ class DaxDialogTests: XCTestCase {
     func testDaxDialogsDismissedByDefault() {
         XCTAssertTrue(DefaultDaxDialogsSettings().isDismissed)
     }
-        
-    private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedTracker {
-        let tds = Self.rulesManager?.currentTDSRules?.trackerData
-        let entity = tds?.findEntity(forHost: url.host!)
-        let knownTracker = tds?.findTracker(forUrl: url.absoluteString)
-        return DetectedTracker(url: url.absoluteString,
-                                      knownTracker: knownTracker,
-                                      entity: entity,
-                                      blocked: true,
-                                      pageUrl: pageUrl)
+    
+    private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
+        let entity = entityProvider.entity(forHost: url.host!)
+        return DetectedRequest(url: url.absoluteString,
+                               knownTracker: KnownTracker(domain: entity?.displayName,
+                                                          defaultAction: .block,
+                                                          owner: nil,
+                                                          prevalence: nil,
+                                                          subdomains: [],
+                                                          categories: [],
+                                                          rules: nil),
+                               entity: entity,
+                               state: .blocked,
+                               pageUrl: pageUrl)
     }
+    
 }

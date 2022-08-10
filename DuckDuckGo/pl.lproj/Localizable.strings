@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Informacje o zabezpieczeniach przed śledzeniem w sieci";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Informacje o zabezpieczeniach wyszukiwania i reklamach";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Jak reklamy w wyszukiwarce wpływają na zabezpieczenia";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorytm";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Wymuszone szyfrowanie";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Połączenie zaszyfrowane";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Zmusiliśmy tę witrynę do korzystania z połączenia szyfrowanego, aby zapobiec przechwytywaniu jakichkolwiek przesyłanych do niej danych osobowych.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Tak";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "WYŁĄCZONA OCHRONA WITRYNY";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Znaleziono duże sieci skryptów śledzących";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Nie znaleziono dużych sieci skryptów śledzących";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Sieci skryptów śledzących zostały znalezione w %1$@%% witrynach odwiedzonych od %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Nadal gromadzimy dane, aby pokazać,\njak wiele skryptów śledzących zablokowaliśmy.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Brak załadowanych żądań innych firm";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Następujące żądania domeny zostały załadowane, ponieważ niedawno została kliknięta reklama %@ na DuckDuckGo. Te żądania pomagają ocenić skuteczność reklam. Wszystkie reklamy na DuckDuckGo są nieprofilowane.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Następujące żądania domeny zostały załadowane, aby zapobiec uszkodzeniu witryny.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Następujące żądania domeny zostały załadowane, ponieważ są powiązane z %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Załadowano następujące żądania domen innych firm. Załadowanie żądań firmy może umożliwić jej profilowanie użytkownika, choć nadal mają zastosowanie nasze pozostałe zabezpieczenia dotyczące śledzenia w sieci.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Żadne żądania innych firm nie zostały zablokowane przed załadowaniem, ponieważ zabezpieczenia są wyłączone dla tej witryny. Załadowanie żądań firmy może umożliwić jej profilowanie użytkownika.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Załadowano żądania śledzenia następujących domen.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Załadowano również żądania następującej domeny.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Załadowano żądania następującej domeny.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Załadowano żądania następującej domeny.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Nie wykryliśmy żądań z żadnych domen innych firm.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Załadowano żądania innych firm";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Uwaga: ograniczenia platformy mogą zmniejszać możliwość wykrywania wszystkich żądań.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Brak profilowania";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Polityka prywatności od ToS;DR.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Nieznana polityka prywatności";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sieci skryptów śledzących tworzą historię wyszukiwania w formie profilu informacyjnego na Twój temat. Największe sieci skryptów śledzących są bardziej szkodliwe, ponieważ mogą śledzić i namierzać Cię na większym obszarze Internetu.";
+"privacy.protection.tracker.networks.info" = "Skrypty śledzące ułatwiają firmom profilowanie użytkownika. Zablokowaliśmy tym skryptom śledzącym możliwość ładowania i monitorowania Twojej aktywności na tej stronie.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Żadne żądania śledzenia nie zostały zablokowane przed załadowaniem, ponieważ zabezpieczenia są wyłączone dla tej witryny. Załadowanie żądań firmy może umożliwić jej profilowanie użytkownika.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nie wykryliśmy żadnych żądań śledzenia.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Następujące żądania domen innych firm zostały zablokowane przed załadowaniem, ponieważ zostały zidentyfikowane jako żądania śledzenia. Załadowanie żądań firmy może umożliwić jej profilowanie użytkownika.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Żądania zablokowane przed załadowaniem";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Znaleziono żądania śledzenia";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Brak zablokowanych żądań śledzenia";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Nie znaleziono żądań śledzenia";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Anuluj";

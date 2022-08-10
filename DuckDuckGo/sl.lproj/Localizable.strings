@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "V REDU";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "O naši zaščiti spletnega sledenja";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "O naši zaščiti pri iskanju in oglasih";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Kako naši oglasi v iskalnem omrežju vplivajo na našo zaščito";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritem";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Prisilno šifriranje";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Šifrirana povezava";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "To spletno mesto smo prisilili, da uporablja šifrirano povezavo in preprečuje prestrezanje vseh osebnih podatkov, ki jih pošlješ.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Da";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "ONEMOGOČI ZAŠČITO NA STRANI";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Najdeno je več sledenj omrežjem";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Glavnega sledilnega omrežja ni mogoče najti";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Sledilna omrežja smo našli na %1$@%% spletnih mestih, ki si jih obiskal od %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Še vedno zbiramo podatke za prikaz, koliko\nsledilnikov smo blokirali.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Ni naloženih zahtevkov tretjih oseb";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Zahtevki naslednjih domen so bili naloženi, ker ste pred kratkim kliknili oglas %@ na portalu DuckDuckGo. Ti zahtevki pomagajo oceniti učinkovitost oglasa. Vsi oglasi na DuckDuckGo so neprofilirani.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Naložene so bile naslednje zahteve za domene, da se prepreči prekinitev spletnega mesta.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Naložene so bile naslednje zahteve za domene, ker so povezane z %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Naložene so bile naslednje zahteve za domene tretjih oseb. Če so zahteve podjetja izpolnjene, lahko podjetje na podlagi tega oblikuje vaš profil, čeprav še vedno veljajo naša druga zaščitna pravila za sledenje v spletu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Nobena zahteva tretjih oseb ni bila blokirana zaradi izklopa zaščite za to mesto. Če so zahtevki podjetja naloženi, lahko na podlagi tega oblikujejo vaš profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Naložene so bile zahteve za sledenje naslednjim domenam.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Naložene so bile tudi naslednje zahteve domene.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Naložene so bile zahteve naslednjih domen.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Naložene so bile tudi zahteve naslednje domene.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Nismo zaznali zahtevkov iz domen tretjih oseb.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Nalaganje zahtevkov tretjih oseb";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Upoštevajte: omejitve platforme lahko omejijo našo zmožnost zaznavanja vseh zahtevkov.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Brez oblikovanja profila";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Prakse zasebnosti od ToS;DR.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Neznane prakse zasebnosti";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sledilna omrežja združijo vašo spletno zgodovino v podatkovni profil o vas. Glavna sledilna omrežja so bolj škodljiva, ker vas lahko spremljajo in ciljajo na večjem delu interneta.";
+"privacy.protection.tracker.networks.info" = "Sledilniki podjetjem pomagajo pri oblikovanju vašega profila. Tem sledilnikom smo preprečili nalaganje in spremljanje vaše dejavnosti na tej strani.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Nalaganje zahtevkov za sledenje ni bilo blokirano, ker so zaščite za to spletno mesto izklopljene. Če so zahtevki podjetja naloženi, lahko na podlagi tega oblikujejo vaš profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nismo zaznali nobenih zahtevkov za sledenje.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Nalaganje zahtevkov naslednjih domen tretjih oseb je bilo blokirano, ker so bili prepoznani kot zahtevki za sledenje. Če so zahtevki podjetja naloženi, lahko na podlagi tega oblikujejo vaš profil.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Zahtevki, katerih nalaganje je blokirano";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Zahtevki za sledenje so bili najdeni";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Noben zahtevek za sledenje ni blokiran";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Ni najdenih zahtevkov za sledenje";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Prekliči";

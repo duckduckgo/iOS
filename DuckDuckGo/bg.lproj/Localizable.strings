@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Добавяне";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Автоматично попълване на данни за вход";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Отметка";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Преглед";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Данните за вход са запазени";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Данните за вход са актуализирани";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Това действие ще запази допълнителни данни за вход за този сайт.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Данните за вход се съхраняват защитени само на това устройство и могат да се управляват от менюто за автоматично попълване в настройките.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Искате ли DuckDuckGo да запази данните за вход?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Не сега";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Запазване на данните за вход";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Запазване на данните за вход?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Запазване на паролата";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Запазване на паролата?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Актуализиране на данните за вход";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Актуализиране на паролата";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Актуализиране на паролата?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Актуализиране на потребителското име?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Добави отметка";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Изтриване";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Сигурни ли сте, че искате да изтриете тази папка и %i елемента?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Сигурни ли сте, че искате да изтриете тази папка и %i елемент?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Изтриване на %@?";
@@ -296,7 +341,7 @@
 "dax.hide.title" = "Скрий оставащите съвети?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Търсенията ви в DuckDuckGo са анонимни и никога не съхранявам историята на вашите търсения. Никога. 🙌";
+"dax.onboarding.browsing.after.search" = "Търсенето в DuckDuckGo е анонимно. Винаги. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Слава Богу!";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Стартирано изтегляне на %@";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отмени";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Изключено";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Блокирайте имейл тракерите и скрийте своя адрес";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Отмени";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Добре дошли в\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Код за покана";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Вашата покана ще се покаже, когато сме готови. Искате ли %1$@, когато пристигне? %2$@ за браузър macOS бета версия.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "да получите известие";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Ще ви изпратим известие, когато сме готови. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Вашата покана за изпробване на DuckDuckGo за Mac ще получите тук. Проверете отново скоро или можем да ви изпратим известие, когато дойде вашият ред.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Ще Ви изпратим известие, когато вашето копие на DuckDuckGo за Mac е готово за изтегляне.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ за бета версия.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Приложението за поверително сърфиране DuckDuckGo за Mac притежава необходимата скорост, както и очакваните от вас функции за сърфиране, и предлага най-добрите в този клас елементи за защита.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Отворете поканата";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "Приложението DuckDuckGo за Mac е готово!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Копиране";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Посетете този URL адрес на вашия Mac, за да изтеглите:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Стъпка 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Отворете файла за инсталиране и въведете кода за покана, за да го отключите.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Стъпка 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Готови ли сте да започнете поверително сърфиране на Mac?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Имате покана!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Включване в списък с чакащи за личен адрес";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Включване в списъка с чакащи...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Изпробвайте DuckDuckGo за Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Очаквайте скоро и за Windows!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Можем да ви изпратим известие, когато дойде вашият ред, но в момента известията за DuckDuckGo са деактивирани.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Не е необходимо да споделяте лична информация, за да се включите в списъка с чакащи. Ще си осигурите място на опашката с клеймо за време, което съществува само на Вашето устройство, така можем да Ви уведомим, когато дойде Вашият ред.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Включени сте в списъка с чакащи!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Налично за изтегляне на Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Сърфирайте поверително с нашето приложение за Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Включени сте в списъка с чакащи!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Имате покана!\n\nГотови ли сте да започнете поверително сърфиране на Mac?\n\nСтъпка 1\nПосетете този URL адрес на вашия Mac, за да изтеглите:\nhttps://duckduckgo.com/mac\n\nСтъпка 2\nОтворете файла за инсталиране и въведете кода за покана, за да го отключите.\n\nКод за покана: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Имате покана!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "Приложение DuckDuckGo за настолен компютър";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню за сърфиране";
 
@@ -883,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "ОК";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Относно нашите защити срещу проследяване в мрежата";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Относно нашите защити при търсене и реклами";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Какво влияние оказват нашите реклами при търсене върху нашите защити";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритъм";
 
@@ -906,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Принудително криптиране";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Шифрована връзка";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Принудихме този сайт да използва криптирана връзка и така предотвратихме подслушването на личните данни, които изпращате към него.";
@@ -985,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Да";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "ЗАЩИТА НА САЙТА ДЕАКТИВИРАНА";
 
@@ -1000,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Открити са основни проследяващи мрежи";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Не са открити основни проследяващи мрежи";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "На %1$@%% от уебсайтовете, които сте посетили от %2$@ досега, са намерени мрежи за проследяване.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Все още събираме данни, за да покажем колко\nтракери сме блокирали.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Няма заредени заявки от трети страни";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Заредени са заявки от следния домейн, защото наскоро сте щракнали върху реклама на %@ в DuckDuckGo. Тези заявки помагат за оценка на ефективността на рекламата. Рекламите в DuckDuckGo не са профилиращи.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Заредени са заявки от следния домейн, за да се предотврати срив на сайта.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Заредени са заявки от следния домейн, защото са свързани с %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Заредени са заявки от следните домейни на трети страни. Ако бъдат заредени заявки от дадена компания, те могат да ѝ позволят да Ви профилира, въпреки че останалите ни защити срещу проследяване в мрежата все още се прилагат.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Няма блокирано зареждане на заявки от трети страни, тъй като защитите за този сайт са изключени. Ако бъдат заредени заявки от дадена компания, те могат да ѝ позволят да Ви профилира.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Заредени са заявки за проследяване от следните домейни на трети страни.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Заредени са също и заявки от следните домейни.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Заредени са заявки от следните домейни.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Заредени са заявки от следния домейн.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Не открихме заявки от домейни на трети страни.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Заредени заявки от трети страни";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Моля, имайте предвид, че ограниченията на платформата могат да намалят способността ни да откриваме всички заявки.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Без профилиране";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Практики за защита на поверителността от ToS;DR.";
@@ -1040,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Неизвестни практики за защита на поверителността";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Проследяващите мрежи обединяват историята на мрежата ви в профил с данни за вас. Основните проследяващи мрежи са по-вредни, защото могат да ви проследяват и насочват през по-голяма част от интернет.";
+"privacy.protection.tracker.networks.info" = "Тракерите се използват от компаниите за профилиране. Блокирахме тези тракери, които се зареждат и следят Вашата дейност на тази страница.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Няма блокирано зареждане на заявки проследяване, тъй като защитите за този сайт са изключени. Ако бъдат заредени заявки от дадена компания, те могат да ѝ позволят да Ви профилира.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Не открихме заявки за проследяване.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Блокирано е зареждането на заявки от следните домейни на трети страни, тъй като са идентифицирани като заявки за проследяване. Ако бъдат заредени заявки от дадена компания, те могат да ѝ позволят да Ви профилира.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Блокирано зареждане на заявки";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Открити заявки за проследяване";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Няма блокирани заявки за проследяване";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Няма открити заявки за проследяване";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Отмени";
@@ -1149,18 +1377,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Изисква се достъп до микрофона";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "ОК";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Отмени";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo никога не слуша какво казвате. При поверително гласово търсене всички гласови данни се обработват на Вашето устройство.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "За поверително гласово търсене се изисква достъп до микрофона";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Отмени";

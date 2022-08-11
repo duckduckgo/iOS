@@ -47,13 +47,10 @@ class FindInPageView: UIView {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.12
         layer.masksToBounds = false
-
-        if #available(iOS 13.4, *) {
-            nextButton.isPointerInteractionEnabled = true
-            previousButton.isPointerInteractionEnabled = true
-            doneButton.isPointerInteractionEnabled = true
-        }
         
+        nextButton.isPointerInteractionEnabled = true
+        previousButton.isPointerInteractionEnabled = true
+        doneButton.isPointerInteractionEnabled = true
     }
     
     override func resignFirstResponder() -> Bool {

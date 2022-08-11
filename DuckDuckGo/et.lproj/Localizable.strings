@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Lisa";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Sisesta sisselogimisandmed automaatselt";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Järjehoidja";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Sees";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Kuva";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Sisselogimisandmed salvestatud";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Sisselogimisandmed värskendatud";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "See salvestab sellele saidile täiendavad sisselogimisandmed.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Sisselogimisandmed salvestatakse turvaliselt ainult selles seadmes ja neid saab hallata sätete menüüst Automaatne täitmine.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Kas soovid, et DuckDuckGo salvestaks sinu sisselogimisandmed?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Mitte praegu";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Salvesta sisselogimisandmed";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Kas salvestada sisselogimisandmed?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Salvesta parool";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Kas salvestada parool?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Värskenda sisselogimisandmeid";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Värskenda parooli";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Kas värskendada parooli?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Kas värskendada kasutajanime?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Lisa järjehoidja";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Kustuta";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Kas soovid kindlasti kustutada selle kausta ja %i üksust?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Kas soovid kindlasti kustutada selle kausta ja %i üksuse?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Kustutada %@?";
@@ -296,7 +341,7 @@
 "dax.hide.title" = "Kas peita allesjäänud näpunäited?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Teie DuckDuckGo otsingud on anonüümsed ja ma ei salvesta kunagi teie otsinguajalugu. Mitte kunagi. 🙌";
+"dax.onboarding.browsing.after.search" = "Sinu DuckDuckGo otsingud on anonüümsed. Alati. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Huh!";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ allalaadimine algas";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Tühista";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Väljas";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blokeeri meilijälgurid ja peida oma aadress";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Tühista";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tere tulemast\nDuckDuckGo kasutajaks!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Kutsekood";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Sinu kutse kuvatakse siin, kui oleme sinu jaoks valmis. Kas soovid %1$@, kui see saabub? %2$@ macOS brauseri beetaversiooni kohta.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "telli teavitus";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Saadame sulle teate, kui oleme sinu jaoks valmis. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Sinu DuckDuckGo for Maci proovimise kutse saabub siia. Vaata varsti tagasi või telli teavitus, millal on sinu kord.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Saadame sulle teavituse, kui sinu DuckDuckGo for Mac on allalaadimiseks valmis.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ beetaversiooni kohta.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "DuckDuckGo Privacy App for Mac on just nii kiire, kui vajad, oodatud sirvimisfunktsioonidega ja tulvil meie oma klassi parimais privaatsuselemente.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Ava oma kutse";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo for Mac on valmis.";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopeeri";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Allalaadimiseks ava oma Macis järgmine URL:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1. toiming";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Ava installimiseks fail ja sisesta lukust avamiseks oma kutsekood.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2. toiming";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Kas oled valmis Macis privaatseks sirvimiseks?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Oled kutsutud!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Liituge privaatse ootenimekirjaga";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Ootenimekirjaga liitumine ...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Proovi DuckDuckGo for Maci!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Windowsi versioon tuleb varsti.";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Võime sind teavitada, kui on sinu kord aga DuckDuckGo jaoks on teavitused praegu keelatud.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Ootenimekirjaga liitumiseks ei pea isikuandmeid jagama. Sinu järjekorrakoht on kinnitatud ainult sinu seadmes oleva ajatempliga ja me teavitame sind, kui on sinu kord.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Oled ootenimekirjas!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Macis allalaadimiseks saadaval";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Sirvi privaatselt meie Maci rakendusega";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Oled ootenimekirjas!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Oled kutsutud!\n\nKas oled valmis Macis privaatselt sirvima?\n\nSamm 1\nAllalaadimiseks ava oma Macis järgmine URL:\nhttps://duckduckgo.com/mac\n\n2. toiming\nAva installimiseks fail ja sisesta lukust avamiseks oma kutsekood.\n\nKutsekood: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Oled kutsutud!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo töölauarakendus";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Sirvimismenüü";
 
@@ -883,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Meie veebijälgimise kaitsete teave";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Meie otsingukaitsete ja reklaamide teave";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Kuidas meie otsingu reklaamid meie kaitset mõjutavad?";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";
 
@@ -906,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Sunnitud krüpteerimine";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Krüptitud ühendus";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Sundisime seda saiti kasutama krüpteeritud ühendust, vältides sellele saadetud isikuandmete pealtkuulamist.";
@@ -985,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Jah";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SAIDI KAITSE ON KEELATUD";
 
@@ -1000,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Leitud peamised jälgimisvõrgud";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Ühtegi peamist jälgimisvõrku ei leitud";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Jälgija võrgud leiti %1$@%% veebisaitidest, mida sa oled külastanud alates %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Kogume endiselt andmeid, et näidata, kui\npalju jälgijaid oleme blokeerinud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Kolmanda poole päringud pole laaditud";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Järgmise domeeni päringud laaditi, sest hiljuti klõpsati DuckDuckGo's %@ reklaamil. Need päringud aitavad hinnata reklaamide tõhusust. Kõik DuckDuckGo reklaamid on mitteprofileerivad.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Laaditi järgmise domeeni päringud, et vältida saidi töö häirimist.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Laaditi järgmise domeeni päringud, sest nendega on seotud %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Laaditi järgmiste kolmanda poole domeenide päringud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida, kuigi meie teised veebi jälgimise kaitsemeetmed kehtivad endiselt.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Kolmandate poolte päringute laadimist ei blokeeritud, sest selle saidi jaoks on kaitsed välja lülitatud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Laaditi järgmiste domeenide jälgimispäringud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Laaditi ka järgmise domeeni päringud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Laaditi ka järgmiste domeenide päringud.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Laaditi ka järgmise domeeni päringud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Me ei tuvastanud kolmanda poole domeenide päringuid.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Kolmanda poole päringud on laaditud";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Pane tähele: platvormi piirangud võivad piirata meie võimet tuvastada kõiki päringuid.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Mitte-profileeriv";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Privaatsustava tuleneb ToS; DR-ist.";
@@ -1040,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Teadmata privaatsustava";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Jälgimisvõrgud koondavad teie veebiajaloo teie kohta andmeprofiiliks. Suuremad jälgimisvõrgud on kahjulikumad, kuna need saavad teid jälgida ja sihtida suuremas Internetis.";
+"privacy.protection.tracker.networks.info" = "Jälgurid aitavad ettevõtetel sind profileerida. Me blokeerisime nende jälgurite laadimise ja sinu tegevuse jälgimise sellel lehel.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Jälgimispäringute laadimist ei blokeeritud, sest selle saidi jaoks on kaitsed välja lülitatud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Me ei tuvastanud ühtegi jälgimispäringut.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Järgmiste kolmanda poole domeenide päringute laadimine blokeeriti, sest need tuvastati jälgimispäringutena. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Päringute laadimine on blokeeritud";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Leitud jälgimispäringud";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Ühtegi jälgimispäringut pole blokeeritud";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Jälgimispäringuid ei leitud";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Tühista";
@@ -1149,18 +1377,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Vajalik juurdepääs mikrofonile";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Tühista";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo ei kuula kunagi pealt, mida te ütlete. Kogu kõneandmete töötlemine privaatse häälotsingu jaoks toimub teie seadmes.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Privaatse häälotsingu jaoks on vajalik juurdepääs mikrofonile";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Tühista";

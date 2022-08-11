@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Samodejno izpolnjevanje obrazcev za prijavo";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Zaznamek";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Vključeno";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Oglejte si";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Prijava shranjena";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Prijava posodobljena";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "To bo prihranilo dodatno prijavo za to spletno mesto.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Prijave so varno shranjene samo v tej napravi in jih lahko upravljate v meniju Samodejno izpolnjevanje v Nastavitvah.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Ali želite, da DuckDuckGo shrani vašo prijavo?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Ne zdaj";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Shrani prijavo";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Želite shraniti prijavo?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Shrani geslo";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Želite shraniti geslo?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Posodobitev prijave";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Posodobitev gesla";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Želite posodobiti geslo?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Želite posodobiti uporabniško ime?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Dodaj zaznamek";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Izbriši";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Ali ste prepričani, da želite izbrisati to mapo in %i elementov?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Ali ste prepričani, da želite izbrisati to mapo in %i element?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Želite izbrisati %@?";
@@ -296,7 +341,7 @@
 "dax.hide.title" = "Skrij preostale nasvete?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Vaša iskanja v DuckDuckGo so anonimna in nikoli ne shranim vaše zgodovine iskanja. Vedno.🙌";
+"dax.onboarding.browsing.after.search" = "Vaša iskanja v DuckDuckGo so anonimna. Vselej. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Fuj!";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Prenos za %@ se je začel";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Prekliči";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Izklopljeno";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blokirajte sledilnike e-pošte in skrijte svoj naslov";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Prekliči";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobrodošli v aplikaciji\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Koda povabila";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Ko bomo pripravljeni, bo vaše povabilo prikazano tukaj. Želite %1$@, ko prispe? %2$@ o beta brskalniku za macOS.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "prejeti obvestilo";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Ko bomo pripravljeni, vam bomo poslali obvestilo. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Vaše povabilo za preizkus DuckDuckGo za računalnike Mac bo prispelo sem. Preverite znova kmalu, lahko pa vam lahko pošljemo obvestilo, ko bo preizkus na voljo.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Ko bo vaš DuckDuckGo za računalnike Mac pripravljen za prenos, vam bomo poslali obvestilo.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ o različici beta.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Aplikacija DuckDuckGo Privacy za računalnike Mac zagotavlja hitrost, ki jo potrebujete, funkcije brskanja, ki jih pričakujete, in opremljena je z našimi ključnimi funkcijami zasebnosti, ki so najboljše v svojem razredu.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Odprite svoje povabilo";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo za računalnike Mac je na voljo!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopiraj";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Za prenos obiščite ta naslov URL v svojem računalniku Mac:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1. korak";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Odprite datoteko za namestitev, nato vnesite kodo povabila, da jo odklenete.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2. korak";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Ste pripravljeni na zasebno brskanje v računalniku Mac?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Povabljeni ste!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Pridruži se zasebnemu čakalnemu seznamu";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Pridružitev čakalni listi ...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Preizkusite DuckDuckGo za računalnike Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Kmalu bo na voljo za Windows!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Lahko vas obvestimo, ko boste na vrsti, toda obvestila za DuckDuckGo so trenutno onemogočena.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Za pridružitev čakalnemu seznamu vam ne bo treba posredovati nobenih osebnih podatkov. Svoje mesto si boste zagotovili v skladu s časovnim žigom, ki obstaja samo v vaši napravi, tako da vas lahko obvestimo, ko boste na vrsti.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Na seznamu ste!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Na voljo za prenos za računalnike Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Brskajte zasebno z našo aplikacijo za računalnike Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Na seznamu ste!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Povabljeni ste!\n\nSte pripravljeni na zasebno brskanje v računalniku Mac? \n\n 1. korak \n Za prenos obiščite ta naslov URL v svojem računalniku Mac: \n https://duckduckgo.com/mac \n\n2. korak\nOdprite datoteko za namestitev, nato vnesite kodo povabila, da jo odklenete.Koda povabila: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Povabljeni ste!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "Namizna aplikacija DuckDuckGo";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Brskanje po meniju";
 
@@ -883,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "V REDU";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "O naši zaščiti spletnega sledenja";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "O naši zaščiti pri iskanju in oglasih";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Kako naši oglasi v iskalnem omrežju vplivajo na našo zaščito";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritem";
 
@@ -906,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Prisilno šifriranje";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Šifrirana povezava";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "To spletno mesto smo prisilili, da uporablja šifrirano povezavo in preprečuje prestrezanje vseh osebnih podatkov, ki jih pošlješ.";
@@ -985,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Da";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "ONEMOGOČI ZAŠČITO NA STRANI";
 
@@ -1000,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Najdeno je več sledenj omrežjem";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Glavnega sledilnega omrežja ni mogoče najti";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Sledilna omrežja smo našli na %1$@%% spletnih mestih, ki si jih obiskal od %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Še vedno zbiramo podatke za prikaz, koliko\nsledilnikov smo blokirali.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Ni naloženih zahtevkov tretjih oseb";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Zahtevki naslednjih domen so bili naloženi, ker ste pred kratkim kliknili oglas %@ na portalu DuckDuckGo. Ti zahtevki pomagajo oceniti učinkovitost oglasa. Vsi oglasi na DuckDuckGo so neprofilirani.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Naložene so bile naslednje zahteve za domene, da se prepreči prekinitev spletnega mesta.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Naložene so bile naslednje zahteve za domene, ker so povezane z %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Naložene so bile naslednje zahteve za domene tretjih oseb. Če so zahteve podjetja izpolnjene, lahko podjetje na podlagi tega oblikuje vaš profil, čeprav še vedno veljajo naša druga zaščitna pravila za sledenje v spletu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Nobena zahteva tretjih oseb ni bila blokirana zaradi izklopa zaščite za to mesto. Če so zahtevki podjetja naloženi, lahko na podlagi tega oblikujejo vaš profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Naložene so bile zahteve za sledenje naslednjim domenam.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Naložene so bile tudi naslednje zahteve domene.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Naložene so bile zahteve naslednjih domen.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Naložene so bile tudi zahteve naslednje domene.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Nismo zaznali zahtevkov iz domen tretjih oseb.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Nalaganje zahtevkov tretjih oseb";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Upoštevajte: omejitve platforme lahko omejijo našo zmožnost zaznavanja vseh zahtevkov.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Brez oblikovanja profila";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Prakse zasebnosti od ToS;DR.";
@@ -1040,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Neznane prakse zasebnosti";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sledilna omrežja združijo vašo spletno zgodovino v podatkovni profil o vas. Glavna sledilna omrežja so bolj škodljiva, ker vas lahko spremljajo in ciljajo na večjem delu interneta.";
+"privacy.protection.tracker.networks.info" = "Sledilniki podjetjem pomagajo pri oblikovanju vašega profila. Tem sledilnikom smo preprečili nalaganje in spremljanje vaše dejavnosti na tej strani.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Nalaganje zahtevkov za sledenje ni bilo blokirano, ker so zaščite za to spletno mesto izklopljene. Če so zahtevki podjetja naloženi, lahko na podlagi tega oblikujejo vaš profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nismo zaznali nobenih zahtevkov za sledenje.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Nalaganje zahtevkov naslednjih domen tretjih oseb je bilo blokirano, ker so bili prepoznani kot zahtevki za sledenje. Če so zahtevki podjetja naloženi, lahko na podlagi tega oblikujejo vaš profil.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Zahtevki, katerih nalaganje je blokirano";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Zahtevki za sledenje so bili najdeni";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Noben zahtevek za sledenje ni blokiran";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Ni najdenih zahtevkov za sledenje";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Prekliči";
@@ -1149,18 +1377,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Potreben je dostop do mikrofona";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "V REDU";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Prekliči";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikoli ne posluša vašega govora. Vsa obdelava govornih podatkov za zasebno glasovno iskanje poteka v vaši napravi.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Za zasebno glasovno iskanje je potreben dostop do mikrofona";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Prekliči";

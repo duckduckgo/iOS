@@ -60,7 +60,7 @@ class ExternalUrlSchemeTests: XCTestCase {
     
     func testThatAboutSchemesAreAllowed() {
         let url = URL(string: "about:blank")!
-        XCTAssertNotEqual(SchemeHandler.schemeType(for: url),
-                          SchemeHandler.SchemeType.navigational)
+        XCTAssertEqual(SchemeHandler.schemeType(for: url),
+                       SchemeHandler.SchemeType.navigational)
     }
 }

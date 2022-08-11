@@ -190,7 +190,6 @@ class TabsBarViewController: UIViewController {
     }
     
     private func enableInteractionsWithPointer() {
-        guard #available(iOS 13.4, *) else { return }
         fireButton.isPointerInteractionEnabled = true
         addTabButton.isPointerInteractionEnabled = true
         tabSwitcherButton.pointerView.frame.size.width = 34

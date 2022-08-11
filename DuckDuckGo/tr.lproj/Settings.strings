@@ -4,6 +4,9 @@
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Bağlantıların yüklenmiş olan diğer uygulamalarda otomatik olarak açılmasını önlemek için devre dışı bırakın.";
 
+/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "0gU-rZ-pRc"; */
+"0gU-rZ-pRc.headerTitle" = "Özelleştir";
+
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
 "2ky-s9-1aZ.text" = "Versiyon";
 
@@ -43,14 +46,20 @@
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Bağlantıları İlişkili Uygulamalarda Aç";
 
+/* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
+"A9G-5I-RSn.text" = "Hata Ayıklama Menüsü";
+
+/* Class = "UILabel"; text = "Autofill Logins"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Girişleri Otomatik Doldur";
+
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animasyon";
 
+/* Class = "UILabel"; text = "Email Protection"; ObjectID = "azf-Nc-kvW"; */
+"azf-Nc-kvW.text" = "E-posta Koruması";
+
 /* Class = "UIViewController"; title = "Email Protection (Beta)"; ObjectID = "b9u-ZD-F95"; */
 "b9u-ZD-F95.title" = "E-posta Koruması (Beta)";
-
-/* Class = "UILabel"; text = "Email Protection"; ObjectID = "bAK-LL-HUH"; */
-"bAK-LL-HUH.text" = "E-posta Koruması";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Uygulama yeniden başlatıldığında veriler ve/veya sekmeler temizlenecektir.";
@@ -82,14 +91,14 @@
 /* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
 "dBZ-yq-FYj.text" = "Uygulama Kilidi";
 
-/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "dj9-vh-Rig"; */
-"dj9-vh-Rig.headerTitle" = "Özelleştir";
+/* Class = "UITableViewSection"; headerTitle = "Appearance"; ObjectID = "dj9-vh-Rig"; */
+"dj9-vh-Rig.headerTitle" = "Görünüm";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.footerTitle" = "Touch ID, Face ID veya sistem parolası belirlenmişse uygulamayı açarken kilidini açmanız istenir.";
 
-/* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.headerTitle" = "Gizlilik ve Güvenlik";
+/* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.headerTitle" = "Gizlilik";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
 "dud-qo-Ces.text" = "Label";
@@ -127,8 +136,8 @@
 /* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
 "FHC-1z-Z3v.text" = "Korumasız Siteler";
 
-/* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "Diğer";
+/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "FpT-1C-xtx"; */
+"FpT-1C-xtx.headerTitle" = "Hakkında";
 
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Küresel Gizlilik Kontrolü (GPC)";
@@ -169,9 +178,6 @@
 /* Class = "UIViewController"; title = "Email Autofill"; ObjectID = "nB1-eu-sN0"; */
 "nB1-eu-sN0.title" = "E-posta Otomatik Doldurma";
 
-/* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
-"NRb-Cc-1d6.footerTitle" = "Etkinleştirildiğinde, web siteleri otomatik olarak DuckDuckGo'da açılır.";
-
 /* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Henüz Korumalı site yok";
 
@@ -180,6 +186,12 @@
 
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
 "oM7-1o-9oY.text" = "DuckDuckGo Hakkında";
+
+/* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
+"OxE-MQ-uJk.headerTitle" = "DuckDuckGo'dan Daha Fazlası";
+
+/* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
+"P0F-ts-ekd.text" = "Mac için uygulamamızla internette gezinirken gizliliğinizi koruyun ";
 
 /* Class = "UITextView"; text = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com."; ObjectID = "pT6-FQ-9d9"; */
 "pT6-FQ-9d9.text" = "E-posta Korumasını bu cihazdan kaldırmak, Web'de gezinirken Kişisel Duck Adresinizi veya yeni oluşturulan Özel Duck Adresinizi e-posta alanlarına doldurma seçeneğini kaldırır.\n\nDuck Adreslerinizi tamamen silmek veya diğer sorularınız veya geri bildirimleriniz için support@duck.com adresinden bize ulaşın.";
@@ -195,6 +207,9 @@
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Metin Boyutu";
+
+/* Class = "UILabel"; text = "Private Voice Search"; ObjectID = "Swa-O7-n8W"; */
+"Swa-O7-n8W.text" = "Özel Sesli Arama";
 
 /* Class = "UITableViewController"; title = "Email Protection"; ObjectID = "TC3-Kg-XJt"; */
 "TC3-Kg-XJt.title" = "E-posta Koruması";
@@ -238,6 +253,9 @@
 /* Class = "UITextView"; text = "Footer Text"; ObjectID = "XvR-D4-LMg"; */
 "XvR-D4-LMg.text" = "Altbilgi Metni";
 
+/* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
+"Y6Y-wA-n6Z.text" = "E-posta izleyicileri engelleyin ve adresinizi gizleyin";
+
 /* Class = "UIButton"; normalTitle = "I have an Invite Code"; ObjectID = "yMC-7O-hSw"; */
 "yMC-7O-hSw.normalTitle" = "Davet Kodum var";
 
@@ -247,14 +265,14 @@
 /* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "Uygulamayı Dock'a Ekle";
 
-/* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Bu siteler için Gizlilik Koruması uygulanmayacaktır.";
-
-/* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
-"zMK-jc-4bJ.headerTitle" = "Yardım";
+/* Class = "UILabel"; text = "DuckDuckGo Desktop App"; ObjectID = "Yz9-17-qnn"; */
+"Yz9-17-qnn.text" = "DuckDuckGo Masaüstü Uygulaması";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Yeni Sekme";
+
+/* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
+"zvh-2e-Wmz.text" = "Bu siteler için Gizlilik Koruması uygulanmayacaktır.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Ana Ekran";

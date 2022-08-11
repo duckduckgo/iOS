@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 @testable import Core
 
 extension PrivacyPractices {

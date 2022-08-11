@@ -171,6 +171,8 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .autofill, defaultValue: true)
     var autofill: Bool
     
+    @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
+    var voiceSearchEnabled: Bool
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

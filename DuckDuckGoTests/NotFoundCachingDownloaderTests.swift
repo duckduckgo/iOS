@@ -26,9 +26,8 @@ class NotFoundCachingDownloaderTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        UserDefaults.app.removePersistentDomain(forName: #file)
-        UserDefaults.app = UserDefaults(suiteName: #file)!
-
+        
+        setupUserDefault(with: #file)
         downloader = NotFoundCachingDownloader(sourcesProvider: DefaultFaviconSourcesProvider())
     }
 

@@ -79,12 +79,8 @@ class BookmarkCell: UITableViewCell {
     var currentState: UITableViewCell.StateMask = []
     
     override func willTransition(to state: UITableViewCell.StateMask) {
-        currentState = state
         super.willTransition(to: state)
         currentState = state
-        if state == .showingEditControl {
-            
-        }
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {

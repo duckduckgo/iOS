@@ -19,6 +19,7 @@
 
 import WebKit
 import Core
+import BrowserServicesKit
 
 protocol TabDelegate: AnyObject {
 
@@ -28,13 +29,19 @@ protocol TabDelegate: AnyObject {
 
     func tab(_ tab: TabViewController,
              didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
-             for navigationAction: WKNavigationAction) -> WKWebView?
+             for navigationAction: WKNavigationAction,
+             inheritingAttribution: AdClickAttributionLogic.State?) -> WKWebView?
 
     func tabDidRequestClose(_ tab: TabViewController)
 
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, openedByPage: Bool)
+    func tab(_ tab: TabViewController,
+             didRequestNewTabForUrl url: URL,
+             openedByPage: Bool,
+             inheritingAttribution: AdClickAttributionLogic.State?)
 
-    func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL)
+    func tab(_ tab: TabViewController,
+             didRequestNewBackgroundTabForUrl url: URL,
+             inheritingAttribution: AdClickAttributionLogic.State?)
     
     func tabLoadingStateDidChange(tab: TabViewController)
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage)

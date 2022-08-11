@@ -25,7 +25,6 @@ extension Font {
     }
 }
 
-@available(iOS 14.0, *)
 struct WidgetEducationView: View {
     
     var body: some View {
@@ -129,7 +128,6 @@ private enum Const {
     }
 }
 
-@available(iOS 14.0, *)
 struct WidgetEducationView_Previews: PreviewProvider {
     static var previews: some View {
         WidgetEducationView()

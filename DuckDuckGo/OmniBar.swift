@@ -108,7 +108,6 @@ class OmniBar: UIView {
     }
     
     private func enableInteractionsWithPointer() {
-        guard #available(iOS 13.4, *) else { return }
         backButton.isPointerInteractionEnabled = true
         forwardButton.isPointerInteractionEnabled = true
         settingsButton.isPointerInteractionEnabled = true
@@ -206,7 +205,7 @@ class OmniBar: UIView {
         trackersAnimator.startLoadingAnimation(in: self, for: url)
     }
     
-    public func startTrackersAnimation(_ trackers: [DetectedTracker], collapsing: Bool) {
+    public func startTrackersAnimation(_ trackers: [DetectedRequest], collapsing: Bool) {
         guard trackersAnimator.configure(self, toDisplay: trackers, shouldCollapse: collapsing), state.allowsTrackersAnimation else {
             trackersAnimator.cancelAnimations(in: self)
             return

@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Hozzáadás";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Bejelentkezési adatok automatikus kitöltése";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Könyvjelző";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Be";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Megtekintés";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Bejelentkezés mentve";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Bejelentkezés frissítve";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Ez további bejelentkezési adatot ment el a webhelyhez.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "A bejelentkezési adatok csak ezen az eszközön lesznek biztonságosan tárolva, és a Beállításokban található Automatikus kitöltés menüpontban kezelhetők.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "A DuckDuckGo mentse a bejelentkezést?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Most nem";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Bejelentkezés mentése";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Mented a bejelentkezést?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Jelszó mentése";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Mented a jelszót?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Bejelentkezés frissítése";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Jelszó frissítése";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Frissíted a jelszót?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Frissíted a felhasználónevet?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Könyvjelző mentése";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Törlés";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Biztos, hogy törölni akarod ezt a mappát és annak %i elemét?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Biztos, hogy törölni akarod ezt a mappát és annak %i elemét?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "%@ törlése?";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "A letöltés elindult: %@";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Mégsem";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Ki";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "E-mail nyomkövetők letiltása, és a cím elrejtése";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Mégsem";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Meghívókód";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "A meghívód itt fog megjelenni, amikor készen állunk. Szeretnél %1$@, amikor megérkezik? %2$@ a macOS rendszerre készült böngésző béta verziójáról.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "értesítést kapni";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Értesítést küldünk, amikor készen állunk. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "A DuckDuckGo Maces verziójának kipróbálására szóló meghívód ide fog érkezni. Látogass vissza mielőbb, vagy küldhetünk értesítést, ha sorra kerülsz.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Értesítést küldünk, ha a DuckDuckGo Maces verziója letölthetővé válik a számodra.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ a béta verzióról.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "A DuckDuckGo Privacy alkalmazás Maces verziója gyors, böngészési funkciókban gazdag, és kategóriája legjobb adatvédelmi megoldásait kínálja.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Meghívó megnyitása";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "Elkészült a DuckDuckGo Maces verziója!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Másolás";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "A letöltéshez látogass el erre az URL-címre a Maceden:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1. lépés";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Nyisd meg a fájlt a telepítéshez, majd írd be a meghívókódot a feloldáshoz.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2. lépés";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Készen állsz a privát böngészésre a Macen?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Meghívót kaptál!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Csatlakozz a privát várólistához";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Csatlakozás a várólistához…";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Próbáld ki a DuckDuckGo Maces verzióját!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Hamarosan érkezik a Windows verzió!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Értesíthetünk, ha sorra kerülsz, de a DuckDuckGo értesítései jelenleg le vannak tiltva.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Nem kell megosztanod a személyes adataid a várólistához való csatlakozáshoz. A sorban elfoglalt helyedet egy olyan időbélyegző igazolja, amely kizárólag az eszközödön található meg, így értesíteni tudunk, amikor sorra kerülsz.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Felkerültél a listára!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Letölthető Macre";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Privát böngészés Maces alkalmazásunkkal";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Felkerültél a listára!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Meghívót kaptál!\n\nKészen állsz a privát böngészésre a Macen?\n\n1. lépés\nA letöltéshez látogass el erre az URL-címre a Maceden:\nhttps://duckduckgo.com/mac\n\n2. lépés\nNyisd meg a fájlt a telepítéshez, majd írd be a meghívókódot a feloldáshoz.\n\nMeghívókód: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Meghívót kaptál!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo asztali alkalmazás";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Tallózás a menüben";
 
@@ -883,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "A webes követés elleni védelemről";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "A keresés védelméről és a hirdetésekről";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Hogyan hatnak a keresési hirdetéseink a védelmünkre";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";
 
@@ -906,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Kényszerített titkosítás";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Titkosított kapcsolat";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Ezt a webhelyet arra kényszerítettük, hogy titkosított kapcsolatot használjon, megakadályozva ezzel a részére küldött személyes adatok lehallgatását.";
@@ -985,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Igen";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "WEBOLDAL VÉDELME LETILTVA";
 
@@ -1000,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Nagy nyomkövető hálózatok találhatók";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Nem található nagyobb nyomkövető hálózat";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "A %2$@ óta meglátogatott weboldalak %1$@%%-án lehetett nyomkövető hálózatokat találni.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Folyamatosan gyűjtjük az adatokat, hogy bemutathassuk, hány\nnyomkövetőt tiltottunk le.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Harmadik féltől származó kérések nincsenek betöltve";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "A következő tartomány kérései azért lettek betöltve, mert a DuckDuckGón nemrég rákattintottak a(z) %@ hirdetésére. Ezek a kérések segítenek értékelni a hirdetések hatékonyságát. A DuckDuckGo egyik hirdetése sem profilozó.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "A következő domain kérései a webhely megszakadásának megelőzése érdekében lettek betöltve.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "A következő tartomány kérései azért lettek betöltve, mert a következőhöz vannak társítva: %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "A következő harmadik fél tartományok kérései be lettek töltve. Ha egy cég kérései betöltődnek, ez lehetővé teheti számukra, hogy profilokat készítsenek a felhasználóról, bár a többi webes nyomkövetési védelmünk továbbra is érvényben van.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "A harmadik féltől származó kérések betöltése nincs blokkolva, mert a végelem ki van kapcsolva ehhez a webhelyhez. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek a felhasználóról.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "A következő tartományok követési kérelmei lettek betöltve.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "A következő tartomány kérései is be lettek töltve.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "A következő tartományok kérései lettek betöltve.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "A következő tartomány kérései lettek betöltve.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Nem észleltünk harmadik fél tartományából származó kéréseket.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "A harmadik féltől származó kérések be lettek töltve";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Fontos tudni: a platformkorlátozások korlátozhatják az összes kérés észlelését.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Nem profilozó";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Adatvédelmi gyakorlatok forrása: ToS;DR.";
@@ -1040,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Ismeretlen adatvédelmi gyakorlatok";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "A nyomkövető hálózatok gyűjtik internetes előzményeidet egy rólad szóló adatprofilban. A nagy nyomkövető hálózatok károsabbak, mert az internet több területén képesek téged nyomon követni és megcélozni.";
+"privacy.protection.tracker.networks.info" = "A nyomkövetők segítségével a cégek profilt alkothatnak rólad. Megakadályoztuk, hogy ezek a nyomkövetők betöltsék és nyomon kövessék a tevékenységedet ezen az oldalon.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "A nyomkövető kérések betöltése nincs blokkolva, mert a végelem ki van kapcsolva ehhez a webhelyhez. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek a felhasználóról.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nem észleltünk nyomkövetési kérést.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "A következő harmadik fél tartományok kéréseinek betöltése blokkolva van, mivel nyomkövető kérésként lettek beazonosítva. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek a felhasználóról.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Kérések betöltése blokkolva";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Nyomkövető kérések találhatók";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Nyomkövető kérések nincsenek blokkolva";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Nem találhatók nyomkövetési kérések";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Mégsem";
@@ -1149,18 +1377,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofon-hozzáférés szükséges";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Mégsem";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "A DuckDuckGo soha nem hallgatja azt, amit mondasz. A Privát beszédhangalapú keresés működéséhez szükséges összes beszédhang-feldolgozási művelet a telefonodon zajlik.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "A Privát beszédhangalapú kereséshez Mikrofon-hozzáférés szükséges";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Mégsem";

@@ -40,7 +40,7 @@ struct HomeMessageView: View {
         VStack(spacing: Const.Spacing.titleAndSubtitle) {
             HStack(alignment: .top) {
                 Spacer()
-                VStack(spacing: Const.Spacing.imageAndTitle) {
+                VStack(spacing: 0) {
                     topText
                     image
                     title
@@ -51,11 +51,12 @@ struct HomeMessageView: View {
                 closeButton
             }
             
-            VStack(spacing: Const.Spacing.subtitleAndButtons) {
+            VStack(spacing: 0) {
                 subtitle
                 HStack {
                     buttons
                 }
+                .padding(.top, Const.Spacing.subtitleAndButtons)
             }
         }
         .multilineTextAlignment(.center)
@@ -102,12 +103,14 @@ struct HomeMessageView: View {
         Text(viewModel.title)
             .font(Font(uiFont: Const.Font.title))
             .fixedSize(horizontal: false, vertical: true)
+            .padding(.top, Const.Spacing.imageAndTitle)
    }
     
     private var subtitle: some View {
         Text(viewModel.subtitle)
             .font(Font(uiFont: Const.Font.subtitle))
             .lineSpacing(Const.Spacing.line)
+            .padding(.top, Const.Spacing.titleAndSubtitle)
     }
     
     private var buttons: some View {
@@ -118,6 +121,7 @@ struct HomeMessageView: View {
                 .font(Font(uiFont: Const.Font.button))
                 .buttonStyle(RoundedRectStyle(foregroundColor: foreground,
                                               backgroundColor: background))
+                .padding([.top, .bottom], Const.Padding.buttonVerticalInset)
         }
     }
 }
@@ -150,12 +154,13 @@ private enum Const {
     enum Padding {
         static let buttonHorizontal: CGFloat = 16
         static let buttonVertical: CGFloat = 9
+        static let buttonVerticalInset: CGFloat = 8
     }
     
     enum Spacing {
         static let imageAndTitle: CGFloat = 8
-        static let titleAndSubtitle: CGFloat = 8
-        static let subtitleAndButtons: CGFloat = 16
+        static let titleAndSubtitle: CGFloat = 4
+        static let subtitleAndButtons: CGFloat = 6
         static let line: CGFloat = 4
     }
     

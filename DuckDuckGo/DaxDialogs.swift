@@ -200,7 +200,7 @@ final class DaxDialogs {
     }
 
     func isStillOnboarding() -> Bool {
-        if settings.homeScreenMessagesSeen < 2 && !settings.isDismissed {
+        if peekNextHomeScreenMessage() != nil {
             return true
         }
         return false
@@ -280,23 +280,31 @@ final class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
+        guard let homeScreenSpec = peekNextHomeScreenMessage() else { return nil }
+
+        if homeScreenSpec != nextHomeScreenMessageOverride {
+            settings.homeScreenMessagesSeen += 1
+        }
+
+        return homeScreenSpec
+    }
+
+    private func peekNextHomeScreenMessage() -> HomeScreenSpec? {
         if nextHomeScreenMessageOverride != nil {
             return nextHomeScreenMessageOverride
         }
 
         guard isEnabled else { return nil }
         guard settings.homeScreenMessagesSeen < 2 else { return nil }
-        
+
         if settings.homeScreenMessagesSeen == 0 {
-            settings.homeScreenMessagesSeen += 1
             return .initial
         }
-        
+
         if firstBrowsingMessageSeen {
-            settings.homeScreenMessagesSeen += 1
             return .subsequent
         }
-        
+
         return nil
     }
     

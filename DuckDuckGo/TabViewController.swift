@@ -222,6 +222,11 @@ class TabViewController: UIViewController {
 
     }()
     
+    private lazy var referrerTrimming: ReferrerTrimming = {
+        ReferrerTrimming(privacyManager: ContentBlocking.privacyConfigurationManager,
+                         contentBlockingManager: ContentBlocking.contentBlockingManager)
+    }()
+    
     private var userScripts: [UserScript] = []
     
     private var canDisplayJavaScriptAlert: Bool {
@@ -1144,6 +1149,7 @@ extension TabViewController: WKNavigationDelegate {
         chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
         linkProtection.setMainFrameUrl(webView.url)
+        referrerTrimming.setMainFrameUrl(webView.url)
         adClickAttributionDetection.onStartNavigation(url: webView.url)
     }
     
@@ -1159,6 +1165,7 @@ extension TabViewController: WKNavigationDelegate {
         detectedLoginURL = nil
         updatePreview()
         linkProtection.setMainFrameUrl(nil)
+        referrerTrimming.setMainFrameUrl(nil)
     }
     
     func preparePreview(completion: @escaping (UIImage?) -> Void) {
@@ -1272,6 +1279,7 @@ extension TabViewController: WKNavigationDelegate {
         checkForReloadOnError()
         scheduleTrackerNetworksAnimation(collapsing: true)
         linkProtection.setMainFrameUrl(nil)
+        referrerTrimming.setMainFrameUrl(nil)
     }
 
     private func webpageDidFailToLoad() {
@@ -1288,6 +1296,7 @@ extension TabViewController: WKNavigationDelegate {
         adClickAttributionDetection.onDidFailNavigation()
         hideProgressIndicator()
         linkProtection.setMainFrameUrl(nil)
+        referrerTrimming.setMainFrameUrl(nil)
         lastError = error
         let error = error as NSError
 
@@ -1395,6 +1404,16 @@ extension TabViewController: WKNavigationDelegate {
             if didRewriteLink {
                 return
             }
+        }
+        
+        if navigationAction.isTargetingMainFrame(),
+           !(navigationAction.request.url?.isCustomURLScheme() ?? false),
+           navigationAction.navigationType != .backForward,
+           let newRequest = referrerTrimming.trimReferrer(forNavigation: navigationAction,
+                                                              originUrl: webView.url) {
+            decisionHandler(.cancel)
+            load(urlRequest: newRequest)
+            return
         }
 
         if navigationAction.isTargetingMainFrame(),

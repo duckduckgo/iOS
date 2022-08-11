@@ -34,6 +34,8 @@ public struct AppDeepLinks {
     public static let addFavorite = "ddgAddFavorite://"
 
     public static let aboutLink = URL(string: "\(AppDeepLinks.quickLink)duckduckgo.com/about")!
+    public static let webTrackingProtections = URL(string: "\(AppDeepLinks.quickLink)help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/")!
+    public static let thirdPartyTrackerLoadingProtection = URL(string: "\(AppDeepLinks.quickLink)help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection")!
 
     public static func isLaunchFavorite(url: URL) -> Bool {
         return isUrl(url, deepLink: launchFavorite)

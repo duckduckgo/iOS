@@ -24,14 +24,28 @@ import BrowserServicesKit
 
 // swiftlint:disable type_body_length
 
-class DaxDialogs {
+protocol EntityProviding {
+    
+    func entity(forHost host: String) -> Entity?
+    
+}
+
+extension ContentBlockerRulesManager: EntityProviding {
+    
+    func entity(forHost host: String) -> Entity? {
+        currentMainRules?.trackerData.findEntity(forHost: host)
+    }
+    
+}
+
+final class DaxDialogs {
     
     struct MajorTrackers {
         
         static let facebookDomain = "facebook.com"
         static let googleDomain = "google.com"
         
-        static let domains = [ Self.facebookDomain, Self.googleDomain ]
+        static let domains = [facebookDomain, googleDomain]
         
     }
     
@@ -136,21 +150,21 @@ class DaxDialogs {
         let cancelActionPixelName: Pixel.Event
     }
 
-    public static let shared = DaxDialogs()
+    public static let shared = DaxDialogs(entityProviding: ContentBlocking.contentBlockingManager)
 
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings
-    private var contentBlockingRulesManager: ContentBlockerRulesManager
+    private var entityProviding: EntityProviding
     private let variantManager: VariantManager
 
     private var nextHomeScreenMessageOverride: HomeScreenSpec?
 
     /// Use singleton accessor, this is only accessible for tests
     init(settings: DaxDialogsSettings = DefaultDaxDialogsSettings(),
-         contentBlockingRulesManager: ContentBlockerRulesManager = ContentBlocking.contentBlockingManager,
+         entityProviding: EntityProviding,
          variantManager: VariantManager = DefaultVariantManager()) {
         self.settings = settings
-        self.contentBlockingRulesManager = contentBlockingRulesManager
+        self.entityProviding = entityProviding
         self.variantManager = variantManager
     }
     
@@ -257,8 +271,8 @@ class DaxDialogs {
             return majorTrackerOwnerMessage(host, owner)
         }
         
-        if let entities = entitiesBlocked(siteRating) {
-            return trackersBlockedMessage(entities)
+        if let entityNames = blockedEntityNames(siteRating) {
+            return trackersBlockedMessage(entityNames)
         }
         
         // only shown if first time on a non-ddg page and none of the non-ddg messages shown
@@ -307,9 +321,7 @@ class DaxDialogs {
     
     private func majorTrackerMessage(_ host: String) -> DaxDialogs.BrowsingSpec? {
         guard !settings.browsingMajorTrackingSiteShown else { return nil }
-        guard let currentTrackerData = contentBlockingRulesManager.currentTDSRules?.trackerData,
-              let entity = currentTrackerData.findEntity(forHost: host),
-            let entityName = entity.displayName else { return nil }
+        guard let entityName = entityProviding.entity(forHost: host)?.displayName else { return nil }
         settings.browsingMajorTrackingSiteShown = true
         settings.browsingWithoutTrackersShown = true
         return BrowsingSpec.siteIsMajorTracker.format(args: entityName, host)
@@ -321,7 +333,7 @@ class DaxDialogs {
         return BrowsingSpec.afterSearch
     }
     
-    private func trackersBlockedMessage(_ entitiesBlocked: [Entity]) -> BrowsingSpec? {
+    private func trackersBlockedMessage(_ entitiesBlocked: [String]) -> BrowsingSpec? {
         guard !settings.browsingWithTrackersShown else { return nil }
 
         switch entitiesBlocked.count {
@@ -331,20 +343,22 @@ class DaxDialogs {
             
         case 1:
             settings.browsingWithTrackersShown = true
-            return BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0].displayName ?? "")
+            return BrowsingSpec.withOneTracker.format(args: entitiesBlocked[0])
             
         default:
             settings.browsingWithTrackersShown = true
             return BrowsingSpec.withMultipleTrackers.format(args: entitiesBlocked.count - 2,
-                                                           entitiesBlocked[0].displayName ?? "",
-                                                           entitiesBlocked[1].displayName ?? "")
+                                                           entitiesBlocked[0],
+                                                           entitiesBlocked[1])
         }
     }
  
-    private func entitiesBlocked(_ siteRating: SiteRating) -> [Entity]? {
+    private func blockedEntityNames(_ siteRating: SiteRating) -> [String]? {
         guard !siteRating.trackersBlocked.isEmpty else { return nil }
-        let entities = Set<Entity>(siteRating.trackersBlocked.compactMap { $0.entity })
-        return Array(entities).sorted(by: { $0.prevalence ?? 0.0 > $1.prevalence ?? 0.0 })
+        
+        return siteRating.trackersBlocked.removingDuplicates { $0.entityName }
+            .sorted(by: { $0.prevalence ?? 0.0 > $1.prevalence ?? 0.0 })
+            .compactMap { $0.entityName }
     }
     
     private func isFacebookOrGoogle(_ url: URL) -> Bool {
@@ -354,8 +368,7 @@ class DaxDialogs {
     }
     
     private func isOwnedByFacebookOrGoogle(_ host: String) -> Entity? {
-        guard let currentTrackerData = contentBlockingRulesManager.currentTDSRules?.trackerData,
-              let entity = currentTrackerData.findEntity(forHost: host) else { return nil }
+        guard let entity = entityProviding.entity(forHost: host) else { return nil }
         return entity.domains?.contains(where: { MajorTrackers.domains.contains($0) }) ?? false ? entity : nil
     }
 }

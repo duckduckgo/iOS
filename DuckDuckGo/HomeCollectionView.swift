@@ -35,10 +35,8 @@ class HomeCollectionView: UICollectionView {
     private lazy var homePageConfiguration = AppDependencyProvider.shared.homePageConfiguration
     
     private var topIndexPath: IndexPath? {
-        for section in 0..<renderers.numberOfSections(in: self) {
-            if numberOfItems(inSection: section) > 0 {
-                return IndexPath(row: 0, section: section)
-            }
+        for section in 0..<renderers.numberOfSections(in: self) where numberOfItems(inSection: section) > 0 {
+            return IndexPath(row: 0, section: section)
         }
         return nil
     }

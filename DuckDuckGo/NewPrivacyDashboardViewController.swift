@@ -17,14 +17,16 @@
 //  limitations under the License.
 //
 
-import Foundation
-import PrivacyDashboard
-import Combine
-import WebKit
 import UIKit
+import WebKit
+import Combine
+import Core
+import PrivacyDashboard
 
 class NewPrivacyDashboardViewController: UIViewController {
 
+    weak var privacyInfo: PrivacyInfo?
+    
     var webView: WKWebView!
     
     private let privacyDashboardLogic: PrivacyDashboardLogic
@@ -32,6 +34,7 @@ class NewPrivacyDashboardViewController: UIViewController {
 
 
     public init(privacyInfo: PrivacyInfo?, themeName: String?) {
+        self.privacyInfo = privacyInfo
         self.privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo,
                                                            themeName: themeName)
         super.init(nibName: nil, bundle: nil)
@@ -56,7 +59,7 @@ class NewPrivacyDashboardViewController: UIViewController {
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        privacyDashboardLogic.cleanUpCancellables()
+        privacyDashboardLogic.cleanUp()
     }
     
     private func setupWebView() {
@@ -71,8 +74,10 @@ class NewPrivacyDashboardViewController: UIViewController {
     }
     
     private func setupPrivacyDashboardLogicHandlers() {
-        privacyDashboardLogic.onProtectionSwitchChange = privacyDashboardProtectionSwitchChangeHandler
-        privacyDashboardLogic.onCloseTapped = privacyDashboardCloseTappedHandler
+        privacyDashboardLogic.onProtectionSwitchChange = { [weak self] isEnabled in
+            self?.privacyDashboardProtectionSwitchChangeHandler(enabled: isEnabled)
+        }
+        privacyDashboardLogic.onCloseTapped = { [weak self] in self?.privacyDashboardCloseTappedHandler() }
     }
 }
 
@@ -80,6 +85,22 @@ private extension NewPrivacyDashboardViewController {
     
     func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
         print("switch: \(enabled)")
+        
+        guard let domain = privacyInfo?.url.host else { return }
+        
+        let privacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
+        
+        if enabled {
+            privacyConfiguration.userEnabledProtection(forDomain: domain)
+            ActionMessageView.present(message: UserText.messageProtectionEnabled.format(arguments: domain))
+        } else {
+            privacyConfiguration.userDisabledProtection(forDomain: domain)
+            ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
+        }
+        
+//        let completionToken = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
+//        pendingUpdates[completionToken] = domain
+//        sendPendingUpdates()
     }
     
     func privacyDashboardCloseTappedHandler() {

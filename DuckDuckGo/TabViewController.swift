@@ -224,7 +224,8 @@ class TabViewController: UIViewController {
     
     private lazy var referrerTrimming: ReferrerTrimming = {
         ReferrerTrimming(privacyManager: ContentBlocking.privacyConfigurationManager,
-                         contentBlockingManager: ContentBlocking.contentBlockingManager)
+                         contentBlockingManager: ContentBlocking.contentBlockingManager,
+                         tld: AppDependencyProvider.shared.storageCache.current.tld)
     }()
     
     private var userScripts: [UserScript] = []

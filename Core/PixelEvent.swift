@@ -222,6 +222,7 @@ extension Pixel {
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable
+        case autofillLoginsAutopromptDismissed
 
         case autofillSettingsOpened
 
@@ -522,6 +523,8 @@ extension Pixel.Event {
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_failed"
         case .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable:
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_unavailable"
+        case .autofillLoginsAutopromptDismissed:
+            return "m_autofill_logins_autoprompt_dismissed"
             
         case .autofillSettingsOpened: return "m_autofill_settings_opened"
             

@@ -31,7 +31,7 @@ struct HomeMessageViewModelBuilder {
     }
 
     // swiftlint:disable function_body_length
-    static func build(for remoteMessage: RemoteMessage, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> HomeMessageViewModel? {
+    static func build(for remoteMessage: RemoteMessageModel, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> HomeMessageViewModel? {
             guard let content = remoteMessage.content else { return nil }
 
             switch content {

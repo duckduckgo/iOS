@@ -143,8 +143,8 @@ extension RemoteMessagingStore {
 
 extension RemoteMessagingStore {
 
-    func fetchScheduledRemoteMessage() -> RemoteMessage? {
-        var scheduledRemoteMessage: RemoteMessage?
+    func fetchScheduledRemoteMessage() -> RemoteMessageModel? {
+        var scheduledRemoteMessage: RemoteMessageModel?
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "status == %i", RemoteMessageStatus.scheduled.rawValue)
@@ -158,15 +158,15 @@ extension RemoteMessagingStore {
                     continue
                 }
 
-                scheduledRemoteMessage = RemoteMessage(id: id, content: remoteMessage.content, matchingRules: [], exclusionRules: [])
+                scheduledRemoteMessage = RemoteMessageModel(id: id, content: remoteMessage.content, matchingRules: [], exclusionRules: [])
                 break
             }
         }
         return scheduledRemoteMessage
     }
 
-    func fetchRemoteMessage(withId id: String) -> RemoteMessage? {
-        var remoteMessage: RemoteMessage?
+    func fetchRemoteMessage(withId id: String) -> RemoteMessageModel? {
+        var remoteMessage: RemoteMessageModel?
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
@@ -180,7 +180,7 @@ extension RemoteMessagingStore {
                     continue
                 }
 
-                remoteMessage = RemoteMessage(id: id, content: remoteMessageMapped.content, matchingRules: [], exclusionRules: [])
+                remoteMessage = RemoteMessageModel(id: id, content: remoteMessageMapped.content, matchingRules: [], exclusionRules: [])
                 break
             }
         }
@@ -255,7 +255,7 @@ extension RemoteMessagingStore {
 
 extension RemoteMessagingStore {
 
-    private func save(remoteMessage: RemoteMessage) {
+    private func save(remoteMessage: RemoteMessageModel) {
         context.performAndWait {
             let managedObject = NSEntityDescription.insertNewObject(forEntityName: Constants.remoteMessageManagedObject, into: context)
             guard let remoteMessageManagedObject = managedObject as? RemoteMessageManagedObject else { return }
@@ -306,15 +306,15 @@ extension RemoteMessagingStore {
 
 private struct RemoteMessageMapper {
 
-    static func toString(_ remoteMessage: RemoteMessage?) -> String? {
+    static func toString(_ remoteMessage: RemoteMessageModel?) -> String? {
         guard let message = remoteMessage,
               let encodedData = try? JSONEncoder().encode(message),
               let jsonString = String(data: encodedData, encoding: .utf8) else { return nil }
         return jsonString
     }
 
-    static func fromString(_ payload: String) -> RemoteMessage? {
+    static func fromString(_ payload: String) -> RemoteMessageModel? {
         guard let data = payload.data(using: .utf8) else { return nil }
-        return try? JSONDecoder().decode(RemoteMessage.self, from: data)
+        return try? JSONDecoder().decode(RemoteMessageModel.self, from: data)
     }
 }

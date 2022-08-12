@@ -22,5 +22,5 @@ import BrowserServicesKit
 
 enum HomeMessage: Equatable {
     case placeholder
-    case remoteMessage(remoteMessage: RemoteMessage)
+    case remoteMessage(remoteMessage: RemoteMessageModel)
 }

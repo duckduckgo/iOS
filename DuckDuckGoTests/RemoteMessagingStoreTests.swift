@@ -59,7 +59,7 @@ class RemoteMessagingStoreTests: XCTestCase {
         wait(for: [expectation], timeout: 10)
     }
 
-    func saveProcessedResultFetchRemoteMessage() throws -> RemoteMessage {
+    func saveProcessedResultFetchRemoteMessage() throws -> RemoteMessageModel {
         let processorResult = try processorResult()
         // 1. saveProcessedResult()
         store.saveProcessedResult(processorResult)
@@ -70,7 +70,7 @@ class RemoteMessagingStoreTests: XCTestCase {
         XCTAssertEqual(config?.version, processorResult.version)
         guard let remoteMessage = store.fetchScheduledRemoteMessage() else {
             XCTFail("No remote message found")
-            return RemoteMessage(id: "", content: nil, matchingRules: [], exclusionRules: [])
+            return RemoteMessageModel(id: "", content: nil, matchingRules: [], exclusionRules: [])
         }
 
         XCTAssertNotNil(remoteMessage)

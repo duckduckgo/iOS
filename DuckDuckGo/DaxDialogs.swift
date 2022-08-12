@@ -150,6 +150,10 @@ final class DaxDialogs {
         let cancelActionPixelName: Pixel.Event
     }
 
+    private enum Constants {
+        static let homeScreenMessagesSeenMaxCeiling = 2
+    }
+
     public static let shared = DaxDialogs(entityProviding: ContentBlocking.contentBlockingManager)
 
     private let appUrls = AppUrls()
@@ -295,7 +299,7 @@ final class DaxDialogs {
         }
 
         guard isEnabled else { return nil }
-        guard settings.homeScreenMessagesSeen < 2 else { return nil }
+        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else { return nil }
 
         if settings.homeScreenMessagesSeen == 0 {
             return .initial

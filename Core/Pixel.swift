@@ -179,9 +179,6 @@ extension Pixel {
             newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
             newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
         }
-        if isInternalUser {
-            newParams[PixelParameters.isInternalUser] = "true"
-        }
         
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)
     }

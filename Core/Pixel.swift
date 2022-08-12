@@ -95,8 +95,7 @@ public struct PixelParameters {
     public static let emailKeychainError = "error"
     public static let emailKeychainKeychainStatus = "keychain_status"
     
-    //
-    public static let bookmarkFolderCount = "folder_count"
+    public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
 }
 
 public struct PixelValues {

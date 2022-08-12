@@ -777,7 +777,7 @@ extension BookmarksCoreDataStorage {
             guard (results?.count ?? 0) <= 1 else {
               
                 let count = results?.count ?? 0
-                let pixelParam = [PixelParameters.bookmarkFolderCount: "\(count)"]
+                let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
                 
                 Pixel.fire(pixel: .debugBookmarkOrphanFolder, withAdditionalParameters: pixelParam)
                 Thread.sleep(forTimeInterval: 1)
@@ -804,7 +804,7 @@ extension BookmarksCoreDataStorage {
             let results = try? viewContext.fetch(fetchRequest)
             guard (results?.count ?? 0) <= 1 else {
                 let count = results?.count ?? 0
-                let pixelParam = [PixelParameters.bookmarkFolderCount: "\(count)"]
+                let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
 
                 Pixel.fire(pixel: .debugFavoriteOrphanFolder, withAdditionalParameters: pixelParam)
                 Thread.sleep(forTimeInterval: 1)

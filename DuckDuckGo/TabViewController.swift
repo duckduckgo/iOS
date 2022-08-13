@@ -1816,8 +1816,6 @@ extension TabViewController {
     }
 
     private func legacySetupBlobDownload(for navigationAction: WKNavigationAction, completion: @escaping () -> Void) {
-        guard #available(iOS 14.0, *) else { completion(); return }
-
         let url = navigationAction.request.url!
         let legacyBlobDownloadScript = """
             let blob = await fetch(url).then(r => r.blob())
@@ -2459,7 +2457,6 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
 extension WKWebView {
 
-    @available(iOS 14.0, *)
     func load(_ url: URL, in frame: WKFrameInfo?) {
         evaluateJavaScript("window.location.href='" + url.absoluteString + "'", in: frame, in: .page)
     }

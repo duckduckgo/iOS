@@ -765,12 +765,17 @@ extension BookmarksCoreDataStorage {
         }
     }
 
-    private enum TopLevelFolderType {
+    internal enum TopLevelFolderType {
         case favorite
         case bookmark
     }
     
-    private func fetchReadOnlyTopLevelFolder(withFolderType
+    /*
+     This function will return nil if the database desired structure is not met
+     i.e: If there are more than one root level folder OR
+     if there is less than one root level folder
+     */
+    internal func fetchReadOnlyTopLevelFolder(withFolderType
                                              folderType: TopLevelFolderType) -> BookmarkFolderManagedObject? {
         
         var folder: BookmarkFolderManagedObject?
@@ -1074,7 +1079,7 @@ extension BookmarksCoreDataStorage {
         }
     }
     
-    private func fixFolderDataStructure(withFolderType folderType: TopLevelFolderType) {
+    internal func fixFolderDataStructure(withFolderType folderType: TopLevelFolderType) {
         let privateContext = getTemporaryPrivateContext()
 
         privateContext.performAndWait {

@@ -320,10 +320,13 @@ extension Pixel {
         case adAttributionLogicWrongVendorOnSuccessfulCompilation
         case adAttributionLogicWrongVendorOnFailedCompilation
         
-        case debugBookmarkOrphanFolder
-        case debugBookmarkTopLevelMissing
-        case debugFavoriteOrphanFolder
-        case debugFavoriteTopLevelMissing
+        // 2 suffix added to differenciate from previous pixels when the fix wasn't available
+        case debugBookmarkOrphanFolder2
+        case debugBookmarkTopLevelMissing2
+        case debugFavoriteOrphanFolder2
+        case debugFavoriteTopLevelMissing2
+        case debugCouldNotFixBookmarkFolder
+        case debugCouldNotFixFavoriteFolder
     }
     
 }
@@ -618,11 +621,14 @@ extension Pixel.Event {
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
         
-        case .debugBookmarkOrphanFolder: return "m_d_bookmark_orphan_folder"
-        case .debugBookmarkTopLevelMissing: return "m_d_bookmark_top_level_missing"
+        case .debugBookmarkOrphanFolder2: return "m_d_bookmark_orphan_folder2"
+        case .debugBookmarkTopLevelMissing2: return "m_d_bookmark_top_level_missing2"
         
-        case .debugFavoriteOrphanFolder: return "m_d_favorite_orphan_folder"
-        case .debugFavoriteTopLevelMissing: return "m_d_bookmark_top_level_missing"
+        case .debugFavoriteOrphanFolder2: return "m_d_favorite_orphan_folder2"
+        case .debugFavoriteTopLevelMissing2: return "m_d_bookmark_top_level_missing2"
+            
+        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
+        case .debugCouldNotFixFavoriteFolder: return "m_d_cannot_fix_favorite_folder"
         
         // MARK: Ad Attribution
             

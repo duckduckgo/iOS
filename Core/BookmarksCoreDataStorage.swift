@@ -1014,6 +1014,66 @@ public class BookmarksCoreDataStorageMigration {
 
 extension BookmarksCoreDataStorage {
     
+    private func deleteExtraOrphanedFolders(_ orphanedFolders: [BookmarkFolderManagedObject],
+                                            onContext context: NSManagedObjectContext,
+                                            withFolderType folderType: TopLevelFolderType) {
+        let count = orphanedFolders.count
+        let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
+        
+        if folderType == .favorite {
+            Pixel.fire(pixel: .debugFavoriteOrphanFolder2, withAdditionalParameters: pixelParam)
+        } else {
+            Pixel.fire(pixel: .debugBookmarkOrphanFolder2, withAdditionalParameters: pixelParam)
+        }
+        
+        // Sort all orphaned folders by number of children
+        let sorted = orphanedFolders.sorted { ($0.children?.count ?? 0) > ($1.children?.count ?? 0) }
+        
+        // Get the folder with the highers number of children
+        let folderWithMoreChildren = sorted.first
+        
+        // Separate the other folders
+        let otherFolders = sorted.suffix(from: 1)
+
+        // Move all children from other folders to the one with highest count and delete the folder
+        otherFolders.forEach { folder in
+            if let children = folder.children {
+                folderWithMoreChildren?.addToChildren(children)
+                folder.children = nil
+            }
+            context.delete(folder)
+        }
+    }
+    
+    private func createMissingTopLevelFolder(onContext context: NSManagedObjectContext,
+                                             withFolderType folderType: TopLevelFolderType) {
+        if folderType == .favorite {
+            Pixel.fire(pixel: .debugFavoriteTopLevelMissing2)
+        } else {
+            Pixel.fire(pixel: .debugBookmarkTopLevelMissing2)
+        }
+
+        // Get all bookmarks
+        let bookmarksFetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
+        bookmarksFetchRequest.predicate = NSPredicate(format: " %K == %@",
+                                                      #keyPath(BookmarkManagedObject.isFavorite),
+                                                      NSNumber(value: folderType == .favorite))
+        let bookmarks = try? context.fetch(bookmarksFetchRequest)
+        
+        // Create root folder
+        let bookmarksFolder: BookmarkFolderManagedObject
+        if folderType == .favorite {
+            bookmarksFolder = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(context)
+        } else {
+            bookmarksFolder = BookmarksCoreDataStorage.rootFolderManagedObject(context)
+        }
+        
+        // Assign all bookmarks to the parent folder
+        bookmarks?.forEach {
+            $0.parent = bookmarksFolder
+        }
+    }
+    
     private func fixFolderDataStructure(withFolderType folderType: TopLevelFolderType) {
         let privateContext = getTemporaryPrivateContext()
 
@@ -1026,74 +1086,16 @@ extension BookmarksCoreDataStorage {
             
             let results = try? privateContext.fetch(fetchRequest)
             
-            if let orphanedFolders = results, orphanedFolders.count > 1 { // More than one orphaned folder
-                
-                let count = orphanedFolders.count
-                let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
-                
-                if folderType == .favorite {
-                    Pixel.fire(pixel: .debugFavoriteOrphanFolder2, withAdditionalParameters: pixelParam)
-                } else {
-                    Pixel.fire(pixel: .debugBookmarkOrphanFolder2, withAdditionalParameters: pixelParam)
-                }
-                
-                // Sort all orphaned folders by number of children
-                let sorted = orphanedFolders.sorted { ($0.children?.count ?? 0) > ($1.children?.count ?? 0) }
-                
-                // Get the folder with the highers number of children
-                let folderWithMoreChildren = sorted.first
-                
-                // Separate the other folders
-                let otherFolders = sorted.suffix(from: 1)
-
-                // Move all children from other folders to the one with highest count and delete the folder
-                otherFolders.forEach { folder in
-                    if let children = folder.children {
-                        folderWithMoreChildren?.addToChildren(children)
-                        folder.children = nil
-                    }
-                    privateContext.delete(folder)
-                }
-                
-                do {
-                    try privateContext.save()
-                } catch {
-                    // Pixel
-                    assertionFailure("Failure saving bookmark top folder fix")
-                }
-            } else { // No orphaned folder
-                if folderType == .favorite {
-                    Pixel.fire(pixel: .debugFavoriteTopLevelMissing2)
-                } else {
-                    Pixel.fire(pixel: .debugBookmarkTopLevelMissing2)
-                }
-
-                // Get all bookmarks
-                let bookmarksFetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
-                bookmarksFetchRequest.predicate = NSPredicate(format: " %K == %@",
-                                                              #keyPath(BookmarkManagedObject.isFavorite),
-                                                              NSNumber(value: folderType == .favorite))
-                let bookmarks = try? privateContext.fetch(bookmarksFetchRequest)
-                
-                // Create root folder
-                let bookmarksFolder: BookmarkFolderManagedObject
-                if folderType == .favorite {
-                    bookmarksFolder = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(privateContext)
-                } else {
-                    bookmarksFolder = BookmarksCoreDataStorage.rootFolderManagedObject(privateContext)
-                }
-                
-                // Assign all bookmarks to the parent folder
-                bookmarks?.forEach {
-                    $0.parent = bookmarksFolder
-                }
-                
-                do {
-                    try privateContext.save()
-                } catch {
-                    // Pixel
-                    assertionFailure("Failure saving bookmark top folder fix")
-                }
+            if let orphanedFolders = results, orphanedFolders.count > 1 {
+               deleteExtraOrphanedFolders(orphanedFolders, onContext: privateContext, withFolderType: folderType)
+            } else {
+                createMissingTopLevelFolder(onContext: privateContext, withFolderType: folderType)
+            }
+            
+            do {
+                try privateContext.save()
+            } catch {
+                assertionFailure("Failure saving bookmark top folder fix")
             }
         }
     }

@@ -666,6 +666,7 @@ public struct UserText {
     public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
     public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
         "Login last updated \(date))"
     } // Message displaying when the login was last updated by
@@ -674,5 +675,11 @@ public struct UserText {
     public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
     public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
     public static let autofillLoginDetailsNewTitle = "Add Login" // Title when adding new autofill login
+    
+    public static let autofillLoginDetailsEditTitlePlaceholder = "Title" // Placeholder for title field on autofill login details
+    public static let autofillLoginDetailsEditUsernamePlaceholder = "username@example.com" // Placeholder for userbane field on autofill login details
+    public static let autofillLoginDetailsEditPasswordPlaceholder = "Password" // Placeholder for password field on autofill login details
+    public static let autofillLoginDetailsEditURLPlaceholder = "example.com" // Placeholder for url field on autofill login details
+    
     public static let autofillNavigationButtonItemTitleClose = "Close" // Title for close navigation button
 }

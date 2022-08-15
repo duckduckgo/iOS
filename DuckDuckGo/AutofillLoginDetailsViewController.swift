@@ -131,18 +131,15 @@ class AutofillLoginDetailsViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        //TODo why was this shit not in the view model? Tsk...
+        title = viewModel.navigationTitle
         switch viewModel.viewMode {
         case .edit:
-            title = UserText.autofillLoginDetailsEditTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
 
         case .view:
-            title = UserText.autofillLoginDetailsDefaultTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
         
         case .new:
-            title = UserText.autofillLoginDetailsNewTitle
             //TODO also cancel button
             if viewModel.shouldShowSaveButton {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))

@@ -55,6 +55,17 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
+    var navigationTitle: String {
+        switch viewMode {
+        case .edit:
+            return UserText.autofillLoginDetailsEditTitle
+        case .view:
+            return UserText.autofillLoginDetailsDefaultTitle
+        case .new:
+            return UserText.autofillLoginDetailsNewTitle
+        }
+    }
+    
     var shouldShowSaveButton: Bool {
         guard viewMode == .new else { return false }
         

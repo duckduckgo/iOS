@@ -20,6 +20,8 @@
 import SwiftUI
 import DuckUI
 
+//TODO address field capitalisation not disabled?
+
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     @State private var cellMaxWidth: CGFloat?
@@ -32,6 +34,8 @@ struct AutofillLoginDetailsView: View {
                 editModeContentView
             case .view:
                 viewModeContentView
+            case .new:
+                editModeContentView
             }
         }
         .simultaneousGesture(

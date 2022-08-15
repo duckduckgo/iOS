@@ -92,8 +92,15 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.setEditing(editing, animated: animated)
     }
     
+    @objc
+    func addButtonPressed() {
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator)
+        detailsController.delegate = self
+        navigationController?.pushViewController(detailsController, animated: true)
+    }
+    
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
-        let detailsController = AutofillLoginDetailsViewController(account: account, authenticator: viewModel.authenticator)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, account: account)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: animated)
     }
@@ -183,7 +190,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
     
     private func installNavigationBarButtons() {
-        navigationItem.rightBarButtonItem = self.editButtonItem
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+        navigationItem.rightBarButtonItems = [editButtonItem, addButton]
     }
     
     private func installSubviews() {

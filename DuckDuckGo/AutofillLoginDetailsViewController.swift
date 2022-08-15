@@ -27,6 +27,7 @@ protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
 }
 
 class AutofillLoginDetailsViewController: UIViewController {
+    
     weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
@@ -34,7 +35,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     private let lockedView = AutofillItemsLockedView()
     private var contentView: UIView?
 
-    init(account: SecureVaultModels.WebsiteAccount, authenticator: AutofillLoginListAuthenticator) {
+    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account)
         self.authenticator = authenticator
         super.init(nibName: nil, bundle: nil)
@@ -119,6 +120,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
+        //TODo why was this shit not in the view model? Tsk...
         switch viewModel.viewMode {
         case .edit:
             title = UserText.autofillLoginDetailsEditTitle
@@ -127,6 +129,12 @@ class AutofillLoginDetailsViewController: UIViewController {
         case .view:
             title = UserText.autofillLoginDetailsDefaultTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+        
+        case .new:
+            title = UserText.autofillLoginDetailsNewTitle
+            //TODO hide save if everything empty
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            
         }
     }
     

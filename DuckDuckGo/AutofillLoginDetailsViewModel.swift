@@ -55,6 +55,12 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
+    var shouldShowSaveButton: Bool {
+        guard viewMode == .new else { return false }
+        
+        return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty
+    }
+    
     var userVisiblePassword: String {
         let passwordHider = PasswordHider(password: password)
         return isPasswordHidden ? passwordHider.hiddenPassword : passwordHider.password

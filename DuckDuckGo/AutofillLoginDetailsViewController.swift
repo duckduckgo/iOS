@@ -93,6 +93,17 @@ class AutofillLoginDetailsViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        Publishers.MergeMany(
+            viewModel.$title,
+            viewModel.$username,
+            viewModel.$password,
+            viewModel.$address)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.setupNavigationBar()
+            }
+            .store(in: &cancellables)
+        
         authenticator.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -132,8 +143,12 @@ class AutofillLoginDetailsViewController: UIViewController {
         
         case .new:
             title = UserText.autofillLoginDetailsNewTitle
-            //TODO hide save if everything empty
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            //TODO also cancel button
+            if viewModel.shouldShowSaveButton {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            } else {
+                navigationItem.rightBarButtonItem = nil
+            }
             
         }
     }

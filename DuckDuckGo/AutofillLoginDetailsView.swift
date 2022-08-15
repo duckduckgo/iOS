@@ -21,6 +21,9 @@ import SwiftUI
 import DuckUI
 
 //TODO address field capitalisation not disabled?
+//TODO when editing text should be darker (#222222)
+//TODO password field doesn't have the x, it should when actively being edited
+//this password handling is gonna be a pain
 
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
@@ -31,11 +34,11 @@ struct AutofillLoginDetailsView: View {
         List {
             switch viewModel.viewMode {
             case .edit:
-                editModeContentView
+                editingContentView
             case .view:
-                viewModeContentView
+                viewingContentView
             case .new:
-                editModeContentView
+                editingContentView
             }
         }
         .simultaneousGesture(
@@ -44,7 +47,7 @@ struct AutofillLoginDetailsView: View {
             }))
     }
     
-    private var editModeContentView: some View {
+    private var editingContentView: some View {
         Group {
             Section {
                 editableCell(UserText.autofillLoginDetailsLoginName,
@@ -71,7 +74,7 @@ struct AutofillLoginDetailsView: View {
         }
     }
     
-    private var viewModeContentView: some View {
+    private var viewingContentView: some View {
         Group {
             Section {
                 AutofillLoginDetailsHeaderView(viewModel: viewModel.headerViewModel)

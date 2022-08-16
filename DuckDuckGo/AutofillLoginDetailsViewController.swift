@@ -135,18 +135,19 @@ class AutofillLoginDetailsViewController: UIViewController {
         switch viewModel.viewMode {
         case .edit:
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
 
         case .view:
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+            navigationItem.leftBarButtonItem = nil
         
         case .new:
-            //TODO also cancel button
             if viewModel.shouldShowSaveButton {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
             } else {
                 navigationItem.rightBarButtonItem = nil
             }
-            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         }
     }
     
@@ -159,6 +160,14 @@ class AutofillLoginDetailsViewController: UIViewController {
         viewModel.save()
         viewModel.toggleEditMode()
         delegate?.autofillLoginDetailsViewControllerDidSave(self)
+    }
+    
+    @objc private func cancel() {
+        if viewModel.viewMode == .new {
+            navigationController?.popViewController(animated: true)
+        } else {
+            toggleEditMode()
+        }
     }
 }
 

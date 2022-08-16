@@ -40,7 +40,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
-    let account: SecureVaultModels.WebsiteAccount?
+    var account: SecureVaultModels.WebsiteAccount?
     
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
@@ -92,6 +92,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
     
     private func updateData(with account: SecureVaultModels.WebsiteAccount) {
+        self.account = account
         username = account.username
         address = account.domain
         title = account.name
@@ -173,6 +174,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
                         self.updateData(with: newCredential.account)
                     }
+                    
+                    viewMode = .view
                 }
             case .view:
                 break
@@ -182,8 +185,16 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address)
                 let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
-                try vault.storeWebsiteCredentials(credentials)
+                let id = try vault.storeWebsiteCredentials(credentials)
                 
+                delegate?.autofillLoginDetailsViewModelDidSave()
+                
+                // Refetch after save to get updated properties like "lastUpdated"
+                if let newCredential = try vault.websiteCredentialsFor(accountId: id) {
+                    self.updateData(with: newCredential.account)
+                }
+                
+                viewMode = .view
             }
         } catch {
             Pixel.fire(pixel: .secureVaultError)

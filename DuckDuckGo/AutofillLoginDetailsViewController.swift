@@ -158,7 +158,6 @@ class AutofillLoginDetailsViewController: UIViewController {
     
     @objc private func save() {
         viewModel.save()
-        viewModel.toggleEditMode()
         delegate?.autofillLoginDetailsViewControllerDidSave(self)
     }
     

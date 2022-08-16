@@ -77,7 +77,10 @@ class NewPrivacyDashboardViewController: UIViewController {
         privacyDashboardLogic.onProtectionSwitchChange = { [weak self] isEnabled in
             self?.privacyDashboardProtectionSwitchChangeHandler(enabled: isEnabled)
         }
-        privacyDashboardLogic.onCloseTapped = { [weak self] in self?.privacyDashboardCloseTappedHandler() }
+        
+        privacyDashboardLogic.onCloseTapped = { [weak self] in
+            self?.privacyDashboardCloseTappedHandler()
+        }
     }
 }
 
@@ -104,6 +107,6 @@ private extension NewPrivacyDashboardViewController {
     }
     
     func privacyDashboardCloseTappedHandler() {
-        print("close")
+        dismiss(animated: true)
     }
 }

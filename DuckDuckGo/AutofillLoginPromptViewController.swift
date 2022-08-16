@@ -139,6 +139,8 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             }
         } else {
             // When system authentication isn't available, for now just fail silently
+            // This should never happen since we check for auth avaiablity before showing anything
+            // (or rarely if the user backgrounds the app, turns auth off, then comes back) 
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
             dismiss(animated: true) {
                 self.completion?(nil)

@@ -55,6 +55,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
+    private var passwordData: Data {
+        password.data(using: .utf8)!
+    }
+    
     var navigationTitle: String {
         switch viewMode {
         case .edit:
@@ -146,7 +150,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     func save() {
-        //TODO handle saving new
         do {
             switch viewMode {
             case .edit:
@@ -161,7 +164,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = address
-                    credential.password = password.data(using: .utf8)!
+                    credential.password = passwordData
                     
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
@@ -177,7 +180,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
                 
                 let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address)
-                let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: password.data(using: .utf8)!) //TODO should helper for data
+                let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
                 try vault.storeWebsiteCredentials(credentials)
                 

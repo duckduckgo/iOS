@@ -20,11 +20,6 @@
 import SwiftUI
 import DuckUI
 
-//TODO address field capitalisation not disabled?
-//TODO when editing text should be darker (#222222)
-//TODO password field doesn't have the x, it should when actively being edited
-//this password handling is gonna be a pain
-
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     @State private var cellMaxWidth: CGFloat?

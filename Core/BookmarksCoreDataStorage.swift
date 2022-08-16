@@ -1034,7 +1034,7 @@ extension BookmarksCoreDataStorage {
         // Sort all orphaned folders by number of children
         let sorted = orphanedFolders.sorted { ($0.children?.count ?? 0) > ($1.children?.count ?? 0) }
         
-        // Get the folder with the highers number of children
+        // Get the folder with the highest number of children
         let folderWithMoreChildren = sorted.first
         
         // Separate the other folders

@@ -1063,6 +1063,8 @@ extension BookmarksCoreDataStorage {
         bookmarksFetchRequest.predicate = NSPredicate(format: " %K == %@",
                                                       #keyPath(BookmarkManagedObject.isFavorite),
                                                       NSNumber(value: folderType == .favorite))
+        bookmarksFetchRequest.returnsObjectsAsFaults = false
+
         let bookmarks = try? context.fetch(bookmarksFetchRequest)
         
         // Create root folder

@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import LocalAuthentication
 import BrowserServicesKit
 
 extension ContentScopeFeatureToggles {
@@ -26,7 +27,10 @@ extension ContentScopeFeatureToggles {
     static let appSettings = AppDependencyProvider.shared.appSettings
     
     static var isCredentialsAutofillEnabled: Bool {
-        featureFlagger.isFeatureOn(.autofill) && appSettings.autofill
+        let context = LAContext()
+        var error: NSError?
+        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+        return featureFlagger.isFeatureOn(.autofill) && appSettings.autofill && canAuthenticate
     }
     
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {

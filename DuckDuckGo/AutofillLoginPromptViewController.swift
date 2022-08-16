@@ -29,12 +29,6 @@ protocol AutofillLoginPromptViewControllerExpansionResponseDelegate: AnyObject {
 
 class AutofillLoginPromptViewController: UIViewController {
     
-    static var canAuthenticate: Bool {
-        let context = LAContext()
-        var error: NSError?
-        return context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-    }
-    
     weak var expansionResponseDelegate: AutofillLoginPromptViewControllerExpansionResponseDelegate?
     
     typealias AutofillLoginPromptViewControllerCompletion = ((SecureVaultModels.WebsiteAccount?) -> Void)

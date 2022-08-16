@@ -22,6 +22,8 @@ import Combine
 import Core
 import BrowserServicesKit
 
+// swiftlint:disable file_length
+
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
 }
@@ -402,3 +404,5 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
         }
     }
 }
+
+// swiftlint:enable file_length

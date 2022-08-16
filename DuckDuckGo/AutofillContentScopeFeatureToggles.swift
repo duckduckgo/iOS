@@ -36,6 +36,6 @@ extension ContentScopeFeatureToggles {
                                    creditCardsAutofill: false,
                                    credentialsSaving: isCredentialsAutofillEnabled,
                                    passwordGeneration: false,
-                                   inlineIconCredentials: false)
+                                   inlineIconCredentials: isCredentialsAutofillEnabled)
     }
 }

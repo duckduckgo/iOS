@@ -33,6 +33,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let lockedView = AutofillItemsLockedView()
     private let emptySearchView = AutofillEmptySearchView()
     
+    private lazy var addBarButtonItem: UIBarButtonItem = {
+        UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+    }()
+    
     private var cancellables: Set<AnyCancellable> = []
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -159,39 +163,47 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = true
+            for item in navigationItem.rightBarButtonItems ?? [] {
+                item.isEnabled = true
+            }
         case .authLocked:
             emptyView.isHidden = true
             tableView.isHidden = true
             lockedView.isHidden = false
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = false
+            for item in navigationItem.rightBarButtonItems ?? [] {
+                item.isEnabled = false
+            }
         case .empty:
             emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = false
+            editButtonItem.isEnabled = false
+            addBarButtonItem.isEnabled = true
         case .searching:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = true
+            for item in navigationItem.rightBarButtonItems ?? [] {
+                item.isEnabled = true
+            }
         case .searchingNoResults:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = false
-            navigationItem.rightBarButtonItem?.isEnabled = true
+            for item in navigationItem.rightBarButtonItems ?? [] {
+                item.isEnabled = true
+            }
         }
         tableView.reloadData()
     }
     
     private func installNavigationBarButtons() {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
-        navigationItem.rightBarButtonItems = [editButtonItem, addButton]
+        navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
     }
     
     private func installSubviews() {

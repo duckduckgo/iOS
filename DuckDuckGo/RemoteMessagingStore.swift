@@ -120,6 +120,7 @@ extension RemoteMessagingStore {
             do {
                 try context.save()
             } catch {
+                Pixel.fire(pixel: .dbRemoteMessagingSaveConfigError, error: error)
                 os_log("Failed to save remote messaging config: %@",
                        log: OSLog.remoteMessaging,
                        type: .error, error.localizedDescription)
@@ -139,6 +140,7 @@ extension RemoteMessagingStore {
             do {
                 try context.save()
             } catch {
+                Pixel.fire(pixel: .dbRemoteMessagingInvalidateConfigError, error: error)
                 os_log("Failed to save remote messaging config entity invalidate: %@",
                        log: OSLog.remoteMessaging,
                        type: .error, error.localizedDescription)
@@ -265,6 +267,7 @@ extension RemoteMessagingStore {
             do {
                 try context.save()
             } catch {
+                Pixel.fire(pixel: .dbRemoteMessagingUpdateMessageShownError, error: error)
                 os_log("Failed to save message update as shown", log: .remoteMessaging, type: .error)
             }
         }
@@ -288,6 +291,7 @@ extension RemoteMessagingStore {
             do {
                 try context.save()
             } catch {
+                Pixel.fire(pixel: .dbRemoteMessagingSaveMessageError, error: error)
                 os_log("Failed to save remote message entity: %@", log: OSLog.remoteMessaging, type: .error, error.localizedDescription)
             }
         }
@@ -306,6 +310,7 @@ extension RemoteMessagingStore {
             do {
                 try context.save()
             } catch {
+                Pixel.fire(pixel: .dbRemoteMessagingUpdateMessageStatusError, error: error)
                 os_log("Error saving updateMessageStatus", log: .remoteMessaging, type: .error)
             }
         }
@@ -321,7 +326,12 @@ extension RemoteMessagingStore {
             results?.forEach {
                 context.delete($0)
             }
-            try? context.save()
+            do {
+                try context.save()
+            } catch {
+                Pixel.fire(pixel: .dbRemoteMessagingDeleteScheduledMessageError, error: error)
+                os_log("Error deleting scheduled remote messages", log: .remoteMessaging, type: .error)
+            }
         }
     }
 }

@@ -37,18 +37,14 @@ final class RemoteMessagingStore: RemoteMessagingStoring {
         static let remoteMessageManagedObject = "RemoteMessageManagedObject"
     }
 
+    let context: NSManagedObjectContext
     let notificationCenter: NotificationCenter
 
-    init() {
-        notificationCenter = .default
-    }
-
-    init(context: NSManagedObjectContext, notificationCenter: NotificationCenter = .default) {
-        self.notificationCenter = notificationCenter
+    init(context: NSManagedObjectContext = Database.shared.makeContext(concurrencyType: .privateQueueConcurrencyType, name: Constants.privateContextName),
+         notificationCenter: NotificationCenter = .default) {
         self.context = context
+        self.notificationCenter = notificationCenter
     }
-
-    private lazy var context = Database.shared.makeContext(concurrencyType: .privateQueueConcurrencyType, name: Constants.privateContextName)
 
     func saveProcessedResult(_ processorResult: RemoteMessagingConfigProcessor.ProcessorResult) {
         os_log("Remote messaging config - save processed version: %d", log: .remoteMessaging, type: .debug, processorResult.version)
@@ -234,8 +230,10 @@ extension RemoteMessagingStore {
     }
 
     func dismissRemoteMessage(withId id: String) {
-        updateRemoteMessage(withId: id, toStatus: .dismissed)
-        invalidateRemoteMessagingConfigs()
+        context.performAndWait {
+            updateRemoteMessage(withId: id, toStatus: .dismissed)
+            invalidateRemoteMessagingConfigs()
+        }
     }
 
     func fetchDismissedRemoteMessageIds() -> [String] {

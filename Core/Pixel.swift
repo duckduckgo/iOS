@@ -90,11 +90,13 @@ public struct PixelParameters {
     public static let isBackgrounded = "is_backgrounded"
     
     public static let isInternalUser = "is_internal_user"
-
+    
     // Email manager
     public static let emailKeychainAccessType = "access_type"
     public static let emailKeychainError = "error"
     public static let emailKeychainKeychainStatus = "keychain_status"
+
+    public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
 
     public static let ctaShown = "cta"
 }

@@ -334,6 +334,10 @@ extension Pixel {
         case adAttributionLogicWrongVendorOnSuccessfulCompilation
         case adAttributionLogicWrongVendorOnFailedCompilation
         
+        case debugBookmarkOrphanFolder
+        case debugBookmarkTopLevelMissing
+        case debugFavoriteOrphanFolder
+        case debugFavoriteTopLevelMissing
     }
     
 }
@@ -641,6 +645,12 @@ extension Pixel.Event {
             return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
+        
+        case .debugBookmarkOrphanFolder: return "m_d_bookmark_orphan_folder"
+        case .debugBookmarkTopLevelMissing: return "m_d_bookmark_top_level_missing"
+        
+        case .debugFavoriteOrphanFolder: return "m_d_favorite_orphan_folder"
+        case .debugFavoriteTopLevelMissing: return "m_d_bookmark_top_level_missing"
         
         // MARK: Ad Attribution
             

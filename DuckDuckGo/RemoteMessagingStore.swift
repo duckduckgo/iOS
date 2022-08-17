@@ -61,6 +61,8 @@ final class RemoteMessagingStore: RemoteMessagingStoring {
             DispatchQueue.main.async {
                 self.notificationCenter.post(name: RemoteMessaging.Notifications.remoteMessagesDidChange, object: nil)
             }
+        } else {
+            deleteScheduledRemoteMessages()
         }
     }
 }
@@ -162,7 +164,7 @@ extension RemoteMessagingStore {
                 guard let message = remoteMessageManagedObject.message,
                       let remoteMessage = RemoteMessageMapper.fromString(message),
                       let id = remoteMessageManagedObject.id
-                         else {
+                else {
                     continue
                 }
 
@@ -186,7 +188,7 @@ extension RemoteMessagingStore {
                 guard let message = remoteMessageManagedObject.message,
                       let remoteMessageMapped = RemoteMessageMapper.fromString(message),
                       let id = remoteMessageManagedObject.id
-                         else {
+                else {
                     continue
                 }
 

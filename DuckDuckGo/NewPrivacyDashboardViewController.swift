@@ -35,8 +35,7 @@ class NewPrivacyDashboardViewController: UIViewController {
 
     public init(privacyInfo: PrivacyInfo?) {
         self.privacyInfo = privacyInfo
-        self.privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo,
-                                                           themeName: ThemeManager.shared.currentTheme.name.rawValue)
+        self.privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -55,6 +54,8 @@ class NewPrivacyDashboardViewController: UIViewController {
         setupWebView()
         setupPrivacyDashboardLogicHandlers()
         privacyDashboardLogic.setup(for: webView)
+        
+        applyTheme(ThemeManager.shared.currentTheme)
     }
     
     public override func viewDidDisappear(_ animated: Bool) {
@@ -68,7 +69,8 @@ class NewPrivacyDashboardViewController: UIViewController {
         let webView = WKWebView(frame: view.frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webView.allowsBackForwardNavigationGestures = true
-
+        webView.isOpaque = false
+        
         view.addSubview(webView)
         self.webView = webView
     }
@@ -123,5 +125,6 @@ extension NewPrivacyDashboardViewController: Themable {
     
     func decorate(with theme: Theme) {
         privacyDashboardLogic.themeName = theme.name.rawValue
+        view.backgroundColor = theme.backgroundColor
     }
 }

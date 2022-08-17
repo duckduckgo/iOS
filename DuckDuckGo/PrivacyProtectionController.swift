@@ -77,6 +77,8 @@ class PrivacyProtectionController: ThemableNavigationController {
     weak var siteRating: SiteRating?
     weak var privacyInfo: PrivacyInfo?
     
+    weak var privacyDashboard: NewPrivacyDashboardViewController?
+    
     var omniBarText: String?
     var errorText: String?
   
@@ -112,6 +114,8 @@ class PrivacyProtectionController: ThemableNavigationController {
 
     private func showInitialScreen() {
         let controller = NewPrivacyDashboardViewController(privacyInfo: privacyInfo)
+        
+        privacyDashboard = controller
          
         pushViewController(controller, animated: true)
         updateViewControllers()
@@ -141,6 +145,11 @@ class PrivacyProtectionController: ThemableNavigationController {
     func updateSiteRating(_ siteRating: SiteRating?) {
         self.siteRating = siteRating
         updateViewControllers()
+    }
+    
+    func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {
+        self.privacyInfo = privacyInfo
+        privacyDashboard?.updatePrivacyInfo(privacyInfo)
     }
 
     func updateViewControllers() {

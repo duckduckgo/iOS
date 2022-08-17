@@ -821,6 +821,7 @@ class TabViewController: UIViewController {
             tabModel.privacyInfo = nil
         }
         onSiteRatingChanged()
+        onPrivacyInfoChanged()
     }
     
     private func makeSiteRating(url: URL) -> SiteRating {
@@ -856,6 +857,10 @@ class TabViewController: UIViewController {
     private func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
         privacyController?.updateSiteRating(siteRating)
+    }
+    
+    private func onPrivacyInfoChanged() {
+        privacyController?.updatePrivacyInfo(tabModel.privacyInfo)
     }
     
     func didLaunchBrowsingMenu() {
@@ -1286,6 +1291,7 @@ extension TabViewController: WKNavigationDelegate {
         self.siteRating = makeSiteRating(url: url)
         self.tabModel.privacyInfo = makePrivacyInfo(url: url)
         updateSiteRating()
+        onSiteRatingChanged()
         checkLoginDetectionAfterNavigation()
     }
     

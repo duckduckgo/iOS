@@ -24,17 +24,13 @@ import Core
 import PrivacyDashboard
 
 class NewPrivacyDashboardViewController: UIViewController {
-
-    weak var privacyInfo: PrivacyInfo?
     
     var webView: WKWebView!
     
     private let privacyDashboardLogic: PrivacyDashboardLogic
-    private var isLoaded: Bool = false
-
+//    private var isLoaded: Bool = false
 
     public init(privacyInfo: PrivacyInfo?) {
-        self.privacyInfo = privacyInfo
         self.privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo)
         super.init(nibName: nil, bundle: nil)
     }
@@ -46,7 +42,6 @@ class NewPrivacyDashboardViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-//        applyTheme(ThemeManager.shared.currentTheme)
 //        extendedLayoutIncludesOpaqueBars = true
 //        isModalInPresentation = true
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -92,6 +87,10 @@ class NewPrivacyDashboardViewController: UIViewController {
             }
         }
     }
+    
+    public func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {
+        privacyDashboardLogic.updatePrivacyInfo(privacyInfo)
+    }
 }
 
 private extension NewPrivacyDashboardViewController {
@@ -99,7 +98,7 @@ private extension NewPrivacyDashboardViewController {
     func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
         print("switch: \(enabled)")
         
-        guard let domain = privacyInfo?.url.host else { return }
+        guard let domain = privacyDashboardLogic.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
         

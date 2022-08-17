@@ -33,10 +33,10 @@ class NewPrivacyDashboardViewController: UIViewController {
     private var isLoaded: Bool = false
 
 
-    public init(privacyInfo: PrivacyInfo?, themeName: String?) {
+    public init(privacyInfo: PrivacyInfo?) {
         self.privacyInfo = privacyInfo
         self.privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo,
-                                                           themeName: themeName)
+                                                           themeName: ThemeManager.shared.currentTheme.name.rawValue)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -116,5 +116,12 @@ private extension NewPrivacyDashboardViewController {
     
     func privacyDashboardCloseTappedHandler() {
         dismiss(animated: true)
+    }
+}
+
+extension NewPrivacyDashboardViewController: Themable {
+    
+    func decorate(with theme: Theme) {
+        privacyDashboardLogic.themeName = theme.name.rawValue
     }
 }

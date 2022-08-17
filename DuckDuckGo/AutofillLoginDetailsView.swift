@@ -47,13 +47,16 @@ struct AutofillLoginDetailsView: View {
             Section {
                 editableCell(UserText.autofillLoginDetailsLoginName,
                              subtitle: $viewModel.title,
-                             placeholderText: UserText.autofillLoginDetailsEditTitlePlaceholder)
+                             placeholderText: UserText.autofillLoginDetailsEditTitlePlaceholder,
+                             autoCapitalizationType: .words,
+                             disableAutoCorrection: false)
             }
     
             Section {
                 editableCell(UserText.autofillLoginDetailsUsername,
                              subtitle: $viewModel.username,
-                             placeholderText: UserText.autofillLoginDetailsEditUsernamePlaceholder)
+                             placeholderText: UserText.autofillLoginDetailsEditUsernamePlaceholder,
+                             keyboardType: .emailAddress)
                 
                 editableCell(UserText.autofillLoginDetailsPassword,
                              subtitle: $viewModel.password,
@@ -64,7 +67,8 @@ struct AutofillLoginDetailsView: View {
             Section {
                 editableCell(UserText.autofillLoginDetailsAddress,
                              subtitle: $viewModel.address,
-                             placeholderText: UserText.autofillLoginDetailsEditURLPlaceholder)
+                             placeholderText: UserText.autofillLoginDetailsEditURLPlaceholder,
+                             keyboardType: .URL)
             }
         }
     }
@@ -99,7 +103,14 @@ struct AutofillLoginDetailsView: View {
         }
     }
     
-    private func editableCell(_ title: String, subtitle: Binding<String>, placeholderText: String, secure: Bool = false) -> some View {
+    private func editableCell(_ title: String,
+                              subtitle: Binding<String>,
+                              placeholderText: String,
+                              secure: Bool = false,
+                              autoCapitalizationType: UITextAutocapitalizationType = .none,
+                              disableAutoCorrection: Bool = true,
+                              keyboardType: UIKeyboardType = .default) -> some View {
+        
         VStack(alignment: .leading, spacing: 5) {
             Text(title)
                 .label3AltStyle()
@@ -109,8 +120,12 @@ struct AutofillLoginDetailsView: View {
                     SecureField(placeholderText, text: subtitle)
                         .label3Style(design: .monospaced)
                 } else {
-                    ClearTextField(placeholderText: placeholderText, text: subtitle)
-                        .label4Style()
+                    ClearTextField(placeholderText: placeholderText,
+                                   text: subtitle,
+                                   autoCapitalizationType: autoCapitalizationType,
+                                   disableAutoCorrection: disableAutoCorrection,
+                                   keyboardType: keyboardType)
+                    .label4Style()
                 }
             }
         }.frame(height: 60)
@@ -120,6 +135,10 @@ struct AutofillLoginDetailsView: View {
 struct ClearTextField: View {
     var placeholderText: String
     @Binding var text: String
+    var autoCapitalizationType: UITextAutocapitalizationType = .none
+    var disableAutoCorrection = true
+    var keyboardType: UIKeyboardType = .default
+    
     @State private var closeButtonVisible = false
     
     var body: some View {
@@ -129,6 +148,10 @@ struct ClearTextField: View {
             } onCommit: {
                 closeButtonVisible = false
             }
+            .autocapitalization(autoCapitalizationType)
+            .disableAutocorrection(disableAutoCorrection)
+            .keyboardType(keyboardType)
+            
             Spacer()
             Image(systemName: "multiply.circle.fill")
                 .foregroundColor(.secondary)

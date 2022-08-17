@@ -81,6 +81,14 @@ class NewPrivacyDashboardViewController: UIViewController {
         privacyDashboardLogic.onCloseTapped = { [weak self] in
             self?.privacyDashboardCloseTappedHandler()
         }
+        
+        privacyDashboardLogic.onShowReportBrokenSiteTapped = { [weak self] in
+            guard let mainViewController = self?.presentingViewController as? MainViewController else { return }
+            
+            self?.dismiss(animated: true) {
+                mainViewController.launchReportBrokenSite()
+            }
+        }
     }
 }
 

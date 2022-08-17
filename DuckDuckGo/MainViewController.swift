@@ -812,7 +812,7 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    fileprivate func launchReportBrokenSite() {
+    func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     

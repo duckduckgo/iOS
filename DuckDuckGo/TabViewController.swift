@@ -2350,6 +2350,18 @@ extension TabViewController: SecureVaultManagerDelegate {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
+    func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
+        let isEnabled = featureFlagger.isFeatureOn(.autofill)
+        let isBackgrounded = UIApplication.shared.applicationState == .background
+        let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
+        if isEnabled {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
+        } else {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenDisabled, withAdditionalParameters: pixelParams)
+        }
+        return isEnabled
+    }
+    
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
         if let credentials = data.credentials, isAutofillEnabled {
             // Add a delay to allow propagation of pointer events to the page
@@ -2363,6 +2375,7 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager,
                             promptUserToAutofillCredentialsForDomain domain: String,
                             withAccounts accounts: [SecureVaultModels.WebsiteAccount],
+                            withTrigger trigger: AutofillUserScript.GetTriggerType,
                             completionHandler: @escaping (SecureVaultModels.WebsiteAccount?) -> Void) {
   
         if !isAutofillEnabled {
@@ -2377,7 +2390,7 @@ extension TabViewController: SecureVaultManagerDelegate {
                 return
             }
             
-            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts) { account in
+            let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, trigger: trigger) { account in
                 completionHandler(account)
             }
             

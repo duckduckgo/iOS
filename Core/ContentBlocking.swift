@@ -141,7 +141,7 @@ public final class ContentBlocking {
             domainEvent = .adClickAttributionActive
         }
         
-        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], includedParameters: [])
+        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], includedParameters: [.appVersion])
     }
     
     private static let attributionDebugEvents = EventMapping<AdClickAttributionDebugEvents> { event, _, _, _ in
@@ -161,6 +161,12 @@ public final class ContentBlocking {
             domainEvent = .adAttributionLogicUnexpectedStateOnRulesCompilationFailed
         case .adAttributionDetectionInvalidDomainInParameter:
             domainEvent = .adAttributionDetectionInvalidDomainInParameter
+        case .adAttributionLogicRequestingAttributionTimedOut:
+            domainEvent = .adAttributionLogicRequestingAttributionTimedOut
+        case .adAttributionLogicWrongVendorOnSuccessfulCompilation:
+            domainEvent = .adAttributionLogicWrongVendorOnSuccessfulCompilation
+        case .adAttributionLogicWrongVendorOnFailedCompilation:
+            domainEvent = .adAttributionLogicWrongVendorOnFailedCompilation
         }
         
         Pixel.fire(pixel: domainEvent, includedParameters: [])

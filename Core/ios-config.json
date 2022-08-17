@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1659709712276,
+    "version": 1660052924250,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -840,6 +840,108 @@
                                     "primaryarms.com"
                                 ],
                                 "reason": "Images in the large scrolling image banner on main page do not render. Note that this CNAMEs to marvel-b4-cdn.bc0a.com at time of mitigation."
+                            }
+                        ]
+                    },
+                    "privacymanager.io": {
+                        "rules": [
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/605.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/650.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/847.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/assets/icons/.*.svg",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/defaultTheme.css",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/index.html",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/main.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/polyfills.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/runtime.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/vendor.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "gdpr.privacymanager.io/1/gdpr.bundle.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "gdpr.privacymanager.io/latest/gdpr.bundle.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "gdpr-wrapper.privacymanager.io/gdpr/.*/gdpr-liveramp.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "gdpr-wrapper.privacymanager.io/gdpr/.*/manager-logo.png",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
                             }
                         ]
                     },

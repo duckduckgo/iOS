@@ -218,6 +218,7 @@ extension Pixel {
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable
+        case autofillLoginsAutopromptDismissed
 
         case autofillSettingsOpened
 
@@ -226,6 +227,11 @@ extension Pixel {
         
         case secureVaultInitFailedError
         case secureVaultFailedToOpenDatabaseError
+        
+        // The pixels are for debugging a specific problem and should be removed when resolved
+        // https://app.asana.com/0/0/1202498365125439/f
+        case secureVaultIsEnabledCheckedWhenEnabled
+        case secureVaultIsEnabledCheckedWhenDisabled
         
         // MARK: Ad Click Attribution pixels
         
@@ -306,7 +312,14 @@ extension Pixel {
         case adAttributionLogicUnexpectedStateOnRulesCompilationFailed
         case adAttributionDetectionHeuristicsDidNotMatchDomain
         case adAttributionDetectionInvalidDomainInParameter
+        case adAttributionLogicRequestingAttributionTimedOut
+        case adAttributionLogicWrongVendorOnSuccessfulCompilation
+        case adAttributionLogicWrongVendorOnFailedCompilation
         
+        case debugBookmarkOrphanFolder
+        case debugBookmarkTopLevelMissing
+        case debugFavoriteOrphanFolder
+        case debugFavoriteTopLevelMissing
     }
     
 }
@@ -511,6 +524,8 @@ extension Pixel.Event {
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_failed"
         case .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable:
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_unavailable"
+        case .autofillLoginsAutopromptDismissed:
+            return "m_autofill_logins_autoprompt_dismissed"
             
         case .autofillSettingsOpened: return "m_autofill_settings_opened"
             
@@ -519,6 +534,9 @@ extension Pixel.Event {
             
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
+            
+        case .secureVaultIsEnabledCheckedWhenEnabled: return "m_secure-vault_is-enabled-checked_when-enabled"
+        case .secureVaultIsEnabledCheckedWhenDisabled: return "m_secure-vault_is-enabled-checked_when-disabled"
             
         // MARK: Ad Click Attribution pixels
             
@@ -592,6 +610,12 @@ extension Pixel.Event {
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
         
+        case .debugBookmarkOrphanFolder: return "m_d_bookmark_orphan_folder"
+        case .debugBookmarkTopLevelMissing: return "m_d_bookmark_top_level_missing"
+        
+        case .debugFavoriteOrphanFolder: return "m_d_favorite_orphan_folder"
+        case .debugFavoriteTopLevelMissing: return "m_d_bookmark_top_level_missing"
+        
         // MARK: Ad Attribution
             
         case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"
@@ -602,7 +626,9 @@ extension Pixel.Event {
         case .adAttributionLogicUnexpectedStateOnRulesCompilationFailed: return "m_attribution_unexpected_state_on_rules_compilation_failed"
         case .adAttributionDetectionInvalidDomainInParameter: return "m_attribution_invalid_domain_in_parameter"
         case .adAttributionDetectionHeuristicsDidNotMatchDomain: return "m_attribution_heuristics_did_not_match_domain"
-            
+        case .adAttributionLogicRequestingAttributionTimedOut: return "m_attribution_logic_requesting_attribution_timed_out"
+        case .adAttributionLogicWrongVendorOnSuccessfulCompilation: return "m_attribution_logic_wrong_vendor_on_successful_compilation"
+        case .adAttributionLogicWrongVendorOnFailedCompilation: return "m_attribution_logic_wrong_vendor_on_failed_compilation"
         }
         
     }

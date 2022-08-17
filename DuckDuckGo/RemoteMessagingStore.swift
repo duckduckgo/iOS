@@ -74,7 +74,9 @@ extension RemoteMessagingStore {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessagingConfigManagedObject>
                     = RemoteMessagingConfigManagedObject.fetchRequest()
+            fetchRequest.fetchLimit = 1
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "version", ascending: false)]
+
             guard let results = try? context.fetch(fetchRequest) else {
                 return
             }
@@ -97,7 +99,9 @@ extension RemoteMessagingStore {
     private func saveRemoteMessagingConfig(withVersion version: Int64) {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessagingConfigManagedObject> = RemoteMessagingConfigManagedObject.fetchRequest()
+            fetchRequest.fetchLimit = 1
             fetchRequest.predicate = NSPredicate(format: "version == %lld", version)
+
             if let results = try? context.fetch(fetchRequest), let result = results.first {
                 result.evaluationTimestamp = Date()
                 result.invalidate = false
@@ -124,6 +128,8 @@ extension RemoteMessagingStore {
     private func invalidateRemoteMessagingConfigs() {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessagingConfigManagedObject> = RemoteMessagingConfigManagedObject.fetchRequest()
+            fetchRequest.returnsObjectsAsFaults = false
+
             guard let results = try? context.fetch(fetchRequest) else { return }
 
             results.forEach { $0.invalidate = true }
@@ -148,6 +154,8 @@ extension RemoteMessagingStore {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "status == %i", RemoteMessageStatus.scheduled.rawValue)
+            fetchRequest.returnsObjectsAsFaults = false
+
             guard let results = try? context.fetch(fetchRequest) else { return }
 
             for remoteMessageManagedObject in results {
@@ -170,6 +178,8 @@ extension RemoteMessagingStore {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            fetchRequest.returnsObjectsAsFaults = false
+
             guard let results = try? context.fetch(fetchRequest) else { return }
 
             for remoteMessageManagedObject in results {
@@ -191,7 +201,9 @@ extension RemoteMessagingStore {
         var shown: Bool = true
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
+            fetchRequest.fetchLimit = 1
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
             guard let results = try? context.fetch(fetchRequest) else { return }
 
             if let result = results.first {
@@ -205,7 +217,9 @@ extension RemoteMessagingStore {
         var dismissed: Bool = true
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
+            fetchRequest.fetchLimit = 1
             fetchRequest.predicate = NSPredicate(format: "status == %i", RemoteMessageStatus.dismissed.rawValue)
+
             guard let results = try? context.fetch(fetchRequest) else { return }
 
             if results.first != nil {
@@ -225,6 +239,8 @@ extension RemoteMessagingStore {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "status == %i", RemoteMessageStatus.dismissed.rawValue)
+            fetchRequest.returnsObjectsAsFaults = false
+
             do {
                 let results = try context.fetch(fetchRequest)
                 dismissedMessageIds = results.compactMap { $0.id }
@@ -239,6 +255,8 @@ extension RemoteMessagingStore {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            fetchRequest.returnsObjectsAsFaults = false
+
             guard let results = try? context.fetch(fetchRequest) else { return }
 
             results.forEach { $0.shown = shown }
@@ -277,6 +295,8 @@ extension RemoteMessagingStore {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+            fetchRequest.returnsObjectsAsFaults = false
+
             guard let results = try? context.fetch(fetchRequest) else { return }
 
             results.forEach { $0.status = status.rawValue }
@@ -292,7 +312,9 @@ extension RemoteMessagingStore {
     private func deleteScheduledRemoteMessages() {
         context.performAndWait {
             let fetchRequest: NSFetchRequest<RemoteMessageManagedObject> = RemoteMessageManagedObject.fetchRequest()
+            fetchRequest.returnsObjectsAsFaults = false
             fetchRequest.predicate = NSPredicate(format: "status == %i", RemoteMessageStatus.scheduled.rawValue)
+
             let results = try? context.fetch(fetchRequest)
             results?.forEach {
                 context.delete($0)

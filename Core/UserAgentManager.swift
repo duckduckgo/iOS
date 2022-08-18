@@ -120,6 +120,7 @@ struct UserAgent {
                       privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> String {
         let omittedSites = omitApplicationSites(forConfig: privacyConfig)
         let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
+
         let omitApplicationComponent = !customUAEnabled || omittedSites.contains { domain in
             url?.isPart(ofDomain: domain) ?? false
         }

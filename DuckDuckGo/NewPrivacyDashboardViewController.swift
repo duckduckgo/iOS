@@ -111,6 +111,7 @@ private extension NewPrivacyDashboardViewController {
             ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
         }
         
+        ContentBlocking.contentBlockingManager.scheduleCompilation()
 //        let completionToken = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
 //        pendingUpdates[completionToken] = domain
 //        sendPendingUpdates()

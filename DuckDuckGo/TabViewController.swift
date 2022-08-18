@@ -886,12 +886,15 @@ class TabViewController: UIViewController {
     private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
-        let entity = EntityMapping().findEntity(forHost: host)
-        
+        let entity = ContentBlocking.trackerDataManager.trackerData.findEntity(forHost: host)
         let config = ContentBlocking.privacyConfigurationManager.privacyConfig
         let isProtected = !config.isUserUnprotected(domain: host)
         
-        return PrivacyInfo(url: url, parentEntity: entity, isProtected: isProtected)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: isProtected)
+        // TODO: required temporarily for serialising the TrackerInfo into old format
+        privacyInfo.trackerInfo.tds = ContentBlocking.trackerDataManager.trackerData
+        
+        return privacyInfo
     }
  
     private func updateSiteRating() {

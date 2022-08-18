@@ -89,6 +89,7 @@ class NewPrivacyDashboardViewController: UIViewController {
     }
     
     public func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {
+        privacyDashboardLogic.didFinishRulesCompilation()
         privacyDashboardLogic.updatePrivacyInfo(privacyInfo)
     }
 }
@@ -113,6 +114,8 @@ private extension NewPrivacyDashboardViewController {
 //        let completionToken = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
 //        pendingUpdates[completionToken] = domain
 //        sendPendingUpdates()
+        
+        privacyDashboardLogic.didStartRulesCompilation()
     }
     
     func privacyDashboardCloseTappedHandler() {

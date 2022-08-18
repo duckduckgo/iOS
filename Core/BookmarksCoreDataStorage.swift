@@ -1016,6 +1016,7 @@ public class BookmarksCoreDataStorageMigration {
 
 // MARK: - CoreData structure fixer
 // https://app.asana.com/0/414709148257752/1202779945035904/f
+// This is a temporary workaround, do not use the following functions for anything else
 
 extension BookmarksCoreDataStorage {
     
@@ -1026,9 +1027,9 @@ extension BookmarksCoreDataStorage {
         let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
         
         if folderType == .favorite {
-            Pixel.fire(pixel: .debugFavoriteOrphanFolder2, withAdditionalParameters: pixelParam)
+            Pixel.fire(pixel: .debugFavoriteOrphanFolderNew, withAdditionalParameters: pixelParam)
         } else {
-            Pixel.fire(pixel: .debugBookmarkOrphanFolder2, withAdditionalParameters: pixelParam)
+            Pixel.fire(pixel: .debugBookmarkOrphanFolderNew, withAdditionalParameters: pixelParam)
         }
         
         // Sort all orphaned folders by number of children
@@ -1050,12 +1051,16 @@ extension BookmarksCoreDataStorage {
         }
     }
     
+    /*
+     Top level (orphaned) folders need to match its type
+     i.e: Favorites and Bookmarks each have their own root folder
+     */
     private func createMissingTopLevelFolder(onContext context: NSManagedObjectContext,
                                              withFolderType folderType: TopLevelFolderType) {
         if folderType == .favorite {
-            Pixel.fire(pixel: .debugFavoriteTopLevelMissing2)
+            Pixel.fire(pixel: .debugFavoriteTopLevelMissingNew)
         } else {
-            Pixel.fire(pixel: .debugBookmarkTopLevelMissing2)
+            Pixel.fire(pixel: .debugBookmarkTopLevelMissingNew)
         }
 
         // Get all bookmarks
@@ -1067,7 +1072,7 @@ extension BookmarksCoreDataStorage {
 
         let bookmarks = try? context.fetch(bookmarksFetchRequest)
         
-        // Create root folder
+        // Create root folder for the specified folder type
         let bookmarksFolder: BookmarkFolderManagedObject
         if folderType == .favorite {
             bookmarksFolder = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(context)
@@ -1083,7 +1088,7 @@ extension BookmarksCoreDataStorage {
     
     internal func fixFolderDataStructure(withFolderType folderType: TopLevelFolderType) {
         let privateContext = getTemporaryPrivateContext()
-
+        
         privateContext.performAndWait {
             let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
             fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == %@",
@@ -1094,7 +1099,7 @@ extension BookmarksCoreDataStorage {
             let results = try? privateContext.fetch(fetchRequest)
             
             if let orphanedFolders = results, orphanedFolders.count > 1 {
-               deleteExtraOrphanedFolders(orphanedFolders, onContext: privateContext, withFolderType: folderType)
+                deleteExtraOrphanedFolders(orphanedFolders, onContext: privateContext, withFolderType: folderType)
             } else {
                 createMissingTopLevelFolder(onContext: privateContext, withFolderType: folderType)
             }

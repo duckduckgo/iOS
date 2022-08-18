@@ -20,6 +20,7 @@
 import WebKit
 import Core
 import StoreKit
+import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
@@ -241,7 +242,11 @@ class TabViewController: UIViewController {
     }
     
     private var isAutofillEnabled: Bool {
-        appSettings.autofill && featureFlagger.isFeatureOn(.autofill)
+        let context = LAContext()
+        var error: NSError?
+        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+
+        return appSettings.autofill && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
     }
     
     private var userContentController: UserContentController {
@@ -2384,11 +2389,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         
         if accounts.count > 0 {
-            if !AutofillLoginPromptViewController.canAuthenticate {
-                Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
-                completionHandler(nil)
-                return
-            }
             
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, trigger: trigger) { account in
                 completionHandler(account)

@@ -29,9 +29,11 @@ struct AutofillLoginDetailsView: View {
         List {
             switch viewModel.viewMode {
             case .edit:
-                editModeContentView
+                editingContentView
             case .view:
-                viewModeContentView
+                viewingContentView
+            case .new:
+                editingContentView
             }
         }
         .simultaneousGesture(
@@ -40,30 +42,34 @@ struct AutofillLoginDetailsView: View {
             }))
     }
     
-    private var editModeContentView: some View {
+    private var editingContentView: some View {
         Group {
             Section {
                 editableCell(UserText.autofillLoginDetailsLoginName,
-                             subtitle: $viewModel.title)
+                             subtitle: $viewModel.title,
+                             placeholderText: UserText.autofillLoginDetailsEditTitlePlaceholder)
             }
     
             Section {
                 editableCell(UserText.autofillLoginDetailsUsername,
-                             subtitle: $viewModel.username)
+                             subtitle: $viewModel.username,
+                             placeholderText: UserText.autofillLoginDetailsEditUsernamePlaceholder)
                 
                 editableCell(UserText.autofillLoginDetailsPassword,
                              subtitle: $viewModel.password,
+                             placeholderText: UserText.autofillLoginDetailsEditPasswordPlaceholder,
                              secure: true)
             }
             
             Section {
                 editableCell(UserText.autofillLoginDetailsAddress,
-                             subtitle: $viewModel.address)
+                             subtitle: $viewModel.address,
+                             placeholderText: UserText.autofillLoginDetailsEditURLPlaceholder)
             }
         }
     }
     
-    private var viewModeContentView: some View {
+    private var viewingContentView: some View {
         Group {
             Section {
                 AutofillLoginDetailsHeaderView(viewModel: viewModel.headerViewModel)
@@ -93,17 +99,17 @@ struct AutofillLoginDetailsView: View {
         }
     }
     
-    private func editableCell(_ title: String, subtitle: Binding<String>, secure: Bool = false) -> some View {
+    private func editableCell(_ title: String, subtitle: Binding<String>, placeholderText: String, secure: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(title)
                 .label3AltStyle()
             
             HStack {
                 if secure {
-                    SecureField("", text: subtitle)
+                    SecureField(placeholderText, text: subtitle)
                         .label3Style(design: .monospaced)
                 } else {
-                    ClearTextField(text: subtitle)
+                    ClearTextField(placeholderText: placeholderText, text: subtitle)
                         .label4Style()
                 }
             }
@@ -112,12 +118,13 @@ struct AutofillLoginDetailsView: View {
 }
 
 struct ClearTextField: View {
+    var placeholderText: String
     @Binding var text: String
     @State private var closeButtonVisible = false
     
     var body: some View {
         HStack {
-            TextField("", text: $text) { editing in
+            TextField(placeholderText, text: $text) { editing in
                 closeButtonVisible = editing
             } onCommit: {
                 closeButtonVisible = false

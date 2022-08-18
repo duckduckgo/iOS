@@ -104,7 +104,7 @@ class PrivacyProtectionPracticesController: UIViewController {
     }
 
     private func initBackButton() {
-        backButton.isHidden = !isPad
+        backButton.isHidden = !AppWidthObserver.shared.isLargeWidth
     }
     
     private func initLabels() {

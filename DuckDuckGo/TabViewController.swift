@@ -910,6 +910,7 @@ class TabViewController: UIViewController {
     }
 
     func dismiss() {
+        presentedViewController?.dismiss(animated: true)
         progressWorker.progressBar = nil
         chromeDelegate?.omniBar.cancelAllAnimations()
         cancelTrackerNetworksAnimation()

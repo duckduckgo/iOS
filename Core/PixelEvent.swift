@@ -614,7 +614,7 @@ extension Pixel.Event {
         case .debugBookmarkTopLevelMissing: return "m_d_bookmark_top_level_missing"
         
         case .debugFavoriteOrphanFolder: return "m_d_favorite_orphan_folder"
-        case .debugFavoriteTopLevelMissing: return "m_d_bookmark_top_level_missing"
+        case .debugFavoriteTopLevelMissing: return "m_d_favorite_top_level_missing"
         
         // MARK: Ad Attribution
             

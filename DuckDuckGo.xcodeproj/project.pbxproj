@@ -5120,7 +5120,6 @@
 				85F1E9B01FB7BF3900A75AC1 /* NativeDisplayableCertificateBuilderDriver.swift in Sources */,
 				85BD869F1FAA0E1100252411 /* PrivacyProtectionInfoDisplaying.swift in Sources */,
 				9820EAF522613CD30089094D /* WebProgressWorker.swift in Sources */,
-				4B14B56326937892002E6805 /* EmailWaitlistDebugViewController.swift in Sources */,
 				B6CB93E5286445AB0090FEB4 /* Base64DownloadSession.swift in Sources */,
 				3151F0EC27357FEE00226F58 /* VoiceSearchFeedbackViewModel.swift in Sources */,
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,

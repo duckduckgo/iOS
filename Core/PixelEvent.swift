@@ -157,10 +157,6 @@ extension Pixel {
         case openVoiceSearch
         case voiceSearchCancelled
         
-        case emailDidShowWaitlistDialog
-        case emailDidPressWaitlistDialogDismiss
-        case emailDidPressWaitlistDialogNotifyMe
-        
         case bookmarksFolderCreated
         
         case bookmarkCreatedAtTopLevel
@@ -231,6 +227,11 @@ extension Pixel {
         
         case secureVaultInitFailedError
         case secureVaultFailedToOpenDatabaseError
+        
+        // The pixels are for debugging a specific problem and should be removed when resolved
+        // https://app.asana.com/0/0/1202498365125439/f
+        case secureVaultIsEnabledCheckedWhenEnabled
+        case secureVaultIsEnabledCheckedWhenDisabled
         
         // MARK: Ad Click Attribution pixels
         
@@ -315,6 +316,10 @@ extension Pixel {
         case adAttributionLogicWrongVendorOnSuccessfulCompilation
         case adAttributionLogicWrongVendorOnFailedCompilation
         
+        case debugBookmarkOrphanFolder
+        case debugBookmarkTopLevelMissing
+        case debugFavoriteOrphanFolder
+        case debugFavoriteTopLevelMissing
     }
     
 }
@@ -455,10 +460,6 @@ extension Pixel.Event {
         case .openVoiceSearch: return "m_open_voice_search"
         case .voiceSearchCancelled: return "m_voice_search_cancelled"
             
-        case .emailDidShowWaitlistDialog: return "email_did_show_waitlist_dialog"
-        case .emailDidPressWaitlistDialogDismiss: return "email_did_press_waitlist_dialog_dismiss"
-        case .emailDidPressWaitlistDialogNotifyMe: return "email_did_press_waitlist_dialog_notify_me"
-            
         case .bookmarksFolderCreated: return "m_bookmarks_folder_created"
             
         case .bookmarkCreatedAtTopLevel: return "m_bookmark_created_at_top_level"
@@ -534,6 +535,9 @@ extension Pixel.Event {
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
+        case .secureVaultIsEnabledCheckedWhenEnabled: return "m_secure-vault_is-enabled-checked_when-enabled"
+        case .secureVaultIsEnabledCheckedWhenDisabled: return "m_secure-vault_is-enabled-checked_when-disabled"
+            
         // MARK: Ad Click Attribution pixels
             
         case .adClickAttributionDetected: return "m_ad_click_detected"
@@ -605,6 +609,12 @@ extension Pixel.Event {
             return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
+        
+        case .debugBookmarkOrphanFolder: return "m_d_bookmark_orphan_folder"
+        case .debugBookmarkTopLevelMissing: return "m_d_bookmark_top_level_missing"
+        
+        case .debugFavoriteOrphanFolder: return "m_d_favorite_orphan_folder"
+        case .debugFavoriteTopLevelMissing: return "m_d_favorite_top_level_missing"
         
         // MARK: Ad Attribution
             

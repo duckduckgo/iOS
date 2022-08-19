@@ -4,7 +4,6 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.duckduckgo.app.waitlistStatus</string>
 		<string>com.duckduckgo.app.macBrowserWaitlistStatus</string>
 		<string>com.duckduckgo.app.configurationRefresh</string>
 	</array>

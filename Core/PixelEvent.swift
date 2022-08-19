@@ -157,10 +157,6 @@ extension Pixel {
         case openVoiceSearch
         case voiceSearchCancelled
         
-        case emailDidShowWaitlistDialog
-        case emailDidPressWaitlistDialogDismiss
-        case emailDidPressWaitlistDialogNotifyMe
-        
         case bookmarksFolderCreated
         
         case bookmarkCreatedAtTopLevel
@@ -320,6 +316,10 @@ extension Pixel {
         case adAttributionLogicWrongVendorOnSuccessfulCompilation
         case adAttributionLogicWrongVendorOnFailedCompilation
         
+        case debugBookmarkOrphanFolder
+        case debugBookmarkTopLevelMissing
+        case debugFavoriteOrphanFolder
+        case debugFavoriteTopLevelMissing
     }
     
 }
@@ -459,10 +459,6 @@ extension Pixel.Event {
         case .voiceSearchDone: return "m_voice_search_done"
         case .openVoiceSearch: return "m_open_voice_search"
         case .voiceSearchCancelled: return "m_voice_search_cancelled"
-            
-        case .emailDidShowWaitlistDialog: return "email_did_show_waitlist_dialog"
-        case .emailDidPressWaitlistDialogDismiss: return "email_did_press_waitlist_dialog_dismiss"
-        case .emailDidPressWaitlistDialogNotifyMe: return "email_did_press_waitlist_dialog_notify_me"
             
         case .bookmarksFolderCreated: return "m_bookmarks_folder_created"
             
@@ -613,6 +609,12 @@ extension Pixel.Event {
             return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
+        
+        case .debugBookmarkOrphanFolder: return "m_d_bookmark_orphan_folder"
+        case .debugBookmarkTopLevelMissing: return "m_d_bookmark_top_level_missing"
+        
+        case .debugFavoriteOrphanFolder: return "m_d_favorite_orphan_folder"
+        case .debugFavoriteTopLevelMissing: return "m_d_favorite_top_level_missing"
         
         // MARK: Ad Attribution
             

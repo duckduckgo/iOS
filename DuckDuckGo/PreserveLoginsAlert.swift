@@ -29,18 +29,18 @@ class PreserveLoginsAlert {
                                              forDomain domain: String) {
         
         let message = UserText.preserveLoginsRemovalConfirmMessage.format(arguments: domain.dropPrefix(prefix: wwwPrefix))
-        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) {
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: {
             worker.handleUserEnablingFireproofing(forDomain: domain)
-        }
+        })
     }
     
     static func showFireproofEnabledMessage(usingController controller: UIViewController,
                                             worker: PreserveLoginsWorker,
                                             forDomain domain: String) {
         let message = UserText.preserveLoginsFireproofConfirmMessage.format(arguments: domain.dropPrefix(prefix: wwwPrefix))
-        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) {
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: {
             worker.handleUserDisablingFireproofing(forDomain: domain)
-        }
+        })
     }
     
     static func showConfirmFireproofWebsite(usingController controller: UIViewController,

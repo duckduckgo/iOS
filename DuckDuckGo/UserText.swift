@@ -676,6 +676,10 @@ public struct UserText {
     public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
     public static let autofillLoginDetailsNewTitle = "Add Login" // Title when adding new autofill login
     
+    public static func autofillLoginLisLoginDeletedToastMessage(for title: String) -> String {
+        "Login for \(title) deleted"
+    } // Toast message when a login item is deleted
+    
     public static let autofillLoginDetailsEditTitlePlaceholder = "Title" // Placeholder for title field on autofill login details
     public static let autofillLoginDetailsEditUsernamePlaceholder = "username@example.com" // Placeholder for userbane field on autofill login details
     public static let autofillLoginDetailsEditPasswordPlaceholder = "Password" // Placeholder for password field on autofill login details

@@ -624,11 +624,10 @@ extension Pixel.Event {
         
         case .debugBookmarkOrphanFolderNew: return "m_d_bookmark_orphan_folder_new"
         case .debugBookmarkTopLevelMissingNew: return "m_d_bookmark_top_level_missing_new"
-        
+        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
+
         case .debugFavoriteOrphanFolderNew: return "m_d_favorite_orphan_folder_new"
         case .debugFavoriteTopLevelMissingNew: return "m_d_favorite_top_level_missing_new"
-            
-        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
         case .debugCouldNotFixFavoriteFolder: return "m_d_cannot_fix_favorite_folder"
         
         // MARK: Ad Attribution

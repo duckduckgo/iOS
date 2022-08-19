@@ -401,49 +401,6 @@ public struct UserText {
     public static let emailSettingsOff = NSLocalizedString("email.settings.off", value: "Off", comment: "Signed out state for the email feature")
     public static let emailSettingsFooterText = NSLocalizedString("email.settings.footer", value: "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com.", comment: "Footer text for the email feature")
 
-    public static let emailSignOutAlertTitle = NSLocalizedString("email.signOutAlert.title", value: "Remove Email Protection?", comment: "Title for the email sign out alert")
-    public static let emailSignOutAlertDescription = NSLocalizedString("email.signOutAlert.description", value: "Note: Removing Email Protection from this device will not delete your Duck Address.", comment: "Description for the email sign out alert")
-    public static let emailSignOutAlertCancel = NSLocalizedString("email.signOutAlert.cancel", value: "Cancel", comment: "Cancel option for the email sign out alert")
-    public static let emailSignOutAlertRemove = NSLocalizedString("email.signOutAlert.remove", value: "Remove", comment: "Remove option for the email sign out alert")
-
-    public static let emailWaitlistPrivacySimplified = NSLocalizedString("email.waitlist.privacy-simplified", value: "Email privacy, simplified.", comment: "Header text for the email waitlist")
-    public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You’re on the waitlist!", comment: "Header text for the email waitlist")
-    public static let emailWaitlistInvited = NSLocalizedString("email.waitlist.invited", value: "You’ve been invited!", comment: "Header text for the email waitlist")
-
-    public static func emailWaitlistSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("email.waitlist.summary", value: "Block email trackers and hide your address, without switching your email provider. %@.", comment: "Description text for the email waitlist. Parameter is 'Learn more'.")
-        return message.format(arguments: learnMoreString)
-    }
-    public static func emailWaitlistJoinedWithNotificationSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when Email Protection is ready for you. %@.", comment: "Description text for the email waitlist. Parameter is 'Learn more.'")
-        return message.format(arguments: learnMoreString)
-    }
-
-    public static let emailWaitlistGetANotification = NSLocalizedString("email.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the email waitlist")
-    public static func emailWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
-        let message =  NSLocalizedString("email.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about Email Protection.", comment: "First parameter is 'get a notification', second is 'Learn more'.")
-        return message.format(arguments: getNotifiedString, learnMoreString)
-    }
-
-    public static let emailWaitlistJoinWaitlist = NSLocalizedString("email.waitlist.join", value: "Join the Private Waitlist", comment: "Action button text for the email waitlist")
-    public static let emailWaitlistGetStarted = NSLocalizedString("email.waitlist.get-started", value: "Get Started", comment: "Action button text for the email waitlist")
-
-    public static let emailWaitlistHaveInviteCode = NSLocalizedString("email.waitlist.have-invite-code", value: "I have an Invite Code", comment: "Invite code button text for the email waitlist")
-    public static func emailWaitlistPrivacyGuarantee(learnMoreString: String) -> String {
-        let message = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We do not save your emails. %@.", comment: "Footer text for the email waitlist. Parameter is 'Learn more'.")
-        return message.format(arguments: learnMoreString)
-    }
-    public static let emailWaitlistLearnMore = NSLocalizedString("email.waitlist.learn-more", value: "Learn more", comment: "Footer text for the email waitlist")
-    public static let emailWaitlistErrorJoining = NSLocalizedString("email.waitlist.error-joining", value: "An error occurred while joining the Waitlist, please try again later", comment: "Error text when failing to join the waitlist")
-
-    public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like us to notify you when it’s your turn?", comment: "Title for the permission notification for the email waitlist")
-    public static let emailWaitlistNotificationPermissionBody = NSLocalizedString("email.waitlist.notification-permission.body", value: "We’ll send you a notification when you can start using Email Protection.", comment: "Body text for the permission notification for the email waitlist")
-    public static let emailWaitlistNotificationPermissionNotifyMe = NSLocalizedString("email.waitlist.notification.notify-me", value: "Notify Me", comment: "Accept option for the permission notification for the email waitlist")
-    public static let emailWaitlistNotificationPermissionNoThanks = NSLocalizedString("email.waitlist.notification.no-thanks", value: "No Thanks", comment: "Decline option for the permission notification for the email waitlist")
-
-    public static let emailWaitlistAvailableNotificationTitle = NSLocalizedString("email.waitlist.notification.title", value: "Your Email Protection Invitation is Here!", comment: "Title for the email waitlist notification")
-    public static let emailWaitlistAvailableNotificationBody = NSLocalizedString("email.waitlist.notification.body", value: "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.", comment: "Body text for the email waitlist notification")
-
     public static let fireButtonAnimationFireRisingName = NSLocalizedString("fireButtonAnimation.fireRising.name", value: "Inferno", comment: "")
     public static let fireButtonAnimationWaterSwirlName = NSLocalizedString("fireButtonAnimation.waterSwirl.name", value: "Whirlpool", comment: "")
     public static let fireButtonAnimationAirstreamName = NSLocalizedString("fireButtonAnimation.airstream.name", value: "Airstream", comment: "")
@@ -644,7 +601,7 @@ public struct UserText {
         return localized.format(arguments: code)
     }
     
-    public static let autofillLoginDetailsLoginName = "Login Name" // Login name label for login details on autofill
+    public static let autofillLoginDetailsLoginName = "Login Title" // Login name label for login details on autofill
     public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
     public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
     public static let autofillLoginDetailsAddress = "Address" // Address label for login details on autofill
@@ -666,6 +623,7 @@ public struct UserText {
     public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
     public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
         "Login last updated \(date))"
     } // Message displaying when the login was last updated by
@@ -673,5 +631,12 @@ public struct UserText {
     public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
     public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
     public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
+    public static let autofillLoginDetailsNewTitle = "Add Login" // Title when adding new autofill login
+    
+    public static let autofillLoginDetailsEditTitlePlaceholder = "Title" // Placeholder for title field on autofill login details
+    public static let autofillLoginDetailsEditUsernamePlaceholder = "username@example.com" // Placeholder for userbane field on autofill login details
+    public static let autofillLoginDetailsEditPasswordPlaceholder = "Password" // Placeholder for password field on autofill login details
+    public static let autofillLoginDetailsEditURLPlaceholder = "example.com" // Placeholder for url field on autofill login details
+    
     public static let autofillNavigationButtonItemTitleClose = "Close" // Title for close navigation button
 }

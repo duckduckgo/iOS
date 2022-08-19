@@ -10,7 +10,7 @@ DuckDuckGo is the all-in-one privacy app that helps protect your online activiti
 
  • Automatically Enforce Encryption - Smarter Encryption forces many sites you visit in DuckDuckGo to use an encrypted (HTTPS) connection where available, protecting your data from prying eyes.
 
- • Block Email Trackers - 70% of emails track you as soon as you open them. Enabling Email Protection is the easy way to block most email trackers and hide your address without switching services. Join the private waitlist for the free beta version through the app settings menu.
+ • Block Email Trackers - 70% of emails track you as soon as you open them. Enabling Email Protection is the easy way to block most email trackers and hide your address without switching services.
 
 The DuckDuckGo app has the browsing features you expect, like tabs and bookmarks, plus privacy controls you'll love. Taking control of your privacy doesn't have to mean making tradeoffs.
 

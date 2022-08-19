@@ -213,9 +213,9 @@ extension TabViewController {
         bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
-                                  actionTitle: UserText.actionGenericEdit) {
+                                  actionTitle: UserText.actionGenericEdit, onAction: {
             self.performEditBookmarkAction(for: link)
-        }
+        })
     }
     
     private func performEditBookmarkAction(for link: Link) {
@@ -256,9 +256,9 @@ extension TabViewController {
     private func performSaveFavoriteAction(for link: Link) {
         bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url) { _, _ in
             DispatchQueue.main.async {
-                ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo) {
+                ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo, onAction: {
                     self.performRemoveFavoriteAction(for: link)
-                }
+                })
             }
         }
     }
@@ -273,9 +273,9 @@ extension TabViewController {
             bookmarksManager.delete(bookmark) { _, _ in
 
                 DispatchQueue.main.async {
-                    ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo) {
+                    ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo, onAction: {
                         self.performSaveFavoriteAction(for: link)
-                    }
+                    })
                 }
             }
         }
@@ -411,9 +411,9 @@ extension TabViewController {
         
         ContentBlocking.contentBlockingManager.scheduleCompilation()
         
-        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: { [weak self] in
             self?.togglePrivacyProtection(domain: domain)
-        }
+        })
     }
 }
 

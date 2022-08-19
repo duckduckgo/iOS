@@ -1,10 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-<<<<<<< HEAD
     "version": 1660230036281,
-=======
-    "version": 1660052924250,
->>>>>>> develop
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",

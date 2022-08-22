@@ -71,10 +71,7 @@ class GestureToolbarButton: UIView {
         longPressRecognizer.minimumPressDuration = Constants.minLongPressDuration
         longPressRecognizer.allowableMovement = CGFloat(Constants.maxTouchDeviationPoints)
         addGestureRecognizer(longPressRecognizer)
-        
-        if #available(iOS 13.4, *) {
-            addInteraction(UIPointerInteraction(delegate: self))
-        }
+        addInteraction(UIPointerInteraction(delegate: self))
     }
     
     override func layoutSubviews() {
@@ -135,7 +132,6 @@ extension GestureToolbarButton: Themable {
     }
 }
 
-@available(iOS 13.4, *)
 extension GestureToolbarButton: UIPointerInteractionDelegate {
     
     func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {

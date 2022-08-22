@@ -33,4 +33,8 @@ protocol AppSettings: AnyObject {
     var currentFireButtonAnimation: FireButtonAnimationType { get set }
     
     var textSize: Int { get set }
+    
+    var autofill: Bool { get set }
+
+    var voiceSearchEnabled: Bool { get set }
 }

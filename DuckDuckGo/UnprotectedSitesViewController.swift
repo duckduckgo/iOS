@@ -34,6 +34,7 @@ class UnprotectedSitesViewController: UITableViewController {
     private var hiddenNavBarItems: [UIBarButtonItem]?
     
     private let privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
+    private let rulesManager: ContentBlockerRulesManager = ContentBlocking.contentBlockingManager
     
     var showBackButton = false
     var enforceLightTheme = false
@@ -124,6 +125,7 @@ class UnprotectedSitesViewController: UITableViewController {
 
         let domain = unprotectedDomains[indexPath.row]
         privacyConfig.userEnabledProtection(forDomain: domain)
+        rulesManager.scheduleCompilation()
 
         if unprotectedDomains.count == 0 {
             if tableView.isEditing {
@@ -199,6 +201,7 @@ class UnprotectedSitesViewController: UITableViewController {
         guard let field = controller.textFields?[0] else { return }
         guard let domain = domain(from: field) else { return }
         privacyConfig.userDisabledProtection(forDomain: domain)
+        rulesManager.scheduleCompilation()
         tableView.reloadData()
         refreshToolbarItems(animated: true)
     }

@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Pievienot";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Automātiski aizpildīt pieteikšanās datus";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Pievienot grāmatzīmi";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ieslēgts";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Skatīt";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Pieteikšanās saglabāta";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Pieteikšanās atjaunināta";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Tas saglabās papildu pieteikšanās datus šai vietnei.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Pieteikšanās dati tiek droši saglabāti tikai šajā ierīcē, un tos var pārvaldīt no Iestatījumu izvēlnes Automātiskā aizpildīšana.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Vai vēlies, lai DuckDuckGo saglabātu tavus pieteikšanās datus?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Ne tagad";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Saglabāt pieteikšanās datus";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Saglabāt pieteikšanās datus?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Saglabāt paroli";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Saglabāt paroli?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Atjaunināt pieteikšanās datus";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Atjaunināt paroli";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Atjaunināt paroli?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Atjaunināt lietotājvārdu?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Pievienot grāmatzīmi";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Dzēst";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Vai tiešām vēlies dzēst šo mapi un %i vienumus?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Vai tiešām vēlies dzēst šo mapi un %i vienumu?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Vai dzēst %@?";
@@ -296,7 +341,7 @@
 "dax.hide.title" = "Vai paslēpt pārējos padomus?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Tavi DuckDuckGo meklējumi ir anonīmi, un es nekad neuzglabāju tavu meklēšanas vēsturi. Nekad. 🙌";
+"dax.onboarding.browsing.after.search" = "Tavi DuckDuckGo meklējumi ir anonīmi. Vienmēr. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Pē!";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ lejupielāde sākta";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atcelt";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Izslēgts";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Bloķē e-pasta izsekotājus un paslēp savu adresi";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Atcelt";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Laipni lūdzam\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Uzaicinājuma kods";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Tavs uzaicinājums parādīsies šeit, kad būsim gatavi tevi uzņemt. Vai vēlies %1$@, kad tas atnāks? %2$@ par macOS pārlūkprogrammas beta versiju.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "saņemt paziņojumu";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Mēs nosūtīsim tev paziņojumu, kad būsim gatavi tevi uzņemt. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Tavs uzaicinājums izmēģināt DuckDuckGo Mac datoram parādīsies šeit. Drīzumā pārbaudi vēlreiz, vai arī mēs varam tev nosūtīt paziņojumu, kad pienāks tava kārta.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Mēs nosūtīsim tev paziņojumu, kad tavs DuckDuckGo Mac datoram būs gatavs lejupielādei.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ par beta versiju.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "DuckDuckGo privātuma lietotnei Mac datoram ir ātrums, kādu tev vajag, pārlūkošanas funkcijas, ko tu gaidi, un tā ir aprīkota ar mūsu klasē labākajiem privātuma pamatiem.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Atver savu ielūgumu";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo Mac datoram ir gatavs!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopēt";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Apmeklē šo URL savā Mac datorā, lai lejupielādētu:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1. solis";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Atver instalējamo failu un pēc tam ievadi uzaicinājuma kodu, lai atbloķētu.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2. solis";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Vai esi gatavs sākt privātu pārlūkošanu savā Mac datorā?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Tu esi uzaicināts!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Pievienojies privātajam nogaides sarakstam";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Notiek pievienošanās gaidīšanas sarakstam...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Izmēģini DuckDuckGo Mac datoram!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Windows drīzumā!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Mēs varam tev paziņot, kad būs pienākusi tava kārta, taču pašlaik DuckDuckGo paziņojumi ir atspējoti.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Lai pievienotos gaidīšanas sarakstam, tev nav jādalās ar personisku informāciju. Tu ieņemsi vietu rindā, izmantojot laikspiedolu, kas pastāv tikai tavā ierīcē, lai mēs varētu tevi informēt, kad pienāks tava kārta.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Tu esi sarakstā!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Pieejams lejupielādei Mac datorā";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Pārlūko privāti, izmantojot mūsu Mac lietotni";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Tu esi sarakstā!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Tu esi uzaicināts! \n\nVai esi gatavs sākt privātu pārlūkošanu savā Mac? \n\n 1. solis \nApmeklē šo URL savā Mac datorā, lai lejupielādētu: \nhttps://duckduckgo.com/mac \n\n2. solis \nAtver instalējamo failu, pēc tam ievadi uzaicinājuma kodu, lai atbloķētu. \n\nUzaicinājuma kods: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Tu esi uzaicināts!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo darbvirsmas lietotne";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Pārlūkošanas izvēlne";
 
@@ -883,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Labi";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Par mūsu tīmekļa izsekošanas aizsardzību";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Par mūsu meklēšanas aizsardzību un reklāmām";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Kā mūsu meklēšanas reklāmas ietekmē mūsu aizsardzību";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritms";
 
@@ -906,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Piespiedu šifrēšana";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Šifrēts savienojums";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Mēs piespiedām šo vietni izmantot šifrētu savienojumu, lai nepieļautu, ka slepeni tiek novērota tevis nosūtītā personīgā informācija.";
@@ -985,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Jā";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "VIETNES AIZSARDZĪBA IR ATSPĒJOTA";
 
@@ -1000,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Atrasti lielāko izsekotāju tīkli";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Nav atrasts neviens lielāko izsekotāju tīkls";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Izsekotāju tīkli tika atrasti %1$@%% vietņu, kuras apmeklēji kopš %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Mēs joprojām apkopojam datus, lai parādītu, cik daudz\nizsekotāju esam bloķējuši.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Nav ielādēts neviens trešo pušu pieprasījums";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Šā domēna pieprasījumi tika ielādēti, jo nesen tika noklikšķināts uz %@ reklāmas DuckDuckGo. Šie pieprasījumi palīdz novērtēt reklāmu efektivitāti. Neviena reklāma DuckDuckGo nav profilējoša.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Šī domēna pieprasījumi tika ielādēti, lai novērstu vietnes darbības traucējumus.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Šī domēna pieprasījumi tika ielādēti, jo tie ir saistīti ar %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Tika ielādēti šādu trešo pušu domēnu pieprasījumi. Ja tiek ielādēti uzņēmuma pieprasījumi, tas var ļaut tiem veidot tavu profilu, lai gan joprojām ir spēkā mūsu pārējās tīmekļa izsekošanas aizsardzības prasības.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Netika bloķēta trešo pušu pieprasījumu ielāde, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Tika ielādēti šādu domēnu izsekošanas pieprasījumi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Tika ielādēti arī šāda domēna pieprasījumi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Tika ielādēti šādu domēnu pieprasījumi.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Tika ielādēti šāda domēna pieprasījumi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Mēs neatradām pieprasījumus no neviena trešās puses domēna.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Ielādēti trešo pušu pieprasījumi";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Lūdzu, ņemiet vērā: platformas ierobežojumi var ierobežot mūsu spēju noteikt visus pieprasījumus.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Bez profilēšanas";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "ToS;DR privātuma prakse.";
@@ -1040,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Nezināma privātuma prakse";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Izsekotāju tīkli apkopo tavu tīmekļa vēsturi datu profilā par tevi. Lielākie izsekotāju tīkli ir kaitīgāki, jo tie var izsekot un atlasīt tevi kā mērķauditoriju internetā plašākā mērogā.";
+"privacy.protection.tracker.networks.info" = "Izsekotāji palīdz uzņēmumiem veidot tavu profilu. Mēs bloķējām šo izsekotāju ielādēšanu un tavu darbību novērošanu šajā lapā.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Neviens izsekošanas pieprasījums netika bloķēts, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Mēs neatradām nevienu izsekošanas pieprasījumu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Turpmāk norādīto trešo pušu domēnu pieprasījumu ielāde tika bloķēta, jo tie tika identificēti kā izsekošanas pieprasījumi. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Pieprasījumu ielādēšana bloķēta";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Atrasti izsekošanas pieprasījumi";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Neviens izsekošanas pieprasījums nav bloķēts";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Nav atrasts neviens izsekošanas pieprasījums";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Atcelt";
@@ -1149,18 +1377,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Nepieciešama piekļuve mikrofonam";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Labi";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Atcelt";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nenoklausās tevis teikto. Visa runas datu apstrāde privātajai balss meklēšanai ar balsi notiek tavā ierīcē.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Privātajai meklēšanai ar balsi ir nepieciešama piekļuve mikrofonam";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Atcelt";

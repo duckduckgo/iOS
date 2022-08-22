@@ -77,14 +77,11 @@ class TabSwitcherViewController: UIViewController {
             tabSwitcherSettings.hasSeenNewLayout = true
         }
         
-        if #available(iOS 13.4, *) {
-            displayModeButton.isPointerInteractionEnabled = true
-            bookmarkAllButton.isPointerInteractionEnabled = true
-            topFireButton.isPointerInteractionEnabled = true
-            topPlusButton.isPointerInteractionEnabled = true
-            topDoneButton.isPointerInteractionEnabled = true
-        }
-        
+        displayModeButton.isPointerInteractionEnabled = true
+        bookmarkAllButton.isPointerInteractionEnabled = true
+        topFireButton.isPointerInteractionEnabled = true
+        topPlusButton.isPointerInteractionEnabled = true
+        topDoneButton.isPointerInteractionEnabled = true
     }
     
     override func viewDidLayoutSubviews() {

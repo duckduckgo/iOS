@@ -80,11 +80,14 @@ extension TabViewController {
     }
     
     private func onNewTabAction(url: URL) {
-        delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
+        delegate?.tab(self,
+                      didRequestNewTabForUrl: url,
+                      openedByPage: false,
+                      inheritingAttribution: adClickAttributionLogic.state)
     }
     
     private func onBackgroundTabAction(url: URL) {
-        delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
+        delegate?.tab(self, didRequestNewBackgroundTabForUrl: url, inheritingAttribution: adClickAttributionLogic.state)
     }
     
     private func onOpenAction(forUrl url: URL) {

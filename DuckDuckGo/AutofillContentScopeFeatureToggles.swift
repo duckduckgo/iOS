@@ -18,15 +18,28 @@
 //
 
 import Foundation
+import LocalAuthentication
 import BrowserServicesKit
 
 extension ContentScopeFeatureToggles {
     
-    static let supportedFeaturesOniOS = ContentScopeFeatureToggles(emailProtection: true,
-                                                                   credentialsAutofill: false,
-                                                                   identitiesAutofill: false,
-                                                                   creditCardsAutofill: false,
-                                                                   credentialsSaving: false,
-                                                                   passwordGeneration: false,
-                                                                   inlineIconCredentials: false)
+    static let featureFlagger = AppDependencyProvider.shared.featureFlagger
+    static let appSettings = AppDependencyProvider.shared.appSettings
+    
+    static var isCredentialsAutofillEnabled: Bool {
+        let context = LAContext()
+        var error: NSError?
+        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+        return featureFlagger.isFeatureOn(.autofill) && appSettings.autofill && canAuthenticate
+    }
+    
+    static var supportedFeaturesOniOS: ContentScopeFeatureToggles {
+        ContentScopeFeatureToggles(emailProtection: true,
+                                   credentialsAutofill: isCredentialsAutofillEnabled,
+                                   identitiesAutofill: false,
+                                   creditCardsAutofill: false,
+                                   credentialsSaving: isCredentialsAutofillEnabled,
+                                   passwordGeneration: false,
+                                   inlineIconCredentials: isCredentialsAutofillEnabled)
+    }
 }

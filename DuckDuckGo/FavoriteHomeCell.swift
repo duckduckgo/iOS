@@ -94,9 +94,9 @@ class FavoriteHomeCell: UICollectionViewCell {
         iconBackground.backgroundColor = UIColor.forDomain(host)
         
         if let domain = favorite.url?.host?.droppingWwwPrefix(),
-           let fakeFavicon = UIImageView.createFakeFavicon(forDomain: favorite.url?.host ?? "",
-                                                           backgroundColor: UIColor.forDomain(domain),
-                                                           bold: false) {
+           let fakeFavicon = FaviconsHelper.createFakeFavicon(forDomain: favorite.url?.host ?? "",
+                                                              backgroundColor: UIColor.forDomain(domain),
+                                                              bold: false) {
             iconImage.image = fakeFavicon
         }
 

@@ -102,33 +102,31 @@ extension URL {
     
     // MARK: static
 
-    public static func webUrl(fromText text: String) -> URL? {
-        guard isWebUrl(text: text) else {
+    public static func webUrl(from text: String) -> URL? {
+        guard var url = URL(string: text) else { return nil }
+
+        switch url.scheme {
+        case URLProtocol.http.rawValue, URLProtocol.https.rawValue:
+            break
+        case .none:
+            // assume http by default
+            guard let urlWithScheme = URL(string: URLProtocol.http.scheme + text),
+                  // only allow 2nd+ level domains or "localhost" without scheme
+                  urlWithScheme.host?.contains(".") == true || urlWithScheme.host == .localhost
+            else { return nil }
+            url = urlWithScheme
+
+        default:
             return nil
         }
-        let urlText = appendScheme(path: text)
-        return URL(string: urlText)
-    }
 
-    public static func isWebUrl(text: String) -> Bool {
-        guard let url = URL(string: text) else { return false }
-        guard let scheme = url.scheme else { return isWebUrl(text: appendScheme(path: text)) }
-        guard scheme == URLProtocol.http.rawValue || scheme == URLProtocol.https.rawValue else { return false }
-        guard url.user == nil else { return false }
-        guard let host = url.host else { return false }
-        guard host.isValidHost else { return false }
-        return true
+        guard url.host?.isValidHost == true, url.user == nil else { return nil }
+
+        return url
     }
 
     public static func decode(query: String) -> String? {
         return query.removingPercentEncoding
-    }
-
-    public static func appendScheme(path: String) -> String {
-        if path.hasPrefix(URLProtocol.http.scheme) || path.hasPrefix(URLProtocol.https.scheme) {
-            return path
-        }
-        return "\(URLProtocol.http.scheme)\(path)"
     }
 
     /// Uses JavaScriptCore to determine if the bookmarklet is valid JavaScript

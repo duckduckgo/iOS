@@ -169,7 +169,7 @@ public struct AppUrls {
     }
 
     public func url(forQuery query: String, queryContext: URL? = nil) -> URL {
-        if let url = URL.webUrl(fromText: query) {
+        if let url = URL.webUrl(from: query) {
             return url
         }
         

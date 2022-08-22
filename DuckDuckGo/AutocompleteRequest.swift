@@ -62,7 +62,7 @@ class AutocompleteRequest {
                 return Suggestion(source: .remote, suggestion: phrase, url: url)
             } else {
                 // We need to infer nav based on the phrase to maintain previous behaviour (ie treat phrase that look like URLs like URLs)
-                let url = URL.webUrl(fromText: phrase)
+                let url = URL.webUrl(from: phrase)
                 return Suggestion(source: .remote, suggestion: phrase, url: url)
             }
         }

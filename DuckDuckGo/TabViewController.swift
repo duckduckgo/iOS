@@ -424,7 +424,7 @@ class TabViewController: UIViewController {
                     self?.webView.stopLoading()
                 }
                 showProgressIndicator()
-            }, onFinishExtracting: {}) { [weak self] cleanURL in
+            }, onFinishExtracting: {}, completion: { [weak self] cleanURL in
                 // restart the cleaned-up URL loading here if:
                 //   link protection provided an updated URL
                 //   OR if loading was stopped for a popup loaded by its parent
@@ -434,7 +434,7 @@ class TabViewController: UIViewController {
                 // break a js-initiated popup request such as printing from a popup
                 guard url != cleanURL || loadingStopped || !loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: .userInitiated(cleanURL))
-            }
+            })
         }
     }
 

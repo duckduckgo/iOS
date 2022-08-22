@@ -775,10 +775,18 @@ extension BookmarksCoreDataStorage {
             
             let results = try? viewContext.fetch(fetchRequest)
             guard (results?.count ?? 0) <= 1 else {
+              
+                let count = results?.count ?? 0
+                let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
+                
+                Pixel.fire(pixel: .debugBookmarkOrphanFolder, withAdditionalParameters: pixelParam)
+                Thread.sleep(forTimeInterval: 1)
                 fatalError("There shouldn't be an orphaned folder")
             }
             
             guard let folder = results?.first else {
+                Pixel.fire(pixel: .debugBookmarkTopLevelMissing)
+                Thread.sleep(forTimeInterval: 1)
                 fatalError("Top level folder missing")
             }
             
@@ -795,10 +803,17 @@ extension BookmarksCoreDataStorage {
             
             let results = try? viewContext.fetch(fetchRequest)
             guard (results?.count ?? 0) <= 1 else {
+                let count = results?.count ?? 0
+                let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
+
+                Pixel.fire(pixel: .debugFavoriteOrphanFolder, withAdditionalParameters: pixelParam)
+                Thread.sleep(forTimeInterval: 1)
                 fatalError("There shouldn't be an orphaned folder")
             }
             
             guard let folder = results?.first else {
+                Pixel.fire(pixel: .debugFavoriteTopLevelMissing)
+                Thread.sleep(forTimeInterval: 1)
                 fatalError("Top level folder missing")
             }
             

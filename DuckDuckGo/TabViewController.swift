@@ -20,6 +20,7 @@
 import WebKit
 import Core
 import StoreKit
+import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
@@ -241,7 +242,11 @@ class TabViewController: UIViewController {
     }
     
     private var isAutofillEnabled: Bool {
-        appSettings.autofill && featureFlagger.isFeatureOn(.autofill)
+        let context = LAContext()
+        var error: NSError?
+        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+
+        return appSettings.autofill && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
     }
     
     private var userContentController: UserContentController {
@@ -1821,8 +1826,6 @@ extension TabViewController {
     }
 
     private func legacySetupBlobDownload(for navigationAction: WKNavigationAction, completion: @escaping () -> Void) {
-        guard #available(iOS 14.0, *) else { completion(); return }
-
         let url = navigationAction.request.url!
         let legacyBlobDownloadScript = """
             let blob = await fetch(url).then(r => r.blob())
@@ -2356,6 +2359,18 @@ extension TabViewController: SecureVaultManagerDelegate {
         SecureVaultErrorReporter.shared.secureVaultInitFailed(error)
     }
     
+    func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
+        let isEnabled = featureFlagger.isFeatureOn(.autofill)
+        let isBackgrounded = UIApplication.shared.applicationState == .background
+        let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
+        if isEnabled {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
+        } else {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenDisabled, withAdditionalParameters: pixelParams)
+        }
+        return isEnabled
+    }
+    
     func secureVaultManager(_ vault: SecureVaultManager, promptUserToStoreAutofillData data: AutofillData) {
         if let credentials = data.credentials, isAutofillEnabled {
             // Add a delay to allow propagation of pointer events to the page
@@ -2378,11 +2393,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         
         if accounts.count > 0 {
-            if !AutofillLoginPromptViewController.canAuthenticate {
-                Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
-                completionHandler(nil)
-                return
-            }
             
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, trigger: trigger) { account in
                 completionHandler(account)
@@ -2453,7 +2463,6 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
 extension WKWebView {
 
-    @available(iOS 14.0, *)
     func load(_ url: URL, in frame: WKFrameInfo?) {
         evaluateJavaScript("window.location.href='" + url.absoluteString + "'", in: frame, in: .page)
     }

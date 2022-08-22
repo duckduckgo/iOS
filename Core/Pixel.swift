@@ -94,6 +94,8 @@ public struct PixelParameters {
     public static let emailKeychainAccessType = "access_type"
     public static let emailKeychainError = "error"
     public static let emailKeychainKeychainStatus = "keychain_status"
+    
+    public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
 }
 
 public struct PixelValues {
@@ -175,9 +177,6 @@ extension Pixel {
         } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
             newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
             newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
-        }
-        if isInternalUser {
-            newParams[PixelParameters.isInternalUser] = "true"
         }
         
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)

@@ -1072,6 +1072,14 @@ extension BookmarksCoreDataStorage {
 
         let bookmarks = try? context.fetch(bookmarksFetchRequest)
         
+        if bookmarks?.count ?? 0 > 0 {
+            if folderType == .favorite {
+                Pixel.fire(pixel: .debugMissingTopFolderFixHasFavorites)
+            } else {
+                Pixel.fire(pixel: .debugMissingTopFolderFixHasBookmarks)
+            }
+        }
+        
         // Create root folder for the specified folder type
         let bookmarksFolder: BookmarkFolderManagedObject
         if folderType == .favorite {
@@ -1107,6 +1115,7 @@ extension BookmarksCoreDataStorage {
             do {
                 try privateContext.save()
             } catch {
+                Pixel.fire(pixel: .debugCantSaveBookmarkFix)
                 assertionFailure("Failure saving bookmark top folder fix")
             }
         }

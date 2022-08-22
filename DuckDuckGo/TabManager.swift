@@ -117,7 +117,7 @@ class TabManager {
         controller.attachWebView(configuration: configCopy,
                                  andLoadRequest: request,
                                  consumeCookies: !model.hasActiveTabs,
-                                 loadedByParentTab: true)
+                                 loadingInitiatedByParentTab: true)
         controller.delegate = delegate
         controller.loadViewIfNeeded()
         controller.applyInheritedAttribution(inheritedAttribution)

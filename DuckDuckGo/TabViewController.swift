@@ -388,7 +388,7 @@ class TabViewController: UIViewController {
     func attachWebView(configuration: WKWebViewConfiguration,
                        andLoadRequest request: URLRequest?,
                        consumeCookies: Bool,
-                       loadedByParentTab: Bool = false) {
+                       loadingInitiatedByParentTab: Bool = false) {
         instrumentation.willPrepareWebView()
         
         configuration.userContentController = UserContentController()
@@ -417,15 +417,22 @@ class TabViewController: UIViewController {
             consumeCookiesThenLoadRequest(request)
         } else if let url = request?.url {
             var loadingStopped = false
-            linkProtection.getCleanURL(from: url) { [weak self] in
-                if loadedByParentTab {
+            linkProtection.getCleanURL(from: url, onStartExtracting: { [weak self] in
+                if loadingInitiatedByParentTab {
+                    // stop parent-initiated URL loading only if canonical URL extraction process has started
                     loadingStopped = true
                     self?.webView.stopLoading()
                 }
                 showProgressIndicator()
-            } onFinishExtracting: {
-            } completion: { [weak self] cleanURL in
-                guard url != cleanURL || !loadedByParentTab || loadingStopped else { return }
+            }, onFinishExtracting: {}) { [weak self] cleanURL in
+                // restart the cleaned-up URL loading here if:
+                //   link protection provided an updated URL
+                //   OR if loading was stopped for a popup loaded by its parent
+                //   OR for any other navigation which is not a popup loaded by its parent
+                // the check is here to let an (about:blank) popup which has its loading
+                // initiated by its parent to keep its active request, otherwise we would
+                // break a js-initiated popup request such as printing from a popup
+                guard url != cleanURL || loadingStopped || !loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: .userInitiated(cleanURL))
             }
         }
@@ -2022,7 +2029,6 @@ extension TabViewController: WKUIDelegate {
             completionHandler(nil)
         }
     }
-
 }
 
 // MARK: - UIPopoverPresentationControllerDelegate

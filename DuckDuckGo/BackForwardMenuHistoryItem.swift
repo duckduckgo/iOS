@@ -38,21 +38,21 @@ struct BackForwardMenuHistoryItem {
 struct BackForwardMenuHistoryItemURLSanitizer {
     
     static func sanitizedURLForDisplay(_ url: URL) -> String {
-        guard let punyURL = url.absoluteString.punycodedUrl,
+        guard let punyURL = URL(trimmedAddressBarString: url.absoluteString),
               let components = URLComponents(string: punyURL.absoluteString) else {
             return "\(url)"
         }
-        
+
         var displayURL = punyURL.absoluteString
 
         if let scheme = components.scheme {
             displayURL = displayURL.replacingOccurrences(of: scheme, with: "")
         }
-        
-        displayURL = displayURL.dropPrefix(prefix: "://")
-        displayURL = displayURL.dropPrefix(prefix: "www.")
-        displayURL = displayURL.drop(suffix: "/")
-        
+
+        displayURL = displayURL.dropping(prefix: "://")
+        displayURL = displayURL.droppingWwwPrefix()
+        displayURL = displayURL.dropping(suffix: "/")
+
         let maxSize = 25
         if displayURL.count > maxSize {
             displayURL = "\(String(displayURL.dropLast(displayURL.count - maxSize)))..."

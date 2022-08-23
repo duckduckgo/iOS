@@ -38,8 +38,8 @@ class WebJSAlert {
         return defaultText ?? ""
     }
 
-    var isConfirm: Bool {
-        guard case .confirm = alertType else { return false }
+    var isSimpleAlert: Bool {
+        guard case .alert = alertType else { return false }
         return true
     }
     

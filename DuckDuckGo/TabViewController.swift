@@ -226,6 +226,12 @@ class TabViewController: UIViewController {
     func present(_ alert: WebJSAlert) {
         self.jsAlertController.present(alert)
     }
+
+    private func dismissJSAlertIfNeeded() {
+        if jsAlertController.isShown {
+            jsAlertController.dismiss(animated: false)
+        }
+    }
     
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
@@ -425,18 +431,14 @@ class TabViewController: UIViewController {
     
     public func load(url: URL) {
         webView.stopLoading()
-        if jsAlertController.isShown {
-            jsAlertController.dismiss(animated: false)
-        }
+        dismissJSAlertIfNeeded()
 
         load(url: url, didUpgradeURL: false)
     }
     
     public func load(backForwardListItem: WKBackForwardListItem) {
         webView.stopLoading()
-        if jsAlertController.isShown {
-            jsAlertController.dismiss(animated: false)
-        }
+        dismissJSAlertIfNeeded()
 
         updateContentMode()
         webView.go(to: backForwardListItem)
@@ -590,9 +592,7 @@ class TabViewController: UIViewController {
     }
     
     func goBack() {
-        if jsAlertController.isShown {
-            jsAlertController.dismiss(animated: false)
-        }
+        dismissJSAlertIfNeeded()
 
         if isError {
             hideErrorMessage()
@@ -608,9 +608,7 @@ class TabViewController: UIViewController {
     }
     
     func goForward() {
-        if jsAlertController.isShown {
-            jsAlertController.dismiss(animated: false)
-        }
+        dismissJSAlertIfNeeded()
 
         if webView.goForward() != nil {
             chromeDelegate?.omniBar.resignFirstResponder()
@@ -2045,9 +2043,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func refresh() {
-        if jsAlertController.isShown {
-            jsAlertController.dismiss(animated: false)
-        }
+        dismissJSAlertIfNeeded()
 
         requeryLogic.onRefresh()
         if isError {

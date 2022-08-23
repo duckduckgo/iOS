@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21200"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -37,12 +36,12 @@
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="403"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="nwz-Vs-EX4" userLabel="Alert">
-                                                <rect key="frame" x="52" y="50" width="251" height="303.5"/>
+                                                <rect key="frame" x="52" y="65.5" width="251" height="272.5"/>
                                                 <subviews>
                                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x4E-3p-RVj">
-                                                        <rect key="frame" x="0.0" y="0.0" width="251" height="303.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="251" height="272.5"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.0" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0fd-78-Khe">
-                                                            <rect key="frame" x="0.0" y="0.0" width="251" height="303.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="251" height="273"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </view>
                                                         <blurEffect style="systemMaterial"/>
@@ -53,15 +52,15 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </visualEffectView>
                                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="1000" text="A message from [website-domain.com]:" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e34-7t-Ubh">
-                                                        <rect key="frame" x="16" y="20" width="219" height="30"/>
+                                                        <rect key="frame" x="16" y="20" width="219" height="35"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="15"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="IRr-e5-RBE">
-                                                        <rect key="frame" x="16" y="59" width="219" height="51"/>
+                                                        <rect key="frame" x="16" y="64" width="219" height="59.5"/>
                                                         <subviews>
                                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" horizontalCompressionResistancePriority="700" verticalCompressionResistancePriority="1000" text="Some javascript alert message text displayed with multiline word wrapping" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmI-1g-rf4">
-                                                                <rect key="frame" x="0.0" y="0.0" width="219" height="51"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="219" height="59.5"/>
                                                                 <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="17"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -79,7 +78,7 @@
                                                         <viewLayoutGuide key="frameLayoutGuide" id="Pom-ol-2OT"/>
                                                     </scrollView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="flI-KP-naP">
-                                                        <rect key="frame" x="0.0" y="126" width="251" height="177.5"/>
+                                                        <rect key="frame" x="0.0" y="139.5" width="251" height="133"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VYW-gI-Rwm" userLabel="Text Field Box">
                                                                 <rect key="frame" x="0.0" y="0.0" width="251" height="44"/>
@@ -161,31 +160,6 @@
                                                                     <action selector="cancelAction:" destination="yf4-q9-yrl" eventType="touchUpInside" id="Dop-j6-wD0"/>
                                                                 </connections>
                                                             </button>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8d-WP-B7b" userLabel="Separator">
-                                                                <rect key="frame" x="0.0" y="133" width="251" height="0.5"/>
-                                                                <color key="backgroundColor" name="AlertSeparatorColor"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="0.5" id="5ez-iG-TRK"/>
-                                                                </constraints>
-                                                            </view>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" role="destructive" translatesAutoresizingMaskIntoConstraints="NO" id="CXg-sc-2nh">
-                                                                <rect key="frame" x="0.0" y="133.5" width="251" height="44"/>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="44" id="9kj-2K-edg"/>
-                                                                </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <state key="normal" title="Close this tab">
-                                                                    <color key="titleColor" name="AlertButtonDestructiveTitleColor"/>
-                                                                </state>
-                                                                <state key="highlighted">
-                                                                    <color key="titleColor" systemColor="systemRedColor"/>
-                                                                </state>
-                                                                <connections>
-                                                                    <action selector="closeTabAction:" destination="yf4-q9-yrl" eventType="touchUpInside" id="K78-T8-Cdt"/>
-                                                                </connections>
-                                                            </button>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -257,8 +231,6 @@
                         <outlet property="alertView" destination="nwz-Vs-EX4" id="USl-He-dsj"/>
                         <outlet property="backgroundView" destination="xrE-Wx-GQ1" id="g4z-uE-LNx"/>
                         <outlet property="cancelButton" destination="pvq-U0-iGm" id="XaJ-xk-sf9"/>
-                        <outlet property="cancelButtonSeparator" destination="W8d-WP-B7b" id="SWz-Cm-cXY"/>
-                        <outlet property="closeTabButton" destination="CXg-sc-2nh" id="5DS-PA-9Hh"/>
                         <outlet property="keyboardConstraint" destination="57G-2R-GFy" id="zNf-Hk-ZhW"/>
                         <outlet property="messageLabel" destination="VmI-1g-rf4" id="vuu-wy-rbi"/>
                         <outlet property="okButton" destination="45B-IT-R1W" id="TaK-fM-eT3"/>
@@ -274,17 +246,11 @@
         </scene>
     </scenes>
     <resources>
-        <namedColor name="AlertButtonDestructiveTitleColor">
-            <color red="0.92549019607843142" green="0.21568627450980393" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <namedColor name="AlertButtonTitleColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AlertSeparatorColor">
-            <color red="0.86666673421859741" green="0.86666667461395264" blue="0.87023848295211792" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.8666666666666667" green="0.8666666666666667" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

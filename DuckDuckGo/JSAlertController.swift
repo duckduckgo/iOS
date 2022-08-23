@@ -26,6 +26,12 @@ private extension UIImage {
 
 final class JSAlertController: UIViewController {
 
+    private enum Constants {
+        static let appearAnimationDuration = 0.2
+        static let dismissAnimationDuration = 0.3
+        static let keyboardAnimationDuration = 0.3
+    }
+
     @IBOutlet var alertView: UIView!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var keyboardConstraint: NSLayoutConstraint!
@@ -34,8 +40,6 @@ final class JSAlertController: UIViewController {
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var okButton: UIButton!
     @IBOutlet var cancelButton: UIButton!
-    @IBOutlet var cancelButtonSeparator: UIView!
-    @IBOutlet var closeTabButton: UIButton!
     @IBOutlet var textField: UITextField!
     @IBOutlet var textFieldBox: UIView!
 
@@ -76,7 +80,7 @@ final class JSAlertController: UIViewController {
         self.alertView.transform = .init(scaleX: 1.15, y: 1.15)
         self.backgroundView.alpha = 0.0
 
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+        UIView.animate(withDuration: Constants.appearAnimationDuration, delay: 0, options: .curveEaseOut) {
             self.alertView.alpha = 1.0
             self.alertView.transform = .identity
             self.backgroundView.alpha = 1.0
@@ -100,7 +104,7 @@ final class JSAlertController: UIViewController {
             return
         }
 
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Constants.dismissAnimationDuration) {
             self.backgroundView.alpha = 0.0
             self.alertView.alpha = 0.0
 
@@ -127,9 +131,6 @@ final class JSAlertController: UIViewController {
         okButton.setBackgroundImage(.highlightedAlertButtonTint, for: .highlighted)
         cancelButton.setTitle(UserText.webJSAlertCancelButton, for: .normal)
         cancelButton.setBackgroundImage(.highlightedAlertButtonTint, for: .highlighted)
-        closeTabButton.setTitle(UserText.webJSAlertCloseTabButton, for: .normal)
-        closeTabButton.setBackgroundImage(.highlightedAlertButtonTint, for: .highlighted)
-
         titleLabel.text = String(format: UserText.webJSAlertWebsiteMessageFormat, alert.domain)
         messageLabel.text = alert.message
 
@@ -141,8 +142,7 @@ final class JSAlertController: UIViewController {
             textFieldBox.isHidden = true
         }
 
-        cancelButton.isHidden = !alert.isConfirm
-        cancelButtonSeparator.isHidden = !alert.isConfirm
+        cancelButton.isHidden = alert.isSimpleAlert
     }
 
     @IBAction func okAction(_ sender: UIButton) {
@@ -185,7 +185,7 @@ final class JSAlertController: UIViewController {
             return
         }
 
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Constants.keyboardAnimationDuration) {
             self.keyboardConstraint.constant = intersection.height
             self.view.layoutIfNeeded()
         }
@@ -199,7 +199,7 @@ final class JSAlertController: UIViewController {
             return
         }
 
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: Constants.keyboardAnimationDuration) {
             self.keyboardConstraint.constant = 0
             self.view.layoutSubviews()
         }

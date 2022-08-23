@@ -1320,9 +1320,6 @@ Invite code: %@";
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancel";
 
-/* “Close this tab” button for JavaScript alerts */
-"webJSAlert.close.tab.button" = "Close This Tab";
-
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
 

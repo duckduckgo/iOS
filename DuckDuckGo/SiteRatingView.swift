@@ -53,10 +53,7 @@ public class SiteRatingView: UIView {
         self.addSubview(view)
         view.frame = self.bounds
         
-        if #available(iOS 13.4, *) {
-            addInteraction(UIPointerInteraction(delegate: self))
-        }
-        
+        addInteraction(UIPointerInteraction(delegate: self))
     }
 
     public func update(siteRating: SiteRating?, with config: PrivacyConfiguration?) {
@@ -96,7 +93,6 @@ public class SiteRatingView: UIView {
     }
 }
 
-@available(iOS 13.4, *)
 extension SiteRatingView: UIPointerInteractionDelegate {
     
     public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {

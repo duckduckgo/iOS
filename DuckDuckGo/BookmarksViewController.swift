@@ -21,6 +21,7 @@ import UIKit
 import Core
 import MobileCoreServices
 import os.log
+import UniformTypeIdentifiers
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -96,14 +97,12 @@ class BookmarksViewController: UITableViewController {
     
     @objc func dataDidChange(notification: Notification) {
         tableView.reloadData()
-        if currentDataSource.isEmpty && tableView.isEditing {
+        if currentDataSource.isEmpty && isEditingBookmarks {
             finishEditing()
         }
         refreshEditButton()
         refreshFooterView()
-        if #available(iOS 14.0, *) {
-            refreshMoreButton()
-        }
+        refreshMoreButton()
     }
     
     func openEditFormWhenPresented(bookmark: Bookmark) {
@@ -125,7 +124,7 @@ class BookmarksViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let item = currentDataSource.item(at: indexPath) else { return }
         
-        if tableView.isEditing {
+        if isEditingBookmarks {
             tableView.deselectRow(at: indexPath, animated: true)
             if let bookmark = item as? Bookmark {
                 performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
@@ -199,17 +198,15 @@ class BookmarksViewController: UITableViewController {
         if dataSource.folder != nil {
             tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: CGFloat.leastNormalMagnitude))
         }
-
-        if #available(iOS 14, *) {
-            importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
-            importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
-            importFooterButton.titleLabel?.textAlignment = .center
-
-            importFooterButton.addAction(UIAction { [weak self] _ in
-                self?.presentDocumentPicker()
-            }, for: .touchUpInside)
-        }
-
+        
+        importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
+        importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
+        importFooterButton.titleLabel?.textAlignment = .center
+        
+        importFooterButton.addAction(UIAction { [weak self] _ in
+            self?.presentDocumentPicker()
+        }, for: .touchUpInside)
+        
         refreshFooterView()
     }
     
@@ -270,25 +267,26 @@ class BookmarksViewController: UITableViewController {
     }
 
     private func configureToolbarMoreItem() {
-        if #available(iOS 14, *) {
-            if tableView.isEditing {
-                if toolbarItems?.count ?? 0 >= 5 {
-                    toolbarItems?.remove(at: 4)
-                    toolbarItems?.remove(at: 3)
-                }
-            } else {
+
+        if isEditingBookmarks {
+            if toolbarItems?.count ?? 0 >= 5 {
+                toolbarItems?.remove(at: 4)
+                toolbarItems?.remove(at: 3)
+            }
+        } else {
+            if toolbarItems?.contains(moreBarButtonItem) == false {
                 let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
                 toolbarItems?.insert(flexibleSpace, at: 3)
                 toolbarItems?.insert(moreBarButtonItem, at: 4)
-                refreshMoreButton()
             }
+            refreshMoreButton()
         }
     }
 
     private func refreshEditButton() {
-        if (currentDataSource.isEmpty && !tableView.isEditing) || currentDataSource === searchDataSource {
+        if (currentDataSource.isEmpty && !isEditingBookmarks) || currentDataSource === searchDataSource {
             disableEditButton()
-        } else if !tableView.isEditing {
+        } else if !isEditingBookmarks {
             enableEditButton()
         }
     }
@@ -301,22 +299,17 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
-    @available(iOS 14.0, *)
     private func refreshMoreButton() {
-        if tableView.isEditing || currentDataSource === searchDataSource  || dataSource.folder != nil {
+        if isEditingBookmarks || currentDataSource === searchDataSource  || dataSource.folder != nil {
             disableMoreButton()
         } else {
             enableMoreButton()
         }
     }
-
+    
     private func refreshFooterView() {
-        if #available(iOS 14, *) {
-            if dataSource.folder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
-                enableFooterView()
-            } else {
-                disableFooterView()
-            }
+        if dataSource.folder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
+            enableFooterView()
         } else {
             disableFooterView()
         }
@@ -327,7 +320,7 @@ class BookmarksViewController: UITableViewController {
     }
     
     @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
-        if tableView.isEditing {
+        if isEditingBookmarks {
             finishEditing()
         } else {
             startEditing()
@@ -349,8 +342,8 @@ class BookmarksViewController: UITableViewController {
     }
 
     func presentDocumentPicker() {
-        let docTypes = [String(kUTTypeHTML)]
-        let docPicker = UIDocumentPickerViewController(documentTypes: docTypes, in: .import)
+        let docTypes = [UTType.html]
+        let docPicker = UIDocumentPickerViewController(forOpeningContentTypes: docTypes, asCopy: true)
         docPicker.delegate = self
         docPicker.allowsMultipleSelection = false
         present(docPicker, animated: true)
@@ -432,9 +425,7 @@ class BookmarksViewController: UITableViewController {
         }
 
         if let popover = activity.popoverPresentationController {
-            if #available(iOS 14, *) {
-                popover.sourceView = moreBarButtonItem.customView
-            }
+            popover.sourceView = moreBarButtonItem.customView
         }
         present(activity, animated: true, completion: nil)
     }
@@ -449,20 +440,19 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
+    // when swipe-to-delete control is shown tableView.isEditing is true
+    private var isEditingBookmarks: Bool = false
     private func startEditing() {
-        guard !tableView.isEditing else {
-            return
-        }
+        assert(!isEditingBookmarks)
 
         // necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
         tableView.isEditing = false
         
         tableView.isEditing = true
+        self.isEditingBookmarks = true
         changeEditButtonToDone()
-        if #available(iOS 14, *) {
-            configureToolbarMoreItem()
-            refreshFooterView()
-        }
+        configureToolbarMoreItem()
+        refreshFooterView()
     }
 
     private func finishEditing() {
@@ -471,12 +461,11 @@ class BookmarksViewController: UITableViewController {
         }
 
         tableView.isEditing = false
+        self.isEditingBookmarks = false
         refreshEditButton()
         enableDoneButton()
-        if #available(iOS 14, *) {
-            configureToolbarMoreItem()
-            refreshFooterView()
-        }
+        configureToolbarMoreItem()
+        refreshFooterView()
     }
 
     private func enableEditButton() {
@@ -509,13 +498,11 @@ class BookmarksViewController: UITableViewController {
         doneButton.isEnabled = true
     }
     
-    @available(iOS 14.0, *)
     private func enableMoreButton() {
         moreButton.menu = bookmarksMenu
         moreButton.isEnabled = true
     }
 
-    @available(iOS 14.0, *)
     private func disableMoreButton() {
         moreButton.isEnabled = false
     }

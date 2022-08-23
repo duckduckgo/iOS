@@ -28,60 +28,59 @@ protocol DownloadDelegate: AnyObject {
 class Download: NSObject, Identifiable, ObservableObject {
     weak var delegate: DownloadDelegate?
     typealias Completion = ((Error?) -> Void)
-    
+
     let id = UUID()
+    let url: URL
     let filename: String
     let mimeType: MIMEType
     var location: URL?
     let date = Date()
-    let temporary: Bool
+    var temporary: Bool
     let session: DownloadSession
     var completionBlock: Completion?
 
+    var isRunning: Bool {
+        session.isRunning
+    }
+
     var link: Link? {
         guard let location = location,
-              let remoteURL = session.task?.currentRequest?.url,
               FileManager.default.fileExists(atPath: location.path) else {
             return nil
         }
-        return Link(title: filename, url: remoteURL, localPath: location)
+        return Link(title: filename, url: url, localPath: location)
     }
-    
-    @Published private(set) var state: URLSessionTask.State = .suspended
+
     @Published private(set) var bytesWritten: Int64 = 0
     @Published private(set) var totalBytesWritten: Int64 = 0
     @Published private(set) var totalBytesExpectedToWrite: Int64 = 0
-    
-    required init(filename: String,
+
+    required init(url: URL,
+                  filename: String,
                   mimeType: MIMEType,
                   temporary: Bool,
                   downloadSession: DownloadSession,
                   delegate: DownloadDelegate? = nil) {
-        
+
+        self.url = url
         self.filename = filename
         self.mimeType = mimeType
         self.temporary = temporary
         self.session = downloadSession
         self.delegate = delegate
-        
+
         super.init()
         self.session.delegate = self
     }
-    
+
     func start() {
         session.start()
-        updateState()
     }
-    
+
     func cancel() {
         session.cancel()
-        updateState()
     }
-    
-    private func updateState() {
-        self.state = self.session.task?.state ?? .completed
-    }
-    
+
     private func renameFile(_ oldPath: URL, newFilename: String) -> URL? {
         do {
             let newPath = oldPath.deletingLastPathComponent().appendingPathComponent(newFilename)
@@ -93,31 +92,31 @@ class Download: NSObject, Identifiable, ObservableObject {
             return nil
         }
     }
+
 }
 
 extension Download: DownloadSessionDelegate {
-    
-    func urlSession(_ session: URLSession,
-                    downloadTask: URLSessionDownloadTask,
-                    didWriteData bytesWritten: Int64,
-                    totalBytesWritten: Int64,
-                    totalBytesExpectedToWrite: Int64) {
-        
+
+    func downloadSession(_ session: DownloadSession,
+                         didWriteData bytesWritten: Int64,
+                         totalBytesWritten: Int64,
+                         totalBytesExpectedToWrite: Int64) {
+
         self.bytesWritten = bytesWritten
         self.totalBytesWritten = totalBytesWritten
         self.totalBytesExpectedToWrite = totalBytesExpectedToWrite
-        
-        self.state = downloadTask.state
     }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        self.location = renameFile(location, newFilename: filename)
+
+    func downloadSession(_ session: DownloadSession, didFinishWith result: Result<URL, Error>) {
+        switch result {
+        case .success(let location):
+            self.location = renameFile(location, newFilename: filename)
+            delegate?.downloadDidFinish(self, error: nil)
+            completionBlock?(nil)
+        case .failure(let error):
+            delegate?.downloadDidFinish(self, error: error)
+            completionBlock?(error)
+        }
     }
-    
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        session.finishTasksAndInvalidate()
-        state = task.state
-        delegate?.downloadDidFinish(self, error: error)
-        completionBlock?(error)
-    }
+
 }

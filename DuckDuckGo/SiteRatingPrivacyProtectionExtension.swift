@@ -23,6 +23,110 @@ import BrowserServicesKit
 
 extension SiteRating {
     
+    enum State { // See: https://app.asana.com/0/0/1202702259694393/f
+        case someTrackersBlockedSomeRequestsAllowed // state 1
+        case noTrackersBlockedSomeTrackersAllowed(isProtectionOn: Bool) // state 2 // 6
+        case noTrackersBlockedSomeRequestsAllowed(isProtectionOn: Bool) // state 3 // 7
+        case nothingDetected // state 4 // 8
+        case someTrackersBlockedNoTrackersAllowed // state 5
+        
+        init(siteRating: SiteRating, config: PrivacyConfiguration) {
+            
+            if siteRating.trackersBlocked.isEmpty {
+                let isProtectionOn = config.isProtected(domain: siteRating.domain)
+                if !allowedTrackers(from: Array(siteRating.trackers)).isEmpty {
+                    self = .noTrackersBlockedSomeTrackersAllowed(isProtectionOn: isProtectionOn)
+                } else if siteRating.isAnyRequestLoaded {
+                    self = .noTrackersBlockedSomeRequestsAllowed(isProtectionOn: isProtectionOn)
+                } else {
+                    self = .nothingDetected
+                }
+            } else {
+                if siteRating.isAnyRequestLoaded {
+                    self = .someTrackersBlockedSomeRequestsAllowed
+                } else {
+                    self = .someTrackersBlockedNoTrackersAllowed
+                }
+            }
+            
+            func allowedTrackers(from requests: [DetectedRequest]) -> [DetectedRequest] {
+                requests.filter { $0.state != .allowed(reason: .otherThirdPartyRequest) }
+            }
+    
+        }
+        
+        var trackingRequestsText: String {
+            switch self {
+            case .noTrackersBlockedSomeTrackersAllowed:
+                return UserText.privacyProtectionNoTrackersBlocked
+            case .someTrackersBlockedSomeRequestsAllowed, .someTrackersBlockedNoTrackersAllowed:
+                return UserText.privacyProtectionTrackersBlockedNew
+            case .noTrackersBlockedSomeRequestsAllowed, .nothingDetected:
+                return UserText.privacyProtectionTrackersNotFound
+            }
+        }
+        
+        var thirdPartyRequestsText: String {
+            switch self {
+            case .nothingDetected, .someTrackersBlockedNoTrackersAllowed:
+                return UserText.privacyProtectionNoOtherThirdPartyDomainsLoaded
+            default:
+                return UserText.privacyProtectionOtherThirdPartyDomainsLoaded
+            }
+        }
+        
+        var trackingRequestsIcon: UIImage {
+            if case .noTrackersBlockedSomeTrackersAllowed(let isProtectionOn) = self {
+                if isProtectionOn {
+                    return #imageLiteral(resourceName: "PP Icon Major Networks Off")
+                } else {
+                    return #imageLiteral(resourceName: "PP Icon Major Networks Bad")
+                }
+            } else {
+                return #imageLiteral(resourceName: "PP Icon Major Networks On")
+            }
+        }
+        
+        var thirdPartyRequestsIcon: UIImage {
+            switch self {
+            case .someTrackersBlockedSomeRequestsAllowed,
+                    .noTrackersBlockedSomeTrackersAllowed,
+                    .noTrackersBlockedSomeRequestsAllowed:
+                return #imageLiteral(resourceName: "PP Icon Other Domains")
+            default:
+                return #imageLiteral(resourceName: "PP Icon Other Domains On")
+            }
+        }
+        
+        var thirdPartyRequestsHeroIcon: UIImage {
+            switch self {
+            case .someTrackersBlockedSomeRequestsAllowed,
+                    .noTrackersBlockedSomeTrackersAllowed,
+                    .noTrackersBlockedSomeRequestsAllowed:
+                return #imageLiteral(resourceName: "PP Hero Other Domains")
+            default:
+                return #imageLiteral(resourceName: "PP Hero Other Domains Good")
+            }
+        }
+        
+        var thirdPartyRequestsDescription: String {
+            switch self {
+            case .nothingDetected, .someTrackersBlockedNoTrackersAllowed:
+                return UserText.ppOtherDomainsOtherThirdPartiesEmptyState
+            case .noTrackersBlockedSomeTrackersAllowed(let isProtectionOn),
+                    .noTrackersBlockedSomeRequestsAllowed(let isProtectionOn):
+                if isProtectionOn {
+                    return UserText.ppOtherDomainsInfo
+                } else {
+                    return UserText.ppOtherDomainsInfoDisabledProtection
+                }
+            default:
+                return UserText.ppOtherDomainsInfo
+            }
+        }
+                
+    }
+    
     static let practicesText: [PrivacyPractices.Summary: String] = [
         .unknown: UserText.privacyProtectionTOSUnknown,
         .good: UserText.privacyProtectionTOSGood,
@@ -40,7 +144,7 @@ extension SiteRating {
             return UserText.ppEncryptionMixedHeading
             
         case .forced:
-            return UserText.ppEncryptionForcedHeading
+            return UserText.ppEncryptionForcedHeadingNew
             
         case .unencrypted:
             return UserText.ppEncryptionUnencryptedHeading
@@ -60,41 +164,12 @@ extension SiteRating {
         return privacyPractice.summary
     }
     
-    func majorNetworksText(config: PrivacyConfiguration) -> String {
-        return protecting(config) ? majorNetworksBlockedText() : majorNetworksDetectedText()
+    func majorNetworksText(found: Bool) -> String {
+        found ? UserText.privacyProtectionMajorTrackersFoundNew : UserText.privacyProtectionMajorTrackersNotFound
     }
     
-    func majorNetworksSuccess(config: PrivacyConfiguration) -> Bool {
-        return (protecting(config) ? majorTrackerNetworksBlocked : majorTrackerNetworksDetected) <= 0
-    }
-    
-    func majorNetworksBlockedText() -> String {
-        return String(format: UserText.privacyProtectionMajorTrackersBlocked, majorTrackerNetworksBlocked)
-    }
-    
-    func majorNetworksDetectedText() -> String {
-        return String(format: UserText.privacyProtectionMajorTrackersFound, majorTrackerNetworksDetected)
-    }
-    
-    func networksText(config: PrivacyConfiguration) -> String {
-        var isProtecting = protecting(config)
-        if config.isTempUnprotected(domain: domain) || config.isInExceptionList(domain: domain, forFeature: .contentBlocking) {
-            isProtecting = false
-        }
-        
-        return isProtecting ? networksBlockedText() : networksDetectedText()
-    }
-    
-    func networksSuccess(config: PrivacyConfiguration) -> Bool {
-        return (protecting(config) ? trackersBlocked.count : trackersDetected.count) <= 0
-    }
-    
-    func networksBlockedText() -> String {
-        return String(format: UserText.privacyProtectionTrackersBlocked, trackersBlocked.count)
-    }
-    
-    func networksDetectedText() -> String {
-        return String(format: UserText.privacyProtectionTrackersFound, trackersDetected.count)
+    func networksText(found: Bool) -> String {
+        found ? UserText.privacyProtectionTrackersFoundNew : UserText.privacyProtectionTrackersNotFound
     }
     
     func protecting(_ config: PrivacyConfiguration) -> Bool {

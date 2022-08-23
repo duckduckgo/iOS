@@ -41,7 +41,12 @@ extension Themable where Self: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = titleAttrs
         
         if #available(iOS 15.0, *) {
-            let appearance = navigationController?.navigationBar.standardAppearance
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithDefaultBackground()
+            appearance.backgroundColor = theme.barBackgroundColor
+            appearance.titleTextAttributes = titleAttrs
+            
+            navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = appearance
         }
     }

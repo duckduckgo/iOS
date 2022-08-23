@@ -53,10 +53,8 @@ class ShareViewController: SLComposeServiceViewController {
 
         guard let attachments = item.attachments else { return nil }
 
-        for attachment in attachments {
-            if attachment.hasItemConformingToTypeIdentifier(identifier) {
-                return attachment
-            }
+        for attachment in attachments where attachment.hasItemConformingToTypeIdentifier(identifier) {
+            return attachment
         }
         return nil
     }

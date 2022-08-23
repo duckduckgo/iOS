@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Добавить";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Автозаполнение логинов";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Добавить в закладки";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Просмотр";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Логин сохранен";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Логин обновлен";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Будет сохранен дополнительный логин для входа на этом сайте.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Учетные данные сохраняются только на этом устройстве. Управлять ими можно в меню «Автозаполнение» в «Настройках».";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Хотите, чтобы DuckDuckGo сохранил логин?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Не сейчас";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Сохранить логин";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Сохранить логин?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Сохранить пароль";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Сохранить пароль?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Обновить логин";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Обновить пароль";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Обновить пароль?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Обновить имя пользователя?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Добавить закладку";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Удалить";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Действительно удалить эту папку и пункты (%i)?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Действительно удалить эту папку и %i пункт?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Удалить %@?";
@@ -296,7 +341,7 @@
 "dax.hide.title" = "Скрыть другие подсказки?";
 
 /* No comment provided by engineer. */
-"dax.onboarding.browsing.after.search" = "Всё, что вы ищете в DuckDuckGo, остается анонимным — я никогда не сохраняю вашу историю поиска. Никогда 🙌";
+"dax.onboarding.browsing.after.search" = "Ваши поисковые запросы в DuckDuckGo анонимны. Все и всегда. 🙌";
 
 /* No comment provided by engineer. */
 "dax.onboarding.browsing.after.search.cta" = "Уф!";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Началась загрузка файла %@";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отменить";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Выключено";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Блокировка почтовых трекеров и скрытие адреса";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Отменить";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Добро пожаловать в\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Код приглашения";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Ваше приглашение появится здесь, когда подойдет ваша очередь. Хотите %1$@, когда оно придет? %2$@ о бета-версии для браузера macOS.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "получить уведомление";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Вы получите уведомление, когда подойдет ваша очередь. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Приглашение на DuckDuckGo для Mac появится здесь. Зайдите сюда позже. Мы также можем отправить вам уведомление, когда придет ваша очередь.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Когда можно будет загрузить вашу копию DuckDuckGo для Mac, мы отправим вам уведомление.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ о бета-версии.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Приложение DuckDuckGo для Mac — это высокая скорость, ожидаемый функционал и полная конфиденциальность.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Откройте приглашение";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "Приложение DuckDuckGo для Mac готово!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Копировать";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Для загрузки DuckDuckGo на Mac откройте эту ссылку:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1.";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Откройте установочный файл и введите код приглашения для разблокировки.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2.";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Хотите просматривать на Mac сайты в полной конфиденциальности?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Вас пригласили!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Приглашаем встать в очередь";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Добавление в список ожидания...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "DuckDuckGo для Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Скоро — для Windows!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Мы можем уведомить вас, когда подойдет ваша очередь, но для этого нужно включить уведомления от DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Чтобы записаться в список ожидания, не нужно делиться личной информацией. Временная метка, хранящаяся только на вашем устройстве, позволит нам определить, когда подойдет ваша очередь, о чем мы сообщим вам дополнительно.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Вы в списке!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Доступна версия для Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Полная конфиденциальность в Интернете, благодаря нашему приложению для Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Вы в списке!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Вас пригласили!\n\nХотите просматривать на Mac сайты в полной конфиденциальности?\n\n1.\nЗагрузите приложение на Mac, перейдя по этой ссылке:\nhttps://duckduckgo.com/mac\n\n2.\nОткройте установочный файл и введите код приглашения для разблокировки.\n\nКод приглашения: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Вас пригласили!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "Настольное приложение DuckDuckGo";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Меню браузера";
 
@@ -883,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Хорошо";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "О нашей защите от отслеживания онлайн";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "О рекламе и защите в поисковых системах";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "How our search ads impact our protections";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритм";
 
@@ -906,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Принудительное шифрование";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Зашифрованное соединение";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Чтобы защитить вас от перехвата личной информации, мы заставили этот сайт зашифровать соединение.";
@@ -985,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Да";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "ЗАЩИТА САЙТА ОТКЛЮЧЕНА";
 
@@ -1000,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Обнаружены крупные сети трекеров";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Не обнаружено ни одной крупной сети трекеров";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Сети трекеров были обнаружены на %1$@%% сайтах, которые вы посетили с %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Мы все еще собираем данные\nо количестве заблокированных трекеров.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Не загружено ни одного стороннего запроса";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Запросы этого домена были загружены в результате недавнего нажатия на рекламу %@ в DuckDuckGo. Такие запросы помогают оценить эффективность рекламы. Рекламные объявления в DuckDuckGo не профилируют пользователей.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Запросы этого домена были загружены для предотвращения неполадок в работе сайта.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Запросы этого домена были загружены, так как они связаны с %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Ниже приведен список загруженных запросов сторонних доменов. Благодаря этим запросам компании могут вас профилировать, однако мы по-прежнему защищаем вас от отслеживания в Сети другими способами.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Мы не заблокировали ни одной загрузки сторонних запросов, так как защита на этом сайте отключена. Загруженные запросы позволяют компаниям вас профилировать.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Загружены трекинг-запросы следующих доменов.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Также загружены запросы следующего домена.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "The following domains’ requests were loaded.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "The following domain’s requests were loaded.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Запросов от сторонних доменов не обнаружено.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Загружены сторонние запросы";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Внимание: наши возможности обнаружения запросов зависят от ограничений платформы.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Без профилирования";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Стандарты конфиденциальности ToS;DR.";
@@ -1040,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Уровень конфиденциальности неизвестен";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Сети трекеров собирают историю вашей активности в интернете и формируют ваш информационный профиль. Крупные сети трекеров более опасны, так как могут отслеживать вас и показывать адресную рекламу на большем количестве сайтов.";
+"privacy.protection.tracker.networks.info" = "Трекеры применяются для профилирования посетителей сайтов. Мы предотвратили загрузку этих трекеров и не дали им отследить ваши действия на данной странице.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Мы не заблокировали ни одного трекинг-запроса, так как защита на этом сайте отключена. Загруженные запросы позволяют компаниям вас профилировать.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Мы не обнаружили ни одного трекинг-запроса.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Мы заблокировали загрузку следующих запросов сторонних доменов, так как распознали в них трекинг-запросы. Загруженные запросы позволяют компаниям вас профилировать.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Заблокирована загрузка запросов";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Обнаружены трекинг-запросы";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Трекинг-запросы не заблокированы";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Трекинг-запросы не обнаружены";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Отменить";
@@ -1149,18 +1377,6 @@
 
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Требуется доступ к микрофону";
-
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Хорошо";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Отменить";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo ни в коем случае не подслушивает ваши разговоры. Вся обработка голосовых данных для приватного голосового поиска осуществляется на вашем устройства.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Для приватного голосового поиска требуется доступ к микрофону";
 
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Отменить";

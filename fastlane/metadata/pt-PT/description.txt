@@ -16,10 +16,17 @@ A aplicação DuckDuckGo tem os recursos de navegação que você espera, como g
 
  • Signal Your Privacy Preference with GPC - Incorporado na aplicação, o Global Privacy Control (GPC) pretende ajudá-lo a expressar automaticamente os seus direitos de exclusão legal. Isto indicará aos websites para não venderem ou partilharem as suas informações pessoais, sob futuros quadros legais (por exemplo, CCPA, GDPR) em vários estados ou países.
 
-Não precisa de esperar para recuperar a sua privacidade. Junte-se aos milhões de pessoas que usam o DuckDuckGo e proteja muitas das suas atividades online diárias com uma aplicação. É privacidade, simplificada.
+Não precisa de esperar para recuperar a sua privacidade. Junte-se aos milhões de pessoas que usam o DuckDuckGo e proteja muitas das suas atividades online diárias com uma aplicação. 
 
-Note about our tracker blocking for 3rd-party sites and emails:
-DuckDuckGo never tracks you. When you leave our search engine to use other sites, we aim to block as many hidden trackers as possible, but we can't block them all for a few reasons. New trackers emerge all the time, so first we need to find them. Then, blocking these trackers can sometimes break functionality, so we need to develop new approaches without hurting usability. Additionally, in our app we offer a specific type of protection that stops scripts from even loading on 3rd-party sites, which isn’t offered on most popular browsers by default. Currently, this one loading protection doesn't apply to Microsoft scripts on 3rd-party sites due to contractual restrictions. However, our other tracker blocking methods (like 3rd-party cookie blocking) are unrestricted and continue to work against these trackers to protect your privacy online.
+É privacidade, simplificada.
+
+Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: 
+Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
+ 
+Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
+ 
+You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+
 
 Sobre nós: https://duckduckgo.com/about
 Como Funciona: https://duckduckgo.com/app

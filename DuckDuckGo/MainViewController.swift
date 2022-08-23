@@ -23,6 +23,7 @@ import Core
 import Lottie
 import Kingfisher
 import os.log
+import BrowserServicesKit
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -118,7 +119,7 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
                 
@@ -344,7 +345,7 @@ class MainViewController: UIViewController {
                let link = currentTab?.link {
                 controller.openEditFormWhenPresented(link: link)
             } else if segue.identifier == "BookmarksEdit",
-                        let bookmark = sender as? Bookmark {
+                      let bookmark = sender as? Core.Bookmark {
                 controller.openEditFormWhenPresented(bookmark: bookmark)
             }
             return
@@ -441,7 +442,7 @@ class MainViewController: UIViewController {
         launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
             guard let self = self, let url = URL(string: urlString) else { return }
 
-            self.loadUrlInNewTab(url)
+            self.loadUrlInNewTab(url, inheritedAttribution: nil)
         })
     }
 
@@ -454,20 +455,17 @@ class MainViewController: UIViewController {
         }
     }
 
-    @available(iOS 13.4, *)
     func handlePressEvent(event: UIPressesEvent?) {
         keyModifierFlags = event?.modifierFlags
     }
 
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         super.pressesBegan(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
         handlePressEvent(event: event)
     }
     
     override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
         super.pressesEnded(presses, with: event)
-        guard #available(iOS 13.4, *) else { return }
         handlePressEvent(event: event)
     }
 
@@ -564,10 +562,10 @@ class MainViewController: UIViewController {
             os_log("Couldn‘t form URL for query “%s”", log: lifecycleLog, type: .error, query)
             return
         }
-        loadUrlInNewTab(url, reuseExisting: reuseExisting)
+        loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
     }
 
-    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false) {
+    func loadUrlInNewTab(_ url: URL, reuseExisting: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) {
         allowContentUnderflow = false
         customNavigationBar.alpha = 1
         loadViewIfNeeded()
@@ -578,7 +576,7 @@ class MainViewController: UIViewController {
             tabManager.selectTab(existing)
             loadUrl(url)
         } else {
-            addTab(url: url)
+            addTab(url: url, inheritedAttribution: inheritedAttribution)
         }
         refreshOmniBar()
         refreshTabIcon()
@@ -606,16 +604,28 @@ class MainViewController: UIViewController {
     }
 
     func loadUrl(_ url: URL) {
+        prepareTabForRequest {
+            currentTab?.load(url: url)
+        }
+    }
+    
+    private func loadBackForwardItem(_ item: WKBackForwardListItem) {
+        prepareTabForRequest {
+            currentTab?.load(backForwardListItem: item)
+        }
+    }
+    
+    private func prepareTabForRequest(request: () -> Void) {
         customNavigationBar.alpha = 1
         allowContentUnderflow = false
-        currentTab?.load(url: url)
+        request()
         guard let tab = currentTab else { fatalError("no tab") }
         select(tab: tab)
         dismissOmniBar()
     }
 
-    private func addTab(url: URL?) {
-        let tab = tabManager.add(url: url)
+    private func addTab(url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) {
+        let tab = tabManager.add(url: url, inheritedAttribution: inheritedAttribution)
         dismissOmniBar()
         addToView(tab: tab)
     }
@@ -676,6 +686,7 @@ class MainViewController: UIViewController {
         refreshMenuIcon()
         refreshOmniBar()
         refreshBackForwardButtons()
+        refreshBackForwardMenuItems()
     }
 
     private func refreshTabIcon() {
@@ -720,7 +731,7 @@ class MainViewController: UIViewController {
         omniBar.backButton.isEnabled = backButton.isEnabled
         omniBar.forwardButton.isEnabled = forwardButton.isEnabled
     }
-    
+  
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
@@ -819,6 +830,22 @@ class MainViewController: UIViewController {
     
     fileprivate func launchDownloads() {
         performSegue(withIdentifier: "Downloads", sender: self)
+    }
+    
+    fileprivate func launchAutofillLogins() {
+        let appSettings = AppDependencyProvider.shared.appSettings
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        autofillSettingsViewController.delegate = self
+        let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
+        autofillSettingsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: UserText.autofillNavigationButtonItemTitleClose,
+                                                                                          style: .plain,
+                                                                                          target: self,
+                                                                                          action: #selector(closeAutofillModal))
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    @objc private func closeAutofillModal() {
+        dismiss(animated: true)
     }
     
     fileprivate func launchSettings() {
@@ -948,20 +975,7 @@ class MainViewController: UIViewController {
     }
     
     private func showNoMicrophonePermissionAlert() {
-        let alertController = UIAlertController(title: UserText.noVoicePermissionAlertTitle,
-                                                message: UserText.noVoicePermissionAlertMessage,
-                                                preferredStyle: .alert)
-        alertController.overrideUserInterfaceStyle()
-
-        let openSettingsButton = UIAlertAction(title: UserText.noVoicePermissionActionSettings, style: .default) { _ in
-            let url = URL(string: UIApplication.openSettingsURLString)!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-        let cancelAction = UIAlertAction(title: UserText.actionCancel, style: .cancel, handler: nil)
-
-        alertController.addAction(openSettingsButton)
-        alertController.addAction(cancelAction)
-        
+        let alertController = NoMicPermissionAlert.buildAlert()
         present(alertController, animated: true, completion: nil)
     }
 }
@@ -1206,12 +1220,10 @@ extension MainViewController: OmniBarDelegate {
     
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
-            DispatchQueue.main.async {
-                if permission {
-                    self.showVoiceSearch()
-                } else {
-                    self.showNoMicrophonePermissionAlert()
-                }
+            if permission {
+                self.showVoiceSearch()
+            } else {
+                self.showNoMicrophonePermissionAlert()
             }
         }
     }
@@ -1219,7 +1231,7 @@ extension MainViewController: OmniBarDelegate {
 
 extension MainViewController: FavoritesOverlayDelegate {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Bookmark) {
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Core.Bookmark) {
         guard let url = favorite.url else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
@@ -1289,7 +1301,7 @@ extension MainViewController: HomeControllerDelegate {
         loadUrl(url)
     }
     
-    func home(_ home: HomeViewController, didRequestEdit favorite: Bookmark) {
+    func home(_ home: HomeViewController, didRequestEdit favorite: Core.Bookmark) {
         performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
     }
     
@@ -1326,12 +1338,15 @@ extension MainViewController: TabDelegate {
     
     func tab(_ tab: TabViewController,
              didRequestNewWebViewWithConfiguration configuration: WKWebViewConfiguration,
-             for navigationAction: WKNavigationAction) -> WKWebView? {
+             for navigationAction: WKNavigationAction,
+             inheritingAttribution: AdClickAttributionLogic.State?) -> WKWebView? {
 
         showBars()
         currentTab?.dismiss()
 
-        let newTab = tabManager.addURLRequest(navigationAction.request, withConfiguration: configuration)
+        let newTab = tabManager.addURLRequest(navigationAction.request,
+                                              with: configuration,
+                                              inheritedAttribution: inheritingAttribution)
         newTab.openedByPage = true
         newTab.openingTab = tab
         
@@ -1371,24 +1386,29 @@ extension MainViewController: TabDelegate {
         newTab()
     }
 
-    func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
-        _ = tabManager.add(url: url, inBackground: true)
+    func tab(_ tab: TabViewController,
+             didRequestNewBackgroundTabForUrl url: URL,
+             inheritingAttribution attribution: AdClickAttributionLogic.State?) {
+        _ = tabManager.add(url: url, inBackground: true, inheritedAttribution: attribution)
         animateBackgroundTab()
     }
 
-    func tab(_ tab: TabViewController, didRequestNewTabForUrl url: URL, openedByPage: Bool) {
+    func tab(_ tab: TabViewController,
+             didRequestNewTabForUrl url: URL,
+             openedByPage: Bool,
+             inheritingAttribution attribution: AdClickAttributionLogic.State?) {
         _ = findInPageView.resignFirstResponder()
 
         if openedByPage {
             showBars()
             newTabAnimation {
-                self.loadUrlInNewTab(url)
+                self.loadUrlInNewTab(url, inheritedAttribution: attribution)
                 self.tabManager.current?.openedByPage = true
                 self.tabManager.current?.openingTab = tab
             }
             tabSwitcherButton.incrementAnimated()
         } else {
-            loadUrlInNewTab(url)
+            loadUrlInNewTab(url, inheritedAttribution: attribution)
             self.tabManager.current?.openingTab = tab
         }
 
@@ -1417,7 +1437,11 @@ extension MainViewController: TabDelegate {
     func tabDidRequestDownloads(tab: TabViewController) {
         launchDownloads()
     }
-
+    
+    func tabDidRequestAutofillLogins(tab: TabViewController) {
+        launchAutofillLogins()
+    }
+    
     func tabDidRequestSettings(tab: TabViewController) {
         launchSettings()
     }
@@ -1545,7 +1569,7 @@ extension MainViewController: TabSwitcherDelegate {
 }
 
 extension MainViewController: BookmarksDelegate {
-    func bookmarksDidSelect(bookmark: Bookmark) {
+    func bookmarksDidSelect(bookmark: Core.Bookmark) {
         dismissOmniBar()
         if let url = bookmark.url {
             loadUrl(url)
@@ -1770,7 +1794,7 @@ extension MainViewController: UIDropInteractionDelegate {
         
         if session.canLoadObjects(ofClass: URL.self) {
             _ = session.loadObjects(ofClass: URL.self) { urls in
-                urls.forEach { self.loadUrlInNewTab($0) }
+                urls.forEach { self.loadUrlInNewTab($0, inheritedAttribution: nil) }
             }
             
         } else if session.canLoadObjects(ofClass: String.self) {
@@ -1795,5 +1819,58 @@ extension MainViewController: VoiceSearchViewControllerDelegate {
         }
     }
 }
+
+// MARK: - History UIMenu Methods
+
+extension MainViewController {
+
+    private func refreshBackForwardMenuItems() {
+        guard let currentTab = currentTab else {
+            return
+        }
+        
+        let backMenu = historyMenu(with: currentTab.webView.backForwardList.backList.reversed())
+        omniBar.backButton.menu = backMenu
+        backButton.menu = backMenu
+        
+        let forwardMenu = historyMenu(with: currentTab.webView.backForwardList.forwardList)
+        omniBar.forwardButton.menu = forwardMenu
+        forwardButton.menu = forwardMenu
+    }
+
+    private func historyMenu(with backForwardList: [WKBackForwardListItem]) -> UIMenu {
+        let historyItemList = backForwardList.map { BackForwardMenuHistoryItem(backForwardItem: $0) }
+        let actions = historyMenuButton(with: historyItemList)
+        return UIMenu(title: "", children: actions)
+    }
+    
+    private func historyMenuButton(with menuHistoryItemList: [BackForwardMenuHistoryItem]) -> [UIAction] {
+        let menuItems: [UIAction] = menuHistoryItemList.compactMap { historyItem in
+            
+            if #available(iOS 15.0, *) {
+                return UIAction(title: historyItem.title,
+                                subtitle: historyItem.sanitizedURLForDisplay,
+                                discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                    self?.loadBackForwardItem(historyItem.backForwardItem)
+                }
+            } else {
+                return  UIAction(title: historyItem.title,
+                                 discoverabilityTitle: historyItem.sanitizedURLForDisplay) { [weak self] _ in
+                    self?.loadBackForwardItem(historyItem.backForwardItem)
+                }
+            }
+        }
+        
+        return menuItems
+    }
+}
+
+// MARK: - AutofillLoginSettingsListViewControllerDelegate
+extension MainViewController: AutofillLoginSettingsListViewControllerDelegate {
+    func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController) {
+        controller.dismiss(animated: true)
+    }
+}
+
 
 // swiftlint:enable file_length

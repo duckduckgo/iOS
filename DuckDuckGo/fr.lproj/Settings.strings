@@ -4,6 +4,9 @@
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Désactiver pour empêcher l'ouverture automatique des liens dans d'autres applications installées.";
 
+/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "0gU-rZ-pRc"; */
+"0gU-rZ-pRc.headerTitle" = "Personnaliser";
+
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
 "2ky-s9-1aZ.text" = "Version";
 
@@ -43,14 +46,20 @@
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Ouvrir les liens dans les applications associées";
 
+/* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
+"A9G-5I-RSn.text" = "Menu de débogage";
+
+/* Class = "UILabel"; text = "Autofill Logins"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Saisie automatique des identifiants";
+
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animation";
 
+/* Class = "UILabel"; text = "Email Protection"; ObjectID = "azf-Nc-kvW"; */
+"azf-Nc-kvW.text" = "Protection des e-mails";
+
 /* Class = "UIViewController"; title = "Email Protection (Beta)"; ObjectID = "b9u-ZD-F95"; */
 "b9u-ZD-F95.title" = "Protection des e-mails (bêta)";
-
-/* Class = "UILabel"; text = "Email Protection"; ObjectID = "bAK-LL-HUH"; */
-"bAK-LL-HUH.text" = "Protection des e-mails";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Les données et/ou les onglets seront effacés lorsque l'application redémarrera.";
@@ -82,14 +91,14 @@
 /* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
 "dBZ-yq-FYj.text" = "Verrouillage de l'application";
 
-/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "dj9-vh-Rig"; */
-"dj9-vh-Rig.headerTitle" = "Personnaliser";
+/* Class = "UITableViewSection"; headerTitle = "Appearance"; ObjectID = "dj9-vh-Rig"; */
+"dj9-vh-Rig.headerTitle" = "Apparence";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.footerTitle" = "Si Touch ID, Face ID ou un code d'accès au système est mis en place, il vous sera demandé de déverrouiller l'application lors de l'ouverture.";
 
-/* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.headerTitle" = "Confidentialité et sécurité";
+/* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.headerTitle" = "Confidentialité";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
 "dud-qo-Ces.text" = "Label";
@@ -127,8 +136,8 @@
 /* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
 "FHC-1z-Z3v.text" = "Sites non protégés";
 
-/* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "Autre";
+/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "FpT-1C-xtx"; */
+"FpT-1C-xtx.headerTitle" = "À propos";
 
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Global Privacy Control (GPC)";
@@ -169,9 +178,6 @@
 /* Class = "UIViewController"; title = "Email Autofill"; ObjectID = "nB1-eu-sN0"; */
 "nB1-eu-sN0.title" = "E-mail – Saisie automatique";
 
-/* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
-"NRb-Cc-1d6.footerTitle" = "Si vous l'activez, les sites Web s'ouvriront automatiquement dans DuckDuckGo.";
-
 /* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Pas encore de sites en mode coupe-feu";
 
@@ -180,6 +186,12 @@
 
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
 "oM7-1o-9oY.text" = "À propos de DuckDuckGo";
+
+/* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
+"OxE-MQ-uJk.headerTitle" = "Plus de la part de DuckDuckGo";
+
+/* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
+"P0F-ts-ekd.text" = "Naviguez incognito avec notre application pour Mac ";
 
 /* Class = "UITextView"; text = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com."; ObjectID = "pT6-FQ-9d9"; */
 "pT6-FQ-9d9.text" = "En supprimant la protection des e-mails de cet appareil, vous ne pourrez plus renseigner d'adresse Duck personnelle ni de nouvelle adresse privée Duck dans les champs Adresse e-mail lorsque vous naviguez sur le Web.<br/><br/>Pour supprimer intégralement vos adresses Duck ou pour toute autre question ou commentaire, contactez-nous à l'adresse support@duck.com.";
@@ -195,6 +207,9 @@
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Taille du texte";
+
+/* Class = "UILabel"; text = "Private Voice Search"; ObjectID = "Swa-O7-n8W"; */
+"Swa-O7-n8W.text" = "Recherche vocale privée";
 
 /* Class = "UITableViewController"; title = "Email Protection"; ObjectID = "TC3-Kg-XJt"; */
 "TC3-Kg-XJt.title" = "Protection des e-mails";
@@ -238,6 +253,9 @@
 /* Class = "UITextView"; text = "Footer Text"; ObjectID = "XvR-D4-LMg"; */
 "XvR-D4-LMg.text" = "Texte du pied de page";
 
+/* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
+"Y6Y-wA-n6Z.text" = "Bloquez les traqueurs d'e-mails et masquez votre adresse";
+
 /* Class = "UIButton"; normalTitle = "I have an Invite Code"; ObjectID = "yMC-7O-hSw"; */
 "yMC-7O-hSw.normalTitle" = "J'ai un code d'invitation";
 
@@ -247,14 +265,14 @@
 /* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "Ajouter l'application à votre Dock";
 
-/* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Les sites suivants ne bénéficient pas de la protection de la confidentialité.";
-
-/* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
-"zMK-jc-4bJ.headerTitle" = "Aide";
+/* Class = "UILabel"; text = "DuckDuckGo Desktop App"; ObjectID = "Yz9-17-qnn"; */
+"Yz9-17-qnn.text" = "Application de bureau DuckDuckGo";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Nouvel onglet";
+
+/* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
+"zvh-2e-Wmz.text" = "Les sites suivants ne bénéficient pas de la protection de la confidentialité.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Écran d'accueil";

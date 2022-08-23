@@ -80,11 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        if !Database.shared.isDatabaseFileInitialized {
-            let autofillStorage = EmailKeychainManager()
-            autofillStorage.deleteAuthenticationState()
-            autofillStorage.deleteWaitlistState()
-        }
+        removeEmailWaitlistState()
         
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
@@ -92,18 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
             if BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context) {
-                if #available(iOS 14, *) {
-                    WidgetCenter.shared.reloadAllTimelines()
-                }
-            }
-        }
-
-        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
-            if #available(iOS 14, *) {
                 WidgetCenter.shared.reloadAllTimelines()
             }
         }
-
+        
+        Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+        
         PrivacyFeatures.httpsUpgrade.loadDataAsync()
         
         // assign it here, because "did become active" is already too late and "viewWillAppear"
@@ -120,11 +112,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         clearLegacyAllowedDomainCookies()
+        
+        AppDependencyProvider.shared.voiceSearchHelper.migrateSettingsFlagIfNecessary()
 
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-        EmailWaitlist.shared.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
@@ -185,13 +178,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        EmailWaitlist.shared.emailManager.fetchInviteCodeIfAvailable { result in
-            switch result {
-            case .success: EmailWaitlist.shared.sendInviteCodeAvailableNotification()
-            case .failure: break
-            }
-        }
-        
         MacBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
             guard error == nil else { return }
             MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
@@ -206,40 +192,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func fireAppLaunchPixel() {
-
-        if #available(iOS 14, *) {
-            WidgetCenter.shared.getCurrentConfigurations { result in
-
-                let paramKeys: [WidgetFamily: String] = [
-                    .systemSmall: PixelParameters.widgetSmall,
-                    .systemMedium: PixelParameters.widgetMedium,
-                    .systemLarge: PixelParameters.widgetLarge
-                ]
-
-                switch result {
-                case .failure(let error):
-                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
-                        PixelParameters.widgetError: "1",
-                        PixelParameters.widgetErrorCode: "\((error as NSError).code)",
-                        PixelParameters.widgetErrorDomain: (error as NSError).domain
-                    ])
-
-                case .success(let widgetInfo):
-                    let params = widgetInfo.reduce([String: String]()) {
-                        var result = $0
-                        if let key = paramKeys[$1.family] {
-                            result[key] = "1"
-                        }
-                        return result
+        
+        WidgetCenter.shared.getCurrentConfigurations { result in
+            let paramKeys: [WidgetFamily: String] = [
+                .systemSmall: PixelParameters.widgetSmall,
+                .systemMedium: PixelParameters.widgetMedium,
+                .systemLarge: PixelParameters.widgetLarge
+            ]
+            
+            switch result {
+            case .failure(let error):
+                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [
+                    PixelParameters.widgetError: "1",
+                    PixelParameters.widgetErrorCode: "\((error as NSError).code)",
+                    PixelParameters.widgetErrorDomain: (error as NSError).domain
+                ])
+                
+            case .success(let widgetInfo):
+                let params = widgetInfo.reduce([String: String]()) {
+                    var result = $0
+                    if let key = paramKeys[$1.family] {
+                        result[key] = "1"
                     }
-                    Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
+                    return result
                 }
-
+                Pixel.fire(pixel: .appLaunch, withAdditionalParameters: params)
             }
-        } else {
-            Pixel.fire(pixel: .appLaunch, withAdditionalParameters: [PixelParameters.widgetUnavailable: "1"])
+            
         }
-
     }
     
     private func shouldShowKeyboardOnLaunch() -> Bool {
@@ -317,7 +297,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.startAddFavoriteFlow()
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
-            mainViewController?.loadUrlInNewTab(url, reuseExisting: true)
+            mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
         }
         
         return true
@@ -349,11 +329,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let hasConfigurationTask = tasks.contains { $0.identifier == AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier }
             if !hasConfigurationTask {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
-            }
-
-            let hasEmailWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
-            if !hasEmailWaitlistTask {
-                EmailWaitlist.shared.scheduleBackgroundRefreshTask()
             }
         }
     }
@@ -425,6 +400,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.loadQueryInNewTab(query)
         }
     }
+    
+    private func removeEmailWaitlistState() {
+        EmailWaitlist.removeEmailState()
+
+        let autofillStorage = EmailKeychainManager()
+        autofillStorage.deleteWaitlistState()
+        
+        // Remove the authentication state if this is a fresh install.
+        if !Database.shared.isDatabaseFileInitialized {
+            autofillStorage.deleteAuthenticationState()
+        }
+    }
 
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
@@ -448,7 +435,7 @@ extension AppDelegate: BlankSnapshotViewRecoveringDelegate {
 extension AppDelegate: UIScreenshotServiceDelegate {
     func screenshotService(_ screenshotService: UIScreenshotService,
                            generatePDFRepresentationWithCompletion completionHandler: @escaping (Data?, Int, CGRect) -> Void) {
-        guard #available(iOS 14.0, *), let webView = mainViewController?.currentTab?.webView else {
+        guard let webView = mainViewController?.currentTab?.webView else {
             completionHandler(nil, 0, .zero)
             return
         }
@@ -479,11 +466,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             Pixel.fire(pixel: .macBrowserWaitlistNotificationShown)
         }
         
-        if #available(iOS 14.0, *) {
-            completionHandler(.banner)
-        } else {
-            completionHandler(.alert)
-        }
+        completionHandler(.banner)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -493,17 +476,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if response.notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
                 Pixel.fire(pixel: .macBrowserWaitlistNotificationLaunched)
                 presentMacBrowserWaitlistSettingsModal()
-            } else if response.notification.request.identifier == EmailWaitlist.Constants.notificationIdentitier {
-                presentEmailWaitlistSettingsModal()
             }
         }
 
         completionHandler()
-    }
-
-    private func presentEmailWaitlistSettingsModal() {
-        let waitlistViewController = EmailWaitlistViewController.loadFromStoryboard()
-        presentSettings(with: waitlistViewController)
     }
     
     private func presentMacBrowserWaitlistSettingsModal() {

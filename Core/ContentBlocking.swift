@@ -32,24 +32,35 @@ public final class ContentBlocking {
                                   localProtection: DomainsProtectionUserDefaultsStore(),
                                   errorReporting: debugEvents)
     
-    public static let contentBlockingUpdating = ContentBlockingUpdating()
+    public static let adClickAttribution = AdClickAttributionFeature(with: privacyConfigurationManager)
+    public static let adClickAttributionRulesProvider = AdClickAttributionRulesProvider(config: adClickAttribution,
+                                                                                        compiledRulesSource: contentBlockingManager,
+                                                                                        exceptionsSource: exceptionsSource,
+                                                                                        errorReporting: attributionDebugEvents,
+                                                                                        compilationErrorReporting: debugEvents)
     
     public static let trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet),
                                                               data: FileStore().loadAsData(forConfiguration: .trackerDataSet),
                                                               embeddedDataProvider: AppTrackerDataSetProvider(),
                                                               errorReporting: debugEvents)
     
+    private static let lastCompiledRulesStore = AppLastCompiledRulesStore()
+    public static let contentBlockingUpdating = ContentBlockingUpdating()
+    
+    private static let contentBlockerRulesSource = ContentBlockerRulesLists(trackerDataManager: trackerDataManager,
+                                                                            adClickAttribution: adClickAttribution)
+    
     public static let contentBlockingManager = ContentBlockerRulesManager(rulesSource: contentBlockerRulesSource,
                                                                           exceptionsSource: exceptionsSource,
+                                                                          lastCompiledRulesStore: lastCompiledRulesStore,
                                                                           updateListener: contentBlockingUpdating,
                                                                           errorReporting: debugEvents,
                                                                           logger: contentBlockingLog)
     
-    private static let contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManger: trackerDataManager)
     private static let exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
     
-    private static let debugEvents = EventMapping<ContentBlockerDebugEvents> { event, scope, error, parameters, onComplete in
-        let domainEvent: PixelName
+    private static let debugEvents = EventMapping<ContentBlockerDebugEvents> { event, error, parameters, onComplete in
+        let domainEvent: Pixel.Event
         switch event {
         case .trackerDataParseFailed:
             domainEvent = .trackerDataParseFailed
@@ -69,40 +80,22 @@ public final class ContentBlocking {
         case .privacyConfigurationCouldNotBeLoaded:
             domainEvent = .privacyConfigurationCouldNotBeLoaded
             
-        case .contentBlockingTDSCompilationFailed:
-            if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
-                domainEvent = .contentBlockingTDSCompilationFailed
-            } else {
-                domainEvent = .contentBlockingErrorReportingIssue
-            }
+        case .contentBlockingCompilationFailed(let listName, let component):
+            let defaultTDSListName = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
             
-        case .contentBlockingTempListCompilationFailed:
-            if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
-                domainEvent = .contentBlockingTempListCompilationFailed
-            } else {
-                domainEvent = .contentBlockingErrorReportingIssue
+            let listType: Pixel.Event.CompileRulesListType
+            switch listName {
+            case defaultTDSListName:
+                listType = .tds
+            case AdClickAttributionRulesSplitter.blockingAttributionRuleListName(forListNamed: defaultTDSListName):
+                listType = .blockingAttribution
+            case AdClickAttributionRulesProvider.Constants.attributedTempRuleListName:
+                listType = .attributed
+            default:
+                listType = .unknown
             }
-            
-        case .contentBlockingAllowListCompilationFailed:
-            if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
-                domainEvent = .contentBlockingAllowListCompilationFailed
-            } else {
-                domainEvent = .contentBlockingErrorReportingIssue
-            }
-            
-        case .contentBlockingUnpSitesCompilationFailed:
-            if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
-                domainEvent = .contentBlockingUnpSitesCompilationFailed
-            } else {
-                domainEvent = .contentBlockingErrorReportingIssue
-            }
-            
-        case .contentBlockingFallbackCompilationFailed:
-            if scope == DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName {
-                domainEvent = .contentBlockingFallbackCompilationFailed
-            } else {
-                domainEvent = .contentBlockingErrorReportingIssue
-            }
+
+            domainEvent = .contentBlockingCompilationFailed(listType: listType, component: component)
             
         case .contentBlockingCompilationTime:
             domainEvent = .contentBlockingCompilationTime
@@ -116,10 +109,69 @@ public final class ContentBlocking {
         } else {
             Pixel.fire(pixel: domainEvent,
                        withAdditionalParameters: parameters ?? [:],
+                       includedParameters: [],
                        onComplete: onComplete)
         }
         
     }
+    
+    public static func makeAdClickAttributionDetection(tld: TLD) -> AdClickAttributionDetection {
+        AdClickAttributionDetection(feature: adClickAttribution,
+                                    tld: tld,
+                                    eventReporting: attributionEvents,
+                                    errorReporting: attributionDebugEvents,
+                                    log: adAttributionLog)
+    }
+    
+    public static func makeAdClickAttributionLogic(tld: TLD) -> AdClickAttributionLogic {
+        AdClickAttributionLogic(featureConfig: adClickAttribution,
+                                rulesProvider: adClickAttributionRulesProvider,
+                                tld: tld,
+                                eventReporting: attributionEvents,
+                                errorReporting: attributionDebugEvents,
+                                log: adAttributionLog)
+    }
+    
+    private static let attributionEvents = EventMapping<AdClickAttributionEvents> { event, _, parameters, _ in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .adAttributionDetected:
+            domainEvent = .adClickAttributionDetected
+        case .adAttributionActive:
+            domainEvent = .adClickAttributionActive
+        }
+        
+        Pixel.fire(pixel: domainEvent, withAdditionalParameters: parameters ?? [:], includedParameters: [.appVersion])
+    }
+    
+    private static let attributionDebugEvents = EventMapping<AdClickAttributionDebugEvents> { event, _, _, _ in
+        let domainEvent: Pixel.Event
+        switch event {
+        case .adAttributionCompilationFailedForAttributedRulesList:
+            domainEvent = .adAttributionCompilationFailedForAttributedRulesList
+        case .adAttributionGlobalAttributedRulesDoNotExist:
+            domainEvent = .adAttributionGlobalAttributedRulesDoNotExist
+        case .adAttributionDetectionHeuristicsDidNotMatchDomain:
+            domainEvent = .adAttributionDetectionHeuristicsDidNotMatchDomain
+        case .adAttributionLogicUnexpectedStateOnRulesCompiled:
+            domainEvent = .adAttributionLogicUnexpectedStateOnRulesCompiled
+        case .adAttributionLogicUnexpectedStateOnInheritedAttribution:
+            domainEvent = .adAttributionLogicUnexpectedStateOnInheritedAttribution
+        case .adAttributionLogicUnexpectedStateOnRulesCompilationFailed:
+            domainEvent = .adAttributionLogicUnexpectedStateOnRulesCompilationFailed
+        case .adAttributionDetectionInvalidDomainInParameter:
+            domainEvent = .adAttributionDetectionInvalidDomainInParameter
+        case .adAttributionLogicRequestingAttributionTimedOut:
+            domainEvent = .adAttributionLogicRequestingAttributionTimedOut
+        case .adAttributionLogicWrongVendorOnSuccessfulCompilation:
+            domainEvent = .adAttributionLogicWrongVendorOnSuccessfulCompilation
+        case .adAttributionLogicWrongVendorOnFailedCompilation:
+            domainEvent = .adAttributionLogicWrongVendorOnFailedCompilation
+        }
+        
+        Pixel.fire(pixel: domainEvent, includedParameters: [])
+    }
+            
 }
 
 public struct ContentBlockerProtectionChangedNotification {
@@ -151,7 +203,7 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
     private let suiteName: String
     
     public init(suiteName: String = ContentBlockerStoreConstants.groupName) {
-        self.suiteName =  suiteName
+        self.suiteName = suiteName
     }
     
     private var userDefaults: UserDefaults? {
@@ -161,7 +213,8 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
     public private(set) var unprotectedDomains: Set<String> {
         get {
             guard let data = userDefaults?.data(forKey: Keys.unprotectedDomains) else { return Set<String>() }
-            guard let unprotectedDomains = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSSet.self, from: data) as? Set<String> else {
+            guard let unprotectedDomains = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSSet.self, NSString.self],
+                                                                                   from: data) as? Set<String> else {
                 return Set<String>()
             }
             return unprotectedDomains
@@ -169,7 +222,6 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
         set(newUnprotectedDomain) {
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newUnprotectedDomain, requiringSecureCoding: false) else { return }
             userDefaults?.set(data, forKey: Keys.unprotectedDomains)
-            onStoreChanged()
         }
     }
     
@@ -183,10 +235,6 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
         var domains = unprotectedDomains
         domains.remove(domain)
         unprotectedDomains = domains
-    }
-    
-    private func onStoreChanged() {
-        ContentBlocking.contentBlockingManager.scheduleCompilation()
     }
     
 }

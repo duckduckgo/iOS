@@ -21,6 +21,7 @@ import Foundation
 import Core
 import WebKit
 import os.log
+import UniformTypeIdentifiers
 
 class DownloadManager {
     
@@ -77,29 +78,33 @@ class DownloadManager {
     private func createDownloadsDirectory() {
         try? FileManager.default.createDirectory(at: downloadsDirectory, withIntermediateDirectories: true, attributes: nil)
     }
-    
-    func makeDownload(navigationResponse: WKNavigationResponse,
+
+    func makeDownload(response: URLResponse,
+                      suggestedFilename: String? = nil,
                       downloadSession: DownloadSession? = nil,
                       cookieStore: WKHTTPCookieStore? = nil,
                       temporary: Bool? = nil) -> Download? {
-        
-        guard let metaData = downloadMetaData(for: navigationResponse) else { return nil }
-        
+
+        guard let metaData = downloadMetaData(for: response, suggestedFilename: suggestedFilename),
+              let url = response.url
+        else { return nil }
+
         let temporaryFile: Bool
         if let temporary = temporary {
             temporaryFile = temporary
         } else {
             temporaryFile = FilePreviewHelper.canAutoPreviewMIMEType(metaData.mimeType)
         }
-        
+
         let session: DownloadSession
         if let downloadSession = downloadSession {
             session = downloadSession
         } else {
-            session = DownloadSession(metaData.url, cookieStore: cookieStore)
+            session = URLDownloadSession(metaData.url, cookieStore: cookieStore)
         }
-        
-        let download = Download(filename: metaData.filename,
+
+        let download = Download(url: url,
+                                filename: metaData.filename,
                                 mimeType: metaData.mimeType,
                                 temporary: temporaryFile,
                                 downloadSession: session,
@@ -108,16 +113,28 @@ class DownloadManager {
         downloadList.insert(download)
         return download
     }
+
+    func makeDownload(navigationResponse: WKNavigationResponse,
+                      suggestedFilename: String? = nil,
+                      downloadSession: DownloadSession? = nil,
+                      cookieStore: WKHTTPCookieStore? = nil,
+                      temporary: Bool? = nil) -> Download? {
+        makeDownload(response: navigationResponse.response,
+                     suggestedFilename: suggestedFilename,
+                     downloadSession: downloadSession,
+                     cookieStore: cookieStore,
+                     temporary: temporary)
+    }
     
-    func downloadMetaData(for navigationResponse: WKNavigationResponse) -> DownloadMetadata? {
-        let filename = filename(for: navigationResponse)
-        return DownloadMetadata(navigationResponse.response, filename: filename)
+    func downloadMetaData(for response: URLResponse, suggestedFilename: String? = nil) -> DownloadMetadata? {
+        let filename = filename(forSuggestedFilename: suggestedFilename ?? response.suggestedFilename, mimeType: response.mimeType)
+        return DownloadMetadata(response, filename: filename)
     }
     
     func startDownload(_ download: Download, completion: Download.Completion? = nil) {
         download.completionBlock = completion
-        download.start()
         notificationCenter.post(name: .downloadStarted, object: nil, userInfo: [UserInfoKeys.download: download])
+        download.start()
     }
     
     func cancelDownload(_ download: Download) {
@@ -174,14 +191,22 @@ extension DownloadManager {
         }
     }
     
-    private func filename(for navigationResponse: WKNavigationResponse) -> String {
-        let filename = sanitizeFilename(navigationResponse.response.suggestedFilename)
+    private func filename(forSuggestedFilename suggestedFilename: String?, mimeType: String?) -> String {
+        let filename = sanitizeFilename(suggestedFilename, mimeType: mimeType)
         return convertToUniqueFilename(filename)
     }
     
     //https://app.asana.com/0/0/1201734618649839/f
-    private func sanitizeFilename(_ originalFilename: String?) -> String {
-        let filename = originalFilename ?? "unknown"
+    private func sanitizeFilename(_ originalFilename: String?, mimeType: String?) -> String {
+        var filename = originalFilename ?? "unknown"
+
+        if let mimeType = mimeType,
+           let utType = UTType(mimeType: mimeType),
+           UTType(filenameExtension: (filename as NSString).pathExtension) != utType,
+           let pathExtension = utType.preferredFilenameExtension {
+            filename.append("." + pathExtension)
+        }
+
         let allowedCharacterSet = CharacterSet.alphanumerics.union(CharacterSet.punctuationCharacters)
         return filename.components(separatedBy: allowedCharacterSet.inverted).joined()
     }

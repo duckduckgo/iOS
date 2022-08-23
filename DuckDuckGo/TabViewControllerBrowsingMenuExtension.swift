@@ -22,6 +22,8 @@ import Core
 import BrowserServicesKit
 import simd
 
+// swiftlint:disable file_length
+
 extension TabViewController {
     
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
@@ -77,13 +79,24 @@ extension TabViewController {
                 self?.onReportBrokenSiteAction()
             }))
             
+            entries.append(.separator)
+
+            
+            if self.featureFlagger.isFeatureOn(.autofill) {
+                entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
+                                                         image: UIImage(named: "MenuAutofill")!,
+                                                         action: { [weak self] in
+                    self?.onOpenAutofillLoginsAction()
+                }))
+            }
+            
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
                                                      image: UIImage(named: "MenuDownloads")!,
                                                      showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
                                                      action: { [weak self] in
                 self?.onOpenDownloadsAction()
             }))
-            
+
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
                                                      image: UIImage(named: "MenuSettings")!,
                                                      action: { [weak self] in
@@ -340,7 +353,12 @@ extension TabViewController {
         Pixel.fire(pixel: .browsingMenuToggleBrowsingMode)
         tabModel.toggleDesktopMode()
         updateContentMode()
-        tabModel.isDesktop ? load(url: url.toDesktopUrl()) : reload(scripts: false)
+        
+        if tabModel.isDesktop {
+            load(url: url.toDesktopUrl())
+        } else {
+            reload(scripts: false)
+        }
     }
     
     private func onReportBrokenSiteAction() {
@@ -352,6 +370,10 @@ extension TabViewController {
         Pixel.fire(pixel: .downloadsListOpened,
                    withAdditionalParameters: [PixelParameters.originatedFromMenu: "1"])
         delegate?.tabDidRequestDownloads(tab: self)
+    }
+    
+    private func onOpenAutofillLoginsAction() {
+        delegate?.tabDidRequestAutofillLogins(tab: self)
     }
     
     private func onBrowsingSettingsAction() {
@@ -387,8 +409,12 @@ extension TabViewController {
             message = UserText.messageProtectionEnabled.format(arguments: domain)
         }
         
+        ContentBlocking.contentBlockingManager.scheduleCompilation()
+        
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) { [weak self] in
             self?.togglePrivacyProtection(domain: domain)
         }
     }
 }
+
+// swiftlint:enable file_length

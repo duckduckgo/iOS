@@ -69,7 +69,7 @@ public extension RunLoop {
             RunLoop.current.add(sendPort, forMode: mode)
 
             // Send Wake message from current RunLoop port to each running RunLoop
-            // Called in reversed order to corretly wake nested RunLoops
+            // Called in reversed order to correctly wake nested RunLoops
             for receivePort in ports.reversed() {
                 receivePort.send(before: Date(), components: nil, from: sendPort, reserved: 0)
             }

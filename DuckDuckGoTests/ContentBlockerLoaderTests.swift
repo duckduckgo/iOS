@@ -53,7 +53,7 @@ class ContentBlockerLoaderTests: XCTestCase {
         
         mockRequest.mockResponse = .success(etag: "test", data: Data())
         
-        // Incorect etag should be updated
+        // Incorrect etag should be updated
         mockEtagStorage.set(etag: "old", for: .surrogates)
 
         // Has data and the correct etag

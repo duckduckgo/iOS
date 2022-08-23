@@ -96,7 +96,7 @@ class MainViewController: UIViewController {
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
     
-    /// Do not referecen directly, use `presentedMenuButton`
+    /// Do not reference directly, use `presentedMenuButton`
     let menuButton = MenuButton()
     var presentedMenuButton: MenuButton {
         AppWidthObserver.shared.isLargeWidth ? omniBar.menuButtonContent : menuButton
@@ -750,7 +750,7 @@ class MainViewController: UIViewController {
             if self.navBarTop.constant >= 0 {
                 self.showBars()
             }
-            // If tabs have been udpated, do this async to make sure size calcs are current
+            // If tabs have been updated, do this async to make sure size calcs are current
             self.tabsBarController?.refresh(tabsModel: self.tabManager.model)
             
             // Do this on the next UI thread pass so we definitely have the right width

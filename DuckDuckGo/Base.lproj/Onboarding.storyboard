@@ -183,7 +183,7 @@
         <!--Open links with peace of mind, every time.-->
         <scene sceneID="sXM-7r-JHN">
             <objects>
-                <viewController storyboardIdentifier="onboardingDefaultBrowser" title="Open links with peace of mind, every time." id="0MQ-7J-rAM" customClass="OnboardingDefaultBroswerViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onboardingDefaultBrowser" title="Open links with peace of mind, every time." id="0MQ-7J-rAM" customClass="OnboardDefaultBrowserViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5SA-Fc-Nnf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="276"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

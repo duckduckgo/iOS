@@ -462,12 +462,12 @@ public class Favicons {
 
         var sources = sourcesProvider.additionalSources(forDomain: domain).map { Source.network($0) }
         
-        // a provided URL was given so add our usual main source to the list of alteratives
+        // a provided URL was given so add our usual main source to the list of alternatives
         if let url = url {
             sources.insert(Source.network(url), at: 0)
         }
 
-        // Explicity set the expiry
+        // Explicitly set the expiry
         let expiry = KingfisherOptionsInfoItem.diskCacheExpiration(isDebugBuild ? .seconds(60) : .days(7))
 
         return [

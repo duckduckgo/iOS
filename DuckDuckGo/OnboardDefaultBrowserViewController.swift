@@ -1,5 +1,5 @@
 //
-//  OnboardingDefaultBroswerViewController.swift
+//  OnboardDefaultBrowserViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -19,7 +19,7 @@
 import UIKit
 import Core
 
-class OnboardingDefaultBroswerViewController: OnboardingContentViewController {
+class OnboardingDefaultBrowserViewController: OnboardingContentViewController {
     
     override var header: String {
         return UserText.onboardingDefaultBrowserTitle

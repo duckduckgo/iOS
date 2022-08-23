@@ -29,11 +29,13 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
 #if DEBUG
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif
+        let isBackgrounded = UIApplication.shared.applicationState == .background
+        let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
         switch error {
         case .initFailed(let error):
-            Pixel.fire(pixel: .secureVaultInitFailedError, error: error)
+            Pixel.fire(pixel: .secureVaultInitFailedError, error: error, withAdditionalParameters: pixelParams)
         case .failedToOpenDatabase(let error):
-            Pixel.fire(pixel: .secureVaultFailedToOpenDatabaseError, error: error)
+            Pixel.fire(pixel: .secureVaultFailedToOpenDatabaseError, error: error, withAdditionalParameters: pixelParams)
         default:
             Pixel.fire(pixel: .secureVaultError, includedParameters: [])
 

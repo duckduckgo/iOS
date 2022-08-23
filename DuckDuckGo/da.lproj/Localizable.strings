@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Okay";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Om vores beskyttelse mod sporing på nettet";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Om vores søgebeskyttelse og annoncer";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Sådan påvirker vores søgeannoncer vores beskyttelse";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Tvunget kryptering";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Krypteret forbindelse";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Vi har tvunget dette websted til at bruge en krypteret forbindelse, hvilket forhindrer aflytning af personlige oplysninger, du sender til det.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Ja";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "BESKYTTELSE AF WEBSTEDET ER DEAKTIVERET";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Større tracker-netværk fundet";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Ingen større tracker-netværk fundet";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Tracker-netværk blev fundet på %1$@%% af de websteder, du har besøgt siden %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Vi indsamler stadig data for at vise, hvor\nmange trackere vi har blokeret.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Ingen tredjepartsanmodninger er indlæst";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Følgende domænes anmodninger blev indlæst, fordi der for nylig blev klikket på en annonce på %@ på DuckDuckGo. Disse anmodninger hjælper med at evaluere annoncernes effektivitet. Alle annoncer på DuckDuckGo er ikke-profilerende.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Følgende domænes anmodninger blev indlæst for at forhindre brud på webstedet.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Følgende domænes anmodninger blev indlæst, fordi de er tilknyttet %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Følgende anmodninger fra tredjepartsdomæner blev indlæst. Hvis en virksomheds anmodninger indlæses, kan det give dem mulighed for at profilere dig, selv om vores andre beskyttelser mod websporing stadig anvendes.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Ingen anmodninger fra tredjeparter blev blokeret fra at blive indlæst, fordi beskyttelse er slået fra på dette websted. Hvis en virksomheds anmodninger indlæses, kan det give dem mulighed for at profilere dig.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Følgende domæners sporingsanmodninger blev indlæst.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Følgende domænes anmodninger blev også indlæst.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Følgende domæners anmodninger blev indlæst.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Følgende domæners anmodninger blev indlæst.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Vi har ikke registreret anmodninger fra tredjepartsdomæner.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Anmodninger fra tredjeparter indlæst";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Bemærk: Platformsbegrænsninger kan begrænse vores evne til at registrere alle anmodninger.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Ikke-profilering";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Databeskyttelsespraksisser fra ToS;DR.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Ukendt praksis for beskyttelse af privatlivets fred";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Tracker-netværk samler din webhistorik i en dataprofil om dig. Større tracker-netværk er mere skadelige, fordi de kan spore og målrette sig dig over en større del af internettet.";
+"privacy.protection.tracker.networks.info" = "Trackere hjælper virksomheder med at profilere dig. Vi blokerede disse trackere fra at indlæse og overvåge din aktivitet på denne side.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Ingen sporingsanmodninger blev blokeret fra at blive indlæst, fordi beskyttelse er slået fra på dette websted. Hvis en virksomheds anmodninger indlæses, kan det give dem mulighed for at profilere dig.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Vi har ikke registreret nogen sporingsanmodninger.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Følgende anmodninger fra tredjepartsdomæner blev blokeret fra at blive indlæst, fordi de blev identificeret som sporingsanmodninger. Hvis en virksomheds anmodninger indlæses, kan det give dem mulighed for at profilere dig.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Anmodninger blokeret fra indlæsning";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Sporingsanmodninger fundet";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Ingen sporingsanmodninger blokeret";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Ingen sporingsanmodninger fundet";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Annullér";

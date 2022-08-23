@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "GERAI";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Apie mūsų žiniatinklio stebėjimo apsaugą";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Apie mūsų paieškos apsaugą ir reklamas";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Kaip paieškos skelbimai veikia mūsų apsaugos priemones";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmas";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Priverstinis šifravimas";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Šifruotas ryšys";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Privertėme šią svetainę naudoti šifruotą ryšį, kad nenutekėtų pateikiama asmeninė informacija.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Taip";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SVETAINĖS APSAUGA IŠJUNGTA";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Rasti pagrindiniai stebėjimo priemonės tinklai";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Rasti pagrindiniai stebėjimo priemonės tinklai";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Stebėjimo priemonės tinklai rasti %1$@%% svetainių, kuriose lankėtės nuo %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Renkame duomenis, kad galėtumėme parodyti, kiek\nstebėjimo priemonių užblokavome.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Nėra įkeltų trečiųjų šalių užklausų";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Šio domeno užklausos buvo įkeltos, nes neseniai buvo spustelėta %@ reklama „DuckDuckGo“. Šios užklausos padeda įvertinti skelbimų efektyvumą. Visi „DuckDuckGo“ skelbimai yra neprofiliavimo.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Siekiant išvengti svetainės sutrikimų, buvo įkeltos šios domeno užklausos.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Šios domeno užklausos buvo įkeltos, nes jos susijusios su %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Buvo įkeltos šios trečiųjų šalių domenų užklausos. Jei įmonės užklausos įkeliamos, ji gali leisti joms rinkti informaciją apie jus, nors kitos mūsų žiniatinklio sekimo apsaugos priemonės tebegalioja.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Nebuvo užblokuotas jokių trečiųjų šalių užklausų įkėlimas, nes šios svetainės apsaugos priemonės yra išjungtos. Jei įmonės užklausos įkeliamos, ji gali leisti joms rinkti informaciją apie jus.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Buvo įkeltos šios domenų stebėjimo užklausos.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Taip pat buvo įkeltos šios domeno užklausos.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Buvo įkeltos šios domenų užklausos.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Taip pat buvo įkeltos šios domeno užklausos.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Užklausų iš trečiųjų šalių domenų neaptikome.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Įkeltos trečiųjų šalių užklausos";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Atkreipkite dėmesį: platformos apribojimai gali riboti mūsų galimybes aptikti visas užklausas.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Informacija nerenkama";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Privatumo praktikos iš ToS;DR.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Nežinoma privatumo praktika";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sekiklių tinklai stebi jūsų naršymo tinkle istoriją ir iš jos sudaro jūsų duomenų profilį. Daugelis sekiklių tinklų yra pavojingesni, nes jie gali sekti ir rasti jus didesnėje interneto erdvėje.";
+"privacy.protection.tracker.networks.info" = "Stebėjimo priemonės padeda įmonėms sudaryti jūsų profilį. Užblokavome šių sekimo priemonių įkėlimą ir jūsų veiklos šiame puslapyje stebėjimą.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Nebuvo užblokuotas jokių sekimo užklausų įkėlimas, nes šioje svetainėje apsauga yra išjungta. Jei įmonės užklausos įkeliamos, ji gali leisti joms rinkti informaciją apie jus.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Neaptikome jokių stebėjimo užklausų.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Toliau nurodytų trečiųjų šalių domenų užklausų įkėlimas buvo užblokuotas, nes jos buvo identifikuotos kaip sekimo užklausos. Jei įmonės užklausos įkeliamos, ji gali leisti joms rinkti informaciją apie jus.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Užklausos užblokuotos įkelti";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Rastos sekimo užklausos";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Neužblokuota jokių sekimo užklausų";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Sekimo užklausų nerasta";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Atšaukti";

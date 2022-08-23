@@ -41,34 +41,34 @@ class TrackersAnimator {
     var shouldCollapse = true
     
     func configure(_ omniBar: OmniBar,
-                   toDisplay trackers: [DetectedTracker],
+                   toDisplay trackers: [DetectedRequest],
                    shouldCollapse: Bool) -> Bool {
         self.shouldCollapse = shouldCollapse
         
-        let blockedEntities = Set(trackers.compactMap { $0.entity }).sorted { l, r -> Bool in
-            return (l.prevalence ?? 0) > (r.prevalence ?? 0)
-        }
-        .filter { $0.displayName != nil }
-        .sorted { _, r -> Bool in
-            guard let displayName = r.displayName else { return false }
-            return "AEIOU".contains(displayName[displayName.startIndex])
-        }
+        let blockedEntityNames = trackers.removingDuplicates { $0.entityName }
+            .sorted { l, r -> Bool in
+                return (l.prevalence ?? 0) > (r.prevalence ?? 0)
+            }
+            .compactMap { $0.entityName }
+            .sorted { _, r -> Bool in
+                "AEIOU".contains(r[r.startIndex])
+            }
         
-        guard !blockedEntities.isEmpty else { return false }
+        guard !blockedEntityNames.isEmpty else { return false }
 
         let imageViews: [UIImageView]! = omniBar.siteRatingContainer.trackerIcons
         
         let iconSource = PrivacyProtectionIconSource.self
         let iconSize = CGSize(width: Constants.iconWidth, height: Constants.iconHeight)
-        let shouldShowMoreIcon = blockedEntities.count > imageViews.count
+        let shouldShowMoreIcon = blockedEntityNames.count > imageViews.count
         
         var iconImages = [UIImage]()
-        for (index, entity) in blockedEntities.enumerated() {
+        for (index, entityName) in blockedEntityNames.enumerated() {
             guard index != imageViews.endIndex else {
                 break
             }
             
-            let iconTemplate = iconSource.iconImageTemplate(forNetworkName: entity.displayName!,
+            let iconTemplate = iconSource.iconImageTemplate(forNetworkName: entityName,
                                                  iconSize: iconSize)
             let iconToDisplay: UIImage
             if index == imageViews.endIndex - 1 && shouldShowMoreIcon {

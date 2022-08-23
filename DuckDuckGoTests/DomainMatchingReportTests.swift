@@ -53,11 +53,11 @@ class DomainMatchingReportTests: XCTestCase {
             
             if test.expectAction == "block" {
                 XCTAssertNotNil(tracker)
-                XCTAssert(tracker?.blocked ?? false)
+                XCTAssert(tracker?.isBlocked ?? false)
             } else if test.expectAction == "ignore" {
-                XCTAssertFalse(tracker?.blocked ?? false)
+                XCTAssertFalse(tracker?.isBlocked ?? false)
             } else {
-                XCTAssert(tracker?.blocked ?? true)
+                XCTAssert(tracker?.isBlocked ?? true)
             }
         }
     }

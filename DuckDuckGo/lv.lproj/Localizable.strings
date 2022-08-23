@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Labi";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Par mūsu tīmekļa izsekošanas aizsardzību";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Par mūsu meklēšanas aizsardzību un reklāmām";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Kā mūsu meklēšanas reklāmas ietekmē mūsu aizsardzību";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritms";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Piespiedu šifrēšana";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Šifrēts savienojums";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Mēs piespiedām šo vietni izmantot šifrētu savienojumu, lai nepieļautu, ka slepeni tiek novērota tevis nosūtītā personīgā informācija.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Jā";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "VIETNES AIZSARDZĪBA IR ATSPĒJOTA";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Atrasti lielāko izsekotāju tīkli";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Nav atrasts neviens lielāko izsekotāju tīkls";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Izsekotāju tīkli tika atrasti %1$@%% vietņu, kuras apmeklēji kopš %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Mēs joprojām apkopojam datus, lai parādītu, cik daudz\nizsekotāju esam bloķējuši.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Nav ielādēts neviens trešo pušu pieprasījums";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Šā domēna pieprasījumi tika ielādēti, jo nesen tika noklikšķināts uz %@ reklāmas DuckDuckGo. Šie pieprasījumi palīdz novērtēt reklāmu efektivitāti. Neviena reklāma DuckDuckGo nav profilējoša.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Šī domēna pieprasījumi tika ielādēti, lai novērstu vietnes darbības traucējumus.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Šī domēna pieprasījumi tika ielādēti, jo tie ir saistīti ar %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Tika ielādēti šādu trešo pušu domēnu pieprasījumi. Ja tiek ielādēti uzņēmuma pieprasījumi, tas var ļaut tiem veidot tavu profilu, lai gan joprojām ir spēkā mūsu pārējās tīmekļa izsekošanas aizsardzības prasības.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Netika bloķēta trešo pušu pieprasījumu ielāde, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Tika ielādēti šādu domēnu izsekošanas pieprasījumi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Tika ielādēti arī šāda domēna pieprasījumi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Tika ielādēti šādu domēnu pieprasījumi.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Tika ielādēti šāda domēna pieprasījumi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Mēs neatradām pieprasījumus no neviena trešās puses domēna.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Ielādēti trešo pušu pieprasījumi";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Lūdzu, ņemiet vērā: platformas ierobežojumi var ierobežot mūsu spēju noteikt visus pieprasījumus.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Bez profilēšanas";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "ToS;DR privātuma prakse.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Nezināma privātuma prakse";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Izsekotāju tīkli apkopo tavu tīmekļa vēsturi datu profilā par tevi. Lielākie izsekotāju tīkli ir kaitīgāki, jo tie var izsekot un atlasīt tevi kā mērķauditoriju internetā plašākā mērogā.";
+"privacy.protection.tracker.networks.info" = "Izsekotāji palīdz uzņēmumiem veidot tavu profilu. Mēs bloķējām šo izsekotāju ielādēšanu un tavu darbību novērošanu šajā lapā.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Neviens izsekošanas pieprasījums netika bloķēts, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Mēs neatradām nevienu izsekošanas pieprasījumu.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Turpmāk norādīto trešo pušu domēnu pieprasījumu ielāde tika bloķēta, jo tie tika identificēti kā izsekošanas pieprasījumi. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Pieprasījumu ielādēšana bloķēta";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Atrasti izsekošanas pieprasījumi";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Neviens izsekošanas pieprasījums nav bloķēts";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Nav atrasts neviens izsekošanas pieprasījums";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Atcelt";

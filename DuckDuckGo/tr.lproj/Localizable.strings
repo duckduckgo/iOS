@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Tamam";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Web İzleme Korumalarımız hakkında";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Arama korumalarımız ve reklamlarımız hakkında";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Arama ağı reklamlarımız korumalarımızı nasıl etkiler?";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritma";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Zorunlu Şifreleme";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Şifreli Bağlantı";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Bu siteyi şifreli bir bağlantı kullanmaya zorladık. Bu sayede, siteye gönderdiğiniz kişisel bilgiler kaydedilemeyecek.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Evet";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SİTE KORUMASI KAPATILDI";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Başlıca İzleyici Ağları Bulundu";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Başlıca İzleyici Ağı Tespit Edilmedi";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "%2$@ yılından beri ziyaret ettiğiniz web sitelerinin %%%1$@ kadarında izleyici ağları bulundu.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Kaç izleyiciyi engellediğimizi göstermek için\nhâlâ veri topluyoruz.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Yüklenen Üçüncü Taraf İsteği Yok";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "DuckDuckGo'daki bir %@ reklamı yakın zamanda tıklandığı için aşağıdaki alan adının istekleri yüklendi. Bu istekler, reklamların ne kadar etkili olduğunun değerlendirilmesine yardımcı olur. DuckDuckGo'daki reklamlar profil oluşturma için kullanılmaz.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Site kopmasını önlemek için aşağıdaki alan adının istekleri yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "%@ ile ilişkili oldukları için aşağıdaki alan adının istekleri yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Aşağıdaki üçüncü taraf alan adlarının istekleri yüklendi. Bir şirketin istekleri yüklenirse, diğer web izleme korumalarımıza rağmen profilinizi oluşturmaları mümkün olabilir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Bu site için Korumalar kapalı olduğundan hiçbir üçüncü taraf isteğin yüklenmesi engellenmedi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Aşağıdaki alan adlarının izleme istekleri yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Aşağıdaki alan adlarının istekleri de yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Aşağıdaki alanların istekleri yüklendi.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Aşağıdaki alanın istekleri yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Herhangi bir üçüncü taraf alan adından gelen istek algılanmadı.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Üçüncü Taraf İstekleri Yüklendi";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Not: Platform sınırlamaları yüzünden tüm istekleri belirlememiz mümkün olmayabilir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Profil Oluşturmama";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Gizlilik Uygulamaları: ToS;DR.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Bilinmeyen Gizlilik Uygulamaları";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "İzleyici ağları, web geçmişinizi sizinle ilgili bir veri profilinde toplar. Büyük izleyici ağları daha zararlıdır, çünkü sizi İnternet'te izleyebilir ve hedefleyebilirler.";
+"privacy.protection.tracker.networks.info" = "Şirketler izleyici kullanarak profilinizi çıkarabilir. Bu izleyicilerin yüklenmesini ve bu sayfadaki etkinliğinizi izlemesini engelledik.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Bu site için Korumalar kapalı olduğundan hiçbir izleme isteğinin yüklenmesi engellenmedi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Herhangi bir izleme isteği algılanmadı.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Aşağıdaki üçüncü taraf alan adlarının isteklerinin yüklenmesi, izleme istekleri olarak tanımlandıkları için engellendi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Yüklenmesi Engellenen İstekler";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "İzleme İstekleri Bulundu";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Hiçbir İzleme İsteği Engellenmedi";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "İzleme İsteği Bulunamadı";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "İptal";

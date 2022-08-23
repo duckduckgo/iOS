@@ -155,7 +155,7 @@ class PrivacyProtectionErrorController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let unprotectedSitesController = segue.destination as? UnprotectedSitesViewController {
             unprotectedSitesController.enforceLightTheme = true
-            if isPad {
+            if AppWidthObserver.shared.isLargeWidth {
                 unprotectedSitesController.showBackButton = true
             }
             Pixel.fire(pixel: .privacyDashboardManageProtection)

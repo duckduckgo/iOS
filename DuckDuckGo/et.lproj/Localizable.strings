@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Meie veebijälgimise kaitsete teave";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Meie otsingukaitsete ja reklaamide teave";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Kuidas meie otsingu reklaamid meie kaitset mõjutavad?";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Sunnitud krüpteerimine";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Krüptitud ühendus";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Sundisime seda saiti kasutama krüpteeritud ühendust, vältides sellele saadetud isikuandmete pealtkuulamist.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Jah";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SAIDI KAITSE ON KEELATUD";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Leitud peamised jälgimisvõrgud";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Ühtegi peamist jälgimisvõrku ei leitud";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Jälgija võrgud leiti %1$@%% veebisaitidest, mida sa oled külastanud alates %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Kogume endiselt andmeid, et näidata, kui\npalju jälgijaid oleme blokeerinud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Kolmanda poole päringud pole laaditud";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Järgmise domeeni päringud laaditi, sest hiljuti klõpsati DuckDuckGo's %@ reklaamil. Need päringud aitavad hinnata reklaamide tõhusust. Kõik DuckDuckGo reklaamid on mitteprofileerivad.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Laaditi järgmise domeeni päringud, et vältida saidi töö häirimist.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Laaditi järgmise domeeni päringud, sest nendega on seotud %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Laaditi järgmiste kolmanda poole domeenide päringud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida, kuigi meie teised veebi jälgimise kaitsemeetmed kehtivad endiselt.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Kolmandate poolte päringute laadimist ei blokeeritud, sest selle saidi jaoks on kaitsed välja lülitatud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Laaditi järgmiste domeenide jälgimispäringud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Laaditi ka järgmise domeeni päringud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Laaditi ka järgmiste domeenide päringud.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Laaditi ka järgmise domeeni päringud.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Me ei tuvastanud kolmanda poole domeenide päringuid.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Kolmanda poole päringud on laaditud";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Pane tähele: platvormi piirangud võivad piirata meie võimet tuvastada kõiki päringuid.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Mitte-profileeriv";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Privaatsustava tuleneb ToS; DR-ist.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Teadmata privaatsustava";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Jälgimisvõrgud koondavad teie veebiajaloo teie kohta andmeprofiiliks. Suuremad jälgimisvõrgud on kahjulikumad, kuna need saavad teid jälgida ja sihtida suuremas Internetis.";
+"privacy.protection.tracker.networks.info" = "Jälgurid aitavad ettevõtetel sind profileerida. Me blokeerisime nende jälgurite laadimise ja sinu tegevuse jälgimise sellel lehel.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Jälgimispäringute laadimist ei blokeeritud, sest selle saidi jaoks on kaitsed välja lülitatud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Me ei tuvastanud ühtegi jälgimispäringut.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Järgmiste kolmanda poole domeenide päringute laadimine blokeeriti, sest need tuvastati jälgimispäringutena. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Päringute laadimine on blokeeritud";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Leitud jälgimispäringud";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Ühtegi jälgimispäringut pole blokeeritud";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Jälgimispäringuid ei leitud";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Tühista";

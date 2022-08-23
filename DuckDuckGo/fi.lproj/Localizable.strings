@@ -1024,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Tietoa verkkoseurantasuojauksistamme";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Tietoa hakusuojauksistamme ja mainoksistamme";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Miten hakumainoksemme vaikuttavat suojauksiimme";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmi";
 
@@ -1047,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Pakotettu salaus";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Salattu yhteys";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Olemme pakottaneet tämän sivuston käyttämään salattua yhteyttä, jotta sille lähettämiäsi henkilötietoja ei voida urkkia.";
@@ -1126,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Kyllä";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SIVUSTOSUOJAUS EI KÄYTÖSSÄ";
 
@@ -1141,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Merkittäviä seurantaverkostoja löytynyt";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Merkittäviä seurantaverkostoja ei löytynyt";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "%1$@%%:lta sivustoista, joilla olet käynyt %2$@ jälkeen, löytyi seurantaverkostoja.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Keräämme edelleen tietoja näyttääksemme,\nkuinka monta seurantapalvelinta olemme estäneet.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Kolmannen osapuolen pyyntöjä ei ole ladattu";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Seuraavan verkkotunnuksen pyynnöt ladattiin, koska %@-mainosta DuckDuckGossa napsautettiin äskettäin. Nämä pyynnöt auttavat arvioimaan mainosten tehokkuutta. Kaikki DuckDuckGon mainokset ovat ei-profiloivia.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Seuraavan verkkotunnuksen pyynnöt ladattiin sivuston rikkoutumisen estämiseksi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Seuraavan verkkotunnuksen pyynnöt ladattiin, koska ne liittyvät kohteeseen %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Seuraavien kolmansien osapuolten verkkotunnusten pyynnöt ladattiin. Jos yrityksen pyynnöt ladataan, se voi antaa yritykselle mahdollisuuden profiloida sinut, vaikka muut verkkoseurantasuojamme ovat edelleen voimassa.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Kolmannen osapuolen pyyntöjä ei estetty latautumasta, koska suojaukset on poistettu käytöstä tältä sivustolta. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Seuraavien verkkotunnusten seurantapyynnöt ladattiin.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Myös seuraavan verkkotunnuksen pyynnöt ladattiin.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Seuraavien verkkotunnusten pyynnöt ladattiin.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Seuraavan verkkotunnuksen pyynnöt ladattiin.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Emme havainneet pyyntöjä kolmannen osapuolen verkkotunnuksilta.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Kolmannen osapuolen pyynnöt ladattu";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Huomaa: alustan rajoitukset voivat rajoittaa kykyämme havaita kaikki pyynnöt.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Ei-profiloiva";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "ToS;DR:n tietosuojakäytäntö.";
@@ -1181,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Tuntemattomat tietosuojakäytännöt";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Seurantaverkostot kokoavat verkkohistoriasi sinua koskevaksi tietoprofiiliksi. Merkittävät seurantaverkostot ovat haitallisempia, koska ne voivat seurata toimiasi ja harjoittaa kohdennusta useammassa osassa verkkoa.";
+"privacy.protection.tracker.networks.info" = "Seurantaohjelmat auttavat yrityksiä profiloimaan sinut. Olemme estäneet näitä seurantalaitteita lataamasta ja seuraamasta toimintaasi tällä sivulla.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Seurantapyyntöjä ei estetty latautumasta, koska suojaukset on poistettu käytöstä tältä sivustolta. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Emme havainneet seurantapyyntöjä.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Seuraavien kolmansien osapuolten verkkotunnusten pyyntöjen lataaminen estettiin, koska ne tunnistettiin seurantapyynnöiksi. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Pyynnöt, joiden lataaminen estetty";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Löydetyt seurantapyynnöt";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Ei estettyjä seurantapyyntöjä";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Seurantapyyntöjä ei löytynyt";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Peruuta";

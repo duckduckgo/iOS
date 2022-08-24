@@ -74,8 +74,8 @@ final class TrackerAnimationImageProvider {
         Set(siteRating.trackersBlocked
             // Filter trackers without entity or entity name
             .compactMap {
-                if let entityName = $0.entity?.displayName, entityName.count > 0 {
-                    return LightEntity(name: entityName, prevalence: $0.entity?.prevalence ?? 0)
+                if let entityName = $0.entityName, entityName.count > 0 {
+                    return LightEntity(name: entityName, prevalence: $0.prevalence ?? 0)
                 }
                 return nil
             })

@@ -2005,10 +2005,7 @@ extension TabViewController: WKUIDelegate {
                                    ?? self.url?.absoluteString
                                    ?? "",
                                    message: message,
-                                   alertType: .alert(handler: completionHandler,
-                                                     closeTab: { [weak self] in
-                self?.delegate?.tabDidRequestClose(self!)
-            }))
+                                   alertType: .alert(handler: completionHandler))
             self.present(alert)
         } else {
             completionHandler()
@@ -2027,9 +2024,7 @@ extension TabViewController: WKUIDelegate {
                                    ?? self.url?.absoluteString
                                    ?? "",
                                    message: message,
-                                   alertType: .confirm(handler: completionHandler, closeTab: { [weak self] in
-                self?.delegate?.tabDidRequestClose(self!)
-            }))
+                                   alertType: .confirm(handler: completionHandler))
             self.present(alert)
         } else {
             completionHandler(false)
@@ -2049,10 +2044,7 @@ extension TabViewController: WKUIDelegate {
                                    ?? "",
                                    message: prompt,
                                    alertType: .text(handler: completionHandler,
-                                                    defaultText: defaultText,
-                                                    closeTab: { [weak self] in
-                self?.delegate?.tabDidRequestClose(self!)
-            }))
+                                                    defaultText: defaultText))
             self.present(alert)
         } else {
             completionHandler(nil)

@@ -23,9 +23,9 @@ import Core
 class WebJSAlert {
 
     enum JSAlertType {
-        case confirm(handler: (_ confirm: Bool) -> Void, closeTab: () -> Void)
-        case text(handler: (_ text: String?) -> Void, defaultText: String?, closeTab: () -> Void)
-        case alert(handler: () -> Void, closeTab: () -> Void)
+        case confirm(handler: (_ confirm: Bool) -> Void)
+        case text(handler: (_ text: String?) -> Void, defaultText: String?)
+        case alert(handler: () -> Void)
     }
 
     let domain: String
@@ -34,7 +34,7 @@ class WebJSAlert {
     private var handlerCalled = false
 
     var text: String? {
-        guard case .text(handler: _, defaultText: let defaultText, closeTab: _) = alertType else { return nil }
+        guard case .text(handler: _, defaultText: let defaultText) = alertType else { return nil }
         return defaultText ?? ""
     }
 
@@ -53,23 +53,12 @@ class WebJSAlert {
         handlerCalled = true
 
         switch alertType {
-        case .confirm(handler: let handler, closeTab: _):
+        case .confirm(handler: let handler):
             handler(result)
-        case .text(handler: let handler, defaultText: _, closeTab: _):
+        case .text(handler: let handler, defaultText: _):
             handler(text)
-        case .alert(handler: let handler, closeTab: _):
+        case .alert(handler: let handler):
             handler()
-        }
-    }
-
-    func closeTab() {
-        switch alertType {
-        case .confirm(handler: _, closeTab: let closeTab):
-            closeTab()
-        case .text(handler: _, defaultText: _, closeTab: let closeTab):
-            closeTab()
-        case .alert(handler: _, closeTab: let closeTab):
-            closeTab()
         }
     }
 

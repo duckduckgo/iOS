@@ -157,12 +157,6 @@ final class JSAlertController: UIViewController {
         }
     }
 
-    @IBAction func closeTabAction(_ sender: Any) {
-        dismiss(animated: true) { [alert=self.alert] in
-            alert?.closeTab()
-        }
-    }
-
     private func registerForKeyboardNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardDidShow),

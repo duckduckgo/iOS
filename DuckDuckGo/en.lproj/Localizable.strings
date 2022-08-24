@@ -1341,6 +1341,6 @@ Invite code: %@";
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
 
-/* Alert title explaining the mssage is shown by a website */
+/* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "A message from %@:";
 

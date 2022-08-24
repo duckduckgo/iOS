@@ -211,7 +211,8 @@ private struct CopyablePasswordCell: View {
                 }
                 .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
                 .background(BackgroundColor(isSelected: selectedCell == id).color)
-                
+                .accessibilityLabel(isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword)
+
             }
         }
         .selectableBackground(isSelected: selectedCell == id)
@@ -279,12 +280,13 @@ private struct Copyable: ViewModifier {
                                 action: menuAction,
                                 onOpen: menuOpenedAction,
                                 onClose: menuClosedAction)
+
             content
                 .allowsHitTesting(false)
                 .contentShape(Rectangle())
                 .frame(maxWidth: .infinity)
                 .frame(height: 60)
-            
+
         }
     }
 }

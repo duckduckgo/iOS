@@ -2371,8 +2371,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
         if isEnabled {
             Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
-        } else {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenDisabled, withAdditionalParameters: pixelParams)
         }
         return isEnabled
     }

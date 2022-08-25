@@ -97,8 +97,10 @@ public struct AppUrls {
     
     public func autocompleteUrl(forText text: String) throws -> URL {
         return try URL(string: Url.autocomplete)!
-            .addParameter(name: Param.search, value: text)
-            .addParameter(name: Param.enableNavSuggestions, value: ParamValue.enableNavSuggestions)
+            .appendingParameters([
+                Param.search: text,
+                Param.enableNavSuggestions: ParamValue.enableNavSuggestions
+            ])
     }
 
     public var surrogates: URL {
@@ -130,8 +132,10 @@ public struct AppUrls {
             return nil
         }
         return try? URL(string: Url.atb)?
-            .addParameter(name: Param.atb, value: atbWithVariant)
-            .addParameter(name: Param.setAtb, value: setAtb)
+            .appendingParameters([
+                Param.atb: atbWithVariant,
+                Param.setAtb: setAtb
+            ])
     }
     
     public var appAtb: URL? {
@@ -139,9 +143,11 @@ public struct AppUrls {
             return nil
         }
         return try? URL(string: Url.atb)?
-            .addParameter(name: Param.activityType, value: ParamValue.appUsage)
-            .addParameter(name: Param.atb, value: atbWithVariant)
-            .addParameter(name: Param.setAtb, value: setAtb)
+            .appendingParameters([
+                Param.activityType: ParamValue.appUsage,
+                Param.atb: atbWithVariant,
+                Param.setAtb: setAtb
+            ])
     }
 
     public func isBlog(url: URL) -> Bool {
@@ -186,24 +192,29 @@ public struct AppUrls {
 
     public func exti(forAtb atb: String) -> URL {
         let extiUrl = URL(string: Url.exti)!
-        return (try? extiUrl.addParameter(name: Param.atb, value: atb))!
+        return (try? extiUrl.appendingParameter(name: Param.atb, value: atb))!
     }
 
     /**
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
      */
-    public func searchUrl(text: String, additionalParameters: [String: String] = [:]) -> URL? {
+    public func searchUrl(text: String, additionalParameters: some Collection<(key: String, value: String)>) -> URL? {
         do {
-            let searchUrl = try base.addParameter(name: Param.search, value: text)
-                .addParameters(additionalParameters)
+            let searchUrl = try base
+                .appendingParameter(name: Param.search, value: text)
+                .appendingParameters(additionalParameters)
             return applyStatsParams(for: searchUrl)
         } catch {
             os_log("URL extension: %s", log: lifecycleLog, type: .error, error.localizedDescription)
             return nil
         }
     }
-    
+
+    public func searchUrl(text: String) -> URL? {
+        return searchUrl(text: text, additionalParameters: Array())
+    }
+
     public func isDuckDuckGoSearch(url: URL) -> Bool {
         if !isDuckDuckGo(url: url) { return false }
         guard (try? url.getParameter(name: Param.search)) ?? nil != nil else { return false }
@@ -234,13 +245,13 @@ public struct AppUrls {
     }
 
     public func applyStatsParams(for url: URL) -> URL {
-        let searchUrl = (try? url.addParameter(name: Param.source, value: ParamValue.source))!
-        if let atbWithVariant = statisticsStore.atbWithVariant,
-           let searchUrl = try? searchUrl.addParameter(name: Param.atb, value: atbWithVariant) {
-            return searchUrl
-        }
+        var searchURL = url.removingParameters(named: [Param.source, Param.atb])
+        try? searchURL = searchURL.appendingParameter(name: Param.source, value: ParamValue.source)
 
-        return searchUrl
+        if let atbWithVariant = statisticsStore.atbWithVariant {
+            try? searchURL = searchURL.appendingParameter(name: Param.atb, value: atbWithVariant)
+        }
+        return searchURL
     }
 
     public func hasCorrectMobileStatsParams(url: URL) -> Bool {
@@ -252,11 +263,16 @@ public struct AppUrls {
         }
         return true
     }
-    
+
     public func applySearchHeaderParams(for url: URL) -> URL {
-        return (try? url.addParameter(name: Param.searchHeader, value: ParamValue.searchHeader)) ?? url
+        do {
+            return try url.removingParameters(named: [Param.searchHeader])
+                .appendingParameter(name: Param.searchHeader, value: ParamValue.searchHeader)
+        } catch {
+            return url
+        }
     }
-    
+
     public func hasCorrectSearchHeaderParams(url: URL) -> Bool {
         guard let header = try? url.getParameter(name: Param.searchHeader) else { return false }
         return header == ParamValue.searchHeader
@@ -291,7 +307,7 @@ public struct AppUrls {
 
         if includeATB {
             do {
-                url = try url.addParameter(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
+                url = try url.appendingParameter(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
             } catch {
                 assertionFailure("couldn‘t add atb parameter")
             }
@@ -299,10 +315,10 @@ public struct AppUrls {
 
         return url
     }
-    
-    public func removeInternalSearchParameters(fromUrl url: URL) -> URL {
+
+    public func removingInternalSearchParameters(fromUrl url: URL) -> URL {
         guard isDuckDuckGoSearch(url: url) else { return url }
-        return url.removeParameters(named: [Param.atb, Param.source, Param.searchHeader])
+        return url.removingParameters(named: [Param.atb, Param.source, Param.searchHeader])
     }
 
 }

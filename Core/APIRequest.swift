@@ -23,6 +23,7 @@ import os.log
 public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
 public typealias APIRequestResult = Result<APIRequest.Response, Error>
 
+// swiftlint:disable line_length
 public class APIRequest {
     
     private static var defaultCallbackQueue: OperationQueue = {
@@ -62,7 +63,7 @@ public class APIRequest {
     
     public static func request(url: URL,
                                method: HTTPMethod = .get,
-                               parameters: [String: String]? = nil,
+                               parameters: some Collection<(key: String, value: String)>,
                                headers: HTTPHeaders = APIHeaders().defaultHeaders,
                                httpBody: Data? = nil,
                                callBackOnMainThread: Bool = false,
@@ -85,11 +86,20 @@ public class APIRequest {
             }
         }
     }
-    
+
+    public static func request(url: URL,
+                               method: HTTPMethod = .get,
+                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                               httpBody: Data? = nil,
+                               callBackOnMainThread: Bool = false,
+                               timeoutInterval: TimeInterval = 60.0) async -> APIRequestResult {
+        return await request(url: url, method: method, parameters: Array(), headers: headers, httpBody: httpBody, callBackOnMainThread: callBackOnMainThread, timeoutInterval: timeoutInterval)
+    }
+
     @discardableResult
     public static func request(url: URL,
                                method: HTTPMethod = .get,
-                               parameters: [String: String]? = nil,
+                               parameters: some Collection<(key: String, value: String)>,
                                headers: HTTPHeaders = APIHeaders().defaultHeaders,
                                httpBody: Data? = nil,
                                timeoutInterval: TimeInterval = 60.0,
@@ -111,7 +121,7 @@ public class APIRequest {
                    type: .debug,
                    url.absoluteString,
                    error.localizedDescription,
-                   parameters?.description ?? "<nil>")
+                   String(describing: parameters))
             completion(nil, error)
             return nil
         }
@@ -144,14 +154,26 @@ public class APIRequest {
         task.resume()
         return task
     }
-    
-    public static func urlRequestFor(url: URL,
-                                     method: HTTPMethod = .get,
-                                     parameters: [String: String]? = nil,
-                                     headers: HTTPHeaders = APIHeaders().defaultHeaders,
-                                     httpBody: Data? = nil,
-                                     timeoutInterval: TimeInterval = 60.0) throws -> URLRequest {
-        let url = try url.addParameters(parameters ?? [:])
+
+    @discardableResult
+    public static func request(url: URL,
+                               method: HTTPMethod = .get,
+                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                               httpBody: Data? = nil,
+                               timeoutInterval: TimeInterval = 60.0,
+                               callBackOnMainThread: Bool = false,
+                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask? {
+        return request(url: url, method: method, parameters: Array(), headers: headers, httpBody: httpBody, timeoutInterval: timeoutInterval, callBackOnMainThread: callBackOnMainThread, completion: completion)
+    }
+
+    // swiftlint:disable:next function_parameter_count
+    private static func urlRequestFor(url: URL,
+                                      method: HTTPMethod,
+                                      parameters: some Collection<(key: String, value: String)>,
+                                      headers: HTTPHeaders,
+                                      httpBody: Data?,
+                                      timeoutInterval: TimeInterval) throws -> URLRequest {
+        let url = try url.appendingParameters(parameters)
         var urlRequest = URLRequest.developerInitiated(url)
         urlRequest.allHTTPHeaderFields = headers
         urlRequest.httpMethod = method.rawValue

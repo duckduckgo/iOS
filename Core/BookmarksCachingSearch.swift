@@ -186,7 +186,7 @@ public class BookmarksCachingSearch {
             return ScoredBookmark(bookmark: $0, score: score)
         }
                     
-        let trimmed = query.trimmingWhitespaces()
+        let trimmed = query.trimmingWhitespace()
         self.score(query: trimmed, results: results)
         
         var finalResult = results.filter { $0.score > 0 }

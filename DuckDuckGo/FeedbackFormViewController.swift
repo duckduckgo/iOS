@@ -157,13 +157,13 @@ class FeedbackFormViewController: UIViewController {
         switch model {
         case .positive:
             feedbackSender.firePositiveSentimentPixel()
-            if message.trimmingWhitespaces().isEmpty == false {
+            if message.trimmingWhitespace().isEmpty == false {
                 feedbackSender.submitPositiveSentiment(message: message)
             }
             
         case .negative(let feedbackModel):
             feedbackSender.fireNegativeSentimentPixel(with: feedbackModel)
-            if message.trimmingWhitespaces().isEmpty == false {
+            if message.trimmingWhitespace().isEmpty == false {
                 feedbackSender.submitNegativeSentiment(message: message,
                                                        url: websiteTextField.text,
                                                        model: feedbackModel)

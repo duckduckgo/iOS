@@ -56,32 +56,32 @@ class StringExtensionTests: XCTestCase {
     
     func testTrimWhitespaceRemovesLeadingSpaces() {
         let input = "  abcd"
-        XCTAssertEqual("abcd", input.trimmingWhitespaces())
+        XCTAssertEqual("abcd", input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceRemovesTrailingSpaces() {
         let input = "abcd  "
-        XCTAssertEqual("abcd", input.trimmingWhitespaces())
+        XCTAssertEqual("abcd", input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceDoesNotRemovesInnerSpaces() {
         let input = "ab  cd"
-        XCTAssertEqual(input, input.trimmingWhitespaces())
+        XCTAssertEqual(input, input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceRemovesLeadingWhitespaceCharacters() {
         let input = "\t\nabcd"
-        XCTAssertEqual("abcd", input.trimmingWhitespaces())
+        XCTAssertEqual("abcd", input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceRemovesTrailingWhitespaceCharacters() {
         let input = "abcd\t\n"
-        XCTAssertEqual("abcd", input.trimmingWhitespaces())
+        XCTAssertEqual("abcd", input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceDoesNotRemoveInnerWhitespaceCharacters() {
         let input = "ab\t\ncd"
-        XCTAssertEqual(input, input.trimmingWhitespaces())
+        XCTAssertEqual(input, input.trimmingWhitespace())
     }
 
     func testIsBookmarklet() {
@@ -186,7 +186,7 @@ class StringExtensionTests: XCTestCase {
 extension String {
 
     var punycodedUrl: URL? {
-        URL(trimmedAddressBarString: self.trimmingWhitespaces())
+        URL(trimmedAddressBarString: self.trimmingWhitespace())
     }
 
 }

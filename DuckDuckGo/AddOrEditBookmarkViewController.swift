@@ -58,7 +58,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
         if let bookmark = existingBookmark,
            let title = bookmark.title,
-           title.trimmingWhitespaces().count > 0,
+           title.trimmingWhitespace().count > 0,
            let url = bookmark.url,
            url.absoluteString.count > 0 {
             
@@ -112,8 +112,8 @@ extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDe
                                              urlText: String?) {
         
         guard let doneButton = navigationItem.rightBarButtonItem else { return }
-        let title = titleText?.trimmingWhitespaces() ?? ""
-        let url = urlText?.trimmingWhitespaces() ?? ""
+        let title = titleText?.trimmingWhitespace() ?? ""
+        let url = urlText?.trimmingWhitespace() ?? ""
         
         doneButton.isEnabled = !title.isEmpty && !url.isEmpty
     }

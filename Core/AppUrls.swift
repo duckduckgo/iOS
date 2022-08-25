@@ -199,7 +199,7 @@ public struct AppUrls {
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
      */
-    public func searchUrl(text: String, additionalParameters: some Collection<(key: String, value: String)>) -> URL? {
+    public func searchUrl<C: Collection>(text: String, additionalParameters: C) -> URL? where C.Element == (key: String, value: String) {
         do {
             let searchUrl = try base
                 .appendingParameter(name: Param.search, value: text)

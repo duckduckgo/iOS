@@ -61,13 +61,15 @@ public class APIRequest {
         case patch = "PATCH"
     }
     
-    public static func request(url: URL,
-                               method: HTTPMethod = .get,
-                               parameters: some Collection<(key: String, value: String)>,
-                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
-                               httpBody: Data? = nil,
-                               callBackOnMainThread: Bool = false,
-                               timeoutInterval: TimeInterval = 60.0) async -> APIRequestResult {
+    public static func request<C: Collection>(url: URL,
+                                              method: HTTPMethod = .get,
+                                              parameters: C,
+                                              headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                                              httpBody: Data? = nil,
+                                              callBackOnMainThread: Bool = false,
+                                              timeoutInterval: TimeInterval = 60.0) async -> APIRequestResult
+    where C.Element == (key: String, value: String) {
+
         await withCheckedContinuation { continuation in
             request(url: url,
                     method: method,
@@ -97,14 +99,16 @@ public class APIRequest {
     }
 
     @discardableResult
-    public static func request(url: URL,
-                               method: HTTPMethod = .get,
-                               parameters: some Collection<(key: String, value: String)>,
-                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
-                               httpBody: Data? = nil,
-                               timeoutInterval: TimeInterval = 60.0,
-                               callBackOnMainThread: Bool = false,
-                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask? {
+    public static func request<C: Collection>(url: URL,
+                                              method: HTTPMethod = .get,
+                                              parameters: C,
+                                              headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                                              httpBody: Data? = nil,
+                                              timeoutInterval: TimeInterval = 60.0,
+                                              callBackOnMainThread: Bool = false,
+                                              completion: @escaping APIRequestCompletion) -> URLSessionDataTask?
+    where C.Element == (key: String, value: String) {
+
         os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
 
         let urlRequest: URLRequest
@@ -167,12 +171,14 @@ public class APIRequest {
     }
 
     // swiftlint:disable:next function_parameter_count
-    private static func urlRequestFor(url: URL,
-                                      method: HTTPMethod,
-                                      parameters: some Collection<(key: String, value: String)>,
-                                      headers: HTTPHeaders,
-                                      httpBody: Data?,
-                                      timeoutInterval: TimeInterval) throws -> URLRequest {
+    private static func urlRequestFor<C: Collection>(url: URL,
+                                                     method: HTTPMethod,
+                                                     parameters: C,
+                                                     headers: HTTPHeaders,
+                                                     httpBody: Data?,
+                                                     timeoutInterval: TimeInterval) throws -> URLRequest
+    where C.Element == (key: String, value: String) {
+
         let url = try url.appendingParameters(parameters)
         var urlRequest = URLRequest.developerInitiated(url)
         urlRequest.allHTTPHeaderFields = headers

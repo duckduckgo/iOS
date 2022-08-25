@@ -25,24 +25,11 @@ private enum Const {
     static let maxNumberOfIcons = 4
 }
 
-extension TrackerAnimationImageProvider: AnimationImageProvider {
-    
-    func imageForAsset(asset: ImageAsset) -> CGImage? {
-        switch asset.name {
-        case "img_0.png": return lastTrackerImages[safe: 0]
-        case "img_1.png": return lastTrackerImages[safe: 1]
-        case "img_2.png": return lastTrackerImages[safe: 2]
-        case "img_3.png": return lastTrackerImages[safe: 3]
-        default: return nil
-        }
-    }
-}
-
 final class TrackerAnimationImageProvider {
     
-    public var trackerImagesCount: Int { lastTrackerImages.count }
+    public var trackerImagesCount: Int { currentTrackerImages.count }
     
-    private var lastTrackerImages = [CGImage]()
+    private var currentTrackerImages = [CGImage]()
     private let trackerImageCache = TrackerImageCache()
     
     public func reset() {
@@ -50,9 +37,9 @@ final class TrackerAnimationImageProvider {
     }
     
     public func loadTrackerImages(from siteRating: SiteRating) {
-        let sortedEntities = sortedEntities(from: siteRating).prefix(Const.maxNumberOfIcons)
+        let entityNames = sortedEntityNames(from: siteRating).prefix(Const.maxNumberOfIcons)
         
-        var images: [CGImage] = sortedEntities.map {
+        var images: [CGImage] = entityNames.map {
             trackerImageCache.trackerImage(for: $0)
         }
         
@@ -60,19 +47,19 @@ final class TrackerAnimationImageProvider {
             images[Const.maxNumberOfIcons - 1] = trackerImageCache.shadowTrackerImage
         }
         
-        lastTrackerImages = images
+        currentTrackerImages = images
     }
     
-    private func sortedEntities(from siteRating: SiteRating) -> [String] {
+    private func sortedEntityNames(from siteRating: SiteRating) -> [String] {
         struct LightEntity: Hashable {
             let name: String
             let prevalence: Double
         }
         
         let blockedEntities: Set<LightEntity> =
-        // Filter entity duplicates by using Set
+        // Remove entity duplicates by using Set
         Set(siteRating.trackersBlocked
-            // Filter trackers without entity or entity name
+            // Filter trackers without entity name
             .compactMap {
                 if let entityName = $0.entityName, entityName.count > 0 {
                     return LightEntity(name: entityName, prevalence: $0.prevalence ?? 0)
@@ -85,13 +72,26 @@ final class TrackerAnimationImageProvider {
             .sorted { l, r -> Bool in
                 return l.prevalence > r.prevalence
             }
-        // Get first character
+        // Convert to lower case
             .map {
                 return $0.name.lowercased()
             }
-        // Prioritise entities with images
+        // Reorder a bit to avoid letters making words
             .sorted { _, r -> Bool in
                 return "aeiou".contains(r[r.startIndex])
             }
+    }
+}
+
+extension TrackerAnimationImageProvider: AnimationImageProvider {
+    
+    func imageForAsset(asset: ImageAsset) -> CGImage? {
+        switch asset.name {
+        case "img_0.png": return currentTrackerImages[safe: 0]
+        case "img_1.png": return currentTrackerImages[safe: 1]
+        case "img_2.png": return currentTrackerImages[safe: 2]
+        case "img_3.png": return currentTrackerImages[safe: 3]
+        default: return nil
+        }
     }
 }

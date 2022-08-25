@@ -47,7 +47,7 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     
     func setUpSaveButton() {
         guard let saveButton = navigationItem.rightBarButtonItem else { return }
-        if let title = existingFolder?.title, title.trimWhitespace().count > 0 {
+        if let title = existingFolder?.title, title.trimmingWhitespaces().count > 0 {
             saveButton.isEnabled = true
         } else {
             saveButton.isEnabled = false
@@ -91,7 +91,7 @@ extension AddOrEditBookmarkFolderViewController: BookmarkFolderDetailsDataSource
     func bookmarkFolderDetailsDataSource(_ dataSource: BookmarkFolderDetailsDataSource, titleTextFieldDidChange textField: UITextField) {
         
         guard let saveButton = navigationItem.rightBarButtonItem else { return }
-        let title = textField.text?.trimWhitespace() ?? ""
+        let title = textField.text?.trimmingWhitespaces() ?? ""
         saveButton.isEnabled = !title.isEmpty
     }
     

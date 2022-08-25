@@ -42,7 +42,7 @@ class BookmarkCell: UITableViewCell {
                 numberOfChildrenLabel.isHidden = true
                 imageWidthConstraint.constant = 24
                 imageHeightConstraint.constant = 24
-                if let linkTitle = bookmark.title?.trimWhitespace(), !linkTitle.isEmpty {
+                if let linkTitle = bookmark.title?.trimmingWhitespaces(), !linkTitle.isEmpty {
                     title.text = linkTitle
                 } else {
                     title.text = bookmark.url?.host?.droppingWwwPrefix() ?? ""

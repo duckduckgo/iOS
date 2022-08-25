@@ -207,7 +207,7 @@ class UnprotectedSitesViewController: UITableViewController {
     }
 
     private func domain(from field: UITextField) -> String? {
-        guard let domain = field.text?.trimWhitespace() else { return nil }
+        guard let domain = field.text?.trimmingWhitespaces() else { return nil }
         guard domain.isValidHostname || domain.isValidIpHost else { return nil }
         return domain
     }

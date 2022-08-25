@@ -362,7 +362,7 @@ class OmniBar: UIView {
         if let suggestion = omniDelegate?.selectedSuggestion() {
             omniDelegate?.onOmniSuggestionSelected(suggestion)
         } else {
-            guard let query = textField.text?.trimWhitespace(), !query.isEmpty else {
+            guard let query = textField.text?.trimmingWhitespaces(), !query.isEmpty else {
                 return
             }
             resignFirstResponder()
@@ -498,7 +498,7 @@ extension OmniBar: Themable {
         
         searchStackContainer?.tintColor = theme.barTintColor
         
-        if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimWhitespace()) }) {
+        if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimmingWhitespaces()) }) {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
         textField.textColor = theme.searchBarTextColor

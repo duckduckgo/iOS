@@ -28,11 +28,12 @@ struct AutofillLoginDetailsHeaderView: View {
             FaviconView(viewModel: FaviconViewModel(domain: viewModel.domain))
                 .scaledToFit()
                 .frame(width: Constants.imageSize, height: Constants.imageSize)
+                .accessibilityHidden(true)
             
             VStack(alignment: .leading, spacing: Constants.verticalStackSpacing) {
                 Text(viewModel.title)
                     .font(Font.system(size: Constants.titleFontSize))
-                    .foregroundColor(.gray90)
+                    .foregroundColor(Color(.label))
                 
                 Text(viewModel.subtitle)
                     .font(Font.system(size: Constants.subtitleFontSize))

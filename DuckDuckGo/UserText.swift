@@ -60,6 +60,12 @@ public struct UserText {
     public static let actionGenericUndo = NSLocalizedString("action.generic.undo", value: "Undo", comment: "Button label for Undo action")
     public static let actionEditBookmark = NSLocalizedString("action.title.edit.bookmark", value: "Edit Bookmark", comment: "Edit Bookmark action")
     public static let actionRemoveFavorite = NSLocalizedString("action.title.remove.favorite", value: "Remove Favorite", comment: "Remove Favorite action")
+
+    public static let suggestionOpenWebsite = NSLocalizedString("action.suggestion.open.website", value: "Open website", comment: "Open suggested website action accessibility title")
+    public static let suggestionOpenBookmark = NSLocalizedString("action.suggestion.open.bookmark", value: "Bookmark", comment: "Open suggested bookmark action accessibility title")
+    public static let suggestionSearchFor = NSLocalizedString("action.suggestion.search", value: "Search at DuckDuckGo", comment: "Search for suggestion action accessibility title")
+    public static let suggestionAutocomplete = NSLocalizedString("action.suggestion.autocomplete", value: "Autocomplete suggestion", comment: "Autocomplete selected suggestion into the Address Bar button accessibility label")
+
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", value: "Save Bookmark", comment: "Save Bookmark action")
     public static let alertSaveFavorite = NSLocalizedString("alert.title.save.favorite", value: "Save Favorite", comment: "Save Favorite action")
     public static let alertBookmarkAllTitle = NSLocalizedString("alert.title.bookmarkAll", value: "Bookmark All Tabs?", comment: "Question from confirmation dialog")
@@ -485,6 +491,8 @@ public struct UserText {
     public static let autofillSaveLoginSaveCTA = NSLocalizedString("autofill.save-login.save.CTA", value: "Save Login", comment: "Confirm CTA displayed on modal asking for the user to save the login")
     public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
     public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
+    public static let autofillShowPassword = NSLocalizedString("autofill.show-password", value: "Show Password", comment: "Accessibility title for a Show Password button displaying actial password instead of *****")
+    public static let autofillHidePassword = NSLocalizedString("autofill.hide-password", value: "Hide Password", comment: "Accessibility title for a Hide Password button replacing displayed password with *****")
     public static let autofillUpdateLoginSaveCTA = NSLocalizedString("autofill.update-login.save.CTA", value: "Update Login", comment: "Confirm CTA displayed on modal asking for the user to update the login")
     public static let autofillAdditionalLoginInfoMessage = NSLocalizedString("autofill.save-login.additional-login.message", value: "This will save an additional Login for this site.", comment: "Message displayed on modal explaining that an additional login will be saved.")
     public static let autofillLoginSavedToastMessage = NSLocalizedString("autofill.login-saved.toast", value: "Login saved", comment: "Message displayed after saving an autofill login")

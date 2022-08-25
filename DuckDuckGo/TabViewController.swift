@@ -398,7 +398,8 @@ class TabViewController: UIViewController {
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
     func attachWebView(configuration: WKWebViewConfiguration,
                        andLoadRequest request: URLRequest?,
-                       consumeCookies: Bool) {
+                       consumeCookies: Bool,
+                       loadingInitiatedByParentTab: Bool = false) {
         instrumentation.willPrepareWebView()
         
         configuration.userContentController = UserContentController()
@@ -425,15 +426,26 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let request = request {
-            if let url = request.url {
-                linkProtection.getCleanURL(from: url,
-                                           onStartExtracting: { showProgressIndicator() },
-                                           onFinishExtracting: { },
-                                           completion: { [weak self] cleanURL in self?.load(urlRequest: .userInitiated(cleanURL)) })
-            } else {
-                load(urlRequest: request)
-            }
+        } else if let url = request?.url {
+            var loadingStopped = false
+            linkProtection.getCleanURL(from: url, onStartExtracting: { [weak self] in
+                if loadingInitiatedByParentTab {
+                    // stop parent-initiated URL loading only if canonical URL extraction process has started
+                    loadingStopped = true
+                    self?.webView.stopLoading()
+                }
+                showProgressIndicator()
+            }, onFinishExtracting: {}, completion: { [weak self] cleanURL in
+                // restart the cleaned-up URL loading here if:
+                //   link protection provided an updated URL
+                //   OR if loading was stopped for a popup loaded by its parent
+                //   OR for any other navigation which is not a popup loaded by its parent
+                // the check is here to let an (about:blank) popup which has its loading
+                // initiated by its parent to keep its active request, otherwise we would
+                // break a js-initiated popup request such as printing from a popup
+                guard url != cleanURL || loadingStopped || !loadingInitiatedByParentTab else { return }
+                self?.load(urlRequest: .userInitiated(cleanURL))
+            })
         }
     }
 
@@ -2394,8 +2406,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
         if isEnabled {
             Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
-        } else {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenDisabled, withAdditionalParameters: pixelParams)
         }
         return isEnabled
     }

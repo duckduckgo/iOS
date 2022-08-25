@@ -83,7 +83,6 @@ class MainViewController: UIViewController {
     var homeController: HomeViewController?
     var tabsBarController: TabsBarViewController?
     var suggestionTrayController: SuggestionTrayViewController?
-    var browsingMenu: BrowsingMenuViewController?
 
     private lazy var appUrls: AppUrls = AppUrls()
 
@@ -289,19 +288,7 @@ class MainViewController: UIViewController {
             quickSaveBookmark()
         }
     }
-    
-    private func enableBookmarksButton() {
-        presentedMenuButton.setState(.bookmarksImage, animated: false)
-        lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
-        omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
-    }
-    
-    private func enableMenuButton() {
-        presentedMenuButton.setState(.menuImage, animated: false)
-        lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
-        omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
-    }
-    
+
     @objc func quickSaveBookmark() {
         UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
         guard currentTab != nil else {
@@ -390,14 +377,6 @@ class MainViewController: UIViewController {
         
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             ThemeManager.shared.refreshSystemTheme()
-        }
-        
-        if let menu = browsingMenu {
-            if AppWidthObserver.shared.isLargeWidth {
-                refreshConstraintsForTablet(browsingMenu: menu)
-            } else {
-                refreshConstraintsForPhone(browsingMenu: menu)
-            }
         }
     }
     
@@ -627,8 +606,6 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func select(tab: TabViewController) {
-        dismissBrowsingMenu()
-
         if tab.link == nil {
             attachHomeScreen()
         } else {
@@ -672,7 +649,7 @@ class MainViewController: UIViewController {
 
     fileprivate func refreshControls() {
         refreshTabIcon()
-        refreshMenuIcon()
+        refreshMenuButtonState()
         refreshOmniBar()
         refreshBackForwardButtons()
         refreshBackForwardMenuItems()
@@ -682,14 +659,6 @@ class MainViewController: UIViewController {
         tabsButton.accessibilityHint = UserText.numberOfTabs(tabManager.count)
         tabSwitcherButton.tabCount = tabManager.count
         tabSwitcherButton.hasUnread = tabManager.hasUnread
-    }
-    
-    private func refreshMenuIcon() {
-        if homeController != nil {
-            enableBookmarksButton()
-        } else {
-            enableMenuButton()
-        }
     }
 
     private func refreshOmniBar() {
@@ -763,7 +732,28 @@ class MainViewController: UIViewController {
             self.refreshMenuButtonState()
         }
     }
-    
+
+    func refreshMenuButtonState() {
+        let expectedState: MenuButton.State
+        if homeController != nil {
+            expectedState = .bookmarksImage
+            lastToolbarButton.accessibilityLabel = UserText.bookmarksButtonHint
+            omniBar.menuButton.accessibilityLabel = UserText.bookmarksButtonHint
+
+        } else {
+            if presentedViewController is BrowsingMenuViewController {
+                expectedState = .closeImage
+            } else {
+                expectedState = .menuImage
+            }
+            lastToolbarButton.accessibilityLabel = UserText.menuButtonHint
+            omniBar.menuButton.accessibilityLabel = UserText.menuButtonHint
+        }
+
+        presentedMenuButton.decorate(with: ThemeManager.shared.currentTheme)
+        presentedMenuButton.setState(expectedState, animated: false)
+    }
+
     private func applyWidthToTrayController() {
         if AppWidthObserver.shared.isLargeWidth {
             self.suggestionTrayController?.float(withWidth: self.omniBar.searchStackContainer.frame.width + 24)
@@ -805,11 +795,13 @@ class MainViewController: UIViewController {
             }
         }
         suggestionTrayContainer.isHidden = false
+        currentTab?.webView.accessibilityElementsHidden = true
     }
     
     func hideSuggestionTray() {
         omniBar.showSeparator()
         suggestionTrayContainer.isHidden = true
+        currentTab?.webView.accessibilityElementsHidden = false
         suggestionTrayController?.didHide()
     }
     
@@ -921,7 +913,6 @@ class MainViewController: UIViewController {
         }
         DaxDialogs.shared.fireButtonPulseCancelled()
         hideSuggestionTray()
-        dismissBrowsingMenu()
         currentTab?.dismiss()
 
         if reuseExisting, let existing = tabManager.firstHomeTab() {
@@ -948,6 +939,8 @@ class MainViewController: UIViewController {
     func updateFindInPage() {
         currentTab?.findInPage?.delegate = self
         findInPageView.update(with: currentTab?.findInPage, updateTextField: true)
+        // hide toolbar on iPhone
+        toolbar.accessibilityElementsHidden = !AppWidthObserver.shared.isLargeWidth
     }
     
     private func showVoiceSearch() {
@@ -981,6 +974,7 @@ extension MainViewController: FindInPageViewDelegate {
     
     func done(findInPageView: FindInPageView) {
         currentTab?.findInPage = nil
+        toolbar.accessibilityElementsHidden = false
     }
     
 }
@@ -1125,7 +1119,28 @@ extension MainViewController: OmniBarDelegate {
         }
         hideSuggestionTray()
         ActionMessageView.dismissAllMessages()
-        launchBrowsingMenu()
+        Task {
+            await launchBrowsingMenu()
+        }
+    }
+
+    @MainActor
+    private func launchBrowsingMenu() async {
+        guard let tab = currentTab else { return }
+
+        let entries = await tab.buildBrowsingMenu()
+        let controller = BrowsingMenuViewController.instantiate(headerEntries: tab.buildBrowsingMenuHeaderContent(),
+                                                                menuEntries: entries)
+
+        controller.modalPresentationStyle = .custom
+        self.present(controller, animated: true) {
+            if self.canDisplayAddFavoriteVisualIndicator {
+                controller.highlightCell(atIndex: IndexPath(row: tab.favoriteEntryIndex, section: 0))
+            }
+        }
+
+        self.presentedMenuButton.setState(.closeImage, animated: true)
+        tab.didLaunchBrowsingMenu()
     }
     
     @objc func onBookmarksPressed() {
@@ -1542,7 +1557,6 @@ extension MainViewController: TabSwitcherDelegate {
     func closeTab(_ tab: Tab) {
         guard let index = tabManager.model.indexOf(tab: tab) else { return }
         hideSuggestionTray()
-        dismissBrowsingMenu()
         tabManager.remove(at: index)
         updateCurrentTab()
     }
@@ -1625,18 +1639,17 @@ extension MainViewController: GestureToolbarButtonDelegate {
 }
 
 extension MainViewController: AutoClearWorker {
-    
+
     func clearNavigationStack() {
         dismissOmniBar()
-        dismissBrowsingMenu()
-        
+
         if let presented = presentedViewController {
             presented.dismiss(animated: false) { [weak self] in
                 self?.clearNavigationStack()
             }
         }
     }
-    
+
     func forgetTabs() {
         DaxDialogs.shared.resumeRegularFlow()
         findInPageView?.done()

@@ -27,8 +27,8 @@ class AutocompleteRequest {
     private let url: URL
     private var task: URLSessionDataTask?
 
-    init(query: String) {
-        self.url = AppUrls().autocompleteUrl(forText: query)
+    init(query: String) throws {
+        self.url = try AppUrls().autocompleteUrl(forText: query)
     }
 
     func execute(completion: @escaping Completion) {

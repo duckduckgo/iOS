@@ -403,5 +403,3 @@ extension TabViewController {
         }
     }
 }
-
-// swiftlint:enable file_length

@@ -22,6 +22,7 @@ import WebKit
 import Core
 import Lottie
 import Kingfisher
+import os.log
 import BrowserServicesKit
 
 // swiftlint:disable type_body_length
@@ -536,7 +537,10 @@ class MainViewController: UIViewController {
 
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
-        let url = appUrls.url(forQuery: query)
+        guard let url = appUrls.url(forQuery: query) else {
+            os_log("Couldn‘t form URL for query “%s”", log: lifecycleLog, type: .error, query)
+            return
+        }
         loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
     }
 
@@ -567,8 +571,15 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func loadQuery(_ query: String) {
-        let queryUrl = appUrls.url(forQuery: query, queryContext: currentTab?.url)
-        loadUrl(queryUrl)
+        guard let url = appUrls.url(forQuery: query, queryContext: currentTab?.url) else {
+            os_log("Couldn‘t form URL for query “%s” with context “%s”",
+                   log: lifecycleLog,
+                   type: .error,
+                   query,
+                   currentTab?.url?.absoluteString ?? "<nil>")
+            return
+        }
+        loadUrl(url)
     }
 
     func loadUrl(_ url: URL) {
@@ -1253,9 +1264,11 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         dismissOmniBar()
         if let url = suggestion.url {
             loadUrl(url)
+        } else if let url = appUrls.searchUrl(text: suggestion.suggestion) {
+            loadUrl(url)
         } else {
-            let queryUrl = appUrls.searchUrl(text: suggestion.suggestion)
-            loadUrl(queryUrl)
+            os_log("Couldn‘t form URL for suggestion “%s”", log: lifecycleLog, type: .error, suggestion.suggestion)
+            return
         }
         showHomeRowReminder()
     }

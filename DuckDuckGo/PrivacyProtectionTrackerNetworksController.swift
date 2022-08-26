@@ -31,7 +31,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var separator: UIView!
-    
+
     private var siteRating: SiteRating!
     private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
 
@@ -211,7 +211,7 @@ struct SiteRatingTrackerNetworkSectionBuilder {
             guard let domain = tracker.domain else { continue }
             let networkName = tracker.networkNameForDisplay
 
-            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain.dropPrefix(prefix: "www."),
+            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain.droppingWwwPrefix(),
                                                                      value: tracker.category ?? "")
 
             if let sectionIndex = sections.firstIndex(where: { $0.name == networkName }) {

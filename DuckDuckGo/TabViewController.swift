@@ -609,7 +609,7 @@ class TabViewController: UIViewController {
     
     private func shouldReissueSearch(for url: URL) -> Bool {
         guard appUrls.isDuckDuckGoSearch(url: url) else { return false }
-        return  !appUrls.hasCorrectMobileStatsParams(url: url) || !appUrls.hasCorrectSearchHeaderParams(url: url)
+        return !appUrls.hasCorrectMobileStatsParams(url: url) || !appUrls.hasCorrectSearchHeaderParams(url: url)
     }
     
     private func reissueSearchWithRequiredParams(for url: URL) {
@@ -1027,7 +1027,7 @@ class TabViewController: UIViewController {
     func onCopyAction(forUrl url: URL) {
         let copyText: String
         if appUrls.isDuckDuckGo(url: url) {
-            let cleanURL = appUrls.removeInternalSearchParameters(fromUrl: url)
+            let cleanURL = appUrls.removingInternalSearchParameters(fromUrl: url)
             copyText = cleanURL.absoluteString
         } else {
             copyText = url.absoluteString
@@ -2322,7 +2322,7 @@ extension TabViewController: EmailManagerRequestDelegate {
                       completion: @escaping (Data?, Error?) -> Void) {
         APIRequest.request(url: url,
                            method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
-                           parameters: parameters,
+                           parameters: parameters ?? [:],
                            headers: headers,
                            httpBody: httpBody,
                            timeoutInterval: timeoutInterval) { response, error in

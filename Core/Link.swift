@@ -38,7 +38,7 @@ public class Link: NSObject, NSCoding {
     public let localFileURL: URL?
     
     public var displayTitle: String? {
-        let host = url.host?.dropPrefix(prefix: "www.") ?? url.absoluteString
+        let host = url.host?.droppingWwwPrefix() ?? url.absoluteString
         
         var displayTitle = (title?.isEmpty ?? true) ? host : title
         

@@ -51,7 +51,7 @@ class APIRequestTests: XCTestCase {
 
         waitForExpectations(timeout: 1.0, handler: nil)
         
-        let headerFields = dataTask.currentRequest!.allHTTPHeaderFields!
+        let headerFields = dataTask!.currentRequest!.allHTTPHeaderFields!
         let userAgent = headerFields[APIHeaders.Name.userAgent]!
         XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
 
@@ -73,7 +73,7 @@ class APIRequestTests: XCTestCase {
         }
 
         waitForExpectations(timeout: 1.0, handler: nil)
-        let userAgent = dataTask.currentRequest!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
+        let userAgent = dataTask!.currentRequest!.allHTTPHeaderFields![APIHeaders.Name.userAgent]!
         XCTAssertTrue(userAgent.hasPrefix("ddg_ios"))
     }
 

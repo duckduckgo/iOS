@@ -75,6 +75,8 @@ final class PrivacyIconAndTrackersAnimator {
             UIView.animate(withDuration: 0.2) {
                 omniBar.textField.alpha = 1
             }
+            
+            container?.privacyIcon.refresh()
         }
     }
     
@@ -125,9 +127,6 @@ final class PrivacyIconAndTrackersAnimator {
         
         container.privacyIcon.shieldAnimationView.stop()
         container.privacyIcon.shieldDotAnimationView.stop()
-        
-        container.privacyIcon.shieldAnimationView.isHidden = true
-        container.privacyIcon.shieldDotAnimationView.isHidden = true
         
         container.privacyIcon.refresh()
         

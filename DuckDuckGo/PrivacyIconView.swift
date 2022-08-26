@@ -97,6 +97,8 @@ class PrivacyIconView: UIView {
     
     func refresh() {
         updateShieldImageView(for: icon)
+        shieldAnimationView.isHidden = true
+        shieldDotAnimationView.isHidden = true
     }
     
     func prepareForAnimation(for icon: PrivacyIcon) {

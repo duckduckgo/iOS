@@ -69,7 +69,7 @@ struct Provider: TimelineProvider {
             .compactMap {
                 guard let url = $0.url else { return nil }
                 return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
-                                domain: url.host?.dropPrefix(prefix: "www.") ?? "",
+                                domain: url.host?.droppingWwwPrefix() ?? "",
                                 title: $0.displayTitle ?? "",
                                 favicon: loadImageFromCache(forDomain: url.host) )
             }

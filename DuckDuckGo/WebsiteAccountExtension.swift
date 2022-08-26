@@ -25,7 +25,7 @@ extension SecureVaultModels.WebsiteAccount {
         if let title = self.title, !title.isEmpty {
             return title
         } else {
-            return self.domain.dropPrefix(prefix: "www.")
+            return self.domain.droppingWwwPrefix()
         }
     }
 }

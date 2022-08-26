@@ -34,9 +34,9 @@ class StringExtensionTests: XCTestCase {
     }
     
     func testWhenPunycodeUrlIsCalledWithValidUrlsThenUrlIsReturned() {
-        XCTAssertEqual("xn--ls8h.la", "💩.la".punycodedUrl?.absoluteString)
-        XCTAssertEqual("xn--ls8h.la/", "💩.la/".punycodedUrl?.absoluteString)
-        XCTAssertEqual("82.xn--b1aew.xn--p1ai", "82.мвд.рф".punycodedUrl?.absoluteString)
+        XCTAssertEqual("http://xn--ls8h.la", "💩.la".punycodedUrl?.absoluteString)
+        XCTAssertEqual("http://xn--ls8h.la/", "💩.la/".punycodedUrl?.absoluteString)
+        XCTAssertEqual("http://82.xn--b1aew.xn--p1ai", "82.мвд.рф".punycodedUrl?.absoluteString)
         XCTAssertEqual("http://xn--ls8h.la:8080", "http://💩.la:8080".punycodedUrl?.absoluteString)
         XCTAssertEqual("http://xn--ls8h.la", "http://💩.la".punycodedUrl?.absoluteString)
         XCTAssertEqual("https://xn--ls8h.la", "https://💩.la".punycodedUrl?.absoluteString)
@@ -47,41 +47,41 @@ class StringExtensionTests: XCTestCase {
     }
     
     func testWhenDropPrefixIsCalledWithoutMatchingPrefixThenStringIsUnchanged() {
-        XCTAssertEqual("subdomain.example.com", "subdomain.example.com".dropPrefix(prefix: "www."))
+        XCTAssertEqual("subdomain.example.com", "subdomain.example.com".droppingWwwPrefix())
     }
 
     func testWhenDropPrefixIsCalledWithMatchingPrefixThenItIsDropped() {
-        XCTAssertEqual("example.com", "www.example.com".dropPrefix(prefix: "www."))
+        XCTAssertEqual("example.com", "www.example.com".droppingWwwPrefix())
     }
     
     func testTrimWhitespaceRemovesLeadingSpaces() {
         let input = "  abcd"
-        XCTAssertEqual("abcd", input.trimWhitespace())
+        XCTAssertEqual("abcd", input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceRemovesTrailingSpaces() {
         let input = "abcd  "
-        XCTAssertEqual("abcd", input.trimWhitespace())
+        XCTAssertEqual("abcd", input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceDoesNotRemovesInnerSpaces() {
         let input = "ab  cd"
-        XCTAssertEqual(input, input.trimWhitespace())
+        XCTAssertEqual(input, input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceRemovesLeadingWhitespaceCharacters() {
         let input = "\t\nabcd"
-        XCTAssertEqual("abcd", input.trimWhitespace())
+        XCTAssertEqual("abcd", input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceRemovesTrailingWhitespaceCharacters() {
         let input = "abcd\t\n"
-        XCTAssertEqual("abcd", input.trimWhitespace())
+        XCTAssertEqual("abcd", input.trimmingWhitespace())
     }
 
     func testTrimWhitespaceDoesNotRemoveInnerWhitespaceCharacters() {
         let input = "ab\t\ncd"
-        XCTAssertEqual(input, input.trimWhitespace())
+        XCTAssertEqual(input, input.trimmingWhitespace())
     }
 
     func testIsBookmarklet() {
@@ -181,6 +181,14 @@ class StringExtensionTests: XCTestCase {
             XCTAssertEqual(attachments[1].bounds, expectedRect)
         }
     }
+}
+
+extension String {
+
+    var punycodedUrl: URL? {
+        URL(trimmedAddressBarString: self.trimmingWhitespace())
+    }
+
 }
 
 extension UIImage {

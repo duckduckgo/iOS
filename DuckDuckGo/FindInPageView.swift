@@ -49,8 +49,12 @@ class FindInPageView: UIView {
         layer.masksToBounds = false
         
         nextButton.isPointerInteractionEnabled = true
+        nextButton.accessibilityLabel = UserText.keyCommandFindNext
         previousButton.isPointerInteractionEnabled = true
+        previousButton.accessibilityLabel = UserText.keyCommandFindPrevious
         doneButton.isPointerInteractionEnabled = true
+
+        inputText.accessibilityLabel = UserText.findInPage
     }
     
     override func resignFirstResponder() -> Bool {

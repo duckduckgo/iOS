@@ -23,6 +23,7 @@ import os.log
 public typealias APIRequestCompletion = (APIRequest.Response?, Error?) -> Void
 public typealias APIRequestResult = Result<APIRequest.Response, Error>
 
+// swiftlint:disable line_length
 public class APIRequest {
     
     private static var defaultCallbackQueue: OperationQueue = {
@@ -60,13 +61,15 @@ public class APIRequest {
         case patch = "PATCH"
     }
     
-    public static func request(url: URL,
-                               method: HTTPMethod = .get,
-                               parameters: [String: String]? = nil,
-                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
-                               httpBody: Data? = nil,
-                               callBackOnMainThread: Bool = false,
-                               timeoutInterval: TimeInterval = 60.0) async -> APIRequestResult {
+    public static func request<C: Collection>(url: URL,
+                                              method: HTTPMethod = .get,
+                                              parameters: C,
+                                              headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                                              httpBody: Data? = nil,
+                                              callBackOnMainThread: Bool = false,
+                                              timeoutInterval: TimeInterval = 60.0) async -> APIRequestResult
+    where C.Element == (key: String, value: String) {
+
         await withCheckedContinuation { continuation in
             request(url: url,
                     method: method,
@@ -85,25 +88,47 @@ public class APIRequest {
             }
         }
     }
-    
-    @discardableResult
+
     public static func request(url: URL,
                                method: HTTPMethod = .get,
-                               parameters: [String: String]? = nil,
                                headers: HTTPHeaders = APIHeaders().defaultHeaders,
                                httpBody: Data? = nil,
-                               timeoutInterval: TimeInterval = 60.0,
                                callBackOnMainThread: Bool = false,
-                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask {
+                               timeoutInterval: TimeInterval = 60.0) async -> APIRequestResult {
+        return await request(url: url, method: method, parameters: Array(), headers: headers, httpBody: httpBody, callBackOnMainThread: callBackOnMainThread, timeoutInterval: timeoutInterval)
+    }
+
+    @discardableResult
+    public static func request<C: Collection>(url: URL,
+                                              method: HTTPMethod = .get,
+                                              parameters: C,
+                                              headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                                              httpBody: Data? = nil,
+                                              timeoutInterval: TimeInterval = 60.0,
+                                              callBackOnMainThread: Bool = false,
+                                              completion: @escaping APIRequestCompletion) -> URLSessionDataTask?
+    where C.Element == (key: String, value: String) {
+
         os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
-        
-        let urlRequest = urlRequestFor(url: url,
-                                       method: method,
-                                       parameters: parameters,
-                                       headers: headers,
-                                       httpBody: httpBody,
-                                       timeoutInterval: timeoutInterval)
-        
+
+        let urlRequest: URLRequest
+        do {
+            urlRequest = try urlRequestFor(url: url,
+                                           method: method,
+                                           parameters: parameters,
+                                           headers: headers,
+                                           httpBody: httpBody,
+                                           timeoutInterval: timeoutInterval)
+        } catch {
+            os_log("Couldn‘t form a request for %s (%s) with parameters: %s",
+                   log: generalLog,
+                   type: .debug,
+                   url.absoluteString,
+                   error.localizedDescription,
+                   String(describing: parameters))
+            completion(nil, error)
+            return nil
+        }
         let session = callBackOnMainThread ? mainThreadCallbackSession : defaultSession
 
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
@@ -133,14 +158,28 @@ public class APIRequest {
         task.resume()
         return task
     }
-    
-    public static func urlRequestFor(url: URL,
-                                     method: HTTPMethod = .get,
-                                     parameters: [String: String]? = nil,
-                                     headers: HTTPHeaders = APIHeaders().defaultHeaders,
-                                     httpBody: Data? = nil,
-                                     timeoutInterval: TimeInterval = 60.0) -> URLRequest {
-        let url = url.addParams(parameters ?? [:])
+
+    @discardableResult
+    public static func request(url: URL,
+                               method: HTTPMethod = .get,
+                               headers: HTTPHeaders = APIHeaders().defaultHeaders,
+                               httpBody: Data? = nil,
+                               timeoutInterval: TimeInterval = 60.0,
+                               callBackOnMainThread: Bool = false,
+                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask? {
+        return request(url: url, method: method, parameters: Array(), headers: headers, httpBody: httpBody, timeoutInterval: timeoutInterval, callBackOnMainThread: callBackOnMainThread, completion: completion)
+    }
+
+    // swiftlint:disable:next function_parameter_count
+    private static func urlRequestFor<C: Collection>(url: URL,
+                                                     method: HTTPMethod,
+                                                     parameters: C,
+                                                     headers: HTTPHeaders,
+                                                     httpBody: Data?,
+                                                     timeoutInterval: TimeInterval) throws -> URLRequest
+    where C.Element == (key: String, value: String) {
+
+        let url = try url.appendingParameters(parameters)
         var urlRequest = URLRequest.developerInitiated(url)
         urlRequest.allHTTPHeaderFields = headers
         urlRequest.httpMethod = method.rawValue

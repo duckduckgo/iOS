@@ -144,9 +144,16 @@ class AutocompleteViewController: UIViewController {
     private func requestSuggestions(query: String) {
         selectedItem = -1
         tableView.reloadData()
-        pendingRequest = true
-        
-        lastRequest = AutocompleteRequest(query: query)
+        do {
+            lastRequest = try AutocompleteRequest(query: query)
+            pendingRequest = true
+        } catch {
+            os_log("Couldn‘t form AutocompleteRequest for query “%s”: %s", log: lifecycleLog, type: .debug, query, error.localizedDescription)
+            lastRequest = nil
+            pendingRequest = false
+            return
+        }
+
         lastRequest!.execute { [weak self] (suggestions, error) in
             guard let strongSelf = self else { return }
             

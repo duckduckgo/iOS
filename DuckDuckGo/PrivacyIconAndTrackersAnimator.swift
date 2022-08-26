@@ -38,9 +38,10 @@ final class PrivacyIconAndTrackersAnimator {
         container.privacyIcon.shieldDotAnimationView.currentFrame = 0
         
         if TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating) {
+            // For
             trackerAnimationImageProvider.loadTrackerImages(from: siteRating)
       
-            if let trackerAnimationView = currentTrackerAnimationView(in: container, for: trackerAnimationImageProvider.trackerImagesCount) {
+            if let trackerAnimationView = container.trackerAnimationView(for: trackerAnimationImageProvider.trackerImagesCount) {
                 trackerAnimationView.imageProvider = trackerAnimationImageProvider
                 trackerAnimationView.reloadImages()
             }
@@ -50,15 +51,6 @@ final class PrivacyIconAndTrackersAnimator {
             // No animation directly set icon
             let icon = PrivacyIconLogic.privacyIcon(for: siteRating)
             container.privacyIcon.updateIcon(icon)
-        }
-    }
-    
-    private func currentTrackerAnimationView(in container: PrivacyInfoContainerView, for trackerCount: Int) -> AnimationView? {
-        switch trackerCount {
-        case 0: return nil
-        case 1: return container.trackers1Animation
-        case 2: return container.trackers2Animation
-        default: return container.trackers3Animation
         }
     }
     
@@ -73,7 +65,7 @@ final class PrivacyIconAndTrackersAnimator {
             omniBar.textField.alpha = 0
         }
 
-        let currentTrackerAnimation = currentTrackerAnimationView(in: container, for: trackerAnimationImageProvider.trackerImagesCount)
+        let currentTrackerAnimation = container.trackerAnimationView(for: trackerAnimationImageProvider.trackerImagesCount)
         currentTrackerAnimation?.play()
         
         let currentShieldAnimation = container.privacyIcon.shieldAnimationView(for: privacyIcon)
@@ -99,15 +91,14 @@ final class PrivacyIconAndTrackersAnimator {
             omniBar.textField.alpha = 0
         }
         
-        let currentTrackerAnimation = currentTrackerAnimationView(in: container, for: trackerAnimationImageProvider.trackerImagesCount)
+        let currentTrackerAnimation = container.trackerAnimationView(for: trackerAnimationImageProvider.trackerImagesCount)
         currentTrackerAnimation?.play(toFrame: 45)  // stop frame for all 3 tracker animations
     }
     
     func completeAnimationForDaxDialog(in omniBar: OmniBar) {
         guard let container = omniBar.privacyInfoContainer else { return }
         
-        let currentTrackerAnimation = currentTrackerAnimationView(in: container,
-                                                                  for: trackerAnimationImageProvider.trackerImagesCount)
+        let currentTrackerAnimation = container.trackerAnimationView(for: trackerAnimationImageProvider.trackerImagesCount)
         currentTrackerAnimation?.play()
         
         let currentShieldAnimation = [container.privacyIcon.shieldAnimationView, container.privacyIcon.shieldDotAnimationView].first { !$0.isHidden }

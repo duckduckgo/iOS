@@ -57,9 +57,20 @@ class PrivacyInfoContainerView: UIView {
         currentlyLoadedStyle = theme.currentImageSet
     }
     
+    func trackerAnimationView(for trackerCount: Int) -> AnimationView? {
+        switch trackerCount {
+        case 0: return nil
+        case 1: return trackers1Animation
+        case 2: return trackers2Animation
+        default: return trackers3Animation
+        }
+    }
+    
     var isAnimationPlaying: Bool {
-        privacyIcon.isAnimationPlaying || trackers1Animation.isAnimationPlaying ||
-        trackers2Animation.isAnimationPlaying || trackers3Animation.isAnimationPlaying
+        privacyIcon.isAnimationPlaying ||
+        trackers1Animation.isAnimationPlaying ||
+        trackers2Animation.isAnimationPlaying ||
+        trackers3Animation.isAnimationPlaying
     }
 }
 

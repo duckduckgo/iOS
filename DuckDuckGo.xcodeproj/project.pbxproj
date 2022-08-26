@@ -505,8 +505,10 @@
 		AAF2E28723E0498200962AF8 /* AppIconPurple83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAF2E28623E0498100962AF8 /* AppIconPurple83.5x83.5@2x.png */; };
 		AAF2E28B23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAF2E28A23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png */; };
 		B609D5522862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609D5512862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift */; };
+		B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60DFF062872B64B0061E7C2 /* JSAlertController.swift */; };
 		B623C1C22862CA9E0043013E /* DownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B623C1C12862CA9E0043013E /* DownloadSession.swift */; };
 		B623C1C42862CD670043013E /* WKDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B623C1C32862CD670043013E /* WKDownloadSession.swift */; };
+		B6BA95E828924730004ABA20 /* JSAlertController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BA95E728924730004ABA20 /* JSAlertController.storyboard */; };
         B6BA95C328891E33004ABA20 /* BrowsingMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BA95C228891E33004ABA20 /* BrowsingMenuAnimator.swift */; };
 		B6BA95C528894A28004ABA20 /* BrowsingMenuViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BA95C428894A28004ABA20 /* BrowsingMenuViewController.storyboard */; };
 		B6CB93E5286445AB0090FEB4 /* Base64DownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CB93E4286445AB0090FEB4 /* Base64DownloadSession.swift */; };
@@ -1920,8 +1922,10 @@
 		AAF2E28623E0498100962AF8 /* AppIconPurple83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconPurple83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		AAF2E28A23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconYellow83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		B609D5512862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineWKDownloadDelegate.swift; sourceTree = "<group>"; };
+		B60DFF062872B64B0061E7C2 /* JSAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSAlertController.swift; sourceTree = "<group>"; };
 		B623C1C12862CA9E0043013E /* DownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadSession.swift; sourceTree = "<group>"; };
 		B623C1C32862CD670043013E /* WKDownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKDownloadSession.swift; sourceTree = "<group>"; };
+		B6BA95E728924730004ABA20 /* JSAlertController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JSAlertController.storyboard; sourceTree = "<group>"; };
 		B6BA95C228891E33004ABA20 /* BrowsingMenuAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingMenuAnimator.swift; sourceTree = "<group>"; };
 		B6BA95C428894A28004ABA20 /* BrowsingMenuViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BrowsingMenuViewController.storyboard; sourceTree = "<group>"; };
 		B6CB93E4286445AB0090FEB4 /* Base64DownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64DownloadSession.swift; sourceTree = "<group>"; };
@@ -3596,6 +3600,8 @@
 				8548D95D25262B1B005AAE49 /* ViewHighlighter.swift */,
 				8548D96725262C33005AAE49 /* view_highlight.json */,
 				31B524562715BB23002225AB /* WebJSAlert.swift */,
+				B60DFF062872B64B0061E7C2 /* JSAlertController.swift */,
+				B6BA95E728924730004ABA20 /* JSAlertController.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -4677,6 +4683,7 @@
 				858650DB246B111900C36F8A /* DaxOnboarding.xcassets in Resources */,
 				984147B124F0264300362052 /* Home.storyboard in Resources */,
 				984147C324F026C800362052 /* HomeRow.storyboard in Resources */,
+				B6BA95E828924730004ABA20 /* JSAlertController.storyboard in Resources */,
 				AA4D6AF623DF0312007E8790 /* AppIconRed60x60@3x.png in Resources */,
 				AA4D6AE423DE4D33007E8790 /* AppIconGreen40x40@3x.png in Resources */,
 				AAF2E28323E0495E00962AF8 /* AppIconBlue83.5x83.5@2x.png in Resources */,
@@ -5021,6 +5028,7 @@
 				F4C9FBF528340DDA002281CC /* AutofillInterfaceEmailTruncator.swift in Sources */,
 				6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
+				B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */,
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
 				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
 				851B128822200575004781BC /* Onboarding.swift in Sources */,

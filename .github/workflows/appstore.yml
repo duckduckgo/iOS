@@ -23,26 +23,17 @@ jobs:
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
           P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
-          APP_PROVISION_PROFILE_BASE64: ${{ secrets.APP_PROVISION_PROFILE_BASE64 }}
-          OPEN_ACTION_PROVISION_PROFILE_BASE64: ${{ secrets.OPEN_ACTION_PROVISION_PROFILE_BASE64 }}
-          SHARE_PROVISION_PROFILE_BASE64: ${{ secrets.SHARE_PROVISION_PROFILE_BASE64 }}
-          WIDGETS_PROVISION_PROFILE_BASE64: ${{ secrets.WIDGETS_PROVISION_PROFILE_BASE64 }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.KEY_ID }}
+          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.KEY_CONTENT }}
         run: |
           # create variables
           CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          APP_PP_PATH=$RUNNER_TEMP/app_pp.mobileprovision
-          OPEN_ACTION_PP_PATH=$RUNNER_TEMP/open-action_pp.mobileprovision
-          SHARE_PP_PATH=$RUNNER_TEMP/share_pp.mobileprovision
-          WIDGETS_PP_PATH=$RUNNER_TEMP/widgets_pp.mobileprovision
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
           echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
-          echo -n "$APP_PROVISION_PROFILE_BASE64" | base64 --decode --output $APP_PP_PATH
-          echo -n "$OPEN_ACTION_PROVISION_PROFILE_BASE64" | base64 --decode --output $OPEN_ACTION_PP_PATH
-          echo -n "$SHARE_PROVISION_PROFILE_BASE64" | base64 --decode --output $SHARE_PP_PATH
-          echo -n "$WIDGETS_PROVISION_PROFILE_BASE64" | base64 --decode --output $WIDGETS_PP_PATH
 
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
@@ -52,10 +43,6 @@ jobs:
           # import certificate to keychain
           security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
           security list-keychain -d user -s $KEYCHAIN_PATH
-
-          # apply provisioning profile
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $APP_PP_PATH $OPEN_ACTION_PP_PATH $SHARE_PP_PATH $WIDGETS_PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Build & upload iOS binary
         run: bundle exec fastlane release

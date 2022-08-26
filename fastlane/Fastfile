@@ -2,7 +2,12 @@ fastlane_version "2.150.0"
 
 default_platform :ios
 
-lane :release do 
+lane :release do
+
+  sigh(
+    app_identifier: "com.duckduckgo.mobile.ios",
+    api_key: app_store_connect_api_key()
+  )
 
   gym(
     export_method: "app-store",

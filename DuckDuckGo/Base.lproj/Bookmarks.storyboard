@@ -129,6 +129,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" name="BookmarksCellColor"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES"/>
+                                </accessibility>
                                 <connections>
                                     <outlet property="disclosureEditView" destination="bPv-ax-jUl" id="JWf-AH-hX2"/>
                                     <outlet property="editSeperatorView" destination="GaQ-J4-STm" id="zdZ-AC-Lpg"/>

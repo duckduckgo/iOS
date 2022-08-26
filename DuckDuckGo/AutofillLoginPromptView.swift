@@ -106,8 +106,8 @@ struct AutofillLoginPromptView: View {
                 }
                 .frame(minHeight: geometry.size.height)
             }
-            .padding(.trailing, 8)
-            .padding(.leading, 8)
+            .padding(.trailing, 8 + Const.Size.buttonBorderWidth)
+            .padding(.leading, 8 + Const.Size.buttonBorderWidth)
         }
     }
     
@@ -140,12 +140,17 @@ struct AutofillLoginPromptView: View {
                     .minimumScaleFactor(0.7)
                     .foregroundColor(style == .primary ? Const.Colors.CTAPrimaryForeground : Const.Colors.CTASecondaryForeground)
                     .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
+                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight - Const.Size.buttonBorderWidth)
                     .background(style == .primary ? Const.Colors.CTAPrimaryBackground : Const.Colors.CTASecondaryBackground)
                     .foregroundColor(.primary)
                     .cornerRadius(Const.Size.CTAButtonCornerRadius)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: Const.Size.CTAButtonCornerRadius)
+                            .stroke(Const.Colors.CTABorder, lineWidth: Const.Size.buttonBorderWidth)
+                    )
             }
-            .frame(width: Const.Size.contentWidth)
+            .frame(width: Const.Size.contentWidth - Const.Size.buttonBorderWidth)
+            .padding(EdgeInsets(top: 1, leading: 0, bottom: 1, trailing: 0))
             
             Spacer()
         }
@@ -190,6 +195,7 @@ private enum Const {
         static let CTASecondaryForeground = Color("CTASecondaryForeground")
         static let PrimaryTextColor = Color("PrimaryTextColor")
         static let SecondaryTextColor = Color("SecondaryTextColor")
+        static let CTABorder = Color("CTAPrimaryBackground")
     }
     
     enum Size {
@@ -198,6 +204,7 @@ private enum Const {
         static let contentWidth: CGFloat = 286
         static let closeButtonSize: CGFloat = 13
         static let closeButtonTappableArea: CGFloat = 44
+        static let buttonBorderWidth: CGFloat = 2
     }
 }
 

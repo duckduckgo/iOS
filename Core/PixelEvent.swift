@@ -157,6 +157,10 @@ extension Pixel {
         case openVoiceSearch
         case voiceSearchCancelled
         
+        case emailDidShowWaitlistDialog
+        case emailDidPressWaitlistDialogDismiss
+        case emailDidPressWaitlistDialogNotifyMe
+        
         case bookmarksFolderCreated
         
         case bookmarkCreatedAtTopLevel
@@ -195,8 +199,7 @@ extension Pixel {
         case downloadAttemptToOpenBLOBviaJS
         
         case jsAlertShown
-        case jsAlertBlocked
-        
+
         case featureFlaggingInternalUserAuthenticated
 
         case autofillLoginsSaveLoginModalOnboardingDisplayed
@@ -231,7 +234,6 @@ extension Pixel {
         // The pixels are for debugging a specific problem and should be removed when resolved
         // https://app.asana.com/0/0/1202498365125439/f
         case secureVaultIsEnabledCheckedWhenEnabled
-        case secureVaultIsEnabledCheckedWhenDisabled
         
         // MARK: Ad Click Attribution pixels
         
@@ -316,10 +318,19 @@ extension Pixel {
         case adAttributionLogicWrongVendorOnSuccessfulCompilation
         case adAttributionLogicWrongVendorOnFailedCompilation
         
-        case debugBookmarkOrphanFolder
-        case debugBookmarkTopLevelMissing
-        case debugFavoriteOrphanFolder
-        case debugFavoriteTopLevelMissing
+        case debugBookmarkOrphanFolderNew
+        case debugBookmarkTopLevelMissingNew
+        
+        case debugFavoriteOrphanFolderNew
+        case debugFavoriteTopLevelMissingNew
+        
+        case debugCouldNotFixBookmarkFolder
+        case debugCouldNotFixFavoriteFolder
+        
+        case debugMissingTopFolderFixHasFavorites
+        case debugMissingTopFolderFixHasBookmarks
+        
+        case debugCantSaveBookmarkFix
     }
     
 }
@@ -460,6 +471,10 @@ extension Pixel.Event {
         case .openVoiceSearch: return "m_open_voice_search"
         case .voiceSearchCancelled: return "m_voice_search_cancelled"
             
+        case .emailDidShowWaitlistDialog: return "email_did_show_waitlist_dialog"
+        case .emailDidPressWaitlistDialogDismiss: return "email_did_press_waitlist_dialog_dismiss"
+        case .emailDidPressWaitlistDialogNotifyMe: return "email_did_press_waitlist_dialog_notify_me"
+            
         case .bookmarksFolderCreated: return "m_bookmarks_folder_created"
             
         case .bookmarkCreatedAtTopLevel: return "m_bookmark_created_at_top_level"
@@ -496,10 +511,9 @@ extension Pixel.Event {
             
         case .downloadPreparingToStart: return "m_download_preparing_to_start"
         case .downloadAttemptToOpenBLOBviaJS: return "m_download_attempt_to_open_blob_js"
-            
+
         case .jsAlertShown: return "m_js_alert_shown"
-        case .jsAlertBlocked: return "m_js_alert_blocked"
-            
+
         case .featureFlaggingInternalUserAuthenticated: return "m_internal-user_authenticated"
 
         case .autofillLoginsSaveLoginModalOnboardingDisplayed: return "m_autofill_logins_save_login_onboarding_inline_displayed"
@@ -536,7 +550,6 @@ extension Pixel.Event {
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
         case .secureVaultIsEnabledCheckedWhenEnabled: return "m_secure-vault_is-enabled-checked_when-enabled"
-        case .secureVaultIsEnabledCheckedWhenDisabled: return "m_secure-vault_is-enabled-checked_when-disabled"
             
         // MARK: Ad Click Attribution pixels
             
@@ -610,11 +623,18 @@ extension Pixel.Event {
             
         case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
         
-        case .debugBookmarkOrphanFolder: return "m_d_bookmark_orphan_folder"
-        case .debugBookmarkTopLevelMissing: return "m_d_bookmark_top_level_missing"
-        
-        case .debugFavoriteOrphanFolder: return "m_d_favorite_orphan_folder"
-        case .debugFavoriteTopLevelMissing: return "m_d_favorite_top_level_missing"
+        case .debugBookmarkOrphanFolderNew: return "m_d_bookmark_orphan_folder_new"
+        case .debugBookmarkTopLevelMissingNew: return "m_d_bookmark_top_level_missing_new"
+        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
+        case .debugMissingTopFolderFixHasBookmarks: return "m_d_missing_top_folder_has_bookmarks"
+
+        case .debugFavoriteOrphanFolderNew: return "m_d_favorite_orphan_folder_new"
+        case .debugFavoriteTopLevelMissingNew: return "m_d_favorite_top_level_missing_new"
+        case .debugCouldNotFixFavoriteFolder: return "m_d_cannot_fix_favorite_folder"
+        case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
+            
+        case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
+            
         
         // MARK: Ad Attribution
             

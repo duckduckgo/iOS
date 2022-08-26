@@ -35,28 +35,28 @@ struct CompleteDownloadRow: View {
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text(rowModel.filename)
-                    .font(Font(uiFont: Const.Font.filename))
-                    .foregroundColor(.filename)
-                    .lineLimit(2)
-                Spacer()
-                    .frame(height: Const.Spacing.betweenLabels)
-                Text(rowModel.fileSize)
-                    .font(Font(uiFont: Const.Font.fileSize))
-                    .foregroundColor(.fileSize)
+            Button {
+                self.isPreviewPresented = true
+            } label: {
+                VStack(alignment: .leading) {
+                    Text(rowModel.filename)
+                        .font(Font(uiFont: Const.Font.filename))
+                        .foregroundColor(.filename)
+                        .lineLimit(2)
+                    Spacer()
+                        .frame(height: Const.Spacing.betweenLabels)
+                    Text(rowModel.fileSize)
+                        .font(Font(uiFont: Const.Font.fileSize))
+                        .foregroundColor(.fileSize)
+                }
             }
-            
             Spacer(minLength: Const.Spacing.betweenLabelsAndShareButton)
-            
+
             shareButton
         }
         .frame(height: Const.Size.rowHeight)
         .listRowInsets(EdgeInsets.rowInsets)
         .contentShape(Rectangle())
-        .onTapGesture {
-            self.isPreviewPresented = true
-        }
         .sheet(isPresented: $isPreviewPresented, content: {
             QuickLookPreviewView(localFileURL: rowModel.fileURL)
                 .edgesIgnoringSafeArea(.all)
@@ -69,6 +69,7 @@ struct CompleteDownloadRow: View {
         } label: {
             Image.share
         }
+        .accessibilityLabel(UserText.actionShare)
         .buttonStyle(.plain)
         .animation(nil)
         .background(

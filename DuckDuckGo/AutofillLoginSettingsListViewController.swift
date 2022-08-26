@@ -22,6 +22,8 @@ import Combine
 import Core
 import BrowserServicesKit
 
+// swiftlint:disable file_length
+
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
 }
@@ -32,6 +34,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
     private let emptySearchView = AutofillEmptySearchView()
+    
+    private lazy var addBarButtonItem: UIBarButtonItem = {
+        UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+    }()
     
     private var cancellables: Set<AnyCancellable> = []
     private lazy var searchController: UISearchController = {
@@ -92,8 +98,15 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.setEditing(editing, animated: animated)
     }
     
+    @objc
+    func addButtonPressed() {
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator)
+        detailsController.delegate = self
+        navigationController?.pushViewController(detailsController, animated: true)
+    }
+    
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
-        let detailsController = AutofillLoginDetailsViewController(account: account, authenticator: viewModel.authenticator)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, account: account)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: animated)
     }
@@ -152,38 +165,47 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = true
+            for item in navigationItem.rightBarButtonItems ?? [] {
+                item.isEnabled = true
+            }
         case .authLocked:
             emptyView.isHidden = true
             tableView.isHidden = true
             lockedView.isHidden = false
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = false
+            for item in navigationItem.rightBarButtonItems ?? [] {
+                item.isEnabled = false
+            }
         case .empty:
             emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = false
+            editButtonItem.isEnabled = false
+            addBarButtonItem.isEnabled = true
         case .searching:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = true
+            for item in navigationItem.rightBarButtonItems ?? [] {
+                item.isEnabled = true
+            }
         case .searchingNoResults:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = false
-            navigationItem.rightBarButtonItem?.isEnabled = true
+            for item in navigationItem.rightBarButtonItems ?? [] {
+                item.isEnabled = true
+            }
         }
         tableView.reloadData()
     }
     
     private func installNavigationBarButtons() {
-        navigationItem.rightBarButtonItem = self.editButtonItem
+        navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
     }
     
     private func installSubviews() {
@@ -382,3 +404,5 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
         }
     }
 }
+
+// swiftlint:enable file_length

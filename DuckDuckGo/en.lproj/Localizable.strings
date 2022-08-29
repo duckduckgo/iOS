@@ -185,7 +185,7 @@
 "autofill.save-login.additional-login.message" = "This will save an additional Login for this site.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.";
+"autofill.save-login.new-user.message" = "DuckDuckGo will securely store this Login on your device.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Do you want DuckDuckGo to save your Login?";

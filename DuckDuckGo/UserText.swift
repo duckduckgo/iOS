@@ -483,7 +483,7 @@ public struct UserText {
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "DuckDuckGo will securely store this Login on your device.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
    
     public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")

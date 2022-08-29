@@ -106,4 +106,27 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel) {
         delegate?.saveLoginViewControllerDidCancel(self)
     }
+
+    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel) {
+        let alertController = UIAlertController(title: UserText.autofillKeepEnabledAlertTitle,
+                                                message: UserText.autofillKeepEnabledAlertMessage,
+                                                preferredStyle: .alert)
+        alertController.overrideUserInterfaceStyle()
+
+        let disableAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertDisableAction, style: .cancel) { _ in
+            self.delegate?.saveLoginViewControllerDidCancel(self)
+            AppDependencyProvider.shared.appSettings.autofill = false
+        }
+
+        let keepUsingAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertKeepUsingAction, style: .default) { _ in
+            self.delegate?.saveLoginViewControllerDidCancel(self)
+        }
+
+        alertController.addAction(disableAction)
+        alertController.addAction(keepUsingAction)
+
+        alertController.preferredAction = keepUsingAction
+
+        present(alertController, animated: true)
+    }
 }

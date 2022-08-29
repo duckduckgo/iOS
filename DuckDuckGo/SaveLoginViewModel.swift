@@ -24,6 +24,7 @@ import Core
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
+    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel)
 }
 
 final class SaveLoginViewModel: ObservableObject {
@@ -95,14 +96,19 @@ final class SaveLoginViewModel: ObservableObject {
     
     private func updateRejectionCount() {
         autofillSaveModalRejectionCount += 1
-        if autofillSaveModalRejectionCount >= numberOfRejectionsToTurnOffAutofill {
-            AppDependencyProvider.shared.appSettings.autofill = false
-        }
+    }
+
+    private func shouldShowAutofillKeepUsingConfirmation() -> Bool {
+        return autofillSaveModalRejectionCount >= numberOfRejectionsToTurnOffAutofill
     }
     
     func cancel() {
         updateRejectionCount()
-        delegate?.saveLoginViewModelDidCancel(self)
+        if shouldShowAutofillKeepUsingConfirmation() {
+            delegate?.saveLoginViewModelConfirmKeepUsing(self)
+        } else {
+            delegate?.saveLoginViewModelDidCancel(self)
+        }
     }
     
     func save() {

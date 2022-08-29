@@ -114,7 +114,7 @@ class TextSizeSettingsViewController: UITableViewController {
         textSizeSlider.minimumValue = 0
         textSizeSlider.maximumValue = Float(predefinedPercentages.count - 1)
         
-        textSizeSlider.steps = predefinedPercentages.count
+        textSizeSlider.steps = predefinedPercentages
         
         configureSliderCurrentSelection()
     }

@@ -109,7 +109,7 @@ class TabsBarCell: UICollectionViewCell {
             removeButton.accessibilityLabel = UserText.closeHomeTab
         } else {
             faviconImage.loadFavicon(forDomain: model.link?.url.host, usingCache: .tabs)
-            label.text = model.link?.displayTitle ?? model.link?.url.host?.dropPrefix(prefix: "www.")
+            label.text = model.link?.displayTitle ?? model.link?.url.host?.droppingWwwPrefix()
             label.accessibilityLabel = UserText.openTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")
             removeButton.accessibilityLabel = UserText.closeTab(withTitle: model.link?.displayTitle ?? "", atAddress: model.link?.url.host ?? "")
         }

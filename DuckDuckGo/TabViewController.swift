@@ -20,6 +20,7 @@
 import WebKit
 import Core
 import StoreKit
+import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
@@ -70,38 +71,38 @@ class TabViewController: UIViewController {
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
     private weak var privacyController: PrivacyProtectionController?
-    
+
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
-    
+
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
-    
+
     lazy var bookmarksManager = BookmarksManager()
 
     private(set) var urlToSiteRating: [URL: SiteRating] = [:]
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
-    
+
     private let requeryLogic = RequeryLogic()
-    
+
     private static let tld = AppDependencyProvider.shared.storageCache.current.tld
     private let adClickAttributionDetection = ContentBlocking.makeAdClickAttributionDetection(tld: tld)
     let adClickAttributionLogic = ContentBlocking.makeAdClickAttributionLogic(tld: tld)
-    
+
     private var httpsForced: Bool = false
     private var lastUpgradedURL: URL?
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
-    
+
     private var trackerNetworksDetectedOnPage = Set<String>()
     private var pageHasTrackers = false
-    
+
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
-    
+
     private var trackersInfoWorkItem: DispatchWorkItem?
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
@@ -189,7 +190,6 @@ class TabViewController: UIViewController {
     private var textSizeUserScript = TextSizeUserScript()
     private lazy var autofillUserScript = createAutofillUserScript()
     private var debugScript = DebugUserScript()
-    private var shouldBlockJSAlert = false
 
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
@@ -225,7 +225,19 @@ class TabViewController: UIViewController {
     private var userScripts: [UserScript] = []
     
     private var canDisplayJavaScriptAlert: Bool {
-        return !shouldBlockJSAlert && presentedViewController == nil && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
+        return presentedViewController == nil
+            && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
+            && !self.jsAlertController.isShown
+    }
+
+    func present(_ alert: WebJSAlert) {
+        self.jsAlertController.present(alert)
+    }
+
+    private func dismissJSAlertIfNeeded() {
+        if jsAlertController.isShown {
+            jsAlertController.dismiss(animated: false)
+        }
     }
     
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
@@ -241,7 +253,11 @@ class TabViewController: UIViewController {
     }
     
     private var isAutofillEnabled: Bool {
-        appSettings.autofill && featureFlagger.isFeatureOn(.autofill)
+        let context = LAContext()
+        var error: NSError?
+        let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+
+        return appSettings.autofill && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
     }
     
     private var userContentController: UserContentController {
@@ -382,7 +398,8 @@ class TabViewController: UIViewController {
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
     func attachWebView(configuration: WKWebViewConfiguration,
                        andLoadRequest request: URLRequest?,
-                       consumeCookies: Bool) {
+                       consumeCookies: Bool,
+                       loadingInitiatedByParentTab: Bool = false) {
         instrumentation.willPrepareWebView()
         
         configuration.userContentController = UserContentController()
@@ -409,15 +426,26 @@ class TabViewController: UIViewController {
         
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
-        } else if let request = request {
-            if let url = request.url {
-                linkProtection.getCleanURL(from: url,
-                                           onStartExtracting: { showProgressIndicator() },
-                                           onFinishExtracting: { },
-                                           completion: { [weak self] cleanURL in self?.load(urlRequest: .userInitiated(cleanURL)) })
-            } else {
-                load(urlRequest: request)
-            }
+        } else if let url = request?.url {
+            var loadingStopped = false
+            linkProtection.getCleanURL(from: url, onStartExtracting: { [weak self] in
+                if loadingInitiatedByParentTab {
+                    // stop parent-initiated URL loading only if canonical URL extraction process has started
+                    loadingStopped = true
+                    self?.webView.stopLoading()
+                }
+                showProgressIndicator()
+            }, onFinishExtracting: {}, completion: { [weak self] cleanURL in
+                // restart the cleaned-up URL loading here if:
+                //   link protection provided an updated URL
+                //   OR if loading was stopped for a popup loaded by its parent
+                //   OR for any other navigation which is not a popup loaded by its parent
+                // the check is here to let an (about:blank) popup which has its loading
+                // initiated by its parent to keep its active request, otherwise we would
+                // break a js-initiated popup request such as printing from a popup
+                guard url != cleanURL || loadingStopped || !loadingInitiatedByParentTab else { return }
+                self?.load(urlRequest: .userInitiated(cleanURL))
+            })
         }
     }
 
@@ -448,11 +476,16 @@ class TabViewController: UIViewController {
     }
     
     public func load(url: URL) {
+        webView.stopLoading()
+        dismissJSAlertIfNeeded()
+
         load(url: url, didUpgradeURL: false)
     }
     
     public func load(backForwardListItem: WKBackForwardListItem) {
         webView.stopLoading()
+        dismissJSAlertIfNeeded()
+
         updateContentMode()
         webView.go(to: backForwardListItem)
     }
@@ -576,7 +609,7 @@ class TabViewController: UIViewController {
     
     private func shouldReissueSearch(for url: URL) -> Bool {
         guard appUrls.isDuckDuckGoSearch(url: url) else { return false }
-        return  !appUrls.hasCorrectMobileStatsParams(url: url) || !appUrls.hasCorrectSearchHeaderParams(url: url)
+        return !appUrls.hasCorrectMobileStatsParams(url: url) || !appUrls.hasCorrectSearchHeaderParams(url: url)
     }
     
     private func reissueSearchWithRequiredParams(for url: URL) {
@@ -605,6 +638,8 @@ class TabViewController: UIViewController {
     }
     
     func goBack() {
+        dismissJSAlertIfNeeded()
+
         if isError {
             hideErrorMessage()
             url = webView.url
@@ -619,6 +654,8 @@ class TabViewController: UIViewController {
     }
     
     func goForward() {
+        dismissJSAlertIfNeeded()
+
         if webView.goForward() != nil {
             chromeDelegate?.omniBar.resignFirstResponder()
         }
@@ -700,7 +737,14 @@ class TabViewController: UIViewController {
         }
         
     }
-    
+
+    private var jsAlertController: JSAlertController!
+    @IBSegueAction
+    func createJSAlertController(coder: NSCoder, sender: Any?, segueIdentifier: String?) -> JSAlertController? {
+        self.jsAlertController = JSAlertController(coder: coder)!
+        return self.jsAlertController
+    }
+
     private func addLoginDetectionStateObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onLoginDetectionStateChanged),
@@ -983,7 +1027,7 @@ class TabViewController: UIViewController {
     func onCopyAction(forUrl url: URL) {
         let copyText: String
         if appUrls.isDuckDuckGo(url: url) {
-            let cleanURL = appUrls.removeInternalSearchParameters(fromUrl: url)
+            let cleanURL = appUrls.removingInternalSearchParameters(fromUrl: url)
             copyText = cleanURL.absoluteString
         } else {
             copyText = url.absoluteString
@@ -1166,6 +1210,8 @@ extension TabViewController: WKNavigationDelegate {
             guard let webView = self?.webView else { completion(nil); return }
             UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
             webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
+            self?.jsAlertController.view.drawHierarchy(in: self!.jsAlertController.view.bounds,
+                                                       afterScreenUpdates: false)
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             completion(image)
@@ -1816,8 +1862,6 @@ extension TabViewController {
     }
 
     private func legacySetupBlobDownload(for navigationAction: WKNavigationAction, completion: @escaping () -> Void) {
-        guard #available(iOS 14.0, *) else { completion(); return }
-
         let url = navigationAction.request.url!
         let legacyBlobDownloadScript = """
             let blob = await fetch(url).then(r => r.blob())
@@ -1961,18 +2005,20 @@ extension TabViewController: WKUIDelegate {
         Pixel.fire(pixel: .webKitDidTerminate)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
-    
+
      func webView(_ webView: WKWebView,
                   runJavaScriptAlertPanelWithMessage message: String,
                   initiatedByFrame frame: WKFrameInfo,
                   completionHandler: @escaping () -> Void) {
         if canDisplayJavaScriptAlert {
-            let alertController = WebJSAlert(message: message, alertType: .alert(handler: { [weak self] blockAlerts in
-                self?.shouldBlockJSAlert = blockAlerts
-                completionHandler()
-            })).createAlertController()
-            
-            self.present(alertController, animated: true, completion: nil)
+            let alert = WebJSAlert(domain: frame.request.url?.host
+                                   // in case the web view is navigating to another host
+                                   ?? webView.backForwardList.currentItem?.url.host
+                                   ?? self.url?.absoluteString
+                                   ?? "",
+                                   message: message,
+                                   alertType: .alert(handler: completionHandler))
+            self.present(alert)
         } else {
             completionHandler()
         }
@@ -1984,13 +2030,14 @@ extension TabViewController: WKUIDelegate {
                   completionHandler: @escaping (Bool) -> Void) {
         
         if canDisplayJavaScriptAlert {
-            let alertController = WebJSAlert(message: message,
-                                             alertType: .confirm(handler: { [weak self] blockAlerts, confirm in
-                self?.shouldBlockJSAlert = blockAlerts
-                completionHandler(confirm)
-            })).createAlertController()
-            
-            self.present(alertController, animated: true, completion: nil)
+            let alert = WebJSAlert(domain: frame.request.url?.host
+                                   // in case the web view is navigating to another host
+                                   ?? webView.backForwardList.currentItem?.url.host
+                                   ?? self.url?.absoluteString
+                                   ?? "",
+                                   message: message,
+                                   alertType: .confirm(handler: completionHandler))
+            self.present(alert)
         } else {
             completionHandler(false)
         }
@@ -2002,14 +2049,15 @@ extension TabViewController: WKUIDelegate {
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (String?) -> Void) {
         if canDisplayJavaScriptAlert {
-            let alertController = WebJSAlert(message: prompt,
-                                             alertType: .text(handler: { [weak self] blockAlerts, text in
-                
-                self?.shouldBlockJSAlert = blockAlerts
-                completionHandler(text)
-            }, defaultText: defaultText)).createAlertController()
-            
-            self.present(alertController, animated: true, completion: nil)
+            let alert = WebJSAlert(domain: frame.request.url?.host
+                                   // in case the web view is navigating to another host
+                                   ?? webView.backForwardList.currentItem?.url.host
+                                   ?? self.url?.absoluteString
+                                   ?? "",
+                                   message: prompt,
+                                   alertType: .text(handler: completionHandler,
+                                                    defaultText: defaultText))
+            self.present(alert)
         } else {
             completionHandler(nil)
         }
@@ -2072,6 +2120,8 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func refresh() {
+        dismissJSAlertIfNeeded()
+
         requeryLogic.onRefresh()
         if isError {
             if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
@@ -2272,7 +2322,7 @@ extension TabViewController: EmailManagerRequestDelegate {
                       completion: @escaping (Data?, Error?) -> Void) {
         APIRequest.request(url: url,
                            method: APIRequest.HTTPMethod(rawValue: method) ?? .post,
-                           parameters: parameters,
+                           parameters: parameters ?? [:],
                            headers: headers,
                            httpBody: httpBody,
                            timeoutInterval: timeoutInterval) { response, error in
@@ -2356,8 +2406,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
         if isEnabled {
             Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
-        } else {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenDisabled, withAdditionalParameters: pixelParams)
         }
         return isEnabled
     }
@@ -2384,11 +2432,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
         
         if accounts.count > 0 {
-            if !AutofillLoginPromptViewController.canAuthenticate {
-                Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
-                completionHandler(nil)
-                return
-            }
             
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, trigger: trigger) { account in
                 completionHandler(account)
@@ -2459,7 +2502,6 @@ extension TabViewController: SaveLoginViewControllerDelegate {
 
 extension WKWebView {
 
-    @available(iOS 14.0, *)
     func load(_ url: URL, in frame: WKFrameInfo?) {
         evaluateJavaScript("window.location.href='" + url.absoluteString + "'", in: frame, in: .page)
     }

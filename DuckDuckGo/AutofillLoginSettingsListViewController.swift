@@ -233,10 +233,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptyView.heightAnchor.constraint(equalToConstant: 235),
             
             emptySearchView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptySearchView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 80),
+            emptySearchView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 160),
             emptySearchView.widthAnchor.constraint(equalToConstant: 225),
-            emptySearchView.heightAnchor.constraint(equalToConstant: 130),
-            
+
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),

@@ -11,6 +11,4 @@ jobs:
         uses: danger/danger-js@9.1.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args:
-            "--dangerfile duckduckgo/iOS/danger.ts"
+

@@ -22,16 +22,23 @@ import SwiftUI
 import DuckUI
 
 class AutofillListItemTableViewCell: UITableViewCell {
+
+    var theme: Theme? {
+        didSet {
+            updateTheme()
+        }
+    }
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
-        label.font = .systemFont(ofSize: 16)
+        label.font = .preferredFont(forTextStyle: .callout)
         label.textColor = .label
         return label
     }()
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
-        label.font = .systemFont(ofSize: 13)
+        label.font = .preferredFont(forTextStyle: .footnote)
         label.textColor = .gray50
         return label
     }()
@@ -53,7 +60,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [iconImageView, textStackView])
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = 12
         return stackView
     }()
     
@@ -79,7 +86,16 @@ class AutofillListItemTableViewCell: UITableViewCell {
         contentView.addSubview(contentStackView)
         installConstraints()
     }
-    
+
+    private func updateTheme() {
+        guard let theme = theme else {
+            return
+        }
+
+        titleLabel.textColor = theme.autofillDefaultTitleTextColor
+        subtitleLabel.textColor = theme.autofillDefaultSubtitleTextColor
+    }
+
     private func installConstraints() {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -110,5 +126,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentStackView.frame = contentView.bounds
+
+        separatorInset = UIEdgeInsets(top: 0, left: contentView.layoutMargins.left + textStackView.frame.origin.x, bottom: 0, right: 0)
     }
 }

@@ -47,6 +47,6 @@ class BrowsingMenuEntryViewCell: UITableViewCell {
                                                    attributes: [.font: UIFont.appFont(ofSize: 17)],
                                                    context: nil)
         
-        return size.width + 69 // Left Margin + Icon width + Spacing + Right Margin
+        return size.width + 90 // Left Margin + Icon width + Spacing + Right Margin
     }
 }

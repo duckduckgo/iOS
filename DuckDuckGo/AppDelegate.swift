@@ -80,11 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return true
         }
 
-        if !Database.shared.isDatabaseFileInitialized {
-            let autofillStorage = EmailKeychainManager()
-            autofillStorage.deleteAuthenticationState()
-            autofillStorage.deleteWaitlistState()
-        }
+        removeEmailWaitlistState()
         
         Database.shared.loadStore(application: application) { context in
             DatabaseMigration.migrate(to: context)
@@ -122,7 +118,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Task handler registration needs to happen before the end of `didFinishLaunching`, otherwise submitting a task can throw an exception.
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
-        EmailWaitlist.shared.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
         RemoteMessaging.registerBackgroundRefreshTaskHandler()
 
@@ -184,13 +179,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        EmailWaitlist.shared.emailManager.fetchInviteCodeIfAvailable { result in
-            switch result {
-            case .success: EmailWaitlist.shared.sendInviteCodeAvailableNotification()
-            case .failure: break
-            }
-        }
-        
         MacBrowserWaitlist.shared.fetchInviteCodeIfAvailable { error in
             guard error == nil else { return }
             MacBrowserWaitlist.shared.sendInviteCodeAvailableNotification()
@@ -291,9 +279,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab(reuseExisting: true)
-            if url.getParam(name: "w") != nil {
-                Pixel.fire(pixel: .widgetNewSearch)
-                mainViewController?.enterSearch()
+            do {
+                if try url.getParameter(name: "w") != nil {
+                    Pixel.fire(pixel: .widgetNewSearch)
+                    mainViewController?.enterSearch()
+                }
+            } catch {
+                os_log("Error decoding parameter: %s", log: lifecycleLog, type: .debug, error.localizedDescription)
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)
@@ -345,11 +337,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let hasConfigurationTask = tasks.contains { $0.identifier == AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier }
             if !hasConfigurationTask {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
-            }
-
-            let hasEmailWaitlistTask = tasks.contains { $0.identifier == EmailWaitlist.Constants.backgroundRefreshTaskIdentifier }
-            if !hasEmailWaitlistTask {
-                EmailWaitlist.shared.scheduleBackgroundRefreshTask()
             }
 
             let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessaging.Constants.backgroundRefreshTaskIdentifier }
@@ -427,6 +414,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    private func removeEmailWaitlistState() {
+        EmailWaitlist.removeEmailState()
+
+        let autofillStorage = EmailKeychainManager()
+        autofillStorage.deleteWaitlistState()
+
+        // Remove the authentication state if this is a fresh install.
+        if !Database.shared.isDatabaseFileInitialized {
+            autofillStorage.deleteAuthenticationState()
+        }
+    }
+
     private var mainViewController: MainViewController? {
         return window?.rootViewController as? MainViewController
     }
@@ -490,17 +489,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             if response.notification.request.identifier == MacBrowserWaitlist.Constants.notificationIdentitier {
                 Pixel.fire(pixel: .macBrowserWaitlistNotificationLaunched)
                 presentMacBrowserWaitlistSettingsModal()
-            } else if response.notification.request.identifier == EmailWaitlist.Constants.notificationIdentitier {
-                presentEmailWaitlistSettingsModal()
             }
         }
 
         completionHandler()
-    }
-
-    private func presentEmailWaitlistSettingsModal() {
-        let waitlistViewController = EmailWaitlistViewController.loadFromStoryboard()
-        presentSettings(with: waitlistViewController)
     }
     
     private func presentMacBrowserWaitlistSettingsModal() {

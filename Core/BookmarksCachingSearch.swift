@@ -149,7 +149,7 @@ public class BookmarksCachingSearch {
                 entry.score += 100
             }
             
-            let domain = entry.bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
+            let domain = entry.bookmark.url?.host?.droppingWwwPrefix() ?? ""
             
             // Tokenized matches
             
@@ -198,7 +198,7 @@ public class BookmarksCachingSearch {
             return ScoredBookmark(bookmark: $0, score: score)
         }
                     
-        let trimmed = query.trimWhitespace()
+        let trimmed = query.trimmingWhitespace()
         self.score(query: trimmed, results: results)
         
         var finalResult = results.filter { $0.score > 0 }

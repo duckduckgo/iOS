@@ -30,6 +30,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     enum ViewMode {
         case edit
         case view
+        case new
     }
     
     enum PasteboardCopyAction {
@@ -39,7 +40,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
-    let account: SecureVaultModels.WebsiteAccount
+    var account: SecureVaultModels.WebsiteAccount?
     
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
@@ -54,22 +55,48 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
     
+    private var passwordData: Data {
+        password.data(using: .utf8)!
+    }
+    
+    var navigationTitle: String {
+        switch viewMode {
+        case .edit:
+            return UserText.autofillLoginDetailsEditTitle
+        case .view:
+            return UserText.autofillLoginDetailsDefaultTitle
+        case .new:
+            return UserText.autofillLoginDetailsNewTitle
+        }
+    }
+    
+    var shouldShowSaveButton: Bool {
+        guard viewMode == .new else { return false }
+        
+        return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty
+    }
+    
     var userVisiblePassword: String {
         let passwordHider = PasswordHider(password: password)
         return isPasswordHidden ? passwordHider.hiddenPassword : passwordHider.password
     }
 
-    internal init(account: SecureVaultModels.WebsiteAccount) {
+    internal init(account: SecureVaultModels.WebsiteAccount? = nil) {
         self.account = account
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel()
-        self.updateData(with: account)
+        if let account = account {
+            self.updateData(with: account)
+        } else {
+            viewMode = .new
+        }
     }
     
     private func updateData(with account: SecureVaultModels.WebsiteAccount) {
-        self.username = account.username
-        self.address = account.domain
-        self.title = account.name
-        self.headerViewModel.updateData(with: account)
+        self.account = account
+        username = account.username
+        address = account.domain
+        title = account.name
+        headerViewModel.updateData(with: account)
         setupPassword(with: account)
     }
     
@@ -125,14 +152,20 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
 
     func save() {
         do {
-            if let accountID = account.id {
+            switch viewMode {
+            case .edit:
+                guard let accountID = account?.id else {
+                    assertionFailure("Trying to save edited account, but the account doesn't exist")
+                    return
+                }
+                
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
                 
                 if var credential = try vault.websiteCredentialsFor(accountId: accountID) {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = address
-                    credential.password = password.data(using: .utf8)!
+                    credential.password = passwordData
                     
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
@@ -141,7 +174,27 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
                         self.updateData(with: newCredential.account)
                     }
+                    
+                    viewMode = .view
                 }
+            case .view:
+                break
+            case .new:
+                let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+                
+                let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address)
+                let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
+
+                let id = try vault.storeWebsiteCredentials(credentials)
+                
+                delegate?.autofillLoginDetailsViewModelDidSave()
+                
+                // Refetch after save to get updated properties like "lastUpdated"
+                if let newCredential = try vault.websiteCredentialsFor(accountId: id) {
+                    self.updateData(with: newCredential.account)
+                }
+                
+                viewMode = .view
             }
         } catch {
             Pixel.fire(pixel: .secureVaultError)

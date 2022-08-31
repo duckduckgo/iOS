@@ -66,16 +66,16 @@ class ActionMessageView: UIView {
         let messageView = loadFromXib()
         messageView.message.attributedText = message
         messageView.message.numberOfLines = numberOfLines
-        ActionMessageView.present(messageView: messageView, actionTitle: actionTitle, onAction: onAction)
+        ActionMessageView.present(messageView: messageView, message: message.string, actionTitle: actionTitle, onAction: onAction)
     }
     
     static func present(message: String, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
         let messageView = loadFromXib()
         messageView.message.setAttributedTextString(message)
-        ActionMessageView.present(messageView: messageView, actionTitle: actionTitle, onAction: onAction)
+        ActionMessageView.present(messageView: messageView, message: message, actionTitle: actionTitle, onAction: onAction)
     }
     
-    private static func present(messageView: ActionMessageView, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
+    private static func present(messageView: ActionMessageView, message: String, actionTitle: String? = nil, onAction: @escaping () -> Void = {}) {
         guard let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first else { return }
         
         dismissAllMessages()
@@ -101,6 +101,8 @@ class ActionMessageView: UIView {
         messageView.alpha = 0
         UIView.animate(withDuration: Constants.animationDuration) {
             messageView.alpha = 1
+        } completion: { _ in
+            UIAccessibility.post(notification: .announcement, argument: message)
         }
         
         let workItem = DispatchWorkItem { [weak messageView] in

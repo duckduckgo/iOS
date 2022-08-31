@@ -42,6 +42,10 @@
                 </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <accessibility key="accessibilityConfiguration">
+                <accessibilityTraits key="traits" button="YES"/>
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="LOb-q4-bUE" secondAttribute="trailing" constant="3" id="7gg-sa-eLs"/>
                 <constraint firstItem="hw1-7w-6TO" firstAttribute="leading" secondItem="LOb-q4-bUE" secondAttribute="leading" constant="3" id="LEv-qH-9tx"/>

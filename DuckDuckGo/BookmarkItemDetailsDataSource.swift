@@ -189,7 +189,7 @@ class BookmarkOrFavoriteDetailsDataSource: NSObject, BookmarkDetailsCellDelegate
             optionalURL = urlString.toEncodedBookmarklet()
             guard URL.isValidBookmarklet(url: optionalURL) else { return nil }
         } else {
-            optionalURL = urlString.punycodedUrl
+            optionalURL = URL(trimmedAddressBarString: urlString)
         }
         
         return optionalURL

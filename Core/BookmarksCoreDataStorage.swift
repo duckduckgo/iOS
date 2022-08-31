@@ -765,60 +765,69 @@ extension BookmarksCoreDataStorage {
         }
     }
 
-    internal func cacheReadOnlyTopLevelBookmarksFolder() {
+    internal enum TopLevelFolderType {
+        case favorite
+        case bookmark
+    }
+    
+    /*
+     This function will return nil if the database desired structure is not met
+     i.e: If there are more than one root level folder OR
+     if there is less than one root level folder
+     */
+    internal func fetchReadOnlyTopLevelFolder(withFolderType
+                                             folderType: TopLevelFolderType) -> BookmarkFolderManagedObject? {
+        
+        var folder: BookmarkFolderManagedObject?
         
         viewContext.performAndWait {
             let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
-            fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == false",
+            fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == %@",
                                                  #keyPath(BookmarkManagedObject.parent),
-                                                 #keyPath(BookmarkManagedObject.isFavorite))
+                                                 #keyPath(BookmarkManagedObject.isFavorite),
+                                                 NSNumber(value: folderType == .favorite))
             
             let results = try? viewContext.fetch(fetchRequest)
-            guard (results?.count ?? 0) <= 1 else {
-              
-                let count = results?.count ?? 0
-                let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
-                
-                Pixel.fire(pixel: .debugBookmarkOrphanFolder, withAdditionalParameters: pixelParam)
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("There shouldn't be an orphaned folder")
+            guard (results?.count ?? 0) == 1,
+                  let fetchedFolder = results?.first else {
+                return
             }
-            
-            guard let folder = results?.first else {
-                Pixel.fire(pixel: .debugBookmarkTopLevelMissing)
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Top level folder missing")
-            }
-            
-            self.cachedReadOnlyTopLevelBookmarksFolder = folder
+
+            folder = fetchedFolder
         }
+        return folder
+    }
+    
+    internal func cacheReadOnlyTopLevelBookmarksFolder() {
+        guard let folder = fetchReadOnlyTopLevelFolder(withFolderType: .bookmark) else {
+            fixFolderDataStructure(withFolderType: .bookmark)
+            
+            // https://app.asana.com/0/414709148257752/1202779945035904/f
+            guard let fixedFolder = fetchReadOnlyTopLevelFolder(withFolderType: .bookmark) else {
+                Pixel.fire(pixel: .debugCouldNotFixBookmarkFolder)
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Coudn't fix bookmark folder")
+            }
+            self.cachedReadOnlyTopLevelBookmarksFolder = fixedFolder
+            return
+        }
+        self.cachedReadOnlyTopLevelBookmarksFolder = folder
     }
     
     internal func cacheReadOnlyTopLevelFavoritesFolder() {
-        viewContext.performAndWait {
-            let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
-            fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == true",
-                                                 #keyPath(BookmarkManagedObject.parent),
-                                                 #keyPath(BookmarkManagedObject.isFavorite))
+        guard let folder = fetchReadOnlyTopLevelFolder(withFolderType: .favorite) else {
+            fixFolderDataStructure(withFolderType: .favorite)
             
-            let results = try? viewContext.fetch(fetchRequest)
-            guard (results?.count ?? 0) <= 1 else {
-                let count = results?.count ?? 0
-                let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
-
-                Pixel.fire(pixel: .debugFavoriteOrphanFolder, withAdditionalParameters: pixelParam)
+            // https://app.asana.com/0/414709148257752/1202779945035904/f
+            guard let fixedFolder = fetchReadOnlyTopLevelFolder(withFolderType: .favorite) else {
+                Pixel.fire(pixel: .debugCouldNotFixFavoriteFolder)
                 Thread.sleep(forTimeInterval: 1)
-                fatalError("There shouldn't be an orphaned folder")
+                fatalError("Coudn't fix favorite folder")
             }
-            
-            guard let folder = results?.first else {
-                Pixel.fire(pixel: .debugFavoriteTopLevelMissing)
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Top level folder missing")
-            }
-            
-            self.cachedReadOnlyTopLevelFavoritesFolder = folder
+            self.cachedReadOnlyTopLevelFavoritesFolder = fixedFolder
+            return
         }
+        self.cachedReadOnlyTopLevelFavoritesFolder = folder
     }
     
     private func readOnlyTopLevelFavoritesItems() -> [BookmarkItem] {
@@ -1001,6 +1010,115 @@ public class BookmarksCoreDataStorageMigration {
 
         migratedFromUserDefaults = true
         return true
+    }
+}
+
+
+// MARK: - CoreData structure fixer
+// https://app.asana.com/0/414709148257752/1202779945035904/f
+// This is a temporary workaround, do not use the following functions for anything else
+
+extension BookmarksCoreDataStorage {
+    
+    private func deleteExtraOrphanedFolders(_ orphanedFolders: [BookmarkFolderManagedObject],
+                                            onContext context: NSManagedObjectContext,
+                                            withFolderType folderType: TopLevelFolderType) {
+        let count = orphanedFolders.count
+        let pixelParam = [PixelParameters.bookmarkErrorOrphanedFolderCount: "\(count)"]
+        
+        if folderType == .favorite {
+            Pixel.fire(pixel: .debugFavoriteOrphanFolderNew, withAdditionalParameters: pixelParam)
+        } else {
+            Pixel.fire(pixel: .debugBookmarkOrphanFolderNew, withAdditionalParameters: pixelParam)
+        }
+        
+        // Sort all orphaned folders by number of children
+        let sorted = orphanedFolders.sorted { ($0.children?.count ?? 0) > ($1.children?.count ?? 0) }
+        
+        // Get the folder with the highest number of children
+        let folderWithMoreChildren = sorted.first
+        
+        // Separate the other folders
+        let otherFolders = sorted.suffix(from: 1)
+
+        // Move all children from other folders to the one with highest count and delete the folder
+        otherFolders.forEach { folder in
+            if let children = folder.children {
+                folderWithMoreChildren?.addToChildren(children)
+                folder.children = nil
+            }
+            context.delete(folder)
+        }
+    }
+    
+    /*
+     Top level (orphaned) folders need to match its type
+     i.e: Favorites and Bookmarks each have their own root folder
+     */
+    private func createMissingTopLevelFolder(onContext context: NSManagedObjectContext,
+                                             withFolderType folderType: TopLevelFolderType) {
+        if folderType == .favorite {
+            Pixel.fire(pixel: .debugFavoriteTopLevelMissingNew)
+        } else {
+            Pixel.fire(pixel: .debugBookmarkTopLevelMissingNew)
+        }
+
+        // Get all bookmarks
+        let bookmarksFetchRequest = NSFetchRequest<BookmarkManagedObject>(entityName: Constants.bookmarkClassName)
+        bookmarksFetchRequest.predicate = NSPredicate(format: " %K == %@",
+                                                      #keyPath(BookmarkManagedObject.isFavorite),
+                                                      NSNumber(value: folderType == .favorite))
+        bookmarksFetchRequest.returnsObjectsAsFaults = false
+
+        let bookmarks = try? context.fetch(bookmarksFetchRequest)
+        
+        if bookmarks?.count ?? 0 > 0 {
+            if folderType == .favorite {
+                Pixel.fire(pixel: .debugMissingTopFolderFixHasFavorites)
+            } else {
+                Pixel.fire(pixel: .debugMissingTopFolderFixHasBookmarks)
+            }
+        }
+        
+        // Create root folder for the specified folder type
+        let bookmarksFolder: BookmarkFolderManagedObject
+        if folderType == .favorite {
+            bookmarksFolder = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(context)
+        } else {
+            bookmarksFolder = BookmarksCoreDataStorage.rootFolderManagedObject(context)
+        }
+        
+        // Assign all bookmarks to the parent folder
+        bookmarks?.forEach {
+            $0.parent = bookmarksFolder
+        }
+    }
+    
+    internal func fixFolderDataStructure(withFolderType folderType: TopLevelFolderType) {
+        let privateContext = getTemporaryPrivateContext()
+        
+        privateContext.performAndWait {
+            let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: Constants.folderClassName)
+            fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == %@",
+                                                 #keyPath(BookmarkManagedObject.parent),
+                                                 #keyPath(BookmarkManagedObject.isFavorite),
+                                                 NSNumber(value: folderType == .favorite))
+            
+            let results = try? privateContext.fetch(fetchRequest)
+            
+            if let orphanedFolders = results, orphanedFolders.count > 1 {
+                deleteExtraOrphanedFolders(orphanedFolders, onContext: privateContext, withFolderType: folderType)
+            } else {
+                createMissingTopLevelFolder(onContext: privateContext, withFolderType: folderType)
+            }
+            
+            do {
+                try privateContext.save()
+            } catch {
+                Pixel.fire(pixel: .debugCantSaveBookmarkFix)
+                assertionFailure("Failure saving bookmark top folder fix")
+            }
+        }
     }
 }
 

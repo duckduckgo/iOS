@@ -1273,7 +1273,11 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
         if let url = suggestion.url {
-            loadUrl(url)
+            if url.isBookmarklet() {
+                executeBookmarklet(url)
+            } else {
+                loadUrl(url)
+            }
         } else if let url = appUrls.searchUrl(text: suggestion.suggestion) {
             loadUrl(url)
         } else {
@@ -1287,7 +1291,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         if let url = suggestion.url {
             if appUrls.isDuckDuckGoSearch(url: url) {
                 omniBar.textField.text = suggestion.suggestion
-            } else {
+            } else if !url.isBookmarklet() {
                 omniBar.textField.text = url.absoluteString
             }
         } else {

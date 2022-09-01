@@ -149,8 +149,6 @@
 			<array>
 				<string>ddgNewSearch</string>
 				<string>ddgQuickLink</string>
-				<string>ddgBookmarks</string>
-				<string>ddgFire</string>
 				<string>ddgFavorite</string>
 				<string>ddgAddFavorite</string>
 				<string>http</string>

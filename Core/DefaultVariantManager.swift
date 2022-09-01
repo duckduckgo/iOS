@@ -1,5 +1,5 @@
 //
-//  VariantManager.swift
+//  DefaultVariantManager.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -20,14 +20,10 @@
 import Foundation
 import os.log
 import Speech
+import BrowserServicesKit
 
-public enum FeatureName: String {
 
-    // Used for unit tests
-    case dummy
-}
-
-public struct Variant {
+public struct VariantIOS: Variant {
     
     struct When {
         static let always = { return true }
@@ -53,30 +49,22 @@ public struct Variant {
     public static let defaultVariants: [Variant] = [
 
         // SERP testing
-        Variant(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        Variant(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
+        VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
+        VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
+        VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
         
     ]
     
-    public let name: String
-    public let weight: Int
-    public let isIncluded: () -> Bool
-    public let features: [FeatureName]
+    public var name: String
+    public var weight: Int
+    public var isIncluded: () -> Bool
+    public var features: [FeatureName]
 
 }
 
 public protocol VariantRNG {
     
     func nextInt(upperBound: Int) -> Int
-    
-}
-
-public protocol VariantManager {
-    
-    var currentVariant: Variant? { get }
-    func assignVariantIfNeeded(_ newInstallCompletion: (VariantManager) -> Void)
-    func isSupported(feature: FeatureName) -> Bool
     
 }
 
@@ -91,7 +79,7 @@ public class DefaultVariantManager: VariantManager {
     private let storage: StatisticsStore
     private let rng: VariantRNG
     
-    public init(variants: [Variant] = Variant.defaultVariants,
+    public init(variants: [Variant] = VariantIOS.defaultVariants,
                 storage: StatisticsStore = StatisticsUserDefaults(),
                 rng: VariantRNG = Arc4RandomUniformVariantRNG()) {
         self.variants = variants

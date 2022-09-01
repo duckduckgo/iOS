@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="RemoteMessageManagedObject" representedClassName="RemoteMessageManagedObject" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="shown" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="RemoteMessagingConfigManagedObject" representedClassName="RemoteMessagingConfigManagedObject" syncable="YES" codeGenerationType="class">
+        <attribute name="evaluationTimestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="invalidate" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="RemoteMessageManagedObject" positionX="-36" positionY="36" width="128" height="89"/>
+        <element name="RemoteMessagingConfigManagedObject" positionX="-54" positionY="-9" width="128" height="74"/>
+    </elements>
+</model>

@@ -76,6 +76,18 @@ public class BookmarksCachingSearch {
         return cachedBookmarksAndFavorites ?? []
     }
 
+	public var bookmarksCount: Int {
+		let bookmarksAndFavorites = bookmarksAndFavorites
+		let bookmarksOnly = bookmarksAndFavorites.filter { !$0.isFavorite }
+		return bookmarksOnly.count
+	}
+
+	public var favoritesCount: Int {
+		let bookmarksAndFavorites = bookmarksAndFavorites
+		let favoritesOnly = bookmarksAndFavorites.filter { $0.isFavorite }
+		return favoritesOnly.count
+	}
+
     public func containsDomain(_ domain: String) -> Bool {
         return bookmarksAndFavorites.contains { $0.url?.host == domain }
     }

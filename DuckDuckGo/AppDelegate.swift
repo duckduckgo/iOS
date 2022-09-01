@@ -119,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
+        RemoteMessaging.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -237,10 +238,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         beginAuthentication()
         initialiseBackgroundFetch(application)
         applyAppearanceChanges()
+        refreshRemoteMessages()
     }
     
     private func applyAppearanceChanges() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
+    }
+
+    private func refreshRemoteMessages() {
+        Task {
+            try? await RemoteMessaging.fetchAndProcess()
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -330,6 +338,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if !hasConfigurationTask {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
             }
+
+            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessaging.Constants.backgroundRefreshTaskIdentifier }
+            if !hasRemoteMessageFetchTask {
+                RemoteMessaging.scheduleBackgroundRefreshTask()
+            }
         }
     }
     
@@ -400,13 +413,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.loadQueryInNewTab(query)
         }
     }
-    
+
     private func removeEmailWaitlistState() {
         EmailWaitlist.removeEmailState()
 
         let autofillStorage = EmailKeychainManager()
         autofillStorage.deleteWaitlistState()
-        
+
         // Remove the authentication state if this is a fresh install.
         if !Database.shared.isDatabaseFileInitialized {
             autofillStorage.deleteAuthenticationState()

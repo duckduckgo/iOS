@@ -150,6 +150,10 @@ final class DaxDialogs {
         let cancelActionPixelName: Pixel.Event
     }
 
+    private enum Constants {
+        static let homeScreenMessagesSeenMaxCeiling = 2
+    }
+
     public static let shared = DaxDialogs(entityProviding: ContentBlocking.contentBlockingManager)
 
     private let appUrls = AppUrls()
@@ -197,6 +201,13 @@ final class DaxDialogs {
     
     var shouldShowFireButtonPulse: Bool {
         return nonDDGBrowsingMessageSeen && !fireButtonBrowsingMessageSeenOrExpired && isEnabled
+    }
+
+    func isStillOnboarding() -> Bool {
+        if peekNextHomeScreenMessage() != nil {
+            return true
+        }
+        return false
     }
 
     func dismiss() {
@@ -273,23 +284,31 @@ final class DaxDialogs {
     }
     
     func nextHomeScreenMessage() -> HomeScreenSpec? {
+        guard let homeScreenSpec = peekNextHomeScreenMessage() else { return nil }
+
+        if homeScreenSpec != nextHomeScreenMessageOverride {
+            settings.homeScreenMessagesSeen += 1
+        }
+
+        return homeScreenSpec
+    }
+
+    private func peekNextHomeScreenMessage() -> HomeScreenSpec? {
         if nextHomeScreenMessageOverride != nil {
             return nextHomeScreenMessageOverride
         }
 
         guard isEnabled else { return nil }
-        guard settings.homeScreenMessagesSeen < 2 else { return nil }
-        
+        guard settings.homeScreenMessagesSeen < Constants.homeScreenMessagesSeenMaxCeiling else { return nil }
+
         if settings.homeScreenMessagesSeen == 0 {
-            settings.homeScreenMessagesSeen += 1
             return .initial
         }
-        
+
         if firstBrowsingMessageSeen {
-            settings.homeScreenMessagesSeen += 1
             return .subsequent
         }
-        
+
         return nil
     }
     

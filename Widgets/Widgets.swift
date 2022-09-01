@@ -63,16 +63,19 @@ struct Provider: TimelineProvider {
         }
     }
     
-    private func coreDataFavoritesToFavories(_ coreDataFavorites: [Bookmark], returningNoMoreThan maxLength: Int) -> [Favorite] {
+    private func coreDataFavoritesToFavorites(_ coreDataFavorites: [Bookmark], returningNoMoreThan maxLength: Int) -> [Favorite] {
         
-        return coreDataFavorites.prefix(maxLength)
-            .compactMap {
-                guard let url = $0.url else { return nil }
-                return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
-                                domain: url.host?.droppingWwwPrefix() ?? "",
-                                title: $0.displayTitle ?? "",
-                                favicon: loadImageFromCache(forDomain: url.host) )
-            }
+        let coreDataFavorites: [Favorite] = coreDataFavorites.compactMap {
+            guard let url = $0.url,
+                  !url.isBookmarklet() else { return nil }
+            return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
+                            domain: url.host?.droppingWwwPrefix() ?? "",
+                            title: $0.displayTitle ?? "",
+                            favicon: loadImageFromCache(forDomain: url.host) )
+        }
+        
+        return Array(coreDataFavorites.prefix(maxLength))
+            
     }
     
     private func getCoreDataFavorites(completion: @escaping ([Bookmark]) -> Void) {
@@ -100,7 +103,7 @@ struct Provider: TimelineProvider {
         
         if maxFavorites > 0 {
             getCoreDataFavorites { coreDataFavorites in
-                let favorites = coreDataFavoritesToFavories(coreDataFavorites, returningNoMoreThan: maxFavorites)
+                let favorites = coreDataFavoritesToFavorites(coreDataFavorites, returningNoMoreThan: maxFavorites)
                 
                 let entry = FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)
                 completion(entry)

@@ -587,6 +587,12 @@ class MainViewController: UIViewController {
             currentTab?.load(url: url)
         }
     }
+
+    func executeBookmarklet(_ url: URL) {
+        if url.isBookmarklet() {
+            currentTab?.executeBookmarklet(url: url)
+        }
+    }
     
     private func loadBackForwardItem(_ item: WKBackForwardListItem) {
         prepareTabForRequest {
@@ -1252,7 +1258,11 @@ extension MainViewController: FavoritesOverlayDelegate {
         homeController?.chromeDelegate = nil
         dismissOmniBar()
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
-        loadUrl(url)
+        if url.isBookmarklet() {
+            executeBookmarklet(url)
+        } else {
+            loadUrl(url)
+        }
         showHomeRowReminder()
     }
 }
@@ -1313,7 +1323,12 @@ extension MainViewController: HomeControllerDelegate {
 
     func home(_ home: HomeViewController, didRequestUrl url: URL) {
         showKeyboardAfterFireButton?.cancel()
-        loadUrl(url)
+        
+        if url.isBookmarklet() {
+            executeBookmarklet(url)
+        } else {
+            loadUrl(url)
+        }
     }
     
     func home(_ home: HomeViewController, didRequestEdit favorite: Core.Bookmark) {
@@ -1586,7 +1601,11 @@ extension MainViewController: BookmarksDelegate {
     func bookmarksDidSelect(bookmark: Core.Bookmark) {
         dismissOmniBar()
         if let url = bookmark.url {
-            loadUrl(url)
+            if url.isBookmarklet() {
+                executeBookmarklet(url)
+            } else {
+                loadUrl(url)
+            }
         }
     }
     

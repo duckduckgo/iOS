@@ -475,6 +475,12 @@ class TabViewController: UIViewController {
         }
     }
     
+    public func executeBookmarklet(url: URL) {
+        if let js = url.toDecodedBookmarklet() {
+            webView.evaluateJavaScript(js)
+        }
+    }
+    
     public func load(url: URL) {
         webView.stopLoading()
         dismissJSAlertIfNeeded()
@@ -1520,15 +1526,6 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        if url.isBookmarklet() {
-            completion(.cancel)
-
-            if let js = url.toDecodedBookmarklet() {
-                webView.evaluateJavaScript(js)
-            }
-            return
-        }
-        
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
         switch schemeType {

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1661422548137,
+    "version": 1662049061721,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -10,40 +10,31 @@
                 "linkFormats": [
                     {
                         "url": "duckduckgo.com/y.js",
-                        "parameterName": "u3",
                         "adDomainParameterName": "ad_domain",
                         "desc": "SERP Ads"
                     },
                     {
                         "url": "www.search-company.site/y.js",
-                        "parameterName": "u3",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Test Domain"
                     },
                     {
                         "url": "www.search-company.example/y.js",
-                        "parameterName": "u3",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Test Domain"
                     },
                     {
                         "url": "links.duckduckgo.com/m.js",
-                        "parameterName": "dsl",
-                        "parameterValue": "1",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Shopping Ads"
                     },
                     {
                         "url": "www.search-company.site/m.js",
-                        "parameterName": "dsl",
-                        "parameterValue": "1",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Test Domain"
                     },
                     {
                         "url": "www.search-company.example/m.js",
-                        "parameterName": "dsl",
-                        "parameterValue": "1",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Test Domain"
                     }
@@ -362,7 +353,7 @@
         },
         "referrer": {
             "exceptions": [],
-            "state": "disabled"
+            "state": "enabled"
         },
         "trackerAllowlist": {
             "state": "enabled",

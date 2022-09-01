@@ -210,14 +210,12 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     private func installSubviews() {
         view.addSubview(tableView)
-        tableView.addSubview(emptyView)
         tableView.addSubview(emptySearchView)
         view.addSubview(lockedView)
     }
     
     private func installConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
         emptySearchView.translatesAutoresizingMaskIntoConstraints = false
         lockedView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -226,12 +224,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            emptyView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptyView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
-            emptyView.widthAnchor.constraint(equalToConstant: 225),
-            emptyView.heightAnchor.constraint(equalToConstant: 235),
-            
+
             emptySearchView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
             emptySearchView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 160),
             emptySearchView.widthAnchor.constraint(equalToConstant: 225),
@@ -284,6 +277,24 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
             showAccountDetails(item.account)
         default:
             break
+        }
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        switch viewModel.viewState {
+        case .empty:
+            return emptyView
+        default:
+            return nil
+        }
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        switch viewModel.viewState {
+        case .empty:
+            return 255
+        default:
+            return 0
         }
     }
 }
@@ -379,7 +390,8 @@ extension AutofillLoginSettingsListViewController: Themable {
     func decorate(with theme: Theme) {
         lockedView.decorate(with: theme)
         emptyView.decorate(with: theme)
-        
+        emptySearchView.decorate(with: theme)
+
         view.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor

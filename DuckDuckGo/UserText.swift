@@ -614,8 +614,8 @@ public struct UserText {
     public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
     public static let autofillLoginDetailsAddress = "Address" // Address label for login details on autofill
     public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
-    public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins." // Title for view displayed when autofill is disabled and has no items
-    public static let autofillEmptyViewTitle = "No logins saved yet." // Title for view displayed when autofill has no items
+    public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins" // Title for view displayed when autofill is disabled and has no items
+    public static let autofillEmptyViewTitle = "No logins saved yet" // Title for view displayed when autofill has no items
     public static let autofillEmptyViewSubtitle = "Logins are stored securely on this device only" // Subtitle for view displayed when autofill has no items
     public static let autofillSearchNoResultTitle = "No Results" // Title displayed when there are no results on Autofill search
     public static func autofillSearchNoResultSubtitle(for query: String) -> String {

@@ -18,6 +18,7 @@
 //
 
 @testable import Core
+@testable import BrowserServicesKit
 
 class MockStatisticsStore: StatisticsStore {
 

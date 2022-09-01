@@ -21,6 +21,7 @@ import Foundation
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
+@testable import BrowserServicesKit
 
 class AtbAndVariantCleanupTests: XCTestCase {
 
@@ -63,7 +64,7 @@ class AtbAndVariantCleanupTests: XCTestCase {
 
     func testWhenVariantIsInCurrentExperimentThenVariantIsNotRemovedFromStorage() {
 
-        let variant = Variant(name: Constants.variant, weight: 100, isIncluded: Variant.When.always, features: [])
+        let variant = VariantIOS(name: Constants.variant, weight: 100, isIncluded: VariantIOS.When.always, features: [])
         let mockVariantManager = MockVariantManager(currentVariant: variant)
 
         mockStorage.atb = "\(Constants.atb)\(Constants.variant)"

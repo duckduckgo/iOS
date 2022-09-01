@@ -20,6 +20,7 @@
 import Foundation
 @testable import DuckDuckGo
 @testable import Core
+@testable import BrowserServicesKit
 
 class MockBundle: InfoBundle {
 

@@ -53,6 +53,8 @@ public struct AppUrls {
 
         static var emailProtectionLink = "https://duckduckgo.com/email"
         static var emailProtectionQuickLink = "ddgQuickLink://https://duckduckgo.com/email"
+
+        static let appStore = "https://apps.apple.com/app/duckduckgo-privacy-browser/id663592361"
     }
     
     private enum DDGStaticURL: String {
@@ -299,6 +301,10 @@ public struct AppUrls {
         return URL(string: "https://duckduckgo.com/mac")!
     }
     
+    public var appStoreURL: URL {
+        return URL(string: Url.appStore)!
+    }
+
     public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
         var urlString = Url.pixel.format(arguments: pixelName)
         if let formFactor = formFactor {

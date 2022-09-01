@@ -1,8 +1,8 @@
 //
-//  InfoBundle.swift
+//  HomeMessageViewModelBuilderTests.swift
 //  DuckDuckGo
 //
-//  Copyright © 2017 DuckDuckGo. All rights reserved.
+//  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@
 //  limitations under the License.
 //
 
+import XCTest
 import Foundation
+@testable import DuckDuckGo
+@testable import BrowserServicesKit
 
-public protocol InfoBundle {
-    func object(forInfoDictionaryKey key: String) -> Any?
-}
+class HomeMessageViewModelBuilderTests: XCTestCase {
 
-extension Bundle: InfoBundle {
+
 }

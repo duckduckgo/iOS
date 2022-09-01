@@ -419,9 +419,12 @@ class MainViewController: UIViewController {
 
     private func addLaunchTabNotificationObserver() {
         launchTabObserver = LaunchTabNotification.addObserver(handler: { [weak self] urlString in
-            guard let self = self, let url = URL(string: urlString) else { return }
-
-            self.loadUrlInNewTab(url, inheritedAttribution: nil)
+            guard let self = self else { return }
+            if let url = URL(string: urlString) {
+                self.loadUrlInNewTab(url, inheritedAttribution: nil)
+            } else {
+                self.loadQuery(urlString)
+            }
         })
     }
 

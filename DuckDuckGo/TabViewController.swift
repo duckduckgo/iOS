@@ -1457,7 +1457,7 @@ extension TabViewController: WKNavigationDelegate {
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
            let newRequest = referrerTrimming.trimReferrer(forNavigation: navigationAction,
-                                                              originUrl: webView.url) {
+                                                          originUrl: webView.url ?? navigationAction.sourceFrame.webView?.url) {
             decisionHandler(.cancel)
             load(urlRequest: newRequest)
             return

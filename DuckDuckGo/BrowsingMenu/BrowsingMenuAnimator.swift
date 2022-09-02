@@ -99,7 +99,12 @@ final class BrowsingMenuAnimator: NSObject, UIViewControllerAnimatedTransitionin
 
         fromViewController.view.isHidden = true
 
-        toViewController.presentedMenuButton.setState(.menuImage, animated: true)
+        if toViewController.homeController != nil {
+            toViewController.presentedMenuButton.setState(.bookmarksImage, animated: true)
+        } else {
+            toViewController.presentedMenuButton.setState(.menuImage, animated: true)
+        }
+
         UIView.animate(withDuration: Constants.dismissAnimationDuration, animations: {
             snapshot?.alpha = 0
             snapshot?.frame = Self.menuOriginFrameForAnimation(for: fromViewController)

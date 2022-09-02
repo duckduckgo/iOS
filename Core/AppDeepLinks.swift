@@ -25,10 +25,6 @@ public struct AppDeepLinks {
 
     public static let quickLink = "ddgQuickLink://"
 
-    public static let bookmarks = "ddgBookmarks://"
-    
-    public static let fire = "ddgFire://"
-
     public static let launchFavorite = "ddgFavorite://"
 
     public static let addFavorite = "ddgAddFavorite://"
@@ -47,14 +43,6 @@ public struct AppDeepLinks {
 
     public static func isQuickLink(url: URL) -> Bool {
         return isUrl(url, deepLink: AppDeepLinks.quickLink)
-    }
-    
-    public static func isBookmarks(url: URL) -> Bool {
-        return isUrl(url, deepLink: AppDeepLinks.bookmarks)
-    }
-    
-    public static func isFire(url: URL) -> Bool {
-        return isUrl(url, deepLink: AppDeepLinks.fire)
     }
 
     public static func isAddFavorite(url: URL) -> Bool {

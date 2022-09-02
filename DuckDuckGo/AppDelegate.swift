@@ -294,13 +294,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
-        } else if AppDeepLinks.isBookmarks(url: url) {
-            mainViewController?.onBookmarksPressed()
-        } else if AppDeepLinks.isFire(url: url) {
-            if !privacyStore.authenticationEnabled {
-                removeOverlay()
-            }
-            mainViewController?.onQuickFirePressed()
         } else if AppDeepLinks.isAddFavorite(url: url) {
             mainViewController?.startAddFavoriteFlow()
         } else {

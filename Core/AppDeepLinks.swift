@@ -26,6 +26,7 @@ public struct AppDeepLinks {
     public static let quickLink = "ddgQuickLink://"
 
     public static let launchFavorite = "ddgFavorite://"
+    public static let launchFavoriteHttps = "ddgFavoriteHttps://"
 
     public static let addFavorite = "ddgAddFavorite://"
 
@@ -34,7 +35,7 @@ public struct AppDeepLinks {
     public static let thirdPartyTrackerLoadingProtection = URL(string: "\(AppDeepLinks.quickLink)help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection")!
 
     public static func isLaunchFavorite(url: URL) -> Bool {
-        return isUrl(url, deepLink: launchFavorite)
+        return isUrl(url, deepLink: launchFavorite) || isUrl(url, deepLink: launchFavoriteHttps)
     }
 
     public static func isNewSearch(url: URL) -> Bool {
@@ -61,6 +62,12 @@ public struct AppDeepLinks {
     }
 
     public static func query(fromLaunchFavorite url: URL) -> String {
-        return url.absoluteString.replacingOccurrences(of: launchFavorite, with: "", options: .caseInsensitive)
+        var newQuery = url.absoluteString
+        if newQuery.hasPrefix(launchFavoriteHttps) {
+            newQuery = "https://" + newQuery.dropping(prefix: launchFavoriteHttps)
+        } else {
+            newQuery = "http://" + newQuery.dropping(prefix: launchFavorite)
+        }
+        return newQuery
     }
 }

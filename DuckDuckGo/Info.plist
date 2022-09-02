@@ -151,6 +151,7 @@
 				<string>ddgNewSearch</string>
 				<string>ddgQuickLink</string>
 				<string>ddgFavorite</string>
+				<string>ddgFavoriteHttps</string>
 				<string>ddgAddFavorite</string>
 				<string>http</string>
 				<string>https</string>

@@ -66,7 +66,7 @@ public struct AppDeepLinks {
         var newQuery = url.absoluteString
         if newQuery.hasPrefix(launchFavoriteHttps) {
             newQuery = "https://" + newQuery.dropping(prefix: launchFavoriteHttps)
-        } else {
+        } else if newQuery.hasPrefix(launchFavorite) {
             newQuery = "http://" + newQuery.dropping(prefix: launchFavorite)
         }
         return newQuery

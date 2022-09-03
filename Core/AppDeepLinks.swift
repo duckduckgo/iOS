@@ -52,7 +52,8 @@ public struct AppDeepLinks {
     
     private static func isUrl(_ url: URL, deepLink: String) -> Bool {
         if let scheme = url.scheme {
-            return deepLink.lowercased().contains(scheme.lowercased())
+            let cleanDeepLink = deepLink.dropping(suffix: "://")
+            return cleanDeepLink.lowercased() == scheme.lowercased()
         }
         return false
     }

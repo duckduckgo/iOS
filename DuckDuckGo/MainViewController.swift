@@ -1400,11 +1400,6 @@ extension MainViewController: TabDelegate {
         closeTab(tab.tabModel)
     }
 
-    func tabDidStartLoading(_ tab: TabViewController) {
-        self.findInPageView.done()
-        self.tabLoadingStateDidChange(tab: tab)
-    }
-
     func tabLoadingStateDidChange(tab: TabViewController) {
         if currentTab == tab {
             refreshControls()
@@ -1498,6 +1493,15 @@ extension MainViewController: TabDelegate {
     func tabDidRequestFindInPage(tab: TabViewController) {
         updateFindInPage()
         _ = findInPageView?.becomeFirstResponder()
+    }
+
+    func closeFindInPage(tab: TabViewController) {
+        if tab === currentTab {
+            findInPageView.done()
+        } else {
+            tab.findInPage?.done()
+            tab.findInPage = nil
+        }
     }
     
     func tabDidRequestForgetAll(tab: TabViewController) {

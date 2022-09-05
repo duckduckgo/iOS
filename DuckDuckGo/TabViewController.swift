@@ -129,6 +129,7 @@ class TabViewController: UIViewController {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
             checkLoginDetectionAfterNavigation()
+            delegate?.closeFindInPage(tab: self)
         }
     }
     
@@ -1122,7 +1123,7 @@ extension TabViewController: WKNavigationDelegate {
         resetSiteRating()
         
         tabModel.link = link
-        delegate?.tabDidStartLoading(self)
+        delegate?.tabLoadingStateDidChange(tab: self)
 
         trackerNetworksDetectedOnPage.removeAll()
         pageHasTrackers = false
@@ -1500,10 +1501,15 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let url = navigationAction.request.url, decision != .cancel {
-                if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
+            if let self = self,
+               let url = navigationAction.request.url,
+               decision != .cancel,
+               navigationAction.isTargetingMainFrame() {
+                if self.appUrls.isDuckDuckGoSearch(url: url) {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
+
+                self.delegate?.closeFindInPage(tab: self)
             }
             decisionHandler(decision)
         }

@@ -23,14 +23,16 @@ import BrowserServicesKit
 import simd
 
 // swiftlint:disable file_length
-
 extension TabViewController {
     
     func buildBrowsingMenuHeaderContent() -> [BrowsingMenuEntry] {
         
         var entries = [BrowsingMenuEntry]()
         
-        entries.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab, image: UIImage(named: "MenuNewTab")!, action: { [weak self] in
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionNewTab,
+                                                 accessibilityLabel: UserText.keyCommandNewTab,
+                                                 image: UIImage(named: "MenuNewTab")!,
+                                                 action: { [weak self] in
             self?.onNewTabAction()
         }))
         
@@ -56,104 +58,96 @@ extension TabViewController {
             Pixel.fire(pixel: .browsingMenuPrint)
             self?.print()
         }))
-        
+
         return entries
     }
     
     var favoriteEntryIndex: Int { 1 }
-    
-    func buildBrowsingMenu(completion: @escaping ([BrowsingMenuEntry]) -> Void) {
-        
+
+    @MainActor
+    func buildBrowsingMenu() async -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
         
-        buildLinkEntries { linkEntries in
-            entries.append(contentsOf: linkEntries)
+        let linkEntries = await buildLinkEntries()
+        entries.append(contentsOf: linkEntries)
             
-            if let domain = self.siteRating?.domain {
-                entries.append(self.buildToggleProtectionEntry(forDomain: domain))
-            }
-            
-            entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
-                                                     image: UIImage(named: "MenuFeedback")!,
-                                                     action: { [weak self] in
-                self?.onReportBrokenSiteAction()
-            }))
-            
-            entries.append(.separator)
-
-            
-            if self.featureFlagger.isFeatureOn(.autofill) {
-                entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
-                                                         image: UIImage(named: "MenuAutofill")!,
-                                                         action: { [weak self] in
-                    self?.onOpenAutofillLoginsAction()
-                }))
-            }
-            
-            entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
-                                                     image: UIImage(named: "MenuDownloads")!,
-                                                     showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
-                                                     action: { [weak self] in
-                self?.onOpenDownloadsAction()
-            }))
-
-            entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
-                                                     image: UIImage(named: "MenuSettings")!,
-                                                     action: { [weak self] in
-                self?.onBrowsingSettingsAction()
-            }))
-            
-            completion(entries)
+        if let domain = self.siteRating?.domain {
+            entries.append(self.buildToggleProtectionEntry(forDomain: domain))
         }
+
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
+                                                 image: UIImage(named: "MenuFeedback")!,
+                                                 action: { [weak self] in
+            self?.onReportBrokenSiteAction()
+        }))
+
+        entries.append(.separator)
+
+        if self.featureFlagger.isFeatureOn(.autofill) {
+            entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,
+                                                     image: UIImage(named: "MenuAutofill")!,
+                                                     action: { [weak self] in
+                self?.onOpenAutofillLoginsAction()
+            }))
+        }
+
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionDownloads,
+                                                 image: UIImage(named: "MenuDownloads")!,
+                                                 showNotificationDot: AppDependencyProvider.shared.downloadManager.unseenDownloadsAvailable,
+                                                 action: { [weak self] in
+            self?.onOpenDownloadsAction()
+        }))
+
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionSettings,
+                                                 image: UIImage(named: "MenuSettings")!,
+                                                 action: { [weak self] in
+            self?.onBrowsingSettingsAction()
+        }))
+
+        return entries
     }
-    
-    private func buildLinkEntries(completion: @escaping ([BrowsingMenuEntry]) -> Void) {
-        guard let link = link, !isError else {
-            completion([])
-            return
-        }
-        
-        var entries = [BrowsingMenuEntry]()
-        
-        buildBookmarkEntry(for: link) { bookmarkEntry in
-            if let bookmarkEntry = bookmarkEntry {
-                entries.append(bookmarkEntry)
-            }
-            
-            self.buildFavoriteEntry(for: link) { favoriteEntry in
-                if let favoriteEntry = favoriteEntry {
-                    assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
-                    entries.append(favoriteEntry)
-                }
-                
-                entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
-                                                         image: UIImage(named: "MenuBookmarks")!,
-                                                         action: { [weak self] in
-                    guard let strongSelf = self else { return }
-                    strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
-                }))
-                
-                entries.append(.separator)
 
-                if let entry = self.buildKeepSignInEntry(forLink: link) {
-                    entries.append(entry)
-                }
-                
-                if let entry = self.buildUseNewDuckAddressEntry(forLink: link) {
-                    entries.append(entry)
-                }
-                
-                let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
-                let image = self.tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
-                entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
-                    self?.onToggleDesktopSiteAction(forUrl: link.url)
-                }))
-                
-                entries.append(self.buildFindInPageEntry(forLink: link))
-                
-                completion(entries)
-            }
+    @MainActor
+    private func buildLinkEntries() async -> [BrowsingMenuEntry] {
+        guard let link = link, !isError else { return [] }
+
+        var entries = [BrowsingMenuEntry]()
+
+        if let bookmarkEntry = await buildBookmarkEntry(for: link) {
+            entries.append(bookmarkEntry)
         }
+            
+        if let favoriteEntry = await self.buildFavoriteEntry(for: link) {
+            assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
+            entries.append(favoriteEntry)
+        }
+                
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
+                                                 image: UIImage(named: "MenuBookmarks")!,
+                                                 action: { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.tabDidRequestBookmarks(tab: strongSelf)
+        }))
+
+        entries.append(.separator)
+
+        if let entry = self.buildKeepSignInEntry(forLink: link) {
+            entries.append(entry)
+        }
+
+        if let entry = self.buildUseNewDuckAddressEntry(forLink: link) {
+            entries.append(entry)
+        }
+
+        let title = self.tabModel.isDesktop ? UserText.actionRequestMobileSite : UserText.actionRequestDesktopSite
+        let image = self.tabModel.isDesktop ? UIImage(named: "MenuMobileMode")! : UIImage(named: "MenuDesktopMode")!
+        entries.append(BrowsingMenuEntry.regular(name: title, image: image, action: { [weak self] in
+            self?.onToggleDesktopSiteAction(forUrl: link.url)
+        }))
+
+        entries.append(self.buildFindInPageEntry(forLink: link))
+                
+        return entries
     }
     
     private func buildKeepSignInEntry(forLink link: Link) -> BrowsingMenuEntry? {
@@ -166,48 +160,44 @@ extension TabViewController {
                                              action: { [weak self] in
                                                 self?.disableFireproofingForDomain(domain)
                                              })
-        } else {
-            return BrowsingMenuEntry.regular(name: UserText.enablePreservingLogins,
-                                             image: UIImage(named: "MenuFireproof")!,
-                                             action: { [weak self] in
-                                                self?.enableFireproofingForDomain(domain)
-                                             })
         }
 
+        return BrowsingMenuEntry.regular(name: UserText.enablePreservingLogins,
+                                         image: UIImage(named: "MenuFireproof")!,
+                                         action: { [weak self] in
+                                            self?.enableFireproofingForDomain(domain)
+                                         })
     }
-    
+
     private func onNewTabAction() {
         Pixel.fire(pixel: .browsingMenuNewTab)
         delegate?.tabDidRequestNewTab(self)
     }
-    
+
     private func buildFindInPageEntry(forLink link: Link) -> BrowsingMenuEntry {
         return BrowsingMenuEntry.regular(name: UserText.findInPage, image: UIImage(named: "MenuFind")!, action: { [weak self] in
             Pixel.fire(pixel: .browsingMenuFindInPage)
             self?.requestFindInPage()
         })
     }
-    
-    private func buildBookmarkEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
-        bookmarksManager.containsBookmark(url: link.url) { contains in
-            if contains {
-                let entry = BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
-                                                      image: UIImage(named: "MenuBookmarkSolid")!,
-                                                      action: { [weak self] in
-                                                         self?.performEditBookmarkAction(for: link)
-                                                      })
-                completion(entry)
-            } else {
-                let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
-                                                      image: UIImage(named: "MenuBookmark")!,
-                                                      action: { [weak self] in
-                                                        self?.performSaveBookmarkAction(for: link)
-                                                      })
-                completion(entry)
-            }
+
+    @MainActor
+    private func buildBookmarkEntry(for link: Link) async -> (BrowsingMenuEntry?) {
+        if await bookmarksManager.containsBookmark(url: link.url) {
+            return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
+                                             image: UIImage(named: "MenuBookmarkSolid")!,
+                                             action: { [weak self] in
+                                                self?.performEditBookmarkAction(for: link)
+                                             })
         }
+
+        return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
+                                         image: UIImage(named: "MenuBookmark")!,
+                                         action: { [weak self] in
+                                           self?.performSaveBookmarkAction(for: link)
+                                         })
     }
-    
+
     private func performSaveBookmarkAction(for link: Link) {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
         bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
@@ -217,40 +207,38 @@ extension TabViewController {
             self.performEditBookmarkAction(for: link)
         })
     }
-    
+
     private func performEditBookmarkAction(for link: Link) {
         Pixel.fire(pixel: .browsingMenuEditBookmark)
-        
+
         delegate?.tabDidRequestEditBookmark(tab: self)
     }
-    
-    private func buildFavoriteEntry(for link: Link, completion: @escaping (BrowsingMenuEntry?) -> Void) {
-        bookmarksManager.containsFavorite(url: link.url) { contains in
 
-            if contains {
-                let action: () -> Void = { [weak self] in
-                    Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
-                    self?.performRemoveFavoriteAction(for: link)
-                }
-
-                let entry = BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
-                                                      image: UIImage(named: "MenuFavoriteSolid")!,
-                                                      action: action)
-                completion(entry)
-
-            } else {
-                // Capture flow state here as will be reset after menu is shown
-                let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
-
-                let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite,
-                                                      image: UIImage(named: "MenuFavorite")!,
-                                                      action: { [weak self] in
-                    Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
-                    self?.performSaveFavoriteAction(for: link)
-                })
-                completion(entry)
+    @MainActor
+    private func buildFavoriteEntry(for link: Link) async -> BrowsingMenuEntry? {
+        if await bookmarksManager.containsFavorite(url: link.url) {
+            let action: () -> Void = { [weak self] in
+                Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
+                self?.performRemoveFavoriteAction(for: link)
             }
+
+            let entry = BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
+                                                  image: UIImage(named: "MenuFavoriteSolid")!,
+                                                  action: action)
+            return entry
+
         }
+
+        // Capture flow state here as will be reset after menu is shown
+        let addToFavoriteFlow = DaxDialogs.shared.isAddFavoriteFlow
+
+        let entry = BrowsingMenuEntry.regular(name: UserText.actionSaveFavorite,
+                                              image: UIImage(named: "MenuFavorite")!,
+                                              action: { [weak self] in
+            Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
+            self?.performSaveFavoriteAction(for: link)
+        })
+        return entry
     }
     
     private func performSaveFavoriteAction(for link: Link) {
@@ -416,5 +404,3 @@ extension TabViewController {
         })
     }
 }
-
-// swiftlint:enable file_length

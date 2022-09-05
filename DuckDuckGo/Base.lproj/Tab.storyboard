@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -41,15 +42,21 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <edgeInsets key="layoutMargins" top="-50" left="0.0" bottom="0.0" right="0.0"/>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gSI-9K-1Ti" userLabel="Alert Container View">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <connections>
+                                    <segue destination="yf4-q9-yrl" kind="embed" destinationCreationSelector="createJSAlertControllerWithCoder:sender:segueIdentifier:" id="8qv-qm-wGG"/>
+                                </connections>
+                            </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ypz-s2-KJB" userLabel="OtherVIew">
-                                <rect key="frame" x="0.0" y="-80" width="768" height="80"/>
+                                <rect key="frame" x="0.0" y="-60" width="768" height="80"/>
                                 <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="xhL-Yb-2Uf"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kd4-Oi-JP2">
-                                <rect key="frame" x="0.0" y="336.5" width="768" height="351"/>
+                                <rect key="frame" x="0.0" y="346.5" width="768" height="351"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="09V-cw-B4O">
                                         <rect key="frame" x="10" y="0.0" width="748" height="351"/>
@@ -119,10 +126,14 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerY" secondItem="t0t-53-xVf" secondAttribute="centerY" id="3qe-NM-ikO"/>
+                            <constraint firstItem="gSI-9K-1Ti" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="4ZJ-81-h64"/>
+                            <constraint firstItem="gSI-9K-1Ti" firstAttribute="top" secondItem="Sgm-Wo-lho" secondAttribute="top" id="9Fd-Ru-MPw"/>
                             <constraint firstItem="t0t-53-xVf" firstAttribute="top" secondItem="ypz-s2-KJB" secondAttribute="top" constant="80" id="Hdu-Wc-sCB"/>
+                            <constraint firstAttribute="trailing" secondItem="gSI-9K-1Ti" secondAttribute="trailing" id="WIt-GE-l23"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="width" secondItem="Sgm-Wo-lho" secondAttribute="width" id="WgD-oO-Ds7"/>
                             <constraint firstAttribute="trailing" secondItem="ypz-s2-KJB" secondAttribute="trailing" id="bXU-Fx-c7D"/>
                             <constraint firstItem="Kd4-Oi-JP2" firstAttribute="centerX" secondItem="t0t-53-xVf" secondAttribute="centerX" id="oFL-Ft-NQV"/>
+                            <constraint firstAttribute="bottom" secondItem="gSI-9K-1Ti" secondAttribute="bottom" id="t3k-1K-dv4"/>
                             <constraint firstItem="ypz-s2-KJB" firstAttribute="leading" secondItem="Sgm-Wo-lho" secondAttribute="leading" id="ugB-DM-Oye"/>
                         </constraints>
                         <connections>
@@ -161,8 +172,25 @@
             </objects>
             <point key="canvasLocation" x="1771" y="445"/>
         </scene>
+        <!--Alert Controller-->
+        <scene sceneID="ysm-ED-Fzh">
+            <objects>
+                <viewControllerPlaceholder storyboardName="JSAlertController" id="yf4-q9-yrl" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UuK-nd-xhA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1770.703125" y="620.80078125"/>
+        </scene>
     </scenes>
     <resources>
         <image name="ErrorInfoDark" width="375" height="280"/>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

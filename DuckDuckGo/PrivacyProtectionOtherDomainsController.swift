@@ -302,7 +302,7 @@ class GenericSectionBuilder {
             guard let domain = tracker.domain else { continue }
             let networkName = tracker.networkNameForDisplay
             
-            let row = PrivacyProtectionOtherDomainsController.Row(name: domain.dropPrefix(prefix: "www."),
+            let row = PrivacyProtectionOtherDomainsController.Row(name: domain.droppingWwwPrefix(),
                                                                   value: tracker.category ?? "")
 
             if let sectionIndex = sections.firstIndex(where: { $0.name == networkName }) {

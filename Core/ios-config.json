@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1660052924250,
+    "version": 1662049061721,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -10,40 +10,31 @@
                 "linkFormats": [
                     {
                         "url": "duckduckgo.com/y.js",
-                        "parameterName": "u3",
                         "adDomainParameterName": "ad_domain",
                         "desc": "SERP Ads"
                     },
                     {
                         "url": "www.search-company.site/y.js",
-                        "parameterName": "u3",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Test Domain"
                     },
                     {
                         "url": "www.search-company.example/y.js",
-                        "parameterName": "u3",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Test Domain"
                     },
                     {
                         "url": "links.duckduckgo.com/m.js",
-                        "parameterName": "dsl",
-                        "parameterValue": "1",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Shopping Ads"
                     },
                     {
                         "url": "www.search-company.site/m.js",
-                        "parameterName": "dsl",
-                        "parameterValue": "1",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Test Domain"
                     },
                     {
                         "url": "www.search-company.example/m.js",
-                        "parameterName": "dsl",
-                        "parameterValue": "1",
                         "adDomainParameterName": "ad_domain",
                         "desc": "Test Domain"
                     }
@@ -73,6 +64,10 @@
                 {
                     "domain": "freecodecamp.org",
                     "reason": "Clicking 'get started' reloads the page and does not progress to the login page."
+                },
+                {
+                    "domain": "www.audiosciencereview.com",
+                    "reason": "Pages on the site end up in redirect loops in Firefox."
                 }
             ],
             "settings": {
@@ -225,6 +220,10 @@
                     "reason": "When creating an account, after filling out details and going to e-mail confirmation, there is an error 'Something went wrong', and the e-mail may not be received. Clicking 'Send new code' appears successful, but after entering the code there is often another account creation error."
                 },
                 {
+                    "domain": "northernrailway.co.uk",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/350"
+                },
+                {
                     "domain": "spirit.com",
                     "reason": "When attempting to sign in, a semi-transparent overlay appears over the page which prevents further interaction with the site."
                 },
@@ -354,7 +353,7 @@
         },
         "referrer": {
             "exceptions": [],
-            "state": "disabled"
+            "state": "enabled"
         },
         "trackerAllowlist": {
             "state": "enabled",
@@ -379,6 +378,13 @@
                                     "aternos.org"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            },
+                            {
+                                "rule": "c1.adform.net/serving/cookie/match",
+                                "domains": [
+                                    "dhl.de"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/340"
                             }
                         ]
                     },
@@ -686,9 +692,10 @@
                                     "dailyherald.com",
                                     "emirates.com",
                                     "iltalehti.fi",
+                                    "pickfu.com",
                                     "rbcroyalbank.com"
                                 ],
-                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. dailyherald.com - Article images render as grey boxes. emirates.com - After filling out login details and clicking to proceed, a loading spinners shows on the proceed button and the login does not progress. iltalehti.fi - Article video renders as a blank box. rbcroyalbank.com - Investments page renders blank."
+                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. dailyherald.com - Article images render as grey boxes. emirates.com - After filling out login details and clicking to proceed, a loading spinners shows on the proceed button and the login does not progress. iltalehti.fi - Article video renders as a blank box. pickfu.com - https://github.com/duckduckgo/privacy-configuration/issues/346 rbcroyalbank.com - Investments page renders blank."
                             }
                         ]
                     },
@@ -970,11 +977,11 @@
                     "scene7.com": {
                         "rules": [
                             {
-                                "rule": "basspro.scene7.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "scene7.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
-                                    "cabelas.com"
+                                    "<all>"
                                 ],
-                                "reason": "Product images don't render on product pages."
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/356"
                             }
                         ]
                     },
@@ -1014,6 +1021,17 @@
                                     "foxnews.com"
                                 ],
                                 "reason": "When on login page, clicking 'create account' has no effect."
+                            }
+                        ]
+                    },
+                    "sky.com": {
+                        "rules": [
+                            {
+                                "rule": "accounts.sky.com/assets/sky_common.js",
+                                "domains": [
+                                    "sky.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/342"
                             }
                         ]
                     },
@@ -1066,6 +1084,73 @@
                                     "tvrain.ru"
                                 ],
                                 "reason": "Adwall renders over video and video does not play."
+                            }
+                        ]
+                    },
+                    "yotpo.com": {
+                        "rules": [
+                            {
+                                "rule": "api.yotpo.com/products/.*/.*/bottomline",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "api.yotpo.com/questions/send_confirmation_mail",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "api.yotpo.com/v1/widget/reviews",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "cdn-yotpo-images-production.yotpo.com/Product/.*/.*/square.jpg",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "staticw2.yotpo.com/.*/widget.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "staticw2.yotpo.com/.*/widget.css",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "staticw2.yotpo.com/assets/yotpo-widget-font.woff",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "staticw2.yotpo.com/batch/app_key/.*/domain_key/.*/widget/main_widget",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "api.yotpo.com/reviews/.*/vote",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
                             }
                         ]
                     },

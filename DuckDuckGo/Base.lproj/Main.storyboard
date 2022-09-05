@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21208.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21191"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -161,7 +161,7 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSE-zZ-iud">
-                                                        <rect key="frame" x="231" y="11" width="37" height="14"/>
+                                                        <rect key="frame" x="231" y="0.0" width="37" height="36"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -169,6 +169,9 @@
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="IBB-TQ-d5c">
                                                         <rect key="frame" x="38" y="0.0" width="185" height="36"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <accessibility key="accessibilityConfiguration">
+                                                            <accessibilityTraits key="traits" searchField="YES"/>
+                                                        </accessibility>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
@@ -182,11 +185,12 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="36" id="5Pu-ef-zfO"/>
                                                     <constraint firstAttribute="trailing" secondItem="rSE-zZ-iud" secondAttribute="trailing" constant="9" id="996-MS-fpg"/>
-                                                    <constraint firstItem="rSE-zZ-iud" firstAttribute="centerY" secondItem="piX-Du-shO" secondAttribute="centerY" id="Lxw-Np-4Gw"/>
                                                     <constraint firstItem="5Nz-IB-Q70" firstAttribute="leading" secondItem="piX-Du-shO" secondAttribute="leading" constant="9" id="PTT-wk-mx9"/>
                                                     <constraint firstItem="5Nz-IB-Q70" firstAttribute="centerY" secondItem="piX-Du-shO" secondAttribute="centerY" id="SIP-i0-Uvg"/>
                                                     <constraint firstItem="IBB-TQ-d5c" firstAttribute="height" secondItem="piX-Du-shO" secondAttribute="height" id="W2O-VQ-lYb"/>
                                                     <constraint firstItem="rSE-zZ-iud" firstAttribute="leading" secondItem="IBB-TQ-d5c" secondAttribute="trailing" constant="8" symbolic="YES" id="X0q-y5-Gc8"/>
+                                                    <constraint firstAttribute="bottom" secondItem="rSE-zZ-iud" secondAttribute="bottom" id="cQS-zU-71M"/>
+                                                    <constraint firstItem="rSE-zZ-iud" firstAttribute="top" secondItem="piX-Du-shO" secondAttribute="top" id="rbE-VA-QNd"/>
                                                     <constraint firstItem="IBB-TQ-d5c" firstAttribute="leading" secondItem="5Nz-IB-Q70" secondAttribute="trailing" constant="6" id="spT-bc-lRS"/>
                                                     <constraint firstItem="IBB-TQ-d5c" firstAttribute="centerY" secondItem="piX-Du-shO" secondAttribute="centerY" id="wtr-nl-jau"/>
                                                 </constraints>

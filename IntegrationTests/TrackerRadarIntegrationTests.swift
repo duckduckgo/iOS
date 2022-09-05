@@ -19,7 +19,7 @@
 
 import XCTest
 import TrackerRadarKit
-import BrowserServicesKit
+@testable import BrowserServicesKit
 @testable import Core
 
 class TrackerRadarIntegrationTests: XCTestCase {

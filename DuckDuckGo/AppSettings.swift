@@ -37,4 +37,6 @@ protocol AppSettings: AnyObject {
     var autofill: Bool { get set }
 
     var voiceSearchEnabled: Bool { get set }
+
+    func isWidgetInstalled() async -> Bool
 }

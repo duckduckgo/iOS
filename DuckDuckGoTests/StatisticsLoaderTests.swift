@@ -21,6 +21,7 @@ import XCTest
 import OHHTTPStubs
 import OHHTTPStubsSwift
 @testable import Core
+@testable import BrowserServicesKit
 
 class StatisticsLoaderTests: XCTestCase {
 

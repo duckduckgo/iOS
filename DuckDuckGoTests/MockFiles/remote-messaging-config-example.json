@@ -1,0 +1,206 @@
+{
+  "version": 1,
+  "messages": [
+    {
+      "id": "26780792-49fe-4e25-ae27-aa6a2e6f013b",
+      "content": {
+        "messageType": "small",
+        "titleText": "Here goes a title",
+        "descriptionText": "description"
+      },
+      "matchingRules": [
+        5,
+        6
+      ],
+      "exclusionRules": [
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "8274589c-8aeb-4322-a737-3852911569e3",
+      "content": {
+        "messageType": "big_single_action",
+        "titleText": "title",
+        "descriptionText": "description",
+        "placeholder": "Announce",
+        "primaryActionText": "Ok",
+        "primaryAction": {
+          "type": "url",
+          "value": "https://duckduckgo.com"
+        }
+      },
+      "translations": {
+        "es": {
+          "titleText": "Titulo",
+          "descriptionText": "Descripción."
+        },
+        "ru": {
+          "titleText": "Добавить закладку",
+          "descriptionText": "Введите поисковый запрос или адрес сайта"
+        },
+        "en-US": {
+          "titleText": "title-Translated",
+          "descriptionText": "description-translated"
+        }
+      }
+    },
+    {
+      "id": "8274589c-8aeb-4322-a737-3852911569e3",
+      "content": {
+        "messageType": "big_single_action",
+        "titleText": "Kedvenc hozzáadása",
+        "descriptionText": "Kedvenc eltávolítása",
+        "placeholder": "DDGAnnounce",
+        "primaryActionText": "Ok",
+        "primaryAction": {
+          "type": "url",
+          "value": "https://duckduckgo.com"
+        }
+      },
+      "translations": {
+        "es": {
+          "titleText": "Titulo",
+          "descriptionText": "Descripción."
+        },
+        "ru": {
+          "titleText": "Here goes a title",
+          "descriptionText": "description"
+        }
+      }
+    },
+    {
+      "id": "c3549d64-b388-41d8-9649-33e6e2674e8e",
+      "content": {
+        "messageType": "medium",
+        "titleText": "Here goes a title",
+        "descriptionText": "description",
+        "placeholder": "CriticalUpdate"
+      }
+    },
+    {
+      "id": "c2d0a1f1-6157-434f-8145-38416037d339",
+      "content": {
+        "messageType": "big_two_action",
+        "titleText": "Here goes a title",
+        "descriptionText": "description",
+        "placeholder": "AppUpdate",
+        "primaryActionText": "Ok",
+        "primaryAction": {
+          "type": "appstore",
+          "value": "com.duckduckgo.mobile.ios"
+        },
+        "secondaryActionText": "Cancel",
+        "secondaryAction": {
+          "type": "dismiss",
+          "value": ""
+        }
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": 5,
+      "attributes": {
+        "locale": {
+          "value": [
+            "en_US",
+            "en_GB"
+          ],
+          "fallback": true
+        },
+        "osApi": {
+          "value": "15.4.0",
+          "min": "13.0.1",
+          "max": "16",
+          "fallback": true
+        },
+        "webview": {
+          "min": "80.012.12343",
+          "max": "90.023.23423",
+          "fallback": true
+        },
+        "appVersion": {
+          "min": "7.67.1.0",
+          "max": "7.68.0.0"
+        },
+        "atb": {
+          "value": "v327-2"
+        },
+        "appAtb": {
+          "value": "v328-4"
+        },
+        "searchAtb": {
+          "value": "v327-2"
+        },
+        "flavor": {
+          "value": [
+            "internal"
+          ]
+        },
+        "appId": {
+          "value": "com.duckduckgo.mobile.ios"
+        },
+        "defaultBrowser": {
+          "value": false
+        },
+        "emailEnabled": {
+          "value": false,
+          "fallback": false
+        },
+        "widgetAdded": {
+          "value": false
+        },
+        "searchCount": {
+          "min": 30,
+          "max": 100
+        },
+        "daysSinceInstalled": {
+          "value": 11
+        },
+        "installedGPlay": {
+          "value": true,
+          "fallback": true
+        },
+        "daysUsedSince": {
+          "since": "2021-10-01",
+          "value": 7
+        },
+        "bookmarks": {
+          "min": 0,
+          "max": 14
+        },
+        "favorites": {
+          "min": 0,
+          "max": 10
+        },
+        "appTheme": {
+          "value": "light"
+        },
+        "unknown": {
+          "value": "random value",
+          "fallback": true
+        }
+      }
+    },
+    {
+      "id": 6,
+      "attributes": {
+        "locale": {
+          "value": [
+            "en_US"
+          ]
+        }
+      }
+    },
+    {
+      "id": 7,
+      "attributes": {
+        "defaultBrowser": {
+          "value": true
+        }
+      }
+    }
+  ]
+}

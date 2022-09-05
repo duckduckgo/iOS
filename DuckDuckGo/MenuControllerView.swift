@@ -69,7 +69,7 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
             self.onClose = onClose
         }
    
-        @objc func tap(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        @objc func tap(_ gestureRecognizer: UIGestureRecognizer) {
             let menu = UIMenuController.shared
 
             guard gestureRecognizer.state == .ended, let view = gestureRecognizer.view, !menu.isMenuVisible else {

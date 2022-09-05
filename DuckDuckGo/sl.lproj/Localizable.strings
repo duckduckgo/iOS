@@ -1399,9 +1399,6 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Priljubljeni dodan";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blokiraj opozorila";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Prekliči";
 

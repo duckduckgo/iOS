@@ -25,11 +25,8 @@ public struct AppDeepLinks {
 
     public static let quickLink = "ddgQuickLink://"
 
-    public static let bookmarks = "ddgBookmarks://"
-    
-    public static let fire = "ddgFire://"
-
     public static let launchFavorite = "ddgFavorite://"
+    public static let launchFavoriteHttps = "ddgFavoriteHttps://"
 
     public static let addFavorite = "ddgAddFavorite://"
 
@@ -38,7 +35,7 @@ public struct AppDeepLinks {
     public static let thirdPartyTrackerLoadingProtection = URL(string: "\(AppDeepLinks.quickLink)help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection")!
 
     public static func isLaunchFavorite(url: URL) -> Bool {
-        return isUrl(url, deepLink: launchFavorite)
+        return isUrl(url, deepLink: launchFavorite) || isUrl(url, deepLink: launchFavoriteHttps)
     }
 
     public static func isNewSearch(url: URL) -> Bool {
@@ -48,14 +45,6 @@ public struct AppDeepLinks {
     public static func isQuickLink(url: URL) -> Bool {
         return isUrl(url, deepLink: AppDeepLinks.quickLink)
     }
-    
-    public static func isBookmarks(url: URL) -> Bool {
-        return isUrl(url, deepLink: AppDeepLinks.bookmarks)
-    }
-    
-    public static func isFire(url: URL) -> Bool {
-        return isUrl(url, deepLink: AppDeepLinks.fire)
-    }
 
     public static func isAddFavorite(url: URL) -> Bool {
         return isUrl(url, deepLink: AppDeepLinks.addFavorite)
@@ -63,7 +52,8 @@ public struct AppDeepLinks {
     
     private static func isUrl(_ url: URL, deepLink: String) -> Bool {
         if let scheme = url.scheme {
-            return deepLink.lowercased().contains(scheme.lowercased())
+            let cleanDeepLink = deepLink.dropping(suffix: "://")
+            return cleanDeepLink.lowercased() == scheme.lowercased()
         }
         return false
     }
@@ -73,6 +63,12 @@ public struct AppDeepLinks {
     }
 
     public static func query(fromLaunchFavorite url: URL) -> String {
-        return url.absoluteString.replacingOccurrences(of: launchFavorite, with: "", options: .caseInsensitive)
+        var newQuery = url.absoluteString
+        if newQuery.hasPrefix(launchFavoriteHttps) {
+            newQuery = "https://" + newQuery.dropping(prefix: launchFavoriteHttps)
+        } else if newQuery.hasPrefix(launchFavorite) {
+            newQuery = "http://" + newQuery.dropping(prefix: launchFavorite)
+        }
+        return newQuery
     }
 }

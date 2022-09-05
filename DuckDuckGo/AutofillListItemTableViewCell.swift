@@ -25,7 +25,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
         label.font = .systemFont(ofSize: 16)
-        label.textColor = .gray90
+        label.textColor = .label
         return label
     }()
     

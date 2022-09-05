@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 public typealias HTTPHeaders = [String: String]
 

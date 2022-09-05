@@ -91,6 +91,7 @@ class ActionMessageView: UIView {
         messageView.message.attributedText = message
         messageView.message.numberOfLines = numberOfLines
         ActionMessageView.present(messageView: messageView,
+                                  message: message.string,
                                   actionTitle: actionTitle,
                                   presentationLocation: presentationLocation,
                                   onAction: onAction,
@@ -105,6 +106,7 @@ class ActionMessageView: UIView {
         let messageView = loadFromXib()
         messageView.message.setAttributedTextString(message)
         ActionMessageView.present(messageView: messageView,
+                                  message: message,
                                   actionTitle: actionTitle,
                                   presentationLocation: presentationLocation,
                                   onAction: onAction,
@@ -112,6 +114,7 @@ class ActionMessageView: UIView {
     }
     
     private static func present(messageView: ActionMessageView,
+                                message: String,
                                 actionTitle: String? = nil,
                                 presentationLocation: PresentationLocation = .withBottomBar,
                                 onAction: @escaping () -> Void = {},
@@ -143,6 +146,8 @@ class ActionMessageView: UIView {
         messageView.alpha = 0
         UIView.animate(withDuration: Constants.animationDuration) {
             messageView.alpha = 1
+        } completion: { _ in
+            UIAccessibility.post(notification: .announcement, argument: message)
         }
         
         let workItem = DispatchWorkItem { [weak messageView] in

@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import BrowserServicesKit
 
 // swiftlint:enable type_body_length
 // swiftlint:enable identifier_name
@@ -27,7 +28,7 @@ public struct PixelParameters {
     public static let url = "url"
     public static let duration = "dur"
     static let test = "test"
-    static let appVersion = "appVersion"
+    public static let appVersion = "appVersion"
     
     public static let autocompleteBookmarkCapable = "bc"
     public static let autocompleteIncludedLocalResults = "sb"
@@ -94,8 +95,10 @@ public struct PixelParameters {
     public static let emailKeychainAccessType = "access_type"
     public static let emailKeychainError = "error"
     public static let emailKeychainKeychainStatus = "keychain_status"
-    
+
     public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
+
+    public static let ctaShown = "cta"
 }
 
 public struct PixelValues {

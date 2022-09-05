@@ -22,6 +22,7 @@ import LinkPresentation
 import Core
 import Kingfisher
 import WebKit
+import BrowserServicesKit
 
 class RootDebugViewController: UITableViewController {
 

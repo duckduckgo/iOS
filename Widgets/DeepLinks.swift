@@ -27,7 +27,13 @@ struct DeepLinks {
 
     static func createFavoriteLauncher(forUrl url: URL) -> URL {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        components?.scheme = String(AppDeepLinks.launchFavorite.dropLast(3))
+        
+        if url.isHttps {
+            components?.scheme = String(AppDeepLinks.launchFavoriteHttps.dropLast(3))
+        } else {
+            components?.scheme = String(AppDeepLinks.launchFavorite.dropLast(3))
+        }
+        
         return components?.url ?? url
     }
 

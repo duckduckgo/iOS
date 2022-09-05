@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Vrátenie späť";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Zobraziť návrhy automatického dopĺňania";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Záložka";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Otvoriť webovú lokalitu";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Vyhľadávať na DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Pridať";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Zapnuté";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Skryť heslo";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Zobraziť";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Uložiť heslo?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Zobraziť heslo";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Aktualizovať prihlasovacie údaje";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Zablokujte nástroje na sledovanie e‑mailov a skryte vašu adresu";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Zrušiť";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Upozornenie: Odstránením e-mailovej ochrany z tohto zariadenia sa neodstráni vaša adresa Duck.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Odstrániť";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Odstrániť e-mailovú ochranu?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Pri pridávaní na zoznam čakateľov sa vyskytla chyba. Prosím, skúste to neskôr znova.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Začnite";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Mám pozývací kód";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Boli ste pozvaný/á!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Pridajte sa do súkromného zoznamu čakateľov";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Ste na zozname čakateľov!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Vaša pozvánka sa zobrazí tu, keď pre vás budeme pripravení. Prajete si, aby sme vám poslali %1$@, keď budete mať pozvánku? %2$@ o e-mailovej ochrane.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "dostať upozornenie";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Pošleme vám upozornenie, keď bude pre vás pripravená e-mailová ochrana. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Zistite viac";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Pošleme vám upozornenie, keď budete môcť začať používať e-mailovú ochranu.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Chcete, aby sme vám poslali upozornenie, keď budete na rade?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Pridali ste sa na zoznam čakateľov a požiadali ste nás, aby sme vás upozornili, keď na vás príde rad a keď budete si môcť vyskúšať našu e-mailovú ochranu.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nie, ďakujem";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "UPOZORNITE MA";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Vaše pozvánka na ochranu e‑mailu je tu!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Vaše e-maily neukladáme. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Zjednodušená ochrana súkromia v e‑mailoch.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Zablokujte e-mailové trackery a skryte svoju adresu bez toho, aby ste museli prepínať svojich poskytovateľov e-mailu. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatiaľ neboli pridané žiadne záložky";
@@ -1024,15 +973,6 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "O našej ochrane pred sledovaním činnosti na webe";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "O ochrane vyhľadávania a reklamách";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Ako naše reklamy vo vyhľadávaní ovplyvňujú našu ochranu";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";
 
@@ -1056,9 +996,6 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Nútené šifrovanie";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Šifrované pripojenie";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Túto webovú stránku sme prinútili, aby používala šifrované pripojenie, čím zabránime odposluchu akýchkoľvek osobných informácií, ktoré odošlete.";
@@ -1138,9 +1075,6 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Áno";
 
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "OCHRANA STRÁNKY ZAKÁZANÁ";
 
@@ -1156,62 +1090,11 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Našli sa hlavné siete sledovacích zariadení";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nenašla sa žiadna veľká sieť sledovacích zariadení";
-
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Siete sledovacích zariadení sa našli na %1$@%% webových stránkach, ktoré ste navštívili od %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Naďalej zhromažďujeme údaje s cieľom zistiť,\nkoľko sledovacích zariadení sme zablokovali.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Neboli načítané žiadne požiadavky tretích strán";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Požiadavky nasledujúcej domény boli načítané, pretože nedávno ste klikli na reklamu %@ na DuckDuckGo. Tieto žiadosti pomáhajú vyhodnotiť účinnosť reklám. Všetky reklamy na DuckDuckGo sú neprofilujúce.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Požiadavky nasledujúcej domény boli načítané, aby sa zabránilo rozbitiu stránky.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Nasledujúce požiadavky domény boli načítané, pretože sú spojené s %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Boli načítané nasledujúce požiadavky na domény tretích strán. Ak sú požiadavky spoločnosti načítané, môže im to umožniť profilovať vás, hoci naše ostatné ochrany sledovania webu stále platia.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Načítanie žiadnych požiadaviek tretích strán nebolo zablokované, pretože ochrana je pre túto stránku vypnutá. Ak sú požiadavky spoločnosti načítané, môže im to umožniť profilovať vás.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Boli načítané nasledujúce požiadavky na sledovanie domén.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Boli načítané aj nasledujúce požiadavky domény.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Boli načítané požiadavky nasledujúcich domén.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Boli načítané požiadavky nasledujúcich domén.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Nezistili sme požiadavky zo žiadnych domén tretích strán.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Požiadavky tretích strán boli načítané";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Upozornenie: obmedzenia platformy môžu obmedziť našu schopnosť zistiť všetky požiadavky.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Neprofilovanie";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Spôsoby ochrany súkromia od ToS;DR.";
@@ -1246,35 +1129,11 @@
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Neznáme spôsoby ochrany súkromia";
 
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sledovače činnosti pomáhajú spoločnostiam profilovať vás. Zablokovali sme načítavanie týchto sledovacích prvkov a monitorovanie vašej činnosti na tejto stránke.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Nebolo zablokované žiadne načítavanie požiadaviek na sledovanie, pretože ochrana je pre túto stránku vypnutá. Ak sú požiadavky spoločnosti načítané, môže im to umožniť profilovať vás.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nezistili sme žiadne požiadavky na sledovanie.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Načítanie požiadaviek nasledujúcich domén tretích strán bolo zablokované, pretože boli identifikované ako požiadavky na sledovanie. Ak sú načítané požiadavky spoločnosti, môže im umožniť profilovať vás.";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Načítavanie žiadostí je zablokované";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Našli sa požiadavky na sledovanie";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nie sú blokované žiadne žiadosti o sledovanie";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nenašli sa žiadne požiadavky na sledovanie";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Zrušiť";

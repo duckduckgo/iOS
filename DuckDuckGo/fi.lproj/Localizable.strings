@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Kumoa";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Automaattisen täydennyksen ehdotus";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Lisää kirjanmerkki";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Avaa verkkosivusto";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Hae DuckDuckGosta";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Lisää";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Päällä";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Piilota salasana";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Näytä";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Tallennetaanko salasana?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Näytä salasana";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Päivitä kirjautumistiedot";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Estä sähköpostiseuraajat ja piilota osoitteesi";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Peruuta";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Huomaa: sähköpostisuojauksen poistaminen tältä laitteelta ei poista Duck-osoitettasi.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Poista";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Poistetaanko sähköpostisuojaus?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Virhe liittyessä odotuslistalle, yritä myöhemmin uudelleen";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Aloita";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Minulla on kutsukoodi";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Sinut on kutsuttu!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Liity yksityiselle odotuslistalle";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Olet odotuslistalla!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Kutsusi näkyy täällä, kun olemme valmiita. Haluatko, että sinulle tulee %1$@, kun kutsusi saapuu? %2$@ sähköpostisuojauksesta.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "ilmoitus";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Lähetämme sinulle ilmoituksen, kun sähköpostisuojaus on valmis käytettäväksi. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Lue lisää";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Lähetämme sinulle ilmoituksen, kun voit aloittaa sähköpostisuojauksen käytön.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Haluatko, että ilmoitamme sinulle, kun on sinun vuorosi?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Liityit odotuslistalle ja pyysit meitä ilmoittamaan sinulle, kun on sinun vuorosi kokeilla sähköpostisuojaustamme.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Ei kiitos";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "HALUAN ILMOITUKSEN";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Kutsusi sähköpostin suojaamiseen on täällä!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Emme tallenna sähköpostejasi. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Sähköpostin tietosuoja, yksinkertaisesti.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Estä sähköpostiseuranta ja piilota osoitteesi vaihtamatta sähköpostintarjoajaa. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Kirjanmerkkejä ei ole vielä lisätty";
@@ -1024,15 +973,6 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Tietoa verkkoseurantasuojauksistamme";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Tietoa hakusuojauksistamme ja mainoksistamme";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Miten hakumainoksemme vaikuttavat suojauksiimme";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmi";
 
@@ -1056,9 +996,6 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Pakotettu salaus";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Salattu yhteys";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Olemme pakottaneet tämän sivuston käyttämään salattua yhteyttä, jotta sille lähettämiäsi henkilötietoja ei voida urkkia.";
@@ -1138,9 +1075,6 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Kyllä";
 
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SIVUSTOSUOJAUS EI KÄYTÖSSÄ";
 
@@ -1156,62 +1090,11 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Merkittäviä seurantaverkostoja löytynyt";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Merkittäviä seurantaverkostoja ei löytynyt";
-
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "%1$@%%:lta sivustoista, joilla olet käynyt %2$@ jälkeen, löytyi seurantaverkostoja.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Keräämme edelleen tietoja näyttääksemme,\nkuinka monta seurantapalvelinta olemme estäneet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Kolmannen osapuolen pyyntöjä ei ole ladattu";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Seuraavan verkkotunnuksen pyynnöt ladattiin, koska %@-mainosta DuckDuckGossa napsautettiin äskettäin. Nämä pyynnöt auttavat arvioimaan mainosten tehokkuutta. Kaikki DuckDuckGon mainokset ovat ei-profiloivia.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Seuraavan verkkotunnuksen pyynnöt ladattiin sivuston rikkoutumisen estämiseksi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Seuraavan verkkotunnuksen pyynnöt ladattiin, koska ne liittyvät kohteeseen %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Seuraavien kolmansien osapuolten verkkotunnusten pyynnöt ladattiin. Jos yrityksen pyynnöt ladataan, se voi antaa yritykselle mahdollisuuden profiloida sinut, vaikka muut verkkoseurantasuojamme ovat edelleen voimassa.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Kolmannen osapuolen pyyntöjä ei estetty latautumasta, koska suojaukset on poistettu käytöstä tältä sivustolta. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Seuraavien verkkotunnusten seurantapyynnöt ladattiin.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Myös seuraavan verkkotunnuksen pyynnöt ladattiin.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Seuraavien verkkotunnusten pyynnöt ladattiin.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Seuraavan verkkotunnuksen pyynnöt ladattiin.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Emme havainneet pyyntöjä kolmannen osapuolen verkkotunnuksilta.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Kolmannen osapuolen pyynnöt ladattu";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Huomaa: alustan rajoitukset voivat rajoittaa kykyämme havaita kaikki pyynnöt.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Ei-profiloiva";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "ToS;DR:n tietosuojakäytäntö.";
@@ -1246,35 +1129,11 @@
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Tuntemattomat tietosuojakäytännöt";
 
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Seurantaohjelmat auttavat yrityksiä profiloimaan sinut. Olemme estäneet näitä seurantalaitteita lataamasta ja seuraamasta toimintaasi tällä sivulla.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Seurantapyyntöjä ei estetty latautumasta, koska suojaukset on poistettu käytöstä tältä sivustolta. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Emme havainneet seurantapyyntöjä.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Seuraavien kolmansien osapuolten verkkotunnusten pyyntöjen lataaminen estettiin, koska ne tunnistettiin seurantapyynnöiksi. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Pyynnöt, joiden lataaminen estetty";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Löydetyt seurantapyynnöt";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Ei estettyjä seurantapyyntöjä";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Seurantapyyntöjä ei löytynyt";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Peruuta";

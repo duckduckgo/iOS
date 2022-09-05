@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Anular";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Sugestão de preenchimento automático";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Marcador";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Abrir website";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Pesquisar no DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Adicionar";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ligado";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Ocultar palavra-passe";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visualizar";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Guardar palavra-passe?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Mostrar palavra-passe";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Atualizar início de sessão";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloqueie rastreadores de e-mail e oculte o seu endereço.";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Cancelar";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Nota: Ao remover a proteção de e-mail deste dispositivo não excluirá o seu endereço Duck.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Remover";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Remover a proteção de e-mail?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Ocorreu um erro ao entrar na Lista de Espera, tente novamente mais tarde";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Comece";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Tenho um Código de Convite";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Você foi convidado!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Adira à Lista de Espera Privada";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Você está na lista de espera!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "O seu convite aparecerá aqui quando estivermos prontos para si. Quer %1$@ quando chegar? %2$@ sobre a proteção de e-mail.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "receba uma notificação";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Enviaremos uma notificação quando a proteção de e-mail estiver pronta para si. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Saiba mais";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Enviaremos uma notificação quando começar a usar a proteção de e-mail.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Gostaria que o notificássemos quando for a sua vez?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Você entrou na lista de espera e pediu-nos para o notificar quando for a sua vez de experimentar a nossa proteção de e-mail.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Não, obrigado";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "NOTIFICAR-ME";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "O seu convite para Proteção de E-mail está aqui!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Não guardamos os seus e-mails. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "A privacidade dos e-mails, simplificada.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Bloqueie os rastreadores de e-mail e oculte o seu endereço, sem alterar o seu provedor de e-mail. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ainda não foram adicionados marcadores";
@@ -1024,15 +973,6 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Sobre as nossas proteções contra o rastreamento na internet";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Sobre as nossas proteções em pesquisas e anúncios";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Como os nossos anúncios de pesquisa afetam as nossas proteções";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmo";
 
@@ -1056,9 +996,6 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Criptografia forçada";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Ligação encriptada";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Forçamos este site a usar uma ligação encriptada, para impedir a escuta não autorizada de qualquer informação pessoal que lhe envie.";
@@ -1138,9 +1075,6 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Sim";
 
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "PROTEÇÃO DO SITE DESATIVADA";
 
@@ -1156,62 +1090,11 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Principais redes de rastreamento encontradas";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nenhuma rede de rastreamento principal encontrada";
-
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Foram encontradas redes de rastreamento em %1$@%% dos websites que visitou desde %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Ainda estamos a recolher dados para mostrar\nquantos rastreadores bloqueámos.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Nenhum pedido de terceiros carregado";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Os pedidos do seguinte domínio foram carregados devido a um clique recente num anúncio de %@ no DuckDuckGo. Estes pedidos ajudam a avaliar a eficácia dos anúncios. Nenhum anúncio no DuckDuckGo é utilizado para criação de perfis.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Os pedidos do seguinte domínio foram carregados para impedir a falha do site.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Os pedidos do seguinte domínio foram carregados porque estão associados a %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Os pedidos dos seguintes domínios de terceiros foram carregados. Se os pedidos de uma empresa forem carregados, a empresa pode conseguir criar um perfil sobre ti, embora sejam aplicadas as nossas outras proteções contra rastreamento na internet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Não foi bloqueado o carregamento de nenhum pedido de terceiros porque as proteções estão desativadas para este site. Se os pedidos de uma empresa forem carregados, a empresa pode conseguir criar um perfil sobre ti.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Os pedidos de rastreamento dos seguintes domínios foram carregados.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Os pedidos de rastreamento do seguinte domínio também foram carregados.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Os pedidos dos seguintes domínios foram carregados.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Os pedidos do seguinte domínio foram carregados.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Não detetámos pedidos de domínios de terceiros.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Pedidos de terceiros carregados";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Nota: as limitações da plataforma podem limitar a nossa capacidade de detetar todos os pedidos.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Sem criação de perfis";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Práticas privadas de ToS;DR.";
@@ -1246,35 +1129,11 @@
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Práticas de privacidade desconhecidas";
 
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Os rastreadores ajudam as empresas a criar perfis sobre ti. Bloqueámos o carregamento destes rastreadores e a monitorização da tua atividade nesta página.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Não foram bloqueados pedidos de terceiros porque as Proteções estão desativadas para este site. Se os pedidos de uma empresa forem carregados, a empresa pode conseguir criar um perfil sobre ti.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Não detetámos nenhum pedido de rastreamento.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Foi bloqueado o carregamento dos pedidos dos seguintes domínios de terceiros porque foram identificados como pedidos de rastreamento. Se os pedidos de uma empresa forem carregados, a empresa pode conseguir criar um perfil sobre ti.";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Pedidos com carregamento bloqueado";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Pedidos de rastreamento encontrados";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nenhum pedido de rastreamento bloqueado";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nenhum pedido de rastreamento encontrado";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Cancelar";

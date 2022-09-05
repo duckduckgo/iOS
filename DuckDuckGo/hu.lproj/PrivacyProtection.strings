@@ -37,9 +37,6 @@
 /* Class = "UITableViewController"; title = "xxx"; ObjectID = "7Z1-eg-OWQ"; */
 "7Z1-eg-OWQ.title" = "xxx";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "8Ec-67-0A8"; */
-"8Ec-67-0A8.normalTitle" = "Gomb";
-
 /* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
 "25V-p3-wsn.text" = "ADATVÉDELMI GYAKORLATOK";
 
@@ -49,20 +46,8 @@
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
 "aD3-hP-MUU.text" = "A NYOMKÖVETŐ-HÁLÓZAT LEGNAGYOBB BŰNELKÖVETŐI";
 
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "DGo-7C-PoV"; */
-"DGo-7C-PoV.normalTitle" = "Gomb";
-
 /* Class = "UILabel"; text = "ENCRYPTED CONNECTION"; ObjectID = "dZC-7f-pp3"; */
 "dZC-7f-pp3.text" = "TITKOSÍTOTT KAPCSOLAT";
-
-/* Class = "UILabel"; text = "www.example.com"; ObjectID = "edo-u1-cGj"; */
-"edo-u1-cGj.text" = "www.example.com";
-
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "eoi-RZ-ibW"; */
-"eoi-RZ-ibW.configuration.title" = "Gomb";
-
-/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "eoi-RZ-ibW"; */
-"eoi-RZ-ibW.normalTitle" = "Gomb";
 
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "F5w-e3-JfY"; */
 "F5w-e3-JfY.text" = "www.example.com";
@@ -123,9 +108,6 @@
 
 /* Class = "UILabel"; text = "TRACKER NETWORK FREQUENCY"; ObjectID = "Y3q-u7-IeX"; */
 "Y3q-u7-IeX.text" = "NYOMKÖVETŐ HÁLÓZAT GYAKORISÁGA";
-
-/* Class = "UILabel"; text = "8 Other Domains Loaded"; ObjectID = "YDP-RX-LaV"; */
-"YDP-RX-LaV.text" = "8 egyéb tartomány betöltve";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "zz1-Q4-Fxr"; */
 "zz1-Q4-Fxr.text" = "Titkosított kapcsolat";

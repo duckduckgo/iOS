@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Anulați";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Sugestie de completare automată";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Marcat";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Deschide site-ul";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Caută pe DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Adăugați";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activat";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Ascunde parola";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vezi";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Salvezi parola?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Arată parola";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Actualizează autentificarea";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blochează tehnologiile de urmărire prin e-mail și ascunde-ți adresa";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Renunță";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Notă: eliminarea protecției comunicațiilor prin e-mail de pe acest dispozitiv nu va șterge adresa ta Duck.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Elimină";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Elimină protecția comunicațiilor prin e-mail?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "S-a produs o eroare la aderarea la lista de așteptare, încearcă din nou mai târziu";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Să începem";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Am un cod de invitație";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Ai primit o invitație!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Alătură-te listei de așteptare private";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Ești pe lista de așteptare!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Invitația ta va apărea aici, când vom fi pregătiți pentru tine. Dorești să %1$@ în momentul în care sosește? %2$@ despre protecția comunicațiilor prin e-mail.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "primește o notificare";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Îți vom trimite o notificare când<br/> protecția comunicațiilor prin e-mail este pregătită pentru tine. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Află mai multe";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Îți vom trimite o notificare în momentul în care poți începe să folosești protecția comunicațiilor prin e-mail.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Vrei să te înștiințăm când îți vine rândul?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Te-ai alăturat listei de așteptare și ne-ai solicitat să te anunțăm când este rândul tău să încerci protecția comunicațiilor prin e-mail.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nu, mulțumesc";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "DORESC SĂ PRIMESC NOTIFICĂRI";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Invitația ta de protecție a comunicațiilor prin e-mail este aici!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Nu îți salvăm e-mailurile. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Confidențialitatea e-mailurilor, simplificată.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blochează modulele cookie de urmărire pentru e-mail și ascunde-ți adresa, <br/> fără a schimba furnizorul de e-mail. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nu s-a adăugat niciun semn de carte";
@@ -1024,15 +973,6 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Despre protecțiile noastre împotriva urmăririi pe internet";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Despre elementele de protecție pentru căutare și reclame";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "În ce mod anunțurile noastre de căutare ne afectează măsurile de protecție";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";
 
@@ -1056,9 +996,6 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Criptare forțată";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Conexiune criptată";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Am forțat acest site să utilizeze o conexiune criptată, împiedicând interceptarea oricăror informații personale pe care i le trimiți.";
@@ -1138,9 +1075,6 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Da";
 
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "PROTECȚIE SITE DEZACTIVATĂ";
 
@@ -1156,62 +1090,11 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "S-au găsit rețele de urmărire majore";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nu a fost găsită nicio rețea de urmărire majoră";
-
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Rețele de urmărire au fost găsite pe %1$@%% de site-uri web pe care le-ai vizitat din %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Continuă să colectăm date pentru a arăta câte\n instrumente de urmărire am blocat.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Nu au fost încărcate solicitări terță parte";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Solicitările următorului domeniu au fost încărcate deoarece s-a făcut clic recent pe o reclamă %@ pe DuckDuckGo. Aceste solicitări ajută la evaluarea eficienței anunțurilor. Nicio reclamă de pe DuckDuckGo nu creează profiluri.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Solicitările următoarelor domenii au fost încărcate pentru a preveni întreruperea site-ului.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Cererile următorului domeniu au fost încărcate deoarece sunt asociate cu %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Au fost încărcate următoarele solicitări ale domeniilor terțe. În cazul în care solicitările unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil, deși celelalte măsuri de protecție ale noastre împotriva urmăririi pe internet se aplică în continuare.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Nu a fost blocată încărcarea niciunei cereri de la terți, deoarece protecțiile sunt dezactivate pentru acest site. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Au fost încărcate solicitările de urmărire ale următoarelor domenii.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Au fost încărcate și următoarele solicitări ale domeniului.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Au fost încărcate solicitările următoarelor domenii.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Solicitările următorului domeniu au fost încărcate.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Nu am detectat solicitări de la niciun domeniu terț.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Solicitări de la terți încărcate";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Reține: limitările platformei ne pot limita capacitatea de a detecta toate solicitările.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Fără crearea de profiluri";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Practici de confidențialitate de la ToS;DR.";
@@ -1246,35 +1129,11 @@
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Practici necunoscute privind confidențialitatea";
 
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Instrumentele de urmărire ajută societățile să îți creeze profilul. Am blocat încărcarea acestor instrumente de urmărire și monitorizarea activității tale pe această pagină.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Nu a fost blocată încărcarea niciunei cereri de urmărire, deoarece protecțiile sunt dezactivate pentru acest site. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nu am detectat nicio solicitare de urmărire.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Încărcarea cererilor următoarelor domenii terțe a fost blocată, deoarece au fost identificate ca fiind cereri de urmărire. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Solicitări a căror încărcare a fost blocată";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "S-au găsit solicitări de urmărire";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nu a fost blocată nicio solicitare de urmărire";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nu au fost găsite solicitări de urmărire";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Renunță";

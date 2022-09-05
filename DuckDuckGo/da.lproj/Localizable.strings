@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Fortryd";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Autoudfyld forslaget";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Bogmærke";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Åbn websted";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Søg på DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Tilføj";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Til";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Skjul adgangskode";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Se";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Gem adgangskode?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Vis adgangskode";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Opdater login";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloker e-mailtrackere, og skjul din adresse";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Annullér";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Bemærk: Fjernelse af e-mailbeskyttelse fra denne enhed sletter ikke din Duck-adresse.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Fjern";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Vil du fjerne e-mailbeskyttelse?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Der opstod en fejl, da du tilmeldte dig til ventelisten. Prøv igen senere";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Kom igang";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Jeg har en invitationskode";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Du er blevet inviteret!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Slut dig til den private venteliste";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Du er på ventelisten!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Din invitation vises her, når vi er klar til dig. Vil du %1$@, når den ankommer? %2$@ om e-mailbeskyttelse.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "have besked";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Vi sender dig en meddelelse, når<br/> e-mailbeskyttelse er klar til dig. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Mere info";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Vi sender dig en meddelelse, når du kan begynde at bruge e-mailbeskyttelse.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Skal vi give dig besked, når det er din tur?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Du har tilmeldt dig ventelisten og bedt os om at underrette dig, når det er din tur til at prøve vores e-mailbeskyttelsesfunktion.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nej tak.";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "UNDERRET MIG";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Din invitation til e-mailbeskyttelse er her!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Vi gemmer ikke dine e-mails. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Fortrolighed af e-mail, forenklet.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokér e-mailtrackere, og skjul din adresse<br/> uden at ændre din e-mailudbyder. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bogmærker tilføjet endnu";
@@ -1024,15 +973,6 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Okay";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Om vores beskyttelse mod sporing på nettet";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Om vores søgebeskyttelse og annoncer";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Sådan påvirker vores søgeannoncer vores beskyttelse";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
 
@@ -1056,9 +996,6 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Tvunget kryptering";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Krypteret forbindelse";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Vi har tvunget dette websted til at bruge en krypteret forbindelse, hvilket forhindrer aflytning af personlige oplysninger, du sender til det.";
@@ -1138,9 +1075,6 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Ja";
 
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "BESKYTTELSE AF WEBSTEDET ER DEAKTIVERET";
 
@@ -1156,62 +1090,11 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Større tracker-netværk fundet";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Ingen større tracker-netværk fundet";
-
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Tracker-netværk blev fundet på %1$@%% af de websteder, du har besøgt siden %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Vi indsamler stadig data for at vise, hvor\nmange trackere vi har blokeret.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Ingen tredjepartsanmodninger er indlæst";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Følgende domænes anmodninger blev indlæst, fordi der for nylig blev klikket på en annonce på %@ på DuckDuckGo. Disse anmodninger hjælper med at evaluere annoncernes effektivitet. Alle annoncer på DuckDuckGo er ikke-profilerende.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Følgende domænes anmodninger blev indlæst for at forhindre brud på webstedet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Følgende domænes anmodninger blev indlæst, fordi de er tilknyttet %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Følgende anmodninger fra tredjepartsdomæner blev indlæst. Hvis en virksomheds anmodninger indlæses, kan det give dem mulighed for at profilere dig, selv om vores andre beskyttelser mod websporing stadig anvendes.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Ingen anmodninger fra tredjeparter blev blokeret fra at blive indlæst, fordi beskyttelse er slået fra på dette websted. Hvis en virksomheds anmodninger indlæses, kan det give dem mulighed for at profilere dig.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Følgende domæners sporingsanmodninger blev indlæst.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Følgende domænes anmodninger blev også indlæst.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Følgende domæners anmodninger blev indlæst.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Følgende domæners anmodninger blev indlæst.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Vi har ikke registreret anmodninger fra tredjepartsdomæner.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Anmodninger fra tredjeparter indlæst";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Bemærk: Platformsbegrænsninger kan begrænse vores evne til at registrere alle anmodninger.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Ikke-profilering";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Databeskyttelsespraksisser fra ToS;DR.";
@@ -1246,35 +1129,11 @@
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Ukendt praksis for beskyttelse af privatlivets fred";
 
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Trackere hjælper virksomheder med at profilere dig. Vi blokerede disse trackere fra at indlæse og overvåge din aktivitet på denne side.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Ingen sporingsanmodninger blev blokeret fra at blive indlæst, fordi beskyttelse er slået fra på dette websted. Hvis en virksomheds anmodninger indlæses, kan det give dem mulighed for at profilere dig.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Vi har ikke registreret nogen sporingsanmodninger.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Følgende anmodninger fra tredjepartsdomæner blev blokeret fra at blive indlæst, fordi de blev identificeret som sporingsanmodninger. Hvis en virksomheds anmodninger indlæses, kan det give dem mulighed for at profilere dig.";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Anmodninger blokeret fra indlæsning";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Sporingsanmodninger fundet";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Ingen sporingsanmodninger blokeret";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Ingen sporingsanmodninger fundet";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Annullér";

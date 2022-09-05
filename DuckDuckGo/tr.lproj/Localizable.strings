@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Geri al";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Otomatik tamamlama önerisi";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Yer imi ekle";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Web sitesini aç";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "DuckDuckGo'da ara";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Açık";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Parolayı gizle";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Görüntüle";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Şifre Kaydedilsin mi?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Parolayı göster";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Girişi Güncelle";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-posta izleyicileri engelleyin ve adresinizi gizleyin";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "İptal";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "E-posta Korumasının bu cihazdan kaldırılması Duck Adresinizin silinmesine yol açmaz.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Kaldır";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "E-posta Koruması Kaldırılsın mı?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Bekleme listesine katılırken bir hata oluştu, lütfen daha sonra tekrar deneyin";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Başlayın";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Davet Kodum var";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Davet edildiniz!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Özel Bekleme Listesine Katılın";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Bekleme listesindesiniz!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Özellik hazır olduğunda davetiyeniz burada gösterilecek. Hazır olduğunda %1$@ ister misiniz? E-posta Koruması hakkında %2$@.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "bildirim almak";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "E-posta Koruması hazır olduğunda size bildirim gönderilecektir. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Daha fazla bilgi";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "E-posta Koruması'nı kullanmaya başlayabileceğiniz zaman size bir bildirim göndereceğiz.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Sıra size geldiğinde haber vermemizi ister misiniz?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Bekleme listesine katılarak E-posta Koruması'nı deneme sırası size geldiğinde sizi bilgilendirmemizi istediniz.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Hayır Teşekkürler";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "BANA BİLDİR";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "E-posta Koruması için Davetlisiniz!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "E-postalarınızı kaydetmiyoruz. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-posta gizliliğinin basitleştirilmiş hâli.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "E-posta sağlayıcınızı değiştirmeden e-posta izleyicileri engelleyin ve adresinizi gizleyin. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi eklenmedi";
@@ -1024,15 +973,6 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Tamam";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Web İzleme Korumalarımız hakkında";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Arama korumalarımız ve reklamlarımız hakkında";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Arama ağı reklamlarımız korumalarımızı nasıl etkiler?";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritma";
 
@@ -1056,9 +996,6 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Zorunlu Şifreleme";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Şifreli Bağlantı";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Bu siteyi şifreli bir bağlantı kullanmaya zorladık. Bu sayede, siteye gönderdiğiniz kişisel bilgiler kaydedilemeyecek.";
@@ -1138,9 +1075,6 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Evet";
 
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SİTE KORUMASI KAPATILDI";
 
@@ -1156,62 +1090,11 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Başlıca İzleyici Ağları Bulundu";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Başlıca İzleyici Ağı Tespit Edilmedi";
-
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "%2$@ yılından beri ziyaret ettiğiniz web sitelerinin %%%1$@ kadarında izleyici ağları bulundu.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Kaç izleyiciyi engellediğimizi göstermek için\nhâlâ veri topluyoruz.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Yüklenen Üçüncü Taraf İsteği Yok";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "DuckDuckGo'daki bir %@ reklamı yakın zamanda tıklandığı için aşağıdaki alan adının istekleri yüklendi. Bu istekler, reklamların ne kadar etkili olduğunun değerlendirilmesine yardımcı olur. DuckDuckGo'daki reklamlar profil oluşturma için kullanılmaz.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Site kopmasını önlemek için aşağıdaki alan adının istekleri yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "%@ ile ilişkili oldukları için aşağıdaki alan adının istekleri yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Aşağıdaki üçüncü taraf alan adlarının istekleri yüklendi. Bir şirketin istekleri yüklenirse, diğer web izleme korumalarımıza rağmen profilinizi oluşturmaları mümkün olabilir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Bu site için Korumalar kapalı olduğundan hiçbir üçüncü taraf isteğin yüklenmesi engellenmedi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Aşağıdaki alan adlarının izleme istekleri yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Aşağıdaki alan adlarının istekleri de yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Aşağıdaki alanların istekleri yüklendi.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Aşağıdaki alanın istekleri yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Herhangi bir üçüncü taraf alan adından gelen istek algılanmadı.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Üçüncü Taraf İstekleri Yüklendi";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Not: Platform sınırlamaları yüzünden tüm istekleri belirlememiz mümkün olmayabilir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Profil Oluşturmama";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Gizlilik Uygulamaları: ToS;DR.";
@@ -1246,35 +1129,11 @@
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Bilinmeyen Gizlilik Uygulamaları";
 
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Şirketler izleyici kullanarak profilinizi çıkarabilir. Bu izleyicilerin yüklenmesini ve bu sayfadaki etkinliğinizi izlemesini engelledik.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Bu site için Korumalar kapalı olduğundan hiçbir izleme isteğinin yüklenmesi engellenmedi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Herhangi bir izleme isteği algılanmadı.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Aşağıdaki üçüncü taraf alan adlarının isteklerinin yüklenmesi, izleme istekleri olarak tanımlandıkları için engellendi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Yüklenmesi Engellenen İstekler";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "İzleme İstekleri Bulundu";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Hiçbir İzleme İsteği Engellenmedi";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "İzleme İsteği Bulunamadı";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "İptal";

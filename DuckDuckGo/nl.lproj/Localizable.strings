@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Ongedaan maken";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Suggestie automatisch aanvullen";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Toevoegen als bladwijzer";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Website openen";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Zoeken op DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Toevoegen";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aan";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Wachtwoord verbergen";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Weergeven";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Wachtwoord opslaan?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Wachtwoord weergeven";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Login bijwerken";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokkeer e-mailtrackers en verberg je adres";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Annuleren";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Let op: als je E-mailbescherming van dit apparaat verwijdert, wordt je Duck-adres niet verwijderd.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Verwijderen";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "E-mailbescherming verwijderen?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Er is een fout opgetreden bij het inschrijven op de wachtlijst. Probeer het later opnieuw.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Aan de slag";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Ik heb een uitnodigingscode";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Je bent uitgenodigd!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Schrijf je in voor de privéwachtlijst";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Je staat op de wachtlijst!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Je uitnodiging wordt hier weergegeven als je aan de beurt bent. Wil je %1$@ wanneer het toekomt? %2$@ over E-mailbescherming.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "krijg een melding";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "We sturen je een melding wanneer<br/> E-mailbescherming voor je klaar staat. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Meer informatie";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "We sturen je een melding wanneer je E-mailbescherming kunt gaan gebruiken.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Wil je dat we je een melding sturen als je aan de beurt bent?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Je hebt je ingeschreven voor de wachtlijst en ons gevraagd je te laten weten wanneer je aan de beurt bent om onze E-mailbescherming te proberen.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nee, bedankt";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "MELDING STUREN";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Je hebt een uitnodiging voor E-mailbescherming ontvangen!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "We bewaren je e-mails niet. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-mailprivacy, vereenvoudigd.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokkeer e-mailtrackers en verberg je adres, zonder van e-mailprovider te wisselen. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nog geen bladwijzers toegevoegd";
@@ -1024,15 +973,6 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Over onze webtrackingbeveiliging";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Over onze zoekbescherming en advertenties";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "How our search ads impact our protections";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
 
@@ -1056,9 +996,6 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Geforceerde versleuteling";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Gecodeerde verbinding";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "We hebben deze site gedwongen om een versleutelde verbinding te gebruiken, om het afluisteren te voorkomen van persoonlijke gegevens die je verstuurt.";
@@ -1138,9 +1075,6 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Ja";
 
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "BESCHERMING VAN DE SITE UITGESCHAKELD";
 
@@ -1156,62 +1090,11 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Grote trackernetwerken gevonden";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Geen grote trackernetwerken gevonden";
-
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Er zijn trackernetwerken gevonden op %1$@%% van de websites die je sinds %2$@ hebt bezocht.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "We verzamelen nog steeds gegevens om te laten zien\nhoeveel trackers we hebben geblokkeerd.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Geen verzoeken van derden geladen";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "De verzoeken van het volgende domein zijn geladen omdat er onlangs op een advertentie van %@ op DuckDuckGo is geklikt. Deze verzoeken helpen de effectiviteit van advertenties te evalueren. Geen enkele advertentie op DuckDuckGo maakt een profiel van je.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "De verzoeken van het volgende domein werden geladen om te voorkomen dat de site niet meer geladen zou worden.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "De verzoeken van het volgende domein zijn geladen omdat ze zijn gekoppeld aan %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "De volgende verzoeken van domeinen van derden zijn geladen. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken, hoewel onze andere beschermingen tegen webtracking nog steeds van toepassing zijn.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Verzoeken van derden werden niet verhinderd om te laden omdat beschermingen zijn uitgeschakeld voor deze site. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "De trackingverzoeken van de volgende domeinen zijn geladen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "De verzoeken van het volgende domein zijn ook geladen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "De aanvragen van de volgende domeinen zijn geladen.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "De verzoeken van het volgende domein werden geladen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "We hebben geen verzoeken van domeinen van derden gedetecteerd.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Verzoeken van derden geladen";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Let op: beperkingen op het platform kunnen ons vermogen om alle verzoeken te detecteren beperken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Geen profiel maken";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Privacypraktijken van ToS;DR.";
@@ -1246,35 +1129,11 @@
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Onbekende privacypraktijken";
 
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Trackers helpen bedrijven om een profiel van je te maken. We hebben verhinderd dat deze trackers je activiteit op deze pagina laden en volgen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Trackingverzoeken werden niet verhinderd om te laden omdat beschermingen zijn uitgeschakeld voor deze site. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "We hebben geen trackingverzoeken gedetecteerd.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "De volgende verzoeken van domeinen van derden werden geblokkeerd omdat ze werden geïdentificeerd als trackingverzoeken. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Verzoeken geblokkeerd bij laden";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Trackingverzoeken gevonden";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Geen trackingverzoeken geblokkeerd";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Geen trackingverzoeken gevonden";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Annuleren";

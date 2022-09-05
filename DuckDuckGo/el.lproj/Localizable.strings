@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Αναίρεση";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Πρόταση αυτόματης συμπλήρωσης";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Σελιδοδείκτης";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Άνοιγμα ιστότοπου";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Αναζήτηση στο DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Προσθήκη";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ενεργό";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Απόκρυψη κωδικού πρόσβασης";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Προβολή";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Αποθήκευση κωδικού πρόσβασης;";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Εμφάνιση κωδικού πρόσβασης";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Ενημέρωση σύνδεσης";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Αποκλείστε εφαρμογές παρακολούθησης email και αποκρύψτε τη διεύθυνσή σας";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Ακύρωση";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Σημείωση: Η αφαίρεση της προστασίας email από τη συσκευή αυτή δεν θα διαγράψει τη Διεύθυνση Duck που διαθέτετε.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Αφαίρεση";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Αφαίρεση προστασίας email;";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Προέκυψε σφάλμα κατά την εγγραφή στη Λίστα αναμονής. Ξαναπροσπαθήστε αργότερα.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Ξεκινήστε";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Διαθέτω Κωδικό πρόσκλησης";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Έχετε προσκληθεί!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Εγγραφείτε στην Ιδιωτική λίστα αναμονής";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Βρίσκεστε στη λίστα αναμονής!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Η πρόσκλησή σας θα εμφανιστεί εδώ όταν θα είναι έτοιμη για εσάς. Θέλετε να %1$@ μόλις φτάσει; %2$@ σχετικά με την Προστασία email.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "λάβετε ειδοποίηση";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Θα σας στείλουμε ειδοποίηση όταν θα είναι έτοιμη για σας η Προστασία<br/>email. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Μάθετε περισσότερα";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Θα σας στείλουμε ειδοποίηση όταν θα μπορείτε να αρχίσετε να χρησιμοποιείτε την Προστασία email.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Θα θέλατε να σας ειδοποιήσουμε όταν θα είναι η σειρά σας;";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Εγγραφήκατε στη λίστα αναμονής και μας ζητήσατε να σας ενημερώσουμε για το πότε θα είναι η σειρά σας να δοκιμάσετε την Προστασία email.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Όχι, ευχαριστώ";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "ΝΑ ΕΙΔΟΠΟΙΗΘΩ";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Η πρόσκλησή σας για προστασία των email είναι εδώ!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Δεν αποθηκεύουμε τα email σας. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Ιδιωτικότητα email, απλοποιημένη.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Αποκλείστε εφαρμογές παρακολούθησης email και αποκρύψτε τη διεύθυνσή σας,<br/>χωρίς να αλλάξετε πάροχο email. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";
@@ -1024,15 +973,6 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Εντάξει";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Σχετικά με τις Προστασίες παρακολούθησης ιστού";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Σχετικά με τις Προστασίες αναζήτησης και τις διαφημίσεις μας";
-
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "How our search ads impact our protections";
-
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Αλγόριθμος";
 
@@ -1056,9 +996,6 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Αναγκαστική κρυπτογράφηση";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Κρυπτογραφημένη σύνδεση";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Έχουμε αναγκάσει τον συγκεκριμένο ιστότοπο να χρησιμοποιεί κρυπτογραφημένη σύνδεση, αποτρέποντας την υποκλοπή τυχόν προσωπικών πληροφοριών που στέλνετε σε αυτόν.";
@@ -1138,9 +1075,6 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Ναί";
 
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "ΑΠΕΝΕΡΓΟΠΟΊΗΣΗ ΤΗΣ ΠΡΟΣΤΑΣΙΑΣ ΤΟΥ ΙΣΤΟΤΟΠΟΥ";
 
@@ -1156,62 +1090,11 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Βρέθηκαν κύριες εφαρμογές παρακολούθησης δικτύων";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Δεν βρέθηκαν κύρια δίκτυα παρακολούθησης";
-
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Τα δίκτυα εφαρμογών παρακολούθησης βρέθηκαν στο %1$@%% των ιστότοπων που έχετε επισκεφτεί από %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Εξακολουθούμε να συλλέγουμε δεδομένα για να δείξουμε\nπόσες εφαρμογές παρακολούθησης έχουμε αποκλείσει.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Δεν έχουν φορτωθεί αιτήματα τρίτων μερών";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Τα αιτήματα του ακόλουθου τομέα φορτώθηκαν επειδή έγινε πρόσφατα κλικ σε μια διαφήμιση %@ στο DuckDuckGo. Τα αιτήματα αυτά βοηθούν στην αξιολόγηση της αποτελεσματικότητας των διαφημίσεων. Καμία διαφήμιση στο DuckDuckGo δεν σκιαγραφεί προφίλ.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Τα αιτήματα του ακόλουθου τομέα φορτώθηκαν για να αποφευχθεί η διακοπή της λειτουργίας του ιστότοπου.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Τα αιτήματα του ακόλουθου τομέα φορτώθηκαν επειδή σχετίζονται με το %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Τα αιτήματα των ακόλουθων τομέων τρίτων μερών φορτώθηκαν. Εάν τα αιτήματα μιας εταιρείας έχουν φορτωθεί, ίσως τους επιτρέπουν να σκιαγραφήσουν το προφίλ σας, μολονότι εξακολουθούν να ισχύουν οι άλλες προστασίες μας για την παρακολούθηση στο διαδίκτυο.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Δεν αποκλείστηκαν αιτήματα τρίτων μερών από τη φόρτωση, καθώς οι Προστασίες είναι απενεργοποιημένες γι' αυτόν τον ιστότοπο. Εάν τα αιτήματα μιας εταιρείας έχουν φορτωθεί, ίσως τους επιτρέπουν να σκιαγραφήσουν το προφίλ σας.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Φορτώθηκαν τα αιτήματα παρακολούθησης των ακόλουθων τομέων.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Φορτώθηκαν επίσης τα αιτήματα του ακόλουθου τομέα.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Φορτώθηκαν τα αιτήματα του ακόλουθου τομέα";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Φορτώθηκαν τα αιτήματα του ακόλουθου τομέα.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Δεν εντοπίσαμε αιτήματα από τομείς τρίτων μερών.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Αιτήματα τρίτων μερών που φορτώθηκαν";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Σημείωση: οι περιορισμοί της πλατφόρμας ενδέχεται να περιορίσουν την ικανότητά μας για εντοπισμό όλων των αιτημάτων.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Μη σκιαγράφηση προφίλ";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Αποτελέσματα πρακτικών ιδιωτικότητας από ToS;DR.";
@@ -1246,35 +1129,11 @@
 /* No comment provided by engineer. */
 "privacy.protection.tos.unknown" = "Άγνωστες πρακτικές ιδιωτικότητας";
 
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Οι εφαρμογές παρακολούθησης βοηθούν τις εταιρείες να σκιαγραφήσουν το προφίλ σας. Αποκλείσαμε αυτές τις εφαρμογές παρακολούθησης από το να φορτώνουν και να παρακολουθούν τις δραστηριότητές σας σε αυτήν τη σελίδα.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Δεν αποκλείστηκαν αιτήματα παρακολούθησης από τη φόρτωση, καθώς οι Προστασίες είναι απενεργοποιημένες γι' αυτόν τον ιστότοπο. Εάν τα αιτήματα μιας εταιρείας έχουν φορτωθεί, ίσως τους επιτρέπουν να σκιαγραφήσουν το προφίλ σας.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Δεν εντοπίσαμε αιτήματα παρακολούθησης.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Τα αιτήματα των ακόλουθων τομέων τρίτων μερών αποκλείστηκαν από τη φόρτωση επειδή αναγνωρίστηκαν ως αιτήματα παρακολούθησης. Εάν τα αιτήματα μιας εταιρείας έχουν φορτωθεί, ίσως τους επιτρέπουν να σκιαγραφήσουν το προφίλ σας.";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Αιτήματα που αποκλείστηκαν από τη φόρτωση";
-
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Βρέθηκαν αιτήματα παρακολούθησης";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Δεν αποκλείστηκαν αιτήματα παρακολούθησης";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Δεν βρέθηκαν αιτήματα παρακολούθησης";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Ακύρωση";

@@ -1400,9 +1400,12 @@ extension MainViewController: TabDelegate {
         closeTab(tab.tabModel)
     }
 
+    func tabDidStartLoading(_ tab: TabViewController) {
+        self.findInPageView.done()
+        self.tabLoadingStateDidChange(tab: tab)
+    }
+
     func tabLoadingStateDidChange(tab: TabViewController) {
-        findInPageView.done()
-        
         if currentTab == tab {
             refreshControls()
         }

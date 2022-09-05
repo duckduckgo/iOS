@@ -1122,7 +1122,7 @@ extension TabViewController: WKNavigationDelegate {
         resetSiteRating()
         
         tabModel.link = link
-        delegate?.tabLoadingStateDidChange(tab: self)
+        delegate?.tabDidStartLoading(self)
 
         trackerNetworksDetectedOnPage.removeAll()
         pageHasTrackers = false
@@ -1504,8 +1504,6 @@ extension TabViewController: WKNavigationDelegate {
                 if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
-                
-                self?.findInPage?.done()
             }
             decisionHandler(decision)
         }

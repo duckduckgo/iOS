@@ -395,6 +395,7 @@ extension AutofillLoginSettingsListViewController: Themable {
         view.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
+        tableView.sectionIndexColor = theme.buttonTintColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor

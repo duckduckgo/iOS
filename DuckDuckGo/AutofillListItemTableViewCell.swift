@@ -33,6 +33,8 @@ class AutofillListItemTableViewCell: UITableViewCell {
         let label = UILabel(frame: CGRect.zero)
         label.font = .preferredFont(forTextStyle: .callout)
         label.textColor = .label
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -40,19 +42,23 @@ class AutofillListItemTableViewCell: UITableViewCell {
         let label = UILabel(frame: CGRect.zero)
         label.font = .preferredFont(forTextStyle: .footnote)
         label.textColor = .gray50
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 4
         return imageView
     }()
     
     private lazy var textStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fillProportionally
         stackView.spacing = 3
         return stackView
     }()
@@ -61,6 +67,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
         let stackView = UIStackView(arrangedSubviews: [iconImageView, textStackView])
         stackView.axis = .horizontal
         stackView.spacing = 12
+        stackView.alignment = .center
         return stackView
     }()
     
@@ -105,7 +112,8 @@ class AutofillListItemTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             iconImageView.widthAnchor.constraint(equalToConstant: imageSize),
-            
+            iconImageView.heightAnchor.constraint(equalToConstant: imageSize),
+
             contentStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             contentStackView.topAnchor.constraint(equalTo: margins.topAnchor),

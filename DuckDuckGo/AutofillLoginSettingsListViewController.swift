@@ -259,7 +259,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
 extension AutofillLoginSettingsListViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         switch viewModel.sections[indexPath.section] {
         case .enableAutofill:
             return 44

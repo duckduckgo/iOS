@@ -106,29 +106,18 @@ public class APIRequest {
                                               httpBody: Data? = nil,
                                               timeoutInterval: TimeInterval = 60.0,
                                               callBackOnMainThread: Bool = false,
-                                              completion: @escaping APIRequestCompletion) -> URLSessionDataTask?
+                                              completion: @escaping APIRequestCompletion) -> URLSessionDataTask
     where C.Element == (key: String, value: String) {
 
         os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
 
-        let urlRequest: URLRequest
-        do {
-            urlRequest = try urlRequestFor(url: url,
-                                           method: method,
-                                           parameters: parameters,
-                                           headers: headers,
-                                           httpBody: httpBody,
-                                           timeoutInterval: timeoutInterval)
-        } catch {
-            os_log("Couldn‘t form a request for %s (%s) with parameters: %s",
-                   log: generalLog,
-                   type: .debug,
-                   url.absoluteString,
-                   error.localizedDescription,
-                   String(describing: parameters))
-            completion(nil, error)
-            return nil
-        }
+        let urlRequest = urlRequestFor(url: url,
+                                       method: method,
+                                       parameters: parameters,
+                                       headers: headers,
+                                       httpBody: httpBody,
+                                       timeoutInterval: timeoutInterval)
+
         let session = callBackOnMainThread ? mainThreadCallbackSession : defaultSession
 
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
@@ -176,10 +165,10 @@ public class APIRequest {
                                                      parameters: C,
                                                      headers: HTTPHeaders,
                                                      httpBody: Data?,
-                                                     timeoutInterval: TimeInterval) throws -> URLRequest
+                                                     timeoutInterval: TimeInterval) -> URLRequest
     where C.Element == (key: String, value: String) {
 
-        let url = try url.appendingParameters(parameters)
+        let url = url.appendingParameters(parameters)
         var urlRequest = URLRequest.developerInitiated(url)
         urlRequest.allHTTPHeaderFields = headers
         urlRequest.httpMethod = method.rawValue

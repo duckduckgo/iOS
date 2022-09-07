@@ -36,7 +36,7 @@ class AutocompleteRequestTests: XCTestCase {
 
     func testWhenRequestIsMadeThenHasNavParameter() throws {
         stub(condition: {
-            return (try? $0.url?.getParameter(name: "nav")) == "1"
+            return ($0.url?.getParameter(named: "nav") == "1"
         }, response: { _ in
             return HTTPStubsResponse(data: """
                 []

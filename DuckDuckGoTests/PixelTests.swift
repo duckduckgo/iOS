@@ -41,7 +41,7 @@ class PixelTests: XCTestCase {
         
         stub(condition: { request -> Bool in
             if let url = request.url {
-                XCTAssertEqual("1.0", try? url.getParameter(name: "dur"))
+                XCTAssertEqual("1.0", url.getParameter(named: "dur"))
                 return true
             }
             
@@ -79,8 +79,8 @@ class PixelTests: XCTestCase {
         let params = ["param1": "value1", "param2": "value2"]
         
         stub(condition: isHost(host) && isPath("/t/ml_ios_phone")) { request -> HTTPStubsResponse in
-            XCTAssertEqual("value1", try? request.url?.getParameter(name: "param1"))
-            XCTAssertEqual("value2", try? request.url?.getParameter(name: "param2"))
+            XCTAssertEqual("value1", request.url?.getParameter(named: "param1"))
+            XCTAssertEqual("value2", request.url?.getParameter(named: "param2"))
             expectation.fulfill()
             return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
         }

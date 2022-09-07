@@ -280,7 +280,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab(reuseExisting: true)
             do {
-                if try url.getParameter(name: "w") != nil {
+                if url.getParameter(named: "w") != nil {
                     Pixel.fire(pixel: .widgetNewSearch)
                     mainViewController?.enterSearch()
                 }

@@ -24,20 +24,21 @@ import Combine
 import os.log
 import Core
 
+internal enum AutofillLoginListSectionType: Comparable {
+    case enableAutofill
+    case credentials(title: String, items: [AutofillLoginListItemViewModel])
+    
+    static func < (lhs: AutofillLoginListSectionType, rhs: AutofillLoginListSectionType) -> Bool {
+        if case .credentials(let leftTitle, _) = lhs,
+           case .credentials(let rightTitle, _) = rhs {
+            return leftTitle.localizedCaseInsensitiveCompare(rightTitle) == .orderedAscending
+        }
+        return true
+    }
+}
+
 final class AutofillLoginListViewModel: ObservableObject {
     
-    enum AutofillLoginListSectionType: Comparable {
-        case enableAutofill
-        case credentials(title: String, items: [AutofillLoginListItemViewModel])
-        
-        static func < (lhs: AutofillLoginListSectionType, rhs: AutofillLoginListSectionType) -> Bool {
-            if case .credentials(let leftTitle, _) = lhs,
-               case .credentials(let rightTitle, _) = rhs {
-                return leftTitle.localizedCaseInsensitiveCompare(rightTitle) == .orderedAscending
-            }
-            return true
-        }
-    }
     enum ViewState {
         case authLocked
         case empty
@@ -154,22 +155,8 @@ final class AutofillLoginListViewModel: ObservableObject {
             newSections.append(.enableAutofill)
         }
 
-        let viewModelsGroupedByFirstLetter = accounts.reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
-            let firstChar = String(account.name.first ?? Character(""))
-            // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
-            // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
-            // Apple's own apps (e.g. contacts) seem to suffer from the same problem
-            let deDistinctionedString = firstChar.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
-            return result[deDistinctionedString, default: []].append(AutofillLoginListItemViewModel(account: account))
-        }
-        
-        let accountSections = viewModelsGroupedByFirstLetter.map { dictionaryItem -> AutofillLoginListSectionType in
-            let sortedGroup = dictionaryItem.value.sorted { lhs, rhs in
-                lhs.title.localizedCaseInsensitiveCompare(rhs.title) == .orderedAscending
-            }
-            return AutofillLoginListSectionType.credentials(title: dictionaryItem.key,
-                                                            items: sortedGroup)
-        }.sorted()
+        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()
+        let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
         
         newSections.append(contentsOf: accountSections)
         return newSections
@@ -220,5 +207,32 @@ final class AutofillLoginListViewModel: ObservableObject {
 extension AutofillLoginListItemViewModel: Comparable {
     static func < (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {
         lhs.title < rhs.title
+    }
+}
+
+internal extension Array where Element == SecureVaultModels.WebsiteAccount {
+    
+    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter() -> [String: [AutofillLoginListItemViewModel]] {
+        reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
+            let firstChar = String(account.name.first ?? Character(""))
+            // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
+            // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
+            // Apple's own apps (e.g. contacts) seem to suffer from the same problem
+            let deDistinctionedString = firstChar.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
+            return result[deDistinctionedString, default: []].append(AutofillLoginListItemViewModel(account: account))
+        }
+    }
+}
+
+internal extension Dictionary where Key == String, Value == [AutofillLoginListItemViewModel] {
+    
+    func autofillLoginListSectionsForViewModelsSortedByTitle() -> [AutofillLoginListSectionType] {
+        map { dictionaryItem -> AutofillLoginListSectionType in
+            let sortedGroup = dictionaryItem.value.sorted { lhs, rhs in
+                lhs.title.localizedCaseInsensitiveCompare(rhs.title) == .orderedAscending
+            }
+            return AutofillLoginListSectionType.credentials(title: dictionaryItem.key,
+                                                            items: sortedGroup)
+        }.sorted()
     }
 }

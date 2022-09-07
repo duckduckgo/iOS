@@ -24,6 +24,7 @@ import BrowserServicesKit
 
 private enum Constants {
     static var textFieldFadeDuration = 0.2
+    static var allTrackersRevealedAnimationFrame = 45.0
 }
 
 final class PrivacyIconAndTrackersAnimator {
@@ -98,7 +99,7 @@ final class PrivacyIconAndTrackersAnimator {
         }
         
         let currentTrackerAnimation = container.trackerAnimationView(for: trackerAnimationImageProvider.trackerImagesCount)
-        currentTrackerAnimation?.play(toFrame: 45)  // stop frame for all 3 tracker animations
+        currentTrackerAnimation?.play(toFrame: Constants.allTrackersRevealedAnimationFrame)
     }
     
     func completeAnimationForDaxDialog(in omniBar: OmniBar) {
@@ -108,7 +109,7 @@ final class PrivacyIconAndTrackersAnimator {
         currentTrackerAnimation?.play()
         
         let currentShieldAnimation = [container.privacyIcon.shieldAnimationView, container.privacyIcon.shieldDotAnimationView].first { !$0.isHidden }
-        currentShieldAnimation?.currentFrame = 45
+        currentShieldAnimation?.currentFrame = Constants.allTrackersRevealedAnimationFrame
         currentShieldAnimation?.play(completion: { [weak container] _ in
             self.isAnimatingForDaxDialog = false
             

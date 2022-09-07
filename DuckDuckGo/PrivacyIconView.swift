@@ -129,7 +129,6 @@ class PrivacyIconView: UIView {
     
 }
 
-@available(iOS 13.4, *)
 extension PrivacyIconView: UIPointerInteractionDelegate {
     
     public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {

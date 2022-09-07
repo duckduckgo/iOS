@@ -22,6 +22,10 @@ import Lottie
 import Core
 import BrowserServicesKit
 
+private enum Constants {
+    static var textFieldFadeDuration = 0.2
+}
+
 final class PrivacyIconAndTrackersAnimator {
 
     private let trackerAnimationImageProvider = TrackerAnimationImageProvider()
@@ -61,7 +65,7 @@ final class PrivacyIconAndTrackersAnimator {
         
         container.privacyIcon.prepareForAnimation(for: privacyIcon)
                 
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: Constants.textFieldFadeDuration) {
             omniBar.textField.alpha = 0
         }
 
@@ -72,7 +76,7 @@ final class PrivacyIconAndTrackersAnimator {
         currentShieldAnimation?.play { [weak container] _ in
             container?.privacyIcon.updateIcon(privacyIcon)
             
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: Constants.textFieldFadeDuration) {
                 omniBar.textField.alpha = 1
             }
             
@@ -89,7 +93,7 @@ final class PrivacyIconAndTrackersAnimator {
         
         container.privacyIcon.prepareForAnimation(for: privacyIcon)
                         
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: Constants.textFieldFadeDuration) {
             omniBar.textField.alpha = 0
         }
         
@@ -110,7 +114,7 @@ final class PrivacyIconAndTrackersAnimator {
             
             container?.privacyIcon.refresh()
             
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: Constants.textFieldFadeDuration) {
                 omniBar.textField.alpha = 1
             }
         })

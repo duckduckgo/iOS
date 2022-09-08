@@ -78,7 +78,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         setupCancellables()
         installSubviews()
         installConstraints()
-        installNavigationBarButtons()
         applyTheme(ThemeManager.shared.currentTheme)
         updateViewState()
         configureNotification()
@@ -96,6 +95,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         super.setEditing(editing, animated: animated)
 
         tableView.setEditing(editing, animated: animated)
+
+        updateNavigationBarButtons()
     }
     
     @objc
@@ -165,47 +166,61 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            for item in navigationItem.rightBarButtonItems ?? [] {
-                item.isEnabled = true
-            }
         case .authLocked:
             emptyView.isHidden = true
             tableView.isHidden = true
             lockedView.isHidden = false
             emptySearchView.isHidden = true
-            for item in navigationItem.rightBarButtonItems ?? [] {
-                item.isEnabled = false
-            }
         case .empty:
             emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            editButtonItem.isEnabled = false
-            addBarButtonItem.isEnabled = true
         case .searching:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            for item in navigationItem.rightBarButtonItems ?? [] {
-                item.isEnabled = true
-            }
         case .searchingNoResults:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = false
-            for item in navigationItem.rightBarButtonItems ?? [] {
-                item.isEnabled = true
-            }
         }
+        updateNavigationBarButtons()
         tableView.reloadData()
     }
     
-    private func installNavigationBarButtons() {
-        navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+    private func updateNavigationBarButtons() {
+        switch viewModel.viewState {
+        case .showItems:
+            if tableView.isEditing {
+                navigationItem.rightBarButtonItems = [editButtonItem]
+            } else {
+                if viewModel.isAutofillEnabled {
+                    navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                } else {
+                    navigationItem.rightBarButtonItems = [addBarButtonItem]
+                }
+                addBarButtonItem.isEnabled = true
+            }
+            editButtonItem.isEnabled = true
+        case .authLocked:
+            navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+            addBarButtonItem.isEnabled = false
+            editButtonItem.isEnabled = false
+        case .empty:
+            if viewModel.isAutofillEnabled {
+                navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                editButtonItem.isEnabled = false
+            } else {
+                navigationItem.rightBarButtonItems = [addBarButtonItem]
+            }
+            addBarButtonItem.isEnabled = true
+        case .searching, .searchingNoResults:
+            navigationItem.rightBarButtonItems = []
+        }
     }
     
     private func installSubviews() {

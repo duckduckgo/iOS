@@ -45,8 +45,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = UserText.autofillLoginListSearchPlaceholder
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
         definesPresentationContext = true
         
         return searchController
@@ -60,6 +59,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.estimatedRowHeight = 60
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
+        // Have to set tableHeaderView height otherwise tableView content willl jump when adding / removing searchController due to tableView insetGrouped style
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 16))
         return tableView
     }()
     
@@ -81,7 +82,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
         updateViewState()
         configureNotification()
-        navigationItem.searchController = searchController
 
     }
     
@@ -97,6 +97,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.setEditing(editing, animated: animated)
 
         updateNavigationBarButtons()
+        updateSearchController()
     }
     
     @objc
@@ -189,6 +190,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptySearchView.isHidden = false
         }
         updateNavigationBarButtons()
+        updateSearchController()
         tableView.reloadData()
     }
     
@@ -222,7 +224,22 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             navigationItem.rightBarButtonItems = []
         }
     }
-    
+
+    private func updateSearchController() {
+        switch viewModel.viewState {
+        case .showItems:
+            if tableView.isEditing {
+                navigationItem.searchController = nil
+            } else {
+                navigationItem.searchController = searchController
+            }
+        case .searching, .searchingNoResults:
+            navigationItem.searchController = searchController
+        case .empty, .authLocked:
+            navigationItem.searchController = nil
+        }
+    }
+
     private func installSubviews() {
         view.addSubview(tableView)
         tableView.addSubview(emptySearchView)

@@ -30,6 +30,10 @@ import BrowserServicesKit
 class MainViewController: UIViewController {
 // swiftlint:enable type_body_length
 
+    static var sharedInstance: MainViewController {
+        (UIApplication.shared.delegate?.window??.rootViewController as? MainViewController)!
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
     }

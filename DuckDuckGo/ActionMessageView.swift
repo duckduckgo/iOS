@@ -39,17 +39,6 @@ class ActionMessageView: UIView {
         static var duration: TimeInterval = 3.0
 
         static let paddingFromNavBar: CGFloat = 30
-        static var windowBottomPadding: CGFloat {
-            if UIDevice.current.userInterfaceIdiom == .phone && !isPortrait {
-                return 40
-            }
-            
-            return 70
-        }
-        static var windowBottomPaddingWithoutBottomBar: CGFloat {
-            return 0
-        }
-
     }
 
     @IBOutlet weak var message: UILabel!
@@ -61,6 +50,8 @@ class ActionMessageView: UIView {
     private var action: () -> Void = {}
     private var onDidDismiss: () -> Void = {}
 
+    private var observers = [NSKeyValueObservation]()
+    private var bottomLayoutConstraint: NSLayoutConstraint!
     private var dismissWorkItem: DispatchWorkItem?
     
     static func loadFromXib() -> ActionMessageView {
@@ -127,22 +118,16 @@ class ActionMessageView: UIView {
 
         window.addSubview(messageView)
 
-//        window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor,
-//                                                           constant: bottomPadding(for: presentationLocation)).isActive = true
-
-        if window.rootViewController?.presentedViewController == nil,
-           let viewController = window.rootViewController?.children.first(where: { $0 is TabViewController }) {
-            window.addConstraint(NSLayoutConstraint(item: viewController.view!,
-                                                    attribute: .bottom,
-                                                    relatedBy: .equal,
-                                                    toItem: messageView,
-                                                    attribute: .bottom,
-                                                    multiplier: 1,
-                                                    constant: Constants.paddingFromNavBar))
-        } else {
-            window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor,
-                                                               constant: Constants.windowBottomPadding).isActive = true
-        }
+        messageView.bottomLayoutConstraint = window.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: messageView.bottomAnchor)
+        messageView.observers.append(MainViewController.sharedInstance.toolbarBottom
+            .observe(\.constant, options: [.initial]) { [weak messageView] _, _ in
+                messageView?.updateBottomLayoutConstraint(animated: false)
+            })
+        messageView.observers.append(MainViewController.sharedInstance.view
+            .observe(\.safeAreaInsets) { [weak messageView] _, _ in
+                messageView?.updateBottomLayoutConstraint(animated: true)
+            })
+        messageView.bottomLayoutConstraint.isActive = true
 
         let messageViewWidth = window.frame.width <= Constants.maxWidth ? window.frame.width - Constants.minimumHorizontalPadding : Constants.maxWidth
         messageView.widthAnchor.constraint(equalToConstant: messageViewWidth).isActive = true
@@ -168,14 +153,39 @@ class ActionMessageView: UIView {
     static func dismissAllMessages() {
         presentedMessages.forEach { $0.dismissAndFadeOut() }
     }
-    
-    func dismissAndFadeOut() {
+
+    private func updateBottomLayoutConstraint(animated: Bool) {
+        if animated {
+            self.superview?.bringSubviewToFront(self)
+            // animation will break if view order changes (in case presentedViewController is shown)
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: Constants.animationDuration, delay: 0, options: .beginFromCurrentState) {
+                    self.updateBottomLayoutConstraint(animated: false)
+                }
+            }
+            return
+        }
+
+        let mainViewController = MainViewController.sharedInstance
+        let toolbarHeight: CGFloat
+        if let presentedViewController = mainViewController.presentedViewController {
+            toolbarHeight = (presentedViewController as? UINavigationController)?.toolbar.frame.size.height ?? 0
+        } else {
+            toolbarHeight = mainViewController.toolbarHeight - mainViewController.toolbarBottom.constant
+        }
+
+        bottomLayoutConstraint.constant = toolbarHeight + Constants.paddingFromNavBar
+        superview?.layoutIfNeeded()
+    }
+
+    private func dismissAndFadeOut() {
         dismissWorkItem?.cancel()
         dismissWorkItem = nil
         
         UIView.animate(withDuration: Constants.animationDuration, animations: {
             self.alpha = 0
         }, completion: {  _ in
+            self.observers.removeAll()
             self.removeFromSuperview()
             if let position = Self.presentedMessages.firstIndex(of: self) {
                 Self.presentedMessages.remove(at: position)

@@ -48,7 +48,6 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N97-eI-Lps">
                                                     <rect key="frame" x="333" y="8" width="30" height="30"/>
-                                                    <accessibility key="accessibilityConfiguration" label="Autocomplete suggestion"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="fBV-vf-OLd"/>
                                                         <constraint firstAttribute="width" constant="30" id="wRc-fh-LDz"/>

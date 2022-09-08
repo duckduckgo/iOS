@@ -37,14 +37,14 @@ class SuggestionTableViewCell: UITableViewCell {
         switch suggestion.source {
         case .local:
             typeImage.image = UIImage(named: "BookmarkSuggestion")
-            self.accessibilityValue = UserText.suggestionOpenBookmark
+            self.accessibilityValue = UserText.suggestionTypeBookmark
         case .remote:
             if suggestion.url != nil {
                 typeImage.image = UIImage(named: "SuggestGlobe")
-                self.accessibilityValue = UserText.suggestionOpenWebsite
+                self.accessibilityValue = UserText.suggestionTypeWebsite
             } else {
                 typeImage.image = UIImage(named: "SuggestLoupe")
-                self.accessibilityValue = UserText.suggestionSearchFor
+                self.accessibilityValue = UserText.suggestionTypeSearch
             }
         }
         self.plusButton.accessibilityLabel = UserText.suggestionAutocomplete

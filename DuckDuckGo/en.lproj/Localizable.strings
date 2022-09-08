@@ -7,17 +7,17 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Undo";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Autocomplete suggestion";
+/* Complete the suggestion into the Address Bar. Verb. VoiceOver description of the button that autocompletes the selected Suggestion into the Address Bar. */
+"action.suggestion.action.autocomplete" = "Autocomplete suggestion";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Bookmark";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Open website";
+/* [a] bookmark. Noun. Voice-over title for a Bookmark. */
+"action.suggestion.type.bookmark" = "Bookmark";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Search at DuckDuckGo";
+"action.suggestion.type.search" = "Search at DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.type.website" = "Open website";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Add";

@@ -25,6 +25,7 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 import BrowserServicesKit
+import Swifter
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length

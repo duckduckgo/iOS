@@ -507,6 +507,9 @@
 		B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60DFF062872B64B0061E7C2 /* JSAlertController.swift */; };
 		B623C1C22862CA9E0043013E /* DownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B623C1C12862CA9E0043013E /* DownloadSession.swift */; };
 		B623C1C42862CD670043013E /* WKDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B623C1C32862CD670043013E /* WKDownloadSession.swift */; };
+		B672B1CE28C718E200443052 /* ReaderMode.js in Resources */ = {isa = PBXBuildFile; fileRef = B672B1CD28C718E200443052 /* ReaderMode.js */; };
+		B672B1D028C7195800443052 /* ReaderModeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = B672B1CF28C7195800443052 /* ReaderModeUserScript.swift */; };
+		B672B1D228C73CE000443052 /* Swifter in Frameworks */ = {isa = PBXBuildFile; productRef = B672B1D128C73CE000443052 /* Swifter */; };
 		B6BA95C328891E33004ABA20 /* BrowsingMenuAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BA95C228891E33004ABA20 /* BrowsingMenuAnimator.swift */; };
 		B6BA95C528894A28004ABA20 /* BrowsingMenuViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BA95C428894A28004ABA20 /* BrowsingMenuViewController.storyboard */; };
 		B6BA95E828924730004ABA20 /* JSAlertController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BA95E728924730004ABA20 /* JSAlertController.storyboard */; };
@@ -1929,6 +1932,8 @@
 		B60DFF062872B64B0061E7C2 /* JSAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSAlertController.swift; sourceTree = "<group>"; };
 		B623C1C12862CA9E0043013E /* DownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadSession.swift; sourceTree = "<group>"; };
 		B623C1C32862CD670043013E /* WKDownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKDownloadSession.swift; sourceTree = "<group>"; };
+		B672B1CD28C718E200443052 /* ReaderMode.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ReaderMode.js; sourceTree = "<group>"; };
+		B672B1CF28C7195800443052 /* ReaderModeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderModeUserScript.swift; sourceTree = "<group>"; };
 		B6BA95C228891E33004ABA20 /* BrowsingMenuAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsingMenuAnimator.swift; sourceTree = "<group>"; };
 		B6BA95C428894A28004ABA20 /* BrowsingMenuViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = BrowsingMenuViewController.storyboard; sourceTree = "<group>"; };
 		B6BA95E728924730004ABA20 /* JSAlertController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JSAlertController.storyboard; sourceTree = "<group>"; };
@@ -2141,6 +2146,7 @@
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
 				4B5167422824B492004C67BA /* Lottie in Frameworks */,
+				B672B1D228C73CE000443052 /* Swifter in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2696,6 +2702,7 @@
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
 				8533133B1F98E9C000E061A5 /* PrivacyProtection */,
+				B672B1CC28C718C900443052 /* ReaderMode */,
 				C1B7B51D28941F160098FD6A /* RemoteMessaging */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				0A6CC0EE23904D5400E4F627 /* Settings.bundle */,
@@ -3299,6 +3306,15 @@
 				AA4D6AF423DF0312007E8790 /* AppIconRed60x60@3x.png */,
 			);
 			name = Red;
+			sourceTree = "<group>";
+		};
+		B672B1CC28C718C900443052 /* ReaderMode */ = {
+			isa = PBXGroup;
+			children = (
+				B672B1CF28C7195800443052 /* ReaderModeUserScript.swift */,
+				B672B1CD28C718E200443052 /* ReaderMode.js */,
+			);
+			name = ReaderMode;
 			sourceTree = "<group>";
 		};
 		C14882D627F2010700D59F0C /* ImportExport */ = {
@@ -4342,6 +4358,7 @@
 			packageProductDependencies = (
 				31E69A62280F4CB600478327 /* DuckUI */,
 				4B5167412824B492004C67BA /* Lottie */,
+				B672B1D128C73CE000443052 /* Swifter */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -4676,6 +4693,7 @@
 				98D16973250CE707009513CC /* OmniBar.xib in Resources */,
 				AAF2E28523E0496F00962AF8 /* AppIconGreen83.5x83.5@2x.png in Resources */,
 				F4F7F10C25813FE200045D62 /* 03_Airstream_divided_by_four.json in Resources */,
+				B672B1CE28C718E200443052 /* ReaderMode.js in Resources */,
 				AAF2E28723E0498200962AF8 /* AppIconPurple83.5x83.5@2x.png in Resources */,
 				AA4D6AB923DE4D15007E8790 /* AppIconYellow29x29@3x.png in Resources */,
 				984147B424F0264B00362052 /* Authentication.storyboard in Resources */,
@@ -5207,6 +5225,7 @@
 				1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */,
 				83004E862193E5ED00DA013C /* TabViewControllerBrowsingMenuExtension.swift in Sources */,
 				AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */,
+				B672B1D028C7195800443052 /* ReaderModeUserScript.swift in Sources */,
 				316931D927BD22A80095F5ED /* DownloadActionMessageViewHelper.swift in Sources */,
 				9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */,
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
@@ -7213,6 +7232,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = BrowserServicesKit;
+		};
+		B672B1D128C73CE000443052 /* Swifter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F486D3022506975E002D07D7 /* XCRemoteSwiftPackageReference "swifter" */;
+			productName = Swifter;
 		};
 		C14882EC27F211A000D59F0C /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

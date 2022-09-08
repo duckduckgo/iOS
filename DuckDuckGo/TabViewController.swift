@@ -190,6 +190,7 @@ class TabViewController: UIViewController {
     private var textSizeUserScript = TextSizeUserScript()
     private lazy var autofillUserScript = createAutofillUserScript()
     private var debugScript = DebugUserScript()
+    private var readerModeScript = ReaderModeUserScript()
 
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
@@ -348,7 +349,8 @@ class TabViewController: UIViewController {
             faviconScript,
             fullScreenVideoScript,
             autofillUserScript,
-            printingUserScript
+            printingUserScript,
+            readerModeScript
         ]
         
         if PreserveLogins.shared.loginDetectionEnabled {
@@ -1211,6 +1213,10 @@ extension TabViewController: WKNavigationDelegate {
         onWebpageDidFinishLoading()
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
+
+        webView.evaluateJavaScript("\(ReaderModeNamespace).checkReadability()") { result, error  in
+            Swift.print(result, error)
+        }
         
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil

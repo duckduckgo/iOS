@@ -31,10 +31,18 @@ internal enum AutofillLoginListSectionType: Comparable {
     static func < (lhs: AutofillLoginListSectionType, rhs: AutofillLoginListSectionType) -> Bool {
         if case .credentials(let leftTitle, _) = lhs,
            case .credentials(let rightTitle, _) = rhs {
+            if leftTitle == miscSectionHeading {
+                return false
+            } else if rightTitle == miscSectionHeading {
+                return true
+            }
+            
             return leftTitle.localizedCaseInsensitiveCompare(rightTitle) == .orderedAscending
         }
         return true
     }
+    
+    static let miscSectionHeading = "#"
 }
 
 final class AutofillLoginListViewModel: ObservableObject {
@@ -225,7 +233,7 @@ internal extension Array where Element == SecureVaultModels.WebsiteAccount {
                 
                 key = String(deDistinctionedChar)
             } else {
-                key = "#"
+                key = AutofillLoginListSectionType.miscSectionHeading
             }
             
             return result[key, default: []].append(AutofillLoginListItemViewModel(account: account))

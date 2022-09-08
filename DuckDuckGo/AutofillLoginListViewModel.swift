@@ -214,12 +214,21 @@ internal extension Array where Element == SecureVaultModels.WebsiteAccount {
     
     func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter() -> [String: [AutofillLoginListItemViewModel]] {
         reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
-            let firstChar = String(account.name.first ?? Character(""))
+            
             // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
             // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
             // Apple's own apps (e.g. contacts) seem to suffer from the same problem
-            let deDistinctionedString = firstChar.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
-            return result[deDistinctionedString, default: []].append(AutofillLoginListItemViewModel(account: account))
+            let key: String
+            if let firstChar = account.name.first,
+               let deDistinctionedChar = String(firstChar).folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil).first,
+               deDistinctionedChar.isLetter {
+                
+                key = String(deDistinctionedChar)
+            } else {
+                key = "#"
+            }
+            
+            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account))
         }
     }
 }

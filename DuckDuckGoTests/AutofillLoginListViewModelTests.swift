@@ -39,13 +39,29 @@ class AutofillLoginListSectionTypeTests: XCTestCase {
 
 class AutofillLoginListItemViewModelTests: XCTestCase {
     
-    func testWhenCreatingViewModelsThenGroupedCorrectly() {
+    func testWhenCreatingViewModelsThenDiacriticsGroupedCorrectly() {
         let domain = "whateverNotImportantForThisTest"
         let testData = [SecureVaultModels.WebsiteAccount(title: nil, username: "c", domain: domain),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "ç", domain: domain),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "C", domain: domain)]
         let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()
         // Diacritics should be grouped with the root letter (in most cases), and grouping should be case insensative
+        XCTAssertEqual(result.count, 1)
+    }
+    
+    func testWhenCreatingViewModelsThenNumbersAndSymbolsGroupCorrectly() {
+        let domain = "whateverNotImportantForThisTest"
+        let testData = [SecureVaultModels.WebsiteAccount(title: nil, username: "1", domain: domain),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "0", domain: domain),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "#", domain: domain),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "9", domain: domain),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "3asdasfd", domain: domain),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "~", domain: domain),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "?????", domain: domain),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "&%$£$%", domain: domain),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "99999", domain: domain)]
+        let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()
+        // All non letters should be grouped together
         XCTAssertEqual(result.count, 1)
     }
 }

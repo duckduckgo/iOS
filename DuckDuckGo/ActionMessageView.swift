@@ -38,7 +38,7 @@ class ActionMessageView: UIView {
         static var animationDuration: TimeInterval = 0.2
         static var duration: TimeInterval = 3.0
 
-        static let paddingFromNavBar: CGFloat = 30
+        static let paddingFromToolbar: CGFloat = 30
     }
 
     @IBOutlet weak var message: UILabel!
@@ -155,6 +155,7 @@ class ActionMessageView: UIView {
     }
 
     private func updateBottomLayoutConstraint(animated: Bool) {
+        guard let superview = superview else { return }
         if animated {
             self.superview?.bringSubviewToFront(self)
             // animation will break if view order changes (in case presentedViewController is shown)
@@ -168,14 +169,28 @@ class ActionMessageView: UIView {
 
         let mainViewController = MainViewController.sharedInstance
         let toolbarHeight: CGFloat
-        if let presentedViewController = mainViewController.presentedViewController {
-            toolbarHeight = (presentedViewController as? UINavigationController)?.toolbar.frame.size.height ?? 0
-        } else {
+
+        // if displaying modal with toolbar
+        if let presentedViewController = mainViewController.presentedViewController as? UINavigationController,
+           let toolbar = presentedViewController.toolbar,
+           !presentedViewController.isBeingDismissed {
+
+            // display over toolbar if modal view controller has a toolbar
+            toolbarHeight = superview.bounds.height - superview.convert(toolbar.frame, from: toolbar.superview).minY - superview.safeAreaInsets.bottom
+
+        // if not displaying modal
+        } else if mainViewController.presentedViewController?.isBeingDismissed ?? true,
+                  case .phone = UIDevice.current.userInterfaceIdiom {
+            // display over Browser Toolbar respecting its position
             toolbarHeight = mainViewController.toolbarHeight - mainViewController.toolbarBottom.constant
+
+        // iPad or modal view controller without toolbar
+        } else {
+            toolbarHeight = 0
         }
 
-        bottomLayoutConstraint.constant = toolbarHeight + Constants.paddingFromNavBar
-        superview?.layoutIfNeeded()
+        bottomLayoutConstraint.constant = toolbarHeight + Constants.paddingFromToolbar
+        superview.layoutIfNeeded()
     }
 
     private func dismissAndFadeOut() {

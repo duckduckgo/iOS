@@ -58,7 +58,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
     private lazy var textStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.spacing = 3
         return stackView
     }()

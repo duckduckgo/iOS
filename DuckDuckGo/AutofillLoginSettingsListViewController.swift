@@ -176,6 +176,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
+            setEditing(false, animated: false)
             lockedView.isHidden = true
             emptySearchView.isHidden = true
         case .searching:

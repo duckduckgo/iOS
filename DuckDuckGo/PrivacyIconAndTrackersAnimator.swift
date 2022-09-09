@@ -23,8 +23,8 @@ import Core
 import BrowserServicesKit
 
 private enum Constants {
-    static var textFieldFadeDuration = 0.2
-    static var allTrackersRevealedAnimationFrame = 45.0
+    static let textFieldFadeDuration = 0.2
+    static let allTrackersRevealedAnimationFrame = 45.0
 }
 
 final class PrivacyIconAndTrackersAnimator {

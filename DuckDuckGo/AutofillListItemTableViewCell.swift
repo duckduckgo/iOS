@@ -33,8 +33,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
         let label = UILabel(frame: CGRect.zero)
         label.font = .preferredFont(forTextStyle: .callout)
         label.textColor = .label
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
+        label.lineBreakMode = .byTruncatingMiddle
         return label
     }()
     
@@ -42,8 +41,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
         let label = UILabel(frame: CGRect.zero)
         label.font = .preferredFont(forTextStyle: .footnote)
         label.textColor = .gray50
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
+        label.lineBreakMode = .byTruncatingMiddle
         return label
     }()
     

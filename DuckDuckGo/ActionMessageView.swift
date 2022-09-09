@@ -178,9 +178,8 @@ class ActionMessageView: UIView {
             // display over toolbar if modal view controller has a toolbar
             toolbarHeight = superview.bounds.height - superview.convert(toolbar.frame, from: toolbar.superview).minY - superview.safeAreaInsets.bottom
 
-        // if not displaying modal
-        } else if mainViewController.presentedViewController?.isBeingDismissed ?? true,
-                  case .phone = UIDevice.current.userInterfaceIdiom {
+        } else if mainViewController.presentedViewController?.isBeingDismissed ?? true /* if not displaying modal */,
+                  !AppWidthObserver.shared.isPad {
             // display over Browser Toolbar respecting its position
             toolbarHeight = mainViewController.toolbarHeight - mainViewController.toolbarBottom.constant
 

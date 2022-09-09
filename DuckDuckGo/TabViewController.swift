@@ -678,9 +678,9 @@ class TabViewController: UIViewController {
         if let controller = segue.destination as? PrivacyProtectionController {
             controller.popoverPresentationController?.delegate = controller
 
-            if let siteRatingView = chromeDelegate.omniBar.siteRatingContainer.siteRatingView {
-                controller.popoverPresentationController?.sourceView = siteRatingView
-                controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
+            if let iconView = chromeDelegate.omniBar.privacyInfoContainer.privacyIcon {
+                controller.popoverPresentationController?.sourceView = iconView
+                controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             
 //            if let domain = tabModel.link?.url.host, let trust = ServerTrustCache.shared.get(forDomain: domain) {
@@ -1110,7 +1110,7 @@ extension TabViewController: WKNavigationDelegate {
         NetworkLeaderboard.shared.incrementPagesLoaded()
         
         appRatingPrompt.registerUsage()
-        
+     
         if let scene = self.view.window?.windowScene, appRatingPrompt.shouldPrompt() {
             SKStoreReviewController.requestReview(in: scene)
             appRatingPrompt.shown()
@@ -1178,7 +1178,6 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
-        chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
         linkProtection.setMainFrameUrl(webView.url)
         adClickAttributionDetection.onStartNavigation(url: webView.url)

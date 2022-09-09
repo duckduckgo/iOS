@@ -25,7 +25,7 @@ import BrowserServicesKit
 public class SiteRating {
 
     public struct Constants {
-        public static let majorNetworkPrevalence = 7.0
+        public static let majorNetworkPrevalence = 25.0
     }
     
     public enum EncryptionType {

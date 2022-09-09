@@ -543,10 +543,6 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .tabBarForwardPressed)
         currentTab?.goForward()
     }
-
-    public var siteRating: SiteRating? {
-        return currentTab?.siteRating
-    }
     
     func didReturnFromBackground() {
         skipSERPFlow = true
@@ -699,12 +695,16 @@ class MainViewController: UIViewController {
         }
 
         omniBar.refreshText(forUrl: tab.url)
-        updateSiteRating(tab.siteRating)
+
+        if tab.isError {
+            omniBar.hidePrivacyIcon()
+        } else if let siteRating = tab.siteRating, siteRating.url.host == tab.url?.host {
+            omniBar.updatePrivacyIcon(for: siteRating)
+        } else {
+            omniBar.resetPrivacyIcon(for: tab.url)
+        }
+            
         omniBar.startBrowsing()
-    }
-    
-    private func updateSiteRating(_ siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating, with: ContentBlocking.privacyConfigurationManager.privacyConfig)
     }
 
     func dismissOmniBar() {
@@ -1110,8 +1110,9 @@ extension MainViewController: OmniBarDelegate {
         showHomeRowReminder()
     }
 
-    func onSiteRatingPressed() {
-        if isSERPPresented { return }
+    func onPrivacyIconPressed() {
+        guard !isSERPPresented else { return }
+
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -1403,7 +1404,7 @@ extension MainViewController: TabDelegate {
 
     func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
         if currentTab == tab {
-            updateSiteRating(siteRating)
+            omniBar.updatePrivacyIcon(for: siteRating)
         }
     }
 
@@ -1464,7 +1465,7 @@ extension MainViewController: TabDelegate {
              didRequestPresentingTrackerAnimation siteRating: SiteRating,
              isCollapsing: Bool) {
         guard tabManager.current === tab else { return }
-        omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: isCollapsing)
+        omniBar?.startTrackersAnimation(siteRating, forDaxDialog: !isCollapsing)
     }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {

@@ -125,11 +125,15 @@ class TabViewController: UIViewController {
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
     public var url: URL? {
+        willSet {
+            if newValue != url {
+                delegate?.closeFindInPage(tab: self)
+            }
+        }
         didSet {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
             checkLoginDetectionAfterNavigation()
-            delegate?.closeFindInPage(tab: self)
         }
     }
     

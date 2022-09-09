@@ -51,6 +51,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
+    private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
     @Published private(set) var sections = [AutofillLoginListSectionType]() {
@@ -75,16 +76,29 @@ final class AutofillLoginListViewModel: ObservableObject {
     
  // MARK: Public Methods
 
-    func delete(at indexPath: IndexPath) {
+    func delete(at indexPath: IndexPath) -> Bool {
         let section = sections[indexPath.section]
         switch section {
         case .credentials(_, let items):
             let item = items[indexPath.row]
-            delete(item.account)
+            let success = delete(item.account)
             updateData()
+            return success
         default:
             break
         }
+        return false
+    }
+    
+    func undoLastDelete() {
+        guard let cachedDeletedCredentials = cachedDeletedCredentials else {
+            return
+        }
+        undelete(cachedDeletedCredentials)
+    }
+    
+    func clearUndoCache() {
+        cachedDeletedCredentials = nil
     }
     
     func lockUI() {
@@ -195,12 +209,34 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    private func delete(_ account: SecureVaultModels.WebsiteAccount) {
+    @discardableResult
+    private func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
-              let accountID = account.id else { return }
+              let accountID = account.id else { return false }
         
         do {
+            cachedDeletedCredentials = try secureVault.websiteCredentialsFor(accountId: accountID)
             try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
+            return true
+        } catch {
+            Pixel.fire(pixel: .secureVaultError)
+            return false
+        }
+    }
+    
+    private func undelete(_ account: SecureVaultModels.WebsiteCredentials) {
+        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
+              var cachedDeletedCredentials = cachedDeletedCredentials else {
+            return
+        }
+        do {
+            // We need to make a new account object. If we try to use the old one, secure vault will try to process it as an update, which will fail
+            let oldAccount = cachedDeletedCredentials.account
+            let newAccount = SecureVaultModels.WebsiteAccount(title: oldAccount.title, username: oldAccount.username, domain: oldAccount.domain)
+            cachedDeletedCredentials.account = newAccount
+            try secureVault.storeWebsiteCredentials(cachedDeletedCredentials)
+            clearUndoCache()
+            updateData()
         } catch {
             Pixel.fire(pixel: .secureVaultError)
         }

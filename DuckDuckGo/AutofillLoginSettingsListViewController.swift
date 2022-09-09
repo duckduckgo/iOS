@@ -362,12 +362,24 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         case .credentials(_, let items):
             if editingStyle == .delete {
                 let shouldDeleteSection = items.count == 1
-                viewModel.delete(at: indexPath)
+                let title = items[indexPath.row].title
+                let deletedSuccessfully = viewModel.delete(at: indexPath)
                 
                 if shouldDeleteSection {
                     tableView.deleteSections([indexPath.section], with: .automatic)
                 } else {
                     tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
+                
+                if deletedSuccessfully {
+                    ActionMessageView.present(message: UserText.autofillLoginLisLoginDeletedToastMessage(for: title),
+                                              actionTitle: UserText.actionGenericUndo,
+                                              presentationLocation: .withoutBottomBar,
+                                              onAction: {
+                        self.viewModel.undoLastDelete()
+                    }, onDidDismiss: {
+                        self.viewModel.clearUndoCache()
+                    })
                 }
             }
         default:

@@ -279,13 +279,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab(reuseExisting: true)
-            do {
-                if try url.getParameter(name: "w") != nil {
-                    Pixel.fire(pixel: .widgetNewSearch)
-                    mainViewController?.enterSearch()
-                }
-            } catch {
-                os_log("Error decoding parameter: %s", log: lifecycleLog, type: .debug, error.localizedDescription)
+            if url.getParameter(named: "w") != nil {
+                Pixel.fire(pixel: .widgetNewSearch)
+                mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)

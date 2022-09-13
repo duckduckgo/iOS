@@ -612,7 +612,7 @@ public struct UserText {
     public static let autofillLoginDetailsLoginName = "Login Title" // Login name label for login details on autofill
     public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
     public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
-    public static let autofillLoginDetailsAddress = "Address" // Address label for login details on autofill
+    public static let autofillLoginDetailsAddress = "Website URL" // Address label for login details on autofill
     public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
     public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins" // Title for view displayed when autofill is disabled and has no items
     public static let autofillEmptyViewTitle = "No logins saved yet" // Title for view displayed when autofill has no items
@@ -633,7 +633,7 @@ public struct UserText {
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
     
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
-        "Login last updated \(date))"
+        "Login last updated \(date)"
     } // Message displaying when the login was last updated by
     public static let autofillLoginListAuthenticationCancelButton = "Cancel" // Cancel button for auth when opening login list
     public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list

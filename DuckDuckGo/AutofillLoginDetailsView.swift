@@ -111,24 +111,25 @@ struct AutofillLoginDetailsView: View {
                               disableAutoCorrection: Bool = true,
                               keyboardType: UIKeyboardType = .default) -> some View {
         
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: Constants.verticalPadding) {
             Text(title)
-                .label3AltStyle()
+                .label4Style()
             
             HStack {
-                if secure {
+                if secure && viewModel.viewMode == .edit {
                     SecureField(placeholderText, text: subtitle)
-                        .label3Style(design: .monospaced)
+                        .label4Style(design: .monospaced)
                 } else {
                     ClearTextField(placeholderText: placeholderText,
                                    text: subtitle,
                                    autoCapitalizationType: autoCapitalizationType,
                                    disableAutoCorrection: disableAutoCorrection,
-                                   keyboardType: keyboardType)
-                    .label4Style()
+                                   keyboardType: keyboardType,
+                                   secure: secure)
                 }
             }
-        }.frame(height: 60)
+        }
+        .frame(minHeight: Constants.minRowHeight)
     }
 }
 
@@ -138,7 +139,8 @@ struct ClearTextField: View {
     var autoCapitalizationType: UITextAutocapitalizationType = .none
     var disableAutoCorrection = true
     var keyboardType: UIKeyboardType = .default
-    
+    var secure = false
+
     @State private var closeButtonVisible = false
     
     var body: some View {
@@ -151,10 +153,10 @@ struct ClearTextField: View {
             .autocapitalization(autoCapitalizationType)
             .disableAutocorrection(disableAutoCorrection)
             .keyboardType(keyboardType)
+            .label4Style(design: secure && text.count > 0 ? .monospaced : .default)
             
             Spacer()
-            Image(systemName: "multiply.circle.fill")
-                .foregroundColor(.secondary)
+            Image("ClearTextField")
                 .opacity(closeButtonOpacity)
                 .onTapGesture { self.text = "" }
         }
@@ -179,15 +181,17 @@ private struct CopyablePasswordCell: View {
     var body: some View {
         ZStack {
             HStack {
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: Constants.verticalPadding) {
                     Text(title)
-                        .label3AltStyle()
+                        .label4Style()
                     HStack {
                         Text(password)
-                            .label3Style(design: .monospaced)
+                            .label4Style(design: .monospaced,
+                                         foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
+                                         foregroundColorDark: .gray30)
                     }
                 }
-                Spacer()
+                Spacer(minLength: Constants.passwordImageSize)
             }
             .copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: action) {
                 self.selectedCell = self.id
@@ -195,25 +199,28 @@ private struct CopyablePasswordCell: View {
                 self.selectedCell = nil
             }
 
-            HStack {
+            HStack(alignment: .bottom) {
                 Spacer()
                 Button {
                     isPasswordHidden.toggle()
                     self.selectedCell = nil
                 } label: {
-                    HStack {
+                    VStack(alignment: .trailing) {
                         Spacer()
-                        Image(isPasswordHidden ? "ShowPasswordEye": "HidePasswordEye")
-                            .foregroundColor(.primary)
+                        HStack {
+                            Spacer()
+                            Image(isPasswordHidden ? "ShowPasswordEye" : "HidePasswordEye")
+                                    .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
+                        }
                     }
                     .contentShape(Rectangle())
-                    .frame(width: 50, height: 50)
+                    .frame(width: Constants.passwordImageSize, height: Constants.passwordImageSize)
                 }
                 .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
                 .background(BackgroundColor(isSelected: selectedCell == id).color)
                 .accessibilityLabel(isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword)
-
             }
+            .padding(.bottom, Constants.verticalPadding)
         }
         .selectableBackground(isSelected: selectedCell == id)
     }
@@ -229,12 +236,14 @@ private struct CopyableCell: View {
         
     var body: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: Constants.verticalPadding) {
                 Text(title)
-                    .label3AltStyle()
+                    .label4Style()
                 HStack {
                     Text(subtitle)
-                        .label4Style()
+                        .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                        .truncationMode(.middle)
+                        .lineLimit(1)
                 }
             }
             Spacer()
@@ -285,7 +294,7 @@ private struct Copyable: ViewModifier {
                 .allowsHitTesting(false)
                 .contentShape(Rectangle())
                 .frame(maxWidth: .infinity)
-                .frame(height: 60)
+                .frame(minHeight: Constants.minRowHeight)
 
         }
     }
@@ -315,4 +324,23 @@ private struct BackgroundColor {
             return Color("AutofillCellBackground")
         }
     }
+}
+
+private struct ForegroundColor {
+    let isSelected: Bool
+
+    var color: Color {
+        if isSelected {
+            return .gray90
+        } else {
+            return .gray50
+        }
+    }
+}
+
+private struct Constants {
+    static let verticalPadding: CGFloat = 4
+    static let minRowHeight: CGFloat = 60
+    static let passwordImageOpacity: CGFloat = 0.84
+    static let passwordImageSize: CGFloat = 44
 }

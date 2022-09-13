@@ -851,9 +851,12 @@ class TabViewController: UIViewController {
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.contentBlockingManager.currentRules)
     }
 
-    @objc func onStorageCacheChange() {
-        DispatchQueue.main.async {
-            self.reload(scripts: true)
+    @objc func onStorageCacheChange(notification: Notification) {
+        
+        if let cacheProvider = notification.object as? StorageCacheProvider {
+            DispatchQueue.main.async {
+                self.storageCache = cacheProvider.current
+            }
         }
     }
     

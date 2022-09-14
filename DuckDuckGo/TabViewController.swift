@@ -227,13 +227,15 @@ class TabViewController: UIViewController {
                          contentBlockingManager: ContentBlocking.contentBlockingManager,
                          tld: AppDependencyProvider.shared.storageCache.current.tld)
     }()
-    
+
     private var userScripts: [UserScript] = []
-    
+
     private var canDisplayJavaScriptAlert: Bool {
         return presentedViewController == nil
             && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
             && !self.jsAlertController.isShown
+            // disable new alerts to appear when navigation is expected
+            && navigationExpectationTimer == nil
     }
 
     func present(_ alert: WebJSAlert) {
@@ -245,7 +247,22 @@ class TabViewController: UIViewController {
             jsAlertController.dismiss(animated: false)
         }
     }
-    
+
+    private var navigationExpectationTimer: Timer? {
+        willSet {
+            navigationExpectationTimer?.invalidate()
+        }
+    }
+
+    private static let navigationExpectationInterval = 3.0
+    private func scheduleNavigationExpectation(legacyNavigationURL: URL?, replay: (() -> Void)? = nil) {
+        navigationExpectationTimer = Timer.scheduledTimer(withTimeInterval: Self.navigationExpectationInterval, repeats: false) { [weak self] _ in
+            if case .sessionRestored = self?.recreateWebView(legacyNavigationURL: legacyNavigationURL) {
+                replay?()
+            }
+        }
+    }
+
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
     
@@ -391,11 +408,11 @@ class TabViewController: UIViewController {
             tabModel.link = nil
         }
     }
-        
+
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
-    
+
     func applyInheritedAttribution(_ attribution: AdClickAttributionLogic.State?) {
         adClickAttributionLogic.applyInheritedAttribution(state: attribution)
     }
@@ -455,6 +472,34 @@ class TabViewController: UIViewController {
         }
     }
 
+    private enum WebViewRecreationResult {
+        case sessionRestored
+        case navigationPerformed
+    }
+    private func recreateWebView(legacyNavigationURL: URL?) -> WebViewRecreationResult {
+        var sessionStateData: Any?
+        if #available(iOS 15.0, *) {
+            sessionStateData = self.webView.interactionState
+        }
+        let configuration = self.webView.configuration
+        let url = self.webView.url
+
+        self.webView.removeFromSuperview()
+        self.webView = nil
+
+        if #available(iOS 15.0, *),
+            let sessionStateData = sessionStateData {
+
+            self.attachWebView(configuration: configuration, andLoadRequest: nil, consumeCookies: false)
+            self.webView.interactionState = sessionStateData
+
+            return .sessionRestored
+        }
+
+        self.attachWebView(configuration: configuration, andLoadRequest: legacyNavigationURL.map(URLRequest.userInitiated), consumeCookies: false)
+        return .navigationPerformed
+    }
+
     private func addObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
@@ -486,16 +531,25 @@ class TabViewController: UIViewController {
             webView.evaluateJavaScript(js)
         }
     }
-    
+
     public func load(url: URL) {
         webView.stopLoading()
+        scheduleNavigationExpectation(legacyNavigationURL: url) { [weak self] in
+            self?.load(url: url)
+        }
         dismissJSAlertIfNeeded()
 
         load(url: url, didUpgradeURL: false)
     }
-    
+
     public func load(backForwardListItem: WKBackForwardListItem) {
         webView.stopLoading()
+        scheduleNavigationExpectation(legacyNavigationURL: backForwardListItem.url) { [weak self, url=backForwardListItem.url] in
+            guard let self = self,
+                  let item = (self.webView.backForwardList.backList + self.webView.backForwardList.forwardList).first(where: { $0.url == url })
+            else { return }
+            self.load(backForwardListItem: item)
+        }
         dismissJSAlertIfNeeded()
 
         updateContentMode()
@@ -648,8 +702,11 @@ class TabViewController: UIViewController {
     func updateContentMode() {
         webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
     }
-    
+
     func goBack() {
+        scheduleNavigationExpectation(legacyNavigationURL: webView.backForwardList.backItem?.url) { [weak self] in
+            self?.goBack()
+        }
         dismissJSAlertIfNeeded()
 
         if isError {
@@ -664,8 +721,11 @@ class TabViewController: UIViewController {
             delegate?.tabDidRequestClose(self)
         }
     }
-    
+
     func goForward() {
+        scheduleNavigationExpectation(legacyNavigationURL: webView.backForwardList.forwardItem?.url) { [weak self] in
+            self?.goForward()
+        }
         dismissJSAlertIfNeeded()
 
         if webView.goForward() != nil {
@@ -1139,6 +1199,8 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        navigationExpectationTimer = nil
+
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1192,6 +1254,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        navigationExpectationTimer = nil
         lastError = nil
         cancelTrackerNetworksAnimation()
         shouldReloadOnError = false
@@ -2137,13 +2200,18 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func refresh() {
+        let url: URL?
+        if isError {
+            url = URL(string: chromeDelegate?.omniBar.textField.text ?? "")
+        } else {
+            url = webView.url
+        }
+        scheduleNavigationExpectation(legacyNavigationURL: url)
         dismissJSAlertIfNeeded()
 
         requeryLogic.onRefresh()
-        if isError {
-            if let url = URL(string: chromeDelegate?.omniBar.textField.text ?? "") {
-                load(url: url)
-            }
+        if isError, let url = url {
+            load(url: url)
         } else {
             reload(scripts: false)
         }

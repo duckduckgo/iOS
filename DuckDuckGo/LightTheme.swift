@@ -120,4 +120,10 @@ struct LightTheme: Theme {
     var homeMessageButtonColor = UIColor.cornflowerBlue
     var homeMessageButtonTextColor = UIColor.white
     var homeMessageDismissButtonColor = UIColor.nearlyBlackLight
+
+    var autofillDefaultTitleTextColor = UIColor.nearlyBlack
+    var autofillDefaultSubtitleTextColor = UIColor.greyishBrown2
+    var autofillEmptySearchViewTextColor = UIColor.gray50
+    var autofillLockedViewTextColor = UIColor.nearlyBlack
+
 }

@@ -505,6 +505,12 @@
 		AAF2E28B23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AAF2E28A23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png */; };
 		B609D5522862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609D5512862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift */; };
 		B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60DFF062872B64B0061E7C2 /* JSAlertController.swift */; };
+		B60F765E28CB64AC00FC090C /* ReaderModeOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F765D28CB64AC00FC090C /* ReaderModeOmniBarState.swift */; };
+		B60F766028D0442500FC090C /* ReaderModeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F765F28D0442500FC090C /* ReaderModeCache.swift */; };
+		B60F766228D073B700FC090C /* ReaderModeServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F766128D073B700FC090C /* ReaderModeServer.swift */; };
+		B60F766528D083B100FC090C /* Reader.css in Resources */ = {isa = PBXBuildFile; fileRef = B60F766328D083B100FC090C /* Reader.css */; };
+		B60F766628D083B100FC090C /* Reader.html in Resources */ = {isa = PBXBuildFile; fileRef = B60F766428D083B100FC090C /* Reader.html */; };
+		B60F766828D084EC00FC090C /* ReaderModeStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60F766728D084EC00FC090C /* ReaderModeStyle.swift */; };
 		B623C1C22862CA9E0043013E /* DownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B623C1C12862CA9E0043013E /* DownloadSession.swift */; };
 		B623C1C42862CD670043013E /* WKDownloadSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B623C1C32862CD670043013E /* WKDownloadSession.swift */; };
 		B672B1CE28C718E200443052 /* ReaderMode.js in Resources */ = {isa = PBXBuildFile; fileRef = B672B1CD28C718E200443052 /* ReaderMode.js */; };
@@ -1930,6 +1936,12 @@
 		AAF2E28A23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconYellow83.5x83.5@2x.png"; sourceTree = "<group>"; };
 		B609D5512862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineWKDownloadDelegate.swift; sourceTree = "<group>"; };
 		B60DFF062872B64B0061E7C2 /* JSAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSAlertController.swift; sourceTree = "<group>"; };
+		B60F765D28CB64AC00FC090C /* ReaderModeOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderModeOmniBarState.swift; sourceTree = "<group>"; };
+		B60F765F28D0442500FC090C /* ReaderModeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderModeCache.swift; sourceTree = "<group>"; };
+		B60F766128D073B700FC090C /* ReaderModeServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderModeServer.swift; sourceTree = "<group>"; };
+		B60F766328D083B100FC090C /* Reader.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = Reader.css; sourceTree = "<group>"; };
+		B60F766428D083B100FC090C /* Reader.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Reader.html; sourceTree = "<group>"; };
+		B60F766728D084EC00FC090C /* ReaderModeStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderModeStyle.swift; sourceTree = "<group>"; };
 		B623C1C12862CA9E0043013E /* DownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadSession.swift; sourceTree = "<group>"; };
 		B623C1C32862CD670043013E /* WKDownloadSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKDownloadSession.swift; sourceTree = "<group>"; };
 		B672B1CD28C718E200443052 /* ReaderMode.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ReaderMode.js; sourceTree = "<group>"; };
@@ -3312,7 +3324,13 @@
 			isa = PBXGroup;
 			children = (
 				B672B1CF28C7195800443052 /* ReaderModeUserScript.swift */,
+				B60F765D28CB64AC00FC090C /* ReaderModeOmniBarState.swift */,
 				B672B1CD28C718E200443052 /* ReaderMode.js */,
+				B60F766328D083B100FC090C /* Reader.css */,
+				B60F766428D083B100FC090C /* Reader.html */,
+				B60F765F28D0442500FC090C /* ReaderModeCache.swift */,
+				B60F766128D073B700FC090C /* ReaderModeServer.swift */,
+				B60F766728D084EC00FC090C /* ReaderModeStyle.swift */,
 			);
 			name = ReaderMode;
 			sourceTree = "<group>";
@@ -4701,6 +4719,7 @@
 				98D98A9B25ED954100D8E3DF /* BrowsingMenuButton.xib in Resources */,
 				AA4D6AA823DE4CC4007E8790 /* AppIconBlue40x40@2x.png in Resources */,
 				AA4D6AE723DE4D33007E8790 /* AppIconGreen29x29@2x.png in Resources */,
+				B60F766528D083B100FC090C /* Reader.css in Resources */,
 				AA4D6ACD23DE4D27007E8790 /* AppIconPurple29x29@3x.png in Resources */,
 				AA4D6A8C23DE49A5007E8790 /* AppIconBlack40x40@2x.png in Resources */,
 				85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */,
@@ -4742,6 +4761,7 @@
 				984E291B22CD68D600EE7154 /* PrivacyProtectionHomeCell.xib in Resources */,
 				0A6CC0EF23904D5400E4F627 /* Settings.bundle in Resources */,
 				85A9C37920E0E00C00073340 /* HomeRow.xcassets in Resources */,
+				B60F766628D083B100FC090C /* Reader.html in Resources */,
 				B6BA95C528894A28004ABA20 /* BrowsingMenuViewController.storyboard in Resources */,
 				AA4D6AE623DE4D33007E8790 /* AppIconGreen60x60@3x.png in Resources */,
 				8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */,
@@ -4989,6 +5009,7 @@
 				984D035824ACCC6F0066CFB8 /* TabViewListCell.swift in Sources */,
 				B6BA95C328891E33004ABA20 /* BrowsingMenuAnimator.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
+				B60F766228D073B700FC090C /* ReaderModeServer.swift in Sources */,
 				8590CB612684D0600089F6BF /* CookieDebugViewController.swift in Sources */,
 				319A37152829A55F0079FBCE /* AutofillListItemTableViewCell.swift in Sources */,
 				4B6484EB27FD1E350050A7A1 /* NotificationService.swift in Sources */,
@@ -5061,6 +5082,7 @@
 				8548D95E25262B1B005AAE49 /* ViewHighlighter.swift in Sources */,
 				F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */,
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
+				B60F765E28CB64AC00FC090C /* ReaderModeOmniBarState.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
@@ -5118,6 +5140,7 @@
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				980891A92238504B00313A70 /* UILabelExtension.swift in Sources */,
 				984D035A24ACCC7D0066CFB8 /* TabViewCell.swift in Sources */,
+				B60F766828D084EC00FC090C /* ReaderModeStyle.swift in Sources */,
 				31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
@@ -5126,6 +5149,7 @@
 				4B6484F127FD1E350050A7A1 /* MacBrowserWaitlistStorage.swift in Sources */,
 				988CF20C2451A4A400B06CCD /* SiteRatingContainerView.swift in Sources */,
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
+				B60F766028D0442500FC090C /* ReaderModeCache.swift in Sources */,
 				986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,

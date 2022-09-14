@@ -23,6 +23,9 @@ import os.log
 
 public struct AppUrls {
 
+    static let readerHost = "http://localhost:8081"
+    public static let readerPath = "/reader"
+
     private struct Url {
         
         static var devMode: String {
@@ -32,6 +35,8 @@ public struct AppUrls {
         static let base = ProcessInfo.processInfo.environment["BASE_URL", default: "https://duckduckgo.com"]
         static let externalContentBase = "https://external-content.duckduckgo.com"
         static let staticBase = "https://staticcdn.duckduckgo.com"
+
+        static let readerModeBase = AppUrls.readerHost + AppUrls.readerPath
         
         static let autocomplete = "\(base)/ac/"
         
@@ -74,6 +79,7 @@ public struct AppUrls {
         static let verticalRewrite = "iar"
         static let verticalMaps = "iaxm"
         static let enableNavSuggestions = "is_nav"
+        static let url = "url"
     }
 
     private struct ParamValue {
@@ -224,7 +230,20 @@ public struct AppUrls {
         guard DDGStaticURL(rawValue: url.path) != nil else { return false }
         return true
     }
-    
+
+    public func readerModeURL(for url: URL) -> URL {
+        return URL(string: Url.readerModeBase)!.appendingParameter(name: Param.url, value: url.absoluteString)
+    }
+
+    public func isReaderModeURL(_ url: URL) -> Bool {
+        url.absoluteString.hasPrefix(Url.readerModeBase)
+    }
+
+    public func getReaderModeURL(from url: URL) -> URL? {
+        guard isReaderModeURL(url) else { return nil }
+        return url.getParameter(named: Param.url).flatMap(URL.init(string:))
+    }
+
     public func isGPCEnabled(url: URL,
                              config: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> Bool {
         guard let gpcUrls = config.settings(for: .gpc)["gpcHeaderEnabledSites"] as? [String] else {

@@ -192,6 +192,10 @@ class TabViewController: UIViewController {
     private var debugScript = DebugUserScript()
     private var readerModeScript = ReaderModeUserScript()
 
+    var readerModeState: ReaderModeState {
+        readerModeScript.state
+    }
+
     lazy var emailManager: EmailManager = {
         let emailManager = EmailManager()
         emailManager.aliasPermissionDelegate = self
@@ -370,6 +374,7 @@ class TabViewController: UIViewController {
         autofillUserScript.vaultDelegate = vaultManager
         printingUserScript.delegate = self
         textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
+        readerModeScript.delegate = self
     }
     // swiftlint:enable function_body_length
     
@@ -1131,6 +1136,7 @@ extension TabViewController: WKNavigationDelegate {
         NetworkLeaderboard.shared.incrementPagesLoaded()
         
         appRatingPrompt.registerUsage()
+        readerModeScript.resetState()
         
         if let scene = self.view.window?.windowScene, appRatingPrompt.shouldPrompt() {
             SKStoreReviewController.requestReview(in: scene)
@@ -2366,6 +2372,23 @@ extension TabViewController: EmailManagerRequestDelegate {
         }
         
         Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
+    }
+
+}
+
+// MARK: -
+extension TabViewController: ReaderModeUserScriptDelegate {
+
+    func readerMode(_ readerMode: ReaderModeUserScript, didChangeReaderModeState state: ReaderModeState) {
+        self.delegate?.tab(self, didChangeReaderModeStateTo: state)
+    }
+
+    func readerModeDidDisplayReaderizedContentForTab(_ readerMode: ReaderModeUserScript) {
+    }
+
+    func readerMode(_ readerMode: ReaderModeUserScript, didParseReadabilityResult readabilityResult: ReadabilityResult) {
+        guard let url = url else { return }
+        ReaderModeCache.shared.cacheReadabilityResult(readabilityResult, for: url)
     }
 
 }

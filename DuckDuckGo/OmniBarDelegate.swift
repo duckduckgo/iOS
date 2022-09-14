@@ -48,6 +48,8 @@ protocol OmniBarDelegate: AnyObject {
     func onForwardPressed()
     
     func onSharePressed()
+
+    func onReaderModePressed()
     
     func onTextFieldWillBeginEditing(_ omniBar: OmniBar)
     

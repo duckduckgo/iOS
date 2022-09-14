@@ -48,8 +48,9 @@ class OmniBar: UIView {
     @IBOutlet weak var bookmarksButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var forwardButton: UIButton!
-    @IBOutlet weak var shareButton: UIButton!
-    
+    @IBOutlet var shareButton: UIButton!
+    @IBOutlet var readerModeButton: UIButton!
+
     private(set) var menuButtonContent = MenuButton()
 
     // Don't use weak because adding/removing them causes them to go away
@@ -193,6 +194,14 @@ class OmniBar: UIView {
         refreshState(state.onBrowsingStoppedState)
     }
 
+    func readerModeAvailable() {
+        refreshState(state.onReaderModeAvailable)
+    }
+
+    func readerModeUnavailable() {
+        refreshState(state.onReaderModeUnavailable)
+    }
+
     @IBAction func textFieldTapped() {
         textField.becomeFirstResponder()
     }
@@ -223,11 +232,21 @@ class OmniBar: UIView {
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {
+        var shouldAnimate = false
         if state.name != newState.name {
             os_log("OmniBar entering %s from %s", log: generalLog, type: .debug, newState.name, state.name)
             if newState.clearTextOnStart {
                 clear()
             }
+
+            if state.showReaderModeButton != newState.showReaderModeButton {
+                if AppWidthObserver.shared.isLargeWidth {
+                    shouldAnimate = true
+                } else {
+                    UIView.transition(from: shareButton, to: readerModeButton, duration: 0.5, options: .transitionFlipFromLeft)
+                }
+            }
+
             state = newState
             trackersAnimator.cancelAnimations(in: self)
         }
@@ -238,30 +257,53 @@ class OmniBar: UIView {
             searchFieldContainer.hideSiteRatingView(state)
         }
 
-        setVisibility(searchLoupe, hidden: !state.showSearchLoupe)
-        setVisibility(clearButton, hidden: !state.showClear)
-        setVisibility(menuButton, hidden: !state.showMenu)
-        setVisibility(settingsButton, hidden: !state.showSettings)
-        setVisibility(cancelButton, hidden: !state.showCancel)
-        setVisibility(refreshButton, hidden: !state.showRefresh)
-        setVisibility(voiceSearchButton, hidden: !state.showVoiceSearch)
+        updateSubviewsVisibility(animated: shouldAnimate || isAnimating)
 
-        setVisibility(backButton, hidden: !state.showBackButton)
-        setVisibility(forwardButton, hidden: !state.showForwardButton)
-        setVisibility(bookmarksButton, hidden: !state.showBookmarksButton)
-        setVisibility(shareButton, hidden: !state.showShareButton)
-        
-        searchContainerCenterConstraint.isActive = state.hasLargeWidth
-        searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
-        leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
-        rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
-
-        if state.showVoiceSearch && state.showClear {
-            searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
-        }
-        
         updateOmniBarPadding()
         updateSearchBarBorder()
+    }
+
+    private var isAnimating = false
+    private func updateSubviewsVisibility(animated: Bool) {
+        func reallyUpdate(setHidden: (UIView) -> (Bool) -> Void) {
+            setHidden(searchLoupe)(!state.showSearchLoupe)
+            setHidden(clearButton)(!state.showClear)
+            setHidden(menuButton)(!state.showMenu)
+            setHidden(settingsButton)(!state.showSettings)
+            setHidden(cancelButton)(!state.showCancel)
+            setHidden(refreshButton)(!state.showRefresh)
+            setHidden(voiceSearchButton)(!state.showVoiceSearch)
+
+            setHidden(backButton)(!state.showBackButton)
+            setHidden(forwardButton)(!state.showForwardButton)
+            setHidden(bookmarksButton)(!state.showBookmarksButton)
+            setHidden(shareButton)(!state.showShareButton)
+            setHidden(readerModeButton)(!state.showReaderModeButton)
+
+            searchContainerCenterConstraint.isActive = state.hasLargeWidth
+            searchContainerMaxWidthConstraint.isActive = state.hasLargeWidth
+            leftButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 0
+            rightButtonsSpacingConstraint.constant = state.hasLargeWidth ? 24 : 14
+
+            if state.showVoiceSearch && state.showClear {
+                searchStackContainer.setCustomSpacing(13, after: voiceSearchButton)
+            }
+            self.layoutSubviews()
+        }
+
+        if animated {
+            self.isAnimating = true
+            UIView.animate(withDuration: 0.2, delay: 0, options: .beginFromCurrentState) {
+                reallyUpdate(setHidden: { view in { hidden in view.alpha = hidden ? 0 : 1 }})
+            } completion: { isCompleted in
+                guard isCompleted else { return }
+                reallyUpdate(setHidden: UIView.setHiddenIfNeeded(_:))
+                self.isAnimating = false
+            }
+            return
+        } else {
+            reallyUpdate(setHidden: UIView.setHiddenIfNeeded(_:))
+        }
     }
 
     private func updateOmniBarPadding() {
@@ -278,17 +320,6 @@ class OmniBar: UIView {
             editingBackground.borderWidth = 1.5
             editingBackground.borderColor = theme.searchBarBorderColor
             editingBackground.backgroundColor = UIColor.clear
-        }
-    }
-
-    /*
-     Superfluous check to overcome apple bug in stack view where setting value more than
-     once causes issues, related to http://www.openradar.me/22819594
-     Kill this method when radar is fixed - burn it with fire ;-)
-     */
-    private func setVisibility(_ view: UIView, hidden: Bool) {
-        if view.isHidden != hidden {
-            view.isHidden = hidden
         }
     }
 
@@ -320,7 +351,9 @@ class OmniBar: UIView {
             return
         }
 
-        if let query = appUrls.searchQuery(fromUrl: url) {
+        if let readerModeURL = appUrls.getReaderModeURL(from: url) {
+            textField.attributedText = OmniBar.demphasisePath(forUrl: readerModeURL)
+        } else if let query = appUrls.searchQuery(fromUrl: url) {
             textField.text = query
         } else {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
@@ -427,7 +460,11 @@ class OmniBar: UIView {
     @IBAction func onSharePressed(_ sender: Any) {
         omniDelegate?.onSharePressed()
     }
-    
+
+    @IBAction func onReaderModePressed(_ sender: Any) {
+        omniDelegate?.onReaderModePressed()
+    }
+
     func enterPhoneState() {
         refreshState(state.onEnterPhoneState)
     }
@@ -521,4 +558,18 @@ extension OmniBar: UIGestureRecognizerDelegate {
     }
     
 }
-// swiftlint:enable file_length
+
+private extension UIView {
+
+    /*
+     Superfluous check to overcome apple bug in stack view where setting value more than
+     once causes issues, related to http://www.openradar.me/22819594
+     Kill this method when radar is fixed - burn it with fire ;-)
+     */
+    func setHiddenIfNeeded(_ hidden: Bool) {
+        if self.isHidden != hidden {
+            self.isHidden = hidden
+        }
+    }
+
+}

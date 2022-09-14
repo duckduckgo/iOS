@@ -82,4 +82,6 @@ protocol TabDelegate: AnyObject {
     
     func showBars()
 
+    func tab(_ tab: TabViewController, didChangeReaderModeStateTo state: ReaderModeState)
+
 }

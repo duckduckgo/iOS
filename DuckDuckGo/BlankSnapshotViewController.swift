@@ -133,6 +133,10 @@ extension BlankSnapshotViewController: OmniBarDelegate {
         // No-op
     }
 
+    func onReaderModePressed() {
+        // No-op
+    }
+
     func onSettingsPressed() {
         userInteractionDetected()
     }

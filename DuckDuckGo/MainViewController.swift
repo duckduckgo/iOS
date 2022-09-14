@@ -688,6 +688,15 @@ class MainViewController: UIViewController {
         }
 
         omniBar.refreshText(forUrl: tab.url)
+        switch tab.readerModeState {
+        case .unavailable:
+            omniBar.readerModeUnavailable()
+        case .available:
+            omniBar.readerModeAvailable()
+        case .active:
+            break
+        }
+
         updateSiteRating(tab.siteRating)
         omniBar.startBrowsing()
     }
@@ -1241,7 +1250,13 @@ extension MainViewController: OmniBarDelegate {
         guard let link = currentTab?.link else { return }
         currentTab?.onShareAction(forLink: link, fromView: omniBar.shareButton, orginatedFromMenu: false)
     }
-    
+
+    func onReaderModePressed() {
+        guard let url = self.currentTab?.url else { return }
+        _=ReaderModeServer.shared // start
+        loadUrlInNewTab(appUrls.readerModeURL(for: url), reuseExisting: true, inheritedAttribution: nil)
+    }
+
     func onVoiceSearchPressed() {
         SpeechRecognizer.requestMicAccess { permission in
             if permission {
@@ -1559,6 +1574,12 @@ extension MainViewController: TabDelegate {
     func tabCheckIfItsBeingCurrentlyPresented(_ tab: TabViewController) -> Bool {
         return tabManager.current === tab
     }
+
+    func tab(_ tab: TabViewController, didChangeReaderModeStateTo state: ReaderModeState) {
+        guard tabManager.current === tab else { return }
+        refreshOmniBar()
+    }
+
 }
 
 extension MainViewController: TabSwitcherDelegate {
@@ -1709,6 +1730,8 @@ extension MainViewController: AutoClearWorker {
         WebCacheManager.shared.clear {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
+
+        ReaderModeCache.shared.clear()
     }
     
     func stopAllOngoingDownloads() {

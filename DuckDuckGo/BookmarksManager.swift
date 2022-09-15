@@ -75,11 +75,29 @@ class BookmarksManager {
     func containsBookmark(url: URL, completion: @escaping (Bool) -> Void) {
         coreDataStorage.containsBookmark(url: url, completion: completion)
     }
-    
+
+    @MainActor
+    func containsBookmark(url: URL) async -> Bool {
+        await withCheckedContinuation { continuation in
+            containsBookmark(url: url) { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
+
     func containsFavorite(url: URL, completion: @escaping (Bool) -> Void) {
         coreDataStorage.containsFavorite(url: url, completion: completion)
     }
-    
+
+    @MainActor
+    func containsFavorite(url: URL) async -> Bool {
+        await withCheckedContinuation { continuation in
+            coreDataStorage.containsFavorite(url: url) { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
+
     func bookmark(forURL url: URL, completion: @escaping (BookmarkManagedObject?) -> Void) {
         coreDataStorage.bookmark(forURL: url, completion: completion)
     }

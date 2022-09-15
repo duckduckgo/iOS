@@ -20,6 +20,7 @@
 import Core
 import WebKit
 import os.log
+import BrowserServicesKit
 
 class TabManager {
 
@@ -37,21 +38,22 @@ class TabManager {
         let index = model.currentIndex
         let tab = model.tabs[index]
         if tab.link != nil {
-            let controller = buildController(forTab: tab)
+            let controller = buildController(forTab: tab, inheritedAttribution: nil)
             tabControllerCache.append(controller)
         }
 
         registerForNotifications()
     }
 
-    private func buildController(forTab tab: Tab) -> TabViewController {
+    private func buildController(forTab tab: Tab, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let url = tab.link?.url
-        return buildController(forTab: tab, url: url)
+        return buildController(forTab: tab, url: url, inheritedAttribution: inheritedAttribution)
     }
 
-    private func buildController(forTab tab: Tab, url: URL?) -> TabViewController {
+    private func buildController(forTab tab: Tab, url: URL?, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
         let configuration =  WKWebViewConfiguration.persistent()
         let controller = TabViewController.loadFromStoryboard(model: tab)
+        controller.applyInheritedAttribution(inheritedAttribution)
         controller.attachWebView(configuration: configuration,
                                  andLoadRequest: url == nil ? nil : URLRequest.userInitiated(url!),
                                  consumeCookies: !model.hasActiveTabs)
@@ -69,7 +71,7 @@ class TabManager {
             return controller
         } else {
             os_log("Tab not in cache, creating", log: generalLog, type: .debug)
-            let controller = buildController(forTab: tab)
+            let controller = buildController(forTab: tab, inheritedAttribution: nil)
             tabControllerCache.append(controller)
             return controller
         }
@@ -100,7 +102,8 @@ class TabManager {
     }
 
     func addURLRequest(_ request: URLRequest,
-                       withConfiguration configuration: WKWebViewConfiguration) -> TabViewController {
+                       with configuration: WKWebViewConfiguration,
+                       inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
 
         guard let configCopy = configuration.copy() as? WKWebViewConfiguration else {
             fatalError("Failed to copy configuration")
@@ -111,9 +114,13 @@ class TabManager {
         model.select(tabAt: model.currentIndex + 1)
 
         let controller = TabViewController.loadFromStoryboard(model: tab)
-        controller.attachWebView(configuration: configCopy, andLoadRequest: request, consumeCookies: !model.hasActiveTabs)
+        controller.attachWebView(configuration: configCopy,
+                                 andLoadRequest: request,
+                                 consumeCookies: !model.hasActiveTabs,
+                                 loadingInitiatedByParentTab: true)
         controller.delegate = delegate
         controller.loadViewIfNeeded()
+        controller.applyInheritedAttribution(inheritedAttribution)
         tabControllerCache.append(controller)
 
         save()
@@ -154,19 +161,7 @@ class TabManager {
         save()
     }
 
-    func loadUrlInCurrentTab(_ url: URL) -> TabViewController {
-        guard let tab = model.currentTab else {
-            fatalError("No current tab")
-
-        }
-        let controller = buildController(forTab: tab, url: url)
-        tabControllerCache.append(controller)
-        
-        save()
-        return controller
-    }
-
-    func add(url: URL?, inBackground: Bool = false) -> TabViewController {
+    func add(url: URL?, inBackground: Bool = false, inheritedAttribution: AdClickAttributionLogic.State?) -> TabViewController {
 
         if !inBackground {
             current?.dismiss()
@@ -174,7 +169,7 @@ class TabManager {
 
         let link = url == nil ? nil : Link(title: nil, url: url!)
         let tab = Tab(link: link)
-        let controller = buildController(forTab: tab, url: url)
+        let controller = buildController(forTab: tab, url: url, inheritedAttribution: inheritedAttribution)
         tabControllerCache.append(controller)
 
         let index = model.currentIndex

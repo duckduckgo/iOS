@@ -19,6 +19,7 @@
 
 import Foundation
 import os.log
+import BrowserServicesKit
 
 // swiftlint:enable type_body_length
 // swiftlint:enable identifier_name
@@ -27,7 +28,7 @@ public struct PixelParameters {
     public static let url = "url"
     public static let duration = "dur"
     static let test = "test"
-    static let appVersion = "appVersion"
+    public static let appVersion = "appVersion"
     
     public static let autocompleteBookmarkCapable = "bc"
     public static let autocompleteIncludedLocalResults = "sb"
@@ -89,6 +90,15 @@ public struct PixelParameters {
     public static let isBackgrounded = "is_backgrounded"
     
     public static let isInternalUser = "is_internal_user"
+    
+    // Email manager
+    public static let emailKeychainAccessType = "access_type"
+    public static let emailKeychainError = "error"
+    public static let emailKeychainKeychainStatus = "keychain_status"
+
+    public static let bookmarkErrorOrphanedFolderCount = "bookmark_error_orphaned_count"
+
+    public static let ctaShown = "cta"
 }
 
 public struct PixelValues {
@@ -170,9 +180,6 @@ extension Pixel {
         } else if let sqlErrorCode = nsError.userInfo["NSSQLiteErrorDomain"] as? NSNumber {
             newParams[PixelParameters.underlyingErrorCode] = "\(sqlErrorCode.intValue)"
             newParams[PixelParameters.underlyingErrorDomain] = "NSSQLiteErrorDomain"
-        }
-        if isInternalUser {
-            newParams[PixelParameters.isInternalUser] = "true"
         }
         
         fire(pixel: pixel, withAdditionalParameters: newParams, includedParameters: [], onComplete: onComplete)

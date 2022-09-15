@@ -43,7 +43,7 @@ extension TabViewController {
             self?.onShareAction(forUrl: url, atPoint: nil)
         })
 
-        return UIMenu(title: url.host?.dropPrefix(prefix: "www.") ?? "", children: items + providedElements)
+        return UIMenu(title: url.host?.droppingWwwPrefix() ?? "", children: items + providedElements)
     }
     
     func buildLongPressMenu(atPoint point: Point, forUrl url: URL) -> UIAlertController {
@@ -80,11 +80,14 @@ extension TabViewController {
     }
     
     private func onNewTabAction(url: URL) {
-        delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false)
+        delegate?.tab(self,
+                      didRequestNewTabForUrl: url,
+                      openedByPage: false,
+                      inheritingAttribution: adClickAttributionLogic.state)
     }
     
     private func onBackgroundTabAction(url: URL) {
-        delegate?.tab(self, didRequestNewBackgroundTabForUrl: url)
+        delegate?.tab(self, didRequestNewBackgroundTabForUrl: url, inheritingAttribution: adClickAttributionLogic.state)
     }
     
     private func onOpenAction(forUrl url: URL) {

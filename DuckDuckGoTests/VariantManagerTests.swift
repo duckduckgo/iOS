@@ -19,15 +19,16 @@
 
 import XCTest
 @testable import Core
+@testable import BrowserServicesKit
 
 class VariantManagerTests: XCTestCase {
 
     let testVariants = [
-        Variant(name: "mb", weight: 50, isIncluded: Variant.When.always, features: []),
-        Variant(name: "mc", weight: 25, isIncluded: Variant.When.always, features: []),
-        Variant(name: "mt", weight: Variant.doNotAllocate, isIncluded: Variant.When.always, features: []),
-        Variant(name: "md", weight: 25, isIncluded: Variant.When.always, features: []),
-        Variant(name: "excluded", weight: 1000, isIncluded: { return false }, features: [.dummy])
+        VariantIOS(name: "mb", weight: 50, isIncluded: VariantIOS.When.always, features: []),
+        VariantIOS(name: "mc", weight: 25, isIncluded: VariantIOS.When.always, features: []),
+        VariantIOS(name: "mt", weight: VariantIOS.doNotAllocate, isIncluded: VariantIOS.When.always, features: []),
+        VariantIOS(name: "md", weight: 25, isIncluded: VariantIOS.When.always, features: []),
+        VariantIOS(name: "excluded", weight: 1000, isIncluded: { return false }, features: [.dummy])
     ]
 
     func testWhenVariantIsExcludedThenItIsNotInVariantList() {
@@ -40,7 +41,7 @@ class VariantManagerTests: XCTestCase {
     func testWhenCurrentVariantSupportsFeatureThenIsSupportedReturnsTrue() {
 
         let testVariants = [
-            Variant(name: "test", weight: 50, isIncluded: Variant.When.always, features: [ .dummy ])
+            VariantIOS(name: "test", weight: 50, isIncluded: VariantIOS.When.always, features: [ .dummy ])
         ]
 
         let mockStore = MockStatisticsStore()
@@ -82,7 +83,7 @@ class VariantManagerTests: XCTestCase {
 
     func testWhenVariantAssignedAndUsingDefaultRNGThenReturnsValidVariant() {
 
-        let variant = Variant(name: "anything", weight: 100, isIncluded: Variant.When.always, features: [])
+        let variant = VariantIOS(name: "anything", weight: 100, isIncluded: VariantIOS.When.always, features: [])
         let subject = DefaultVariantManager(variants: [variant], storage: MockStatisticsStore())
         subject.assignVariantIfNeeded { _ in }
         XCTAssertEqual(variant.name, subject.currentVariant?.name)

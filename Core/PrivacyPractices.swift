@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 /// The main interface for privacy practices.  Currently uses TOSDR as its data source.
 public class PrivacyPractices {
@@ -52,7 +53,7 @@ public class PrivacyPractices {
         termsOfServiceStore.terms.forEach {
             let derivedScore = $0.value.derivedScore
 
-            if let entity = entityMapping.findEntity(forHost: $0.key) {
+            if let entity = entityMapping.findEntity(forHost: $0.key, in: ContentBlocking.shared.trackerDataManager.trackerData) {
                 if entityScores[entity.displayName ?? ""] == nil || entityScores[entity.displayName ?? ""]! < derivedScore {
                     entityScores[entity.displayName ?? ""] = derivedScore
                 }
@@ -73,7 +74,8 @@ public class PrivacyPractices {
     func findPractice(forHost host: String) -> Practice {
         guard let domain = tld.domain(host) else { return Constants.unknown }
         guard let term = termsOfServiceStore.terms[domain] else { return Constants.unknown }
-        let entityScore = entityScores[entityMapping.findEntity(forHost: domain)?.displayName ?? ""]
+        let entityScore = entityScores[entityMapping.findEntity(forHost: domain,
+                                                                in: ContentBlocking.shared.trackerDataManager.trackerData)?.displayName ?? ""]
         return Practice(score: entityScore ?? term.derivedScore,
                         summary: term.summary,
                         goodReasons: term.goodReasons,

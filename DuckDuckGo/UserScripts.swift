@@ -24,7 +24,7 @@ import TrackerRadarKit
 
 final class UserScripts: BrowserServicesKit.UserScriptsProvider {
 
-    let contentBlockerRulesScript: ContentBlockerRulesUserScript
+    let contentBlockerUserScript: ContentBlockerRulesUserScript
     let surrogatesScript: SurrogatesUserScript
     let autofillUserScript: AutofillUserScript
     let loginFormDetectionScript: LoginFormDetectionUserScript?
@@ -33,6 +33,7 @@ final class UserScripts: BrowserServicesKit.UserScriptsProvider {
     private(set) var faviconScript = FaviconUserScript()
     private(set) var fingerprintScript = FingerprintUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
+    private(set) var documentScript = DocumentUserScript()
     private(set) var findInPageScript = FindInPageUserScript()
     private(set) var fullScreenVideoScript = FullScreenVideoUserScript()
     private(set) var printingUserScript = PrintingUserScript()
@@ -40,7 +41,7 @@ final class UserScripts: BrowserServicesKit.UserScriptsProvider {
     private(set) var debugScript = DebugUserScript()
 
     init(with sourceProvider: ScriptSourceProviding) {
-        contentBlockerRulesScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
+        contentBlockerUserScript = ContentBlockerRulesUserScript(configuration: sourceProvider.contentBlockerRulesConfig)
         surrogatesScript = SurrogatesUserScript(configuration: sourceProvider.surrogatesConfig)
         autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider)
 
@@ -53,8 +54,9 @@ final class UserScripts: BrowserServicesKit.UserScriptsProvider {
         textSizeUserScript,
         findInPageScript,
         navigatorPatchScript,
+        documentScript,
         surrogatesScript,
-        contentBlockerRulesScript,
+        contentBlockerUserScript,
         fingerprintScript,
         faviconScript,
         fullScreenVideoScript,

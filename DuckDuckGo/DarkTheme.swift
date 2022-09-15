@@ -120,4 +120,9 @@ struct DarkTheme: Theme {
     var homeMessageButtonTextColor = UIColor.white
     var homeMessageDismissButtonColor = UIColor.white
 
+    var autofillDefaultTitleTextColor = UIColor.white
+    var autofillDefaultSubtitleTextColor = UIColor.lightMercury
+    var autofillEmptySearchViewTextColor = UIColor.gray20
+    var autofillLockedViewTextColor = UIColor.lightMercury
+
 }

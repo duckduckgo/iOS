@@ -95,23 +95,18 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     private static func buildSurrogatesConfig(contentBlockingManager: ContentBlockerRulesManagerProtocol,
                                               privacyConfigurationManager: PrivacyConfigurationManager) -> SurrogatesUserScriptConfig {
 
-        let isDebugBuild: Bool
-        #if DEBUG
-        isDebugBuild = true
-        #else
-        isDebugBuild = false
-        #endif
-
         let surrogates = FileStore().loadAsString(forConfiguration: .surrogates) ?? ""
-
         let tdsName = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let rules = contentBlockingManager.currentRules.first(where: { $0.name == tdsName })
-        return DefaultSurrogatesUserScriptConfig(privacyConfig: privacyConfigurationManager.privacyConfig,
-                                                 surrogates: surrogates,
-                                                 trackerData: rules?.trackerData,
-                                                 encodedSurrogateTrackerData: rules?.encodedTrackerData,
-                                                 trackerDataManager: ContentBlocking.shared.trackerDataManager,
-                                                 isDebugBuild: isDebugBuild)
+
+        let surrogatesConfig = DefaultSurrogatesUserScriptConfig(privacyConfig: privacyConfigurationManager.privacyConfig,
+                                                                 surrogates: surrogates,
+                                                                 trackerData: rules?.trackerData,
+                                                                 encodedSurrogateTrackerData: rules?.encodedTrackerData,
+                                                                 trackerDataManager: ContentBlocking.shared.trackerDataManager,
+                                                                 isDebugBuild: isDebugBuild)
+
+        return surrogatesConfig
     }
 
 }

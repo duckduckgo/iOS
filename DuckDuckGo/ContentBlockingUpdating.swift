@@ -65,7 +65,7 @@ public final class ContentBlockingUpdating {
             return BufferedValue(rulesUpdate: rulesUpdate, sourceProvider: sourceProvider)
         }
 
-        let transform: (Update, Notification) ->  Update = { update, notification in
+        let transform: (Update, Notification) -> Update = { update, notification in
             var update = update
             update.changes[notification.name.rawValue] = .notification
             return update

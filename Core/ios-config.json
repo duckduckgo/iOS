@@ -1,12 +1,73 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1657192590532,
+    "version": 1662049061721,
     "features": {
+        "adClickAttribution": {
+            "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
+            "state": "enabled",
+            "exceptions": [],
+            "settings": {
+                "linkFormats": [
+                    {
+                        "url": "duckduckgo.com/y.js",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "SERP Ads"
+                    },
+                    {
+                        "url": "www.search-company.site/y.js",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Test Domain"
+                    },
+                    {
+                        "url": "www.search-company.example/y.js",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Test Domain"
+                    },
+                    {
+                        "url": "links.duckduckgo.com/m.js",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Shopping Ads"
+                    },
+                    {
+                        "url": "www.search-company.site/m.js",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Test Domain"
+                    },
+                    {
+                        "url": "www.search-company.example/m.js",
+                        "adDomainParameterName": "ad_domain",
+                        "desc": "Test Domain"
+                    }
+                ],
+                "allowlist": [
+                    {
+                        "blocklistEntry": "bing.com",
+                        "host": "bat.bing.com"
+                    },
+                    {
+                        "blocklistEntry": "ad-company.site",
+                        "host": "convert.ad-company.site"
+                    },
+                    {
+                        "blocklistEntry": "ad-company.example",
+                        "host": "convert.ad-company.example"
+                    }
+                ],
+                "navigationExpiration": 1800,
+                "totalExpiration": 604800,
+                "heuristicDetection": "enabled",
+                "domainDetection": "enabled"
+            }
+        },
         "ampLinks": {
             "exceptions": [
                 {
                     "domain": "freecodecamp.org",
-                    "reason": "sign-up issues"
+                    "reason": "Clicking 'get started' reloads the page and does not progress to the login page."
+                },
+                {
+                    "domain": "www.audiosciencereview.com",
+                    "reason": "Pages on the site end up in redirect loops in Firefox."
                 }
             ],
             "settings": {
@@ -38,31 +99,31 @@
             "exceptions": [
                 {
                     "domain": "zeitraum-moebel.de",
-                    "reason": "broken autoconsent rule"
+                    "reason": "After the cookie popup is managed and disappears, a semi-transparent overlay remains on the page which prevents further interaction with the site."
                 },
                 {
                     "domain": "mathebibel.de",
-                    "reason": "broken scrolling"
+                    "reason": "Page renders but one cannot scroll (and no CMP is shown) for a few seconds."
                 },
                 {
                     "domain": "focus.de",
-                    "reason": "broken scrolling"
+                    "reason": "Page renders but one cannot scroll (and no CMP is shown) for a few seconds."
                 },
                 {
                     "domain": "computerbild.de",
-                    "reason": "broken scrolling"
+                    "reason": "Page renders but one cannot scroll (and no CMP is shown) for a few seconds."
                 },
                 {
                     "domain": "techtarget.com",
-                    "reason": "broken scrolling"
+                    "reason": "Page renders but one cannot scroll (and no CMP is shown) for a few seconds."
                 },
                 {
                     "domain": "n-tv.de",
-                    "reason": "broken scrolling"
+                    "reason": "Page renders but one cannot scroll (and no CMP is shown) for a few seconds."
                 },
                 {
                     "domain": "concursolutions.com",
-                    "reason": "blank page during opt-out"
+                    "reason": "Page renders blank for several seconds before cookie management can complete."
                 }
             ],
             "settings": {
@@ -88,7 +149,7 @@
             "exceptions": [
                 {
                     "domain": "welt.de",
-                    "reason": "Video not playing correctly"
+                    "reason": "Video pauses at about 13-15 seconds in. Playing the video again results in a single frame rendering without progressing to the next frame."
                 }
             ]
         },
@@ -101,11 +162,11 @@
                 "omitApplicationSites": [
                     {
                         "domain": "thingiverse.com",
-                        "reason": "Site loads blank"
+                        "reason": "Site loads blank and does not proceed."
                     },
                     {
                         "domain": "qubushotel.com",
-                        "reason": "Site UI elements are not interactable"
+                        "reason": "Homepage UI elements appear squashed together, preventing interaction with the site."
                     },
                     {
                         "domain": "cvs.com",
@@ -147,58 +208,104 @@
                     "reason": "When adding an item to the cart, there is an error 'An unexpected problem occurred' and the item is not added to the cart."
                 },
                 {
+                    "domain": "emirates.com",
+                    "reason": "After filling out flight information and clicking 'Search flights', a blank page is shown for several seconds before the page redirects."
+                },
+                {
                     "domain": "hm.com",
-                    "reason": "Broken add to cart"
+                    "reason": "When adding an item to cart, there is an error 'something went wrong', and the item does not get added to the cart."
+                },
+                {
+                    "domain": "ikea.com",
+                    "reason": "When creating an account, after filling out details and going to e-mail confirmation, there is an error 'Something went wrong', and the e-mail may not be received. Clicking 'Send new code' appears successful, but after entering the code there is often another account creation error."
+                },
+                {
+                    "domain": "northernrailway.co.uk",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/350"
                 },
                 {
                     "domain": "spirit.com",
-                    "reason": "Broken login"
+                    "reason": "When attempting to sign in, a semi-transparent overlay appears over the page which prevents further interaction with the site."
+                },
+                {
+                    "domain": "thetrainline.com",
+                    "reason": "After filling out travel info and clicking 'Get times & tickets', there is an error warning that 'Something went wrong', which prevents further interaction."
                 }
             ],
             "state": "disabled"
         },
         "fingerprintingHardware": {
+            "settings": {
+                "keyboard": {
+                    "type": "undefined"
+                },
+                "hardwareConcurrency": {
+                    "type": "number",
+                    "value": 4
+                },
+                "deviceMemory": {
+                    "type": "undefined"
+                }
+            },
             "exceptions": [
                 {
                     "domain": "gamestop.com",
-                    "reason": "broken add to cart"
+                    "reason": "Clicking 'add to cart' causes a spinner to load briefly, and the item doesn't get added to the cart."
                 },
                 {
                     "domain": "godaddy.com",
-                    "reason": "adwall"
+                    "reason": "After entering login details and clicking to log in, the site shows an adwall and prevents login."
                 },
                 {
                     "domain": "realestate.com.au",
-                    "reason": "Site not loading"
+                    "reason": "Site loads blank and does not proceed."
                 },
                 {
                     "domain": "secureserver.net",
-                    "reason": "adwall"
+                    "reason": "After entering login details and clicking to log in, the site shows an adwall and prevents login."
                 },
                 {
                     "domain": "hyatt.com",
-                    "reason": "site breakage"
+                    "reason": "Site loads blank and does not proceed."
                 }
             ],
-            "state": "disabled"
+            "state": "enabled"
         },
         "fingerprintingScreenSize": {
+            "settings": {
+                "availTop": {
+                    "type": "number",
+                    "value": 0
+                },
+                "availLeft": {
+                    "type": "number",
+                    "value": 0
+                },
+                "colorDepth": {
+                    "type": "number",
+                    "value": 24
+                },
+                "pixelDepth": {
+                    "type": "number",
+                    "value": 24
+                }
+            },
             "exceptions": [
                 {
                     "domain": "gamestop.com",
-                    "reason": "broken add to cart"
+                    "reason": "Clicking 'add to cart' causes a spinner to load briefly, and the item doesn't get added to the cart."
                 },
                 {
                     "domain": "godaddy.com",
-                    "reason": "adwall"
+                    "reason": "After entering login details and clicking to log in, the site shows an adwall and prevents login."
                 },
                 {
                     "domain": "hyatt.com",
-                    "reason": "Site not loading"
+                    "reason": "Site loads blank and does not proceed."
                 },
                 {
                     "domain": "secureserver.net",
-                    "reason": "adwall"
+                    "reason": "After entering login details and clicking to log in, the site shows an adwall and prevents login."
                 }
             ],
             "state": "enabled"
@@ -213,7 +320,12 @@
         },
         "gpc": {
             "state": "enabled",
-            "exceptions": [],
+            "exceptions": [
+                {
+                    "domain": "allegiantair.com",
+                    "reason": "Example URL: https://www.allegiantair.com/seating-checking-boarding; Clicking the 'show details' button in the FAQ sections does nothing."
+                }
+            ],
             "settings": {
                 "gpcHeaderEnabledSites": [
                     "global-privacy-control.glitch.me",
@@ -241,20 +353,63 @@
         },
         "referrer": {
             "exceptions": [],
-            "state": "disabled"
+            "state": "enabled"
         },
         "trackerAllowlist": {
             "state": "enabled",
             "settings": {
                 "allowlistedTrackers": {
+                    "4dex.io": {
+                        "rules": [
+                            {
+                                "rule": "mp.4dex.io/prebid",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
+                    "adform.net": {
+                        "rules": [
+                            {
+                                "rule": "adx.adform.net/adx/openrtb",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            },
+                            {
+                                "rule": "c1.adform.net/serving/cookie/match",
+                                "domains": [
+                                    "dhl.de"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/340"
+                            }
+                        ]
+                    },
                     "adsafeprotected.com": {
                         "rules": [
+                            {
+                                "rule": "static.adsafeprotected.com/favicon.ico",
+                                "domains": [
+                                    "tf1info.fr"
+                                ],
+                                "reason": "Adwall displays over video and prevents video from being played."
+                            },
+                            {
+                                "rule": "static.adsafeprotected.com/iasPET.1.js",
+                                "domains": [
+                                    "corriere.it"
+                                ],
+                                "reason": "Example URL: https://www.corriere.it/video-articoli/2022/07/13/missione-wwf-liberare-mare-plastica/9abb64de-029d-11ed-a0cc-ad3c68cacbae.shtml; Clicking on the video to play causes a still frame to show and the video does not continue."
+                            },
                             {
                                 "rule": "static.adsafeprotected.com/vans-adapter-google-ima.js",
                                 "domains": [
                                     "nhl.com"
                                 ],
-                                "reason": "video not loading"
+                                "reason": "Videos show a spinner and never load."
                             }
                         ]
                     },
@@ -265,7 +420,7 @@
                                 "domains": [
                                     "aldi.co.uk"
                                 ],
-                                "reason": "product images missing"
+                                "reason": "Product lists don't render."
                             }
                         ]
                     },
@@ -276,7 +431,7 @@
                                 "domains": [
                                     "aliexpress.com"
                                 ],
-                                "reason": "content not loading"
+                                "reason": "Page content renders as text without images."
                             }
                         ]
                     },
@@ -285,10 +440,11 @@
                             {
                                 "rule": "c.amazon-adsystem.com/aax2/apstag.js",
                                 "domains": [
+                                    "corriere.it",
                                     "eurogamer.net",
                                     "seattletimes.com"
                                 ],
-                                "reason": "An unskippable adwall appears which prevents interaction with the page."
+                                "reason": "corriere.it -  Example URL: https://www.corriere.it/video-articoli/2022/07/13/missione-wwf-liberare-mare-plastica/9abb64de-029d-11ed-a0cc-ad3c68cacbae.shtml; Clicking on the video to play causes a still frame to show and the video does not continue. eurogamer.net, seattletimes.com - An unskippable adwall appears which prevents interaction with the page."
                             }
                         ]
                     },
@@ -303,14 +459,100 @@
                             }
                         ]
                     },
+                    "bc0a.com": {
+                        "rules": [
+                            {
+                                "rule": "marvel-b1-cdn.bc0a.com/f00000000269380/www.beretta.com/assets/",
+                                "domains": [
+                                    "beretta.com"
+                                ],
+                                "reason": "Example URL1: https://www.beretta.com/en-us/womens-clothing/caps-and-hats/; Example URL2: https://www.beretta.com/en-us/mens-clothing/caps-and-hats/lp-trucker-hat/; Various product and product-related images do not render - e.g., main product images on product pages, product images in product listings, etc."
+                            }
+                        ]
+                    },
+                    "bing.com": {
+                        "rules": [
+                            {
+                                "rule": "r.bing.com/rp/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. These requests are associated with map/location functionality on websites."
+                            },
+                            {
+                                "rule": "th.bing.com/th",
+                                "domains": [
+                                    "drudgereport.com"
+                                ],
+                                "reason": "On the homepage (drudgereport.com), some images are fetched from bing.com. When we block these requests, the images do not render, and the page appears to have blank boxes. Note that requests can be of the form th.bing.com/th?id=... or th.bing.com/th/id/..., hence we unblock the common path here."
+                            },
+                            {
+                                "rule": "www.bing.com/api/maps/mapcontrol",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. This request is associated with map/location functionality on websites."
+                            },
+                            {
+                                "rule": "www.bing.com/api/v6/Places/AutoSuggest",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. This request is associated with map/location auto-suggest functionality on websites."
+                            },
+                            {
+                                "rule": "www.bing.com/maps/sdkrelease/mapcontrol",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. This request is associated with map/location functionality on websites."
+                            },
+                            {
+                                "rule": "www.bing.com/rp/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. These requests are associated with map/location functionality on websites."
+                            }
+                        ]
+                    },
+                    "casalemedia.com": {
+                        "rules": [
+                            {
+                                "rule": "htlb.casalemedia.com/cygnus",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
                     "cloudflare.com": {
                         "rules": [
+                            {
+                                "rule": "cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.8.6/fingerprint2.min.js",
+                                "domains": [
+                                    "winnipegfreepress.com"
+                                ],
+                                "reason": "Example URL: https://www.winnipegfreepress.com/local/city-will-try-to-fill-money-losing-ex-canada-post-office-576646662.html Main text content on article does not load."
+                            },
                             {
                                 "rule": "cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js",
                                 "domains": [
                                     "2000mules.com"
                                 ],
                                 "reason": "Loading percentage hits 100% and the site does not proceed to display usual content."
+                            }
+                        ]
+                    },
+                    "criteo.com": {
+                        "rules": [
+                            {
+                                "rule": "bidder.criteo.com/cdb",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
                             }
                         ]
                     },
@@ -321,7 +563,7 @@
                                 "domains": [
                                     "wsj.com"
                                 ],
-                                "reason": "content not loading"
+                                "reason": "Opinion section article elements do not render. Note that Firefox Enhanced Tracking Protection may prevent mitigation from succeeding on Firefox."
                             }
                         ]
                     },
@@ -332,7 +574,7 @@
                                 "domains": [
                                     "ah.nl"
                                 ],
-                                "reason": "internal ads blocked"
+                                "reason": "'Bonus offer' elements do not render and are not clickable."
                             },
                             {
                                 "rule": "pubads.g.doubleclick.net/gampad/ads",
@@ -340,7 +582,7 @@
                                     "nhl.com",
                                     "viki.com"
                                 ],
-                                "reason": "nhl.com - videos not loading; viki.com - after a video has played for a few seconds an adwall pops up. Clicking 'I've turned off my adblocker' resets the video, then after a few seconds the adwall pops up again."
+                                "reason": "nhl.com - Videos show a spinner and never load. viki.com - after a video has played for a few seconds an adwall pops up. Clicking 'I've turned off my adblocker' resets the video, then after a few seconds the adwall pops up again."
                             },
                             {
                                 "rule": "pubads.g.doubleclick.net/ssai/event/",
@@ -356,7 +598,7 @@
                                     "wunderground.com",
                                     "youmath.it"
                                 ],
-                                "reason": "videos not loading, adwall, internal ads blocked"
+                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. wunderground.com - Video element does not display. youmath.it - Adwall displays which prevents page interaction and resets the page view when clicked."
                             },
                             {
                                 "rule": "securepubads.g.doubleclick.net/gpt/pubads_impl_",
@@ -364,7 +606,18 @@
                                     "ah.nl",
                                     "wunderground.com"
                                 ],
-                                "reason": "videos not loading, internal ads blocked"
+                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. wunderground.com - Video element does not display."
+                            }
+                        ]
+                    },
+                    "fastly.net": {
+                        "rules": [
+                            {
+                                "rule": "mslc-prod-herokuapp-com.global.ssl.fastly.net/main.8736233213226195.js",
+                                "domains": [
+                                    "masslottery.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/332"
                             }
                         ]
                     },
@@ -373,9 +626,11 @@
                             {
                                 "rule": "connect.facebook.net/en_US/sdk.js",
                                 "domains": [
-                                    "grubhub.com"
+                                    "bandsintown.com",
+                                    "nextdoor.co.uk",
+                                    "nextdoor.com"
                                 ],
-                                "reason": "broken login"
+                                "reason": "bandsintown.com - Ticket page renders blank. With this exception the page redirects to ticketspice.com. nextdoor.co.uk, nextdoor.com - Facebook login option appears greyed out and cannot be clicked."
                             }
                         ]
                     },
@@ -386,18 +641,7 @@
                                 "domains": [
                                     "channel4.com"
                                 ],
-                                "reason": "adwall"
-                            }
-                        ]
-                    },
-                    "gigya.com": {
-                        "rules": [
-                            {
-                                "rule": "gigya.com/js/gigya.services.plugins.base.min.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "login content not loading"
+                                "reason": "Unskippable adblock warning when trying to play a video."
                             }
                         ]
                     },
@@ -406,9 +650,17 @@
                             {
                                 "rule": "google-analytics.com/analytics.js",
                                 "domains": [
+                                    "doterra.com",
                                     "easyjet.com"
                                 ],
-                                "reason": "broken form"
+                                "reason": "doterra.com - For doterra.com/login/loading, the page shows a loading indicator and never redirects. easyjet.com - Clicking 'Show Worldwide flights' after entering parameters for a worldwide flight in the flight viewing form does nothing."
+                            },
+                            {
+                                "rule": "www.google-analytics.com/plugins/ua/ecommerce.js",
+                                "domains": [
+                                    "doterra.com"
+                                ],
+                                "reason": "For doterra.com/login/loading, the page shows a loading indicator and never redirects."
                             }
                         ]
                     },
@@ -427,7 +679,7 @@
                                 "domains": [
                                     "rumble.com"
                                 ],
-                                "reason": "adwall (video blocked)"
+                                "reason": "After clicking to play a video, the video will display a grey box for several seconds before playing."
                             }
                         ]
                     },
@@ -438,10 +690,12 @@
                                 "domains": [
                                     "ah.nl",
                                     "dailyherald.com",
+                                    "emirates.com",
                                     "iltalehti.fi",
+                                    "pickfu.com",
                                     "rbcroyalbank.com"
                                 ],
-                                "reason": "page/video/image not loading, internal ads blocked"
+                                "reason": "ah.nl - 'Bonus offer' elements do not render and are not clickable. dailyherald.com - Article images render as grey boxes. emirates.com - After filling out login details and clicking to proceed, a loading spinners shows on the proceed button and the login does not progress. iltalehti.fi - Article video renders as a blank box. pickfu.com - https://github.com/duckduckgo/privacy-configuration/issues/346 rbcroyalbank.com - Investments page renders blank."
                             }
                         ]
                     },
@@ -453,7 +707,7 @@
                                     "rei.com",
                                     "ups.com"
                                 ],
-                                "reason": "adwall, login issues"
+                                "reason": "rei.com - When going to write a review for a product, there is an adblocker warning, and submission of the review fails. ups.com - When trying to reset password, there is an error 'We are sorry, the application encountered an error during processing.'"
                             }
                         ]
                     },
@@ -464,7 +718,7 @@
                                 "domains": [
                                     "livejournal.com"
                                 ],
-                                "reason": "embeds"
+                                "reason": "Instagram embeds as main article content render as grey boxes."
                             },
                             {
                                 "rule": "www.instagram.com/embed.js",
@@ -472,7 +726,7 @@
                                     "buzzfeed.com",
                                     "livejournal.com"
                                 ],
-                                "reason": "embeds"
+                                "reason": "Instagram embeds as main article content render as grey boxes."
                             }
                         ]
                     },
@@ -484,7 +738,7 @@
                                     "brooksrunning.com",
                                     "joann.com"
                                 ],
-                                "reason": "site not loading"
+                                "reason": "brooksrunning.com - When switching between product variants (e.g., different shoe colours) a loading spinner shows and the variant does not load. joann.com - When switching between product variants (e.g., different shirt colours) the page shows an overlay and further interaction is prevented."
                             }
                         ]
                     },
@@ -518,7 +772,18 @@
                                     "shein.co.uk",
                                     "shein.com"
                                 ],
-                                "reason": "login issues"
+                                "reason": "When attempting to create an account (after filling out registration form and clicking 'Register'), there is an 'access timed out' warning, and account creation does not proceed."
+                            }
+                        ]
+                    },
+                    "medicare.gov": {
+                        "rules": [
+                            {
+                                "rule": "frontend.medicare.gov/static/js/2.6c6651b4.chunk.js",
+                                "domains": [
+                                    "medicare.gov"
+                                ],
+                                "reason": "Navigation bar at top of site does not display, preventing easy access to e.g., site login. Note that this CNAMEs to iservprod.medicare.gov.edgekey.net at time of mitiagtion."
                             }
                         ]
                     },
@@ -533,6 +798,17 @@
                             }
                         ]
                     },
+                    "openx.net": {
+                        "rules": [
+                            {
+                                "rule": "venatusmedia-d.openx.net/w/1.0/arj",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
                     "opta.net": {
                         "rules": [
                             {
@@ -541,7 +817,7 @@
                                     "abc.net.au",
                                     "emol.com"
                                 ],
-                                "reason": "widget blocked"
+                                "reason": "abc.net.au - Error message displays in place of scoreboard (scoreboard does not show). emol.com - Scoreboard does not render."
                             }
                         ]
                     },
@@ -553,6 +829,159 @@
                                     "cbssports.com"
                                 ],
                                 "reason": "Live videos do not load or render."
+                            }
+                        ]
+                    },
+                    "primaryarms.com": {
+                        "rules": [
+                            {
+                                "rule": "images.primaryarms.com/f00000000191638/www.primaryarms.com/SSP%20Applications/NetSuite%20Inc.%20-%20SCA%20Mont%20Blanc/Development/img/",
+                                "domains": [
+                                    "primaryarms.com"
+                                ],
+                                "reason": "Product images on the main page don't render. Note that this CNAMEs to marvel-b4-cdn.bc0a.com at time of mitigation."
+                            },
+                            {
+                                "rule": "images.primaryarms.com/f00000000191638/www.primaryarms.com/core/media/media.nl",
+                                "domains": [
+                                    "primaryarms.com"
+                                ],
+                                "reason": "Images in the large scrolling image banner on main page do not render. Note that this CNAMEs to marvel-b4-cdn.bc0a.com at time of mitigation."
+                            }
+                        ]
+                    },
+                    "privacymanager.io": {
+                        "rules": [
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/605.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/650.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/847.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/assets/icons/.*.svg",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/defaultTheme.css",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/index.html",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/main.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/polyfills.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/runtime.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "cmp-consent-tool.privacymanager.io/latest/vendor.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "gdpr.privacymanager.io/1/gdpr.bundle.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "gdpr.privacymanager.io/latest/gdpr.bundle.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "gdpr-wrapper.privacymanager.io/gdpr/.*/gdpr-liveramp.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            },
+                            {
+                                "rule": "gdpr-wrapper.privacymanager.io/gdpr/.*/manager-logo.png",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/334"
+                            }
+                        ]
+                    },
+                    "pubmatic.com": {
+                        "rules": [
+                            {
+                                "rule": "hpopenbid.pubmatic.com/translator",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
+                    "quantserve.com": {
+                        "rules": [
+                            {
+                                "rule": "secure.quantserve.com/quant.js",
+                                "domains": [
+                                    "aternos.org"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/328"
+                            }
+                        ]
+                    },
+                    "scene7.com": {
+                        "rules": [
+                            {
+                                "rule": "scene7.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/356"
                             }
                         ]
                     },
@@ -595,6 +1024,17 @@
                             }
                         ]
                     },
+                    "sky.com": {
+                        "rules": [
+                            {
+                                "rule": "accounts.sky.com/assets/sky_common.js",
+                                "domains": [
+                                    "sky.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/342"
+                            }
+                        ]
+                    },
                     "theplatform.com": {
                         "rules": [
                             {
@@ -602,7 +1042,7 @@
                                 "domains": [
                                     "eonline.com"
                                 ],
-                                "reason": "video not loading"
+                                "reason": "Videos don't play (blank box after clicking to play)."
                             }
                         ]
                     },
@@ -625,14 +1065,14 @@
                                     "notthebee.com",
                                     "upworthy.com"
                                 ],
-                                "reason": "content not rendering"
+                                "reason": "notthebee.com - Tweets (as main article content) don't render - instead there are loading spinners for a while before errors are displayed. upworthy.com - Tweets (as main article content) don't render - instead there are loading spinners which overlap some text content."
                             },
                             {
                                 "rule": "platform.twitter.com/widgets/tweet_button",
                                 "domains": [
                                     "winnipegfreepress.com"
                                 ],
-                                "reason": "missing tweet button"
+                                "reason": "Tweet button does not render."
                             }
                         ]
                     },
@@ -643,7 +1083,74 @@
                                 "domains": [
                                     "tvrain.ru"
                                 ],
-                                "reason": "adwall"
+                                "reason": "Adwall renders over video and video does not play."
+                            }
+                        ]
+                    },
+                    "yotpo.com": {
+                        "rules": [
+                            {
+                                "rule": "api.yotpo.com/products/.*/.*/bottomline",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "api.yotpo.com/questions/send_confirmation_mail",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "api.yotpo.com/v1/widget/reviews",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "cdn-yotpo-images-production.yotpo.com/Product/.*/.*/square.jpg",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "staticw2.yotpo.com/.*/widget.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "staticw2.yotpo.com/.*/widget.css",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "staticw2.yotpo.com/assets/yotpo-widget-font.woff",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "staticw2.yotpo.com/batch/app_key/.*/domain_key/.*/widget/main_widget",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
+                            },
+                            {
+                                "rule": "api.yotpo.com/reviews/.*/vote",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/348"
                             }
                         ]
                     },
@@ -716,6 +1223,10 @@
             "state": "disabled"
         },
         "webCompat": {
+            "exceptions": [],
+            "state": "disabled"
+        },
+        "windowsPermissionUsage": {
             "exceptions": [],
             "state": "disabled"
         }

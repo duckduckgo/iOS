@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Papildyti";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Automatiškai užpildyti prisijungimus";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Žymė";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Įjungti";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Peržiūrėti";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Prisijungimas išsaugotas";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Prisijungimas atnaujintas";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Taip bus išsaugotas papildomas prisijungimas prie šios svetainės.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Prisijungimai saugiai saugomi tik šiame prietaise, o juos galima tvarkyti nustatymų automatinio pildymo meniu.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Ar norite, kad „DuckDuckGo“ išsaugotų jūsų prisijungimą?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Ne dabar";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Išsaugoti prisijungimą";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Išsaugoti prisijungimą?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Išsaugoti slaptažodį";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Išsaugoti slaptažodį?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Atnaujinti prisijungimą";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Atnaujinti slaptažodį";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Atnaujinti slaptažodį?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Atnaujinti naudotojo vardą?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Pridėti žymę";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Trinti";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Ar tikrai norite ištrinti šį aplanką ir %i elementus (-ų)?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Ar tikrai norite ištrinti šį aplanką ir %i elementą?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Ištrinti %@?";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ atsiusntimas prasidėjo.";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atšaukti";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Išjungti";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blokuokite el. laiškų sekimo priemones ir paslėpkite savo adresą";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Atšaukti";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Sveiki atvykę į\n„DuckDuckGo“!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Pakvietimo kodas";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Kai viską paruošime, pakvietimą matysite čia. Ar norite %1$@, kai gausite pakvietimą? %2$@ apie „macOS“ naršyklės beta versiją.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "gauti pranešimą";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Atsiųsime jums pranešimą, kai viską paruošime. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Pakvietimą išbandyti „DuckDuckGo for Mac“ matysite čia. Netrukus patikrinkite arba galime jums atsiųsti pranešimą, kai bus jūsų eilė.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Atsiųsime jums pranešimą, kai jūsų „DuckDuckGo for Mac“ kopija bus paruošta atsisiųsti.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ apie beta versiją.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "„DuckDuckGo Privacy App for Mac“ pasižymi jums reikiama sparta, naršymo funkcijomis ir aukščiausios klasės privatumo įrankiais.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Atidaryti pakvietimą";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "„DuckDuckGo for Mac“ paruošta!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopijuoti";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Spustelėkite šį URL „Mac“ kompiuteryje, kad atsisiųstumėte:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1 veiksmas";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Atidarykite įdiegiamą failą, tuomet įveskite pakvietimo kodą, kad atrakintumėte.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2 veiksmas";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Pasiruošę naršyti privačiai „Mac“?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Esate pakviesti!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Prisijungti prie privataus laukimo sąrašo";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Prisijungiama prie laukimo sąrašo...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Išbandykite „DuckDuckGo for Mac“!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "„Windows“ jau greitai!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Galime jus informuoti, kai bus jūsų eilė, tačiau šiuo metu pranešimai yra išjungti „DuckDuckGo“.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Jums nereikia dalintis savo asmenine informacija, kad prisijungtumėte prie laukimo sąrašo. Užsitikrinsite vietą eilėje laiko žyma, kuri egzistuoja tik jūsų įrenginyje, kad galėtume jus įspėti, kai ateis jūsų eilė.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Esate sąraše!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Galima atsisiųsti „Mac“";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Naršykite privačiai su mūsų „Mac“ skirta programa";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Esate sąraše!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Esate pakviesti!\n\nPasiruošę naršyti privačiai „Mac“?\n\n1 veiksmas\nSpustelėkite šį URL „Mac“ kompiuteryje, kad atsisiųstumėte:\nhttps://duckduckgo.com/mac\n\n2 veiksmas\nAtidarykite įdiegiamą failą, tuomet įveskite pakvietimo kodą, kad atrakintumėte.\n\nPakvietimo kodas: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Esate pakviesti!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "„DuckDuckGo“ darbalaukio programa";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Naršymo meniu";
 
@@ -883,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "GERAI";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Apie mūsų žiniatinklio stebėjimo apsaugą";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Apie mūsų paieškos apsaugą ir reklamas";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Kaip paieškos skelbimai veikia mūsų apsaugos priemones";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmas";
 
@@ -906,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Priverstinis šifravimas";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Šifruotas ryšys";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Privertėme šią svetainę naudoti šifruotą ryšį, kad nenutekėtų pateikiama asmeninė informacija.";
@@ -985,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Taip";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SVETAINĖS APSAUGA IŠJUNGTA";
 
@@ -1000,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Rasti pagrindiniai stebėjimo priemonės tinklai";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Rasti pagrindiniai stebėjimo priemonės tinklai";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Stebėjimo priemonės tinklai rasti %1$@%% svetainių, kuriose lankėtės nuo %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Renkame duomenis, kad galėtumėme parodyti, kiek\nstebėjimo priemonių užblokavome.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Nėra įkeltų trečiųjų šalių užklausų";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Šio domeno užklausos buvo įkeltos, nes neseniai buvo spustelėta %@ reklama „DuckDuckGo“. Šios užklausos padeda įvertinti skelbimų efektyvumą. Visi „DuckDuckGo“ skelbimai yra neprofiliavimo.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Siekiant išvengti svetainės sutrikimų, buvo įkeltos šios domeno užklausos.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Šios domeno užklausos buvo įkeltos, nes jos susijusios su %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Buvo įkeltos šios trečiųjų šalių domenų užklausos. Jei įmonės užklausos įkeliamos, ji gali leisti joms rinkti informaciją apie jus, nors kitos mūsų žiniatinklio sekimo apsaugos priemonės tebegalioja.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Nebuvo užblokuotas jokių trečiųjų šalių užklausų įkėlimas, nes šios svetainės apsaugos priemonės yra išjungtos. Jei įmonės užklausos įkeliamos, ji gali leisti joms rinkti informaciją apie jus.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Buvo įkeltos šios domenų stebėjimo užklausos.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Taip pat buvo įkeltos šios domeno užklausos.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Buvo įkeltos šios domenų užklausos.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Taip pat buvo įkeltos šios domeno užklausos.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Užklausų iš trečiųjų šalių domenų neaptikome.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Įkeltos trečiųjų šalių užklausos";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Atkreipkite dėmesį: platformos apribojimai gali riboti mūsų galimybes aptikti visas užklausas.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Informacija nerenkama";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Privatumo praktikos iš ToS;DR.";
@@ -1040,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Nežinoma privatumo praktika";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sekiklių tinklai stebi jūsų naršymo tinkle istoriją ir iš jos sudaro jūsų duomenų profilį. Daugelis sekiklių tinklų yra pavojingesni, nes jie gali sekti ir rasti jus didesnėje interneto erdvėje.";
+"privacy.protection.tracker.networks.info" = "Stebėjimo priemonės padeda įmonėms sudaryti jūsų profilį. Užblokavome šių sekimo priemonių įkėlimą ir jūsų veiklos šiame puslapyje stebėjimą.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Nebuvo užblokuotas jokių sekimo užklausų įkėlimas, nes šioje svetainėje apsauga yra išjungta. Jei įmonės užklausos įkeliamos, ji gali leisti joms rinkti informaciją apie jus.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Neaptikome jokių stebėjimo užklausų.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Toliau nurodytų trečiųjų šalių domenų užklausų įkėlimas buvo užblokuotas, nes jos buvo identifikuotos kaip sekimo užklausos. Jei įmonės užklausos įkeliamos, ji gali leisti joms rinkti informaciją apie jus.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Užklausos užblokuotos įkelti";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Rastos sekimo užklausos";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Neužblokuota jokių sekimo užklausų";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Sekimo užklausų nerasta";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Atšaukti";
@@ -1150,18 +1378,6 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Būtina prieiga prie mikrofono";
 
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "GERAI";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Atšaukti";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "„DuckDuckGo“ niekada nesiklauso jūsų pokalbių. Visas kalbos duomenų apdorojimas, skirtas privačiai balsu atliekamai paieškai, vyksta jūsų įrenginyje.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Privačiai balsu atliekamai paieškai reikalinga prieiga prie mikrofono";
-
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Atšaukti";
 
@@ -1182,9 +1398,6 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Mėgstamas pridėtas";
-
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blokuoti įspėjimus";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Atšaukti";

@@ -13,6 +13,9 @@
 /* Add action - button shown in alert */
 "action.title.add" = "Lisää";
 
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Täytä kirjautumistiedot automaattisesti";
+
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Lisää kirjanmerkki";
 
@@ -157,6 +160,51 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Päällä";
 
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Näytä";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Kirjautumistiedot tallennettu";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Kirjautumistiedot päivitetty";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Tämä tallentaa ylimääräiset kirjautumistiedot tälle sivustolle.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "Kirjautumistiedot tallennetaan turvallisesti vain tähän laitteeseen. Niitä voi hallita asetusten automaattisen täytön asetuksista.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Haluatko, että DuckDuckGo tallentaa kirjautumistietosi?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Ei nyt";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Tallenna kirjautumistiedot";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Tallennetaanko kirjautumistiedot?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Tallenna salasana";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Tallennetaanko salasana?";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Päivitä kirjautumistiedot";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Päivitä salasana";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Päivitetäänkö salasana?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Päivitetäänkö käyttäjätunnus?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Lisää kirjanmerkki";
 
@@ -175,11 +223,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Poista";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Haluatko varmasti poistaa tämän kansion ja %i kohdetta?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Haluatko varmasti poistaa tämän kansion ja %i kohteen?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Poistetaanko %@?";
@@ -415,6 +460,9 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Tiedoston %@ lataus aloitettu";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Peruuta";
 
@@ -441,6 +489,9 @@
 
 /* Signed out state for the email feature */
 "email.settings.off" = "Pois";
+
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Estä sähköpostiseuraajat ja piilota osoitteesi";
 
 /* Cancel option for the email sign out alert */
 "email.signOutAlert.cancel" = "Peruuta";
@@ -802,6 +853,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tervetuloa\nDuckDuckGo-sovellukseen!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Kutsukoodi";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Kutsusi näytetään tässä, kun olemme valmiita. Haluatko %1$@, kun se saapuu? %2$@ macOS-selaimen beetaversiosta.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "ilmoitus";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Lähetämme sinulle ilmoituksen, kun olemme valmiita. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Saat kutsusi Macin DuckDuckGon käyttöön tänne. Tarkista tilanne pian uudelleen. Voimme myös lähettää sinulle ilmoituksen, kun on sinun vuorosi.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Lähetämme sinulle ilmoituksen, kun voit ladata Macin DuckDuckGon.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ beetaversiosta.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Macin DuckDuckGo Privacy -sovellus tarjoaa kaipaamasi nopeuden, odottamasi selaintoiminnot sekä luokkansa parhaat tietosuojaominaisuudet.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Avaa kutsusi";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "Macin DuckDuckGo on valmis!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopioi";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Lataa se siirtymällä Macilla tähän URL-osoitteeseen:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Vaihe 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Asenna se avaamalla tiedosto ja avaa sitten lukitus antamalla kutsukoodisi.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Vaihe 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Oletko valmis aloittamaan yksityisen selaamisen Macilla?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Sinut on kutsuttu!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Liity yksityiselle odotuslistalle";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Liitytään odotuslistalle...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Kokeile Macin DuckDuckGota!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Windows-versio on tulossa pian!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Voimme ilmoittaa sinulle, kun on sinun vuorosi, mutta ilmoitukset ovat tällä hetkellä poissa käytöstä DuckDuckGossa.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Sinun ei tarvitse jakaa henkilötietoja liittyäksesi jonotuslistalle. Varmistat paikkasi jonossa aikaleimalla, joka on olemassa vain laitteessasi. Näin voimme ilmoittaa sinulle, kun on sinun vuorosi.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Olet odotuslistalla!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Ladattavissa Macille";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Selaa yksityisesti Mac-sovelluksellamme";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Olet odotuslistalla!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Sinut on kutsuttu!\n\nOletko valmis aloittamaan yksityisen selaamisen Macilla? \n\n Vaihe 1\n Lataa sovellus siirtymällä tähän URL-osoitteeseen Macillasi:\nhttps://duckduckgo.com/mac.\n\nVaihe 2\nAsenna sovellus avaamalla tiedosto ja avaa sitten lukitus antamalla kutsukoodisi.\n\nKutsukoodi: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Sinut on kutsuttu!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo-työpöytäsovellus";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Selausvalikko";
 
@@ -883,6 +1024,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Tietoa verkkoseurantasuojauksistamme";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Tietoa hakusuojauksistamme ja mainoksistamme";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Miten hakumainoksemme vaikuttavat suojauksiimme";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmi";
 
@@ -906,6 +1056,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Pakotettu salaus";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Salattu yhteys";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Olemme pakottaneet tämän sivuston käyttämään salattua yhteyttä, jotta sille lähettämiäsi henkilötietoja ei voida urkkia.";
@@ -985,6 +1138,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Kyllä";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SIVUSTOSUOJAUS EI KÄYTÖSSÄ";
 
@@ -1000,11 +1156,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Merkittäviä seurantaverkostoja löytynyt";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Merkittäviä seurantaverkostoja ei löytynyt";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "%1$@%%:lta sivustoista, joilla olet käynyt %2$@ jälkeen, löytyi seurantaverkostoja.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Keräämme edelleen tietoja näyttääksemme,\nkuinka monta seurantapalvelinta olemme estäneet.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Kolmannen osapuolen pyyntöjä ei ole ladattu";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Seuraavan verkkotunnuksen pyynnöt ladattiin, koska %@-mainosta DuckDuckGossa napsautettiin äskettäin. Nämä pyynnöt auttavat arvioimaan mainosten tehokkuutta. Kaikki DuckDuckGon mainokset ovat ei-profiloivia.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Seuraavan verkkotunnuksen pyynnöt ladattiin sivuston rikkoutumisen estämiseksi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Seuraavan verkkotunnuksen pyynnöt ladattiin, koska ne liittyvät kohteeseen %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Seuraavien kolmansien osapuolten verkkotunnusten pyynnöt ladattiin. Jos yrityksen pyynnöt ladataan, se voi antaa yritykselle mahdollisuuden profiloida sinut, vaikka muut verkkoseurantasuojamme ovat edelleen voimassa.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Kolmannen osapuolen pyyntöjä ei estetty latautumasta, koska suojaukset on poistettu käytöstä tältä sivustolta. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Seuraavien verkkotunnusten seurantapyynnöt ladattiin.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Myös seuraavan verkkotunnuksen pyynnöt ladattiin.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Seuraavien verkkotunnusten pyynnöt ladattiin.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Seuraavan verkkotunnuksen pyynnöt ladattiin.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Emme havainneet pyyntöjä kolmannen osapuolen verkkotunnuksilta.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Kolmannen osapuolen pyynnöt ladattu";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Huomaa: alustan rajoitukset voivat rajoittaa kykyämme havaita kaikki pyynnöt.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Ei-profiloiva";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "ToS;DR:n tietosuojakäytäntö.";
@@ -1040,13 +1247,34 @@
 "privacy.protection.tos.unknown" = "Tuntemattomat tietosuojakäytännöt";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Seurantaverkostot kokoavat verkkohistoriasi sinua koskevaksi tietoprofiiliksi. Merkittävät seurantaverkostot ovat haitallisempia, koska ne voivat seurata toimiasi ja harjoittaa kohdennusta useammassa osassa verkkoa.";
+"privacy.protection.tracker.networks.info" = "Seurantaohjelmat auttavat yrityksiä profiloimaan sinut. Olemme estäneet näitä seurantalaitteita lataamasta ja seuraamasta toimintaasi tällä sivulla.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Seurantapyyntöjä ei estetty latautumasta, koska suojaukset on poistettu käytöstä tältä sivustolta. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Emme havainneet seurantapyyntöjä.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Seuraavien kolmansien osapuolten verkkotunnusten pyyntöjen lataaminen estettiin, koska ne tunnistettiin seurantapyynnöiksi. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Pyynnöt, joiden lataaminen estetty";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Löydetyt seurantapyynnöt";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Ei estettyjä seurantapyyntöjä";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Seurantapyyntöjä ei löytynyt";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Peruuta";
@@ -1150,18 +1378,6 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofonin käyttöoikeus vaaditaan";
 
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Peruuta";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo ei koskaan kuuntele puhettasi. Kaikki yksityisen äänihaun äänen käsittely tapahtuu omalla laitteellasi.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Mikrofonin käyttöoikeus vaaditaan yksityiseen äänihakuun";
-
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Peruuta";
 
@@ -1182,9 +1398,6 @@
 
 /* Confirmation message */
 "web.url.save.favorite.done" = "Suosikki lisätty";
-
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Estä ilmoitukset";
 
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Peruuta";

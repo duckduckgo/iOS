@@ -87,7 +87,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initHeroIcon() {
-        let resultImage = siteRating.networksSuccess(config: privacyConfig) ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Bad")
+        let resultImage = siteRating.trackerNetworksDetected > 0 ? #imageLiteral(resourceName: "PP Hero Leaderboard On") : #imageLiteral(resourceName: "PP Hero Leaderboard Bad")
         heroIconImage.image = siteRating.protecting(privacyConfig) ? resultImage : #imageLiteral(resourceName: "PP Hero Leaderboard Off")
     }
 
@@ -109,7 +109,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
     }
 
     private func initBackButton() {
-        backButton.isHidden = !isPad
+        backButton.isHidden = !AppWidthObserver.shared.isLargeWidth
     }
 
     private func initMessageLabel() {
@@ -209,7 +209,7 @@ extension PrivacyProtectionNetworkLeaderboardController: UITableViewDataSource {
             fatalError("Failed to dequeue cell as PrivacyProtectionNetworkLeaderboardCell")
         }
 
-        let currentTrackerData = ContentBlocking.shared.contentBlockingManager.currentTDSRules?.trackerData
+        let currentTrackerData = ContentBlocking.shared.contentBlockingManager.currentMainRules?.trackerData
         let networkName = currentTrackerData?.findEntity(byName: network.name!)?.displayName ?? network.name!
         cell.update(network: networkName, percent: percent)
         return cell

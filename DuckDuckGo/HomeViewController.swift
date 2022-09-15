@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import os.log
 
 class HomeViewController: UIViewController {
     
@@ -85,12 +86,23 @@ class HomeViewController: UIViewController {
                                                selector: #selector(bookmarksDidChange),
                                                name: BookmarksManager.Notifications.bookmarksDidChange,
                                                object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(remoteMessagesDidChange),
+                                               name: RemoteMessaging.Notifications.remoteMessagesDidChange,
+                                               object: nil)
     }
     
     @objc func bookmarksDidChange() {
         configureCollectionView()
     }
     
+    @objc func remoteMessagesDidChange() {
+        os_log("Remote messages did change", log: .remoteMessaging, type: .info)
+        collectionView.refreshHomeConfiguration()
+        refresh()
+    }
+
     func configureCollectionView() {
         collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
     }

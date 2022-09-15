@@ -18,16 +18,7 @@
 //
 
 import Foundation
-
-public protocol StatisticsStore: AnyObject {
-
-    var hasInstallStatistics: Bool { get }
-    var installDate: Date? { get set }
-    var atb: String? { get set }
-    var searchRetentionAtb: String? { get set }
-    var appRetentionAtb: String? { get set }
-    var variant: String? { get set }
-}
+import BrowserServicesKit
 
 extension StatisticsStore {
     public var atbWithVariant: String? {

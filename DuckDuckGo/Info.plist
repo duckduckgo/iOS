@@ -4,9 +4,9 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.duckduckgo.app.waitlistStatus</string>
 		<string>com.duckduckgo.app.macBrowserWaitlistStatus</string>
 		<string>com.duckduckgo.app.configurationRefresh</string>
+		<string>com.duckduckgo.app.remoteMessageRefresh</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -150,9 +150,8 @@
 			<array>
 				<string>ddgNewSearch</string>
 				<string>ddgQuickLink</string>
-				<string>ddgBookmarks</string>
-				<string>ddgFire</string>
 				<string>ddgFavorite</string>
+				<string>ddgFavoriteHttps</string>
 				<string>ddgAddFavorite</string>
 				<string>http</string>
 				<string>https</string>

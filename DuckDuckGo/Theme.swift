@@ -126,4 +126,10 @@ protocol Theme {
     var homeMessageButtonColor: UIColor { get }
     var homeMessageButtonTextColor: UIColor { get }
     var homeMessageDismissButtonColor: UIColor { get }
+
+    var autofillDefaultTitleTextColor: UIColor { get }
+    var autofillDefaultSubtitleTextColor: UIColor { get }
+    var autofillEmptySearchViewTextColor: UIColor { get }
+    var autofillLockedViewTextColor: UIColor { get }
+
 }

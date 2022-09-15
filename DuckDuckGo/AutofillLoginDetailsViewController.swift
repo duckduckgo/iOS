@@ -27,6 +27,7 @@ protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
 }
 
 class AutofillLoginDetailsViewController: UIViewController {
+    
     weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
@@ -34,7 +35,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     private let lockedView = AutofillItemsLockedView()
     private var contentView: UIView?
 
-    init(account: SecureVaultModels.WebsiteAccount, authenticator: AutofillLoginListAuthenticator) {
+    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account)
         self.authenticator = authenticator
         super.init(nibName: nil, bundle: nil)
@@ -92,6 +93,17 @@ class AutofillLoginDetailsViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        Publishers.MergeMany(
+            viewModel.$title,
+            viewModel.$username,
+            viewModel.$password,
+            viewModel.$address)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.setupNavigationBar()
+            }
+            .store(in: &cancellables)
+        
         authenticator.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -119,14 +131,23 @@ class AutofillLoginDetailsViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
+        title = viewModel.navigationTitle
         switch viewModel.viewMode {
         case .edit:
-            title = UserText.autofillLoginDetailsEditTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
 
         case .view:
-            title = UserText.autofillLoginDetailsDefaultTitle
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+            navigationItem.leftBarButtonItem = nil
+        
+        case .new:
+            if viewModel.shouldShowSaveButton {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            } else {
+                navigationItem.rightBarButtonItem = nil
+            }
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         }
     }
     
@@ -137,8 +158,15 @@ class AutofillLoginDetailsViewController: UIViewController {
     
     @objc private func save() {
         viewModel.save()
-        viewModel.toggleEditMode()
         delegate?.autofillLoginDetailsViewControllerDidSave(self)
+    }
+    
+    @objc private func cancel() {
+        if viewModel.viewMode == .new {
+            navigationController?.popViewController(animated: true)
+        } else {
+            toggleEditMode()
+        }
     }
 }
 

@@ -56,9 +56,7 @@ class BookmarksViewController: UITableViewController {
         button.setTitle(UserText.moreBookmarkButton, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .body)
         button.sizeToFit()
-        if #available(iOS 14.0, *) {
-            button.showsMenuAsPrimaryAction = true
-        }
+        button.showsMenuAsPrimaryAction = true
         return button
     }()
 

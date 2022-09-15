@@ -134,6 +134,7 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
             if let newCache = newCache {
                 self.storageCache = newCache
                 controller.dismiss(animated: true)
+                // TODO: self.privacyProtectionDelegate?.reload(scripts: true)
             } else {
                 controller.resetTryAgain()
             }

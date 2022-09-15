@@ -61,19 +61,24 @@ class TabViewController: UIViewController {
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
 
-    weak var findInPageScript: FindInPageUserScript?
+    private var userScripts: UserScripts? {
+        userContentController.contentBlockingAssets?.userScripts as? UserScripts
+    }
+    private var findInPageScript: FindInPageUserScript? {
+        userScripts?.findInPageScript
+    }
+    private var documentScript: DocumentUserScript? {
+        userScripts?.documentScript
+    }
+
     var findInPage: FindInPage? {
         get { return findInPageScript?.findInPage }
         set { findInPageScript?.findInPage = newValue }
     }
-    
+
     let progressWorker = WebProgressWorker()
 
     private(set) var webView: WKWebView!
-    private var userContentController: UserContentController {
-        (webView.configuration.userContentController as? UserContentController)!
-    }
-
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
     private weak var privacyController: PrivacyProtectionController?
 
@@ -248,6 +253,10 @@ class TabViewController: UIViewController {
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
 
         return appSettings.autofill && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
+    }
+
+    private var userContentController: UserContentController {
+        (webView.configuration.userContentController as? UserContentController)!
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -1280,11 +1289,6 @@ extension TabViewController: WKNavigationDelegate {
         guard navigationAction.request.mainDocumentURL != nil else { return allowPolicy }
         guard let url = navigationAction.request.url else { return allowPolicy }
 
-        if url.isBookmarklet() {
-            executeBookmarklet(url: url)
-            return .cancel
-        }
-
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
 
@@ -1842,11 +1846,10 @@ extension TabViewController: UIGestureRecognizerDelegate {
         if isShowBarsTap(gestureRecognizer) {
             return true
         }
-        if gestureRecognizer == longPressGestureRecognizer,
-           let userScripts = userContentController.contentBlockingAssets?.userScripts as? UserScripts {
+        if gestureRecognizer == longPressGestureRecognizer {
             let x = Int(gestureRecognizer.location(in: webView).x)
             let y = Int(gestureRecognizer.location(in: webView).y)
-            let url = userScripts.documentScript.getUrlAtPointSynchronously(x: x, y: y)
+            let url = documentScript?.getUrlAtPointSynchronously(x: x, y: y)
             return url != nil
         }
         return false
@@ -1916,8 +1919,6 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.printingUserScript.delegate = self
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
-
-        findInPageScript = userScripts.findInPageScript
 
         adClickAttributionLogic.reapplyCurrentRules()
 
@@ -2028,7 +2029,7 @@ extension TabViewController: AdClickAttributionLogicDelegate {
     func attributionLogic(_ logic: AdClickAttributionLogic,
                           didRequestRuleApplication rules: ContentBlockerRulesManager.Rules?,
                           forVendor vendor: String?) {
-        guard let userScripts = userContentController.contentBlockingAssets?.userScripts as? UserScripts else {
+        guard let userScripts = userScripts else {
             assertionFailure("UserScripts not found")
             return
         }
@@ -2182,7 +2183,7 @@ extension TabViewController: SecureVaultManagerDelegate {
  
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
         guard isAutofillEnabled else { return }
-        guard let userScripts = userContentController.contentBlockingAssets?.userScripts as? UserScripts else {
+        guard let userScripts = userScripts else {
             assertionFailure("UserScripts not found")
             return
         }

@@ -20,7 +20,7 @@
 import WebKit
 
 extension WKWebViewConfiguration {
-        
+
     public static func persistent() -> WKWebViewConfiguration {
         return configuration(persistsData: true)
     }
@@ -28,15 +28,13 @@ extension WKWebViewConfiguration {
     public static func nonPersistent() -> WKWebViewConfiguration {
         return configuration(persistsData: false)
     }
-    
+
     private static func configuration(persistsData: Bool) -> WKWebViewConfiguration {
         let configuration = WKWebViewConfiguration()
         if !persistsData {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
         }
         configuration.dataDetectorTypes = [.phoneNumber]
-
-        configuration.installContentBlockingRules()
 
         configuration.allowsAirPlayForMediaPlayback = true
         configuration.allowsInlineMediaPlayback = true
@@ -46,21 +44,5 @@ extension WKWebViewConfiguration {
 
         return configuration
     }
-    
-    private func installContentBlockingRules() {
-        func addRulesToController(rules: WKContentRuleList) {
-            self.userContentController.add(rules)
-        }
 
-        if let rules = ContentBlocking.shared.contentBlockingManager.currentMainRules {
-            // TODO: ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking)?
-            addRulesToController(rules: rules.rulesList)
-        }
-    }
-    
-    public func installContentRules(trackerProtection: Bool) {
-        if trackerProtection {
-            self.installContentBlockingRules()
-        }
-    }
 }

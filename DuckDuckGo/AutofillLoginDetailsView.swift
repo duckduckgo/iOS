@@ -20,6 +20,8 @@
 import SwiftUI
 import DuckUI
 
+// swiftlint:disable file_length
+
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     @State private var cellMaxWidth: CGFloat?
@@ -57,11 +59,19 @@ struct AutofillLoginDetailsView: View {
                              subtitle: $viewModel.username,
                              placeholderText: UserText.autofillLoginDetailsEditUsernamePlaceholder,
                              keyboardType: .emailAddress)
-                
-                editableCell(UserText.autofillLoginDetailsPassword,
-                             subtitle: $viewModel.password,
-                             placeholderText: UserText.autofillLoginDetailsEditPasswordPlaceholder,
-                             secure: true)
+
+                if viewModel.viewMode == .new {
+                    editableCell(UserText.autofillLoginDetailsPassword,
+                                 subtitle: $viewModel.password,
+                                 placeholderText: UserText.autofillLoginDetailsEditPasswordPlaceholder,
+                                 secure: true)
+                } else {
+                    EditablePasswordCell(title: UserText.autofillLoginDetailsPassword,
+                                         placeholderText: UserText.autofillLoginDetailsEditPasswordPlaceholder,
+                                         password: $viewModel.password,
+                                         userVisiblePassword: .constant(viewModel.userVisiblePassword),
+                                         isPasswordHidden: $viewModel.isPasswordHidden)
+                }
             }
             
             Section {
@@ -167,6 +177,56 @@ struct ClearTextField: View {
             return 0
         }
         return 1
+    }
+}
+
+private struct EditablePasswordCell: View {
+    @State private var id = UUID()
+    let title: String
+    let placeholderText: String
+    @Binding var password: String
+    @Binding var userVisiblePassword: String
+    @Binding var isPasswordHidden: Bool
+
+    @State private var closeButtonVisible = false
+
+    var body: some View {
+
+        VStack(alignment: .leading, spacing: Constants.verticalPadding) {
+            Text(title)
+                .label4Style()
+
+            HStack {
+                TextField(placeholderText, text: isPasswordHidden ? $userVisiblePassword : $password) { editing in
+                    closeButtonVisible = editing
+                } onCommit: {
+                    closeButtonVisible = false
+                }
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .keyboardType(.default)
+                .label4Style(design: password.count > 0 ? .monospaced : .default)
+                .disabled(isPasswordHidden)
+
+                Spacer()
+
+                if password.count > 0 {
+                    if closeButtonVisible {
+                        Image("ClearTextField")
+                            .onTapGesture {
+                                self.password = ""
+                            }
+                    } else {
+                        Image(isPasswordHidden ? "ShowPasswordEye" : "HidePasswordEye")
+                            .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
+                            .onTapGesture {
+                                isPasswordHidden.toggle()
+                            }
+                    }
+                }
+            }
+        }
+        .frame(minHeight: Constants.minRowHeight)
     }
 }
 

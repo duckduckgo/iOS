@@ -321,7 +321,9 @@ class TabViewController: UIViewController {
                        loadingInitiatedByParentTab: Bool = false) {
         instrumentation.willPrepareWebView()
 
-        configuration.userContentController = UserContentController()
+        let userContentController = UserContentController()
+        configuration.userContentController = userContentController
+        userContentController.delegate = self
 
         webView = WKWebView(frame: view.bounds, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -1905,7 +1907,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
 extension TabViewController: UserContentControllerDelegate {
 
     func userContentController(_ userContentController: UserContentController,
-                               didInstallContentRuleLists contentRuleLists: [String : WKContentRuleList],
+                               didInstallContentRuleLists contentRuleLists: [String: WKContentRuleList],
                                userScripts: UserScriptsProvider,
                                updateEvent: ContentBlockerRulesManager.UpdateEvent) {
         guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
@@ -1920,14 +1922,18 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
 
-        adClickAttributionLogic.reapplyCurrentRules()
+        adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
 
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
-        // TODO: Or on reload(scripts: true) - on notification
-        // loginDetectionState
-        // storageCache
-        // doNotSell
-        if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) ?? false {
+        let notificationsTriggeringReload = [
+            PreserveLogins.Notifications.loginDetectionStateChanged,
+            AppUserDefaults.Notifications.doNotSellStatusChange,
+            StorageCacheProvider.didUpdateStorageCacheNotification
+        ]
+        if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) == true
+            || notificationsTriggeringReload.contains(where: {
+                updateEvent.changes[$0.rawValue]?.contains(.notification) == true
+            }) {
             reload()
         }
     }

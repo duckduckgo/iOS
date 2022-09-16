@@ -65,6 +65,7 @@ class PrivacyProtectionController: ThemableNavigationController {
             PrivacyProtectionErrorController(coder: coder, configuration: self.privacyConfig)
         }) else { return }
         controller.errorText = errorText
+        controller.delegate = self
         pushViewController(controller, animated: true)
     }
 
@@ -134,7 +135,6 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
             if let newCache = newCache {
                 self.storageCache = newCache
                 controller.dismiss(animated: true)
-                // TODO: self.privacyProtectionDelegate?.reload(scripts: true)
             } else {
                 controller.resetTryAgain()
             }

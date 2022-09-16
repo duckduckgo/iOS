@@ -65,33 +65,32 @@ public final class ContentBlockingUpdating {
             return BufferedValue(rulesUpdate: rulesUpdate, sourceProvider: sourceProvider)
         }
 
-        let transform: (Update, Notification) -> Update = { update, notification in
+        func onNotificationWithInitial(_ name: Notification.Name) -> AnyPublisher<Notification, Never> {
+            return NotificationCenter.default.publisher(for: name)
+                .prepend([Notification(name: Notification.Name(rawValue: ""))])
+                .eraseToAnyPublisher()
+        }
+
+        func combine(_ update: Update, _ notification: Notification) -> Update {
             var update = update
             update.changes[notification.name.rawValue] = .notification
             return update
         }
 
-        let nc = NotificationCenter.default
-
         // 1. Collect updates from ContentBlockerRulesManager and generate UserScripts based on its output
         cancellable = contentBlockerRulesManager.updatesPublisher
             // regenerate UserScripts on:
-            // prefs changes notifications
-            .combineLatest(nc.publisher(for: PreserveLogins.Notifications.loginDetectionStateChanged), transform)
-            .combineLatest(nc.publisher(for: AppUserDefaults.Notifications.doNotSellStatusChange), transform)
-            .combineLatest(nc.publisher(for: AppUserDefaults.Notifications.autofillEnabledChange), transform)
-            .combineLatest(nc.publisher(for: AppUserDefaults.Notifications.textSizeChange), transform)
-            .combineLatest(nc.publisher(for: AppUserDefaults.Notifications.didVerifyInternalUser), transform)
-            .combineLatest(nc.publisher(for: StorageCacheProvider.didUpdateStorageCacheNotification)
-                .receive(on: DispatchQueue.main), transform)
-            // gpcEnabled preference updated
-        // TODO: on ContentBlocking.onStoreChanged
-        // TODO: On privacy security preferences update
-//            .combineLatest(privacySecurityPreferences.$gpcEnabled)
-            // drop gpcEnabled value: $0.1
+            // prefs changes notifications with initially published value for combineLatest to work
+            .combineLatest(onNotificationWithInitial(PreserveLogins.Notifications.loginDetectionStateChanged), combine)
+            .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.doNotSellStatusChange), combine)
+            .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.autofillEnabledChange), combine)
+            .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.textSizeChange), combine)
+            .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.didVerifyInternalUser), combine)
+            .combineLatest(onNotificationWithInitial(StorageCacheProvider.didUpdateStorageCacheNotification)
+                .receive(on: DispatchQueue.main), combine)
             // DefaultScriptSourceProvider instance should be created once per rules/config change and fed into UserScripts initialization
             .map(makeValue)
-            .assign(to: \.bufferedValue, on: self) // buffer latest update value // TODO: onWeaklyHeld
+            .assign(to: \.bufferedValue, onWeaklyHeld: self) // buffer latest update value
 
         // 2. Publish ContentBlockingAssets(Rules+Scripts) for WKUserContentController per subscription
         self.userContentBlockingAssets = $bufferedValue

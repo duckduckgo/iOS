@@ -24,6 +24,7 @@ import Core
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
+    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount)
 }
 
 final class AutofillLoginDetailsViewModel: ObservableObject {
@@ -200,6 +201,14 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         } catch {
             Pixel.fire(pixel: .secureVaultError)
         }
+    }
+
+    func delete() {
+        guard let account = account else {
+            assertionFailure("Trying to delete account, but the account doesn't exist")
+            return
+        }
+        delegate?.autofillLoginDetailsViewModelDelete(account: account)
     }
 }
 

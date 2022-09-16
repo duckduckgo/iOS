@@ -26,6 +26,7 @@ struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
     @State private var cellMaxWidth: CGFloat?
     @State private var isShowingPassword: Bool = false
+    @State private var actionSheetConfirmDeletePresented: Bool = false
     
     var body: some View {
         List {
@@ -80,6 +81,10 @@ struct AutofillLoginDetailsView: View {
                              placeholderText: UserText.autofillLoginDetailsEditURLPlaceholder,
                              keyboardType: .URL)
             }
+
+            if viewModel.viewMode == .edit {
+                deleteCell()
+            }
         }
     }
     
@@ -109,6 +114,10 @@ struct AutofillLoginDetailsView: View {
                              selectedCell: $viewModel.selectedCell) {
                     viewModel.copyToPasteboard(.address)
                 }
+            }
+
+            Section {
+                deleteCell()
             }
         }
     }
@@ -140,6 +149,23 @@ struct AutofillLoginDetailsView: View {
             }
         }
         .frame(minHeight: Constants.minRowHeight)
+    }
+
+    private func deleteCell() -> some View {
+        HStack {
+            Button(UserText.autofillLoginDetailsDeleteButton) {
+                actionSheetConfirmDeletePresented.toggle()
+            }
+            .actionSheet(isPresented: $actionSheetConfirmDeletePresented, content: {
+                 let deleteAction = ActionSheet.Button.destructive(Text(UserText.autofillLoginDetailsDeleteConfirmationButtonTitle)) {
+                     viewModel.delete()
+                 }
+                 return ActionSheet(title: Text(UserText.autofillLoginDetailsDeleteConfirmationTitle),
+                                    message: nil,
+                                    buttons: [deleteAction, ActionSheet.Button.cancel()])
+             })
+             .foregroundColor(Color.red)
+        }
     }
 }
 

@@ -156,6 +156,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             }
         }
     }
+
+    private func presentDeleteConfirmation(for title: String) {
+        ActionMessageView.present(message: UserText.autofillLoginLisLoginDeletedToastMessage(for: title),
+                                  actionTitle: UserText.actionGenericUndo,
+                                  presentationLocation: .withoutBottomBar,
+                                  onAction: {
+            self.viewModel.undoLastDelete()
+        }, onDidDismiss: {
+            self.viewModel.clearUndoCache()
+        })
+    }
     
     // MARK: Subviews Setup
     
@@ -372,14 +383,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
                 }
                 
                 if deletedSuccessfully {
-                    ActionMessageView.present(message: UserText.autofillLoginLisLoginDeletedToastMessage(for: title),
-                                              actionTitle: UserText.actionGenericUndo,
-                                              presentationLocation: .withoutBottomBar,
-                                              onAction: {
-                        self.viewModel.undoLastDelete()
-                    }, onDidDismiss: {
-                        self.viewModel.clearUndoCache()
-                    })
+                    presentDeleteConfirmation(for: title)
                 }
             }
         default:
@@ -416,6 +420,17 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController) {
         viewModel.updateData()
         tableView.reloadData()
+    }
+
+    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount) {
+        let title = account.title ?? ""
+        let deletedSuccessfully = viewModel.delete(account)
+
+        if deletedSuccessfully {
+            viewModel.updateData()
+            tableView.reloadData()
+            presentDeleteConfirmation(for: title)
+        }
     }
 }
 

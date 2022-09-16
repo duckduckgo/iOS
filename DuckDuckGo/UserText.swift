@@ -640,7 +640,10 @@ public struct UserText {
     public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
     public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
     public static let autofillLoginDetailsNewTitle = "Add Login" // Title when adding new autofill login
-    
+    public static let autofillLoginDetailsDeleteButton = "Delete" // Delete button when deleting an autofill login
+    public static let autofillLoginDetailsDeleteConfirmationTitle = "Are you sure you want to delete this Login?" // Title of confirmation alert when deleting an autofill login
+    public static let autofillLoginDetailsDeleteConfirmationButtonTitle = "Delete Login" // Autofill alert button confirming delete autofill login
+
     public static func autofillLoginLisLoginDeletedToastMessage(for title: String) -> String {
         "Login for \(title) deleted"
     } // Toast message when a login item is deleted

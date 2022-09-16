@@ -1209,6 +1209,7 @@ extension TabViewController: WKNavigationDelegate {
         return result
     }
 
+    // swiftlint:disable function_body_length
     @MainActor
     func decidePolicy(for navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
@@ -1276,6 +1277,7 @@ extension TabViewController: WKNavigationDelegate {
         }
         return decision
     }
+    // swiftlint:enable function_body_length
 
     @MainActor
     private func decideFinalPolicy(for navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
@@ -2322,7 +2324,7 @@ extension WKWebView {
 
 extension UserContentController {
 
-    public convenience init(privacyConfigurationManager: PrivacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager) {
+    public convenience init(privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
         self.init(assetsPublisher: ContentBlocking.shared.contentBlockingUpdating.userContentBlockingAssets,
                   privacyConfigurationManager: privacyConfigurationManager)
     }

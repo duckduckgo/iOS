@@ -37,11 +37,11 @@ class ContentBlockerProtectionStoreTests: XCTestCase {
         }
         """.data(using: .utf8)!
         _ = FileStore().persist(configFile, forConfiguration: .privacyConfiguration)
-        XCTAssertEqual(ContentBlocking.privacyConfigurationManager.embeddedConfigData.etag,
+        XCTAssertEqual(ContentBlocking.shared.privacyConfigurationManager.embeddedConfigData.etag,
                        AppPrivacyConfigurationDataProvider.Constants.embeddedDataETag)
-        XCTAssertEqual(ContentBlocking.privacyConfigurationManager.reload(etag: "new etag", data: configFile), .downloaded)
+        XCTAssertEqual(ContentBlocking.shared.privacyConfigurationManager.reload(etag: "new etag", data: configFile), .downloaded)
 
-        let newConfig = ContentBlocking.privacyConfigurationManager.fetchedConfigData
+        let newConfig = ContentBlocking.shared.privacyConfigurationManager.fetchedConfigData
         XCTAssertNotNil(newConfig)
 
         if let newConfig = newConfig {

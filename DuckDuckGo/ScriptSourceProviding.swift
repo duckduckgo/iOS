@@ -28,7 +28,7 @@ protocol ScriptSourceProviding {
     var sendDoNotSell: Bool { get }
     var contentBlockerRulesConfig: ContentBlockerUserScriptConfig { get }
     var surrogatesConfig: SurrogatesUserScriptConfig { get }
-    var privacyConfigurationManager: PrivacyConfigurationManager { get }
+    var privacyConfigurationManager: PrivacyConfigurationManaging { get }
     var autofillSourceProvider: AutofillUserScriptSourceProvider { get }
     var sessionKey: String { get }
 
@@ -44,11 +44,11 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     let autofillSourceProvider: AutofillUserScriptSourceProvider
     let sessionKey: String
 
-    let privacyConfigurationManager: PrivacyConfigurationManager
+    let privacyConfigurationManager: PrivacyConfigurationManaging
     let contentBlockingManager: ContentBlockerRulesManagerProtocol
 
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
-         privacyConfigurationManager: PrivacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager,
+         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          contentBlockingManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager) {
 
         self.sendDoNotSell = appSettings.sendDoNotSell
@@ -72,7 +72,7 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
 
     public static func buildAutofillSource(gpcEnabled: Bool,
                                            sessionKey: String,
-                                           privacyConfigurationManager: PrivacyConfigurationManager) -> AutofillUserScriptSourceProvider {
+                                           privacyConfigurationManager: PrivacyConfigurationManaging) -> AutofillUserScriptSourceProvider {
         let prefs = ContentScopeProperties(gpcEnabled: gpcEnabled,
                                            sessionKey: sessionKey,
                                            featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
@@ -81,7 +81,7 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     }
 
     private static func buildContentBlockerRulesConfig(contentBlockingManager: ContentBlockerRulesManagerProtocol,
-                                                       privacyConfigurationManager: PrivacyConfigurationManager) -> ContentBlockerUserScriptConfig {
+                                                       privacyConfigurationManager: PrivacyConfigurationManaging) -> ContentBlockerUserScriptConfig {
 
         let tdsName = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let trackerData = contentBlockingManager.currentRules.first(where: { $0.name == tdsName })?.trackerData
@@ -93,7 +93,7 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     }
 
     private static func buildSurrogatesConfig(contentBlockingManager: ContentBlockerRulesManagerProtocol,
-                                              privacyConfigurationManager: PrivacyConfigurationManager) -> SurrogatesUserScriptConfig {
+                                              privacyConfigurationManager: PrivacyConfigurationManaging) -> SurrogatesUserScriptConfig {
 
         let surrogates = FileStore().loadAsString(forConfiguration: .surrogates) ?? ""
         let tdsName = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName

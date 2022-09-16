@@ -24,7 +24,7 @@ import os.log
 public final class ContentBlocking {
     public static let shared = ContentBlocking()
 
-    public let privacyConfigurationManager: PrivacyConfigurationManager
+    public let privacyConfigurationManager: PrivacyConfigurationManaging
     public let adClickAttribution: AdClickAttributionFeature
     public let adClickAttributionRulesProvider: AdClickAttributionRulesProvider
     public let trackerDataManager: TrackerDataManager
@@ -34,12 +34,14 @@ public final class ContentBlocking {
     private let lastCompiledRulesStore: AppLastCompiledRulesStore
 
 
-    private init() {
-        privacyConfigurationManager = PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().etag(for: .privacyConfiguration),
-                                                                  fetchedData: FileStore().loadAsData(forConfiguration: .privacyConfiguration),
-                                                                  embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
-                                                                  localProtection: DomainsProtectionUserDefaultsStore(),
-                                                                  errorReporting: Self.debugEvents)
+    private init(privacyConfigurationManager: PrivacyConfigurationManaging? = nil) {
+        let privacyConfigurationManager = privacyConfigurationManager
+            ?? PrivacyConfigurationManager(fetchedETag: UserDefaultsETagStorage().etag(for: .privacyConfiguration),
+                                           fetchedData: FileStore().loadAsData(forConfiguration: .privacyConfiguration),
+                                           embeddedDataProvider: AppPrivacyConfigurationDataProvider(),
+                                           localProtection: DomainsProtectionUserDefaultsStore(),
+                                           errorReporting: Self.debugEvents)
+        self.privacyConfigurationManager = privacyConfigurationManager
 
         trackerDataManager = TrackerDataManager(etag: UserDefaultsETagStorage().etag(for: .trackerDataSet),
                                                 data: FileStore().loadAsData(forConfiguration: .trackerDataSet),

@@ -56,11 +56,13 @@ public final class ContentBlockingUpdating {
 
     private(set) var userContentBlockingAssets: AnyPublisher<UserContentController.ContentBlockingAssets, Never>!
 
-    init(contentBlockerRulesManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager,
-         privacyConfigurationManager: PrivacyConfigurationManager = ContentBlocking.shared.privacyConfigurationManager) {
+    init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
+         contentBlockerRulesManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager,
+         privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
 
         let makeValue: (Update) -> BufferedValue = { rulesUpdate in
-            let sourceProvider = DefaultScriptSourceProvider(privacyConfigurationManager: privacyConfigurationManager,
+            let sourceProvider = DefaultScriptSourceProvider(appSettings: appSettings,
+                                                             privacyConfigurationManager: privacyConfigurationManager,
                                                              contentBlockingManager: contentBlockerRulesManager)
             return BufferedValue(rulesUpdate: rulesUpdate, sourceProvider: sourceProvider)
         }

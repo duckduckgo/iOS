@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Les pratiques de confidentialité de ce site Web n'ont pas été vérifiées.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Degré de confidentialité %@";
+"privacy.protection.site.grade(letter: %@)" = "Degré de confidentialité %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Appuyer pour accéder à l'écran de protection de la confidentialité";

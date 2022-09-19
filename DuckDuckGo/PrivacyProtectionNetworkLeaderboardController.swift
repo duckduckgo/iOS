@@ -120,7 +120,7 @@ class PrivacyProtectionNetworkLeaderboardController: UIViewController {
 
         let percent = pagesVisited == 0 ? 0 : 100 * pagesWithTrackers / pagesVisited
         let percentText = "\(percent)"
-        let message = UserText.ppNetworkLeaderboard.format(arguments: percentText, dateText)
+        let message = Loc.Privacy.Protection.Network.Leaderboard(percentText, dateText).string
 
         guard let percentRange = message.range(of: percentText) else { return }
         guard let dateRange = message.range(of: dateText) else { return }

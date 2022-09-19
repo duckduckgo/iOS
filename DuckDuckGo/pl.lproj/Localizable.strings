@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Polityka prywatności tej witryny nie została sprawdzona.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Poziom prywatności %@";
+"privacy.protection.site.grade(letter: %@)" = "Poziom prywatności %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Naciśnij, aby otworzyć ekran ochrony prywatności";

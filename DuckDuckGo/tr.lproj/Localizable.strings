@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Bu web sitesinin gizlilik uygulamaları gözden geçirilmemiştir.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Gizlilik derecesi %@";
+"privacy.protection.site.grade(letter: %@)" = "Gizlilik derecesi %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Gizlilik Koruması ekranını açmak için basın";

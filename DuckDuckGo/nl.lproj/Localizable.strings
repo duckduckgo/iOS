@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "De privacypraktijken van deze website zijn niet gecontroleerd.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privacyklasse %@";
+"privacy.protection.site.grade(letter: %@)" = "Privacyklasse %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Druk hierop om het scherm Privacybescherming te openen";

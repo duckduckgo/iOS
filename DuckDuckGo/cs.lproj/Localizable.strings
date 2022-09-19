@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Postupy na ochranu osobních údajů na této webové stránce nebyly přezkoumány.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Ochrana osobních údajů stupeň %@";
+"privacy.protection.site.grade(letter: %@)" = "Ochrana osobních údajů stupeň %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Stisknutím otevřete obrazovku Ochrany osobních údajů";

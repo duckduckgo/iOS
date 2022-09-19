@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Prakse zaštite privatnosti na ovom web-mjestu nisu provjerene.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Ocjena privatnosti %@";
+"privacy.protection.site.grade(letter: %@)" = "Ocjena privatnosti %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Pritisnite za otvaranje zaslona za zaštitu privatnosti";

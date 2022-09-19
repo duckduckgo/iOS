@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "No se han revisado las prácticas de privacidad de este sitio web.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Grado de privacidad %@";
+"privacy.protection.site.grade(letter: %@)" = "Grado de privacidad %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Pulsa para abrir la pantalla de protección de privacidad";

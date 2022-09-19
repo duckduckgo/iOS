@@ -233,7 +233,7 @@ class FirstPartySectionBuilder: SectionWithSummaryBuilder {
     
     static func build(with siteRating: SiteRating) -> [PrivacyProtectionOtherDomainsController.Section] {
         buildSections(from: siteRating.trackersAllowedForReason(.ownedByFirstParty),
-                      withSummary: String(format: UserText.ppOtherDomainsOwnedByFirstParty, siteRating.domain ?? siteRating.url.absoluteString))
+                      withSummary: Loc.Privacy.Protection.Other.Domains.Firstparty(siteRating.domain ?? siteRating.url.absoluteString).string)
     }
 }
 

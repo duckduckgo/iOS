@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Privatlivspraksis på dette websted er ikke blevet gennemgået.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privatlivsniveau %@";
+"privacy.protection.site.grade(letter: %@)" = "Privatlivsniveau %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Tryk for at åbne siden om beskyttelse af dit privatliv";

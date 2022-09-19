@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Tämän verkkosivuston tietosuojakäytäntöjä ei ole tarkistettu.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Tietosuojaluokka %@";
+"privacy.protection.site.grade(letter: %@)" = "Tietosuojaluokka %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Avaa yksityisyydensuojanäyttö painamalla";

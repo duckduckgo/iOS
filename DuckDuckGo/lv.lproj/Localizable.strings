@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Šīs vietnes privātuma prakse nav pārskatīta.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privātuma līmenis: %@";
+"privacy.protection.site.grade(letter: %@)" = "Privātuma līmenis: %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Nospied, lai atvērtu privātuma aizsardzības ekrānu";

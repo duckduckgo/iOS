@@ -2677,6 +2677,7 @@
 				83ED3B8C1FA8E61D00B47556 /* ManualTestsScript.md */,
 				85A313962028E78A00327D00 /* release_notes.txt */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
 		};
 		84E341931E2F7EFB00BDBA6F /* Products */ = {
@@ -4345,7 +4346,6 @@
 			buildPhases = (
 				2E847D5228D8FBD10000C625 /* ReMafoX */,
 				0A991F5B239418D100AA1F64 /* Prevent Version Override */,
-				98B0CE69251C937D003FB601 /* Update Localizable.strings */,
 				84E3418E1E2F7EFB00BDBA6F /* Sources */,
 				8558AA7D20EE3CB200A346E9 /* Swift Lint */,
 				85CA9A212644081300145393 /* Check Filename Headers */,
@@ -4944,24 +4944,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  [ -z \"$TRAVIS\" ]\n\n  if env | grep -q ^TRAVIS=\n  then\n    echo Skipping fonts on TRAVIS build\n  elif [ -d ~/DuckDuckGo/Fonts/proximanova ]\n  then\n  \n    echo Installing fonts from standard location\n    cp ~/DuckDuckGo/Fonts/proximanova/*.otf \"$SRCROOT/fonts/licensed\"\n\n  elif [ ! -d ~/DuckDuckGo/Fonts/proximanova ]\n  then\n                                        \n      echo \"warning: Correct fonts not found, install proximanova fonts at ~/DuckDuckGo/Fonts/proximanova\"\n                                        \n  fi\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		98B0CE69251C937D003FB601 /* Update Localizable.strings */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Update Localizable.strings";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $ENABLE_PREVIEWS == \"YES\" ]\nthen\n  exit 0\nelse\n  \"$SOURCE_ROOT/loc_update.sh\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

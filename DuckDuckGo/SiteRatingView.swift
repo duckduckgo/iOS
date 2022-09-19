@@ -87,7 +87,7 @@ public class SiteRatingView: UIView {
             let grade = config.isProtected(domain: siteRating.domain) ? grades.enhanced : grades.site
             
             circleIndicator.image = SiteRatingView.gradeImages[grade.grade]
-            circleIndicator.accessibilityLabel = UserText.privacyGrade(grade.grade.rawValue.uppercased())
+            circleIndicator.accessibilityLabel = Loc.Privacy.Protection.Site.Grade(letter: grade.grade.rawValue.uppercased()).string
             circleIndicator.accessibilityHint = UserText.privacyGradeHint
         }
     }

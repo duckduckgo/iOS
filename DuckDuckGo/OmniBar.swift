@@ -130,7 +130,7 @@ class OmniBar: UIView {
     
     private func configureTextField() {
         let theme = ThemeManager.shared.currentTheme
-        textField.attributedPlaceholder = NSAttributedString(string: UserText.searchDuckDuckGo,
+        textField.attributedPlaceholder = NSAttributedString(string: Loc.Search.Hint.Duckduckgo.string,
                                                              attributes: [.foregroundColor: theme.searchBarTextPlaceholderColor])
         textField.delegate = self
         

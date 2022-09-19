@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Стандарты конфиденциальности этого сайта не проверены.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Уровень защиты: %@";
+"privacy.protection.site.grade(letter: %@)" = "Уровень защиты: %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Нажмите, чтобы открыть страницу защиты конфиденциальности";

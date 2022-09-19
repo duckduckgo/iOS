@@ -34,7 +34,7 @@ public class Authenticator {
 
     public func authenticate(reply: @escaping (Bool, Error?) -> Void) {
         let context = LAContext()
-        let reason = UserText.appUnlock
+        let reason = Loc.App.Authentication.Unlock.string
         context.evaluatePolicy(policy, localizedReason: reason) { (success, error) in
             DispatchQueue.main.async {
                 reply(success, error)

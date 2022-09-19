@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Practicile de confidențialitate ale acestui site nu au fost revizuite.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Grad de confidențialitate %@";
+"privacy.protection.site.grade(letter: %@)" = "Grad de confidențialitate %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Apăsați pentru a deschide ecranul de protecție a confidențialității";

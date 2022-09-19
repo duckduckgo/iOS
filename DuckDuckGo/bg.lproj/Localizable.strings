@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Политиката за защита на поверителността на този уебсайт не е прегледана.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Клас на поверителност %@";
+"privacy.protection.site.grade(letter: %@)" = "Клас на поверителност %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Натиснете, за да отворите екрана за защита на поверителността";

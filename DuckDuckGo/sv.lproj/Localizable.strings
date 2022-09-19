@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Integritetspraxis på denna webbplats har inte granskats.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Sekretessklass %@";
+"privacy.protection.site.grade(letter: %@)" = "Sekretessklass %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Tryck för att öppna skärmen för integritetsskydd";

@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Selle veebisaidi privaatsustavasid ei ole üle vaadatud.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privaatsusaste %@";
+"privacy.protection.site.grade(letter: %@)" = "Privaatsusaste %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Vajuta, et avada privaatsuse kaitse aken";

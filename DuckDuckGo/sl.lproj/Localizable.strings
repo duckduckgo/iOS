@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Prakse zasebnosti tega spletnega mesta niso bile pregledane.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Raven zasebnosti %@";
+"privacy.protection.site.grade(letter: %@)" = "Raven zasebnosti %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Pritisnite, da odprete zaslon za zaščito zasebnosti";

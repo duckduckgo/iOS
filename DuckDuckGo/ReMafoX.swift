@@ -1541,7 +1541,7 @@ internal enum Res {
             }
         }
 
-        /// 🇺🇸 English: "Open in DuckDuckGo"
+        /// 🇺🇸 English: "DuckDuckGo"
         internal enum CFBundleDisplayName {
             /// The translated `String` instance.
             internal static var string: String { Bundle.main.localizedString(forKey: self.tableLookupKey, value: nil, table: "InfoPlist") }
@@ -1553,7 +1553,7 @@ internal enum Res {
             internal static var tableLookupKey: String { "CFBundleDisplayName" }
         }
 
-        /// 🇺🇸 English: "Core"
+        /// 🇺🇸 English: "DuckDuckGo"
         internal enum CFBundleName {
             /// The translated `String` instance.
             internal static var string: String { Bundle.main.localizedString(forKey: self.tableLookupKey, value: nil, table: "InfoPlist") }
@@ -5490,24 +5490,23 @@ internal enum Res {
                 internal enum Site {
                     /// 🇺🇸 English: "Privacy grade %@"
                     internal struct Grade {
-                        internal let unnamedParam1: String
+                        internal let letter: String
 
-                        internal init(_ unnamedParam1: String) {
-                            self.unnamedParam1 = unnamedParam1
+                        internal init(letter: String) {
+                            self.letter = letter
                         }
 
                         /// The translated `String` instance.
                         internal var string: String {
                             let localizedFormatString = Bundle.main.localizedString(forKey: self.tableLookupKey, value: nil, table: "Localizable")
-                            return String.localizedStringWithFormat(localizedFormatString, self.unnamedParam1)
+                            return String.localizedStringWithFormat(localizedFormatString, self.letter)
                         }
 
                         /// The SwiftUI `LocalizedStringKey` instance.
-                        @available(*, unavailable, message: "'LocalizedStringKey' support requires the translation key 'privacy.protection.site.grade' to end with named parameters like in 'User.Description(username: %@, birthYear: %d)'")
-                        internal var locStringKey: LocalizedStringKey { fatalError() }
+                        internal var locStringKey: LocalizedStringKey { LocalizedStringKey("privacy.protection.site.grade(letter: \(self.letter))") }
 
                         /// The lookup key in the translation table (= the key in the `.strings` or `.stringsdict` file).
-                        internal var tableLookupKey: String { "privacy.protection.site.grade" }
+                        internal var tableLookupKey: String { "privacy.protection.site.grade(letter: %@)" }
                     }
 
                     /// 🇺🇸 English: "Press to open Privacy Protection screen"

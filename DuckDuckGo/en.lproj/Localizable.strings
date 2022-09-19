@@ -1180,7 +1180,7 @@ Invite code: %@";
 "privacy.protection.practices.unknown.info" = "The privacy practices of this website have not been reviewed.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privacy grade %@";
+"privacy.protection.site.grade(letter: %@)" = "Privacy grade %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Press to open Privacy Protection screen";
@@ -1361,4 +1361,3 @@ Invite code: %@";
 
 /* Alert title explaining the message is shown by a website */
 "webJSAlert.website-message.format" = "A message from %@:";
-

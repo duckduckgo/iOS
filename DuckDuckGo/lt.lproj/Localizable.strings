@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Šios svetainės privatumo praktikos neperžiūrėtos.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privatumo laipsnis %@";
+"privacy.protection.site.grade(letter: %@)" = "Privatumo laipsnis %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Paspauskite norėdami atidaryti privatumo apsaugos ekraną";

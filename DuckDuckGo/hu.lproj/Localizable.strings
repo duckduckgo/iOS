@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "A weboldal adatvédelmi gyakorlatát nem vizsgálták felül.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Adatvédelmi fokozat: %@";
+"privacy.protection.site.grade(letter: %@)" = "Adatvédelmi fokozat: %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Nyomd meg az adatvédelmi képernyő megnyitásához";

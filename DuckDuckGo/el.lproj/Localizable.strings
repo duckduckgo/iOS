@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Οι πρακτικές προστασίας προσωπικών δεδομένων αυτού του ιστότοπου δεν έχουν ελεγχθεί.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Βαθμός προστασίας προσωπικών δεδομένων %@";
+"privacy.protection.site.grade(letter: %@)" = "Βαθμός προστασίας προσωπικών δεδομένων %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Πατήστε για να ανοίξετε την οθόνη Προστασίας προσωπικών δεδομένων";

@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Le procedure sulla privacy di questo sito Web non sono state sottoposte a verifica.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Valutazione dell’affidabilità dei siti %@";
+"privacy.protection.site.grade(letter: %@)" = "Valutazione dell’affidabilità dei siti %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Premi per aprire la schermata di tutela della privacy";

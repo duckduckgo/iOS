@@ -22,9 +22,7 @@ import Core
 
 
 public struct UserText {
-    
-    public static let appUnlock = NSLocalizedString("app.authentication.unlock", value: "Unlock DuckDuckGo.", comment: "Shown on authentication screen")
-    public static let searchDuckDuckGo = NSLocalizedString("search.hint.duckduckgo", value: "Search or enter address", comment: "")
+
     public static let webSaveBookmarkDone = NSLocalizedString("web.url.save.bookmark.done", value: "Bookmark added", comment: "Confirmation message")
     public static let webBookmarkAlreadySaved = NSLocalizedString("web.url.save.bookmark.exists", value: "Bookmark already saved", comment: "Floating Info message")
     public static let webSaveFavoriteDone = NSLocalizedString("web.url.save.favorite.done", value: "Favorite added", comment: "Confirmation message")
@@ -145,7 +143,6 @@ public struct UserText {
     public static let ppEncryptionMixedHeading = NSLocalizedString("privacy.protection.encryption.mixed.heading", value: "Mixed Encryption", comment: "")
     public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", value: "Unencrypted Connection", comment: "")
     
-    public static let ppNetworkLeaderboard = NSLocalizedString("privacy.protection.network.leaderboard", value: "Tracker networks were found on %@%% of websites you’ve visited since %@.", comment: "First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date")
     public static let ppNetworkLeaderboardGatheringData = NSLocalizedString("privacy.protection.network.leaderboard.gathering", value: "We’re still collecting data to show how\nmany trackers we’ve blocked.", comment: "")
     
     public static let ppEncryptionHeaderInfo = NSLocalizedString("privacy.protection.encryption.header", value: "An encrypted connection prevents eavesdropping of any personal information you send to a website.", comment: "")
@@ -165,7 +162,6 @@ public struct UserText {
     public static let ppOtherDomainsInfoHeaderDisabledProtectionNew = NSLocalizedString("privacy.protection.other.domains.info.header.disabled.protection.new", value: "The following domains’ requests were loaded.", comment: "")
     public static let ppOtherDomainsAdClickAttribution = NSLocalizedString("privacy.protection.other.domains.adclickattribution", value: "The following domain’s requests were loaded because a %@ ad on DuckDuckGo was recently clicked. These requests help evaluate ad effectiveness. All ads on DuckDuckGo are non-profiling.", comment: "")
     public static let ppOtherDomainsExceptions = NSLocalizedString("privacy.protection.other.domains.exceptions", value: "The following domain’s requests were loaded to prevent site breakage.", comment: "")
-    public static let ppOtherDomainsOwnedByFirstParty = NSLocalizedString("privacy.protection.other.domains.firstparty", value: "The following domain’s requests were loaded because they’re associated with %@.", comment: "")
     public static let ppOtherDomainsOtherThirdParties = NSLocalizedString("privacy.protection.other.domains.thirdparties", value: "The following domain’s requests were loaded.", comment: "")
     public static let ppOtherDomainsOtherThirdPartiesEmptyState = NSLocalizedString("privacy.protection.other.domains.thirdparties.empty", value: "We did not detect requests from any third-party domains.", comment: "")
     
@@ -291,11 +287,6 @@ public struct UserText {
     
     public static let autoClearAccessoryOn = NSLocalizedString("autoclear.on", value: "On", comment: "")
     public static let autoClearAccessoryOff = NSLocalizedString("autoclear.off", value: "Off", comment: "")
-    
-    public static func privacyGrade(_ grade: String) -> String {
-        let message = NSLocalizedString("privacy.protection.site.grade", value: "Privacy grade %@", comment: "Replacement string is a single letter: A/B/C/D")
-        return message.format(arguments: grade)
-    }
     
     public static let privacyGradeHint = NSLocalizedString("privacy.protection.site.hint", value: "Press to open Privacy Protection screen", comment: "")
     public static let menuButtonHint = NSLocalizedString("menu.button.hint", value: "Browsing Menu", comment: "")

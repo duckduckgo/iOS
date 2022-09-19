@@ -1169,7 +1169,7 @@
 "privacy.protection.practices.unknown.info" = "Personvenpraksisen til dette nettstedet har ikke blitt vurdert.";
 
 /* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Grad av personvern %@";
+"privacy.protection.site.grade(letter: %@)" = "Grad av personvern %@";
 
 /* No comment provided by engineer. */
 "privacy.protection.site.hint" = "Trykk for å åpne Personvernskjermen";

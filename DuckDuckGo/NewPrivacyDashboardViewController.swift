@@ -92,7 +92,7 @@ class NewPrivacyDashboardViewController: UIViewController {
 
 private extension NewPrivacyDashboardViewController {
     
-    func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {        
+    func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
         guard let domain = privacyDashboardLogic.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig

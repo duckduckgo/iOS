@@ -43,7 +43,7 @@ struct ServerTrustViewModel: Encodable {
 
             var secTrust: SecTrust?
             if errSecSuccess == SecTrustCreateWithCertificates(secCertificate, SecPolicyCreateBasicX509(), &secTrust), let certTrust = secTrust {
-                publicKey = SecKeyViewModel(secKey: SecTrustCopyPublicKey(certTrust))
+                publicKey = SecKeyViewModel(secKey: SecTrustCopyKey(certTrust))
             } else {
                 publicKey = nil
             }

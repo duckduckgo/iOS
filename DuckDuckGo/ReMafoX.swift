@@ -1541,7 +1541,7 @@ internal enum Res {
             }
         }
 
-        /// 🇺🇸 English: "DuckDuckGo"
+        /// 🇺🇸 English: "Open in DuckDuckGo"
         internal enum CFBundleDisplayName {
             /// The translated `String` instance.
             internal static var string: String { Bundle.main.localizedString(forKey: self.tableLookupKey, value: nil, table: "InfoPlist") }
@@ -1553,7 +1553,7 @@ internal enum Res {
             internal static var tableLookupKey: String { "CFBundleDisplayName" }
         }
 
-        /// 🇺🇸 English: "DuckDuckGo"
+        /// 🇺🇸 English: "Core"
         internal enum CFBundleName {
             /// The translated `String` instance.
             internal static var string: String { Bundle.main.localizedString(forKey: self.tableLookupKey, value: nil, table: "InfoPlist") }

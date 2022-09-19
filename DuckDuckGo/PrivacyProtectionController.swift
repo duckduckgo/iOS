@@ -68,11 +68,11 @@ class PrivacyProtectionController: ThemableNavigationController {
     }
 
     private func showError(withText errorText: String) {
-        guard let controller = storyboard?.instantiateViewController(identifier: "Error", creator: { coder in
-            PrivacyProtectionErrorController(coder: coder, configuration: self.privacyConfig)
-        }) else { return }
-        controller.errorText = errorText
-        pushViewController(controller, animated: true)
+//        guard let controller = storyboard?.instantiateViewController(identifier: "Error", creator: { coder in
+//            PrivacyProtectionErrorController(coder: coder, configuration: self.privacyConfig)
+//        }) else { return }
+//        controller.errorText = errorText
+//        pushViewController(controller, animated: true)
     }
 
     private func showInitialScreen() {
@@ -126,33 +126,6 @@ class PrivacyProtectionController: ThemableNavigationController {
 
     @objc func done() {
         dismiss(animated: true)
-    }
-
-}
-
-// Only use case just now is blocker lists not having downloaded
-extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
-
-    func canTryAgain(controller: PrivacyProtectionErrorController) -> Bool {
-        return true
-    }
-
-    func tryAgain(controller: PrivacyProtectionErrorController) {
-        AppDependencyProvider.shared.storageCache.update { [weak self] newCache in
-            self?.handleBlockerListsLoaderResult(controller, newCache)
-        }
-    }
-
-    private func handleBlockerListsLoaderResult(_ controller: PrivacyProtectionErrorController, _ newCache: StorageCache?) {
-        DispatchQueue.main.async {
-            if let newCache = newCache {
-                self.storageCache = newCache
-                controller.dismiss(animated: true)
-                self.privacyProtectionDelegate?.reload(scripts: true)
-            } else {
-                controller.resetTryAgain()
-            }
-        }
     }
 
 }

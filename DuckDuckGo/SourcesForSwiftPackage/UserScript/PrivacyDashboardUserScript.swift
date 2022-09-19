@@ -20,6 +20,7 @@ import WebKit
 import os
 import BrowserServicesKit
 import TrackerRadarKit
+import Core
 
 protocol PrivacyDashboardUserScriptDelegate: AnyObject {
 
@@ -75,17 +76,14 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
     }
 
     private func handleFirePixel(message: WKScriptMessage) {
-//        guard let pixel = message.body as? String else {
-//            assertionFailure("privacyDashboardFirePixel: expected Pixel String")
-//            return
-//        }
-//
-//        let etag = ContentBlocking.shared.contentBlockingManager.currentRules.first?.etag
-//                    .trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? ""
-//        Pixel.shared?.fire(pixelNamed: pixel,
-//                           withAdditionalParameters: [
-//                            "tds": etag
-//        ])
+        guard let pixel = message.body as? String else {
+            assertionFailure("privacyDashboardFirePixel: expected Pixel String")
+            return
+        }
+
+        let etag = ContentBlocking.contentBlockingManager.currentMainRules?.etag.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? ""
+               
+        Pixel.fire(pixel: .privacyDashboardPixelFromJS(rawPixel: pixel), withAdditionalParameters: ["tds": etag])
     }
 
     private func handleClose() {

@@ -292,6 +292,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
         } else if AppDeepLinks.isAddFavorite(url: url) {
             mainViewController?.startAddFavoriteFlow()
+        } else if app.applicationState == .active,
+                  let currentTab = mainViewController?.currentTab {
+            // If app is in active state, treat this navigation as something initiated form the context of the current tab.
+            mainViewController?.tab(currentTab,
+                                    didRequestNewTabForUrl: url,
+                                    openedByPage: true,
+                                    inheritingAttribution: nil)
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
             mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)

@@ -1104,7 +1104,6 @@ extension TabViewController: WKNavigationDelegate {
 
         trackerNetworksDetectedOnPage.removeAll()
         pageHasTrackers = false
-        NetworkLeaderboard.shared.incrementPagesLoaded()
         
         appRatingPrompt.registerUsage()
      
@@ -1592,7 +1591,6 @@ extension TabViewController: WKNavigationDelegate {
             switch result {
             case let .success(upgradedUrl):
                 if lastUpgradedURL != upgradedUrl {
-                    NetworkLeaderboard.shared.incrementHttpsUpgrades()
                     lastUpgradedURL = upgradedUrl
                     tabModel.privacyInfo?.connectionUpgradedTo = upgradedUrl
                     load(url: upgradedUrl, didUpgradeURL: true)
@@ -2154,16 +2152,13 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
         onSiteRatingChanged()
 
         if !pageHasTrackers {
-            NetworkLeaderboard.shared.incrementPagesWithTrackers()
             pageHasTrackers = true
         }
 
         if let networkName = tracker.ownerName {
             if !trackerNetworksDetectedOnPage.contains(networkName) {
                 trackerNetworksDetectedOnPage.insert(networkName)
-                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
             }
-            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
         }
     }
 }

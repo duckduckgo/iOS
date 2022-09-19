@@ -1,0 +1,79 @@
+{
+  "androidStringsFilesSearch" : {
+    "excludeSubPathsContaining" : [
+      ".build/",
+      ".git/",
+      ".idea/",
+      "build/",
+      "docs/",
+      "gradle/"
+    ],
+    "pathsToSearch" : [
+
+    ]
+  },
+  "appleStringsFilesConfig" : {
+    "emptyLinesBetweenKeys" : 1
+  },
+  "appleStringsFilesSearch" : {
+    "excludeSubPathsContaining" : [
+      ".build/",
+      ".git/",
+      "build/",
+      "Carthage/",
+      "docs/",
+      "Pods/"
+    ],
+    "pathsToSearch" : [
+      "Core/",
+      "DuckDuckGo/",
+      "OpenAction/",
+      "ShareExtension/",
+      "Widgets/"
+    ]
+  },
+  "configFilePath" : "DuckDuckGo-iOS.remafox",
+  "id" : "296DF638-E4DF-4211-B40D-29633E5E0CD6",
+  "interfaceBuilderFilesSearch" : {
+    "excludeSubPathsContaining" : [
+      ".build/",
+      ".git/",
+      "build/",
+      "Carthage/",
+      "docs/",
+      "Pods/"
+    ],
+    "pathsToSearch" : [
+      "DuckDuckGo/",
+      "OpenAction/",
+      "ShareExtension/"
+    ]
+  },
+  "interfaceBuilderIgnoreTags" : [
+    "#remafox-ignore",
+    "#non-translatable"
+  ],
+  "lintTasks" : [
+    "duplicateKeys",
+    "emptyValues"
+  ],
+  "normalizeTasks" : [
+    "sortByKeys",
+    "harmonizeWithSourceLanguage"
+  ],
+  "projectName" : "DuckDuckGo",
+  "resourcesEnum" : {
+    "accessLevel" : "internal",
+    "bundleInstance" : "Bundle.main",
+    "enumName" : "Res",
+    "filePath" : "DuckDuckGo/ReMafoX.swift",
+    "indent" : "    ",
+    "stringsEnumName" : "Str",
+    "stringsTopLevelAlias" : "Loc",
+    "useSwiftPackagePreviewsWorkaround" : false,
+    "useTopLevelAliases" : true
+  },
+  "sourceLanguage" : "en",
+  "version" : 1,
+  "xcodeProjectPath" : "DuckDuckGo.xcodeproj"
+}

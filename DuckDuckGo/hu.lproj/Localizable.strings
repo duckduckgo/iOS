@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Szerkesztés";
 
@@ -9,6 +6,18 @@
 
 /* Button label for Undo action */
 "action.generic.undo" = "Visszavonás";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Automatikus kitöltési javaslat";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Könyvjelző";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Nyissa meg weboldalát";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Keresés a DuckDuckGo-n";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Hozzáadás";
@@ -160,6 +169,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Be";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Jelszó elrejtése";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Megtekintés";
 
@@ -192,6 +204,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Mented a jelszót?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Jelszó megjelenítése";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Bejelentkezés frissítése";
@@ -460,9 +475,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "A letöltés elindult: %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Mégsem";
 
@@ -492,75 +504,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-mail nyomkövetők letiltása, és a cím elrejtése";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Mégsem";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Megjegyzés: az e-mail-védelem eltávolítása erről az eszközről nem törli a Duck-címedet.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Eltávolítás";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Eltávolítod az e-mail-védelmet?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Hiba történt a várólistához való csatlakozás közben. Kérjük, próbálkozz újra később.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Első lépések";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Van meghívókódom";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Meghívót kaptál!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Csatlakozz a privát várólistához";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Felkerültél a várólistára!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "A meghívód itt fog megjelenni, amikor készen állunk. Szeretnél %1$@, amikor megérkezik? %2$@ az e-mail-védelemről.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "értesítést kapni";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Értesítést küldünk, amikor az e-mail-védelem készen áll számodra. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "További tudnivalók";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Értesítést küldünk, amikor megkezdheted az e-mail-védelem használatát.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Szeretnéd, hogy értesítsünk, amikor rád kerül a sor?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Feliratkoztál a várólistára, és arra kértél minket, hogy értesítsünk, amikor rád kerül a sor, hogy kipróbálhasd az e-mail-védelmet.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nem, köszönöm";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "ÉRTESÍTSETEK";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Megérkezett az e-mail védelmi meghívód!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Nem mentjük el az e-mailjeidet. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-mail adatvédelem, egyszerűsítve.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Tiltsd le az e-mail nyomkövetőket, és rejtsd el a címedet anélkül, hogy e-mail szolgáltatót váltanál. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Még nincsenek könyvjelzők hozzáadva";
@@ -1405,3 +1348,5 @@
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
 
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Üzenet %@-tól:";

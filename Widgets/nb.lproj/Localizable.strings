@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"Label" = "Etikett";
-
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Søk eller besøk favorittsider privat med ett trykk.";
 
@@ -21,4 +18,3 @@
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Søk i DuckDuckGo";
-

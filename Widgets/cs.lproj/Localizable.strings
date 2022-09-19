@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"Label" = "Štítek";
-
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Vyhledávejte nebo navštěvujte své oblíbené weby soukromě jediným klepnutím.";
 
@@ -21,4 +18,3 @@
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Vyhledat prostřednictvím DuckDuckGo";
-

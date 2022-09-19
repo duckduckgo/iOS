@@ -58,7 +58,27 @@ Užblokavau juos!
 ☝️ Patikrink adreso juostą ir pamatyk, kas bando tave sekti, kai lankaisi naujoje svetainėje.️</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.major.trackers.found</key>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d privatus skirtukas</string>
+			<key>few</key>
+			<string>%1$d privatūs skirtukai</string>
+			<key>many</key>
+			<string>%1$d privataus skirtuko</string>
+			<key>other</key>
+			<string>%1$d privačiu skirtukų</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.first.party.trackers.loaded</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -69,13 +89,9 @@ Užblokavau juos!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d pagrindinė stebėjimo priemonė rasta</string>
-			<key>few</key>
-			<string>%1$d pagrindinės stebėjimo priemonės rastos</string>
-			<key>many</key>
-			<string>%1$d pagrindinės stebėjimo priemonės rasta</string>
+			<string>%d Tracker Owned by This Site (Loaded)</string>
 			<key>other</key>
-			<string>%1$d pagrindinių stebėjimo priemonių rasta</string>
+			<string>%d Trackers Owned by This Site (Loaded)</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -98,7 +114,7 @@ Užblokavau juos!
 			<string>%1$d pagrindinių stebėjimo priemonių užblokuota</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.found</key>
+	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -109,13 +125,29 @@ Užblokavau juos!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Rasta %1$d stebėjimo priemonė</string>
+			<string>%1$d pagrindinė stebėjimo priemonė rasta</string>
 			<key>few</key>
-			<string>Rastos %1$d stebėjimo priemonės</string>
+			<string>%1$d pagrindinės stebėjimo priemonės rastos</string>
 			<key>many</key>
-			<string>Rasta %1$d stebėjimo priemonės</string>
+			<string>%1$d pagrindinės stebėjimo priemonės rasta</string>
 			<key>other</key>
-			<string>Rasta %1$d stebėjimo priemonių</string>
+			<string>%1$d pagrindinių stebėjimo priemonių rasta</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.other.domains.loaded</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Other Domain Loaded</string>
+			<key>other</key>
+			<string>%d Other Domains Loaded</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -138,24 +170,24 @@ Užblokavau juos!
 			<string>Užblokuota %1$d stebėjimo priemonių</string>
 		</dict>
 	</dict>
-	<key>number.of.tabs</key>
+	<key>privacy.protection.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d privatus skirtukas</string>
+			<string>Rasta %1$d stebėjimo priemonė</string>
 			<key>few</key>
-			<string>%1$d privatūs skirtukai</string>
+			<string>Rastos %1$d stebėjimo priemonės</string>
 			<key>many</key>
-			<string>%1$d privataus skirtuko</string>
+			<string>Rasta %1$d stebėjimo priemonės</string>
 			<key>other</key>
-			<string>%1$d privačiu skirtukų</string>
+			<string>Rasta %1$d stebėjimo priemonių</string>
 		</dict>
 	</dict>
 </dict>

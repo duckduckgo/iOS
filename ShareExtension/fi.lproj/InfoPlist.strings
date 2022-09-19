@@ -1,6 +1,2 @@
 /* Bundle display name */
 "CFBundleDisplayName" = "Avaa DuckDuckGo:ssa";
-
-/* Bundle name */
-"CFBundleName" = "ShareExtension";
-

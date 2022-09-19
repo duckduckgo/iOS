@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"Label" = "Címke";
-
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Látogasd meg a kedvenc weboldalaidat és keress rajtuk privát módon, mindössze egyetlen koppintással.";
 
@@ -21,4 +18,3 @@
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "DuckDuckGo keresés";
-

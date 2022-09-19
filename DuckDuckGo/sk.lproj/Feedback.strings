@@ -1,11 +1,11 @@
 /* Class = "UIImageView"; accessibilityLabel = "Negative Feedback"; ObjectID = "1RQ-bi-6hU"; */
 "1RQ-bi-6hU.accessibilityLabel" = "Negatívna spätná väzba";
 
-/* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
-"7zN-Xh-yYi.normalTitle" = "Zdieľať spätnú väzbu";
-
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
 "46v-cB-2YV.title" = "Zdieľať spätnú väzbu";
+
+/* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
+"7zN-Xh-yYi.normalTitle" = "Zdieľať spätnú väzbu";
 
 /* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
 "A1s-GY-hbq.normalTitle" = "Nie, vďaka! Skončil/skončila som";
@@ -66,4 +66,3 @@
 
 /* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
 "ze4-T7-OFN.accessibilityLabel" = "Pozitívna";
-

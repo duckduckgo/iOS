@@ -42,7 +42,23 @@ Li ho bloccati!
  ☝ Controlla la barra degli indirizzi per vedere chi sta cercando di tracciare la tua attività quando visiti un nuovo sito.️</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.major.trackers.found</key>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d scheda privata</string>
+			<key>other</key>
+			<string>%1$d schede private</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.first.party.trackers.loaded</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -53,9 +69,9 @@ Li ho bloccati!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d sistema di tracciamento principale rilevato</string>
+			<string>%d Tracker Owned by This Site (Loaded)</string>
 			<key>other</key>
-			<string>%1$d sistemi di tracciamento principali rilevati</string>
+			<string>%d Trackers Owned by This Site (Loaded)</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -74,7 +90,7 @@ Li ho bloccati!
 			<string>%1$d sistemi di tracciamento principali bloccati</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.found</key>
+	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -85,9 +101,25 @@ Li ho bloccati!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d sistema di tracciamento rilevato</string>
+			<string>%1$d sistema di tracciamento principale rilevato</string>
 			<key>other</key>
-			<string>%1$d sistemi di tracciamento rilevati</string>
+			<string>%1$d sistemi di tracciamento principali rilevati</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.other.domains.loaded</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Other Domain Loaded</string>
+			<key>other</key>
+			<string>%d Other Domains Loaded</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -106,20 +138,20 @@ Li ho bloccati!
 			<string>%1$d sistemi di tracciamento bloccati</string>
 		</dict>
 	</dict>
-	<key>number.of.tabs</key>
+	<key>privacy.protection.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d scheda privata</string>
+			<string>%1$d sistema di tracciamento rilevato</string>
 			<key>other</key>
-			<string>%1$d schede private</string>
+			<string>%1$d sistemi di tracciamento rilevati</string>
 		</dict>
 	</dict>
 </dict>

@@ -58,7 +58,27 @@
 ☝️ Заходя на новый сайт, вы всегда можете проверить, шпионит ли он за вами: просто загляните в адресную строку.</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.major.trackers.found</key>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d приватная вкладка</string>
+			<key>few</key>
+			<string>%1$d приватных вкладки</string>
+			<key>many</key>
+			<string>%1$d приватных вкладок</string>
+			<key>other</key>
+			<string>Приватных вкладок: %1$d</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.first.party.trackers.loaded</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -69,13 +89,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Обнаружен %1$d крупный трекер</string>
-			<key>few</key>
-			<string>Обнаружено %1$d крупных трекера</string>
-			<key>many</key>
-			<string>Обнаружено %1$d крупных трекеров</string>
+			<string>%d Tracker Owned by This Site (Loaded)</string>
 			<key>other</key>
-			<string>Обнаружено крупных трекеров: %1$d</string>
+			<string>%d Trackers Owned by This Site (Loaded)</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -98,7 +114,7 @@
 			<string>Заблокировано крупных трекеров: %1$d</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.found</key>
+	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -109,13 +125,29 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Найден %1$d трекер</string>
+			<string>Обнаружен %1$d крупный трекер</string>
 			<key>few</key>
-			<string>Найдено %1$d трекера</string>
+			<string>Обнаружено %1$d крупных трекера</string>
 			<key>many</key>
-			<string>Найдено %1$d трекеров</string>
+			<string>Обнаружено %1$d крупных трекеров</string>
 			<key>other</key>
-			<string>Найдены %1$d трекеры</string>
+			<string>Обнаружено крупных трекеров: %1$d</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.other.domains.loaded</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Other Domain Loaded</string>
+			<key>other</key>
+			<string>%d Other Domains Loaded</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -138,24 +170,24 @@
 			<string>Заблокированы %1$d трекеры</string>
 		</dict>
 	</dict>
-	<key>number.of.tabs</key>
+	<key>privacy.protection.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d приватная вкладка</string>
+			<string>Найден %1$d трекер</string>
 			<key>few</key>
-			<string>%1$d приватных вкладки</string>
+			<string>Найдено %1$d трекера</string>
 			<key>many</key>
-			<string>%1$d приватных вкладок</string>
+			<string>Найдено %1$d трекеров</string>
 			<key>other</key>
-			<string>Приватных вкладок: %1$d</string>
+			<string>Найдены %1$d трекеры</string>
 		</dict>
 	</dict>
 </dict>

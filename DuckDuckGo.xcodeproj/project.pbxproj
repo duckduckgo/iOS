@@ -47,6 +47,10 @@
 		1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		2E847D5128D8F2E90000C625 /* ReMafoX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E847D5028D8F2E90000C625 /* ReMafoX.swift */; };
+		2E847D5328D8FD680000C625 /* ReMafoX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E847D5028D8F2E90000C625 /* ReMafoX.swift */; };
+		2E847D5428D8FD680000C625 /* ReMafoX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E847D5028D8F2E90000C625 /* ReMafoX.swift */; };
+		2E847D5528D8FD690000C625 /* ReMafoX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E847D5028D8F2E90000C625 /* ReMafoX.swift */; };
+		2E847D5628D8FD700000C625 /* ReMafoX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E847D5028D8F2E90000C625 /* ReMafoX.swift */; };
 		310742A62848CD780012660B /* BackForwardMenuHistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310742A52848CD780012660B /* BackForwardMenuHistoryItem.swift */; };
 		310742AB2848E6FD0012660B /* BackForwardMenuHistoryItemURLSanitizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310742A92848E5B70012660B /* BackForwardMenuHistoryItemURLSanitizerTests.swift */; };
 		310C4B45281B5A9A00BA79A9 /* AutofillLoginDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310C4B44281B5A9A00BA79A9 /* AutofillLoginDetailsView.swift */; };
@@ -838,6 +842,24 @@
 		1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsDeleteHelper.swift; sourceTree = "<group>"; };
 		22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDeepLinksTests.swift; sourceTree = "<group>"; };
 		2E847D5028D8F2E90000C625 /* ReMafoX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReMafoX.swift; sourceTree = "<group>"; };
+		2E847D5828D9018F0000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Authentication.strings; sourceTree = "<group>"; };
+		2E847D5A28D901CA0000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Autocomplete.strings; sourceTree = "<group>"; };
+		2E847D5C28D901D90000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Bookmarks.strings; sourceTree = "<group>"; };
+		2E847D5E28D901E30000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DaxOnboarding.strings; sourceTree = "<group>"; };
+		2E847D6028D901ED0000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feedback.strings; sourceTree = "<group>"; };
+		2E847D6228D901F50000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Home.strings; sourceTree = "<group>"; };
+		2E847D6428D901FD0000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HomeRow.strings; sourceTree = "<group>"; };
+		2E847D6628D9020E0000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		2E847D6828D902190000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		2E847D6A28D902210000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/OmniBar.strings; sourceTree = "<group>"; };
+		2E847D6C28D9022A0000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
+		2E847D6E28D902330000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrivacyProtection.strings; sourceTree = "<group>"; };
+		2E847D7028D9023C0000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PrivacyProtectionHeaderCell.strings; sourceTree = "<group>"; };
+		2E847D7228D902430000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
+		2E847D7428D9024A0000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Tab.strings; sourceTree = "<group>"; };
+		2E847D7628D902510000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TabSwitcher.strings; sourceTree = "<group>"; };
+		2E847D7828D902660000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		2E847D7A28D902C00000C625 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		310742A52848CD780012660B /* BackForwardMenuHistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackForwardMenuHistoryItem.swift; sourceTree = "<group>"; };
 		310742A92848E5B70012660B /* BackForwardMenuHistoryItemURLSanitizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackForwardMenuHistoryItemURLSanitizerTests.swift; sourceTree = "<group>"; };
 		310C4B44281B5A9A00BA79A9 /* AutofillLoginDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginDetailsView.swift; sourceTree = "<group>"; };
@@ -4874,7 +4896,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=\"$PATH:/Applications/ReMafoX.app/Contents/Resources\"\n\nif which remafox > /dev/null; then\n  remafox ibsync -c DuckDuckGo-iOS.remafox\n  remafox normalize -c DuckDuckGo-iOS.remafox\n  remafox translate -c DuckDuckGo-iOS.remafox\n  remafox lint -c DuckDuckGo-iOS.remafox\n  remafox generate -c DuckDuckGo-iOS.remafox\nelse\n  echo \"warning: ReMafoX command line tool not installed, download & setup app from https://remafox.app\"\nfi\n";
+			shellScript = "export PATH=\"$PATH:/Applications/ReMafoX.app/Contents/Resources\"\n\nif which remafox > /dev/null; then\n  remafox ibsync -c DuckDuckGo.remafox\n  remafox normalize -c DuckDuckGo.remafox\n  remafox translate -c DuckDuckGo.remafox\n  remafox lint -c DuckDuckGo.remafox\n  remafox generate -c DuckDuckGo.remafox\nelse\n  echo \"warning: ReMafoX command line tool not installed, download & setup app from https://remafox.app\"\nfi\n";
 		};
 		8558AA7D20EE3CB200A346E9 /* Swift Lint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4956,6 +4978,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E847D5528D8FD690000C625 /* ReMafoX.swift in Sources */,
 				8390446F20BDCE10006461CD /* ShareViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5394,6 +5417,7 @@
 				853273AE24FEF49600E3C778 /* ColorExtension.swift in Sources */,
 				853273B324FF114700E3C778 /* DeepLinks.swift in Sources */,
 				853273B424FFB36100E3C778 /* UIColorExtension.swift in Sources */,
+				2E847D5628D8FD700000C625 /* ReMafoX.swift in Sources */,
 				853273AB24FEF27500E3C778 /* WidgetViews.swift in Sources */,
 				8512EA5424ED30D20073EE19 /* Widgets.swift in Sources */,
 				8544C37C250B827300A0FE73 /* UserText.swift in Sources */,
@@ -5404,6 +5428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E847D5428D8FD680000C625 /* ReMafoX.swift in Sources */,
 				85482D8D2462DCD100EDEDD1 /* ActionViewController.swift in Sources */,
 				85C91CA224671F4C00A11132 /* AppDeepLinks.swift in Sources */,
 			);
@@ -5530,6 +5555,7 @@
 				F17D723C1E8BB374003E8B0E /* AppDeepLinks.swift in Sources */,
 				1E8AD1DB27C51AE000ABA377 /* TimeIntervalExtension.swift in Sources */,
 				859C5FBD214972E400E2A43D /* Grade.swift in Sources */,
+				2E847D5328D8FD680000C625 /* ReMafoX.swift in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				988971A222C2DB95009DC1D6 /* StorageCacheProvider.swift in Sources */,
 				9887DC252354D2AA005C85F5 /* Database.swift in Sources */,
@@ -5649,6 +5675,7 @@
 				9866DE68251CBC5300612E3A /* fr */,
 				9866DE6A251CBC5400612E3A /* fi */,
 				981685542521EEF500FA91A1 /* nb */,
+				2E847D7828D902660000C625 /* en */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -5681,6 +5708,7 @@
 				9866DD80251CB12100612E3A /* sv */,
 				9866DD82251CB12200612E3A /* tr */,
 				981685472521EEF000FA91A1 /* nb */,
+				2E847D6828D902190000C625 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -5713,6 +5741,7 @@
 				9866DE58251CBC4A00612E3A /* fr */,
 				9866DE5A251CBC4A00612E3A /* fi */,
 				981685532521EEF500FA91A1 /* nb */,
+				2E847D6628D9020E0000C625 /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -5745,6 +5774,7 @@
 				9866DE78251CBC6400612E3A /* fr */,
 				9866DE7A251CBC6400612E3A /* fi */,
 				981685572521EEF600FA91A1 /* nb */,
+				2E847D7A28D902C00000C625 /* en */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -5777,6 +5807,7 @@
 				9866DE18251CB92700612E3A /* sv */,
 				9866DE1A251CB95500612E3A /* tr */,
 				981685512521EEF400FA91A1 /* nb */,
+				2E847D6C28D9022A0000C625 /* en */,
 			);
 			name = Onboarding.storyboard;
 			sourceTree = "<group>";
@@ -5809,6 +5840,7 @@
 				9866DD10251CACCF00612E3A /* sv */,
 				9866DD12251CACCF00612E3A /* tr */,
 				981685432521EEEF00FA91A1 /* nb */,
+				2E847D5A28D901CA0000C625 /* en */,
 			);
 			name = Autocomplete.storyboard;
 			sourceTree = "<group>";
@@ -5841,6 +5873,7 @@
 				9866DD58251CB0F100612E3A /* sv */,
 				9866DD5A251CB0F200612E3A /* tr */,
 				981685452521EEF000FA91A1 /* nb */,
+				2E847D6028D901ED0000C625 /* en */,
 			);
 			name = Feedback.storyboard;
 			sourceTree = "<group>";
@@ -5873,6 +5906,7 @@
 				9866DD68251CB10700612E3A /* sv */,
 				9866DD6A251CB10800612E3A /* tr */,
 				981685462521EEF000FA91A1 /* nb */,
+				2E847D6228D901F50000C625 /* en */,
 			);
 			name = Home.storyboard;
 			sourceTree = "<group>";
@@ -5905,6 +5939,7 @@
 				9866DD90251CB12E00612E3A /* sv */,
 				9866DD92251CB12E00612E3A /* tr */,
 				981685492521EEF100FA91A1 /* nb */,
+				2E847D5828D9018F0000C625 /* en */,
 			);
 			name = Authentication.storyboard;
 			sourceTree = "<group>";
@@ -5937,6 +5972,7 @@
 				9866DDA8251CB41000612E3A /* sv */,
 				9866DDAA251CB4F500612E3A /* tr */,
 				9816854A2521EEF100FA91A1 /* nb */,
+				2E847D6E28D902330000C625 /* en */,
 			);
 			name = PrivacyProtection.storyboard;
 			sourceTree = "<group>";
@@ -5969,6 +6005,7 @@
 				9866DDC8251CB7A000612E3A /* sv */,
 				9866DDCA251CB7A100612E3A /* tr */,
 				9816854D2521EEF300FA91A1 /* nb */,
+				2E847D7428D9024A0000C625 /* en */,
 			);
 			name = Tab.storyboard;
 			sourceTree = "<group>";
@@ -6001,6 +6038,7 @@
 				9866DE00251CB90500612E3A /* sv */,
 				9866DE02251CB90700612E3A /* tr */,
 				981685502521EEF400FA91A1 /* nb */,
+				2E847D6428D901FD0000C625 /* en */,
 			);
 			name = HomeRow.storyboard;
 			sourceTree = "<group>";
@@ -6033,6 +6071,7 @@
 				9866DDF0251CB8DC00612E3A /* sv */,
 				9866DDF2251CB8DF00612E3A /* tr */,
 				9816854F2521EEF300FA91A1 /* nb */,
+				2E847D5E28D901E30000C625 /* en */,
 			);
 			name = DaxOnboarding.storyboard;
 			sourceTree = "<group>";
@@ -6257,6 +6296,7 @@
 				9866DE90251CBC8500612E3A /* fr */,
 				9866DE92251CBC8600612E3A /* fi */,
 				981685482521EEF100FA91A1 /* nb */,
+				2E847D6A28D902210000C625 /* en */,
 			);
 			name = OmniBar.xib;
 			sourceTree = "<group>";
@@ -6289,6 +6329,7 @@
 				9866DE9E251CBC9600612E3A /* fr */,
 				9866DEA0251CBC9700612E3A /* fi */,
 				9816854B2521EEF200FA91A1 /* nb */,
+				2E847D7028D9023C0000C625 /* en */,
 			);
 			name = PrivacyProtectionHeaderCell.xib;
 			sourceTree = "<group>";
@@ -6321,6 +6362,7 @@
 				9866DDB8251CB6FC00612E3A /* sv */,
 				9866DDBA251CB73700612E3A /* tr */,
 				9816854C2521EEF200FA91A1 /* nb */,
+				2E847D7228D902430000C625 /* en */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";
@@ -6353,6 +6395,7 @@
 				9866DD20251CACE600612E3A /* sv */,
 				9866DD22251CACE700612E3A /* tr */,
 				981685442521EEEF00FA91A1 /* nb */,
+				2E847D5C28D901D90000C625 /* en */,
 			);
 			name = Bookmarks.storyboard;
 			sourceTree = "<group>";
@@ -6385,6 +6428,7 @@
 				9866DDE0251CB87D00612E3A /* sv */,
 				9866DDE2251CB8B200612E3A /* tr */,
 				9816854E2521EEF300FA91A1 /* nb */,
+				2E847D7628D902510000C625 /* en */,
 			);
 			name = TabSwitcher.storyboard;
 			sourceTree = "<group>";

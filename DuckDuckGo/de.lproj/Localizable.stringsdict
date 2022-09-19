@@ -42,7 +42,23 @@ Ich habe sie blockiert!
  ☝️Du kannst in der Adressleiste sehen, wer dich beim Besuch einer neuen Website tracken will.</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.major.trackers.found</key>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d privater Tab</string>
+			<key>other</key>
+			<string>%1$d private Tabs</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.first.party.trackers.loaded</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -53,9 +69,9 @@ Ich habe sie blockiert!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d großer Tracker wurde gefunden</string>
+			<string>%d Tracker Owned by This Site (Loaded)</string>
 			<key>other</key>
-			<string>%1$d große Tracker wurden gefunden</string>
+			<string>%d Trackers Owned by This Site (Loaded)</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -74,7 +90,7 @@ Ich habe sie blockiert!
 			<string>%1$d große Tracker wurden blockiert</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.found</key>
+	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -85,9 +101,25 @@ Ich habe sie blockiert!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d Tracker gefunden</string>
+			<string>%1$d großer Tracker wurde gefunden</string>
 			<key>other</key>
-			<string>%1$d Tracker gefunden</string>
+			<string>%1$d große Tracker wurden gefunden</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.other.domains.loaded</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Other Domain Loaded</string>
+			<key>other</key>
+			<string>%d Other Domains Loaded</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -106,20 +138,20 @@ Ich habe sie blockiert!
 			<string>%1$d Tracker blockiert</string>
 		</dict>
 	</dict>
-	<key>number.of.tabs</key>
+	<key>privacy.protection.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d privater Tab</string>
+			<string>%1$d Tracker gefunden</string>
 			<key>other</key>
-			<string>%1$d private Tabs</string>
+			<string>%1$d Tracker gefunden</string>
 		</dict>
 	</dict>
 </dict>

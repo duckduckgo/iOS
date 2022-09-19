@@ -19,12 +19,5 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Lehetővé teszi képek mentését az eszközödre";
 
-/* Privacy - Speech Recognition Usage Description */
-"NSSpeechRecognitionUsageDescription" = "Erre a hangalapú keresés használatához van szükség. A DuckDuckGo soha nem készít felvételt arról, amit mondasz.";
-
 /* (No Comment) */
 "Paste from clipboard" = "Beillesztés a vágólapról";
-
-/* (No Comment) */
-"Paste from Clipboard" = "Beillesztés a vágólapról";
-

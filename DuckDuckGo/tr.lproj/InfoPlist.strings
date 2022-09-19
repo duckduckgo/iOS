@@ -19,12 +19,5 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Görselleri cihazınıza kaydetmenize olanak tanır";
 
-/* Privacy - Speech Recognition Usage Description */
-"NSSpeechRecognitionUsageDescription" = "Sesli aramayı kullanmak için bu gereklidir. DuckDuckGo söylediklerinizi asla kaydetmez.";
-
 /* (No Comment) */
 "Paste from clipboard" = "Panodan yapıştır";
-
-/* (No Comment) */
-"Paste from Clipboard" = "Panodan yapıştır";
-

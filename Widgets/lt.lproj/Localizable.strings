@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"Label" = "Etiketė";
-
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Ieškokite arba lankykitės savo mėgstamose svetainėse privačiai vienu bakstelėjimu.";
 
@@ -21,4 +18,3 @@
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Ieškoti DuckDuckGo";
-

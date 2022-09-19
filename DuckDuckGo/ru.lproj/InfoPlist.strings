@@ -19,12 +19,5 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Позволяет сохранять изображения на устройство";
 
-/* Privacy - Speech Recognition Usage Description */
-"NSSpeechRecognitionUsageDescription" = "Требуется для голосового поиска. DuckDuckGo ни в коем случае не записывает ваши разговоры.";
-
 /* (No Comment) */
 "Paste from clipboard" = "Вставить из буфера обмена";
-
-/* (No Comment) */
-"Paste from Clipboard" = "Вставить из буфера обмена";
-

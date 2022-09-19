@@ -58,7 +58,27 @@ Zablokowałem ich!
 ☝️ Możesz sprawdzić pasek adresu, aby zobaczyć, kto próbuje Cię śledzić, gdy odwiedzasz nową witrynę.️</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.major.trackers.found</key>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d prywatna karta</string>
+			<key>few</key>
+			<string>%1$d prywatne karty</string>
+			<key>many</key>
+			<string>%1$d prywatnych kart</string>
+			<key>other</key>
+			<string>%1$d prywatnych kart</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.first.party.trackers.loaded</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -69,13 +89,9 @@ Zablokowałem ich!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Znaleziono %1$d główny skrypt śledzący</string>
-			<key>few</key>
-			<string>Znaleziono %1$d główne skrypty śledzące</string>
-			<key>many</key>
-			<string>Znaleziono %1$d głównych skryptów śledzących</string>
+			<string>%d Tracker Owned by This Site (Loaded)</string>
 			<key>other</key>
-			<string>Znaleziono %1$d głównych skryptów śledzących</string>
+			<string>%d Trackers Owned by This Site (Loaded)</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -98,7 +114,7 @@ Zablokowałem ich!
 			<string>Zablokowano %1$d głównych skryptów śledzących</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.found</key>
+	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -109,13 +125,29 @@ Zablokowałem ich!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Znaleziono %1$d skrypt śledzący</string>
+			<string>Znaleziono %1$d główny skrypt śledzący</string>
 			<key>few</key>
-			<string>Znaleziono %1$d skrypty śledzące</string>
+			<string>Znaleziono %1$d główne skrypty śledzące</string>
 			<key>many</key>
-			<string>Znaleziono %1$d skryptów śledzących</string>
+			<string>Znaleziono %1$d głównych skryptów śledzących</string>
 			<key>other</key>
-			<string>Znaleziono %1$d skryptów śledzących</string>
+			<string>Znaleziono %1$d głównych skryptów śledzących</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.other.domains.loaded</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Other Domain Loaded</string>
+			<key>other</key>
+			<string>%d Other Domains Loaded</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -138,24 +170,24 @@ Zablokowałem ich!
 			<string>Zablokowano %1$d skryptu śledzącego</string>
 		</dict>
 	</dict>
-	<key>number.of.tabs</key>
+	<key>privacy.protection.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d prywatna karta</string>
+			<string>Znaleziono %1$d skrypt śledzący</string>
 			<key>few</key>
-			<string>%1$d prywatne karty</string>
+			<string>Znaleziono %1$d skrypty śledzące</string>
 			<key>many</key>
-			<string>%1$d prywatnych kart</string>
+			<string>Znaleziono %1$d skryptów śledzących</string>
 			<key>other</key>
-			<string>%1$d prywatnych kart</string>
+			<string>Znaleziono %1$d skryptów śledzących</string>
 		</dict>
 	</dict>
 </dict>

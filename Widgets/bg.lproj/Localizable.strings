@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"Label" = "Етикет";
-
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Насладете се на поверително търсене и сърфиране в любимите си сайтове само с едно докосване.";
 
@@ -21,4 +18,3 @@
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Търси с DuckDuckGo";
-

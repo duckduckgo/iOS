@@ -4,6 +4,9 @@
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "0SO-8y-5QH"; */
 "0SO-8y-5QH.text" = "www.example.com";
 
+/* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
+"25V-p3-wsn.text" = "ADATVÉDELMI GYAKORLATOK";
+
 /* Class = "UIButton"; normalTitle = "Try Again"; ObjectID = "2KC-47-FBo"; */
 "2KC-47-FBo.normalTitle" = "Próbáld újra";
 
@@ -37,17 +40,20 @@
 /* Class = "UITableViewController"; title = "xxx"; ObjectID = "7Z1-eg-OWQ"; */
 "7Z1-eg-OWQ.title" = "xxx";
 
+/* Class = "UIButton"; configuration.title = "Link"; ObjectID = "8Ec-67-0A8"; */
+"8Ec-67-0A8.configuration.title" = "Link";
+
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "8Ec-67-0A8"; */
 "8Ec-67-0A8.normalTitle" = "Gomb";
-
-/* Class = "UILabel"; text = "PRIVACY PRACTICES"; ObjectID = "25V-p3-wsn"; */
-"25V-p3-wsn.text" = "ADATVÉDELMI GYAKORLATOK";
 
 /* Class = "UIButton"; normalTitle = "Reset Tracker Network Stats"; ObjectID = "953-jn-tmN"; */
 "953-jn-tmN.normalTitle" = "Nyomkövető hálózati statisztikák visszaállítása";
 
 /* Class = "UILabel"; text = "TRACKER NETWORK TOP OFFENDERS"; ObjectID = "aD3-hP-MUU"; */
 "aD3-hP-MUU.text" = "A NYOMKÖVETŐ-HÁLÓZAT LEGNAGYOBB BŰNELKÖVETŐI";
+
+/* Class = "UIButton"; configuration.title = "Link"; ObjectID = "DGo-7C-PoV"; */
+"DGo-7C-PoV.configuration.title" = "Link";
 
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "DGo-7C-PoV"; */
 "DGo-7C-PoV.normalTitle" = "Gomb";
@@ -129,4 +135,3 @@
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "zz1-Q4-Fxr"; */
 "zz1-Q4-Fxr.text" = "Titkosított kapcsolat";
-

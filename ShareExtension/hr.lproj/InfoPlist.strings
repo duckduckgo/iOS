@@ -1,6 +1,2 @@
 /* Bundle display name */
 "CFBundleDisplayName" = "Otvori u DuckDuckGou";
-
-/* Bundle name */
-"CFBundleName" = "ShareExtension";
-

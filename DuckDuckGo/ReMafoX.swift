@@ -1553,7 +1553,7 @@ internal enum Res {
             internal static var tableLookupKey: String { "CFBundleDisplayName" }
         }
 
-        /// 🇺🇸 English: "OpenAction"
+        /// 🇺🇸 English: "Core"
         internal enum CFBundleName {
             /// The translated `String` instance.
             internal static var string: String { Bundle.main.localizedString(forKey: self.tableLookupKey, value: nil, table: "InfoPlist") }
@@ -4047,18 +4047,7 @@ internal enum Res {
             }
 
             internal enum ShareSheet {
-                /// 🇺🇸 English: "You’re invited!
-
-                Ready to start browsing privately on Mac?
-
-                Step 1
-                Visit this URL on your Mac to download:
-                https://duckduckgo.com/mac
-
-                Step 2
-                Open the file to install, then enter your invite code to unlock.
-
-                Invite code: %@"
+                /// 🇺🇸 English: "You’re invited!\n\nReady to start browsing privately on Mac?\n\nStep 1\nVisit this URL on your Mac to download:\nhttps://duckduckgo.com/mac\n\nStep 2\nOpen the file to install, then enter your invite code to unlock.\n\nInvite code: %@"
                 internal struct Message {
                     internal let unnamedParam1: String
 

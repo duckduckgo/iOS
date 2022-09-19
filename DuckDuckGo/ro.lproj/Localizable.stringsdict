@@ -50,7 +50,25 @@ I-am blocat!
 ☝️ Poți verifica bara de adrese pentru a vedea cine încearcă să te urmărească atunci când vizitezi un nou site.</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.major.trackers.found</key>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d filă privată</string>
+			<key>few</key>
+			<string>%1$d file private</string>
+			<key>other</key>
+			<string>%1$d de file private</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.first.party.trackers.loaded</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -61,11 +79,9 @@ I-am blocat!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d instrument de urmărire important găsit</string>
-			<key>few</key>
-			<string>%1$d instrumente de urmărire importante găsite</string>
+			<string>%d Tracker Owned by This Site (Loaded)</string>
 			<key>other</key>
-			<string>%1$d de instrumente de urmărire importante găsite</string>
+			<string>%d Trackers Owned by This Site (Loaded)</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -86,7 +102,7 @@ I-am blocat!
 			<string>%1$d de instrumente de urmărire importante blocate</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.found</key>
+	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -97,11 +113,27 @@ I-am blocat!
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d Urmăritor Găsit</string>
+			<string>%1$d instrument de urmărire important găsit</string>
 			<key>few</key>
-			<string>%1$d Urmăritori Găsiți</string>
+			<string>%1$d instrumente de urmărire importante găsite</string>
 			<key>other</key>
-			<string>%1$d Urmăritori Găsiți</string>
+			<string>%1$d de instrumente de urmărire importante găsite</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.other.domains.loaded</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Other Domain Loaded</string>
+			<key>other</key>
+			<string>%d Other Domains Loaded</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -122,22 +154,22 @@ I-am blocat!
 			<string>%1$d Urmăritori Blocați</string>
 		</dict>
 	</dict>
-	<key>number.of.tabs</key>
+	<key>privacy.protection.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d filă privată</string>
+			<string>%1$d Urmăritor Găsit</string>
 			<key>few</key>
-			<string>%1$d file private</string>
+			<string>%1$d Urmăritori Găsiți</string>
 			<key>other</key>
-			<string>%1$d de file private</string>
+			<string>%1$d Urmăritori Găsiți</string>
 		</dict>
 	</dict>
 </dict>

@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"Label" = "Label";
-
 /* Description of search and favorites widget in widget gallery */
 "widget.gallery.search.and.favorites.description" = "Recherchez ou visitez vos sites favoris en privé et d'un seul mouvement.";
 
@@ -21,4 +18,3 @@
 
 /* Placeholder text in search field on the search and favorites widget */
 "widget.search.duckduckgo" = "Rechercher avec DuckDuckGo";
-

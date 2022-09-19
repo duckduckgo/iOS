@@ -19,12 +19,5 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Leidžia įrašyti nuotraukas į jūsų įrenginį";
 
-/* Privacy - Speech Recognition Usage Description */
-"NSSpeechRecognitionUsageDescription" = "Tai būtina, kai naudojama balsu valdoma paieška. „DuckDuckGo“ niekada neįrašinėja to, ką sakote.";
-
 /* (No Comment) */
 "Paste from clipboard" = "Įklijuoti iš mainų srities";
-
-/* (No Comment) */
-"Paste from Clipboard" = "Įklijuoti iš mainų srities";
-

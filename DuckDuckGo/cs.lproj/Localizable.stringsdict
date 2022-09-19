@@ -58,7 +58,27 @@ Zablokovali jsme je.
 ☝️ Při návštěvě nového webu můžeš zjistit, kdo se tě snaží sledovat, v adresním řádku.</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.major.trackers.found</key>
+	<key>number.of.tabs</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%1$d soukromá karta</string>
+			<key>few</key>
+			<string>%1$d soukromé karty</string>
+			<key>many</key>
+			<string>%1$d soukromých karet</string>
+			<key>other</key>
+			<string>%1$d soukromých karet</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.first.party.trackers.loaded</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -69,13 +89,9 @@ Zablokovali jsme je.
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Nalezen %1$d hlavní tracker</string>
-			<key>few</key>
-			<string>Nalezeny %1$d hlavní trackery</string>
-			<key>many</key>
-			<string>Nalezeno %1$d hlavních trackerů</string>
+			<string>%d Tracker Owned by This Site (Loaded)</string>
 			<key>other</key>
-			<string>Nalezeno %1$d hlavních trackerů</string>
+			<string>%d Trackers Owned by This Site (Loaded)</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.major.trackers.blocked</key>
@@ -98,7 +114,7 @@ Zablokovali jsme je.
 			<string>Zablokováno %1$d hlavních trackerů</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.trackers.found</key>
+	<key>privacy.protection.major.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@networks@</string>
@@ -109,13 +125,29 @@ Zablokovali jsme je.
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Nalezen %1$d tracker</string>
+			<string>Nalezen %1$d hlavní tracker</string>
 			<key>few</key>
-			<string>Nalezeny %1$d trackery</string>
+			<string>Nalezeny %1$d hlavní trackery</string>
 			<key>many</key>
-			<string>Nalezeno %1$d trackerů</string>
+			<string>Nalezeno %1$d hlavních trackerů</string>
 			<key>other</key>
-			<string>Nalezeno %1$d trackerů</string>
+			<string>Nalezeno %1$d hlavních trackerů</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.other.domains.loaded</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Other Domain Loaded</string>
+			<key>other</key>
+			<string>%d Other Domains Loaded</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.trackers.blocked</key>
@@ -138,24 +170,24 @@ Zablokovali jsme je.
 			<string>Zablokováno %1$d trackerů</string>
 		</dict>
 	</dict>
-	<key>number.of.tabs</key>
+	<key>privacy.protection.trackers.found</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%1$d soukromá karta</string>
+			<string>Nalezen %1$d tracker</string>
 			<key>few</key>
-			<string>%1$d soukromé karty</string>
+			<string>Nalezeny %1$d trackery</string>
 			<key>many</key>
-			<string>%1$d soukromých karet</string>
+			<string>Nalezeno %1$d trackerů</string>
 			<key>other</key>
-			<string>%1$d soukromých karet</string>
+			<string>Nalezeno %1$d trackerů</string>
 		</dict>
 	</dict>
 </dict>

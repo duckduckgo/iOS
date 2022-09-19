@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Editar";
 
@@ -9,6 +6,18 @@
 
 /* Button label for Undo action */
 "action.generic.undo" = "Deshacer";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Sugerencia de autocompletar";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Marcador";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Abrir el sitio web";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Buscar en DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Añadir";
@@ -160,6 +169,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activado";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Ocultar contraseña";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Ver";
 
@@ -192,6 +204,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "¿Guardar contraseña?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Mostrar contraseña";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Actualizar inicio de sesión";
@@ -460,9 +475,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Descarga de %@ iniciada";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Cancelar";
 
@@ -492,75 +504,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloquea los rastreadores de correo electrónico y oculta tu dirección";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Cancelar";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Nota: Eliminar la protección de correo electrónico de este dispositivo no eliminará tu dirección Duck.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Eliminar";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "¿Eliminar la protección de correo electrónico?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Se ha producido un error al unirte a la lista de espera, inténtalo de nuevo más tarde";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Empezar";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Tengo un código de invitación";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "¡Te han invitado!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Unirse a la lista de espera privada";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "¡Estás en la lista de espera!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Tu invitación aparecerá aquí cuando estemos listos para ti. ¿Quieres %1$@ cuando llegue? %2$@ sobre la protección de correo electrónico.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "recibir una notificación";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Te enviaremos una notificación cuando la protección de correo electrónico esté lista para ti. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Más información";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Te enviaremos una notificación cuando puedas empezar a usar la protección de correo electrónico.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "¿Quieres que te enviemos una notificación cuando te toque?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Te has unido a la lista de espera y nos has pedido que te avisemos cuando te toque probar nuestra protección de correo electrónico.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "No, gracias";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "NOTIFICARME";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "¡Tu invitación de protección de correo electrónico ya está aquí!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "No guardamos tus correos electrónicos. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Privacidad de correo electrónico, simplificada.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Bloquea los rastreadores de correo electrónico y oculta tu dirección sin cambiar de proveedor de correo electrónico. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Aún no se han añadido marcadores";
@@ -1405,3 +1348,5 @@
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "De acuerdo";
 
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Un mensaje de %@:";

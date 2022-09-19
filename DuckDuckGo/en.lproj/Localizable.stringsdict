@@ -28,14 +28,14 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>one</key>
-			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
+			<key>zero</key>
+			<string>*%2$@ and %3$@* were trying to track you here.
 
 I blocked them!
 
 ☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
-			<key>zero</key>
-			<string>*%2$@ and %3$@* were trying to track you here.
+			<key>one</key>
+			<string>*%2$@, %3$@* and *1 other* were trying to track you here.
 
 I blocked them!
 
@@ -48,84 +48,22 @@ I blocked them!
 ☝️ You can check the address bar to see who is trying to track you when you visit a new site.</string>
 		</dict>
 	</dict>
-	<key>privacy.protection.major.trackers.found</key>
+	<key>number.of.tabs</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
+		<string>%#@tabs@</string>
+		<key>tabs</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
+			<key>zero</key>
+			<string>No Private Tabs</string>
 			<key>one</key>
-			<string>%d Major Tracker Found</string>
+			<string>%d Private Tab</string>
 			<key>other</key>
-			<string>%d Major Trackers Found</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.major.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d Major Tracker Blocked</string>
-			<key>other</key>
-			<string>%d Major Trackers Blocked</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.found</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d Tracker Found</string>
-			<key>other</key>
-			<string>%d Trackers Found</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.trackers.blocked</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d Tracker Blocked from Loading</string>
-			<key>other</key>
-			<string>%d Trackers Blocked from Loading</string>
-		</dict>
-	</dict>
-	<key>privacy.protection.other.domains.loaded</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@networks@</string>
-		<key>networks</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d Other Domain Loaded</string>
-			<key>other</key>
-			<string>%d Other Domains Loaded</string>
+			<string>%d Private Tabs</string>
 		</dict>
 	</dict>
 	<key>privacy.protection.first.party.trackers.loaded</key>
@@ -144,22 +82,84 @@ I blocked them!
 			<string>%d Trackers Owned by This Site (Loaded)</string>
 		</dict>
 	</dict>
-	<key>number.of.tabs</key>
+	<key>privacy.protection.major.trackers.blocked</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@tabs@</string>
-		<key>tabs</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d Private Tab</string>
-			<key>zero</key>
-			<string>No Private Tabs</string>
+			<string>%d Major Tracker Blocked</string>
 			<key>other</key>
-			<string>%d Private Tabs</string>
+			<string>%d Major Trackers Blocked</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.major.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Major Tracker Found</string>
+			<key>other</key>
+			<string>%d Major Trackers Found</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.other.domains.loaded</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Other Domain Loaded</string>
+			<key>other</key>
+			<string>%d Other Domains Loaded</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Tracker Blocked from Loading</string>
+			<key>other</key>
+			<string>%d Trackers Blocked from Loading</string>
+		</dict>
+	</dict>
+	<key>privacy.protection.trackers.found</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@networks@</string>
+		<key>networks</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Tracker Found</string>
+			<key>other</key>
+			<string>%d Trackers Found</string>
 		</dict>
 	</dict>
 </dict>

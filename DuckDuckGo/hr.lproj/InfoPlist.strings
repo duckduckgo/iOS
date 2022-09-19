@@ -19,12 +19,5 @@
 /* Privacy - Photo Library Additions Usage Description */
 "NSPhotoLibraryAddUsageDescription" = "Omogućuje ti spremanje slika na uređaj";
 
-/* Privacy - Speech Recognition Usage Description */
-"NSSpeechRecognitionUsageDescription" = "To je potrebno za korištenje glasovnih funkcija. DuckDuckGo nikad ne snima ono što govorite.";
-
 /* (No Comment) */
 "Paste from clipboard" = "Zalijepi iz međuspremnika";
-
-/* (No Comment) */
-"Paste from Clipboard" = "Zalijepi iz međuspremnika";
-

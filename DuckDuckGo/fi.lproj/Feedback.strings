@@ -1,11 +1,11 @@
 /* Class = "UIImageView"; accessibilityLabel = "Negative Feedback"; ObjectID = "1RQ-bi-6hU"; */
 "1RQ-bi-6hU.accessibilityLabel" = "Negatiivinen palaute";
 
-/* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
-"7zN-Xh-yYi.normalTitle" = "Jaa palaute";
-
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "46v-cB-2YV"; */
 "46v-cB-2YV.title" = "Jaa palaute";
+
+/* Class = "UIButton"; normalTitle = "Share Feedback"; ObjectID = "7zN-Xh-yYi"; */
+"7zN-Xh-yYi.normalTitle" = "Jaa palaute";
 
 /* Class = "UIButton"; normalTitle = "No Thanks! I’m Done"; ObjectID = "A1s-GY-hbq"; */
 "A1s-GY-hbq.normalTitle" = "Ei kiitos! Valmista";
@@ -66,4 +66,3 @@
 
 /* Class = "UIButton"; accessibilityLabel = "Positive"; ObjectID = "ze4-T7-OFN"; */
 "ze4-T7-OFN.accessibilityLabel" = "Positiivinen";
-

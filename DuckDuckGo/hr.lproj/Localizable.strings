@@ -1,6 +1,3 @@
-/* No comment provided by engineer. */
-"%@" = "%@";
-
 /* Buton label for Edit action */
 "action.generic.edit" = "Uredi";
 
@@ -9,6 +6,18 @@
 
 /* Button label for Undo action */
 "action.generic.undo" = "Poništi";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Prijedlog samodovršetka";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Knjižna oznaka";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Otvori web-mjesto";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Pretraživanje na DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
@@ -160,6 +169,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Uključeno";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Sakrij lozinku";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Pregled";
 
@@ -192,6 +204,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Želiš li spremiti lozinku?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Pokaži lozinku";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Ažuriraj prijavu";
@@ -460,9 +475,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Preuzimanje je počelo za %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Otkaži";
 
@@ -492,75 +504,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokiraj programe za praćenje e-pošte i sakrij svoju adresu";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Otkaži";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Napomena: uklanjanjem zaštite e-pošte s ovog uređaja neće se izbrisati vaša Duck adresa.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Ukloni";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Ukloniti zaštitu e-pošte?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Došlo je do pogreške prilikom pridruživanja listi čekanja; pokušajte ponovo kasnije";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Započnite";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Imam pozivnu šifru";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Pozvani ste!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Pridružite se privatnoj listi čekanja";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Na listi ste čekanja!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Vaša pozivnica pojavit će se ovdje kad budemo spremni za vas. Želite li %1$@ kad stigne? %2$@ o zaštiti e-pošte.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "primite obavijest";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Poslat ćemo vam obavijest kad zaštita e-pošte bude spremna za vas. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Saznajte više";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Poslat ćemo vam obavijest kad možete početi koristiti zaštitu e-pošte.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Želite li da vas obavijestimo kada dođete na red?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Pridružili ste se listi čekanja i zatražili da vas obavijestimo kada dođete na red za isprobavanje naše značajke zaštite e-pošte.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Ne, hvala";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "OBAVIJESTI ME";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Vaša pozivnica za zaštitu e-pošte je stigla!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Ne čuvamo vašu e-poštu. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Zaštita privatnosti e-pošte, na jednostavan način.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokirajte programe za praćenje e-pošte i sakrijte svoju adresu bez promjene pružatelja usluga e-pošte. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Još nema dodanih knjižnih oznaka";
@@ -1405,3 +1348,5 @@
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "U redu";
 
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Poruka od %@:";

@@ -61,16 +61,6 @@ class TabViewController: UIViewController {
     weak var delegate: TabDelegate?
     weak var chromeDelegate: BrowserChromeDelegate?
 
-    private var userScripts: UserScripts? {
-        userContentController.contentBlockingAssets?.userScripts as? UserScripts
-    }
-    private var findInPageScript: FindInPageUserScript? {
-        userScripts?.findInPageScript
-    }
-    private var documentScript: DocumentUserScript? {
-        userScripts?.documentScript
-    }
-
     var findInPage: FindInPage? {
         get { return findInPageScript?.findInPage }
         set { findInPageScript?.findInPage = newValue }
@@ -235,9 +225,7 @@ class TabViewController: UIViewController {
             jsAlertController.dismiss(animated: false)
         }
     }
-    
-    private let rulesCompilationMonitor = RulesCompilationMonitor.shared
-    
+
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
         guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
@@ -830,7 +818,7 @@ class TabViewController: UIViewController {
     deinit {
         temporaryDownloadForPreviewedFile?.cancel()
         removeObservers()
-        rulesCompilationMonitor.tabWillClose(self)
+        RulesCompilationMonitor.shared.tabWillClose(self)
     }
 
 }
@@ -1196,26 +1184,31 @@ extension TabViewController: WKNavigationDelegate {
         return nil
     }
 
-    @MainActor
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
-        let result = await decidePolicy(for: navigationAction)
-        if case .allow = result,
-           !(navigationAction.request.url.map({ appUrls.isDuckDuckGoSearch(url: $0) }) ?? false) {
+    // swiftlint:disable function_body_length
+    // swiftlint:disable cyclomatic_complexity
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-            await prepareForContentBlocking()
+        if let url = navigationAction.request.url,
+           !appUrls.isDuckDuckGoSearch(url: url),
+           true == shouldWaitUntilContentBlockingIsLoaded({ [weak self, webView /* decision handler must be called */] in
+               guard let self = self else {
+                   decisionHandler(.cancel)
+                   return
+               }
+               self.webView(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
+           }) {
+            // will wait for Content Blocking to load and re-call on completion
+            return
         }
 
         didGoBackForward = (navigationAction.navigationType == .backForward)
-        return result
-    }
 
-    // swiftlint:disable function_body_length
-    @MainActor
-    func decidePolicy(for navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
         // This check needs to happen before GPC checks. Otherwise the navigation type may be rewritten to `.other`
         // which would skip link rewrites.
-        if navigationAction.navigationType == .linkActivated,
-           let navPolicy = await linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
+        if navigationAction.navigationType == .linkActivated {
+            let didRewriteLink = linkProtection.requestTrackingLinkRewrite(initiatingURL: webView.url,
                                                                            navigationAction: navigationAction,
                                                                            onStartExtracting: { showProgressIndicator() },
                                                                            onFinishExtracting: { },
@@ -1229,17 +1222,22 @@ extension TabViewController: WKNavigationDelegate {
                 } else {
                     self.load(url: newURL)
                 }
-           }) {
-            return navPolicy
+            },
+                                                                           policyDecisionHandler: decisionHandler)
+
+            if didRewriteLink {
+                return
+            }
         }
-        
+
         if navigationAction.isTargetingMainFrame(),
            !(navigationAction.request.url?.isCustomURLScheme() ?? false),
            navigationAction.navigationType != .backForward,
            let newRequest = referrerTrimming.trimReferrer(forNavigation: navigationAction,
                                                           originUrl: webView.url ?? navigationAction.sourceFrame.webView?.url) {
+            decisionHandler(.cancel)
             load(urlRequest: newRequest)
-            return .cancel
+            return
         }
 
         if navigationAction.isTargetingMainFrame(),
@@ -1247,8 +1245,9 @@ extension TabViewController: WKNavigationDelegate {
            navigationAction.navigationType != .backForward,
            let request = requestForDoNotSell(basedOn: navigationAction.request) {
 
+            decisionHandler(.cancel)
             load(urlRequest: request)
-            return .cancel
+            return
         }
 
         if navigationAction.navigationType == .linkActivated,
@@ -1257,30 +1256,35 @@ extension TabViewController: WKNavigationDelegate {
 
             if modifierFlags.contains(.command) {
                 if modifierFlags.contains(.shift) {
-                    delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: false, inheritingAttribution: adClickAttributionLogic.state)
-                    return .cancel
+                    decisionHandler(.cancel)
+                    delegate?.tab(self,
+                                  didRequestNewTabForUrl: url,
+                                  openedByPage: false,
+                                  inheritingAttribution: adClickAttributionLogic.state)
+                    return
                 } else {
+                    decisionHandler(.cancel)
                     delegate?.tab(self, didRequestNewBackgroundTabForUrl: url, inheritingAttribution: adClickAttributionLogic.state)
-                    return .cancel
+                    return
                 }
             }
         }
-        
-        let decision = await decideFinalPolicy(for: navigationAction)
 
-        if let url = navigationAction.request.url, decision != .cancel {
-            if appUrls.isDuckDuckGoSearch(url: url) {
-                StatisticsLoader.shared.refreshSearchRetentionAtb()
+        decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
+            if let url = navigationAction.request.url, decision != .cancel {
+                if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
+                    StatisticsLoader.shared.refreshSearchRetentionAtb()
+                }
+
+                self?.findInPage?.done()
             }
-
-            self.findInPage?.done()
+            decisionHandler(decision)
         }
-        return decision
     }
     // swiftlint:enable function_body_length
+    // swiftlint:enable cyclomatic_complexity
 
-    @MainActor
-    private func decideFinalPolicy(for navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+    private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {
         let allowPolicy = determineAllowPolicy()
 
         let tld = storageCache.tld
@@ -1290,22 +1294,31 @@ extension TabViewController: WKNavigationDelegate {
             lastUpgradedURL = nil
         }
 
-        guard navigationAction.request.mainDocumentURL != nil else { return allowPolicy }
-        guard let url = navigationAction.request.url else { return allowPolicy }
+        guard navigationAction.request.mainDocumentURL != nil else {
+            completion(allowPolicy)
+            return
+        }
+
+        guard let url = navigationAction.request.url else {
+            completion(allowPolicy)
+            return
+        }
 
         let schemeType = SchemeHandler.schemeType(for: url)
         self.blobDownloadTargetFrame = nil
-
         switch schemeType {
         case .navigational:
-            return await performNavigationFor(url: url, navigationAction: navigationAction, allowPolicy: allowPolicy)
+            performNavigationFor(url: url,
+                                 navigationAction: navigationAction,
+                                 allowPolicy: allowPolicy,
+                                 completion: completion)
 
         case .external(let action):
             performExternalNavigationFor(url: url, action: action)
-            return .cancel
+            completion(.cancel)
 
         case .blob:
-            return await performBlobNavigation(navigationAction)
+            performBlobNavigation(navigationAction, completion: completion)
 
         case .unknown:
             if navigationAction.navigationType == .linkActivated {
@@ -1313,28 +1326,31 @@ extension TabViewController: WKNavigationDelegate {
             } else {
                 presentOpenInExternalAppAlert(url: url)
             }
-            return .cancel
+            completion(.cancel)
         }
     }
 
-    @MainActor
     private func performNavigationFor(url: URL,
                                       navigationAction: WKNavigationAction,
-                                      allowPolicy: WKNavigationActionPolicy) async -> WKNavigationActionPolicy {
+                                      allowPolicy: WKNavigationActionPolicy,
+                                      completion: @escaping (WKNavigationActionPolicy) -> Void) {
 
         if shouldReissueSearch(for: url) {
             reissueSearchWithRequiredParams(for: url)
-            return .cancel
+            completion(.cancel)
+            return
         }
 
         if shouldReissueDDGStaticNavigation(for: url) {
             reissueNavigationWithSearchHeaderParams(for: url)
-            return .cancel
+            completion(.cancel)
+            return
         }
 
         if isNewTargetBlankRequest(navigationAction: navigationAction) {
             delegate?.tab(self, didRequestNewTabForUrl: url, openedByPage: true, inheritingAttribution: adClickAttributionLogic.state)
-            return .cancel
+            completion(.cancel)
+            return
         }
 
         if allowPolicy != WKNavigationActionPolicy.cancel {
@@ -1342,44 +1358,66 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         if !ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isProtected(domain: url.host) {
-            return allowPolicy
+            completion(allowPolicy)
+            return
         }
 
         if shouldUpgradeToHttps(url: url, navigationAction: navigationAction) {
-            return await upgradeToHttps(url: url, allowPolicy: allowPolicy)
+            upgradeToHttps(url: url, allowPolicy: allowPolicy, completion: completion)
         } else {
-            return allowPolicy
+            completion(allowPolicy)
         }
     }
 
-    @MainActor
-    private func upgradeToHttps(url: URL, allowPolicy: WKNavigationActionPolicy) async -> WKNavigationActionPolicy {
-        let result = await PrivacyFeatures.httpsUpgrade.upgrade(url: url)
-        switch result {
-        case let .success(upgradedUrl):
-            if lastUpgradedURL != upgradedUrl {
-                NetworkLeaderboard.shared.incrementHttpsUpgrades()
-                lastUpgradedURL = upgradedUrl
-                load(url: upgradedUrl, didUpgradeURL: true)
-                return .cancel
-            } else {
-                return allowPolicy
+    private func upgradeToHttps(url: URL,
+                                allowPolicy: WKNavigationActionPolicy,
+                                completion: @escaping (WKNavigationActionPolicy) -> Void) {
+        Task {
+            let result = await PrivacyFeatures.httpsUpgrade.upgrade(url: url)
+            switch result {
+            case let .success(upgradedUrl):
+                if lastUpgradedURL != upgradedUrl {
+                    NetworkLeaderboard.shared.incrementHttpsUpgrades()
+                    lastUpgradedURL = upgradedUrl
+                    load(url: upgradedUrl, didUpgradeURL: true)
+                    completion(.cancel)
+                } else {
+                    completion(allowPolicy)
+                }
+            case .failure:
+                completion(allowPolicy)
             }
-        case .failure:
-            return allowPolicy
         }
+    }
+
+    private func shouldWaitUntilContentBlockingIsLoaded(_ completion: @escaping @MainActor () -> Void) -> Bool {
+        // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
+        if userContentController.contentBlockingAssetsInstalled {
+            RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
+            return false
+        }
+
+        Task {
+            RulesCompilationMonitor.shared.tabWillWaitForRulesCompilation(self)
+            showProgressIndicator()
+            await userContentController.awaitContentBlockingAssetsInstalled()
+            RulesCompilationMonitor.shared.reportTabFinishedWaitingForRules(self)
+
+            completion()
+        }
+        return true
     }
 
     @MainActor
     private func prepareForContentBlocking() async {
         // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
         if !userContentController.contentBlockingAssetsInstalled {
-            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
+            RulesCompilationMonitor.shared.tabWillWaitForRulesCompilation(self)
             showProgressIndicator()
             await userContentController.awaitContentBlockingAssetsInstalled()
-            rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
+            RulesCompilationMonitor.shared.reportTabFinishedWaitingForRules(self)
         } else {
-            rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
+            RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
         }
     }
 
@@ -1439,20 +1477,18 @@ extension TabViewController: WKNavigationDelegate {
 // MARK: - Downloads
 extension TabViewController {
 
-    @MainActor
-    private func performBlobNavigation(_ navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+    private func performBlobNavigation(_ navigationAction: WKNavigationAction,
+                                       completion: @escaping (WKNavigationActionPolicy) -> Void) {
         guard #available(iOS 14.5, *) else {
             Pixel.fire(pixel: .downloadAttemptToOpenBLOBviaJS)
-            await withCheckedContinuation { continuation in
-                self.legacySetupBlobDownload(for: navigationAction) {
-                    continuation.resume()
-                }
+            self.legacySetupBlobDownload(for: navigationAction) {
+                completion(.allow)
             }
-            return .allow
+            return
         }
 
         self.blobDownloadTargetFrame = navigationAction.targetFrame
-        return .allow
+        completion(.allow)
     }
 
     @discardableResult
@@ -1908,6 +1944,22 @@ extension TabViewController: UIGestureRecognizerDelegate {
 // MARK: - UserContentControllerDelegate
 extension TabViewController: UserContentControllerDelegate {
 
+    private var userScripts: UserScripts? {
+        userContentController.contentBlockingAssets?.userScripts as? UserScripts
+    }
+    private var findInPageScript: FindInPageUserScript? {
+        userScripts?.findInPageScript
+    }
+    private var documentScript: DocumentUserScript? {
+        userScripts?.documentScript
+    }
+    private var contentBlockerUserScript: ContentBlockerRulesUserScript? {
+        userScripts?.contentBlockerUserScript
+    }
+    private var autofillUserScript: AutofillUserScript? {
+        userScripts?.autofillUserScript
+    }
+
     func userContentController(_ userContentController: UserContentController,
                                didInstallContentRuleLists contentRuleLists: [String: WKContentRuleList],
                                userScripts: UserScriptsProvider,
@@ -1929,8 +1981,7 @@ extension TabViewController: UserContentControllerDelegate {
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
             PreserveLogins.Notifications.loginDetectionStateChanged,
-            AppUserDefaults.Notifications.doNotSellStatusChange,
-            StorageCacheProvider.didUpdateStorageCacheNotification
+            AppUserDefaults.Notifications.doNotSellStatusChange
         ]
         if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) == true
             || notificationsTriggeringReload.contains(where: {
@@ -2033,26 +2084,22 @@ extension TabViewController: PrintingUserScriptDelegate {
 
 // MARK: - AdClickAttributionLogicDelegate
 extension TabViewController: AdClickAttributionLogicDelegate {
-    
+
     func attributionLogic(_ logic: AdClickAttributionLogic,
                           didRequestRuleApplication rules: ContentBlockerRulesManager.Rules?,
                           forVendor vendor: String?) {
-        guard let userScripts = userScripts else {
-            assertionFailure("UserScripts not found")
-            return
-        }
         guard ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) else {
             userContentController.replaceAttributedList(with: nil)
             return
         }
-        
+
         userContentController.replaceAttributedList(with: rules?.rulesList)
-        
-        userScripts.contentBlockerUserScript.currentAdClickAttributionVendor = vendor
+
+        contentBlockerUserScript?.currentAdClickAttributionVendor = vendor
         if let rules = rules {
-            userScripts.contentBlockerUserScript.supplementaryTrackerData = [rules.trackerData]
+            contentBlockerUserScript?.supplementaryTrackerData = [rules.trackerData]
         } else {
-            userScripts.contentBlockerUserScript.supplementaryTrackerData = []
+            contentBlockerUserScript?.supplementaryTrackerData = []
         }
     }
 
@@ -2190,13 +2237,9 @@ extension NSError {
 extension TabViewController: SecureVaultManagerDelegate {
  
     private func presentSavePasswordModal(with vault: SecureVaultManager, credentials: SecureVaultModels.WebsiteCredentials) {
-        guard isAutofillEnabled else { return }
-        guard let userScripts = userScripts else {
-            assertionFailure("UserScripts not found")
-            return
-        }
+        guard isAutofillEnabled, let autofillUserScript = autofillUserScript else { return }
 
-        let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: userScripts.autofillUserScript)
+        let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         manager.prepareData { [weak self] in
 
             let saveLoginController = SaveLoginViewController(credentialManager: manager)

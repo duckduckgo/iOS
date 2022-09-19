@@ -27,10 +27,7 @@ public struct TrackerInfo: Encodable {
         case trackersBlocked
         case installedSurrogates
     }
-    
-    // TODO: required temporarily for serialising the TrackerInfo into old format
-    public var tds: TrackerData!
-    
+
     private(set) var trackersDetected = Set<DetectedRequest>()
     private(set) var trackersBlocked = Set<DetectedRequest>()
     private(set) var installedSurrogates = Set<String>()
@@ -55,7 +52,10 @@ public struct TrackerInfo: Encodable {
             installedSurrogates.count == 0
     }
 
-    // We need to adapt new DetectionRequest to old Privacy Dashboard API, code below should be removed once we finalize updated Dashboard
+    // Required temporarily for serialising the TrackerInfo into old format
+    public var tds: TrackerData!
+    
+    // Required temporarily to adapt new DetectedRequest to old Privacy Dashboard API, code below should be removed once we finalize updated Dashboard
     public func encode(to encoder: Encoder) throws {
             
         let transformedDetectedRequests = trackersDetected.map { DetectedRequestAdapter.init(request: $0, tds: tds) }

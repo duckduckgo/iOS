@@ -32,43 +32,6 @@ protocol PrivacyProtectionDelegate: AnyObject {
     func getCurrentWebsiteInfo() -> BrokenSiteInfo
 }
 
-class SimpleWebViewController: UIViewController {
-    var webView: WKWebView?
-    
-    var url: URL? {
-        didSet {
-            if let url = url {
-                load(url: url)
-            }
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        extendedLayoutIncludesOpaqueBars = true
-        
-        applyTheme(ThemeManager.shared.currentTheme)
-        
-        let webView = WKWebView(frame: view.frame)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(webView)
-        self.webView = webView
-
-        if let url = url {
-            load(url: url)
-        }
-    }
-
-    private func load(url: URL) {
-        if url.isFileURL {
-            webView?.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent().deletingLastPathComponent())
-        } else {
-            webView?.load(URLRequest.userInitiated(url))
-        }
-    }
-}
-
 class PrivacyProtectionController: ThemableNavigationController {
 
     weak var privacyProtectionDelegate: PrivacyProtectionDelegate?

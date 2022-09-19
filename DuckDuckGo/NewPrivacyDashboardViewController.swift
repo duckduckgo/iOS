@@ -26,9 +26,7 @@ import PrivacyDashboard
 class NewPrivacyDashboardViewController: UIViewController {
     
     var webView: WKWebView!
-    
     private let privacyDashboardLogic: PrivacyDashboardLogic
-//    private var isLoaded: Bool = false
 
     public init(privacyInfo: PrivacyInfo?) {
         self.privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo)
@@ -42,8 +40,6 @@ class NewPrivacyDashboardViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-//        extendedLayoutIncludesOpaqueBars = true
-//        isModalInPresentation = true
         navigationController?.setNavigationBarHidden(true, animated: false)
 
         setupWebView()
@@ -96,9 +92,7 @@ class NewPrivacyDashboardViewController: UIViewController {
 
 private extension NewPrivacyDashboardViewController {
     
-    func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
-        print("switch: \(enabled)")
-        
+    func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {        
         guard let domain = privacyDashboardLogic.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
@@ -112,9 +106,6 @@ private extension NewPrivacyDashboardViewController {
         }
         
         ContentBlocking.contentBlockingManager.scheduleCompilation()
-//        let completionToken = ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
-//        pendingUpdates[completionToken] = domain
-//        sendPendingUpdates()
         
         privacyDashboardLogic.didStartRulesCompilation()
     }

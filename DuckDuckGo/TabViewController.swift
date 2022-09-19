@@ -695,9 +695,7 @@ class TabViewController: UIViewController {
             privacyController = controller
             controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
             controller.omniBarText = chromeDelegate.omniBar.textField.text
-            controller.siteRating = siteRating
             controller.privacyInfo = tabModel.privacyInfo
-            controller.errorText = isError ? errorText : nil
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -906,7 +904,6 @@ class TabViewController: UIViewController {
 
     private func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
-        privacyController?.updateSiteRating(siteRating)
     }
     
     private func onPrivacyInfoChanged() {

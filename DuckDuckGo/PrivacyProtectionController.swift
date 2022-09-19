@@ -37,13 +37,11 @@ class PrivacyProtectionController: ThemableNavigationController {
     weak var privacyProtectionDelegate: PrivacyProtectionDelegate?
 
     weak var omniDelegate: OmniBarDelegate!
-    weak var siteRating: SiteRating?
     weak var privacyInfo: PrivacyInfo?
     
     weak var privacyDashboard: NewPrivacyDashboardViewController?
     
     var omniBarText: String?
-    var errorText: String?
   
     private var storageCache = AppDependencyProvider.shared.storageCache.current
     private var privacyConfig = ContentBlocking.privacyConfigurationManager.privacyConfig
@@ -57,22 +55,7 @@ class PrivacyProtectionController: ThemableNavigationController {
         
         popoverPresentationController?.backgroundColor = UIColor.nearlyWhite
 
-        if let errorText = errorText {
-            showError(withText: errorText)
-        } else if siteRating == nil {
-            showError(withText: UserText.unknownErrorOccurred)
-        } else {
-            showInitialScreen()
-        }
-
-    }
-
-    private func showError(withText errorText: String) {
-//        guard let controller = storyboard?.instantiateViewController(identifier: "Error", creator: { coder in
-//            PrivacyProtectionErrorController(coder: coder, configuration: self.privacyConfig)
-//        }) else { return }
-//        controller.errorText = errorText
-//        pushViewController(controller, animated: true)
+        showInitialScreen()
     }
 
     private func showInitialScreen() {
@@ -81,47 +64,17 @@ class PrivacyProtectionController: ThemableNavigationController {
         privacyDashboard = controller
          
         pushViewController(controller, animated: true)
-        updateViewControllers()
     }
 
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        
-        if viewControllers.isEmpty {
-            viewController.title = siteRating?.domain
-        } else {
-            topViewController?.title = " "
-        }
-        
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         viewController.navigationItem.rightBarButtonItem = doneButton
         super.pushViewController(viewController, animated: animated)
     }
     
-    override func popViewController(animated: Bool) -> UIViewController? {
-        let controller = super.popViewController(animated: animated)
-        if viewControllers.count == 1 {
-            viewControllers[0].title = siteRating?.domain
-        }
-        return controller
-    }
-
-    func updateSiteRating(_ siteRating: SiteRating?) {
-        self.siteRating = siteRating
-        updateViewControllers()
-    }
-    
     func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {
         self.privacyInfo = privacyInfo
         privacyDashboard?.updatePrivacyInfo(privacyInfo)
-    }
-
-    func updateViewControllers() {
-        guard let siteRating = siteRating else { return }
-
-        viewControllers.forEach {
-            guard let infoDisplaying = $0 as? PrivacyProtectionInfoDisplaying else { return }
-            infoDisplaying.using(siteRating: siteRating, config: privacyConfig)
-        }
     }
 
     @objc func done() {

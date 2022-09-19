@@ -1302,9 +1302,6 @@ Invite code: %@";
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privacy Protection enabled for %@";
 
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "An unknown error occurred.";
-
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Settings";
 

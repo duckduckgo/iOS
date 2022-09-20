@@ -683,10 +683,6 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             
-            if let domain = tabModel.link?.url.host, let trust = webView.serverTrust {
-                tabModel.privacyInfo?.serverTrust = ServerTrust(host: domain, secTrust: trust)
-            }
-            
             controller.privacyInfo = tabModel.privacyInfo
             privacyDashboard = controller
         }
@@ -849,7 +845,9 @@ class TabViewController: UIViewController {
                 didGoBackForward = false
             } else {
                 siteRating = makeSiteRating(url: url)
-                tabModel.privacyInfo = makePrivacyInfo(url: url)
+                
+                let serverTrust = makeServerTrust(url: url, secTrust: webView.serverTrust)
+                tabModel.privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
             }
         } else {
             siteRating = nil
@@ -874,7 +872,17 @@ class TabViewController: UIViewController {
         return siteRating
     }
     
-    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+    private func makeServerTrust(url: URL, secTrust: SecTrust?) -> ServerTrust? {
+        var serverTrust: ServerTrust?
+        
+        if let domain = tabModel.link?.url.host, let trust = secTrust {
+            serverTrust = ServerTrust(host: domain, secTrust: trust)
+        }
+        
+        return serverTrust
+    }
+    
+    private func makePrivacyInfo(url: URL, serverTrust: ServerTrust?) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.trackerDataManager.trackerData.findEntity(forHost: host)
@@ -882,6 +890,8 @@ class TabViewController: UIViewController {
         let isProtected = !config.isUserUnprotected(domain: host)
         
         let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: isProtected)
+        privacyInfo.serverTrust = serverTrust
+        
         // TODO: required temporarily for serialising the TrackerInfo into old format
         privacyInfo.trackerInfo.tds = ContentBlocking.trackerDataManager.trackerData
         
@@ -1047,12 +1057,6 @@ extension TabViewController: WKNavigationDelegate {
             performBasicHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)
-            guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
-            ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
-                        
-//            if let host = webView.url?.host, let serverTrust = challenge.protectionSpace.serverTrust, host == challenge.protectionSpace.host {
-//                tabModel.privacyInfo?.serverTrust = ServerTrust(host: host, secTrust: serverTrust)
-//            }
         }
     }
     
@@ -1341,7 +1345,8 @@ extension TabViewController: WKNavigationDelegate {
         guard let url = webView.url else { return }
         self.url = url
         self.siteRating = makeSiteRating(url: url)
-        self.tabModel.privacyInfo = makePrivacyInfo(url: url)
+        let serverTrust = makeServerTrust(url: url, secTrust: webView.serverTrust)
+        self.tabModel.privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
         updateSiteRating()
         onSiteRatingChanged()
         checkLoginDetectionAfterNavigation()

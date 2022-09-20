@@ -82,6 +82,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         return isPasswordHidden ? passwordHider.hiddenPassword : passwordHider.password
     }
 
+    var usernameDisplayString: String {
+        AutofillInterfaceEmailTruncator.truncateEmail(username, maxLength: 36)
+    }
+
     internal init(account: SecureVaultModels.WebsiteAccount? = nil) {
         self.account = account
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel()

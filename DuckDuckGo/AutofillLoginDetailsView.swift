@@ -95,7 +95,7 @@ struct AutofillLoginDetailsView: View {
             }
             
             Section {
-                CopyableCell(title: UserText.autofillLoginDetailsUsername, subtitle: viewModel.username, selectedCell: $viewModel.selectedCell) {
+                CopyableCell(title: UserText.autofillLoginDetailsUsername, subtitle: viewModel.usernameDisplayString, selectedCell: $viewModel.selectedCell) {
                     viewModel.copyToPasteboard(.username)
                 }
 
@@ -111,7 +111,8 @@ struct AutofillLoginDetailsView: View {
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
                              subtitle: viewModel.address,
-                             selectedCell: $viewModel.selectedCell) {
+                             selectedCell: $viewModel.selectedCell,
+                             truncationMode: .middle) {
                     viewModel.copyToPasteboard(.address)
                 }
             }
@@ -319,7 +320,8 @@ private struct CopyableCell: View {
     let subtitle: String
     @Binding var selectedCell: UUID?
     let action: () -> Void
-        
+    var truncationMode: Text.TruncationMode = .tail
+
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: Constants.verticalPadding) {
@@ -328,8 +330,8 @@ private struct CopyableCell: View {
                 HStack {
                     Text(subtitle)
                         .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
-                        .truncationMode(.middle)
                         .lineLimit(1)
+                        .truncationMode(truncationMode)
                 }
             }
             Spacer()

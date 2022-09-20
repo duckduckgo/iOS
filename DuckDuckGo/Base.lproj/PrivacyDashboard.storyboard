@@ -18,9 +18,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView opaque="NO" contentMode="scaleToFill" allowsBackForwardNavigationGestures="YES" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9r4-O0-IkD">
-                                <rect key="frame" x="0.0" y="44" width="375" height="734"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO" allowsPictureInPictureMediaPlayback="NO">
-                                    <dataDetectorTypes key="dataDetectorTypes"/>
+                                    <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
@@ -29,8 +29,8 @@
                         <viewLayoutGuide key="safeArea" id="sfY-KH-UyS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="sfY-KH-UyS" firstAttribute="bottom" secondItem="9r4-O0-IkD" secondAttribute="bottom" id="EMv-Me-25O"/>
-                            <constraint firstItem="9r4-O0-IkD" firstAttribute="top" secondItem="sfY-KH-UyS" secondAttribute="top" id="Gb1-rI-iSy"/>
+                            <constraint firstAttribute="bottom" secondItem="9r4-O0-IkD" secondAttribute="bottom" id="EMv-Me-25O"/>
+                            <constraint firstItem="9r4-O0-IkD" firstAttribute="top" secondItem="JQH-zL-KqH" secondAttribute="top" id="Gb1-rI-iSy"/>
                             <constraint firstItem="9r4-O0-IkD" firstAttribute="leading" secondItem="sfY-KH-UyS" secondAttribute="leading" id="Ny6-VH-4rF"/>
                             <constraint firstItem="sfY-KH-UyS" firstAttribute="trailing" secondItem="9r4-O0-IkD" secondAttribute="trailing" id="g2B-dI-PlE"/>
                         </constraints>

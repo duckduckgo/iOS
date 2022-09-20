@@ -36,26 +36,4 @@ public final class PrivacyInfo {
         trackerInfo = TrackerInfo()
     }
     
-//    private func resetDashboardInfo() {
-//        trackerInfo = TrackerInfo()
-//        if self.serverTrust?.host != content.url?.host {
-//            serverTrust = nil
-//        }
-//    }
-
-//    private func resetConnectionUpgradedTo(navigationAction: WKNavigationAction) {
-//        let isOnUpgradedPage = navigationAction.request.url == connectionUpgradedTo
-//        if !navigationAction.isTargetingMainFrame || isOnUpgradedPage { return }
-//        connectionUpgradedTo = nil
-//    }
-
-//    private func setConnectionUpgradedTo(_ upgradedUrl: URL, navigationAction: WKNavigationAction) {
-//        if !navigationAction.isTargetingMainFrame { return }
-//        connectionUpgradedTo = upgradedUrl
-//    }
-
-//    public func setMainFrameConnectionUpgradedTo(_ upgradedUrl: URL?) {
-//        if upgradedUrl == nil { return }
-//        connectionUpgradedTo = upgradedUrl
-//    }
 }

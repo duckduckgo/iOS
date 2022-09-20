@@ -83,8 +83,6 @@ public final class PrivacyDashboardLogic: NSObject {
     }
     
     private func loadPrivacyDashboardHTML() {
-//        guard !isLoaded, let url = Bundle.privacyDashboardURL else { return }
-        
         guard let url = Bundle.privacyDashboardURL else { return }
         webView?.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent().deletingLastPathComponent())
     }
@@ -94,21 +92,15 @@ extension PrivacyDashboardLogic: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         subscribeToDataModelChanges()
-        
         sendProtectionStatus()
-//        sendPendingUpdates() // used while recompiling TDS on toggle
         sendParentEntity()
-
-//        isLoaded = true // <-- got rid of it temporarly
     }
     
     private func subscribeToDataModelChanges() {
         subscribeToTheme()
-//        subscribeToPermissions() // not yet available
         subscribeToTrackerInfo()
         subscribeToConnectionUpgradedTo()
         subscribeToServerTrust()
-//        subscribeToConsentManaged() // not yet available
     }
     
     private func subscribeToTheme() {
@@ -162,15 +154,6 @@ extension PrivacyDashboardLogic: WKNavigationDelegate {
         privacyDashboardScript.setProtectionStatus(privacyInfo?.isProtected ?? false, webView: webView)
     }
     
-//    private func sendPendingUpdates() {
-//        guard let domain = tabViewModel?.tab.content.url?.host else {
-//            assertionFailure("PrivacyDashboardViewController: no domain available")
-//            return
-//        }
-//
-//        self.privacyDashboardScript.setIsPendingUpdates(pendingUpdates.values.contains(domain), webView: self.webView)
-//    }
-    
     private func sendParentEntity() {
         guard let webView = self.webView else { return }
         privacyDashboardScript.setParentEntity(privacyInfo?.parentEntity, webView: webView)
@@ -181,27 +164,6 @@ extension PrivacyDashboardLogic: PrivacyDashboardUserScriptDelegate {
 
     func userScript(_ userScript: PrivacyDashboardUserScript, didChangeProtectionStateTo isProtected: Bool) {
         onProtectionSwitchChange?(isProtected)
-    }
-
-//    func userScript(_ userScript: PrivacyDashboardUserScript, didSetPermission permission: PermissionType, to state: PermissionAuthorizationState) {
-//        guard let domain = tabViewModel?.tab.content.url?.host else {
-//            assertionFailure("PrivacyDashboardViewController: no domain available")
-//            return
-//        }
-//
-//        PermissionManager.shared.setPermission(state.persistedPermissionDecision, forDomain: domain, permissionType: permission)
-//    }
-
-//    func userScript(_ userScript: PrivacyDashboardUserScript, setPermission permission: PermissionType, paused: Bool) {
-//        tabViewModel?.tab.permissions.set([permission], muted: paused)
-//    }
-
-    func userScript(_ userScript: PrivacyDashboardUserScript, setHeight height: Int) {
-//        NSAnimationContext.runAnimationGroup { [weak self] context in
-//            context.duration = 1/3
-//            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
-//            self?.contentHeightConstraint.animator().constant = CGFloat(height)
-//        }
     }
     
     func userScriptDidRequestClosing(_ userScript: PrivacyDashboardUserScript) {

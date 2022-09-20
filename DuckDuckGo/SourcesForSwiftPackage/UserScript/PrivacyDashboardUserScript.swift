@@ -23,12 +23,9 @@ import TrackerRadarKit
 import Core
 
 protocol PrivacyDashboardUserScriptDelegate: AnyObject {
-
     func userScript(_ userScript: PrivacyDashboardUserScript, didChangeProtectionStateTo protectionState: Bool)
-    func userScript(_ userScript: PrivacyDashboardUserScript, setHeight height: Int)
     func userScriptDidRequestClosing(_ userScript: PrivacyDashboardUserScript)
     func userScriptDidRequestShowReportBrokenSite(_ userScript: PrivacyDashboardUserScript)
-
 }
 
 final class PrivacyDashboardUserScript: NSObject, StaticUserScript {

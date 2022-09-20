@@ -1,5 +1,5 @@
 //
-//  NewPrivacyDashboardViewController.swift
+//  PrivacyDashboardViewController.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -23,27 +23,22 @@ import Combine
 import Core
 import PrivacyDashboard
 
-class NewPrivacyDashboardViewController: UIViewController {
+class PrivacyDashboardViewController: UIViewController {
     
-    var webView: WKWebView!
-    private let privacyDashboardLogic: PrivacyDashboardLogic
-
-    public init(privacyInfo: PrivacyInfo?) {
-        self.privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo)
-        super.init(nibName: nil, bundle: nil)
-    }
+    @IBOutlet private(set) weak var webView: WKWebView!
+    
+    weak var privacyInfo: PrivacyInfo?
+    private var privacyDashboardLogic: PrivacyDashboardLogic!
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationController?.setNavigationBarHidden(true, animated: false)
-
-        setupWebView()
+        setupPrivacyDashboardLogic()
         setupPrivacyDashboardLogicHandlers()
+        
         privacyDashboardLogic.setup(for: webView)
         
         applyTheme(ThemeManager.shared.currentTheme)
@@ -54,16 +49,8 @@ class NewPrivacyDashboardViewController: UIViewController {
         privacyDashboardLogic.cleanUp()
     }
     
-    private func setupWebView() {
-        let configuration = WKWebViewConfiguration()
-
-        let webView = WKWebView(frame: view.frame, configuration: configuration)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webView.allowsBackForwardNavigationGestures = true
-        webView.isOpaque = false
-        
-        view.addSubview(webView)
-        self.webView = webView
+    private func setupPrivacyDashboardLogic() {
+        privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo!)
     }
     
     private func setupPrivacyDashboardLogicHandlers() {
@@ -90,7 +77,7 @@ class NewPrivacyDashboardViewController: UIViewController {
     }
 }
 
-private extension NewPrivacyDashboardViewController {
+private extension PrivacyDashboardViewController {
     
     func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
         guard let domain = privacyDashboardLogic.privacyInfo?.url.host else { return }
@@ -115,10 +102,12 @@ private extension NewPrivacyDashboardViewController {
     }
 }
 
-extension NewPrivacyDashboardViewController: Themable {
+extension PrivacyDashboardViewController: Themable {
     
     func decorate(with theme: Theme) {
         privacyDashboardLogic.themeName = theme.name.rawValue
         view.backgroundColor = theme.backgroundColor
     }
 }
+
+extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate { }

@@ -70,7 +70,7 @@ class TabViewController: UIViewController {
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
-    private weak var privacyController: PrivacyProtectionController?
+    private weak var privacyDashboard: PrivacyDashboardViewController?
     
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
@@ -675,7 +675,7 @@ class TabViewController: UIViewController {
 
         guard let chromeDelegate = chromeDelegate else { return }
 
-        if let controller = segue.destination as? PrivacyProtectionController {
+        if let controller = segue.destination as? PrivacyDashboardViewController {
             controller.popoverPresentationController?.delegate = controller
 
             if let iconView = chromeDelegate.omniBar.privacyInfoContainer.privacyIcon {
@@ -683,19 +683,12 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             
-//            if let domain = tabModel.link?.url.host, let trust = ServerTrustCache.shared.get(forDomain: domain) {
-//                tabModel.privacyInfo?.serverTrust = ServerTrust(host: domain, secTrust: trust)
-//            }
-
             if let domain = tabModel.link?.url.host, let trust = webView.serverTrust {
                 tabModel.privacyInfo?.serverTrust = ServerTrust(host: domain, secTrust: trust)
             }
             
-            controller.privacyProtectionDelegate = self
-            privacyController = controller
-            controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
-            controller.omniBarText = chromeDelegate.omniBar.textField.text
             controller.privacyInfo = tabModel.privacyInfo
+            privacyDashboard = controller
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -844,7 +837,7 @@ class TabViewController: UIViewController {
 
     func showPrivacyDashboard() {
         Pixel.fire(pixel: .privacyDashboardOpened)
-        performSegue(withIdentifier: "PrivacyProtection", sender: self)
+        performSegue(withIdentifier: "PrivacyDashboard", sender: self)
     }
     
     private var didGoBackForward: Bool = false
@@ -907,7 +900,7 @@ class TabViewController: UIViewController {
     }
     
     private func onPrivacyInfoChanged() {
-        privacyController?.updatePrivacyInfo(tabModel.privacyInfo)
+        privacyDashboard?.updatePrivacyInfo(tabModel.privacyInfo)
     }
     
     func didLaunchBrowsingMenu() {
@@ -1962,14 +1955,6 @@ extension TabViewController {
         } else {
             Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
         }
-    }
-
-}
-
-// MARK: - PrivacyProtectionDelegate
-extension TabViewController: PrivacyProtectionDelegate {
-    func omniBarTextTapped() {
-        chromeDelegate?.omniBar.becomeFirstResponder()
     }
 }
 

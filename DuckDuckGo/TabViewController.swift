@@ -96,10 +96,7 @@ class TabViewController: UIViewController {
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
-    
-    private var trackerNetworksDetectedOnPage = Set<String>()
-    private var pageHasTrackers = false
-    
+        
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
     
@@ -1065,9 +1062,6 @@ extension TabViewController: WKNavigationDelegate {
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
-
-        trackerNetworksDetectedOnPage.removeAll()
-        pageHasTrackers = false
         
         appRatingPrompt.registerUsage()
      
@@ -2104,16 +2098,6 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
 
         privacyInfo?.trackerInfo.add(detectedTracker: tracker)
         onPrivacyInfoChanged()
-
-        if !pageHasTrackers {
-            pageHasTrackers = true
-        }
-
-        if let networkName = tracker.ownerName {
-            if !trackerNetworksDetectedOnPage.contains(networkName) {
-                trackerNetworksDetectedOnPage.insert(networkName)
-            }
-        }
     }
 }
 

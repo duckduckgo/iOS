@@ -24,20 +24,29 @@ import Combine
 import os.log
 import Core
 
+internal enum AutofillLoginListSectionType: Comparable {
+    case enableAutofill
+    case credentials(title: String, items: [AutofillLoginListItemViewModel])
+    
+    static func < (lhs: AutofillLoginListSectionType, rhs: AutofillLoginListSectionType) -> Bool {
+        if case .credentials(let leftTitle, _) = lhs,
+           case .credentials(let rightTitle, _) = rhs {
+            if leftTitle == miscSectionHeading {
+                return false
+            } else if rightTitle == miscSectionHeading {
+                return true
+            }
+            
+            return leftTitle.localizedCaseInsensitiveCompare(rightTitle) == .orderedAscending
+        }
+        return true
+    }
+    
+    static let miscSectionHeading = "#"
+}
+
 final class AutofillLoginListViewModel: ObservableObject {
     
-    enum AutofillLoginListSectionType: Comparable {
-        case enableAutofill
-        case credentials(title: String, items: [AutofillLoginListItemViewModel])
-        
-        static func < (lhs: AutofillLoginListSectionType, rhs: AutofillLoginListSectionType) -> Bool {
-            if case .credentials(let left, _) = lhs,
-               case .credentials(let right, _) = rhs {
-                return left < right
-            }
-            return true
-        }
-    }
     enum ViewState {
         case authLocked
         case empty
@@ -167,13 +176,9 @@ final class AutofillLoginListViewModel: ObservableObject {
         if !isSearching {
             newSections.append(.enableAutofill)
         }
-        
-        let accountSections = accounts.reduce(into: [:]) { result, account in
-            return result[account.name.first?.lowercased() ?? "", default: []].append(AutofillLoginListItemViewModel(account: account))
-        }.map { dictionaryItem -> AutofillLoginListSectionType in
-            AutofillLoginListSectionType.credentials(title: dictionaryItem.key,
-                                                     items: dictionaryItem.value.sorted())
-        }.sorted()
+
+        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()
+        let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
         
         newSections.append(contentsOf: accountSections)
         return newSections
@@ -246,5 +251,41 @@ final class AutofillLoginListViewModel: ObservableObject {
 extension AutofillLoginListItemViewModel: Comparable {
     static func < (lhs: AutofillLoginListItemViewModel, rhs: AutofillLoginListItemViewModel) -> Bool {
         lhs.title < rhs.title
+    }
+}
+
+internal extension Array where Element == SecureVaultModels.WebsiteAccount {
+    
+    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter() -> [String: [AutofillLoginListItemViewModel]] {
+        reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
+            
+            // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
+            // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
+            // Apple's own apps (e.g. contacts) seem to suffer from the same problem
+            let key: String
+            if let firstChar = account.name.first,
+               let deDistinctionedChar = String(firstChar).folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil).first,
+               deDistinctionedChar.isLetter {
+                
+                key = String(deDistinctionedChar)
+            } else {
+                key = AutofillLoginListSectionType.miscSectionHeading
+            }
+            
+            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account))
+        }
+    }
+}
+
+internal extension Dictionary where Key == String, Value == [AutofillLoginListItemViewModel] {
+    
+    func autofillLoginListSectionsForViewModelsSortedByTitle() -> [AutofillLoginListSectionType] {
+        map { dictionaryItem -> AutofillLoginListSectionType in
+            let sortedGroup = dictionaryItem.value.sorted { lhs, rhs in
+                lhs.title.localizedCaseInsensitiveCompare(rhs.title) == .orderedAscending
+            }
+            return AutofillLoginListSectionType.credentials(title: dictionaryItem.key,
+                                                            items: sortedGroup)
+        }.sorted()
     }
 }

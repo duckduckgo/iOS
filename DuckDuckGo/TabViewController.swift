@@ -125,6 +125,11 @@ class TabViewController: UIViewController {
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
     public var url: URL? {
+        willSet {
+            if newValue != url {
+                delegate?.closeFindInPage(tab: self)
+            }
+        }
         didSet {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
@@ -1500,12 +1505,15 @@ extension TabViewController: WKNavigationDelegate {
         }
         
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let url = navigationAction.request.url, decision != .cancel {
-                if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
+            if let self = self,
+               let url = navigationAction.request.url,
+               decision != .cancel,
+               navigationAction.isTargetingMainFrame() {
+                if self.appUrls.isDuckDuckGoSearch(url: url) {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
-                
-                self?.findInPage?.done()
+
+                self.delegate?.closeFindInPage(tab: self)
             }
             decisionHandler(decision)
         }

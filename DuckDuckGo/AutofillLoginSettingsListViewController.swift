@@ -404,6 +404,29 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         viewModel.viewState == .showItems ? UILocalizedIndexedCollation.current().sectionIndexTitles : []
     }
     
+    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        var closestSoFar = 0
+        var exactMatchIndex: Int?
+        for (index, section) in viewModel.sections.enumerated() {
+            if case .credentials(let sectionTitle, _) = section {
+                
+                if let first = title.first, !first.isLetter {
+                    return viewModel.sections.count - 1
+                }
+                
+                let result = sectionTitle.localizedCaseInsensitiveCompare(title)
+                if result == .orderedSame {
+                    exactMatchIndex = index
+                    break
+                } else if result == .orderedDescending {
+                    break
+                }
+            }
+            closestSoFar = index
+        }
+        return exactMatchIndex ?? closestSoFar
+    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         switch viewModel.sections[indexPath.section] {
         case .credentials:

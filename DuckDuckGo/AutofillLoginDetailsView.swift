@@ -170,6 +170,7 @@ struct AutofillLoginDetailsView: View {
              })
              .foregroundColor(Color.red)
         }
+        .listRowBackground(Color("AutofillCellBackground"))
     }
 }
 

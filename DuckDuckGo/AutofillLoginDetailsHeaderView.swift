@@ -47,6 +47,7 @@ struct AutofillLoginDetailsHeaderView: View {
         .frame(minHeight: Constants.viewHeight)
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
+        .listRowBackground(Color("AutofillCellBackground"))
     }
 }
 

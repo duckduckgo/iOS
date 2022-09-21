@@ -39,6 +39,10 @@ public final class PrivacyInfo {
     public var https: Bool {
         return url.isHttps
     }
+    
+    public var domain: String? {
+        return url.host
+    }
 
     public var isMajorTrackerNetwork: Bool {
         return parentEntity?.prevalence ?? 0 >= TrackerInfo.Constants.majorNetworkPrevalence

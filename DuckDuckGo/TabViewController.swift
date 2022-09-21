@@ -977,7 +977,7 @@ class TabViewController: UIViewController {
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: siteRating?.installedSurrogates.map { $0 } ?? [],
+                              installedSurrogates: privacyInfo?.trackerInfo.installedSurrogates.map { $0 } ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.contentBlockingManager.currentMainRules?.etag ?? "",
                               ampUrl: linkProtection.lastAMPURLString,
@@ -1212,7 +1212,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        guard let siteRating = self.siteRating,
+        guard let privacyInfo = self.privacyInfo,
               !isShowingFullScreenDaxDialog else {
 
             scheduleTrackerNetworksAnimation(collapsing: true)
@@ -1224,7 +1224,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        guard let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
+        guard let spec = DaxDialogs.shared.nextBrowsingMessage(privacyInfo: privacyInfo) else {
             
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 delegate?.tabDidRequestFireButtonPulse(tab: self)

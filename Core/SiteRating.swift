@@ -32,9 +32,9 @@ public class SiteRating {
         case unencrypted, mixed, encrypted, forced
     }
 
-    public var domain: String? {
-        return url.host
-    }
+//    public var domain: String? {
+//        return url.host
+//    }
     
 //    public var scores: Grade.Scores {
 //        if let scores = cache.get(url: url), scores.site.score > grade.scores.site.score {
@@ -47,10 +47,10 @@ public class SiteRating {
 //    public let httpsForced: Bool
 //    public let privacyPractice: PrivacyPractices.Practice
     
-    public private (set) var trackers = Set<DetectedRequest>()
-    public private (set) var thirdPartyRequests = Set<DetectedRequest>()
+//    public private (set) var trackers = Set<DetectedRequest>()
+//    public private (set) var thirdPartyRequests = Set<DetectedRequest>()
     
-    public private (set) var installedSurrogates = Set<String>()
+//    public private (set) var installedSurrogates = Set<String>()
     
     private let grade = Grade()
     private let cache = GradeCache.shared
@@ -83,9 +83,9 @@ public class SiteRating {
         
     }
     
-    public var trackersBlocked: [DetectedRequest] {
-        trackers.filter { $0.state == .blocked }
-    }
+//    public var trackersBlocked: [DetectedRequest] {
+//        trackers.filter { $0.state == .blocked }
+//    }
     
 //    public var requestsAllowed: [DetectedRequest] {
 //        trackers.filter { $0.state != .blocked }

@@ -628,6 +628,11 @@ public struct UserText {
     public static let autofillLoginPromptAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth during login prompt
     public static let autofillLoginPromptTitle = "Use Saved Login?" // Title for autofill login prompt
     public static let autofillLoginPromptMoreOptions = "More Options" // Button title for autofill login prompt if more options are available
+
+    public static let autofillOpenWebsitePrompt = "Open Website" // Menu item title for option to open website from selected url
+    public static func autofillCopyPrompt(for type: String) -> String {
+        "Copy \(type)"
+    } // Menu item text for copying autofill login details
     public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
     public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address

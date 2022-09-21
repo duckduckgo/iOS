@@ -95,7 +95,9 @@ struct AutofillLoginDetailsView: View {
             }
             
             Section {
-                CopyableCell(title: UserText.autofillLoginDetailsUsername, subtitle: viewModel.usernameDisplayString, selectedCell: $viewModel.selectedCell) {
+                CopyableCell(title: UserText.autofillLoginDetailsUsername,
+                             subtitle: viewModel.usernameDisplayString,
+                             selectedCell: $viewModel.selectedCell) {
                     viewModel.copyToPasteboard(.username)
                 }
 
@@ -112,9 +114,10 @@ struct AutofillLoginDetailsView: View {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
                              subtitle: viewModel.address,
                              selectedCell: $viewModel.selectedCell,
-                             truncationMode: .middle) {
-                    viewModel.copyToPasteboard(.address)
-                }
+                             action: { viewModel.copyToPasteboard(.address) },
+                             secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
+                             secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil,
+                             truncationMode: .middle)
             }
 
             Section {
@@ -320,6 +323,8 @@ private struct CopyableCell: View {
     let subtitle: String
     @Binding var selectedCell: UUID?
     let action: () -> Void
+    var secondaryActionTitle: String?
+    var secondaryAction: (() -> Void)?
     var truncationMode: Text.TruncationMode = .tail
 
     var body: some View {
@@ -336,7 +341,11 @@ private struct CopyableCell: View {
             }
             Spacer()
         }
-        .copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: action) {
+        .copyable(isSelected: selectedCell == id,
+                  menuTitle: title,
+                  menuAction: action,
+                  menuSecondaryTitle: secondaryActionTitle,
+                  menuSecondaryAction: secondaryAction) {
             self.selectedCell = self.id
         } menuClosedAction: {
             self.selectedCell = nil
@@ -358,13 +367,17 @@ private struct Copyable: ViewModifier {
     var isSelected: Bool
     var menuTitle: String
     let menuAction: () -> Void
+    let menuSecondaryTitle: String?
+    let menuSecondaryAction: (() -> Void)?
     let menuOpenedAction: () -> Void
     let menuClosedAction: () -> Void
     
-    internal init(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) {
+    internal init(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, menuSecondaryTitle: String?, menuSecondaryAction: (() -> Void)?, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) {
         self.isSelected = isSelected
         self.menuTitle = menuTitle
         self.menuAction = menuAction
+        self.menuSecondaryTitle = menuSecondaryTitle
+        self.menuSecondaryAction = menuSecondaryAction
         self.menuOpenedAction = menuOpenedAction
         self.menuClosedAction = menuClosedAction
     }
@@ -373,8 +386,10 @@ private struct Copyable: ViewModifier {
         ZStack {
             Rectangle()
                 .foregroundColor(.clear)
-                .menuController("Copy \(menuTitle)",
+                .menuController(UserText.autofillCopyPrompt(for: menuTitle),
                                 action: menuAction,
+                                secondaryTitle: menuSecondaryTitle,
+                                secondaryAction: menuSecondaryAction,
                                 onOpen: menuOpenedAction,
                                 onClose: menuClosedAction)
 
@@ -389,10 +404,12 @@ private struct Copyable: ViewModifier {
 }
 
 private extension View {
-    func copyable(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) -> some View {
+    func copyable(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, menuSecondaryTitle: String? = "", menuSecondaryAction: (() -> Void)? = nil, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) -> some View {
         modifier(Copyable(isSelected: isSelected,
                           menuTitle: menuTitle,
                           menuAction: menuAction,
+                          menuSecondaryTitle: menuSecondaryTitle,
+                          menuSecondaryAction: menuSecondaryAction,
                           menuOpenedAction: menuOpenedAction,
                           menuClosedAction: menuClosedAction))
     }

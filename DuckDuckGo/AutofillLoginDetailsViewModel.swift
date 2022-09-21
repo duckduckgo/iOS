@@ -25,6 +25,7 @@ import Core
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
     func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount)
+    func autofillLoginDetailsViewModelDismiss()
 }
 
 final class AutofillLoginDetailsViewModel: ObservableObject {
@@ -75,6 +76,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         guard viewMode == .new else { return false }
         
         return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty
+    }
+
+    var websiteIsValidUrl: Bool {
+        account?.domain.url != nil
     }
     
     var userVisiblePassword: String {
@@ -213,6 +218,13 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             return
         }
         delegate?.autofillLoginDetailsViewModelDelete(account: account)
+    }
+
+    func openUrl() {
+        guard let url = account?.domain.url else { return }
+
+        LaunchTabNotification.postLaunchTabNotification(urlString: url.absoluteString)
+        delegate?.autofillLoginDetailsViewModelDismiss()
     }
 }
 

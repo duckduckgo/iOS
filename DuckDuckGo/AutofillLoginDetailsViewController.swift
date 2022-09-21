@@ -180,6 +180,10 @@ extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDeleg
         delegate?.autofillLoginDetailsViewControllerDelete(account: account)
         navigationController?.popViewController(animated: true)
     }
+
+    func autofillLoginDetailsViewModelDismiss() {
+        navigationController?.dismiss(animated: true)
+    }
 }
 
 // MARK: Themable

@@ -831,8 +831,7 @@ class TabViewController: UIViewController {
                 self.privacyInfo = privacyInfo
                 didGoBackForward = false
             } else {
-                let serverTrust = makeServerTrust(url: url, secTrust: webView.serverTrust)
-                privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
+                privacyInfo = makePrivacyInfo(url: url)
             }
         } else {
             privacyInfo = nil
@@ -841,17 +840,7 @@ class TabViewController: UIViewController {
         onPrivacyInfoChanged()
     }
     
-    private func makeServerTrust(url: URL, secTrust: SecTrust?) -> ServerTrust? {
-        var serverTrust: ServerTrust?
-        
-        if let domain = tabModel.link?.url.host, let trust = secTrust {
-            serverTrust = ServerTrust(host: domain, secTrust: trust)
-        }
-        
-        return serverTrust
-    }
-    
-    private func makePrivacyInfo(url: URL, serverTrust: ServerTrust?) -> PrivacyInfo? {
+    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.trackerDataManager.trackerData.findEntity(forHost: host)
@@ -859,7 +848,7 @@ class TabViewController: UIViewController {
         let isProtected = !config.isUserUnprotected(domain: host)
         
         let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: isProtected)
-        privacyInfo.serverTrust = serverTrust
+        privacyInfo.serverTrust = makeServerTrust()
         
         // TODO: required temporarily for serialising the TrackerInfo into old format
         privacyInfo.trackerInfo.tds = ContentBlocking.trackerDataManager.trackerData
@@ -867,6 +856,16 @@ class TabViewController: UIViewController {
         previousPrivacyInfosByURL[url] = privacyInfo
         
         return privacyInfo
+    }
+    
+    private func makeServerTrust() -> ServerTrust? {
+        var serverTrust: ServerTrust?
+        
+        if let domain = tabModel.link?.url.host, let trust = webView.serverTrust {
+            serverTrust = ServerTrust(host: domain, secTrust: trust)
+        }
+        
+        return serverTrust
     }
  
     private func onPrivacyInfoChanged() {
@@ -1304,8 +1303,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
-        let serverTrust = makeServerTrust(url: url, secTrust: webView.serverTrust)
-        self.privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
+        self.privacyInfo = makePrivacyInfo(url: url)
 
         onPrivacyInfoChanged()
         checkLoginDetectionAfterNavigation()

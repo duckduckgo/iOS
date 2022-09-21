@@ -32,7 +32,7 @@ final class PrivacyIconAndTrackersAnimator {
     private let trackerAnimationImageProvider = TrackerAnimationImageProvider()
     private(set) var isAnimatingForDaxDialog: Bool = false
     
-    func configure(_ container: PrivacyInfoContainerView, for siteRating: SiteRating) {
+    func configure(_ container: PrivacyInfoContainerView, with privacyInfo: PrivacyInfo) {
         isAnimatingForDaxDialog = false
         
         container.trackers1Animation.currentFrame = 0
@@ -42,9 +42,9 @@ final class PrivacyIconAndTrackersAnimator {
         container.privacyIcon.shieldAnimationView.currentFrame = 0
         container.privacyIcon.shieldDotAnimationView.currentFrame = 0
         
-        if TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating) {
+        if TrackerAnimationLogic.shouldAnimateTrackers(for: privacyInfo.trackerInfo) {
             // For
-            trackerAnimationImageProvider.loadTrackerImages(from: siteRating)
+            trackerAnimationImageProvider.loadTrackerImages(for: privacyInfo.trackerInfo)
       
             if let trackerAnimationView = container.trackerAnimationView(for: trackerAnimationImageProvider.trackerImagesCount) {
                 trackerAnimationView.imageProvider = trackerAnimationImageProvider
@@ -54,15 +54,15 @@ final class PrivacyIconAndTrackersAnimator {
             container.privacyIcon.updateIcon(.shield)
         } else {
             // No animation directly set icon
-            let icon = PrivacyIconLogic.privacyIcon(for: siteRating)
+            let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
             container.privacyIcon.updateIcon(icon)
         }
     }
     
-    func startAnimating(in omniBar: OmniBar, with siteRating: SiteRating) {
+    func startAnimating(in omniBar: OmniBar, with privacyInfo: PrivacyInfo) {
         guard let container = omniBar.privacyInfoContainer else { return }
         
-        let privacyIcon = PrivacyIconLogic.privacyIcon(for: siteRating)
+        let privacyIcon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         
         container.privacyIcon.prepareForAnimation(for: privacyIcon)
                 
@@ -85,12 +85,12 @@ final class PrivacyIconAndTrackersAnimator {
         }
     }
     
-    func startAnimationForDaxDialog(in omniBar: OmniBar, with siteRating: SiteRating) {
+    func startAnimationForDaxDialog(in omniBar: OmniBar, with privacyInfo: PrivacyInfo) {
         guard let container = omniBar.privacyInfoContainer else { return }
         
         isAnimatingForDaxDialog = true
         
-        let privacyIcon = PrivacyIconLogic.privacyIcon(for: siteRating)
+        let privacyIcon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         
         container.privacyIcon.prepareForAnimation(for: privacyIcon)
                         

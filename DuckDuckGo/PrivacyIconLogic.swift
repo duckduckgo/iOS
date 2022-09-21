@@ -30,14 +30,14 @@ final class PrivacyIconLogic {
         }
     }
     
-    static func privacyIcon(for siteRating: SiteRating) -> PrivacyIcon {
-        if AppUrls().isDuckDuckGoSearch(url: siteRating.url) {
+    static func privacyIcon(for privacyInfo: PrivacyInfo) -> PrivacyIcon {
+        if AppUrls().isDuckDuckGoSearch(url: privacyInfo.url) {
             return .daxLogo
         } else {
             let config = ContentBlocking.privacyConfigurationManager.privacyConfig
-            let isUserUnprotected = config.isUserUnprotected(domain: siteRating.url.host)
+            let isUserUnprotected = config.isUserUnprotected(domain: privacyInfo.url.host)
  
-            let notFullyProtected = !siteRating.https || siteRating.isMajorTrackerNetwork || isUserUnprotected
+            let notFullyProtected = !privacyInfo.https || privacyInfo.isMajorTrackerNetwork || isUserUnprotected
             
             return notFullyProtected ? .shieldWithDot : .shield
         }

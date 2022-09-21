@@ -212,28 +212,28 @@ class OmniBar: UIView {
         privacyInfoContainer.privacyIcon.updateIcon(icon)
     }
     
-    public func updatePrivacyIcon(for siteRating: SiteRating?) {
-        guard let siteRating = siteRating,
+    public func updatePrivacyIcon(for privacyInfo: PrivacyInfo?) {
+        guard let privacyInfo = privacyInfo,
               !privacyInfoContainer.isAnimationPlaying,
               !privacyIconAndTrackersAnimator.isAnimatingForDaxDialog
         else { return }
         
         privacyInfoContainer.privacyIcon.isHidden = false
         
-        let icon = PrivacyIconLogic.privacyIcon(for: siteRating)
+        let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         privacyInfoContainer.privacyIcon.updateIcon(icon)
     }
     
-    public func startTrackersAnimation(_ siteRating: SiteRating, forDaxDialog: Bool) {
+    public func startTrackersAnimation(_ privacyInfo: PrivacyInfo, forDaxDialog: Bool) {
         guard state.allowsTrackersAnimation, !privacyInfoContainer.isAnimationPlaying else { return }
         
-        privacyIconAndTrackersAnimator.configure(privacyInfoContainer, for: siteRating)
+        privacyIconAndTrackersAnimator.configure(privacyInfoContainer, with: privacyInfo)
         
-        if TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating) {
+        if TrackerAnimationLogic.shouldAnimateTrackers(for: privacyInfo.trackerInfo) {
             if forDaxDialog {
-                privacyIconAndTrackersAnimator.startAnimationForDaxDialog(in: self, with: siteRating)
+                privacyIconAndTrackersAnimator.startAnimationForDaxDialog(in: self, with: privacyInfo)
             } else {
-                privacyIconAndTrackersAnimator.startAnimating(in: self, with: siteRating)
+                privacyIconAndTrackersAnimator.startAnimating(in: self, with: privacyInfo)
             }
         }
     }

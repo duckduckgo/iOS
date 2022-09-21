@@ -22,7 +22,7 @@ import Core
 
 final class TrackerAnimationLogic {
     
-    static func shouldAnimateTrackers(for siteRating: SiteRating) -> Bool {
-        !siteRating.trackersBlocked.isEmpty
+    static func shouldAnimateTrackers(for trackerInfo: TrackerInfo) -> Bool {
+        !trackerInfo.trackersBlocked.isEmpty
     }
 }

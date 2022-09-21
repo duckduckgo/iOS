@@ -36,4 +36,15 @@ public final class PrivacyInfo {
         trackerInfo = TrackerInfo()
     }
     
+    public var https: Bool {
+        return url.isHttps
+    }
+
+    public var isMajorTrackerNetwork: Bool {
+        return parentEntity?.prevalence ?? 0 >= TrackerInfo.Constants.majorNetworkPrevalence
+    }
+    
+    public func isFor(_ url: URL?) -> Bool {
+        return self.url.host == url?.host
+    }
 }

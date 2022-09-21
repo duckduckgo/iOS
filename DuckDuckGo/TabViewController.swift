@@ -84,6 +84,7 @@ class TabViewController: UIViewController {
     private(set) var urlToSiteRating: [URL: SiteRating] = [:]
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
+    private(set) var privacyInfo: PrivacyInfo?
     
     private let requeryLogic = RequeryLogic()
     
@@ -424,7 +425,6 @@ class TabViewController: UIViewController {
 
     private func addObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
@@ -461,7 +461,7 @@ class TabViewController: UIViewController {
     private func load(url: URL, didUpgradeURL: Bool) {
         if !didUpgradeURL {
             lastUpgradedURL = nil
-            tabModel.privacyInfo?.connectionUpgradedTo = nil
+            privacyInfo?.connectionUpgradedTo = nil
         }
         
         if !url.isBookmarklet() {
@@ -516,9 +516,6 @@ class TabViewController: UIViewController {
         case #keyPath(WKWebView.estimatedProgress):
             progressWorker.progressDidChange(webView.estimatedProgress)
             
-        case #keyPath(WKWebView.hasOnlySecureContent):
-            hasOnlySecureContentChanged(hasOnlySecureContent: webView.hasOnlySecureContent)
-            
         case #keyPath(WKWebView.url):
             webViewUrlHasChanged()
             
@@ -542,12 +539,6 @@ class TabViewController: UIViewController {
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
         }
-    }
-    
-    func hasOnlySecureContentChanged(hasOnlySecureContent: Bool) {
-        guard webView.url?.host == siteRating?.url.host else { return }
-        siteRating?.hasOnlySecureContent = hasOnlySecureContent
-        updateSiteRating()
     }
     
     func enableFireproofingForDomain(_ domain: String) {
@@ -683,7 +674,7 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             
-            controller.privacyInfo = tabModel.privacyInfo
+            controller.privacyInfo = privacyInfo
             privacyDashboard = controller
         }
         
@@ -847,13 +838,13 @@ class TabViewController: UIViewController {
                 siteRating = makeSiteRating(url: url)
                 
                 let serverTrust = makeServerTrust(url: url, secTrust: webView.serverTrust)
-                tabModel.privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
+                privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
             }
         } else {
             siteRating = nil
-            tabModel.privacyInfo = nil
+            privacyInfo = nil
         }
-        onSiteRatingChanged()
+        
         onPrivacyInfoChanged()
     }
     
@@ -898,19 +889,13 @@ class TabViewController: UIViewController {
         return privacyInfo
     }
  
-    private func updateSiteRating() {
-        if isError {
-            siteRating = nil
-        }
-        onSiteRatingChanged()
-    }
-
-    private func onSiteRatingChanged() {
-        delegate?.tab(self, didChangeSiteRating: siteRating)
-    }
-    
     private func onPrivacyInfoChanged() {
-        privacyDashboard?.updatePrivacyInfo(tabModel.privacyInfo)
+        if isError {
+            privacyInfo = nil
+        }
+        
+        delegate?.tab(self, didChangePrivacyInfo: privacyInfo)
+        privacyDashboard?.updatePrivacyInfo(privacyInfo)
     }
     
     func didLaunchBrowsingMenu() {
@@ -980,7 +965,6 @@ class TabViewController: UIViewController {
     
     private func removeObservers() {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
@@ -1212,8 +1196,8 @@ extension TabViewController: WKNavigationDelegate {
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
         
-        siteRating?.finishedLoading = true
-        updateSiteRating()
+        onPrivacyInfoChanged()
+        
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -1275,8 +1259,8 @@ extension TabViewController: WKNavigationDelegate {
     
     private func scheduleTrackerNetworksAnimation(collapsing: Bool) {
         let trackersWorkItem = DispatchWorkItem {
-            guard let siteRating = self.siteRating else { return }
-            self.delegate?.tab(self, didRequestPresentingTrackerAnimation: siteRating, isCollapsing: collapsing)
+            guard let privacyInfo = self.privacyInfo else { return }
+            self.delegate?.tab(self, didRequestPresentingTrackerAnimation: privacyInfo, isCollapsing: collapsing)
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,
@@ -1308,8 +1292,7 @@ extension TabViewController: WKNavigationDelegate {
         if isError {
             showBars(animated: true)
         }
-        siteRating?.finishedLoading = true
-        updateSiteRating()
+        onPrivacyInfoChanged()
         self.delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -1346,9 +1329,9 @@ extension TabViewController: WKNavigationDelegate {
         self.url = url
         self.siteRating = makeSiteRating(url: url)
         let serverTrust = makeServerTrust(url: url, secTrust: webView.serverTrust)
-        self.tabModel.privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
-        updateSiteRating()
-        onSiteRatingChanged()
+        self.privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
+
+        onPrivacyInfoChanged()
         checkLoginDetectionAfterNavigation()
     }
     
@@ -1494,7 +1477,7 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
-            tabModel.privacyInfo?.connectionUpgradedTo = nil
+            privacyInfo?.connectionUpgradedTo = nil
         }
         
         guard navigationAction.request.mainDocumentURL != nil else {
@@ -1590,7 +1573,7 @@ extension TabViewController: WKNavigationDelegate {
             case let .success(upgradedUrl):
                 if lastUpgradedURL != upgradedUrl {
                     lastUpgradedURL = upgradedUrl
-                    tabModel.privacyInfo?.connectionUpgradedTo = upgradedUrl
+                    privacyInfo?.connectionUpgradedTo = upgradedUrl
                     load(url: upgradedUrl, didUpgradeURL: true)
                     completion(.cancel)
                 } else {
@@ -2112,7 +2095,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
 extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
     func contentBlockerRulesUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
-        return siteRating?.isFor(self.url) ?? false
+        return privacyInfo?.isFor(self.url) ?? false
     }
     
     func contentBlockerRulesUserScriptShouldProcessCTLTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
@@ -2138,8 +2121,8 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
         }
 
         siteRating?.trackerDetected(tracker)
-        tabModel.privacyInfo?.trackerInfo.add(detectedTracker: tracker)
-        onSiteRatingChanged()
+        privacyInfo?.trackerInfo.add(detectedTracker: tracker)
+        onPrivacyInfoChanged()
 
         if !pageHasTrackers {
             pageHasTrackers = true
@@ -2157,7 +2140,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
 extension TabViewController: SurrogatesUserScriptDelegate {
 
     func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
-        return siteRating?.isFor(self.url) ?? false
+        return privacyInfo?.isFor(self.url) ?? false
     }
 
     func surrogatesUserScript(_ script: SurrogatesUserScript,
@@ -2165,7 +2148,7 @@ extension TabViewController: SurrogatesUserScriptDelegate {
                               withSurrogate host: String) {
         if siteRating?.url.absoluteString == tracker.pageUrl {
             siteRating?.surrogateInstalled(host)
-            tabModel.privacyInfo?.trackerInfo.add(installedSurrogateHost: host)
+            privacyInfo?.trackerInfo.add(installedSurrogateHost: host)
         }
         userScriptDetectedTracker(tracker)
     }

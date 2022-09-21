@@ -36,20 +36,17 @@ public class SiteRating {
         return url.host
     }
     
-    public var scores: Grade.Scores {
-        if let scores = cache.get(url: url), scores.site.score > grade.scores.site.score {
-            return scores
-        }
-        return grade.scores
-    }
+//    public var scores: Grade.Scores {
+//        if let scores = cache.get(url: url), scores.site.score > grade.scores.site.score {
+//            return scores
+//        }
+//        return grade.scores
+//    }
 
     public let url: URL
-    public let httpsForced: Bool
-    public let privacyPractice: PrivacyPractices.Practice
+//    public let httpsForced: Bool
+//    public let privacyPractice: PrivacyPractices.Practice
     
-    public var hasOnlySecureContent: Bool
-    public var finishedLoading = false
-
     public private (set) var trackers = Set<DetectedRequest>()
     public private (set) var thirdPartyRequests = Set<DetectedRequest>()
     
@@ -75,15 +72,14 @@ public class SiteRating {
         }
 
         self.url = url
-        self.httpsForced = httpsForced
-        self.hasOnlySecureContent = url.isHttps
-        self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
+//        self.httpsForced = httpsForced
+//        self.privacyPractice = privacyPractices.findPractice(forHost: url.host ?? "")
         
         // This will change when there is auto upgrade data.  The default is false, but we don't penalise sites at this time so if the url is https
         //  then we assume auto upgrade is available for the purpose of grade scoring.
-        self.grade.httpsAutoUpgrade = url.isHttps
-        self.grade.https = url.isHttps
-        self.grade.privacyScore = privacyPractice.score
+//        self.grade.httpsAutoUpgrade = url.isHttps
+//        self.grade.https = url.isHttps
+//        self.grade.privacyScore = privacyPractice.score
         
     }
     
@@ -110,31 +106,31 @@ public class SiteRating {
         }
     }
     
-    public var https: Bool {
-        return url.isHttps
-    }
+//    public var https: Bool {
+//        return url.isHttps
+//    }
 
-    public var encryptionType: EncryptionType {
-        if hasOnlySecureContent {
-            return httpsForced ? .forced : .encrypted
-        } else if https {
-            return .mixed
-        }
+//    public var encryptionType: EncryptionType {
+//        if hasOnlySecureContent {
+//            return httpsForced ? .forced : .encrypted
+//        } else if https {
+//            return .mixed
+//        }
 
-        return .unencrypted
-    }
+//        return .unencrypted
+//    }
 
-    public var majorTrackerNetworksDetected: Int {
-        return requestsAllowed.filter({ $0.prevalence ?? 0 >= Constants.majorNetworkPrevalence }).count
-    }
+//    public var majorTrackerNetworksDetected: Int {
+//        return requestsAllowed.filter({ $0.prevalence ?? 0 >= Constants.majorNetworkPrevalence }).count
+//    }
 
-    public var trackerNetworksDetected: Int {
-        return requestsAllowed.filter({ $0.prevalence ?? 0 < Constants.majorNetworkPrevalence }).count
-    }
+//    public var trackerNetworksDetected: Int {
+//        return requestsAllowed.filter({ $0.prevalence ?? 0 < Constants.majorNetworkPrevalence }).count
+//    }
     
-    public var isMajorTrackerNetwork: Bool {
-        return entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence
-    }
+//    public var isMajorTrackerNetwork: Bool {
+//        return entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence
+//    }
 
     public func trackerDetected(_ tracker: DetectedRequest) {
         guard tracker.pageUrl == url.absoluteString else { return }
@@ -156,16 +152,16 @@ public class SiteRating {
         thirdPartyRequests.insert(request)
     }
 
-    public var totalTrackersAllowed: Int {
-        return requestsAllowed.count
-    }
+//    public var totalTrackersAllowed: Int {
+//        return requestsAllowed.count
+//    }
 
-    public var totalTrackersBlocked: Int {
-        return trackersBlocked.count
-    }
+//    public var totalTrackersBlocked: Int {
+//        return trackersBlocked.count
+//    }
     
-    public func isFor(_ url: URL?) -> Bool {
-        return self.url.host == url?.host
-    }
+//    public func isFor(_ url: URL?) -> Bool {
+//        return self.url.host == url?.host
+//    }
 
 }

@@ -698,8 +698,8 @@ class MainViewController: UIViewController {
 
         if tab.isError {
             omniBar.hidePrivacyIcon()
-        } else if let siteRating = tab.siteRating, siteRating.url.host == tab.url?.host {
-            omniBar.updatePrivacyIcon(for: siteRating)
+        } else if let privacyInfo = tab.privacyInfo, privacyInfo.url.host == tab.url?.host {
+            omniBar.updatePrivacyIcon(for: privacyInfo)
         } else {
             omniBar.resetPrivacyIcon(for: tab.url)
         }
@@ -1402,9 +1402,9 @@ extension MainViewController: TabDelegate {
 
     }
 
-    func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
+    func tab(_ tab: TabViewController, didChangePrivacyInfo privacyInfo: PrivacyInfo?) {
         if currentTab == tab {
-            omniBar.updatePrivacyIcon(for: siteRating)
+            omniBar.updatePrivacyIcon(for: privacyInfo)
         }
     }
 
@@ -1462,10 +1462,10 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController,
-             didRequestPresentingTrackerAnimation siteRating: SiteRating,
+             didRequestPresentingTrackerAnimation privacyInfo: PrivacyInfo,
              isCollapsing: Bool) {
         guard tabManager.current === tab else { return }
-        omniBar?.startTrackersAnimation(siteRating, forDaxDialog: !isCollapsing)
+        omniBar?.startTrackersAnimation(privacyInfo, forDaxDialog: !isCollapsing)
     }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {

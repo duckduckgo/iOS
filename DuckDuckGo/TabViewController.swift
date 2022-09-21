@@ -81,10 +81,9 @@ class TabViewController: UIViewController {
     
     lazy var bookmarksManager = BookmarksManager()
 
-    private(set) var urlToSiteRating: [URL: SiteRating] = [:]
-    private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
+    private(set) var previousPrivacyInfosByURL: [URL: PrivacyInfo] = [:]
     
     private let requeryLogic = RequeryLogic()
     
@@ -829,38 +828,20 @@ class TabViewController: UIViewController {
     
     private var didGoBackForward: Bool = false
 
-    private func resetSiteRating() {
+    private func resetPrivacyInfo() {
         if let url = url {
-            if didGoBackForward, let siteRating = urlToSiteRating[url] {
-                self.siteRating = siteRating
+            if didGoBackForward, let privacyInfo = previousPrivacyInfosByURL[url] {
+                self.privacyInfo = privacyInfo
                 didGoBackForward = false
             } else {
-                siteRating = makeSiteRating(url: url)
-                
                 let serverTrust = makeServerTrust(url: url, secTrust: webView.serverTrust)
                 privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
             }
         } else {
-            siteRating = nil
             privacyInfo = nil
         }
         
         onPrivacyInfoChanged()
-    }
-    
-    private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = EntityMapping()
-        let privacyPractices = PrivacyPractices(tld: storageCache.tld,
-                                                termsOfServiceStore: storageCache.termsOfServiceStore,
-                                                entityMapping: entityMapping)
-        
-        let siteRating = SiteRating(url: url,
-                                    httpsForced: httpsForced,
-                                    entityMapping: entityMapping,
-                                    privacyPractices: privacyPractices)
-        urlToSiteRating[url] = siteRating
-        
-        return siteRating
     }
     
     private func makeServerTrust(url: URL, secTrust: SecTrust?) -> ServerTrust? {
@@ -885,6 +866,8 @@ class TabViewController: UIViewController {
         
         // TODO: required temporarily for serialising the TrackerInfo into old format
         privacyInfo.trackerInfo.tds = ContentBlocking.trackerDataManager.trackerData
+        
+        previousPrivacyInfosByURL[url] = privacyInfo
         
         return privacyInfo
     }
@@ -1078,7 +1061,7 @@ extension TabViewController: WKNavigationDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        resetSiteRating()
+        resetPrivacyInfo()
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
@@ -1327,7 +1310,6 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
-        self.siteRating = makeSiteRating(url: url)
         let serverTrust = makeServerTrust(url: url, secTrust: webView.serverTrust)
         self.privacyInfo = makePrivacyInfo(url: url, serverTrust: serverTrust)
 

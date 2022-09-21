@@ -31,8 +31,6 @@ class PrivacyIconLogicTests: XCTestCase {
     static let ddgSearchURL = URL(string: "https://duckduckgo.com/?q=catfood&t=h_&ia=web")!
     static let ddgMainURL = URL(string: "https://duckduckgo.com")!
     static let ddgSupportURL = URL(string: "https://duckduckgo.com/email/settings/support")!
-
-    var siteRatingHelper = SiteRatingHelper(pageURL: PrivacyIconLogicTests.pageURL)
     
     override func setUp() {
         super.setUp()
@@ -73,25 +71,27 @@ class PrivacyIconLogicTests: XCTestCase {
     
     func testPrivacyIconIsShieldWithDotForHTTP() {
         let url = PrivacyIconLogicTests.insecurePageURL
-        let siteRating = SiteRating(url: url)
+        let entity = Entity(displayName: "E", domains: [], prevalence: TrackerInfo.Constants.majorNetworkPrevalence - 1.0)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: true)
 
-        let icon = PrivacyIconLogic.privacyIcon(for: siteRating)
+        let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         
         XCTAssertTrue(url.isHttp)
-        XCTAssertFalse(siteRating.https)
-        XCTAssertFalse(siteRating.isMajorTrackerNetwork)
+        XCTAssertFalse(privacyInfo.https)
+        XCTAssertFalse(privacyInfo.isMajorTrackerNetwork)
         XCTAssertEqual(icon, .shieldWithDot)
     }
     
     func testPrivacyIconIsShieldWithDotForMajorTrackerNetwork() {
         let url = PrivacyIconLogicTests.pageURL
-        let siteRating = siteRatingHelper.makeBlockedTrackersSiteRating()
-
-        let icon = PrivacyIconLogic.privacyIcon(for: siteRating)
+        let entity = Entity(displayName: "E", domains: [], prevalence: TrackerInfo.Constants.majorNetworkPrevalence + 1.0)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: true)
+        
+        let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         
         XCTAssertTrue(url.isHttps)
-        XCTAssertTrue(siteRating.https)
-        XCTAssertTrue(siteRating.isMajorTrackerNetwork)
+        XCTAssertTrue(privacyInfo.https)
+        XCTAssertTrue(privacyInfo.isMajorTrackerNetwork)
         XCTAssertEqual(icon, .shieldWithDot)
     }
 

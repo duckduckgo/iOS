@@ -37,7 +37,6 @@
 		1E7CDAE428D8A78F0067D38A /* TrackerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDADB28D8A78F0067D38A /* TrackerInfo.swift */; };
 		1E8146AD28C8ABF000D1AF63 /* TrackerAnimationLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146A728C8AB3F00D1AF63 /* TrackerAnimationLogicTests.swift */; };
 		1E8146AE28C8ABF400D1AF63 /* PrivacyIconLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146A928C8AB8200D1AF63 /* PrivacyIconLogicTests.swift */; };
-		1E8146B228C8ADA800D1AF63 /* SiteRatingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146B028C8AC8100D1AF63 /* SiteRatingHelper.swift */; };
 		1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */; };
 		1E87615928A1517200C7C5CE /* PrivacyDashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E87615828A1517200C7C5CE /* PrivacyDashboardViewController.swift */; };
 		1E8AD1C727BE9B2900ABA377 /* DownloadsListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */; };
@@ -823,7 +822,6 @@
 		1E7CDADB28D8A78F0067D38A /* TrackerInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerInfo.swift; sourceTree = "<group>"; };
 		1E8146A728C8AB3F00D1AF63 /* TrackerAnimationLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerAnimationLogicTests.swift; sourceTree = "<group>"; };
 		1E8146A928C8AB8200D1AF63 /* PrivacyIconLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyIconLogicTests.swift; sourceTree = "<group>"; };
-		1E8146B028C8AC8100D1AF63 /* SiteRatingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteRatingHelper.swift; sourceTree = "<group>"; };
 		1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeSettingsViewController.swift; sourceTree = "<group>"; };
 		1E87615828A1517200C7C5CE /* PrivacyDashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyDashboardViewController.swift; sourceTree = "<group>"; };
 		1E8AD1C627BE9B2900ABA377 /* DownloadsListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListDataSource.swift; sourceTree = "<group>"; };
@@ -2273,7 +2271,6 @@
 		1E8146A628C8AAF500D1AF63 /* PrivacyIconAndTrackers */ = {
 			isa = PBXGroup;
 			children = (
-				1E8146B028C8AC8100D1AF63 /* SiteRatingHelper.swift */,
 				1E8146A728C8AB3F00D1AF63 /* TrackerAnimationLogicTests.swift */,
 				1E8146A928C8AB8200D1AF63 /* PrivacyIconLogicTests.swift */,
 			);
@@ -5294,7 +5291,6 @@
 				9847C00527A41A0A00DB07AA /* WebViewTestHelper.swift in Sources */,
 				830C37671F6C4A6200E317A7 /* TermsOfServiceListParserTests.swift in Sources */,
 				3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */,
-				1E8146B228C8ADA800D1AF63 /* SiteRatingHelper.swift in Sources */,
 				317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */,

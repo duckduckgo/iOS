@@ -26,7 +26,7 @@ import BrowserServicesKit
 
 class TrackerAnimationLogicTests: XCTestCase {
 
-    var siteRatingHelper = SiteRatingHelper(pageURL: URL(string: "http://example.com")!)
+    static let pageURL = URL(string: "https://example.com")!
     
     override func setUp() {
         super.setUp()
@@ -37,13 +37,61 @@ class TrackerAnimationLogicTests: XCTestCase {
     }
     
     func testAnimationLogicToAnimateTrackersIfAnyBlocked() {
-        let siteRating = siteRatingHelper.makeBlockedTrackersSiteRating()
-        XCTAssertTrue(TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating))
+        let trackerInfo = makeBlockedTrackerInfo(pageURL: Self.pageURL)
+        XCTAssertTrue(TrackerAnimationLogic.shouldAnimateTrackers(for: trackerInfo))
     }
     
     func testAnimationLogicNotToAnimateTrackersIfNoneBlocked() {
-        let siteRating = siteRatingHelper.makeNonBlockedTrackersSiteRating()
-        XCTAssertFalse(TrackerAnimationLogic.shouldAnimateTrackers(for: siteRating))
+        let trackerInfo = makeNonBlockedTrackerInfo(pageURL: Self.pageURL)
+        XCTAssertFalse(TrackerAnimationLogic.shouldAnimateTrackers(for: trackerInfo))
     }
     
+    private func makeBlockedTrackerInfo(pageURL: URL) -> TrackerInfo {
+        var trackerInfo = TrackerInfo()
+        
+        let entity = Entity(displayName: "E", domains: [], prevalence: 1.0)
+        let trackers = [DetectedRequest(url: "a",
+                                        knownTracker: nil,
+                                        entity: entity,
+                                        state: .allowed(reason: .ownedByFirstParty),
+                                        pageUrl: pageURL.absoluteString),
+                        DetectedRequest(url: "b",
+                                        knownTracker: nil,
+                                        entity: entity,
+                                        state: .allowed(reason: .otherThirdPartyRequest),
+                                        pageUrl: pageURL.absoluteString),
+                        DetectedRequest(url: "c",
+                                        knownTracker: nil,
+                                        entity: entity,
+                                        state: .blocked,
+                                        pageUrl: pageURL.absoluteString)]
+        
+        for tracker in trackers {
+            trackerInfo.add(detectedTracker: tracker)
+        }
+        
+        return trackerInfo
+    }
+    
+    private func makeNonBlockedTrackerInfo(pageURL: URL) -> TrackerInfo {
+        var trackerInfo = TrackerInfo()
+        
+        let entity = Entity(displayName: "E", domains: [], prevalence: 1.0)
+        let trackers = [DetectedRequest(url: "a",
+                                        knownTracker: nil,
+                                        entity: entity,
+                                        state: .allowed(reason: .ownedByFirstParty),
+                                        pageUrl: pageURL.absoluteString),
+                        DetectedRequest(url: "b",
+                                        knownTracker: nil,
+                                        entity: entity,
+                                        state: .allowed(reason: .otherThirdPartyRequest),
+                                        pageUrl: pageURL.absoluteString)]
+        
+        for tracker in trackers {
+            trackerInfo.add(detectedTracker: tracker)
+        }
+        
+        return trackerInfo
+    }
 }

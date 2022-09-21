@@ -87,24 +87,24 @@ public class SiteRating {
         trackers.filter { $0.state == .blocked }
     }
     
-    public var requestsAllowed: [DetectedRequest] {
-        trackers.filter { $0.state != .blocked }
-    }
+//    public var requestsAllowed: [DetectedRequest] {
+//        trackers.filter { $0.state != .blocked }
+//    }
     
-    public var isAnyRequestLoaded: Bool {
-        !requestsAllowed.isEmpty || !thirdPartyRequests.isEmpty
-    }
+//    public var isAnyRequestLoaded: Bool {
+//        !requestsAllowed.isEmpty || !thirdPartyRequests.isEmpty
+//    }
     
-    public func trackersAllowedForReason(_ reason: AllowReason) -> [DetectedRequest] {
-        return trackers.filter {
-            switch $0.state {
-            case let .allowed(trackerReason):
-                return trackerReason == reason
-            default:
-                return false
-            }
-        }
-    }
+//    public func trackersAllowedForReason(_ reason: AllowReason) -> [DetectedRequest] {
+//        return trackers.filter {
+//            switch $0.state {
+//            case let .allowed(trackerReason):
+//                return trackerReason == reason
+//            default:
+//                return false
+//            }
+//        }
+//    }
     
 //    public var https: Bool {
 //        return url.isHttps
@@ -132,25 +132,25 @@ public class SiteRating {
 //        return entity?.prevalence ?? 0 >= Constants.majorNetworkPrevalence
 //    }
 
-    public func trackerDetected(_ tracker: DetectedRequest) {
-        guard tracker.pageUrl == url.absoluteString else { return }
-         
-        trackers.insert(tracker)
-        
-        if tracker.isBlocked {
-            grade.addEntityBlocked(named: tracker.entityName ?? "", withPrevalence: tracker.prevalence ?? 0)
-        } else {
-            grade.addEntityNotBlocked(named: tracker.entityName ?? "", withPrevalence: tracker.prevalence ?? 0)
-        }
-    }
+//    public func trackerDetected(_ tracker: DetectedRequest) {
+//        guard tracker.pageUrl == url.absoluteString else { return }
+//
+//        trackers.insert(tracker)
+//
+//        if tracker.isBlocked {
+//            grade.addEntityBlocked(named: tracker.entityName ?? "", withPrevalence: tracker.prevalence ?? 0)
+//        } else {
+//            grade.addEntityNotBlocked(named: tracker.entityName ?? "", withPrevalence: tracker.prevalence ?? 0)
+//        }
+//    }
     
-    public func surrogateInstalled(_ surrogateHost: String) {
-        installedSurrogates.insert(surrogateHost)
-    }
+//    public func surrogateInstalled(_ surrogateHost: String) {
+//        installedSurrogates.insert(surrogateHost)
+//    }
     
-    public func thirdPartyRequestDetected(_ request: DetectedRequest) {
-        thirdPartyRequests.insert(request)
-    }
+//    public func thirdPartyRequestDetected(_ request: DetectedRequest) {
+//        thirdPartyRequests.insert(request)
+//    }
 
 //    public var totalTrackersAllowed: Int {
 //        return requestsAllowed.count

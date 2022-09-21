@@ -32,29 +32,37 @@ public struct TrackerInfo: Encodable {
         case installedSurrogates
     }
 
-    private(set) var trackersDetected = Set<DetectedRequest>()
-    private(set) var trackersBlocked = Set<DetectedRequest>()
-    private(set) var installedSurrogates = Set<String>()
+    public private (set) var trackers = Set<DetectedRequest>()
+    private(set) var thirdPartyRequests = Set<DetectedRequest>()
+    public private(set) var installedSurrogates = Set<String>()
 
     public init() { }
     
+    // MARK: - Collecting detected elements
+    
     public mutating func add(detectedTracker: DetectedRequest) {
-        if detectedTracker.isBlocked {
-            trackersBlocked.insert(detectedTracker)
-        } else {
-            trackersDetected.insert(detectedTracker)
-        }
+        trackers.insert(detectedTracker)
+    }
+    
+    public mutating func add(detectedThirdPartyRequest request: DetectedRequest) {
+        thirdPartyRequests.insert(request)
     }
 
     public mutating func add(installedSurrogateHost: String) {
         installedSurrogates.insert(installedSurrogateHost)
     }
 
-    var isEmpty: Bool {
-        return trackersDetected.count == 0 &&
-            trackersBlocked.count == 0 &&
-            installedSurrogates.count == 0
+    // MARK: - Helper accessors
+    
+    public var trackersBlocked: [DetectedRequest] {
+        trackers.filter { $0.state == .blocked }
     }
+    
+    public var trackersDetected: [DetectedRequest] {
+        trackers.filter { $0.state != .blocked }
+    }
+    
+    // MARK: - Custom encoding to be removed in Phase 2
 
     // Required temporarily for serialising the TrackerInfo into old format
     public var tds: TrackerData!

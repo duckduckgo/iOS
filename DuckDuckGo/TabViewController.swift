@@ -972,7 +972,7 @@ class TabViewController: UIViewController {
     }
         
     public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
-        let blockedTrackerDomains = siteRating?.trackersBlocked.compactMap { $0.domain } ?? []
+        let blockedTrackerDomains = privacyInfo?.trackerInfo.trackersBlocked.compactMap { $0.domain } ?? []
         
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
@@ -2109,7 +2109,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
     func contentBlockerRulesUserScript(_ script: ContentBlockerRulesUserScript,
                                        detectedThirdPartyRequest request: DetectedRequest) {
-        siteRating?.thirdPartyRequestDetected(request)
+        privacyInfo?.trackerInfo.add(detectedThirdPartyRequest: request)
     }
 
     fileprivate func userScriptDetectedTracker(_ tracker: DetectedRequest) {
@@ -2120,7 +2120,6 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
         }
 
-        siteRating?.trackerDetected(tracker)
         privacyInfo?.trackerInfo.add(detectedTracker: tracker)
         onPrivacyInfoChanged()
 
@@ -2146,8 +2145,7 @@ extension TabViewController: SurrogatesUserScriptDelegate {
     func surrogatesUserScript(_ script: SurrogatesUserScript,
                               detectedTracker tracker: DetectedRequest,
                               withSurrogate host: String) {
-        if siteRating?.url.absoluteString == tracker.pageUrl {
-            siteRating?.surrogateInstalled(host)
+        if privacyInfo?.url.absoluteString == tracker.pageUrl {
             privacyInfo?.trackerInfo.add(installedSurrogateHost: host)
         }
         userScriptDetectedTracker(tracker)

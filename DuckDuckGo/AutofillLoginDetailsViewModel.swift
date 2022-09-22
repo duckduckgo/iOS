@@ -54,6 +54,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     @Published var viewMode: ViewMode = .view {
         didSet {
             selectedCell = nil
+            if viewMode == .edit && password.isEmpty {
+                isPasswordHidden = false
+            } else {
+                isPasswordHidden = true
+            }
         }
     }
     
@@ -113,7 +118,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     func toggleEditMode() {
         withAnimation {
             if viewMode == .edit {
-                isPasswordHidden = true
                 viewMode = .view
             } else {
                 viewMode = .edit
@@ -185,7 +189,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
                         self.updateData(with: newCredential.account)
                     }
-                    isPasswordHidden = true
                     viewMode = .view
                 }
             case .view:

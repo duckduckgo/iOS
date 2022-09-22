@@ -304,6 +304,7 @@ private struct CopyablePasswordCell: View {
                             Spacer()
                             Image(isPasswordHidden ? "ShowPasswordEye" : "HidePasswordEye")
                                     .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
+                                    .opacity(password.isEmpty ? 0 : 1)
                         }
                     }
                     .contentShape(Rectangle())

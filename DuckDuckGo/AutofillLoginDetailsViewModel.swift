@@ -84,7 +84,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     var websiteIsValidUrl: Bool {
-        account?.domain.url != nil
+        account?.domain.toTrimmedURL != nil
     }
     
     var userVisiblePassword: String {
@@ -224,7 +224,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     func openUrl() {
-        guard let url = account?.domain.url else { return }
+        guard let url = account?.domain.toTrimmedURL else { return }
 
         LaunchTabNotification.postLaunchTabNotification(urlString: url.absoluteString)
         delegate?.autofillLoginDetailsViewModelDismiss()

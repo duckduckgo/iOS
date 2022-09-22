@@ -119,6 +119,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         withAnimation {
             if viewMode == .edit {
                 viewMode = .view
+                if let account = account {
+                    updateData(with: account)
+                }
             } else {
                 viewMode = .edit
             }

@@ -367,17 +367,17 @@ private struct SelectableBackground: ViewModifier {
 private struct Copyable: ViewModifier {
     var isSelected: Bool
     var menuTitle: String
-    let menuAction: () -> Void
     let menuSecondaryTitle: String?
+    let menuAction: () -> Void
     let menuSecondaryAction: (() -> Void)?
     let menuOpenedAction: () -> Void
     let menuClosedAction: () -> Void
     
-    internal init(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, menuSecondaryTitle: String?, menuSecondaryAction: (() -> Void)?, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) {
+    internal init(isSelected: Bool, menuTitle: String, menuSecondaryTitle: String?, menuAction: @escaping () -> Void, menuSecondaryAction: (() -> Void)?, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) {
         self.isSelected = isSelected
         self.menuTitle = menuTitle
-        self.menuAction = menuAction
         self.menuSecondaryTitle = menuSecondaryTitle
+        self.menuAction = menuAction
         self.menuSecondaryAction = menuSecondaryAction
         self.menuOpenedAction = menuOpenedAction
         self.menuClosedAction = menuClosedAction
@@ -388,8 +388,8 @@ private struct Copyable: ViewModifier {
             Rectangle()
                 .foregroundColor(.clear)
                 .menuController(UserText.autofillCopyPrompt(for: menuTitle),
-                                action: menuAction,
                                 secondaryTitle: menuSecondaryTitle,
+                                action: menuAction,
                                 secondaryAction: menuSecondaryAction,
                                 onOpen: menuOpenedAction,
                                 onClose: menuClosedAction)
@@ -408,8 +408,8 @@ private extension View {
     func copyable(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, menuSecondaryTitle: String? = "", menuSecondaryAction: (() -> Void)? = nil, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) -> some View {
         modifier(Copyable(isSelected: isSelected,
                           menuTitle: menuTitle,
-                          menuAction: menuAction,
                           menuSecondaryTitle: menuSecondaryTitle,
+                          menuAction: menuAction,
                           menuSecondaryAction: menuSecondaryAction,
                           menuOpenedAction: menuOpenedAction,
                           menuClosedAction: menuClosedAction))

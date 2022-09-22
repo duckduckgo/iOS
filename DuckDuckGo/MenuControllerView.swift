@@ -22,11 +22,11 @@ import UIKit
 
 extension View {
 
-    func menuController(_ title: String, action: @escaping () -> Void, secondaryTitle: String? = "", secondaryAction:(() -> Void)? = nil, onOpen: (() -> Void)? = nil, onClose: (() -> Void)? = nil) -> some View {
+    func menuController(_ title: String, secondaryTitle: String? = "", action: @escaping () -> Void, secondaryAction:(() -> Void)? = nil, onOpen: (() -> Void)? = nil, onClose: (() -> Void)? = nil) -> some View {
         MenuControllerView(content: self,
                            title: title,
-                           action: action,
                            secondaryTitle: secondaryTitle,
+                           action: action,
                            secondaryAction: secondaryAction,
                            onOpen: onOpen,
                            onClose: onClose)
@@ -38,14 +38,14 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
 
     let content: Content
     let title: String
-    let action: () -> Void
     let secondaryTitle: String?
+    let action: () -> Void
     let secondaryAction: (() -> Void)?
     let onOpen: (() -> Void)?
     let onClose: (() -> Void)?
 
     func makeCoordinator() -> Coordinator<Content> {
-        Coordinator(title: title, action: action, secondaryTitle: secondaryTitle, secondaryAction: secondaryAction, onOpen: onOpen, onClose: onClose)
+        Coordinator(title: title, secondaryTitle: secondaryTitle, action: action, secondaryAction: secondaryAction, onOpen: onOpen, onClose: onClose)
     }
     
     func makeUIViewController(context: Context) -> UIHostingController<Content> {
@@ -66,16 +66,16 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
         var responder: UIResponder?
         var observer: Any?
         private let title: String
-        private let action: () -> Void
         private let secondaryTitle: String?
+        private let action: () -> Void
         private let secondaryAction: (() -> Void)?
         private let onOpen: (() -> Void)?
         private let onClose: (() -> Void)?
         
-        init(title: String, action: @escaping () -> Void, secondaryTitle: String?, secondaryAction: (() -> Void)?, onOpen: (() -> Void)?, onClose: (() -> Void)?) {
+        init(title: String, secondaryTitle: String?, action: @escaping () -> Void, secondaryAction: (() -> Void)?, onOpen: (() -> Void)?, onClose: (() -> Void)?) {
             self.title = title
-            self.action = action
             self.secondaryTitle = secondaryTitle
+            self.action = action
             self.secondaryAction = secondaryAction
             self.onOpen = onOpen
             self.onClose = onClose

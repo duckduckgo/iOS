@@ -48,6 +48,7 @@ struct AutofillLoginDetailsHeaderView: View {
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
         .listRowBackground(Color("AutofillCellBackground"))
+        .listRowInsets(Constants.insets)
     }
 }
 
@@ -57,6 +58,7 @@ extension AutofillLoginDetailsHeaderView {
         static let horizontalStackSpacing: CGFloat = 12
         static let verticalStackSpacing: CGFloat = 1
         static let viewHeight: CGFloat = 60
+        static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
     }
 }
 

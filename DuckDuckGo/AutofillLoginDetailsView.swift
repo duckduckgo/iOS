@@ -153,6 +153,7 @@ struct AutofillLoginDetailsView: View {
             }
         }
         .frame(minHeight: Constants.minRowHeight)
+        .listRowInsets(Constants.insets)
     }
 
     private func deleteCell() -> some View {
@@ -258,6 +259,7 @@ private struct EditablePasswordCell: View {
             }
         }
         .frame(minHeight: Constants.minRowHeight)
+        .listRowInsets(Constants.insets)
     }
 }
 
@@ -361,6 +363,7 @@ private struct SelectableBackground: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .listRowBackground(BackgroundColor(isSelected: isSelected).color)
+            .listRowInsets(.init(top: 0, leading: 16, bottom: 0, trailing: 16))
     }
 }
 
@@ -449,4 +452,5 @@ private struct Constants {
     static let minRowHeight: CGFloat = 60
     static let passwordImageOpacity: CGFloat = 0.84
     static let passwordImageSize: CGFloat = 44
+    static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }

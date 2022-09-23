@@ -81,6 +81,13 @@ struct AutofillLoginDetailsView: View {
                              placeholderText: UserText.autofillLoginDetailsEditURLPlaceholder,
                              keyboardType: .URL)
             }
+            
+            Section {
+                editableCell(UserText.autofillLoginDetailsNotes,
+                             subtitle: $viewModel.notes,
+                             placeholderText: "",
+                             autoCapitalizationType: .sentences)
+            }
 
             if viewModel.viewMode == .edit {
                 deleteCell()
@@ -119,6 +126,16 @@ struct AutofillLoginDetailsView: View {
                              secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil,
                              truncationMode: .middle)
             }
+            
+            Section {
+                CopyableCell(title: UserText.autofillLoginDetailsNotes,
+                             subtitle: viewModel.notes,
+                             selectedCell: $viewModel.selectedCell,
+                             truncationMode: .middle,
+                             action: {
+                    viewModel.copyToPasteboard(.notes)
+                })
+            }
 
             Section {
                 deleteCell()
@@ -132,7 +149,8 @@ struct AutofillLoginDetailsView: View {
                               secure: Bool = false,
                               autoCapitalizationType: UITextAutocapitalizationType = .none,
                               disableAutoCorrection: Bool = true,
-                              keyboardType: UIKeyboardType = .default) -> some View {
+                              keyboardType: UIKeyboardType = .default,
+                              lineLimit: Int = 5) -> some View {
         
         VStack(alignment: .leading, spacing: Constants.verticalPadding) {
             Text(title)
@@ -142,13 +160,15 @@ struct AutofillLoginDetailsView: View {
                 if secure && viewModel.viewMode == .edit {
                     SecureField(placeholderText, text: subtitle)
                         .label4Style(design: .monospaced)
+                        .lineLimit(lineLimit)
                 } else {
                     ClearTextField(placeholderText: placeholderText,
                                    text: subtitle,
                                    autoCapitalizationType: autoCapitalizationType,
                                    disableAutoCorrection: disableAutoCorrection,
                                    keyboardType: keyboardType,
-                                   secure: secure)
+                                   secure: secure,
+                                   lineLimit: lineLimit)
                 }
             }
         }
@@ -181,6 +201,7 @@ struct ClearTextField: View {
     var disableAutoCorrection = true
     var keyboardType: UIKeyboardType = .default
     var secure = false
+    var lineLimit = 1
 
     @State private var closeButtonVisible = false
     

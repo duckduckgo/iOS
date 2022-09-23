@@ -39,6 +39,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case username
         case password
         case address
+        case notes
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
@@ -49,6 +50,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     @Published var username = ""
     @Published var password = ""
     @Published var address = ""
+    @Published var notes = ""
     @Published var title = ""
     @Published var selectedCell: UUID?
     @Published var viewMode: ViewMode = .view {
@@ -106,6 +108,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         username = account.username
         address = account.domain
         title = account.name
+        notes = account.notes ?? ""
         headerViewModel.updateData(with: account)
         setupPassword(with: account)
     }
@@ -133,6 +136,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .address:
             message = UserText.autofillCopyToastAddressCopied
             UIPasteboard.general.string = address
+        case .notes:
+            message = UserText.autofillCopyToastAddressCopied
+            UIPasteboard.general.string = notes
         }
         
         presentCopyConfirmation(message: message)
@@ -176,6 +182,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = address
+                    credential.account.notes = notes
                     credential.password = passwordData
                     
                     try vault.storeWebsiteCredentials(credential)
@@ -193,7 +200,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             case .new:
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
                 
-                let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address)
+                let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address, notes: notes)
                 let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
                 let id = try vault.storeWebsiteCredentials(credentials)

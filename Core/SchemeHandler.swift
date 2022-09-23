@@ -47,6 +47,7 @@ public class SchemeHandler {
         case itmsApps = "itms-apps"
         case itmsAppss = "itms-appss"
         case itunes
+        case shortcuts
     }
     
     private enum BlockedScheme: String {
@@ -68,7 +69,7 @@ public class SchemeHandler {
         }
 
         switch PlatformScheme(rawValue: schemeString) {
-        case .sms, .mailto, .itms, .itmss, .itunes, .itmsApps, .itmsAppss:
+        case .sms, .mailto, .itms, .itmss, .itunes, .itmsApps, .itmsAppss, .shortcuts:
             return .external(.askForConfirmation)
         case .none:
             return .unknown

@@ -44,6 +44,7 @@ struct AutofillLoginDetailsView: View {
                 viewModel.selectedCell = nil
             }))
         .modifier(ListBackgroundModifier())
+        .listStyle(.insetGrouped)
     }
     
     private var editingContentView: some View {

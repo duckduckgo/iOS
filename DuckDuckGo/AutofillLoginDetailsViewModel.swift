@@ -56,6 +56,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     @Published var viewMode: ViewMode = .view {
         didSet {
             selectedCell = nil
+            if viewMode == .edit && password.isEmpty {
+                isPasswordHidden = false
+            } else {
+                isPasswordHidden = true
+            }
         }
     }
     
@@ -81,7 +86,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     var websiteIsValidUrl: Bool {
-        account?.domain.url != nil
+        account?.domain.toTrimmedURL != nil
     }
     
     var userVisiblePassword: String {
@@ -116,8 +121,10 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     func toggleEditMode() {
         withAnimation {
             if viewMode == .edit {
-                isPasswordHidden = true
                 viewMode = .view
+                if let account = account {
+                    updateData(with: account)
+                }
             } else {
                 viewMode = .edit
             }
@@ -192,7 +199,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
                         self.updateData(with: newCredential.account)
                     }
-                    isPasswordHidden = true
                     viewMode = .view
                 }
             case .view:
@@ -228,7 +234,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     func openUrl() {
-        guard let url = account?.domain.url else { return }
+        guard let url = account?.domain.toTrimmedURL else { return }
 
         LaunchTabNotification.postLaunchTabNotification(urlString: url.absoluteString)
         delegate?.autofillLoginDetailsViewModelDismiss()

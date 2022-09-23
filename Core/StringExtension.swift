@@ -91,7 +91,7 @@ extension String {
 // MARK: - URL
 
 extension String {
-    public var url: URL? {
+    public var toTrimmedURL: URL? {
         return URL(trimmedAddressBarString: self)
     }
 }

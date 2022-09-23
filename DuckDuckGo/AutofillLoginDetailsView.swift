@@ -43,6 +43,8 @@ struct AutofillLoginDetailsView: View {
             DragGesture().onChanged({_ in
                 viewModel.selectedCell = nil
             }))
+        .modifier(ListBackgroundModifier())
+        .listStyle(.insetGrouped)
     }
     
     private var editingContentView: some View {
@@ -170,6 +172,7 @@ struct AutofillLoginDetailsView: View {
             }
         }
         .frame(minHeight: Constants.minRowHeight)
+        .listRowInsets(Constants.insets)
     }
     
     // This is seperate from editableCell() because TextEditor doesn't support placeholders, and we don't need it to at the moment
@@ -307,6 +310,7 @@ private struct EditablePasswordCell: View {
             }
         }
         .frame(minHeight: Constants.minRowHeight)
+        .listRowInsets(Constants.insets)
     }
 }
 
@@ -351,6 +355,7 @@ private struct CopyablePasswordCell: View {
                             Spacer()
                             Image(isPasswordHidden ? "ShowPasswordEye" : "HidePasswordEye")
                                     .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
+                                    .opacity(password.isEmpty ? 0 : 1)
                         }
                     }
                     .contentShape(Rectangle())
@@ -417,23 +422,24 @@ private struct SelectableBackground: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .listRowBackground(BackgroundColor(isSelected: isSelected).color)
+            .listRowInsets(.init(top: 0, leading: 16, bottom: 0, trailing: 16))
     }
 }
 
 private struct Copyable: ViewModifier {
     var isSelected: Bool
     var menuTitle: String
-    let menuAction: () -> Void
     let menuSecondaryTitle: String?
+    let menuAction: () -> Void
     let menuSecondaryAction: (() -> Void)?
     let menuOpenedAction: () -> Void
     let menuClosedAction: () -> Void
     
-    internal init(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, menuSecondaryTitle: String?, menuSecondaryAction: (() -> Void)?, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) {
+    internal init(isSelected: Bool, menuTitle: String, menuSecondaryTitle: String?, menuAction: @escaping () -> Void, menuSecondaryAction: (() -> Void)?, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) {
         self.isSelected = isSelected
         self.menuTitle = menuTitle
-        self.menuAction = menuAction
         self.menuSecondaryTitle = menuSecondaryTitle
+        self.menuAction = menuAction
         self.menuSecondaryAction = menuSecondaryAction
         self.menuOpenedAction = menuOpenedAction
         self.menuClosedAction = menuClosedAction
@@ -444,8 +450,8 @@ private struct Copyable: ViewModifier {
             Rectangle()
                 .foregroundColor(.clear)
                 .menuController(UserText.autofillCopyPrompt(for: menuTitle),
-                                action: menuAction,
                                 secondaryTitle: menuSecondaryTitle,
+                                action: menuAction,
                                 secondaryAction: menuSecondaryAction,
                                 onOpen: menuOpenedAction,
                                 onClose: menuClosedAction)
@@ -464,8 +470,8 @@ private extension View {
     func copyable(isSelected: Bool, menuTitle: String, menuAction: @escaping () -> Void, menuSecondaryTitle: String? = "", menuSecondaryAction: (() -> Void)? = nil, menuOpenedAction: @escaping () -> Void, menuClosedAction: @escaping () -> Void) -> some View {
         modifier(Copyable(isSelected: isSelected,
                           menuTitle: menuTitle,
-                          menuAction: menuAction,
                           menuSecondaryTitle: menuSecondaryTitle,
+                          menuAction: menuAction,
                           menuSecondaryAction: menuSecondaryAction,
                           menuOpenedAction: menuOpenedAction,
                           menuClosedAction: menuClosedAction))
@@ -500,10 +506,26 @@ private struct ForegroundColor {
     }
 }
 
+private struct ListBackgroundModifier: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content
+                .scrollContentBackground(.hidden)
+                .background(colorScheme == .light ? Color(UIColor.nearlyWhite) : Color(UIColor.nearlyBlack))
+        } else {
+            content
+        }
+    }
+}
+
 private struct Constants {
     static let verticalPadding: CGFloat = 4
     static let minRowHeight: CGFloat = 60
     static let notesMaxHeight: CGFloat = 200.0
     static let passwordImageOpacity: CGFloat = 0.84
     static let passwordImageSize: CGFloat = 44
+    static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }

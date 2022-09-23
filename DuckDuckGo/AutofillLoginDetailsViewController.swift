@@ -36,6 +36,20 @@ class AutofillLoginDetailsViewController: UIViewController {
     private let lockedView = AutofillItemsLockedView()
     private var contentView: UIView?
 
+    private lazy var saveBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]
+        barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        return barButtonItem
+    }()
+
+    private lazy var editBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]
+        barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        return barButtonItem
+    }()
+
     init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account)
         self.authenticator = authenticator
@@ -135,16 +149,16 @@ class AutofillLoginDetailsViewController: UIViewController {
         title = viewModel.navigationTitle
         switch viewModel.viewMode {
         case .edit:
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            navigationItem.rightBarButtonItem = saveBarButtonItem
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
 
         case .view:
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+            navigationItem.rightBarButtonItem = editBarButtonItem
             navigationItem.leftBarButtonItem = nil
         
         case .new:
             if viewModel.shouldShowSaveButton {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+                navigationItem.rightBarButtonItem = saveBarButtonItem
             } else {
                 navigationItem.rightBarButtonItem = nil
             }
@@ -199,5 +213,12 @@ extension AutofillLoginDetailsViewController: Themable {
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
 
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithTransparentBackground()
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
     }
 }

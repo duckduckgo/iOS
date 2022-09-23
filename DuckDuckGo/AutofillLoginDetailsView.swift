@@ -83,10 +83,9 @@ struct AutofillLoginDetailsView: View {
             }
             
             Section {
-                editableCell(UserText.autofillLoginDetailsNotes,
-                             subtitle: $viewModel.notes,
-                             placeholderText: "",
-                             autoCapitalizationType: .sentences)
+                editableMultilineCell(UserText.autofillLoginDetailsNotes,
+                                      subtitle: $viewModel.notes,
+                                      maxHeight: Constants.notesMaxHeight)
             }
 
             if viewModel.viewMode == .edit {
@@ -121,10 +120,10 @@ struct AutofillLoginDetailsView: View {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
                              subtitle: viewModel.address,
                              selectedCell: $viewModel.selectedCell,
-                             action: { viewModel.copyToPasteboard(.address) },
                              secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
-                             secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil,
-                             truncationMode: .middle)
+                             truncationMode: .middle,
+                             action: { viewModel.copyToPasteboard(.address) },
+                             secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil)
             }
             
             Section {
@@ -132,6 +131,7 @@ struct AutofillLoginDetailsView: View {
                              subtitle: viewModel.notes,
                              selectedCell: $viewModel.selectedCell,
                              truncationMode: .middle,
+                             maxSubtitleHeight: Constants.notesMaxHeight,
                              action: {
                     viewModel.copyToPasteboard(.notes)
                 })
@@ -149,8 +149,7 @@ struct AutofillLoginDetailsView: View {
                               secure: Bool = false,
                               autoCapitalizationType: UITextAutocapitalizationType = .none,
                               disableAutoCorrection: Bool = true,
-                              keyboardType: UIKeyboardType = .default,
-                              lineLimit: Int = 5) -> some View {
+                              keyboardType: UIKeyboardType = .default) -> some View {
         
         VStack(alignment: .leading, spacing: Constants.verticalPadding) {
             Text(title)
@@ -160,16 +159,34 @@ struct AutofillLoginDetailsView: View {
                 if secure && viewModel.viewMode == .edit {
                     SecureField(placeholderText, text: subtitle)
                         .label4Style(design: .monospaced)
-                        .lineLimit(lineLimit)
                 } else {
                     ClearTextField(placeholderText: placeholderText,
                                    text: subtitle,
                                    autoCapitalizationType: autoCapitalizationType,
                                    disableAutoCorrection: disableAutoCorrection,
                                    keyboardType: keyboardType,
-                                   secure: secure,
-                                   lineLimit: lineLimit)
+                                   secure: secure)
                 }
+            }
+        }
+        .frame(minHeight: Constants.minRowHeight)
+    }
+    
+    // This is seperate from editableCell() because TextEditor doesn't support placeholders, and we don't need it to at the moment
+    private func editableMultilineCell(_ title: String,
+                                       subtitle: Binding<String>,
+                                       autoCapitalizationType: UITextAutocapitalizationType = .none,
+                                       disableAutoCorrection: Bool = true,
+                                       keyboardType: UIKeyboardType = .default,
+                                       maxHeight: CGFloat) -> some View {
+        
+        VStack(alignment: .leading, spacing: Constants.verticalPadding) {
+            Text(title)
+                .label4Style()
+            
+            HStack {
+                MultilineTextEditor(text: subtitle,
+                                    maxHeight: maxHeight)
             }
         }
         .frame(minHeight: Constants.minRowHeight)
@@ -201,7 +218,6 @@ struct ClearTextField: View {
     var disableAutoCorrection = true
     var keyboardType: UIKeyboardType = .default
     var secure = false
-    var lineLimit = 1
 
     @State private var closeButtonVisible = false
     
@@ -229,6 +245,18 @@ struct ClearTextField: View {
             return 0
         }
         return 1
+    }
+}
+
+private struct MultilineTextEditor: View {
+    @Binding var text: String
+    var maxHeight: CGFloat
+    
+    var body: some View {
+        HStack {
+            TextEditor(text: $text)
+                .frame(maxHeight: maxHeight) // frustratingly, .lineLimit doesn't work on TextEditor
+        }
     }
 }
 
@@ -344,10 +372,11 @@ private struct CopyableCell: View {
     let title: String
     let subtitle: String
     @Binding var selectedCell: UUID?
-    let action: () -> Void
     var secondaryActionTitle: String?
-    var secondaryAction: (() -> Void)?
     var truncationMode: Text.TruncationMode = .tail
+    var maxSubtitleHeight: CGFloat?
+    let action: () -> Void
+    var secondaryAction: (() -> Void)?
 
     var body: some View {
         HStack {
@@ -355,10 +384,16 @@ private struct CopyableCell: View {
                 Text(title)
                     .label4Style()
                 HStack {
-                    Text(subtitle)
-                        .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
-                        .lineLimit(1)
-                        .truncationMode(truncationMode)
+                    if let maxSubtitleHeight = maxSubtitleHeight {
+                        Text(subtitle)
+                            .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                            .truncationMode(truncationMode)
+                            .frame(maxHeight: maxSubtitleHeight)
+                    } else {
+                        Text(subtitle)
+                            .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                            .truncationMode(truncationMode)
+                    }
                 }
             }
             Spacer()
@@ -468,6 +503,7 @@ private struct ForegroundColor {
 private struct Constants {
     static let verticalPadding: CGFloat = 4
     static let minRowHeight: CGFloat = 60
+    static let notesMaxHeight: CGFloat = 200.0
     static let passwordImageOpacity: CGFloat = 0.84
     static let passwordImageSize: CGFloat = 44
 }

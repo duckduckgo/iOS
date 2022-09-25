@@ -82,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         removeEmailWaitlistState()
         
-        Database.shared.loadStore(application: application) { context in
+        Database.shared.loadStore { context in
             DatabaseMigration.migrate(to: context)
         }
         

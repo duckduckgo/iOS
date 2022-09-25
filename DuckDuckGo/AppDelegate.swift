@@ -81,7 +81,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         removeEmailWaitlistState()
-        
+                
+        Database.configureErrorHandling(application: application)
         Database.shared.loadStore { context in
             DatabaseMigration.migrate(to: context)
         }
@@ -510,4 +511,24 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         }
     }
 
+}
+
+extension Database {
+    
+    static func configureErrorHandling(application: UIApplication) {
+        
+        errorHandling = EventMapping<CoreDataDatabase.Error>(mapping: { event, error, params, onComplete in
+            
+            var parameters = params ?? [:]
+            switch event {
+            case .dbInitializationError:
+                if let error = error {
+                    parameters["as"] = "\(application.applicationState.rawValue)"
+                    parameters["dp"] = "\(application.isProtectedDataAvailable)"
+                    
+                    Pixel.fire(pixel: .dbInitializationError, error: error, withAdditionalParameters: parameters, onComplete: onComplete)
+                }
+            }
+        })
+    }
 }

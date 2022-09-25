@@ -1799,7 +1799,6 @@
 		989DF82822C628F80077AA55 /* ContentBlockerLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentBlockerLoaderTests.swift; sourceTree = "<group>"; };
 		98A54A8122AFCB2C00E541F4 /* Instruments.instrdst */ = {isa = PBXFileReference; explicitFileType = com.apple.instruments.instrdst; includeInIndex = 0; path = Instruments.instrdst; sourceTree = BUILT_PRODUCTS_DIR; };
 		98A54A8322AFCB2D00E541F4 /* Instruments.instrpkg */ = {isa = PBXFileReference; lastKnownFileType = "com.apple.instruments.package-definition"; path = Instruments.instrpkg; sourceTree = "<group>"; };
-		98A9729F28DDABDB000A91FD /* BrowserServicesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BrowserServicesKit; path = ../BrowserServicesKit; sourceTree = "<group>"; };
 		98AA92B22456FBE100ED4B9E /* SearchFieldContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldContainerView.swift; sourceTree = "<group>"; };
 		98AC5D8B251EAC07009B7979 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98AC5D8C251EAC07009B7979 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2634,7 +2633,6 @@
 			isa = PBXGroup;
 			children = (
 				6FB030C7234331B400A10DB9 /* Configuration.xcconfig */,
-				98A9729F28DDABDB000A91FD /* BrowserServicesKit */,
 				84E341941E2F7EFB00BDBA6F /* DuckDuckGo */,
 				F143C2E51E4A4CD400CFDE3A /* Core */,
 				F1EEAC461EAFC708006128D9 /* Fonts */,
@@ -7162,8 +7160,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit";
 			requirement = {
-				kind = exactVersion;
-				version = 30.0.0;
+				branch = "bartek/extract-db";
+				kind = branch;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

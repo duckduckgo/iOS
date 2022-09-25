@@ -31,19 +31,33 @@ public class Database {
     
     public static let shared = makeCoreDataDatabase()
     
+    public static var errorHandling: EventMapping<CoreDataDatabase.Error>?
+    
     static func makeCoreDataDatabase() -> CoreDataDatabase {
         
         let mainBundle = Bundle.main
         let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
         
-        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else { fatalError("No DB scheme found") }
+        guard let appRatingModel = CoreDataDatabase.loadModel(from: mainBundle, named: "AppRatingPrompt"),
+              let networkLeaderboardModel = CoreDataDatabase.loadModel(from: mainBundle, named: "NetworkLeaderboard"),
+              let remoteMessagingModel = CoreDataDatabase.loadModel(from: mainBundle, named: "RemoteMessaging"),
+              let smarterEncryptionModel = CoreDataDatabase.loadModel(from: coreBundle, named: "HTTPSUpgrade"),
+              let managedObjectModel = NSManagedObjectModel(byMerging: [appRatingModel,
+                                                                        networkLeaderboardModel,
+                                                                       remoteMessagingModel,
+                                                                       smarterEncryptionModel]) else {
+            fatalError("No DB scheme found")
+        }
         
+        let errorHandling = EventMapping<CoreDataDatabase.Error>(mapping: { event, error, params, onComplete in
+             self.errorHandling?.fire(event, error: error, parameters: params, onComplete: onComplete)
+        })
         
         let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Database.Constants.databaseGroupID)!
-        return CoreDataDatabase(name: "Database",
+        return CoreDataDatabase(name: Constants.databaseName,
                                 url: url,
                                 model: managedObjectModel,
-                                errorEvents: nil,
-                                log: .disabled)
+                                errorEvents: errorHandling,
+                                log: generalLog)
     }
 }

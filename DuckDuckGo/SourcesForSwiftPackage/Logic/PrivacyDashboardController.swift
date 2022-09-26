@@ -1,5 +1,5 @@
 //
-//  PrivacyDashboardLogic.swift
+//  PrivacyDashboardController.swift
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
@@ -20,7 +20,7 @@ import Foundation
 import WebKit
 import Combine
 
-public final class PrivacyDashboardLogic: NSObject {
+public final class PrivacyDashboardController: NSObject {
     
     @Published public var themeName: String?
     
@@ -88,7 +88,7 @@ public final class PrivacyDashboardLogic: NSObject {
     }
 }
 
-extension PrivacyDashboardLogic: WKNavigationDelegate {
+extension PrivacyDashboardController: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         subscribeToDataModelChanges()
@@ -160,7 +160,7 @@ extension PrivacyDashboardLogic: WKNavigationDelegate {
     }
 }
 
-extension PrivacyDashboardLogic: PrivacyDashboardUserScriptDelegate {
+extension PrivacyDashboardController: PrivacyDashboardUserScriptDelegate {
 
     func userScript(_ userScript: PrivacyDashboardUserScript, didChangeProtectionStateTo isProtected: Bool) {
         onProtectionSwitchChange?(isProtected)

@@ -28,7 +28,7 @@ class PrivacyDashboardViewController: UIViewController {
     
     @IBOutlet private(set) weak var webView: WKWebView!
     
-    private let privacyDashboardLogic: PrivacyDashboardLogic
+    private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
 
@@ -36,13 +36,13 @@ class PrivacyDashboardViewController: UIViewController {
           privacyInfo: PrivacyInfo?,
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager) {
-        privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo)
+        privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
         
         super.init(coder: coder)
         
-        setupPrivacyDashboardLogicHandlers()
+        setupPrivacyDashboardControllerHandlers()
     }
     
     required init?(coder: NSCoder) {
@@ -52,25 +52,25 @@ class PrivacyDashboardViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        privacyDashboardLogic.setup(for: webView)
+        privacyDashboardController.setup(for: webView)
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        privacyDashboardLogic.cleanUp()
+        privacyDashboardController.cleanUp()
     }
     
-    private func setupPrivacyDashboardLogicHandlers() {
-        privacyDashboardLogic.onProtectionSwitchChange = { [weak self] isEnabled in
+    private func setupPrivacyDashboardControllerHandlers() {
+        privacyDashboardController.onProtectionSwitchChange = { [weak self] isEnabled in
             self?.privacyDashboardProtectionSwitchChangeHandler(enabled: isEnabled)
         }
         
-        privacyDashboardLogic.onCloseTapped = { [weak self] in
+        privacyDashboardController.onCloseTapped = { [weak self] in
             self?.privacyDashboardCloseTappedHandler()
         }
         
-        privacyDashboardLogic.onShowReportBrokenSiteTapped = { [weak self] in
+        privacyDashboardController.onShowReportBrokenSiteTapped = { [weak self] in
             guard let mainViewController = self?.presentingViewController as? MainViewController else { return }
             
             self?.dismiss(animated: true) {
@@ -80,15 +80,15 @@ class PrivacyDashboardViewController: UIViewController {
     }
     
     public func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {
-        privacyDashboardLogic.didFinishRulesCompilation()
-        privacyDashboardLogic.updatePrivacyInfo(privacyInfo)
+        privacyDashboardController.didFinishRulesCompilation()
+        privacyDashboardController.updatePrivacyInfo(privacyInfo)
     }
 }
 
 private extension PrivacyDashboardViewController {
     
     func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
-        guard let domain = privacyDashboardLogic.privacyInfo?.url.host else { return }
+        guard let domain = privacyDashboardController.privacyInfo?.url.host else { return }
         
         let privacyConfiguration = privacyConfigurationManager.privacyConfig
         
@@ -102,7 +102,7 @@ private extension PrivacyDashboardViewController {
         
         contentBlockingManager.scheduleCompilation()
         
-        privacyDashboardLogic.didStartRulesCompilation()
+        privacyDashboardController.didStartRulesCompilation()
     }
     
     func privacyDashboardCloseTappedHandler() {
@@ -113,7 +113,7 @@ private extension PrivacyDashboardViewController {
 extension PrivacyDashboardViewController: Themable {
     
     func decorate(with theme: Theme) {
-        privacyDashboardLogic.themeName = theme.name.rawValue
+        privacyDashboardController.themeName = theme.name.rawValue
         view.backgroundColor = theme.backgroundColor
     }
 }

@@ -30,7 +30,7 @@
 		1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */; };
 		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
 		1E7CDADF28D8A78F0067D38A /* ServerTrustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD328D8A78F0067D38A /* ServerTrustViewModel.swift */; };
-		1E7CDAE028D8A78F0067D38A /* PrivacyDashboardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD528D8A78F0067D38A /* PrivacyDashboardLogic.swift */; };
+		1E7CDAE028D8A78F0067D38A /* PrivacyDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */; };
 		1E7CDAE128D8A78F0067D38A /* PrivacyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD628D8A78F0067D38A /* PrivacyInfo.swift */; };
 		1E7CDAE228D8A78F0067D38A /* PrivacyDashboardUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD828D8A78F0067D38A /* PrivacyDashboardUserScript.swift */; };
 		1E7CDAE328D8A78F0067D38A /* ServerTrust.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDADA28D8A78F0067D38A /* ServerTrust.swift */; };
@@ -798,7 +798,7 @@
 		1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeUserScript.swift; sourceTree = "<group>"; };
 		1E7CDAD328D8A78F0067D38A /* ServerTrustViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTrustViewModel.swift; sourceTree = "<group>"; };
-		1E7CDAD528D8A78F0067D38A /* PrivacyDashboardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyDashboardLogic.swift; sourceTree = "<group>"; };
+		1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyDashboardController.swift; sourceTree = "<group>"; };
 		1E7CDAD628D8A78F0067D38A /* PrivacyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyInfo.swift; sourceTree = "<group>"; };
 		1E7CDAD828D8A78F0067D38A /* PrivacyDashboardUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyDashboardUserScript.swift; sourceTree = "<group>"; };
 		1E7CDADA28D8A78F0067D38A /* ServerTrust.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTrust.swift; sourceTree = "<group>"; };
@@ -2211,7 +2211,7 @@
 		1E7CDAD428D8A78F0067D38A /* Logic */ = {
 			isa = PBXGroup;
 			children = (
-				1E7CDAD528D8A78F0067D38A /* PrivacyDashboardLogic.swift */,
+				1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */,
 			);
 			path = Logic;
 			sourceTree = "<group>";
@@ -5005,7 +5005,7 @@
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
-				1E7CDAE028D8A78F0067D38A /* PrivacyDashboardLogic.swift in Sources */,
+				1E7CDAE028D8A78F0067D38A /* PrivacyDashboardController.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,

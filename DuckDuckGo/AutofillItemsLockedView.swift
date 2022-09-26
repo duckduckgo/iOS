@@ -69,10 +69,10 @@ class AutofillItemsLockedView: UIView {
         NSLayoutConstraint.activate([
             stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            stackContentView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            self.heightAnchor.constraint(equalTo: stackContentView.heightAnchor),
+            self.widthAnchor.constraint(equalTo: stackContentView.widthAnchor)
         ])
     }
-
 }
 
 extension AutofillItemsLockedView: Themable {

@@ -59,11 +59,21 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.estimatedRowHeight = 60
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
-        // Have to set tableHeaderView height otherwise tableView content willl jump when adding / removing searchController due to tableView insetGrouped style
+        // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 16))
         return tableView
     }()
-    
+
+    private lazy var lockedViewBottomConstraint: NSLayoutConstraint = {
+        NSLayoutConstraint(item: tableView,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: lockedView,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 144)
+    }()
+
     init(appSettings: AppSettings) {
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings)
         super.init(nibName: nil, bundle: nil)
@@ -89,6 +99,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         super.viewDidAppear(animated)
         Pixel.fire(pixel: .autofillSettingsOpened)
         authenticate()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate { _ in
+            self.updateConstraintConstants()
+        }
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -251,7 +269,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         emptySearchView.translatesAutoresizingMaskIntoConstraints = false
         lockedView.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        updateConstraintConstants()
+
         NSLayoutConstraint.activate([
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -263,13 +283,19 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptySearchView.widthAnchor.constraint(equalToConstant: 225),
 
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            lockedView.heightAnchor.constraint(equalToConstant: 140)
+            lockedViewBottomConstraint
         ])
     }
 
-    
+    private func updateConstraintConstants() {
+        let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
+        if isIPhoneLandscape {
+            lockedViewBottomConstraint.constant = (view.frame.height / 2 - max(lockedView.frame.height, 120.0) / 2)
+        } else {
+            lockedViewBottomConstraint.constant = view.frame.height * 0.15
+        }
+    }
+
     // MARK: Cell Methods
     
     private func credentialCell(for tableView: UITableView, item: AutofillLoginListItemViewModel, indexPath: IndexPath) -> AutofillListItemTableViewCell {

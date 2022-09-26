@@ -21,17 +21,27 @@ import UIKit
 import WebKit
 import Combine
 import Core
+import BrowserServicesKit
 import PrivacyDashboard
 
 class PrivacyDashboardViewController: UIViewController {
     
     @IBOutlet private(set) weak var webView: WKWebView!
     
-    private var privacyDashboardLogic: PrivacyDashboardLogic
+    private let privacyDashboardLogic: PrivacyDashboardLogic
+    private let privacyConfigurationManager: PrivacyConfigurationManaging
+    private let contentBlockingManager: ContentBlockerRulesManager
 
-    init?(coder: NSCoder, privacyInfo: PrivacyInfo?) {
+    init?(coder: NSCoder,
+          privacyInfo: PrivacyInfo?,
+          privacyConfigurationManager: PrivacyConfigurationManaging,
+          contentBlockingManager: ContentBlockerRulesManager) {
         privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo)
+        self.privacyConfigurationManager = privacyConfigurationManager
+        self.contentBlockingManager = contentBlockingManager
+        
         super.init(coder: coder)
+        
         setupPrivacyDashboardLogicHandlers()
     }
     
@@ -80,7 +90,7 @@ private extension PrivacyDashboardViewController {
     func privacyDashboardProtectionSwitchChangeHandler(enabled: Bool) {
         guard let domain = privacyDashboardLogic.privacyInfo?.url.host else { return }
         
-        let privacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
+        let privacyConfiguration = privacyConfigurationManager.privacyConfig
         
         if enabled {
             privacyConfiguration.userEnabledProtection(forDomain: domain)
@@ -90,7 +100,7 @@ private extension PrivacyDashboardViewController {
             ActionMessageView.present(message: UserText.messageProtectionDisabled.format(arguments: domain))
         }
         
-        ContentBlocking.contentBlockingManager.scheduleCompilation()
+        contentBlockingManager.scheduleCompilation()
         
         privacyDashboardLogic.didStartRulesCompilation()
     }

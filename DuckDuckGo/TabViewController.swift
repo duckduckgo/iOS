@@ -687,7 +687,10 @@ class TabViewController: UIViewController {
     
     @IBSegueAction
     private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
-        PrivacyDashboardViewController(coder: coder, privacyInfo: privacyInfo)
+        PrivacyDashboardViewController(coder: coder,
+                                       privacyInfo: privacyInfo,
+                                       privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
+                                       contentBlockingManager: ContentBlocking.contentBlockingManager)
     }
     
     private func addLoginDetectionStateObserver() {

@@ -27,30 +27,28 @@ class PrivacyDashboardViewController: UIViewController {
     
     @IBOutlet private(set) weak var webView: WKWebView!
     
-    weak var privacyInfo: PrivacyInfo?
-    private var privacyDashboardLogic: PrivacyDashboardLogic!
+    private var privacyDashboardLogic: PrivacyDashboardLogic
 
-    required init?(coder: NSCoder) {
+    init?(coder: NSCoder, privacyInfo: PrivacyInfo?) {
+        privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo)
         super.init(coder: coder)
+        setupPrivacyDashboardLogicHandlers()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setupPrivacyDashboardLogic()
-        setupPrivacyDashboardLogicHandlers()
         
         privacyDashboardLogic.setup(for: webView)
-        
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         privacyDashboardLogic.cleanUp()
-    }
-    
-    private func setupPrivacyDashboardLogic() {
-        privacyDashboardLogic = PrivacyDashboardLogic(privacyInfo: privacyInfo!)
     }
     
     private func setupPrivacyDashboardLogicHandlers() {

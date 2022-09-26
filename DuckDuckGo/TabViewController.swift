@@ -670,7 +670,6 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
             
-            controller.privacyInfo = privacyInfo
             privacyDashboard = controller
         }
         
@@ -684,6 +683,11 @@ class TabViewController: UIViewController {
             }
         }
         
+    }
+    
+    @IBSegueAction
+    private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
+        PrivacyDashboardViewController(coder: coder, privacyInfo: privacyInfo)
     }
     
     private func addLoginDetectionStateObserver() {

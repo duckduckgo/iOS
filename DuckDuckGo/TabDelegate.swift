@@ -42,7 +42,7 @@ protocol TabDelegate: AnyObject {
     func tab(_ tab: TabViewController,
              didRequestNewBackgroundTabForUrl url: URL,
              inheritingAttribution: AdClickAttributionLogic.State?)
-    
+
     func tabLoadingStateDidChange(tab: TabViewController)
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage)
 
@@ -61,6 +61,7 @@ protocol TabDelegate: AnyObject {
     func tabDidRequestSettings(tab: TabViewController)
     
     func tabDidRequestFindInPage(tab: TabViewController)
+    func closeFindInPage(tab: TabViewController)
 
     func tabContentProcessDidTerminate(tab: TabViewController)
     

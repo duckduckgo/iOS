@@ -291,6 +291,7 @@ final class DaxDialog: XCTestCase {
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,
+                               eTLDplus1: nil,
                                knownTracker: KnownTracker(domain: entity?.displayName,
                                                           defaultAction: .block,
                                                           owner: nil,

@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+@testable import BrowserServicesKit
 
 struct MockVariantManager: VariantManager {
 

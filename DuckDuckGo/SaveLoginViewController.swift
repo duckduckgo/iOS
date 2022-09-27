@@ -32,12 +32,6 @@ class SaveLoginViewController: UIViewController {
     weak var delegate: SaveLoginViewControllerDelegate?
     private let credentialManager: SaveAutofillLoginManager
 
-    private lazy var blurView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemMaterial)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        return blurEffectView
-    }()
-
     internal init(credentialManager: SaveAutofillLoginManager) {
         self.credentialManager = credentialManager
         super.init(nibName: nil, bundle: nil)
@@ -50,9 +44,8 @@ class SaveLoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.clear
+        self.view.backgroundColor = UIColor(named: "AutofillPromptLargeBackground")
         
-        setupBlurBackgroundView()
         setupSaveLoginView()
     }
     
@@ -62,11 +55,6 @@ class SaveLoginViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        blurView.frame = self.view.frame
-    }
-    
-    private func setupBlurBackgroundView() {
-        view.addSubview(blurView)
     }
 
     private func setupSaveLoginView() {

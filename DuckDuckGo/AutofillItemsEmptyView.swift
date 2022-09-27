@@ -47,7 +47,7 @@ class AutofillItemsEmptyView: UIView {
         let label = UILabel(frame: CGRect.zero)
 
         let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title3)
-        label.font = UIFont.systemFont(ofSize: descriptor.pointSize, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: descriptor.pointSize, weight: .semibold)
         
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -81,7 +81,7 @@ class AutofillItemsEmptyView: UIView {
     private lazy var stackContentView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [imageView, title])
         stackView.axis = .vertical
-        stackView.spacing = 28
+        stackView.spacing = 8
         return stackView
     }()
     
@@ -105,13 +105,16 @@ class AutofillItemsEmptyView: UIView {
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackContentView.topAnchor.constraint(equalTo: topAnchor),
+            stackContentView.topAnchor.constraint(equalTo: topAnchor, constant: 67),
             stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackContentView.widthAnchor.constraint(equalTo: widthAnchor),
-            
+            stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stackContentView.widthAnchor.constraint(equalToConstant: 225),
+
             subtitle.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subtitle.widthAnchor.constraint(equalTo: widthAnchor),
-            subtitle.bottomAnchor.constraint(equalTo: bottomAnchor)
+            subtitle.topAnchor.constraint(equalTo: stackContentView.bottomAnchor, constant: 27),
+            subtitle.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
+            subtitle.leadingAnchor.constraint(equalTo: stackContentView.leadingAnchor),
+            subtitle.trailingAnchor.constraint(equalTo: stackContentView.trailingAnchor)
         ])
     }
 }
@@ -119,6 +122,7 @@ class AutofillItemsEmptyView: UIView {
 extension AutofillItemsEmptyView: Themable {
     
     func decorate(with theme: Theme) {
-        title.textColor = theme.textFieldFontColor
+        title.textColor = theme.autofillDefaultTitleTextColor
+        subtitle.textColor = theme.autofillDefaultSubtitleTextColor
     }
 }

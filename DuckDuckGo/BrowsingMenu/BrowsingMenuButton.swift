@@ -39,14 +39,25 @@ class BrowsingMenuButton: UIView {
         highlight.layer.cornerRadius = 6
         highlight.isHidden = true
     }
-    
+
+    func configure(with entry: BrowsingMenuEntry, willPerformAction: (() -> Void)?) {
+        guard case .regular(let name, let accessibilityLabel, let image, _, let action) = entry else {
+            fatalError("Regular entry not found")
+        }
+
+        self.configure(with: image, label: name, accessibilityLabel: accessibilityLabel) {
+            willPerformAction?()
+            action()
+        }
+    }
+
     func configure(with icon: UIImage, label: String, accessibilityLabel: String?, action: @escaping () -> Void) {
         image.image = icon
         self.label.setAttributedTextString(label)
-        self.label.accessibilityLabel = accessibilityLabel
+        self.accessibilityLabel = accessibilityLabel ?? label
         self.action = action
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
@@ -75,5 +86,10 @@ class BrowsingMenuButton: UIView {
         
         highlight.isHidden = true
     }
-    
+
+    override func accessibilityActivate() -> Bool {
+        action()
+        return true
+    }
+
 }

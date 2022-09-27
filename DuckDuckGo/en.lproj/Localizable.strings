@@ -7,6 +7,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Undo";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Autocomplete suggestion";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Bookmark";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Open website";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Search at DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
@@ -157,6 +169,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Hide Password";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "View";
 
@@ -189,6 +204,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Save Password?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Show Password";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Update Login";
@@ -1086,12 +1104,12 @@ Invite code: %@";
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favorite added";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Block Alerts";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Cancel";
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "A message from %@:";
 

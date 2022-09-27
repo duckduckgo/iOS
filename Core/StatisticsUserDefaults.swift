@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 public class StatisticsUserDefaults: StatisticsStore {
 

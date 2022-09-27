@@ -41,7 +41,7 @@ private struct MockEntityProvider: EntityProviding {
 }
 
 final class DaxDialog: XCTestCase {
-    
+
     struct URLs {
         
         static let example = URL(string: "https://www.example.com")!
@@ -53,13 +53,14 @@ final class DaxDialog: XCTestCase {
         static let tracker = URL(string: "https://www.1dmp.io")!
 
     }
-    
+
+    let settings: InMemoryDaxDialogsSettings = InMemoryDaxDialogsSettings()
     lazy var mockVariantManager = MockVariantManager(isSupportedReturns: true)
-    lazy var onboarding = DaxDialogs(settings: InMemoryDaxDialogsSettings(),
+    lazy var onboarding = DaxDialogs(settings: settings,
                                      entityProviding: MockEntityProvider(),
                                      variantManager: mockVariantManager)
     private var entityProvider: EntityProviding!
-    
+
     override func setUp() {
         super.setUp()
         setupUserDefault(with: #file)
@@ -70,14 +71,25 @@ final class DaxDialog: XCTestCase {
         onboarding.enableAddFavoriteFlow()
         onboarding.resumeRegularFlow()
         XCTAssertNil(onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.google)))
         XCTAssertEqual(onboarding.nextHomeScreenMessage(), .subsequent)
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
     }
 
     func testWhenStartingAddFavoriteFlowThenNextMessageIsAddFavorite() {
         onboarding.enableAddFavoriteFlow()
         XCTAssertEqual(onboarding.nextHomeScreenMessage(), .addFavorite)
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertTrue(onboarding.isAddFavoriteFlow)
+    }
+
+    func testWhenStartingNextMessageAndAddFavoriteFlowThenNextHomeScreenMessagesSeenDoesNotIncrement() {
+        XCTAssertNotNil(onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
+        onboarding.enableAddFavoriteFlow()
+        XCTAssertEqual(onboarding.nextHomeScreenMessage(), .addFavorite)
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
     }
 
     func testWhenEachVersionOfTrackersMessageIsShownThenFormattedCorrectlyAndNotShownAgain() {
@@ -227,6 +239,7 @@ final class DaxDialog: XCTestCase {
     func testWhenDimissedThenShowNothing() {
         onboarding.dismiss()
         XCTAssertNil(onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 0)
         XCTAssertNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
     }
@@ -234,27 +247,35 @@ final class DaxDialog: XCTestCase {
     func testWhenThirdTimeOnHomeScreenAndFireEducationSeenThenShowNothing() {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertNotNil(onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.HomeScreenSpec.subsequent, onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
         XCTAssertNil(onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
     }
     
     func testWhenSecondTimeOnHomeScreenAndFireEducationSeenThenShowSubsequentDialog() {
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertNotNil(onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: makePrivacyInfo(url: URLs.example)))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
         XCTAssertEqual(DaxDialogs.HomeScreenSpec.subsequent, onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 2)
     }
 
-    func testWhenSecondTimeOnHomeScreenAndNoOtherDialgosSeenThenShowNothing() {
+    func testWhenSecondTimeOnHomeScreenAndNoOtherDialogsSeenThenShowNothing() {
         XCTAssertNotNil(onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
         XCTAssertNil(onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
     }
 
     func testWhenFirstTimeOnHomeScreenThenShowFirstDialog() {
         XCTAssertEqual(DaxDialogs.HomeScreenSpec.initial, onboarding.nextHomeScreenMessage())
+        XCTAssertEqual(settings.homeScreenMessagesSeen, 1)
     }
     
     func testWhenPrimingDaxDialogForUseThenDismissedIsFalse() {
@@ -269,10 +290,12 @@ final class DaxDialog: XCTestCase {
     func testDaxDialogsDismissedByDefault() {
         XCTAssertTrue(DefaultDaxDialogsSettings().isDismissed)
     }
-    
+
+
     private func detectedTrackerFrom(_ url: URL, pageUrl: String) -> DetectedRequest {
         let entity = entityProvider.entity(forHost: url.host!)
         return DetectedRequest(url: url.absoluteString,
+                               eTLDplus1: nil,
                                knownTracker: KnownTracker(domain: entity?.displayName,
                                                           defaultAction: .block,
                                                           owner: nil,

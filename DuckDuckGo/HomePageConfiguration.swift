@@ -18,7 +18,9 @@
 //
 
 import Foundation
+import BrowserServicesKit
 import Core
+import os.log
 
 final class HomePageConfiguration {
     
@@ -40,12 +42,63 @@ final class HomePageConfiguration {
     // MARK: - Messages
     
     private var homeMessageStorage: HomeMessageStorage
-    
-    init(variantManager: VariantManager? = nil) {
+    private var remoteMessagingStore: RemoteMessagingStore
+
+    var homeMessages: [HomeMessage] = []
+
+    init(variantManager: VariantManager? = nil, remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
+        self.remoteMessagingStore = remoteMessagingStore
+        homeMessages = buildHomeMessages()
     }
-    
-    var homeMessages: [HomeMessage] { homeMessageStorage.messagesToBeShown }
-    
-    func dismissHomeMessage(_ homeMessage: HomeMessage) { }
+
+    func refresh() {
+        homeMessages = buildHomeMessages()
+    }
+
+    private func buildHomeMessages() -> [HomeMessage] {
+        var messages = homeMessageStorage.messagesToBeShown
+
+        if DaxDialogs.shared.isStillOnboarding() {
+            return messages
+        }
+
+        guard let remoteMessage = remoteMessageToShow() else {
+            return messages
+        }
+
+        messages.append(remoteMessage)
+        return messages
+    }
+
+    private func remoteMessageToShow() -> HomeMessage? {
+        guard let remoteMessageToPresent = remoteMessagingStore.fetchScheduledRemoteMessage() else { return nil }
+
+        os_log("Remote message to show: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+        Pixel.fire(pixel: .remoteMessageShown,
+                   withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
+
+        if !remoteMessagingStore.hasShownRemoteMessage(withId: remoteMessageToPresent.id) {
+            os_log("Remote message shown for first time: %s", log: .remoteMessaging, type: .info, remoteMessageToPresent.id)
+            Pixel.fire(pixel: .remoteMessageShownUnique,
+                       withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessageToPresent.id)"])
+            remoteMessagingStore.updateRemoteMessage(withId: remoteMessageToPresent.id, asShown: true)
+        }
+
+        return .remoteMessage(remoteMessage: remoteMessageToPresent)
+    }
+
+    func dismissHomeMessage(_ homeMessage: HomeMessage) {
+        switch homeMessage {
+        case .remoteMessage(let remoteMessage):
+            os_log("Home message dismissed: %s", log: .remoteMessaging, type: .info, remoteMessage.id)
+            remoteMessagingStore.dismissRemoteMessage(withId: remoteMessage.id)
+
+            if let index = homeMessages.firstIndex(of: homeMessage) {
+                homeMessages.remove(at: index)
+            }
+        default:
+            break
+        }
+    }
 }

@@ -119,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
+        RemoteMessaging.registerBackgroundRefreshTaskHandler()
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -237,10 +238,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         beginAuthentication()
         initialiseBackgroundFetch(application)
         applyAppearanceChanges()
+        refreshRemoteMessages()
     }
     
     private func applyAppearanceChanges() {
         UILabel.appearance(whenContainedInInstancesOf: [UIAlertController.self]).numberOfLines = 0
+    }
+
+    private func refreshRemoteMessages() {
+        Task {
+            try? await RemoteMessaging.fetchAndProcess()
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -271,7 +279,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab(reuseExisting: true)
-            if url.getParam(name: "w") != nil {
+            if url.getParameter(named: "w") != nil {
                 Pixel.fire(pixel: .widgetNewSearch)
                 mainViewController?.enterSearch()
             }
@@ -282,15 +290,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else if AppDeepLinks.isQuickLink(url: url) {
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
-        } else if AppDeepLinks.isBookmarks(url: url) {
-            mainViewController?.onBookmarksPressed()
-        } else if AppDeepLinks.isFire(url: url) {
-            if !privacyStore.authenticationEnabled {
-                removeOverlay()
-            }
-            mainViewController?.onQuickFirePressed()
         } else if AppDeepLinks.isAddFavorite(url: url) {
             mainViewController?.startAddFavoriteFlow()
+        } else if app.applicationState == .active,
+                  let currentTab = mainViewController?.currentTab {
+            // If app is in active state, treat this navigation as something initiated form the context of the current tab.
+            mainViewController?.tab(currentTab,
+                                    didRequestNewTabForUrl: url,
+                                    openedByPage: true,
+                                    inheritingAttribution: nil)
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
             mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
@@ -325,6 +333,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let hasConfigurationTask = tasks.contains { $0.identifier == AppConfigurationFetch.Constants.backgroundProcessingTaskIdentifier }
             if !hasConfigurationTask {
                 AppConfigurationFetch.scheduleBackgroundRefreshTask()
+            }
+
+            let hasRemoteMessageFetchTask = tasks.contains { $0.identifier == RemoteMessaging.Constants.backgroundRefreshTaskIdentifier }
+            if !hasRemoteMessageFetchTask {
+                RemoteMessaging.scheduleBackgroundRefreshTask()
             }
         }
     }
@@ -396,13 +409,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.loadQueryInNewTab(query)
         }
     }
-    
+
     private func removeEmailWaitlistState() {
         EmailWaitlist.removeEmailState()
 
         let autofillStorage = EmailKeychainManager()
         autofillStorage.deleteWaitlistState()
-        
+
         // Remove the authentication state if this is a fresh install.
         if !Database.shared.isDatabaseFileInitialized {
             autofillStorage.deleteAuthenticationState()

@@ -179,7 +179,7 @@ extension DownloadManager {
         var fileExtension = downloadsDirectory.appendingPathComponent(filename).pathExtension
         fileExtension = fileExtension.count > 0 ? ".\(fileExtension)" : ""
         
-        let filePrefix = filename.drop(suffix: fileExtension)
+        let filePrefix = filename.dropping(suffix: fileExtension)
 
         let newFilename = counter > 0 ? "\(filePrefix) \(counter)\(fileExtension)" : filename
         
@@ -200,8 +200,7 @@ extension DownloadManager {
     private func sanitizeFilename(_ originalFilename: String?, mimeType: String?) -> String {
         var filename = originalFilename ?? "unknown"
 
-        if #available(iOS 14.0, *),
-           let mimeType = mimeType,
+        if let mimeType = mimeType,
            let utType = UTType(mimeType: mimeType),
            UTType(filenameExtension: (filename as NSString).pathExtension) != utType,
            let pathExtension = utType.preferredFilenameExtension {

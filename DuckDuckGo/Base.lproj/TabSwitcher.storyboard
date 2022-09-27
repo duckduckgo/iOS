@@ -504,13 +504,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="alN-nB-cJU" secondAttribute="bottom" id="6Sa-p4-HFX"/>
                                                 <constraint firstItem="xto-EI-h22" firstAttribute="trailing" secondItem="37U-Jd-wxr" secondAttribute="trailing" id="90I-9Z-JeZ"/>
-                                                <constraint firstItem="gw0-u8-5aN" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" id="Bl9-4V-c3M">
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="8"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </constraint>
+                                                <constraint firstItem="gw0-u8-5aN" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" id="Bl9-4V-c3M"/>
                                                 <constraint firstItem="gw0-u8-5aN" firstAttribute="leading" secondItem="37U-Jd-wxr" secondAttribute="leading" id="C4I-35-4Co"/>
                                                 <constraint firstItem="LwM-2c-pnd" firstAttribute="leading" secondItem="37U-Jd-wxr" secondAttribute="leading" constant="12" id="Cn9-AA-Hzr"/>
                                                 <constraint firstItem="alN-nB-cJU" firstAttribute="height" secondItem="37U-Jd-wxr" secondAttribute="height" multiplier="0.75" id="DUM-PI-q90"/>

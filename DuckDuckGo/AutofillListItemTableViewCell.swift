@@ -22,30 +22,41 @@ import SwiftUI
 import DuckUI
 
 class AutofillListItemTableViewCell: UITableViewCell {
+
+    var theme: Theme? {
+        didSet {
+            updateTheme()
+        }
+    }
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
-        label.font = .systemFont(ofSize: 16)
-        label.textColor = .gray90
+        label.font = .preferredFont(forTextStyle: .callout)
+        label.textColor = .label
+        label.lineBreakMode = .byTruncatingMiddle
         return label
     }()
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
-        label.font = .systemFont(ofSize: 13)
+        label.font = .preferredFont(forTextStyle: .footnote)
         label.textColor = .gray50
+        label.lineBreakMode = .byTruncatingMiddle
         return label
     }()
     
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 4
         return imageView
     }()
     
     private lazy var textStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [titleLabel, subtitleLabel])
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
         stackView.spacing = 3
         return stackView
     }()
@@ -53,7 +64,8 @@ class AutofillListItemTableViewCell: UITableViewCell {
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [iconImageView, textStackView])
         stackView.axis = .horizontal
-        stackView.spacing = 10
+        stackView.spacing = 12
+        stackView.alignment = .center
         return stackView
     }()
     
@@ -79,7 +91,16 @@ class AutofillListItemTableViewCell: UITableViewCell {
         contentView.addSubview(contentStackView)
         installConstraints()
     }
-    
+
+    private func updateTheme() {
+        guard let theme = theme else {
+            return
+        }
+
+        titleLabel.textColor = theme.autofillDefaultTitleTextColor
+        subtitleLabel.textColor = theme.autofillDefaultSubtitleTextColor
+    }
+
     private func installConstraints() {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,7 +110,8 @@ class AutofillListItemTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             iconImageView.widthAnchor.constraint(equalToConstant: imageSize),
-            
+            iconImageView.heightAnchor.constraint(equalToConstant: imageSize),
+
             contentStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             contentStackView.topAnchor.constraint(equalTo: margins.topAnchor),
@@ -110,5 +132,7 @@ class AutofillListItemTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentStackView.frame = contentView.bounds
+
+        separatorInset = UIEdgeInsets(top: 0, left: contentView.layoutMargins.left + textStackView.frame.origin.x, bottom: 0, right: 0)
     }
 }

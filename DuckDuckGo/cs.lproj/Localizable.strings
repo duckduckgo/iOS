@@ -1399,9 +1399,6 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Oblíbené položky uloženy";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blokovat výstrahy";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Zrušit";
 

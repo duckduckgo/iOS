@@ -106,6 +106,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
         coordinator.animate { _ in
             self.updateConstraintConstants()
+            self.emptyView.refreshConstraints()
         }
     }
 
@@ -348,10 +349,10 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch viewModel.viewState {
         case .empty:
-            return 255
+            return max(tableView.bounds.height - tableView.contentSize.height, 250)
         default:
             return 0
         }

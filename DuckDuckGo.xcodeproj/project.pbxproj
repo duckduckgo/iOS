@@ -77,7 +77,7 @@
 		1EEF387D285B1A1100383393 /* TrackerImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEF387C285B1A1100383393 /* TrackerImageCache.swift */; };
 		1EEFD2D52758E31600B1393B /* textsize.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EEFD2D42758E31600B1393B /* textsize.js */; };
 		1EF24235273BB9D200DE3D02 /* IntervalSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */; };
-		1EFC197828E361A10016EC0A /* PrivacyDashboard in Frameworks */ = {isa = PBXBuildFile; productRef = 1EFC197728E361A10016EC0A /* PrivacyDashboard */; };
+		1EFC197A28E451200016EC0A /* PrivacyDashboard in Frameworks */ = {isa = PBXBuildFile; productRef = 1EFC197928E451200016EC0A /* PrivacyDashboard */; };
 		1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */; };
 		22CB1ED8203DDD2C00D2C724 /* AppDeepLinksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB1ED7203DDD2C00D2C724 /* AppDeepLinksTests.swift */; };
 		310742A62848CD780012660B /* BackForwardMenuHistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310742A52848CD780012660B /* BackForwardMenuHistoryItem.swift */; };
@@ -2073,7 +2073,7 @@
 			files = (
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
-				1EFC197828E361A10016EC0A /* PrivacyDashboard in Frameworks */,
+				1EFC197A28E451200016EC0A /* PrivacyDashboard in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
 				4B5167422824B492004C67BA /* Lottie in Frameworks */,
 			);
@@ -4226,7 +4226,7 @@
 			packageProductDependencies = (
 				31E69A62280F4CB600478327 /* DuckUI */,
 				4B5167412824B492004C67BA /* Lottie */,
-				1EFC197728E361A10016EC0A /* PrivacyDashboard */,
+				1EFC197928E451200016EC0A /* PrivacyDashboard */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -4485,7 +4485,6 @@
 				C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				4B5167402824B492004C67BA /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */,
-				1ED7D9042821B4D30064AFB8 /* XCRemoteSwiftPackageReference "duckduckgo-privacy-dashboard" */,
 			);
 			productRefGroup = 84E341931E2F7EFB00BDBA6F /* Products */;
 			projectDirPath = "";
@@ -6973,14 +6972,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1ED7D9042821B4D30064AFB8 /* XCRemoteSwiftPackageReference "duckduckgo-privacy-dashboard" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/more-duckduckgo-org/duckduckgo-privacy-dashboard";
-			requirement = {
-				branch = "michal/spm-distribution";
-				kind = branch;
-			};
-		};
 		4B5167402824B492004C67BA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -7060,9 +7051,8 @@
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = BrowserServicesKit;
 		};
-		1EFC197728E361A10016EC0A /* PrivacyDashboard */ = {
+		1EFC197928E451200016EC0A /* PrivacyDashboard */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1ED7D9042821B4D30064AFB8 /* XCRemoteSwiftPackageReference "duckduckgo-privacy-dashboard" */;
 			productName = PrivacyDashboard;
 		};
 		31E69A62280F4CB600478327 /* DuckUI */ = {

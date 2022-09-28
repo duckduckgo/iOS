@@ -74,6 +74,16 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                            constant: 144)
     }()
 
+    private lazy var emptySearchViewCenterYConstraint: NSLayoutConstraint = {
+        NSLayoutConstraint(item: emptySearchView,
+                           attribute: .centerY,
+                           relatedBy: .equal,
+                           toItem: tableView,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: (tableView.frame.height / 2))
+    }()
+
     init(appSettings: AppSettings) {
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings)
         super.init(nibName: nil, bundle: nil)
@@ -92,6 +102,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
         updateViewState()
         configureNotification()
+        registerForKeyboardNotifications()
 
     }
     
@@ -280,8 +291,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             emptySearchView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptySearchView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 160),
-            emptySearchView.widthAnchor.constraint(equalToConstant: 225),
+            emptySearchViewCenterYConstraint,
 
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lockedViewBottomConstraint
@@ -509,6 +519,28 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
             viewModel.filterData(with: query)
             emptySearchView.query = query
         }
+    }
+}
+
+// MARK: Keyboard
+
+extension AutofillLoginSettingsListViewController {
+
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(adjustForKeyboard),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
+    }
+
+    @objc private func adjustForKeyboard(notification: NSNotification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        emptySearchViewCenterYConstraint.constant = min((keyboardViewEndFrame.minY / 2) - searchController.searchBar.frame.height + (emptySearchView.frame.height / 2),
+                           (tableView.frame.height / 2) - searchController.searchBar.frame.height)
     }
 }
 

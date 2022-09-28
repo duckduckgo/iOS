@@ -175,7 +175,7 @@ struct AutofillLoginDetailsView: View {
         .listRowInsets(Constants.insets)
     }
     
-    // This is seperate from editableCell() because TextEditor doesn't support placeholders, and we don't need it to at the moment
+    // This is seperate from editableCell() because TextEditor doesn't support placeholders, and we don't need placeholders for notes at the moment
     private func editableMultilineCell(_ title: String,
                                        subtitle: Binding<String>,
                                        autoCapitalizationType: UITextAutocapitalizationType = .none,
@@ -187,10 +187,8 @@ struct AutofillLoginDetailsView: View {
             Text(title)
                 .label4Style()
             
-            HStack {
-                MultilineTextEditor(text: subtitle,
-                                    maxHeight: maxHeight)
-            }
+            MultilineTextEditor(text: subtitle,
+                                maxHeight: maxHeight)
         }
         .frame(minHeight: Constants.minRowHeight)
     }
@@ -256,10 +254,8 @@ private struct MultilineTextEditor: View {
     var maxHeight: CGFloat
     
     var body: some View {
-        HStack {
-            TextEditor(text: $text)
-                .frame(maxHeight: maxHeight) // frustratingly, .lineLimit doesn't work on TextEditor
-        }
+        TextEditor(text: $text)
+            .frame(maxHeight: maxHeight) // frustratingly, .lineLimit doesn't work on TextEditor
     }
 }
 

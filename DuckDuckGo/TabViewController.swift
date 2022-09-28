@@ -328,6 +328,7 @@ class TabViewController: UIViewController {
         let contentBlockerConfig = DefaultContentBlockerUserScriptConfig(privacyConfiguration: privacyConfig,
                                                                          trackerData: currentMainRules?.trackerData,
                                                                          ctlTrackerData: nil,
+                                                                         tld: Self.tld,
                                                                          trackerDataManager: ContentBlocking.trackerDataManager)
         let contentBlockerRulesScript = ContentBlockerRulesUserScript(configuration: contentBlockerConfig)
         contentBlockerUserScript = contentBlockerRulesScript
@@ -338,6 +339,7 @@ class TabViewController: UIViewController {
                                                                  trackerData: currentMainRules?.trackerData,
                                                                  encodedSurrogateTrackerData: currentMainRules?.encodedTrackerData,
                                                                  trackerDataManager: ContentBlocking.trackerDataManager,
+                                                                 tld: Self.tld,
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
         autofillUserScript = createAutofillUserScript()
@@ -856,9 +858,12 @@ class TabViewController: UIViewController {
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.contentBlockingManager.currentRules)
     }
 
-    @objc func onStorageCacheChange() {
-        DispatchQueue.main.async {
-            self.reload(scripts: true)
+    @objc func onStorageCacheChange(notification: Notification) {
+        
+        if let cacheProvider = notification.object as? StorageCacheProvider {
+            DispatchQueue.main.async {
+                self.storageCache = cacheProvider.current
+            }
         }
     }
     
@@ -1552,6 +1557,10 @@ extension TabViewController: WKNavigationDelegate {
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
             return
+        }
+        
+        if navigationAction.isTargetingMainFrame(), navigationAction.navigationType == .backForward {
+            adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
 
         let schemeType = SchemeHandler.schemeType(for: url)

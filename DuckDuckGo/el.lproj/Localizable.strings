@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Αναίρεση";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Πρόταση αυτόματης συμπλήρωσης";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Σελιδοδείκτης";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Άνοιγμα ιστότοπου";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Αναζήτηση στο DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Προσθήκη";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ενεργό";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Απόκρυψη κωδικού πρόσβασης";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Προβολή";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Αποθήκευση κωδικού πρόσβασης;";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Εμφάνιση κωδικού πρόσβασης";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Ενημέρωση σύνδεσης";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Αποκλείστε εφαρμογές παρακολούθησης email και αποκρύψτε τη διεύθυνσή σας";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Ακύρωση";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Σημείωση: Η αφαίρεση της προστασίας email από τη συσκευή αυτή δεν θα διαγράψει τη Διεύθυνση Duck που διαθέτετε.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Αφαίρεση";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Αφαίρεση προστασίας email;";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Προέκυψε σφάλμα κατά την εγγραφή στη Λίστα αναμονής. Ξαναπροσπαθήστε αργότερα.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Ξεκινήστε";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Διαθέτω Κωδικό πρόσκλησης";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Έχετε προσκληθεί!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Εγγραφείτε στην Ιδιωτική λίστα αναμονής";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Βρίσκεστε στη λίστα αναμονής!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Η πρόσκλησή σας θα εμφανιστεί εδώ όταν θα είναι έτοιμη για εσάς. Θέλετε να %1$@ μόλις φτάσει; %2$@ σχετικά με την Προστασία email.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "λάβετε ειδοποίηση";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Θα σας στείλουμε ειδοποίηση όταν θα είναι έτοιμη για σας η Προστασία<br/>email. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Μάθετε περισσότερα";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Θα σας στείλουμε ειδοποίηση όταν θα μπορείτε να αρχίσετε να χρησιμοποιείτε την Προστασία email.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Θα θέλατε να σας ειδοποιήσουμε όταν θα είναι η σειρά σας;";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Εγγραφήκατε στη λίστα αναμονής και μας ζητήσατε να σας ενημερώσουμε για το πότε θα είναι η σειρά σας να δοκιμάσετε την Προστασία email.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Όχι, ευχαριστώ";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "ΝΑ ΕΙΔΟΠΟΙΗΘΩ";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Η πρόσκλησή σας για προστασία των email είναι εδώ!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Δεν αποθηκεύουμε τα email σας. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Ιδιωτικότητα email, απλοποιημένη.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Αποκλείστε εφαρμογές παρακολούθησης email και αποκρύψτε τη διεύθυνσή σας,<br/>χωρίς να αλλάξετε πάροχο email. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";
@@ -1031,7 +980,7 @@
 "privacy.protection.about.search.protections.link" = "Σχετικά με τις Προστασίες αναζήτησης και τις διαφημίσεις μας";
 
 /* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "How our search ads impact our protections";
+"privacy.protection.about.search.protections.link.new" = "Πώς επηρεάζουν οι διαφημίσεις αναζήτησης τις προστασίες μας";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Αλγόριθμος";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "Εντάξει";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Μήνυμα από %@:";
 

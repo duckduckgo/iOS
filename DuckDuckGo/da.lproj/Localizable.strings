@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Fortryd";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Autoudfyld forslaget";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Bogmærke";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Åbn websted";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Søg på DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Tilføj";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Til";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Skjul adgangskode";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Se";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Gem adgangskode?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Vis adgangskode";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Opdater login";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloker e-mailtrackere, og skjul din adresse";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Annullér";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Bemærk: Fjernelse af e-mailbeskyttelse fra denne enhed sletter ikke din Duck-adresse.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Fjern";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Vil du fjerne e-mailbeskyttelse?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Der opstod en fejl, da du tilmeldte dig til ventelisten. Prøv igen senere";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Kom igang";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Jeg har en invitationskode";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Du er blevet inviteret!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Slut dig til den private venteliste";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Du er på ventelisten!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Din invitation vises her, når vi er klar til dig. Vil du %1$@, når den ankommer? %2$@ om e-mailbeskyttelse.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "have besked";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Vi sender dig en meddelelse, når<br/> e-mailbeskyttelse er klar til dig. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Mere info";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Vi sender dig en meddelelse, når du kan begynde at bruge e-mailbeskyttelse.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Skal vi give dig besked, når det er din tur?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Du har tilmeldt dig ventelisten og bedt os om at underrette dig, når det er din tur til at prøve vores e-mailbeskyttelsesfunktion.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nej tak.";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "UNDERRET MIG";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Din invitation til e-mailbeskyttelse er her!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Vi gemmer ikke dine e-mails. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Fortrolighed af e-mail, forenklet.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokér e-mailtrackere, og skjul din adresse<br/> uden at ændre din e-mailudbyder. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bogmærker tilføjet endnu";
@@ -1205,7 +1154,7 @@
 "privacy.protection.other.domains.thirdparties.empty" = "Vi har ikke registreret anmodninger fra tredjepartsdomæner.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Anmodninger fra tredjeparter indlæst";
+"privacy.protection.other.third.party.domains.loaded" = "Anmodninger fra tredjeparter";
 
 /* No comment provided by engineer. */
 "privacy.protection.platform.limitations.footer.info" = "Bemærk: Platformsbegrænsninger kan begrænse vores evne til at registrere alle anmodninger.";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "Okay";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "En besked fra %@:";
 

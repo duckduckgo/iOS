@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Atsaukt";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Automātiski pabeigt ieteikumu";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Pievienot grāmatzīmi";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Atvērt tīmekļa vietni";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Meklēt vietnē DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Pievienot";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ieslēgts";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Paslēpt paroli";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Skatīt";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Saglabāt paroli?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Rādīt paroli";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Atjaunināt pieteikšanās datus";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Bloķē e-pasta izsekotājus un paslēp savu adresi";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Atcelt";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Piezīme: noņemot e-pasta aizsardzību no šīs ierīces, tava Duck adrese netiks dzēsta.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Noņemt";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Vai noņemt e-pasta aizsardzību?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Radusies kļūda, pievienojoties gaidīšanas sarakstam, lūdzu, mēģini vēlāk";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Sākt darbu";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Man ir uzaicinājuma kods";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Tu saņēmi uzaicinājumu!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Pievienojies privātajam nogaides sarakstam";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Tu esi gaidīšanas sarakstā!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Tavs uzaicinājums parādīsies šeit, kad būsim gatavi uzņemt tevi. Vai vēlies %1$@, kad tas atnāks? %2$@ par e-pasta aizsardzību.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "saņemt paziņojumu";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Mēs nosūtīsim tev paziņojumu, ka e-pasta aizsardzība būs sagatavota. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Uzzināt vairāk";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Mēs nosūtīsim tev paziņojumu, kad varēsi sākt lietot e-pasta aizsardzību.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Vai vēlies, lai tev paziņojam, kad būs pienākusi tava kārta?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Tu pievienojies nogaides sarakstam un lūdzi mūs informēt, kad būs pienākusi tava kārta izmēģināt mūsu e-pasta aizsardzību.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nē, paldies";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "INFORMĒT MANI";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Tavs uzaicinājums izmantot e-pasta aizsardzības funkciju ir šeit!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Mēs nesaglabājam tavas e-pasta vēstules. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-pasta konfidencialitāte, vienkāršota.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Bloķē e-pasta izsekotājus un paslēp savu adresi, nemainot e-pasta pakalpojumu sniedzēju. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Vēl nav pievienota neviena grāmatzīme";
@@ -1025,7 +974,7 @@
 "preserveLogins.remove.all.ok" = "Labi";
 
 /* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Par mūsu tīmekļa izsekošanas aizsardzību";
+"privacy.protection.about.protections.link" = "Par mūsu Tīmekļa izsekošanas aizsardzību";
 
 /* No comment provided by engineer. */
 "privacy.protection.about.search.protections.link" = "Par mūsu meklēšanas aizsardzību un reklāmām";
@@ -1157,7 +1106,7 @@
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
 /* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Atrasti lielāko izsekotāju tīkli";
+"privacy.protection.major.trackers.found.new" = "Atrastie lielie izsekotāju tīkli";
 
 /* No comment provided by engineer. */
 "privacy.protection.major.trackers.not.found" = "Nav atrasts neviens lielāko izsekotāju tīkls";
@@ -1181,10 +1130,10 @@
 "privacy.protection.other.domains.firstparty" = "Šī domēna pieprasījumi tika ielādēti, jo tie ir saistīti ar %@.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Tika ielādēti šādu trešo pušu domēnu pieprasījumi. Ja tiek ielādēti uzņēmuma pieprasījumi, tas var ļaut tiem veidot tavu profilu, lai gan joprojām ir spēkā mūsu pārējās tīmekļa izsekošanas aizsardzības prasības.";
+"privacy.protection.other.domains.info" = "Tika ielādēti šādi trešo pušu domēnu pieprasījumi. Ja tiek ielādēti uzņēmuma pieprasījumi, tas var ļaut uzņēmumam tevi profilēt, lai gan joprojām ir spēkā citi mūsu tīmekļa izsekošanas aizsardzības līdzekļi.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Netika bloķēta trešo pušu pieprasījumu ielāde, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
+"privacy.protection.other.domains.info.disabled.protection" = "Netika bloķēta nekādu trešo pušu pieprasījumu ielāde, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut uzņēmumam veidot tavu profilu.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.info.header.disabled.protection" = "Tika ielādēti šādu domēnu izsekošanas pieprasījumi.";
@@ -1202,10 +1151,10 @@
 "privacy.protection.other.domains.thirdparties" = "Tika ielādēti šāda domēna pieprasījumi.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Mēs neatradām pieprasījumus no neviena trešās puses domēna.";
+"privacy.protection.other.domains.thirdparties.empty" = "Mēs neatklājām nevienu pieprasījumu no trešo pušu domēniem.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Ielādēti trešo pušu pieprasījumi";
+"privacy.protection.other.third.party.domains.loaded" = "Ielādētie trešo pušu pieprasījumi";
 
 /* No comment provided by engineer. */
 "privacy.protection.platform.limitations.footer.info" = "Lūdzu, ņemiet vērā: platformas ierobežojumi var ierobežot mūsu spēju noteikt visus pieprasījumus.";
@@ -1250,28 +1199,28 @@
 "privacy.protection.tracker.networks.info" = "Izsekotāji palīdz uzņēmumiem veidot tavu profilu. Mēs bloķējām šo izsekotāju ielādēšanu un tavu darbību novērošanu šajā lapā.";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Neviens izsekošanas pieprasījums netika bloķēts, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
+"privacy.protection.tracker.networks.info.empty" = "Netika bloķēta neviena izsekošanas pieprasījuma ielāde, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut uzņēmumam veidot tavu profilu.";
 
 /* No comment provided by engineer. */
 "privacy.protection.tracker.networks.info.empty.no.trackers" = "Mēs neatradām nevienu izsekošanas pieprasījumu.";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Turpmāk norādīto trešo pušu domēnu pieprasījumu ielāde tika bloķēta, jo tie tika identificēti kā izsekošanas pieprasījumi. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut tiem izveidot tavu profilu.";
+"privacy.protection.tracker.networks.info.new" = "Turpmāk norādīto trešo pušu domēnu pieprasījumu ielāde tika bloķēta, jo tie tika identificēti kā izsekošanas pieprasījumi. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut uzņēmumam veidot tavu profilu.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
 /* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Pieprasījumu ielādēšana bloķēta";
+"privacy.protection.trackers.blocked.new" = "Pieprasījumi, kuru ielādēšana ir bloķēta";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
 
 /* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Atrasti izsekošanas pieprasījumi";
+"privacy.protection.trackers.found.new" = "Atrastie izsekošanas pieprasījumi";
 
 /* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Neviens izsekošanas pieprasījums nav bloķēts";
+"privacy.protection.trackers.not.blocked" = "Nav bloķēts neviens izsekošanas pieprasījums";
 
 /* No comment provided by engineer. */
 "privacy.protection.trackers.not.found" = "Nav atrasts neviens izsekošanas pieprasījums";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "Labi";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Ziņojums no %@:";
 

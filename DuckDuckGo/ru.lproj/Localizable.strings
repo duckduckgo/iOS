@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Отменить";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Предложение для автозаполнения";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Добавить в закладки";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Открыть сайт";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Поиск в DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Добавить";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Скрыть пароль";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Просмотр";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Сохранить пароль?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Показать пароль";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Обновить логин";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Блокировка почтовых трекеров и скрытие адреса";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Отменить";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Внимание: снятие почтовой защиты на этом устройстве не ведет к удалению вашего адреса на Duck.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Удалить";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Удалить защиту почты?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "При постановке в очередь произошла ошибка. Пожалуйста, повторите попытку позже";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Приступим!";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "У меня есть пригласительный код";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Вас пригласили!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Приглашаем встать в очередь";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Вас добавили в список ожидания!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Когда настанет время, ваше приглашение появится здесь. Хотите %1$@, когда оно придет? %2$@ о защите почты.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "получить уведомление";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Мы отправим вам уведомление, когда защита почты станет вам доступна. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Узнать больше";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Мы отправим вам уведомление, когда вы сможете начать пользоваться защитой почты.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Оповестить, когда подойдет ваша очередь?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Ранее вы встали в очередь и попросили нас оповестить вас о возможности применить защиту почты.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Нет, спасибо";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "ОПОВЕСТИТЬ";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Ваше приглашение воспользоваться защитой почты";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Мы не храним вашу электронную почту. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Надежная защита почты и ничего лишнего.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Оказывается, чтобы избавиться от трекеров и скрыть свой адрес,<br/>вовсе не нужно менять почтовый сервис. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Закладок пока нет";
@@ -1031,7 +980,7 @@
 "privacy.protection.about.search.protections.link" = "О рекламе и защите в поисковых системах";
 
 /* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "How our search ads impact our protections";
+"privacy.protection.about.search.protections.link.new" = "Как реклама при поиске влияет на защиту";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Алгоритм";
@@ -1181,7 +1130,7 @@
 "privacy.protection.other.domains.firstparty" = "Запросы этого домена были загружены, так как они связаны с %@.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Ниже приведен список загруженных запросов сторонних доменов. Благодаря этим запросам компании могут вас профилировать, однако мы по-прежнему защищаем вас от отслеживания в Сети другими способами.";
+"privacy.protection.other.domains.info" = "Ниже приведен список загруженных запросов сторонних доменов. Благодаря этим запросам компании могут вас профилировать, однако мы по-прежнему защищаем вас от отслеживания в сети другими способами.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.info.disabled.protection" = "Мы не заблокировали ни одной загрузки сторонних запросов, так как защита на этом сайте отключена. Загруженные запросы позволяют компаниям вас профилировать.";
@@ -1193,13 +1142,13 @@
 "privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Также загружены запросы следующего домена.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "The following domains’ requests were loaded.";
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Загружены запросы следующих доменов.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "The following domain’s requests were loaded.";
+"privacy.protection.other.domains.thirdparties" = "Загружены запросы следующего домена.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.thirdparties.empty" = "Запросов от сторонних доменов не обнаружено.";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "Хорошо";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Сообщение от %@:";
 

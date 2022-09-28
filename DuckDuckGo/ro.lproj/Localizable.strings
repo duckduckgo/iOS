@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Anulați";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Sugestie de completare automată";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Marcat";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Deschide site-ul";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Caută pe DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Adăugați";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activat";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Ascunde parola";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vezi";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Salvezi parola?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Arată parola";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Actualizează autentificarea";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blochează tehnologiile de urmărire prin e-mail și ascunde-ți adresa";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Renunță";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Notă: eliminarea protecției comunicațiilor prin e-mail de pe acest dispozitiv nu va șterge adresa ta Duck.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Elimină";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Elimină protecția comunicațiilor prin e-mail?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "S-a produs o eroare la aderarea la lista de așteptare, încearcă din nou mai târziu";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Să începem";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Am un cod de invitație";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Ai primit o invitație!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Alătură-te listei de așteptare private";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Ești pe lista de așteptare!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Invitația ta va apărea aici, când vom fi pregătiți pentru tine. Dorești să %1$@ în momentul în care sosește? %2$@ despre protecția comunicațiilor prin e-mail.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "primește o notificare";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Îți vom trimite o notificare când<br/> protecția comunicațiilor prin e-mail este pregătită pentru tine. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Află mai multe";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Îți vom trimite o notificare în momentul în care poți începe să folosești protecția comunicațiilor prin e-mail.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Vrei să te înștiințăm când îți vine rândul?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Te-ai alăturat listei de așteptare și ne-ai solicitat să te anunțăm când este rândul tău să încerci protecția comunicațiilor prin e-mail.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nu, mulțumesc";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "DORESC SĂ PRIMESC NOTIFICĂRI";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Invitația ta de protecție a comunicațiilor prin e-mail este aici!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Nu îți salvăm e-mailurile. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Confidențialitatea e-mailurilor, simplificată.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blochează modulele cookie de urmărire pentru e-mail și ascunde-ți adresa, <br/> fără a schimba furnizorul de e-mail. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nu s-a adăugat niciun semn de carte";
@@ -1172,7 +1121,7 @@
 "privacy.protection.no.other.third.party.domains.loaded" = "Nu au fost încărcate solicitări terță parte";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Solicitările următorului domeniu au fost încărcate deoarece s-a făcut clic recent pe o reclamă %@ pe DuckDuckGo. Aceste solicitări ajută la evaluarea eficienței anunțurilor. Nicio reclamă de pe DuckDuckGo nu creează profiluri.";
+"privacy.protection.other.domains.adclickattribution" = "Solicitările următorului domeniu au fost încărcate deoarece s-a făcut recent clic pe o reclamă %@ de pe DuckDuckGo. Aceste solicitări ajută la evaluarea eficienței anunțurilor. Nicio reclamă de pe DuckDuckGo nu creează profiluri.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.exceptions" = "Solicitările următoarelor domenii au fost încărcate pentru a preveni întreruperea site-ului.";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Un mesaj de la %@:";
 

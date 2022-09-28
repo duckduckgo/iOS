@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Visszavonás";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Automatikus kiegészítési javaslat";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Könyvjelző";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Webhely megnyitása";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Keresés a DuckDuckGón";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Hozzáadás";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Be";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Jelszó elrejtése";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Megtekintés";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Mented a jelszót?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Jelszó megjelenítése";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Bejelentkezés frissítése";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-mail nyomkövetők letiltása, és a cím elrejtése";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Mégsem";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Megjegyzés: az e-mail-védelem eltávolítása erről az eszközről nem törli a Duck-címedet.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Eltávolítás";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Eltávolítod az e-mail-védelmet?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Hiba történt a várólistához való csatlakozás közben. Kérjük, próbálkozz újra később.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Első lépések";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Van meghívókódom";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Meghívót kaptál!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Csatlakozz a privát várólistához";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Felkerültél a várólistára!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "A meghívód itt fog megjelenni, amikor készen állunk. Szeretnél %1$@, amikor megérkezik? %2$@ az e-mail-védelemről.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "értesítést kapni";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Értesítést küldünk, amikor az e-mail-védelem készen áll számodra. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "További tudnivalók";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Értesítést küldünk, amikor megkezdheted az e-mail-védelem használatát.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Szeretnéd, hogy értesítsünk, amikor rád kerül a sor?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Feliratkoztál a várólistára, és arra kértél minket, hogy értesítsünk, amikor rád kerül a sor, hogy kipróbálhasd az e-mail-védelmet.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nem, köszönöm";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "ÉRTESÍTSETEK";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Megérkezett az e-mail védelmi meghívód!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Nem mentjük el az e-mailjeidet. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-mail adatvédelem, egyszerűsítve.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Tiltsd le az e-mail nyomkövetőket, és rejtsd el a címedet anélkül, hogy e-mail szolgáltatót váltanál. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Még nincsenek könyvjelzők hozzáadva";
@@ -1025,7 +974,7 @@
 "preserveLogins.remove.all.ok" = "OK";
 
 /* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "A webes követés elleni védelemről";
+"privacy.protection.about.protections.link" = "A webes követés elleni védelmünkről";
 
 /* No comment provided by engineer. */
 "privacy.protection.about.search.protections.link" = "A keresés védelméről és a hirdetésekről";
@@ -1169,25 +1118,25 @@
 "privacy.protection.network.leaderboard.gathering" = "Folyamatosan gyűjtjük az adatokat, hogy bemutathassuk, hány\nnyomkövetőt tiltottunk le.";
 
 /* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Harmadik féltől származó kérések nincsenek betöltve";
+"privacy.protection.no.other.third.party.domains.loaded" = "Nincsenek harmadik féltől származó kérések betöltve";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.adclickattribution" = "A következő tartomány kérései azért lettek betöltve, mert a DuckDuckGón nemrég rákattintottak a(z) %@ hirdetésére. Ezek a kérések segítenek értékelni a hirdetések hatékonyságát. A DuckDuckGo egyik hirdetése sem profilozó.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "A következő domain kérései a webhely megszakadásának megelőzése érdekében lettek betöltve.";
+"privacy.protection.other.domains.exceptions" = "A következő tartomány kérései a webhely megszakadásának megelőzése érdekében lettek betöltve.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.firstparty" = "A következő tartomány kérései azért lettek betöltve, mert a következőhöz vannak társítva: %@.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "A következő harmadik fél tartományok kérései be lettek töltve. Ha egy cég kérései betöltődnek, ez lehetővé teheti számukra, hogy profilokat készítsenek a felhasználóról, bár a többi webes nyomkövetési védelmünk továbbra is érvényben van.";
+"privacy.protection.other.domains.info" = "A következő harmadik fél tartományok kérései be lettek töltve. Ha egy cég kérései betöltődnek, ez lehetővé teheti számukra, hogy profilokat készítsenek rólad, bár a többi webes nyomkövetési védelmünk továbbra is működik.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "A harmadik féltől származó kérések betöltése nincs blokkolva, mert a végelem ki van kapcsolva ehhez a webhelyhez. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek a felhasználóról.";
+"privacy.protection.other.domains.info.disabled.protection" = "A harmadik féltől származó kérések betöltése nincs blokkolva, mert a védelem ki van kapcsolva ehhez a webhelyhez. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek rólad.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "A következő tartományok követési kérelmei lettek betöltve.";
+"privacy.protection.other.domains.info.header.disabled.protection" = "A következő tartományok követési kérései lettek betöltve.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.info.header.disabled.protection.also.new" = "A következő tartomány kérései is be lettek töltve.";
@@ -1205,7 +1154,7 @@
 "privacy.protection.other.domains.thirdparties.empty" = "Nem észleltünk harmadik fél tartományából származó kéréseket.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "A harmadik féltől származó kérések be lettek töltve";
+"privacy.protection.other.third.party.domains.loaded" = "A harmadik fél kérései be lettek töltve";
 
 /* No comment provided by engineer. */
 "privacy.protection.platform.limitations.footer.info" = "Fontos tudni: a platformkorlátozások korlátozhatják az összes kérés észlelését.";
@@ -1247,16 +1196,16 @@
 "privacy.protection.tos.unknown" = "Ismeretlen adatvédelmi gyakorlatok";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "A nyomkövetők segítségével a cégek profilt alkothatnak rólad. Megakadályoztuk, hogy ezek a nyomkövetők betöltsék és nyomon kövessék a tevékenységedet ezen az oldalon.";
+"privacy.protection.tracker.networks.info" = "A nyomkövetők segítségével a cégek profilt alkothatnak rólad. Megakadályoztuk, hogy ezek a nyomkövetők betöltődjenek, és nyomon kövessék a tevékenységedet ezen az oldalon.";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "A nyomkövető kérések betöltése nincs blokkolva, mert a végelem ki van kapcsolva ehhez a webhelyhez. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek a felhasználóról.";
+"privacy.protection.tracker.networks.info.empty" = "A nyomkövető kérések betöltése nincs blokkolva, mert a védelem ki van kapcsolva ehhez a webhelyhez. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek rólad.";
 
 /* No comment provided by engineer. */
 "privacy.protection.tracker.networks.info.empty.no.trackers" = "Nem észleltünk nyomkövetési kérést.";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "A következő harmadik fél tartományok kéréseinek betöltése blokkolva van, mivel nyomkövető kérésként lettek beazonosítva. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek a felhasználóról.";
+"privacy.protection.tracker.networks.info.new" = "A következő harmadik fél tartományok kéréseinek betöltése blokkolva van, mivel nyomkövető kérésként lettek beazonosítva. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek rólad.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
@@ -1271,7 +1220,7 @@
 "privacy.protection.trackers.found.new" = "Nyomkövető kérések találhatók";
 
 /* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nyomkövető kérések nincsenek blokkolva";
+"privacy.protection.trackers.not.blocked" = "Nincsenek nyomkövetési kérések blokkolva";
 
 /* No comment provided by engineer. */
 "privacy.protection.trackers.not.found" = "Nem találhatók nyomkövetési kérések";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "%@ üzenete:";
 

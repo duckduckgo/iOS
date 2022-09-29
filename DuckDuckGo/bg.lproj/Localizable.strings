@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Отмяна";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Предложение за автоматично довършване";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Отметка";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Отваряне на уебсайта";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Търсене в DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Добавяне";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Скриване на паролата";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Преглед";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Запазване на паролата?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Показване на паролата";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Актуализиране на данните за вход";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Блокирайте имейл тракерите и скрийте своя адрес";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Отмени";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Забележка: При премахване на защитата на имейла от устройството, вашият Duck адрес няма да бъде изтрит.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Премахване";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Да се премахне ли защитата на имейла?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Възникна грешка при включване в списъка с чакащи. Моля, опитайте отново по-късно.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Първи стъпки";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Имам код за покана";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Получихте покана!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Включване в списък с чакащи за личен адрес";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "В списъка с чакащи сте!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Вашата покана ще се покаже, когато сме готови. Искате ли %1$@, когато пристигне? %2$@ за защитата на имейли.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "да получите известие";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Ще ви изпратим известие, когато вашата защита на имейли е готова. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Научете повече";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Ще ви изпратим известие, когато можете да започнете да използвате защитата на имейла.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Искате ли да Ви изпратим известие, когато дойде Вашият ред?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Присъединихте се към списъка с чакащи и поискахте да ви уведомим, когато дойде вашият ред да изпробвате нашата функция за защита на имейл.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Не, благодаря";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "УВЕДОМЕТЕ МЕ";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Вашата покана за защита на имейл пристигна!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Ние не запазваме вашите имейли. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Поверителност на имейла с две думи.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Блокирайте имейл тракерите и скрийте своя адрес, без да променяте имейл доставчика си. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Все още няма добавени отметки";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "ОК";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Съобщение от %@:";
 

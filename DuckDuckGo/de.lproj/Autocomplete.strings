@@ -4,3 +4,6 @@
 /* Class = "UILabel"; text = "No Suggestions"; ObjectID = "gPe-Cv-14j"; */
 "gPe-Cv-14j.text" = "Keine Vorschläge";
 
+/* Class = "UIButton"; accessibilityLabel = "Autocomplete suggestion"; ObjectID = "N97-eI-Lps"; */
+"N97-eI-Lps.accessibilityLabel" = "Vorschläge für die Autovervollständigung";
+

@@ -23,16 +23,16 @@ public final class PrivacyInfo {
     
     public private(set) var url: URL
     private(set) var parentEntity: Entity?
-    private(set) var isProtected: Bool
     
     @Published public var trackerInfo: TrackerInfo
+    @Published public var protectionStatus: ProtectionStatus
     @Published public var serverTrust: ServerTrust?
     @Published public var connectionUpgradedTo: URL?
     
-    public init(url: URL, parentEntity: Entity?, isProtected: Bool) {
+    public init(url: URL, parentEntity: Entity?, protectionStatus: ProtectionStatus) {
         self.url = url
         self.parentEntity = parentEntity
-        self.isProtected = isProtected
+        self.protectionStatus = protectionStatus
         trackerInfo = TrackerInfo()
     }
     

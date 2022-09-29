@@ -29,6 +29,7 @@
 		1E4FAA6427D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */; };
 		1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */; };
 		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
+		1E7BA07628E5C32300F2C468 /* ProtectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7BA07528E5C32300F2C468 /* ProtectionStatus.swift */; };
 		1E7CDADF28D8A78F0067D38A /* ServerTrustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD328D8A78F0067D38A /* ServerTrustViewModel.swift */; };
 		1E7CDAE028D8A78F0067D38A /* PrivacyDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */; };
 		1E7CDAE128D8A78F0067D38A /* PrivacyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD628D8A78F0067D38A /* PrivacyInfo.swift */; };
@@ -803,6 +804,7 @@
 		1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeUserScript.swift; sourceTree = "<group>"; };
+		1E7BA07528E5C32300F2C468 /* ProtectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionStatus.swift; sourceTree = "<group>"; };
 		1E7CDAD328D8A78F0067D38A /* ServerTrustViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTrustViewModel.swift; sourceTree = "<group>"; };
 		1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyDashboardController.swift; sourceTree = "<group>"; };
 		1E7CDAD628D8A78F0067D38A /* PrivacyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyInfo.swift; sourceTree = "<group>"; };
@@ -2241,6 +2243,7 @@
 			children = (
 				1E7CDADA28D8A78F0067D38A /* ServerTrust.swift */,
 				1E7CDADB28D8A78F0067D38A /* TrackerInfo.swift */,
+				1E7BA07528E5C32300F2C468 /* ProtectionStatus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5068,6 +5071,7 @@
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				4B6484ED27FD1E350050A7A1 /* MacBrowserWaitlist.swift in Sources */,
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,
+				1E7BA07628E5C32300F2C468 /* ProtectionStatus.swift in Sources */,
 				1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,

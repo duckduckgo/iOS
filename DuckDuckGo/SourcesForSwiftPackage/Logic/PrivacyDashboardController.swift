@@ -150,8 +150,11 @@ extension PrivacyDashboardController: WKNavigationDelegate {
     }
     
     private func sendProtectionStatus() {
-        guard let webView = self.webView else { return }
-        privacyDashboardScript.setProtectionStatus(privacyInfo?.isProtected ?? false, webView: webView)
+        guard let webView = self.webView,
+              let protectionStatus = privacyInfo?.protectionStatus
+        else { return }
+        
+        privacyDashboardScript.setProtectionStatus(protectionStatus, webView: webView)
     }
     
     private func sendParentEntity() {

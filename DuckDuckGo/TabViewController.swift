@@ -923,9 +923,6 @@ class TabViewController: UIViewController {
         let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: isProtected)
         privacyInfo.serverTrust = makeServerTrust()
         
-        // TODO: required temporarily for serialising the TrackerInfo into old format
-        privacyInfo.trackerInfo.tds = ContentBlocking.trackerDataManager.trackerData
-        
         previousPrivacyInfosByURL[url] = privacyInfo
         
         return privacyInfo

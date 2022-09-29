@@ -115,10 +115,15 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        coordinator.animate { _ in
+        coordinator.animate(alongsideTransition: { _ in
             self.updateConstraintConstants()
             self.emptyView.refreshConstraints()
-        }
+            if !self.searchController.isActive {
+                self.navigationItem.searchController = nil
+            }
+        }, completion: { _ in
+            self.updateSearchController()
+        })
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {

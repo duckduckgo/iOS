@@ -1,6 +1,5 @@
 //
-//  TrackerAnimationLogic.swift
-//  DuckDuckGo
+//  ServerTrust.swift
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
@@ -18,11 +17,14 @@
 //
 
 import Foundation
-import Core
 
-final class TrackerAnimationLogic {
-    
-    static func shouldAnimateTrackers(for trackerInfo: TrackerInfo) -> Bool {
-        !trackerInfo.trackersBlocked.isEmpty
+public struct ServerTrust {
+
+    let host: String
+    let secTrust: SecTrust
+
+    public init(host: String, secTrust: SecTrust) {
+        self.host = host
+        self.secTrust = secTrust
     }
 }

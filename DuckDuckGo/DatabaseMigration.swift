@@ -26,11 +26,9 @@ class DatabaseMigration {
     
     private enum LegacyStores: String, CaseIterable {
         case appRating = "AppRatingPrompt"
-        case networkLeaderboard = "NetworkLeaderboard"
         case httpsUpgrade = "HTTPSUpgrade"
     }
     
-    // swiftlint:disable function_body_length
     static func migrate(to context: NSManagedObjectContext) {
         let group = DispatchGroup()
         
@@ -41,29 +39,6 @@ class DatabaseMigration {
                     destination.lastAccess = source.lastAccess
                     destination.lastShown = source.lastShown
                     destination.uniqueAccessDays = source.uniqueAccessDays
-        }, completion: { result in
-            group.leave()
-            success = success && result
-        })
-        
-        group.enter()
-        migrate(db: LegacyStores.networkLeaderboard.rawValue, to: context,
-                with: { (source: PPTrackerNetwork, destination: PPTrackerNetwork) in
-                    destination.detectedOnCount = source.detectedOnCount
-                    destination.trackersCount = source.trackersCount
-                    destination.name = source.name
-        }, completion: { result in
-            group.leave()
-            success = success && result
-        })
-        
-        group.enter()
-        migrate(db: LegacyStores.networkLeaderboard.rawValue, to: context,
-                with: { (source: PPPageStats, destination: PPPageStats) in
-                    destination.httpsUpgrades = source.httpsUpgrades
-                    destination.pagesLoaded = source.pagesLoaded
-                    destination.pagesWithTrackers = source.pagesWithTrackers
-                    destination.startDate = source.startDate
         }, completion: { result in
             group.leave()
             success = success && result

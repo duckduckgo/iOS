@@ -46,7 +46,7 @@ protocol TabDelegate: AnyObject {
     func tabLoadingStateDidChange(tab: TabViewController)
     func tab(_ tab: TabViewController, didUpdatePreview preview: UIImage)
 
-    func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?)
+    func tab(_ tab: TabViewController, didChangePrivacyInfo privacyInfo: PrivacyInfo?)
 
     func tabDidRequestReportBrokenSite(tab: TabViewController)
     
@@ -71,7 +71,7 @@ protocol TabDelegate: AnyObject {
     func tabDidRequestSearchBarRect(tab: TabViewController) -> CGRect
 
     func tab(_ tab: TabViewController,
-             didRequestPresentingTrackerAnimation siteRating: SiteRating,
+             didRequestPresentingTrackerAnimation privacyInfo: PrivacyInfo,
              isCollapsing: Bool)
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController)

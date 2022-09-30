@@ -46,12 +46,8 @@ class HomeCollectionView: UICollectionView {
         
         register(UINib(nibName: "FavoriteHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "favorite")
-        register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
-                 forCellWithReuseIdentifier: "PrivacyHomeCell")
         register(UINib(nibName: "HomeMessageCell", bundle: nil),
                  forCellWithReuseIdentifier: "homeMessageCell")
-        register(UINib(nibName: "ExtraContentHomeCell", bundle: nil),
-                 forCellWithReuseIdentifier: "extraContent")
         
         register(HomeMessageCollectionViewCell.self, forCellWithReuseIdentifier: "HomeMessageCell")
         

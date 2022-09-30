@@ -36,8 +36,8 @@ final class TrackerAnimationImageProvider {
         trackerImageCache.resetCache()
     }
     
-    public func loadTrackerImages(from siteRating: SiteRating) {
-        let entityNames = sortedEntityNames(from: siteRating).prefix(Const.maxNumberOfIcons)
+    public func loadTrackerImages(for trackerInfo: TrackerInfo) {
+        let entityNames = sortedEntityNames(from: trackerInfo).prefix(Const.maxNumberOfIcons)
         
         var images: [CGImage] = entityNames.map {
             trackerImageCache.trackerImage(for: $0)
@@ -50,7 +50,7 @@ final class TrackerAnimationImageProvider {
         currentTrackerImages = images
     }
     
-    private func sortedEntityNames(from siteRating: SiteRating) -> [String] {
+    private func sortedEntityNames(from trackerInfo: TrackerInfo) -> [String] {
         struct LightEntity: Hashable {
             let name: String
             let prevalence: Double
@@ -58,7 +58,7 @@ final class TrackerAnimationImageProvider {
         
         let blockedEntities: Set<LightEntity> =
         // Remove entity duplicates by using Set
-        Set(siteRating.trackersBlocked
+        Set(trackerInfo.trackersBlocked
             // Filter trackers without entity name
             .compactMap {
                 if let entityName = $0.entityName, entityName.count > 0 {

@@ -27,6 +27,7 @@ public final class PrivacyDashboardController: NSObject {
     public var onProtectionSwitchChange: ((Bool) -> Void)?
     public var onCloseTapped: (() -> Void)?
     public var onShowReportBrokenSiteTapped: (() -> Void)?
+    public var onOpenUrlInNewTab: ((URL) -> Void)?
     
     public private(set) weak var privacyInfo: PrivacyInfo?
     private weak var webView: WKWebView?
@@ -175,5 +176,9 @@ extension PrivacyDashboardController: PrivacyDashboardUserScriptDelegate {
     
     func userScriptDidRequestShowReportBrokenSite(_ userScript: PrivacyDashboardUserScript) {
         onShowReportBrokenSiteTapped?()
+    }
+    
+    func userScript(_ userScript: PrivacyDashboardUserScript, didRequestOpenUrlInNewTab url: URL) {
+        onOpenUrlInNewTab?(url)
     }
 }

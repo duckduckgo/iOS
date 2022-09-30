@@ -26,6 +26,7 @@ protocol PrivacyDashboardUserScriptDelegate: AnyObject {
     func userScript(_ userScript: PrivacyDashboardUserScript, didChangeProtectionStateTo protectionState: Bool)
     func userScriptDidRequestClosing(_ userScript: PrivacyDashboardUserScript)
     func userScriptDidRequestShowReportBrokenSite(_ userScript: PrivacyDashboardUserScript)
+    func userScript(_ userScript: PrivacyDashboardUserScript, didRequestOpenUrlInNewTab: URL)
 }
 
 final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
@@ -35,6 +36,7 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
         case privacyDashboardFirePixel
         case privacyDashboardClose
         case privacyDashboardShowReportBrokenSite
+        case privacyDashboardOpenUrlInNewTab
     }
 
     static var injectionTime: WKUserScriptInjectionTime { .atDocumentStart }
@@ -60,8 +62,12 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
             handleClose()
         case .privacyDashboardShowReportBrokenSite:
             handleShowReportBrokenSite()
+        case .privacyDashboardOpenUrlInNewTab:
+            handleOpenUrlInNewTab(message: message)
         }
     }
+    
+    // MARK: - JS message handlers
 
     private func handleSetProtection(message: WKScriptMessage) {
         guard let isProtected = message.body as? Bool else {
@@ -90,7 +96,21 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
     private func handleShowReportBrokenSite() {
         delegate?.userScriptDidRequestShowReportBrokenSite(self)
     }
+    
+    private func handleOpenUrlInNewTab(message: WKScriptMessage) {
+        guard let dict = message.body as? [String: Any],
+              let urlString = dict["url"] as? String,
+              let url = URL(string: urlString)
+        else {
+            assertionFailure("handleOpenUrlInNewTab: expected { url: '...' } ")
+            return
+        }
 
+        delegate?.userScript(self, didRequestOpenUrlInNewTab: url)
+    }
+
+    // MARK: - Calls to script's JS API
+    
     func setTrackerInfo(_ tabUrl: URL, trackerInfo: TrackerInfo, webView: WKWebView) {
         guard let trackerBlockingDataJson = try? JSONEncoder().encode(trackerInfo).utf8String() else {
             assertionFailure("Can't encode trackerInfoViewModel into JSON")

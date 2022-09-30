@@ -77,6 +77,14 @@ class PrivacyDashboardViewController: UIViewController {
                 mainViewController.launchReportBrokenSite()
             }
         }
+        
+        privacyDashboardController.onOpenUrlInNewTab = { [weak self] url in
+            guard let mainViewController = self?.presentingViewController as? MainViewController else { return }
+            
+            self?.dismiss(animated: true) {
+                mainViewController.loadUrlInNewTab(url, inheritedAttribution: nil)
+            }
+        }
     }
     
     public func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {

@@ -517,7 +517,7 @@ extension Database {
     
     static func configureErrorHandling(application: UIApplication) {
         
-        errorHandling = EventMapping<CoreDataDatabase.Error>(mapping: { event, error, params, onComplete in
+        errorHandling = EventMapping<CoreDataDatabase.Error>(mapping: { event, error, params, _ in
             
             var parameters = params ?? [:]
             switch event {
@@ -526,8 +526,11 @@ extension Database {
                     parameters[PixelParameters.applicationState] = "\(application.applicationState.rawValue)"
                     parameters[PixelParameters.dataAvailability] = "\(application.isProtectedDataAvailable)"
                     
-                    Pixel.fire(pixel: .dbInitializationError, error: error, withAdditionalParameters: parameters, onComplete: onComplete)
+                    Pixel.fire(pixel: .dbInitializationError, error: error, withAdditionalParameters: parameters)
+                    Thread.sleep(forTimeInterval: 1.0)
                 }
+                
+                fatalError("Could not initialize database: \(error?.localizedDescription ?? "unknown"   )")
             }
         })
     }

@@ -57,7 +57,7 @@ public class Database {
         return CoreDataDatabase(name: Constants.databaseName,
                                 url: url,
                                 model: managedObjectModel,
-                                errorEvents: errorHandling,
+                                errorHandler: errorHandling,
                                 log: generalLog)
     }
 }

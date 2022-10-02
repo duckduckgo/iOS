@@ -35,8 +35,8 @@ public struct PixelParameters {
     
     public static let originatedFromMenu = "om"
     
-    static let applicationState = "as"
-    static let dataAvailiability = "dp"
+    public static let applicationState = "as"
+    public static let dataAvailability = "dp"
     
     static let errorCode = "e"
     static let errorDomain = "d"

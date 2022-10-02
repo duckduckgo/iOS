@@ -523,8 +523,8 @@ extension Database {
             switch event {
             case .dbInitializationError:
                 if let error = error {
-                    parameters["as"] = "\(application.applicationState.rawValue)"
-                    parameters["dp"] = "\(application.isProtectedDataAvailable)"
+                    parameters[PixelParameters.applicationState] = "\(application.applicationState.rawValue)"
+                    parameters[PixelParameters.dataAvailability] = "\(application.isProtectedDataAvailable)"
                     
                     Pixel.fire(pixel: .dbInitializationError, error: error, withAdditionalParameters: parameters, onComplete: onComplete)
                 }

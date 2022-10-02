@@ -40,12 +40,14 @@ Using a simulator where a physical device is unavailable is acceptable.
 * [ ] iPhone SE (1st Gen)
 * [ ] iPhone 8
 * [ ] iPhone X
+* [ ] iPhone 14 Pro
 * [ ] iPad
 
 **OS Testing**:
 
 * [ ] iOS 14
 * [ ] iOS 15
+* [ ] iOS 16
 
 **Theme Testing**:
 

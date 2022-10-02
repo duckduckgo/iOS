@@ -268,6 +268,7 @@ extension Pixel {
         case dbRemovalError
         case dbDestroyError
         case dbDestroyFileError
+        case dbContainerInitializationError
         case dbInitializationError
         case dbSaveExcludedHTTPSDomainsError
         case dbSaveBloomFilterError
@@ -598,6 +599,7 @@ extension Pixel.Event {
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"
         case .dbDestroyFileError: return "m_d_dbdf"
+        case .dbContainerInitializationError: return "m_d_database_container_error"
         case .dbInitializationError: return "m_d_dbie"
         case .dbSaveExcludedHTTPSDomainsError: return "m_d_dbsw"
         case .dbSaveBloomFilterError: return "m_d_dbsb"

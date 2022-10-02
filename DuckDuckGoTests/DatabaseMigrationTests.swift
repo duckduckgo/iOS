@@ -19,30 +19,53 @@
 
 import XCTest
 import CoreData
+import BrowserServicesKit
 @testable import Core
 @testable import DuckDuckGo
 
 class DatabaseMigrationTests: XCTestCase {
     
-    let sourceDB = Database(name: "Source", model: Database.shared.model)
+    static var tempDBDir: URL {
+        FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    }
+    
+    static var mergedModel: NSManagedObjectModel = {
+        let mainBundle = Bundle.main
+        
+        return CoreDataDatabase.loadModel(from: mainBundle, named: "NetworkLeaderboard")!
+    }()
+    
+    let sourceDB = CoreDataDatabase(name: "Source",
+                                    containerLocation: tempDBDir,
+                                    model: mergedModel)
+    
+    let destinationDB = CoreDataDatabase(name: "Destination",
+                                         containerLocation: tempDBDir,
+                                         model: mergedModel)
 
     override func setUp() {
         super.setUp()
         
-        sourceDB.loadStore()
-        
-        cleanup(database: Database.shared)
-        cleanup(database: sourceDB)
+        sourceDB.loadStore { _, error in
+            if let e = error {
+                XCTFail("Could not load store: \(e.localizedDescription)")
+            }
+        }
+        destinationDB.loadStore { _, error in
+            if let e = error {
+                XCTFail("Could not load store: \(e.localizedDescription)")
+            }
+        }
     }
     
     override func tearDown() {
         super.tearDown()
         
-        cleanup(database: Database.shared)
+        cleanup(database: destinationDB)
         cleanup(database: sourceDB)
     }
     
-    private func cleanup(database: Database) {
+    private func cleanup(database: CoreDataDatabase) {
         let context = database.makeContext(concurrencyType: .mainQueueConcurrencyType)
         context.deleteAll(entityDescriptions: [PPTrackerNetwork.entity(),
                                                PPPageStats.entity()])
@@ -65,7 +88,7 @@ class DatabaseMigrationTests: XCTestCase {
     }
     
     func testWhenDestinationIsEmptyThenMigrateAndClean() {
-        let destination = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        let destination = destinationDB.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let source = sourceDB.makeContext(concurrencyType: .mainQueueConcurrencyType)
         
         populate(context: source)
@@ -96,7 +119,7 @@ class DatabaseMigrationTests: XCTestCase {
     }
     
     func testWhenDestinationIsNotEmptyThenSkipAndClean() {
-        let destination = Database.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        let destination = destinationDB.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let source = sourceDB.makeContext(concurrencyType: .mainQueueConcurrencyType)
         
         populate(context: source)

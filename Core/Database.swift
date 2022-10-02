@@ -31,8 +31,6 @@ public class Database {
     
     public static let shared = makeCoreDataDatabase()
     
-    public static var errorHandling: EventMapping<CoreDataDatabase.Error>?
-    
     static func makeCoreDataDatabase() -> CoreDataDatabase {
         
         let mainBundle = Bundle.main
@@ -49,15 +47,9 @@ public class Database {
             fatalError("No DB scheme found")
         }
         
-        let errorHandling = EventMapping<CoreDataDatabase.Error>(mapping: { event, error, params, onComplete in
-             self.errorHandling?.fire(event, error: error, parameters: params, onComplete: onComplete)
-        })
-        
         let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Database.Constants.databaseGroupID)!
         return CoreDataDatabase(name: Constants.databaseName,
-                                url: url,
-                                model: managedObjectModel,
-                                errorHandler: errorHandling,
-                                log: generalLog)
+                                containerLocation: url,
+                                model: managedObjectModel)
     }
 }

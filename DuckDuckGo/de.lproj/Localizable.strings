@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Rückgängig machen";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Vorschläge für die Autovervollständigung";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Lesezeichen";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Website öffnen";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Suche bei DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Hinzufügen";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "An";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Passwort ausblenden";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Ansehen";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Passwort speichern?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Passwort anzeigen";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Anmeldedaten aktualisieren";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-Mail-Tracker blockieren und deine Adresse verbergen";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Abbrechen";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Hinweis: Beim Entfernen des E-Mail-Schutzes von diesem Gerät wird deine Duck-Adresse nicht gelöscht.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Entfernen";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "E-Mail-Schutz entfernen?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Bei der Aktion „Auf die Warteliste setzen“ ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Los geht's!";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Ich habe einen Einladungscode";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Du wurdest eingeladen!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Auf die private Warteliste setzen";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Du stehst auf der Warteliste!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Deine Einladung wird hier angezeigt, wenn es soweit ist. Möchtest du %1$@, wenn sie eintrifft? %2$@ über E-Mail-Schutz.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "Benachrichtigt werden";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Du erhältst eine Benachrichtigung, wenn du die E-Mail-Schutzfunktion testen kannst. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Mehr erfahren";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Wir senden dir eine Benachrichtigung, wenn du den E-Mail-Schutz nutzen kannst.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Möchtest du von uns benachrichtigt werden, wenn du an der Reihe bist?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Du hast dich auf die Warteliste setzen lassen und uns darum gebeten, dich zu benachrichtigen, wenn auch du unseren E-Mail-Schutz testen kannst.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nein, danke";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "ICH MÖCHTE BENACHRICHTIGT WERDEN";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Deine Einladung zum E-Mail-Schutz ist da!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Wir speichern keine E-Mails. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-Mail-Datenschutz, vereinfacht.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "E-Mail-Tracker blockieren und deine Adresse verbergen, ohne dafür den E-Mail-Anbieter wechseln zu müssen. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Noch keine Lesezeichen hinzugefügt";
@@ -1181,7 +1130,7 @@
 "privacy.protection.other.domains.firstparty" = "Die Anforderungen der folgenden Domain wurden geladen, da sie mit %@ verknüpft sind.";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Die Anfragen der folgenden Drittanbieter-Domains wurden geladen. Wenn die Anfragen eines Unternehmens geladen werden, kann dies ihm erlauben, ein Profil von dir zu erstellen, obwohl unsere anderen Schutzmaßnahmen für das Web-Tracking weiterhin gelten.";
+"privacy.protection.other.domains.info" = "Die Anfragen der folgenden Drittanbieter-Domains wurden geladen. Wenn die Anfragen eines Unternehmens geladen werden, kann dies ihnen erlauben, ein Profil von dir zu erstellen, obwohl unsere anderen Schutzmaßnahmen für das Web-Tracking weiterhin gelten.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.info.disabled.protection" = "Das Laden von Anfragen von Drittanbietern wurde nicht blockiert, da der Schutz für diese Website deaktiviert ist. Wenn die Anfragen eines Unternehmens geladen werden, kann ihm dies ermöglichen, ein Profil von dir zu erstellen.";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Eine Nachricht von %@:";
 

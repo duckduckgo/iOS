@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Geri al";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Otomatik tamamlama önerisi";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Yer imi ekle";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Web sitesini aç";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "DuckDuckGo'da ara";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Açık";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Parolayı gizle";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Görüntüle";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Şifre Kaydedilsin mi?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Parolayı göster";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Girişi Güncelle";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "E-posta izleyicileri engelleyin ve adresinizi gizleyin";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "İptal";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "E-posta Korumasının bu cihazdan kaldırılması Duck Adresinizin silinmesine yol açmaz.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Kaldır";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "E-posta Koruması Kaldırılsın mı?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Bekleme listesine katılırken bir hata oluştu, lütfen daha sonra tekrar deneyin";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Başlayın";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Davet Kodum var";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Davet edildiniz!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Özel Bekleme Listesine Katılın";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Bekleme listesindesiniz!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Özellik hazır olduğunda davetiyeniz burada gösterilecek. Hazır olduğunda %1$@ ister misiniz? E-posta Koruması hakkında %2$@.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "bildirim almak";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "E-posta Koruması hazır olduğunda size bildirim gönderilecektir. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Daha fazla bilgi";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "E-posta Koruması'nı kullanmaya başlayabileceğiniz zaman size bir bildirim göndereceğiz.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Sıra size geldiğinde haber vermemizi ister misiniz?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Bekleme listesine katılarak E-posta Koruması'nı deneme sırası size geldiğinde sizi bilgilendirmemizi istediniz.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Hayır Teşekkürler";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "BANA BİLDİR";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "E-posta Koruması için Davetlisiniz!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "E-postalarınızı kaydetmiyoruz. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-posta gizliliğinin basitleştirilmiş hâli.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "E-posta sağlayıcınızı değiştirmeden e-posta izleyicileri engelleyin ve adresinizi gizleyin. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi eklenmedi";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "Tamam";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "%@ size bir mesaj gönderdi:";
 

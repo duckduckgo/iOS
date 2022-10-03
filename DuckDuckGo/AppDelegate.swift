@@ -279,13 +279,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab(reuseExisting: true)
-            do {
-                if try url.getParameter(name: "w") != nil {
-                    Pixel.fire(pixel: .widgetNewSearch)
-                    mainViewController?.enterSearch()
-                }
-            } catch {
-                os_log("Error decoding parameter: %s", log: lifecycleLog, type: .debug, error.localizedDescription)
+            if url.getParameter(named: "w") != nil {
+                Pixel.fire(pixel: .widgetNewSearch)
+                mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)
@@ -296,6 +292,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
         } else if AppDeepLinks.isAddFavorite(url: url) {
             mainViewController?.startAddFavoriteFlow()
+        } else if app.applicationState == .active,
+                  let currentTab = mainViewController?.currentTab {
+            // If app is in active state, treat this navigation as something initiated form the context of the current tab.
+            mainViewController?.tab(currentTab,
+                                    didRequestNewTabForUrl: url,
+                                    openedByPage: true,
+                                    inheritingAttribution: nil)
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
             mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
@@ -411,11 +414,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         EmailWaitlist.removeEmailState()
 
         let autofillStorage = EmailKeychainManager()
-        autofillStorage.deleteWaitlistState()
+        try? autofillStorage.deleteWaitlistState()
 
         // Remove the authentication state if this is a fresh install.
         if !Database.shared.isDatabaseFileInitialized {
-            autofillStorage.deleteAuthenticationState()
+            try? autofillStorage.deleteAuthenticationState()
         }
     }
 

@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Anuliuoti";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Automatinio užbaigimo pasiūlymas";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Žymė";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Atidaryti svetainę";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Ieškoti „DuckDuckGo“";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Papildyti";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Įjungti";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Paslėpti slaptažodį";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Peržiūrėti";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Išsaugoti slaptažodį?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Rodyti slaptažodį";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Atnaujinti prisijungimą";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokuokite el. laiškų sekimo priemones ir paslėpkite savo adresą";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Atšaukti";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Pastaba: jei iš šio įrenginio pašalinsite el. pašto adreso apsaugos priemonę, jūsų „Duck“ adresas nebus ištrintas.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Pašalinti";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Pašalinti el. pašto adreso apsaugos priemonę?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Jungiantis prie laukimo sąrašo atsirado klaida; vėliau pabandykite dar kartą";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Pradėti";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Turiu kvietimo kodą";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Buvote pakviesti!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Prisijungti prie privataus laukimo sąrašo";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Esate laukimo sąraše!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Kai jums viską paruošime, pakvietimą matysite čia. Ar nori %1$@, kai gausi pakvietimą? %2$@ apie el. pašto adreso apsaugos priemonę.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "gauti pranešimą";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Kai el. pašto adreso apsaugos priemonė jums bus paruošta, atsiųsime pranešimą. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Sužinokite daugiau";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Kai galėsite pradėti naudoti el. pašto adreso apsaugos priemonę, atsiųsime pranešimą.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Ar norite, kad praneštume, kai ateis jūsų eilė?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Prisijungėte prie laukimo sąrašo ir paprašėte mus informuoti, kai ateis jūsų eilė išbandyti mūsų parengtą el. pašto adreso apsaugos priemonę.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Ne, dėkoju";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "INFORMUOTI";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Jūsų el. pašto apsaugos kvietimas jau čia!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Jūsų el. laiškų neišsaugome. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Supaprastintas el. pašto privatumas.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Užbluokuokite el. pašto adresų stebėjimo priemones ir paslėpkite savo adresus nekeisdami el. pašto paslaugų teikėjo. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Žymių dar nepridėta";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "GERAI";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Pranešimas iš %@:";
 

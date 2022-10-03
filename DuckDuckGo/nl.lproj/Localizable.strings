@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Ongedaan maken";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Suggestie automatisch aanvullen";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Toevoegen als bladwijzer";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Website openen";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Zoeken op DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Toevoegen";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aan";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Wachtwoord verbergen";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Weergeven";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Wachtwoord opslaan?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Wachtwoord weergeven";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Login bijwerken";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokkeer e-mailtrackers en verberg je adres";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Annuleren";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Let op: als je E-mailbescherming van dit apparaat verwijdert, wordt je Duck-adres niet verwijderd.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Verwijderen";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "E-mailbescherming verwijderen?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Er is een fout opgetreden bij het inschrijven op de wachtlijst. Probeer het later opnieuw.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Aan de slag";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Ik heb een uitnodigingscode";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Je bent uitgenodigd!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Schrijf je in voor de privéwachtlijst";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Je staat op de wachtlijst!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Je uitnodiging wordt hier weergegeven als je aan de beurt bent. Wil je %1$@ wanneer het toekomt? %2$@ over E-mailbescherming.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "krijg een melding";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "We sturen je een melding wanneer<br/> E-mailbescherming voor je klaar staat. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Meer informatie";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "We sturen je een melding wanneer je E-mailbescherming kunt gaan gebruiken.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Wil je dat we je een melding sturen als je aan de beurt bent?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Je hebt je ingeschreven voor de wachtlijst en ons gevraagd je te laten weten wanneer je aan de beurt bent om onze E-mailbescherming te proberen.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nee, bedankt";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "MELDING STUREN";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Je hebt een uitnodiging voor E-mailbescherming ontvangen!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "We bewaren je e-mails niet. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-mailprivacy, vereenvoudigd.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokkeer e-mailtrackers en verberg je adres, zonder van e-mailprovider te wisselen. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nog geen bladwijzers toegevoegd";
@@ -1025,13 +974,13 @@
 "preserveLogins.remove.all.ok" = "OK";
 
 /* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Over onze webtrackingbeveiliging";
+"privacy.protection.about.protections.link" = "Over onze bescherming tegen webtracking";
 
 /* No comment provided by engineer. */
 "privacy.protection.about.search.protections.link" = "Over onze zoekbescherming en advertenties";
 
 /* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "How our search ads impact our protections";
+"privacy.protection.about.search.protections.link.new" = "Hoe onze zoekadvertenties onze bescherming beïnvloeden";
 
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Een bericht van %@:";
 

@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Võta tagasi";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Kasuta ettepaneku automaatteksti";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Järjehoidja";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Ava veebisait";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Otsing DuckDuckGo's";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Lisa";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Sees";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Peida parool";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Kuva";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Kas salvestada parool?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Kuva parool";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Värskenda sisselogimisandmeid";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokeeri meilijälgurid ja peida oma aadress";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Tühista";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Märkus. E-posti kaitsete eemaldamine sellest seadmest ei kustuta teie Ducki aadressi.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Eemaldage";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Kas eemaldada e-posti kaitsed?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Ooteloendiga liitumisel tekkis tõrge, proovige hiljem uuesti";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Alustage";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Mul on kutse kood";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Olete kutsutud!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Liituge privaatse ootenimekirjaga";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Te olete ootenimekirjas!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Teie kutse kuvatakse siin, kui oleme teie jaoks valmis. Soovite %1$@, kui see saabub? %2$@ e-posti kaitse kohta.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "telli teavitus";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Saadame teile teate, kui E-posti kaitse on teie jaoks valmis. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Loe edasi";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Saadame teile teatise, kui saate e-posti kaitset kasutama hakata.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Kas soovite, et me saadame teile teavituse, kui on teie kord?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Liitusite ootenimekirjaga ja palusite meid teavitada, kui on teie kord proovida meie e-posti kaitset.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Ei aitäh";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "TEAVITAGE MIND";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Teie e-posti kaitse kutse on siin!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Me ei salvesta teie e-kirju. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-posti privaatsus, lihtsustatud.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokeerige e-posti jälgijad ja peitke oma aadress ilma oma e-posti teenuse pakkujat vahetamata. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Järjehoidjaid pole veel lisatud";
@@ -1172,7 +1121,7 @@
 "privacy.protection.no.other.third.party.domains.loaded" = "Kolmanda poole päringud pole laaditud";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Järgmise domeeni päringud laaditi, sest hiljuti klõpsati DuckDuckGo's %@ reklaamil. Need päringud aitavad hinnata reklaamide tõhusust. Kõik DuckDuckGo reklaamid on mitteprofileerivad.";
+"privacy.protection.other.domains.adclickattribution" = "Järgmise domeeni päringud laaditi, sest hiljuti klõpsati DuckDuckGo's %@ reklaamil. Need päringud aitavad hinnata reklaamide tõhusust. Kõik DuckDuckGo' reklaamid on mitteprofileerivad.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.exceptions" = "Laaditi järgmise domeeni päringud, et vältida saidi töö häirimist.";
@@ -1253,7 +1202,7 @@
 "privacy.protection.tracker.networks.info.empty" = "Jälgimispäringute laadimist ei blokeeritud, sest selle saidi jaoks on kaitsed välja lülitatud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Me ei tuvastanud ühtegi jälgimispäringut.";
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Me ei tuvastanud ühtegi jälgimistaotlust.";
 
 /* No comment provided by engineer. */
 "privacy.protection.tracker.networks.info.new" = "Järgmiste kolmanda poole domeenide päringute laadimine blokeeriti, sest need tuvastati jälgimispäringutena. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Sõnum saatjalt %@:";
 

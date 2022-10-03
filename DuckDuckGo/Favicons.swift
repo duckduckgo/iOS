@@ -310,7 +310,7 @@ public class Favicons {
 
         func complete(withImage image: UIImage?) {
             queue.async {
-                if var image = image {
+                if let image = image {
                     let image = self.scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
                     targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
                 }

@@ -637,6 +637,7 @@ public struct UserText {
     public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
     public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    public static let autofillCopyToastNotesCopied = "Notes copied" //Title for toast when copying notes
     
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
         "Login last updated \(date)"

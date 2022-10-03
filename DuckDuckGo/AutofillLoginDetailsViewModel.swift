@@ -144,7 +144,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             message = UserText.autofillCopyToastAddressCopied
             UIPasteboard.general.string = address
         case .notes:
-            message = UserText.autofillCopyToastAddressCopied
+            message = UserText.autofillCopyToastNotesCopied
             UIPasteboard.general.string = notes
         }
         

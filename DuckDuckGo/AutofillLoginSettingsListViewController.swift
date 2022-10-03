@@ -29,6 +29,11 @@ protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
 }
 
 final class AutofillLoginSettingsListViewController: UIViewController {
+
+    private enum Constants {
+        static let padding: CGFloat = 16
+    }
+
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
@@ -297,8 +302,12 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
             emptySearchView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
             emptySearchViewCenterYConstraint,
+            emptySearchView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            emptySearchView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
 
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lockedView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            lockedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
             lockedViewBottomConstraint
         ])
     }

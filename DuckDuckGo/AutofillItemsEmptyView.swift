@@ -143,7 +143,9 @@ class AutofillItemsEmptyView: UIView {
         outerStackContentView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            outerStackContentView.centerXAnchor.constraint(equalTo: centerXAnchor)
+            outerStackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            outerStackContentView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 16),
+            outerStackContentView.trailingAnchor.constraint(greaterThanOrEqualTo: trailingAnchor, constant: -16)
         ])
 
         refreshConstraints()

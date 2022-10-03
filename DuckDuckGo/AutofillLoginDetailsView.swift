@@ -188,6 +188,7 @@ struct AutofillLoginDetailsView: View {
             MultilineTextEditor(text: subtitle)
         }
         .frame(minHeight: Constants.minRowHeight)
+        .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
     }
 
     private func deleteCell() -> some View {

@@ -23,6 +23,7 @@ import Core
 import BrowserServicesKit
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
@@ -548,14 +549,16 @@ extension AutofillLoginSettingsListViewController {
     }
 
     @objc private func adjustForKeyboard(notification: NSNotification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            return
+        }
 
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
 
-        emptySearchViewCenterYConstraint.constant = min((keyboardViewEndFrame.minY / 2) - searchController.searchBar.frame.height + (emptySearchView.frame.height / 2),
-                           (tableView.frame.height / 2) - searchController.searchBar.frame.height)
+        emptySearchViewCenterYConstraint.constant = min(
+            (keyboardViewEndFrame.minY + emptySearchView.frame.height) / 2 - searchController.searchBar.frame.height,
+            (tableView.frame.height / 2) - searchController.searchBar.frame.height
+        )
     }
 }
-
-// swiftlint:enable file_length

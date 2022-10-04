@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             _ = DefaultUserAgentManager.shared
-            Database.shared.loadStore { _ in }
+            Database.shared.loadStore { _, _ in }
             BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
                 _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
             }
@@ -81,8 +81,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         removeEmailWaitlistState()
-        
-        Database.shared.loadStore(application: application) { context in
+                
+        Database.shared.loadStore { context, error in
+            guard let context = context else {
+                
+                let parameters = [PixelParameters.applicationState: "\(application.applicationState.rawValue)",
+                                  PixelParameters.dataAvailability: "\(application.isProtectedDataAvailable)"]
+                        
+                switch error {
+                case .none:
+                    fatalError("Could not create database stack: Unknown Error")
+                case .some(CoreDataDatabase.Error.containerLocationCouldNotBePrepared(let underlyingError)):
+                    Pixel.fire(pixel: .dbContainerInitializationError,
+                               error: underlyingError,
+                               withAdditionalParameters: parameters)
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create database stack: \(underlyingError.localizedDescription)")
+                case .some(let error):
+                    Pixel.fire(pixel: .dbInitializationError,
+                               error: error,
+                               withAdditionalParameters: parameters)
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create database stack: \(error.localizedDescription)")
+                }
+            }
             DatabaseMigration.migrate(to: context)
         }
         

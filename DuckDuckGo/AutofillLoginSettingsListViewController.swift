@@ -242,7 +242,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             if tableView.isEditing {
                 navigationItem.rightBarButtonItems = [editButtonItem]
             } else {
-                if viewModel.isAutofillEnabled {
+                if viewModel.isAutofillEnabled || (!viewModel.isAutofillEnabled && viewModel.hasAccountsSaved) {
                     navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
                 } else {
                     navigationItem.rightBarButtonItems = [addBarButtonItem]

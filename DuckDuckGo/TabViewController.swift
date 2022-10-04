@@ -725,8 +725,8 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceView = iconView
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
-            
             privacyDashboard = controller
+            privacyDashboard?.tabViewController = self
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {

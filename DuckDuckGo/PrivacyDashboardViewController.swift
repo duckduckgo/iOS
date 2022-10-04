@@ -28,6 +28,8 @@ class PrivacyDashboardViewController: UIViewController {
     
     @IBOutlet private(set) weak var webView: WKWebView!
     
+    public weak var tabViewController: TabViewController?
+    
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
@@ -71,11 +73,7 @@ class PrivacyDashboardViewController: UIViewController {
         }
         
         privacyDashboardController.onShowReportBrokenSiteTapped = { [weak self] in
-            guard let mainViewController = self?.presentingViewController as? MainViewController else { return }
-            
-            self?.dismiss(animated: true) {
-                mainViewController.launchReportBrokenSite()
-            }
+            self?.performSegue(withIdentifier: "ReportBrokenSite", sender: self)
         }
         
         privacyDashboardController.onOpenUrlInNewTab = { [weak self] url in
@@ -90,6 +88,13 @@ class PrivacyDashboardViewController: UIViewController {
     public func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {
         privacyDashboardController.didFinishRulesCompilation()
         privacyDashboardController.updatePrivacyInfo(privacyInfo)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let navController = segue.destination as? UINavigationController,
+           let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
+            brokenSiteScreen.brokenSiteInfo = tabViewController?.getCurrentWebsiteInfo()
+        }
     }
 }
 

@@ -825,7 +825,7 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    func launchReportBrokenSite() {
+    fileprivate func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     

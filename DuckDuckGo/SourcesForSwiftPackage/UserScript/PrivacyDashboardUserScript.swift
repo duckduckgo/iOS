@@ -29,6 +29,11 @@ protocol PrivacyDashboardUserScriptDelegate: AnyObject {
     func userScript(_ userScript: PrivacyDashboardUserScript, didRequestOpenUrlInNewTab: URL)
 }
 
+public enum PrivacyDashboardTheme: String, Encodable {
+    case light
+    case dark
+}
+
 final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
 
     enum MessageNames: String, CaseIterable {
@@ -149,15 +154,15 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
         evaluate(js: "window.onChangeParentEntity(\(parentEntityJson))", in: webView)
     }
 
-    func setTheme(_ themeName: String?, webView: WKWebView) {
-        if themeName == nil { return }
+    func setTheme(_ theme: PrivacyDashboardTheme?, webView: WKWebView) {
+        if theme == nil { return }
 
-        guard let themeNameJson = try? JSONEncoder().encode(themeName).utf8String() else {
+        guard let themeJson = try? JSONEncoder().encode(theme).utf8String() else {
             assertionFailure("Can't encode themeName into JSON")
             return
         }
 
-        evaluate(js: "window.onChangeTheme(\(themeNameJson))", in: webView)
+        evaluate(js: "window.onChangeTheme(\(themeJson))", in: webView)
     }
 
     func setServerTrust(_ serverTrustViewModel: ServerTrustViewModel, webView: WKWebView) {

@@ -22,7 +22,7 @@ import Combine
 
 public final class PrivacyDashboardController: NSObject {
     
-    @Published public var themeName: String?
+    @Published public var theme: PrivacyDashboardTheme?
     
     public var onProtectionSwitchChange: ((Bool) -> Void)?
     public var onCloseTapped: (() -> Void)?
@@ -105,7 +105,7 @@ extension PrivacyDashboardController: WKNavigationDelegate {
     }
     
     private func subscribeToTheme() {
-        $themeName
+        $theme
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] themeName in

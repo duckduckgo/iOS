@@ -126,8 +126,16 @@ private extension PrivacyDashboardViewController {
 extension PrivacyDashboardViewController: Themable {
     
     func decorate(with theme: Theme) {
-        privacyDashboardController.themeName = theme.name.rawValue
         view.backgroundColor = theme.backgroundColor
+        privacyDashboardController.theme = privacyDashboardTheme(from: theme)
+    }
+    
+    private func privacyDashboardTheme(from theme: Theme) -> PrivacyDashboardTheme {
+        switch theme.name {
+        case .light: return .light
+        case .dark: return .dark
+        default: return .light
+        }
     }
 }
 

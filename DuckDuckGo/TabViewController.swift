@@ -2364,8 +2364,19 @@ extension TabViewController: EmailManagerRequestDelegate {
             PixelParameters.emailKeychainError: error.errorDescription
         ]
         
-        if case let .keychainAccessFailure(status) = error {
+        if case let .keychainLookupFailure(status) = error {
             parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+            parameters[PixelParameters.emailKeychainKeychainOperation] = "lookup"
+        }
+        
+        if case let .keychainDeleteFailure(status) = error {
+            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+            parameters[PixelParameters.emailKeychainKeychainOperation] = "delete"
+        }
+        
+        if case let .keychainSaveFailure(status) = error {
+            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+            parameters[PixelParameters.emailKeychainKeychainOperation] = "save"
         }
         
         Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)

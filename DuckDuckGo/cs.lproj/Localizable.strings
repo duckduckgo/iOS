@@ -10,6 +10,18 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Vrátit";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Použít návrh automatického doplňování";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Záložka";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Otevřít webovou stránku";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Hledat na DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Přidat";
 
@@ -160,6 +172,9 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aktivní";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Skrýt heslo";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Zobrazit";
 
@@ -192,6 +207,9 @@
 
 /* Title displayed on modal asking for the user to save the password */
 "autofill.save-password.title" = "Uložit heslo?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Zobrazit heslo";
 
 /* Confirm CTA displayed on modal asking for the user to update the login */
 "autofill.update-login.save.CTA" = "Aktualizovat přihlašovací údaje";
@@ -492,75 +510,6 @@
 
 /* Subtitle for the email settings cell */
 "email.settings.subtitle" = "Blokování trackerů v e-mailu a skrytí adresy";
-
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Zrušit";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Poznámka: Když odeberete ochranu e-mailů z tohoto zařízení, vaše adresa Duck zůstane zachovaná.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Odstranit";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Odebrat ochranu e-mailů?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Při zařazování do pořadníku došlo k chybě, zkuste to znovu později";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Začínáme";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Mám zvací kód";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Přišla vám pozvánka";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Připojte se k soukromému pořadníku";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Jste v pořadníku";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Vaše pozvánka se tu objeví, až na vás budeme připravení. Chcete %1$@, až dorazí? %2$@ o ochraně e-mailů.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "dostat oznámení";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Pošleme vám oznámení, až pro vás bude ochrana e-mailů připravená. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Více informací";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Pošleme vám oznámení, až budete moct začít používat ochrana e-mailů.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Máme tě upozornit, až budeš na řadě?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Zapsali jste se do pořadníku a požádali nás, abychom vás upozornili, až budete moct vyzkoušet naši ochranu e-mailů.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Ne, děkuji";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "UPOZORNĚTE MĚ";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Vaše pozvánka k ochraně e-mailů je zde!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Vaše e-maily neukládáme. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-mailové soukromí, zjednodušené.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokujte e-mailové trackery a skryjte svou adresu bez nutnosti měnit poskytovatele e-mailu. %@.";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
@@ -1172,7 +1121,7 @@
 "privacy.protection.no.other.third.party.domains.loaded" = "Nebyly načteny žádné požadavky třetích stran";
 
 /* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Protože nedávno došlo ke kliknutí na reklamu %@ na DuckDuckGo, byly načteny požadavky následujících domén. Tyto požadavky pomáhají vyhodnotit účinnost reklamy. Žádná reklama na DuckDuckGo nevytváří tvůj profil.";
+"privacy.protection.other.domains.adclickattribution" = "Protože nedávno došlo ke kliknutí na reklamu %@ na DuckDuckGo, byly načteny požadavky následujících domén. Tyhle požadavky pomáhají vyhodnocovat účinnost reklam. Žádná reklama na DuckDuckGo nevytváří tvůj profil.";
 
 /* No comment provided by engineer. */
 "privacy.protection.other.domains.exceptions" = "Následující požadavky domény byly načteny, aby se zabránilo narušení funkčnosti webové stránky.";
@@ -1404,4 +1353,7 @@
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "DOBŘE";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Zpráva od %@:";
 

@@ -193,10 +193,6 @@ class OmniBar: UIView {
         refreshState(state.onBrowsingStoppedState)
     }
 
-    @IBAction func textFieldTapped() {
-        textField.becomeFirstResponder()
-    }
-    
     func removeTextSelection() {
         textField.selectedTextRange = nil
     }
@@ -512,13 +508,5 @@ extension OmniBar: Themable {
         
         updateSearchBarBorder()
     }
-}
-
-extension OmniBar: UIGestureRecognizerDelegate {
- 
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return !textField.isFirstResponder
-    }
-    
 }
 // swiftlint:enable file_length

@@ -30,11 +30,6 @@
 		1E4FAA6427D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */; };
 		1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */; };
 		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
-		1E7BA07628E5C32300F2C468 /* ProtectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7BA07528E5C32300F2C468 /* ProtectionStatus.swift */; };
-		1E7CDAE028D8A78F0067D38A /* PrivacyDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */; };
-		1E7CDAE128D8A78F0067D38A /* PrivacyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD628D8A78F0067D38A /* PrivacyInfo.swift */; };
-		1E7CDAE228D8A78F0067D38A /* PrivacyDashboardUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD828D8A78F0067D38A /* PrivacyDashboardUserScript.swift */; };
-		1E7CDAE428D8A78F0067D38A /* TrackerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDADB28D8A78F0067D38A /* TrackerInfo.swift */; };
 		1E8146AD28C8ABF000D1AF63 /* TrackerAnimationLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146A728C8AB3F00D1AF63 /* TrackerAnimationLogicTests.swift */; };
 		1E8146AE28C8ABF400D1AF63 /* PrivacyIconLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146A928C8AB8200D1AF63 /* PrivacyIconLogicTests.swift */; };
 		1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */; };
@@ -803,11 +798,6 @@
 		1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeUserScript.swift; sourceTree = "<group>"; };
-		1E7BA07528E5C32300F2C468 /* ProtectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionStatus.swift; sourceTree = "<group>"; };
-		1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyDashboardController.swift; sourceTree = "<group>"; };
-		1E7CDAD628D8A78F0067D38A /* PrivacyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyInfo.swift; sourceTree = "<group>"; };
-		1E7CDAD828D8A78F0067D38A /* PrivacyDashboardUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyDashboardUserScript.swift; sourceTree = "<group>"; };
-		1E7CDADB28D8A78F0067D38A /* TrackerInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackerInfo.swift; sourceTree = "<group>"; };
 		1E8146A728C8AB3F00D1AF63 /* TrackerAnimationLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerAnimationLogicTests.swift; sourceTree = "<group>"; };
 		1E8146A928C8AB8200D1AF63 /* PrivacyIconLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyIconLogicTests.swift; sourceTree = "<group>"; };
 		1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeSettingsViewController.swift; sourceTree = "<group>"; };
@@ -2197,50 +2187,6 @@
 				1EFDCBC027D2393C00916BC5 /* DownloadsDeleteHelper.swift */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		1E7CDAD128D8A78F0067D38A /* SourcesForSwiftPackage */ = {
-			isa = PBXGroup;
-			children = (
-				1E7CDAD228D8A78F0067D38A /* ViewModel */,
-				1E7CDAD428D8A78F0067D38A /* Logic */,
-				1E7CDAD628D8A78F0067D38A /* PrivacyInfo.swift */,
-				1E7CDAD728D8A78F0067D38A /* UserScript */,
-				1E7CDAD928D8A78F0067D38A /* Model */,
-			);
-			path = SourcesForSwiftPackage;
-			sourceTree = "<group>";
-		};
-		1E7CDAD228D8A78F0067D38A /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		1E7CDAD428D8A78F0067D38A /* Logic */ = {
-			isa = PBXGroup;
-			children = (
-				1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */,
-			);
-			path = Logic;
-			sourceTree = "<group>";
-		};
-		1E7CDAD728D8A78F0067D38A /* UserScript */ = {
-			isa = PBXGroup;
-			children = (
-				1E7CDAD828D8A78F0067D38A /* PrivacyDashboardUserScript.swift */,
-			);
-			path = UserScript;
-			sourceTree = "<group>";
-		};
-		1E7CDAD928D8A78F0067D38A /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				1E7CDADB28D8A78F0067D38A /* TrackerInfo.swift */,
-				1E7BA07528E5C32300F2C468 /* ProtectionStatus.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		1E8146A628C8AAF500D1AF63 /* PrivacyIconAndTrackers */ = {
@@ -4860,7 +4806,6 @@
 				85BDC310243359040053DB07 /* FindInPageUserScript.swift in Sources */,
 				F1DE78581E5CAE350058895A /* TabViewGridCell.swift in Sources */,
 				984D035824ACCC6F0066CFB8 /* TabViewListCell.swift in Sources */,
-				1E7CDAE128D8A78F0067D38A /* PrivacyInfo.swift in Sources */,
 				B6BA95C328891E33004ABA20 /* BrowsingMenuAnimator.swift in Sources */,
 				AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */,
 				8590CB612684D0600089F6BF /* CookieDebugViewController.swift in Sources */,
@@ -4897,7 +4842,6 @@
 				31A42566285A0A6300049386 /* FaviconViewModel.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,
-				1E7CDAE228D8A78F0067D38A /* PrivacyDashboardUserScript.swift in Sources */,
 				310ECFDD282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift in Sources */,
 				CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
@@ -4974,7 +4918,6 @@
 				982686AD2600C0850011A8D6 /* ActionMessageView.swift in Sources */,
 				F446B9B5251150AC00324016 /* HomeMessageViewSectionRenderer.swift in Sources */,
 				98D98A8225ED88E300D8E3DF /* BrowsingMenuSeparatorViewCell.swift in Sources */,
-				1E7CDAE428D8A78F0067D38A /* TrackerInfo.swift in Sources */,
 				1E4FAA6427D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift in Sources */,
 				8C4724502217A14B004C9B2D /* TabViewControllerLongPressBookmarkExtension.swift in Sources */,
 				1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */,
@@ -5046,7 +4989,6 @@
 				F1C4A70E1E57725800A6CA1B /* OmniBar.swift in Sources */,
 				981CA7EA2617797500E119D5 /* MainViewController+AddFavoriteFlow.swift in Sources */,
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
-				1E7CDAE028D8A78F0067D38A /* PrivacyDashboardController.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
@@ -5066,7 +5008,6 @@
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				4B6484ED27FD1E350050A7A1 /* MacBrowserWaitlist.swift in Sources */,
 				310D091D2799F57200DC0060 /* Download.swift in Sources */,
-				1E7BA07628E5C32300F2C468 /* ProtectionStatus.swift in Sources */,
 				1EEF124E2850EADE003DDE57 /* PrivacyIconView.swift in Sources */,
 				F159BDA41F0BDB5A00B4A01D /* TabViewController.swift in Sources */,
 				F44D279C27F331BB0037F371 /* AutofillLoginPromptView.swift in Sources */,

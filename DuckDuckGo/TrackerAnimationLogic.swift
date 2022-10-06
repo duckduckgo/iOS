@@ -19,6 +19,7 @@
 
 import Foundation
 import Core
+import PrivacyDashboardCode
 
 final class TrackerAnimationLogic {
     

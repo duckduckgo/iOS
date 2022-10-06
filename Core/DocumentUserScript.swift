@@ -18,7 +18,7 @@
 //
 
 import WebKit
-import BrowserServicesKit
+import UserScript
 
 public class DocumentUserScript: NSObject, UserScript {
     

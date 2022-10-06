@@ -24,8 +24,10 @@ import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
-import PrivacyDashboard
 import PrivacyDashboardCode
+import UserScript
+import ContentBlocking
+import TrackerRadarKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -2265,7 +2267,7 @@ extension TabViewController: AdClickAttributionLogicDelegate {
         
         contentBlockerUserScript?.currentAdClickAttributionVendor = vendor
         if let rules = rules {
-            contentBlockerUserScript?.supplementaryTrackerData = [rules.trackerData]
+            contentBlockerUserScript?.supplementaryTrackerData = [rules.trackerData as TrackerRadarKit.TrackerData]
         } else {
             contentBlockerUserScript?.supplementaryTrackerData = []
         }

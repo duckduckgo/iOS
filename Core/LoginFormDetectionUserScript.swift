@@ -18,7 +18,7 @@
 //
 
 import WebKit
-import BrowserServicesKit
+import UserScript
 
 public protocol LoginFormDetectionDelegate: NSObjectProtocol {
     

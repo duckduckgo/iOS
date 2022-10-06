@@ -21,6 +21,8 @@ import Foundation
 import Core
 import TrackerRadarKit
 import BrowserServicesKit
+import Common
+import PrivacyDashboardCode
 
 // swiftlint:disable type_body_length
 

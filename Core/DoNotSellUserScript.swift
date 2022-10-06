@@ -19,7 +19,7 @@
 
 import UIKit
 import WebKit
-import BrowserServicesKit
+import UserScript
 
 public class DoNotSellUserScript: NSObject, UserScript {
     public var source: String {

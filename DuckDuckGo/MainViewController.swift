@@ -24,6 +24,7 @@ import Lottie
 import Kingfisher
 import os.log
 import BrowserServicesKit
+import PrivacyDashboardCode
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length

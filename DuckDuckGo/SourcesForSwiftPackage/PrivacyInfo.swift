@@ -18,6 +18,7 @@
 
 import Foundation
 import TrackerRadarKit
+import PrivacyDashboardCode
 
 public final class PrivacyInfo {
     

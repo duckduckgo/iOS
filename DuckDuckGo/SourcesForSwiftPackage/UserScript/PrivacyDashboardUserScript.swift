@@ -21,6 +21,7 @@ import os
 import BrowserServicesKit
 import TrackerRadarKit
 import Core
+import PrivacyDashboardCode
 
 protocol PrivacyDashboardUserScriptDelegate: AnyObject {
     func userScript(_ userScript: PrivacyDashboardUserScript, didChangeProtectionStateTo protectionState: Bool)

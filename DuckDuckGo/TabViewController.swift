@@ -25,6 +25,7 @@ import os.log
 import BrowserServicesKit
 import SwiftUI
 import PrivacyDashboard
+import PrivacyDashboardCode
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length

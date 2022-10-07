@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1664457446666,
+    "version": 1665085312777,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -190,6 +190,296 @@
             },
             "exceptions": [],
             "state": "enabled"
+        },
+        "elementHiding": {
+            "exceptions": [],
+            "settings": {
+                "rules": [
+                    {
+                        "selector": "[id*='gpt-']",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[class*='gpt-']",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[class*='dfp-']",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[id*='taboola-']",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".adHolder",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[class*='ad_unit']",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".ad-leaderboard",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[class*='bannerAd']",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".ad-container",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".adcontainer",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".ad-slot",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".ad-wrapper",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[data-adunitpath]",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[data-unit]",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[data-targeting]",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[data-ad-placeholder]",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".bordeaux-slot",
+                        "type": "closest-empty"
+                    }
+                ],
+                "adLabelStrings": [
+                    "advertisement",
+                    "advertisementclose",
+                    "advertising",
+                    "ad feedback",
+                    "sponsored",
+                    "reklama",
+                    "continue reading the main story"
+                ],
+                "domains": [
+                    {
+                        "domain": "bbc.com",
+                        "rules": [
+                            {
+                                "selector": ".dotcom-ad",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "bleacherreport.com",
+                        "rules": [
+                            {
+                                "selector": ".br-ad-wrapper",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "cyclingtips.com",
+                        "rules": [
+                            {
+                                "selector": "[data-block-name='ads']",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "eonline.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='mps-']",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "fandom.com",
+                        "rules": [
+                            {
+                                "selector": ".top-ads-container",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "forbes.com",
+                        "rules": [
+                            {
+                                "selector": "fbs-ad",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "fortune.com",
+                        "rules": [
+                            {
+                                "selector": "[id*='Leaderboard']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[id*='RightRailFlex']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[id*='InStream']",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "indy100.com",
+                        "rules": [
+                            {
+                                "selector": "[id*='thirdparty']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "marketwatch.com",
+                        "rules": [
+                            {
+                                "selector": ".j-ad",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "qz.com",
+                        "rules": [
+                            {
+                                "selector": "#marquee-ad",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "si.com",
+                        "rules": [
+                            {
+                                "selector": ".m-ad",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".m-header-ad",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "snopes.com",
+                        "rules": [
+                            {
+                                "selector": ".proper-dynamic-insertion",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "washingtonpost.com",
+                        "rules": [
+                            {
+                                "selector": "wp-ad",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "#leaderboard-wrapper",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "wsj.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='adWrapper']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[id*='cx-']",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "yahoo.com",
+                        "rules": [
+                            {
+                                "selector": ".darla",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "gazeta.pl",
+                        "rules": [
+                            {
+                                "selector": "[class*='DFP-']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "nfl.com",
+                        "rules": [
+                            {
+                                "selector": "[class*='adv-block']",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "usatoday.com",
+                        "rules": [
+                            {
+                                "selector": "[aria-label='advertisement']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".gnt_tb",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".gnt_flp",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "washingtontimes.com",
+                        "rules": [
+                            {
+                                "selector": ".connatixcontainer",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": "[id*='cxense-']",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "state": "disabled"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -530,6 +820,17 @@
                             }
                         ]
                     },
+                    "azure.net": {
+                        "rules": [
+                            {
+                                "rule": "amp.azure.net/libs/amp/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/504"
+                            }
+                        ]
+                    },
                     "azureedge.net": {
                         "rules": [
                             {
@@ -859,6 +1160,44 @@
                                     "nextdoor.com"
                                 ],
                                 "reason": "bandsintown.com - Ticket page renders blank. With this exception the page redirects to ticketspice.com. nextdoor.co.uk, nextdoor.com - Facebook login option appears greyed out and cannot be clicked."
+                            }
+                        ]
+                    },
+                    "fox.com": {
+                        "rules": [
+                            {
+                                "rule": "fox.com",
+                                "domains": [
+                                    "adrise.tv",
+                                    "fncstatic.com",
+                                    "fox10phoenix.com",
+                                    "fox13news.com",
+                                    "fox26houston.com",
+                                    "fox29.com",
+                                    "fox2detroit.com",
+                                    "fox32chicago.com",
+                                    "fox35orlando.com",
+                                    "fox46charlotte.com",
+                                    "fox4news.com",
+                                    "fox5atlanta.com",
+                                    "fox5dc.com",
+                                    "fox5ny.com",
+                                    "fox7austin.com",
+                                    "fox9.com",
+                                    "foxbusiness.com",
+                                    "foxla.com",
+                                    "foxnews.com",
+                                    "foxsports.com",
+                                    "foxsportsasia.com",
+                                    "foxsportsgo.com",
+                                    "foxweather.com",
+                                    "ktvu.com",
+                                    "tubi.io",
+                                    "tubi.tv",
+                                    "tubi.video",
+                                    "tubitv.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/460"
                             }
                         ]
                     },

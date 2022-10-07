@@ -417,10 +417,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if overlayWindow == nil {
             tryToObtainOverlayWindow()
         }
-        
-        overlayWindow?.isHidden = true
-        overlayWindow = nil
-        window?.makeKeyAndVisible()
+
+        if let overlay = overlayWindow {
+            overlay.isHidden = true
+            overlayWindow = nil
+            window?.makeKeyAndVisible()
+        }
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {

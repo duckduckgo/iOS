@@ -23,12 +23,18 @@ import Core
 import BrowserServicesKit
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
 }
 
 final class AutofillLoginSettingsListViewController: UIViewController {
+
+    private enum Constants {
+        static let padding: CGFloat = 16
+    }
+
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
@@ -59,11 +65,31 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.estimatedRowHeight = 60
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
-        // Have to set tableHeaderView height otherwise tableView content willl jump when adding / removing searchController due to tableView insetGrouped style
+        // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 16))
         return tableView
     }()
-    
+
+    private lazy var lockedViewBottomConstraint: NSLayoutConstraint = {
+        NSLayoutConstraint(item: tableView,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: lockedView,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 144)
+    }()
+
+    private lazy var emptySearchViewCenterYConstraint: NSLayoutConstraint = {
+        NSLayoutConstraint(item: emptySearchView,
+                           attribute: .centerY,
+                           relatedBy: .equal,
+                           toItem: tableView,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: (tableView.frame.height / 2))
+    }()
+
     init(appSettings: AppSettings) {
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings)
         super.init(nibName: nil, bundle: nil)
@@ -82,6 +108,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         applyTheme(ThemeManager.shared.currentTheme)
         updateViewState()
         configureNotification()
+        registerForKeyboardNotifications()
 
     }
     
@@ -89,6 +116,20 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         super.viewDidAppear(animated)
         Pixel.fire(pixel: .autofillSettingsOpened)
         authenticate()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: { _ in
+            self.updateConstraintConstants()
+            self.emptyView.refreshConstraints()
+            if !self.searchController.isActive {
+                self.navigationItem.searchController = nil
+            }
+        }, completion: { _ in
+            self.updateSearchController()
+        })
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -201,7 +242,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             if tableView.isEditing {
                 navigationItem.rightBarButtonItems = [editButtonItem]
             } else {
-                if viewModel.isAutofillEnabled {
+                if viewModel.isAutofillEnabled || (!viewModel.isAutofillEnabled && viewModel.hasAccountsSaved) {
                     navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
                 } else {
                     navigationItem.rightBarButtonItems = [addBarButtonItem]
@@ -251,7 +292,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         emptySearchView.translatesAutoresizingMaskIntoConstraints = false
         lockedView.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        updateConstraintConstants()
+
         NSLayoutConstraint.activate([
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
@@ -259,17 +302,26 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             emptySearchView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptySearchView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 160),
-            emptySearchView.widthAnchor.constraint(equalToConstant: 225),
+            emptySearchViewCenterYConstraint,
+            emptySearchView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            emptySearchView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
 
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            lockedView.heightAnchor.constraint(equalToConstant: 140)
+            lockedView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            lockedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
+            lockedViewBottomConstraint
         ])
     }
 
-    
+    private func updateConstraintConstants() {
+        let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
+        if isIPhoneLandscape {
+            lockedViewBottomConstraint.constant = (view.frame.height / 2 - max(lockedView.frame.height, 120.0) / 2)
+        } else {
+            lockedViewBottomConstraint.constant = view.frame.height * 0.15
+        }
+    }
+
     // MARK: Cell Methods
     
     private func credentialCell(for tableView: UITableView, item: AutofillLoginListItemViewModel, indexPath: IndexPath) -> AutofillListItemTableViewCell {
@@ -322,10 +374,10 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch viewModel.viewState {
         case .empty:
-            return 255
+            return max(tableView.bounds.height - tableView.contentSize.height, 250)
         default:
             return 0
         }
@@ -485,4 +537,28 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
     }
 }
 
-// swiftlint:enable file_length
+// MARK: Keyboard
+
+extension AutofillLoginSettingsListViewController {
+
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(adjustForKeyboard),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
+    }
+
+    @objc private func adjustForKeyboard(notification: NSNotification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            return
+        }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        emptySearchViewCenterYConstraint.constant = min(
+            (keyboardViewEndFrame.minY + emptySearchView.frame.height) / 2 - searchController.searchBar.frame.height,
+            (tableView.frame.height / 2) - searchController.searchBar.frame.height
+        )
+    }
+}

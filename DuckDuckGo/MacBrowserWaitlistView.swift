@@ -215,16 +215,8 @@ private extension Color {
         Color("MacWaitlistSubtitleColor")
     }
     
-    static var macWaitlistGreen: Color {
-        Color("MacWaitlistGreen")
-    }
-    
     static var macWaitlistBlue: Color {
         Color("MacWaitlistBlue")
-    }
-    
-    static var macWaitlistNotificationBackground: Color {
-        Color("MacWaitlistNotificationsBackgroundColor")
     }
     
 }

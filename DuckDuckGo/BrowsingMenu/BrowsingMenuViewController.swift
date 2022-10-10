@@ -87,8 +87,8 @@ final class BrowsingMenuViewController: UIViewController {
     private func configureHeader() {
         for entry in headerEntries {
             let button = BrowsingMenuButton.loadFromXib()
-            button.configure(with: entry) { [weak self] in
-                self?.dismiss(animated: true)
+            button.configure(with: entry) { [weak self] completion in
+                self?.dismiss(animated: true, completion: completion)
             }
 
             horizontalStackView.addArrangedSubview(button)

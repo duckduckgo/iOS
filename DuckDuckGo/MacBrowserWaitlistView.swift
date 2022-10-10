@@ -60,7 +60,7 @@ struct MacBrowserWaitlistContentView: View {
                         .multilineTextAlignment(.center)
                         .lineSpacing(6)
                     
-                    Text("On your Mac, go to:")
+                    Text(UserText.macWaitlistOnYourMacGoTo)
                         .font(.proximaNova(size: 16, weight: .regular))
                         .foregroundColor(.macWaitlistText)
                         .multilineTextAlignment(.center)

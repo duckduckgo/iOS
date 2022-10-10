@@ -808,6 +808,9 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copy";
 
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "On your Mac, go to:";
+
 /* Title for the Share Link button */
 "mac-waitlist.join-waitlist-screen.share-link" = "Share Link";
 

@@ -39,7 +39,7 @@ final class MacWaitlistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = UserText.macWaitlistTitle
+        title = UserText.macBrowserTitle
         addHostingControllerToViewHierarchy()
     }
     

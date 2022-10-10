@@ -76,9 +76,11 @@ class TabPreviewsSource {
         guard let url = previewLocation(for: tab) else { return }
         
         cache[tab.uid] = nil
-        
+
         do {
-            try FileManager.default.removeItem(at: url)
+            if FileManager.default.fileExists(atPath: url.filePath) {
+                try FileManager.default.removeItem(at: url)
+            }
         } catch {
             Pixel.fire(pixel: .cachedTabPreviewRemovalError, error: error)
         }

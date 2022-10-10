@@ -40,6 +40,10 @@ private struct ShareButtonFramePreferenceKey: PreferenceKey {
 
 struct MacBrowserWaitlistContentView: View {
     
+    enum Constants {
+        static let downloadURL = "duckduckgo.com/mac"
+    }
+    
     let action: ViewActionHandler
     
     @State private var shareButtonFrame: CGRect = .zero
@@ -63,7 +67,7 @@ struct MacBrowserWaitlistContentView: View {
                         .lineSpacing(6)
                         .padding(.top, 18)
 
-                    Text("duckduckgo.com/mac")
+                    Text(Constants.downloadURL)
                         .font(.proximaNovaBold17)
                         .foregroundColor(.blue)
                         .menuController(UserText.macWaitlistCopy) {

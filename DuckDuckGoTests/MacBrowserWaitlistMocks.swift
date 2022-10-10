@@ -107,11 +107,9 @@ struct MockNotificationService: NotificationService {
 class MockMacWaitlistViewModelDelegate: MacWaitlistViewModelDelegate {
 
     private(set) var didOpenShareSheetCalled = false
-    private(set) var didOpenShareSheetInviteCode: String?
     
-    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: MacWaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
+    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: DuckDuckGo.MacWaitlistViewModel, senderFrame: CGRect) {
         didOpenShareSheetCalled = true
-        didOpenShareSheetInviteCode = inviteCode
     }
 
 }

@@ -172,11 +172,11 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             PreviewView("Mac Browser Beta") {
-                MacBrowserWaitlistContentView() { _ in }
+                MacBrowserWaitlistContentView { _ in }
             }
 
             if #available(iOS 15.0, *) {
-                MacBrowserWaitlistContentView() { _ in }
+                MacBrowserWaitlistContentView { _ in }
                     .previewInterfaceOrientation(.landscapeLeft)
             }
         }

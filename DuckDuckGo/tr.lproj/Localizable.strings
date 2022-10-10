@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "İptal";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Özel Adres Oluşturun";
+"email.aliasAlert.generatePrivateAddress" = "Özel Duck Address Oluştur";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Duck Adresi ile e-posta izleyicileri engelleyin";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Yeni adres panoya kopyalandı";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Duck Adresi Oluştur";
+"email.browsingMenu.useNewDuckAddress" = "Özel Duck Address Oluştur";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Etkin";

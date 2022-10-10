@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Отмени";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Генериране на личен адрес";
+"email.aliasAlert.generatePrivateAddress" = "Генериране на личен Duck Address";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Блокирайте имейл тракерите с Duck адрес";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Новият адрес е копиран в клипборда";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Създаване на Duck адрес";
+"email.browsingMenu.useNewDuckAddress" = "Генериране на личен Duck Address";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Активирано";

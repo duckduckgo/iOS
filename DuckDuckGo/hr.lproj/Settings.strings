@@ -40,9 +40,6 @@
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Pokretanje aplikacije";
 
-/* Class = "UILabel"; text = "dax@duck.com"; ObjectID = "25v-n4-wJD"; */
-"25v-n4-wJD.text" = "dax@duck.com";
-
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Otvori veze u povezanim aplikacijama";
 
@@ -58,20 +55,11 @@
 /* Class = "UILabel"; text = "Email Protection"; ObjectID = "azf-Nc-kvW"; */
 "azf-Nc-kvW.text" = "Zaštita e-pošte";
 
-/* Class = "UIViewController"; title = "Email Protection (Beta)"; ObjectID = "b9u-ZD-F95"; */
-"b9u-ZD-F95.title" = "Zaštita e-pošte (Beta)";
-
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Podaci i/ili kartice bit će uklonjeni nakon ponovnog pokretanja aplikacije.";
 
 /* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
 "bIg-0T-UWq.text" = "Zatraži označavanje web-mjesta kao zaštićenih prilikom prijave";
-
-/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
-"bJo-qn-f57.title" = "Zaštita e-pošte (Beta)";
-
-/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "Br7-C6-EmT"; */
-"Br7-C6-EmT.title" = "Zaštita e-pošte (Beta)";
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "Ikona aplikacije";
@@ -108,9 +96,6 @@
 
 /* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
 "EB8-09-gt2.text" = "100 %";
-
-/* Class = "UIButton"; normalTitle = "I already have a Duck Address"; ObjectID = "ehC-NI-TIu"; */
-"ehC-NI-TIu.normalTitle" = "Već imam Duck adresu";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Label";
@@ -151,9 +136,6 @@
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Zadano";
 
-/* Class = "UILabel"; text = "Header Title"; ObjectID = "ghI-g4-R9Q"; */
-"ghI-g4-R9Q.text" = "Naslov zaglavlja";
-
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
 "gji-Fs-EET.text" = "Zaštita privatnosti, pojednostavljeno. ";
 
@@ -166,17 +148,14 @@
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Zaštita privatnosti omogućena za sva web-mjesta";
 
-/* Class = "UILabel"; text = "Personal Duck Address"; ObjectID = "i4Y-CX-8b6"; */
-"i4Y-CX-8b6.text" = "Osobna Duck adresa";
+/* Class = "UIImageView"; accessibilityLabel = "DuckDuckGo"; ObjectID = "iNd-oh-m3g"; */
+"iNd-oh-m3g.accessibilityLabel" = "DuckDuckGo";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Ikona";
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Podijeli povratne informacije";
-
-/* Class = "UIViewController"; title = "Email Autofill"; ObjectID = "nB1-eu-sN0"; */
-"nB1-eu-sN0.title" = "Automatsko popunjavanje e-adrese";
 
 /* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Još nema web-mjesta koja su označena kao zaštićena";
@@ -193,26 +172,14 @@
 /* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
 "P0F-ts-ekd.text" = "Pretražujte privatno s našom aplikacijom za Mac ";
 
-/* Class = "UITextView"; text = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com."; ObjectID = "pT6-FQ-9d9"; */
-"pT6-FQ-9d9.text" = "Uklanjanjem zaštite e-pošte s ovog uređaja uklanja se i mogućnost popunjavanja polja vaše osobne ili novogenerirane privatne Duck adrese dok pregledavate web.\n\nŽelite li u cijelosti izbrisati svoje Duck adrese te imate li pitanja ili povratne informacije, pišite nam na support@duck.com.";
-
-/* Class = "UILabel"; text = "Remove from Device"; ObjectID = "qEh-V1-QaM"; */
-"qEh-V1-QaM.text" = "Ukloni s uređaja";
-
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Label";
-
-/* Class = "UITextView"; text = "Description Text"; ObjectID = "rOy-6J-i8L"; */
-"rOy-6J-i8L.text" = "Tekst opisa";
 
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Veličina teksta";
 
 /* Class = "UILabel"; text = "Private Voice Search"; ObjectID = "Swa-O7-n8W"; */
 "Swa-O7-n8W.text" = "Privatno glasovno pretraživanje";
-
-/* Class = "UITableViewController"; title = "Email Protection"; ObjectID = "TC3-Kg-XJt"; */
-"TC3-Kg-XJt.title" = "Zaštita e-pošte";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Prikaži tipkovnicu";
@@ -241,23 +208,14 @@
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Željeno vrijeme brisanja";
 
-/* Class = "UIButton"; normalTitle = "Action button"; ObjectID = "VvN-QG-WsD"; */
-"VvN-QG-WsD.normalTitle" = "Akcijski gumb";
-
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
 "xof-5k-PkI.text" = "Postavi kao zadani preglednik";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Zaštićena web-mjesta";
 
-/* Class = "UITextView"; text = "Footer Text"; ObjectID = "XvR-D4-LMg"; */
-"XvR-D4-LMg.text" = "Tekst u podnožju";
-
 /* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
 "Y6Y-wA-n6Z.text" = "Blokiraj programe za praćenje e-pošte i sakrij svoju adresu";
-
-/* Class = "UIButton"; normalTitle = "I have an Invite Code"; ObjectID = "yMC-7O-hSw"; */
-"yMC-7O-hSw.normalTitle" = "Imam pozivnu šifru";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Tipkovnica";

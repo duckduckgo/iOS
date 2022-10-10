@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Prekliči";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Ustvari zasebni naslov";
+"email.aliasAlert.generatePrivateAddress" = "Ustvarjanje zasebnega naslova Duck";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokiraj sledilnike e-pošte z naslovom Duck";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Nov naslov je kopiran v odložišče";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Ustvari naslov Duck";
+"email.browsingMenu.useNewDuckAddress" = "Ustvarjanje zasebnega naslova Duck";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Omogočeno";

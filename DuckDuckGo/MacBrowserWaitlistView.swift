@@ -26,7 +26,7 @@ struct MacBrowserWaitlistView: View {
     @EnvironmentObject var viewModel: MacWaitlistViewModel
     
     var body: some View {
-        MacBrowserWaitlistSignUpView { action in
+        MacBrowserWaitlistContentView { action in
             Task { await viewModel.perform(action: action) }
         }
     }
@@ -38,7 +38,7 @@ private struct ShareButtonFramePreferenceKey: PreferenceKey {
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) {}
 }
 
-struct MacBrowserWaitlistSignUpView: View {
+struct MacBrowserWaitlistContentView: View {
     
     let action: ViewActionHandler
     
@@ -76,13 +76,24 @@ struct MacBrowserWaitlistSignUpView: View {
                             action(.openShareSheet(shareButtonFrame))
                         }, label: {
                             HStack {
-                                Image("Share")
+                                Image("Share-16")
                                 Text(UserText.macWaitlistShareLink)
                             }
                         }
                     )
                     .buttonStyle(RoundedButtonStyle(enabled: true))
                     .padding(.top, 24)
+                    .background(
+                        GeometryReader { proxy in
+                            Color.clear
+                                .preference(key: ShareButtonFramePreferenceKey.self, value: proxy.frame(in: .global))
+                        }
+                    )
+                    .onPreferenceChange(ShareButtonFramePreferenceKey.self) { newFrame in
+                        if UIDevice.current.userInterfaceIdiom == .pad {
+                            self.shareButtonFrame = newFrame
+                        }
+                    }
                     
                     Spacer(minLength: 24)
                     
@@ -109,17 +120,6 @@ struct MacBrowserWaitlistSignUpView: View {
                 .foregroundColor(.macWaitlistText)
         })
         .frame(width: 44, height: 44)
-        .background(
-            GeometryReader { proxy in
-                Color.clear
-                    .preference(key: ShareButtonFramePreferenceKey.self, value: proxy.frame(in: .global))
-            }
-        )
-        .onPreferenceChange(ShareButtonFramePreferenceKey.self) { newFrame in
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                self.shareButtonFrame = newFrame
-            }
-        }
         
     }
 
@@ -168,11 +168,11 @@ private struct MacBrowserWaitlistView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             PreviewView("Mac Browser Beta") {
-                MacBrowserWaitlistSignUpView() { _ in }
+                MacBrowserWaitlistContentView() { _ in }
             }
 
             if #available(iOS 15.0, *) {
-                MacBrowserWaitlistSignUpView() { _ in }
+                MacBrowserWaitlistContentView() { _ in }
                     .previewInterfaceOrientation(.landscapeLeft)
             }
         }

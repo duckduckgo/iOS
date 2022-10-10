@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Zrušiť";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Vygenerovať súkromnú adresu";
+"email.aliasAlert.generatePrivateAddress" = "Generovať súkromnú adresu Duck";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokujte e-mailové sledovače (trackery) s adresou Duck";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Nová adresa bola skopírovaná do schránky";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Vytvorenie adresy Duck";
+"email.browsingMenu.useNewDuckAddress" = "Generovať súkromnú adresu Duck";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Zapnuté";

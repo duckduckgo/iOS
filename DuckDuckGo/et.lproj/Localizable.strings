@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Tühista";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Looge privaatne aadress";
+"email.aliasAlert.generatePrivateAddress" = "Loo privaatne Duck Address";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokeerige e-posti jälgijad Ducki aadressiga";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Uus aadress kopeeriti teie lõikelauale";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Looge Ducki aadress";
+"email.browsingMenu.useNewDuckAddress" = "Loo privaatne Duck Address";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Lubatud";

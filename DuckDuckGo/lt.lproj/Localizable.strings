@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Atšaukti";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generuoti privatų adresą";
+"email.aliasAlert.generatePrivateAddress" = "Generuoti privatų „Duck“ adresą";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokuoti el. pašto adresų stebėjimo priemones „Duck“ adresams";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Naujas adresas nukopijuotas į jūsų iškarpinę";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Susikurkite „Duck“ adresą";
+"email.browsingMenu.useNewDuckAddress" = "Generuoti privatų „Duck“ adresą";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Įjungta";

@@ -58,9 +58,6 @@
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "edo-u1-cGj"; */
 "edo-u1-cGj.text" = "www.exemple.com";
 
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "eoi-RZ-ibW"; */
-"eoi-RZ-ibW.configuration.title" = "Bouton";
-
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "eoi-RZ-ibW"; */
 "eoi-RZ-ibW.normalTitle" = "Bouton";
 

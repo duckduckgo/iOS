@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Mégsem";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Privát cím létrehozása";
+"email.aliasAlert.generatePrivateAddress" = "Privát Duck-cím generálása";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "E-mail nyomkövetők letiltása Duck-címmel";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Új cím a vágólapra másolva";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Duck-cím létrehozása";
+"email.browsingMenu.useNewDuckAddress" = "Privát Duck-cím létrehozása";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Engedélyezve";

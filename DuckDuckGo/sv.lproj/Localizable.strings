@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Avbryt";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Skapa en privat adress";
+"email.aliasAlert.generatePrivateAddress" = "Generera privat Duck Address";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blockera e-postspårare med en Duck-adress";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Ny adress har kopierats till Urklipp";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Skapa en Duck-adress";
+"email.browsingMenu.useNewDuckAddress" = "Generera privat Duck Address";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Aktiverad";

@@ -83,6 +83,11 @@ struct AutofillLoginDetailsView: View {
                              placeholderText: UserText.autofillLoginDetailsEditURLPlaceholder,
                              keyboardType: .URL)
             }
+            
+            Section {
+                editableMultilineCell(UserText.autofillLoginDetailsNotes,
+                                      subtitle: $viewModel.notes)
+            }
 
             if viewModel.viewMode == .edit {
                 deleteCell()
@@ -116,10 +121,21 @@ struct AutofillLoginDetailsView: View {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
                              subtitle: viewModel.address,
                              selectedCell: $viewModel.selectedCell,
-                             action: { viewModel.copyToPasteboard(.address) },
                              secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
-                             secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil,
-                             truncationMode: .middle)
+                             truncationMode: .middle,
+                             action: { viewModel.copyToPasteboard(.address) },
+                             secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil)
+            }
+            
+            Section {
+                CopyableCell(title: UserText.autofillLoginDetailsNotes,
+                             subtitle: viewModel.notes,
+                             selectedCell: $viewModel.selectedCell,
+                             truncationMode: .middle,
+                             multiLine: true,
+                             action: {
+                    viewModel.copyToPasteboard(.notes)
+                })
             }
 
             Section {
@@ -156,6 +172,23 @@ struct AutofillLoginDetailsView: View {
         }
         .frame(minHeight: Constants.minRowHeight)
         .listRowInsets(Constants.insets)
+    }
+    
+    // This is seperate from editableCell() because TextEditor doesn't support placeholders, and we don't need placeholders for notes at the moment
+    private func editableMultilineCell(_ title: String,
+                                       subtitle: Binding<String>,
+                                       autoCapitalizationType: UITextAutocapitalizationType = .none,
+                                       disableAutoCorrection: Bool = true,
+                                       keyboardType: UIKeyboardType = .default) -> some View {
+        
+        VStack(alignment: .leading, spacing: Constants.verticalPadding) {
+            Text(title)
+                .label4Style()
+            
+            MultilineTextEditor(text: subtitle)
+        }
+        .frame(minHeight: Constants.minRowHeight)
+        .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
     }
 
     private func deleteCell() -> some View {
@@ -211,6 +244,15 @@ struct ClearTextField: View {
             return 0
         }
         return 1
+    }
+}
+
+private struct MultilineTextEditor: View {
+    @Binding var text: String
+    
+    var body: some View {
+        TextEditor(text: $text)
+            .frame(maxHeight: .greatestFiniteMagnitude)
     }
 }
 
@@ -328,10 +370,11 @@ private struct CopyableCell: View {
     let title: String
     let subtitle: String
     @Binding var selectedCell: UUID?
-    let action: () -> Void
     var secondaryActionTitle: String?
-    var secondaryAction: (() -> Void)?
     var truncationMode: Text.TruncationMode = .tail
+    var multiLine: Bool = false
+    let action: () -> Void
+    var secondaryAction: (() -> Void)?
 
     var body: some View {
         HStack {
@@ -339,12 +382,20 @@ private struct CopyableCell: View {
                 Text(title)
                     .label4Style()
                 HStack {
-                    Text(subtitle)
-                        .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
-                        .lineLimit(1)
-                        .truncationMode(truncationMode)
+                    if multiLine {
+                        Text(subtitle)
+                            .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                            .truncationMode(truncationMode)
+                            .frame(maxHeight: .greatestFiniteMagnitude)
+                    } else {
+                        Text(subtitle)
+                            .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                            .truncationMode(truncationMode)
+                    }
                 }
             }
+            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+            
             Spacer()
         }
         .copyable(isSelected: selectedCell == id,

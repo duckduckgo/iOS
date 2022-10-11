@@ -613,6 +613,7 @@ public struct UserText {
     public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
     public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
     public static let autofillLoginDetailsAddress = "Website URL" // Address label for login details on autofill
+    public static let autofillLoginDetailsNotes = "Notes" // Notes label for login details on autofill
     public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
     public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins" // Title for view displayed when autofill is disabled and has no items
     public static let autofillEmptyViewTitle = "No logins saved yet" // Title for view displayed when autofill has no items
@@ -636,6 +637,7 @@ public struct UserText {
     public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
     public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    public static let autofillCopyToastNotesCopied = "Notes copied" //Title for toast when copying notes
     
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
         "Login last updated \(date)"

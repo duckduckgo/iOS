@@ -1,33 +1,32 @@
-厭倦上網時被追蹤嗎？我們可以助你一臂之力。
 
-DuckDuckGo 是多功能隱私保護應用程式，保障你的上網安全。只要下載一次，就能取得可以每天使用的全新瀏覽器，提供萬無一失的保護，防範第三方追蹤器，讓你放心搜尋與瀏覽，甚至是在收取電子郵件時，也可以使用追蹤防護。選擇 DuckDuckGo，讓隱私保障成為優先預設。
+DuckDuckGo 應用程式提供最全面的線上隱私保護，按一下按鈕即可啟動。只需下載一次，就能取得可以每天使用的全新瀏覽器，在你搜尋和瀏覽時提供萬無一失的保護，甚至是在收取電子郵件時，也可以使用追蹤防護。
 
-私密搜尋 - DuckDuckGo Private Search 為內建功能，讓你可以安心地在網路上搜尋，不用擔心遭到追蹤。
+保護你的線上隱私就像保護你的家一樣。鎖上前門，只能防君子不能防小人，特別是如果你沒鎖後門和窗戶，甚至還在門墊下面藏有備份鑰匙。這就是我們提供多種類型隱私保護的原因，目前許多人使用的瀏覽器在預設狀態下都並未提供上述保護。  
 
-避免網站追蹤 - 當你透過 DuckDuckGo 造訪網站時，Tracker Radar 會偵測潛藏的第三方追蹤器並自動封鎖，放置這些追蹤器的公司便無從收集和銷售你的資料。
+功能焦點 
+• 預設私密搜尋 - DuckDuckGo Private Search 為內建功能，讓你可以在網路上安心搜尋，不用擔心遭到追蹤。 
 
-加密執行程式 - 使用 DuckDuckGo 造訪網站時，如有加密連線 (HTTPS) 選擇，Smarter Encryption 會強迫該網站使用，保護你的資料不受窺視。
+• 在載入之前躲避網站追蹤器 - 自動阻止大多數隱藏的追蹤器（第三方指令碼）載入，進而阻止公司收集和使用（例如銷售、廣告等）來自這些追蹤器的任何數據。我們的「第三方追蹤器載入保護」是最先進的追蹤器防堵技術，效能大幅超越大部分常見瀏覽器的相關預設功能。 
 
-封鎖電子郵件追蹤器 - 70% 的電子郵件都會在你打開信的瞬間開始追蹤。啟用 Email Protection 是封鎖電子郵件追蹤器並隱藏你的電子郵件地址最簡單的方法，無需切換服務。透過應用程式設定選單，即可加入免費測試版的私密等候清單。
+• 自動強制加密 - 強制你造訪的許多網站自動使用加密（HTTPS）連接，這有助於保護你的資料免受來自 Wi-Fi 或網際網路（例如你的網路供應商）的窺探。大多數常見瀏覽器僅會在特定情況下將使用者引導至加密版本的頁面，例如當你透過網址列中直接前往該頁面時。我們會檢查你點擊的所有連結，與我們的可升級網站清單比對。 
 
-DuckDuckGo 應用程式具備你所需的瀏覽功能，例如分頁和書籤，並增加了你會喜愛的隱私權控制功能。想控制隱私權，不必犧牲實用功能。
+• 啟用內建電子郵件防護 - 傳送到 DuckDuckGo 電子郵件地址的郵件，有超過 85% 都包含追蹤程式，可偵測到你是否打開信件、打開信件時的所在地點，以及使用的裝置。電子郵件防護可幫助你在線上進行各類註冊時，輕鬆封鎖大部分的電子郵件追蹤程式，也無需更換電子郵件服務供應商。
 
-點按 Fire Button，燒毀資料 - 點按一下 Fire Button，即可清除分頁和瀏覽資料。
+• 避免指紋識別 - 阻止其他公司嘗試組合你的瀏覽器和裝置設定的特定訊息，有效幫助阻止其為你建立唯一識別碼。
+  
+• 阻止追蹤你的 Cookie - 防止大多數第三方 Cookie 追蹤你瀏覽各個網站的過程。
 
-以 GPC 來表示隱私權偏好 - Global Privacy Control (GPC) 為內建應用程式，能自動為你表達選擇退出的法律權益。這會讓網站知道根據未來的法律規範架構（例如 CCPA 和 GDPR），不能在各州或各國出售或分享你的個人資訊。
+大多數瀏覽器不提供額外防護
+• 連結追蹤保護 - 在你點擊連結時，防止公司透過嵌入連結中的個人識別資料收集你的瀏覽歷史記錄和其他資訊。  
+• Google AMP 防護 - 強迫網站直接透過內容發布者載入其內容，而不是使用充滿可怕追蹤程式的 Google 所屬連結。  
 
-重奪隱私權，無需再等待。加入數百萬 DuckDuckGo 使用者，只要一個應用程式，就能保護你的日常線上活動。保護隱私，化繁為簡。
+日常隱私控制
+• 點擊 Fire Button，燒毀資料 - 使用我們的 Fire Button 清除你的分頁和瀏覽資料。
 
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: 
-Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
- 
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
- 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+• 透過全球隱私控制（GPC）偏好表達你的隱私偏好 - GPC 內建於我們的應用程式中，旨在透過告知網站不要出售或共享你的個人訊息，幫助你自動行使選擇退出的權利。此功能是否可用於執行你的合法權利（例如，目前或未來的 CCPA、GDPR 要求）取決於你所在司法管轄區的法律規範。 
 
+請留意，在點擊 DuckDuckGo 廣告後的第三方追蹤器載入保護：我們的第三方追蹤器防護範圍超出了大部分常見瀏覽器的預設內容，但我們一直都在努力改進，使其更加完善。目前，如果廣告商希望在他們自己的網站上偵測我們的私人 DuckDuckGo 搜尋廣告的轉化，若使用者點擊 DuckDuckGo 廣告，我們的「第三方追蹤器載入保護」不會阻止 bat.bing.com 載入廣告商網站的要求，但這類請求在所有其他情況下都會被封鎖。這是因為 DuckDuckGo 的私人搜尋廣告是與微軟合作。根據合作內容，使用者得以在 DuckDuckGo 上匿名查看廣告，Microsoft 已承諾不分析我們使用者的廣告點擊。   
 
-關於我們：https://duckduckgo.com/about/
-運作方式：https://duckduckgo.com/app
-隱私電子報：https://duckduckgo.com/newsletter
-隱私政策：https://duckduckgo.com/privacy/
-開放原始碼：https://github.com/duckduckgo/iOS
+在https://help.duckduckgo.com/privacy/web-tracking-protections/閱讀更多相關內容與我們的追蹤防護資訊
+
+重奪隱私權，無需再等待。加入數百萬 DuckDuckGo 使用者，只要一個應用程式，就能保護你的日常線上活動。保護隱私，化繁為簡。  

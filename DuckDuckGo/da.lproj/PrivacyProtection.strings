@@ -58,9 +58,6 @@
 /* Class = "UILabel"; text = "www.example.com"; ObjectID = "edo-u1-cGj"; */
 "edo-u1-cGj.text" = "www.example.com";
 
-/* Class = "UIButton"; configuration.title = "Button"; ObjectID = "eoi-RZ-ibW"; */
-"eoi-RZ-ibW.configuration.title" = "Knap";
-
 /* Class = "UIButton"; normalTitle = "Button"; ObjectID = "eoi-RZ-ibW"; */
 "eoi-RZ-ibW.normalTitle" = "Knap";
 
@@ -125,7 +122,7 @@
 "Y3q-u7-IeX.text" = "TRACKER NETVÆRKSFREKVENS";
 
 /* Class = "UILabel"; text = "8 Other Domains Loaded"; ObjectID = "YDP-RX-LaV"; */
-"YDP-RX-LaV.text" = "8 Andre domæner indlæst";
+"YDP-RX-LaV.text" = "8 andre domæner indlæst";
 
 /* Class = "UILabel"; text = "Encrypted Connection"; ObjectID = "zz1-Q4-Fxr"; */
 "zz1-Q4-Fxr.text" = "Krypteret forbindelse";

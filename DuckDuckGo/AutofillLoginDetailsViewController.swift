@@ -215,7 +215,8 @@ extension AutofillLoginDetailsViewController: Themable {
 
         if #available(iOS 15.0, *) {
             let appearance = UINavigationBarAppearance()
-            appearance.configureWithTransparentBackground()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
 
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = appearance

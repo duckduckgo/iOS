@@ -68,6 +68,10 @@ final class AutofillLoginListViewModel: ObservableObject {
             updateViewState()
         }
     }
+
+    var hasAccountsSaved: Bool {
+        return !accounts.isEmpty
+    }
     
     var isAutofillEnabled: Bool {
         get { appSettings.autofill }

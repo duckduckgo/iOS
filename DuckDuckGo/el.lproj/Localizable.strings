@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Ακύρωση";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Δημιουργία ιδιωτικής διεύθυνσης";
+"email.aliasAlert.generatePrivateAddress" = "Δημιουργήστε ιδιωτική Duck Address";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Αποκλείστε εφαρμογές παρακολούθησης email με μια Διεύθυνση Duck";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Έγινε αντιγραφή νέας διεύθυνσης στο πρόχειρό σας";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Δημιουργήστε Διεύθυνση Duck";
+"email.browsingMenu.useNewDuckAddress" = "Δημιουργήστε ιδιωτική Duck Address";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Ενεργοποιήθηκε";

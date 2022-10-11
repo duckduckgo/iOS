@@ -1,34 +1,24 @@
-¿Cansado de que te rastreen? Podemos ayudarte.
 
-DuckDuckGo es la aplicación de privacidad todo en uno que te ayuda a proteger tu actividad en línea. Con una sola descarga, obtienes un nuevo navegador de uso cotidiano que ofrece una protección perfecta contra rastreadores de terceros mientras realizas búsquedas y navegas e, incluso, acceso a protecciones de rastreo cuando recibes correo electrónico. Con DuckDuckGo, la privacidad pasa a ser tu opción por defecto.
+La aplicación DuckDuckGo ofrece la protección de la privacidad en línea más completa con solo pulsar un botón. Con una sola descarga, obtienes un nuevo navegador de uso cotidiano que ofrece una protección perfecta mientras realizas búsquedas y navegas y acceso a protecciones de rastreo cuando recibes correo electrónico. Muchas de estas protecciones no se ofrecen en la mayoría de navegadores por defecto.
 
- • Busca con total privacidad - DuckDuckGo Private Search viene integrado para que puedas buscar en la web sin ser rastreado.
+FUNCIONES DESTACADAS
+• Busca con total privacidad por defecto: DuckDuckGo Private Search viene integrado para que puedas buscar fácilmente en la web sin ser rastreado.
 
- • Escapa del seguimiento de sitios web - Tracker Radar bloquea automáticamente los rastreadores de terceros que acechan en los sitios web que visitas en DuckDuckGo, lo que impide que las empresas que están detrás de esos rastreadores recopilen y vendan tus datos.
+• Escapa de los rastreadores de sitios web antes de que se carguen: evita automáticamente que la mayoría de los rastreadores ocultos (secuencias de comandos de terceros) se carguen, lo que evita que las empresas recopilen y utilicen (por ejemplo, para venta, anuncios, etc.) cualquier dato de estos rastreadores. Nuestra tecnología de vanguardia para el bloqueo de rastreadores, conocida como Protección de Carga de Rastreadores de Terceros, va más allá de lo que ofrecen los navegadores más populares por defecto.
 
- • Obligación de cifrado - Smarter Encryption obliga a los sitios que visitas en DuckDuckGo a utilizar una conexión cifrada (HTTPS) cuando se encuentre disponible, lo que protege tus datos de miradas indiscretas.
+• Aplica el cifrado automáticamente: obliga a muchos de los sitios que visitas a utilizar automáticamente una conexión cifrada (HTTPS), lo que ayuda a proteger tus datos de los fisgones de la Wi-Fi y de los curiosos de la red, como tu proveedor de Internet. 
 
- • Bloquea rastreadores de correo electrónico - El 70 % de los correos electrónicos te rastrean en cuanto los abres. Habilitar Email Protection es la forma fácil de bloquear los rastreadores de correo electrónico y ocultar tu dirección sin cambiar de servicio. Únete a la lista de espera privada para la versión beta gratuita a través del menú de configuración de la aplicación.
+• Habilita Email Protection integrado: más del 85 % de los correos electrónicos enviados a direcciones de Duck contenían rastreadores que pueden detectar el momento en que abres un mensaje, el lugar en el que estás cuando lo haces y el dispositivo que usas. Email Protection facilita el bloqueo de la mayoría de los rastreadores de correo electrónico y oculta tu dirección cuando te registras en línea, y todo ello sin cambiar de proveedor de correo electrónico.
 
-La aplicación de DuckDuckGo tiene las funciones de navegación que esperas, como pestañas y marcadores, además de controles de privacidad que te encantarán. Para tomar el control de tu privacidad no tienes por qué hacer concesiones.
+También tenemos muchas protecciones que no están disponibles en la mayoría de los navegadores, incluida la protección contra desde rastreo de enlaces, la huella digital, cookies de rastreo, el rastreo de Google AMP y mucho más.
 
- • Pulsa Fire Button para quemar los datos - Borra tus pestañas y datos de navegación con solo tocar el Fire Button.
+CONTROLES DE PRIVACIDAD COTIDIANOS
+• Pulsa Fire Button para quemar los datos: borra tus pestañas y datos de navegación con Fire Button.
 
- • Marca tus preferencias de privacidad con GPC - Global Privacy Control (GPC), integrado en la aplicación, te ayuda a expresar tus derechos legales de exclusión voluntaria automáticamente. Esto indicará a los sitios web que no pueden vender o compartir tu información personal en marcos legales futuros (por ejemplo, CCPA, RGPD) en distintos estados o países.
+• Marca tus preferencias de privacidad con Global Privacy Control (GPC): integrado en la aplicación, GPC te ayuda a expresar tus derechos de exclusión voluntaria automáticamente para indicar a los sitios web que no pueden vender o compartir tu información personal. El hecho de que se pueda utilizar para hacer valer tus derechos (por ejemplo, la CCPA actual o futura, los requisitos del RGPD) depende de las leyes de tu jurisdicción.
 
-No tienes que esperar para recuperar tu privacidad. Únete a los millones de personas que usan DuckDuckGo y protege muchas de tus actividades cotidianas en línea con una sola aplicación. Tu privacidad simplificada.
+Nota sobre nuestra protección de carga de rastreadores de terceros tras los clics de los anuncios de DuckDuckGo: nuestra protección de carga de rastreadores de terceros va más allá de lo que obtienes en la mayoría de los navegadores populares por defecto, pero estamos trabajando constantemente para hacerla aún más completa. Actualmente, si un anunciante desea detectar conversiones en su propio sitio web para nuestros anuncios privados de búsqueda de DuckDuckGo, nuestra protección de carga de rastreadores de terceros no impedirá que las solicitudes de bat.bing.com se carguen del sitio web del anunciante tras los clics en anuncios de DuckDuckGo, pero esas solicitudes se detienen en todos los demás contextos. Esto se debe a que la publicidad de DuckDuckGo Private Search está asociada con Microsoft. Como parte de esa asociación, la visualización de anuncios en DuckDuckGo es anónima y Microsoft se ha comprometido a no perfilar los clics en los anuncios de nuestros usuarios.
 
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: 
-Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
- 
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
- 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+Lee más sobre esto y sobre nuestras protecciones de rastreo en https://help.duckduckgo.com/privacy/web-tracking-protections/
 
-
-Acerca de nosotros: https://duckduckgo.com/about
-Cómo funciona: https://duckduckgo.com/app
-Boletín de noticias sobre privacidad: https://duckduckgo.com/newsletter
-Política de privacidad: https://duckduckgo.com/privacy
-Código abierto: https://github.com/duckduckgo/iOS
-
+No tienes que esperar para recuperar tu privacidad. Únete a los millones de personas que usan DuckDuckGo y protege muchas de tus actividades cotidianas en línea con una sola aplicación. Es tan solo privacidad simplificada.

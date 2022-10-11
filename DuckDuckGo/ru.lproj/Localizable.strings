@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Отменить";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Сгенерировать приватный адрес";
+"email.aliasAlert.generatePrivateAddress" = "Создать адрес на Duck";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Блокировать почтовые трекеры с адресом Duck";

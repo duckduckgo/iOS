@@ -1,33 +1,33 @@
-온라인에서 개인 정보를 보호하고 싶으신가요? DuckDuckGo와 함께 하세요.
 
-DuckDuckGo는 여러분의 온라인 활동을 보호하는 올인원 개인 정보 보호 앱입니다. 다운로드 한 번으로 제삼자 추적기로부터 검색과 활동 내역이 완벽하게 보호되는 새로운 일일 브라우저를 이용할 수 있으며 이메일을 수신할 때에도 추적 방지 기능을 사용할 수 있습니다. DuckDuckGo와 함께라면 개인 정보 보호가 현실이 됩니다.
+DuckDuckGo 앱은 버튼 하나만으로 가장 포괄적인 온라인 개인 정보 보호 기능을 제공합니다. 다운로드 한번으로 제 3의 추적기로부터 검색과 활동 내역을 완벽하게 보호받는 새로운 브라우저를 일상에서 이용할 수 있으며, 이메일을 받을 때에도 추적 방지 기능을 사용할 수 있습니다.
 
-비공개 검색 - DuckDuckGo Private Search를 통해 추적없이 웹을 검색할 수 있습니다.
+온라인에서 개인 정보를 보호하는 것은 집을 지키는 것과 같습니다. 대문만 단속해서는 작정하고 침입하는 사람들을 막을 수 없습니다. 뒷문과 창문을 열어두고 현관 근처에 예비 열쇠를 숨겨두기까지 했다면 보안은 물건너 간 셈이죠. 그래서 우리는 여러 유형의 개인 정보 보호 기능을 제공합니다. 인기 브라우저 대부분이 기본 설정에서 제공하지 않는 수준의 보안입니다.  
 
-웹사이트 추적 방지 - Tracker Radar는 사용자가 DuckGo 방문 시 웹사이트에 잠복해 있는 숨겨진 타사 추적기를 자동으로 차단하여 온라인 활동을 추적하는 회사들이 사용자의 데이터를 수집하고 판매하는 것을 막습니다.
+기능 특징 
+• 비공개 검색 기본 설정 - DuckDuckGo 비공개 검색이 내장되어 추적 받지 않고 웹을 쉽게 검색할 수 있습니다. 
 
-강제 암호화 - Smarter Encryption은 사용자가 DuckDuckGo에서 방문하는 가능한 경우 사이트가 암호화된(HTTPS) 연결을 사용하도록 강제하여 사용자의 데이터가 노출되지 않도록 보호합니다.
+• 웹사이트 추적기가 로드되기 전에 탈출 - 숨어있는 추적기(외부 스크립트) 대부분을 로딩 전에 자동으로 중지시켜서 회사가 이 추적기를 통해 데이터를 일체 수집하고 사용할 수 없게 합니다(영업, 광고 등). 첨단 추적기 차단 기술 3rd-Party Tracker Loading Protection – 인기 브라우저 대부분의 기본 설정과는 차원이 다른 보안을 선사합니다. 
 
-이메일 추적 프로그램 차단 - 이메일의 70퍼센트가 메일을 열자마자 사용자를 추적합니다. 이메일 보호 활성화 기능으로 서비스를 전환하지 않고도 이메일 추적기를 차단하고 주소를 숨길 수 있습니다. 앱 설정 메뉴를 통해 무료 베타 버전 전용 대기자 목록에 등록하세요.
+• 자동으로 암호화 적용 - 사용자가 방문하는 많은 사이트가 암호화된(HTTPS) 연결을 자동으로 사용하게 만들어서 Wi-Fi 염탐꾼이나 인터넷 통신사 등의 네트워크 감시자로부터 데이터를 보호합니다. 대부분의 인기 브라우저는 사용자가 주소 창을 통해 직접 페이지를 이동하는 등의 특정 상황에만 사용자를 암호화된 버전의 페이지로 안내합니다. 우리는 사용자가 클릭하는 모든 링크에 대해 업그레이드 가능한 사이트 목록을 확인합니다. 
 
-DuckDuckGo 앱은 탭, 북마크 등 편리한 검색 기능을 보유하며 사용자가 가장 원하는 개인 정보 보호를 제공합니다. 개인 정보를 보호하는 것이 불편함을 감수해야 한다는 뜻은 아닌 것이죠.
+• 내장형 이메일 보호 기능 사용 - Duck Addresses로 전송 된 이메일의 85% 이상에, 메시지를 열어 본 시점에 사용자가 어디 있었는지, 어느 장치를 사용 중이었는지 감지하는 추적기가 숨겨져 있었습니다. Email Protection을 사용하면 이메일 사이트를 바꾸지 않고도 이메일 추적기를 대부분 차단하고 온라인 사이트에 가입할 때 기존 주소를 감출 수 있습니다. 
 
-Fire Button 탭하면 데이터 삭제 - Fire Button을 한 번만 탭하면 모든 탭과 검색 데이터가 삭제됩니다.
-
-GPC로 개인 정보 보호 설정 신호 - 앱에 내장된 Global Privacy Control(GPC)을 통해 사용자의 법적 거부권을 자동으로 표시할 수 있도록 지원합니다. 이 신호는 웹 사이트로 하여금 여러 주 또는 국가에서 향후 법적 프레임워크(CCPA, GDPR 등)에 따라 사용자의 개인 정보를 판매하거나 공유하지 말 것을 표시하는 것입니다.
-
-이제 개인 정보를 보호하는 데 시간을 들일 필요가 없습니다. 하나의 앱으로 DuckDuckGo를 사용하는 수백만 명의 사람들과 교류하고 일상적인 온라인 활동을 보호하세요. 개인 정보 보호, 어렵지 않습니다.
-
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks:
-Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
+• 지문 차단 - 회사가 사용자의 브라우저 및 장치 설정에 대한 특정 정보를 결합하지 못하게 차단하여 고유 식별자 생성을 방지합니다. 
  
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
- 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+• 쿠키 추적 차단 - 사용자가 사이트를 탐색할 때 외부 쿠키 대부분이 사용자를 추적하지 못하게 합니다.
+대부분의 브라우저에는 없는 추가 보호 기능
 
+• 링크 추적 방지 기능 - 사용자가 클릭하는 링크에 삽입된 개인 식별자를 통해 회사가 사용자의 검색 기록과 그 밖의 정보를 수집할 수 없게 합니다.  
 
-회사 소개: https://duckduckgo.com/about/
-작동 방법: https://duckduckgo.com/app
-개인 정보 보호 뉴스레터: https://duckduckgo.com/newsletter
-개인 정보 보호 정책: https://duckduckgo.com/privacy/
-오픈 소스: https://github.com/duckduckgo/iOS
+• Google AMP 보호 - 께름칙한 추적기가 득실거리는 Google 소유 링크를 사용하지 않고, 사이트 퍼블리셔에서 콘텐츠를 직접 불러오도록 강제합니다.  
+
+일상적인 개인 정보 보호
+• Fire Button을 눌러 데이터 삭제 - Fire Button을 누르면 모든 탭과 검색 데이터가 삭제됩니다.
+
+• GPC(Global Privacy Control)로 개인 정보 관련 선호 사항 알리기 - 우리 앱에 내장된 GPC가 웹사이트에 개인 정보를 판매하거나 공유하지 않도록 지시를 해서, 거부 권리를 자동으로 표현할 수 있도록 도와줍니다. 사용자의 법적 권리(현재 또는 미래의 CCPA, GDPR 요구 사항 등) 주장에 사용할 수 있는지 여부는 관할 지역의 법률에 따라 다릅니다. 
+
+DuckDuckGo 광고 클릭에 따른 외부 추적기 로딩 방지 관련 참고 사항: 3rd-Party Tracker Protection은 이미 대부분의 인기 브라우저 이상의 기능을 제공하고 있음에도 더욱 종합적인 솔루션이 되기 위하여 지속적으로 노력하고 있습니다. 현재 광고주가 비공개 DuckDuckGo 검색 광고에 대한 자사 웹 사이트에서의 전환율을 감지하려는 경우, 3rd-Party Tracker Loading Protection은 DuckDuckGo 광고 클릭 후 광고주 웹 사이트에 bat.bing.com 요청이 로드되는 것을 막지 않습니다. 그러나 다른 모든 상황에서는 해당 요청이 중지됩니다. DuckDuckGo 비공개 검색 광고는 Microsoft와 제휴를 맺고 있기 때문입니다. 이 파트너십의 일환으로 DuckDuckGo에서 광고를 보는 것은 익명으로 처리되며 Microsoft는 사용자의 광고 클릭을 프로파일링하지 않기로 약속했습니다.   
+
+이 정보와 DuckDuckGo 추적 방지에 대한 자세한 내용: https://help.duckduckgo.com/privacy/web-tracking-protections/  
+
+이제 개인 정보를 보호하는 데 시간을 들일 필요가 없습니다. 하나의 앱으로 DuckDuckGo를 사용하는 수백만 명의 사람들과 교류하고 일상적인 온라인 활동을 보호하세요. 개인 정보 보호, 어렵지 않습니다.  

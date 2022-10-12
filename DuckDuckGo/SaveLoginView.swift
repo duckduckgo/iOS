@@ -88,16 +88,22 @@ struct SaveLoginView: View {
                 titleHeaderView
                 if isIPad {
                     Spacer()
-                } else {
+                } else if layoutType == .newUser || layoutType == .saveLogin {
                     Spacer()
                         .frame(maxHeight: isSmallFrame ? 8 : 24)
+                } else {
+                    Spacer()
+                        .frame(maxHeight: isSmallFrame ? 24 : 56)
                 }
                 contentView
                 if isIPad {
                     Spacer()
-                } else {
+                } else if layoutType == .newUser || layoutType == .saveLogin {
                     Spacer()
                         .frame(maxHeight: isSmallFrame ? 24 : 40)
+                } else {
+                    Spacer()
+                        .frame(maxHeight: isSmallFrame ? 24 : 56)
                 }
                 ctaView
                 if isIPhonePortrait {
@@ -202,7 +208,6 @@ struct SaveLoginView: View {
             .lineLimit(1)
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, 10)
             .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
     }
     

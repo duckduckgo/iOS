@@ -34,7 +34,7 @@ protocol AppSettings: AnyObject {
     
     var textSize: Int { get set }
     
-    var autofill: Bool { get set }
+    var autofillCredentialsEnabled: Bool { get set }
 
     var voiceSearchEnabled: Bool { get set }
 

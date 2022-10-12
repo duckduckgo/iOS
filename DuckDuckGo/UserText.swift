@@ -483,7 +483,7 @@ public struct UserText {
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "DuckDuckGo will securely store this Login on your device.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
    
     public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
@@ -498,6 +498,11 @@ public struct UserText {
     public static let autofillLoginSavedToastMessage = NSLocalizedString("autofill.login-saved.toast", value: "Login saved", comment: "Message displayed after saving an autofill login")
     public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login updated", comment: "Message displayed after updating an autofill login")
     public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "View", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
+
+    public static let autofillKeepEnabledAlertTitle = NSLocalizedString("autofill.keep-enabled.alert.title", value: "Do you want to keep using Autofill?", comment: "Title for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertMessage = NSLocalizedString("autofill.keep-enabled.alert.message", value: "You can disable Autofill at any time in Settings.", comment: "Message for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertKeepUsingAction = NSLocalizedString("autofill.keep-enabled.alert.keep-using", value: "Keep Using", comment: "Confirm action for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertDisableAction = NSLocalizedString("autofill.keep-enabled.alert.disable", value: "Disable", comment: "Disable action for alert when asking the user if they want to keep using autofill")
 
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
 
@@ -612,7 +617,8 @@ public struct UserText {
     public static let autofillLoginDetailsLoginName = "Login Title" // Login name label for login details on autofill
     public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
     public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
-    public static let autofillLoginDetailsAddress = "Address" // Address label for login details on autofill
+    public static let autofillLoginDetailsAddress = "Website URL" // Address label for login details on autofill
+    public static let autofillLoginDetailsNotes = "Notes" // Notes label for login details on autofill
     public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
     public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins" // Title for view displayed when autofill is disabled and has no items
     public static let autofillEmptyViewTitle = "No logins saved yet" // Title for view displayed when autofill has no items
@@ -628,19 +634,28 @@ public struct UserText {
     public static let autofillLoginPromptAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth during login prompt
     public static let autofillLoginPromptTitle = "Use Saved Login?" // Title for autofill login prompt
     public static let autofillLoginPromptMoreOptions = "More Options" // Button title for autofill login prompt if more options are available
+
+    public static let autofillOpenWebsitePrompt = "Open Website" // Menu item title for option to open website from selected url
+    public static func autofillCopyPrompt(for type: String) -> String {
+        "Copy \(type)"
+    } // Menu item text for copying autofill login details
     public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
     public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    public static let autofillCopyToastNotesCopied = "Notes copied" //Title for toast when copying notes
     
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
-        "Login last updated \(date))"
+        "Login last updated \(date)"
     } // Message displaying when the login was last updated by
     public static let autofillLoginListAuthenticationCancelButton = "Cancel" // Cancel button for auth when opening login list
     public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
     public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
     public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
     public static let autofillLoginDetailsNewTitle = "Add Login" // Title when adding new autofill login
-    
+    public static let autofillLoginDetailsDeleteButton = "Delete Login" // Delete button when deleting an autofill login
+    public static let autofillLoginDetailsDeleteConfirmationTitle = "Are you sure you want to delete this Login?" // Title of confirmation alert when deleting an autofill login
+    public static let autofillLoginDetailsDeleteConfirmationButtonTitle = "Delete Login" // Autofill alert button confirming delete autofill login
+
     public static func autofillLoginLisLoginDeletedToastMessage(for title: String) -> String {
         "Login for \(title) deleted"
     } // Toast message when a login item is deleted

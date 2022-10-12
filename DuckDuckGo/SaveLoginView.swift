@@ -38,9 +38,9 @@ struct SaveLoginView: View {
     
     private var title: String {
         switch layoutType {
-        case .newUser:
+        case .newUser, .saveLogin:
             return UserText.autofillSaveLoginTitleNewUser
-        case .saveLogin, .saveAdditionalLogin:
+        case .saveAdditionalLogin:
             return UserText.autofillSaveLoginTitle
         case .savePassword:
             return UserText.autofillSavePasswordTitle
@@ -157,10 +157,8 @@ struct SaveLoginView: View {
     @ViewBuilder
     private var contentView: some View {
         switch layoutType {
-        case .newUser:
+        case .newUser, .saveLogin, .savePassword:
             newUserContentView
-        case .saveLogin, .savePassword:
-            saveContentView
         case .saveAdditionalLogin:
             additionalLoginContentView
         case .updateUsername, .updatePassword:
@@ -177,10 +175,6 @@ struct SaveLoginView: View {
             .padding(.horizontal, isSmallFrame ? 28 : 30)
             .padding(.top, isSmallFrame ? 10 : 24)
             .padding(.bottom, isSmallFrame ? 15 : 40)
-    }
-    
-    private var saveContentView: some View {
-        Spacer(minLength: 60)
     }
     
     private var updateContentView: some View {

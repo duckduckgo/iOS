@@ -30,7 +30,7 @@ extension ContentScopeFeatureToggles {
         let context = LAContext()
         var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        return featureFlagger.isFeatureOn(.autofill) && appSettings.autofill && canAuthenticate
+        return featureFlagger.isFeatureOn(.autofill) && appSettings.autofillCredentialsEnabled && canAuthenticate
     }
     
     static var supportedFeaturesOniOS: ContentScopeFeatureToggles {

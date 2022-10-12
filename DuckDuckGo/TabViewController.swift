@@ -104,6 +104,10 @@ class TabViewController: UIViewController {
     private var preserveLoginsWorker: PreserveLoginsWorker?
 
     private var trackersInfoWorkItem: DispatchWorkItem?
+    
+    // Required to know when to disable autofill, see SaveLoginViewModel for details
+    // Stored in memory on TabViewController for privacy reasons
+    private var domainSaveLoginPromptLastShownOn: String?
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -268,7 +272,7 @@ class TabViewController: UIViewController {
         var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
 
-        return appSettings.autofill && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
+        return appSettings.autofillCredentialsEnabled && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
     }
     
     private var userContentController: UserContentController {
@@ -2430,7 +2434,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         manager.prepareData { [weak self] in
 
-            let saveLoginController = SaveLoginViewController(credentialManager: manager)
+            let saveLoginController = SaveLoginViewController(credentialManager: manager, domainLastShownOn: self?.domainSaveLoginPromptLastShownOn)
+            self?.domainSaveLoginPromptLastShownOn = self?.url?.host
             saveLoginController.delegate = self
             if #available(iOS 15.0, *) {
                 if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {

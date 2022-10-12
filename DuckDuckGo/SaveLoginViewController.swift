@@ -31,9 +31,11 @@ protocol SaveLoginViewControllerDelegate: AnyObject {
 class SaveLoginViewController: UIViewController {
     weak var delegate: SaveLoginViewControllerDelegate?
     private let credentialManager: SaveAutofillLoginManager
+    private let domainLastShownOn: String?
 
-    internal init(credentialManager: SaveAutofillLoginManager) {
+    internal init(credentialManager: SaveAutofillLoginManager, domainLastShownOn: String? = nil) {
         self.credentialManager = credentialManager
+        self.domainLastShownOn = domainLastShownOn
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -58,7 +60,7 @@ class SaveLoginViewController: UIViewController {
     }
 
     private func setupSaveLoginView() {
-        let saveViewModel = SaveLoginViewModel(credentialManager: credentialManager)
+        let saveViewModel = SaveLoginViewModel(credentialManager: credentialManager, domainLastShownOn: domainLastShownOn)
         saveViewModel.delegate = self
 
         let saveLoginView = SaveLoginView(viewModel: saveViewModel)
@@ -115,7 +117,7 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
 
         let disableAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertDisableAction, style: .cancel) { _ in
             self.delegate?.saveLoginViewControllerDidCancel(self)
-            AppDependencyProvider.shared.appSettings.autofill = false
+            AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled = false
         }
 
         let keepUsingAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertKeepUsingAction, style: .default) { _ in

@@ -22,8 +22,14 @@ import UIKit
 
 extension View {
 
-    func menuController(_ title: String, action: @escaping () -> Void, onOpen: (() -> Void)? = nil, onClose: (() -> Void)? = nil) -> some View {
-        MenuControllerView(content: self, title: title, action: action, onOpen: onOpen, onClose: onClose)
+    func menuController(_ title: String, secondaryTitle: String? = "", action: @escaping () -> Void, secondaryAction:(() -> Void)? = nil, onOpen: (() -> Void)? = nil, onClose: (() -> Void)? = nil) -> some View {
+        MenuControllerView(content: self,
+                           title: title,
+                           secondaryTitle: secondaryTitle,
+                           action: action,
+                           secondaryAction: secondaryAction,
+                           onOpen: onOpen,
+                           onClose: onClose)
     }
 
 }
@@ -32,18 +38,20 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
 
     let content: Content
     let title: String
+    let secondaryTitle: String?
     let action: () -> Void
+    let secondaryAction: (() -> Void)?
     let onOpen: (() -> Void)?
     let onClose: (() -> Void)?
 
     func makeCoordinator() -> Coordinator<Content> {
-        Coordinator(title: title, action: action, onOpen: onOpen, onClose: onClose)
+        Coordinator(title: title, secondaryTitle: secondaryTitle, action: action, secondaryAction: secondaryAction, onOpen: onOpen, onClose: onClose)
     }
     
     func makeUIViewController(context: Context) -> UIHostingController<Content> {
         let coordinator = context.coordinator
         
-        let hostingController = HostingController(rootView: content, action: action)
+        let hostingController = HostingController(rootView: content, action: action, secondaryAction: secondaryAction)
         coordinator.responder = hostingController
         
         let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.tap))
@@ -58,13 +66,17 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
         var responder: UIResponder?
         var observer: Any?
         private let title: String
+        private let secondaryTitle: String?
         private let action: () -> Void
+        private let secondaryAction: (() -> Void)?
         private let onOpen: (() -> Void)?
         private let onClose: (() -> Void)?
         
-        init(title: String, action: @escaping () -> Void, onOpen: (() -> Void)?, onClose: (() -> Void)?) {
+        init(title: String, secondaryTitle: String?, action: @escaping () -> Void, secondaryAction: (() -> Void)?, onOpen: (() -> Void)?, onClose: (() -> Void)?) {
             self.title = title
+            self.secondaryTitle = secondaryTitle
             self.action = action
+            self.secondaryAction = secondaryAction
             self.onOpen = onOpen
             self.onClose = onClose
         }
@@ -81,6 +93,11 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
             menu.menuItems = [
                 UIMenuItem(title: self.title, action: #selector(HostingController<Content>.menuItemAction(_:)))
             ]
+
+            if let secondaryTitle = secondaryTitle, !secondaryTitle.isEmpty, secondaryAction != nil {
+                menu.menuItems?.append(UIMenuItem(title: secondaryTitle,
+                                                  action: #selector(HostingController<Content>.menuItemSecondaryAction(_:))))
+            }
 
             menu.showMenu(from: view, rect: view.bounds)
 
@@ -105,12 +122,14 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
     
     class HostingController<Content: View>: UIHostingController<Content> {
         private var action: (() -> Void)?
+        private var secondaryAction: (() -> Void)?
 
-        convenience init(rootView: Content, action: @escaping () -> Void) {
+        convenience init(rootView: Content, action: @escaping () -> Void, secondaryAction: (() -> Void)?) {
             self.init(rootView: rootView)
 
             self.action = action
-            
+            self.secondaryAction = secondaryAction
+
             preferredContentSize = view.intrinsicContentSize
             view.backgroundColor = .clear
             
@@ -124,7 +143,11 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
         @objc func menuItemAction(_ sender: Any) {
             self.action?()
         }
-        
+
+        @objc func menuItemSecondaryAction(_ sender: Any) {
+            self.secondaryAction?()
+        }
+
         // Work around an issue with Safe Areas inside UIHostingController: https://defagos.github.io/swiftui_collection_part3/
         func disableSafeArea() {
             guard let viewClass = object_getClass(view) else { return }

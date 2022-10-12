@@ -24,6 +24,8 @@ import Core
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
+    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount)
+    func autofillLoginDetailsViewModelDismiss()
 }
 
 final class AutofillLoginDetailsViewModel: ObservableObject {
@@ -37,6 +39,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case username
         case password
         case address
+        case notes
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
@@ -47,11 +50,17 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     @Published var username = ""
     @Published var password = ""
     @Published var address = ""
+    @Published var notes = ""
     @Published var title = ""
     @Published var selectedCell: UUID?
     @Published var viewMode: ViewMode = .view {
         didSet {
             selectedCell = nil
+            if viewMode == .edit && password.isEmpty {
+                isPasswordHidden = false
+            } else {
+                isPasswordHidden = true
+            }
         }
     }
     
@@ -64,7 +73,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .edit:
             return UserText.autofillLoginDetailsEditTitle
         case .view:
-            return UserText.autofillLoginDetailsDefaultTitle
+            return title
         case .new:
             return UserText.autofillLoginDetailsNewTitle
         }
@@ -75,10 +84,18 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         
         return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty
     }
+
+    var websiteIsValidUrl: Bool {
+        account?.domain.toTrimmedURL != nil
+    }
     
     var userVisiblePassword: String {
         let passwordHider = PasswordHider(password: password)
         return isPasswordHidden ? passwordHider.hiddenPassword : passwordHider.password
+    }
+
+    var usernameDisplayString: String {
+        AutofillInterfaceEmailTruncator.truncateEmail(username, maxLength: 36)
     }
 
     internal init(account: SecureVaultModels.WebsiteAccount? = nil) {
@@ -96,6 +113,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         username = account.username
         address = account.domain
         title = account.name
+        notes = account.notes ?? ""
         headerViewModel.updateData(with: account)
         setupPassword(with: account)
     }
@@ -104,6 +122,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         withAnimation {
             if viewMode == .edit {
                 viewMode = .view
+                if let account = account {
+                    updateData(with: account)
+                }
             } else {
                 viewMode = .edit
             }
@@ -122,6 +143,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .address:
             message = UserText.autofillCopyToastAddressCopied
             UIPasteboard.general.string = address
+        case .notes:
+            message = UserText.autofillCopyToastNotesCopied
+            UIPasteboard.general.string = notes
         }
         
         presentCopyConfirmation(message: message)
@@ -165,6 +189,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = address
+                    credential.account.notes = notes
                     credential.password = passwordData
                     
                     try vault.storeWebsiteCredentials(credential)
@@ -174,7 +199,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
                         self.updateData(with: newCredential.account)
                     }
-                    
                     viewMode = .view
                 }
             case .view:
@@ -182,7 +206,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             case .new:
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
                 
-                let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address)
+                let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address, notes: notes)
                 let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
                 let id = try vault.storeWebsiteCredentials(credentials)
@@ -199,6 +223,21 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         } catch {
             Pixel.fire(pixel: .secureVaultError)
         }
+    }
+
+    func delete() {
+        guard let account = account else {
+            assertionFailure("Trying to delete account, but the account doesn't exist")
+            return
+        }
+        delegate?.autofillLoginDetailsViewModelDelete(account: account)
+    }
+
+    func openUrl() {
+        guard let url = account?.domain.toTrimmedURL else { return }
+
+        LaunchTabNotification.postLaunchTabNotification(urlString: url.absoluteString)
+        delegate?.autofillLoginDetailsViewModelDismiss()
     }
 }
 

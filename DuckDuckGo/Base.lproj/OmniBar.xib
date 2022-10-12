@@ -172,7 +172,6 @@
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="onTextEntered:" destination="ojX-nM-dyN" eventType="primaryActionTriggered" id="eM4-vG-pza"/>
-                                                <outletCollection property="gestureRecognizers" destination="xpX-Ub-pSL" appends="YES" id="LVj-rh-iOO"/>
                                             </connections>
                                         </textField>
                                     </subviews>
@@ -363,12 +362,6 @@
         <tapGestureRecognizer id="qXd-RO-1cS" userLabel="Site Rating Tap Recogniser">
             <connections>
                 <action selector="onSiteRatingPressed:" destination="ojX-nM-dyN" id="aWb-03-h7C"/>
-            </connections>
-        </tapGestureRecognizer>
-        <tapGestureRecognizer id="xpX-Ub-pSL" userLabel="Text Field Tap Recogniser">
-            <connections>
-                <action selector="textFieldTapped" destination="ojX-nM-dyN" id="rWo-vd-pnL"/>
-                <outlet property="delegate" destination="ojX-nM-dyN" id="DQk-Hy-3f6"/>
             </connections>
         </tapGestureRecognizer>
         <tapGestureRecognizer id="N3q-x6-xYr">

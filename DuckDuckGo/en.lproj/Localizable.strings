@@ -172,6 +172,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Disable";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Keep Using";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "You can disable Autofill at any time in Settings.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Do you want to keep using Autofill?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "View";
 
@@ -185,7 +197,7 @@
 "autofill.save-login.additional-login.message" = "This will save an additional Login for this site.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.";
+"autofill.save-login.new-user.message" = "DuckDuckGo will securely store this Login on your device.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Do you want DuckDuckGo to save your Login?";

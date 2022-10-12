@@ -21,6 +21,7 @@ import Kingfisher
 import UIKit
 import os
 import LinkPresentation
+import WidgetKit
 
 // swiftlint:disable type_body_length file_length
 public class Favicons {
@@ -274,6 +275,7 @@ public class Favicons {
             case .success(let image):
                 if let image = image.image {
                     Constants.caches[toCache]?.store(image, forKey: resource.cacheKey, options: .init(options))
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
                 completion?(image.image)
 
@@ -313,6 +315,7 @@ public class Favicons {
                 if let image = image {
                     let image = self.scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
                     targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
                 completion?(image)
             }

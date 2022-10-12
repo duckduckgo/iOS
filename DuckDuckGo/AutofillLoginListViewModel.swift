@@ -219,7 +219,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     @discardableResult
-    private func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
+    func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
               let accountID = account.id else { return false }
         

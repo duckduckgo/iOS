@@ -25,6 +25,13 @@ struct FaviconView: View {
     var body: some View {
         Image(uiImage: viewModel.image)
             .resizable()
+            .cornerRadius(Constants.cornerRadius)
+    }
+}
+
+extension FaviconView {
+    private struct Constants {
+        static let cornerRadius: CGFloat = 4
     }
 }
 

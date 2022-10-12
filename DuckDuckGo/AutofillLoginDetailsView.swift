@@ -43,7 +43,6 @@ struct AutofillLoginDetailsView: View {
             DragGesture().onChanged({_ in
                 viewModel.selectedCell = nil
             }))
-        .modifier(ListBackgroundModifier())
         .listStyle(.insetGrouped)
     }
     
@@ -497,21 +496,6 @@ private struct ForegroundColor {
             return .gray90
         } else {
             return .gray50
-        }
-    }
-}
-
-private struct ListBackgroundModifier: ViewModifier {
-    @Environment(\.colorScheme) private var colorScheme
-
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        if #available(iOS 16.0, *) {
-            content
-                .scrollContentBackground(.hidden)
-                .background(colorScheme == .light ? Color(UIColor.nearlyWhite) : Color(UIColor.nearlyBlack))
-        } else {
-            content
         }
     }
 }

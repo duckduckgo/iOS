@@ -655,5 +655,9 @@ public struct UserText {
     public static let autofillLoginDetailsEditPasswordPlaceholder = "Password" // Placeholder for password field on autofill login details
     public static let autofillLoginDetailsEditURLPlaceholder = "example.com" // Placeholder for url field on autofill login details
     
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertTitle = "Duplicated Login" // Title for alert when attempting to save a duplicate login
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertMessage = "You already have a login for this username and website." // Message for alert when attempting to save a duplicate login
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = "OK" // Action text for alert when attempting to save a duplicate login
+    
     public static let autofillNavigationButtonItemTitleClose = "Close" // Title for close navigation button
 }

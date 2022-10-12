@@ -2454,8 +2454,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         let isEnabled = featureFlagger.isFeatureOn(.autofill)
         let isBackgrounded = UIApplication.shared.applicationState == .background
         let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
-        if isEnabled {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
+        if isEnabled && isBackgrounded {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded, withAdditionalParameters: pixelParams)
         }
         return isEnabled
     }

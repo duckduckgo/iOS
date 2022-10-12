@@ -203,8 +203,7 @@ struct SaveLoginView: View {
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 10)
-            .padding(.top, 56)
-            .padding(.bottom, 56)
+            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
     }
     
     private var additionalLoginContentView: some View {
@@ -213,8 +212,7 @@ struct SaveLoginView: View {
             .secondaryTextStyle()
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.top, 56)
-            .padding(.bottom, 56)
+            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
     }
     
     // We have specific layouts for the smaller iPhones

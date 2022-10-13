@@ -513,6 +513,12 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
 
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
+        if value {
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
+        } else {
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
+        }
+        
         viewModel.isAutofillEnabled = value
         updateViewState()
     }

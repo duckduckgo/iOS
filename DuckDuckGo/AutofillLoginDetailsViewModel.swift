@@ -24,6 +24,7 @@ import Core
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
+    func autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
     func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount)
     func autofillLoginDetailsViewModelDismiss()
 }
@@ -174,17 +175,20 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
 
+    // swiftlint:disable cyclomatic_complexity
     func save() {
-        do {
-            switch viewMode {
-            case .edit:
-                guard let accountID = account?.id else {
-                    assertionFailure("Trying to save edited account, but the account doesn't exist")
-                    return
-                }
-                
-                let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-                
+        guard let vault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
+            return
+        }
+            
+        switch viewMode {
+        case .edit:
+            guard let accountID = account?.id else {
+                assertionFailure("Trying to save edited account, but the account doesn't exist")
+                return
+            }
+                           
+            do {
                 if var credential = try vault.websiteCredentialsFor(accountId: accountID) {
                     credential.account.username = username
                     credential.account.title = title
@@ -201,14 +205,16 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     }
                     viewMode = .view
                 }
-            case .view:
-                break
-            case .new:
-                let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-                
-                let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address, notes: notes)
-                let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
+            } catch let error {
+                Pixel.fire(pixel: .secureVaultError, error: error)
+            }
+        case .view:
+            break
+        case .new:
+            let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address, notes: notes)
+            let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
 
+            do {
                 let id = try vault.storeWebsiteCredentials(credentials)
                 
                 delegate?.autofillLoginDetailsViewModelDidSave()
@@ -219,11 +225,17 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                 }
                 
                 viewMode = .view
+            } catch let error {
+                if case SecureVaultError.duplicateRecord = error {
+                    Pixel.fire(pixel: .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate)
+                    delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
+                } else {
+                    Pixel.fire(pixel: .secureVaultError, error: error)
+                }
             }
-        } catch {
-            Pixel.fire(pixel: .secureVaultError)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 
     func delete() {
         guard let account = account else {

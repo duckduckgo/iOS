@@ -189,6 +189,15 @@ extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDeleg
     func autofillLoginDetailsViewModelDidSave() {
         
     }
+    
+    func autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin() {
+        let alert = UIAlertController(title: UserText.autofillLoginDetailsSaveDuplicateLoginAlertTitle,
+                                      message: UserText.autofillLoginDetailsSaveDuplicateLoginAlertMessage,
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: UserText.autofillLoginDetailsSaveDuplicateLoginAlertAction, style: .default)
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
 
     func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount) {
         delegate?.autofillLoginDetailsViewControllerDelete(account: account)

@@ -570,7 +570,8 @@ extension Pixel.Event {
         case .autofillSettingsOpened: return "m_autofill_settings_opened"
         case .autofillLoginsSettingsEnabled: return "m_autofill_logins_settings_enabled"
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
-        case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate: return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-dupliplicate"
+        case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
+            return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
             
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"

@@ -175,6 +175,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
 
+    // swiftlint:disable cyclomatic_complexity
     func save() {
         guard let vault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
             return
@@ -234,6 +235,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             }
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 
     func delete() {
         guard let account = account else {

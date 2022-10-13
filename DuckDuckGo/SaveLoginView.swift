@@ -32,6 +32,10 @@ struct SaveLoginView: View {
     }
     @State var frame: CGSize = .zero
     @ObservedObject var viewModel: SaveLoginViewModel
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    @State private var orientation = UIDevice.current.orientation
+
     var layoutType: LayoutType {
         viewModel.layoutType
     }
@@ -68,6 +72,11 @@ struct SaveLoginView: View {
         GeometryReader { geometry in
             makeBodyView(geometry)
         }
+        .padding(.horizontal, isIPhonePortrait ? 16 : 48)
+        .ignoresSafeArea(edges: [.top, .bottom])
+        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
+            orientation = UIDevice.current.orientation
+        }
     }
     
     private func makeBodyView(_ geometry: GeometryProxy) -> some View {
@@ -78,15 +87,16 @@ struct SaveLoginView: View {
         
         return ZStack {
             closeButtonHeader
-            
+                .offset(x: isIPhonePortrait ? 16 : 48)
+
             VStack(spacing: 0) {
                 titleHeaderView
+                contentViewTopSpacer
                 contentView
+                contentViewBottomSpacer
                 ctaView
-                Spacer()
+                bottomSpacer
             }
-            .frame(width: Const.Size.contentWidth)
-            .padding(.top, isSmallFrame ? 19 : 43)
         }
     }
     
@@ -116,7 +126,7 @@ struct SaveLoginView: View {
     }
     
     var titleHeaderView: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 FaviconView(viewModel: FaviconViewModel(domain: viewModel.accountDomain))
                     .scaledToFit()
@@ -124,21 +134,49 @@ struct SaveLoginView: View {
                 Text(viewModel.accountDomain)
                     .secondaryTextStyle()
                     .font(Const.Fonts.titleCaption)
-                    
             }
-            
-            VStack {
-                Text(title)
-                    .font(Const.Fonts.title)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
+
+            Text(title)
+                .font(Const.Fonts.title)
+                .frame(maxWidth: .infinity)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, isSmallFrame ? 2 : (isIPhonePortrait ? 25 : 29))
+        }
+        .frame(width: isIPhone ? Const.Size.contentWidth : frame.width)
+        .padding(.top, isSmallFrame ? 20 : (isIPhonePortrait ? 40 : 54))
+    }
+
+    var contentViewTopSpacer: some View {
+        VStack {
+            if isIPad {
+                Spacer()
+            } else if layoutType == .newUser || layoutType == .saveLogin {
+                Spacer()
+                    .frame(maxHeight: isSmallFrame ? 8 : 24)
+            } else {
+                Spacer()
+                    .frame(maxHeight: isSmallFrame ? 24 : 56)
             }
-            .padding(.top, isSmallFrame ? 15 : 25)
         }
     }
-    
-    var ctaView: some View {
+
+    var contentViewBottomSpacer: some View {
         VStack {
+            if isIPad {
+                Spacer()
+            } else if layoutType == .newUser || layoutType == .saveLogin {
+                Spacer()
+                    .frame(maxHeight: isSmallFrame ? 24 : 40)
+            } else {
+                Spacer()
+                    .frame(maxHeight: isSmallFrame ? 24 : 56)
+            }
+        }
+    }
+
+    var ctaView: some View {
+        VStack(spacing: 8) {
             Button {
                 viewModel.save()
             } label: {
@@ -151,6 +189,21 @@ struct SaveLoginView: View {
                 Text(UserText.autofillSaveLoginNotNowCTA)
             }
             .buttonStyle(SecondaryButtonStyle())
+        }
+        .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
+    }
+
+    var bottomSpacer: some View {
+        VStack {
+            if isIPhonePortrait {
+                Spacer()
+            } else if isIPad {
+                Spacer()
+                    .frame(height: orientation == .portrait ? 24 : 64)
+            } else {
+                Spacer()
+                    .frame(height: 44)
+            }
         }
     }
     
@@ -170,11 +223,10 @@ struct SaveLoginView: View {
         Text(UserText.autofillSaveLoginMessageNewUser)
             .font(Const.Fonts.subtitle)
             .secondaryTextStyle()
-            .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, isSmallFrame ? 28 : 30)
-            .padding(.top, isSmallFrame ? 10 : 24)
-            .padding(.bottom, isSmallFrame ? 15 : 40)
+            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
+            .frame(width: isIPhonePortrait ? Const.Size.contentWidth : frame.width)
+            .fixedSize(horizontal: false, vertical: true)
     }
     
     private var updateContentView: some View {
@@ -183,9 +235,7 @@ struct SaveLoginView: View {
             .lineLimit(1)
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.horizontal, 10)
-            .padding(.top, 56)
-            .padding(.bottom, 56)
+            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
     }
     
     private var additionalLoginContentView: some View {
@@ -194,13 +244,24 @@ struct SaveLoginView: View {
             .secondaryTextStyle()
             .frame(maxWidth: .infinity)
             .multilineTextAlignment(.center)
-            .padding(.top, 56)
-            .padding(.bottom, 56)
+            .padding(.horizontal, isSmallFrame ? Const.Size.paddingSmallDevice : Const.Size.paddingDefault)
     }
     
     // We have specific layouts for the smaller iPhones
     private var isSmallFrame: Bool {
         frame.width <= Const.Size.smallDevice || frame.height <= Const.Size.smallDevice
+    }
+
+    private var isIPhonePortrait: Bool {
+        verticalSizeClass == .regular && horizontalSizeClass == .compact
+    }
+
+    private var isIPhone: Bool {
+        verticalSizeClass == .compact || horizontalSizeClass == .compact
+    }
+
+    private var isIPad: Bool {
+        verticalSizeClass == .regular && horizontalSizeClass == .regular
     }
 }
 
@@ -256,11 +317,11 @@ struct SaveLoginView_Previews: PreviewProvider {
 
 private enum Const {
     enum Fonts {
-        static let title = Font.system(size: 20).weight(.bold)
-        static let subtitle = Font.system(size: 13.0)
-        static let updatedInfo = Font.system(size: 16)
-        static let titleCaption = Font.system(size: 13)
-        static let userInfo = Font.system(size: 13).weight(.bold)
+        static let title = Font.system(.title3).weight(.bold)
+        static let subtitle = Font.system(.footnote)
+        static let updatedInfo = Font.system(.callout)
+        static let titleCaption = Font.system(.footnote)
+        static let userInfo = Font.system(.footnote).weight(.bold)
     }
 
     enum Margin {
@@ -278,5 +339,7 @@ private enum Const {
         static var closeButtonOffset: CGFloat {
             closeButtonTappableArea - closeButtonSize
         }
+        static let paddingSmallDevice: CGFloat = 28
+        static let paddingDefault: CGFloat = 30
     }
 }

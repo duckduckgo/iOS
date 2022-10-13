@@ -205,7 +205,7 @@ public class Favicons {
             loadFaviconForBookmarks(forDomain: domain)
             return
         }
-        
+
         let faviconImage = scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
 
         let replace = {
@@ -342,7 +342,7 @@ public class Favicons {
         }
 
     }
-    
+
     private func scaleDownIfNeeded(image: UIImage, toFit size: CGSize) -> UIImage {
         isValidImage(image, forMaxSize: size) ? image : resizedImage(image, toSize: size)
     }

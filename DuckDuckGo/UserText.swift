@@ -550,7 +550,8 @@ public struct UserText {
     public static let autofillLoginDetailsLoginName = "Login Title" // Login name label for login details on autofill
     public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
     public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
-    public static let autofillLoginDetailsAddress = "Address" // Address label for login details on autofill
+    public static let autofillLoginDetailsAddress = "Website URL" // Address label for login details on autofill
+    public static let autofillLoginDetailsNotes = "Notes" // Notes label for login details on autofill
     public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
     public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins" // Title for view displayed when autofill is disabled and has no items
     public static let autofillEmptyViewTitle = "No logins saved yet" // Title for view displayed when autofill has no items
@@ -566,19 +567,28 @@ public struct UserText {
     public static let autofillLoginPromptAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth during login prompt
     public static let autofillLoginPromptTitle = "Use Saved Login?" // Title for autofill login prompt
     public static let autofillLoginPromptMoreOptions = "More Options" // Button title for autofill login prompt if more options are available
+
+    public static let autofillOpenWebsitePrompt = "Open Website" // Menu item title for option to open website from selected url
+    public static func autofillCopyPrompt(for type: String) -> String {
+        "Copy \(type)"
+    } // Menu item text for copying autofill login details
     public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
     public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    public static let autofillCopyToastNotesCopied = "Notes copied" //Title for toast when copying notes
     
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
-        "Login last updated \(date))"
+        "Login last updated \(date)"
     } // Message displaying when the login was last updated by
     public static let autofillLoginListAuthenticationCancelButton = "Cancel" // Cancel button for auth when opening login list
     public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
     public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
     public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
     public static let autofillLoginDetailsNewTitle = "Add Login" // Title when adding new autofill login
-    
+    public static let autofillLoginDetailsDeleteButton = "Delete Login" // Delete button when deleting an autofill login
+    public static let autofillLoginDetailsDeleteConfirmationTitle = "Are you sure you want to delete this Login?" // Title of confirmation alert when deleting an autofill login
+    public static let autofillLoginDetailsDeleteConfirmationButtonTitle = "Delete Login" // Autofill alert button confirming delete autofill login
+
     public static func autofillLoginLisLoginDeletedToastMessage(for title: String) -> String {
         "Login for \(title) deleted"
     } // Toast message when a login item is deleted
@@ -587,6 +597,10 @@ public struct UserText {
     public static let autofillLoginDetailsEditUsernamePlaceholder = "username@example.com" // Placeholder for userbane field on autofill login details
     public static let autofillLoginDetailsEditPasswordPlaceholder = "Password" // Placeholder for password field on autofill login details
     public static let autofillLoginDetailsEditURLPlaceholder = "example.com" // Placeholder for url field on autofill login details
+    
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertTitle = "Duplicated Login" // Title for alert when attempting to save a duplicate login
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertMessage = "You already have a login for this username and website." // Message for alert when attempting to save a duplicate login
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = "OK" // Action text for alert when attempting to save a duplicate login
     
     public static let autofillNavigationButtonItemTitleClose = "Close" // Title for close navigation button
 }

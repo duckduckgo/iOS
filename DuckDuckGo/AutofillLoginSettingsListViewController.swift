@@ -199,7 +199,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func presentDeleteConfirmation(for title: String) {
-        ActionMessageView.present(message: UserText.autofillLoginLisLoginDeletedToastMessage(for: title),
+        ActionMessageView.present(message: UserText.autofillLoginListLoginDeletedToastMessage(for: title),
                                   actionTitle: UserText.actionGenericUndo,
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {

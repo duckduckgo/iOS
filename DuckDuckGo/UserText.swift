@@ -613,61 +613,75 @@ public struct UserText {
 
         return localized.format(arguments: code)
     }
+
+    public static let autofillLoginDetailsLoginName = NSLocalizedString("autofill.logins.details.login-name", value:"Login Title", comment: "Login name label for login details on autofill")
+    public static let autofillLoginDetailsUsername = NSLocalizedString("autofill.logins.details.username", value:"Username", comment: "Username label for login details on autofill")
+    public static let autofillLoginDetailsPassword = NSLocalizedString("autofill.logins.details.password", value:"Password", comment: "Password label for login details on autofill")
     
-    public static let autofillLoginDetailsLoginName = "Login Title" // Login name label for login details on autofill
-    public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
-    public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
-    public static let autofillLoginDetailsAddress = "Website URL" // Address label for login details on autofill
-    public static let autofillLoginDetailsNotes = "Notes" // Notes label for login details on autofill
-    public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
-    public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins" // Title for view displayed when autofill is disabled and has no items
-    public static let autofillEmptyViewTitle = "No logins saved yet" // Title for view displayed when autofill has no items
-    public static let autofillEmptyViewSubtitle = "Logins are stored securely on this device only" // Subtitle for view displayed when autofill has no items
-    public static let autofillSearchNoResultTitle = "No Results" // Title displayed when there are no results on Autofill search
+    public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
+    public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
+    public static let autofillLockedViewTitle = NSLocalizedString("autofill.logins.details.title", value:"Unlock Autofill", comment: "Title for view displayed when autofill is locked")
+    public static let autofillEmptyViewTitleDisabled = NSLocalizedString("autofill.logins.empty-view.title-disabled", value:"Enable Autofill to start saving Logins", comment: "Title for view displayed when autofill is disabled and has no items")
+    public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No logins saved yet", comment: "Title for view displayed when autofill has no items")
+    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Logins are stored securely on this device only", comment: "Subtitle for view displayed when autofill has no items")
+    public static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value:"No Results", comment: "Title displayed when there are no results on Autofill search")
     public static func autofillSearchNoResultSubtitle(for query: String) -> String {
-        "for '\(query)'"
-    } // Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)
-    public static let autofillEnableSettings = "Save and Autofill Logins" // Title for a toggle that enables autofill
-    public static let autofillLoginListTitle = "Autofill Logins" // Title for screen listing autofill logins
-    public static let autofillLoginListSearchPlaceholder = "Search Logins" // Placeholder for search field on autofill login listing
-    public static let autofillLoginPromptAuthenticationCancelButton = "Cancel" // Cancel button for auth during login prompt
-    public static let autofillLoginPromptAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth during login prompt
-    public static let autofillLoginPromptTitle = "Use Saved Login?" // Title for autofill login prompt
-    public static let autofillLoginPromptMoreOptions = "More Options" // Button title for autofill login prompt if more options are available
+        let message = NSLocalizedString("autofill.logins.search.no-results.subtitle", value: "for '%@'", comment: "Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)")
+        return message.format(arguments: query)
+    }
+    
+    public static let autofillEnableSettings = NSLocalizedString("autofill.logins.list.enable", value:"Save and Autofill Logins", comment: "Title for a toggle that enables autofill")
+    public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Autofill Logins", comment: "Title for screen listing autofill logins")
+    public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search Logins", comment: "Placeholder for search field on autofill login listing")
+    
+    public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
+    public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock To Use Saved Login", comment: "Reason for auth during login prompt")
+    public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use Saved Login?", comment: "Title for autofill login prompt")
+    public static let autofillLoginPromptMoreOptions = NSLocalizedString("autofill.logins.prompt.more-options", value:"More Options", comment: "Button title for autofill login prompt if more options are available")
 
-    public static let autofillOpenWebsitePrompt = "Open Website" // Menu item title for option to open website from selected url
+    public static let autofillNoAuthViewFaceIDTitle = NSLocalizedString("autofill.logins.no-auth.face-id.title", value:"Enable Face ID to use Autofill", comment: "Title for view displayed when autofill is locked on devices with faceID")
+    public static let autofillNoAuthViewTouchIDTitle = NSLocalizedString("autofill.logins.no-auth.touch-id.title", value:"Enable Touch ID to use Autofill", comment: "Title for view displayed when autofill is locked on devices with touchID")
+    public static let autofillNoAuthViewFaceIDSubtitle = NSLocalizedString("autofill.logins.no-auth.face-id.subtitle", value:"Face ID & Passcode are required to protect your Autofill Login details.", comment: "Title for view displayed when autofill is locked on devices with faceID")
+    public static let autofillNoAuthViewTouchIDSubtitle = NSLocalizedString("autofill.logins.no-auth.touch-id.subtitle", value:"Touch ID & Passcode are required to protect your Autofill Login details.", comment: "Title for view displayed when autofill is locked on devices with touchID")
+    public static let autofillNoAuthViewFaceIDButton = NSLocalizedString("autofill.logins.no-auth.face-id.button", value:"Set Up Face ID", comment: "Title for view displayed when autofill is locked on devices with faceID")
+    public static let autofillNoAuthViewTouchIDButton = NSLocalizedString("autofill.logins.no-auth.touch-id.button", value:"Set Up Touch ID", comment: "Title for view displayed when autofill is locked on devices with touchID")
+
+    public static let autofillOpenWebsitePrompt = NSLocalizedString("autofill.logins.details.open-website-prompt.title", value:"Open Website", comment: "Menu item title for option to open website from selected url")
     public static func autofillCopyPrompt(for type: String) -> String {
-        "Copy \(type)"
-    } // Menu item text for copying autofill login details
-    public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
-    public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
-    public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
-    public static let autofillCopyToastNotesCopied = "Notes copied" //Title for toast when copying notes
-    
-    public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
-        "Login last updated \(date)"
-    } // Message displaying when the login was last updated by
-    public static let autofillLoginListAuthenticationCancelButton = "Cancel" // Cancel button for auth when opening login list
-    public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
-    public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
-    public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
-    public static let autofillLoginDetailsNewTitle = "Add Login" // Title when adding new autofill login
-    public static let autofillLoginDetailsDeleteButton = "Delete Login" // Delete button when deleting an autofill login
-    public static let autofillLoginDetailsDeleteConfirmationTitle = "Are you sure you want to delete this Login?" // Title of confirmation alert when deleting an autofill login
-    public static let autofillLoginDetailsDeleteConfirmationButtonTitle = "Delete Login" // Autofill alert button confirming delete autofill login
+        let message = NSLocalizedString("autofill.logins.copy-prompt", value: "Copy %@", comment: "Menu item text for copying autofill login details")
+        return message.format(arguments: type)
+    }
+    public static let autofillCopyToastUsernameCopied = NSLocalizedString("autofill.logins.copy-toast.username-copied", value:"Username copied", comment: "Title for toast when copying username")
+    public static let autofillCopyToastPasswordCopied = NSLocalizedString("autofill.logins.copy-toast.password-copied", value:"Password copied", comment: "Title for toast when copying password")
+    public static let autofillCopyToastAddressCopied = NSLocalizedString("autofill.logins.copy-toast.address-copied", value:"Address copied", comment: "Title for toast when copying address")
+    public static let autofillCopyToastNotesCopied = NSLocalizedString("autofill.logins.copy-toast.notes-copied", value:"Notes copied", comment: "Title for toast when copying notes")
 
-    public static func autofillLoginLisLoginDeletedToastMessage(for title: String) -> String {
-        "Login for \(title) deleted"
-    } // Toast message when a login item is deleted
-    
-    public static let autofillLoginDetailsEditTitlePlaceholder = "Title" // Placeholder for title field on autofill login details
-    public static let autofillLoginDetailsEditUsernamePlaceholder = "username@example.com" // Placeholder for userbane field on autofill login details
-    public static let autofillLoginDetailsEditPasswordPlaceholder = "Password" // Placeholder for password field on autofill login details
-    public static let autofillLoginDetailsEditURLPlaceholder = "example.com" // Placeholder for url field on autofill login details
-    
-    public static let autofillLoginDetailsSaveDuplicateLoginAlertTitle = "Duplicated Login" // Title for alert when attempting to save a duplicate login
-    public static let autofillLoginDetailsSaveDuplicateLoginAlertMessage = "You already have a login for this username and website." // Message for alert when attempting to save a duplicate login
-    public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = "OK" // Action text for alert when attempting to save a duplicate login
-    
-    public static let autofillNavigationButtonItemTitleClose = "Close" // Title for close navigation button
+    public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
+        let message = NSLocalizedString("autofill.logins.details.last-updated", value: "Login last updated %@", comment: "Message displaying when the login was last updated by")
+        return message.format(arguments: date)
+    }
+    public static let autofillLoginListAuthenticationCancelButton = NSLocalizedString("autofill.logins.list.auth.cancel", value:"Cancel", comment: "Cancel button for auth when opening login list")
+    public static let autofillLoginListAuthenticationReason = NSLocalizedString("autofill.logins.list.auth.reason", value:"Unlock To Use Saved Login", comment: "Reason for auth when opening login list")
+    public static let autofillLoginDetailsDefaultTitle = NSLocalizedString("autofill.logins.details.default-title", value:"Login", comment: "Title for autofill login details")
+    public static let autofillLoginDetailsEditTitle = NSLocalizedString("autofill.logins.details.edit-title", value:"Edit Login", comment: "Title when editing autofill login details")
+    public static let autofillLoginDetailsNewTitle = NSLocalizedString("autofill.logins.details.new-title", value:"Add Login", comment: "Title when adding new autofill login")
+    public static let autofillLoginDetailsDeleteButton = NSLocalizedString("autofill.logins.details.delete", value:"Delete Login", comment: "Delete button when deleting an autofill login")
+    public static let autofillLoginDetailsDeleteConfirmationTitle = NSLocalizedString("autofill.logins.details.delete-confirmation.title", value:"Are you sure you want to delete this Login?", comment: "Title of confirmation alert when deleting an autofill login")
+    public static let autofillLoginDetailsDeleteConfirmationButtonTitle = NSLocalizedString("autofill.logins.details.delete-confirmation.button", value:"Delete Login", comment: "Autofill alert button confirming delete autofill login")
+
+    public static func autofillLoginListLoginDeletedToastMessage(for title: String) -> String {
+        let message = NSLocalizedString("autofill.logins.list.login-deleted-message", value: "Login for %@ deleted", comment: "Toast message when a login item is deleted")
+        return message.format(arguments: title)
+    }
+
+    public static let autofillLoginDetailsEditTitlePlaceholder = NSLocalizedString("autofill.logins.details.edit.title-placeholder", value:"Title", comment: "Placeholder for title field on autofill login details")
+    public static let autofillLoginDetailsEditUsernamePlaceholder = NSLocalizedString("autofill.logins.details.edit.username-placeholder", value:"username@example.com", comment: "Placeholder for userbane field on autofill login details")
+    public static let autofillLoginDetailsEditPasswordPlaceholder = NSLocalizedString("autofill.logins.details.edit.password-placeholder", value:"Password", comment: "Placeholder for password field on autofill login details")
+    public static let autofillLoginDetailsEditURLPlaceholder = NSLocalizedString("autofill.logins.details.edit.url-placeholder", value:"example.com", comment: "Placeholder for url field on autofill login details")
+
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertTitle = NSLocalizedString("autofill.logins.details.save-duplicate-alert.title", value:"Duplicated Login", comment: "Title for alert when attempting to save a duplicate login")
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertMessage = NSLocalizedString("autofill.logins.details.save-duplicate-alert.message", value:"You already have a login for this username and website.", comment: "Message for alert when attempting to save a duplicate login")
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = NSLocalizedString("autofill.logins.details.save-duplicate-alert.action", value:"OK", comment: "Action text for alert when attempting to save a duplicate login")
+
+    public static let autofillNavigationButtonItemTitleClose = NSLocalizedString("autofill.logins.list.close-title", value:"Close", comment: "Title for close navigation button")
 }

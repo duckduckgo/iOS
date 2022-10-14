@@ -55,6 +55,7 @@ class PrivacyDashboardViewController: UIViewController {
         super.viewDidLoad()
         
         privacyDashboardController.setup(for: webView)
+        privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
         applyTheme(ThemeManager.shared.currentTheme)
     }
     

@@ -178,6 +178,18 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
         evaluate(js: "window.onIsPendingUpdates(\(isPendingUpdates))", in: webView)
     }
 
+    func setLocale(_ currentLocale: String, webView: WKWebView) {
+        struct LocaleSetting: Encodable {
+            var locale: String
+        }
+        
+        guard let localeSettingJson = try? JSONEncoder().encode(LocaleSetting(locale: currentLocale)).utf8String() else {
+            assertionFailure("Can't encode consentInfo into JSON")
+            return
+        }
+        evaluate(js: "window.onChangeLocale(\(localeSettingJson))", in: webView)
+    }
+    
     private func evaluate(js: String, in webView: WKWebView) {
         webView.evaluateJavaScript(js)
     }

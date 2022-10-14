@@ -23,6 +23,7 @@ import Combine
 public final class PrivacyDashboardController: NSObject {
     
     @Published public var theme: PrivacyDashboardTheme?
+    public var preferredLocale: String?
     
     public var onProtectionSwitchChange: ((Bool) -> Void)?
     public var onCloseTapped: (() -> Void)?
@@ -95,6 +96,7 @@ extension PrivacyDashboardController: WKNavigationDelegate {
         subscribeToDataModelChanges()
         sendProtectionStatus()
         sendParentEntity()
+        sendCurrentLocale()
     }
     
     private func subscribeToDataModelChanges() {
@@ -161,6 +163,13 @@ extension PrivacyDashboardController: WKNavigationDelegate {
     private func sendParentEntity() {
         guard let webView = self.webView else { return }
         privacyDashboardScript.setParentEntity(privacyInfo?.parentEntity, webView: webView)
+    }
+    
+    private func sendCurrentLocale() {
+        guard let webView = self.webView else { return }
+        
+        let locale = preferredLocale ?? "en"
+        privacyDashboardScript.setLocale(locale, webView: webView)
     }
 }
 

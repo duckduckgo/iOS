@@ -18,9 +18,9 @@
 //
 
 import SwiftUI
-import DuckUI
 
 struct AutofillLoginDetailsHeaderView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: AutofillLoginDetailsHeaderViewModel
     
     var body: some View {
@@ -32,30 +32,33 @@ struct AutofillLoginDetailsHeaderView: View {
             
             VStack(alignment: .leading, spacing: Constants.verticalStackSpacing) {
                 Text(viewModel.title)
-                    .font(Font.system(size: Constants.titleFontSize))
-                    .foregroundColor(Color(.label))
-                
+                    .font(.callout)
+                    .foregroundColor(colorScheme == .light ? .gray90 : .white)
+                    .truncationMode(.middle)
+                    .lineLimit(1)
+
                 Text(viewModel.subtitle)
-                    .font(Font.system(size: Constants.subtitleFontSize))
-                    .foregroundColor(.gray50)
+                    .font(.footnote)
+                    .foregroundColor(colorScheme == .light ? .gray50 : .gray20)
             }
             
             Spacer()
         }
-        .frame(height: Constants.viewHeight)
+        .frame(minHeight: Constants.viewHeight)
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
+        .listRowBackground(Color("AutofillCellBackground"))
+        .listRowInsets(Constants.insets)
     }
 }
 
 extension AutofillLoginDetailsHeaderView {
     private struct Constants {
         static let imageSize: CGFloat = 32
-        static let titleFontSize: CGFloat = 16
-        static let subtitleFontSize: CGFloat = 13
-        static let horizontalStackSpacing: CGFloat = 10
-        static let verticalStackSpacing: CGFloat = 3
+        static let horizontalStackSpacing: CGFloat = 12
+        static let verticalStackSpacing: CGFloat = 1
         static let viewHeight: CGFloat = 60
+        static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
     }
 }
 

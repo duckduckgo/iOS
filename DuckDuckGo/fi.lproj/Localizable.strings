@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Peruuta";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Luo yksityinen osoite";
+"email.aliasAlert.generatePrivateAddress" = "Luo yksityinen Duck Address";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Estä sähköpostiseuranta Duck-osoitteella";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Uusi osoite on kopioitu leikepöydälle";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Luo Duck-osoite";
+"email.browsingMenu.useNewDuckAddress" = "Luo yksityinen Duck Address";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Käytössä";

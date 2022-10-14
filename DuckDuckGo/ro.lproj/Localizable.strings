@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Renunță";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generează o adresă privată";
+"email.aliasAlert.generatePrivateAddress" = "Generează o Duck Address privată";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blochează instrumentele de urmărire a e-mailului cu o adresă Duck";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Adresă nouă copiată în clipboard";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Creează o adresă Duck";
+"email.browsingMenu.useNewDuckAddress" = "Generează o Duck Address privată";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Activat";

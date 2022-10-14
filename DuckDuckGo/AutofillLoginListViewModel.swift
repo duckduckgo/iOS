@@ -74,9 +74,9 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     var isAutofillEnabled: Bool {
-        get { appSettings.autofill }
+        get { appSettings.autofillCredentialsEnabled }
         set {
-            appSettings.autofill = newValue
+            appSettings.autofillCredentialsEnabled = newValue
             NotificationCenter.default.post(name: AppUserDefaults.Notifications.autofillEnabledChange, object: self)
         }
     }
@@ -219,7 +219,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     @discardableResult
-    private func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
+    func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
               let accountID = account.id else { return false }
         

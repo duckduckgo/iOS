@@ -74,12 +74,7 @@ class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSour
         self.bookmarksManager = bookmarksManager
         super.init()
         let bookmarksDataSource = BookmarksSectionDataSource(parentFolder: parentFolder, delegate: alertDelegate, bookmarksManager: bookmarksManager)
-        if parentFolder != nil {
-            self.sectionDataSources = [bookmarksDataSource]
-        } else {
-            let favoritesDataSource = FavoritesSectionDataSource(bookmarksManager: bookmarksManager)
-            self.sectionDataSources = [favoritesDataSource, bookmarksDataSource]
-        }
+        self.sectionDataSources = [bookmarksDataSource]
     }
     
     var favoritesSectionIndex: Int? {

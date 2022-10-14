@@ -26,7 +26,7 @@ import UniformTypeIdentifiers
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 
-class BookmarksViewController: UITableViewController {
+class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private enum Constants {
         static var saveToFiles = "com.apple.DocumentManagerUICore.SaveToFiles"
@@ -35,9 +35,13 @@ class BookmarksViewController: UITableViewController {
         static var exportBookmarkImage = "BookmarksExport"
     }
 
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var importFooterButton: UIButton!
+    @IBOutlet weak var favoritesContainer: UIView!
+    @IBOutlet weak var selectorContainer: UIView!
+    @IBOutlet weak var selectorHeightConstraint: NSLayoutConstraint!
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -75,22 +79,40 @@ class BookmarksViewController: UITableViewController {
     private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
     
     fileprivate var onDidAppearAction: () -> Void = {}
-        
+    private var isNested: Bool
+
+    init?(coder: NSCoder, isNested: Bool = false) {
+        self.isNested = isNested
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        isNested = false
+        super.init(coder: coder)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.delegate = self
+
         registerForNotifications()
+        configureSelector()
         configureTableView()
         configureSearchIfNeeded()
         configureBars()
-        
+
         applyTheme(ThemeManager.shared.currentTheme)
+
+        selectorContainer.isHidden = isNested
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         onDidAppearAction()
         onDidAppearAction = {}
+
     }
     
     @objc func dataDidChange(notification: Notification) {
@@ -101,6 +123,23 @@ class BookmarksViewController: UITableViewController {
         refreshEditButton()
         refreshFooterView()
         refreshMoreButton()
+    }
+
+    @IBAction func onViewSelectorChanged(_ segment: UISegmentedControl) {
+
+        switch segment.selectedSegmentIndex {
+        case 0:
+            tableView.isHidden = false
+            favoritesContainer.isHidden = true
+            // TODO update rest of UI
+
+        case 1:
+            tableView.isHidden = true
+            favoritesContainer.isHidden = false
+
+        default: assertionFailure("Invalid selected segment index")
+        }
+
     }
     
     func openEditFormWhenPresented(bookmark: Bookmark) {
@@ -119,7 +158,7 @@ class BookmarksViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let item = currentDataSource.item(at: indexPath) else { return }
         
         if isEditingBookmarks {
@@ -134,11 +173,9 @@ class BookmarksViewController: UITableViewController {
                 select(bookmark: bookmark)
             } else if let folder = item as? BookmarkFolder {
                 let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
-                guard let viewController = storyboard.instantiateViewController(withIdentifier: "BookmarksViewController")
-                        as? BookmarksViewController else {
-                            
-                    return
-                }
+                let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
+                    BookmarksViewController(coder: coder, isNested: true)
+                })
                 viewController.dataSource = DefaultBookmarksDataSource(alertDelegate: viewController, parentFolder: folder)
                 viewController.delegate = delegate
                 navigationController?.pushViewController(viewController, animated: true)
@@ -146,7 +183,7 @@ class BookmarksViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         guard let item = currentDataSource.item(at: indexPath),
               item as? BookmarkFolder == nil else {
             return nil
@@ -158,26 +195,6 @@ class BookmarksViewController: UITableViewController {
         }
         shareContextualAction.backgroundColor = UIColor.cornflowerBlue
         return UISwipeActionsConfiguration(actions: [shareContextualAction])
-    }
-    
-    override func tableView(_ tableView: UITableView,
-                            targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath,
-                            toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        
-        // Can't move folders into favorites
-        if let item = currentDataSource.item(at: sourceIndexPath),
-           item as? BookmarkFolder != nil &&
-            proposedDestinationIndexPath.section == currentDataSource.favoritesSectionIndex {
-            return sourceIndexPath
-        }
-        
-        // Check if the proposed section is empty, if so we need to make sure the proposed row is 0, not 1
-        let sectionIndexPath = IndexPath(row: 0, section: proposedDestinationIndexPath.section)
-        if currentDataSource.item(at: sectionIndexPath) == nil {
-            return sectionIndexPath
-        }
-        
-        return proposedDestinationIndexPath
     }
 
     private func registerForNotifications() {
@@ -191,7 +208,15 @@ class BookmarksViewController: UITableViewController {
                                                object: nil)
     }
 
+    private func configureSelector() {
+        selectorContainer.backgroundColor = tableView.backgroundColor
+        selectorContainer.isHidden = isNested
+        selectorHeightConstraint.constant = isNested ? 0 : selectorHeightConstraint.constant
+    }
+
     private func configureTableView() {
+        tableView.contentInset = .init(top: isNested ? 24 : 0, left: 0, bottom: 0, right: 0)
+
         tableView.dataSource = dataSource
         if dataSource.folder != nil {
             tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: CGFloat.leastNormalMagnitude))
@@ -250,7 +275,7 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    private func configureBars() {
+    func configureBars() {
         self.navigationController?.setToolbarHidden(false, animated: true)
         toolbarItems?.insert(addFolderBarButtonItem, at: 0)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
@@ -566,14 +591,14 @@ class BookmarksViewController: UITableViewController {
         }
     }
     
-    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if (searchController?.searchBar.bounds.height ?? 0) == 0 {
             // Disable drag-to-dismiss if we start scrolling and search bar is still hidden
             isModalInPresentation = true
         }
     }
 
-    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         guard let searchController = searchController else {
             return
         }
@@ -584,7 +609,7 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
-    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard let searchController = searchController else {
             return
         }

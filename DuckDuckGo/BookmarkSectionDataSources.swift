@@ -29,8 +29,7 @@ protocol BookmarkItemsSectionDataSource {
     func bookmarkItem(at index: Int) -> BookmarkItem?
     
     func cell(_ tableView: UITableView, forIndex index: Int) -> UITableViewCell
-    func title() -> String?
-    
+
     func canEditRow(_ tableView: UITableView, at index: Int) -> Bool
     func canMoveRow(_ tableView: UITableView, at index: Int) -> Bool
     func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int)
@@ -101,10 +100,6 @@ class FavoritesSectionDataSource: BookmarkItemsSectionDataSource {
         return cell
     }
 
-    func title() -> String? {
-        return UserText.sectionTitleFavorites
-    }
-
     func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {
         
         guard editingStyle == .delete else { return }
@@ -169,10 +164,6 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
     
     func navigationTitle() -> String? {
         return parentFolder?.title
-    }
-
-    func title() -> String? {
-        return parentFolder == nil ? UserText.sectionTitleBookmarks : nil
     }
     
     func commit(_ tableView: UITableView, editingStyle: UITableViewCell.EditingStyle, forRowAt index: Int, section: Int) {

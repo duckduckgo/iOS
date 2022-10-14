@@ -55,7 +55,7 @@ final class ReaderModeServer {
         let stylePath = Bundle.main.path(forResource: "Reader", ofType: "css")!
         let css = (try? String(contentsOfFile: stylePath, encoding: .utf8))!
         let tmplURL = Bundle.main.url(forResource: "Reader", withExtension: "html")!
-        let tmpl = (try? NSMutableString(contentsOf: tmplURL, encoding: NSUTF8StringEncoding))!
+        let tmpl = (try? NSMutableString(contentsOf: tmplURL, encoding: String.Encoding.utf8.rawValue))!
 
         tmpl.replaceOccurrences(of: "%READER-CSS%", with: css, options: .literal, range: NSRange(location: 0, length: tmpl.length))
         tmpl.replaceOccurrences(of: "%READER-STYLE%", with: style.encode(), options: .literal, range: NSRange(location: 0, length: tmpl.length))

@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1665085312777,
+    "version": 1665698380738,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -190,6 +190,10 @@
             },
             "exceptions": [],
             "state": "enabled"
+        },
+        "duckPlayer": {
+            "exceptions": [],
+            "state": "disabled"
         },
         "elementHiding": {
             "exceptions": [],
@@ -884,6 +888,13 @@
                                 "reason": "See https://github.com/duckduckgo/privacy-configuration/issues/321. This request is associated with map/location auto-suggest functionality on websites."
                             },
                             {
+                                "rule": "www.bing.com/maps/sdk/mapcontrol",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/321"
+                            },
+                            {
                                 "rule": "www.bing.com/maps/sdkrelease/mapcontrol",
                                 "domains": [
                                     "<all>"
@@ -1028,6 +1039,7 @@
                             {
                                 "rule": "dpm.demdex.net/id",
                                 "domains": [
+                                    "dhl.de",
                                     "homedepot.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/393"
@@ -1908,11 +1920,25 @@
                     "theplatform.com": {
                         "rules": [
                             {
+                                "rule": "link.theplatform.com/s/",
+                                "domains": [
+                                    "nbcsports.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/512"
+                            },
+                            {
                                 "rule": "pdk.theplatform.com/pdk6/current/pdk/player.js",
                                 "domains": [
                                     "eonline.com"
                                 ],
                                 "reason": "Videos don't play (blank box after clicking to play)."
+                            },
+                            {
+                                "rule": "pdk.theplatform.com/pdk6/next/pdk/player.js",
+                                "domains": [
+                                    "nbcsports.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/512"
                             }
                         ]
                     },

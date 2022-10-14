@@ -1220,9 +1220,7 @@ extension TabViewController: WKNavigationDelegate {
         instrumentation.didLoadURL()
         checkLoginDetectionAfterNavigation()
 
-        webView.evaluateJavaScript("\(ReaderModeNamespace).checkReadability()") { result, error  in
-            Swift.print(result, error)
-        }
+        webView.evaluateJavaScript("\(ReaderModeNamespace).checkReadability()")
         
         // definitely finished with any potential login cycle by this point, so don't try and handle it any more
         detectedLoginURL = nil

@@ -294,7 +294,9 @@ class OmniBar: UIView {
         if animated {
             self.isAnimating = true
             UIView.animate(withDuration: 0.2, delay: 0, options: .beginFromCurrentState) {
-                reallyUpdate(setHidden: { view in { hidden in view.alpha = hidden ? 0 : 1 }})
+                reallyUpdate(setHidden: { view in { hidden in
+                    view.alpha = hidden ? 0 : 1
+                }})
             } completion: { isCompleted in
                 guard isCompleted else { return }
                 reallyUpdate(setHidden: UIView.setHiddenIfNeeded(_:))

@@ -61,7 +61,7 @@ final class DaxDialogs {
     
     func overrideShownFlagFor(_ spec: BrowsingSpec, flag: Bool) {
         switch spec.type {
-        case .withMultipleTrackers, .withOneTracker :
+        case .withMultipleTrackers, .withOneTracker:
             settings.browsingWithTrackersShown = flag
         case .afterSearch:
             settings.browsingAfterSearchShown = flag

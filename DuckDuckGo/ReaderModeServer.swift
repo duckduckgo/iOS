@@ -21,6 +21,7 @@ import Foundation
 import Swifter
 import Core
 
+// swiftlint:disable line_length
 final class ReaderModeServer {
     public static let shared = ReaderModeServer()
 

@@ -22,16 +22,28 @@ import Combine
 import Core
 import BrowserServicesKit
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
+
 protocol AutofillLoginSettingsListViewControllerDelegate: AnyObject {
     func autofillLoginSettingsListViewControllerDidFinish(_ controller: AutofillLoginSettingsListViewController)
 }
 
 final class AutofillLoginSettingsListViewController: UIViewController {
+
+    private enum Constants {
+        static let padding: CGFloat = 16
+    }
+
     weak var delegate: AutofillLoginSettingsListViewControllerDelegate?
     private let viewModel: AutofillLoginListViewModel
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
     private let emptySearchView = AutofillEmptySearchView()
+    
+    private lazy var addBarButtonItem: UIBarButtonItem = {
+        UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+    }()
     
     private var cancellables: Set<AnyCancellable> = []
     private lazy var searchController: UISearchController = {
@@ -39,8 +51,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = UserText.autofillLoginListSearchPlaceholder
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
         definesPresentationContext = true
         
         return searchController
@@ -54,9 +65,31 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         tableView.estimatedRowHeight = 60
         tableView.registerCell(ofType: AutofillListItemTableViewCell.self)
         tableView.registerCell(ofType: EnableAutofillSettingsTableViewCell.self)
+        // Have to set tableHeaderView height otherwise tableView content will jump when adding / removing searchController due to tableView insetGrouped style
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 16))
         return tableView
     }()
-    
+
+    private lazy var lockedViewBottomConstraint: NSLayoutConstraint = {
+        NSLayoutConstraint(item: tableView,
+                           attribute: .bottom,
+                           relatedBy: .equal,
+                           toItem: lockedView,
+                           attribute: .bottom,
+                           multiplier: 1,
+                           constant: 144)
+    }()
+
+    private lazy var emptySearchViewCenterYConstraint: NSLayoutConstraint = {
+        NSLayoutConstraint(item: emptySearchView,
+                           attribute: .centerY,
+                           relatedBy: .equal,
+                           toItem: tableView,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: (tableView.frame.height / 2))
+    }()
+
     init(appSettings: AppSettings) {
         self.viewModel = AutofillLoginListViewModel(appSettings: appSettings)
         super.init(nibName: nil, bundle: nil)
@@ -72,11 +105,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         setupCancellables()
         installSubviews()
         installConstraints()
-        installNavigationBarButtons()
         applyTheme(ThemeManager.shared.currentTheme)
         updateViewState()
         configureNotification()
-        navigationItem.searchController = searchController
+        registerForKeyboardNotifications()
 
     }
     
@@ -86,14 +118,38 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         authenticate()
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: { _ in
+            self.updateConstraintConstants()
+            self.emptyView.refreshConstraints()
+            if !self.searchController.isActive {
+                self.navigationItem.searchController = nil
+            }
+        }, completion: { _ in
+            self.updateSearchController()
+        })
+    }
+
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
 
         tableView.setEditing(editing, animated: animated)
+
+        updateNavigationBarButtons()
+        updateSearchController()
+    }
+    
+    @objc
+    func addButtonPressed() {
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator)
+        detailsController.delegate = self
+        navigationController?.pushViewController(detailsController, animated: true)
     }
     
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
-        let detailsController = AutofillLoginDetailsViewController(account: account, authenticator: viewModel.authenticator)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, account: account)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: animated)
     }
@@ -141,6 +197,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             }
         }
     }
+
+    private func presentDeleteConfirmation(for title: String) {
+        ActionMessageView.present(message: UserText.autofillLoginLisLoginDeletedToastMessage(for: title),
+                                  actionTitle: UserText.actionGenericUndo,
+                                  presentationLocation: .withoutBottomBar,
+                                  onAction: {
+            self.viewModel.undoLastDelete()
+        }, onDidDismiss: {
+            self.viewModel.clearUndoCache()
+        })
+    }
     
     // MARK: Subviews Setup
     
@@ -152,77 +219,120 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = true
         case .authLocked:
             emptyView.isHidden = true
             tableView.isHidden = true
             lockedView.isHidden = false
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = false
         case .empty:
             emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
             emptyView.isHidden = false
             tableView.isHidden = false
+            setEditing(false, animated: false)
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = false
         case .searching:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = true
-            navigationItem.rightBarButtonItem?.isEnabled = true
         case .searchingNoResults:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
             emptySearchView.isHidden = false
-            navigationItem.rightBarButtonItem?.isEnabled = true
         }
+        updateNavigationBarButtons()
+        updateSearchController()
         tableView.reloadData()
     }
     
-    private func installNavigationBarButtons() {
-        navigationItem.rightBarButtonItem = self.editButtonItem
+    private func updateNavigationBarButtons() {
+        switch viewModel.viewState {
+        case .showItems:
+            if tableView.isEditing {
+                navigationItem.rightBarButtonItems = [editButtonItem]
+            } else {
+                if viewModel.isAutofillEnabled || (!viewModel.isAutofillEnabled && viewModel.hasAccountsSaved) {
+                    navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                } else {
+                    navigationItem.rightBarButtonItems = [addBarButtonItem]
+                }
+                addBarButtonItem.isEnabled = true
+            }
+            editButtonItem.isEnabled = true
+        case .authLocked:
+            navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+            addBarButtonItem.isEnabled = false
+            editButtonItem.isEnabled = false
+        case .empty:
+            if viewModel.isAutofillEnabled {
+                navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
+                editButtonItem.isEnabled = false
+            } else {
+                navigationItem.rightBarButtonItems = [addBarButtonItem]
+            }
+            addBarButtonItem.isEnabled = true
+        case .searching, .searchingNoResults:
+            navigationItem.rightBarButtonItems = []
+        }
     }
-    
+
+    private func updateSearchController() {
+        switch viewModel.viewState {
+        case .showItems:
+            if tableView.isEditing {
+                navigationItem.searchController = nil
+            } else {
+                navigationItem.searchController = searchController
+            }
+        case .searching, .searchingNoResults:
+            navigationItem.searchController = searchController
+        case .empty, .authLocked:
+            navigationItem.searchController = nil
+        }
+    }
+
     private func installSubviews() {
         view.addSubview(tableView)
-        tableView.addSubview(emptyView)
         tableView.addSubview(emptySearchView)
         view.addSubview(lockedView)
     }
     
     private func installConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
         emptySearchView.translatesAutoresizingMaskIntoConstraints = false
         lockedView.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        updateConstraintConstants()
+
         NSLayoutConstraint.activate([
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            emptyView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptyView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
-            emptyView.widthAnchor.constraint(equalToConstant: 225),
-            emptyView.heightAnchor.constraint(equalToConstant: 235),
-            
+
             emptySearchView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            emptySearchView.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 80),
-            emptySearchView.widthAnchor.constraint(equalToConstant: 225),
-            emptySearchView.heightAnchor.constraint(equalToConstant: 130),
-            
+            emptySearchViewCenterYConstraint,
+            emptySearchView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            emptySearchView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
+
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            lockedView.heightAnchor.constraint(equalToConstant: 140)
+            lockedView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            lockedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
+            lockedViewBottomConstraint
         ])
     }
 
-    
+    private func updateConstraintConstants() {
+        let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
+        if isIPhoneLandscape {
+            lockedViewBottomConstraint.constant = (view.frame.height / 2 - max(lockedView.frame.height, 120.0) / 2)
+        } else {
+            lockedViewBottomConstraint.constant = view.frame.height * 0.15
+        }
+    }
+
     // MARK: Cell Methods
     
     private func credentialCell(for tableView: UITableView, item: AutofillLoginListItemViewModel, indexPath: IndexPath) -> AutofillListItemTableViewCell {
@@ -245,7 +355,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
 
 extension AutofillLoginSettingsListViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         switch viewModel.sections[indexPath.section] {
         case .enableAutofill:
             return 44
@@ -263,6 +373,24 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
             showAccountDetails(item.account)
         default:
             break
+        }
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        switch viewModel.viewState {
+        case .empty:
+            return emptyView
+        default:
+            return nil
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch viewModel.viewState {
+        case .empty:
+            return max(tableView.bounds.height - tableView.contentSize.height, 250)
+        default:
+            return 0
         }
     }
 }
@@ -297,12 +425,17 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         case .credentials(_, let items):
             if editingStyle == .delete {
                 let shouldDeleteSection = items.count == 1
-                viewModel.delete(at: indexPath)
+                let title = items[indexPath.row].title
+                let deletedSuccessfully = viewModel.delete(at: indexPath)
                 
                 if shouldDeleteSection {
                     tableView.deleteSections([indexPath.section], with: .automatic)
                 } else {
                     tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
+                
+                if deletedSuccessfully {
+                    presentDeleteConfirmation(for: title)
                 }
             }
         default:
@@ -323,6 +456,29 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         viewModel.viewState == .showItems ? UILocalizedIndexedCollation.current().sectionIndexTitles : []
     }
     
+    func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        var closestSoFar = 0
+        var exactMatchIndex: Int?
+        for (index, section) in viewModel.sections.enumerated() {
+            if case .credentials(let sectionTitle, _) = section {
+                
+                if let first = title.first, !first.isLetter {
+                    return viewModel.sections.count - 1
+                }
+                
+                let result = sectionTitle.localizedCaseInsensitiveCompare(title)
+                if result == .orderedSame {
+                    exactMatchIndex = index
+                    break
+                } else if result == .orderedDescending {
+                    break
+                }
+            }
+            closestSoFar = index
+        }
+        return exactMatchIndex ?? closestSoFar
+    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         switch viewModel.sections[indexPath.section] {
         case .credentials:
@@ -340,12 +496,29 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         viewModel.updateData()
         tableView.reloadData()
     }
+
+    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount) {
+        let title = account.title ?? ""
+        let deletedSuccessfully = viewModel.delete(account)
+
+        if deletedSuccessfully {
+            viewModel.updateData()
+            tableView.reloadData()
+            presentDeleteConfirmation(for: title)
+        }
+    }
 }
 
 // MARK: EnableAutofillSettingsTableViewCellDelegate
 
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
+        if value {
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
+        } else {
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
+        }
+        
         viewModel.isAutofillEnabled = value
         updateViewState()
     }
@@ -358,14 +531,25 @@ extension AutofillLoginSettingsListViewController: Themable {
     func decorate(with theme: Theme) {
         lockedView.decorate(with: theme)
         emptyView.decorate(with: theme)
-        
+        emptySearchView.decorate(with: theme)
+
         view.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
+        tableView.sectionIndexColor = theme.buttonTintColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
-        
+
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+
         tableView.reloadData()
     }
 }
@@ -380,5 +564,31 @@ extension AutofillLoginSettingsListViewController: UISearchResultsUpdating {
             viewModel.filterData(with: query)
             emptySearchView.query = query
         }
+    }
+}
+
+// MARK: Keyboard
+
+extension AutofillLoginSettingsListViewController {
+
+    private func registerForKeyboardNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(adjustForKeyboard),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
+    }
+
+    @objc private func adjustForKeyboard(notification: NSNotification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            return
+        }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        emptySearchViewCenterYConstraint.constant = min(
+            (keyboardViewEndFrame.minY + emptySearchView.frame.height) / 2 - searchController.searchBar.frame.height,
+            (tableView.frame.height / 2) - searchController.searchBar.frame.height
+        )
     }
 }

@@ -19,12 +19,14 @@
 
 import Foundation
 import Core
+import BrowserServicesKit
 
 protocol DependencyProvider {
     var appSettings: AppSettings { get }
     var variantManager: VariantManager { get }
     var featureFlagger: FeatureFlagger { get }
     var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider { get }
+    var remoteMessagingStore: RemoteMessagingStore { get }
     var homePageConfiguration: HomePageConfiguration { get }
     var storageCache: StorageCacheProvider { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
@@ -46,8 +48,10 @@ class AppDependencyProvider: DependencyProvider {
     var featureFlaggerInternalUserDecider: FeatureFlaggerInternalUserDecider {
         return defaultFeatureFlagger
     }
-    
-    lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager)
+
+    let remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()
+    lazy var homePageConfiguration: HomePageConfiguration = HomePageConfiguration(variantManager: variantManager,
+                                                                                  remoteMessagingStore: remoteMessagingStore)
     let storageCache = StorageCacheProvider()
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()

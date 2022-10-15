@@ -23,6 +23,7 @@ import XCTest
 import Foundation
 import BrowserServicesKit
 import os.log
+import Common
 
 class DomainMatchingReportTests: XCTestCase {
     private var data = JsonTestDataLoader()
@@ -36,7 +37,7 @@ class DomainMatchingReportTests: XCTestCase {
         let refTests = try JSONDecoder().decode(RefTests.self, from: testJSON)
         let tests = refTests.domainTests.tests
         
-        let resolver = TrackerResolver(tds: trackerData, unprotectedSites: [], tempList: [])
+        let resolver = TrackerResolver(tds: trackerData, unprotectedSites: [], tempList: [], tld: TLD())
 
         for test in tests {
             let skip = test.exceptPlatforms?.contains("ios-browser")

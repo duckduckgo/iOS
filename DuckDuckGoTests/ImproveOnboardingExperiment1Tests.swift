@@ -19,13 +19,14 @@
 
 import XCTest
 @testable import Core
+@testable import BrowserServicesKit
 
 class ImproveOnboardingExperiment1Tests: XCTestCase {
     
     func testWhenOnboardingExperimentVariantsHaveWeightThenItIsSetToOne() {
         let variantNames = [ "mq", "mr" ]
         
-        for variant in Variant.defaultVariants {
+        for variant in VariantIOS.defaultVariants {
             guard variantNames.contains(variant.name) else { continue }
             XCTAssertEqual(variant.weight, 1, variant.name)
         }

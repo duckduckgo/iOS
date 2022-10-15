@@ -76,6 +76,18 @@ public class BookmarksCachingSearch {
         return cachedBookmarksAndFavorites ?? []
     }
 
+	public var bookmarksCount: Int {
+		let bookmarksAndFavorites = bookmarksAndFavorites
+		let bookmarksOnly = bookmarksAndFavorites.filter { !$0.isFavorite }
+		return bookmarksOnly.count
+	}
+
+	public var favoritesCount: Int {
+		let bookmarksAndFavorites = bookmarksAndFavorites
+		let favoritesOnly = bookmarksAndFavorites.filter { $0.isFavorite }
+		return favoritesOnly.count
+	}
+
     public func containsDomain(_ domain: String) -> Bool {
         return bookmarksAndFavorites.contains { $0.url?.host == domain }
     }
@@ -137,7 +149,7 @@ public class BookmarksCachingSearch {
                 entry.score += 100
             }
             
-            let domain = entry.bookmark.url?.host?.dropPrefix(prefix: "www.") ?? ""
+            let domain = entry.bookmark.url?.host?.droppingWwwPrefix() ?? ""
             
             // Tokenized matches
             
@@ -186,7 +198,7 @@ public class BookmarksCachingSearch {
             return ScoredBookmark(bookmark: $0, score: score)
         }
                     
-        let trimmed = query.trimWhitespace()
+        let trimmed = query.trimmingWhitespace()
         self.score(query: trimmed, results: results)
         
         var finalResult = results.filter { $0.score > 0 }

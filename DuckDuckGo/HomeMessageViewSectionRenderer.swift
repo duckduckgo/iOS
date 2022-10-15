@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import os.log
 
 protocol HomeMessageViewSectionRendererDelegate: AnyObject {
     
@@ -49,7 +50,11 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         self.controller = controller
         hideLogoIfThereAreMessagesToDisplay()
     }
-    
+
+    func refresh() {
+        hideLogoIfThereAreMessagesToDisplay()
+    }
+
     private func hideLogoIfThereAreMessagesToDisplay() {
         if !homePageConfiguration.homeMessages.isEmpty {
             controller?.hideLogo()
@@ -92,19 +97,34 @@ class HomeMessageViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private func configureCell(_ cell: HomeMessageCollectionViewCell,
                                in collectionView: UICollectionView,
                                at indexPath: IndexPath) {
-        if let controller = controller {
-            let viewModel = homeMessageViewModel(for: indexPath, collectionView: collectionView)
+        if let controller = controller, let viewModel = homeMessageViewModel(for: indexPath, collectionView: collectionView) {
             cell.configure(with: viewModel, parent: controller)
         }
     }
-    
+
     private func homeMessageViewModel(for indexPath: IndexPath,
-                                      collectionView: UICollectionView) -> HomeMessageViewModel {
+                                      collectionView: UICollectionView) -> HomeMessageViewModel? {
         let message = homePageConfiguration.homeMessages[indexPath.row]
         switch message {
         case .placeholder:
-            return HomeMessageViewModel(image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] in
+            return HomeMessageViewModel(image: nil, topText: nil, title: "", subtitle: "", buttons: []) { [weak self] _ in
                 self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
+            }
+        case .remoteMessage(let remoteMessage):
+            return HomeMessageViewModelBuilder.build(for: remoteMessage) { [weak self] action in
+                self?.dismissHomeMessage(message, at: indexPath, in: collectionView)
+
+                switch action {
+                case .primaryAction:
+                    Pixel.fire(pixel: .remoteMessageShownPrimaryActionClicked,
+                               withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                case .secondaryAction:
+                    Pixel.fire(pixel: .remoteMessageShownSecondaryActionClicked,
+                               withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                default:
+                    Pixel.fire(pixel: .remoteMessageDismissed,
+                               withAdditionalParameters: [PixelParameters.ctaShown: "\(remoteMessage.id)"])
+                }
             }
         }
     }

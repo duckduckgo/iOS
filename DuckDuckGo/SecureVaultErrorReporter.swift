@@ -30,14 +30,16 @@ final class SecureVaultErrorReporter: SecureVaultErrorReporting {
         guard !ProcessInfo().arguments.contains("testing") else { return }
 #endif
         let isBackgrounded = UIApplication.shared.applicationState == .background
-        let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
+        // including the appVersion for debugging purposes, it should be removed before the feature is public
+        let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false",
+                           PixelParameters.appVersion: AppVersion.shared.versionAndBuildNumber]
         switch error {
         case .initFailed(let error):
             Pixel.fire(pixel: .secureVaultInitFailedError, error: error, withAdditionalParameters: pixelParams)
         case .failedToOpenDatabase(let error):
             Pixel.fire(pixel: .secureVaultFailedToOpenDatabaseError, error: error, withAdditionalParameters: pixelParams)
         default:
-            Pixel.fire(pixel: .secureVaultError, includedParameters: [])
+            Pixel.fire(pixel: .secureVaultError)
 
         }
     }

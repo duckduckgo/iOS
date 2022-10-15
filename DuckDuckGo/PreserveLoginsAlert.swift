@@ -21,32 +21,30 @@ import Foundation
 import Core
 
 class PreserveLoginsAlert {
-  
-    static let wwwPrefix = "www."
-    
+
     static func showFireproofDisabledMessage(usingController controller: UIViewController,
                                              worker: PreserveLoginsWorker,
                                              forDomain domain: String) {
         
-        let message = UserText.preserveLoginsRemovalConfirmMessage.format(arguments: domain.dropPrefix(prefix: wwwPrefix))
-        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) {
+        let message = UserText.preserveLoginsRemovalConfirmMessage.format(arguments: domain.droppingWwwPrefix())
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: {
             worker.handleUserEnablingFireproofing(forDomain: domain)
-        }
+        })
     }
     
     static func showFireproofEnabledMessage(usingController controller: UIViewController,
                                             worker: PreserveLoginsWorker,
                                             forDomain domain: String) {
-        let message = UserText.preserveLoginsFireproofConfirmMessage.format(arguments: domain.dropPrefix(prefix: wwwPrefix))
-        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo) {
+        let message = UserText.preserveLoginsFireproofConfirmMessage.format(arguments: domain.droppingWwwPrefix())
+        ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: {
             worker.handleUserDisablingFireproofing(forDomain: domain)
-        }
+        })
     }
     
     static func showConfirmFireproofWebsite(usingController controller: UIViewController,
                                             forDomain domain: String,
                                             onConfirmHandler: @escaping () -> Void) {
-        let prompt = UIAlertController(title: UserText.preserveLoginsFireproofAskTitle.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
+        let prompt = UIAlertController(title: UserText.preserveLoginsFireproofAskTitle.format(arguments: domain.droppingWwwPrefix()),
                                        message: UserText.preserveLoginsFireproofAskMessage,
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
         prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction, style: .default) {
@@ -59,7 +57,7 @@ class PreserveLoginsAlert {
     static func showFireproofWebsitePrompt(usingController controller: UIViewController,
                                            forDomain domain: String,
                                            onConfirmHandler: @escaping () -> Void) {
-        let prompt = UIAlertController(title: UserText.preserveLoginsFireproofAskTitle.format(arguments: domain.dropPrefix(prefix: wwwPrefix)),
+        let prompt = UIAlertController(title: UserText.preserveLoginsFireproofAskTitle.format(arguments: domain.droppingWwwPrefix()),
                                        message: UserText.preserveLoginsFireproofAskMessage,
                                        preferredStyle: controller.isPad ? .alert : .actionSheet)
         prompt.addAction(title: UserText.preserveLoginsFireproofConfirmAction) {

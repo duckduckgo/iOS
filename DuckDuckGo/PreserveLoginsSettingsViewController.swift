@@ -28,9 +28,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         case domainList
         case removeAll
     }
-    
-    let wwwPrefix = "www."
-    
+
     @IBOutlet var doneButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
 
@@ -186,7 +184,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
         }
         cell.label.textColor = theme.tableCellTextColor
         cell.faviconImage.loadFavicon(forDomain: model[index], usingCache: .bookmarks)
-        cell.label?.text = model[index].dropPrefix(prefix: wwwPrefix)
+        cell.label?.text = model[index].droppingWwwPrefix()
         cell.decorate(with: theme)
         return cell
     }
@@ -219,7 +217,7 @@ class PreserveLoginsSettingsViewController: UITableViewController {
     
     func refreshModel() {
         model = PreserveLogins.shared.allowedDomains.sorted(by: { (lhs, rhs) -> Bool in
-            return lhs.dropPrefix(prefix: wwwPrefix) < rhs.dropPrefix(prefix: wwwPrefix)
+            return lhs.droppingWwwPrefix() < rhs.droppingWwwPrefix()
         })
         tableView.reloadData()
     }

@@ -214,7 +214,15 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
             renderer.endReordering()
         }
     }
-    
+
+    func refresh() {
+        renderers.forEach { renderer in
+            if let renderer = renderer as? HomeMessageViewSectionRenderer {
+                renderer.refresh()
+            }
+        }
+    }
+
     // MARK: UIScrollViewDelegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

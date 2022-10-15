@@ -4,3 +4,6 @@
 /* Class = "UILabel"; text = "No Suggestions"; ObjectID = "gPe-Cv-14j"; */
 "gPe-Cv-14j.text" = "Δεν υπάρχουν προτάσεις";
 
+/* Class = "UIButton"; accessibilityLabel = "Autocomplete suggestion"; ObjectID = "N97-eI-Lps"; */
+"N97-eI-Lps.accessibilityLabel" = "Πρόταση αυτόματης συμπλήρωσης";
+

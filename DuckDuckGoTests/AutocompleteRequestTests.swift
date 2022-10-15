@@ -27,7 +27,7 @@ import OHHTTPStubsSwift
 
 class AutocompleteRequestTests: XCTestCase {
 
-    let request = AutocompleteRequest(query: "test")
+    let request = (try? AutocompleteRequest(query: "test"))!
 
     override func tearDown() {
         HTTPStubs.removeAllStubs()
@@ -36,7 +36,7 @@ class AutocompleteRequestTests: XCTestCase {
 
     func testWhenRequestIsMadeThenHasNavParameter() throws {
         stub(condition: {
-            return $0.url?.getParam(name: "nav") == "1"
+            return $0.url?.getParameter(named: "nav") == "1"
         }, response: { _ in
             return HTTPStubsResponse(data: """
                 []

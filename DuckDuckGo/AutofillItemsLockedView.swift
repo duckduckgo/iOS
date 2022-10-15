@@ -38,14 +38,14 @@ class AutofillItemsLockedView: UIView {
         let image = UIImage(named: "AutofillLock")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: 126, height: 96)
+        imageView.frame = CGRect(x: 0, y: 0, width: 128, height: 96)
         return imageView
     }()
     
     private lazy var stackContentView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [imageView, title])
         stackView.axis = .vertical
-        stackView.spacing = 10
+        stackView.spacing = 0
         return stackView
     }()
     
@@ -68,15 +68,16 @@ class AutofillItemsLockedView: UIView {
         
         NSLayoutConstraint.activate([
             stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            heightAnchor.constraint(equalTo: stackContentView.heightAnchor),
+            widthAnchor.constraint(equalTo: stackContentView.widthAnchor)
         ])
     }
-
 }
 
 extension AutofillItemsLockedView: Themable {
     
     func decorate(with theme: Theme) {
-        title.textColor = theme.textFieldFontColor
+        title.textColor = theme.autofillLockedViewTextColor
     }
 }

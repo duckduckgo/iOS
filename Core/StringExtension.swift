@@ -22,85 +22,11 @@ import BrowserServicesKit
 
 extension String {
 
-    public func length() -> Int {
-        return count
-    }
-    
-    public var fullRange: NSRange {
-        return NSRange(location: 0, length: count)
-    }
-
-    public func matches(pattern: String, options: NSRegularExpression.Options = [.caseInsensitive]) -> Bool {
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: options) else {
-            return false
-        }
-        let matches = regex.matches(in: self, options: .anchored, range: fullRange)
-        return matches.count == 1
-    }
-
     /// Useful if loaded from UserText, for example
     public func format(arguments: CVarArg...) -> String {
         return String(format: self, arguments: arguments)
     }
-
-    public func dropPrefix(prefix: String) -> String {
-        if hasPrefix(prefix) {
-            return String(dropFirst(prefix.count))
-        }
-        return self
-    }
     
-    public func drop(suffix: String) -> String {
-        return hasSuffix(suffix) ? String(dropLast(suffix.count)) : self
-    }
-
-    /// URL and URLComponents can't cope with emojis and international characters so this routine does some manual processing while trying to
-    ///  retain the input as much as possible.
-    public var punycodedUrl: URL? {
-        if let url = URL(string: self) {
-            return url
-        }
-        
-        if contains(" ") {
-            return nil
-        }
-        
-        var originalScheme = ""
-        var s = self
-        
-        if hasPrefix(URL.URLProtocol.http.scheme) {
-            originalScheme = URL.URLProtocol.http.scheme
-        } else if hasPrefix(URL.URLProtocol.https.scheme) {
-            originalScheme = URL.URLProtocol.https.scheme
-        } else if !contains(".") {
-            // could be a local domain but user needs to use the protocol to specify that
-            return nil
-        } else {
-            s = URL.URLProtocol.https.scheme + s
-        }
-        
-        let urlAndQuery = s.split(separator: "?")
-        guard urlAndQuery.count > 0 else {
-            return nil
-        }
-        
-        let query = urlAndQuery.count > 1 ? "?" + urlAndQuery[1] : ""
-        let componentsWithoutQuery = [String](urlAndQuery[0].split(separator: "/").map { String($0) }.dropFirst())
-        guard componentsWithoutQuery.count > 0 else {
-            return nil
-        }
-        
-        let host = componentsWithoutQuery[0].punycodeEncodedHostname
-        let encodedPath = componentsWithoutQuery
-            .dropFirst()
-            .map { $0.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlPathAllowed) ?? $0 }
-            .joined(separator: "/")
-        
-        let hostPathSeparator = !encodedPath.isEmpty || hasSuffix("/") ? "/" : ""
-        let url = originalScheme + host + hostPathSeparator + encodedPath + query
-        return URL(string: url)
-    }
-
     public func sha256() -> String {
         if let stringData = self.data(using: String.Encoding.utf8) {
             return stringData.sha256
@@ -146,7 +72,7 @@ extension String {
 
     public func toDecodedBookmarklet() -> String? {
         guard self.isBookmarklet(),
-              let result = self.dropPrefix(prefix: "javascript:").removingPercentEncoding,
+              let result = self.dropping(prefix: "javascript:").removingPercentEncoding,
               !result.isEmpty else { return nil }
         return result
     }
@@ -154,10 +80,18 @@ extension String {
     public func toEncodedBookmarklet() -> URL? {
         let allowedCharacters = CharacterSet.alphanumerics.union(.urlQueryAllowed)
         guard self.isBookmarklet(),
-              let encoded = self.dropPrefix(prefix: "javascript:")
+              let encoded = self.dropping(prefix: "javascript:")
                 // Avoid double encoding by removing any encoding first
                 .removingPercentEncoding?
                 .addingPercentEncoding(withAllowedCharacters: allowedCharacters) else { return nil }
         return URL(string: "javascript:\(encoded)")
+    }
+}
+
+// MARK: - URL
+
+extension String {
+    public var toTrimmedURL: URL? {
+        return URL(trimmedAddressBarString: self)
     }
 }

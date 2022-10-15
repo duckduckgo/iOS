@@ -192,10 +192,6 @@ class OmniBar: UIView {
         refreshState(state.onBrowsingStoppedState)
     }
 
-    @IBAction func textFieldTapped() {
-        textField.becomeFirstResponder()
-    }
-    
     func removeTextSelection() {
         textField.selectedTextRange = nil
     }
@@ -379,12 +375,12 @@ class OmniBar: UIView {
         if let suggestion = omniDelegate?.selectedSuggestion() {
             omniDelegate?.onOmniSuggestionSelected(suggestion)
         } else {
-            guard let query = textField.text?.trimWhitespace(), !query.isEmpty else {
+            guard let query = textField.text?.trimmingWhitespace(), !query.isEmpty else {
                 return
             }
             resignFirstResponder()
 
-            if let url = query.punycodedUrl {
+            if let url = URL(trimmedAddressBarString: query), url.isValid {
                 omniDelegate?.onOmniQuerySubmitted(url.absoluteString)
             } else {
                 omniDelegate?.onOmniQuerySubmitted(query)
@@ -478,11 +474,7 @@ extension OmniBar: UITextFieldDelegate {
             self.refreshState(self.state.onEditingStartedState)
             
             if highlightText {
-                // Allow the cursor to move to the end before selecting all the text
-                // to avoid text not being selected properly
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                    self.textField.selectAll(nil)
-                }
+                self.textField.selectAll(nil)
             }
         }
     }
@@ -514,7 +506,7 @@ extension OmniBar: Themable {
         
         searchStackContainer?.tintColor = theme.barTintColor
         
-        if let url = textField.text?.punycodedUrl {
+        if let url = textField.text.flatMap({ URL(trimmedAddressBarString: $0.trimmingWhitespace()) }) {
             textField.attributedText = OmniBar.demphasisePath(forUrl: url)
         }
         textField.textColor = theme.searchBarTextColor
@@ -528,13 +520,5 @@ extension OmniBar: Themable {
         
         updateSearchBarBorder()
     }
-}
-
-extension OmniBar: UIGestureRecognizerDelegate {
- 
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return !textField.isFirstResponder
-    }
-    
 }
 // swiftlint:enable file_length

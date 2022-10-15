@@ -67,6 +67,7 @@ struct OngoingDownloadRow: View {
                 .scaledToFit()
                 .frame(width: Const.Size.cancel.width, height: Const.Size.cancel.height)
         }
+        .accessibilityLabel(UserText.cancelDownloadAlertCancelAction)
         .buttonStyle(.plain)
     }
 }

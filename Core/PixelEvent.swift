@@ -223,8 +223,15 @@ extension Pixel {
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable
         case autofillLoginsAutopromptDismissed
+        
+        case autofillLoginsFillLoginInlineDisablePromptShown
+        case autofillLoginsFillLoginInlineDisablePromptAutofillKept
+        case autofillLoginsFillLoginInlineDisablePromptAutofillDisabled
 
         case autofillSettingsOpened
+        case autofillLoginsSettingsEnabled
+        case autofillLoginsSettingsDisabled
+        case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
 
         case secureVaultInitError
         case secureVaultError
@@ -234,7 +241,7 @@ extension Pixel {
         
         // The pixels are for debugging a specific problem and should be removed when resolved
         // https://app.asana.com/0/0/1202498365125439/f
-        case secureVaultIsEnabledCheckedWhenEnabled
+        case secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded
         
         // MARK: Ad Click Attribution pixels
         
@@ -269,6 +276,7 @@ extension Pixel {
         case dbRemovalError
         case dbDestroyError
         case dbDestroyFileError
+        case dbContainerInitializationError
         case dbInitializationError
         case dbSaveExcludedHTTPSDomainsError
         case dbSaveBloomFilterError
@@ -557,7 +565,15 @@ extension Pixel.Event {
         case .autofillLoginsAutopromptDismissed:
             return "m_autofill_logins_autoprompt_dismissed"
             
+        case .autofillLoginsFillLoginInlineDisablePromptShown: return "m_autofill_logins_save_disable-prompt_shown"
+        case .autofillLoginsFillLoginInlineDisablePromptAutofillKept: return "m_autofill_logins_save_disable-prompt_autofill-kept"
+        case .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled: return "m_autofill_logins_save_disable-prompt_autofill-disabled"
+            
         case .autofillSettingsOpened: return "m_autofill_settings_opened"
+        case .autofillLoginsSettingsEnabled: return "m_autofill_logins_settings_enabled"
+        case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
+        case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
+            return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
             
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"
@@ -565,7 +581,7 @@ extension Pixel.Event {
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
             
-        case .secureVaultIsEnabledCheckedWhenEnabled: return "m_secure-vault_is-enabled-checked_when-enabled"
+        case .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded: return "m_secure-vault_is-enabled-checked_when-enabled-and-backgrounded"
             
         // MARK: Ad Click Attribution pixels
             
@@ -600,6 +616,7 @@ extension Pixel.Event {
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"
         case .dbDestroyFileError: return "m_d_dbdf"
+        case .dbContainerInitializationError: return "m_d_database_container_error"
         case .dbInitializationError: return "m_d_dbie"
         case .dbSaveExcludedHTTPSDomainsError: return "m_d_dbsw"
         case .dbSaveBloomFilterError: return "m_d_dbsb"

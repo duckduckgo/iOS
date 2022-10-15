@@ -28,6 +28,7 @@ jobs:
     name: Unit Tests
 
     runs-on: macos-12
+    timeout-minutes: 30
 
     steps:
     - name: Check out the code

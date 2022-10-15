@@ -24,11 +24,26 @@ import Core
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
+    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel)
 }
 
 final class SaveLoginViewModel: ObservableObject {
+    
+    /*
+     - The url of the last site where autofill was declined is stored in app memory
+     - The count of the number of times autofill has been declined is kept in user defaults
+     - If the user has never saved a password and declines to save a password:
+         - The count will increment unless the user is declining to fill on the same site as the one which is currently recorded in memory
+         - The current site will replace the one stored in memory (if different)
+     - If the count reaches 3, we show the prompt to explain that autofill can be disabled
+     */
+    private let domainLastShownOn: String?
+    
     @UserDefaultsWrapper(key: .autofillSaveModalRejectionCount, defaultValue: 0)
     private var autofillSaveModalRejectionCount: Int
+    
+    @UserDefaultsWrapper(key: .autofillSaveModalDisablePromptShown, defaultValue: false)
+    private var autofillSaveModalDisablePromptShown: Bool
     
     @UserDefaultsWrapper(key: .autofillFirstTimeUser, defaultValue: true)
     private var autofillFirstTimeUser: Bool
@@ -88,21 +103,35 @@ final class SaveLoginViewModel: ObservableObject {
     
     private var attributedLayoutType: SaveLoginView.LayoutType?
     
-    internal init(credentialManager: SaveAutofillLoginManagerProtocol, layoutType: SaveLoginView.LayoutType? = nil) {
+    internal init(credentialManager: SaveAutofillLoginManagerProtocol, layoutType: SaveLoginView.LayoutType? = nil, domainLastShownOn: String? = nil) {
         self.credentialManager = credentialManager
         self.attributedLayoutType = layoutType
+        self.domainLastShownOn = domainLastShownOn
     }
     
-    private func updateRejectionCount() {
-        autofillSaveModalRejectionCount += 1
-        if autofillSaveModalRejectionCount >= numberOfRejectionsToTurnOffAutofill {
-            AppDependencyProvider.shared.appSettings.autofill = false
+    private func updateRejectionCountIfNeeded() {
+        // If the prompt has already been shown on this domain (that we know of), we don't want to increment the rejection count
+        if let domainLastShownOn = domainLastShownOn, domainLastShownOn == accountDomain {
+            return
         }
+        autofillSaveModalRejectionCount += 1
+    }
+
+    private func shouldShowAutofillKeepUsingConfirmation() -> Bool {
+        if autofillSaveModalDisablePromptShown || !autofillFirstTimeUser {
+            return false
+        }
+        return autofillSaveModalRejectionCount >= numberOfRejectionsToTurnOffAutofill
     }
     
     func cancel() {
-        updateRejectionCount()
-        delegate?.saveLoginViewModelDidCancel(self)
+        updateRejectionCountIfNeeded()
+        if shouldShowAutofillKeepUsingConfirmation() {
+            delegate?.saveLoginViewModelConfirmKeepUsing(self)
+            autofillSaveModalDisablePromptShown = true
+        } else {
+            delegate?.saveLoginViewModelDidCancel(self)
+        }
     }
     
     func save() {

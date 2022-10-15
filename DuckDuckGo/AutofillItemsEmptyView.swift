@@ -26,7 +26,14 @@ class AutofillItemsEmptyView: UIView {
         case autofillEnabled
         case autofillDisabled
     }
-    
+
+    private enum Constants {
+        static let defaultPadding: CGFloat = 15
+        static let portraitPaddingImageTitle: CGFloat = 8
+        static let portraitPaddingTitleSubtitle: CGFloat = 27
+        static let portraitPaddingTitle: CGFloat = 24
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         installSubviews()
@@ -36,6 +43,7 @@ class AutofillItemsEmptyView: UIView {
     var viewState: ViewState = .autofillEnabled {
         didSet {
             updateLabels(with: viewState)
+            refreshConstraints()
         }
     }
     
@@ -62,7 +70,7 @@ class AutofillItemsEmptyView: UIView {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .footnote, compatibleWith: nil)
+        label.font = .preferredFont(forTextStyle: .footnote)
         label.textColor = .gray70
         label.text = UserText.autofillEmptyViewSubtitle
 
@@ -73,7 +81,7 @@ class AutofillItemsEmptyView: UIView {
         let image = UIImage(named: "AutofillKey")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
-        imageView.frame = CGRect(x: 0, y: 0, width: 87, height: 87)
+        imageView.frame = CGRect(x: 0, y: 0, width: 220, height: 170)
 
         return imageView
     }()
@@ -81,16 +89,45 @@ class AutofillItemsEmptyView: UIView {
     private lazy var stackContentView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [imageView, title])
         stackView.axis = .vertical
-        stackView.spacing = 8
         return stackView
     }()
-    
-    
+
+    private lazy var outerStackContentView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [stackContentView, subtitle])
+        stackView.axis = .vertical
+        return stackView
+    }()
+
+    private lazy var centerYConstraint: NSLayoutConstraint = {
+        NSLayoutConstraint(item: self,
+                           attribute: .centerY,
+                           relatedBy: .equal,
+                           toItem: outerStackContentView,
+                           attribute: .centerY,
+                           multiplier: 1.1,
+                           constant: 0)
+    }()
+
+    private lazy var widthConstraintIPhonePortrait: NSLayoutConstraint = {
+        outerStackContentView.widthAnchor.constraint(equalToConstant: 250)
+    }()
+
+    private lazy var topConstraintIPhonePortrait: NSLayoutConstraint = {
+        NSLayoutConstraint(item: self,
+                           attribute: .top,
+                           relatedBy: .equal,
+                           toItem: outerStackContentView,
+                           attribute: .top,
+                           multiplier: 1,
+                           constant: -66)
+    }()
+
     private func installSubviews() {
         addSubview(stackContentView)
         addSubview(subtitle)
+        addSubview(outerStackContentView)
     }
-    
+
     private func updateLabels(with state: AutofillItemsEmptyView.ViewState) {
         switch state {
         case .autofillDisabled:
@@ -103,19 +140,38 @@ class AutofillItemsEmptyView: UIView {
     private func installConstraints() {
         stackContentView.translatesAutoresizingMaskIntoConstraints = false
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            stackContentView.topAnchor.constraint(equalTo: topAnchor, constant: 67),
-            stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            stackContentView.widthAnchor.constraint(equalToConstant: 225),
+        outerStackContentView.translatesAutoresizingMaskIntoConstraints = false
 
-            subtitle.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subtitle.topAnchor.constraint(equalTo: stackContentView.bottomAnchor, constant: 27),
-            subtitle.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor),
-            subtitle.leadingAnchor.constraint(equalTo: stackContentView.leadingAnchor),
-            subtitle.trailingAnchor.constraint(equalTo: stackContentView.trailingAnchor)
+        NSLayoutConstraint.activate([
+            outerStackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            outerStackContentView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 16),
+            outerStackContentView.trailingAnchor.constraint(greaterThanOrEqualTo: trailingAnchor, constant: -16)
         ])
+
+        refreshConstraints()
+    }
+
+    func refreshConstraints() {
+        let isIPhonePortrait = traitCollection.verticalSizeClass == .regular && traitCollection.horizontalSizeClass == .compact
+
+        if isIPhonePortrait {
+            centerYConstraint.isActive = !isIPhonePortrait
+            topConstraintIPhonePortrait.isActive = isIPhonePortrait
+            widthConstraintIPhonePortrait.isActive = isIPhonePortrait
+            stackContentView.spacing = Constants.portraitPaddingImageTitle
+            if viewState == .autofillEnabled {
+                outerStackContentView.spacing = Constants.portraitPaddingTitleSubtitle + Constants.portraitPaddingTitle
+            } else {
+                outerStackContentView.spacing = Constants.portraitPaddingTitleSubtitle
+            }
+        } else {
+            topConstraintIPhonePortrait.isActive = isIPhonePortrait
+            widthConstraintIPhonePortrait.isActive = isIPhonePortrait
+            centerYConstraint.isActive = !isIPhonePortrait
+            stackContentView.spacing = Constants.defaultPadding
+            outerStackContentView.spacing = Constants.defaultPadding
+        }
+        invalidateIntrinsicContentSize()
     }
 }
 

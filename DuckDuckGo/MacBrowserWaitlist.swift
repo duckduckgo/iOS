@@ -64,13 +64,7 @@ struct MacBrowserWaitlist {
     }
     
     func settingsSubtitle() -> String {
-        if waitlistStorage.isInvited {
-            return UserText.macWaitlistAvailableForDownload
-        } else if waitlistStorage.isOnWaitlist {
-            return UserText.macWaitlistSettingsOnTheList
-        } else {
-            return UserText.macWaitlistBrowsePrivately
-        }
+        return UserText.macWaitlistBrowsePrivately
     }
     
     func fetchInviteCodeIfAvailable() async -> WaitlistInviteCodeFetchError? {

@@ -1,34 +1,33 @@
-不堪在线跟踪之扰？我们可以助你一臂之力。
 
-DuckDuckGo 是一体式隐私应用程序，有助于保护你的在线活动。只需下载一次，便可以获得一款全新的日常浏览器，在搜索和浏览时提供防止第三方跟踪程序的无缝保护，甚至在接收电子邮件时，也可以使用该浏览器防止跟踪。DuckDuckGo 会预设为保护你的隐私。
+按一下按钮即可享用 DuckDuckGo 应用程序提供的最全面在线隐私保护。只需下载一次，便可以获得一款全新的日常浏览器，在搜索和浏览时提供无缝保护，甚至在接收电子邮件时，也可以使用该浏览器防止跟踪。
 
-保密搜索 - DuckDuckGo Private Search 是内置功能，让你可以在不受跟踪的情况下搜索网页。
+保护在线隐私就像保护住宅一样。锁上前门无法阻止图谋不轨的不法之徒入内，特别是在没有锁上后门和窗户，并在门垫下留有备用钥匙的情况下。因此我们提供了多种类型的隐私保护功能，大多数热门浏览器在默认情况下并不提供相关功能。  
 
-摆脱网站跟踪 - Tracker Radar 会自动屏蔽通过 DuckDuckGo 访问的网站上隐藏的第三方跟踪程序，从而阻止跟踪程序背后的公司收集和出售你的数据。
+功能亮点 
+• 在默认情况下进行保密搜索——内置 DuckDuckGo Private Search，让你可以在不受跟踪的情况下搜索网页。 
 
-强制加密 - Smarter Encryption 会强制通过 DuckDuckGo 访问的网站使用加密 (HTTPS) 连接（如果有的话），以免他人窥探你的数据。
+• 避免加载网站跟踪程序——自动阻止大多数隐藏跟踪程序（第三方脚本）加载，从而防止公司收集和使用（例如销售、广告等）来自这些跟踪程序的任何数据。我们最先进的跟踪程序屏蔽技术（称为”3rd-Party Tracker Loading Protection“）优于大多数热门浏览器所提供的默认功能。 
 
-屏蔽电子邮件跟踪程序 - 70% 的电子邮件会在一打开后便跟踪你。启用 Email Protection 是在不切换服务的情况下，屏蔽电子邮件跟踪程序并隐藏地址的简单方法。通过应用程序设置菜单加入免费测试版的专用候补名单。
+• 自动强制加密——强制所访问的许多网站自动使用加密 (HTTPS) 连接，这有助于保护数据免受 Wi-Fi 窥探者和网络围观者（例如互联网提供商）的跟踪。大多数热门浏览器仅在特定情况下将用户引向加密版网页，例如当你直接前往地址栏中的网页时。我们会检查你点击的所有链接的可升级网站列表。 
 
-DuckDuckGo 应用程序具有你期望的浏览功能（例如标签页和书签），以及你会喜欢的隐私控制。控制你的隐私并不意味着要有所取舍。
+• 启用内置 Email Protection——超过 85% 发送到 Duck 地址的电子邮件包含跟踪程序，这些跟踪程序可以检测你何时打开邮件，打开邮件时所处的位置以及所使用的设备。Email Protection 可以轻松屏蔽大多数电子邮件跟踪程序，并于在线注册时隐藏现有地址，而无需切换电子邮件提供程序。
 
-点击 Fire Button，刻录数据 - 只需点击一下 Fire Button，即可清除标签页和浏览数据。
+• 避免指纹识别——阻止公司尝试组合有关浏览器和设备设置的特定信息，从而有助于防止它们创建唯一标识符。  
 
-用 GPC 表示你的隐私首选项 - 内置于应用程序中，全球隐私控制（GPC）旨在帮助你自动表达自己的合法选择退出权利。该功能将知会网站不要依据未来的法律框架（如 CCPA、GDPR），在不同的州或国家／地区出售或分享你的个人信息。
+• 屏蔽跟踪 Cookie——防止大多数第三方 Cookie 在你从一个网站浏览到另一个网站时跟踪你。
 
-你无需等待重掌自己的隐私。加入数百万 DuckDuckGo 用户的行列，用一个应用程序保护自己众多的日常在线活动。化繁为简的隐私保护措施。
+大多数浏览器并不提供下列额外保护
+• Link Tracking Protection——有助于阻止公司通过所点击链接中嵌入的个人标识符收集浏览历史记录和其他信息。  
 
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: 
-Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
- 
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
- 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+• Google AMP Protection——迫使网站直接从发布服务器加载内容，而不是使用 Google 所有的链接，后者充斥着可怕的跟踪程序。  
 
+日常隐私控制
+• 点击 Fire Button ，烧毁数据——使用我们的 Fire Button 清除标签和浏览数据。
 
-公司简介：https://duckduckgo.com/about
-运作方式：https://duckduckgo.com/app
-隐私简讯：https://duckduckgo.com/newsletter
-隐私政策：https://duckduckgo.com/privacy
-开放源：https://github.com/duckduckgo/iOS
+• 使用全球隐私控制 (GPC) 表明你的隐私偏好——GPC 内置于我们的应用程序中，旨在通过告诉网站不要出售或分享你的个人信息来帮助你自动表达自己的选择退出权利。是否可以用此来行使你的合法权利（例如，当前或未来的 CCPA、GDPR 要求）取决于你所在司法管辖区的法律。 
 
+DuckDuckGo 广告点击后我们的 3rd-Party Tracker Loading Protection 说明：我们的 3rd-Party Tracker Loading Protection 优于大多数热门浏览器所提供的默认功能，但我们一直致力使其更加全面。目前，如果广告商想要在其网站上检测我们的私密 DuckDuckGo 搜索广告转换，我们的 3rd-Party Tracker Loading Protection 不会阻止 bat.bing.com 请求在 DuckDuckGo 广告点击后加载到广告商网站上，但这些请求在所有其他情况下都会停止。这是因为 DuckDuckGo Private Search 广告与 Microsoft 合作。作为该合作伙伴关系的一部分，可以在 DuckDuckGo 上匿名查看广告，Microsoft 已承诺不分析我们用户的广告点击。 
+  
+请访问  https://help.duckduckgo.com/privacy/web-tracking-protections/，详细了解此项保护和我们的跟踪保护信息。
+
+你无需等待重掌自己的隐私。加入数百万 DuckDuckGo 用户的行列，用一个应用程序保护自己众多的日常在线活动。化繁为简的隐私保护措施。  

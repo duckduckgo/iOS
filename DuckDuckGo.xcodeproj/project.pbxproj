@@ -21,7 +21,6 @@
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
 		1E0A75EA27A2FBD000A2BFB6 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */; };
-		1E25CD5828FAEFA300E04B42 /* PrivacyDashboardResources in Frameworks */ = {isa = PBXBuildFile; productRef = 1E25CD5728FAEFA300E04B42 /* PrivacyDashboardResources */; };
 		1E4DCF4627B6A33600961E25 /* DownloadsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4527B6A33600961E25 /* DownloadsListViewModel.swift */; };
 		1E4DCF4827B6A35400961E25 /* DownloadsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4727B6A35400961E25 /* DownloadsListModel.swift */; };
 		1E4DCF4A27B6A38000961E25 /* DownloadListRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4927B6A38000961E25 /* DownloadListRepresentable.swift */; };
@@ -30,6 +29,7 @@
 		1E4FAA6427D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */; };
 		1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */; };
 		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
+		1E7060BE28F88EE200E4CCDB /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 1E7060BD28F88EE200E4CCDB /* Common */; };
 		1E7BA07628E5C32300F2C468 /* ProtectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7BA07528E5C32300F2C468 /* ProtectionStatus.swift */; };
 		1E7CDADF28D8A78F0067D38A /* ServerTrustViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD328D8A78F0067D38A /* ServerTrustViewModel.swift */; };
 		1E7CDAE028D8A78F0067D38A /* PrivacyDashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7CDAD528D8A78F0067D38A /* PrivacyDashboardController.swift */; };
@@ -53,9 +53,6 @@
 		1EA51376286596A000493C6A /* PrivacyIconLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA51375286596A000493C6A /* PrivacyIconLogic.swift */; };
 		1EA513782866039400493C6A /* TrackerAnimationLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA513772866039400493C6A /* TrackerAnimationLogic.swift */; };
 		1EC51CD928D8C0DF00E9D05A /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC51CD828D8C0DF00E9D05A /* UIImageExtension.swift */; };
-		1EC7844928D9BF1A0048E2B7 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC7844828D9BF1A0048E2B7 /* BrowserServicesKit */; };
-		1EC7844B28D9BF400048E2B7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC7844A28D9BF400048E2B7 /* TrackerRadarKit */; };
-		1EC7844D28D9BF870048E2B7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC7844C28D9BF870048E2B7 /* TrackerRadarKit */; };
 		1EC7844F28D9BF870048E2B7 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC7844E28D9BF870048E2B7 /* BrowserServicesKit */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
 		1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE411F02857C3640003FE64 /* TrackerAnimationImageProvider.swift */; };
@@ -66,6 +63,7 @@
 		1EE411FF2858B9300003FE64 /* dark-trackers-1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EE411FA2858B92F0003FE64 /* dark-trackers-1.json */; };
 		1EE412002858B9300003FE64 /* dark-shield-dot.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EE411FB2858B92F0003FE64 /* dark-shield-dot.json */; };
 		1EE412012858B9300003FE64 /* dark-trackers-3.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EE411FC2858B9300003FE64 /* dark-trackers-3.json */; };
+		1EE52AB828FB12DC00B750C1 /* PrivacyDashboardResources in Frameworks */ = {isa = PBXBuildFile; productRef = 1EE52AB728FB12DC00B750C1 /* PrivacyDashboardResources */; };
 		1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC460527A9499600E75FCB /* DownloadsList.swift */; };
 		1EEF123F2850A68A003DDE57 /* PrivacyInfoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEF123E2850A68A003DDE57 /* PrivacyInfoContainerView.swift */; };
 		1EEF12452850A923003DDE57 /* shield.json in Resources */ = {isa = PBXBuildFile; fileRef = 1EEF12402850A922003DDE57 /* shield.json */; };
@@ -160,7 +158,6 @@
 		4B6484FC27FFD14F0050A7A1 /* MacBrowserWaitlistTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6484FB27FFD14F0050A7A1 /* MacBrowserWaitlistTests.swift */; };
 		4B75EA9226A266CB00018634 /* PrintingUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B75EA9126A266CB00018634 /* PrintingUserScript.swift */; };
 		4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4B82E97F25B634B800656FE7 /* TrackerRadarKit */; };
-		4BC21A2B2723862E00229F0E /* RunLoopExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A29272384F500229F0E /* RunLoopExtension.swift */; };
 		4BC21A2F27238B7500229F0E /* RunLoopExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */; };
 		4BE2756827304F57006B20B0 /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE27566272F878F006B20B0 /* URLRequestExtension.swift */; };
 		6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC6DAB228804F97002723C0 /* BarsAnimator.swift */; };
@@ -927,7 +924,6 @@
 		4B6484F727FFCF3D0050A7A1 /* MacWaitlistViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacWaitlistViewModelTests.swift; sourceTree = "<group>"; };
 		4B6484FB27FFD14F0050A7A1 /* MacBrowserWaitlistTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBrowserWaitlistTests.swift; sourceTree = "<group>"; };
 		4B75EA9126A266CB00018634 /* PrintingUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingUserScript.swift; sourceTree = "<group>"; };
-		4BC21A29272384F500229F0E /* RunLoopExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RunLoopExtension.swift; path = ../DuckDuckGo/RunLoopExtension.swift; sourceTree = "<group>"; };
 		4BC21A2C272388BD00229F0E /* RunLoopExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunLoopExtensionTests.swift; sourceTree = "<group>"; };
 		4BE27566272F878F006B20B0 /* URLRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLRequestExtension.swift; path = ../DuckDuckGo/URLRequestExtension.swift; sourceTree = "<group>"; };
 		6AC6DAB228804F97002723C0 /* BarsAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAnimator.swift; sourceTree = "<group>"; };
@@ -2076,7 +2072,7 @@
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
 				4B5167422824B492004C67BA /* Lottie in Frameworks */,
-				1E25CD5828FAEFA300E04B42 /* PrivacyDashboardResources in Frameworks */,
+				1EE52AB828FB12DC00B750C1 /* PrivacyDashboardResources in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2084,8 +2080,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1EC7844928D9BF1A0048E2B7 /* BrowserServicesKit in Frameworks */,
-				1EC7844B28D9BF400048E2B7 /* TrackerRadarKit in Frameworks */,
 				F486D3362506A037002D07D7 /* OHHTTPStubs in Frameworks */,
 				F486D3382506A225002D07D7 /* OHHTTPStubsSwift in Frameworks */,
 			);
@@ -2114,7 +2108,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1EC7844F28D9BF870048E2B7 /* BrowserServicesKit in Frameworks */,
-				1EC7844D28D9BF870048E2B7 /* TrackerRadarKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2131,6 +2124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E7060BE28F88EE200E4CCDB /* Common in Frameworks */,
 				4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */,
 				F486D33425069BBB002D07D7 /* Kingfisher in Frameworks */,
 				98A16C2D28A11D6200A6C003 /* BrowserServicesKit in Frameworks */,
@@ -3644,7 +3638,6 @@
 				1CB7B82023CEA1F800AA24EA /* DateExtension.swift */,
 				1E8AD1DA27C51AE000ABA377 /* TimeIntervalExtension.swift */,
 				85449EFA23FDA0BC00512AAF /* UserDefaultsPropertyWrapper.swift */,
-				4BC21A29272384F500229F0E /* RunLoopExtension.swift */,
 				1EE411F22857C4A30003FE64 /* CollectionExtension.swift */,
 			);
 			name = Utilities;
@@ -4227,7 +4220,7 @@
 			packageProductDependencies = (
 				31E69A62280F4CB600478327 /* DuckUI */,
 				4B5167412824B492004C67BA /* Lottie */,
-				1E25CD5728FAEFA300E04B42 /* PrivacyDashboardResources */,
+				1EE52AB728FB12DC00B750C1 /* PrivacyDashboardResources */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -4250,8 +4243,6 @@
 			packageProductDependencies = (
 				F486D3352506A037002D07D7 /* OHHTTPStubs */,
 				F486D3372506A225002D07D7 /* OHHTTPStubsSwift */,
-				1EC7844828D9BF1A0048E2B7 /* BrowserServicesKit */,
-				1EC7844A28D9BF400048E2B7 /* TrackerRadarKit */,
 			);
 			productName = DuckDuckGoTests;
 			productReference = 84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */;
@@ -4307,7 +4298,6 @@
 			);
 			name = IntegrationTests;
 			packageProductDependencies = (
-				1EC7844C28D9BF870048E2B7 /* TrackerRadarKit */,
 				1EC7844E28D9BF870048E2B7 /* BrowserServicesKit */,
 			);
 			productName = IntegrationTests;
@@ -4369,6 +4359,7 @@
 				4B82E97F25B634B800656FE7 /* TrackerRadarKit */,
 				C14882EC27F211A000D59F0C /* SwiftSoup */,
 				98A16C2C28A11D6200A6C003 /* BrowserServicesKit */,
+				1E7060BD28F88EE200E4CCDB /* Common */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -5335,7 +5326,6 @@
 				85C271DF1FD044D7007216B4 /* AppHTTPSUpgradeStore.swift in Sources */,
 				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
 				85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */,
-				4BC21A2B2723862E00229F0E /* RunLoopExtension.swift in Sources */,
 				85CA53AA24BB376800A6288C /* NotFoundCachingDownloader.swift in Sources */,
 				4B60ACA1252EC0B100E8D219 /* FullScreenVideoUserScript.swift in Sources */,
 				F1A886781F29394E0096251E /* WebCacheManager.swift in Sources */,
@@ -7004,7 +6994,7 @@
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit";
 			requirement = {
 				kind = exactVersion;
-				version = 30.0.0;
+				version = 33.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -7042,30 +7032,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1E25CD5728FAEFA300E04B42 /* PrivacyDashboardResources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1ED8339A28F9A0C60006626E /* XCRemoteSwiftPackageReference "privacy-dashboard" */;
-			productName = PrivacyDashboardResources;
-		};
-		1EC7844828D9BF1A0048E2B7 /* BrowserServicesKit */ = {
+		1E7060BD28F88EE200E4CCDB /* Common */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
-			productName = BrowserServicesKit;
-		};
-		1EC7844A28D9BF400048E2B7 /* TrackerRadarKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */;
-			productName = TrackerRadarKit;
-		};
-		1EC7844C28D9BF870048E2B7 /* TrackerRadarKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4B82E97E25B634B800656FE7 /* XCRemoteSwiftPackageReference "TrackerRadarKit" */;
-			productName = TrackerRadarKit;
+			productName = Common;
 		};
 		1EC7844E28D9BF870048E2B7 /* BrowserServicesKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = BrowserServicesKit;
+		};
+		1EE52AB728FB12DC00B750C1 /* PrivacyDashboardResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1ED8339A28F9A0C60006626E /* XCRemoteSwiftPackageReference "privacy-dashboard" */;
+			productName = PrivacyDashboardResources;
 		};
 		31E69A62280F4CB600478327 /* DuckUI */ = {
 			isa = XCSwiftPackageProductDependency;

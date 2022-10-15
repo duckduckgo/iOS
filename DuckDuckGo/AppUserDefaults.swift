@@ -169,8 +169,8 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
     
-    @UserDefaultsWrapper(key: .autofill, defaultValue: true)
-    var autofill: Bool
+    @UserDefaultsWrapper(key: .autofillCredentialsEnabled, defaultValue: true)
+    var autofillCredentialsEnabled: Bool
     
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool

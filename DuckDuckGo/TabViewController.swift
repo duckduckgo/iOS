@@ -24,7 +24,6 @@ import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
-import PrivacyDashboard
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length

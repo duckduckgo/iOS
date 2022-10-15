@@ -21,6 +21,7 @@
 		1CB7B82123CEA1F800AA24EA /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82023CEA1F800AA24EA /* DateExtension.swift */; };
 		1CB7B82323CEA28300AA24EA /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB7B82223CEA28300AA24EA /* DateExtensionTests.swift */; };
 		1E0A75EA27A2FBD000A2BFB6 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */; };
+		1E25CD5828FAEFA300E04B42 /* PrivacyDashboardResources in Frameworks */ = {isa = PBXBuildFile; productRef = 1E25CD5728FAEFA300E04B42 /* PrivacyDashboardResources */; };
 		1E4DCF4627B6A33600961E25 /* DownloadsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4527B6A33600961E25 /* DownloadsListViewModel.swift */; };
 		1E4DCF4827B6A35400961E25 /* DownloadsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4727B6A35400961E25 /* DownloadsListModel.swift */; };
 		1E4DCF4A27B6A38000961E25 /* DownloadListRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4927B6A38000961E25 /* DownloadListRepresentable.swift */; };
@@ -56,7 +57,6 @@
 		1EC7844B28D9BF400048E2B7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC7844A28D9BF400048E2B7 /* TrackerRadarKit */; };
 		1EC7844D28D9BF870048E2B7 /* TrackerRadarKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC7844C28D9BF870048E2B7 /* TrackerRadarKit */; };
 		1EC7844F28D9BF870048E2B7 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1EC7844E28D9BF870048E2B7 /* BrowserServicesKit */; };
-		1ED8339C28F9A0C60006626E /* PrivacyDashboard in Frameworks */ = {isa = PBXBuildFile; productRef = 1ED8339B28F9A0C60006626E /* PrivacyDashboard */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
 		1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE411F02857C3640003FE64 /* TrackerAnimationImageProvider.swift */; };
 		1EE411F52857C95B0003FE64 /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE411F22857C4A30003FE64 /* CollectionExtension.swift */; };
@@ -2074,9 +2074,9 @@
 			files = (
 				853273B624FFE0BB00E3C778 /* WidgetKit.framework in Frameworks */,
 				F143C2EB1E4A4CD400CFDE3A /* Core.framework in Frameworks */,
-				1ED8339C28F9A0C60006626E /* PrivacyDashboard in Frameworks */,
 				31E69A63280F4CB600478327 /* DuckUI in Frameworks */,
 				4B5167422824B492004C67BA /* Lottie in Frameworks */,
+				1E25CD5828FAEFA300E04B42 /* PrivacyDashboardResources in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4227,7 +4227,7 @@
 			packageProductDependencies = (
 				31E69A62280F4CB600478327 /* DuckUI */,
 				4B5167412824B492004C67BA /* Lottie */,
-				1ED8339B28F9A0C60006626E /* PrivacyDashboard */,
+				1E25CD5728FAEFA300E04B42 /* PrivacyDashboardResources */,
 			);
 			productName = DuckDuckGo;
 			productReference = 84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */;
@@ -7042,6 +7042,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1E25CD5728FAEFA300E04B42 /* PrivacyDashboardResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1ED8339A28F9A0C60006626E /* XCRemoteSwiftPackageReference "privacy-dashboard" */;
+			productName = PrivacyDashboardResources;
+		};
 		1EC7844828D9BF1A0048E2B7 /* BrowserServicesKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
@@ -7061,11 +7066,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = BrowserServicesKit;
-		};
-		1ED8339B28F9A0C60006626E /* PrivacyDashboard */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1ED8339A28F9A0C60006626E /* XCRemoteSwiftPackageReference "privacy-dashboard" */;
-			productName = PrivacyDashboard;
 		};
 		31E69A62280F4CB600478327 /* DuckUI */ = {
 			isa = XCSwiftPackageProductDependency;

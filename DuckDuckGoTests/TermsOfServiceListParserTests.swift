@@ -20,6 +20,7 @@
 import XCTest
 @testable import Core
 @testable import BrowserServicesKit
+import Common
 
 class TermsOfServiceListParserTests: XCTestCase {
 

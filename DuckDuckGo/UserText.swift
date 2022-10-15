@@ -483,7 +483,7 @@ public struct UserText {
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "DuckDuckGo will securely store this Login on your device.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
    
     public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
@@ -499,54 +499,28 @@ public struct UserText {
     public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login updated", comment: "Message displayed after updating an autofill login")
     public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "View", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
 
+    public static let autofillKeepEnabledAlertTitle = NSLocalizedString("autofill.keep-enabled.alert.title", value: "Do you want to keep using Autofill?", comment: "Title for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertMessage = NSLocalizedString("autofill.keep-enabled.alert.message", value: "You can disable Autofill at any time in Settings.", comment: "Message for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertKeepUsingAction = NSLocalizedString("autofill.keep-enabled.alert.keep-using", value: "Keep Using", comment: "Confirm action for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertDisableAction = NSLocalizedString("autofill.keep-enabled.alert.disable", value: "Disable", comment: "Disable action for alert when asking the user if they want to keep using autofill")
+
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
 
     // MARK: - Mac Waitlist
     
-    static let macWaitlistTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
+    public static let macBrowserTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
     
-    static let macWaitlistPrivacyDisclaimer = NSLocalizedString("mac-waitlist.privacy-disclaimer",
-                                                                       value: "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.",
-                                                                       comment: "Privacy disclaimer for the Mac Waitlist feature")
+    public static let macWaitlistSummary = NSLocalizedString("mac-browser.waitlist.summary", value: "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the macOS browser waitlist")
     
-    public static let macWaitlistSummary = NSLocalizedString("mac-browser.waitlist.summary", value: "The DuckDuckGo Privacy App for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the macOS browser waitlist")
+    public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Get DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
     
-    public static let macWaitlistInviteCode = NSLocalizedString("mac-browser.waitlist.invite-code", value: "Invite Code", comment: "Label text for the invite code")
+    public static let macWaitlistOnYourMacGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-mac-go-to", value: "On your Mac, go to:", comment: "Description text above the Share Link button")
     
-    public static let macWaitlistJoinedWithNotifications = NSLocalizedString("mac-browser.waitlist.joined.notifications-enabled",
-                                                                                    value: "We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download.",
-                                                                                    comment: "Label text for the Joined Waitlist state with notifications enabled")
+    public static let macWaitlistShareLink = NSLocalizedString("mac-waitlist.join-waitlist-screen.share-link", value: "Share Link", comment: "Title for the Share Link button")
     
-    public static let macWaitlistJoinedWithoutNotifications = NSLocalizedString("mac-browser.waitlist.joined.notifications-declined",
-                                                                                    value: "Your invite to try DuckDuckGo for Mac will arrive here. Check back soon, or we can send you a notification when it’s your turn.",
-                                                                                    comment: "Label text for the Joined Waitlist state with notifications declined")
-    
-    public static func macWaitlistLearnMore(learnMoreString: String) -> String {
-        let message = NSLocalizedString("mac-browser.waitlist.learn-more", value: "%@ about the beta.", comment: "Footer text for the macOS waitlist. Parameter is 'Learn more'.")
-        return message.format(arguments: learnMoreString)
-    }
-    
-    public static func macWaitlistJoinedWithNotificationSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("mac-browser.waitlist.joined.notification", value: "We’ll send you a notification when we're ready for you. %@.", comment: "Description text for the macOS waitlist. Parameter is 'Learn more.'")
-        return message.format(arguments: learnMoreString)
-    }
-
-    public static let macWaitlistGetANotification = NSLocalizedString("mac-browser.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the macOS waitlist")
-    
-    public static func macWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
-        let message =  NSLocalizedString("mac-browser.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about the macOS browser beta.", comment: "First parameter is 'get a notification', second is 'Learn more'.")
-        return message.format(arguments: getNotifiedString, learnMoreString)
-    }
-    
-    // MARK: Join Waitlist Screen
-    
-    public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Try DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
-    
-    public static let macWaitlistJoin = NSLocalizedString("mac-waitlist.join-waitlist-screen.join", value: "Join the Private Waitlist", comment: "Title for the Join Waitlist screen")
+    public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
     
     public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Windows coming soon!", comment: "Disclaimer for the Join Waitlist screen")
-    
-    public static let macWaitlistJoining = NSLocalizedString("mac-waitlist.join-waitlist-screen.joining", value: "Joining Waitlist...", comment: "Temporary status text for the Join Waitlist screen")
     
     // MARK: Notifications
     
@@ -554,65 +528,30 @@ public struct UserText {
     
     public static let macWaitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the macOS waitlist notification")
     
-    // MARK: Queue Screen
-    
-    public static let macWaitlistOnTheList = NSLocalizedString("mac-waitlist.queue-screen.on-the-list", value: "You’re on the list!", comment: "Title for the queue screen")
-    
-    // MARK: Invite Code Screen
-    
-    public static let macWaitlistYoureInvited = NSLocalizedString("mac-waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
-    
-    public static let macWaitlistInviteScreenSubtitle = NSLocalizedString("mac-waitlist.invite-screen.subtitle", value: "Ready to start browsing privately on Mac?", comment: "Subtitle for the Mac Waitlist Invite screen")
-    
-    public static let macWaitlistInviteScreenStep1Title = NSLocalizedString("mac-waitlist.invite-screen.step-1.title", value: "Step 1", comment: "Title on the invite screen")
-
-    public static let macWaitlistInviteScreenStep1Description = NSLocalizedString("mac-waitlist.invite-screen.step-1.description", value: "Visit this URL on your Mac to download:", comment: "Description on the invite screen")
-    
-    public static let macWaitlistInviteScreenStep2Title = NSLocalizedString("mac-waitlist.invite-screen.step-2.title", value: "Step 2", comment: "Title on the invite screen")
-    
-    public static let macWaitlistInviteScreenStep2Description = NSLocalizedString("mac-waitlist.invite-screen.step-2.description", value: "Open the file to install, then enter your invite code to unlock.", comment: "Description on the invite screen")
-    
-    public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
-    
-    public static let macWaitlistNotificationDisabled = NSLocalizedString("mac-waitlist.notification.disabled", value: "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.", comment: "Text used for the Notifications Disabled state")
-    
     // MARK: Settings Screen
     
     public static let emailSettingsSubtitle = NSLocalizedString("email.settings.subtitle", value: "Block email trackers and hide your address", comment: "Subtitle for the email settings cell")
-    
-    public static let macWaitlistAvailableForDownload = NSLocalizedString("mac-waitlist.settings.available-for-download", value: "Available for download on Mac", comment: "Title for the settings subtitle")
-    
-    public static let macWaitlistSettingsOnTheList = NSLocalizedString("mac-waitlist.settings.on-the-list", value: "You’re on the list!", comment: "Title for the settings subtitle")
     
     public static let macWaitlistBrowsePrivately = NSLocalizedString("mac-waitlist.settings.browse-privately", value: "Browse privately with our app for Mac", comment: "Title for the settings subtitle")
     
     // MARK: Share Sheet
     
-    public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "You’re Invited!", comment: "Title for the share sheet entry")
+    public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "DuckDuckGo for Mac", comment: "Title for the share sheet entry")
     
-    public static func macWaitlistShareSheetMessage(code: String) -> String {
-        let localized = NSLocalizedString("mac-waitlist.share-sheet.message", value: """
-        You’re invited!
-        
+    public static func macWaitlistShareSheetMessage() -> String {
+        return NSLocalizedString("mac-waitlist.share-sheet.message", value: """
         Ready to start browsing privately on Mac?
         
-        Step 1
         Visit this URL on your Mac to download:
         https://duckduckgo.com/mac
-        
-        Step 2
-        Open the file to install, then enter your invite code to unlock.
-        
-        Invite code: %@
-        """, comment: "Message used when sharing to iMessage. Parameter is an eight digit invite code.")
-
-        return localized.format(arguments: code)
+        """, comment: "Message used when sharing to iMessage")
     }
     
     public static let autofillLoginDetailsLoginName = "Login Title" // Login name label for login details on autofill
     public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
     public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
-    public static let autofillLoginDetailsAddress = "Address" // Address label for login details on autofill
+    public static let autofillLoginDetailsAddress = "Website URL" // Address label for login details on autofill
+    public static let autofillLoginDetailsNotes = "Notes" // Notes label for login details on autofill
     public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
     public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins" // Title for view displayed when autofill is disabled and has no items
     public static let autofillEmptyViewTitle = "No logins saved yet" // Title for view displayed when autofill has no items
@@ -628,19 +567,28 @@ public struct UserText {
     public static let autofillLoginPromptAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth during login prompt
     public static let autofillLoginPromptTitle = "Use Saved Login?" // Title for autofill login prompt
     public static let autofillLoginPromptMoreOptions = "More Options" // Button title for autofill login prompt if more options are available
+
+    public static let autofillOpenWebsitePrompt = "Open Website" // Menu item title for option to open website from selected url
+    public static func autofillCopyPrompt(for type: String) -> String {
+        "Copy \(type)"
+    } // Menu item text for copying autofill login details
     public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
     public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
     public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    public static let autofillCopyToastNotesCopied = "Notes copied" //Title for toast when copying notes
     
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
-        "Login last updated \(date))"
+        "Login last updated \(date)"
     } // Message displaying when the login was last updated by
     public static let autofillLoginListAuthenticationCancelButton = "Cancel" // Cancel button for auth when opening login list
     public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
     public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
     public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
     public static let autofillLoginDetailsNewTitle = "Add Login" // Title when adding new autofill login
-    
+    public static let autofillLoginDetailsDeleteButton = "Delete Login" // Delete button when deleting an autofill login
+    public static let autofillLoginDetailsDeleteConfirmationTitle = "Are you sure you want to delete this Login?" // Title of confirmation alert when deleting an autofill login
+    public static let autofillLoginDetailsDeleteConfirmationButtonTitle = "Delete Login" // Autofill alert button confirming delete autofill login
+
     public static func autofillLoginLisLoginDeletedToastMessage(for title: String) -> String {
         "Login for \(title) deleted"
     } // Toast message when a login item is deleted
@@ -649,6 +597,10 @@ public struct UserText {
     public static let autofillLoginDetailsEditUsernamePlaceholder = "username@example.com" // Placeholder for userbane field on autofill login details
     public static let autofillLoginDetailsEditPasswordPlaceholder = "Password" // Placeholder for password field on autofill login details
     public static let autofillLoginDetailsEditURLPlaceholder = "example.com" // Placeholder for url field on autofill login details
+    
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertTitle = "Duplicated Login" // Title for alert when attempting to save a duplicate login
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertMessage = "You already have a login for this username and website." // Message for alert when attempting to save a duplicate login
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = "OK" // Action text for alert when attempting to save a duplicate login
     
     public static let autofillNavigationButtonItemTitleClose = "Close" // Title for close navigation button
 }

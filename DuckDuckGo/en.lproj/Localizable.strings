@@ -172,6 +172,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Disable";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Keep Using";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "You can disable Autofill at any time in Settings.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Do you want to keep using Autofill?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "View";
 
@@ -185,7 +197,7 @@
 "autofill.save-login.additional-login.message" = "This will save an additional Login for this site.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.";
+"autofill.save-login.new-user.message" = "DuckDuckGo will securely store this Login on your device.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Do you want DuckDuckGo to save your Login?";
@@ -796,29 +808,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welcome to\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Invite Code";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Your invite will show up here when we’re ready for you. Want to %1$@ when it arrives? %2$@ about the macOS browser beta.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "get a notification";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "We’ll send you a notification when we're ready for you. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Your invite to try DuckDuckGo for Mac will arrive here. Check back soon, or we can send you a notification when it’s your turn.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ about the beta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "The DuckDuckGo Privacy App for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
+"mac-browser.waitlist.summary" = "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Open your invite";
@@ -829,70 +820,29 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copy";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Visit this URL on your Mac to download:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "On your Mac, go to:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Step 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Open the file to install, then enter your invite code to unlock.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Step 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Ready to start browsing privately on Mac?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "You’re Invited!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Share Link";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Join the Private Waitlist";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Joining Waitlist...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Try DuckDuckGo for Mac!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Get DuckDuckGo for Mac!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows coming soon!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "You’re on the list!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Available for download on Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Browse privately with our app for Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "You’re on the list!";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Ready to start browsing privately on Mac?
 
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "You’re invited!
-
-Ready to start browsing privately on Mac?
-
-Step 1
 Visit this URL on your Mac to download:
-https://duckduckgo.com/mac
-
-Step 2
-Open the file to install, then enter your invite code to unlock.
-
-Invite code: %@";
+https://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "You’re Invited!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo for Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo Desktop App";

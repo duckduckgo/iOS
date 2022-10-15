@@ -197,6 +197,17 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             }
         }
     }
+
+    private func presentDeleteConfirmation(for title: String) {
+        ActionMessageView.present(message: UserText.autofillLoginLisLoginDeletedToastMessage(for: title),
+                                  actionTitle: UserText.actionGenericUndo,
+                                  presentationLocation: .withoutBottomBar,
+                                  onAction: {
+            self.viewModel.undoLastDelete()
+        }, onDidDismiss: {
+            self.viewModel.clearUndoCache()
+        })
+    }
     
     // MARK: Subviews Setup
     
@@ -424,14 +435,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
                 }
                 
                 if deletedSuccessfully {
-                    ActionMessageView.present(message: UserText.autofillLoginLisLoginDeletedToastMessage(for: title),
-                                              actionTitle: UserText.actionGenericUndo,
-                                              presentationLocation: .withoutBottomBar,
-                                              onAction: {
-                        self.viewModel.undoLastDelete()
-                    }, onDidDismiss: {
-                        self.viewModel.clearUndoCache()
-                    })
+                    presentDeleteConfirmation(for: title)
                 }
             }
         default:
@@ -492,12 +496,29 @@ extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewContr
         viewModel.updateData()
         tableView.reloadData()
     }
+
+    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount) {
+        let title = account.title ?? ""
+        let deletedSuccessfully = viewModel.delete(account)
+
+        if deletedSuccessfully {
+            viewModel.updateData()
+            tableView.reloadData()
+            presentDeleteConfirmation(for: title)
+        }
+    }
 }
 
 // MARK: EnableAutofillSettingsTableViewCellDelegate
 
 extension AutofillLoginSettingsListViewController: EnableAutofillSettingsTableViewCellDelegate {
     func enableAutofillSettingsTableViewCell(_ cell: EnableAutofillSettingsTableViewCell, didChangeSettings value: Bool) {
+        if value {
+            Pixel.fire(pixel: .autofillLoginsSettingsEnabled)
+        } else {
+            Pixel.fire(pixel: .autofillLoginsSettingsDisabled)
+        }
+        
         viewModel.isAutofillEnabled = value
         updateViewState()
     }
@@ -519,7 +540,16 @@ extension AutofillLoginSettingsListViewController: Themable {
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
-        
+
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+
         tableView.reloadData()
     }
 }

@@ -23,6 +23,7 @@ import XCTest
 import Foundation
 import BrowserServicesKit
 import os.log
+import Common
 
 class DomainMatchingReportTests: XCTestCase {
     private var data = JsonTestDataLoader()

@@ -18,7 +18,7 @@
 //
 
 import Foundation
-import BrowserServicesKit
+import Common
 
 public struct AtbParser {
     func convert(fromJsonData data: Data) throws -> Atb {

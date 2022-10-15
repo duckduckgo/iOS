@@ -21,6 +21,7 @@ import Foundation
 import UIKit
 import Core
 import BrowserServicesKit
+import Common
 
 class PrivacyProtectionOtherDomainsController: UIViewController {
 

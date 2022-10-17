@@ -257,6 +257,7 @@ class TabViewController: UIViewController {
     
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
+    private let tabIdentifier = UUID()
     
     static func loadFromStoryboard(model: Tab) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
@@ -1070,7 +1071,11 @@ class TabViewController: UIViewController {
         temporaryDownloadForPreviewedFile?.cancel()
         removeMessageHandlers()
         removeObservers()
-        rulesCompilationMonitor.tabWillClose(self)
+        reportTabClosed()
+    }
+    
+    private func reportTabClosed() {
+        rulesCompilationMonitor.tabWillClose(tabIdentifier)
     }
 
 }
@@ -1534,13 +1539,13 @@ extension TabViewController: WKNavigationDelegate {
         if contentBlockingAssetsInstalled {
             rulesCompilationMonitor.reportNavigationDidNotWaitForRules()
         } else {
-            rulesCompilationMonitor.tabWillWaitForRulesCompilation(self)
+            rulesCompilationMonitor.tabWillWaitForRulesCompilation(tabIdentifier)
             showProgressIndicator()
             if let rulesCompiledCondition = rulesCompiledCondition {
                 RunLoop.current.run(until: rulesCompiledCondition)
             }
         }
-        rulesCompilationMonitor.reportTabFinishedWaitingForRules(self)
+        rulesCompilationMonitor.reportTabFinishedWaitingForRules(tabIdentifier)
     }
 
     private func decidePolicyFor(navigationAction: WKNavigationAction, completion: @escaping (WKNavigationActionPolicy) -> Void) {

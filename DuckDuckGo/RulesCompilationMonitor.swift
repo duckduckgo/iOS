@@ -26,7 +26,7 @@ final class RulesCompilationMonitor {
     
     private var didReport = false
     private var waitStart: TimeInterval?
-    private var waiters = NSMapTable<TabViewController, NSNumber>.init(keyOptions: .weakMemory, valueOptions: .strongMemory)
+    private var waiters: [AnyHashable: Bool] = [:]
     
     private init() {
         NotificationCenter.default.addObserver(self,
@@ -36,19 +36,19 @@ final class RulesCompilationMonitor {
     }
     
     /// Called when a Tab is going  to wait for Content Blocking Rules compilation
-    func tabWillWaitForRulesCompilation(_ tab: TabViewController) {
+    func tabWillWaitForRulesCompilation(_ tabIdentifier: AnyHashable) {
         guard !didReport else { return }
 
-        waiters.setObject(NSNumber(value: true), forKey: tab)
+        waiters[tabIdentifier] = true
         if waitStart == nil {
             waitStart = CACurrentMediaTime()
         }
     }
     
     /// Called when Rules compilation finishes
-    func reportTabFinishedWaitingForRules(_ tab: TabViewController) {
-        defer { waiters.removeObject(forKey: tab) }
-        guard waiters.object(forKey: tab) != nil,
+    func reportTabFinishedWaitingForRules(_ tabIdentifier: AnyHashable) {
+        defer { waiters[tabIdentifier] = nil }
+        guard waiters[tabIdentifier] != nil,
               !didReport,
               let waitStart = waitStart
         else { return }
@@ -62,9 +62,9 @@ final class RulesCompilationMonitor {
     }
     
     /// If Tab is going to close while the rules are still being compiled: report wait time with Tab .closed argument
-    func tabWillClose(_ tab: TabViewController) {
-        defer { waiters.removeObject(forKey: tab) }
-        guard waiters.object(forKey: tab) != nil,
+    func tabWillClose(_ tabIdentifier: AnyHashable) {
+        defer { waiters[tabIdentifier] = nil }
+        guard waiters[tabIdentifier] != nil,
               !didReport,
               let waitStart = waitStart
         else { return }

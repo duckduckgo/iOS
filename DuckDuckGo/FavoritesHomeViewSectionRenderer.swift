@@ -49,7 +49,13 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)?
     
     private weak var reorderingCell: FavoriteHomeCell?
-    
+
+    var isEditing = false {
+        didSet {
+            print("***", #function)
+        }
+    }
+
     private let allowsEditing: Bool
     private let cellWidth: CGFloat
     private let cellHeight: CGFloat
@@ -236,7 +242,12 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        launchFavorite(in: collectionView, at: indexPath)
+        if isEditing {
+            guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return }
+            editFavorite(cell, collectionView)
+        } else {
+            launchFavorite(in: collectionView, at: indexPath)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {

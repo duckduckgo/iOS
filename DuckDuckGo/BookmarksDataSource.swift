@@ -24,7 +24,6 @@ import CoreData
 protocol MainBookmarksViewDataSource: UITableViewDataSource {
     var isEmpty: Bool { get }
     var showSearch: Bool { get }
-    var favoritesSectionIndex: Int? { get }
     var navigationTitle: String? { get }
     var folder: BookmarkFolder? { get }
     var bookmarksManager: BookmarksManager { get }

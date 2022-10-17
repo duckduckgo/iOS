@@ -124,7 +124,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRM-18-dYh">
                                 <rect key="frame" x="0.0" y="108" width="375" height="510"/>
                                 <connections>
-                                    <segue destination="pYs-v1-gvr" kind="embed" destinationCreationSelector="createFavoritesController:" id="bY2-W6-VAQ"/>
+                                    <segue destination="pYs-v1-gvr" kind="embed" id="bY2-W6-VAQ"/>
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">

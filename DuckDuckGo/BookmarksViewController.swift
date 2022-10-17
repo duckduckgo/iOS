@@ -78,7 +78,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate lazy var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource(alertDelegate: self)
     fileprivate var searchDataSource = SearchBookmarksDataSource()
     private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
-    
+
+    var favoritesController: FavoritesViewController?
+
     fileprivate var onDidAppearAction: () -> Void = {}
     private var isNested: Bool
 
@@ -138,15 +140,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
     }
 
-    @IBSegueAction func createFavoritesController(_ coder: NSCoder) -> FavoritesViewController? {
-        return FavoritesViewController(coder: coder)
-    }
-
     private func showBookmarksView() {
         tableView.isHidden = false
         favoritesContainer.isHidden = true
         addFolderButton.isHidden = false
         moreButton.isHidden = false
+        navigationItem.title = UserText.sectionTitleBookmarks
+        refreshEditButton()
     }
 
     private func showFavoritesView() {
@@ -154,6 +154,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         favoritesContainer.isHidden = false
         addFolderButton.isHidden = true
         moreButton.isHidden = true
+        navigationItem.title = UserText.sectionTitleFavorites
+        refreshEditButton()
     }
 
     func openEditFormWhenPresented(bookmark: Bookmark) {
@@ -322,7 +324,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func refreshEditButton() {
-        if (currentDataSource.isEmpty && !isEditingBookmarks) || currentDataSource === searchDataSource {
+        if !favoritesContainer.isHidden {
+            editButton.isEnabled = dataSource.bookmarksManager.favoritesCount > 0
+            editButton.title = UserText.actionGenericEdit
+        } else if (currentDataSource.isEmpty && !isEditingBookmarks) || currentDataSource === searchDataSource {
             disableEditButton()
         } else if !isEditingBookmarks {
             enableEditButton()
@@ -487,6 +492,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         tableView.isEditing = false
         
         tableView.isEditing = true
+        favoritesController?.isEditing = true
+
         self.isEditingBookmarks = true
         changeEditButtonToDone()
         configureToolbarMoreItem()
@@ -494,6 +501,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func finishEditing() {
+        favoritesController?.isEditing = false
+
         guard tableView.isEditing else {
             return
         }
@@ -556,6 +565,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func prepareForSearching() {
+        print("***", #function, "TODO")
         finishEditing()
         disableEditButton()
         disableAddFolderButton()
@@ -568,7 +578,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         enableEditButton()
         enableAddFolderButton()
     }
-    
+
     fileprivate func showShareSheet(for indexPath: IndexPath) {
 
         if let item = currentDataSource.item(at: indexPath),
@@ -603,6 +613,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         } else if let viewController = segue.destination.children.first as? AddOrEditBookmarkViewController {
             viewController.hidesBottomBarWhenPushed = true
             viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
+        } else if let viewController = segue.destination as? FavoritesViewController {
+            viewController.delegate = self
+            favoritesController = viewController
         }
     }
     
@@ -701,6 +714,18 @@ extension BookmarksViewController: UIDocumentPickerDelegate {
         }
         importBookmarks(fromHtml: contents)
     }
+}
+
+extension BookmarksViewController: FavoritesViewControllerDelegate {
+
+    func favoritesViewController(_ controller: FavoritesViewController, didSelectFavorite favorite: Bookmark) {
+        select(bookmark: favorite)
+    }
+
+    func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite favorite: Bookmark) {
+        performSegue(withIdentifier: "AddOrEditBookmark", sender: favorite)
+    }
+
 }
 
 // swiftlint:enable type_body_length

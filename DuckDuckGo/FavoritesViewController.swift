@@ -21,6 +21,13 @@ import Foundation
 import UIKit
 import Core
 
+protocol FavoritesViewControllerDelegate: NSObjectProtocol {
+
+    func favoritesViewController(_ controller: FavoritesViewController, didSelectFavorite: Bookmark)
+    func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite: Bookmark)
+
+}
+
 class FavoritesViewController: UIViewController {
 
     @IBOutlet weak var emptyHeroView: UIView!
@@ -35,6 +42,14 @@ class FavoritesViewController: UIViewController {
     private var renderer: FavoritesHomeViewSectionRenderer!
 
     private var theme: Theme!
+
+    weak var delegate: FavoritesViewControllerDelegate?
+
+    override var isEditing: Bool {
+        didSet {
+            renderer.isEditing = true
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,11 +124,11 @@ class FavoritesViewController: UIViewController {
 extension FavoritesViewController: FavoritesHomeViewSectionRendererDelegate {
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
-        print("***", #function)
+        delegate?.favoritesViewController(self, didSelectFavorite: favorite)
     }
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
-        print("***", #function)
+        delegate?.favoritesViewController(self, didRequestEditFavorite: favorite)
     }
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: Bookmark) {

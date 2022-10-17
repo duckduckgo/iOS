@@ -24,9 +24,12 @@ protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
                            didSelect favorite: Bookmark)
+
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
                            didRequestEdit favorite: Bookmark)
-    
+
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
+                           favoriteDeleted favorite: Bookmark)
 }
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
@@ -165,9 +168,10 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
         bookmarksManager.delete(favorite)
-        collectionView.performBatchUpdates({
+        collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [indexPath])
-        })
+            self.controller?.favoritesRenderer(self, favoriteDeleted: favorite)
+        }
     }
     
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
@@ -188,7 +192,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func supportsReordering() -> Bool {
         return true
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         guard allowsEditing else {
             return false
@@ -227,13 +231,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return CGSize(width: 1, height: Constants.defaultHeaderHeight)
     }
 
-    func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {
-        return [
-            UIMenuItem(title: UserText.favoriteMenuDelete, action: FavoriteHomeCell.Actions.delete),
-            UIMenuItem(title: UserText.favoriteMenuEdit, action: FavoriteHomeCell.Actions.edit)
-        ]
-    }
-
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -242,10 +239,92 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         launchFavorite(in: collectionView, at: indexPath)
     }
 
+    func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return previewForConfiguration(configuration, inCollectionView: collectionView)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return previewForConfiguration(configuration, inCollectionView: collectionView)
+    }
+
+    func previewForConfiguration(_ configuration: UIContextMenuConfiguration, inCollectionView collectionView: UICollectionView) -> UITargetedPreview? {
+        guard let indexPath = configuration.identifier as? IndexPath,
+                let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else {
+            return nil
+        }
+
+        let targetedPreview = UITargetedPreview(view: cell.iconImage)
+        targetedPreview.parameters.backgroundColor = .clear
+        return targetedPreview
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemAt indexPath: IndexPath,
+                        point: CGPoint) -> UIContextMenuConfiguration? {
+
+        guard allowsEditing else { return nil }
+
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return nil }
+
+        let edit = UIAction(title: "Edit",
+                            image: UIImage(systemName: "square.and.pencil"),
+                            identifier: nil,
+                            discoverabilityTitle: nil,
+                            state: .off) { [weak self] _ in
+            self?.editFavorite(cell, collectionView)
+        }
+
+        let delete = UIAction(title: "Delete",
+                              image: UIImage(systemName: "trash"),
+                              identifier: nil,
+                              discoverabilityTitle: nil,
+                              attributes: .destructive, state: .off) { [weak self] _ in
+            self?.deleteFavorite(cell, collectionView)
+        }
+
+        let context = UIContextMenuConfiguration(identifier: indexPath as NSIndexPath) {
+            guard let image = cell.iconImage.image else { return nil }
+            return ImagePreviewer(image: image)
+        } actionProvider: { _ in
+            UIMenu(title: "", options: .displayInline, children: [
+                edit,
+                delete
+            ])
+        }
+
+        return context
+    }
+
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
         guard let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
         controller?.favoritesRenderer(self, didSelect: favorite)
     }
     
+}
+
+private class ImagePreviewer: UIViewController {
+
+    let image: UIImage
+
+    init(image: UIImage) {
+        self.image = image
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let imageView = UIImageView(image: image)
+        imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
+        view.addSubview(imageView)
+        view.frame = imageView.frame
+        preferredContentSize = view.frame.size
+
+    }
+
 }

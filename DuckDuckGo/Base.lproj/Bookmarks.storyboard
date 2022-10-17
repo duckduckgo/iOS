@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -18,40 +17,50 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Collection View Controller-->
-        <scene sceneID="tUj-Ah-Rbk">
+        <!--Favorites View Controller-->
+        <scene sceneID="fa7-3d-Yxy">
             <objects>
-                <collectionViewController id="1zw-o2-oXm" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="e49-i4-3CZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="523"/>
+                <viewController id="pYs-v1-gvr" customClass="FavoritesViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="urO-HF-PLt"/>
+                        <viewControllerLayoutGuide type="bottom" id="pjw-Jr-9f0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="yLW-ha-WmV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2cW-nQ-0CK">
-                            <size key="itemSize" width="128" height="128"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="NgU-hQ-TbY">
-                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1F8-Pj-U0p">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionViewCellContentView>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="1zw-o2-oXm" id="5Pi-Dm-ELr"/>
-                            <outlet property="delegate" destination="1zw-o2-oXm" id="7cU-ye-Ygz"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" id="jgJ-dP-21r"/>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bpI-o2-AcI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="FPe-OG-g5a">
+                                <rect key="frame" x="22" y="82" width="331" height="157.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkFavoritesHero" translatesAutoresizingMaskIntoConstraints="NO" id="FRF-MC-5eG">
+                                        <rect key="frame" x="0.0" y="0.0" width="331" height="115.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="115.40000000000001" id="nKK-XC-tDl"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No favorites added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8y-oO-xBm">
+                                        <rect key="frame" x="0.0" y="137.5" width="331" height="20"/>
+                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="FPe-OG-g5a" firstAttribute="centerX" secondItem="yLW-ha-WmV" secondAttribute="centerX" id="h4i-lb-gLF"/>
+                            <constraint firstAttribute="trailing" secondItem="FPe-OG-g5a" secondAttribute="trailing" constant="22" id="l4m-f8-V0j"/>
+                            <constraint firstItem="FPe-OG-g5a" firstAttribute="leading" secondItem="yLW-ha-WmV" secondAttribute="leading" constant="22" id="m1l-Cr-HN8"/>
+                            <constraint firstItem="FPe-OG-g5a" firstAttribute="top" secondItem="urO-HF-PLt" secondAttribute="bottom" constant="82" id="xbf-bw-cgt"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emptyHeroView" destination="FPe-OG-g5a" id="8vE-4y-4Oh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XSH-GN-MfA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3607" y="459"/>
+            <point key="canvasLocation" x="3135" y="724"/>
         </scene>
         <!--Themable Navigation Controller-->
         <scene sceneID="eey-lA-vN2">
@@ -112,11 +121,10 @@
                                     <constraint firstItem="NJH-oV-DbS" firstAttribute="centerX" secondItem="ZH1-Ia-TsP" secondAttribute="centerX" id="nIJ-vd-dr1"/>
                                 </constraints>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rRM-18-dYh">
-                                <rect key="frame" x="0.0" y="144" width="375" height="523"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRM-18-dYh">
+                                <rect key="frame" x="0.0" y="108" width="375" height="510"/>
                                 <connections>
-                                    <segue destination="1zw-o2-oXm" kind="embed" id="3mh-Fu-bBb"/>
+                                    <segue destination="pYs-v1-gvr" kind="embed" destinationCreationSelector="createFavoritesController:" id="bY2-W6-VAQ"/>
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
@@ -279,13 +287,17 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="rRM-18-dYh" firstAttribute="width" secondItem="dl2-Hs-8PH" secondAttribute="width" id="9zH-wq-Hv7"/>
                             <constraint firstAttribute="trailing" secondItem="vYN-5M-awE" secondAttribute="trailing" id="Jrz-9n-TYg"/>
+                            <constraint firstItem="rRM-18-dYh" firstAttribute="centerX" secondItem="dl2-Hs-8PH" secondAttribute="centerX" id="We9-7y-nQ6"/>
                             <constraint firstItem="ZH1-Ia-TsP" firstAttribute="top" secondItem="FEP-Q2-zTZ" secondAttribute="bottom" id="WuI-Xm-wrJ"/>
                             <constraint firstAttribute="trailing" secondItem="ZH1-Ia-TsP" secondAttribute="trailing" id="atb-i1-qgp"/>
                             <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="ZH1-Ia-TsP" secondAttribute="bottom" id="cLI-Ny-hsn"/>
+                            <constraint firstItem="rRM-18-dYh" firstAttribute="top" secondItem="ZH1-Ia-TsP" secondAttribute="bottom" id="gyG-Nk-aYo"/>
                             <constraint firstItem="vYN-5M-awE" firstAttribute="bottom" secondItem="dl2-Hs-8PH" secondAttribute="bottom" id="k33-5w-Pqt"/>
                             <constraint firstItem="ZH1-Ia-TsP" firstAttribute="leading" secondItem="dl2-Hs-8PH" secondAttribute="leading" id="kNG-Ze-Dnn"/>
                             <constraint firstAttribute="leading" secondItem="vYN-5M-awE" secondAttribute="leading" id="nEW-Yf-us5"/>
+                            <constraint firstItem="rGL-tq-B12" firstAttribute="top" secondItem="rRM-18-dYh" secondAttribute="bottom" id="w5u-gF-Okq"/>
                         </constraints>
                     </view>
                     <toolbarItems>
@@ -309,6 +321,7 @@
                         <outlet property="favoritesContainer" destination="rRM-18-dYh" id="N76-id-b2D"/>
                         <outlet property="importFooterButton" destination="R7T-q4-qHz" id="JZd-ar-KeL"/>
                         <outlet property="selectorContainer" destination="ZH1-Ia-TsP" id="tdG-dE-c8f"/>
+                        <outlet property="selectorControl" destination="NJH-oV-DbS" id="tVX-k9-DgN"/>
                         <outlet property="selectorHeightConstraint" destination="S2Q-FV-giu" id="DEb-RM-R7m"/>
                         <outlet property="tableView" destination="vYN-5M-awE" id="4rq-bu-ZLw"/>
                         <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddOrEditBookmarkFolder" id="Uhm-2I-Xo5"/>
@@ -611,6 +624,7 @@
         <segue reference="Uhm-2I-Xo5"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="BookmarkFavoritesHero" width="150" height="116"/>
         <image name="DisclosureIndicator" width="8" height="13"/>
         <image name="Folder" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>

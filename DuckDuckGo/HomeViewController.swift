@@ -259,6 +259,10 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
         delegate?.home(self, didRequestEdit: favorite)
     }
 
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: Bookmark) {
+        delegate?.home(self, didRequestHideLogo: renderer.bookmarksManager.favoritesCount == 0)
+    }
+
 }
 
 extension HomeViewController: HomeMessageViewSectionRendererDelegate {

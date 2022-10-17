@@ -42,6 +42,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var favoritesContainer: UIView!
     @IBOutlet weak var selectorContainer: UIView!
     @IBOutlet weak var selectorHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var selectorControl: UISegmentedControl!
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -126,22 +127,35 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     @IBAction func onViewSelectorChanged(_ segment: UISegmentedControl) {
-
-        switch segment.selectedSegmentIndex {
+        switch selectorControl.selectedSegmentIndex {
         case 0:
-            tableView.isHidden = false
-            favoritesContainer.isHidden = true
-            // TODO update rest of UI
+            showBookmarksView()
 
         case 1:
-            tableView.isHidden = true
-            favoritesContainer.isHidden = false
+            showFavoritesView()
 
         default: assertionFailure("Invalid selected segment index")
         }
-
     }
-    
+
+    @IBSegueAction func createFavoritesController(_ coder: NSCoder) -> FavoritesViewController? {
+        return FavoritesViewController(coder: coder)
+    }
+
+    private func showBookmarksView() {
+        tableView.isHidden = false
+        favoritesContainer.isHidden = true
+        addFolderButton.isHidden = false
+        moreButton.isHidden = false
+    }
+
+    private func showFavoritesView() {
+        tableView.isHidden = true
+        favoritesContainer.isHidden = false
+        addFolderButton.isHidden = true
+        moreButton.isHidden = true
+    }
+
     func openEditFormWhenPresented(bookmark: Bookmark) {
         onDidAppearAction = { [weak self] in
             self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
@@ -209,6 +223,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func configureSelector() {
+        favoritesContainer.backgroundColor = tableView.backgroundColor
         selectorContainer.backgroundColor = tableView.backgroundColor
         selectorContainer.isHidden = isNested
         selectorHeightConstraint.constant = isNested ? 0 : selectorHeightConstraint.constant

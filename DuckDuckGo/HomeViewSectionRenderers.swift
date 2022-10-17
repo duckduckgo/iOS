@@ -41,9 +41,7 @@ protocol HomeViewSectionRenderer: AnyObject {
     func omniBarCancelPressed()
     
     func openedAsNewTab()
-    
-    func menuItemsFor(itemAt: Int) -> [UIMenuItem]?
-    
+
     func launchNewSearch()
     
     func supportsReordering() -> Bool
@@ -80,7 +78,17 @@ protocol HomeViewSectionRenderer: AnyObject {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets?
-    
+
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemAt indexPath: IndexPath,
+                        point: CGPoint) -> UIContextMenuConfiguration?
+
+    func collectionView(_ collectionView: UICollectionView,
+                        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+
+    func collectionView(_ collectionView: UICollectionView,
+                        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+
     func endReordering()
     
 }
@@ -151,7 +159,24 @@ extension HomeViewSectionRenderer {
                         insetForSectionAt section: Int) -> UIEdgeInsets? {
         return nil
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemAt indexPath: IndexPath,
+                        point: CGPoint) -> UIContextMenuConfiguration? {
+        return nil
+    }
+
+
+    func collectionView(_ collectionView: UICollectionView,
+                        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return nil
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return nil
+    }
+
     func endReordering() { }
 }
 
@@ -276,7 +301,7 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         renderers[indexPath.section].collectionView(collectionView, didSelectItemAt: indexPath)
     }
-        
+
     // MARK: UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
@@ -299,7 +324,27 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
         return renderers[section].collectionView(collectionView, layout: collectionViewLayout, referenceSizeForFooterInSection: section)
             ?? CGSize.zero
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return renderers[indexPath.section].collectionView(collectionView,
+                                                           contextMenuConfigurationForItemAt: indexPath,
+                                                           point: point)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+        return renderers[indexPath.section].collectionView(collectionView,
+                                                           previewForDismissingContextMenuWithConfiguration: configuration)
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+        return renderers[indexPath.section].collectionView(collectionView,
+                                                           previewForHighlightingContextMenuWithConfiguration: configuration)
+    }
+
     // MARK: UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath)

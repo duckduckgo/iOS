@@ -263,6 +263,24 @@ class TabViewController: UIViewController {
                                                           repeats: false) { [weak self] _ in
             Pixel.fire(pixel: .webKitDidBecomeUnresponsive)
             self?.navigationExpectationTimer = nil
+
+            #if DEBUG
+                func fileLine(file: StaticString = #file, line: Int = #line) -> String {
+                    return "\(("\(file)" as NSString).lastPathComponent):\(line + 1)"
+                }
+                os_log("""
+                    -----------------------------------------------------------------------
+                    BREAK: WebView process has appeared hung and was TERMINATED
+                    Check %s to temporarily disable this behaviour
+                    Hit Continue (^⌘Y) to continue program execution
+                    -----------------------------------------------------------------------
+                """, log: generalLog, type: .debug, fileLine())
+                // DEBUG: Comment out the following line to disable stopping at this breakpoint:
+                raise(SIGINT)
+                // DEBUG: Uncomment the following line to disable WebView process termination:
+//                return
+            #endif
+
             if case .sessionRestored = self?.recreateWebView(destinationURL: destinationURL) {
                 onSessionRestored?()
             }

@@ -129,7 +129,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     
     private func updateAuthViews() {
         switch authenticator.state {
-        case .loggedOut:
+        case .loggedOut, .notAvailable:
             lockedView.isHidden = false
             self.contentView?.isHidden = true
         case .loggedIn:

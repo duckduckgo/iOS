@@ -40,7 +40,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
     private let emptySearchView = AutofillEmptySearchView()
-    
+    private let noAuthAvailableView = AutofillNoAuthAvailableView()
+
     private lazy var addBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
     }()
@@ -124,6 +125,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         coordinator.animate(alongsideTransition: { _ in
             self.updateConstraintConstants()
             self.emptyView.refreshConstraints()
+            if self.view.subviews.contains(self.noAuthAvailableView) {
+                self.noAuthAvailableView.refreshConstraints()
+            }
             if !self.searchController.isActive {
                 self.navigationItem.searchController = nil
             }
@@ -193,7 +197,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         viewModel.authenticate {[weak self] error in
             guard let self = self else { return }
             if error != nil {
-                self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
+                if error == .noAuthAvailable(.faceId) {
+                    self.noAuthAvailableView.viewState = .faceId
+                } else if error == .noAuthAvailable(.touchId) {
+                    self.noAuthAvailableView.viewState = .touchId
+                } else {
+                    self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
+                }
             }
         }
     }
@@ -218,11 +228,19 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
+            noAuthAvailableView.isHidden = true
+            emptySearchView.isHidden = true
+        case .noAuthAvailable:
+            emptyView.isHidden = true
+            tableView.isHidden = true
+            lockedView.isHidden = true
+            noAuthAvailableView.isHidden = false
             emptySearchView.isHidden = true
         case .authLocked:
             emptyView.isHidden = true
             tableView.isHidden = true
             lockedView.isHidden = false
+            noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .empty:
             emptyView.viewState = viewModel.isAutofillEnabled ? .autofillEnabled : .autofillDisabled
@@ -230,16 +248,19 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             tableView.isHidden = false
             setEditing(false, animated: false)
             lockedView.isHidden = true
+            noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .searching:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
+            noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = true
         case .searchingNoResults:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
+            noAuthAvailableView.isHidden = true
             emptySearchView.isHidden = false
         }
         updateNavigationBarButtons()
@@ -261,6 +282,9 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                 addBarButtonItem.isEnabled = true
             }
             editButtonItem.isEnabled = true
+        case .noAuthAvailable:
+            navigationItem.rightBarButtonItems = [addBarButtonItem]
+            addBarButtonItem.isEnabled = false
         case .authLocked:
             navigationItem.rightBarButtonItems = [editButtonItem, addBarButtonItem]
             addBarButtonItem.isEnabled = false
@@ -288,7 +312,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             }
         case .searching, .searchingNoResults:
             navigationItem.searchController = searchController
-        case .empty, .authLocked:
+        case .empty, .authLocked, .noAuthAvailable:
             navigationItem.searchController = nil
         }
     }
@@ -297,12 +321,14 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         view.addSubview(tableView)
         tableView.addSubview(emptySearchView)
         view.addSubview(lockedView)
+        view.addSubview(noAuthAvailableView)
     }
     
     private func installConstraints() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         emptySearchView.translatesAutoresizingMaskIntoConstraints = false
         lockedView.translatesAutoresizingMaskIntoConstraints = false
+        noAuthAvailableView.translatesAutoresizingMaskIntoConstraints = false
 
         updateConstraintConstants()
 
@@ -320,7 +346,12 @@ final class AutofillLoginSettingsListViewController: UIViewController {
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lockedView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
             lockedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
-            lockedViewBottomConstraint
+            lockedViewBottomConstraint,
+
+            noAuthAvailableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noAuthAvailableView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noAuthAvailableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            noAuthAvailableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding)
         ])
     }
 
@@ -532,6 +563,7 @@ extension AutofillLoginSettingsListViewController: Themable {
         lockedView.decorate(with: theme)
         emptyView.decorate(with: theme)
         emptySearchView.decorate(with: theme)
+        noAuthAvailableView.decorate(with: theme)
 
         view.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = theme.backgroundColor

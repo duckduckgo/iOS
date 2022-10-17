@@ -23,13 +23,13 @@ import os.log
 import Core
 
 final class AutofillLoginListAuthenticator {
-    enum AuthError {
-        case noAuthAvailable
+    enum AuthError: Equatable {
+        case noAuthAvailable(AutofillNoAuthAvailableView.ViewState)
         case failedToAuthenticate
     }
     
     enum AuthenticationState {
-        case loggedIn, loggedOut
+        case loggedIn, loggedOut, notAvailable
     }
     
     private var context = LAContext()
@@ -52,9 +52,9 @@ final class AutofillLoginListAuthenticator {
         context.localizedReason = reason
         
         var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             let reason = reason
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason ) { success, error in
             
                 DispatchQueue.main.async {
                     if success {
@@ -67,7 +67,15 @@ final class AutofillLoginListAuthenticator {
                 }
             }
         } else {
-            completion?(.noAuthAvailable)
+            state = .notAvailable
+            switch context.biometryType {
+            case .faceID:
+                completion?(.noAuthAvailable(.faceId))
+            case .touchID:
+                completion?(.noAuthAvailable(.touchId))
+            default:
+                completion?(.noAuthAvailable(.faceId))
+            }
         }
     }
 }

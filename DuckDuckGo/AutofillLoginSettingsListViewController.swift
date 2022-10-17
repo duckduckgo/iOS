@@ -220,7 +220,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
     
     // MARK: Subviews Setup
-    
+
+    // swiftlint:disable function_body_length
     private func updateViewState() {
         
         switch viewModel.viewState {
@@ -267,6 +268,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         updateSearchController()
         tableView.reloadData()
     }
+    // swiftlint:enable function_body_length
     
     private func updateNavigationBarButtons() {
         switch viewModel.viewState {

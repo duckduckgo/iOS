@@ -28,12 +28,17 @@ protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
 }
 
 class AutofillLoginDetailsViewController: UIViewController {
-    
+
+    private enum Constants {
+        static let padding: CGFloat = 16
+    }
+
     weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
     private var authenticator = AutofillLoginListAuthenticator()
     private let lockedView = AutofillItemsLockedView()
+    private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private var contentView: UIView?
 
     private lazy var saveBarButtonItem: UIBarButtonItem = {
@@ -75,22 +80,39 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        authenticator.authenticate()
+        authenticate()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: nil) { _ in
+            if self.view.subviews.contains(self.noAuthAvailableView) {
+                self.noAuthAvailableView.refreshConstraints()
+            }
+        }
     }
     
     private func installSubviews() {
         installContentView()
         view.addSubview(lockedView)
+        view.addSubview(noAuthAvailableView)
     }
 
     private func installConstraints() {
         lockedView.translatesAutoresizingMaskIntoConstraints = false
-        
+        noAuthAvailableView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            lockedView.heightAnchor.constraint(equalToConstant: 140)
+            lockedView.heightAnchor.constraint(equalToConstant: 140),
+
+            noAuthAvailableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noAuthAvailableView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noAuthAvailableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            noAuthAvailableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding)
         ])
     }
 
@@ -126,15 +148,44 @@ class AutofillLoginDetailsViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
-    
+
+    private func authenticate() {
+        authenticator.authenticate {[weak self] error in
+            guard let self = self else { return }
+            if error != nil {
+                if error == .noAuthAvailable(.faceId) {
+                    self.noAuthAvailableView.viewState = .faceId
+                } else if error == .noAuthAvailable(.touchId) {
+                    self.noAuthAvailableView.viewState = .touchId
+                }
+            }
+        }
+    }
+
     private func updateAuthViews() {
         switch authenticator.state {
-        case .loggedOut, .notAvailable:
+        case .loggedOut:
             lockedView.isHidden = false
+            noAuthAvailableView.isHidden = true
+            self.contentView?.isHidden = true
+        case .notAvailable:
+            lockedView.isHidden = true
+            noAuthAvailableView.isHidden = false
             self.contentView?.isHidden = true
         case .loggedIn:
             lockedView.isHidden = true
+            noAuthAvailableView.isHidden = true
             self.contentView?.isHidden = false
+        }
+        updateNavigationBarButtons()
+    }
+
+    private func updateNavigationBarButtons() {
+        switch authenticator.state {
+        case .loggedOut, .notAvailable:
+            navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
+        case .loggedIn:
+            navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }
         }
     }
     
@@ -216,7 +267,9 @@ extension AutofillLoginDetailsViewController: Themable {
     func decorate(with theme: Theme) {
         lockedView.decorate(with: theme)
         lockedView.backgroundColor = theme.backgroundColor
-        
+
+        noAuthAvailableView.decorate(with: theme)
+
         view.backgroundColor = theme.backgroundColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor

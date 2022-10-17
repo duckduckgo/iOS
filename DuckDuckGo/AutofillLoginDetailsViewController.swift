@@ -55,6 +55,17 @@ class AutofillLoginDetailsViewController: UIViewController {
         return barButtonItem
     }()
 
+    private lazy var lockedViewBottomConstraint: NSLayoutConstraint? = {
+        guard let view = view else { return nil }
+        return NSLayoutConstraint(item: view,
+                                  attribute: .bottom,
+                                  relatedBy: .equal,
+                                  toItem: lockedView,
+                                  attribute: .bottom,
+                                  multiplier: 1,
+                                  constant: 144)
+    }()
+
     init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account)
         self.authenticator = authenticator
@@ -87,6 +98,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
 
         coordinator.animate(alongsideTransition: nil) { _ in
+            self.updateConstraintConstants()
             if self.view.subviews.contains(self.noAuthAvailableView) {
                 self.noAuthAvailableView.refreshConstraints()
             }
@@ -103,11 +115,12 @@ class AutofillLoginDetailsViewController: UIViewController {
         lockedView.translatesAutoresizingMaskIntoConstraints = false
         noAuthAvailableView.translatesAutoresizingMaskIntoConstraints = false
 
+        updateConstraintConstants()
+
         NSLayoutConstraint.activate([
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            lockedView.heightAnchor.constraint(equalToConstant: 140),
+            lockedView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            lockedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
 
             noAuthAvailableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             noAuthAvailableView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -116,7 +129,19 @@ class AutofillLoginDetailsViewController: UIViewController {
         ])
     }
 
-    
+    private func updateConstraintConstants() {
+        guard let lockedViewBottomConstraint = lockedViewBottomConstraint else { return }
+
+        lockedViewBottomConstraint.isActive = true
+
+        let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
+        if isIPhoneLandscape {
+            lockedViewBottomConstraint.constant = (view.frame.height / 2 - max(lockedView.frame.height, 120.0) / 2)
+        } else {
+            lockedViewBottomConstraint.constant = view.frame.height * 0.15
+        }
+    }
+
     private func setupTableViewAppearance() {
         let appearance = UITableView.appearance(whenContainedInInstancesOf: [AutofillLoginDetailsViewController.self])
         appearance.backgroundColor = UIColor(named: "ListBackground")

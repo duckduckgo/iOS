@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Forslag fra autofullfør";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Legg til";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Bokmerke";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Åpne nettsted";
+"action.suggestion.type.website" = "Åpne nettsted";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Søk med DuckDuckGo";
+"action.suggestion.type.search" = "Søk med DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Legg til";

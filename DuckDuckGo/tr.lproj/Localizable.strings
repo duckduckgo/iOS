@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Otomatik tamamlama önerisi";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Yer imi ekle";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Yer imi";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Web sitesini aç";
+"action.suggestion.type.website" = "Web sitesini aç";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "DuckDuckGo'da ara";
+"action.suggestion.type.search" = "DuckDuckGo'da ara";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";

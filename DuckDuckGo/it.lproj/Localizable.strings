@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Mostra suggerimenti di completamento automatico";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Segnalibro";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Segnalibro";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Apri il sito web";
+"action.suggestion.type.website" = "Apri il sito web";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Cerca su DuckDuckGo";
+"action.suggestion.type.search" = "Cerca su DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Aggiungi";

@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Automātiski pabeigt ieteikumu";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Pievienot grāmatzīmi";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Grāmatzīme";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Atvērt tīmekļa vietni";
+"action.suggestion.type.website" = "Atvērt tīmekļa vietni";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Meklēt vietnē DuckDuckGo";
+"action.suggestion.type.search" = "Meklēt vietnē DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Pievienot";

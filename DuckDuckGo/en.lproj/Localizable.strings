@@ -7,10 +7,10 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Undo";
 
-/* Complete the suggestion into the Address Bar. Verb. VoiceOver description of the button that autocompletes the selected Suggestion into the Address Bar. */
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.action.autocomplete" = "Autocomplete suggestion";
 
-/* [a] bookmark. Noun. Voice-over title for a Bookmark. */
+/* Voice-over title for a Bookmark suggestion. Noun */
 "action.suggestion.type.bookmark" = "Bookmark";
 
 /* Search for suggestion action accessibility title */

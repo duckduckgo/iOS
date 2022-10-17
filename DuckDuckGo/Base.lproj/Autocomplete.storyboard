@@ -48,6 +48,7 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N97-eI-Lps">
                                                     <rect key="frame" x="333" y="8" width="30" height="30"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Autocomplete suggestion"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="fBV-vf-OLd"/>
                                                         <constraint firstAttribute="width" constant="30" id="wRc-fh-LDz"/>
@@ -71,9 +72,6 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" button="YES"/>
-                                        </accessibility>
                                         <connections>
                                             <outlet property="label" destination="5ag-a1-mlA" id="jTa-51-N4b"/>
                                             <outlet property="plusButton" destination="N97-eI-Lps" id="2NX-0l-oBk"/>

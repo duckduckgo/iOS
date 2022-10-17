@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Предложение за автоматично довършване";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Отметка";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Отметка";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Отваряне на уебсайта";
+"action.suggestion.type.website" = "Отваряне на уебсайта";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Търсене в DuckDuckGo";
+"action.suggestion.type.search" = "Търсене в DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Добавяне";

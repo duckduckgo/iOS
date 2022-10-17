@@ -41,9 +41,11 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel(frame: CGRect.zero)
-        label.font = .systemFont(ofSize: 16)
+        label.font = .preferredFont(forTextStyle: .callout)
         label.textColor = .gray90
         label.text = UserText.autofillEnableSettings
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -79,7 +81,7 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
         }
 
         toggleSwitch.onTintColor = theme.buttonTintColor
-        titleLabel.textColor = theme.textFieldFontColor
+        titleLabel.textColor = theme.autofillDefaultTitleTextColor
     }
     
     private func installConstraints() {
@@ -88,8 +90,10 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
         let margins = contentView.layoutMarginsGuide
         
         NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: margins.topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalToSystemSpacingAfter: toggleSwitch.leadingAnchor, multiplier: 1),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: toggleSwitch.leadingAnchor, constant: 8),
             titleLabel.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
             
             toggleSwitch.centerYAnchor.constraint(equalTo: margins.centerYAnchor),

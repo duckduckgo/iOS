@@ -24,7 +24,7 @@ class AutofillEmptySearchView: UIView {
     private lazy var title: UILabel = {
         let label = UILabel(frame: CGRect.zero)
 
-        label.font = .systemFont(ofSize: 24)
+        label.font = .systemFont(ofSize: UIFont.preferredFont(forTextStyle: .title2).pointSize * 1.091, weight: .regular)
         label.text = UserText.autofillSearchNoResultTitle
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -35,7 +35,7 @@ class AutofillEmptySearchView: UIView {
     private lazy var subtitle: UILabel = {
         let label = UILabel(frame: CGRect.zero)
 
-        label.font = .systemFont(ofSize: 16)
+        label.font = .preferredFont(forTextStyle: .callout)
         label.text = ""
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -79,7 +79,17 @@ class AutofillEmptySearchView: UIView {
         
         NSLayoutConstraint.activate([
             stackContentView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            stackContentView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            heightAnchor.constraint(equalTo: stackContentView.heightAnchor),
+            widthAnchor.constraint(equalTo: stackContentView.widthAnchor)
         ])
+    }
+}
+
+extension AutofillEmptySearchView: Themable {
+
+    func decorate(with theme: Theme) {
+        title.textColor = theme.autofillEmptySearchViewTextColor
+        subtitle.textColor = theme.autofillEmptySearchViewTextColor
     }
 }

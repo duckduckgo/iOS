@@ -99,7 +99,7 @@ public struct AppUrls {
     }
     
     public func autocompleteUrl(forText text: String) throws -> URL {
-        return try URL(string: Url.autocomplete)!
+        return URL(string: Url.autocomplete)!
             .appendingParameters([
                 Param.search: text,
                 Param.enableNavSuggestions: ParamValue.enableNavSuggestions
@@ -134,7 +134,7 @@ public struct AppUrls {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.searchRetentionAtb else {
             return nil
         }
-        return try? URL(string: Url.atb)?
+        return URL(string: Url.atb)?
             .appendingParameters([
                 Param.atb: atbWithVariant,
                 Param.setAtb: setAtb
@@ -145,7 +145,7 @@ public struct AppUrls {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.appRetentionAtb else {
             return nil
         }
-        return try? URL(string: Url.atb)?
+        return URL(string: Url.atb)?
             .appendingParameters([
                 Param.activityType: ParamValue.appUsage,
                 Param.atb: atbWithVariant,
@@ -172,7 +172,7 @@ public struct AppUrls {
         if !isDuckDuckGo(url: url) {
             return nil
         }
-        return try? url.getParameter(name: Param.search)
+        return url.getParameter(named: Param.search)
     }
 
     public func url(forQuery query: String, queryContext: URL? = nil) -> URL? {
@@ -183,8 +183,8 @@ public struct AppUrls {
         var parameters = [String: String]()
         if let queryContext = queryContext,
            isDuckDuckGoSearch(url: queryContext),
-           (try? queryContext.getParameter(name: Param.verticalMaps)) == nil,
-           let vertical = (try? queryContext.getParameter(name: Param.vertical)) ?? nil,
+           queryContext.getParameter(named: Param.verticalMaps) == nil,
+           let vertical = queryContext.getParameter(named: Param.vertical),
            ParamValue.majorVerticals.contains(vertical) {
 
             parameters[Param.verticalRewrite] = vertical
@@ -195,23 +195,18 @@ public struct AppUrls {
 
     public func exti(forAtb atb: String) -> URL {
         let extiUrl = URL(string: Url.exti)!
-        return (try? extiUrl.appendingParameter(name: Param.atb, value: atb))!
+        return extiUrl.appendingParameter(name: Param.atb, value: atb)
     }
 
     /**
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
      */
-    public func searchUrl<C: Collection>(text: String, additionalParameters: C) -> URL? where C.Element == (key: String, value: String) {
-        do {
-            let searchUrl = try base
-                .appendingParameter(name: Param.search, value: text)
-                .appendingParameters(additionalParameters)
-            return applyStatsParams(for: searchUrl)
-        } catch {
-            os_log("URL extension: %s", log: lifecycleLog, type: .error, error.localizedDescription)
-            return nil
-        }
+    public func searchUrl<C: Collection>(text: String, additionalParameters: C) -> URL where C.Element == (key: String, value: String) {
+        let searchUrl = base
+            .appendingParameter(name: Param.search, value: text)
+            .appendingParameters(additionalParameters)
+        return applyStatsParams(for: searchUrl)
     }
 
     public func searchUrl(text: String) -> URL? {
@@ -220,7 +215,7 @@ public struct AppUrls {
 
     public func isDuckDuckGoSearch(url: URL) -> Bool {
         if !isDuckDuckGo(url: url) { return false }
-        guard (try? url.getParameter(name: Param.search)) ?? nil != nil else { return false }
+        guard url.getParameter(named: Param.search) != nil else { return false }
         return true
     }
     
@@ -249,35 +244,31 @@ public struct AppUrls {
 
     public func applyStatsParams(for url: URL) -> URL {
         var searchURL = url.removingParameters(named: [Param.source, Param.atb])
-        try? searchURL = searchURL.appendingParameter(name: Param.source, value: ParamValue.source)
+            .appendingParameter(name: Param.source, value: ParamValue.source)
 
         if let atbWithVariant = statisticsStore.atbWithVariant {
-            try? searchURL = searchURL.appendingParameter(name: Param.atb, value: atbWithVariant)
+            searchURL = searchURL.appendingParameter(name: Param.atb, value: atbWithVariant)
         }
         return searchURL
     }
 
     public func hasCorrectMobileStatsParams(url: URL) -> Bool {
-        guard let source = try? url.getParameter(name: Param.source),
+        guard let source = url.getParameter(named: Param.source),
               source == ParamValue.source
         else { return false }
         if let atbWithVariant = statisticsStore.atbWithVariant {
-            return atbWithVariant == (try? url.getParameter(name: Param.atb)) ?? nil
+            return atbWithVariant == url.getParameter(named: Param.atb)
         }
         return true
     }
 
     public func applySearchHeaderParams(for url: URL) -> URL {
-        do {
-            return try url.removingParameters(named: [Param.searchHeader])
-                .appendingParameter(name: Param.searchHeader, value: ParamValue.searchHeader)
-        } catch {
-            return url
-        }
+        return url.removingParameters(named: [Param.searchHeader])
+            .appendingParameter(name: Param.searchHeader, value: ParamValue.searchHeader)
     }
 
     public func hasCorrectSearchHeaderParams(url: URL) -> Bool {
-        guard let header = try? url.getParameter(name: Param.searchHeader) else { return false }
+        guard let header = url.getParameter(named: Param.searchHeader) else { return false }
         return header == ParamValue.searchHeader
     }
     
@@ -313,11 +304,7 @@ public struct AppUrls {
         var url = URL(string: urlString)!
 
         if includeATB {
-            do {
-                url = try url.appendingParameter(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
-            } catch {
-                assertionFailure("couldn‘t add atb parameter")
-            }
+            url = url.appendingParameter(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
         }
 
         return url

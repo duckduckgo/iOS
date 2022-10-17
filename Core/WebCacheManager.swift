@@ -41,7 +41,7 @@ public protocol WebCacheManagerDataStore {
 public class WebCacheManager {
 
     private struct Constants {
-        static let cookieDomain = "duckduckgo.com"
+        static let cookieDomainsToPreserve = ["duckduckgo.com", "surveys.duckduckgo.com"]
     }
     
     public static var shared = WebCacheManager()
@@ -152,7 +152,10 @@ public class WebCacheManager {
 
             cookieStore.getAllCookies { cookies in
                 let group = DispatchGroup()
-                let cookiesToRemove = cookies.filter { !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain }
+                let cookiesToRemove = cookies.filter {
+                    !logins.isAllowed(cookieDomain: $0.domain) &&
+                    !Constants.cookieDomainsToPreserve.contains($0.domain)
+                }
                 let protectedCookiesCount = cookies.count - cookiesToRemove.count
                 
                 cookieClearingSummary.storeInitialCount = cookies.count
@@ -178,7 +181,7 @@ public class WebCacheManager {
                     // Remove legacy HTTPCookieStorage cookies
                     let storageCookies = HTTPCookieStorage.shared.cookies ?? []
                     let storageCookiesToRemove = storageCookies.filter {
-                        !logins.isAllowed(cookieDomain: $0.domain) && $0.domain != Constants.cookieDomain
+                        !logins.isAllowed(cookieDomain: $0.domain) && !Constants.cookieDomainsToPreserve.contains($0.domain)
                     }
                     
                     let protectedStorageCookiesCount = storageCookies.count - storageCookiesToRemove.count
@@ -225,10 +228,10 @@ public class WebCacheManager {
         }
     }
 
-    /// The Fire Button does not delete the user's DuckDuckGo search settings, which are saved as cookies. Removing these cookies would reset them and have undesired
-    ///  consequences, i.e. changing the theme, default language, etc.  These cookies are not stored in a personally identifiable way. For example, the large size setting
-    ///  is stored as 's=l.' More info in https://duckduckgo.com/privacy
-    private func isCookie(_ cookie: HTTPCookie, matchingDomain domain: String) -> Bool {
+    /// The Fire Button does not delete the user's DuckDuckGo search settings, which are saved as cookies. Removing these cookies would reset them and have undesired consequences, i.e. changing the theme, default language, etc.
+    /// The Fire Button also does not delete temporary cookies associated with 'surveys.duckduckgo.com'. When we launch surveys to help us understand issues that impact users over time, we use this cookie to temporarily store anonymous survey answers, before deleting the cookie. Cookie storage duration is communicated to users before they opt to submit survey answers.
+    /// These cookies are not stored in a personally identifiable way. For example, the large size setting is stored as 's=l.' More info in https://duckduckgo.com/privacy
+    public func isCookie(_ cookie: HTTPCookie, matchingDomain domain: String) -> Bool {
         return cookie.domain == domain || (cookie.domain.hasPrefix(".") && domain.hasSuffix(cookie.domain))
     }
 

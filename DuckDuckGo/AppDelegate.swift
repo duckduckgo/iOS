@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         testing = ProcessInfo().arguments.contains("testing")
         if testing {
             _ = DefaultUserAgentManager.shared
-            Database.shared.loadStore { _ in }
+            Database.shared.loadStore { _, _ in }
             BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
                 _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
             }
@@ -81,8 +81,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         removeEmailWaitlistState()
-        
-        Database.shared.loadStore(application: application) { context in
+                
+        Database.shared.loadStore { context, error in
+            guard let context = context else {
+                
+                let parameters = [PixelParameters.applicationState: "\(application.applicationState.rawValue)",
+                                  PixelParameters.dataAvailability: "\(application.isProtectedDataAvailable)"]
+                        
+                switch error {
+                case .none:
+                    fatalError("Could not create database stack: Unknown Error")
+                case .some(CoreDataDatabase.Error.containerLocationCouldNotBePrepared(let underlyingError)):
+                    Pixel.fire(pixel: .dbContainerInitializationError,
+                               error: underlyingError,
+                               withAdditionalParameters: parameters)
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create database stack: \(underlyingError.localizedDescription)")
+                case .some(let error):
+                    Pixel.fire(pixel: .dbInitializationError,
+                               error: error,
+                               withAdditionalParameters: parameters)
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not create database stack: \(error.localizedDescription)")
+                }
+            }
             DatabaseMigration.migrate(to: context)
         }
         
@@ -279,13 +301,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if AppDeepLinks.isNewSearch(url: url) {
             mainViewController?.newTab(reuseExisting: true)
-            do {
-                if try url.getParameter(name: "w") != nil {
-                    Pixel.fire(pixel: .widgetNewSearch)
-                    mainViewController?.enterSearch()
-                }
-            } catch {
-                os_log("Error decoding parameter: %s", log: lifecycleLog, type: .debug, error.localizedDescription)
+            if url.getParameter(named: "w") != nil {
+                Pixel.fire(pixel: .widgetNewSearch)
+                mainViewController?.enterSearch()
             }
         } else if AppDeepLinks.isLaunchFavorite(url: url) {
             let query = AppDeepLinks.query(fromLaunchFavorite: url)
@@ -296,6 +314,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             mainViewController?.loadQueryInNewTab(query, reuseExisting: true)
         } else if AppDeepLinks.isAddFavorite(url: url) {
             mainViewController?.startAddFavoriteFlow()
+        } else if app.applicationState == .active,
+                  let currentTab = mainViewController?.currentTab {
+            // If app is in active state, treat this navigation as something initiated form the context of the current tab.
+            mainViewController?.tab(currentTab,
+                                    didRequestNewTabForUrl: url,
+                                    openedByPage: true,
+                                    inheritingAttribution: nil)
         } else {
             Pixel.fire(pixel: .defaultBrowserLaunch)
             mainViewController?.loadUrlInNewTab(url, reuseExisting: true, inheritedAttribution: nil)
@@ -392,10 +417,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if overlayWindow == nil {
             tryToObtainOverlayWindow()
         }
-        
-        overlayWindow?.isHidden = true
-        overlayWindow = nil
-        window?.makeKeyAndVisible()
+
+        if let overlay = overlayWindow {
+            overlay.isHidden = true
+            overlayWindow = nil
+            window?.makeKeyAndVisible()
+        }
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
@@ -411,11 +438,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         EmailWaitlist.removeEmailState()
 
         let autofillStorage = EmailKeychainManager()
-        autofillStorage.deleteWaitlistState()
+        try? autofillStorage.deleteWaitlistState()
 
         // Remove the authentication state if this is a fresh install.
         if !Database.shared.isDatabaseFileInitialized {
-            autofillStorage.deleteAuthenticationState()
+            try? autofillStorage.deleteAuthenticationState()
         }
     }
 

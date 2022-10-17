@@ -24,6 +24,7 @@ import Combine
 
 protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController)
+    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount)
 }
 
 class AutofillLoginDetailsViewController: UIViewController {
@@ -34,6 +35,20 @@ class AutofillLoginDetailsViewController: UIViewController {
     private var authenticator = AutofillLoginListAuthenticator()
     private let lockedView = AutofillItemsLockedView()
     private var contentView: UIView?
+
+    private lazy var saveBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]
+        barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        return barButtonItem
+    }()
+
+    private lazy var editBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]
+        barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        return barButtonItem
+    }()
 
     init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account)
@@ -134,16 +149,16 @@ class AutofillLoginDetailsViewController: UIViewController {
         title = viewModel.navigationTitle
         switch viewModel.viewMode {
         case .edit:
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            navigationItem.rightBarButtonItem = saveBarButtonItem
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
 
         case .view:
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+            navigationItem.rightBarButtonItem = editBarButtonItem
             navigationItem.leftBarButtonItem = nil
         
         case .new:
             if viewModel.shouldShowSaveButton {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+                navigationItem.rightBarButtonItem = saveBarButtonItem
             } else {
                 navigationItem.rightBarButtonItem = nil
             }
@@ -174,6 +189,24 @@ extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDeleg
     func autofillLoginDetailsViewModelDidSave() {
         
     }
+    
+    func autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin() {
+        let alert = UIAlertController(title: UserText.autofillLoginDetailsSaveDuplicateLoginAlertTitle,
+                                      message: UserText.autofillLoginDetailsSaveDuplicateLoginAlertMessage,
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: UserText.autofillLoginDetailsSaveDuplicateLoginAlertAction, style: .default)
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
+
+    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount) {
+        delegate?.autofillLoginDetailsViewControllerDelete(account: account)
+        navigationController?.popViewController(animated: true)
+    }
+
+    func autofillLoginDetailsViewModelDismiss() {
+        navigationController?.dismiss(animated: true)
+    }
 }
 
 // MARK: Themable
@@ -189,5 +222,13 @@ extension AutofillLoginDetailsViewController: Themable {
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
 
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
     }
 }

@@ -8,7 +8,7 @@
 "action.generic.undo" = "Undo";
 
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.action.autocomplete" = "Autocomplete suggestion";
+"action.suggestion.autocomplete" = "Autocomplete suggestion";
 
 /* Voice-over title for a Bookmark suggestion. Noun */
 "action.suggestion.type.bookmark" = "Bookmark";

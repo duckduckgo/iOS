@@ -91,6 +91,21 @@ class BookmarksImporterTests: XCTestCase {
         XCTAssertEqual(importer.importedBookmarks.count, 9)
     }
 
+    func test_WhenParseNetscapeHtml_ThenImportSuccess() async throws {
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_netscape_nested.html"))
+        XCTAssertEqual(importer.importedBookmarks.count, 5)
+    }
+
+    func test_WhenParseFirefoxFlatHtml_ThenImportSuccess() async throws {
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_firefox_flat.html"))
+        XCTAssertEqual(importer.importedBookmarks.count, 23)
+    }
+
+    func test_WhenParseFirefoxNestedHtml_ThenImportSuccess() async throws {
+        try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_firefox_nested.html"))
+        XCTAssertEqual(importer.importedBookmarks.count, 8)
+    }
+
     func test_WhenParseInvalidHtml_ThenImportFail() async throws {
         // Note: wanted to use XCTAssertThrowsError but it doesn't support concurrency yet
         do {

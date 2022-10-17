@@ -14,7 +14,7 @@
 "action.suggestion.autocomplete" = "Autoudfyld forslaget";
 
 /* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Bogmærk";
+"action.suggestion.type.bookmark" = "Bogmærke";
 
 /* Open suggested website action accessibility title */
 "action.suggestion.type.website" = "Åbn websted";

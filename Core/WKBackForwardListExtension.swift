@@ -28,6 +28,9 @@ public extension WKBackForwardList {
         if let idx = forwardList.firstIndex(of: backForwardListItem) {
             return idx + 1
         }
+        if currentItem == backForwardListItem {
+            return 0
+        }
         return nil
     }
 

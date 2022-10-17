@@ -46,7 +46,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     var onDelete: (() -> Void)?
     var onEdit: (() -> Void)?
     
-    private var favorite: Bookmark?
+    var favorite: Bookmark?
     private var theme: Theme?
     
     struct Actions {

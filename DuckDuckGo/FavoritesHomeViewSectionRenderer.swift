@@ -266,7 +266,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
         guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return nil }
 
-        let edit = UIAction(title: "Edit",
+        let edit = UIAction(title: UserText.favoriteMenuEdit,
                             image: UIImage(systemName: "square.and.pencil"),
                             identifier: nil,
                             discoverabilityTitle: nil,
@@ -274,7 +274,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             self?.editFavorite(cell, collectionView)
         }
 
-        let delete = UIAction(title: "Delete",
+        let delete = UIAction(title: UserText.favoriteMenuDelete,
                               image: UIImage(systemName: "trash"),
                               identifier: nil,
                               discoverabilityTitle: nil,
@@ -286,7 +286,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             guard let image = cell.iconImage.image else { return nil }
             return ImagePreviewer(image: image)
         } actionProvider: { _ in
-            UIMenu(title: "", options: .displayInline, children: [
+            let title = (cell.favorite?.title ?? "") + "\n" + (cell.favorite?.url?.absoluteString ?? "")
+            return UIMenu(title: title, options: .displayInline, children: [
                 edit,
                 delete
             ])

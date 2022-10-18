@@ -200,7 +200,7 @@ class AutofillNoAuthAvailableView: UIView {
             stackContentView.spacing = 27
             outerStackContentView.spacing = 4
         } else if isIPad {
-            NSLayoutConstraint.activate([leadingConstraint, trailingConstraint, centerYConstraint])
+            NSLayoutConstraint.activate([heightConstraint, leadingConstraint, trailingConstraint, centerYConstraint])
             stackContentView.spacing = 16
             stackContentView.setCustomSpacing(58, after: button)
             outerStackContentView.spacing = 16

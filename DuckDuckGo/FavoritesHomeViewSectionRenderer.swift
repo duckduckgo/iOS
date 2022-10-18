@@ -77,11 +77,8 @@ class InMemoryFavoritesViewModel: FavoritesViewModel {
             assertionFailure("Unknown favorite")
             return
         }
-        print("***", #function, "A", existingIndex, index)
-        print("***", #function, "B", favorites.map { $0.id })
         favorites.remove(at: existingIndex)
         favorites.insert(favorite, at: index)
-        print("***", #function, "C", favorites.map { $0.id })
     }
 
     func favorite(atIndex index: Int) -> Favorite? {
@@ -208,9 +205,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        print("***", #function, indexPath)
-
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favorite", for: indexPath) as? FavoriteHomeCell else {
             fatalError("not a FavoriteCell")
         }
@@ -307,7 +301,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             return nil
         }
 
-        let targetedPreview = UITargetedPreview(view: cell.iconImage)
+        let targetedPreview = UITargetedPreview(view: cell.iconBackground)
         targetedPreview.parameters.backgroundColor = .clear
         return targetedPreview
     }
@@ -338,7 +332,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
         let context = UIContextMenuConfiguration(identifier: indexPath as NSIndexPath) {
             guard let image = cell.iconImage.image else { return nil }
-            return ImagePreviewer(image: image)
+            return UIImageViewController(image: image)
         } actionProvider: { _ in
             let title = (cell.favorite?.title ?? "") + "\n" + (cell.favorite?.url?.absoluteString ?? "")
             return UIMenu(title: title, options: .displayInline, children: [
@@ -365,7 +359,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
               let favorite = cell.favorite
         else { return }
 
-        print("***", #function, sourcePath, ">", destinationPath)
+        cell.isReordering = false
 
         viewModel.move(favorite, toIndexAt: destinationPath.row)
         coordinator.drop(dragItem, toItemAt: destinationPath)
@@ -378,47 +372,36 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         guard let cell = self.collectionView(collectionView, cellForItemAt: indexPath) as? FavoriteHomeCell else { return [] }
 
-        // TODO better item provider
+        UIGraphicsBeginImageContextWithOptions(cell.iconBackground.frame.size, true, 1.0)
+        defer {
+            UIGraphicsEndImageContext()
+        }
 
+        cell.iconBackground.drawHierarchy(in: cell.iconBackground.frame, afterScreenUpdates: false)
+        cell.isReordering = true
+        guard let image = UIGraphicsGetImageFromCurrentImageContext() else {
+            assertionFailure("Unable to create image from context")
+            return []
+        }
+
+        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
+        dragItem.previewProvider = { () -> UIDragPreview? in
+            return UIDragPreview(view: cell.iconBackground)
+        }
         return [
-            UIDragItem(itemProvider: NSItemProvider(object: cell.iconImage.image!))
+            dragItem
         ]
     }
 
-    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        print("***", #function, destinationIndexPath as Any)
+    func collectionView(_ collectionView: UICollectionView,
+                        dropSessionDidUpdate session: UIDropSession,
+                        withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+
         guard collectionView.hasActiveDrag else {
-            print("***", #function, destinationIndexPath as Any, "forbidden")
             return UICollectionViewDropProposal(operation: .forbidden)
         }
-        print("***", #function, destinationIndexPath as Any, "move")
+
         return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
-    }
-
-}
-
-private class ImagePreviewer: UIViewController {
-
-    let image: UIImage
-
-    init(image: UIImage) {
-        self.image = image
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let imageView = UIImageView(image: image)
-        imageView.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
-        view.addSubview(imageView)
-        view.frame = imageView.frame
-        preferredContentSize = view.frame.size
-
     }
 
 }

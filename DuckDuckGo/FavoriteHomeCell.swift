@@ -46,7 +46,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     var onDelete: (() -> Void)?
     var onEdit: (() -> Void)?
     
-    var favorite: Bookmark?
+    var favorite: Favorite?
     private var theme: Theme?
     
     struct Actions {
@@ -81,14 +81,14 @@ class FavoriteHomeCell: UICollectionViewCell {
         return [ Actions.delete, Actions.edit ].contains(action)
     }
     
-    func updateFor(favorite: Bookmark) {
+    func updateFor(favorite: Favorite) {
         self.favorite = favorite
         
         let host = favorite.url?.host?.droppingWwwPrefix() ?? ""
         
         isAccessibilityElement = true
         accessibilityTraits = .button
-        accessibilityLabel = "\(favorite.displayTitle ?? "")). \(UserText.favorite)"
+        accessibilityLabel = "\(favorite.displayTitle). \(UserText.favorite)"
         
         titleLabel.text = favorite.displayTitle
         iconBackground.backgroundColor = UIColor.forDomain(host)

@@ -59,6 +59,9 @@ class FavoritesViewController: UIViewController {
         collectionView.register(UINib(nibName: "FavoriteHomeCell", bundle: nil), forCellWithReuseIdentifier: "favorite")
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.dragDelegate = self
+        collectionView.dropDelegate = self
+        
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)
@@ -90,7 +93,7 @@ class FavoritesViewController: UIViewController {
     }
 
     private func updateHeroImage() {
-        emptyHeroView.isHidden = renderer.bookmarksManager.favoritesCount > 0
+        emptyHeroView.isHidden = renderer.viewModel.count > 0
     }
 
     private func registerForKeyboardNotifications() {
@@ -147,6 +150,22 @@ extension FavoritesViewController: UICollectionViewDelegate {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: 1, height: Constants.footerPadding)
+    }
+
+}
+
+extension FavoritesViewController: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return renderer.collectionView(collectionView, itemsForBeginning: session, at: indexPath)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        renderer.collectionView(collectionView, performDropWith: coordinator)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        return renderer.collectionView(collectionView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath)
     }
 
 }

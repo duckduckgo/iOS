@@ -89,98 +89,23 @@ protocol HomeViewSectionRenderer: AnyObject {
     func collectionView(_ collectionView: UICollectionView,
                         previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
 
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem]
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator)
+
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal
+
     func endReordering()
     
 }
 
-extension HomeViewSectionRenderer {
-    
-    func install(into controller: HomeViewController) { }
-    
-    func remove(from controller: HomeViewController) { }
-    
-    func omniBarCancelPressed() { }
-    
-    func openedAsNewTab() { }
-    
-    func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {
-        return nil
-    }
-    
-    func launchNewSearch() { }
-    
-    func supportsReordering() -> Bool { return false }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        canMoveItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        moveItemAt sourceIndexPath: IndexPath,
-                        to destinationIndexPath: IndexPath) { }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
-                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath? {
-        return nil
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection section: Int) -> CGSize? {
-        return nil
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) { }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        referenceSizeForFooterInSection section: Int) -> CGSize? {
-        return nil
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
-        return collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                               withReuseIdentifier: EmptyCollectionReusableView.reuseIdentifier,
-                                                               for: indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets? {
-        return nil
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        contextMenuConfigurationForItemAt indexPath: IndexPath,
-                        point: CGPoint) -> UIContextMenuConfiguration? {
-        return nil
-    }
-
-
-    func collectionView(_ collectionView: UICollectionView,
-                        previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-        return nil
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-        return nil
-    }
-
-    func endReordering() { }
-}
-
-class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+/// Each renderer added becomes a section in the containing collection view.
+class HomeViewSectionRenderers: NSObject,
+                                UICollectionViewDelegate,
+                                UICollectionViewDelegateFlowLayout,
+                                UICollectionViewDataSource,
+                                UICollectionViewDragDelegate,
+                                UICollectionViewDropDelegate {
     
     struct Constants {
         
@@ -358,7 +283,23 @@ class HomeViewSectionRenderers: NSObject, UICollectionViewDataSource, UICollecti
             return renderers[section].collectionView(collectionView, layout: collectionViewLayout, insetForSectionAt: section) ??
                 UIEdgeInsets(top: 0, left: Constants.sideInsets, bottom: 0, right: Constants.sideInsets)
     }
-    
+
+    // MARK: Drag and Drop
+
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return renderers[indexPath.section].collectionView(collectionView, itemsForBeginning: session, at: indexPath)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        guard let section = coordinator.destinationIndexPath?.section else { return }
+        renderers[section].collectionView(collectionView, performDropWith: coordinator)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        guard let section = destinationIndexPath?.section else { return UICollectionViewDropProposal(operation: .forbidden) }
+        return renderers[section].collectionView(collectionView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath)
+    }
+
 }
 
 extension HomeViewSectionRenderers: Themable {

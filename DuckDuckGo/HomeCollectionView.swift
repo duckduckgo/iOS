@@ -89,6 +89,9 @@ class HomeCollectionView: UICollectionView {
         
         dataSource = renderers
         delegate = renderers
+        dropDelegate = renderers
+        dragDelegate = renderers
+
         collectionViewReorderingGesture.delegate = self
         addGestureRecognizer(collectionViewReorderingGesture)
     }

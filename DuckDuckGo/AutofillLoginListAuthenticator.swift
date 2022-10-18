@@ -62,20 +62,30 @@ final class AutofillLoginListAuthenticator {
                         completion?(nil)
                     } else {
                         os_log("Failed to authenticate: %s", log: generalLog, type: .debug, error?.localizedDescription ?? "nil error")
-                        completion?(.failedToAuthenticate)
+                        switch error {
+                        case LAError.biometryNotAvailable?, LAError.biometryNotEnrolled?:
+                            self.handleBiometryType(self.context.biometryType, completion: completion)
+                        default:
+                            completion?(.failedToAuthenticate)
+                        }
                     }
                 }
             }
         } else {
-            state = .notAvailable
-            switch context.biometryType {
-            case .faceID:
-                completion?(.noAuthAvailable(.faceId))
-            case .touchID:
-                completion?(.noAuthAvailable(.touchId))
-            default:
-                completion?(.noAuthAvailable(.faceId))
-            }
+            handleBiometryType(context.biometryType, completion: completion)
+        }
+    }
+
+    private func handleBiometryType(_ biometryType: LABiometryType, completion: ((AuthError?) -> Void)?) {
+        state = .notAvailable
+
+        switch context.biometryType {
+        case .faceID:
+            completion?(.noAuthAvailable(.faceId))
+        case .touchID:
+            completion?(.noAuthAvailable(.touchId))
+        default:
+            completion?(.noAuthAvailable(.faceId))
         }
     }
 }

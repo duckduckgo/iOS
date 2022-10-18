@@ -47,7 +47,8 @@ class FavoritesViewController: UIViewController {
 
     override var isEditing: Bool {
         didSet {
-            renderer.isEditing = true
+            renderer.isEditing = isEditing
+            collectionView.reloadData()
         }
     }
 

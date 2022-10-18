@@ -114,11 +114,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private weak var reorderingCell: FavoriteHomeCell?
 
-    var isEditing = false {
-        didSet {
-            print("***", #function)
-        }
-    }
+    var isEditing = false
 
     private let allowsEditing: Bool
     private let cellWidth: CGFloat
@@ -214,6 +210,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
 
         cell.updateFor(favorite: favorite)
+        cell.isEditing = isEditing
 
         // can't use captured index path because deleting items can change it
         cell.onDelete = { [weak self, weak collectionView, weak cell] in

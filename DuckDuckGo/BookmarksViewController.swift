@@ -232,7 +232,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func configureTableView() {
-        tableView.contentInset = .init(top: isNested ? 24 : 0, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = .init(top: isNested ? 24 : -24, left: 0, bottom: 0, right: 0)
 
         tableView.dataSource = dataSource
         if dataSource.folder != nil {

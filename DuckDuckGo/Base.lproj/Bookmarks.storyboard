@@ -127,7 +127,7 @@
                                     <segue destination="pYs-v1-gvr" kind="embed" id="bY2-W6-VAQ"/>
                                 </connections>
                             </containerView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
                                 <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                                 <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">

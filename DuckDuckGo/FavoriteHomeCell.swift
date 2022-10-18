@@ -32,7 +32,8 @@ class FavoriteHomeCell: UICollectionViewCell {
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var highlightMask: UIView!
     @IBOutlet weak var iconSize: NSLayoutConstraint!
-    
+    @IBOutlet weak var deleteButton: UIButton!
+
     static let appUrls = AppUrls()
     
     var isReordering = false {
@@ -40,6 +41,12 @@ class FavoriteHomeCell: UICollectionViewCell {
             let scale: CGFloat = isReordering ? 1.2 : 1.0
             transform = CGAffineTransform.identity.scaledBy(x: scale, y: scale)
             contentView.alpha = isReordering ? 0.5 : 1.0
+        }
+    }
+
+    var isEditing = false {
+        didSet {
+            deleteButton.isHidden = !isEditing
         }
     }
     
@@ -67,8 +74,16 @@ class FavoriteHomeCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         FavoriteHomeCell.applyDropshadow(to: iconBackground)
+        FavoriteHomeCell.applyDropshadow(to: deleteButton)
     }
-    
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if deleteButton.frame.contains(point) {
+            return deleteButton
+        }
+        return super.hitTest(point, with: event)
+    }
+
     @objc func doDelete(sender: Any?) {
         onDelete?()
     }
@@ -79,6 +94,10 @@ class FavoriteHomeCell: UICollectionViewCell {
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return [ Actions.delete, Actions.edit ].contains(action)
+    }
+
+    @IBAction func onDeletePressed() {
+        doDelete(sender: nil)
     }
     
     func updateFor(favorite: Favorite) {

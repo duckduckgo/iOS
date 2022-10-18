@@ -76,8 +76,9 @@ public struct UserDefaultsWrapper<T> {
         
         case lastCompiledRules = "com.duckduckgo.app.lastCompiledRules"
 
-        case autofill = "com.duckduckgo.ios.autofill"
+        case autofillCredentialsEnabled = "com.duckduckgo.ios.autofillCredentialsEnabled"
         case autofillSaveModalRejectionCount = "com.duckduckgo.ios.autofillSaveModalRejectionCount"
+        case autofillSaveModalDisablePromptShown = "com.duckduckgo.ios.autofillSaveModalDisablePromptShown"
         case autofillFirstTimeUser = "com.duckduckgo.ios.autofillFirstTimeUser"
         
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"

@@ -104,6 +104,10 @@ class TabViewController: UIViewController {
     private var preserveLoginsWorker: PreserveLoginsWorker?
 
     private var trackersInfoWorkItem: DispatchWorkItem?
+    
+    // Required to know when to disable autofill, see SaveLoginViewModel for details
+    // Stored in memory on TabViewController for privacy reasons
+    private var domainSaveLoginPromptLastShownOn: String?
 
     // If no trackers dax dialog was shown recently in this tab, ie without the user navigating somewhere else, e.g. backgrounding or tab switcher
     private var woShownRecently = false
@@ -121,6 +125,11 @@ class TabViewController: UIViewController {
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
     public var url: URL? {
+        willSet {
+            if newValue != url {
+                delegate?.closeFindInPage(tab: self)
+            }
+        }
         didSet {
             updateTabModel()
             delegate?.tabLoadingStateDidChange(tab: self)
@@ -240,7 +249,7 @@ class TabViewController: UIViewController {
         var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
 
-        return appSettings.autofill && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
+        return appSettings.autofillCredentialsEnabled && featureFlagger.isFeatureOn(.autofill) && canAuthenticate
     }
 
     private var userContentController: UserContentController {
@@ -1271,12 +1280,15 @@ extension TabViewController: WKNavigationDelegate {
         }
 
         decidePolicyFor(navigationAction: navigationAction) { [weak self] decision in
-            if let url = navigationAction.request.url, decision != .cancel {
-                if let isDdg = self?.appUrls.isDuckDuckGoSearch(url: url), isDdg {
+            if let self = self,
+               let url = navigationAction.request.url,
+               decision != .cancel,
+               navigationAction.isTargetingMainFrame() {
+                if self.appUrls.isDuckDuckGoSearch(url: url) {
                     StatisticsLoader.shared.refreshSearchRetentionAtb()
                 }
 
-                self?.findInPage?.done()
+                self.delegate?.closeFindInPage(tab: self)
             }
             decisionHandler(decision)
         }
@@ -1320,6 +1332,10 @@ extension TabViewController: WKNavigationDelegate {
         guard let url = navigationAction.request.url else {
             completion(allowPolicy)
             return
+        }
+        
+        if navigationAction.isTargetingMainFrame(), navigationAction.navigationType == .backForward {
+            adClickAttributionLogic.onBackForwardNavigation(mainFrameURL: webView.url)
         }
 
         let schemeType = SchemeHandler.schemeType(for: url)
@@ -2197,8 +2213,19 @@ extension TabViewController: EmailManagerRequestDelegate {
             PixelParameters.emailKeychainError: error.errorDescription
         ]
         
-        if case let .keychainAccessFailure(status) = error {
+        if case let .keychainLookupFailure(status) = error {
             parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+            parameters[PixelParameters.emailKeychainKeychainOperation] = "lookup"
+        }
+        
+        if case let .keychainDeleteFailure(status) = error {
+            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+            parameters[PixelParameters.emailKeychainKeychainOperation] = "delete"
+        }
+        
+        if case let .keychainSaveFailure(status) = error {
+            parameters[PixelParameters.emailKeychainKeychainStatus] = String(status)
+            parameters[PixelParameters.emailKeychainKeychainOperation] = "save"
         }
         
         Pixel.fire(pixel: .emailAutofillKeychainError, withAdditionalParameters: parameters)
@@ -2242,7 +2269,8 @@ extension TabViewController: SecureVaultManagerDelegate {
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         manager.prepareData { [weak self] in
 
-            let saveLoginController = SaveLoginViewController(credentialManager: manager)
+            let saveLoginController = SaveLoginViewController(credentialManager: manager, domainLastShownOn: self?.domainSaveLoginPromptLastShownOn)
+            self?.domainSaveLoginPromptLastShownOn = self?.url?.host
             saveLoginController.delegate = self
             if #available(iOS 15.0, *) {
                 if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
@@ -2260,9 +2288,9 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManagerIsEnabledStatus(_: SecureVaultManager) -> Bool {
         let isEnabled = featureFlagger.isFeatureOn(.autofill)
         let isBackgrounded = UIApplication.shared.applicationState == .background
-        let pixelParams = [PixelParameters.isBackgrounded: isBackgrounded ? "true" : "false"]
-        if isEnabled {
-            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabled, withAdditionalParameters: pixelParams)
+        if isEnabled && isBackgrounded {
+            Pixel.fire(pixel: .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded,
+                       withAdditionalParameters: [PixelParameters.isBackgrounded: "true"])
         }
         return isEnabled
     }

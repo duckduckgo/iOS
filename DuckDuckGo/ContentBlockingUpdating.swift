@@ -27,9 +27,8 @@ extension ContentBlocking {
     var contentBlockingUpdating: ContentBlockingUpdating { .shared }
 }
 
-protocol ContentBlockerRulesManagerProtocol: AnyObject {
+protocol ContentBlockerRulesManagerProtocol: CompiledRuleListsSource {
     var updatesPublisher: AnyPublisher<ContentBlockerRulesManager.UpdateEvent, Never> { get }
-    var currentRules: [ContentBlockerRulesManager.Rules] { get }
 }
 extension ContentBlockerRulesManager: ContentBlockerRulesManagerProtocol {}
 

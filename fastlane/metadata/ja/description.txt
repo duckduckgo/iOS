@@ -1,33 +1,32 @@
-トラッキングに悩んでいるなら、当社におまかせ。
 
-DuckDuckGoは、オンライン活動の保護に必要なすべての機能が揃ったオールインワンのプライバシーアプリです。1回のダウンロードで、検索やブラウジング中のサードパーティのトラッカーからのシームレスな保護を実現し、メール受信時にもトラッキングからの保護にアクセスできる、毎日使える新しいブラウザを手に入れることができます。DuckDuckGoなら、デフォルトでプライバシーが守られます。
+DuckDuckGoアプリなら、ボタンを押すだけで最も包括的なオンラインプライバシー保護を実現できます。1回ダウンロードするだけで、検索やブラウジング中にシームレスな保護を提供し、受信したメールのトラッキング保護にもアクセスでき、毎日活用できる新しいブラウザが手に入ります。
 
-プライベートに検索 - 組み込みのDuckDuckGo Private Searchで追跡されることなくウェブを検索できます。
+オンラインでプライバシーを保護することは、自宅を保護するのと同じです。玄関のドアをロックしても、裏口のドアと窓のロックが空いたままで、ドアマットの下にスペアキーを置いたままにしておくと、あらゆる防犯対策をすり抜ける侵入者が中に入ることを止めることはできません。そのため、当社では複数のタイプのプライバシー保護を提供しています。その大半は、ほとんどの一般的なブラウザではデフォルトで提供されていません.  
 
-ウェブサイトのトラッキングを回避 - Tracker RadarがDuckDuckGoで訪問したウェブサイトに潜むサードパーティの隠しトラッカーを自動ブロックし、トラッカーを裏で操る企業がデータを収集・販売するのを阻止します。
+主な機能 
+• デフォルトでプライベートに検索 - 組み込みのDuckDuckGo Private Searchで追跡されることなく手軽にウェブを検索できます。 
 
-暗号化を強制 - Smarter EncryptionがDuckDuckGoで訪問するサイトに暗号化 (HTTPS) 接続の使用を強制し、データを覗き見から保護します。
+• ウェブサイトトラッカーを読み込み前に回避 - 非表示のトラッカー (サードパーティスクリプト) の大半の読み込みを自動停止し、企業によるこうしたトラッカーからのデータの使用 (販売、広告など) を防ぎます。当社の最先端のトラッカーブロックテクノロジー (3rd-Party Tracker Loading Protection) は、人気ブラウザがデフォルトで提供する機能をはるかに超えた機能をお届けします。 
 
-メールトラッカーをブロック - 70%のメールに開封と同時にあなたを追跡する機能が埋め込まれています。Email Protection を有効にすると、サービスを変更することなく簡単にメールトラッカーをブロックし、アドレスを隠すことができます。無料のベータ版の非公開ウェイティングリストへはアプリの設定メニューから登録できます。
+• 自動的に暗号化を適用 - アクセスする多数のサイトで暗号化 (HTTPS) 接続の自動使用を強制します。これにより、Wi-Fiでの盗聴やインターネットプロバイダーなどのネットワーク監視者からデータを保護できます。最も一般的なブラウザでは、アドレスバーのページに直接移動する場合など、特定の状況でのみユーザーを暗号化されたバージョンのページに誘導します。当社では、クリックしたすべてのリンクについてアップグレード可能なサイトのリストを確認します。 
 
-DuckDuckGoアプリには、タブやブックマークなどのブラウジング機能に加えてプライバシーコントロール機能が搭載されています。機能や操作感を損なわずにプライバシーをコントロールできるようになります。
+• 組み込みのメール保護を有効化 - Duckアドレスに送信されたメールの85%以上に、メッセージを開いたタイミング、その時点でいた場所、使用したデバイスを検出できるトラッカーが含まれていました。メール保護を使用すると、メールプロバイダーを切り替えることなく、ほとんどのメールトラッカーをブロックし、オンラインでの新規登録時に既存のアドレスを簡単に隠すことができます。
+• フィンガープリンティングの回避 - ブラウザとデバイスの設定に関する特定の情報を組み合わせる試みをブロックすることで、企業が一意の識別子を作成するのを防ぎます。  
 
-Fire Buttonをタップしてデータを消去 - Fire Buttonボタンのワンタップでタブや閲覧データを消去できます。
+• 追跡Cookieをブロック - 複数のサイトをブラウジングする際にサードパーティのCookieによる追跡を防ぎます。
+追加の保護は大半のブラウザでは利用不可
 
-プライバシー設定を「GPC」に - アプリに組み込まれたGlobal Privacy Control (GPC) には法律上のオプトアウト権の自動表明を促す目的があります。多様な地域や国で、将来の法的枠組み (CCPA、GDPRなど) に基づきユーザーの個人情報を売却または共有しないようウェブサイトに伝えます。
+• リンクトラッキングに対する保護 - クリックしたリンクに埋め込まれた個人識別子を介して企業が閲覧履歴などの情報を収集するのを阻止します。  
 
-今こそ自分のプライバシーを取り戻すべきタイミングです。DuckDuckGoを使用する数百万人のユーザーに加わり、日々のオンライン活動の多くを1つのアプリで保護しましょう。それこそ、シンプルさを極めたプライバシーです。
+• Google AMPに対する保護 - 悪質なトラッカーの温床となっているGoogle所有のリンクを使用する代わりに、サイトがパブリッシャーから直接コンテンツを読み込むように強制します。  
 
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: 
-Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
+日々のプライバシー管理
+• Fire Buttonをタップしてデータを消去 - Fire Buttonボタンでタブや閲覧データを消去できます。
+
+• Global Privacy Control (GPC) でプライバシー設定を通知 - 当社のアプリに組み込まれているGPCは、個人情報を販売または共有しないようウェブサイトに指示することで、オプトアウトの権利を自動表明するのに役立ちます。お客様の法的権利 (現在または将来のCCPAおよびGDPR要件など) の行使のためのこの機能の利用の可否は、お住まいの法域の法律によって異なります。 
+
+DuckDuckGoの広告をクリックした際の3rd-Party Tracker Loading Protectionについて : 当社の3rd-Party Tracker Loading Protectionは、一般的なブラウザの大半でデフォルトで提供されている機能より優れていますが、より包括的なものとするため、常に取り組んでいます。現在、広告主が自社ウェブサイトでのDuckDuckGo Private Search広告のコンバージョンを検出したい場合、当社の3rd-Party Tracker Loading ProtectionはDuckDuckGo広告のクリック後に広告主のウェブサイトでbat.bing.comリクエストが読み込まれるのを止めませんが、こうしたリクエストは他の場合には一律に停止されます。これは、DuckDuckGo Private Search広告がMicrosoftと提携しているためです。このパートナーシップの一環として、DuckDuckGoでの広告の閲覧は匿名で行われ、Microsoftはユーザーの広告クリックをプロファイリングしないことを約束しています。  
  
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
- 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+この件と当社のトラッキング保護についての詳細は https://help.duckduckgo.com/privacy/web-tracking-protections/をご覧ください。
 
-
-当社について：https://duckduckgo.com/about
-仕組み : https://duckduckgo.com/app
-プライバシーニュースレター：https://duckduckgo.com/newsletter
-プライバシーポリシー：https://duckduckgo.com/privacy/
-オープンソース : https://github.com/duckduckgo/iOS
+今こそ自分のプライバシーを取り戻すべきタイミングです。DuckDuckGoを使用する数百万人のユーザーに加わり、日々のオンライン活動の多くを1つのアプリで保護しましょう。それこそ、シンプルさを極めたプライバシーです。  

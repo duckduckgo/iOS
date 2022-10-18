@@ -21,6 +21,7 @@ import Kingfisher
 import UIKit
 import os
 import LinkPresentation
+import WidgetKit
 
 // swiftlint:disable type_body_length file_length
 public class Favicons {
@@ -205,9 +206,11 @@ public class Favicons {
             return
         }
 
+        let faviconImage = scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
+
         let replace = {
             Constants.bookmarksCache.removeImage(forKey: resource.cacheKey)
-            Constants.bookmarksCache.store(image, forKey: resource.cacheKey, options: .init(options))
+            Constants.bookmarksCache.store(faviconImage, forKey: resource.cacheKey, options: .init(options))
         }
         
         // only replace if it exists and new one is bigger
@@ -215,7 +218,7 @@ public class Favicons {
             switch result {
                 
             case .success(let cachedImage):
-                if let cachedImage = cachedImage, cachedImage.size.width < image.size.width {
+                if let cachedImage = cachedImage, cachedImage.size.width < faviconImage.size.width {
                     replace()
                 } else if self.bookmarksStore.contains(domain: domain) {
                     replace()
@@ -272,6 +275,7 @@ public class Favicons {
             case .success(let image):
                 if let image = image.image {
                     Constants.caches[toCache]?.store(image, forKey: resource.cacheKey, options: .init(options))
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
                 completion?(image.image)
 
@@ -308,11 +312,10 @@ public class Favicons {
 
         func complete(withImage image: UIImage?) {
             queue.async {
-                if var image = image {
-                    if !self.isValidImage(image, forMaxSize: Constants.maxFaviconSize) {
-                        image = self.resizedImage(image, toSize: Constants.maxFaviconSize)
-                    }
+                if let image = image {
+                    let image = self.scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
                     targetCache.store(image, forKey: resource.cacheKey, options: .init(options))
+                    WidgetCenter.shared.reloadAllTimelines()
                 }
                 completion?(image)
             }
@@ -338,6 +341,10 @@ public class Favicons {
 
         }
 
+    }
+
+    private func scaleDownIfNeeded(image: UIImage, toFit size: CGSize) -> UIImage {
+        isValidImage(image, forMaxSize: size) ? image : resizedImage(image, toSize: size)
     }
 
     private func loadImageFromNetwork(_ imageUrl: URL?,

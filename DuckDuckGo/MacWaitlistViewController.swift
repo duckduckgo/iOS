@@ -39,29 +39,8 @@ final class MacWaitlistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = UserText.macWaitlistTitle
-
+        title = UserText.macBrowserTitle
         addHostingControllerToViewHierarchy()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateViewState),
-                                               name: UIApplication.didBecomeActiveNotification,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateViewState),
-                                               name: MacBrowserWaitlist.Notifications.inviteCodeChanged,
-                                               object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.updateViewState()
-    }
-    
-    @objc
-    private func updateViewState() {
-        viewModel.updateViewState()
     }
     
     private func addHostingControllerToViewHierarchy() {
@@ -85,9 +64,9 @@ final class MacWaitlistViewController: UIViewController {
 }
 
 extension MacWaitlistViewController: MacWaitlistViewModelDelegate {
-    
-    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: MacWaitlistViewModel, inviteCode: String, senderFrame: CGRect) {
-        let linkMetadata = MacWaitlistLinkMetadata(inviteCode: inviteCode)
+
+    func macWaitlistViewModelDidOpenShareSheet(_ viewModel: MacWaitlistViewModel, senderFrame: CGRect) {
+        let linkMetadata = MacWaitlistLinkMetadata()
         let activityViewController = UIActivityViewController(activityItems: [linkMetadata], applicationActivities: nil)
         
         Pixel.fire(pixel: .macBrowserWaitlistDidPressShareButton)
@@ -123,12 +102,6 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
         return metadata
     }()
     
-    private let inviteCode: String
-    
-    init(inviteCode: String) {
-        self.inviteCode = inviteCode
-    }
-    
     func activityViewControllerLinkMetadata(_: UIActivityViewController) -> LPLinkMetadata? {
         return self.metadata
     }
@@ -143,10 +116,8 @@ private final class MacWaitlistLinkMetadata: NSObject, UIActivityItemSource {
         }
 
         switch type {
-        case .message, .mail:
-            return UserText.macWaitlistShareSheetMessage(code: inviteCode)
-        default:
-            return self.metadata.originalURL as Any
+        case .message, .mail: return UserText.macWaitlistShareSheetMessage()
+        default: return self.metadata.originalURL as Any
         }
     }
     

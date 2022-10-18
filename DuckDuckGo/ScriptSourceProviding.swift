@@ -83,11 +83,11 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     private static func buildContentBlockerRulesConfig(contentBlockingManager: ContentBlockerRulesManagerProtocol,
                                                        privacyConfigurationManager: PrivacyConfigurationManaging) -> ContentBlockerUserScriptConfig {
 
-        let tdsName = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
-        let trackerData = contentBlockingManager.currentRules.first(where: { $0.name == tdsName })?.trackerData
+        let currentMainRules = contentBlockingManager.currentMainRules
+        let privacyConfig = privacyConfigurationManager.privacyConfig
 
-        return DefaultContentBlockerUserScriptConfig(privacyConfiguration: privacyConfigurationManager.privacyConfig,
-                                                     trackerData: trackerData,
+        return DefaultContentBlockerUserScriptConfig(privacyConfiguration: privacyConfig,
+                                                     trackerData: currentMainRules?.trackerData,
                                                      ctlTrackerData: nil,
                                                      tld: AppDependencyProvider.shared.storageCache.current.tld,
                                                      trackerDataManager: ContentBlocking.shared.trackerDataManager)
@@ -97,13 +97,12 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
                                               privacyConfigurationManager: PrivacyConfigurationManaging) -> SurrogatesUserScriptConfig {
 
         let surrogates = FileStore().loadAsString(forConfiguration: .surrogates) ?? ""
-        let tdsName = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
-        let rules = contentBlockingManager.currentRules.first(where: { $0.name == tdsName })
+        let currentMainRules = contentBlockingManager.currentMainRules
 
         let surrogatesConfig = DefaultSurrogatesUserScriptConfig(privacyConfig: privacyConfigurationManager.privacyConfig,
                                                                  surrogates: surrogates,
-                                                                 trackerData: rules?.trackerData,
-                                                                 encodedSurrogateTrackerData: rules?.encodedTrackerData,
+                                                                 trackerData: currentMainRules?.trackerData,
+                                                                 encodedSurrogateTrackerData: currentMainRules?.encodedTrackerData,
                                                                  trackerDataManager: ContentBlocking.shared.trackerDataManager,
                                                                  tld: AppDependencyProvider.shared.storageCache.current.tld,
                                                                  isDebugBuild: isDebugBuild)

@@ -144,6 +144,10 @@ final class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
             try audioEngine.start()
             
             self.recognitionTask = self.speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] (result, error) in
+                guard let recognitionTask = self?.recognitionTask, !recognitionTask.isCancelled else {
+                    return
+                }
+                
                 var isFinal = false
                 var transcription: String?
                 

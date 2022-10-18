@@ -19,6 +19,7 @@
 
 import Foundation
 import CoreData
+import BrowserServicesKit
 
 public class Database {
     
@@ -28,99 +29,27 @@ public class Database {
         static let databaseName = "Database"
     }
     
-    public static let shared = Database()
-
-    private let container: NSPersistentContainer
-    private let storeLoadedCondition = RunLoop.ResumeCondition()
-
-    public var isDatabaseFileInitialized: Bool {
-        var containerURL = DDGPersistentContainer.defaultDirectoryURL()
-        containerURL.appendPathComponent("\(Constants.databaseName).sqlite")
-
-        return FileManager.default.fileExists(atPath: containerURL.path)
-    }
+    public static let shared = makeCoreDataDatabase()
     
-    public var model: NSManagedObjectModel {
-        return container.managedObjectModel
-    }
-    
-    convenience init() {
+    static func makeCoreDataDatabase() -> CoreDataDatabase {
+        
         let mainBundle = Bundle.main
         let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
         
-        guard let managedObjectModel = NSManagedObjectModel.mergedModel(from: [mainBundle, coreBundle]) else { fatalError("No DB scheme found") }
-        
-        self.init(name: Constants.databaseName, model: managedObjectModel)
-    }
-    
-    init(name: String, model: NSManagedObjectModel) {
-        container = DDGPersistentContainer(name: name, managedObjectModel: model)
-    }
-    
-    public func loadStore(application: UIApplication? = nil, andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
-        container.loadPersistentStores { _, error in
-            if let error = error {
-                var parameters = [String: String]()
-                if let application = application {
-                    parameters[PixelParameters.applicationState] = "\(application.applicationState.rawValue)"
-                    parameters[PixelParameters.dataAvailiability] = "\(application.isProtectedDataAvailable)"
-                }
-                
-                Pixel.fire(pixel: .dbInitializationError, error: error, withAdditionalParameters: parameters)
-                // Give Pixel a chance to be sent, but not too long
-                Thread.sleep(forTimeInterval: 1)
-                fatalError("Could not load DB: \(error.localizedDescription)")
-            }
-            
-            let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-            context.persistentStoreCoordinator = self.container.persistentStoreCoordinator
-            context.name = "Migration"
-            context.perform {
-                handler(context)
-                self.storeLoadedCondition.resolve()
-            }
+        guard let appRatingModel = CoreDataDatabase.loadModel(from: mainBundle, named: "AppRatingPrompt"),
+              let networkLeaderboardModel = CoreDataDatabase.loadModel(from: mainBundle, named: "NetworkLeaderboard"),
+              let remoteMessagingModel = CoreDataDatabase.loadModel(from: mainBundle, named: "RemoteMessaging"),
+              let smarterEncryptionModel = CoreDataDatabase.loadModel(from: coreBundle, named: "HTTPSUpgrade"),
+              let managedObjectModel = NSManagedObjectModel(byMerging: [appRatingModel,
+                                                                        networkLeaderboardModel,
+                                                                       remoteMessagingModel,
+                                                                       smarterEncryptionModel]) else {
+            fatalError("No DB scheme found")
         }
-    }
-    
-    public func makeContext(concurrencyType: NSManagedObjectContextConcurrencyType, name: String? = nil) -> NSManagedObjectContext {
-        RunLoop.current.run(until: storeLoadedCondition)
-
-        let context = NSManagedObjectContext(concurrencyType: concurrencyType)
-        context.persistentStoreCoordinator = container.persistentStoreCoordinator
-        context.name = name
         
-        return context
-    }
-}
-
-extension NSManagedObjectContext {
-    
-    public func deleteAll(entities: [NSManagedObject] = []) {
-        for entity in entities {
-            delete(entity)
-        }
-    }
-    
-    public func deleteAll<T: NSManagedObject>(matching request: NSFetchRequest<T>) {
-            if let result = try? fetch(request) {
-                deleteAll(entities: result)
-            }
-    }
-    
-    public func deleteAll(entityDescriptions: [NSEntityDescription] = []) {
-        for entityDescription in entityDescriptions {
-            let request = NSFetchRequest<NSManagedObject>()
-            request.entity = entityDescription
-            
-            deleteAll(matching: request)
-        }
-    }
-}
-
-private class DDGPersistentContainer: NSPersistentContainer {
-
-    override public class func defaultDirectoryURL() -> URL {
-        
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Database.Constants.databaseGroupID)!
+        let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Database.Constants.databaseGroupID)!
+        return CoreDataDatabase(name: Constants.databaseName,
+                                containerLocation: url,
+                                model: managedObjectModel)
     }
 }

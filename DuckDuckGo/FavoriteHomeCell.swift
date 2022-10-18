@@ -49,6 +49,17 @@ class FavoriteHomeCell: UICollectionViewCell {
             deleteButton.isHidden = !isEditing
         }
     }
+
+    var truncatedUrlString: String? {
+        guard let url = favorite?.url else { return nil }
+        let urlString = url.absoluteString.prefix(100).description
+        let ellipsis = url.absoluteString.count != urlString.count ? "…" : ""
+        return urlString + ellipsis
+    }
+
+    var title: String? {
+        favorite?.title
+    }
     
     var onDelete: (() -> Void)?
     var onEdit: (() -> Void)?

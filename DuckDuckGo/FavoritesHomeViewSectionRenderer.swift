@@ -62,9 +62,9 @@ class InMemoryFavoritesViewModel: FavoritesViewModel {
 
     var favorites = [
 
-        Favorite(id: "1", url: URL(string: "https://www.bbc.co.uk"), title: "BBC"),
+        Favorite(id: "1", url: URL(string: "https://www.bbc.co.uk/news/uk-politics-63308930"), title: "BBC"),
         Favorite(id: "2", url: URL(string: "https://news.ycombinator.com"), title: "Hacker News"),
-        Favorite(id: "3", url: URL(string: "https://time.com"), title: "Time Magazine")
+        Favorite(id: "3", url: URL(string: "https://time.com/123-123-123-123-123-123-123-123-123-123-123-123-123-123-123-123-123-123-1231-231-31231231231231312312312312321312312"), title: "Time Magazine")
 
     ]
 
@@ -331,7 +331,12 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             guard let image = cell.iconImage.image else { return nil }
             return UIImageViewController(image: image)
         } actionProvider: { _ in
-            let title = (cell.favorite?.title ?? "") + "\n" + (cell.favorite?.url?.absoluteString ?? "")
+
+            let title = [
+                cell.title,
+                cell.truncatedUrlString
+            ].compactMap { $0 }.joined(separator: "\n")
+
             return UIMenu(title: title, options: .displayInline, children: [
                 edit,
                 delete

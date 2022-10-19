@@ -68,7 +68,7 @@ public final class ContentBlockingUpdating {
 
         func onNotificationWithInitial(_ name: Notification.Name) -> AnyPublisher<Notification, Never> {
             return NotificationCenter.default.publisher(for: name)
-                .prepend([Notification(name: Notification.Name(rawValue: ""))])
+                .prepend([Notification(name: .init(rawValue: "initial"))])
                 .eraseToAnyPublisher()
         }
 

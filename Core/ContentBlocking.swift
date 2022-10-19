@@ -49,7 +49,9 @@ public final class ContentBlocking {
                                                 embeddedDataProvider: AppTrackerDataSetProvider(),
                                                 errorReporting: Self.debugEvents)
 
-        contentBlockerRulesSource = DefaultContentBlockerRulesListsSource(trackerDataManager: trackerDataManager)
+        adClickAttribution = AdClickAttributionFeature(with: privacyConfigurationManager)
+        contentBlockerRulesSource = ContentBlockerRulesLists(trackerDataManager: trackerDataManager,
+                                                             adClickAttribution: adClickAttribution)
 
         exceptionsSource = DefaultContentBlockerRulesExceptionsSource(privacyConfigManager: privacyConfigurationManager)
         lastCompiledRulesStore = AppLastCompiledRulesStore()
@@ -60,7 +62,6 @@ public final class ContentBlocking {
                                                             errorReporting: Self.debugEvents,
                                                             logger: contentBlockingLog)
 
-        adClickAttribution = AdClickAttributionFeature(with: privacyConfigurationManager)
         adClickAttributionRulesProvider = AdClickAttributionRulesProvider(config: adClickAttribution,
                                                                           compiledRulesSource: contentBlockingManager,
                                                                           exceptionsSource: exceptionsSource,
@@ -226,9 +227,5 @@ public class DomainsProtectionUserDefaultsStore: DomainsProtectionStore {
         domains.remove(domain)
         unprotectedDomains = domains
     }
-    
-    private func onStoreChanged() {
-//        ContentBlocking.contentBlockingManager.scheduleCompilation()
-    }
-    
+
 }

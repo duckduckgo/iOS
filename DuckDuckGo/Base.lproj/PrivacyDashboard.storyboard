@@ -12,7 +12,7 @@
         <!--Privacy Dashboard View Controller-->
         <scene sceneID="QtM-yS-7u3">
             <objects>
-                <viewController id="E4q-pT-pJ1" customClass="PrivacyDashboardViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController definesPresentationContext="YES" providesPresentationContextTransitionStyle="YES" modalPresentationStyle="formSheet" id="E4q-pT-pJ1" customClass="PrivacyDashboardViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JQH-zL-KqH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,11 +38,20 @@
                     <value key="contentSizeForViewInPopover" type="size" width="375" height="650"/>
                     <connections>
                         <outlet property="webView" destination="9r4-O0-IkD" id="0PF-2w-VYe"/>
+                        <segue destination="f4z-Pu-QxE" kind="presentation" identifier="ReportBrokenSite" modalPresentationStyle="formSheet" id="kJi-QP-mel"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cBN-QY-8a1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="319" y="412"/>
+        </scene>
+        <!--Feedback-->
+        <scene sceneID="Jx3-vm-WCX">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Feedback" id="f4z-Pu-QxE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gTT-yM-AmS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1089" y="356"/>
         </scene>
     </scenes>
     <resources>

@@ -28,6 +28,8 @@ class PrivacyDashboardViewController: UIViewController {
     
     @IBOutlet private(set) weak var webView: WKWebView!
     
+    public weak var tabViewController: TabViewController?
+    
     private let privacyDashboardController: PrivacyDashboardController
     private let privacyConfigurationManager: PrivacyConfigurationManaging
     private let contentBlockingManager: ContentBlockerRulesManager
@@ -53,6 +55,7 @@ class PrivacyDashboardViewController: UIViewController {
         super.viewDidLoad()
         
         privacyDashboardController.setup(for: webView)
+        privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
         applyTheme(ThemeManager.shared.currentTheme)
     }
     
@@ -71,10 +74,14 @@ class PrivacyDashboardViewController: UIViewController {
         }
         
         privacyDashboardController.onShowReportBrokenSiteTapped = { [weak self] in
+            self?.performSegue(withIdentifier: "ReportBrokenSite", sender: self)
+        }
+        
+        privacyDashboardController.onOpenUrlInNewTab = { [weak self] url in
             guard let mainViewController = self?.presentingViewController as? MainViewController else { return }
             
             self?.dismiss(animated: true) {
-                mainViewController.launchReportBrokenSite()
+                mainViewController.loadUrlInNewTab(url, inheritedAttribution: nil)
             }
         }
     }
@@ -82,6 +89,13 @@ class PrivacyDashboardViewController: UIViewController {
     public func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {
         privacyDashboardController.didFinishRulesCompilation()
         privacyDashboardController.updatePrivacyInfo(privacyInfo)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let navController = segue.destination as? UINavigationController,
+           let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
+            brokenSiteScreen.brokenSiteInfo = tabViewController?.getCurrentWebsiteInfo()
+        }
     }
 }
 
@@ -113,8 +127,16 @@ private extension PrivacyDashboardViewController {
 extension PrivacyDashboardViewController: Themable {
     
     func decorate(with theme: Theme) {
-        privacyDashboardController.themeName = theme.name.rawValue
         view.backgroundColor = theme.backgroundColor
+        privacyDashboardController.theme = privacyDashboardTheme(from: theme)
+    }
+    
+    private func privacyDashboardTheme(from theme: Theme) -> PrivacyDashboardTheme {
+        switch theme.name {
+        case .light: return .light
+        case .dark: return .dark
+        default: return .light
+        }
     }
 }
 

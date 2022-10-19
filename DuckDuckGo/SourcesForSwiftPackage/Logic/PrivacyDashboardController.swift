@@ -22,11 +22,13 @@ import Combine
 
 public final class PrivacyDashboardController: NSObject {
     
-    @Published public var themeName: String?
+    @Published public var theme: PrivacyDashboardTheme?
+    public var preferredLocale: String?
     
     public var onProtectionSwitchChange: ((Bool) -> Void)?
     public var onCloseTapped: (() -> Void)?
     public var onShowReportBrokenSiteTapped: (() -> Void)?
+    public var onOpenUrlInNewTab: ((URL) -> Void)?
     
     public private(set) weak var privacyInfo: PrivacyInfo?
     private weak var webView: WKWebView?
@@ -94,6 +96,7 @@ extension PrivacyDashboardController: WKNavigationDelegate {
         subscribeToDataModelChanges()
         sendProtectionStatus()
         sendParentEntity()
+        sendCurrentLocale()
     }
     
     private func subscribeToDataModelChanges() {
@@ -104,7 +107,7 @@ extension PrivacyDashboardController: WKNavigationDelegate {
     }
     
     private func subscribeToTheme() {
-        $themeName
+        $theme
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] themeName in
@@ -150,13 +153,23 @@ extension PrivacyDashboardController: WKNavigationDelegate {
     }
     
     private func sendProtectionStatus() {
-        guard let webView = self.webView else { return }
-        privacyDashboardScript.setProtectionStatus(privacyInfo?.isProtected ?? false, webView: webView)
+        guard let webView = self.webView,
+              let protectionStatus = privacyInfo?.protectionStatus
+        else { return }
+        
+        privacyDashboardScript.setProtectionStatus(protectionStatus, webView: webView)
     }
     
     private func sendParentEntity() {
         guard let webView = self.webView else { return }
         privacyDashboardScript.setParentEntity(privacyInfo?.parentEntity, webView: webView)
+    }
+    
+    private func sendCurrentLocale() {
+        guard let webView = self.webView else { return }
+        
+        let locale = preferredLocale ?? "en"
+        privacyDashboardScript.setLocale(locale, webView: webView)
     }
 }
 
@@ -172,5 +185,9 @@ extension PrivacyDashboardController: PrivacyDashboardUserScriptDelegate {
     
     func userScriptDidRequestShowReportBrokenSite(_ userScript: PrivacyDashboardUserScript) {
         onShowReportBrokenSiteTapped?()
+    }
+    
+    func userScript(_ userScript: PrivacyDashboardUserScript, didRequestOpenUrlInNewTab url: URL) {
+        onOpenUrlInNewTab?(url)
     }
 }

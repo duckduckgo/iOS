@@ -728,8 +728,8 @@ class TabViewController: UIViewController {
                 controller.popoverPresentationController?.sourceView = iconView
                 controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
-            
             privacyDashboard = controller
+            privacyDashboard?.tabViewController = self
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -758,7 +758,6 @@ class TabViewController: UIViewController {
                                        privacyConfigurationManager: ContentBlocking.privacyConfigurationManager,
                                        contentBlockingManager: ContentBlocking.contentBlockingManager)
     }
-    
 
     private func addLoginDetectionStateObserver() {
         NotificationCenter.default.addObserver(self,
@@ -921,14 +920,12 @@ class TabViewController: UIViewController {
         guard let host = url.host else { return nil }
         
         let entity = ContentBlocking.trackerDataManager.trackerData.findEntity(forHost: host)
-        let config = ContentBlocking.privacyConfigurationManager.privacyConfig
-        let isProtected = !config.isUserUnprotected(domain: host)
         
-        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: isProtected)
-        privacyInfo.serverTrust = makeServerTrust()
         
-        // TODO: required temporarily for serialising the TrackerInfo into old format
-        privacyInfo.trackerInfo.tds = ContentBlocking.trackerDataManager.trackerData
+        let privacyInfo = PrivacyInfo(url: url,
+                                      parentEntity: entity,
+                                      protectionStatus: makeProtectionStatus(for: host),
+                                      serverTrust: makeServerTrust())
         
         previousPrivacyInfosByURL[url] = privacyInfo
         
@@ -943,6 +940,24 @@ class TabViewController: UIViewController {
         }
         
         return serverTrust
+    }
+    
+    private func makeProtectionStatus(for host: String) -> ProtectionStatus {
+        let config = ContentBlocking.privacyConfigurationManager.privacyConfig
+        
+        let isTempUnprotected = config.isTempUnprotected(domain: host)
+        let isAllowlisted = config.isUserUnprotected(domain: host)
+        
+        var enabledFeatures: [String] = []
+        
+        if !config.isInExceptionList(domain: host, forFeature: .contentBlocking) {
+            enabledFeatures.append(PrivacyFeature.contentBlocking.rawValue)
+        }
+        
+        return ProtectionStatus(unprotectedTemporary: isTempUnprotected,
+                                enabledFeatures: enabledFeatures,
+                                allowlisted: isAllowlisted,
+                                denylisted: false)
     }
  
     private func onPrivacyInfoChanged() {

@@ -19,6 +19,7 @@
 
 import XCTest
 import TrackerRadarKit
+import DuckDuckGo
 @testable import BrowserServicesKit
 @testable import Core
 

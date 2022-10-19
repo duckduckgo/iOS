@@ -21,18 +21,19 @@ import TrackerRadarKit
 
 public final class PrivacyInfo {
     
-    public private(set) var url: URL
+    private(set) var url: URL
     private(set) var parentEntity: Entity?
-    private(set) var isProtected: Bool
     
     @Published public var trackerInfo: TrackerInfo
-    @Published public var serverTrust: ServerTrust?
+    @Published private(set) var protectionStatus: ProtectionStatus
+    @Published private(set) var serverTrust: ServerTrust?
     @Published public var connectionUpgradedTo: URL?
     
-    public init(url: URL, parentEntity: Entity?, isProtected: Bool) {
+    public init(url: URL, parentEntity: Entity?, protectionStatus: ProtectionStatus, serverTrust: ServerTrust?) {
         self.url = url
         self.parentEntity = parentEntity
-        self.isProtected = isProtected
+        self.protectionStatus = protectionStatus
+        self.serverTrust = serverTrust
         trackerInfo = TrackerInfo()
     }
     

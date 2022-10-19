@@ -71,17 +71,17 @@ extension TabViewController {
         let linkEntries = await buildLinkEntries()
         entries.append(contentsOf: linkEntries)
             
-            if let domain = self.privacyInfo?.domain {
-                entries.append(self.buildToggleProtectionEntry(forDomain: domain))
-            }
-            
-            entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
-                                                     image: UIImage(named: "MenuFeedback")!,
-                                                     action: { [weak self] in
-                self?.onReportBrokenSiteAction()
-            }))
-            
-            entries.append(.separator)
+        if let domain = self.privacyInfo?.domain {
+            entries.append(self.buildToggleProtectionEntry(forDomain: domain))
+        }
+
+        entries.append(BrowsingMenuEntry.regular(name: UserText.actionReportBrokenSite,
+                                                 image: UIImage(named: "MenuFeedback")!,
+                                                 action: { [weak self] in
+            self?.onReportBrokenSiteAction()
+        }))
+
+        entries.append(.separator)
 
         if self.featureFlagger.isFeatureOn(.autofill) {
             entries.append(BrowsingMenuEntry.regular(name: UserText.actionAutofillLogins,

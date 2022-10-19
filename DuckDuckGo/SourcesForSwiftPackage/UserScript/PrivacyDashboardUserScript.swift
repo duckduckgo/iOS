@@ -26,6 +26,12 @@ protocol PrivacyDashboardUserScriptDelegate: AnyObject {
     func userScript(_ userScript: PrivacyDashboardUserScript, didChangeProtectionStateTo protectionState: Bool)
     func userScriptDidRequestClosing(_ userScript: PrivacyDashboardUserScript)
     func userScriptDidRequestShowReportBrokenSite(_ userScript: PrivacyDashboardUserScript)
+    func userScript(_ userScript: PrivacyDashboardUserScript, didRequestOpenUrlInNewTab: URL)
+}
+
+public enum PrivacyDashboardTheme: String, Encodable {
+    case light
+    case dark
 }
 
 final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
@@ -35,6 +41,7 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
         case privacyDashboardFirePixel
         case privacyDashboardClose
         case privacyDashboardShowReportBrokenSite
+        case privacyDashboardOpenUrlInNewTab
     }
 
     static var injectionTime: WKUserScriptInjectionTime { .atDocumentStart }
@@ -60,8 +67,12 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
             handleClose()
         case .privacyDashboardShowReportBrokenSite:
             handleShowReportBrokenSite()
+        case .privacyDashboardOpenUrlInNewTab:
+            handleOpenUrlInNewTab(message: message)
         }
     }
+    
+    // MARK: - JS message handlers
 
     private func handleSetProtection(message: WKScriptMessage) {
         guard let isProtected = message.body as? Bool else {
@@ -90,7 +101,21 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
     private func handleShowReportBrokenSite() {
         delegate?.userScriptDidRequestShowReportBrokenSite(self)
     }
+    
+    private func handleOpenUrlInNewTab(message: WKScriptMessage) {
+        guard let dict = message.body as? [String: Any],
+              let urlString = dict["url"] as? String,
+              let url = URL(string: urlString)
+        else {
+            assertionFailure("handleOpenUrlInNewTab: expected { url: '...' } ")
+            return
+        }
 
+        delegate?.userScript(self, didRequestOpenUrlInNewTab: url)
+    }
+
+    // MARK: - Calls to script's JS API
+    
     func setTrackerInfo(_ tabUrl: URL, trackerInfo: TrackerInfo, webView: WKWebView) {
         guard let trackerBlockingDataJson = try? JSONEncoder().encode(trackerInfo).utf8String() else {
             assertionFailure("Can't encode trackerInfoViewModel into JSON")
@@ -102,11 +127,16 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
             return
         }
 
-        evaluate(js: "window.onChangeTrackerBlockingData(\(safeTabUrl), \(trackerBlockingDataJson))", in: webView)
+        evaluate(js: "window.onChangeRequestData(\(safeTabUrl), \(trackerBlockingDataJson))", in: webView)
     }
 
-    func setProtectionStatus(_ isProtected: Bool, webView: WKWebView) {
-        evaluate(js: "window.onChangeProtectionStatus(\(isProtected))", in: webView)
+    func setProtectionStatus(_ protectionStatus: ProtectionStatus, webView: WKWebView) {
+        guard let protectionStatusJson = try? JSONEncoder().encode(protectionStatus).utf8String() else {
+            assertionFailure("Can't encode mockProtectionStatus into JSON")
+            return
+        }
+        
+        evaluate(js: "window.onChangeProtectionStatus(\(protectionStatusJson))", in: webView)
     }
 
     func setUpgradedHttps(_ upgradedHttps: Bool, webView: WKWebView) {
@@ -124,15 +154,15 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
         evaluate(js: "window.onChangeParentEntity(\(parentEntityJson))", in: webView)
     }
 
-    func setTheme(_ themeName: String?, webView: WKWebView) {
-        if themeName == nil { return }
+    func setTheme(_ theme: PrivacyDashboardTheme?, webView: WKWebView) {
+        if theme == nil { return }
 
-        guard let themeNameJson = try? JSONEncoder().encode(themeName).utf8String() else {
+        guard let themeJson = try? JSONEncoder().encode(theme).utf8String() else {
             assertionFailure("Can't encode themeName into JSON")
             return
         }
 
-        evaluate(js: "window.onChangeTheme(\(themeNameJson))", in: webView)
+        evaluate(js: "window.onChangeTheme(\(themeJson))", in: webView)
     }
 
     func setServerTrust(_ serverTrustViewModel: ServerTrustViewModel, webView: WKWebView) {
@@ -148,6 +178,18 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
         evaluate(js: "window.onIsPendingUpdates(\(isPendingUpdates))", in: webView)
     }
 
+    func setLocale(_ currentLocale: String, webView: WKWebView) {
+        struct LocaleSetting: Encodable {
+            var locale: String
+        }
+        
+        guard let localeSettingJson = try? JSONEncoder().encode(LocaleSetting(locale: currentLocale)).utf8String() else {
+            assertionFailure("Can't encode consentInfo into JSON")
+            return
+        }
+        evaluate(js: "window.onChangeLocale(\(localeSettingJson))", in: webView)
+    }
+    
     private func evaluate(js: String, in webView: WKWebView) {
         webView.evaluateJavaScript(js)
     }

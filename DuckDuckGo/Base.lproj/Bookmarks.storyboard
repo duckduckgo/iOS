@@ -128,10 +128,15 @@
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="108" width="375" height="510"/>
                                 <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
+                                <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="1tO-s1-k2W">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">
-                                    <rect key="frame" x="0.0" y="234.5" width="375" height="82"/>
+                                    <rect key="frame" x="0.0" y="504.5" width="375" height="82"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
@@ -150,7 +155,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" id="14A-Y0-GYO" customClass="BookmarkCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="49.5" width="343" height="43.5"/>
+                                        <rect key="frame" x="16" y="93.5" width="343" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="14A-Y0-GYO" id="2vh-lJ-WoO">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
@@ -226,7 +231,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoBookmarksInSubfolderCell" rowHeight="79" id="UXh-5I-dao" customClass="NoBookmarksInSubfolderCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="93" width="343" height="79"/>
+                                        <rect key="frame" x="16" y="137" width="343" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UXh-5I-dao" id="I27-uY-1Yo">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="79"/>
@@ -252,7 +257,7 @@
                                         <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoBookmarskCell" id="k5c-O7-NAf" userLabel="Empty" customClass="NoBookmarksCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="172" width="343" height="44.5"/>
+                                        <rect key="frame" x="16" y="216" width="343" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k5c-O7-NAf" id="L5l-gj-zLA">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="44.5"/>
@@ -294,7 +299,7 @@
                             <constraint firstAttribute="trailing" secondItem="ZH1-Ia-TsP" secondAttribute="trailing" id="atb-i1-qgp"/>
                             <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="ZH1-Ia-TsP" secondAttribute="bottom" id="cLI-Ny-hsn"/>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="top" secondItem="ZH1-Ia-TsP" secondAttribute="bottom" id="gyG-Nk-aYo"/>
-                            <constraint firstItem="vYN-5M-awE" firstAttribute="bottom" secondItem="dl2-Hs-8PH" secondAttribute="bottom" id="k33-5w-Pqt"/>
+                            <constraint firstItem="vYN-5M-awE" firstAttribute="bottom" secondItem="rGL-tq-B12" secondAttribute="top" id="k33-5w-Pqt"/>
                             <constraint firstItem="ZH1-Ia-TsP" firstAttribute="leading" secondItem="dl2-Hs-8PH" secondAttribute="leading" id="kNG-Ze-Dnn"/>
                             <constraint firstAttribute="leading" secondItem="vYN-5M-awE" secondAttribute="leading" id="nEW-Yf-us5"/>
                             <constraint firstItem="rGL-tq-B12" firstAttribute="top" secondItem="rRM-18-dYh" secondAttribute="bottom" id="w5u-gF-Okq"/>

@@ -102,7 +102,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         registerForNotifications()
         configureSelector()
         configureTableView()
-        configureSearchIfNeeded()
         configureBars()
 
         applyTheme(ThemeManager.shared.currentTheme)
@@ -232,13 +231,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func configureTableView() {
-        tableView.contentInset = .init(top: isNested ? 24 : -24, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = .init(top: isNested ? -12 : -1, left: 0,
+                                       bottom: isNested ? 0 : -24, right: 0)
+
+        if isNested {
+            tableView.tableHeaderView = nil
+        }
 
         tableView.dataSource = dataSource
-        if dataSource.folder != nil {
-            tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: CGFloat.leastNormalMagnitude))
-        }
-        
         importFooterButton.setTitle(UserText.importBookmarksFooterButton, for: .normal)
         importFooterButton.setTitleColor(UIColor.cornflowerBlue, for: .normal)
         importFooterButton.titleLabel?.textAlignment = .center
@@ -249,38 +249,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         
         refreshFooterView()
     }
-    
-    private func configureSearchIfNeeded() {
-        guard isNested else {
-            // Don't show search for sub folders
-            return
-        }
-        let searchController = UISearchController(searchResultsController: nil)
-        navigationItem.searchController = searchController
-        
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
-        searchController.searchResultsUpdater = self
-        searchController.automaticallyShowsScopeBar = false
-        searchController.searchBar.searchTextField.font = UIFont.semiBoldAppFont(ofSize: 16.0)
-        
-        // Add separator
-        if let nv = navigationController?.navigationBar {
-            let separator = UIView()
-            separator.backgroundColor = .greyish
-            nv.addSubview(separator)
-            separator.translatesAutoresizingMaskIntoConstraints = false
-            separator.widthAnchor.constraint(equalTo: nv.widthAnchor).isActive = true
-            separator.leadingAnchor.constraint(equalTo: nv.leadingAnchor).isActive = true
-            separator.bottomAnchor.constraint(equalTo: nv.bottomAnchor, constant: 1.0 / UIScreen.main.scale).isActive = true
-            separator.heightAnchor.constraint(equalToConstant: 1.0 / UIScreen.main.scale).isActive = true
-        }
-        self.searchController = searchController
-        
-        // Initially puling down the table to reveal search bar will result in a glitch if content offset is 0 and we are using `isModalInPresentation` set to true
-        tableView.setContentOffset(CGPoint(x: 0, y: 1), animated: false)
-    }
-    
+
     private var currentDataSource: MainBookmarksViewDataSource {
         if tableView.dataSource === dataSource {
             return dataSource
@@ -596,14 +565,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private func dismiss() {
         delegate?.bookmarksUpdated()
-        
-        if let searchController = searchController, searchController.isActive {
-            searchController.dismiss(animated: false) {
-                self.dismiss(animated: true, completion: nil)
-            }
-        } else {
-            dismiss(animated: true, completion: nil)
-        }
+        dismiss(animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -618,35 +580,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             favoritesController = viewController
         }
     }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if (searchController?.searchBar.bounds.height ?? 0) == 0 {
-            // Disable drag-to-dismiss if we start scrolling and search bar is still hidden
-            isModalInPresentation = true
-        }
-    }
 
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let searchController = searchController else {
-            return
-        }
-
-        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
-            // Re-enable drag-to-dismiss if needed
-            isModalInPresentation = false
-        }
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard let searchController = searchController else {
-            return
-        }
-        
-        if isModalInPresentation, searchController.searchBar.bounds.height > 0 {
-            // Re-enable drag-to-dismiss if needed
-            isModalInPresentation = false
-        }
-    }
 }
 
 extension BookmarksViewController: UISearchBarDelegate {

@@ -146,7 +146,8 @@ struct AutofillLoginPromptView: View {
                     .cornerRadius(Const.Size.CTAButtonCornerRadius)
                     .overlay(
                         RoundedRectangle(cornerRadius: Const.Size.CTAButtonCornerRadius)
-                            .stroke(Const.Colors.CTABorder, lineWidth: Const.Size.buttonBorderWidth)
+                            .stroke(style == .primary ? Const.Colors.CTAPrimaryBackground : Const.Colors.CTASecondaryBorder,
+                                    lineWidth: Const.Size.buttonBorderWidth)
                     )
             }
             .frame(width: Const.Size.contentWidth - Const.Size.buttonBorderWidth)
@@ -165,16 +166,17 @@ struct AutofillLoginPromptView: View {
                 .foregroundColor(Const.Colors.CTASecondaryForeground)
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)
-                .background(Color.clear)
+                .background(Const.Colors.CTATertiaryBackground)
                 .foregroundColor(.primary)
                 .cornerRadius(Const.Size.CTAButtonCornerRadius)
         }
+        .frame(width: Const.Size.contentWidth - Const.Size.buttonBorderWidth)
     }
     
     var footer: some View {
         HStack {
             Spacer()
-                .padding(.bottom, 62)
+                .padding(.bottom, 44)
         }
     }
 }
@@ -183,19 +185,20 @@ struct AutofillLoginPromptView: View {
 
 private enum Const {
     enum Fonts {
-        static let title = Font.system(size: 20).weight(.bold)
-        static let titleCaption = Font.system(size: 13)
+        static let title = Font.system(.title3).weight(.bold)
+        static let titleCaption = Font.system(.footnote)
         static let CTA = Font(UIFont.boldAppFont(ofSize: 16))
     }
     
     enum Colors {
         static let CTAPrimaryBackground = Color("CTAPrimaryBackground")
         static let CTASecondaryBackground = Color("CTASecondaryBackground")
+        static let CTATertiaryBackground = Color("CTATertiaryBackground")
         static let CTAPrimaryForeground = Color("CTAPrimaryForeground")
         static let CTASecondaryForeground = Color("CTASecondaryForeground")
         static let PrimaryTextColor = Color("PrimaryTextColor")
         static let SecondaryTextColor = Color("SecondaryTextColor")
-        static let CTABorder = Color("CTAPrimaryBackground")
+        static let CTASecondaryBorder = Color("CTASecondaryBorder")
     }
     
     enum Size {

@@ -312,18 +312,12 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return nil }
 
         let edit = UIAction(title: UserText.favoriteMenuEdit,
-                            image: UIImage(named: "Edit"),
-                            identifier: nil,
-                            discoverabilityTitle: nil,
-                            state: .off) { [weak self] _ in
+                            image: UIImage(named: "Edit")) { [weak self] _ in
             self?.editFavorite(cell, collectionView)
         }
 
         let delete = UIAction(title: UserText.favoriteMenuDelete,
-                              image: UIImage(named: "Trash"),
-                              identifier: nil,
-                              discoverabilityTitle: nil,
-                              attributes: .destructive, state: .off) { [weak self] _ in
+                              image: UIImage(named: "Trash")) { [weak self] _ in
             self?.deleteFavorite(cell, collectionView)
         }
 
@@ -390,9 +384,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         dragItem.previewProvider = { () -> UIDragPreview? in
             return UIDragPreview(view: cell.iconBackground)
         }
-        return [
-            dragItem
-        ]
+        return [ dragItem ]
     }
 
     func collectionView(_ collectionView: UICollectionView,

@@ -79,7 +79,7 @@ class HomeCollectionView: UICollectionView {
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
                 
             case .favorites:
-                renderers.install(renderer: FavoritesHomeViewSectionRenderer())
+                renderers.install(renderer: FavoritesHomeViewSectionRenderer(viewModel: .make()))
                 
             case .homeMessage:
                 renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))

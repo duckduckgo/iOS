@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Bookmarks
 
 protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
@@ -30,70 +31,6 @@ protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
                            favoriteDeleted favorite: Bookmark)
-}
-
-struct Favorite: Equatable {
-
-    let id: String
-    let url: URL?
-    let title: String?
-
-    var displayTitle: String {
-        title ?? url?.absoluteString ?? ""
-    }
-
-}
-
-protocol FavoritesViewModel {
-
-    var count: Int { get }
-
-    func move(_ favorite: Favorite, toIndexAt index: Int)
-
-    func delete(_ favorite: Favorite)
-
-    func favorite(atIndex: Int) -> Favorite?
-
-}
-
-class InMemoryFavoritesViewModel: FavoritesViewModel {
-
-    static let shared: FavoritesViewModel = InMemoryFavoritesViewModel()
-
-    var favorites = [
-
-        Favorite(id: "1", url: URL(string: "https://www.bbc.co.uk/news/uk-politics-63308930"), title: "BBC"),
-        Favorite(id: "2", url: URL(string: "https://news.ycombinator.com"), title: "Hacker News"),
-        Favorite(id: "3", url: URL(string: "https://time.com/123-123-123-123-123-123-123-123-123-123-123-123-123-123-123-123-123-123-1231-231-31231231231231312312312312321312312"), title: "Time Magazine")
-
-    ]
-
-    var count: Int {
-        favorites.count
-    }
-
-    func move(_ favorite: Favorite, toIndexAt index: Int) {
-        guard let existingIndex = favorites.firstIndex(where: { $0 == favorite }) else {
-            assertionFailure("Unknown favorite")
-            return
-        }
-        favorites.remove(at: existingIndex)
-        favorites.insert(favorite, at: index)
-    }
-
-    func favorite(atIndex index: Int) -> Favorite? {
-        guard favorites.indices.contains(index) else { return nil }
-        return favorites[index]
-    }
-
-    func delete(_ favorite: Favorite) {
-        guard let index = favorites.firstIndex(where: { $0 == favorite }) else {
-            assertionFailure("Unknown favorite")
-            return
-        }
-        favorites.remove(at: index)
-    }
-
 }
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
@@ -108,7 +45,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
-    let viewModel: FavoritesViewModel
+    let viewModel: FavoritesListViewModel
 
     private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)?
     
@@ -124,7 +61,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
 
-    init(allowsEditing: Bool = true, viewModel: FavoritesViewModel = InMemoryFavoritesViewModel.shared) {
+    init(allowsEditing: Bool = true, viewModel: FavoritesListViewModel) {
         guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
             fatalError("Failed to load FavoriteHomeCell")
         }
@@ -136,7 +73,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     private var numberOfItems: Int {
-        return viewModel.count
+        return viewModel.favorites.count
     }
     
     private var headerHeight: CGFloat {
@@ -357,7 +294,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
         cell.isReordering = false
 
-        viewModel.move(favorite, toIndexAt: destinationPath.row)
+        viewModel.move(favorite, toIndex: destinationPath.row)
         coordinator.drop(dragItem, toItemAt: destinationPath)
 
         collectionView.performBatchUpdates {

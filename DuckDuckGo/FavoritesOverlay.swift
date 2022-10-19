@@ -52,7 +52,7 @@ class FavoritesOverlay: UIViewController {
 
         view.addSubview(collectionView)
         
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false)
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false, viewModel: .make())
         renderer.install(into: self)
         
         registerForKeyboardNotifications()

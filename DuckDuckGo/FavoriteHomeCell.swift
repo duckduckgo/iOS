@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Bookmarks
 
 class FavoriteHomeCell: UICollectionViewCell {
 
@@ -52,8 +53,8 @@ class FavoriteHomeCell: UICollectionViewCell {
 
     var truncatedUrlString: String? {
         guard let url = favorite?.url else { return nil }
-        let urlString = url.absoluteString.prefix(100).description
-        let ellipsis = url.absoluteString.count != urlString.count ? "…" : ""
+        let urlString = url.prefix(100).description
+        let ellipsis = url.count != urlString.count ? "…" : ""
         return urlString + ellipsis
     }
 
@@ -64,7 +65,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     var onDelete: (() -> Void)?
     var onEdit: (() -> Void)?
     
-    var favorite: Favorite?
+    var favorite: BookmarkEntity?
     private var theme: Theme?
     
     struct Actions {
@@ -111,10 +112,10 @@ class FavoriteHomeCell: UICollectionViewCell {
         doDelete(sender: nil)
     }
     
-    func updateFor(favorite: Favorite) {
+    func updateFor(favorite: BookmarkEntity) {
         self.favorite = favorite
         
-        let host = favorite.url?.host?.droppingWwwPrefix() ?? ""
+        let host = favorite.host
         
         isAccessibilityElement = true
         accessibilityTraits = .button
@@ -122,18 +123,18 @@ class FavoriteHomeCell: UICollectionViewCell {
         
         titleLabel.text = favorite.displayTitle
         iconBackground.backgroundColor = UIColor.forDomain(host)
-        
-        if let domain = favorite.url?.host?.droppingWwwPrefix(),
-           let fakeFavicon = FaviconsHelper.createFakeFavicon(forDomain: favorite.url?.host ?? "",
+
+        let domain = favorite.host
+        if let fakeFavicon = FaviconsHelper.createFakeFavicon(forDomain: domain,
                                                               backgroundColor: UIColor.forDomain(domain),
                                                               bold: false) {
             iconImage.image = fakeFavicon
         }
 
-        iconImage.loadFavicon(forDomain: favorite.url?.host, usingCache: .bookmarks, useFakeFavicon: false) { image, _ in
+        iconImage.loadFavicon(forDomain: domain, usingCache: .bookmarks, useFakeFavicon: false) { image, _ in
             guard let image = image else { return }
 
-            let useBorder = Self.appUrls.isDuckDuckGo(domain: favorite.url?.host) || image.size.width < Constants.largeFaviconSize
+            let useBorder = Self.appUrls.isDuckDuckGo(domain: domain) || image.size.width < Constants.largeFaviconSize
             self.useImageBorder(useBorder)
             self.applyFavicon(image)
         }
@@ -161,6 +162,19 @@ class FavoriteHomeCell: UICollectionViewCell {
         view.layer.masksToBounds = false
     }
     
+}
+
+private extension BookmarkEntity {
+
+    var displayTitle: String {
+        ""
+    }
+
+    var host: String {
+        guard let url = url else { return "" }
+        return URL(string: url)?.host?.droppingWwwPrefix() ?? ""
+    }
+
 }
 
 extension FavoriteHomeCell: Themable {

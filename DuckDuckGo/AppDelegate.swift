@@ -25,6 +25,7 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 import BrowserServicesKit
+import Persistence
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -113,6 +114,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 WidgetCenter.shared.reloadAllTimelines()
             }
         }
+
+        BookmarksDatabase.shared.loadStore { _, _ in
+            // TODO
+        }
+
+        /*
+        Task { @MainActor in
+
+            await OldDatabase.load
+            await NewDatabase.load
+            await NewDatabase.migrate(from: oldDatabase)
+            WidgetCenter.shared.reloadAllTimelines()
+
+        }
+        */
         
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()

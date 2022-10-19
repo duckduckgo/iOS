@@ -20,6 +20,8 @@
 import Foundation
 import UIKit
 import Core
+import Bookmarks
+import Persistence
 
 protocol FavoritesViewControllerDelegate: NSObjectProtocol {
 
@@ -66,8 +68,8 @@ class FavoritesViewController: UIViewController {
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)
-
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true)
+        
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true, viewModel: .make())
         renderer.install(into: self)
 
         registerForKeyboardNotifications()
@@ -222,4 +224,12 @@ extension FavoritesViewController: Themable {
         self.theme = theme
         view.backgroundColor = .clear
     }
+}
+
+extension FavoritesListViewModel {
+
+    static func make(db: CoreDataDatabase = BookmarksDatabase.shared) -> FavoritesListViewModel {
+        FavoritesListViewModel(storage: CoreDataFavoritesLogic(context: db.makeContext(concurrencyType: .mainQueueConcurrencyType)))
+    }
+
 }

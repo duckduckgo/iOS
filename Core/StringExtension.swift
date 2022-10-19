@@ -87,3 +87,11 @@ extension String {
         return URL(string: "javascript:\(encoded)")
     }
 }
+
+// MARK: - URL
+
+extension String {
+    public var toTrimmedURL: URL? {
+        return URL(trimmedAddressBarString: self)
+    }
+}

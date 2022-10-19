@@ -1,33 +1,24 @@
-Etkö halua, että sinua seurataan verkossa? Voimme auttaa.
 
-DuckDuckGo on all-in-one-tietosuojasovellus, joka auttaa suojaamaan verkkotoimintaasi. Yhdellä latauksella saat uuden arkiselaimen, joka tarjoaa saumattoman suojan kolmannen osapuolen jäljittäjiltä, kun haet ja selaat, ja jopa seurantasuojaukset, kun vastaanotat sähköpostia. DuckDuckGon avulla tietosuoja voi olla oletusarvosi.
+DuckDuckGo-sovellus tarjoaa kattavimman yksityisyydensuojan verkossa napin painalluksella. Yhdellä latauksella saat uuden arkiselaimen, joka tarjoaa saumattoman suojan, kun haet ja selaat, ja seurantasuojaukset, kun vastaanotat sähköposteja. Monia näistä suojauksista ei tarjota oletusarvoisesti suosituimmissa selaimissa.
 
-Etsi yksityisesti - DuckDuckGon yksityinen haku on sisäänrakennettu sovellukseen, joten voit hakea verkosta ilman että sinua seurataan.
+OMINAISUUKSIEN KOHOKOHDAT 
+• Hae yksityisesti oletuksena – DuckDuckGo Private Search on sisäänrakennettu sovellukseen, joten voit hakea verkosta ilman että sinua seurataan. 
 
-Estä verkkosivustoseuranta - Jäljittäjätutka estää automaattisesti piilotetut kolmannen osapuolen jäljittäjät, joita voi olla DuckDuckGossa vierailemillasi verkkosivustoilla. Tämä estää jäljittäjien takana olevia yrityksiä keräämästä ja myymästä sinuun liittyviä tietoja.
+• Vältä sivustojen seurantalaitteet ennen kuin niitä ladataan – Estä useimpien piilotettujen seurantalaitteiden (kolmannen osapuolen komentosarjat) latautuminen automaattisesti, mikä estää yrityksiä keräämästä ja käyttämästä (esim. myynti, mainokset jne.) näiden seurantalaitteiden tietoja. Huippuluokan seurannanestoteknologiamme – 3rd-Party Tracker Loading Protection – on enemmän, kuin useimpien suosittujen selainten oletusarvoinen suojaus. 
 
-Pakota salaus - Älykkäämpi salaus pakottaa DuckDuckGossa vierailemasi sivustot käyttämään salattua (HTTPS) yhteyttä mahdollisuuksien mukaan, mikä suojaa tietojasi uteliailta urkkijoilta.
+• Pakota salaus automaattisesti – pakota useat vierailemasi sivustot käyttämään salattua (HTTPS) yhteyttä automaattisesti, mikä auttaa suojaamaan tietojasi Wi-Fi-urkkijoilta ja verkon katsojilta, kuten Internet-palveluntarjoajaltasi. Useimmat suositut selaimet ohjaavat käyttäjiä sivujen salattuihin versioihin vain tietyissä tilanteissa, esimerkiksi kun siirryt sivulle suoraan osoitepalkista. Tarkistamme päivitettävien sivustojen luettelon kaikkien napsauttamiesi linkkien osalta. 
 
-Estä sähköpostiseuraajat - 70 % sähköposteista seuraa sinua heti kun avaat ne. Sähköpostisuojauksen ottaminen käyttöön on helppo tapa estää sähköpostijäljittäjät ja piilottaa osoitteesi vaihtamatta palvelua. Liity ilmaisen beetaversion yksityiselle jonotuslistalle sovelluksen asetusvalikon kautta.
+• Ota käyttöön sisäänrakennettu Email Protection – Yli 85 % Duck-osoitteisiin lähetetyistä sähköposteista sisälsi seurantalaitteita, jotka voivat havaita, milloin olet avannut viestin, missä olit, kun avasit sen ja mitä laitetta käytit. Email Protectionin avulla on helppo estää useimmat sähköpostin seurantalaitteet ja piilottaa nykyinen osoitteesi, kun kirjaudut sisään verkossa, ja kaikki tämä ilman sähköpostipalveluntarjoajan vaihtamista. 
 
-DuckDuckGo-sovelluksessa on odottamasi selausominaisuudet, kuten välilehdet ja kirjanmerkit, sekä toivomasi tietosuojan hallinta-asetukset. Tietosuojan hallinnan ei tarvitse tarkoittaa kompromisseja.
+Meillä on myös monia suojauksia, joita ei ole saatavilla useimmissa selaimissa, kuten muun muassa suoja linkkien seurannalta, sormenjälkien ottaminen, seurantaevästeet, ja Google AMP-seurannalta.
 
-Napauta Fire-painiketta, Poista tiedot - Tyhjennä välilehdet ja selaustietosi yhdellä Fire-painikkeen napautuksella.
+JOKAPÄIVÄISTÄ YKSITYISYYDEN HALLINTAA
+• Napauta Fire Button-painiketta, Poista tiedot – Tyhjennä välilehdet ja selaustietosi Fire Button -painikkeella.
 
-Viestitä tietosuoja-asetuksesi GPC:n avulla - Sovellukseen sisäänrakennettu Global Privacy Control (GPC) auttaa sinua viestittämään lailliset kieltäytymisoikeutesi automaattisesti. Tämä kehottaa verkkosivustoja olemaan myymättä tai jakamatta henkilökohtaisia tietojasi tulevien oikeudellisten puitteiden (esim. CCPA, GDPR) mukaisesti eri osavaltioissa tai maissa.
+• Ilmoita yksityisyysasetuksestasi Global Privacy Control (GPC) -toiminnolla – sovellukseemme sisäänrakennettu GPC auttaa sinua ilmaisemaan kieltäytymisoikeutesi automaattisesti käskemällä sivustoja olemaan myymättä tai jakamatta henkilötietojasi. Se, voidaanko sitä käyttää laillisten oikeuksiesi (esimerkiksi nykyisen tai tulevan CCPA:n tai yleisen tietosuoja-asetuksen vaatimusten) täytäntöönpanoon, riippuu oman lainkäyttöalueesi laeista. 
 
-Sinun ei tarvitse odottaa tietosuojasi takaisinottoa. Liity miljoonien DuckDuckGo-käyttäjien joukkoon ja suojaa monia päivittäisiä verkkotoimintojasi yhdellä sovelluksella. Se on tietosuojaa, yksinkertaistettuna.
+Huomautus kolmannen osapuolen seurantalaitteiden lataussuojauksesta DuckDuckGo-mainosnapsautusten jälkeen: Kolmannen osapuolen seurantasuojauksemme ylittää sen, mitä saat suosituimmissa selaimissa oletusarvoisesti, mutta pyrimme jatkuvasti tekemään siitä kattavamman. Tällä hetkellä, jos mainostaja haluaa havaita yksityisten DuckDuckGo-hakumainosten konversioita omalla sivustollaan, kolmannen osapuolen seurantalaitteiden lataussuojaus ei estä bat.bing.com-pyyntöjen lataamista mainostajan verkkosivustolle DuckDuckGo-mainosklikkausten jälkeen, mutta pyynnöt pysäytetään kaikissa muissa yhteyksissä. Tämä johtuu siitä, että DuckDuckGon Private Search -haun mainonta tapahtuu yhteistyössä Microsoftin kanssa. Osana kumppanuutta, mainosten katselu DuckDuckGossa on nimetöntä, ja Microsoft on sitoutunut olemaan profiloimamatta käyttäjiemme mainosnapsautuksia.   
 
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: 
-Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
- 
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
- 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+Lue lisää tästä ja jäljityssuojastamme osoitteessa https://help.duckduckgo.com/privacy/web-tracking-protections/. 
 
-
-Tietoja meistä: https://duckduckgo.com/about
-Näin se toimii: https://duckduckgo.com/app
-Tietosuojauutiskirje: https://duckduckgo.com/newsletter
-Tietosuojakäytäntö: https://duckduckgo.com/privacy
-Avoin lähdekoodi: https://github.com/duckduckgo/iOS
+Sinun ei tarvitse odottaa tietosuojasi takaisinottoa. Liity miljoonien DuckDuckGo-käyttäjien joukkoon ja suojaa monia päivittäisiä verkkotoimintojasi yhdellä sovelluksella. Se on tietosuojaa, yksinkertaistettuna.  

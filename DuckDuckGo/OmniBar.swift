@@ -20,7 +20,7 @@
 import UIKit
 import Core
 import os.log
-import PrivacyDashboardCode
+import PrivacyDashboard
 
 extension OmniBar: NibLoading {}
 
@@ -192,10 +192,6 @@ class OmniBar: UIView {
         refreshState(state.onBrowsingStoppedState)
     }
 
-    @IBAction func textFieldTapped() {
-        textField.becomeFirstResponder()
-    }
-    
     func removeTextSelection() {
         textField.selectedTextRange = nil
     }
@@ -478,11 +474,7 @@ extension OmniBar: UITextFieldDelegate {
             self.refreshState(self.state.onEditingStartedState)
             
             if highlightText {
-                // Allow the cursor to move to the end before selecting all the text
-                // to avoid text not being selected properly
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                    self.textField.selectAll(nil)
-                }
+                self.textField.selectAll(nil)
             }
         }
     }
@@ -528,13 +520,5 @@ extension OmniBar: Themable {
         
         updateSearchBarBorder()
     }
-}
-
-extension OmniBar: UIGestureRecognizerDelegate {
- 
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return !textField.isFirstResponder
-    }
-    
 }
 // swiftlint:enable file_length

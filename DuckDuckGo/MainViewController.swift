@@ -24,7 +24,7 @@ import Lottie
 import Kingfisher
 import os.log
 import BrowserServicesKit
-import PrivacyDashboardCode
+import PrivacyDashboard
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -826,7 +826,7 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    fileprivate func launchReportBrokenSite() {
+    func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     

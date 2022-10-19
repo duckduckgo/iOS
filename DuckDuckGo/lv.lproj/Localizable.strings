@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Atcelt";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Ģenerēt privātu adresi";
+"email.aliasAlert.generatePrivateAddress" = "Ģenerēt privātu Duck adresi";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Bloķē e-pasta izsekotājus ar Duck adresi";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Jaunā adrese tika iekopēta tavā starpliktuvē";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Izveidot Duck adresi";
+"email.browsingMenu.useNewDuckAddress" = "Ģenerēt privātu Duck adresi";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Iespējota";

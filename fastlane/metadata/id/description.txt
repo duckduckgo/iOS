@@ -1,33 +1,24 @@
-Bosan dilacak secara online? Kami dapat membantu.
 
-DuckDuckGo adalah aplikasi privasi lengkap yang membantu melindungi aktivitas online Anda. Dengan satu unduhan, Anda mendapatkan peramban harian baru yang menawarkan perlindungan tanpa batas dari pelacak pihak ketiga saat Anda mencari dan menjelajah, dan bahkan akses ke perlindungan pelacakan saat menerima email. Dengan DuckDuckGo, privasi dapat menjadi standar Anda.
+Aplikasi DuckDuckGo memberikan perlindungan privasi online paling komprehensif dengan satu tombol saja. Dengan sekali unduh, Anda mendapatkan browser harian baru yang menawarkan perlindungan tanpa batas saat mencari dan menjelajah, dan akses ke perlindungan pelacakan untuk email yang Anda terima. Banyak dari perlindungan ini tidak ditawarkan di sebagian besar browser populer secara default.
 
-Cari Secara Pribadi - DuckDuckGo Private Search sudah ada di dalamnya sehingga Anda dapat melakukan pencarian di web tanpa dilacak.
+FITUR UTAMA 
+• Cari secara Pribadi secara Default - Private Search DuckDuckGo sudah terpasang, sehingga Anda dapat dengan mudah mencari di web tanpa dilacak. 
 
-Menghindar dari Pelacakan Situs Web - Tracker Radar secara otomatis memblokir pelacak pihak ketiga yang tersembunyi yang dapat kami temukan bersembunyi di situs web yang Anda kunjungi di DuckDuckGo, yang menghentikan perusahaan di belakang pelacak tersebut mengumpulkan dan menjual data Anda.
+• Escape Website Trackers Before They Load - Secara otomatis menghentikan sebagian besar pelacak tersembunyi (skrip pihak ketiga) dari pemuatan, yang mencegah perusahaan mengumpulkan dan menggunakan (mis. penjualan, iklan, dll.) data apa pun dari pelacak ini. Teknologi pemblokiran pelacak mutakhir kami - yang disebut Perlindungan Pemuatan Pelacak Pihak Ketiga - melampaui apa yang Anda dapatkan di sebagian besar browser populer secara default. 
 
-Terapkan Enkripsi - Smarter Encryption memaksa situs yang Anda kunjungi di DuckDuckGo untuk menggunakan koneksi terenkripsi (HTTPS) jika tersedia, melindungi data Anda dari mata-mata.
+• Secara Otomatis Menerapkan Enkripsi - memaksa banyak situs yang Anda kunjungi untuk secara otomatis menggunakan koneksi terenkripsi (HTTPS), yang membantu melindungi data Anda dari pengintai Wi-Fi dan pengintai jaringan seperti penyedia Internet Anda. Sebagian besar browser populer hanya mengarahkan pengguna ke versi halaman terenkripsi dalam keadaan tertentu, seperti ketika Anda menavigasi langsung ke halaman di bilah alamat. Kami memeriksa daftar situs yang dapat diupgrade untuk semua tautan yang Anda klik. 
 
-Blokir Pelacak Email - 70% email melacak Anda segera setelah Anda membukanya. Mengaktifkan Email Protection adalah cara mudah untuk memblokir pelacak email dan menyembunyikan alamat Anda tanpa berpindah layanan. Bergabunglah dengan daftar tunggu pribadi untuk versi beta gratis melalui menu pengaturan aplikasi.
+• Aktifkan Email Protection Bawaan - Lebih dari 85% email yang dikirim ke Alamat Duck berisi pelacak yang dapat mendeteksi ketika Anda membuka pesan, di mana Anda berada ketika Anda membukanya, dan perangkat apa yang Anda gunakan. Perlindungan Email memudahkan untuk memblokir sebagian besar pelacak email dan menyembunyikan alamat yang ada saat mendaftar untuk hal-hal online, semua tanpa beralih penyedia email. 
 
-Aplikasi DuckDuckGo memiliki fitur penjelajahan yang Anda harapkan, seperti tab dan bookmark, ditambah kontrol privasi yang akan Anda sukai. Mengambil kendali atas privasi Anda tidak harus berarti melakukan pengorbanan.
+Kami juga memiliki banyak perlindungan yang tidak tersedia di sebagian besar browser termasuk perlindungan dari pelacakan tautan, pelacakan Google AMP, dan banyak lagi.
 
-Ketuk Fire Button, Burn Data - Hapus tab dan data penjelajahan Anda dengan satu ketukan Fire Button.
+KONTROL PRIVASI SEHARI-HARI
+• Ketuk Fire Button, Bakar Data - Hapus tab Anda dan data penjelajahan dengan Tombol Api kami.
 
-Tandai Preferensi Privasi Anda dengan GPC - Di dalam aplikasi, Global Privacy Control (GPC) dibuat untuk membantu Anda mengekspresikan hak memilih keluar hukum Anda secara otomatis. Ini akan menginformasikan kepada situs web agar ke depannya tidak menjual atau membagikan informasi pribadi Anda di bawah kerangka hukum (misalnya CCPA, GDPR) di berbagai negara bagian atau negara.
+• Memberi Sinyal Preferensi Privasi Anda dengan Global Privacy Control (GPC) - GPC yang ada di dalam aplikasi kami bermaksud untuk membantu Anda mengekspresikan hak pilih Anda secara otomatis dengan memberi tahu situs web untuk tidak menjual atau membagikan informasi pribadi Anda. Apakah dapat digunakan untuk menegakkan hak-hak hukum Anda (misalnya, CCPA saat ini atau di masa mendatang, persyaratan GDPR) tergantung pada undang-undang di yurisdiksi Anda. 
 
-Anda tidak perlu menunggu untuk mengambil kembali privasi Anda. Bergabunglah dengan jutaan orang yang menggunakan DuckDuckGo dan lindungi banyak aktivitas online Anda sehari-hari dengan satu aplikasi. Ini privasi, disederhanakan.
+Catatan tentang Perlindungan Pemuatan Pelacak Pihak Ketiga kami mengikuti klik iklan DuckDuckGo: Perlindungan Pelacak Pihak Ketiga kami melampaui apa yang Anda dapatkan di peramban paling populer secara default, tetapi kami terus berupaya membuatnya lebih komprehensif. Saat ini, jika pengiklan ingin mendeteksi konversi di situs web mereka sendiri untuk iklan penelusuran DuckDuckGo pribadi kami, Perlindungan Pemuatan Pelacak Pihak Ketiga kami tidak akan menghentikan permintaan bat.bing.com memuat di situs web pengiklan setelah klik iklan DuckDuckGo, tetapi permintaan tersebut dihentikan di semua konteks lainnya. Hal ini karena iklan private search DuckDuckGo menjalin kemitraan dengan Microsoft. Sebagai bagian dari kemitraan itu, melihat iklan di DuckDuckGo bersifat anonim dan Microsoft telah berkomitmen untuk tidak memprofilkan klik iklan pengguna kami.   
 
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: 
-Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
- 
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
- 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+Baca selengkapnya mengenai hal ini dan Perlindungan Pelacakan kami di https://help.duckduckgo.com/privacy/web-tracking-protections/ 
 
-
-Tentang Kami: https://duckduckgo.com/about/
-Cara Kerjanya: https://duckduckgo.com/app
-Nawala Privasi: https://duckduckgo.com/newsletter
-Kebijakan Privasi: https://duckduckgo.com/privacy/
-Sumber Terbuka: https://github.com/duckduckgo/iOS
+Anda tidak perlu menunggu untuk mengambil kembali privasi Anda. Bergabunglah dengan jutaan orang yang menggunakan DuckDuckGo dan lindungi banyak aktivitas online Anda sehari-hari dengan satu aplikasi. Ini privasi, disederhanakan.  

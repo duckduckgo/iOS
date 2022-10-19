@@ -20,7 +20,7 @@
 import UIKit
 import Lottie
 import Core
-import PrivacyDashboardCode
+import PrivacyDashboard
 
 private enum Constants {
     static let textFieldFadeDuration = 0.2

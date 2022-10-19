@@ -485,7 +485,7 @@
 "email.aliasAlert.decline" = "Annuleren";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Een privéadres genereren";
+"email.aliasAlert.generatePrivateAddress" = "Privé-Duck Address genereren";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "E-mailtrackers met een Duck-adres blokkeren";
@@ -497,7 +497,7 @@
 "email.browsingMenu.alert" = "Nieuw adres gekopieerd naar je klembord";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Duck-adres aanmaken";
+"email.browsingMenu.useNewDuckAddress" = "Privé-Duck Address genereren";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Ingeschakeld";

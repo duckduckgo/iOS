@@ -1,34 +1,28 @@
-Lei av å bli sporet på nettet? Vi kan hjelpe.
 
-DuckDuckGo er alt-i-ett-personvernappen som beskytter nettaktivitetene dine. Med én nedlasting får du en ny hverdagsnettleser som tilbyr sømløs beskyttelse fra tredjepartssporere mens du søker og surfer, og til og med tilgang til sporingsbeskyttelse når du får e-post. Med DuckDuckGo kan personvern være standardvalget.
+DuckDuckGo-appen gir det mest omfattende personvernet på nettet med et trykk på en knapp. Med én nedlasting får du en hverdagsnettleser som tilbyr sømløs beskyttelse mens du søker og surfer samt tilgang til sporingsbeskyttelse på e-poster du får. Mange av disse beskyttelsene tilbys ikke som standard i de fleste populære nettleserne. 
 
-Søk privat - DuckDuckGo Private Search er innebygd, så du kan søke på nettet uten å bli sporet.
+HØYDEPUNKTER 
+• Søk privat som standard – DuckDuckGos Private Search er innebygd, slik at du lett kan søke på nettet uten å bli sporet. 
 
-Unngå nettstedssporing - Tracker Radar blokkerer automatisk skjulte tredjepartssporere som vi finner luskende på nettsteder du besøker i DuckDuckGo, og forhindrer firmaene bak disse sporerne i å samle inn og selge dataene dine.
+• Unngå nettstedssporere før de lastes – hindre automatisk de fleste skjulte sporere (tredjepartsskript) fra å bli lastet. Dette forhindrer selskaper i å samle inn og bruke data fra disse sporerne (som salg, annonser osv.) Vår banebrytende sporingsblokkeringsteknologi, kalt beskyttelse mot tredjeparts sporingslasting, går langt utover det du vanligvis får som standard i de fleste populære nettlesere. 
 
-Fremtving kryptering - Smarter Encryption tvinger nettsteder du besøker i DuckDuckGo, til å bruke en kryptert tilkobling (HTTPS) der det er tilgjengelig, så dataene dine er beskyttet mot nysgjerrige blikk.
+• Fremtving kryptering automatisk – tving mange nettsteder du besøker, til å automatisk bruke en kryptert tilkobling (HTTPS), som verner dataene dine mot wifi-snokere og nettverkstilskuere som internettleverandøren din. De fleste populære nettlesere bare omdirigerer brukerne til krypterte versjoner av sider under visse omstendigheter, som når du går direkte til en side i adressefeltet. Vi sjekker listen vår over oppgraderbare nettsteder for alle lenker du klikker på. 
 
-Blokker e-postsporere - 70 % av e-poster sporer deg så snart du åpner dem. Aktivering av Email Protection er den enkle måten å blokkere e-postsporere og skjule adressen din på, uten å bytte tjenester. Meld deg på en privat venteliste for den gratis betaversjonen via appinnstillingene.
+• Aktiver innebygd Email Protection – over 85 % av e-poster som ble sendt til Duck-adresser, inneholdt sporere som kan oppdage når du har åpnet en e-post, hvor du var da du åpnet den, og hvilken enhet du brukte. Email Protection gjør det lett å blokkere de fleste e-postsporere og skjule den eksisterende adressen din når du registrerer deg for ting på nettet, og alt dette uten å bytte e-postleverandør. 
 
-DuckDuckGo-appen har surfefunksjonene du forventer, som faner og bokmerker, samt personvernkontroller du vil sette stor pris på. Du behøver ikke å ofre noe for å ta kontroll over personvernet ditt.
+• Unngå digitalt fingeravtrykk – hindre selskaper i å opprette en unik identifikator for deg ved å blokkere forsøkene deres på å kombinere spesifikk informasjon om nettleseren og enhetsinnstillingene dine.  
 
-Trykk på Fire Button og brenn data - Fjern faner og nettleserdata med ett trykk på Fire Button.
+• Blokker sporingsinformasjonskapsler – hindre de fleste tredjeparts informasjonskapsler i å spore deg når du surfer fra nettsted til nettsted.
 
-Signaliser personvernpreferansene dine med GPC - Global Privacy Control (GPC) er innebygd i appen og uttrykker automatisk din lovfestede rett til personvern. Dette gjør nettsteder oppmerksomme på at de ikke skal selge eller dele personopplysningene dine under fremtidige juridiske rammeverk (f.eks. CCPA, GDPR) i diverse delstater eller land.
+Vi har også mange beskyttelser som ikke er tilgjengelige i de fleste nettlesere, inkludert beskyttelse mot lenkesporing, Google AMP-sporing med mer.
 
-Du trenger ikke å vente for å ta tilbake personvernet ditt. Slutt deg til millionene av mennesker som bruker DuckDuckGo og beskytt mange av dine daglige nettaktiviteter med én app. Dette er personvern gjort enkelt.
+PERSONVERNKONTROLLER I HVERDAGEN
+• Trykk på Fire Button-knappen og brenn data – tøm faner og nettleserdata med Fire Button.
 
-Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: 
-Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks. 
- 
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/
- 
-You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified.
+• Signaliser personvernreferansene dine med GPC (Global Privacy Control) – som er innebygd i appen og uttrykker automatisk reservasjonsretten din ved å gi beskjed til nettstedene om at de ikke kan selge eller dele personopplysningene dine. Om dette kan brukes til å håndheve dine juridiske rettigheter (for eksempel i henhold til nåværende eller fremtidige CCPA- og GDPR-krav), avhenger av lovene i din jurisdiksjon. 
 
+Merknad om vår beskyttelse mot tredjeparts sporingslasting etter annonseklikk på DuckDuckGo: I utgangspunktet går vår beskyttelse mot tredjepartssporing langt utover hva du får i de fleste populære nettlesere, men vi jobber uavlatelig med å gjøre det mer omfattende. For øyeblikket er det slik at hvis en annonsør vil registrere konverteringer på sitt eget nettsted for våre private DuckDuckGo-søkeannonser, forhindrer ikke beskyttelsen mot tredjeparts sporingslasting bat.bing.com-forespørsler i å lastes på annonsørens nettsted etter DuckDuckGo-annonseklikk, men disse forespørslene stoppes i alle andre sammenhenger. Dette er fordi DuckDuckGos Private Search-annonsering skjer i samarbeid med Microsoft. Dette samarbeidet innebærer at du ser annonser anonymt på DuckDuckGo, og Microsoft har forpliktet seg til å ikke profilere brukernes annonseklikk.  
+ 
+Les mer om dette og sporingsbeskyttelsene våre på https://help.duckduckgo.com/privacy/web-tracking-protections/  
 
-Om oss: https://duckduckgo.com/about
-Hvordan det fungerer: https://duckduckgo.com/app
-Nyhetsbrev om personvern: https://duckduckgo.com/newsletter
-Personvernerklæring: https://duckduckgo.com/privacy
-Åpen kildekode: https://github.com/duckduckgo/iOS
-
+Du trenger ikke å vente for å ta tilbake personvernet ditt. Slutt deg til millionene av mennesker som bruker DuckDuckGo og beskytt mange av dine daglige nettaktiviteter med én app. Dette er personvern gjort enkelt. 

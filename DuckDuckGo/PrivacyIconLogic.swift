@@ -19,7 +19,7 @@
 
 import Foundation
 import Core
-import PrivacyDashboardCode
+import PrivacyDashboard
 
 final class PrivacyIconLogic {
     

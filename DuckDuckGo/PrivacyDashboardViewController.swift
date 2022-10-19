@@ -21,8 +21,8 @@ import UIKit
 import WebKit
 import Combine
 import Core
-import PrivacyDashboardCode
 import BrowserServicesKit
+import PrivacyDashboard
 
 class PrivacyDashboardViewController: UIViewController {
     
@@ -55,6 +55,7 @@ class PrivacyDashboardViewController: UIViewController {
         super.viewDidLoad()
         
         privacyDashboardController.setup(for: webView)
+        privacyDashboardController.preferredLocale = Bundle.main.preferredLocalizations.first
         applyTheme(ThemeManager.shared.currentTheme)
     }
     

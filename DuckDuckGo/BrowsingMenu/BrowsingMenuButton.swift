@@ -40,14 +40,19 @@ class BrowsingMenuButton: UIView {
         highlight.isHidden = true
     }
 
-    func configure(with entry: BrowsingMenuEntry, willPerformAction: (() -> Void)?) {
+    func configure(with entry: BrowsingMenuEntry, willPerformAction: ((@escaping () -> Void) -> Void)?) {
         guard case .regular(let name, let accessibilityLabel, let image, _, let action) = entry else {
             fatalError("Regular entry not found")
         }
 
         self.configure(with: image, label: name, accessibilityLabel: accessibilityLabel) {
-            willPerformAction?()
-            action()
+            if let willPerformAction = willPerformAction {
+                willPerformAction {
+                    action()
+                }
+            } else {
+                action()
+            }
         }
     }
 

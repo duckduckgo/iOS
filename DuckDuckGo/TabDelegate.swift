@@ -20,7 +20,7 @@
 import WebKit
 import Core
 import BrowserServicesKit
-import PrivacyDashboardCode
+import PrivacyDashboard
 
 protocol TabDelegate: AnyObject {
 

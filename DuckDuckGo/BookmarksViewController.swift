@@ -251,7 +251,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     private func configureSearchIfNeeded() {
-        guard dataSource.showSearch else {
+        guard isNested else {
             // Don't show search for sub folders
             return
         }

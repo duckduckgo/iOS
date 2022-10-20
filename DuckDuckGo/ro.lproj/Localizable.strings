@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Ascunde parola";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Dezactivează";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Continuă să utilizezi";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Poți dezactiva oricând completarea automată din Setări.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Dorești să continui să utilizezi completarea automată?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vezi";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Autentificare actualizată";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Copiază %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adresă copiată";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Note copiate";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Parolă copiată";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Numele de utilizator a fost copiat";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL-ul site-ului";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Autentificare";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Șterge datele de autentificare";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Șterge datele de autentificare";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Sigur dorești să ștergi aceste date de autentificare?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Editează datele de autentificare";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Parolă";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Titlu";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "exemplu.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "numedeutilizator@exemplu.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Datele de autentificare au fost actualizate ultima dată la %s";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Titlu autentificare";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Adaugă date de autentificare";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Note";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Deschide site-ul";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Parolă";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Ai deja date de autentificare pentru acest nume de utilizator și site.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Date de autentificare duplicate";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Deblochează completarea automată";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Nume utilizator";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Datele de autentificare sunt stocate în siguranță numai pe acest dispozitiv";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Nu au fost salvate încă date de autentificare";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Activează Completarea automată pentru a începe salvarea autentificărilor";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Renunță";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Deblochează pentru a utiliza Datele de autentificare salvate";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Închidere";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Salvează și completează automat datele de autentificare";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "S-a șters autentificarea pentru %@";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Date de autentificare pentru căutare";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Completare automată la autentificare";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Configurează identificatorul facial";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Identificatorul facial și parola sunt necesare pentru a-ți proteja detaliile aferente completării automate a datelor de autentificare.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Activează identificatorul facial pentru a utiliza completarea automată";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Configurează identificatorul tactil";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Identificatorul tactil și parola sunt necesare pentru a-ți proteja detaliile aferente completării automate a datelor de autentificare.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Activează identificatorul tactil pentru a utiliza completarea automată";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Renunță";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Deblochează pentru a utiliza Datele de autentificare salvate";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Mai multe opțiuni";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Folosești datele de autentificare salvate?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "pentru „%@”";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Niciun rezultat";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Aceasta va salva o autentificare suplimentară pentru acest site.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Autentificările sunt stocate în siguranță doar pe acest dispozitiv și pot fi gestionate din meniul de completare automată din Setări.";
+"autofill.save-login.new-user.message" = "DuckDuckGo va stoca în siguranță aceste date de autentificare pe dispozitivul tău.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";

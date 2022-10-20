@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skjul adgangskode";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Deaktiver";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Fortsæt med at bruge";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Du kan til enhver tid deaktivere automatisk udfyldning i indstillinger.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Vil du fortsætte med at bruge automatisk udfyldning?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Se";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Login er opdateret";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Kopiér %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adresse kopieret";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Noter kopieret";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Adgangskode kopieret";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Brugernavn kopieret";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL til webstedet";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Log på";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Slet login";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Slet login";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Er du sikker på, at du vil slette dette login?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Rediger login";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Adgangskode";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Titel";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "eksempel.dk";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "brugernavn@eksempel.dk";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Login sidst opdateret %s";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Login-titel";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Tilføj login";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Noter";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Åbn websted";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Adgangskode";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "Okay";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede et login til dette brugernavn og websted.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Duplikeret login";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Lås op for automatisk udfyldning";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Brugernavn";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Login gemmes kun sikkert på denne enhed";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Ingen logins gemt endnu";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Aktivér automatisk udfyldning for at begynde at gemme logins";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Annullér";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Lås op for at bruge gemte logins";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Luk";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Gem og udfyld automatisk logins";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Login til %@ slettet";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Søg logins";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Automatisk udfyldning ved login";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Opsætning af Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Face ID og adgangskode er påkrævet for at beskytte dine automatisk udfyldte login-oplysninger";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Aktivér Face ID for at bruge automatisk udfyldning";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Opsætning af Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID og adgangskode er påkrævet for at beskytte dine automatisk udfyldte login-oplysninger.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Aktivér Touch ID for at bruge automatisk udfyldning";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Annullér";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Lås op for at bruge gemte logins";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Flere muligheder";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Brug gemt login?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "for '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Ingen resultater";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Dette vil gemme et ekstra login for dette websted.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logins gemmes kun sikkert på denne enhed og kan administreres fra menuen Automatisk udfyldning i Indstillinger.";
+"autofill.save-login.new-user.message" = "DuckDuckGo gemmer dette login sikkert på din enhed.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Skal DuckDuckGo gemme dit login?";

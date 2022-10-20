@@ -91,6 +91,7 @@ struct AutofillLoginPromptView: View {
     var messageView: some View {
         Text(viewModel.message)
             .font(Const.Fonts.title)
+            .minimumScaleFactor(0.5)
             .foregroundColor(Const.Colors.PrimaryTextColor)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Const.Size.CTAButtonMaxHeight)

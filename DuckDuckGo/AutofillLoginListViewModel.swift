@@ -127,6 +127,10 @@ final class AutofillLoginListViewModel: ObservableObject {
         authenticator.authenticate(completion: completion)
     }
 
+    func authenticateInvalidateContext() {
+        authenticator.invalidateContext()
+    }
+
     func rowsInSection(_ section: Int) -> Int {
         switch self.sections[section] {
         case .enableAutofill:

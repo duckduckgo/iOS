@@ -93,7 +93,7 @@ class EnableAutofillSettingsTableViewCell: UITableViewCell {
             titleLabel.topAnchor.constraint(equalTo: margins.topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: toggleSwitch.leadingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: toggleSwitch.leadingAnchor, constant: -8),
             titleLabel.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
             
             toggleSwitch.centerYAnchor.constraint(equalTo: margins.centerYAnchor),

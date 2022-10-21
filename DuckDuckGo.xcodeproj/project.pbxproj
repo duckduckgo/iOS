@@ -7195,7 +7195,7 @@
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit";
 			requirement = {
 				kind = revision;
-				revision = 2517af075f4ce41a1704982917b0bd321d416ffb;
+				revision = efff2e44f0ff893bd9935058830d04413b780811;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

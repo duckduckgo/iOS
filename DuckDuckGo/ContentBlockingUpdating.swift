@@ -97,10 +97,7 @@ public final class ContentBlockingUpdating {
         self.userContentBlockingAssets = $bufferedValue
             .compactMap { $0 } // drop initial nil
             .map { value in
-                UserContentController.ContentBlockingAssets(contentRuleLists: value.rulesUpdate.rules
-                                                                .reduce(into: [String: WKContentRuleList](), { result, rules in
-                                                                    result[rules.name] = rules.rulesList
-                                                                }),
+                UserContentController.ContentBlockingAssets(globalRuleLists: value.rulesUpdate.rules,
                                                             userScripts: UserScripts(with: value.sourceProvider),
                                                             updateEvent: value.rulesUpdate)
             }

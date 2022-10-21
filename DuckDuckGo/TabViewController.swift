@@ -2104,15 +2104,30 @@ extension TabViewController: AdClickAttributionLogicDelegate {
     func attributionLogic(_ logic: AdClickAttributionLogic,
                           didRequestRuleApplication rules: ContentBlockerRulesManager.Rules?,
                           forVendor vendor: String?) {
-        guard ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) else {
-            userContentController.replaceAttributedList(with: nil)
+        let attributedTempListName = AdClickAttributionRulesProvider.Constants.attributedTempRuleListName
+
+        guard ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking)
+        else {
+            userContentController.removeLocalContentRuleList(withIdentifier: attributedTempListName)
+            contentBlockerUserScript?.currentAdClickAttributionVendor = nil
+            contentBlockerUserScript?.supplementaryTrackerData = []
             return
         }
 
-        userContentController.replaceAttributedList(with: rules?.rulesList)
-
         contentBlockerUserScript?.currentAdClickAttributionVendor = vendor
         if let rules = rules {
+
+            let globalListName = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
+            let globalAttributionListName = AdClickAttributionRulesSplitter.blockingAttributionRuleListName(forListNamed: globalListName)
+
+            if vendor != nil {
+                userContentController.installLocalContentRuleList(rules.rulesList, identifier: attributedTempListName)
+                try? userContentController.disableGlobalContentRuleList(withIdentifier: globalAttributionListName)
+            } else {
+                userContentController.removeLocalContentRuleList(withIdentifier: attributedTempListName)
+                try? userContentController.enableGlobalContentRuleList(withIdentifier: globalAttributionListName)
+            }
+
             contentBlockerUserScript?.supplementaryTrackerData = [rules.trackerData]
         } else {
             contentBlockerUserScript?.supplementaryTrackerData = []

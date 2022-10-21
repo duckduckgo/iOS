@@ -6966,7 +6966,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/privacy-dashboard";
 			requirement = {
-				branch = main;
+				branch = shane/esm;
 				kind = branch;
 			};
 		};

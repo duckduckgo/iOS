@@ -191,7 +191,6 @@ class TabViewController: UIViewController {
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
-    private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
     private var findInPageScript = FindInPageUserScript()
     private var fullScreenVideoScript = FullScreenVideoUserScript()
@@ -369,10 +368,6 @@ class TabViewController: UIViewController {
         if PreserveLogins.shared.loginDetectionEnabled {
             loginFormDetectionScript.delegate = self
             userScripts.append(loginFormDetectionScript)
-        }
-        
-        if appSettings.sendDoNotSell {
-            userScripts.append(doNotSellScript)
         }
         
         faviconScript.delegate = self

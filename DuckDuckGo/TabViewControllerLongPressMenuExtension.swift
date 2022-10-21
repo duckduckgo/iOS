@@ -45,40 +45,7 @@ extension TabViewController {
 
         return UIMenu(title: url.host?.droppingWwwPrefix() ?? "", children: items + providedElements)
     }
-    
-    func buildLongPressMenu(atPoint point: Point, forUrl url: URL) -> UIAlertController {
-        let alert = UIAlertController(title: nil, message: makeMessage(from: url), preferredStyle: .actionSheet)
-        alert.overrideUserInterfaceStyle()
-        alert.addAction(title: UserText.actionNewTabForUrl) { [weak self] in
-            self?.onNewTabAction(url: url)
-        }
-        alert.addAction(title: UserText.actionNewBackgroundTabForUrl) { [weak self] in
-            self?.onBackgroundTabAction(url: url)
-        }
-        alert.addAction(title: UserText.actionOpen) { [weak self] in
-            self?.onOpenAction(forUrl: url)
-        }
-        alert.addAction(title: UserText.actionCopy) { [weak self] in
-            self?.onCopyAction(forUrl: url)
-        }
-        alert.addAction(title: UserText.actionShare) { [weak self] in
-            self?.onShareAction(forUrl: url, atPoint: point)
-        }
-        alert.addAction(title: UserText.actionCancel, style: .cancel)
-        return alert
-    }
-    
-    private func makeMessage(from url: URL) -> String {
-        if var components = URLComponents(url: url, resolvingAgainstBaseURL: true) {
-            components.query = nil
-            if let newUrl = components.url {
-                return newUrl.absoluteString
-            }
-        }
-        
-        return url.absoluteString
-    }
-    
+
     private func onNewTabAction(url: URL) {
         delegate?.tab(self,
                       didRequestNewTabForUrl: url,

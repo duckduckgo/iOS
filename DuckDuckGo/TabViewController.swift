@@ -45,8 +45,7 @@ class TabViewController: UIViewController {
     @IBOutlet weak var webViewContainer: UIView!
     
     @IBOutlet var showBarsTapGestureRecogniser: UITapGestureRecognizer!
-    var longPressGestureRecognizer: UILongPressGestureRecognizer?
-    
+
     private let instrumentation = TabInstrumentation()
 
     var isLinkPreview = false
@@ -722,12 +721,7 @@ class TabViewController: UIViewController {
         Pixel.fire(pixel: .browsingMenuOpened)
         DaxDialogs.shared.resumeRegularFlow()
     }
-    
-    private func launchLongPressMenu(atPoint point: Point, forUrl url: URL) {
-        let alert = buildLongPressMenu(atPoint: point, forUrl: url)
-        present(controller: alert, fromView: webView, atPoint: point)
-    }
-    
+        
     private func openExternally(url: URL) {
         self.url = webView.url
         delegate?.tabLoadingStateDidChange(tab: self)
@@ -1902,12 +1896,6 @@ extension TabViewController: UIGestureRecognizerDelegate {
         if isShowBarsTap(gestureRecognizer) {
             return true
         }
-        if gestureRecognizer == longPressGestureRecognizer {
-            let x = Int(gestureRecognizer.location(in: webView).x)
-            let y = Int(gestureRecognizer.location(in: webView).y)
-            let url = documentScript?.getUrlAtPointSynchronously(x: x, y: y)
-            return url != nil
-        }
         return false
     }
 
@@ -1922,18 +1910,15 @@ extension TabViewController: UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherRecognizer: UIGestureRecognizer) -> Bool {
-        guard gestureRecognizer == showBarsTapGestureRecogniser || gestureRecognizer == longPressGestureRecognizer else {
+        guard gestureRecognizer == showBarsTapGestureRecogniser else {
             return false
         }
 
         if gestureRecognizer == showBarsTapGestureRecogniser,
             otherRecognizer is UITapGestureRecognizer {
             return true
-        } else if gestureRecognizer == longPressGestureRecognizer,
-            otherRecognizer is UILongPressGestureRecognizer || String(describing: otherRecognizer).contains("action=_highlightLongPressRecognized:") {
-            return true
         }
-        
+
         return false
     }
 
@@ -1965,9 +1950,6 @@ extension TabViewController: UserContentControllerDelegate {
     }
     private var findInPageScript: FindInPageUserScript? {
         userScripts?.findInPageScript
-    }
-    private var documentScript: DocumentUserScript? {
-        userScripts?.documentScript
     }
     private var contentBlockerUserScript: ContentBlockerRulesUserScript? {
         userScripts?.contentBlockerUserScript

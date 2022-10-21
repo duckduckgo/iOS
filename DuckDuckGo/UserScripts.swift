@@ -33,7 +33,6 @@ final class UserScripts: BrowserServicesKit.UserScriptsProvider {
     private(set) var faviconScript = FaviconUserScript()
     private(set) var fingerprintScript = FingerprintUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
-    private(set) var documentScript = DocumentUserScript()
     private(set) var findInPageScript = FindInPageUserScript()
     private(set) var fullScreenVideoScript = FullScreenVideoUserScript()
     private(set) var printingUserScript = PrintingUserScript()
@@ -54,7 +53,6 @@ final class UserScripts: BrowserServicesKit.UserScriptsProvider {
         textSizeUserScript,
         findInPageScript,
         navigatorPatchScript,
-        documentScript,
         surrogatesScript,
         contentBlockerUserScript,
         fingerprintScript,

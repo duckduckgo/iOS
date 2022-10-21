@@ -539,7 +539,7 @@
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/499"
                 }
             ],
-            "state": "disabled"
+            "state": "enabled"
         },
         "fingerprintingHardware": {
             "settings": {

@@ -23,6 +23,7 @@ import StoreKit
 import LocalAuthentication
 import os.log
 import BrowserServicesKit
+import ContentScopeScripts
 import SwiftUI
 
 // swiftlint:disable file_length
@@ -189,7 +190,6 @@ class TabViewController: UIViewController {
     private var contentBlockerUserScript: ContentBlockerRulesUserScript?
     private var faviconScript = FaviconUserScript()
     private var loginFormDetectionScript = LoginFormDetectionUserScript()
-    private var fingerprintScript = FingerprintUserScript()
     private var navigatorPatchScript = NavigatorSharePatchUserScript()
     private var doNotSellScript = DoNotSellUserScript()
     private var documentScript = DocumentUserScript()
@@ -347,6 +347,10 @@ class TabViewController: UIViewController {
                                                                  isDebugBuild: isDebugBuild)
         let surrogatesScript = SurrogatesUserScript(configuration: surrogatesConfig)
         autofillUserScript = createAutofillUserScript()
+        let prefs = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                           sessionKey: UUID().uuidString,
+                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
+        let contentScopeUserScript = ContentScopeUserScript(ContentBlocking.privacyConfigurationManager, properties: prefs)
 
         userScripts = [
             debugScript,
@@ -355,7 +359,7 @@ class TabViewController: UIViewController {
             navigatorPatchScript,
             surrogatesScript,
             contentBlockerRulesScript,
-            fingerprintScript,
+            contentScopeUserScript,
             faviconScript,
             fullScreenVideoScript,
             autofillUserScript,

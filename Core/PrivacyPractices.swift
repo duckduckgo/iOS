@@ -19,7 +19,7 @@
 
 import Common
 import Foundation
-import BrowserServicesKit
+import Common
 
 /// The main interface for privacy practices.  Currently uses TOSDR as its data source.
 public class PrivacyPractices {

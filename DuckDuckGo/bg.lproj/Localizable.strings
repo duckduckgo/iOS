@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Скриване на паролата";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Забрани";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Продължи да използваш";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Можете да деактивирате автоматичното попълване по всяко време в Настройки.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Искате ли да продължите да използвате автоматично попълване?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Преглед";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Данните за вход са актуализирани";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Копиране на %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Адресът е копиран";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Бележките са копирани";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Паролата е копирана";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Потребителското име е копирано";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "Адрес на уебсайта";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Вход";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Изтриване на данните за вход";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Изтриване на данните за вход";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Сигурни ли сте, че искате да изтриете тези данни за вход?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Редактиране на данните за вход";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Парола";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Заглавие";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "example.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "username@example.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Последна актуализация на данните за вход %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Име на данните за вход";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Добавяне на данни за вход";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Бележки";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Отваряне на уебсайта";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Парола";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "ОК";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Вече имате данни за вход за това потребителско име и уебсайт.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Дублирани данни за вход";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Отключете автоматичното попълване";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Потребителско име";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Данните за вход се съхраняват на сигурно място само на това устройство";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Все още няма запазени данни за вход";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Активирайте автоматичното попълване, за да започнете да запазвате данни за вход";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Отмени";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Отключване за използване на запазени данни за вход";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Затваряне";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Запазване и автоматично попълване на данните за вход";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Данните за вход за %@ са изтрити";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Търсене на данни за вход";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Автоматично попълване на данни за вход";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Задаване на лицев идентификатор";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "За защита на данните за вход с автоматично попълване се изисква лицев идентификатор и парола.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Активирайте лицев идентификатор, за да използвате автоматично попълване";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Задаване на пръстов идентификатор";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "За защита на данните за вход с автоматично попълване се изисква пръстов идентификатор и парола.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Активирайте пръстов идентификатор, за да използвате автоматично попълване";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Отмени";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Отключване за използване на запазени данни за вход";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Повече опции";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Да се използват ли запазените данни за вход?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "за '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Няма резултати";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Това действие ще запази допълнителни данни за вход за този сайт.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Данните за вход се съхраняват защитени само на това устройство и могат да се управляват от менюто за автоматично попълване в настройките.";
+"autofill.save-login.new-user.message" = "DuckDuckGo ще съхранява тези данни за вход на сигурно място на Вашето устройство.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Искате ли DuckDuckGo да запази данните за вход?";

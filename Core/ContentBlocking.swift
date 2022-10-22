@@ -21,6 +21,7 @@ import Foundation
 import BrowserServicesKit
 import Combine
 import os.log
+import Common
 
 public final class ContentBlocking {
     public static let shared = ContentBlocking()

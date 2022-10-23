@@ -6928,7 +6928,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit";
 			requirement = {
-				branch = "michal/privacy-dashboard-in-module";
+				branch = "michal/privacy-dashboard-in-module-macos-changes";
 				kind = branch;
 			};
 		};

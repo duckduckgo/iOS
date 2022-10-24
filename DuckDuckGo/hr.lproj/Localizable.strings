@@ -14,7 +14,7 @@
 "action.suggestion.autocomplete" = "Prijedlog za automatsko ispunjavanje";
 
 /* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Zabilješka";
+"action.suggestion.type.bookmark" = "Knjižna oznaka";
 
 /* Open suggested website action accessibility title */
 "action.suggestion.type.website" = "Otvori web lokaciju";

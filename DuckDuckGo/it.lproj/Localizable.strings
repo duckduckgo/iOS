@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Nascondi password";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Disabilita";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Continua a utilizzare";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "La funzione di riempimento automatico può essere disattivata in qualsiasi momento in Impostazioni.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Continuare a utilizzare il riempimento automatico?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visualizza";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Dati di accesso aggiornati";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Copia %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Indirizzo copiato";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Appunti copiati";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Password copiata";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Nome utente copiato";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL del sito Web";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Dati di accesso";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Elimina dati di accesso";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Elimina dati di accesso";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Vuoi davvero eliminare questi dati di accesso?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Modifica dati di accesso";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Password";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Titolo";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "esempio.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "username@esempio.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Ultimo aggiornamento dei dati di accesso: %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Titolo dati di accesso";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Aggiungi dati di accesso";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Note";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Apri il sito web";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Password";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Hai già creato i dati di accesso per questo nome utente e sito web.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Dati di accesso duplicati";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Sblocca la compilazione automatica";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Nome utente";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "I dati di accesso vengono salvati in modo sicuro solo su questo dispositivo";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Non ci sono ancora dati di accesso salvati";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Attiva il riempimento automatico per iniziare a salvare i dati di accesso";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Annulla";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Sblocca per utilizzare i dati di accesso salvati";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Chiudi";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Salva e compila automaticamente i dati di accesso";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Dati di accesso per %@ eliminati";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Cerca dati di accesso";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Accessi compilazione automatica";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Configurazione Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Face ID e codice di accesso sono necessari per proteggere i dati di accesso mediante riempimento automatico.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Attiva Face ID per utilizzare il riempimento automatico";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Configurazione Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID e codice di accesso sono necessari per proteggere i dati di accesso mediante riempimento automatico.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Attiva Touch ID per utilizzare il riempimento automatico";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Annulla";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Sblocca per utilizzare i dati di accesso salvati";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Altre opzioni";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Usare i dati di accesso salvati?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "per \"%@\"";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Nessun risultato";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "In questo modo vengono salvati ulteriori dati di accesso per questo sito.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "I dati di accesso sono archiviati in modo sicuro solo su questo dispositivo e possono essere gestiti dal menu Compilazione automatica, all'interno di Impostazioni.";
+"autofill.save-login.new-user.message" = "DuckDuckGo salverà in modo sicuro questi dati di accesso sul tuo dispositivo.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vuoi che DuckDuckGo salvi i dati di accesso?";

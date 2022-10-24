@@ -179,6 +179,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         notificationCenter.addObserver(self,
                                        selector: #selector(appWillMoveToBackgroundCallback),
                                        name: UIApplication.willResignActiveNotification, object: nil)
+
+        notificationCenter.addObserver(self,
+                                       selector: #selector(authenticatorInvalidateContext),
+                                       name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
     }
     
     @objc private func appWillMoveToForegroundCallback() {
@@ -187,6 +191,10 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     @objc private func appWillMoveToBackgroundCallback() {
         viewModel.lockUI()
+    }
+
+    @objc private func authenticatorInvalidateContext() {
+        viewModel.authenticateInvalidateContext()
     }
     
     private func authenticate() {
@@ -199,7 +207,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
 
     private func presentDeleteConfirmation(for title: String) {
-        ActionMessageView.present(message: UserText.autofillLoginLisLoginDeletedToastMessage(for: title),
+        ActionMessageView.present(message: UserText.autofillLoginListLoginDeletedToastMessage(for: title),
                                   actionTitle: UserText.actionGenericUndo,
                                   presentationLocation: .withoutBottomBar,
                                   onAction: {

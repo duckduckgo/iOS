@@ -84,7 +84,10 @@ final public class BookmarksImporter {
     }
 
     func parseHtml(_ htmlContent: String) async throws {
-        let document: Document = try SwiftSoup.parse(htmlContent)
+        // remove irrelevant DD tags used in older firefox and netscape bookmark files
+        let cleanedHtml = htmlContent.replacingOccurrences(of: "<DD>", with: "", options: .caseInsensitive)
+
+        let document: Document = try SwiftSoup.parse(cleanedHtml)
 
         if isDocumentInSafariFormat(document) {
             guard let newDocument = try transformSafariDocument(document: document) else {

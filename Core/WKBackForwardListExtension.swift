@@ -21,6 +21,12 @@ import WebKit
 
 public extension WKBackForwardList {
 
+    /// Returns the offset of the searched item from the Current Item
+    /// - Parameter backForwardListItem: An item to search for in the list.
+    /// - Returns: When found, returns 1-based index from the Current Item, positive for the `forwardList`,
+    ///   negative for the `backList`. If `backForwardListItem` matches the current item, returns `0`.
+    ///   If `backForwardListItem` is not in the list, returns `nil`.
+    ///   When the found index is passed to `item(at: index)` will return the searched item.
     func index(of backForwardListItem: WKBackForwardListItem) -> Int? {
         if let idx = backList.firstIndex(of: backForwardListItem) {
             return -idx - 1

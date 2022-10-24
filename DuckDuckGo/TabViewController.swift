@@ -578,12 +578,12 @@ class TabViewController: UIViewController {
     public func load(backForwardListItem: WKBackForwardListItem) {
         webView.stopLoading()
         let destinationURL = backForwardListItem.url
-        var itemIndex = webView.backForwardList.index(of: backForwardListItem)
+        let itemOffset = webView.backForwardList.index(of: backForwardListItem)
 
         scheduleNavigationExpectation(destinationURL: destinationURL,
                                       onSessionRestored: { [weak self] in
             guard let self = self,
-                  let item = itemIndex.flatMap(self.webView.backForwardList.item(at:))
+                  let item = itemOffset.flatMap(self.webView.backForwardList.item(at:))
             else {
                 self?.load(url: destinationURL)
                 return

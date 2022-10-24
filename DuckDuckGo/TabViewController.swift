@@ -737,13 +737,14 @@ class TabViewController: UIViewController {
     }
     
     public func reload(scripts: Bool) {
-        scheduleNavigationExpectation(destinationURL: webView.url)
         dismissJSAlertIfNeeded()
 
         if scripts {
             reloadUserScripts()
         }
         updateContentMode()
+        guard webView.url != nil else { return }
+        scheduleNavigationExpectation(destinationURL: webView.url)
         webView.reload()
     }
     
@@ -1540,6 +1541,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        navigationExpectationTimer = nil
 
         if let url = navigationAction.request.url, !appUrls.isDuckDuckGoSearch(url: url) {
             waitUntilRulesAreCompiled()

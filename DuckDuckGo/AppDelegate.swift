@@ -295,6 +295,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         os_log("App launched with url %s", log: lifecycleLog, type: .debug, url.absoluteString)
+        NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = false

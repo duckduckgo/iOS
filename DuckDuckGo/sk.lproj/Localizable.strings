@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skryť heslo";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Zakázať";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Používajte ďalej";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Automatické vypĺňanie môžete kedykoľvek zakázať v Nastaveniach.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Chcete naďalej používať automatické vypĺňanie?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Zobraziť";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Prihlasovacie údaje sa aktualizovali";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Kopírovať %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adresa bola skopírovaná";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Poznámky boli skopírované";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Heslo bolo skopírované";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Meno používateľa bolo skopírované";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "Adresa URL webových stránok";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Prihlásenie";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Odstrániť prihlásenie";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Odstrániť prihlásenie";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Naozaj chcete odstrániť toto prihlásenie?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Upraviť prihlásenie";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Heslo";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Názov";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "priklad.sk";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "menopouzivatela@priklad.sk";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Posledná aktualizácia prihlásenia %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Prihlasovací názov";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Pridať prihlásenie";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Poznámky";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Otvoriť webovú lokalitu";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Heslo";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Pre toto meno používateľa a webovú lokalitu už máte prihlásenie.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Duplikované prihlásenie";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Odomknutie automatického vypĺňania";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Používateľské meno";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Prihlásenia sú zabezpečene uložené iba v tomto zariadení";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Zatiaľ nie sú uložené žiadne prihlásenia";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Ak chcete začať ukladať prihlásenia, povoľte automatické vypĺňanie";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Zrušiť";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Odomknúť na použitie uložených prihlásení";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Zatvoriť";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Uložiť a automaticky vyplniť prihlásenia";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Prihlásenie pre %@ bolo odstránené";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Vyhľadávanie prihlásení";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Automatické vyplňovanie prihlasovacích údajov";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Nastavenie ID tváre";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Na ochranu prihlasovacích údajov pri automatickom vypĺňaní sa vyžaduje ID tváre a prístupový kód.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Ak chcete používať automatické vypĺňanie, povoľte ID tváre";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Nastavenie ID dotyku";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Na ochranu prihlasovacích údajov pri automatickom vypĺňaní je potrebné ID dotyku a heslo.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Ak chcete používať automatické dopĺňanie, povoľte ID dotyku";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Zrušiť";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Odomknúť na použitie uložených prihlásení";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Ďalšie možnosti";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Použiť uložené prihlásenie?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "pre „%@”";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Žiadne výsledky";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Tým sa uložia dodatočné prihlasovacie údaje pre túto lokalitu.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prihlasovacie údaje sú zabezpečene uložené len v tomto zariadení a môžete ich spravovať v ponuke Automatické vypĺňanie v Nastaveniach.";
+"autofill.save-login.new-user.message" = "DuckDuckGo zabezpečene uloží toto prihlásenie vo vašom zariadení.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Chcete, aby DuckDuckGo uložil vaše prihlasovacie údaje?";

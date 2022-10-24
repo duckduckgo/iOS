@@ -17,7 +17,6 @@
 //  limitations under the License.
 //
 
-import Common
 import XCTest
 @testable import Core
 @testable import BrowserServicesKit

@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Sisesta sisselogimisandmed automaatselt";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Järjehoidja";
+"action.title.bookmark" = "Lisa järjehoidjatesse";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Järjehoidjad";

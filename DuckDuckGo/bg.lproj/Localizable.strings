@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Автоматично попълване на данни за вход";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Отметка";
+"action.title.bookmark" = "Добавяне към отметки";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Отметки";

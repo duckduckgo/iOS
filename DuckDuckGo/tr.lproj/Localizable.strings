@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Girişleri Otomatik Doldur";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Yer imi ekle";
+"action.title.bookmark" = "Yer İmlerine Ekle";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Yer İmleri";

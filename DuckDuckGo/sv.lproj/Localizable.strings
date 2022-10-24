@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Fyll i inloggningar automatiskt";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Spara bokmärke";
+"action.title.bookmark" = "Lägg till i bokmärken";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Bokmärken";

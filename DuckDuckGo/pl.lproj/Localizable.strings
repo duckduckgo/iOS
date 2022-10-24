@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Autouzupełnianie logowania";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Zakładka";
+"action.title.bookmark" = "Dodaj do zakładek";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Zakładki";

@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Samodejno izpolnjevanje obrazcev za prijavo";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Zaznamek";
+"action.title.bookmark" = "Dodaj med zaznamke";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Zaznamki";

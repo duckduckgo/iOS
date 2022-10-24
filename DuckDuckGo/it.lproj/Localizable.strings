@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Compilazione automatica dei dati di accesso";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Segnalibro";
+"action.title.bookmark" = "Aggiungi ai segnalibri";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Segnalibri";

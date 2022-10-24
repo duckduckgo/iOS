@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Täytä kirjautumistiedot automaattisesti";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Lisää kirjanmerkki";
+"action.title.bookmark" = "Lisää kirjanmerkkeihin";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Kirjanmerkit";

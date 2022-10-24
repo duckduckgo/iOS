@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Login met automatisch invullen";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Toevoegen als bladwijzer";
+"action.title.bookmark" = "Toevoegen aan bladwijzers";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Bladwijzers";

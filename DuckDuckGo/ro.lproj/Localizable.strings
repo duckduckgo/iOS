@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Completare automată la autentificare";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Marcat";
+"action.title.bookmark" = "Adaugă la marcaje";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Semne de carte";

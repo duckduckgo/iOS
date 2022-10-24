@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Automatické vyplňování přihlašovacích údajů";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Záložka";
+"action.title.bookmark" = "Přidat do záložek";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Záložky";

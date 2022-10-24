@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Bejelentkezési adatok automatikus kitöltése";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Könyvjelző";
+"action.title.bookmark" = "Hozzáadás a könyvjelzőkhöz";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Könyvjelzők";

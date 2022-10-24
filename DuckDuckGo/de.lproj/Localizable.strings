@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Anmeldedaten automatisch ausfüllen";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Lesezeichen";
+"action.title.bookmark" = "Zu Lesezeichen hinzufügen";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Lesezeichen";

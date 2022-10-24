@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Preenchimento automático de inícios de sessão";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Marcador";
+"action.title.bookmark" = "Adicionar aos marcadores";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Marcadores";

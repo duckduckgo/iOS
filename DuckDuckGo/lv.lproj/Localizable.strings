@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Automātiski aizpildīt pieteikšanās datus";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Pievienot grāmatzīmi";
+"action.title.bookmark" = "Pievienot grāmatzīmēm";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Grāmatzīmes";

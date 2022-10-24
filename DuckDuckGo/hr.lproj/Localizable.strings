@@ -29,7 +29,7 @@
 "action.title.autofill.logins" = "Automatsko popunjavanje prijave";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Knjižna oznaka";
+"action.title.bookmark" = "Dodaj u Knjižne oznake";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Knjižne oznake";

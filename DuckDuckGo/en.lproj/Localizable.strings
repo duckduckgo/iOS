@@ -7,25 +7,13 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Undo";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Autocomplete suggestion";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Bookmark";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Search at DuckDuckGo";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Open website";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Autofill Logins";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Bookmark";
 
 /* Button: Open bookmarks list */
@@ -1272,6 +1260,18 @@ https://duckduckgo.com/mac";
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "An unknown error occurred.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Autocomplete suggestion";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Bookmark";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Search at DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Open website";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Settings";

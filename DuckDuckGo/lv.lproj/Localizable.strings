@@ -28,7 +28,7 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Automātiski aizpildīt pieteikšanās datus";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Pievienot grāmatzīmēm";
 
 /* Button: Open bookmarks list */

@@ -28,7 +28,7 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Automatické vyplňovanie prihlasovacích údajov";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Pridať medzi záložky";
 
 /* Button: Open bookmarks list */

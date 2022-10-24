@@ -40,30 +40,26 @@ public final class ContentBlockingUpdating {
     fileprivate static let shared = ContentBlockingUpdating()
 
     private typealias Update = ContentBlockerRulesManager.UpdateEvent
-    private struct BufferedValue {
-        let rulesUpdate: Update
+    struct NewContent: UserContentControllerNewContent {
+        let rulesUpdate: ContentBlockerRulesManager.UpdateEvent
         let sourceProvider: ScriptSourceProviding
-
-        init(rulesUpdate: Update, sourceProvider: ScriptSourceProviding) {
-            self.rulesUpdate = rulesUpdate
-            self.sourceProvider = sourceProvider
-        }
+        var makeUserScripts: (ScriptSourceProviding) -> UserScripts { return UserScripts.init(with:) }
     }
 
-    @Published private var bufferedValue: BufferedValue?
+    @Published private var bufferedValue: NewContent?
     private var cancellable: AnyCancellable?
 
-    private(set) var userContentBlockingAssets: AnyPublisher<UserContentController.ContentBlockingAssets, Never>!
+    private(set) var userContentBlockingAssets: AnyPublisher<NewContent, Never>!
 
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
          contentBlockerRulesManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager) {
 
-        let makeValue: (Update) -> BufferedValue = { rulesUpdate in
+        let makeValue: (Update) -> NewContent = { rulesUpdate in
             let sourceProvider = DefaultScriptSourceProvider(appSettings: appSettings,
                                                              privacyConfigurationManager: privacyConfigurationManager,
                                                              contentBlockingManager: contentBlockerRulesManager)
-            return BufferedValue(rulesUpdate: rulesUpdate, sourceProvider: sourceProvider)
+            return NewContent(rulesUpdate: rulesUpdate, sourceProvider: sourceProvider)
         }
 
         func onNotificationWithInitial(_ name: Notification.Name) -> AnyPublisher<Notification, Never> {
@@ -96,11 +92,6 @@ public final class ContentBlockingUpdating {
         // 2. Publish ContentBlockingAssets(Rules+Scripts) for WKUserContentController per subscription
         self.userContentBlockingAssets = $bufferedValue
             .compactMap { $0 } // drop initial nil
-            .map { value in
-                UserContentController.ContentBlockingAssets(globalRuleLists: value.rulesUpdate.rules,
-                                                            userScripts: UserScripts(with: value.sourceProvider),
-                                                            updateEvent: value.rulesUpdate)
-            }
             .eraseToAnyPublisher()
 
     }

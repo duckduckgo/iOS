@@ -721,7 +721,7 @@ class TabViewController: UIViewController {
         Pixel.fire(pixel: .browsingMenuOpened)
         DaxDialogs.shared.resumeRegularFlow()
     }
-        
+
     private func openExternally(url: URL) {
         self.url = webView.url
         delegate?.tabLoadingStateDidChange(tab: self)

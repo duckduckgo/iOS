@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 @testable import DuckDuckGo
 @testable import Core

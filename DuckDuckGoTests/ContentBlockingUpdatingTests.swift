@@ -71,14 +71,14 @@ class ContentBlockingUpdatingTests: XCTestCase {
         let c = updating.userContentBlockingAssets.sink { assets in
             switch (ruleList1, ruleList2) {
             case (.none, _):
-                ruleList1 = assets.contentRuleLists["test"]
+                ruleList1 = assets.rules(withName: "test")
                 e1.fulfill()
             case (.some, .none):
-                ruleList2 = assets.contentRuleLists["test"]
+                ruleList2 = assets.rules(withName: "test")
                 e2.fulfill()
             case (.some(let list1), .some(let list2)):
                 XCTAssertFalse(list1 == list2)
-                XCTAssertFalse(assets.contentRuleLists["test"] === list2)
+                XCTAssertFalse(assets.rules(withName: "test") === list2)
                 e3.fulfill()
             }
         }
@@ -98,19 +98,14 @@ class ContentBlockingUpdatingTests: XCTestCase {
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
         var ruleList: WKContentRuleList!
-        var userScripts: UserScriptsProvider!
         let c = updating.userContentBlockingAssets.sink { assets in
-            if ruleList == nil && userScripts == nil {
-                ruleList = assets.contentRuleLists["test"]
-                userScripts = assets.userScripts
+            if ruleList == nil {
+                ruleList = assets.rules(withName: "test")
                 e1.fulfill()
             } else {
                 // ruleList should not be recompiled
-                XCTAssertTrue(assets.contentRuleLists["test"] === ruleList)
+                XCTAssertTrue(assets.rules(withName: "test") === ruleList)
                 XCTAssertTrue(assets.isValid)
-                // userScripts should be rebuilt
-                XCTAssertFalse(assets.userScripts === userScripts)
-
                 e2.fulfill()
             }
         }
@@ -130,19 +125,14 @@ class ContentBlockingUpdatingTests: XCTestCase {
         var e2: XCTestExpectation!
 
         var ruleList: WKContentRuleList!
-        var userScripts: UserScriptsProvider!
         let c = updating.userContentBlockingAssets.sink { assets in
-            if ruleList == nil && userScripts == nil {
-                ruleList = assets.contentRuleLists["test"]
-                userScripts = assets.userScripts
+            if ruleList == nil {
+                ruleList = assets.rules(withName: "test")
                 e1.fulfill()
             } else {
                 // ruleList should not be recompiled
-                XCTAssertTrue(assets.contentRuleLists["test"] === ruleList)
+                XCTAssertTrue(assets.rules(withName: "test") === ruleList)
                 XCTAssertTrue(assets.isValid)
-                // userScripts should be rebuilt
-                XCTAssertFalse(assets.userScripts === userScripts)
-
                 e2.fulfill()
             }
         }
@@ -160,19 +150,14 @@ class ContentBlockingUpdatingTests: XCTestCase {
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
         var ruleList: WKContentRuleList!
-        var userScripts: UserScriptsProvider!
         let c = updating.userContentBlockingAssets.sink { assets in
-            if ruleList == nil && userScripts == nil {
-                ruleList = assets.contentRuleLists["test"]
-                userScripts = assets.userScripts
+            if ruleList == nil {
+                ruleList = assets.rules(withName: "test")
                 e1.fulfill()
             } else {
                 // ruleList should not be recompiled
-                XCTAssertTrue(assets.contentRuleLists["test"] === ruleList)
+                XCTAssertTrue(assets.rules(withName: "test") === ruleList)
                 XCTAssertTrue(assets.isValid)
-                // userScripts should be rebuilt
-                XCTAssertFalse(assets.userScripts === userScripts)
-
                 e2.fulfill()
             }
         }
@@ -190,19 +175,14 @@ class ContentBlockingUpdatingTests: XCTestCase {
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
         var ruleList: WKContentRuleList!
-        var userScripts: UserScriptsProvider!
         let c = updating.userContentBlockingAssets.sink { assets in
-            if ruleList == nil && userScripts == nil {
-                ruleList = assets.contentRuleLists["test"]
-                userScripts = assets.userScripts
+            if ruleList == nil {
+                ruleList = assets.rules(withName: "test")
                 e1.fulfill()
             } else {
                 // ruleList should not be recompiled
-                XCTAssertTrue(assets.contentRuleLists["test"] === ruleList)
+                XCTAssertTrue(assets.rules(withName: "test") === ruleList)
                 XCTAssertTrue(assets.isValid)
-                // userScripts should be rebuilt
-                XCTAssertFalse(assets.userScripts === userScripts)
-
                 e2.fulfill()
             }
         }
@@ -220,19 +200,14 @@ class ContentBlockingUpdatingTests: XCTestCase {
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
         var ruleList: WKContentRuleList!
-        var userScripts: UserScriptsProvider!
         let c = updating.userContentBlockingAssets.sink { assets in
-            if ruleList == nil && userScripts == nil {
-                ruleList = assets.contentRuleLists["test"]
-                userScripts = assets.userScripts
+            if ruleList == nil {
+                ruleList = assets.rules(withName: "test")
                 e1.fulfill()
             } else {
                 // ruleList should not be recompiled
-                XCTAssertTrue(assets.contentRuleLists["test"] === ruleList)
+                XCTAssertTrue(assets.rules(withName: "test") === ruleList)
                 XCTAssertTrue(assets.isValid)
-                // userScripts should be rebuilt
-                XCTAssertFalse(assets.userScripts === userScripts)
-
                 e2.fulfill()
             }
         }
@@ -250,19 +225,14 @@ class ContentBlockingUpdatingTests: XCTestCase {
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
         var ruleList: WKContentRuleList!
-        var userScripts: UserScriptsProvider!
         let c = updating.userContentBlockingAssets.sink { assets in
-            if ruleList == nil && userScripts == nil {
-                ruleList = assets.contentRuleLists["test"]
-                userScripts = assets.userScripts
+            if ruleList == nil {
+                ruleList = assets.rules(withName: "test")
                 e1.fulfill()
             } else {
                 // ruleList should not be recompiled
-                XCTAssertTrue(assets.contentRuleLists["test"] === ruleList)
+                XCTAssertTrue(assets.rules(withName: "test") === ruleList)
                 XCTAssertTrue(assets.isValid)
-                // userScripts should be rebuilt
-                XCTAssertFalse(assets.userScripts === userScripts)
-
                 e2.fulfill()
             }
         }
@@ -282,7 +252,7 @@ class ContentBlockingUpdatingTests: XCTestCase {
         var update1received = false
         let e1 = expectation(description: "should post initial update")
         var e2: XCTestExpectation!
-        let c = updating.userContentBlockingAssets.map { $0.updateEvent.completionTokens }.sink { tokens in
+        let c = updating.userContentBlockingAssets.map { $0.rulesUpdate.completionTokens }.sink { tokens in
             if !update1received {
                 XCTAssertEqual(tokens, update1.completionTokens)
                 update1received = true
@@ -342,9 +312,13 @@ class ContentBlockingUpdatingTests: XCTestCase {
 
 }
 
-extension UserContentController.ContentBlockingAssets {
+extension UserContentControllerNewContent {
+    func rules(withName name: String) -> WKContentRuleList? {
+        rulesUpdate.rules.first(where: { $0.name == name })?.rulesList
+    }
+
     var isValid: Bool {
-        return self.contentRuleLists["test"] != nil && self.userScripts.userScripts.isEmpty == false
+        return rules(withName: "test") != nil
     }
 }
 

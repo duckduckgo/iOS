@@ -21,6 +21,8 @@ import Foundation
 @testable import DuckDuckGo
 
 class AppSettingsMock: AppSettings {
+    var autofillCredentialsEnabled: Bool = false
+
     var autocomplete: Bool = true
 
     var currentThemeName: DuckDuckGo.ThemeName = .systemDefault

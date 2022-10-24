@@ -21,6 +21,8 @@ import BrowserServicesKit
 import Combine
 
 final class ContentBlockerRulesManagerMock: ContentBlockerRulesManagerProtocol {
+    var currentMainRules: BrowserServicesKit.ContentBlockerRulesManager.Rules?
+    var currentAttributionRules: BrowserServicesKit.ContentBlockerRulesManager.Rules?
 
     var updatesPublisher: AnyPublisher<ContentBlockerRulesManager.UpdateEvent, Never> {
         updatesSubject.eraseToAnyPublisher()

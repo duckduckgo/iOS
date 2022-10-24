@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+import Common
 import Foundation
 import BrowserServicesKit
 @testable import Core

@@ -205,11 +205,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
         viewModel.authenticate {[weak self] error in
             guard let self = self else { return }
             if error != nil {
-                if error == .noAuthAvailable(.faceId) {
-                    self.noAuthAvailableView.viewState = .faceId
-                } else if error == .noAuthAvailable(.touchId) {
-                    self.noAuthAvailableView.viewState = .touchId
-                } else {
+                if error != .noAuthAvailable {
                     self.delegate?.autofillLoginSettingsListViewControllerDidFinish(self)
                 }
             }

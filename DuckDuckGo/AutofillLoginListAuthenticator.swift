@@ -24,7 +24,7 @@ import Core
 
 final class AutofillLoginListAuthenticator {
     enum AuthError: Equatable {
-        case noAuthAvailable(AutofillNoAuthAvailableView.ViewState)
+        case noAuthAvailable
         case failedToAuthenticate
     }
     
@@ -66,30 +66,13 @@ final class AutofillLoginListAuthenticator {
                         completion?(nil)
                     } else {
                         os_log("Failed to authenticate: %s", log: generalLog, type: .debug, error?.localizedDescription ?? "nil error")
-                        switch error {
-                        case LAError.biometryNotAvailable?, LAError.biometryNotEnrolled?:
-                            self.handleBiometryType(self.context.biometryType, completion: completion)
-                        default:
-                            completion?(.failedToAuthenticate)
-                        }
+                        completion?(.failedToAuthenticate)
                     }
                 }
             }
         } else {
-            handleBiometryType(context.biometryType, completion: completion)
-        }
-    }
-
-    private func handleBiometryType(_ biometryType: LABiometryType, completion: ((AuthError?) -> Void)?) {
-        state = .notAvailable
-
-        switch context.biometryType {
-        case .faceID:
-            completion?(.noAuthAvailable(.faceId))
-        case .touchID:
-            completion?(.noAuthAvailable(.touchId))
-        default:
-            completion?(.noAuthAvailable(.faceId))
+            state = .notAvailable
+            completion?(.noAuthAvailable)
         }
     }
 

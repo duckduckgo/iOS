@@ -91,7 +91,7 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        authenticate()
+        authenticator.authenticate()
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -172,19 +172,6 @@ class AutofillLoginDetailsViewController: UIViewController {
                 self?.updateAuthViews()
             }
             .store(in: &cancellables)
-    }
-
-    private func authenticate() {
-        authenticator.authenticate {[weak self] error in
-            guard let self = self else { return }
-            if error != nil {
-                if error == .noAuthAvailable(.faceId) {
-                    self.noAuthAvailableView.viewState = .faceId
-                } else if error == .noAuthAvailable(.touchId) {
-                    self.noAuthAvailableView.viewState = .touchId
-                }
-            }
-        }
     }
 
     private func updateAuthViews() {

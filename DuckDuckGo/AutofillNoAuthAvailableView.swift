@@ -21,22 +21,10 @@ import UIKit
 
 class AutofillNoAuthAvailableView: UIView {
 
-    enum ViewState: Equatable {
-        case faceId
-        case touchId
-    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         installSubviews()
         installConstraints()
-    }
-
-    var viewState: ViewState = .faceId {
-        didSet {
-            updateLabels(with: viewState)
-            refreshConstraints()
-        }
     }
 
     required init?(coder: NSCoder) {
@@ -62,7 +50,7 @@ class AutofillNoAuthAvailableView: UIView {
         label.textAlignment = .center
         label.lineBreakMode = .byWordWrapping
         label.textColor = .gray90
-        label.text = "Enable Face ID to use Autofill"
+        label.text = UserText.autofillNoAuthViewTitle
 
         return label
     }()
@@ -74,23 +62,9 @@ class AutofillNoAuthAvailableView: UIView {
         label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .footnote)
         label.textColor = .gray70
-        label.text = "Face ID & Passcode are required to protect your Autofill Login details."
+        label.text = UserText.autofillNoAuthViewSubtitle
 
         return label
-    }()
-
-    private lazy var button: UIButton = {
-        let button = UIButton(type: .system)
-        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .footnote)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: descriptor.pointSize, weight: .semibold)
-        button.setTitle("Set Up Face ID", for: .normal)
-        button.addAction(UIAction(handler: { [weak self] _ in
-            if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
-                UIApplication.shared.open(appSettings)
-            }
-        }), for: .touchUpInside)
-
-        return button
     }()
 
     private lazy var lockImageView: UIImageView = {
@@ -104,7 +78,7 @@ class AutofillNoAuthAvailableView: UIView {
 
     private lazy var stackContentView: UIStackView = {
         let spacerView = UIView()
-        let stackView = UIStackView(arrangedSubviews: [title, subtitle, button, lockImageView])
+        let stackView = UIStackView(arrangedSubviews: [title, subtitle, lockImageView])
         stackView.axis = .vertical
 
         return stackView
@@ -168,19 +142,6 @@ class AutofillNoAuthAvailableView: UIView {
         addSubview(outerStackContentView)
     }
 
-    private func updateLabels(with state: AutofillNoAuthAvailableView.ViewState) {
-        switch state {
-        case .faceId:
-            title.text = "Enable Face ID to use Autofill"
-            subtitle.text = "Face ID & Passcode are required to protect your Autofill Login details."
-            button.setTitle("Set Up Face ID", for: .normal)
-        case .touchId:
-            title.text = "Enable Touch ID to use Autofill"
-            subtitle.text = "Touch ID & Passcode are required to protect your Autofill Login details."
-            button.setTitle("Set Up Touch ID", for: .normal)
-        }
-    }
-
     private func installConstraints() {
         stackContentView.translatesAutoresizingMaskIntoConstraints = false
         outerStackContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -202,7 +163,6 @@ class AutofillNoAuthAvailableView: UIView {
         } else if isIPad {
             NSLayoutConstraint.activate([heightConstraint, leadingConstraint, trailingConstraint, centerYConstraint])
             stackContentView.spacing = 16
-            stackContentView.setCustomSpacing(58, after: button)
             outerStackContentView.spacing = 16
         } else {
             NSLayoutConstraint.deactivate([centerYConstraint, widthConstraintIPhonePortrait, heightConstraint])

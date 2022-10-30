@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import BrowserServicesKit
 
 // swiftlint:disable file_length
 // swiftlint:disable identifier_name
@@ -195,11 +196,10 @@ extension Pixel {
         case downloadsSharingPredownloadedLocalFile
         
         case downloadPreparingToStart
-        case downloadAttemptToOpenBLOB
+        case downloadAttemptToOpenBLOBviaJS
         
         case jsAlertShown
-        case jsAlertBlocked
-        
+
         case featureFlaggingInternalUserAuthenticated
 
         case autofillLoginsSaveLoginModalOnboardingDisplayed
@@ -221,14 +221,31 @@ extension Pixel {
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable
+        case autofillLoginsAutopromptDismissed
+        
+        case autofillLoginsFillLoginInlineDisablePromptShown
+        case autofillLoginsFillLoginInlineDisablePromptAutofillKept
+        case autofillLoginsFillLoginInlineDisablePromptAutofillDisabled
 
         case autofillSettingsOpened
+        case autofillLoginsSettingsEnabled
+        case autofillLoginsSettingsDisabled
+        case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
 
         case secureVaultInitError
         case secureVaultError
         
         case secureVaultInitFailedError
         case secureVaultFailedToOpenDatabaseError
+        
+        // The pixels are for debugging a specific problem and should be removed when resolved
+        // https://app.asana.com/0/0/1202498365125439/f
+        case secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded
+        
+        // MARK: Ad Click Attribution pixels
+        
+        case adClickAttributionDetected
+        case adClickAttributionActive
         
         // MARK: SERP pixels
         
@@ -243,6 +260,14 @@ extension Pixel {
         
         case macBrowserWaitlistNotificationShown
         case macBrowserWaitlistNotificationLaunched
+
+        // MARK: remote messaging pixels
+
+        case remoteMessageShown
+        case remoteMessageShownUnique
+        case remoteMessageDismissed
+        case remoteMessageShownPrimaryActionClicked
+        case remoteMessageShownSecondaryActionClicked
         
         // MARK: debug pixels
         
@@ -250,10 +275,17 @@ extension Pixel {
         case dbRemovalError
         case dbDestroyError
         case dbDestroyFileError
+        case dbContainerInitializationError
         case dbInitializationError
         case dbSaveExcludedHTTPSDomainsError
         case dbSaveBloomFilterError
-        
+        case dbRemoteMessagingSaveConfigError
+        case dbRemoteMessagingInvalidateConfigError
+        case dbRemoteMessagingSaveMessageError
+        case dbRemoteMessagingUpdateMessageShownError
+        case dbRemoteMessagingUpdateMessageStatusError
+        case dbRemoteMessagingDeleteScheduledMessageError
+
         case configurationFetchInfo
         
         case trackerDataParseFailed
@@ -264,11 +296,8 @@ extension Pixel {
         case privacyConfigurationParseFailed
         case privacyConfigurationCouldNotBeLoaded
         
-        case contentBlockingTDSCompilationFailed
-        case contentBlockingTempListCompilationFailed
-        case contentBlockingAllowListCompilationFailed
-        case contentBlockingUnpSitesCompilationFailed
-        case contentBlockingFallbackCompilationFailed
+        case contentBlockingCompilationFailed(listType: CompileRulesListType,
+                                              component: ContentBlockerDebugEvents.Component)
         
         case contentBlockingErrorReportingIssue
         case contentBlockingCompilationTime
@@ -292,8 +321,38 @@ extension Pixel {
         case cachedTabPreviewsExceedsTabCount
         case cachedTabPreviewRemovalError
         
+        case missingDownloadedFile
+        case unhandledDownload
+        
         case compilationResult(result: CompileRulesResult, waitTime: CompileRulesWaitTime, appState: AppState)
         
+        case emailAutofillKeychainError
+
+        case adAttributionGlobalAttributedRulesDoNotExist
+        case adAttributionCompilationFailedForAttributedRulesList
+
+        case adAttributionLogicUnexpectedStateOnInheritedAttribution
+        case adAttributionLogicUnexpectedStateOnRulesCompiled
+        case adAttributionLogicUnexpectedStateOnRulesCompilationFailed
+        case adAttributionDetectionHeuristicsDidNotMatchDomain
+        case adAttributionDetectionInvalidDomainInParameter
+        case adAttributionLogicRequestingAttributionTimedOut
+        case adAttributionLogicWrongVendorOnSuccessfulCompilation
+        case adAttributionLogicWrongVendorOnFailedCompilation
+        
+        case debugBookmarkOrphanFolderNew
+        case debugBookmarkTopLevelMissingNew
+        
+        case debugFavoriteOrphanFolderNew
+        case debugFavoriteTopLevelMissingNew
+        
+        case debugCouldNotFixBookmarkFolder
+        case debugCouldNotFixFavoriteFolder
+        
+        case debugMissingTopFolderFixHasFavorites
+        case debugMissingTopFolderFixHasBookmarks
+        
+        case debugCantSaveBookmarkFix
     }
     
 }
@@ -473,11 +532,10 @@ extension Pixel.Event {
         case .downloadsSharingPredownloadedLocalFile: return "m_downloads_sharing_predownloaded_local_file"
             
         case .downloadPreparingToStart: return "m_download_preparing_to_start"
-        case .downloadAttemptToOpenBLOB: return "m_download_attempt_to_open_blob"
-            
+        case .downloadAttemptToOpenBLOBviaJS: return "m_download_attempt_to_open_blob_js"
+
         case .jsAlertShown: return "m_js_alert_shown"
-        case .jsAlertBlocked: return "m_js_alert_blocked"
-            
+
         case .featureFlaggingInternalUserAuthenticated: return "m_internal-user_authenticated"
 
         case .autofillLoginsSaveLoginModalOnboardingDisplayed: return "m_autofill_logins_save_login_onboarding_inline_displayed"
@@ -502,14 +560,31 @@ extension Pixel.Event {
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_failed"
         case .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable:
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_unavailable"
+        case .autofillLoginsAutopromptDismissed:
+            return "m_autofill_logins_autoprompt_dismissed"
+            
+        case .autofillLoginsFillLoginInlineDisablePromptShown: return "m_autofill_logins_save_disable-prompt_shown"
+        case .autofillLoginsFillLoginInlineDisablePromptAutofillKept: return "m_autofill_logins_save_disable-prompt_autofill-kept"
+        case .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled: return "m_autofill_logins_save_disable-prompt_autofill-disabled"
             
         case .autofillSettingsOpened: return "m_autofill_settings_opened"
+        case .autofillLoginsSettingsEnabled: return "m_autofill_logins_settings_enabled"
+        case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
+        case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
+            return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
             
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"
             
         case .secureVaultInitFailedError: return "m_secure-vault_error_init-failed"
         case .secureVaultFailedToOpenDatabaseError: return "m_secure-vault_error_failed-to-open-database"
+            
+        case .secureVaultIsEnabledCheckedWhenEnabledAndBackgrounded: return "m_secure-vault_is-enabled-checked_when-enabled-and-backgrounded"
+            
+        // MARK: Ad Click Attribution pixels
+            
+        case .adClickAttributionDetected: return "m_ad_click_detected"
+        case .adClickAttributionActive: return "m_ad_click_active"
             
         // MARK: SERP pixels
             
@@ -524,17 +599,32 @@ extension Pixel.Event {
             
         case .macBrowserWaitlistNotificationShown: return "m_notification_shown_mac_waitlist"
         case .macBrowserWaitlistNotificationLaunched: return "m_notification_launch_mac_waitlist"
-            
+
+        // MARK: remote messaging pixels
+
+        case .remoteMessageShown: return "m_remote_message_shown"
+        case .remoteMessageShownUnique: return "m_remote_message_shown_unique"
+        case .remoteMessageDismissed: return "m_remote_message_dismissed"
+        case .remoteMessageShownPrimaryActionClicked: return "m_remote_message_primary_action_clicked"
+        case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
+
         // MARK: debug pixels
             
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"
         case .dbDestroyFileError: return "m_d_dbdf"
+        case .dbContainerInitializationError: return "m_d_database_container_error"
         case .dbInitializationError: return "m_d_dbie"
         case .dbSaveExcludedHTTPSDomainsError: return "m_d_dbsw"
         case .dbSaveBloomFilterError: return "m_d_dbsb"
-            
+        case .dbRemoteMessagingSaveConfigError: return "m_d_db_rm_save_config"
+        case .dbRemoteMessagingInvalidateConfigError: return "m_d_db_rm_invalidate_config"
+        case .dbRemoteMessagingSaveMessageError: return "m_d_db_rm_save_message"
+        case .dbRemoteMessagingUpdateMessageShownError: return "m_d_db_rm_update_message_shown"
+        case .dbRemoteMessagingUpdateMessageStatusError: return "m_d_db_rm_update_message_status"
+        case .dbRemoteMessagingDeleteScheduledMessageError: return "m_d_db_rm_delete_scheduled_message"
+
         case .configurationFetchInfo: return "m_d_cfgfetch"
             
         case .trackerDataParseFailed: return "m_d_tds_p"
@@ -545,11 +635,8 @@ extension Pixel.Event {
         case .privacyConfigurationParseFailed: return "m_d_pc_p"
         case .privacyConfigurationCouldNotBeLoaded: return "m_d_pc_l"
             
-        case .contentBlockingTDSCompilationFailed: return "m_d_cb_ct"
-        case .contentBlockingTempListCompilationFailed: return "m_d_cb_cl"
-        case .contentBlockingAllowListCompilationFailed: return "m_d_cb_ca"
-        case .contentBlockingUnpSitesCompilationFailed: return "m_d_cb_cu"
-        case .contentBlockingFallbackCompilationFailed: return "m_d_cb_cf"
+        case .contentBlockingCompilationFailed(let listType, let component):
+            return "m_d_content_blocking_\(listType)_\(component)_compilation_failed"
             
         case .contentBlockingErrorReportingIssue: return "m_content_blocking_error_reporting_issue"
         case .contentBlockingCompilationTime: return "m_content_blocking_compilation_time"
@@ -573,8 +660,40 @@ extension Pixel.Event {
         case .cachedTabPreviewsExceedsTabCount: return "m_d_tpetc"
         case .cachedTabPreviewRemovalError: return "m_d_tpre"
             
+        case .missingDownloadedFile: return "m_d_missing_downloaded_file"
+        case .unhandledDownload: return "m_d_unhandled_download"
+            
         case .compilationResult(result: let result, waitTime: let waitTime, appState: let appState):
             return "m_compilation_result_\(result)_time_\(waitTime)_state_\(appState)"
+            
+        case .emailAutofillKeychainError: return "m_email_autofill_keychain_error"
+        
+        case .debugBookmarkOrphanFolderNew: return "m_d_bookmark_orphan_folder_new"
+        case .debugBookmarkTopLevelMissingNew: return "m_d_bookmark_top_level_missing_new"
+        case .debugCouldNotFixBookmarkFolder: return "m_d_cannot_fix_bookmark_folder"
+        case .debugMissingTopFolderFixHasBookmarks: return "m_d_missing_top_folder_has_bookmarks"
+
+        case .debugFavoriteOrphanFolderNew: return "m_d_favorite_orphan_folder_new"
+        case .debugFavoriteTopLevelMissingNew: return "m_d_favorite_top_level_missing_new"
+        case .debugCouldNotFixFavoriteFolder: return "m_d_cannot_fix_favorite_folder"
+        case .debugMissingTopFolderFixHasFavorites: return "m_d_missing_top_folder_has_favorites"
+            
+        case .debugCantSaveBookmarkFix: return "m_d_cant_save_bookmark_fix"
+            
+        
+        // MARK: Ad Attribution
+            
+        case .adAttributionGlobalAttributedRulesDoNotExist: return "m_attribution_global_attributed_rules_do_not_exist"
+        case .adAttributionCompilationFailedForAttributedRulesList: return "m_attribution_compilation_failed_for_attributed_rules_list"
+            
+        case .adAttributionLogicUnexpectedStateOnInheritedAttribution: return "m_attribution_unexpected_state_on_inherited_attribution"
+        case .adAttributionLogicUnexpectedStateOnRulesCompiled: return "m_attribution_unexpected_state_on_rules_compiled"
+        case .adAttributionLogicUnexpectedStateOnRulesCompilationFailed: return "m_attribution_unexpected_state_on_rules_compilation_failed"
+        case .adAttributionDetectionInvalidDomainInParameter: return "m_attribution_invalid_domain_in_parameter"
+        case .adAttributionDetectionHeuristicsDidNotMatchDomain: return "m_attribution_heuristics_did_not_match_domain"
+        case .adAttributionLogicRequestingAttributionTimedOut: return "m_attribution_logic_requesting_attribution_timed_out"
+        case .adAttributionLogicWrongVendorOnSuccessfulCompilation: return "m_attribution_logic_wrong_vendor_on_successful_compilation"
+        case .adAttributionLogicWrongVendorOnFailedCompilation: return "m_attribution_logic_wrong_vendor_on_failed_compilation"
         }
         
     }
@@ -634,5 +753,15 @@ extension Pixel.Event {
         case regular
         
     }
+        
+    public enum CompileRulesListType: String, CustomStringConvertible {
     
+        public var description: String { rawValue }
+        
+        case tds
+        case blockingAttribution
+        case attributed
+        case unknown
+        
+    }
 }

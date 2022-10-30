@@ -70,9 +70,15 @@ final class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
         return speechRecognizer?.supportsOnDeviceRecognition ?? false
     }
     
+    static var recordPermission: AVAudioSession.RecordPermission {
+        return AVAudioSession.sharedInstance().recordPermission
+    }
+    
     static func requestMicAccess(withHandler handler: @escaping (Bool) -> Void) {
         AVAudioSession.sharedInstance().requestRecordPermission { authorized in
-            handler(authorized)
+            DispatchQueue.main.async {
+                handler(authorized)
+            }
         }
     }
     
@@ -138,6 +144,10 @@ final class SpeechRecognizer: NSObject, SpeechRecognizerProtocol {
             try audioEngine.start()
             
             self.recognitionTask = self.speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] (result, error) in
+                guard let recognitionTask = self?.recognitionTask, !recognitionTask.isCancelled else {
+                    return
+                }
+                
                 var isFinal = false
                 var transcription: String?
                 

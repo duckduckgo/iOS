@@ -60,6 +60,12 @@ public struct UserText {
     public static let actionGenericUndo = NSLocalizedString("action.generic.undo", value: "Undo", comment: "Button label for Undo action")
     public static let actionEditBookmark = NSLocalizedString("action.title.edit.bookmark", value: "Edit Bookmark", comment: "Edit Bookmark action")
     public static let actionRemoveFavorite = NSLocalizedString("action.title.remove.favorite", value: "Remove Favorite", comment: "Remove Favorite action")
+
+    public static let suggestionOpenWebsite = NSLocalizedString("action.suggestion.open.website", value: "Open website", comment: "Open suggested website action accessibility title")
+    public static let suggestionOpenBookmark = NSLocalizedString("action.suggestion.open.bookmark", value: "Bookmark", comment: "Open suggested bookmark action accessibility title")
+    public static let suggestionSearchFor = NSLocalizedString("action.suggestion.search", value: "Search at DuckDuckGo", comment: "Search for suggestion action accessibility title")
+    public static let suggestionAutocomplete = NSLocalizedString("action.suggestion.autocomplete", value: "Autocomplete suggestion", comment: "Autocomplete selected suggestion into the Address Bar button accessibility label")
+
     public static let alertSaveBookmark = NSLocalizedString("alert.title.save.bookmark", value: "Save Bookmark", comment: "Save Bookmark action")
     public static let alertSaveFavorite = NSLocalizedString("alert.title.save.favorite", value: "Save Favorite", comment: "Save Favorite action")
     public static let alertBookmarkAllTitle = NSLocalizedString("alert.title.bookmarkAll", value: "Bookmark All Tabs?", comment: "Question from confirmation dialog")
@@ -84,9 +90,19 @@ public struct UserText {
     public static let privacyProtectionPrivacyGrade = NSLocalizedString("privacy.protection.main.grade", value: "PRIVACY GRADE", comment: "")
     public static let privacyProtectionEnhanced = NSLocalizedString("privacy.protection.main.enhanced", value: "ENHANCED FROM $1 TO $2", comment: "$1 and $2 are grades - letters. Example: Enhanced from D to B")
     public static let privacyProtectionTrackersBlocked = NSLocalizedString("privacy.protection.trackers.blocked", comment: "Do not translate - stringsdict entry")
+    public static let privacyProtectionTrackersBlockedNew = NSLocalizedString("privacy.protection.trackers.blocked.new", value: "Requests Blocked from Loading", comment: "")
+    public static let privacyProtectionNoTrackersBlocked = NSLocalizedString("privacy.protection.trackers.not.blocked", value: "No Tracking Requests Blocked", comment: "")
     public static let privacyProtectionTrackersFound = NSLocalizedString("privacy.protection.trackers.found", comment: "Do not translate - stringsdict entry")
+    public static let privacyProtectionTrackersNotFound = NSLocalizedString("privacy.protection.trackers.not.found", value: "No Tracking Requests Found", comment: "")
+    public static let privacyProtectionTrackersFoundNew = NSLocalizedString("privacy.protection.trackers.found.new", value: "Tracking Requests Found", comment: "")
+    public static let privacyProtectionFirstPartyTrackersLoaded = NSLocalizedString("privacy.protection.first.party.trackers.loaded", comment: "Do not translate - stringsdict entry")
+    public static let privacyProtectionOtherDomainsLoaded = NSLocalizedString("privacy.protection.other.domains.loaded", comment: "Do not translate - stringsdict entry")
+    public static let privacyProtectionOtherThirdPartyDomainsLoaded = NSLocalizedString("privacy.protection.other.third.party.domains.loaded", value: "Third-Party Requests Loaded", comment: "")
+    public static let privacyProtectionNoOtherThirdPartyDomainsLoaded = NSLocalizedString("privacy.protection.no.other.third.party.domains.loaded", value: "No Third-Party Requests Loaded", comment: "")
     public static let privacyProtectionMajorTrackersBlocked = NSLocalizedString("privacy.protection.major.trackers.blocked", comment: "Major trackers blocked")
     public static let privacyProtectionMajorTrackersFound = NSLocalizedString("privacy.protection.major.trackers.found", comment: "Major trackers found")
+    public static let privacyProtectionMajorTrackersNotFound = NSLocalizedString("privacy.protection.major.trackers.not.found", value: "No Major Tracker Networks Found", comment: "")
+    public static let privacyProtectionMajorTrackersFoundNew = NSLocalizedString("privacy.protection.major.trackers.found.new", value: "Major Tracker Networks Found", comment: "")
     
     public static let privacyProtectionTOSUnknown = NSLocalizedString("privacy.protection.tos.unknown", value: "Unknown Privacy Practices", comment: "")
     public static let privacyProtectionTOSGood = NSLocalizedString("privacy.protection.tos.good", value: "Good Privacy Practices", comment: "")
@@ -125,6 +141,7 @@ public struct UserText {
     
     public static let ppEncryptionEncryptedHeading = NSLocalizedString("privacy.protection.encryption.encrypted.heading", value: "Encrypted Connection", comment: "")
     public static let ppEncryptionForcedHeading = NSLocalizedString("privacy.protection.encryption.forced.heading", value: "Forced Encryption", comment: "")
+    public static let ppEncryptionForcedHeadingNew = NSLocalizedString("privacy.protection.encryption.forced.heading.new", value: "Encrypted Connection", comment: "")
     public static let ppEncryptionMixedHeading = NSLocalizedString("privacy.protection.encryption.mixed.heading", value: "Mixed Encryption", comment: "")
     public static let ppEncryptionUnencryptedHeading = NSLocalizedString("privacy.protection.encryption.unencrypted.heading", value: "Unencrypted Connection", comment: "")
     
@@ -137,7 +154,26 @@ public struct UserText {
     
     public static let ppTopOffendersInfo = NSLocalizedString("privacy.protection.top.offenders.info", value: "These stats are only stored on your device, and are not sent anywhere. Ever.", comment: "")
     
-    public static let ppTrackerNetworksInfo = NSLocalizedString("privacy.protection.tracker.networks.info", value: "Tracker networks aggregate your web history into a data profile about you.  Major tracker networks are more harmful because they can track and target you across more of the Internet.", comment: "")
+    public static let ppTrackerNetworksInfo = NSLocalizedString("privacy.protection.tracker.networks.info", value: "Trackers help companies profile you. We blocked these trackers from loading and monitoring your activity on this page.", comment: "")
+    public static let ppTrackerNetworksInfoNew = NSLocalizedString("privacy.protection.tracker.networks.info.new", value: "The following third-party domains’ requests were blocked from loading because they were identified as tracking requests. If a company's requests are loaded, it can allow them to profile you.", comment: "")
+    public static let ppTrackerNetworksInfoEmptyStatePrivacyOff = NSLocalizedString("privacy.protection.tracker.networks.info.empty", value: "No tracking requests were blocked from loading because Protections are turned off for this site. If a company's requests are loaded, it can allow them to profile you.", comment: "")
+    public static let ppTrackerNetworksInfoEmptyStateNoTrackers = NSLocalizedString("privacy.protection.tracker.networks.info.empty.no.trackers", value: "We did not detect any tracking requests.", comment: "")
+    public static let ppOtherDomainsInfo = NSLocalizedString("privacy.protection.other.domains.info", value: "The following third-party domains’ requests were loaded. If a company's requests are loaded, it can allow them to profile you, though our other web tracking protections still apply.", comment: "")
+    public static let ppOtherDomainsInfoDisabledProtection = NSLocalizedString("privacy.protection.other.domains.info.disabled.protection", value: "No third-party requests were blocked from loading because Protections are turned off for this site. If a company's requests are loaded, it can allow them to profile you.", comment: "")
+    public static let ppOtherDomainsInfoHeaderDisabledProtection = NSLocalizedString("privacy.protection.other.domains.info.header.disabled.protection", value: "The following domains’ tracking requests were loaded.", comment: "")
+    public static let ppOtherDomainsInfoHeaderDisabledProtectionAlsoNew = NSLocalizedString("privacy.protection.other.domains.info.header.disabled.protection.also.new", value: "The following domain’s requests were also loaded.", comment: "")
+    public static let ppOtherDomainsInfoHeaderDisabledProtectionNew = NSLocalizedString("privacy.protection.other.domains.info.header.disabled.protection.new", value: "The following domains’ requests were loaded.", comment: "")
+    public static let ppOtherDomainsAdClickAttribution = NSLocalizedString("privacy.protection.other.domains.adclickattribution", value: "The following domain’s requests were loaded because a %@ ad on DuckDuckGo was recently clicked. These requests help evaluate ad effectiveness. All ads on DuckDuckGo are non-profiling.", comment: "")
+    public static let ppOtherDomainsExceptions = NSLocalizedString("privacy.protection.other.domains.exceptions", value: "The following domain’s requests were loaded to prevent site breakage.", comment: "")
+    public static let ppOtherDomainsOwnedByFirstParty = NSLocalizedString("privacy.protection.other.domains.firstparty", value: "The following domain’s requests were loaded because they’re associated with %@.", comment: "")
+    public static let ppOtherDomainsOtherThirdParties = NSLocalizedString("privacy.protection.other.domains.thirdparties", value: "The following domain’s requests were loaded.", comment: "")
+    public static let ppOtherDomainsOtherThirdPartiesEmptyState = NSLocalizedString("privacy.protection.other.domains.thirdparties.empty", value: "We did not detect requests from any third-party domains.", comment: "")
+    
+    public static let ppAboutProtectionsLink = NSLocalizedString("privacy.protection.about.protections.link", value: "About our Web Tracking Protections", comment: "")
+    public static let ppAboutSearchProtectionsAndAdsLink = NSLocalizedString("privacy.protection.about.search.protections.link", value: "About our search protections and ads", comment: "")
+    public static let ppAboutSearchProtectionsAndAdsLinkNew = NSLocalizedString("privacy.protection.about.search.protections.link.new", value: "How our search ads impact our protections", comment: "")
+    public static let ppPlatformLimitationsFooterInfo = NSLocalizedString("privacy.protection.platform.limitations.footer.info", value: "Please note: platform limitations may limit our ability to detect all requests.", comment: "")
+    public static let ppTrackerCategoryNonProfiling = NSLocalizedString("privacy.protection.platform.tracker.category.non.profiling", value: "Non-Profiling", comment: "")
     
     public static let ppPracticesHeaderInfo = NSLocalizedString("privacy.protection.practices.header.info", value: "Privacy practices indicate how much the personal information that you share with a website is protected.", comment: "")
     public static let ppPracticesReviewedInfo = NSLocalizedString("privacy.protection.practices.reviewed.info", value: "This website will notify you before transferring your information in the event of a merger or acquisition", comment: "")
@@ -360,59 +396,16 @@ public struct UserText {
     public static let doNotSellEnabled = NSLocalizedString("donotsell.enabled", value: "Enabled", comment: "GPC Setting state")
     public static let doNotSellDisabled = NSLocalizedString("donotsell.disabled", value: "Disabled", comment: "GPC Setting state")
     
-    public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "Create a Duck Address", comment: "Email option title in the browsing menu")
+    public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "Generate Private Duck Address", comment: "Email option title in the browsing menu")
     public static let emailBrowsingMenuAlert = NSLocalizedString("email.browsingMenu.alert", value: "New address copied to your clipboard", comment: "Title for the email copy browsing menu alert")
     public static let emailAliasAlertTitle = NSLocalizedString("email.aliasAlert.title", value: "Block email trackers with a Duck Address", comment: "Title for the email alias selection alert")
     public static let emailAliasAlertUseUserAddress = NSLocalizedString("email.aliasAlert.useUserAddress", value: "Use %@", comment: "Parameter is an email address (string)")
-    public static let emailAliasAlertGeneratePrivateAddress = NSLocalizedString("email.aliasAlert.generatePrivateAddress", value: "Generate a Private Address", comment: "Option for generating a private email address")
+    public static let emailAliasAlertGeneratePrivateAddress = NSLocalizedString("email.aliasAlert.generatePrivateAddress", value: "Generate Private Duck Address", comment: "Option for generating a private email address")
     public static let emailAliasAlertDecline = NSLocalizedString("email.aliasAlert.decline", value: "Cancel", comment: "Cancel option for the email alias alert")
 
     public static let emailSettingEnabled = NSLocalizedString("email.settings.enabled", value: "Enabled", comment: "Signed in state for the email feature")
     public static let emailSettingsOff = NSLocalizedString("email.settings.off", value: "Off", comment: "Signed out state for the email feature")
     public static let emailSettingsFooterText = NSLocalizedString("email.settings.footer", value: "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com.", comment: "Footer text for the email feature")
-
-    public static let emailSignOutAlertTitle = NSLocalizedString("email.signOutAlert.title", value: "Remove Email Protection?", comment: "Title for the email sign out alert")
-    public static let emailSignOutAlertDescription = NSLocalizedString("email.signOutAlert.description", value: "Note: Removing Email Protection from this device will not delete your Duck Address.", comment: "Description for the email sign out alert")
-    public static let emailSignOutAlertCancel = NSLocalizedString("email.signOutAlert.cancel", value: "Cancel", comment: "Cancel option for the email sign out alert")
-    public static let emailSignOutAlertRemove = NSLocalizedString("email.signOutAlert.remove", value: "Remove", comment: "Remove option for the email sign out alert")
-
-    public static let emailWaitlistPrivacySimplified = NSLocalizedString("email.waitlist.privacy-simplified", value: "Email privacy, simplified.", comment: "Header text for the email waitlist")
-    public static let emailWaitlistJoinedWaitlist = NSLocalizedString("email.waitlist.joined", value: "You’re on the waitlist!", comment: "Header text for the email waitlist")
-    public static let emailWaitlistInvited = NSLocalizedString("email.waitlist.invited", value: "You’ve been invited!", comment: "Header text for the email waitlist")
-
-    public static func emailWaitlistSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("email.waitlist.summary", value: "Block email trackers and hide your address, without switching your email provider. %@.", comment: "Description text for the email waitlist. Parameter is 'Learn more'.")
-        return message.format(arguments: learnMoreString)
-    }
-    public static func emailWaitlistJoinedWithNotificationSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("email.waitlist.joined.notification", value: "We’ll send you a notification when Email Protection is ready for you. %@.", comment: "Description text for the email waitlist. Parameter is 'Learn more.'")
-        return message.format(arguments: learnMoreString)
-    }
-
-    public static let emailWaitlistGetANotification = NSLocalizedString("email.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the email waitlist")
-    public static func emailWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
-        let message =  NSLocalizedString("email.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about Email Protection.", comment: "First parameter is 'get a notification', second is 'Learn more'.")
-        return message.format(arguments: getNotifiedString, learnMoreString)
-    }
-
-    public static let emailWaitlistJoinWaitlist = NSLocalizedString("email.waitlist.join", value: "Join the Private Waitlist", comment: "Action button text for the email waitlist")
-    public static let emailWaitlistGetStarted = NSLocalizedString("email.waitlist.get-started", value: "Get Started", comment: "Action button text for the email waitlist")
-
-    public static let emailWaitlistHaveInviteCode = NSLocalizedString("email.waitlist.have-invite-code", value: "I have an Invite Code", comment: "Invite code button text for the email waitlist")
-    public static func emailWaitlistPrivacyGuarantee(learnMoreString: String) -> String {
-        let message = NSLocalizedString("email.waitlist.privacy-guarantee", value: "We do not save your emails. %@.", comment: "Footer text for the email waitlist. Parameter is 'Learn more'.")
-        return message.format(arguments: learnMoreString)
-    }
-    public static let emailWaitlistLearnMore = NSLocalizedString("email.waitlist.learn-more", value: "Learn more", comment: "Footer text for the email waitlist")
-    public static let emailWaitlistErrorJoining = NSLocalizedString("email.waitlist.error-joining", value: "An error occurred while joining the Waitlist, please try again later", comment: "Error text when failing to join the waitlist")
-
-    public static let emailWaitlistNotificationPermissionTitle = NSLocalizedString("email.waitlist.notification-permission.title", value: "Would you like us to notify you when it’s your turn?", comment: "Title for the permission notification for the email waitlist")
-    public static let emailWaitlistNotificationPermissionBody = NSLocalizedString("email.waitlist.notification-permission.body", value: "We’ll send you a notification when you can start using Email Protection.", comment: "Body text for the permission notification for the email waitlist")
-    public static let emailWaitlistNotificationPermissionNotifyMe = NSLocalizedString("email.waitlist.notification.notify-me", value: "Notify Me", comment: "Accept option for the permission notification for the email waitlist")
-    public static let emailWaitlistNotificationPermissionNoThanks = NSLocalizedString("email.waitlist.notification.no-thanks", value: "No Thanks", comment: "Decline option for the permission notification for the email waitlist")
-
-    public static let emailWaitlistAvailableNotificationTitle = NSLocalizedString("email.waitlist.notification.title", value: "Your Email Protection Invitation is Here!", comment: "Title for the email waitlist notification")
-    public static let emailWaitlistAvailableNotificationBody = NSLocalizedString("email.waitlist.notification.body", value: "You joined the waitlist and asked us to notify you when it’s your turn to try our Email Protection.", comment: "Body text for the email waitlist notification")
 
     public static let fireButtonAnimationFireRisingName = NSLocalizedString("fireButtonAnimation.fireRising.name", value: "Inferno", comment: "")
     public static let fireButtonAnimationWaterSwirlName = NSLocalizedString("fireButtonAnimation.waterSwirl.name", value: "Whirlpool", comment: "")
@@ -421,7 +414,9 @@ public struct UserText {
     
     public static let webJSAlertOKButton = NSLocalizedString("webJSAlert.OK.button", value: "OK", comment: "OK button for JavaScript alerts")
     public static let webJSAlertCancelButton = NSLocalizedString("webJSAlert.cancel.button", value: "Cancel", comment: "Cancel button for JavaScript alerts")
-        public static let noVoicePermissionAlertTitle = NSLocalizedString("voiceSearch.alert.no-permission.title", value: "Microphone Access Required", comment: "Title for alert warning the user about missing microphone permission")
+    public static let webJSAlertWebsiteMessageFormat = NSLocalizedString("webJSAlert.website-message.format", value: "A message from %@:", comment: "Alert title explaining the message is shown by a website")
+
+    public static let noVoicePermissionAlertTitle = NSLocalizedString("voiceSearch.alert.no-permission.title", value: "Microphone Access Required", comment: "Title for alert warning the user about missing microphone permission")
     public static let noVoicePermissionAlertMessage = NSLocalizedString("voiceSearch.alert.no-permission.message", value: "Please allow Microphone access in iOS System Settings for DuckDuckGo to use voice features.", comment: "Message for alert warning the user about missing microphone permission")
     public static let noVoicePermissionActionSettings = NSLocalizedString("voiceSearch.alert.no-permission.action.settings", value: "Settings", comment: "No microphone permission alert action button to open the settings app")
     public static let voiceSearchCancelButton = NSLocalizedString("voiceSearch.cancel", value: "Cancel", comment: "Cancel button for voice search")
@@ -438,9 +433,7 @@ public struct UserText {
     public static let addWidgetSettingsFirstParagraph = NSLocalizedString("addWidget.settings.firstParagraph", value: "Long-press on the home screen to enter jiggle mode.", comment: "")
     public static let addWidgetSettingsSecondParagraph = NSLocalizedString("addWidget.settings.secondParagraph.%@", value: "Tap the plus %@ button.", comment: "Replacement string is a plus button icon.")
     public static let addWidgetSettingsThirdParagraph = NSLocalizedString("addWidget.settings.title", value: "Find and select DuckDuckGo. Then choose a widget.", comment: "")
-    
-    public static let webJSAlertDisableAlertsButton = NSLocalizedString("webJSAlert.block-alerts.button", value: "Block Alerts", comment: "Block Alerts button for JavaScript alerts")
-    
+
     public static let actionSaveToDownloads = NSLocalizedString("downloads.alert.action.save-to-downloads", value: "Save to Downloads", comment: "Alert action for starting a file dowload")
     public static func messageDownloadStarted(for filename: String) -> String {
         let message = NSLocalizedString("downloads.message.download-started", value: "Download started for %@", comment: "Message confirming that the download process has started. Parameter is downloaded file's filename")
@@ -490,7 +483,7 @@ public struct UserText {
     public static let autofillSaveLoginTitle = NSLocalizedString("autofill.save-login.title", value: "Save Login?", comment: "Title displayed on modal asking for the user to save the login")
     public static let autofillUpdateUsernameTitle = NSLocalizedString("autofill.update-usernamr.title", value: "Update Username?", comment: "Title displayed on modal asking for the user to update the username")
 
-    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "Logins are stored securely on this device only, and can be managed from the Autofill menu in Settings.", comment: "Message displayed on modal asking for the user to save the login for the first time")
+    public static let autofillSaveLoginMessageNewUser = NSLocalizedString("autofill.save-login.new-user.message", value: "DuckDuckGo will securely store this Login on your device.", comment: "Message displayed on modal asking for the user to save the login for the first time")
     public static let autofillSaveLoginNotNowCTA = NSLocalizedString("autofill.save-login.not-now.CTA", value: "Not Now", comment: "Cancel CTA displayed on modal asking for the user to save the login")
    
     public static let autofillSavePasswordTitle = NSLocalizedString("autofill.save-password.title", value: "Save Password?", comment: "Title displayed on modal asking for the user to save the password")
@@ -498,60 +491,36 @@ public struct UserText {
     public static let autofillSaveLoginSaveCTA = NSLocalizedString("autofill.save-login.save.CTA", value: "Save Login", comment: "Confirm CTA displayed on modal asking for the user to save the login")
     public static let autofillSavePasswordSaveCTA = NSLocalizedString("autofill.save-password.save.CTA", value: "Save Password", comment: "Confirm CTA displayed on modal asking for the user to save the password")
     public static let autofillUpdatePasswordSaveCTA = NSLocalizedString("autofill.update-password.save.CTA", value: "Update Password", comment: "Confirm CTA displayed on modal asking for the user to update the password")
+    public static let autofillShowPassword = NSLocalizedString("autofill.show-password", value: "Show Password", comment: "Accessibility title for a Show Password button displaying actial password instead of *****")
+    public static let autofillHidePassword = NSLocalizedString("autofill.hide-password", value: "Hide Password", comment: "Accessibility title for a Hide Password button replacing displayed password with *****")
     public static let autofillUpdateLoginSaveCTA = NSLocalizedString("autofill.update-login.save.CTA", value: "Update Login", comment: "Confirm CTA displayed on modal asking for the user to update the login")
     public static let autofillAdditionalLoginInfoMessage = NSLocalizedString("autofill.save-login.additional-login.message", value: "This will save an additional Login for this site.", comment: "Message displayed on modal explaining that an additional login will be saved.")
     public static let autofillLoginSavedToastMessage = NSLocalizedString("autofill.login-saved.toast", value: "Login saved", comment: "Message displayed after saving an autofill login")
     public static let autofillLoginUpdatedToastMessage = NSLocalizedString("autofill.login-updated.toast", value: "Login updated", comment: "Message displayed after updating an autofill login")
     public static let autofillLoginSaveToastActionButton = NSLocalizedString("autofill.login-save-action-button.toast", value: "View", comment: "Button displayed after saving/updating an autofill login that takes the user to the saved login")
 
+    public static let autofillKeepEnabledAlertTitle = NSLocalizedString("autofill.keep-enabled.alert.title", value: "Do you want to keep using Autofill?", comment: "Title for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertMessage = NSLocalizedString("autofill.keep-enabled.alert.message", value: "You can disable Autofill at any time in Settings.", comment: "Message for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertKeepUsingAction = NSLocalizedString("autofill.keep-enabled.alert.keep-using", value: "Keep Using", comment: "Confirm action for alert when asking the user if they want to keep using autofill")
+    public static let autofillKeepEnabledAlertDisableAction = NSLocalizedString("autofill.keep-enabled.alert.disable", value: "Disable", comment: "Disable action for alert when asking the user if they want to keep using autofill")
+
     public static let actionAutofillLogins = NSLocalizedString("action.title.autofill.logins", value: "Autofill Logins", comment: "Autofill Logins menu item opening the login list")
 
     // MARK: - Mac Waitlist
     
-    static let macWaitlistTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
+    public static let macBrowserTitle = NSLocalizedString("mac-waitlist.title", value: "DuckDuckGo Desktop App", comment: "Title for the Mac Waitlist feature")
     
-    static let macWaitlistPrivacyDisclaimer = NSLocalizedString("mac-waitlist.privacy-disclaimer",
-                                                                       value: "You won’t need to share any personal information to join the waitlist. You’ll secure your place in line with a timestamp that exists solely on your device so we can notify you when it’s your turn.",
-                                                                       comment: "Privacy disclaimer for the Mac Waitlist feature")
+    public static let macWaitlistSummary = NSLocalizedString("mac-browser.waitlist.summary", value: "DuckDuckGo for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the macOS browser waitlist")
     
-    public static let macWaitlistSummary = NSLocalizedString("mac-browser.waitlist.summary", value: "The DuckDuckGo Privacy App for Mac has the speed you need, the browsing features you expect, and comes packed with our best-in-class privacy essentials.", comment: "Summary text for the macOS browser waitlist")
+    public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Get DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
     
-    public static let macWaitlistInviteCode = NSLocalizedString("mac-browser.waitlist.invite-code", value: "Invite Code", comment: "Label text for the invite code")
+    public static let macWaitlistOnYourMacGoTo = NSLocalizedString("mac-waitlist.join-waitlist-screen.on-your-mac-go-to", value: "On your Mac, go to:", comment: "Description text above the Share Link button")
     
-    public static let macWaitlistJoinedWithNotifications = NSLocalizedString("mac-browser.waitlist.joined.notifications-enabled",
-                                                                                    value: "We’ll send you a notification when your copy of DuckDuckGo for Mac is ready for download.",
-                                                                                    comment: "Label text for the Joined Waitlist state with notifications enabled")
+    public static let macWaitlistShareLink = NSLocalizedString("mac-waitlist.join-waitlist-screen.share-link", value: "Share Link", comment: "Title for the Share Link button")
     
-    public static let macWaitlistJoinedWithoutNotifications = NSLocalizedString("mac-browser.waitlist.joined.notifications-declined",
-                                                                                    value: "Your invite to try DuckDuckGo for Mac will arrive here. Check back soon, or we can send you a notification when it’s your turn.",
-                                                                                    comment: "Label text for the Joined Waitlist state with notifications declined")
-    
-    public static func macWaitlistLearnMore(learnMoreString: String) -> String {
-        let message = NSLocalizedString("mac-browser.waitlist.learn-more", value: "%@ about the beta.", comment: "Footer text for the macOS waitlist. Parameter is 'Learn more'.")
-        return message.format(arguments: learnMoreString)
-    }
-    
-    public static func macWaitlistJoinedWithNotificationSummary(learnMoreString: String) -> String {
-        let message = NSLocalizedString("mac-browser.waitlist.joined.notification", value: "We’ll send you a notification when we're ready for you. %@.", comment: "Description text for the macOS waitlist. Parameter is 'Learn more.'")
-        return message.format(arguments: learnMoreString)
-    }
-
-    public static let macWaitlistGetANotification = NSLocalizedString("mac-browser.waitlist.joined.no-notification.get-notification", value: "get a notification", comment: "Notification text for the macOS waitlist")
-    
-    public static func macWaitlistJoinedWithoutNotificationSummary(getNotifiedString: String, learnMoreString: String) -> String {
-        let message =  NSLocalizedString("mac-browser.waitlist.joined.no-notification", value: "Your invite will show up here when we’re ready for you. Want to %@ when it arrives? %@ about the macOS browser beta.", comment: "First parameter is 'get a notification', second is 'Learn more'.")
-        return message.format(arguments: getNotifiedString, learnMoreString)
-    }
-    
-    // MARK: Join Waitlist Screen
-    
-    public static let macWaitlistTryDuckDuckGoForMac = NSLocalizedString("mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac", value: "Try DuckDuckGo for Mac!", comment: "Title for the Join Waitlist screen")
-    
-    public static let macWaitlistJoin = NSLocalizedString("mac-waitlist.join-waitlist-screen.join", value: "Join the Private Waitlist", comment: "Title for the Join Waitlist screen")
+    public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
     
     public static let macWaitlistWindows = NSLocalizedString("mac-waitlist.join-waitlist-screen.windows", value: "Windows coming soon!", comment: "Disclaimer for the Join Waitlist screen")
-    
-    public static let macWaitlistJoining = NSLocalizedString("mac-waitlist.join-waitlist-screen.joining", value: "Joining Waitlist...", comment: "Temporary status text for the Join Waitlist screen")
     
     // MARK: Notifications
     
@@ -559,89 +528,93 @@ public struct UserText {
     
     public static let macWaitlistAvailableNotificationBody = NSLocalizedString("mac-waitlist.available.notification.body", value: "Open your invite", comment: "Body text for the macOS waitlist notification")
     
-    // MARK: Queue Screen
-    
-    public static let macWaitlistOnTheList = NSLocalizedString("mac-waitlist.queue-screen.on-the-list", value: "You’re on the list!", comment: "Title for the queue screen")
-    
-    // MARK: Invite Code Screen
-    
-    public static let macWaitlistYoureInvited = NSLocalizedString("mac-waitlist.invite-screen.youre-invited", value: "You’re Invited!", comment: "Title for the invite code screen")
-    
-    public static let macWaitlistInviteScreenSubtitle = NSLocalizedString("mac-waitlist.invite-screen.subtitle", value: "Ready to start browsing privately on Mac?", comment: "Subtitle for the Mac Waitlist Invite screen")
-    
-    public static let macWaitlistInviteScreenStep1Title = NSLocalizedString("mac-waitlist.invite-screen.step-1.title", value: "Step 1", comment: "Title on the invite screen")
-
-    public static let macWaitlistInviteScreenStep1Description = NSLocalizedString("mac-waitlist.invite-screen.step-1.description", value: "Visit this URL on your Mac to download:", comment: "Description on the invite screen")
-    
-    public static let macWaitlistInviteScreenStep2Title = NSLocalizedString("mac-waitlist.invite-screen.step-2.title", value: "Step 2", comment: "Title on the invite screen")
-    
-    public static let macWaitlistInviteScreenStep2Description = NSLocalizedString("mac-waitlist.invite-screen.step-2.description", value: "Open the file to install, then enter your invite code to unlock.", comment: "Description on the invite screen")
-    
-    public static let macWaitlistCopy = NSLocalizedString("mac-waitlist.copy", value: "Copy", comment: "Title for the copy action")
-    
-    public static let macWaitlistNotificationDisabled = NSLocalizedString("mac-waitlist.notification.disabled", value: "We can notify you when it’s your turn, but notifications are currently disabled for DuckDuckGo.", comment: "Text used for the Notifications Disabled state")
-    
     // MARK: Settings Screen
     
     public static let emailSettingsSubtitle = NSLocalizedString("email.settings.subtitle", value: "Block email trackers and hide your address", comment: "Subtitle for the email settings cell")
-    
-    public static let macWaitlistAvailableForDownload = NSLocalizedString("mac-waitlist.settings.available-for-download", value: "Available for download on Mac", comment: "Title for the settings subtitle")
-    
-    public static let macWaitlistSettingsOnTheList = NSLocalizedString("mac-waitlist.settings.on-the-list", value: "You’re on the list!", comment: "Title for the settings subtitle")
     
     public static let macWaitlistBrowsePrivately = NSLocalizedString("mac-waitlist.settings.browse-privately", value: "Browse privately with our app for Mac", comment: "Title for the settings subtitle")
     
     // MARK: Share Sheet
     
-    public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "You’re Invited!", comment: "Title for the share sheet entry")
+    public static let macWaitlistShareSheetTitle = NSLocalizedString("mac-waitlist.share-sheet.title", value: "DuckDuckGo for Mac", comment: "Title for the share sheet entry")
     
-    public static func macWaitlistShareSheetMessage(code: String) -> String {
-        let localized = NSLocalizedString("mac-waitlist.share-sheet.message", value: """
-        You’re invited!
-        
+    public static func macWaitlistShareSheetMessage() -> String {
+        return NSLocalizedString("mac-waitlist.share-sheet.message", value: """
         Ready to start browsing privately on Mac?
         
-        Step 1
         Visit this URL on your Mac to download:
         https://duckduckgo.com/mac
-        
-        Step 2
-        Open the file to install, then enter your invite code to unlock.
-        
-        Invite code: %@
-        """, comment: "Message used when sharing to iMessage. Parameter is an eight digit invite code.")
+        """, comment: "Message used when sharing to iMessage")
+    }
 
-        return localized.format(arguments: code)
+    public static let autofillLoginDetailsLoginName = NSLocalizedString("autofill.logins.details.login-name", value:"Login Title", comment: "Login name label for login details on autofill")
+    public static let autofillLoginDetailsUsername = NSLocalizedString("autofill.logins.details.username", value:"Username", comment: "Username label for login details on autofill")
+    public static let autofillLoginDetailsPassword = NSLocalizedString("autofill.logins.details.password", value:"Password", comment: "Password label for login details on autofill")
+    
+    public static let autofillLoginDetailsAddress = NSLocalizedString("autofill.logins.details.address", value:"Website URL", comment: "Address label for login details on autofill")
+    public static let autofillLoginDetailsNotes = NSLocalizedString("autofill.logins.details.notes", value:"Notes", comment: "Notes label for login details on autofill")
+    public static let autofillLockedViewTitle = NSLocalizedString("autofill.logins.details.title", value:"Unlock Autofill", comment: "Title for view displayed when autofill is locked")
+    public static let autofillEmptyViewTitleDisabled = NSLocalizedString("autofill.logins.empty-view.title-disabled", value:"Enable Autofill to start saving Logins", comment: "Title for view displayed when autofill is disabled and has no items")
+    public static let autofillEmptyViewTitle = NSLocalizedString("autofill.logins.empty-view.title", value:"No logins saved yet", comment: "Title for view displayed when autofill has no items")
+    public static let autofillEmptyViewSubtitle = NSLocalizedString("autofill.logins.empty-view.subtitle", value:"Logins are stored securely on this device only", comment: "Subtitle for view displayed when autofill has no items")
+    public static let autofillSearchNoResultTitle = NSLocalizedString("autofill.logins.search.no-results.title", value:"No Results", comment: "Title displayed when there are no results on Autofill search")
+    public static func autofillSearchNoResultSubtitle(for query: String) -> String {
+        let message = NSLocalizedString("autofill.logins.search.no-results.subtitle", value: "for '%@'", comment: "Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)")
+        return message.format(arguments: query)
     }
     
-    public static let autofillLoginDetailsLoginName = "Login Name" // Login name label for login details on autofill
-    public static let autofillLoginDetailsUsername = "Username" // Username label for login details on autofill
-    public static let autofillLoginDetailsPassword = "Password" // Password label for login details on autofill
-    public static let autofillLoginDetailsAddress = "Address" // Address label for login details on autofill
-    public static let autofillLockedViewTitle = "Unlock Autofill" // Title for view displayed when autofill is locked
-    public static let autofillEmptyViewTitleDisabled = "Enable Autofill to start saving Logins." // Title for view displayed when autofill is disabled and has no items
-    public static let autofillEmptyViewTitle = "No logins saved yet." // Title for view displayed when autofill has no items
-    public static let autofillEmptyViewSubtitle = "Logins are stored securely on this device only" // Subtitle for view displayed when autofill has no items
-    public static let autofillSearchNoResultTitle = "No Results" // Title displayed when there are no results on Autofill search
-    public static func autofillSearchNoResultSubtitle(for query: String) -> String {
-        "for '\(query)'"
-    } // Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle)
-    public static let autofillEnableSettings = "Save and Autofill Logins" // Title for a toggle that enables autofill
-    public static let autofillLoginListTitle = "Autofill Logins" // Title for screen listing autofill logins
-    public static let autofillLoginListSearchPlaceholder = "Search Logins" // Placeholder for search field on autofill login listing
-    public static let autofillLoginPromptAuthenticationCancelButton = "Cancel" // Cancel button for auth during login prompt
-    public static let autofillLoginPromptAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth during login prompt
-    public static let autofillLoginPromptTitle = "Use Saved Login?" // Title for autofill login prompt
-    public static let autofillLoginPromptMoreOptions = "More Options" // Button title for autofill login prompt if more options are available
-    public static let autofillCopyToastUsernameCopied = "Username copied" // Title for toast when copying username
-    public static let autofillCopyToastPasswordCopied = "Password copied" // Title for toast when copying password
-    public static let autofillCopyToastAddressCopied = "Address copied" // Title for toast when copying address
+    public static let autofillEnableSettings = NSLocalizedString("autofill.logins.list.enable", value:"Save and Autofill Logins", comment: "Title for a toggle that enables autofill")
+    public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Autofill Logins", comment: "Title for screen listing autofill logins")
+    public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search Logins", comment: "Placeholder for search field on autofill login listing")
+    
+    public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
+    public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock To Use Saved Login", comment: "Reason for auth during login prompt")
+    public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use Saved Login?", comment: "Title for autofill login prompt")
+    public static let autofillLoginPromptMoreOptions = NSLocalizedString("autofill.logins.prompt.more-options", value:"More Options", comment: "Button title for autofill login prompt if more options are available")
+
+    public static let autofillNoAuthViewFaceIDTitle = NSLocalizedString("autofill.logins.no-auth.face-id.title", value:"Enable Face ID to use Autofill", comment: "Title for view displayed when autofill is locked on devices with faceID")
+    public static let autofillNoAuthViewTouchIDTitle = NSLocalizedString("autofill.logins.no-auth.touch-id.title", value:"Enable Touch ID to use Autofill", comment: "Title for view displayed when autofill is locked on devices with touchID")
+    public static let autofillNoAuthViewFaceIDSubtitle = NSLocalizedString("autofill.logins.no-auth.face-id.subtitle", value:"Face ID & Passcode are required to protect your Autofill Login details.", comment: "Title for view displayed when autofill is locked on devices with faceID")
+    public static let autofillNoAuthViewTouchIDSubtitle = NSLocalizedString("autofill.logins.no-auth.touch-id.subtitle", value:"Touch ID & Passcode are required to protect your Autofill Login details.", comment: "Title for view displayed when autofill is locked on devices with touchID")
+    public static let autofillNoAuthViewFaceIDButton = NSLocalizedString("autofill.logins.no-auth.face-id.button", value:"Set Up Face ID", comment: "Title for view displayed when autofill is locked on devices with faceID")
+    public static let autofillNoAuthViewTouchIDButton = NSLocalizedString("autofill.logins.no-auth.touch-id.button", value:"Set Up Touch ID", comment: "Title for view displayed when autofill is locked on devices with touchID")
+
+    public static let autofillOpenWebsitePrompt = NSLocalizedString("autofill.logins.details.open-website-prompt.title", value:"Open Website", comment: "Menu item title for option to open website from selected url")
+    public static func autofillCopyPrompt(for type: String) -> String {
+        let message = NSLocalizedString("autofill.logins.copy-prompt", value: "Copy %@", comment: "Menu item text for copying autofill login details")
+        return message.format(arguments: type)
+    }
+    public static let autofillCopyToastUsernameCopied = NSLocalizedString("autofill.logins.copy-toast.username-copied", value:"Username copied", comment: "Title for toast when copying username")
+    public static let autofillCopyToastPasswordCopied = NSLocalizedString("autofill.logins.copy-toast.password-copied", value:"Password copied", comment: "Title for toast when copying password")
+    public static let autofillCopyToastAddressCopied = NSLocalizedString("autofill.logins.copy-toast.address-copied", value:"Address copied", comment: "Title for toast when copying address")
+    public static let autofillCopyToastNotesCopied = NSLocalizedString("autofill.logins.copy-toast.notes-copied", value:"Notes copied", comment: "Title for toast when copying notes")
+
     public static func autofillLoginDetailsLastUpdated(for date: String) -> String {
-        "Login last updated \(date))"
-    } // Message displaying when the login was last updated by
-    public static let autofillLoginListAuthenticationCancelButton = "Cancel" // Cancel button for auth when opening login list
-    public static let autofillLoginListAuthenticationReason = "Unlock To Use Saved Login" // Reason for auth when opening login list
-    public static let autofillLoginDetailsDefaultTitle = "Login" // Title for autofill login details
-    public static let autofillLoginDetailsEditTitle = "Edit Login" // Title when editing autofill login details
-    public static let autofillNavigationButtonItemTitleClose = "Close" // Title for close navigation button
+        let message = NSLocalizedString("autofill.logins.details.last-updated", value: "Login last updated %@", comment: "Message displaying when the login was last updated by")
+        return message.format(arguments: date)
+    }
+    public static let autofillLoginListAuthenticationCancelButton = NSLocalizedString("autofill.logins.list.auth.cancel", value:"Cancel", comment: "Cancel button for auth when opening login list")
+    public static let autofillLoginListAuthenticationReason = NSLocalizedString("autofill.logins.list.auth.reason", value:"Unlock To Use Saved Login", comment: "Reason for auth when opening login list")
+    public static let autofillLoginDetailsDefaultTitle = NSLocalizedString("autofill.logins.details.default-title", value:"Login", comment: "Title for autofill login details")
+    public static let autofillLoginDetailsEditTitle = NSLocalizedString("autofill.logins.details.edit-title", value:"Edit Login", comment: "Title when editing autofill login details")
+    public static let autofillLoginDetailsNewTitle = NSLocalizedString("autofill.logins.details.new-title", value:"Add Login", comment: "Title when adding new autofill login")
+    public static let autofillLoginDetailsDeleteButton = NSLocalizedString("autofill.logins.details.delete", value:"Delete Login", comment: "Delete button when deleting an autofill login")
+    public static let autofillLoginDetailsDeleteConfirmationTitle = NSLocalizedString("autofill.logins.details.delete-confirmation.title", value:"Are you sure you want to delete this Login?", comment: "Title of confirmation alert when deleting an autofill login")
+    public static let autofillLoginDetailsDeleteConfirmationButtonTitle = NSLocalizedString("autofill.logins.details.delete-confirmation.button", value:"Delete Login", comment: "Autofill alert button confirming delete autofill login")
+
+    public static func autofillLoginListLoginDeletedToastMessage(for title: String) -> String {
+        let message = NSLocalizedString("autofill.logins.list.login-deleted-message", value: "Login for %@ deleted", comment: "Toast message when a login item is deleted")
+        return message.format(arguments: title)
+    }
+
+    public static let autofillLoginDetailsEditTitlePlaceholder = NSLocalizedString("autofill.logins.details.edit.title-placeholder", value:"Title", comment: "Placeholder for title field on autofill login details")
+    public static let autofillLoginDetailsEditUsernamePlaceholder = NSLocalizedString("autofill.logins.details.edit.username-placeholder", value:"username@example.com", comment: "Placeholder for userbane field on autofill login details")
+    public static let autofillLoginDetailsEditPasswordPlaceholder = NSLocalizedString("autofill.logins.details.edit.password-placeholder", value:"Password", comment: "Placeholder for password field on autofill login details")
+    public static let autofillLoginDetailsEditURLPlaceholder = NSLocalizedString("autofill.logins.details.edit.url-placeholder", value:"example.com", comment: "Placeholder for url field on autofill login details")
+
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertTitle = NSLocalizedString("autofill.logins.details.save-duplicate-alert.title", value:"Duplicated Login", comment: "Title for alert when attempting to save a duplicate login")
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertMessage = NSLocalizedString("autofill.logins.details.save-duplicate-alert.message", value:"You already have a login for this username and website.", comment: "Message for alert when attempting to save a duplicate login")
+    public static let autofillLoginDetailsSaveDuplicateLoginAlertAction = NSLocalizedString("autofill.logins.details.save-duplicate-alert.action", value:"OK", comment: "Action text for alert when attempting to save a duplicate login")
+
+    public static let autofillNavigationButtonItemTitleClose = NSLocalizedString("autofill.logins.list.close-title", value:"Close", comment: "Title for close navigation button")
 }

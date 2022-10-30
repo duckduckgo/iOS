@@ -10,8 +10,23 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Vrátit";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Použít návrh automatického doplňování";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Záložka";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Otevřít webovou stránku";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Hledat na DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Přidat";
+
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Automatické vyplňování přihlašovacích údajů";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Záložka";
@@ -157,6 +172,213 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aktivní";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Skrýt heslo";
+
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Vypnout";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Používat dál";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Automatické vyplňování můžeš kdykoli vypnout v Nastavení.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Chceš dál používat automatické vyplňování?";
+
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Zobrazit";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Přihlašovací údaje uloženy";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Příhlašovací údaje aktualizovány";
+
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Kopírovat %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adresa zkopírovaná";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Poznámky zkopírované";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Heslo zkopírované";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Uživatelské jméno zkopírované";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL webové stránky";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Přihlásit se";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Smazat přihlášení";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Smazat přihlášení";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Opravdu chceš smazat tohle přihlášení?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Upravit přihlášení";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Heslo";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Název";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "example.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "username@example.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Přihlášení se naposledy aktualizovalo %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Přihlašovací jméno";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Přidat přihlášení";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Poznámky";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Otevřít webovou stránku";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Heslo";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "DOBŘE";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Pro tohle uživatelské jméno a web už máš přihlašovací údaje.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Duplicitní přihlášení";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Odemknout automatické vyplňování";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Uživatelské jméno";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Přihlašovací údaje jsou bezpečně uložené jen v tomhle zařízení";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Zatím nemáš uložené žádné přihlašovací údaje";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Zapni automatické vyplňování a začni ukládat přihlašovací údaje";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Zrušit";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Jestli chceš použít uložené přihlašovací údaje, odemkni zařízení";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Zavřít";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Uložit a automaticky vyplnit přihlášení";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Přihlašovací údaje pro %@ se smazaly";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Hledání přihlašovacích údajů";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Automatické vyplňování přihlašovacích údajů";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Nastavení Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "K ochraně přihlašovacích údajů při automatickém vyplňování je vyžadováno Face ID.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Pokud chceš používat automatické vyplňování, zapni Face ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Nastavení Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "K ochraně přihlašovacích údajů při automatickém vyplňování je vyžadováno Touch ID.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Pokud chceš používat automatické vyplňování, zapni Touch ID";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Zrušit";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Jestli chceš použít uložené přihlašovací údaje, odemkni zařízení";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Další možnosti";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Použít uložené přihlášení?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "pro „%@“";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Žádné výsledky";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Uloží se další přihlašovací údaje pro tenhle web.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "DuckDuckGo tyto přihlašovací údaje bezpečně uloží do tvého zařízení.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Má DuckDuckGo uložit přihlašovací údaje?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Teď ne";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Uložit přihlašovací údaje";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Uložit přihlašovací údaje?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Uložit heslo";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Uložit heslo?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Zobrazit heslo";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Aktualizovat přihlašovací údaje";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Aktualizuj si heslo";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Aktualizovat heslo?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Aktualizovat uživatelské jméno?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Přidat záložku";
 
@@ -175,11 +397,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Smazat";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Opravdu chceš odstranit tuto složku a položky (%i)?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Opravdu chceš odstranit tuto složku a %i položku?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Odstranit %@?";
@@ -415,11 +634,14 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Stahování souboru %@ bylo zahájeno";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Zrušit";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Vygenerovat soukromou adresu";
+"email.aliasAlert.generatePrivateAddress" = "Vygenerovat soukromou adresu Duck";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokování e-mailových trackerů pomocí adresy Duck";
@@ -431,7 +653,7 @@
 "email.browsingMenu.alert" = "Nová adresa zkopírovaná do vaší schránky";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Vytvořit adresu Duck";
+"email.browsingMenu.useNewDuckAddress" = "Vygenerovat soukromou adresu Duck";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Povoleno";
@@ -442,74 +664,8 @@
 /* Signed out state for the email feature */
 "email.settings.off" = "Vypnout";
 
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Zrušit";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Poznámka: Když odeberete ochranu e-mailů z tohoto zařízení, vaše adresa Duck zůstane zachovaná.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Odstranit";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Odebrat ochranu e-mailů?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Při zařazování do pořadníku došlo k chybě, zkuste to znovu později";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Začínáme";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Mám zvací kód";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Přišla vám pozvánka";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Připojte se k soukromému pořadníku";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Jste v pořadníku";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Vaše pozvánka se tu objeví, až na vás budeme připravení. Chcete %1$@, až dorazí? %2$@ o ochraně e-mailů.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "dostat oznámení";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Pošleme vám oznámení, až pro vás bude ochrana e-mailů připravená. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Více informací";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Pošleme vám oznámení, až budete moct začít používat ochrana e-mailů.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Máme tě upozornit, až budeš na řadě?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Zapsali jste se do pořadníku a požádali nás, abychom vás upozornili, až budete moct vyzkoušet naši ochranu e-mailů.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Ne, děkuji";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "UPOZORNĚTE MĚ";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Vaše pozvánka k ochraně e-mailů je zde!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Vaše e-maily neukládáme. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-mailové soukromí, zjednodušené.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokujte e-mailové trackery a skryjte svou adresu bez nutnosti měnit poskytovatele e-mailu. %@.";
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blokování trackerů v e-mailu a skrytí adresy";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
@@ -802,6 +958,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vítejte na\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Zvací kód";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Tvoje pozvánka se tu objeví, až na tebe vyjde řada. Chceš %1$@, až dorazí? %2$@ o betaverzi prohlížeče pro macOS.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "dostat oznámení";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Dáme ti vědět, až na tebe vyjde řada. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Sem dostaneš pozvánku k vyzkoušení DuckDuckGo pro Mac. Zkus se sem brzy podívat znovu. Nebo ti můžeme dát vědět, až na tebe vyjde řada.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Dáme ti vědět, až bude tvoje kopie DuckDuckGo pro Mac připravená ke stažení.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ o betaverzi.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Aplikace DuckDuckGo Privacy pro Mac má rychlost, kterou potřebuješ, funkce prohlížeče, které očekáváš, a obsahuje naše nejlepší funkce na ochranu soukromí.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Otevřít pozvánku";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo pro Mac už čeká!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopírovat";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Aplikaci si do Macu stáhni z téhle URL:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1. krok";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Otevři instalační soubor a zvacím kódem ho odemkni.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2. krok";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Cítíš se na to začít si na Macu prohlížet web v naprostém soukromí?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Zveme tě!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Připojte se k soukromému pořadníku";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Zapiš se do pořadníku...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Vyzkoušej DuckDuckGo pro Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Verze pro Windows bude už brzo.";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Můžeme ti dát vědět, až budeš na řadě, ale aktuálně jsou oznámení pro DuckDuckGo vypnutá.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Kvůli zařazení do pořadníku není nutné sdílet žádné osobní údaje. Tvé místo se určuje podle časového razítka uloženého jen ve tvém zařízení tak, abychom tě mohli upozornit, až budeš na řadě.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Jsi v pořadníku!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Ke stažení pro Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Zajisti si soukromí při prohlížení webu – v naší aplikaci pro Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Jsi v pořadníku!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Zveme tě!\n\nCítíš se na to začít si na Macu prohlížet web v naprostém soukromí?\n\n1. krok\nAplikaci si do Macu stáhni z téhle URL:\nhttps://duckduckgo.com/mac\n\n2. krok\nOtevři instalační soubor a zvacím kódem ho odemkni.\n\nZvací kód: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Zveme tě!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo Desktop";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Procházení nabídky";
 
@@ -883,6 +1129,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "DOBŘE";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "O našich mechanismech na ochranu proti sledování na webu";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "O našich mechanismech na ochranu při vyhledávání a zobrazování reklam";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Jak naše reklamy ve vyhledávání ovlivňují naši ochranu";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritmus";
 
@@ -906,6 +1161,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Nucené šifrování";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Šifrované připojení";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Pro tento web jsme vynutili používat šifrované připojení, které brání odposlouchávání jakýchkoli osobních údajů, které na něj posíláte.";
@@ -985,6 +1243,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Ano";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "OCHRANA STRÁNKY VYPNUTA";
 
@@ -1000,11 +1261,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Zjištěny velké sítě trackerů";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Nenašli jsme žádnou velkou sledovací síť";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Sledovací sítě byly nalezeny na webových stránkách %1$@%%, které jste navštívili od roku %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Stále shromažďujeme data, abychom zjistili,\nkolik trackerů jsme zablokovali.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Nebyly načteny žádné požadavky třetích stran";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Protože nedávno došlo ke kliknutí na reklamu %@ na DuckDuckGo, byly načteny požadavky následujících domén. Tyhle požadavky pomáhají vyhodnocovat účinnost reklam. Žádná reklama na DuckDuckGo nevytváří tvůj profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Následující požadavky domény byly načteny, aby se zabránilo narušení funkčnosti webové stránky.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Následující požadavky domény byly načteny, protože jsou spojeny s %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Byly načteny následující požadavky domén třetích stran. Pokud se načtou požadavky společnosti, může jim to umožnit vytvořit si tvůj profil, i když naše ostatní mechanismy na ochranu proti sledování na webu jsou stále aktivní.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Nebyly zablokovány žádné požadavky třetích stran, protože pro tento web je vypnutá ochrana. Pokud se načtou požadavky služby, může jim to umožnit vytvořit si tvůj profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Načetly se následující požadavky domén na sledování.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Načetly se taky následující požadavky domény.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Načetly se požadavky následujících domén.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Načetly se požadavky následující domény.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Neodhalili jsme žádné požadavky domén třetích stran.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Načteny požadavky třetích stran";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Upozornění: omezení platformy mohou omezit naši schopnost detekovat všechny požadavky.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Neprofilující";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Zásady ochrany osobních údajů od ToS;DR.";
@@ -1040,13 +1352,34 @@
 "privacy.protection.tos.unknown" = "Neznámé postupy ochrany soukromí";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sledovací sítě agregují vaši webovou historii do datového profilu o vás. Hlavní sledovací sítě jsou nebezpečnější, protože vás mohou sledovat a zaměřit přes více internetových stránek.";
+"privacy.protection.tracker.networks.info" = "Trackery umožňují různým službám, aby si vytvářely tvůj profil. Na téhle stránce jsme zablokovali načtení těchhle trackerů a zabránili jim sledovat tvou aktivitu";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Žádné požadavky na sledování nebyly zablokovány, protože ochrana je pro tento web vypnutá. Pokud se načtou požadavky služby, může jim to umožnit vytvořit si tvůj profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nezjistili jsme žádné požadavky na sledování.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Následující požadavky na domény třetích stran byly zablokovány, protože byly identifikovány jako požadavky na sledování. Pokud se načtou požadavky služby, může jim to umožnit vytvořit si tvůj profil.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Načítání požadavků bylo zablokováno";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Byly nalezeny požadavky na sledování";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Nejsou blokovány žádné požadavky na sledování";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Nebyly nalezeny žádné požadavky na sledování";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Zrušit";
@@ -1150,18 +1483,6 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Je nutný přístup k mikrofonu";
 
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "DOBŘE";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Zrušit";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nikdy neposlouchá, co říkáš. Veškeré zpracování dat řeči při soukromém hlasovém vyhledávání probíhá přímo v zařízení.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Pro soukromé hlasové vyhledávání je nutný přístup k mikrofonu";
-
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Zrušit";
 
@@ -1183,12 +1504,12 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Oblíbené položky uloženy";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blokovat výstrahy";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Zrušit";
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "DOBŘE";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Zpráva od %@:";
 

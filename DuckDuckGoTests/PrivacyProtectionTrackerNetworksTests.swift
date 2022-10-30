@@ -29,10 +29,11 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     static let pageUrl = "http://example.com"
     
     func testWhenNetworkNotKnownSectionHasNoRows() {
-        let trackers = [DetectedTracker(url: "http://tracker1.com",
+        let trackers = [DetectedRequest(url: "http://tracker1.com",
+                                        eTLDplus1: "tracker1.com",
                                         knownTracker: nil,
                                         entity: nil,
-                                        blocked: false,
+                                        state: .blocked,
                                         pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)]
 
         let sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers).build()
@@ -48,20 +49,23 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
         let entity2 = Entity(displayName: "Entity 2", domains: nil, prevalence: 0.01)
 
         let trackers = [
-            DetectedTracker(url: "http://tracker1.com",
+            DetectedRequest(url: "http://tracker1.com",
+                            eTLDplus1: "tracker1.com",
                             knownTracker: nil,
                             entity: entity1,
-                            blocked: false,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker2.com",
+            DetectedRequest(url: "http://tracker2.com",
+                            eTLDplus1: "tracker2.com",
                             knownTracker: nil,
                             entity: entity1,
-                            blocked: false,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker3.com",
+            DetectedRequest(url: "http://tracker3.com",
+                            eTLDplus1: "tracker3.com",
                             knownTracker: nil,
                             entity: entity2,
-                            blocked: false,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)
         ]
 
@@ -78,20 +82,23 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
         let major2 = Entity(displayName: "Major 2", domains: nil, prevalence: 99)
 
         let trackers = [
-            DetectedTracker(url: "http://tracker1.com",
+            DetectedRequest(url: "http://tracker1.com",
+                            eTLDplus1: "tracker1.com",
                             knownTracker: nil,
                             entity: major1,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker2.com",
+            DetectedRequest(url: "http://tracker2.com",
+                            eTLDplus1: "tracker2.com",
                             knownTracker: nil,
                             entity: major1,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker3.com",
+            DetectedRequest(url: "http://tracker3.com",
+                            eTLDplus1: "tracker3.com",
                             knownTracker: nil,
                             entity: major2,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)
         ]
 
@@ -111,20 +118,23 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
         let minor = Entity(displayName: "Minor", domains: nil, prevalence: 0.01)
 
         let trackers = [
-            DetectedTracker(url: "http://tracker3.com",
+            DetectedRequest(url: "http://tracker3.com",
+                            eTLDplus1: "tracker3.com",
                             knownTracker: nil,
                             entity: minor,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker1.com",
+            DetectedRequest(url: "http://tracker1.com",
+                            eTLDplus1: "tracker1.com",
                             knownTracker: nil,
                             entity: major1,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker2.com",
+            DetectedRequest(url: "http://tracker2.com",
+                            eTLDplus1: "tracker2.com",
                             knownTracker: nil,
                             entity: major2,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)
         ]
 
@@ -142,20 +152,23 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
         let major = Entity(displayName: "Major 1", domains: nil, prevalence: 100)
 
         let trackers = [
-            DetectedTracker(url: "http://tracker3.com",
+            DetectedRequest(url: "http://tracker3.com",
+                            eTLDplus1: "tracker3.com",
                             knownTracker: nil,
                             entity: major,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker1.com",
+            DetectedRequest(url: "http://tracker1.com",
+                            eTLDplus1: "tracker1.com",
                             knownTracker: nil,
                             entity: major,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker2.com",
+            DetectedRequest(url: "http://tracker2.com",
+                            eTLDplus1: "tracker2.com",
                             knownTracker: nil,
                             entity: major,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)
             ]
 
@@ -174,20 +187,23 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
         let minor = Entity(displayName: "Minor", domains: nil, prevalence: 0.01)
 
         let trackers = [
-            DetectedTracker(url: "http://tracker3.com",
+            DetectedRequest(url: "http://tracker3.com",
+                            eTLDplus1: "tracker3.com",
                             knownTracker: nil,
                             entity: minor,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker1.com",
+            DetectedRequest(url: "http://tracker1.com",
+                            eTLDplus1: "tracker1.com",
                             knownTracker: nil,
                             entity: minor,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker2.com",
+            DetectedRequest(url: "http://tracker2.com",
+                            eTLDplus1: "tracker2.com",
                             knownTracker: nil,
                             entity: minor,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)
             ]
 
@@ -204,20 +220,23 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     func testWhenUnknownTrackerNetworkThenDomainsAreSortedAndHaveOwnSection() {
 
         let trackers = [
-            DetectedTracker(url: "http://tracker3.com",
+            DetectedRequest(url: "http://tracker3.com",
+                            eTLDplus1: "tracker3.com",
                             knownTracker: nil,
                             entity: nil,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker1.com",
+            DetectedRequest(url: "http://tracker1.com",
+                            eTLDplus1: "tracker1.com",
                             knownTracker: nil,
                             entity: nil,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl),
-            DetectedTracker(url: "http://tracker2.com",
+            DetectedRequest(url: "http://tracker2.com",
+                            eTLDplus1: "tracker2.com",
                             knownTracker: nil,
                             entity: nil,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)
             ]
 
@@ -233,10 +252,11 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     func testWhenNoProtocolThenTrackerAddedByDomain() {
 
         let trackers = [
-            DetectedTracker(url: "//tracker.com",
+            DetectedRequest(url: "//tracker.com",
+                            eTLDplus1: "tracker.com",
                             knownTracker: nil,
                             entity: nil,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)
             ]
 
@@ -249,10 +269,11 @@ class PrivacyProtectionTrackerNetworksTests: XCTestCase {
     func testWhenNoDomainThenTrackerIgnored() {
 
         let trackers = [
-            DetectedTracker(url: "/tracker3.js",
+            DetectedRequest(url: "/tracker3.js",
+                            eTLDplus1: nil,
                             knownTracker: nil,
                             entity: nil,
-                            blocked: true,
+                            state: .blocked,
                             pageUrl: PrivacyProtectionTrackerNetworksTests.pageUrl)
             ]
 

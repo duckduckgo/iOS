@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import os.log
 
 public struct AppUrls {
 
@@ -36,7 +37,7 @@ public struct AppUrls {
         
         static let surrogates = "\(staticBase)/surrogates.txt"
         static let privacyConfig = "\(staticBase)/trackerblocking/config/v2/ios-config.json"
-        static let trackerDataSet = "\(staticBase)/trackerblocking/v2.1/apple-tds.json"
+        static let trackerDataSet = "\(staticBase)/trackerblocking/v3/apple-tds.json"
         static let lastCompiledRules = "\(staticBase)/trackerblocking/last-compiled-rules"
 
         static let atb = "\(base)/atb.js\(devMode)"
@@ -51,14 +52,9 @@ public struct AppUrls {
         static let pixel = "\(pixelBase)/t/%@"
 
         static var emailProtectionLink = "https://duckduckgo.com/email"
-        static var loginQuickLink = "https://duckduckgo.com/email/login"
-        static var emailPrivacyGuarantees = "https://duckduckgo.com/email/privacy-guarantees"
-        static var addressBlogPostQuickLink = "https://duckduckgo.com/email/learn-more"
-        static var emailLoginQuickLink = "https://duckduckgo.com/email/login"
-        static var signUpQuickLink = "https://duckduckgo.com/email/start"
-        static func signUpWithCodeQuickLink(code: String) -> String {
-            return "https://duckduckgo.com/email/start?inviteCode=\(code)"
-        }
+        static var emailProtectionQuickLink = "ddgQuickLink://https://duckduckgo.com/email"
+
+        static let appStore = "https://apps.apple.com/app/duckduckgo-privacy-browser/id663592361"
     }
     
     private enum DDGStaticURL: String {
@@ -102,10 +98,12 @@ public struct AppUrls {
         return URL(string: Url.base)!
     }
     
-    public func autocompleteUrl(forText text: String) -> URL {
+    public func autocompleteUrl(forText text: String) throws -> URL {
         return URL(string: Url.autocomplete)!
-            .addParam(name: Param.search, value: text)
-            .addParam(name: Param.enableNavSuggestions, value: ParamValue.enableNavSuggestions)
+            .appendingParameters([
+                Param.search: text,
+                Param.enableNavSuggestions: ParamValue.enableNavSuggestions
+            ])
     }
 
     public var surrogates: URL {
@@ -136,19 +134,23 @@ public struct AppUrls {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.searchRetentionAtb else {
             return nil
         }
-        return URL(string: Url.atb)!
-            .addParam(name: Param.atb, value: atbWithVariant)
-            .addParam(name: Param.setAtb, value: setAtb)
+        return URL(string: Url.atb)?
+            .appendingParameters([
+                Param.atb: atbWithVariant,
+                Param.setAtb: setAtb
+            ])
     }
     
     public var appAtb: URL? {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.appRetentionAtb else {
             return nil
         }
-        return URL(string: Url.atb)!
-            .addParam(name: Param.activityType, value: ParamValue.appUsage)
-            .addParam(name: Param.atb, value: atbWithVariant)
-            .addParam(name: Param.setAtb, value: setAtb)
+        return URL(string: Url.atb)?
+            .appendingParameters([
+                Param.activityType: ParamValue.appUsage,
+                Param.atb: atbWithVariant,
+                Param.setAtb: setAtb
+            ])
     }
 
     public func isBlog(url: URL) -> Bool {
@@ -170,21 +172,22 @@ public struct AppUrls {
         if !isDuckDuckGo(url: url) {
             return nil
         }
-        return url.getParam(name: Param.search)
+        return url.getParameter(named: Param.search)
     }
 
-    public func url(forQuery query: String, queryContext: URL? = nil) -> URL {
-        if let url = URL.webUrl(fromText: query) {
+    public func url(forQuery query: String, queryContext: URL? = nil) -> URL? {
+        if let url = URL.webUrl(from: query) {
             return url
         }
         
         var parameters = [String: String]()
-        if let queryContext = queryContext, isDuckDuckGoSearch(url: queryContext) {
-            if queryContext.getParam(name: Param.verticalMaps) == nil,
-               let vertical = queryContext.getParam(name: Param.vertical),
-                      ParamValue.majorVerticals.contains(vertical) {
-                parameters[Param.verticalRewrite] = vertical
-            }
+        if let queryContext = queryContext,
+           isDuckDuckGoSearch(url: queryContext),
+           queryContext.getParameter(named: Param.verticalMaps) == nil,
+           let vertical = queryContext.getParameter(named: Param.vertical),
+           ParamValue.majorVerticals.contains(vertical) {
+
+            parameters[Param.verticalRewrite] = vertical
         }
         
         return searchUrl(text: query, additionalParameters: parameters)
@@ -192,22 +195,27 @@ public struct AppUrls {
 
     public func exti(forAtb atb: String) -> URL {
         let extiUrl = URL(string: Url.exti)!
-        return extiUrl.addParam(name: Param.atb, value: atb)
+        return extiUrl.appendingParameter(name: Param.atb, value: atb)
     }
 
     /**
      Generates a search url with the source (t) https://duck.co/help/privacy/t
      and cohort (atb) https://duck.co/help/privacy/atb
      */
-    public func searchUrl(text: String, additionalParameters: [String: String] = [:]) -> URL {
-        var searchUrl = base.addParam(name: Param.search, value: text)
-        searchUrl = searchUrl.addParams(additionalParameters)
+    public func searchUrl<C: Collection>(text: String, additionalParameters: C) -> URL where C.Element == (key: String, value: String) {
+        let searchUrl = base
+            .appendingParameter(name: Param.search, value: text)
+            .appendingParameters(additionalParameters)
         return applyStatsParams(for: searchUrl)
     }
-    
+
+    public func searchUrl(text: String) -> URL? {
+        return searchUrl(text: text, additionalParameters: Array())
+    }
+
     public func isDuckDuckGoSearch(url: URL) -> Bool {
         if !isDuckDuckGo(url: url) { return false }
-        guard url.getParam(name: Param.search) != nil else { return false }
+        guard url.getParameter(named: Param.search) != nil else { return false }
         return true
     }
     
@@ -223,10 +231,8 @@ public struct AppUrls {
             return false
         }
         
-        for gpcHost in gpcUrls {
-            if url.isPart(ofDomain: gpcHost) {
-                return true
-            }
+        for gpcHost in gpcUrls where url.isPart(ofDomain: gpcHost) {
+            return true
         }
         
         return false
@@ -237,28 +243,32 @@ public struct AppUrls {
     }
 
     public func applyStatsParams(for url: URL) -> URL {
-        var searchUrl = url.addParam(name: Param.source, value: ParamValue.source)
-        if let atbWithVariant = statisticsStore.atbWithVariant {
-            searchUrl = searchUrl.addParam(name: Param.atb, value: atbWithVariant)
-        }
+        var searchURL = url.removingParameters(named: [Param.source, Param.atb])
+            .appendingParameter(name: Param.source, value: ParamValue.source)
 
-        return searchUrl
+        if let atbWithVariant = statisticsStore.atbWithVariant {
+            searchURL = searchURL.appendingParameter(name: Param.atb, value: atbWithVariant)
+        }
+        return searchURL
     }
 
     public func hasCorrectMobileStatsParams(url: URL) -> Bool {
-        guard let source = url.getParam(name: Param.source), source == ParamValue.source  else { return false }
+        guard let source = url.getParameter(named: Param.source),
+              source == ParamValue.source
+        else { return false }
         if let atbWithVariant = statisticsStore.atbWithVariant {
-            return atbWithVariant == url.getParam(name: Param.atb)
+            return atbWithVariant == url.getParameter(named: Param.atb)
         }
         return true
     }
-    
+
     public func applySearchHeaderParams(for url: URL) -> URL {
-        return url.addParam(name: Param.searchHeader, value: ParamValue.searchHeader)
+        return url.removingParameters(named: [Param.searchHeader])
+            .appendingParameter(name: Param.searchHeader, value: ParamValue.searchHeader)
     }
-    
+
     public func hasCorrectSearchHeaderParams(url: URL) -> Bool {
-        guard let header = url.getParam(name: Param.searchHeader) else { return false }
+        guard let header = url.getParameter(named: Param.searchHeader) else { return false }
         return header == ParamValue.searchHeader
     }
     
@@ -274,34 +284,18 @@ public struct AppUrls {
         return URL(string: Url.httpsExcludedDomains)!
     }
 
-    public var loginQuickLink: URL {
-        return URL(string: Url.loginQuickLink)!
+    public var emailProtectionQuickLink: URL {
+        return URL(string: Url.emailProtectionQuickLink)!
     }
 
-    public var signUpQuickLink: URL {
-        return URL(string: Url.signUpQuickLink)!
-    }
-
-    public func signUpWithCodeQuickLink(code: String) -> URL {
-        return URL(string: Url.signUpWithCodeQuickLink(code: code))!
-    }
-
-    public var emailPrivacyGuarantees: URL {
-        return URL(string: Url.emailPrivacyGuarantees)!
-    }
-
-    public var addressBlogPostQuickLink: URL {
-        return URL(string: Url.addressBlogPostQuickLink)!
-    }
-
-    public var emailLoginQuickLink: URL {
-        return URL(string: Url.emailLoginQuickLink)!
-    }
-    
     public var macBrowserDownloadURL: URL {
         return URL(string: "https://duckduckgo.com/mac")!
     }
     
+    public var appStoreURL: URL {
+        return URL(string: Url.appStore)!
+    }
+
     public func pixelUrl(forPixelNamed pixelName: String, formFactor: String? = nil, includeATB: Bool = true) -> URL {
         var urlString = Url.pixel.format(arguments: pixelName)
         if let formFactor = formFactor {
@@ -310,15 +304,15 @@ public struct AppUrls {
         var url = URL(string: urlString)!
 
         if includeATB {
-            url = url.addParam(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
+            url = url.appendingParameter(name: Param.atb, value: statisticsStore.atbWithVariant ?? "")
         }
 
         return url
     }
-    
-    public func removeInternalSearchParameters(fromUrl url: URL) -> URL {
+
+    public func removingInternalSearchParameters(fromUrl url: URL) -> URL {
         guard isDuckDuckGoSearch(url: url) else { return url }
-        return url.removeParams(named: [Param.atb, Param.source, Param.searchHeader])
+        return url.removingParameters(named: [Param.atb, Param.source, Param.searchHeader])
     }
 
 }

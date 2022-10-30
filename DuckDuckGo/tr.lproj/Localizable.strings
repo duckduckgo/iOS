@@ -10,8 +10,23 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Geri al";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Otomatik tamamlama önerisi";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Yer imi ekle";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Web sitesini aç";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "DuckDuckGo'da ara";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";
+
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Girişleri Otomatik Doldur";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Yer imi ekle";
@@ -157,6 +172,213 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Açık";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Parolayı gizle";
+
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Devre dışı bırak";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Kullanmaya Devam Edin";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Otomatik Doldurmayı istediğiniz zaman Ayarlar'dan devre dışı bırakabilirsiniz.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Otomatik Doldurma özelliğini kullanmaya devam etmek istiyor musunuz?";
+
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Görüntüle";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Giriş kaydedildi";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Giriş güncellendi";
+
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "%@ Ögesini Kopyala";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adres kopyalandı";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Notlar kopyalandı";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Şifre kopyalandı";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Kullanıcı adı kopyalandı";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "Web sitesi URL'si";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Oturum Aç";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Girişi Sil";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Girişi Sil";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Bu Girişi silmek istediğinizden emin misiniz?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Girişi Düzenle";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Parola";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Title";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "ornek.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "kullaniciadi@ornek.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Giriş son güncelleme: %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Giriş Başlığı";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Giriş Ekle";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Notlar";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Web sitesini aç";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Parola";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "Tamam";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Bu kullanıcı adı ve web sitesi için zaten bir girişiniz var.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Yinelenen Giriş";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Otomatik Doldurmayı Aç";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Kullanıcı adı";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Girişler yalnızca bu cihazda güvenli bir şekilde saklanır";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Henüz kaydedilmiş giriş yok";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Girişleri kaydetmeye başlamak için Otomatik Doldurmayı etkinleştirin";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "İptal";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Kayıtlı Girişi Kullanmak İçin Kilidi Açın";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Kapat";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Girişleri Kaydet ve Otomatik Doldur";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "%@ için giriş silindi";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Giriş Ara";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Girişleri Otomatik Doldur";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Face ID'yi Ayarlayın";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Otomatik Doldurulan Giriş bilgilerinizi korumak için Face ID ve Parola gereklidir.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Otomatik Doldur'u kullanmak için Face ID'yi etkinleştirme";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Touch ID'yi Ayarlayın";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Otomatik Doldurulan Giriş bilgilerinizi korumak için Touch ID ve Parola gereklidir.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Otomatik Doldurma özelliğini kullanmak için Touch ID'yi etkinleştirin";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "İptal";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Kayıtlı Girişi Kullanmak İçin Kilidi Açın";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Diğer Seçenekler";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Kayıtlı Giriş kullanılsın mı?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "\"%@\" için";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Sonuç yok";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Bu, bu site için ek bir Giriş kaydedecektir.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "DuckDuckGo bu Girişi cihazınızda güvenli bir şekilde saklayacaktır.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "DuckDuckGo'nun Girişinizi kaydetmesini istiyor musunuz?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Şimdi Değil";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Girişi Kaydet";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Giriş Kaydedilsin mi?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Şifre Kaydet";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Şifre Kaydedilsin mi?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Parolayı göster";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Girişi Güncelle";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Şifreyi Güncelle";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Şifre Güncellensin mi?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Kullanıcı Adı Güncellensin mi?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Yer İmi ekle";
 
@@ -175,11 +397,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Sil";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Bu klasörü ve %i ögeyi silmek istediğinizden emin misiniz?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Bu klasörü ve %i ögeyi silmek istediğinizden emin misiniz?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "%@ silinsin mi?";
@@ -415,11 +634,14 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ için indirme başlatıldı";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "İptal";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Özel Adres Oluşturun";
+"email.aliasAlert.generatePrivateAddress" = "Özel Duck Address Oluştur";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Duck Adresi ile e-posta izleyicileri engelleyin";
@@ -431,7 +653,7 @@
 "email.browsingMenu.alert" = "Yeni adres panoya kopyalandı";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Duck Adresi Oluştur";
+"email.browsingMenu.useNewDuckAddress" = "Özel Duck Address Oluştur";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Etkin";
@@ -442,74 +664,8 @@
 /* Signed out state for the email feature */
 "email.settings.off" = "Kapalı";
 
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "İptal";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "E-posta Korumasının bu cihazdan kaldırılması Duck Adresinizin silinmesine yol açmaz.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Kaldır";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "E-posta Koruması Kaldırılsın mı?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Bekleme listesine katılırken bir hata oluştu, lütfen daha sonra tekrar deneyin";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Başlayın";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Davet Kodum var";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Davet edildiniz!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Özel Bekleme Listesine Katılın";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Bekleme listesindesiniz!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Özellik hazır olduğunda davetiyeniz burada gösterilecek. Hazır olduğunda %1$@ ister misiniz? E-posta Koruması hakkında %2$@.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "bildirim almak";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "E-posta Koruması hazır olduğunda size bildirim gönderilecektir. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Daha fazla bilgi";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "E-posta Koruması'nı kullanmaya başlayabileceğiniz zaman size bir bildirim göndereceğiz.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Sıra size geldiğinde haber vermemizi ister misiniz?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Bekleme listesine katılarak E-posta Koruması'nı deneme sırası size geldiğinde sizi bilgilendirmemizi istediniz.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Hayır Teşekkürler";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "BANA BİLDİR";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "E-posta Koruması için Davetlisiniz!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "E-postalarınızı kaydetmiyoruz. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "E-posta gizliliğinin basitleştirilmiş hâli.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "E-posta sağlayıcınızı değiştirmeden e-posta izleyicileri engelleyin ve adresinizi gizleyin. %@.";
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "E-posta izleyicileri engelleyin ve adresinizi gizleyin";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi eklenmedi";
@@ -802,6 +958,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo'ya\nHoş Geldiniz!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Davet Kodu";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Özellik hazır olduğunda davetiyeniz burada gösterilecek. Hazır olduğunda %1$@ ister misiniz? macOS tarayıcı beta hakkında %2$@.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "bildirim almak";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Özellik hazır olduğunda bir bildirim göndereceğiz. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Mac için DuckDuckGo'yu deneme davetiniz buraya gelecek. Kısa süre içinde tekrar kontrol edin ya da sıranız geldiğinde size bir bildirim gönderebiliriz.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Mac için DuckDuckGo kopyanız indirilmeye hazır olduğunda size bir bildirim göndereceğiz.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "Beta hakkında %@.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Mac için DuckDuckGo Gizlilik Uygulaması, ihtiyacınız olan hız ve beklediğiniz tarama özelliklerinin yanı sıra sınıfının en iyisi gizlilik özellikleri sunuyor.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Davetiyenizi açın";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "Mac için DuckDuckGo hazır!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopyala";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "İndirmek için Mac'inizde bu URL'yi ziyaret edin:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "1. Adım";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Yüklemek için dosyayı açın, ardından kilidini açmak için davet kodunuzu girin.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "2. Adım";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Mac'te gizliliğinizi koruyarak gezinmeye başlamaya hazır mısınız?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Davetlisiniz!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Özel Bekleme Listesine Katılın";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Bekleme listesine katılıyorsunuz...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Mac için DuckDuckGo'yu deneyin!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Windows sürümü çok yakında!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Sıra size geldiğinde bunu bildirebiliriz, ancak bildirimler şu anda DuckDuckGo için devre dışı bırakılmış.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Bekleme listesine katılmak için kişisel bilgilerinizi paylaşmanız gerekmez. Yerinizi yalnızca cihazınıza yerleştirilen bir zaman damgası ile güvence altına alacaksınız. Böylece sıranız geldiğinde sizi bilgilendirebiliriz.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Listedesiniz!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Mac cihazlarda indirilebilir";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Mac için uygulamamızla internette gezinirken gizliliğinizi koruyun";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Listedesiniz!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Davetlisiniz!\n\nMac'te gizliliğinizi koruyarak gezinmeye başlamaya hazır mısınız?\n\n1. Adım\nİndirmek için Mac'inizde bu URL'yi ziyaret edin:\nhttps://duckduckgo.com/mac\n\n2. Adım\nYüklemek için dosyayı açın, ardından kilidini açmak için davet kodunuzu girin.\n\nDavet kodu: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Davetlisiniz!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo Masaüstü Uygulaması";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Göz Atma Menüsü";
 
@@ -883,6 +1129,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Tamam";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Web İzleme Korumalarımız hakkında";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Arama korumalarımız ve reklamlarımız hakkında";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Arama ağı reklamlarımız korumalarımızı nasıl etkiler?";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritma";
 
@@ -906,6 +1161,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Zorunlu Şifreleme";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Şifreli Bağlantı";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Bu siteyi şifreli bir bağlantı kullanmaya zorladık. Bu sayede, siteye gönderdiğiniz kişisel bilgiler kaydedilemeyecek.";
@@ -985,6 +1243,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Evet";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "SİTE KORUMASI KAPATILDI";
 
@@ -1000,11 +1261,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Başlıca İzleyici Ağları Bulundu";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Başlıca İzleyici Ağı Tespit Edilmedi";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "%2$@ yılından beri ziyaret ettiğiniz web sitelerinin %%%1$@ kadarında izleyici ağları bulundu.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Kaç izleyiciyi engellediğimizi göstermek için\nhâlâ veri topluyoruz.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Yüklenen Üçüncü Taraf İsteği Yok";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "DuckDuckGo'daki bir %@ reklamı yakın zamanda tıklandığı için aşağıdaki alan adının istekleri yüklendi. Bu istekler, reklamların ne kadar etkili olduğunun değerlendirilmesine yardımcı olur. DuckDuckGo'daki reklamlar profil oluşturma için kullanılmaz.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Site kopmasını önlemek için aşağıdaki alan adının istekleri yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "%@ ile ilişkili oldukları için aşağıdaki alan adının istekleri yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Aşağıdaki üçüncü taraf alan adlarının istekleri yüklendi. Bir şirketin istekleri yüklenirse, diğer web izleme korumalarımıza rağmen profilinizi oluşturmaları mümkün olabilir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Bu site için Korumalar kapalı olduğundan hiçbir üçüncü taraf isteğin yüklenmesi engellenmedi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Aşağıdaki alan adlarının izleme istekleri yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Aşağıdaki alan adlarının istekleri de yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Aşağıdaki alanların istekleri yüklendi.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Aşağıdaki alanın istekleri yüklendi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Herhangi bir üçüncü taraf alan adından gelen istek algılanmadı.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Üçüncü Taraf İstekleri Yüklendi";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Not: Platform sınırlamaları yüzünden tüm istekleri belirlememiz mümkün olmayabilir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Profil Oluşturmama";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Gizlilik Uygulamaları: ToS;DR.";
@@ -1040,13 +1352,34 @@
 "privacy.protection.tos.unknown" = "Bilinmeyen Gizlilik Uygulamaları";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "İzleyici ağları, web geçmişinizi sizinle ilgili bir veri profilinde toplar. Büyük izleyici ağları daha zararlıdır, çünkü sizi İnternet'te izleyebilir ve hedefleyebilirler.";
+"privacy.protection.tracker.networks.info" = "Şirketler izleyici kullanarak profilinizi çıkarabilir. Bu izleyicilerin yüklenmesini ve bu sayfadaki etkinliğinizi izlemesini engelledik.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Bu site için Korumalar kapalı olduğundan hiçbir izleme isteğinin yüklenmesi engellenmedi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Herhangi bir izleme isteği algılanmadı.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Aşağıdaki üçüncü taraf alan adlarının isteklerinin yüklenmesi, izleme istekleri olarak tanımlandıkları için engellendi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Yüklenmesi Engellenen İstekler";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "İzleme İstekleri Bulundu";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Hiçbir İzleme İsteği Engellenmedi";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "İzleme İsteği Bulunamadı";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "İptal";
@@ -1150,18 +1483,6 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofon Erişimi Gerekli";
 
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "Tamam";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "İptal";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo söylediklerinizi asla dinlemez. Özel Sesli Arama için tüm konuşma verilerinin işlenmesi cihazınızda gerçekleşir.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Özel Sesli Arama için Mikrofon Erişimi Gerekli";
-
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "İptal";
 
@@ -1183,12 +1504,12 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori eklendi";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Uyarıları Engelle";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "İptal";
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "Tamam";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "%@ size bir mesaj gönderdi:";
 

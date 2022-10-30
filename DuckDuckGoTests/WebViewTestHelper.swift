@@ -42,8 +42,8 @@ class MockSurrogatesUserScriptDelegate: NSObject, SurrogatesUserScriptDelegate {
 
     var shouldProcessTrackers = true
 
-    var onSurrogateDetected: ((DetectedTracker, String) -> Void)?
-    var detectedSurrogates = Set<DetectedTracker>()
+    var onSurrogateDetected: ((DetectedRequest, String) -> Void)?
+    var detectedSurrogates = Set<DetectedRequest>()
 
     func reset() {
         detectedSurrogates.removeAll()
@@ -54,7 +54,7 @@ class MockSurrogatesUserScriptDelegate: NSObject, SurrogatesUserScriptDelegate {
     }
 
     func surrogatesUserScript(_ script: SurrogatesUserScript,
-                              detectedTracker tracker: DetectedTracker,
+                              detectedTracker tracker: DetectedRequest,
                               withSurrogate host: String) {
         detectedSurrogates.insert(tracker)
         onSurrogateDetected?(tracker, host)

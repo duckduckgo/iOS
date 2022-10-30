@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import WidgetKit
 
 class ImageCacheDebugViewController: UITableViewController {
 
@@ -140,6 +141,7 @@ class ImageCacheDebugViewController: UITableViewController {
 
         alert.addAction(UIAlertAction(title: "Clear", style: .destructive, handler: { _ in
             self.clearCacheAndReload()
+            WidgetCenter.shared.reloadAllTimelines()
         }))
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))

@@ -20,6 +20,7 @@
 import XCTest
 @testable import DuckDuckGo
 @testable import Core
+@testable import BrowserServicesKit
 
 class AppVersionExtensionTests: XCTestCase {
 

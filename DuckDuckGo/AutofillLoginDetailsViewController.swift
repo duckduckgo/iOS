@@ -24,9 +24,11 @@ import Combine
 
 protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
     func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController)
+    func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount)
 }
 
 class AutofillLoginDetailsViewController: UIViewController {
+    
     weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
@@ -34,7 +36,21 @@ class AutofillLoginDetailsViewController: UIViewController {
     private let lockedView = AutofillItemsLockedView()
     private var contentView: UIView?
 
-    init(account: SecureVaultModels.WebsiteAccount, authenticator: AutofillLoginListAuthenticator) {
+    private lazy var saveBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]
+        barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        return barButtonItem
+    }()
+
+    private lazy var editBarButtonItem: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)]
+        barButtonItem.setTitleTextAttributes(attributes, for: .normal)
+        return barButtonItem
+    }()
+
+    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account)
         self.authenticator = authenticator
         super.init(nibName: nil, bundle: nil)
@@ -92,6 +108,17 @@ class AutofillLoginDetailsViewController: UIViewController {
             }
             .store(in: &cancellables)
         
+        Publishers.MergeMany(
+            viewModel.$title,
+            viewModel.$username,
+            viewModel.$password,
+            viewModel.$address)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.setupNavigationBar()
+            }
+            .store(in: &cancellables)
+        
         authenticator.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -119,14 +146,23 @@ class AutofillLoginDetailsViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
+        title = viewModel.navigationTitle
         switch viewModel.viewMode {
         case .edit:
-            title = UserText.autofillLoginDetailsEditTitle
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+            navigationItem.rightBarButtonItem = saveBarButtonItem
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
 
         case .view:
-            title = UserText.autofillLoginDetailsDefaultTitle
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(toggleEditMode))
+            navigationItem.rightBarButtonItem = editBarButtonItem
+            navigationItem.leftBarButtonItem = nil
+        
+        case .new:
+            if viewModel.shouldShowSaveButton {
+                navigationItem.rightBarButtonItem = saveBarButtonItem
+            } else {
+                navigationItem.rightBarButtonItem = nil
+            }
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         }
     }
     
@@ -137,14 +173,39 @@ class AutofillLoginDetailsViewController: UIViewController {
     
     @objc private func save() {
         viewModel.save()
-        viewModel.toggleEditMode()
         delegate?.autofillLoginDetailsViewControllerDidSave(self)
+    }
+    
+    @objc private func cancel() {
+        if viewModel.viewMode == .new {
+            navigationController?.popViewController(animated: true)
+        } else {
+            toggleEditMode()
+        }
     }
 }
 
 extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDelegate {
     func autofillLoginDetailsViewModelDidSave() {
         
+    }
+    
+    func autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin() {
+        let alert = UIAlertController(title: UserText.autofillLoginDetailsSaveDuplicateLoginAlertTitle,
+                                      message: UserText.autofillLoginDetailsSaveDuplicateLoginAlertMessage,
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: UserText.autofillLoginDetailsSaveDuplicateLoginAlertAction, style: .default)
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
+
+    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount) {
+        delegate?.autofillLoginDetailsViewControllerDelete(account: account)
+        navigationController?.popViewController(animated: true)
+    }
+
+    func autofillLoginDetailsViewModelDismiss() {
+        navigationController?.dismiss(animated: true)
     }
 }
 
@@ -161,5 +222,13 @@ extension AutofillLoginDetailsViewController: Themable {
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor
         navigationController?.navigationBar.tintColor = theme.navigationBarTintColor
 
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
     }
 }

@@ -4,6 +4,9 @@
 /* Class = "UITableViewSection"; footerTitle = "Disable to prevent links from automatically opening in other installed apps."; ObjectID = "0gU-rZ-pRc"; */
 "0gU-rZ-pRc.footerTitle" = "Uitschakelen om te voorkomen dat links automatisch geopend worden in andere geïnstalleerde apps.";
 
+/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "0gU-rZ-pRc"; */
+"0gU-rZ-pRc.headerTitle" = "Aanpassen";
+
 /* Class = "UILabel"; text = "Version"; ObjectID = "2ky-s9-1aZ"; */
 "2ky-s9-1aZ.text" = "Versie";
 
@@ -37,32 +40,26 @@
 /* Class = "UILabel"; text = "App Launch"; ObjectID = "13n-KI-KLq"; */
 "13n-KI-KLq.text" = "Starten van app";
 
-/* Class = "UILabel"; text = "dax@duck.com"; ObjectID = "25v-n4-wJD"; */
-"25v-n4-wJD.text" = "dax@duck.com";
-
 /* Class = "UILabel"; text = "Open Links in Associated Apps"; ObjectID = "a1T-ui-4Nw"; */
 "a1T-ui-4Nw.text" = "Links openen in bijbehorende apps";
+
+/* Class = "UILabel"; text = "Debug Menu"; ObjectID = "A9G-5I-RSn"; */
+"A9G-5I-RSn.text" = "Probleemoplossingsmenu";
+
+/* Class = "UILabel"; text = "Autofill Logins"; ObjectID = "And-cQ-SEu"; */
+"And-cQ-SEu.text" = "Login met automatisch invullen";
 
 /* Class = "UILabel"; text = "Animation"; ObjectID = "AtR-nS-Gun"; */
 "AtR-nS-Gun.text" = "Animatie";
 
-/* Class = "UIViewController"; title = "Email Protection (Beta)"; ObjectID = "b9u-ZD-F95"; */
-"b9u-ZD-F95.title" = "E-mailbescherming (bèta)";
-
-/* Class = "UILabel"; text = "Email Protection"; ObjectID = "bAK-LL-HUH"; */
-"bAK-LL-HUH.text" = "E-mailbescherming";
+/* Class = "UILabel"; text = "Email Protection"; ObjectID = "azf-Nc-kvW"; */
+"azf-Nc-kvW.text" = "E-mailbescherming";
 
 /* Class = "UITableViewSection"; footerTitle = "Data and/or tabs will be cleared upon restart of the app."; ObjectID = "BGs-JL-4ib"; */
 "BGs-JL-4ib.footerTitle" = "Gegevens en/of tabbladen worden gewist bij het opnieuw starten van de app.";
 
 /* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
 "bIg-0T-UWq.text" = "Vraag naar brandveilige websites bij het inloggen";
-
-/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "bJo-qn-f57"; */
-"bJo-qn-f57.title" = "E-mailbescherming (bèta)";
-
-/* Class = "UINavigationItem"; title = "Email Protection (Beta)"; ObjectID = "Br7-C6-EmT"; */
-"Br7-C6-EmT.title" = "E-mailbescherming (bèta)";
 
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "App-pictogram";
@@ -82,14 +79,14 @@
 /* Class = "UILabel"; text = "Application Lock"; ObjectID = "dBZ-yq-FYj"; */
 "dBZ-yq-FYj.text" = "App-vergrendeling";
 
-/* Class = "UITableViewSection"; headerTitle = "Customize"; ObjectID = "dj9-vh-Rig"; */
-"dj9-vh-Rig.headerTitle" = "Aanpassen";
+/* Class = "UITableViewSection"; headerTitle = "Appearance"; ObjectID = "dj9-vh-Rig"; */
+"dj9-vh-Rig.headerTitle" = "Uiterlijk";
 
 /* Class = "UITableViewSection"; footerTitle = "If Touch ID, Face ID or a system passcode is set, you’ll be requested to unlock the app when opening."; ObjectID = "dOj-jn-mSN"; */
 "dOj-jn-mSN.footerTitle" = "Als je Touch ID, Face ID of een systeemwachtwoord hebt ingesteld, word je gevraagd om de app te ontgrendelen als je deze opent.";
 
-/* Class = "UITableViewSection"; headerTitle = "Privacy & Security"; ObjectID = "dOj-jn-mSN"; */
-"dOj-jn-mSN.headerTitle" = "Privacy en beveiliging";
+/* Class = "UITableViewSection"; headerTitle = "Privacy"; ObjectID = "dOj-jn-mSN"; */
+"dOj-jn-mSN.headerTitle" = "Privacy";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "dud-qo-Ces"; */
 "dud-qo-Ces.text" = "Label";
@@ -99,9 +96,6 @@
 
 /* Class = "UILabel"; text = "100%"; ObjectID = "EB8-09-gt2"; */
 "EB8-09-gt2.text" = "100%";
-
-/* Class = "UIButton"; normalTitle = "I already have a Duck Address"; ObjectID = "ehC-NI-TIu"; */
-"ehC-NI-TIu.normalTitle" = "Ik heb al een Duck-adres";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "EIq-Ev-nfj"; */
 "EIq-Ev-nfj.text" = "Label";
@@ -127,8 +121,8 @@
 /* Class = "UILabel"; text = "Unprotected Sites"; ObjectID = "FHC-1z-Z3v"; */
 "FHC-1z-Z3v.text" = "Onbeschermde sites";
 
-/* Class = "UITableViewSection"; headerTitle = "Other"; ObjectID = "FpT-1C-xtx"; */
-"FpT-1C-xtx.headerTitle" = "Anders";
+/* Class = "UITableViewSection"; headerTitle = "About"; ObjectID = "FpT-1C-xtx"; */
+"FpT-1C-xtx.headerTitle" = "Over";
 
 /* Class = "UITableViewController"; title = "Global Privacy Control (GPC)"; ObjectID = "fV3-86-QQj"; */
 "fV3-86-QQj.title" = "Global Privacy Control (GPC)";
@@ -142,9 +136,6 @@
 /* Class = "UILabel"; text = "Default"; ObjectID = "Gbx-kl-uOO"; */
 "Gbx-kl-uOO.text" = "Standaard";
 
-/* Class = "UILabel"; text = "Header Title"; ObjectID = "ghI-g4-R9Q"; */
-"ghI-g4-R9Q.text" = "Kop Titel";
-
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
 "gji-Fs-EET.text" = "Privacy, vereenvoudigd. ";
 
@@ -157,20 +148,14 @@
 /* Class = "UILabel"; text = "Privacy Protection enabled for all sites"; ObjectID = "Hu1-5i-vjL"; */
 "Hu1-5i-vjL.text" = "Privacybescherming ingeschakeld voor alle sites";
 
-/* Class = "UILabel"; text = "Personal Duck Address"; ObjectID = "i4Y-CX-8b6"; */
-"i4Y-CX-8b6.text" = "Persoonlijk Duck-adres";
+/* Class = "UIImageView"; accessibilityLabel = "DuckDuckGo"; ObjectID = "iNd-oh-m3g"; */
+"iNd-oh-m3g.accessibilityLabel" = "DuckDuckGo";
 
 /* Class = "UICollectionViewController"; title = "Icon"; ObjectID = "jbD-Oy-Cmw"; */
 "jbD-Oy-Cmw.title" = "Pictogram";
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Feedback delen";
-
-/* Class = "UIViewController"; title = "Email Autofill"; ObjectID = "nB1-eu-sN0"; */
-"nB1-eu-sN0.title" = "E-mailadres automatisch invullen";
-
-/* Class = "UITableViewSection"; footerTitle = "When enabled, websites will automatically open in DuckDuckGo."; ObjectID = "NRb-Cc-1d6"; */
-"NRb-Cc-1d6.footerTitle" = "Als je dit inschakelt, worden websites automatisch geopend in DuckDuckGo.";
 
 /* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Nog geen brandveilige websites";
@@ -181,23 +166,20 @@
 /* Class = "UILabel"; text = "About DuckDuckGo"; ObjectID = "oM7-1o-9oY"; */
 "oM7-1o-9oY.text" = "Over DuckDuckGo";
 
-/* Class = "UITextView"; text = "Removing Email Protection from this device removes the option to fill in your Personal Duck Address or a newly generated Private Duck Address into email fields as you browse the web.\n\nTo delete your Duck Addresses entirely, or for any other questions or feedback, reach out to us at support@duck.com."; ObjectID = "pT6-FQ-9d9"; */
-"pT6-FQ-9d9.text" = "Als je E-mailbescherming van dit apparaat verwijdert, kun je je persoonlijke Duck-adres niet meer invullen en geen nieuwe privé-Duck-adressen genereren in e-mailvelden terwijl je op het internet surft.<br/><br/>Als je je Duck-adressen volledig wilt verwijderen of als je andere vragen of feedback hebt, kun je contact met ons opnemen via support@duck.com.";
+/* Class = "UITableViewSection"; headerTitle = "More From DuckDuckGo"; ObjectID = "OxE-MQ-uJk"; */
+"OxE-MQ-uJk.headerTitle" = "Meer over DuckDuckGo";
 
-/* Class = "UILabel"; text = "Remove from Device"; ObjectID = "qEh-V1-QaM"; */
-"qEh-V1-QaM.text" = "Verwijderen van apparaat";
+/* Class = "UILabel"; text = "Browse privately with our app for Mac "; ObjectID = "P0F-ts-ekd"; */
+"P0F-ts-ekd.text" = "Browse privé met onze app voor Mac ";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "qeN-SV-zy7"; */
 "qeN-SV-zy7.text" = "Label";
 
-/* Class = "UITextView"; text = "Description Text"; ObjectID = "rOy-6J-i8L"; */
-"rOy-6J-i8L.text" = "Omschrijving tekst";
-
 /* Class = "UINavigationItem"; title = "Text Size"; ObjectID = "ssa-zd-L3T"; */
 "ssa-zd-L3T.title" = "Lettergrootte";
 
-/* Class = "UITableViewController"; title = "Email Protection"; ObjectID = "TC3-Kg-XJt"; */
-"TC3-Kg-XJt.title" = "E-mailbescherming";
+/* Class = "UILabel"; text = "Private Voice Search"; ObjectID = "Swa-O7-n8W"; */
+"Swa-O7-n8W.text" = "Private spraakzoekopdracht";
 
 /* Class = "UITableViewSection"; headerTitle = "Show keyboard on"; ObjectID = "tGh-di-rfq"; */
 "tGh-di-rfq.headerTitle" = "Toetsenbord weergeven bij";
@@ -226,20 +208,14 @@
 /* Class = "UITableViewSection"; headerTitle = "Desired timing"; ObjectID = "vSJ-YJ-bBs"; Note = "Timing setting for automatic data clearing function"; */
 "vSJ-YJ-bBs.headerTitle" = "Gewenste timing";
 
-/* Class = "UIButton"; normalTitle = "Action button"; ObjectID = "VvN-QG-WsD"; */
-"VvN-QG-WsD.normalTitle" = "Actieknop";
-
 /* Class = "UILabel"; text = "Set as Default Browser"; ObjectID = "xof-5k-PkI"; */
 "xof-5k-PkI.text" = "Instellen als standaardbrowser";
 
 /* Class = "UINavigationItem"; title = "Fireproof Sites"; ObjectID = "xUX-nF-HOl"; */
 "xUX-nF-HOl.title" = "Brandveilige websites";
 
-/* Class = "UITextView"; text = "Footer Text"; ObjectID = "XvR-D4-LMg"; */
-"XvR-D4-LMg.text" = "Voettekst";
-
-/* Class = "UIButton"; normalTitle = "I have an Invite Code"; ObjectID = "yMC-7O-hSw"; */
-"yMC-7O-hSw.normalTitle" = "Ik heb een uitnodigingscode";
+/* Class = "UILabel"; text = "Block email trackers and hide your address"; ObjectID = "Y6Y-wA-n6Z"; */
+"Y6Y-wA-n6Z.text" = "Blokkeer e-mailtrackers en verberg je adres";
 
 /* Class = "UILabel"; text = "Keyboard"; ObjectID = "yoZ-jw-Cu3"; */
 "yoZ-jw-Cu3.text" = "Toetsenbord";
@@ -247,14 +223,14 @@
 /* Class = "UILabel"; text = "Add App to Your Dock"; ObjectID = "yvj-LL-MiR"; */
 "yvj-LL-MiR.text" = "App toevoegen aan je dock";
 
-/* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
-"zvh-2e-Wmz.text" = "Deze sites worden niet beschermd met Privacybescherming.";
-
-/* Class = "UITableViewSection"; headerTitle = "Help"; ObjectID = "zMK-jc-4bJ"; */
-"zMK-jc-4bJ.headerTitle" = "Help";
+/* Class = "UILabel"; text = "DuckDuckGo Desktop App"; ObjectID = "Yz9-17-qnn"; */
+"Yz9-17-qnn.text" = "DuckDuckGo-bureaubladapp";
 
 /* Class = "UILabel"; text = "New Tab"; ObjectID = "Zpg-h0-rYv"; */
 "Zpg-h0-rYv.text" = "Nieuw tabblad";
+
+/* Class = "UILabel"; text = "These sites will not be enhanced by Privacy Protection."; ObjectID = "zvh-2e-Wmz"; */
+"zvh-2e-Wmz.text" = "Deze sites worden niet beschermd met Privacybescherming.";
 
 /* Class = "UITableViewController"; title = "Home Screen"; ObjectID = "zWP-d3-nVc"; */
 "zWP-d3-nVc.title" = "Beginscherm";

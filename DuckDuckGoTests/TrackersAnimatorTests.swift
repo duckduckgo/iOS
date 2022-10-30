@@ -50,15 +50,17 @@ class TrackersAnimatorTests: XCTestCase {
     
     func testWhenOneTrackerNetworkWasFoundThenThereIsOneItemPresented() {
         let entity = Entity(displayName: "E", domains: [], prevalence: 1)
-        let trackers = [DetectedTracker(url: "a",
+        let trackers = [DetectedRequest(url: "a",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl),
-                        DetectedTracker(url: "b",
+                        DetectedRequest(url: "b",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
@@ -74,15 +76,17 @@ class TrackersAnimatorTests: XCTestCase {
         let entity1 = Entity(displayName: "E1", domains: [], prevalence: 1)
         let entity2 = Entity(displayName: "E2", domains: [], prevalence: 1)
         
-        let trackers = [DetectedTracker(url: "a",
+        let trackers = [DetectedRequest(url: "a",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity1,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl),
-                        DetectedTracker(url: "b",
+                        DetectedRequest(url: "b",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity2,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
@@ -99,20 +103,23 @@ class TrackersAnimatorTests: XCTestCase {
         let entity2 = Entity(displayName: "E2", domains: [], prevalence: 1)
         let entity3 = Entity(displayName: "E3", domains: [], prevalence: 1)
         
-        let trackers = [DetectedTracker(url: "a",
+        let trackers = [DetectedRequest(url: "a",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity1,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl),
-                        DetectedTracker(url: "b",
+                        DetectedRequest(url: "b",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity2,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl),
-                        DetectedTracker(url: "c",
+                        DetectedRequest(url: "c",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity3,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,
@@ -129,25 +136,29 @@ class TrackersAnimatorTests: XCTestCase {
         let entity2 = Entity(displayName: "E2", domains: [], prevalence: 1)
         let entity3 = Entity(displayName: "E3", domains: [], prevalence: 1)
         let entity4 = Entity(displayName: "E4", domains: [], prevalence: 1)
-        let trackers = [DetectedTracker(url: "a",
+        let trackers = [DetectedRequest(url: "a",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity1,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl),
-                        DetectedTracker(url: "b",
+                        DetectedRequest(url: "b",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity2,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl),
-                        DetectedTracker(url: "c",
+                        DetectedRequest(url: "c",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity3,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl),
-                        DetectedTracker(url: "d",
+                        DetectedRequest(url: "d",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity4,
-                                        blocked: true,
+                                        state: .blocked,
                                         pageUrl: TrackersAnimatorTests.pageUrl)]
         
         XCTAssert(omniBar.trackersAnimator.configure(omniBar,

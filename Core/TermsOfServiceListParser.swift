@@ -18,7 +18,7 @@
 //
 
 import Foundation
-import BrowserServicesKit
+import Common
 
 public typealias TermsOfServiceList = [String: TermsOfService]
 

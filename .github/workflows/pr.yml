@@ -28,6 +28,7 @@ jobs:
     name: Unit Tests
 
     runs-on: macos-12
+    timeout-minutes: 30
 
     steps:
     - name: Check out the code
@@ -37,14 +38,13 @@ jobs:
 
     - name: Build and test
       run: |
-        xcodebuild test \
+        set -o pipefail && xcodebuild test \
           -scheme "DuckDuckGo" \
           -destination "platform=iOS Simulator,name=iPhone 8" \
           | xcpretty -r junit -o unittests.xml
 
     - name: Publish unit tests report
       uses: mikepenz/action-junit-report@v3
-      if: always() # always run even if the previous step fails
       with:
         report_paths: unittests.xml
 

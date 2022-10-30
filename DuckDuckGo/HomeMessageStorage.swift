@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-import Core
+import BrowserServicesKit
 
 struct HomeMessageStorage {
     

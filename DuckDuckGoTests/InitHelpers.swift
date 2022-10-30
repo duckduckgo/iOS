@@ -18,7 +18,9 @@
 //
 
 import Foundation
+import BrowserServicesKit
 @testable import Core
+import Common
 
 extension PrivacyPractices {
     

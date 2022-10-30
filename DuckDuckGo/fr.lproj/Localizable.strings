@@ -10,8 +10,23 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Annuler";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Saisie semi-automatique de la suggestion";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Ajouter aux signets";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Ouvrir le site Web";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Rechercher sur DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Ajouter";
+
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Saisie automatique des identifiants";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Ajouter aux signets";
@@ -157,6 +172,213 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activé";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Masquer le mot de passe";
+
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Désactiver";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Continuer à utiliser";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Vous pouvez désactiver la saisie automatique à tout moment dans Paramètres.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Voulez-vous continuer à utiliser la saisie automatique ?";
+
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Voir";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Identifiant enregistré";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Identifiant modifié";
+
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Copier %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adresse copiée";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Notes copiées";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Mot de passe copié";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Nom d'utilisateur copié";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL du site Web";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Connexion";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Supprimer l'identifiant";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Supprimer l'identifiant";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Voulez-vous vraiment supprimer cet identifiant ?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Modifier l'identifiant";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Mot de passe";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Titre";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "exemple.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "nomdutilisateur@exemple.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Dernière mise à jour de l'identifiant %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Titre de l'identifiant";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Ajouter un identifiant";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Notes";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Ouvrir le site Web";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Mot de passe";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Vous avez déjà un identifiant pour ce nom d'utilisateur et ce site Web.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Identifiant dupliqué";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Déverrouiller la saisie automatique";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Nom d'utilisateur";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Les identifiants sont stockés de manière sécurisée sur cet appareil uniquement";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Aucun identifiant enregistré pour l'instant";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Activer la saisie automatique pour commencer à enregistrer les identifiants";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Annuler";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Déverrouiller pour utiliser les identifiants enregistrés";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Fermer";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Enregistrer et saisir automatiquement les identifiants";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Identifiant pour %@ supprimé";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Recherche d'identifiants";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Saisie automatique des identifiants";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Configurer Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Face ID et le code d'accès sont nécessaires pour protéger les informations relatives à la saisie automatique de vos identifiants.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Activer Face ID pour utiliser la saisie automatique";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Configurer Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID et le code d'accès sont nécessaires pour protéger les informations relatives à la saisie automatique de vos identifiants.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Activer Touch ID pour utiliser la saisie automatique";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Annuler";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Déverrouiller pour utiliser l'identifiant enregistré";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Plus d'options";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Utiliser l'identifiant enregistré ?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "pour '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Aucun résultat";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Un identifiant supplémentaire sera enregistré pour ce site.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "DuckDuckGo stockera cet identifiant en toute sécurité sur votre appareil.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Voulez-vous que DuckDuckGo enregistre votre identifiant ?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Pas maintenant";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Enregistrer l'identifiant";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Enregistrer l'identifiant ?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Enregistrer le mot de passe";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Enregistrer le mot de passe ?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Afficher le mot de passe";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Modifier l'identifiant";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Modifier le mot de passe";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Modifier le mot de passe ?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Modifier le nom d'utilisateur ?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Ajouter un signet";
 
@@ -175,11 +397,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Supprimer";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Voulez-vous vraiment supprimer ce dossier et %i éléments ?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Voulez-vous vraiment supprimer ce dossier et %i élément ?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Supprimer %@ ?";
@@ -415,11 +634,14 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Début du téléchargement pour %@";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuler";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Générer une adresse privée";
+"email.aliasAlert.generatePrivateAddress" = "Générer une Duck Address privée";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Bloquer les traqueurs d'e-mails avec une adresse Duck";
@@ -431,7 +653,7 @@
 "email.browsingMenu.alert" = "Nouvelle adresse copiée dans le presse-papiers";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Créer une adresse Duck";
+"email.browsingMenu.useNewDuckAddress" = "Générer une Duck Address privée";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Activé";
@@ -442,74 +664,8 @@
 /* Signed out state for the email feature */
 "email.settings.off" = "Désactivé";
 
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Annuler";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Remarque : la suppression de la protection des e-mails sur cet appareil ne supprimera pas votre adresse Duck.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Supprimer";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Supprimer la protection des e-mails ?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Une erreur s'est produite lors de l'inscription sur la liste d'attente. Veuillez réessayer plus tard.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Commencer";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "J'ai un code d'invitation";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Vous avez été invité(e) !";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Rejoindre la liste d'attente privée";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Vous êtes sur liste d'attente !";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Votre invitation s'affichera ici lorsque vous aurez accès à la fonctionnalité. Vous souhaitez %1$@ de son lancement ? %2$@ sur la protection des e-mails.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "être prévenu(e)";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Nous vous contacterons lorsque la protection des e-mails sera disponible pour vous. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "En savoir plus";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Nous vous enverrons une notification dès que vous pourrez commencer à utiliser la protection des e-mails.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Souhaitez-vous être prévenu(e) lorsque ce sera votre tour ?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Vous vous êtes inscrit(e) sur la liste d'attente et nous avez demandé de vous informer lorsque vous pourrez tester notre fonctionnalité de protection des e-mails.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Non merci";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "ME PRÉVENIR";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Vous avez reçu votre invitation pour tester la protection des e-mails !";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Nous n'enregistrons pas vos adresses e-mail. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "La confidentialité des e-mails, simplifiée.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Bloquez les traqueurs d'e-mails et masquez votre adresse, sans changer de fournisseur de messagerie. %@.";
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Bloquez les traqueurs d'e-mails et masquez votre adresse";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Aucun signet ajouté pour le moment";
@@ -802,6 +958,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Bienvenue sur\nDuckDuckGo !";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Code d'invitation";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Votre invitation s'affichera ici lorsque vous aurez accès à la fonctionnalité. Vous souhaitez %1$@ de son lancement ? %2$@ sur le navigateur macOS bêta.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "être prévenu(e)";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Nous vous enverrons une notification lorsque nous serons prêts. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Votre invitation à essayer DuckDuckGo pour Mac arrivera ici. Vous pouvez revenir dans quelques temps ou attendre de recevoir une notification de notre part.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Nous vous avertirons lorsque vous pourrez télécharger DuckDuckGo pour Mac.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ sur la version bêta.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "L'application de confidentialité DuckDuckGo pour Mac répond à vos besoins de rapidité et de fonctionnalités de navigation, et dispose des meilleurs outils de leur catégorie pour protéger votre vie privée.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Ouvrez votre invitation";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo pour Mac est prêt !";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Copier";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Accédez à cette URL sur votre Mac pour télécharger l'application :";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Étape 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Ouvrez le fichier à installer, puis saisissez votre code d'invitation pour le débloquer.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Étape 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Prêt(e) à naviguer incognito sur Mac ?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Vous avez reçu une invitation !";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Rejoindre la liste d'attente privée";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Inscription à la liste d'attente...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Essayez DuckDuckGo pour Mac !";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Des places vont bientôt se libérer !";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Nous pouvons vous avertir lorsque ce sera votre tour, mais les notifications sont actuellement désactivées pour DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Vous n'aurez pas à fournir d'informations personnelles pour vous inscrire sur la liste d'attente. Votre place sera assurée par un horodatage associé uniquement à votre appareil, qui nous permettra de vous informer quand viendra votre tour.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Vous êtes sur liste d'attente !";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Disponible en téléchargement sur Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Naviguez incognito avec notre application pour Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Vous êtes sur liste d'attente !";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Vous avez reçu une invitation !\n\nPrêt(e) à naviguer incognito sur Mac ?\n\nÉtape 1\nAccédez à cette URL sur votre Mac pour télécharger l'application :\nhttps://duckduckgo.com/mac\n\nÉtape 2\nOuvrez le fichier à installer, puis saisissez votre code d'invitation pour le débloquer.\n\nCode d'invitation : %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Vous avez reçu une invitation !";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "Application de bureau DuckDuckGo";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Menu de navigation";
 
@@ -883,6 +1129,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "À propos de nos protections contre le suivi Web";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "À propos de nos protections des recherches et publicités";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Impact de nos publicités de recherche sur nos protections";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algorithme";
 
@@ -906,6 +1161,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Cryptage forcé";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Connexion chiffrée";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Nous avons obligé ce site à utiliser une connexion chiffrée, ce qui l'empêchera d'espionner les informations personnelles que vous lui enverrez.";
@@ -985,6 +1243,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Oui";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "PROTECTION DU SITE DÉSACTIVÉE";
 
@@ -1000,11 +1261,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Principaux réseaux de suivi trouvés";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Aucun réseau majeur de traqueurs trouvé";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Des réseaux de traqueurs ont été trouvés sur %1$@%% des sites Web que vous avez visités depuis le %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Nous recueillons toujours des données pour indiquer\nle nombre de traqueurs que nous avons bloqués.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Aucune demande tierce chargée";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Les demandes du domaine suivant ont été chargées car une publicité %@ sur DuckDuckGo a récemment fait l'objet d'un clic. Ces demandes permettent d'évaluer l'efficacité des publicités. Toutes les publicités sur DuckDuckGo sont sans profilage.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Les demandes du domaine suivant ont été chargées pour éviter toute coupure du site.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Les demandes du domaine suivant ont été chargées car elles sont associées à %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Les demandes des domaines tiers suivants ont été chargées. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil, bien que nos autres protections en matière de suivi sur Internet restent applicables.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Aucune demande tierce n'a vu son chargement bloqué car les protections sont désactivées pour ce site. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Les demandes de suivi des domaines suivants ont été chargées.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Les demandes du domaine suivant ont également été chargées.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Les demandes des domaines suivants ont été chargées.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Les demandes du domaine suivant ont été chargées.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Nous n'avons détecté aucune demande provenant de domaines tiers.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Demandes tierces chargées";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Remarque : les limites de la plateforme peuvent restreindre notre capacité à détecter toutes les demandes.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Absence de profilage";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Les pratiques de confidentialité de ToS;DR.";
@@ -1040,13 +1352,34 @@
 "privacy.protection.tos.unknown" = "Pratiques de confidentialité inconnues";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Les réseaux de traqueurs regroupent votre historique Web dans un profil de données vous concernant. Les réseaux majeurs de traqueurs sont plus nuisibles, car ils peuvent vous suivre et vous cibler sur une plus grande partie du Web.";
+"privacy.protection.tracker.networks.info" = "Les traqueurs aident les entreprises à établir votre profil. Nous avons empêché ces traqueurs de charger et de surveiller votre activité sur cette page.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Aucune demande de suivi n'a vu son chargement bloqué car les protections sont désactivées pour ce site. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nous n'avons détecté aucune demande de suivi.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Les demandes des domaines tiers suivants ont vu leur chargement bloqué, car elles ont été identifiées comme des demandes de suivi. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Demandes dont le chargement a été bloqué";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Demandes de suivi trouvées";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Aucune demande de suivi bloquée";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Aucune demande de suivi trouvée";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Annuler";
@@ -1150,18 +1483,6 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Accès au microphone requis";
 
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Annuler";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo n'écoute jamais ce que vous dites. Le traitement des données vocales pour la recherche vocale privée se déroule sur votre appareil.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Accès au microphone requis pour la recherche vocale privée";
-
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Annuler";
 
@@ -1183,12 +1504,12 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favori ajouté";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Bloquer les alertes";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Annuler";
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Message de %@ :";
 

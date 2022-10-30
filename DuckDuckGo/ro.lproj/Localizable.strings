@@ -10,8 +10,23 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Anulați";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Sugestie de completare automată";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Marcat";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Deschide site-ul";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Caută pe DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Adăugați";
+
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Completare automată la autentificare";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Marcat";
@@ -157,6 +172,213 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activat";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Ascunde parola";
+
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Dezactivează";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Continuă să utilizezi";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Poți dezactiva oricând completarea automată din Setări.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Dorești să continui să utilizezi completarea automată?";
+
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Vezi";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Autentificare salvată";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Autentificare actualizată";
+
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Copiază %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adresă copiată";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Note copiate";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Parolă copiată";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Numele de utilizator a fost copiat";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL-ul site-ului";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Autentificare";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Șterge datele de autentificare";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Șterge datele de autentificare";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Sigur dorești să ștergi aceste date de autentificare?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Editează datele de autentificare";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Parolă";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Titlu";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "exemplu.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "numedeutilizator@exemplu.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Datele de autentificare au fost actualizate ultima dată la %s";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Titlu autentificare";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Adaugă date de autentificare";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Note";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Deschide site-ul";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Parolă";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Ai deja date de autentificare pentru acest nume de utilizator și site.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Date de autentificare duplicate";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Deblochează completarea automată";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Nume utilizator";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Datele de autentificare sunt stocate în siguranță numai pe acest dispozitiv";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Nu au fost salvate încă date de autentificare";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Activează Completarea automată pentru a începe salvarea autentificărilor";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Renunță";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Deblochează pentru a utiliza Datele de autentificare salvate";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Închidere";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Salvează și completează automat datele de autentificare";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "S-a șters autentificarea pentru %@";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Date de autentificare pentru căutare";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Completare automată la autentificare";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Configurează identificatorul facial";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Identificatorul facial și parola sunt necesare pentru a-ți proteja detaliile aferente completării automate a datelor de autentificare.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Activează identificatorul facial pentru a utiliza completarea automată";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Configurează identificatorul tactil";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Identificatorul tactil și parola sunt necesare pentru a-ți proteja detaliile aferente completării automate a datelor de autentificare.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Activează identificatorul tactil pentru a utiliza completarea automată";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Renunță";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Deblochează pentru a utiliza Datele de autentificare salvate";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Mai multe opțiuni";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Folosești datele de autentificare salvate?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "pentru „%@”";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Niciun rezultat";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Aceasta va salva o autentificare suplimentară pentru acest site.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "DuckDuckGo va stoca în siguranță aceste date de autentificare pe dispozitivul tău.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Dorești ca DuckDuckGo să îți salveze datele de autentificare?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Nu acum";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Salvează autentificarea";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Salvezi autentificarea?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Salvează parola";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Salvezi parola?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Arată parola";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Actualizează autentificarea";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Actualizează parola";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Actualizezi parola?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Actualizezi numele de utilizator?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Adăugare semn de carte";
 
@@ -175,11 +397,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Ștergere";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Sigur dorești să ștergi aceste folder și %i elemente?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Sigur dorești să ștergi aceste folder și %i element?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Ștergi %@?";
@@ -415,11 +634,14 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Descărcarea a început pentru %@";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Renunță";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generează o adresă privată";
+"email.aliasAlert.generatePrivateAddress" = "Generează o Duck Address privată";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blochează instrumentele de urmărire a e-mailului cu o adresă Duck";
@@ -431,7 +653,7 @@
 "email.browsingMenu.alert" = "Adresă nouă copiată în clipboard";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Creează o adresă Duck";
+"email.browsingMenu.useNewDuckAddress" = "Generează o Duck Address privată";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Activat";
@@ -442,74 +664,8 @@
 /* Signed out state for the email feature */
 "email.settings.off" = "Dezactivat";
 
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Renunță";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Notă: eliminarea protecției comunicațiilor prin e-mail de pe acest dispozitiv nu va șterge adresa ta Duck.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Elimină";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Elimină protecția comunicațiilor prin e-mail?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "S-a produs o eroare la aderarea la lista de așteptare, încearcă din nou mai târziu";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Să începem";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Am un cod de invitație";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Ai primit o invitație!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Alătură-te listei de așteptare private";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Ești pe lista de așteptare!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Invitația ta va apărea aici, când vom fi pregătiți pentru tine. Dorești să %1$@ în momentul în care sosește? %2$@ despre protecția comunicațiilor prin e-mail.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "primește o notificare";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Îți vom trimite o notificare când<br/> protecția comunicațiilor prin e-mail este pregătită pentru tine. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Află mai multe";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Îți vom trimite o notificare în momentul în care poți începe să folosești protecția comunicațiilor prin e-mail.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Vrei să te înștiințăm când îți vine rândul?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Te-ai alăturat listei de așteptare și ne-ai solicitat să te anunțăm când este rândul tău să încerci protecția comunicațiilor prin e-mail.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nu, mulțumesc";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "DORESC SĂ PRIMESC NOTIFICĂRI";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Invitația ta de protecție a comunicațiilor prin e-mail este aici!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Nu îți salvăm e-mailurile. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Confidențialitatea e-mailurilor, simplificată.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blochează modulele cookie de urmărire pentru e-mail și ascunde-ți adresa, <br/> fără a schimba furnizorul de e-mail. %@.";
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blochează tehnologiile de urmărire prin e-mail și ascunde-ți adresa";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nu s-a adăugat niciun semn de carte";
@@ -802,6 +958,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Bine ai venit la\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Codul de invitație";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Invitația ta va apărea aici, când vom fi pregătiți pentru tine. Vrei să %1$@ în momentul în care sosește? %2$@ despre browserul macOS beta.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "primește o notificare";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Îți vom trimite o notificare când suntem pregătiți pentru tine. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Invitația ta să încerci DuckDuckGo pentru Mac va sosi aici. Revino în curând sau îți putem trimite o notificare când este rândul tău.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Îți vom trimite o notificare când copia ta DuckDuckGo pentru Mac este pregătită pentru a fi descărcată.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ despre versiunea beta.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "Aplicația pentru confidențialitate DuckDuckGo pentru Mac are viteza de care ai nevoie, funcționalitățile de răsfoire pe care ți le dorești și este prevăzută cu cele mai bune caracteristici de bază în privința confidențialității din domeniu.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Deschide invitația ta";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo pentru Mac este pregătită!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Copiere";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Vizitează această adresă URL pe computerul tău Mac pentru a descărca:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Pasul 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Deschide fișierul de instalat, apoi introdu codul de invitație pentru a debloca.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Pasul 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Ești gata să începi să răsfoiești în modul privat pe Mac?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Ești invitat(ă)!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Alătură-te listei de așteptare private";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Te alături listei de așteptare...";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Încearcă DuckDuckGo pentru Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Va fi disponibil în curând și pentru Windows!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Te putem înștiința când este rândul tău, însă notificările sunt momentan dezactivate pentru DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Nu va trebui să comunici informații personale, pentru a te înscrie pe lista de așteptare. Îți vei asigura locul la coadă, folosind o marcă de timp care există numai pe dispozitivul tău, astfel încât să te putem înștiința când ți-a sosit rândul.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Ești pe listă!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Disponibilă pentru descărcare pe Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Răsfoiește în mod privat, cu aplicația noastră pentru Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Ești pe listă!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Ești invitat(ă)!\n\nEști pregătit(ă) să răsfoiești privat pe Mac?\n\nPasul 1\nVizitează această adresă URL pe computerul tău Mac pentru a descărca:\nhttps://duckduckgo.com/mac\n\nPasul 2\nDescarcă fișierul pentru a instala, apoi introdu codul de invitație pentru a debloca.\n\nCod de invitație: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Ești invitat(ă)!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "Aplicația DuckDuckGo pentru desktop";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Meniul de navigare";
 
@@ -883,6 +1129,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Despre protecțiile noastre împotriva urmăririi pe internet";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Despre elementele de protecție pentru căutare și reclame";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "În ce mod anunțurile noastre de căutare ne afectează măsurile de protecție";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritm";
 
@@ -906,6 +1161,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Criptare forțată";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Conexiune criptată";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Am forțat acest site să utilizeze o conexiune criptată, împiedicând interceptarea oricăror informații personale pe care i le trimiți.";
@@ -985,6 +1243,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Da";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "PROTECȚIE SITE DEZACTIVATĂ";
 
@@ -1000,11 +1261,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "S-au găsit rețele de urmărire majore";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Nu a fost găsită nicio rețea de urmărire majoră";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Rețele de urmărire au fost găsite pe %1$@%% de site-uri web pe care le-ai vizitat din %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Continuă să colectăm date pentru a arăta câte\n instrumente de urmărire am blocat.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Nu au fost încărcate solicitări terță parte";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Solicitările următorului domeniu au fost încărcate deoarece s-a făcut recent clic pe o reclamă %@ de pe DuckDuckGo. Aceste solicitări ajută la evaluarea eficienței anunțurilor. Nicio reclamă de pe DuckDuckGo nu creează profiluri.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Solicitările următoarelor domenii au fost încărcate pentru a preveni întreruperea site-ului.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Cererile următorului domeniu au fost încărcate deoarece sunt asociate cu %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Au fost încărcate următoarele solicitări ale domeniilor terțe. În cazul în care solicitările unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil, deși celelalte măsuri de protecție ale noastre împotriva urmăririi pe internet se aplică în continuare.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Nu a fost blocată încărcarea niciunei cereri de la terți, deoarece protecțiile sunt dezactivate pentru acest site. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Au fost încărcate solicitările de urmărire ale următoarelor domenii.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Au fost încărcate și următoarele solicitări ale domeniului.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Au fost încărcate solicitările următoarelor domenii.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Solicitările următorului domeniu au fost încărcate.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Nu am detectat solicitări de la niciun domeniu terț.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Solicitări de la terți încărcate";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Reține: limitările platformei ne pot limita capacitatea de a detecta toate solicitările.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Fără crearea de profiluri";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Practici de confidențialitate de la ToS;DR.";
@@ -1040,13 +1352,34 @@
 "privacy.protection.tos.unknown" = "Practici necunoscute privind confidențialitatea";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Rețelele de cookie-uri de urmărire vă adună istoricul web într-un profil de date despre dvs. Rețelele mari de cookie-uri de urmărire sunt mai dăunătoare, deoarece vă pot urmări și vă pot viza pe mai multe site-uri de pe internet.";
+"privacy.protection.tracker.networks.info" = "Instrumentele de urmărire ajută societățile să îți creeze profilul. Am blocat încărcarea acestor instrumente de urmărire și monitorizarea activității tale pe această pagină.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Nu a fost blocată încărcarea niciunei cereri de urmărire, deoarece protecțiile sunt dezactivate pentru acest site. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nu am detectat nicio solicitare de urmărire.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Încărcarea cererilor următoarelor domenii terțe a fost blocată, deoarece au fost identificate ca fiind cereri de urmărire. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Solicitări a căror încărcare a fost blocată";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "S-au găsit solicitări de urmărire";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Nu a fost blocată nicio solicitare de urmărire";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Nu au fost găsite solicitări de urmărire";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Renunță";
@@ -1150,18 +1483,6 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Este necesar accesul la microfon";
 
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Renunță";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo nu ascultă niciodată ceea ce spui. Prelucrarea datelor vocale pentru Căutarea vocală privată are loc pe dispozitivul tău.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Este necesar accesul la microfon pentru Căutarea vocală privată";
-
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Renunță";
 
@@ -1183,12 +1504,12 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Preferință adăugată";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blochează notificările";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Renunță";
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "Un mesaj de la %@:";
 

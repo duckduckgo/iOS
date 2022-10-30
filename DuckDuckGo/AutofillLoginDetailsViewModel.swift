@@ -24,34 +24,70 @@ import Core
 
 protocol AutofillLoginDetailsViewModelDelegate: AnyObject {
     func autofillLoginDetailsViewModelDidSave()
+    func autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
+    func autofillLoginDetailsViewModelDelete(account: SecureVaultModels.WebsiteAccount)
+    func autofillLoginDetailsViewModelDismiss()
 }
 
 final class AutofillLoginDetailsViewModel: ObservableObject {
     enum ViewMode {
         case edit
         case view
+        case new
     }
     
     enum PasteboardCopyAction {
         case username
         case password
         case address
+        case notes
     }
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
-    let account: SecureVaultModels.WebsiteAccount
+    var account: SecureVaultModels.WebsiteAccount?
     
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
     @Published var username = ""
     @Published var password = ""
     @Published var address = ""
+    @Published var notes = ""
     @Published var title = ""
     @Published var selectedCell: UUID?
     @Published var viewMode: ViewMode = .view {
         didSet {
             selectedCell = nil
+            if viewMode == .edit && password.isEmpty {
+                isPasswordHidden = false
+            } else {
+                isPasswordHidden = true
+            }
         }
+    }
+    
+    private var passwordData: Data {
+        password.data(using: .utf8)!
+    }
+    
+    var navigationTitle: String {
+        switch viewMode {
+        case .edit:
+            return UserText.autofillLoginDetailsEditTitle
+        case .view:
+            return title
+        case .new:
+            return UserText.autofillLoginDetailsNewTitle
+        }
+    }
+    
+    var shouldShowSaveButton: Bool {
+        guard viewMode == .new else { return false }
+        
+        return !username.isEmpty || !password.isEmpty || !address.isEmpty || !title.isEmpty
+    }
+
+    var websiteIsValidUrl: Bool {
+        account?.domain.toTrimmedURL != nil
     }
     
     var userVisiblePassword: String {
@@ -59,17 +95,27 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         return isPasswordHidden ? passwordHider.hiddenPassword : passwordHider.password
     }
 
-    internal init(account: SecureVaultModels.WebsiteAccount) {
+    var usernameDisplayString: String {
+        AutofillInterfaceEmailTruncator.truncateEmail(username, maxLength: 36)
+    }
+
+    internal init(account: SecureVaultModels.WebsiteAccount? = nil) {
         self.account = account
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel()
-        self.updateData(with: account)
+        if let account = account {
+            self.updateData(with: account)
+        } else {
+            viewMode = .new
+        }
     }
     
     private func updateData(with account: SecureVaultModels.WebsiteAccount) {
-        self.username = account.username
-        self.address = account.domain
-        self.title = account.name
-        self.headerViewModel.updateData(with: account)
+        self.account = account
+        username = account.username
+        address = account.domain
+        title = account.name
+        notes = account.notes ?? ""
+        headerViewModel.updateData(with: account)
         setupPassword(with: account)
     }
     
@@ -77,6 +123,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         withAnimation {
             if viewMode == .edit {
                 viewMode = .view
+                if let account = account {
+                    updateData(with: account)
+                }
             } else {
                 viewMode = .edit
             }
@@ -95,6 +144,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         case .address:
             message = UserText.autofillCopyToastAddressCopied
             UIPasteboard.general.string = address
+        case .notes:
+            message = UserText.autofillCopyToastNotesCopied
+            UIPasteboard.general.string = notes
         }
         
         presentCopyConfirmation(message: message)
@@ -123,16 +175,26 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         }
     }
 
+    // swiftlint:disable cyclomatic_complexity
     func save() {
-        do {
-            if let accountID = account.id {
-                let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
-                
+        guard let vault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
+            return
+        }
+            
+        switch viewMode {
+        case .edit:
+            guard let accountID = account?.id else {
+                assertionFailure("Trying to save edited account, but the account doesn't exist")
+                return
+            }
+                           
+            do {
                 if var credential = try vault.websiteCredentialsFor(accountId: accountID) {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = address
-                    credential.password = password.data(using: .utf8)!
+                    credential.account.notes = notes
+                    credential.password = passwordData
                     
                     try vault.storeWebsiteCredentials(credential)
                     delegate?.autofillLoginDetailsViewModelDidSave()
@@ -141,11 +203,53 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
                         self.updateData(with: newCredential.account)
                     }
+                    viewMode = .view
+                }
+            } catch let error {
+                Pixel.fire(pixel: .secureVaultError, error: error)
+            }
+        case .view:
+            break
+        case .new:
+            let account = SecureVaultModels.WebsiteAccount(title: title, username: username, domain: address, notes: notes)
+            let credentials = SecureVaultModels.WebsiteCredentials(account: account, password: passwordData)
+
+            do {
+                let id = try vault.storeWebsiteCredentials(credentials)
+                
+                delegate?.autofillLoginDetailsViewModelDidSave()
+                
+                // Refetch after save to get updated properties like "lastUpdated"
+                if let newCredential = try vault.websiteCredentialsFor(accountId: id) {
+                    self.updateData(with: newCredential.account)
+                }
+                
+                viewMode = .view
+            } catch let error {
+                if case SecureVaultError.duplicateRecord = error {
+                    Pixel.fire(pixel: .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate)
+                    delegate?.autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin()
+                } else {
+                    Pixel.fire(pixel: .secureVaultError, error: error)
                 }
             }
-        } catch {
-            Pixel.fire(pixel: .secureVaultError)
         }
+    }
+    // swiftlint:enable cyclomatic_complexity
+
+    func delete() {
+        guard let account = account else {
+            assertionFailure("Trying to delete account, but the account doesn't exist")
+            return
+        }
+        delegate?.autofillLoginDetailsViewModelDelete(account: account)
+    }
+
+    func openUrl() {
+        guard let url = account?.domain.toTrimmedURL else { return }
+
+        LaunchTabNotification.postLaunchTabNotification(urlString: url.absoluteString)
+        delegate?.autofillLoginDetailsViewModelDismiss()
     }
 }
 

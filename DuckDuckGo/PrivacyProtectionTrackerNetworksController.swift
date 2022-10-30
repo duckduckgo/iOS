@@ -25,33 +25,36 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 
     @IBOutlet weak var iconImage: UIImageView!
     @IBOutlet weak var domainLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var aboutButton: UIButton!
+    @IBOutlet weak var footerLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var separator: UIView!
 
     private var siteRating: SiteRating!
     private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
 
     struct Section {
-
         let name: String
         let rows: [Row]
 
+        internal init(name: String, rows: [PrivacyProtectionTrackerNetworksController.Row] = []) {
+            self.name = name
+            self.rows = rows
+        }
+        
         func adding(_ row: Row) -> Section {
             guard self.rows.filter({ $0.name == row.name }).count == 0 else { return self }
             var rows = self.rows
             rows.append(row)
             return Section(name: name, rows: rows.sorted(by: { $0.name < $1.name }))
         }
-
     }
 
     struct Row {
-
         let name: String
         let value: String
-
     }
 
     var sections = [Section]()
@@ -73,39 +76,28 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
         guard isViewLoaded else { return }
 
         sections = SiteRatingTrackerNetworkSectionBuilder(trackers: trackers()).build()
+        
         updateDomain()
-        updateSubtitle()
         updateIcon()
         tableView.reloadData()
         tableView.setNeedsLayout()
+        updateSeparator()
     }
 
-    private func trackers() -> [DetectedTracker] {
-        var protecting = siteRating.protecting(privacyConfig)
-        if privacyConfig.isTempUnprotected(domain: siteRating.domain) ||
-            privacyConfig.isInExceptionList(domain: siteRating.domain, forFeature: .contentBlocking) {
-            protecting = false
-        }
-        
-        return [DetectedTracker](protecting ? siteRating.trackersBlocked : siteRating.trackersDetected)
+    private func trackers() -> [DetectedRequest] {
+        siteRating.trackersBlocked
     }
 
     private func updateDomain() {
         domainLabel.text = siteRating.domain
     }
 
-    private func updateSubtitle() {
-        subtitleLabel.text = siteRating.networksText(config: privacyConfig).uppercased()
-    }
-
     private func updateIcon() {
-
-        if siteRating.protecting(privacyConfig) || siteRating.trackerNetworksDetected == 0 {
-            iconImage.image = #imageLiteral(resourceName: "PP Hero Major On")
-        } else {
-            iconImage.image = #imageLiteral(resourceName: "PP Hero Major Bad")
-        }
-
+        iconImage.image = SiteRating.State(siteRating: siteRating, config: privacyConfig).trackingRequestsIcon
+    }
+    
+    private func updateSeparator() {
+        separator.isHidden = sections.isEmpty
     }
 
     private func initTableView() {
@@ -114,22 +106,44 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     }
 
     private func initUI() {
-        messageLabel.setAttributedTextString(UserText.ppTrackerNetworksInfo)
-        backButton.isHidden = !isPad
+        var networksInfo = UserText.ppTrackerNetworksInfoEmptyStatePrivacyOff
+        if siteRating.protecting(privacyConfig) {
+            networksInfo = UserText.ppTrackerNetworksInfoNew
+        }
+        messageLabel.setAttributedTextString(networksInfo)
+        backButton.isHidden = !AppWidthObserver.shared.isLargeWidth
+                
+        let attributedTitle = aboutButton.attributedTitle(for: .normal)?.withText(UserText.ppAboutProtectionsLink)
+        aboutButton.setAttributedTitle(attributedTitle, for: .normal)
+        
+        footerLabel.text = UserText.ppPlatformLimitationsFooterInfo
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        guard let headerView = tableView.tableHeaderView else {
-            return
+        if let headerView = tableView.tableHeaderView {
+            let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            if headerView.frame.size.height != size.height {
+                headerView.frame.size.height = size.height
+                tableView.tableHeaderView = headerView
+                tableView.layoutIfNeeded()
+            }
         }
         
-        let size = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        if headerView.frame.size.height != size.height {
-            headerView.frame.size.height = size.height
-            tableView.tableHeaderView = headerView
-            tableView.layoutIfNeeded()
+        if let footerView = tableView.tableFooterView {
+            let size = footerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+            if footerView.frame.size.height != size.height {
+                footerView.frame.size.height = size.height
+                tableView.tableFooterView = footerView
+                tableView.layoutIfNeeded()
+            }
+        }
+    }
+    
+    @IBAction func onAboutLinkTapped(_ sender: UIButton) {
+        dismiss(animated: true) {
+            UIApplication.shared.open(AppDeepLinks.webTrackingProtections, options: [:])
         }
     }
 }
@@ -137,13 +151,14 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
 extension PrivacyProtectionTrackerNetworksController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let section = sections[section]
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Section") as? PrivacyProtectionTrackerNetworksSectionCell else {
             fatalError("Failed to dequeue cell as PrivacyProtectionTrackerNetworksSectionCell")
         }
-        cell.update(withSection: sections[section])
+        cell.update(withSection: section)
         return cell
     }
-
 }
 
 extension PrivacyProtectionTrackerNetworksController: UITableViewDataSource {
@@ -155,9 +170,9 @@ extension PrivacyProtectionTrackerNetworksController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].rows.count
     }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].name
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 46
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -182,7 +197,7 @@ extension PrivacyProtectionTrackerNetworksController: PrivacyProtectionInfoDispl
 
 struct SiteRatingTrackerNetworkSectionBuilder {
 
-    let trackers: [DetectedTracker]
+    let trackers: [DetectedRequest]
 
     func build() -> [PrivacyProtectionTrackerNetworksController.Section] {
         return toSections()
@@ -196,8 +211,8 @@ struct SiteRatingTrackerNetworkSectionBuilder {
             guard let domain = tracker.domain else { continue }
             let networkName = tracker.networkNameForDisplay
 
-            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain.dropPrefix(prefix: "www."),
-                                                                     value: tracker.knownTracker?.category ?? "")
+            let row = PrivacyProtectionTrackerNetworksController.Row(name: domain.droppingWwwPrefix(),
+                                                                     value: tracker.category ?? "")
 
             if let sectionIndex = sections.firstIndex(where: { $0.name == networkName }) {
                 if row.name != networkName {
@@ -213,18 +228,17 @@ struct SiteRatingTrackerNetworkSectionBuilder {
         return sections
     }
     
-    func compareTrackersByPrevalence(tracker1: DetectedTracker, tracker2: DetectedTracker) -> Bool {
-        return tracker1.entity?.prevalence ?? 0 > tracker2.entity?.prevalence ?? 0
+    func compareTrackersByPrevalence(tracker1: DetectedRequest, tracker2: DetectedRequest) -> Bool {
+        return tracker1.prevalence ?? 0 > tracker2.prevalence ?? 0
     }
     
-    func compareTrackersByHostName(tracker1: DetectedTracker, tracker2: DetectedTracker) -> Bool {
+    func compareTrackersByHostName(tracker1: DetectedRequest, tracker2: DetectedRequest) -> Bool {
         return tracker1.domain ?? "" < tracker2.domain ?? ""
     }
 
 }
 
 class PrivacyProtectionTrackerNetworksRowCell: UITableViewCell {
-
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
 
@@ -232,11 +246,9 @@ class PrivacyProtectionTrackerNetworksRowCell: UITableViewCell {
         nameLabel.text = row.name
         valueLabel.text = row.value
     }
-
 }
 
 class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
-
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
 
@@ -245,5 +257,12 @@ class PrivacyProtectionTrackerNetworksSectionCell: UITableViewCell {
         iconImage.image = PrivacyProtectionIconSource.iconImageTemplate(forNetworkName: section.name.lowercased(),
                                                                         iconSize: CGSize(width: 24, height: 24))
     }
+}
 
+class PrivacyProtectionTrackerNetworksSummaryCell: UITableViewCell {
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
+    func update(withSection section: PrivacyProtectionTrackerNetworksController.Section) {
+        descriptionLabel.text = section.name
+    }
 }

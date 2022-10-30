@@ -57,7 +57,8 @@ public struct UserDefaultsWrapper<T> {
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
         
         case lastConfigurationRefreshDate = "com.duckduckgo.ios.lastConfigurationRefreshDate"
-        
+        case lastRemoteMessagingRefreshDate = "com.duckduckgo.ios.lastRemoteMessagingRefreshDate"
+
         case doNotSell = "com.duckduckgo.ios.sendDoNotSell"
 
         case backgroundFetchTaskDuration = "com.duckduckgo.app.bgFetchTaskDuration"
@@ -75,12 +76,14 @@ public struct UserDefaultsWrapper<T> {
         
         case lastCompiledRules = "com.duckduckgo.app.lastCompiledRules"
 
-        case autofill = "com.duckduckgo.ios.autofill"
+        case autofillCredentialsEnabled = "com.duckduckgo.ios.autofillCredentialsEnabled"
         case autofillSaveModalRejectionCount = "com.duckduckgo.ios.autofillSaveModalRejectionCount"
+        case autofillSaveModalDisablePromptShown = "com.duckduckgo.ios.autofillSaveModalDisablePromptShown"
         case autofillFirstTimeUser = "com.duckduckgo.ios.autofillFirstTimeUser"
         
         case featureFlaggingDidVerifyInternalUser = "com.duckduckgo.app.featureFlaggingDidVerifyInternalUser"
-
+        
+        case voiceSearchEnabled = "com.duckduckgo.app.voiceSearchEnabled"
     }
 
     private let key: Key

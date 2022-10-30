@@ -10,8 +10,23 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Angre";
 
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"action.suggestion.autocomplete" = "Forslag fra autofullfør";
+
+/* Open suggested bookmark action accessibility title */
+"action.suggestion.open.bookmark" = "Legg til";
+
+/* Open suggested website action accessibility title */
+"action.suggestion.open.website" = "Åpne nettsted";
+
+/* Search for suggestion action accessibility title */
+"action.suggestion.search" = "Søk med DuckDuckGo";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Legg til";
+
+/* Autofill Logins menu item opening the login list */
+"action.title.autofill.logins" = "Fyll inn pålogginger automatisk";
 
 /* Confirmation of Bookmark action in add to bookmark alert */
 "action.title.bookmark" = "Legg til";
@@ -157,6 +172,213 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "På";
 
+/* Accessibility title for a Hide Password button replacing displayed password with ***** */
+"autofill.hide-password" = "Skjul passord";
+
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Slå av";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Fortsett å bruke";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Du kan deaktivere Autofyll når som helst i innstillingene.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Vil du fortsette å bruke Autofyll?";
+
+/* Button displayed after saving/updating an autofill login that takes the user to the saved login */
+"autofill.login-save-action-button.toast" = "Vis";
+
+/* Message displayed after saving an autofill login */
+"autofill.login-saved.toast" = "Pålogging lagret";
+
+/* Message displayed after updating an autofill login */
+"autofill.login-updated.toast" = "Pålogging oppdatert";
+
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Kopier %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adressen er kopiert";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Notatene er kopiert";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Passordet er kopiert";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Brukernavnet er kopiert";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL-adresse til nettsted";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Pålogging";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Slett pålogging";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Slett pålogging";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Er du sikker på at du vil slette denne påloggingen?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Rediger pålogging";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Passord";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Tittel";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "eksempel.no";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "brukernavn@eksempel.no";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Pålogging sist oppdatert %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Påloggingstittel";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Legg til pålogging";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Notater";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Åpne nettsted";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Passord";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede en pålogging for dette brukernavnet og nettstedet.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Eksisterende pålogging";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Lås opp Autofyll";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Brukernavn";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Pålogginger lagres sikkert og bare på denne enheten";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Ingen pålogginger er lagret ennå";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Aktiver Autofyll for å begynne å lagre pålogginger";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Avbryt";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Lås opp for å bruke lagrede pålogginger";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Lukk";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Lagre og fyll inn pålogginger automatisk";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Pålogging for %@ er slettet";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Søk i pålogginger";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Fyll inn pålogginger automatisk";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Konfigurer Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Face ID og passord kreves for å beskytte påloggingsdetaljer for Autofyll.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Aktiver Face ID for å bruke Autofyll";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Konfigurer Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID og passord kreves for å beskytte påloggingsdetaljer for Autofyll.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Aktiver Touch ID for å bruke Autofyll";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Avbryt";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Lås opp for å bruke lagrede pålogginger";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Flere alternativer";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Vil du bruke lagret pålogging?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "for «%@»";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Ingen resultater";
+
+/* Message displayed on modal explaining that an additional login will be saved. */
+"autofill.save-login.additional-login.message" = "Dette lagrer en ekstra pålogging for dette nettstedet.";
+
+/* Message displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.message" = "DuckDuckGo lagrer denne påloggingen på en sikker måte på enheten din.";
+
+/* Title displayed on modal asking for the user to save the login for the first time */
+"autofill.save-login.new-user.title" = "Vil du at DuckDuckGo skal lagre påloggingen din?";
+
+/* Cancel CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.not-now.CTA" = "Ikke nå";
+
+/* Confirm CTA displayed on modal asking for the user to save the login */
+"autofill.save-login.save.CTA" = "Lagre påloggingen";
+
+/* Title displayed on modal asking for the user to save the login */
+"autofill.save-login.title" = "Vil du lagre påloggingen?";
+
+/* Confirm CTA displayed on modal asking for the user to save the password */
+"autofill.save-password.save.CTA" = "Lagre passordet";
+
+/* Title displayed on modal asking for the user to save the password */
+"autofill.save-password.title" = "Vil du lagre passordet?";
+
+/* Accessibility title for a Show Password button displaying actial password instead of ***** */
+"autofill.show-password" = "Vis passord";
+
+/* Confirm CTA displayed on modal asking for the user to update the login */
+"autofill.update-login.save.CTA" = "Oppdater påloggingen";
+
+/* Confirm CTA displayed on modal asking for the user to update the password */
+"autofill.update-password.save.CTA" = "Oppdater passordet";
+
+/* Title displayed on modal asking for the user to update the password */
+"autofill.update-password.title" = "Vil du oppdatere passordet?";
+
+/* Title displayed on modal asking for the user to update the username */
+"autofill.update-usernamr.title" = "Vil du oppdatere brukernavnet?";
+
 /* Add bookmark screen title */
 "bookmark.addBookmark.title" = "Legg til bokmerke";
 
@@ -175,11 +397,8 @@
 /* Delete bookmark folder alert delete button */
 "bookmark.deleteFolderAlert.deleteButton" = "Slett";
 
-/* Delete bookmark folder alert message plural */
-"bookmark.deleteFolderAlert.message.plural" = "Er du sikker på at du vil slette denne mappen og %i elementer?";
-
-/* Delete bookmark folder alert message */
-"bookmark.deleteFolderAlert.message.singular" = "Er du sikker på at du vil slette denne mappen og %i element?";
+/* Do not translate - stringsdict entry */
+"bookmark.deleteFolderAlert.message" = "bookmark.deleteFolderAlert.message";
 
 /* Delete bookmark folder alert title */
 "bookmark.deleteFolderAlert.title" = "Vil du slette %@?";
@@ -415,11 +634,14 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Nedlasting av %@ har startet";
 
+/* No comment provided by engineer. */
+"duckduckgo.com/mac" = "duckduckgo.com/mac";
+
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Avbryt";
 
 /* Option for generating a private email address */
-"email.aliasAlert.generatePrivateAddress" = "Generer en privat adresse";
+"email.aliasAlert.generatePrivateAddress" = "Generer privat Duck Address";
 
 /* Title for the email alias selection alert */
 "email.aliasAlert.title" = "Blokker e-postsporere med en Duck-adresse";
@@ -431,7 +653,7 @@
 "email.browsingMenu.alert" = "Ny adresse kopiert til utklippstavlen";
 
 /* Email option title in the browsing menu */
-"email.browsingMenu.useNewDuckAddress" = "Opprett Duck-adresse";
+"email.browsingMenu.useNewDuckAddress" = "Generer privat Duck Address";
 
 /* Signed in state for the email feature */
 "email.settings.enabled" = "Aktivert";
@@ -442,74 +664,8 @@
 /* Signed out state for the email feature */
 "email.settings.off" = "Av";
 
-/* Cancel option for the email sign out alert */
-"email.signOutAlert.cancel" = "Avbryt";
-
-/* Description for the email sign out alert */
-"email.signOutAlert.description" = "Merk: Duck-adressen din slettes ikke ved at du fjerner e-postbeskyttelse fra denne enheten.";
-
-/* Remove option for the email sign out alert */
-"email.signOutAlert.remove" = "Fjern";
-
-/* Title for the email sign out alert */
-"email.signOutAlert.title" = "Vil du fjerne e-postbeskyttelse?";
-
-/* Error text when failing to join the waitlist */
-"email.waitlist.error-joining" = "Det oppstod en feil under registrering for ventelisten. Prøv igjen senere.";
-
-/* Action button text for the email waitlist */
-"email.waitlist.get-started" = "Kom i gang";
-
-/* Invite code button text for the email waitlist */
-"email.waitlist.have-invite-code" = "Jeg har en invitasjonskode";
-
-/* Header text for the email waitlist */
-"email.waitlist.invited" = "Du er invitert!";
-
-/* Action button text for the email waitlist */
-"email.waitlist.join" = "Sett deg på den private ventelisten";
-
-/* Header text for the email waitlist */
-"email.waitlist.joined" = "Du er på ventelisten!";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"email.waitlist.joined.no-notification" = "Invitasjonen vises her når vi er klare for deg. Vil du %1$@ når den kommer? %2$@ om e-postbeskyttelse.";
-
-/* Notification text for the email waitlist */
-"email.waitlist.joined.no-notification.get-notification" = "få et varsel";
-
-/* Description text for the email waitlist. Parameter is 'Learn more.' */
-"email.waitlist.joined.notification" = "Vi sender deg et varsel når e-postbeskyttelse er klar for deg. %@.";
-
-/* Footer text for the email waitlist */
-"email.waitlist.learn-more" = "Finn ut mer";
-
-/* Body text for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.body" = "Vi sender deg et varsel når du kan begynne å bruke e-postbeskyttelse.";
-
-/* Title for the permission notification for the email waitlist */
-"email.waitlist.notification-permission.title" = "Vil du at vi skal varsle deg når det er din tur?";
-
-/* Body text for the email waitlist notification */
-"email.waitlist.notification.body" = "Du har satt deg på ventelisten og bedt oss om å varsle deg når det er din tur til å prøve funksjonen for e-postbeskyttelse.";
-
-/* Decline option for the permission notification for the email waitlist */
-"email.waitlist.notification.no-thanks" = "Nei takk";
-
-/* Accept option for the permission notification for the email waitlist */
-"email.waitlist.notification.notify-me" = "VARSLE MEG";
-
-/* Title for the email waitlist notification */
-"email.waitlist.notification.title" = "Invitasjonen til e-postbeskyttelse er her!";
-
-/* Footer text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.privacy-guarantee" = "Vi lagrer ikke e-postene dine. %@.";
-
-/* Header text for the email waitlist */
-"email.waitlist.privacy-simplified" = "Personvern for e-post gjort enkelt.";
-
-/* Description text for the email waitlist. Parameter is 'Learn more'. */
-"email.waitlist.summary" = "Blokker e-postsporere og skjul adressen din, uten å bytte e-postleverandør. %@.";
+/* Subtitle for the email settings cell */
+"email.settings.subtitle" = "Blokker e-postsporere og skjul adressen din";
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bokmerker lagt til ennå";
@@ -802,6 +958,96 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
+/* Label text for the invite code */
+"mac-browser.waitlist.invite-code" = "Invitasjonskode";
+
+/* First parameter is 'get a notification', second is 'Learn more'. */
+"mac-browser.waitlist.joined.no-notification" = "Invitasjonen vises her når vi er klare for deg. Vil du %1$@ når den kommer? %2$@ om betaversjonen av macOS-nettleseren.";
+
+/* Notification text for the macOS waitlist */
+"mac-browser.waitlist.joined.no-notification.get-notification" = "få et varsel";
+
+/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
+"mac-browser.waitlist.joined.notification" = "Vi sender deg et varsel når vi er klare for deg. %@.";
+
+/* Label text for the Joined Waitlist state with notifications declined */
+"mac-browser.waitlist.joined.notifications-declined" = "Invitasjonen til å prøve DuckDuckGo for Mac kommer hit. Kom tilbake snart, eller vi kan sende deg et varsel når det er din tur.";
+
+/* Label text for the Joined Waitlist state with notifications enabled */
+"mac-browser.waitlist.joined.notifications-enabled" = "Vi sender et varsel til deg når ditt eksemplar av DuckDuckGo for Mac er klar til nedlasting.";
+
+/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
+"mac-browser.waitlist.learn-more" = "%@ om betaversjonen.";
+
+/* Summary text for the macOS browser waitlist */
+"mac-browser.waitlist.summary" = "DuckDuckGo personvernapp for Mac har hastigheten du trenger, nettleserfunksjonene du forventer og er stappfull av våre førsteklasses personvernfunksjoner.";
+
+/* Body text for the macOS waitlist notification */
+"mac-waitlist.available.notification.body" = "Åpne invitasjonen din";
+
+/* Title for the macOS waitlist notification */
+"mac-waitlist.available.notification.title" = "DuckDuckGo for Mac er klar!";
+
+/* Title for the copy action */
+"mac-waitlist.copy" = "Kopier";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-1.description" = "Gå til denne nettadressen på Mac-en din for å laste ned:";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-1.title" = "Trinn 1";
+
+/* Description on the invite screen */
+"mac-waitlist.invite-screen.step-2.description" = "Åpne filen som skal installeres og oppgi invitasjonskoden for å låse den opp.";
+
+/* Title on the invite screen */
+"mac-waitlist.invite-screen.step-2.title" = "Trinn 2";
+
+/* Subtitle for the Mac Waitlist Invite screen */
+"mac-waitlist.invite-screen.subtitle" = "Er du klar til å begynne å surfe privat på Mac?";
+
+/* Title for the invite code screen */
+"mac-waitlist.invite-screen.youre-invited" = "Du er invitert!";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.join" = "Sett deg på den private ventelisten";
+
+/* Temporary status text for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.joining" = "Setter deg på ventelisten…";
+
+/* Title for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Prøv DuckDuckGo for Mac!";
+
+/* Disclaimer for the Join Waitlist screen */
+"mac-waitlist.join-waitlist-screen.windows" = "Windows kommer snart!";
+
+/* Text used for the Notifications Disabled state */
+"mac-waitlist.notification.disabled" = "Vi kan varsle deg når det er din tur, men varsler er for øyeblikket deaktivert for DuckDuckGo.";
+
+/* Privacy disclaimer for the Mac Waitlist feature */
+"mac-waitlist.privacy-disclaimer" = "Du behøver ikke å dele noen personopplysninger for å sette deg på ventelisten. Du sikrer plassen din i køen med et tidsstempel som kun eksisterer på enheten din, så vi kan varsle deg når det er din tur.";
+
+/* Title for the queue screen */
+"mac-waitlist.queue-screen.on-the-list" = "Du står på listen!";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.available-for-download" = "Tilgjengelig for nedlasting på Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.browse-privately" = "Surf privat med vår app for Mac";
+
+/* Title for the settings subtitle */
+"mac-waitlist.settings.on-the-list" = "Du står på listen!";
+
+/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
+"mac-waitlist.share-sheet.message" = "Du er invitert!\n\nEr du klar til å begynne å surfe privat på Mac?\n\nTrinn 1\nGå til denne nettadressen på Mac-en din for å laste ned:\nhttps://duckduckgo.com/mac\n\nTrinn 2\nÅpne filen som skal installeres og oppgi invitasjonskoden for å låse den opp.\n\nInvitasjonskode: %@";
+
+/* Title for the share sheet entry */
+"mac-waitlist.share-sheet.title" = "Du er invitert!";
+
+/* Title for the Mac Waitlist feature */
+"mac-waitlist.title" = "DuckDuckGo skrivebordsapp";
+
 /* No comment provided by engineer. */
 "menu.button.hint" = "Alternativer";
 
@@ -883,6 +1129,15 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
+/* No comment provided by engineer. */
+"privacy.protection.about.protections.link" = "Om nettsporingsbeskyttelsen vår";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link" = "Om søkebeskyttelsene og annonsene våre";
+
+/* No comment provided by engineer. */
+"privacy.protection.about.search.protections.link.new" = "Hvordan søkeannonsene våre påvirker beskyttelsen vår";
+
 /* Part of certificate info */
 "privacy.protection.encryption.algorithm" = "Algoritme";
 
@@ -906,6 +1161,9 @@
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.heading" = "Tvungen kryptering";
+
+/* No comment provided by engineer. */
+"privacy.protection.encryption.forced.heading.new" = "Kryptert tilkobling";
 
 /* No comment provided by engineer. */
 "privacy.protection.encryption.forced.message" = "Vi har tvunget dette nettstedet til å bruke en kryptert tilkobling, noe som hindrer tyvlytting av personlige opplysninger du sender gjennom denne tilkoblingen.";
@@ -985,6 +1243,9 @@
 /* Confirmation that certificate is permanent */
 "privacy.protection.encryption.yes" = "Ja";
 
+/* Do not translate - stringsdict entry */
+"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
+
 /* No comment provided by engineer. */
 "privacy.protection.main.disabled" = "BESKYTTELSE DEAKTIVERT FOR NETTSTEDET";
 
@@ -1000,11 +1261,62 @@
 /* Major trackers found */
 "privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
 
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.found.new" = "Store sporingsnettverk oppdaget";
+
+/* No comment provided by engineer. */
+"privacy.protection.major.trackers.not.found" = "Ingen større sporingsnettverk ble oppdaget";
+
 /* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
 "privacy.protection.network.leaderboard" = "Sporingsnettverk ble funnet på %1$@ %% av nettstedene du har besøkt siden %2$@.";
 
 /* No comment provided by engineer. */
 "privacy.protection.network.leaderboard.gathering" = "Vi samler fortsatt inn data for å vise deg\nhvor mange sporinger vi har blokkert.";
+
+/* No comment provided by engineer. */
+"privacy.protection.no.other.third.party.domains.loaded" = "Ingen tredjepartsforespørsler lastet";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.adclickattribution" = "Forespørslene fra følgende domene ble lastet fordi en %@-annonse på DuckDuckGo nylig ble klikket på. Disse forespørslene bidrar til å evaluere annonseeffektiviteten. Alle annonser på DuckDuckGo er ikke-profilerende.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.exceptions" = "Forespørslene fra følgende domene ble lastet for å forhindre feil på nettstedet.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.firstparty" = "Forespørslene fra følgende domene ble lastet fordi de er tilknyttet %@.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info" = "Forespørslene fra følgende tredjepartsdomener ble lastet. Hvis forespørslene fra et selskap blir lastet, har selskapet mulighet til å profilere deg, selv om de andre nettsporingsbeskyttelsene våre fremdeles gjelder.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.disabled.protection" = "Ingen tredjepartsforespørsler ble blokkert fra lasting, fordi beskyttelse er slått av for dette nettstedet. Hvis forespørslene fra et selskap blir lastet, har selskapet mulighet til å profilere deg.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection" = "Sporingsforespørslene fra følgende domene ble lastet.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Forespørslene fra følgende domene ble også lastet.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.info.header.disabled.protection.new" = "Forespørslene fra følgende domener ble lastet.";
+
+/* Do not translate - stringsdict entry */
+"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties" = "Forespørslene fra følgende domener ble lastet.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.domains.thirdparties.empty" = "Vi oppdaget ingen forespørsler fra tredjepartsdomener.";
+
+/* No comment provided by engineer. */
+"privacy.protection.other.third.party.domains.loaded" = "Tredjepartsforespørsler lastet";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.limitations.footer.info" = "Merk: Plattformbegrensninger kan begrense kapasiteten vår til å oppdage alle forespørsler.";
+
+/* No comment provided by engineer. */
+"privacy.protection.platform.tracker.category.non.profiling" = "Ikke-profilerende";
 
 /* ToS;DR is an organization */
 "privacy.protection.practices.footer.info" = "Personvernpraksis fra ToS;DR.";
@@ -1040,13 +1352,34 @@
 "privacy.protection.tos.unknown" = "Ukjent personvernpraksis";
 
 /* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sporingsnettverk samler netthistorikken din i en dataprofil om deg. Større sporingsnettverk gjør mer skade fordi de kan spore og peile seg inn på deg på flere steder på Internett.";
+"privacy.protection.tracker.networks.info" = "Sporere hjelper selskaper å profilere deg. Vi blokkerte disse sporerne fra å laste og overvåke aktiviteten din på denne siden.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty" = "Ingen sporingsforespørsler ble blokkert fra lasting, fordi beskyttelse er slått av for dette nettstedet. Hvis forespørslene fra et selskap blir lastet, har selskapet mulighet til å profilere deg.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.empty.no.trackers" = "Vi oppdaget ingen sporingsforespørsler.";
+
+/* No comment provided by engineer. */
+"privacy.protection.tracker.networks.info.new" = "Forespørslene fra følgende tredjepartsdomener ble blokkert fra lasting, fordi de ble identifisert som sporingsforespørsler. Hvis forespørslene fra et selskap blir lastet, har selskapet mulighet til å profilere deg.";
 
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
 
+/* No comment provided by engineer. */
+"privacy.protection.trackers.blocked.new" = "Forespørsler blokkert fra lasting";
+
 /* Do not translate - stringsdict entry */
 "privacy.protection.trackers.found" = "privacy.protection.trackers.found";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.found.new" = "Sporingsforespørsler funnet";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.blocked" = "Ingen sporingsforespørsler blokkert";
+
+/* No comment provided by engineer. */
+"privacy.protection.trackers.not.found" = "Ingen sporingsforespørsler funnet";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Avbryt";
@@ -1150,18 +1483,6 @@
 /* Title for alert warning the user about missing microphone permission */
 "voiceSearch.alert.no-permission.title" = "Mikrofontilgang kreves";
 
-/* Voice-search privacy accept alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.accept" = "OK";
-
-/* Voice-search privacy reject alert action */
-"voiceSearch.alert.privacy-acknowledgment.action.reject" = "Avbryt";
-
-/* Message for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.message" = "DuckDuckGo lytter aldri til det du sier. All taledatabehandling for Privat talesøk skjer på enheten din.";
-
-/* Title for alert explaining voice-search privacy */
-"voiceSearch.alert.privacy-acknowledgment.title" = "Mikrofontilgang kreves for Privat talesøk";
-
 /* Cancel button for voice search */
 "voiceSearch.cancel" = "Avbryt";
 
@@ -1183,12 +1504,12 @@
 /* Confirmation message */
 "web.url.save.favorite.done" = "Favoritt lagt til";
 
-/* Block Alerts button for JavaScript alerts */
-"webJSAlert.block-alerts.button" = "Blokker varsler";
-
 /* Cancel button for JavaScript alerts */
 "webJSAlert.cancel.button" = "Avbryt";
 
 /* OK button for JavaScript alerts */
 "webJSAlert.OK.button" = "OK";
+
+/* Alert title explaining the message is shown by a website */
+"webJSAlert.website-message.format" = "En melding fra %@:";
 

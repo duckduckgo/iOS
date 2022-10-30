@@ -44,7 +44,7 @@ class PrivacyProtectionIconSource {
         }
         
         let networkSymbol: String
-        let networkName = networkName.uppercased().dropPrefix(prefix: "THE ")
+        let networkName = networkName.uppercased().dropping(prefix: "THE ")
         if let firstCharacter = networkName.first {
             networkSymbol = String(firstCharacter)
         } else {

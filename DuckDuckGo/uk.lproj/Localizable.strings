@@ -65,7 +65,7 @@
 "action.title.refresh" = "Оновити";
 
 /* Remove Favorite action */
-"action.title.remove.favorite" = "Видалити Обране";
+"action.title.remove.favorite" = "Видалити з улюблених";
 
 /* Report broken site action */
 "action.title.reportBrokenSite" = "Повідомити про зламаний сайт";
@@ -83,7 +83,7 @@
 "action.title.save.bookmark" = "Додати закладку";
 
 /* Add to Favorites action */
-"action.title.save.favorite" = "Додати в обране";
+"action.title.save.favorite" = "Додати до улюблених";
 
 /* Settings action */
 "action.title.settings" = "Параметри";
@@ -125,7 +125,7 @@
 "alert.title.save.bookmark" = "Зберегти закладку";
 
 /* Save Favorite action */
-"alert.title.save.favorite" = "Зберегти в Обрані";
+"alert.title.save.favorite" = "Зберегти в улюблених";
 
 /* Shown on authentication screen */
 "app.authentication.unlock" = "Розблокуйте DuckDuckGo.";
@@ -158,7 +158,7 @@
 "bookmark.addBookmark.title" = "Додати закладку";
 
 /* Add favorite screen title */
-"bookmark.addFavorite.title" = "Додати в обране";
+"bookmark.addFavorite.title" = "Додати до улюблених";
 
 /* Add folder screen title */
 "bookmark.addFolder.title" = "Додати теку";
@@ -182,7 +182,7 @@
 "bookmark.editBookmark.title" = "Редагувати закладку";
 
 /* Edit favorite screen title */
-"bookmark.editFavorite.title" = "Редагувати обране";
+"bookmark.editFavorite.title" = "Редагувати улюблені";
 
 /* Edit folder screen title */
 "bookmark.editFolder.title" = "Редагувати теку";
@@ -338,7 +338,7 @@
 "dax.onboarding.home.add.favorite" = "Відвідайте улюблені сайти миттєво!\n\nПерейдіть на сайт, який вам подобається. Потім торкніться значка \"⋯\" та виберіть *Додати до вибраного*.";
 
 /* Accessible version of dax.onboarding.home.add.favorite */
-"dax.onboarding.home.add.favorite.accessible" = "Відвідайте улюблені сайти миттєво! Відвідайте один із ваших улюблених сайтів. Потім торкніться кнопки «Відкрити меню» та виберіть «Додати до вибраного».";
+"dax.onboarding.home.add.favorite.accessible" = "Відвідайте улюблені сайти миттєво! Відвідайте один із ваших улюблених сайтів. Потім торкніться кнопки «Відкрити меню» та виберіть «Додати до улюблених».";
 
 /* No comment provided by engineer. */
 "dax.onboarding.home.initial" = "Далі спробуйте відвідати один із ваших улюблених сайтів!\n\nЯ заблокую трекери, щоб вони не шпигували за вами. Я також підвищу рівень безпеки вашого з’єднання, якщо це можливо. 🔒";
@@ -512,13 +512,13 @@
 "empty.bookmarks" = "Ще не додано жодної закладки";
 
 /* Empty list state placholder */
-"empty.favorites" = "Обране ще не додано";
+"empty.favorites" = "Улюблені ще не додані";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Збігів не знайдено";
 
 /* No comment provided by engineer. */
-"favorite" = "Обране";
+"favorite" = "Улюблені";
 
 /* No comment provided by engineer. */
 "favorite.menu.delete" = "Видалити";
@@ -740,7 +740,7 @@
 "keyCommandAddBookmark" = "Додати закладку";
 
 /* No comment provided by engineer. */
-"keyCommandAddFavorite" = "Додати в обране";
+"keyCommandAddFavorite" = "Додати до улюблених";
 
 /* No comment provided by engineer. */
 "keyCommandBrowserBack" = "Перейти назад";
@@ -1168,7 +1168,7 @@ https://duckduckgo.com/mac
 "section.title.bookmarks" = "Закладки";
 
 /* No comment provided by engineer. */
-"section.title.favorites" = "Обране";
+"section.title.favorites" = "Улюблені";
 
 /* No comment provided by engineer. */
 "settings.about.text" = "У DuckDuckGo ми встановлюємо новий стандарт довіри в Інтернеті.\n\nDuckDuckGo Privacy Browser надає все необхідне для захисту конфіденційності під час пошуку та перегляду веб-сторінок, включаючи блокування трекерів, більш розумне шифрування та приватний пошук DuckDuckGo.\n\nЗрештою, Інтернет не повинен бути таким жахливим, а отримати в Інтернеті заслуговувану конфіденційність має бути так само просто, як закрити жалюзі.";
@@ -1255,7 +1255,7 @@ https://duckduckgo.com/mac
 "voiceSearch.footer.note" = "Аудіо обробляється на пристрої. Воно не зберігається і не надається нікому, включаючи DuckDuckGo.";
 
 /* Confirmation message */
-"web.url.remove.favorite.done" = "Обране видалено";
+"web.url.remove.favorite.done" = "Улюблене видалено";
 
 /* Confirmation message */
 "web.url.save.bookmark.done" = "Додано закладку";
@@ -1267,7 +1267,7 @@ https://duckduckgo.com/mac
 "web.url.save.bookmark.none" = "Немає вебсторінки для закладки";
 
 /* Confirmation message */
-"web.url.save.favorite.done" = "Обране додано";
+"web.url.save.favorite.done" = "Улюблене додано";
 
 /* Block Alerts button for JavaScript alerts */
 "webJSAlert.block-alerts.button" = "Блокувати Сповіщення";

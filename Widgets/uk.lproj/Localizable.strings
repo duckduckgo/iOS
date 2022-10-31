@@ -2,7 +2,7 @@
 "widget.gallery.search.and.favorites.description" = "Шукайте або відвідуйте улюблені сайти лише одним дотиком.";
 
 /* Display name for search and favorites widget in widget gallery */
-"widget.gallery.search.and.favorites.display.name" = "Пошук і Вибране";
+"widget.gallery.search.and.favorites.display.name" = "Пошук в обраному";
 
 /* Description of search only widget in widget gallery */
 "widget.gallery.search.description" = "Швидко запустіть приватний пошук у DuckDuckGo.";
@@ -11,7 +11,7 @@
 "widget.gallery.search.display.name" = "Пошук";
 
 /* CTA shown in the favorites widget empty state. */
-"widget.no.favorites.cta" = "Додати Вибране";
+"widget.no.favorites.cta" = "Додати Обране";
 
 /* Message shown in the favorites widget empty state. */
 "widget.no.favorites.message" = "Швидко відвідуйте улюблені сайти.";

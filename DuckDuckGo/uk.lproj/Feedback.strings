@@ -23,10 +23,10 @@
 "TMj-NM-j3b.placeholder" = "Який вебсайт має проблеми?";
 
 /* Class = "UINavigationItem"; title = "Report Broken Site"; ObjectID = "WjT-HM-yim"; */
-"WjT-HM-yim.title" = "Повідомити про не справний сайт";
+"WjT-HM-yim.title" = "Повідомити про несправний сайт";
 
 /* Class = "UILabel"; text = "Broken Site Reason"; ObjectID = "Wx3-Vb-ItS"; */
-"Wx3-Vb-ItS.text" = "Причина  не справності сайту";
+"Wx3-Vb-ItS.text" = "Причина  несправності сайту";
 
 /* Class = "UINavigationItem"; title = "Share Feedback"; ObjectID = "Xb0-Zu-opM"; */
 "Xb0-Zu-opM.title" = "Надіслати Відгук";

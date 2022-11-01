@@ -211,7 +211,6 @@ final class BrowsingMenuViewController: UIViewController {
         let isIPad = AppWidthObserver.shared.isLargeWidth
         let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
 
-        flexibleWidthConstraint.isActive = isIPhoneLandscape
         topConstraint.isActive = !isIPad
         topConstraintIPad.isActive = isIPad
         bottomConstraint.isActive = !isIPad
@@ -223,7 +222,7 @@ final class BrowsingMenuViewController: UIViewController {
         bottomConstraint.constant = windowBounds.maxY - frame.maxY - (isIPhoneLandscape ? 2 : 10)
         rightConstraint.constant = isIPad ? 67 : 10
 
-        self.recalculatePreferredWidthConstraint()
+        recalculatePreferredWidthConstraint()
     }
 
     private func recalculatePreferredWidthConstraint() {
@@ -241,8 +240,8 @@ final class BrowsingMenuViewController: UIViewController {
     private func recalculateHeightConstraints() {
         tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         tableView.reloadData()
-        tableViewHeight.constant = tableView.contentSize.height + tableView.contentInset.bottom + tableView.contentInset.top
         tableView.superview?.layoutIfNeeded()
+        tableViewHeight.constant = tableView.contentSize.height + tableView.contentInset.bottom + tableView.contentInset.top
     }
 
 }
@@ -257,15 +256,6 @@ extension BrowsingMenuViewController: UITableViewDelegate {
             action()
         case .separator:
             break
-        }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch menuEntries[indexPath.row] {
-        case .regular:
-            return 40
-        case .separator:
-            return 20
         }
     }
 

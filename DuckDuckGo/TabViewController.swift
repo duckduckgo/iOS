@@ -646,6 +646,7 @@ class TabViewController: UIViewController {
         }
         updateContentMode()
         webView.reload()
+        privacyDashboard?.dismiss(animated: true)
     }
     
     func updateContentMode() {

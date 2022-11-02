@@ -966,10 +966,6 @@ class TabViewController: UIViewController {
     }
  
     private func onPrivacyInfoChanged() {
-        if isError {
-            privacyInfo = nil
-        }
-        
         delegate?.tab(self, didChangePrivacyInfo: privacyInfo)
         privacyDashboard?.updatePrivacyInfo(privacyInfo)
     }
@@ -1272,9 +1268,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
-        
-        onPrivacyInfoChanged()
-        
+                
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -1369,8 +1363,10 @@ extension TabViewController: WKNavigationDelegate {
         os_log("webpageLoading failed", log: generalLog, type: .debug)
         if isError {
             showBars(animated: true)
+            privacyInfo = nil
+            onPrivacyInfoChanged()
         }
-        onPrivacyInfoChanged()
+        
         self.delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -1406,9 +1402,10 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
+        
         self.privacyInfo = makePrivacyInfo(url: url)
-
         onPrivacyInfoChanged()
+        
         checkLoginDetectionAfterNavigation()
     }
     
@@ -2210,7 +2207,6 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
         }
 
         privacyInfo?.trackerInfo.add(detectedTracker: tracker)
-        onPrivacyInfoChanged()
     }
 }
 

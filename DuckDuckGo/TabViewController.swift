@@ -2480,7 +2480,13 @@ extension TabViewController: SecureVaultManagerDelegate {
             completionHandler(nil)
             return
         }
-        
+
+        // if user is interacting with the searchBar, don't show the autofill prompt since it will overlay the keyboard
+        if let parent = parent as? MainViewController, parent.omniBar.textField.isFirstResponder {
+            completionHandler(nil)
+            return
+        }
+
         if accounts.count > 0 {
             
             let autofillPromptViewController = AutofillLoginPromptViewController(accounts: accounts, trigger: trigger) { account in

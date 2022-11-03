@@ -56,7 +56,8 @@ struct HomeMessageViewModelBuilder {
                                             subtitle: descriptionText,
                                             buttons: [
                                                 HomeMessageButtonViewModel(title: primaryActionText,
-                                                                           action: mapActionToViewModel(action: primaryAction,
+                                                                           action: mapActionToViewModel(remoteAction: primaryAction,
+                                                                                                        buttonAction: .primaryAction,
                                                                                                         onDidClose: onDidClose))],
                                             onDidClose: onDidClose)
             case .bigTwoAction(let titleText, let descriptionText, let placeholder, let primaryActionText,
@@ -68,23 +69,27 @@ struct HomeMessageViewModelBuilder {
                                             buttons: [
                                                 HomeMessageButtonViewModel(title: secondaryActionText,
                                                                            actionStyle: .cancel,
-                                                                           action: mapActionToViewModel(action: secondaryAction,
+                                                                           action: mapActionToViewModel(remoteAction: secondaryAction,
+                                                                                                        buttonAction: .secondaryAction,
                                                                                                         onDidClose: onDidClose)),
                                                 HomeMessageButtonViewModel(title: primaryActionText,
                                                                            actionStyle: .default,
-                                                                           action: mapActionToViewModel(action: primaryAction,
+                                                                           action: mapActionToViewModel(remoteAction: primaryAction,
+                                                                                                        buttonAction: .primaryAction,
                                                                                                         onDidClose: onDidClose))],
                                             onDidClose: onDidClose)
             }
     }
     // swiftlint:enable function_body_length
 
-    static func mapActionToViewModel(action: RemoteAction, onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> () -> Void {
-        switch action {
+    static func mapActionToViewModel(remoteAction: RemoteAction,
+                                     buttonAction: HomeMessageViewModel.ButtonAction,
+                                     onDidClose: @escaping (HomeMessageViewModel.ButtonAction?) -> Void) -> () -> Void {
+        switch remoteAction {
         case .url(let value):
             return {
                 LaunchTabNotification.postLaunchTabNotification(urlString: value)
-                onDidClose(.primaryAction)
+                onDidClose(buttonAction)
             }
         case .appStore:
             return {
@@ -92,11 +97,11 @@ struct HomeMessageViewModelBuilder {
                 if UIApplication.shared.canOpenURL(url as URL) {
                     UIApplication.shared.open(url)
                 }
-                onDidClose(.primaryAction)
+                onDidClose(buttonAction)
             }
         case .dismiss:
             return {
-                onDidClose(.secondaryAction)
+                onDidClose(buttonAction)
             }
         }
     }

@@ -69,9 +69,9 @@ public final class ContentBlockingUpdating {
         }
 
         func combine(_ update: Update, _ notification: Notification) -> Update {
-            var update = update
-            update.changes[notification.name.rawValue] = .notification
-            return update
+            var changes = update.changes
+            changes[notification.name.rawValue] = .notification
+            return Update(rules: update.rules, changes: changes, completionTokens: update.completionTokens)
         }
 
         // 1. Collect updates from ContentBlockerRulesManager and generate UserScripts based on its output

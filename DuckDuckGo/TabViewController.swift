@@ -270,7 +270,7 @@ class TabViewController: UIViewController {
                 }
                 os_log("""
                     -----------------------------------------------------------------------
-                    BREAK: WebView process has appeared hung and was TERMINATED
+                    BREAK: WebView process has appeared hung and will be TERMINATED
                     Check %s to temporarily disable this behaviour
                     Hit Continue (^⌘Y) to continue program execution
                     -----------------------------------------------------------------------

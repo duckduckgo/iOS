@@ -28,14 +28,14 @@ public extension WKBackForwardList {
     ///   If `backForwardListItem` is not in the list, returns `nil`.
     ///   When the found index is passed to `item(at: index)` will return the searched item.
     func index(of backForwardListItem: WKBackForwardListItem) -> Int? {
+        if currentItem == backForwardListItem {
+            return 0
+        }
         if let idx = backList.firstIndex(of: backForwardListItem) {
             return -idx - 1
         }
         if let idx = forwardList.firstIndex(of: backForwardListItem) {
             return idx + 1
-        }
-        if currentItem == backForwardListItem {
-            return 0
         }
         return nil
     }

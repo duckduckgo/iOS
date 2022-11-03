@@ -73,6 +73,7 @@ extension Pixel {
         case browsingMenuEnableProtection
         case browsingMenuReportBrokenSite
         case browsingMenuFireproof
+        case browsingMenuAutofill
         
         case tabBarBackPressed
         case tabBarForwardPressed
@@ -206,21 +207,32 @@ extension Pixel {
         
         case autofillLoginsSaveLoginModalDisplayed
         case autofillLoginsSaveLoginModalConfirmed
+        case autofillLoginsSaveLoginModalDismissed
         
         case autofillLoginsSavePasswordModalDisplayed
         case autofillLoginsSavePasswordModalConfirmed
+        case autofillLoginsSavePasswordModalDismissed
         
         case autofillLoginsUpdatePasswordModalDisplayed
         case autofillLoginsUpdatePasswordModalConfirmed
+        case autofillLoginsUpdatePasswordModalDismissed
         
-        case autofillLoginsUpdateUsernameModelDisplayed
-        case autofillLoginsUpdateUsernameModelConfirmed
+        case autofillLoginsUpdateUsernameModalDisplayed
+        case autofillLoginsUpdateUsernameModalConfirmed
+        case autofillLoginsUpdateUsernameModalDismissed
 
-        case autofillLoginsFillLoginInlineDisplayed
-        case autofillLoginsFillLoginInlineConfirmed
+        case autofillLoginsFillLoginInlineManualDisplayed
+        case autofillLoginsFillLoginInlineManualConfirmed
+        case autofillLoginsFillLoginInlineManualDismissed
+        
+        case autofillLoginsFillLoginInlineAutopromptDisplayed
+        case autofillLoginsFillLoginInlineAutopromptConfirmed
+        
+        case autofillLoginsFillLoginInlineAuthenticationDeviceDisplayed
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed
         case autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable
+        case autofillLoginsFillLoginInlineAuthenticationDeviceAuthCancelled
         case autofillLoginsAutopromptDismissed
         
         case autofillLoginsFillLoginInlineDisablePromptShown
@@ -410,6 +422,7 @@ extension Pixel.Event {
         case .browsingMenuEnableProtection: return "mb_wlr"
         case .browsingMenuReportBrokenSite: return "mb_rb"
         case .browsingMenuFireproof: return "mb_f"
+        case .browsingMenuAutofill: return "m_nav_autofill_menu_item_pressed"
             
         case .tabBarBackPressed: return "mt_bk"
         case .tabBarForwardPressed: return "mt_fw"
@@ -543,24 +556,37 @@ extension Pixel.Event {
         
         case .autofillLoginsSaveLoginModalDisplayed: return "m_autofill_logins_save_login_inline_displayed"
         case .autofillLoginsSaveLoginModalConfirmed: return "m_autofill_logins_save_login_inline_confirmed"
+        case .autofillLoginsSaveLoginModalDismissed: return "m_autofill_logins_save_login_inline_dismissed"
         
         case .autofillLoginsSavePasswordModalDisplayed: return "m_autofill_logins_save_password_inline_displayed"
         case .autofillLoginsSavePasswordModalConfirmed: return "m_autofill_logins_save_password_inline_confirmed"
+        case .autofillLoginsSavePasswordModalDismissed: return "m_autofill_logins_save_password_inline_dismissed"
         
         case .autofillLoginsUpdatePasswordModalDisplayed: return "m_autofill_logins_update_password_inline_displayed"
         case .autofillLoginsUpdatePasswordModalConfirmed: return "m_autofill_logins_update_password_inline_confirmed"
+        case .autofillLoginsUpdatePasswordModalDismissed: return "m_autofill_logins_update_password_inline_dismissed"
         
-        case .autofillLoginsUpdateUsernameModelDisplayed: return "m_autofill_logins_update_username_inline_displayed"
-        case .autofillLoginsUpdateUsernameModelConfirmed: return "m_autofill_logins_update_username_inline_confirmed"
+        case .autofillLoginsUpdateUsernameModalDisplayed: return "m_autofill_logins_update_username_inline_displayed"
+        case .autofillLoginsUpdateUsernameModalConfirmed: return "m_autofill_logins_update_username_inline_confirmed"
+        case .autofillLoginsUpdateUsernameModalDismissed: return "m_autofill_logins_update_username_inline_dismissed"
 
-        case .autofillLoginsFillLoginInlineDisplayed: return "m_autofill_logins_fill_login_inline_displayed"
-        case .autofillLoginsFillLoginInlineConfirmed: return "m_autofill_logins_fill_login_inline_confirmed"
+        case .autofillLoginsFillLoginInlineManualDisplayed: return "m_autofill_logins_fill_login_inline_manual_displayed"
+        case .autofillLoginsFillLoginInlineManualConfirmed: return "m_autofill_logins_fill_login_inline_manual_confirmed"
+        case .autofillLoginsFillLoginInlineManualDismissed: return "m_autofill_logins_fill_login_inline_manual_dismissed"
+            
+        case .autofillLoginsFillLoginInlineAutopromptDisplayed: return "m_autofill_logins_fill_login_inline_autoprompt_displayed"
+        case .autofillLoginsFillLoginInlineAutopromptConfirmed: return "m_autofill_logins_fill_login_inline_autoprompt_confirmed"
+            
+        case .autofillLoginsFillLoginInlineAuthenticationDeviceDisplayed:
+            return "m_autofill_logins_fill_login_inline_authentication_device-displayed"
         case .autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated:
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_authenticated"
         case .autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed:
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_failed"
         case .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable:
             return "m_autofill_logins_fill_login_inline_authentication_device-auth_unavailable"
+        case .autofillLoginsFillLoginInlineAuthenticationDeviceAuthCancelled:
+            return "m_autofill_logins_fill_login_inline_authentication_device-auth_cancelled"
         case .autofillLoginsAutopromptDismissed:
             return "m_autofill_logins_autoprompt_dismissed"
             

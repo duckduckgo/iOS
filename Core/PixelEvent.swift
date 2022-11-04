@@ -202,8 +202,6 @@ extension Pixel {
         case jsAlertShown
 
         case featureFlaggingInternalUserAuthenticated
-
-        case autofillLoginsSaveLoginModalOnboardingDisplayed
         
         case autofillLoginsSaveLoginModalDisplayed
         case autofillLoginsSaveLoginModalConfirmed
@@ -551,8 +549,6 @@ extension Pixel.Event {
         case .jsAlertShown: return "m_js_alert_shown"
 
         case .featureFlaggingInternalUserAuthenticated: return "m_internal-user_authenticated"
-
-        case .autofillLoginsSaveLoginModalOnboardingDisplayed: return "m_autofill_logins_save_login_onboarding_inline_displayed"
         
         case .autofillLoginsSaveLoginModalDisplayed: return "m_autofill_logins_save_login_inline_displayed"
         case .autofillLoginsSaveLoginModalConfirmed: return "m_autofill_logins_save_login_inline_confirmed"

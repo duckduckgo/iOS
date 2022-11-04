@@ -100,7 +100,7 @@ class SaveLoginViewController: UIViewController {
         
         switch saveViewModel.layoutType {
         case .newUser:
-            Pixel.fire(pixel: .autofillLoginsSaveLoginModalOnboardingDisplayed)
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
         case .saveLogin:
             Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
         case .savePassword:

@@ -24,7 +24,7 @@ protocol ContentBlockerRemoteDataSource {
     var requestCount: Int { get }
     
     func request(_ configuration: ContentBlockerRequest.Configuration,
-                 completion:@escaping (ContentBlockerRequest.Response) -> Void)
+                 completion: @escaping (ContentBlockerRequest.Response) -> Void)
 }
 
 public class ContentBlockerRequest: ContentBlockerRemoteDataSource {

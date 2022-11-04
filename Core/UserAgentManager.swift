@@ -117,7 +117,7 @@ struct UserAgent {
     }
     
     public func agent(forUrl url: URL?, isDesktop: Bool,
-                      privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig) -> String {
+                      privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> String {
         let omittedSites = omitApplicationSites(forConfig: privacyConfig)
         let customUAEnabled = privacyConfig.isEnabled(featureKey: .customUserAgent)
 

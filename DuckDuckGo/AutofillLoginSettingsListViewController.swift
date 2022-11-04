@@ -114,7 +114,6 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Pixel.fire(pixel: .autofillSettingsOpened)
         authenticate()
     }
 

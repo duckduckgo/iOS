@@ -222,7 +222,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func updateViewState() {
         
         switch viewModel.viewState {
-        case .showItems :
+        case .showItems:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
@@ -493,7 +493,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         switch viewModel.sections[indexPath.section] {
         case .credentials:
             return true
-        default :
+        default:
             return false
         }
     }

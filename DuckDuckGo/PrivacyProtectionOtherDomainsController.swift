@@ -34,7 +34,7 @@ class PrivacyProtectionOtherDomainsController: UIViewController {
     @IBOutlet weak var backButton: UIButton!
 
     private var siteRating: SiteRating!
-    private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
+    private var privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
     private var isProtecting: Bool { privacyConfig.isProtected(domain: siteRating.domain) }
     
     private lazy var tld = TLD()

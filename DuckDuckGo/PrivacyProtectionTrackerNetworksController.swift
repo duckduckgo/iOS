@@ -33,7 +33,7 @@ class PrivacyProtectionTrackerNetworksController: UIViewController {
     @IBOutlet weak var separator: UIView!
 
     private var siteRating: SiteRating!
-    private var privacyConfig: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
+    private var privacyConfig: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
 
     struct Section {
         let name: String

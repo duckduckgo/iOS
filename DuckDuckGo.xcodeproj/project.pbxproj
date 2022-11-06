@@ -429,6 +429,7 @@
 		98A16C2D28A11D6200A6C003 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 98A16C2C28A11D6200A6C003 /* BrowserServicesKit */; };
 		98A54A8422AFCB2D00E541F4 /* Instruments.instrpkg in Sources */ = {isa = PBXBuildFile; fileRef = 98A54A8322AFCB2D00E541F4 /* Instruments.instrpkg */; };
 		98AA92B32456FBE100ED4B9E /* SearchFieldContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AA92B22456FBE100ED4B9E /* SearchFieldContainerView.swift */; };
+		98B000532915C46E0034BCA0 /* LegacyBookmarksStoreMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B000522915C46E0034BCA0 /* LegacyBookmarksStoreMigration.swift */; };
 		98B001A4251EABB40090EC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98B001A2251EABB40090EC07 /* InfoPlist.strings */; };
 		98B001A7251EABB40090EC07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98B001A5251EABB40090EC07 /* InfoPlist.strings */; };
 		98B001AA251EABB40090EC07 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98B001A8251EABB40090EC07 /* Localizable.strings */; };
@@ -1815,6 +1816,7 @@
 		98AC5D8D251EAC07009B7979 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98AC5D90251EAC07009B7979 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
 		98AC5D91251EAC07009B7979 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		98B000522915C46E0034BCA0 /* LegacyBookmarksStoreMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyBookmarksStoreMigration.swift; sourceTree = "<group>"; };
 		98B001A3251EABB40090EC07 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98B001A6251EABB40090EC07 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98B001A9251EABB40090EC07 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -4081,6 +4083,7 @@
 				F41C2DA126C1925600F9A760 /* BookmarksAndFolders.xcdatamodeld */,
 				F41C2DA426C1975E00F9A760 /* BookmarksCoreDataStorage.swift */,
 				F4F6DFB926EFF28A00ED7E12 /* BookmarkObjects.swift */,
+				98B000522915C46E0034BCA0 /* LegacyBookmarksStoreMigration.swift */,
 			);
 			name = LegacyStore;
 			sourceTree = "<group>";
@@ -5516,6 +5519,7 @@
 				CB2A7EF128410DF700885F67 /* PixelEvent.swift in Sources */,
 				830C375C1F6C06BF00E317A7 /* TermsOfService.swift in Sources */,
 				85D2187624BF6164004373D2 /* FaviconSourcesProvider.swift in Sources */,
+				98B000532915C46E0034BCA0 /* LegacyBookmarksStoreMigration.swift in Sources */,
 				85200FA11FBC5BB5001AF290 /* DDGPersistenceContainer.swift in Sources */,
 				C14882DB27F2011C00D59F0C /* BookmarkOrFolder.swift in Sources */,
 				F1722BC91E8BE2AB0058AAA5 /* BookmarkStore.swift in Sources */,

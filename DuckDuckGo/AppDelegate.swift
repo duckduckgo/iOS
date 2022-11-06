@@ -115,8 +115,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        BookmarksDatabase.shared.loadStore { _, _ in
-            // TODO
+        BookmarksDatabase.shared.loadStore { context, _ in
+            let source = BookmarksCoreDataStorage.shared.getTemporaryPrivateContext()
+            source.performAndWait {
+                LegacyBookmarksStoreMigration.migrate(source: source,
+                                                      destination: context!)
+            }
         }
 
         /*

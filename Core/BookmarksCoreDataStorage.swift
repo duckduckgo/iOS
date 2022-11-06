@@ -50,7 +50,7 @@ public class BookmarksCoreDataStorage {
     private let storeLoadedCondition = RunLoop.ResumeCondition()
     internal var persistentContainer: NSPersistentContainer
     
-    internal lazy var viewContext: NSManagedObjectContext = {
+    public lazy var viewContext: NSManagedObjectContext = {
         RunLoop.current.run(until: storeLoadedCondition)
         let context = persistentContainer.viewContext
         context.mergePolicy = NSMergePolicy(merge: .rollbackMergePolicyType)
@@ -58,7 +58,7 @@ public class BookmarksCoreDataStorage {
         return context
     }()
     
-    internal func getTemporaryPrivateContext() -> NSManagedObjectContext {
+    public func getTemporaryPrivateContext() -> NSManagedObjectContext {
         RunLoop.current.run(until: storeLoadedCondition)
         let context = persistentContainer.newBackgroundContext()
         context.mergePolicy = NSMergePolicy(merge: .mergeByPropertyObjectTrumpMergePolicyType)

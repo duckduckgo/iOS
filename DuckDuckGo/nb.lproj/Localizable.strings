@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skjul passord";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Slå av";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Fortsett å bruke";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Du kan deaktivere Autofyll når som helst i innstillingene.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Vil du fortsette å bruke Autofyll?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Vis";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Pålogging oppdatert";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Kopier %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adressen er kopiert";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Notatene er kopiert";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Passordet er kopiert";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Brukernavnet er kopiert";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL-adresse til nettsted";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Pålogging";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Slett pålogging";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Slett pålogging";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Er du sikker på at du vil slette denne påloggingen?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Rediger pålogging";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Passord";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Tittel";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "eksempel.no";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "brukernavn@eksempel.no";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Pålogging sist oppdatert %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Påloggingstittel";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Legg til pålogging";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Notater";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Åpne nettsted";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Passord";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Du har allerede en pålogging for dette brukernavnet og nettstedet.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Eksisterende pålogging";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Lås opp Autofyll";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Brukernavn";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Pålogginger lagres sikkert og bare på denne enheten";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Ingen pålogginger er lagret ennå";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Aktiver Autofyll for å begynne å lagre pålogginger";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Avbryt";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Lås opp for å bruke lagrede pålogginger";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Lukk";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Lagre og fyll inn pålogginger automatisk";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Pålogging for %@ er slettet";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Søk i pålogginger";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Fyll inn pålogginger automatisk";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Konfigurer Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Face ID og passord kreves for å beskytte påloggingsdetaljer for Autofyll.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Aktiver Face ID for å bruke Autofyll";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Konfigurer Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID og passord kreves for å beskytte påloggingsdetaljer for Autofyll.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Aktiver Touch ID for å bruke Autofyll";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Avbryt";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Lås opp for å bruke lagrede pålogginger";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Flere alternativer";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Vil du bruke lagret pålogging?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "for «%@»";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Ingen resultater";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Dette lagrer en ekstra pålogging for dette nettstedet.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Pålogginger lagres bare på denne enheten, og kan administreres fra Autofyll-menyen i Innstillinger.";
+"autofill.save-login.new-user.message" = "DuckDuckGo lagrer denne påloggingen på en sikker måte på enheten din.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vil du at DuckDuckGo skal lagre påloggingen din?";

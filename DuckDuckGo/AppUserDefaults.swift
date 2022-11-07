@@ -28,6 +28,7 @@ public class AppUserDefaults: AppSettings {
         public static let currentFireButtonAnimationChange = Notification.Name("com.duckduckgo.app.CurrentFireButtonAnimationChange")
         public static let textSizeChange = Notification.Name("com.duckduckgo.app.TextSizeChange")
         public static let autofillEnabledChange = Notification.Name("com.duckduckgo.app.AutofillEnabledChange")
+        public static let didVerifyInternalUser = Notification.Name("com.duckduckgo.app.DidVerifyInternalUser")
     }
 
     private let groupName: String

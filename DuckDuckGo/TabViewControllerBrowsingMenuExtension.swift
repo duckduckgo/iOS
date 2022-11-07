@@ -345,7 +345,7 @@ extension TabViewController {
         if tabModel.isDesktop {
             load(url: url.toDesktopUrl())
         } else {
-            reload(scripts: false)
+            reload()
         }
     }
     
@@ -370,7 +370,7 @@ extension TabViewController {
     }
     
     private func buildToggleProtectionEntry(forDomain domain: String) -> BrowsingMenuEntry {
-        let config = ContentBlocking.privacyConfigurationManager.privacyConfig
+        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let isProtected = !config.isUserUnprotected(domain: domain)
         let title = isProtected ? UserText.actionDisableProtection : UserText.actionEnableProtection
         let image = isProtected ? UIImage(named: "MenuDisableProtection")! : UIImage(named: "MenuEnableProtection")!
@@ -382,7 +382,7 @@ extension TabViewController {
     }
     
     private func togglePrivacyProtection(domain: String) {
-        let config = ContentBlocking.privacyConfigurationManager.privacyConfig
+        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
         let isProtected = !config.isUserUnprotected(domain: domain)
         if isProtected {
             config.userDisabledProtection(forDomain: domain)
@@ -397,7 +397,7 @@ extension TabViewController {
             message = UserText.messageProtectionEnabled.format(arguments: domain)
         }
         
-        ContentBlocking.contentBlockingManager.scheduleCompilation()
+        ContentBlocking.shared.contentBlockingManager.scheduleCompilation()
         
         ActionMessageView.present(message: message, actionTitle: UserText.actionGenericUndo, onAction: { [weak self] in
             self?.togglePrivacyProtection(domain: domain)

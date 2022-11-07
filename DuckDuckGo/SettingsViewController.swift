@@ -222,6 +222,7 @@ class SettingsViewController: UITableViewController {
     private func showAutofill(animated: Bool = true) {
         let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
         autofillController.delegate = self
+        Pixel.fire(pixel: .autofillSettingsOpened)
         navigationController?.pushViewController(autofillController, animated: animated)
     }
     

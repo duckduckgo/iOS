@@ -2522,6 +2522,12 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
         viewController.dismiss(animated: true)
     }
+    
+    func saveLoginViewController(_ viewController: SaveLoginViewController,
+                                 didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController) {
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
+        present(alertController, animated: true)
+    }
 }
 
 extension WKWebView {

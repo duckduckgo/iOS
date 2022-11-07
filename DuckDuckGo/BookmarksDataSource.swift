@@ -47,20 +47,15 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if viewModel.bookmarks.isEmpty {
-            if viewModel.currentFolder == nil {
-                tableView.dequeueReusableCell(withIdentifier: "NoBookmarksCell", for: indexPath)
-            } else {
-                tableView.dequeueReusableCell(withIdentifier: "NoBookmarksInSubfolderCell", for: indexPath)
-            }
+        guard !viewModel.bookmarks.isEmpty else {
+            return BookmarkCellCreator.createEmptyCell(tableView, forIndexPath: indexPath, inFolder: viewModel.currentFolder != nil)
         }
-
 
         guard let bookmark = viewModel.bookmarkAt(indexPath.row) else {
             fatalError("No bookmark at index \(indexPath.row)")
         }
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "BookmarkCell", for: indexPath) as? BookmarkCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier, for: indexPath) as? BookmarkCell else {
             fatalError("Failed to dequeue bookmark item")
         }
 
@@ -82,6 +77,11 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         guard editingStyle == .delete else { return }
         guard let bookmark = viewModel.bookmarkAt(indexPath.row) else { return }
 
+        func delete() {
+            viewModel.deleteBookmark(bookmark)
+            tableView.reloadSections([0], with: .automatic)
+        }
+
         if let delegate = delegate,
            bookmark.isFolder,
            bookmark.children?.count ?? 0 > 0 {
@@ -92,14 +92,14 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
-                self.viewModel.deleteBookmark(bookmark)
+                delete()
             }
             alertController.addAction(title: UserText.actionCancel, style: .cancel)
             let viewController = delegate.viewControllerForAlert(self)
             viewController.present(alertController, animated: true)
 
         } else {
-            viewModel.deleteBookmark(bookmark)
+            delete()
         }
 
     }
@@ -123,6 +123,30 @@ class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         fatalError("not implemented")
+    }
+
+}
+
+class BookmarkCellCreator {
+
+    static func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath, inFolder: Bool) -> UITableViewCell {
+        let theme = ThemeManager.shared.currentTheme
+
+        let cell: UITableViewCell
+        if inFolder {
+            cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksInSubfolderCell.reuseIdentifier, for: indexPath)
+        } else {
+            guard let dequeuedCell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier, for: indexPath)
+                    as? NoBookmarksCell else {
+                fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
+            }
+            dequeuedCell.label.textColor = theme.tableCellTextColor
+            cell = dequeuedCell
+        }
+
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        return cell
     }
 
 }

@@ -136,7 +136,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">
-                                    <rect key="frame" x="0.0" y="510.5" width="375" height="82"/>
+                                    <rect key="frame" x="0.0" y="545.5" width="375" height="82"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
@@ -256,7 +256,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoBookmarskCell" id="k5c-O7-NAf" userLabel="Empty" customClass="NoBookmarksCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoBookmarksCell" id="k5c-O7-NAf" userLabel="Empty" customClass="NoBookmarksCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="16" y="222" width="343" height="44.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k5c-O7-NAf" id="L5l-gj-zLA">

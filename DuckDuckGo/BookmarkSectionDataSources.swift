@@ -21,6 +21,9 @@ import UIKit
 import Core
 import CoreData
 
+#warning("delete this file")
+
+/*
 protocol BookmarkItemsSectionDataSource {
     
     var numberOfRows: Int { get }
@@ -206,23 +209,4 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
         }
     }
 }
-
-class BookmarkCellCreator {
-    
-    static func createCell(_ tableView: UITableView, withItem item: BookmarkItem?) -> UITableViewCell {
-        fatalError("To be deleted")
-    }
-    
-    static func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier) as? NoBookmarksCell else {
-            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
-        }
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.label.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-
-        return cell
-    }
-}
+*/

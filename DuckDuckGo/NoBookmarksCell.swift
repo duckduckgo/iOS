@@ -23,7 +23,7 @@ class NoBookmarksCell: UITableViewCell {
     
     @IBOutlet var label: UILabel!
     
-    static let reuseIdentifier = "NoBookmarskCell"
+    static let reuseIdentifier = "NoBookmarksCell"
 }
 
 class NoBookmarksInSubfolderCell: UITableViewCell {

@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import Common
 import SwiftUI
 import Core
 
@@ -45,7 +46,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
     var account: SecureVaultModels.WebsiteAccount?
-    
+    private let tld: TLD
+
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
     @Published var username = ""
@@ -99,8 +101,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         AutofillInterfaceEmailTruncator.truncateEmail(username, maxLength: 36)
     }
 
-    internal init(account: SecureVaultModels.WebsiteAccount? = nil) {
+    internal init(account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD) {
         self.account = account
+        self.tld = tld
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel()
         if let account = account {
             self.updateData(with: account)
@@ -113,9 +116,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.account = account
         username = account.username
         address = account.domain
-        title = account.name
+        title = account.name(tld: tld)
         notes = account.notes ?? ""
-        headerViewModel.updateData(with: account)
+        headerViewModel.updateData(with: account, tld: tld)
         setupPassword(with: account)
     }
     
@@ -266,8 +269,8 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     @Published var subtitle: String = ""
     @Published var domain: String = ""
     
-    func updateData(with account: SecureVaultModels.WebsiteAccount) {
-        self.title = account.name
+    func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD) {
+        self.title = account.name(tld: tld)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain
     }

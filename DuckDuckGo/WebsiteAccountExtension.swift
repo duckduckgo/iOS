@@ -19,13 +19,19 @@
 
 import Foundation
 import BrowserServicesKit
+import Common
 
 extension SecureVaultModels.WebsiteAccount {
-    var name: String {
+
+    func name(tld: TLD) -> String {
         if let title = self.title, !title.isEmpty {
             return title
         } else {
-            return self.domain.droppingWwwPrefix()
+            if let domain = tld.eTLDplus1(self.domain) {
+                return domain
+            } else {
+                return self.domain.droppingWwwPrefix()
+            }
         }
     }
 }

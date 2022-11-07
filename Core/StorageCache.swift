@@ -67,7 +67,7 @@ public class StorageCache: StorageCacheUpdating {
         case .trackerDataSet:
             if let data = data as? Data,
                 fileStore.persist(data, forConfiguration: configuration) {
-                if ContentBlocking.trackerDataManager.reload(etag: etag, data: data) != .downloaded {
+                if ContentBlocking.shared.trackerDataManager.reload(etag: etag, data: data) != .downloaded {
                     Pixel.fire(pixel: .trackerDataReloadFailed)
                     return false
                 }
@@ -78,7 +78,7 @@ public class StorageCache: StorageCacheUpdating {
         case .privacyConfiguration:
             if let data = data as? Data,
                fileStore.persist(data, forConfiguration: configuration) {
-                if ContentBlocking.privacyConfigurationManager.reload(etag: etag, data: data) != .downloaded {
+                if ContentBlocking.shared.privacyConfigurationManager.reload(etag: etag, data: data) != .downloaded {
                     Pixel.fire(pixel: .privacyConfigurationReloadFailed)
                     return false
                 }

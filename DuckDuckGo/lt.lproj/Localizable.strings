@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Paslėpti slaptažodį";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Išjungti";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Naudoti toliau";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Automatinį užpildymą galite bet kada išjungti nustatymuose.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Ar norite ir toliau naudoti automatinį užpildymą?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Peržiūrėti";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Prisijungimas atnaujintas";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Kopijuoti %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adresas nukopijuotas";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Pastabos nukopijuotos";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Slaptažodis nukopijuotas";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Naudotojo vardas nukopijuotas";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "Svetainės URL";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Prisijungti";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Ištrinti prisijungimą";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Ištrinti prisijungimą";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Ar tikrai norite ištrinti šį prisijungimą?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Redaguoti prisijungimą";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Slaptažodis";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Pavadinimas";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "example.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "username@example.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Prisijungimas paskutinį kartą atnaujintas %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Prisijungimo pavadinimas";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Pridėti prisijungimą";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Pastabos";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Atidaryti svetainę";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Slaptažodis";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "GERAI";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Jūs jau turite prisijungimą prie šio naudotojo vardo ir svetainės.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Dvigubas prisijungimas";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Atrakinti automatinį pildymą";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Naudotojo vardas";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Prisijungimai saugiai saugomi tik šiame įrenginyje";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Dar nėra išsaugotų prisijungimų";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Įgalinkite automatinį užpildymą, kad pradėtumėte išsaugoti prisijungimus";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Atšaukti";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Atrakinkite norėdami naudoti išsaugotą prisijungimą";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Uždaryti";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Išsaugoti ir automatiškai pildyti prisijungimus";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Prisijungimas prie %@ ištrintas";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Ieškoti prisijungimų";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Automatiškai užpildyti prisijungimus";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "„Face ID“ nustatymas";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "„Face ID“ ir slaptasis kodas reikalingas automatiškai užpildytiems prisijungimo duomenims apsaugoti.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Įgalinkite „Face ID“, kad galėtumėte naudoti automatinį užpildymą";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "„Touch ID“ nustatymas";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "„Touch ID“ ir slaptasis kodas reikalingas automatiškai užpildytiems prisijungimo duomenims apsaugoti.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Įgalinkite „Touch ID“, kad galėtumėte naudoti automatinį užpildymą";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Atšaukti";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Atrakinkite norėdami naudoti išsaugotą prisijungimą";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Daugiau parinkčių";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Naudoti išsaugotą prisijungimą?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "„%@“";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Rezultatų nerasta";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Taip bus išsaugotas papildomas prisijungimas prie šios svetainės.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Prisijungimai saugiai saugomi tik šiame prietaise, o juos galima tvarkyti nustatymų automatinio pildymo meniu.";
+"autofill.save-login.new-user.message" = "„DuckDuckGo“ saugiai išsaugos šį prisijungimą jūsų įrenginyje.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Ar norite, kad „DuckDuckGo“ išsaugotų jūsų prisijungimą?";

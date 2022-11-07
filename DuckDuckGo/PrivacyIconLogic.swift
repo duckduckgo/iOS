@@ -35,7 +35,7 @@ final class PrivacyIconLogic {
         if AppUrls().isDuckDuckGoSearch(url: privacyInfo.url) {
             return .daxLogo
         } else {
-            let config = ContentBlocking.privacyConfigurationManager.privacyConfig
+            let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
             let isUserUnprotected = config.isUserUnprotected(domain: privacyInfo.url.host)
  
             let notFullyProtected = !privacyInfo.https || privacyInfo.isMajorTrackerNetwork || isUserUnprotected

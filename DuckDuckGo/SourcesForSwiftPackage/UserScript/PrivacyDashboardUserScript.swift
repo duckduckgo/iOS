@@ -89,7 +89,7 @@ final class PrivacyDashboardUserScript: NSObject, StaticUserScript {
             return
         }
 
-        let etag = ContentBlocking.contentBlockingManager.currentMainRules?.etag.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? ""
+        let etag = ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag.trimmingCharacters(in: CharacterSet(charactersIn: "\"")) ?? ""
                
         Pixel.fire(pixel: .privacyDashboardPixelFromJS(rawPixel: pixel), withAdditionalParameters: ["tds": etag])
     }

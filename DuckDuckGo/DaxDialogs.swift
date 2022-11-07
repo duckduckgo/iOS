@@ -63,7 +63,7 @@ final class DaxDialogs {
     
     func overrideShownFlagFor(_ spec: BrowsingSpec, flag: Bool) {
         switch spec.type {
-        case .withMultipleTrackers, .withOneTracker :
+        case .withMultipleTrackers, .withOneTracker:
             settings.browsingWithTrackersShown = flag
         case .afterSearch:
             settings.browsingAfterSearchShown = flag
@@ -156,7 +156,7 @@ final class DaxDialogs {
         static let homeScreenMessagesSeenMaxCeiling = 2
     }
 
-    public static let shared = DaxDialogs(entityProviding: ContentBlocking.contentBlockingManager)
+    public static let shared = DaxDialogs(entityProviding: ContentBlocking.shared.contentBlockingManager)
 
     private let appUrls = AppUrls()
     private var settings: DaxDialogsSettings

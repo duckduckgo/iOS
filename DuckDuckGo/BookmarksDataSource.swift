@@ -92,14 +92,14 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
-#warning("Implement delete bookmark")
+                self.viewModel.deleteBookmark(bookmark)
             }
             alertController.addAction(title: UserText.actionCancel, style: .cancel)
             let viewController = delegate.viewControllerForAlert(self)
             viewController.present(alertController, animated: true)
 
         } else {
-#warning("Implement delete bookmark")
+            viewModel.deleteBookmark(bookmark)
         }
 
     }
@@ -109,7 +109,8 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-#warning("Implement move bookmark")
+        guard let bookmark = viewModel.bookmarkAt(sourceIndexPath.row) else { return }
+        viewModel.moveBookmark(bookmark, fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
     }
 
 }

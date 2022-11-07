@@ -222,7 +222,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private func updateViewState() {
         
         switch viewModel.viewState {
-        case .showItems :
+        case .showItems:
             emptyView.isHidden = true
             tableView.isHidden = false
             lockedView.isHidden = true
@@ -397,6 +397,8 @@ extension AutofillLoginSettingsListViewController: UITableViewDelegate {
         switch viewModel.viewState {
         case .empty:
             return max(tableView.bounds.height - tableView.contentSize.height, 250)
+        case .showItems:
+            return viewModel.sections[section] == .enableAutofill ? 10 : 0
         default:
             return 0
         }
@@ -491,7 +493,7 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         switch viewModel.sections[indexPath.section] {
         case .credentials:
             return true
-        default :
+        default:
             return false
         }
     }

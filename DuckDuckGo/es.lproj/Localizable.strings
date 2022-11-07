@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Ocultar contraseña";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Deshabilitar";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Seguir utilizando";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Puedes desactivar Autocompletar en cualquier momento en Configuración.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "¿Quieres seguir usando Autocompletar?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Ver";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Inicio de sesión actualizado";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Copiar %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Dirección copiada";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Notas copiadas";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Contraseña copiada";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Nombre de usuario copiado";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL del sitio web";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Iniciar sesión";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Borrar inicio de sesión";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Borrar inicio de sesión";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "¿Seguro de que quieres borrar este inicio de sesión?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Editar inicio de sesión";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Contraseña";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Título";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "ejemplo.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "usuario@ejemplo.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Última actualización del inicio de sesión el %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Título de inicio de sesión";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Añadir inicio de sesión";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Notas";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Abrir sitio web";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Contraseña";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "De acuerdo";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Ya tienes un inicio de sesión para este nombre de usuario y sitio web.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Inicio de sesión duplicado";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Desbloquear Autocompletar";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Nombre de usuario";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Los inicios de sesión se almacenan de forma segura solo en este dispositivo";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Aún no hay inicios de sesión guardados";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Habilitar Autocompletar para comenzar a guardar inicios de sesión";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Cancelar";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Desbloquear para usar el inicio de sesión guardado";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Cerrar";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Guardar y autocompletar inicios de sesión";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Inicio de sesión para %@ eliminado";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Buscar inicios de sesión";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Autocompletar inicios de sesión";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Configurar Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Para proteger tus datos de Autocompletar el inicio de sesión, necesitas Face ID y contraseña.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Habilitar Face ID para usar Autocompletar";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Configurar Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Para proteger tus datos de Autocompletar el inicio de sesión, necesitas Touch ID y contraseña.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Habilitar Touch ID para usar Autocompletar";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Cancelar";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Desbloquear para usar el inicio de sesión guardado";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Más opciones";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "¿Usar inicio de sesión guardado?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "para '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Sin resultados";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Esto guardará un inicio de sesión adicional para este sitio.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Los inicios de sesión se almacenan de forma segura solo en este dispositivo y se pueden administrar desde el menú de Autocompletar en Configuración.";
+"autofill.save-login.new-user.message" = "DuckDuckGo almacenará este inicio de sesión en tu dispositivo de forma segura.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "¿Quieres que DuckDuckGo guarde tu inicio de sesión?";

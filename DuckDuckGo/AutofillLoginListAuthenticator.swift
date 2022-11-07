@@ -31,6 +31,10 @@ final class AutofillLoginListAuthenticator {
     enum AuthenticationState {
         case loggedIn, loggedOut
     }
+
+    public struct Notifications {
+        public static let invalidateContext = Notification.Name("com.duckduckgo.app.AutofillLoginListAuthenticator.invalidateContext")
+    }
     
     private var context = LAContext()
     @Published private(set) var state = AuthenticationState.loggedOut
@@ -69,5 +73,9 @@ final class AutofillLoginListAuthenticator {
         } else {
             completion?(.noAuthAvailable)
         }
+    }
+
+    func invalidateContext() {
+        context.invalidate()
     }
 }

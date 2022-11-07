@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Dölj lösenord";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Inaktivera";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Fortsätt använda";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Du kan inaktivera automatisk ifyllning när som helst i inställningarna.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Vill du fortsätta att använda automatisk ifyllning?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Visa";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Inloggning uppdaterad";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Kopiera %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adress kopierad";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Anteckningar kopierade";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Lösenord kopierat";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Användarnamn kopierat";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "Webbplats-URL";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Logga in";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Radera inloggning";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Radera inloggning";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Är du säker på att du vill radera inloggningen?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Redigera inloggning";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Lösenord";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Rubrik";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "exempel.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "anvandarnamn@exempel.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Inloggningen uppdaterades senast %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Inloggningens titel";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Lägg till inloggning";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Anteckningar";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Öppna webbplatsen";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Lösenord";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Du har redan en inloggning för detta användarnamn och denna webbplats.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Duplicerad inloggning";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Lås upp automatisk ifyllning";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Användarnamn";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Inloggningar lagras säkert endast på den här enheten";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Inga inloggningar sparade ännu";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Aktivera automatisk ifyllning för att börja spara inloggningar";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Avbryt";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Lås upp för att använda sparad inloggning";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Stäng";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Spara och fyll i inloggningar automatiskt";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Inloggning till %@ raderad";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Sök inloggningar";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Fyll i inloggningar automatiskt";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Konfigurera Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Face ID och lösenkod krävs för att skydda dina inloggningsuppgifter för automatisk ifyllning.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Aktivera Face ID för att använda automatisk ifyllning";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Konfigurera Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID och lösenkod krävs för att skydda dina inloggningsuppgifter för automatisk ifyllning.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Aktivera Touch ID för att använda automatisk ifyllning";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Avbryt";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Lås upp för att använda sparad inloggning";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Fler alternativ";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Använd sparad inloggning?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "för ”%@”";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Inga resultat";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Ytterligare en inloggning kommer att sparas för den här webbplatsen.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Inloggningar lagras säkert, bara på den här enheten, och kan hanteras genom menyn Automatisk ifyllning i inställningarna.";
+"autofill.save-login.new-user.message" = "DuckDuckGo lagrar denna inloggning säkert på din enhet.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Vill du att DuckDuckGo ska spara din inloggning?";

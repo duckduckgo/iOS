@@ -210,18 +210,7 @@ class BookmarksSectionDataSource: BookmarkItemsSectionDataSource {
 class BookmarkCellCreator {
     
     static func createCell(_ tableView: UITableView, withItem item: BookmarkItem?) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier) as? BookmarkCell else {
-            fatalError("Failed to dequeue \(BookmarkCell.reuseIdentifier) as BookmarkCell")
-        }
-
-        cell.bookmarkItem = item
-        
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.title.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        
-        return cell
+        fatalError("To be deleted")
     }
     
     static func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {

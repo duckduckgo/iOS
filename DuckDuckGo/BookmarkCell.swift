@@ -18,7 +18,7 @@
 //
 
 import UIKit
-import Core
+import Bookmarks
 
 class BookmarkCell: UITableViewCell {
 
@@ -36,35 +36,37 @@ class BookmarkCell: UITableViewCell {
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
-    var bookmarkItem: BookmarkItem? {
+    var bookmark: BookmarkEntity? {
         didSet {
-            if let bookmark = bookmarkItem as? Bookmark {
-                numberOfChildrenLabel.isHidden = true
-                imageWidthConstraint.constant = 24
-                imageHeightConstraint.constant = 24
-                if let linkTitle = bookmark.title?.trimmingWhitespace(), !linkTitle.isEmpty {
-                    title.text = linkTitle
-                } else {
-                    title.text = bookmark.url?.host?.droppingWwwPrefix() ?? ""
-                }
-                
-                accessoryView = nil
-                
-                itemImage.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks)
-            } else if let folder = bookmarkItem as? BookmarkFolder {
+            if bookmark?.isFolder == true {
                 imageWidthConstraint.constant = 22
                 imageHeightConstraint.constant = 20
                 numberOfChildrenLabel.isHidden = false
-                title.text = folder.title
-                numberOfChildrenLabel.text = folder.children?.count.description
+                title.text = bookmark?.title
+                numberOfChildrenLabel.text = "\(bookmark?.children?.count ?? 0)"
                 itemImage.image = #imageLiteral(resourceName: "Folder")
-                
+
                 let theme = ThemeManager.shared.currentTheme
                 let accesoryImage = UIImageView(image: UIImage(named: "DisclosureIndicator"))
                 accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
                 accesoryImage.tintColor = theme.tableCellAccessoryColor
                 accessoryView = accesoryImage
+
+            } else {
+                numberOfChildrenLabel.isHidden = true
+                imageWidthConstraint.constant = 24
+                imageHeightConstraint.constant = 24
+                if let linkTitle = bookmark?.title?.trimmingWhitespace(), !linkTitle.isEmpty {
+                    title.text = linkTitle
+                } else {
+                    title.text = bookmark?.urlObject?.host?.droppingWwwPrefix() ?? ""
+                }
+
+                accessoryView = nil
+
+                itemImage.loadFavicon(forDomain: bookmark?.urlObject?.host, usingCache: .bookmarks)
             }
+
         }
     }
 
@@ -97,9 +99,7 @@ class BookmarkCell: UITableViewCell {
             disclosureEditView.isHidden = true
             editSeperatorView.isHidden = true
             stackViewTrailingConstraint.constant = 0
-            if bookmarkItem as? BookmarkFolder != nil {
-                numberOfChildrenLabel.isHidden = false
-            }
+            numberOfChildrenLabel.isHidden = bookmark?.isFolder == false
             mainContentStackView.setCustomSpacing(16, after: itemImage)
         }
     }

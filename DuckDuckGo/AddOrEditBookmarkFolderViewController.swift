@@ -55,25 +55,29 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     }
     
     func setExistingFolder(_ existingFolder: BookmarkFolder?, initialParentFolder: BookmarkFolder?) {
-        self.existingFolder = existingFolder
-        self.initialParentFolder = initialParentFolder
-        foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(
-            delegate: self,
-            addFolderDelegate: nil,
-            existingFolder: existingFolder,
-            initialParentFolder: initialParentFolder)
-        setUpTitle()
+        #warning("Not implemented")
+        fatalError("Not implemented")
+//        self.existingFolder = existingFolder
+//        self.initialParentFolder = initialParentFolder
+//        foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(
+//            delegate: self,
+//            addFolderDelegate: nil,
+//            existingFolder: existingFolder,
+//            initialParentFolder: initialParentFolder)
+//        setUpTitle()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
-            foldersViewController = segue.destination as? BookmarkFoldersViewController
-            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(
-                delegate: self,
-                addFolderDelegate: nil,
-                existingFolder: existingFolder,
-                initialParentFolder: initialParentFolder)
-        }
+        #warning("Not implemented")
+        fatalError("Not implemented")
+//        if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
+//            foldersViewController = segue.destination as? BookmarkFoldersViewController
+//            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(
+//                delegate: self,
+//                addFolderDelegate: nil,
+//                existingFolder: existingFolder,
+//                initialParentFolder: initialParentFolder)
+//        }
     }
     
     @IBAction func onCancelPressed(_ sender: Any) {

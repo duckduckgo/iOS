@@ -22,6 +22,7 @@ import Core
 import MobileCoreServices
 import os.log
 import UniformTypeIdentifiers
+import Bookmarks
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -74,8 +75,19 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private var searchController: UISearchController?
     weak var delegate: BookmarksDelegate?
-    
-    fileprivate lazy var dataSource: MainBookmarksViewDataSource = DefaultBookmarksDataSource(alertDelegate: self)
+
+    fileprivate lazy var viewModel: BookmarkListViewModel = {
+        let context = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        let storage = CoreDataBookmarksLogic(context: context)
+        return BookmarkListViewModel(storage: storage, currentFolder: nil)
+    }()
+
+    fileprivate lazy var dataSource: BookmarksDataSource = {
+        let dataSource = BookmarksDataSource(viewModel: viewModel)
+        dataSource.delegate = self
+        return dataSource
+    }()
+
     fileprivate var searchDataSource = SearchBookmarksDataSource()
     private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
 
@@ -164,17 +176,18 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     func openEditFormWhenPresented(link: Link) {
-        onDidAppearAction = { [weak self] in
-            self?.dataSource.bookmarksManager.bookmark(forURL: link.url) { bookmark in
-                if let bookmark = bookmark {
-                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
-                }
-            }
-        }
+        fatalError("Not implemented")
+//        onDidAppearAction = { [weak self] in
+//            self?.dataSource.bookmarksManager.bookmark(forURL: link.url) { bookmark in
+//                if let bookmark = bookmark {
+//                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
+//                }
+//            }
+//        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = currentDataSource.item(at: indexPath) else { return }
+        guard let item = viewModel.bookmarkAt(indexPath.row) else { return }
         
         if isEditingBookmarks {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -187,20 +200,21 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             if let bookmark = item as? Bookmark {
                 select(bookmark: bookmark)
             } else if let folder = item as? BookmarkFolder {
-                let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
-                let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
-                    BookmarksViewController(coder: coder, isNested: true)
-                })
-                viewController.dataSource = DefaultBookmarksDataSource(alertDelegate: viewController, parentFolder: folder)
-                viewController.delegate = delegate
-                navigationController?.pushViewController(viewController, animated: true)
+                fatalError("Not implemented")
+//                let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
+//                let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
+//                    BookmarksViewController(coder: coder, isNested: true)
+//                })
+//                viewController.dataSource = DefaultBookmarksDataSource(alertDelegate: viewController, parentFolder: folder)
+//                viewController.delegate = delegate
+//                navigationController?.pushViewController(viewController, animated: true)
             }
         }
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let item = currentDataSource.item(at: indexPath),
-              item as? BookmarkFolder == nil else {
+        guard let item = viewModel.bookmarkAt(indexPath.row),
+                !item.isFolder else {
             return nil
         }
      
@@ -250,11 +264,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         refreshFooterView()
     }
 
-    private var currentDataSource: MainBookmarksViewDataSource {
-        if tableView.dataSource === dataSource {
-            return dataSource
-        }
-        return searchDataSource
+#warning("should return correct datasource")
+    private var currentDataSource: BookmarksDataSource {
+        return dataSource
+
+//        if tableView.dataSource === dataSource {
+//            return dataSource
+//        }
+//        return searchDataSource
     }
 
     @objc func onApplicationBecameActive(notification: NSNotification) {
@@ -269,9 +286,11 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         // Edit button is at position 2
         configureToolbarMoreItem()
 
-        if let dataSourceTitle = dataSource.navigationTitle {
-            title = dataSourceTitle
-        }
+        #warning("Set appropriate navigation title")
+        title = "Not implemented"
+//        if let dataSourceTitle = dataSource.navigationTitle {
+//            title = dataSourceTitle
+//        }
         refreshEditButton()
     }
 
@@ -294,8 +313,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private func refreshEditButton() {
         if !favoritesContainer.isHidden {
-            editButton.isEnabled = dataSource.bookmarksManager.favoritesCount > 0
-            editButton.title = UserText.actionGenericEdit
+            #warning("refer to favorites view model")
+//            editButton.isEnabled = dataSource.bookmarksManager.favoritesCount > 0
+//            editButton.title = UserText.actionGenericEdit
         } else if (currentDataSource.isEmpty && !isEditingBookmarks) || currentDataSource === searchDataSource {
             disableEditButton()
         } else if !isEditingBookmarks {
@@ -312,7 +332,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func refreshMoreButton() {
-        if isEditingBookmarks || currentDataSource === searchDataSource  || dataSource.folder != nil {
+        if isEditingBookmarks || currentDataSource === searchDataSource  || viewModel.currentFolder != nil {
             disableMoreButton()
         } else {
             enableMoreButton()
@@ -320,7 +340,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     private func refreshFooterView() {
-        if dataSource.folder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
+        if viewModel.currentFolder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
             enableFooterView()
         } else {
             disableFooterView()
@@ -362,29 +382,30 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     func importBookmarks(fromHtml html: String) {
-        Task {
-            let bookmarkCountBeforeImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
-
-            let result = await BookmarksImporter().parseAndSave(html: html)
-            switch result {
-            case .success:
-                dataSource.bookmarksManager.reloadWidgets()
-
-                let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
-                let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
-                Pixel.fire(pixel: .bookmarkImportSuccess,
-                           withAdditionalParameters: [PixelParameters.bookmarkCount: "\(bookmarksImported)"])
-                DispatchQueue.main.async {
-                    ActionMessageView.present(message: UserText.importBookmarksSuccessMessage)
-                }
-            case .failure(let bookmarksImportError):
-                os_log("Bookmarks import error %s", type: .debug, bookmarksImportError.localizedDescription)
-                Pixel.fire(pixel: .bookmarkImportFailure)
-                DispatchQueue.main.async {
-                    ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
-                }
-            }
-        }
+        fatalError("Not implemented")
+//        Task {
+//            let bookmarkCountBeforeImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
+//
+//            let result = await BookmarksImporter().parseAndSave(html: html)
+//            switch result {
+//            case .success:
+//                dataSource.bookmarksManager.reloadWidgets()
+//
+//                let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
+//                let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
+//                Pixel.fire(pixel: .bookmarkImportSuccess,
+//                           withAdditionalParameters: [PixelParameters.bookmarkCount: "\(bookmarksImported)"])
+//                DispatchQueue.main.async {
+//                    ActionMessageView.present(message: UserText.importBookmarksSuccessMessage)
+//                }
+//            case .failure(let bookmarksImportError):
+//                os_log("Bookmarks import error %s", type: .debug, bookmarksImportError.localizedDescription)
+//                Pixel.fire(pixel: .bookmarkImportFailure)
+//                DispatchQueue.main.async {
+//                    ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
+//                }
+//            }
+//        }
     }
 
     // MARK: Export bookmarks
@@ -550,8 +571,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     fileprivate func showShareSheet(for indexPath: IndexPath) {
 
-        if let item = currentDataSource.item(at: indexPath),
-            let bookmark = item as? Bookmark {
+        if let bookmark = viewModel.bookmarkAt(indexPath.row) {
             presentShareSheet(withItems: [bookmark], fromView: self.view)
         } else {
             os_log("Invalid share link found", log: generalLog, type: .debug)
@@ -569,13 +589,15 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
-            viewController.hidesBottomBarWhenPushed = true
-            viewController.setExistingFolder(sender as? BookmarkFolder, initialParentFolder: dataSource.folder)
-        } else if let viewController = segue.destination.children.first as? AddOrEditBookmarkViewController {
-            viewController.hidesBottomBarWhenPushed = true
-            viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
-        } else if let viewController = segue.destination as? FavoritesViewController {
+//        if let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
+//            viewController.hidesBottomBarWhenPushed = true
+//            viewController.setExistingFolder(sender as? BookmarkFolder, initialParentFolder: dataSource.folder)
+//        } else
+//        if let viewController = segue.destination.children.first as? AddOrEditBookmarkViewController {
+//            viewController.hidesBottomBarWhenPushed = true
+//            viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
+//        } else
+        if let viewController = segue.destination as? FavoritesViewController {
             viewController.delegate = self
             favoritesController = viewController
         }
@@ -598,9 +620,10 @@ extension BookmarksViewController: UISearchBarDelegate {
             tableView.dataSource = searchDataSource
         }
 
-        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksCachingSearch) {
-            self.tableView.reloadData()
-        }
+        fatalError("Not implemented")
+//        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksCachingSearch) {
+//            self.tableView.reloadData()
+//        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -614,12 +637,20 @@ extension BookmarksViewController: UISearchResultsUpdating {
     }
 }
 
-extension BookmarksViewController: BookmarksSectionDataSourceDelegate {
-    func bookmarksSectionDataSourceDidRequestViewControllerForDeleteAlert(
-        _ bookmarksSectionDataSource: BookmarksSectionDataSource) -> UIViewController {
-       
+//extension BookmarksViewController: BookmarksSectionDataSourceDelegate {
+//    func bookmarksSectionDataSourceDidRequestViewControllerForDeleteAlert(
+//        _ bookmarksSectionDataSource: BookmarksSectionDataSource) -> UIViewController {
+//
+//        return self
+//    }
+//}
+
+extension BookmarksViewController: BookmarksDataSourceDelegate {
+
+    func viewControllerForAlert(_: BookmarksDataSource) -> UIViewController {
         return self
     }
+
 }
 
 extension BookmarksViewController: Themable {

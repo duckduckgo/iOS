@@ -24,6 +24,7 @@ import Core
 protocol BookmarksDataSourceDelegate: NSObjectProtocol {
 
     func viewControllerForAlert(_: BookmarksDataSource) -> UIViewController
+    func bookmarkDeleted(_: BookmarksDataSource)
 
 }
 
@@ -80,6 +81,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         func delete() {
             viewModel.deleteBookmark(bookmark)
             tableView.reloadSections([0], with: .automatic)
+            delegate?.bookmarkDeleted(self)
         }
 
         if let delegate = delegate,

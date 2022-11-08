@@ -338,7 +338,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     private func refreshFooterView() {
-        if viewModel.currentFolder == nil && dataSource.isEmpty && currentDataSource !== searchDataSource {
+        if !isNested && dataSource.isEmpty && currentDataSource !== searchDataSource {
             enableFooterView()
         } else {
             disableFooterView()
@@ -655,6 +655,10 @@ extension BookmarksViewController: BookmarksDataSourceDelegate {
 
     func viewControllerForAlert(_: BookmarksDataSource) -> UIViewController {
         return self
+    }
+
+    func bookmarkDeleted(_: BookmarksDataSource) {
+        refreshFooterView()
     }
 
 }

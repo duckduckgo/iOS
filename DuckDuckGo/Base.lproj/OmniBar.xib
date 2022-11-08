@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -89,7 +89,7 @@
                                     </constraints>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="30" y="0.0" width="335" height="40"/>
+                                    <rect key="frame" x="30" y="0.0" width="345" height="40"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGG-5L-D8Q" customClass="PrivacyInfoContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="2" y="0.0" width="138" height="40"/>
@@ -176,6 +176,7 @@
                                                     </subviews>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" button="YES"/>
+                                                        <bool key="isElement" value="YES"/>
                                                     </accessibility>
                                                     <constraints>
                                                         <constraint firstItem="eoZ-Ly-QHi" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="2K9-i4-lfC"/>
@@ -220,7 +221,7 @@
                                             </connections>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="30" y="0.0" width="305" height="40"/>
+                                            <rect key="frame" x="30" y="0.0" width="315" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -259,7 +260,7 @@
                                     </connections>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ita-iD-8ad" userLabel="Voice Button">
-                                    <rect key="frame" x="365" y="0.0" width="40" height="40"/>
+                                    <rect key="frame" x="375" y="5" width="30" height="30"/>
                                     <accessibility key="accessibilityConfiguration" label="Voice Search"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="80Y-p8-kj7"/>

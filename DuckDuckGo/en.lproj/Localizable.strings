@@ -1072,11 +1072,14 @@ https://duckduckgo.com/mac";
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privacy grade %@";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "DuckDuckGo logo";
 
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Press to open Privacy Protection screen";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Tap to open Privacy Dashboard screen";
+
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Privacy Icon";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Cancel";

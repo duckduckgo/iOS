@@ -196,12 +196,10 @@ public struct UserText {
     public static let autoClearAccessoryOn = NSLocalizedString("autoclear.on", value: "On", comment: "")
     public static let autoClearAccessoryOff = NSLocalizedString("autoclear.off", value: "Off", comment: "")
     
-    public static func privacyGrade(_ grade: String) -> String {
-        let message = NSLocalizedString("privacy.protection.site.grade", value: "Privacy grade %@", comment: "Replacement string is a single letter: A/B/C/D")
-        return message.format(arguments: grade)
-    }
+    public static let privacyIconShield = NSLocalizedString("privacy.icon.shield", value: "Privacy Icon", comment: "Privacy Icon accessibility title")
+    public static let privacyIconDax = NSLocalizedString("privacy.icon.dax", value: "DuckDuckGo logo", comment: "Privacy Icon accessibility title")
+    public static let privacyIconOpenDashboardHint = NSLocalizedString("privacy.icon.hint", value: "Tap to open Privacy Dashboard screen", comment: "Privacy Icon accessibility hint")
     
-    public static let privacyGradeHint = NSLocalizedString("privacy.protection.site.hint", value: "Press to open Privacy Protection screen", comment: "")
     public static let menuButtonHint = NSLocalizedString("menu.button.hint", value: "Browsing Menu", comment: "")
     public static let bookmarksButtonHint = NSLocalizedString("bookmarks.button.hint", value: "Bookmarks", comment: "")
     

@@ -51,6 +51,7 @@ class PrivacyIconView: UIView {
         loadAnimations(for: ThemeManager.shared.currentTheme)
         
         updateShieldImageView(for: icon)
+        updateAccessibilityLabels(for: icon)
     }
     
     func loadAnimations(for theme: Theme, animationCache cache: AnimationCacheProvider = LRUAnimationCache.sharedCache) {
@@ -75,6 +76,7 @@ class PrivacyIconView: UIView {
         willSet {
             guard newValue != icon else { return }
             updateShieldImageView(for: newValue)
+            updateAccessibilityLabels(for: icon)
         }
     }
     
@@ -95,8 +97,22 @@ class PrivacyIconView: UIView {
         }
     }
     
+    private func updateAccessibilityLabels(for icon: PrivacyIcon) {
+        switch icon {
+        case .daxLogo:
+            accessibilityLabel = UserText.privacyIconDax
+            accessibilityHint = nil
+            accessibilityTraits = .image
+        case .shield, .shieldWithDot:
+            accessibilityLabel = UserText.privacyIconShield
+            accessibilityHint = UserText.privacyIconOpenDashboardHint
+            accessibilityTraits = .button
+        }
+    }
+    
     func refresh() {
         updateShieldImageView(for: icon)
+        updateAccessibilityLabels(for: icon)
         shieldAnimationView.isHidden = true
         shieldDotAnimationView.isHidden = true
     }

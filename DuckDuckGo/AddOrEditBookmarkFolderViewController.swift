@@ -24,7 +24,7 @@ import Bookmarks
 
 protocol AddOrEditBookmarkFolderViewControllerDelegate: AnyObject {
 
-    func folderFinishedEditing(_: AddOrEditBookmarkFolderViewController)
+    func finishedEditing(_: AddOrEditBookmarkFolderViewController)
 
 }
 
@@ -38,7 +38,9 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     private var editingFolder: BookmarkEntity?
     private var parentFolder: BookmarkEntity?
 
-    let context = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+    lazy var context: NSManagedObjectContext = {
+        BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,10 +95,14 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let folderVC = segue.destination as? BookmarkFoldersViewController {
-            foldersViewController = folderVC
-            foldersViewController?.delegate = self
-            foldersViewController?.viewModel = locationSelectorViewModel()
+        if let controller = segue.destination as? BookmarkFoldersViewController {
+            controller.delegate = self
+            controller.viewModel = locationSelectorViewModel()
+            foldersViewController = controller
+        } else
+        if let controller = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
+            controller.setExistingID(nil, withParentID: editingFolder?.parent?.objectID)
+            controller.delegate = self
         }
     }
 
@@ -106,6 +112,7 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
     }
 
     @IBAction func onCancelPressed(_ sender: Any) {
+        editingFolder = nil
         dismiss(animated: true, completion: nil)
     }
     
@@ -121,7 +128,7 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
         } catch {
             assertionFailure("\(error)")
         }
-        self.delegate?.folderFinishedEditing(self)
+        self.delegate?.finishedEditing(self)
         dismiss(animated: true, completion: nil)
     }
 }
@@ -139,7 +146,18 @@ extension AddOrEditBookmarkFolderViewController: BookmarkFoldersViewControllerDe
     }
 
     func addFolder(_ controller: BookmarkFoldersViewController) {
+        performSegue(withIdentifier: "AddFolder", sender: nil)
+    }
 
+}
+
+extension AddOrEditBookmarkFolderViewController: AddOrEditBookmarkFolderViewControllerDelegate {
+
+    func finishedEditing(_ controller: AddOrEditBookmarkFolderViewController) {
+        if let folderID = controller.editingFolder?.objectID {
+            foldersViewController?.viewModel?.bookmark.parent = context.object(with: folderID) as? BookmarkEntity
+        }
+        foldersViewController?.refresh()
     }
 
 }

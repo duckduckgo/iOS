@@ -125,6 +125,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         onDidAppearAction()
         onDidAppearAction = {}
 
+        tableView.reloadData()
     }
     
     @objc func dataDidChange(notification: Notification) {
@@ -577,15 +578,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
-//            viewController.hidesBottomBarWhenPushed = true
-//            viewController.setExistingFolder(sender as? BookmarkFolder, initialParentFolder: dataSource.folder)
-//        } else
-//        if let viewController = segue.destination.children.first as? AddOrEditBookmarkViewController {
-//            viewController.hidesBottomBarWhenPushed = true
-//            viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
-//        } else
-
         if let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
             viewController.hidesBottomBarWhenPushed = true
             viewController.setExistingID(sender as? NSManagedObjectID,
@@ -602,7 +594,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
 extension BookmarksViewController: AddOrEditBookmarkFolderViewControllerDelegate {
 
-    func folderFinishedEditing(_: AddOrEditBookmarkFolderViewController) {
+    func finishedEditing(_: AddOrEditBookmarkFolderViewController) {
         viewModel.refresh()
         tableView.reloadData()
     }

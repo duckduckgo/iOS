@@ -150,4 +150,10 @@ class BookmarkFoldersViewController: UITableViewController {
         delegate?.textDidReturn(self)
     }
 
+    func refresh() {
+        print("***", #function)
+        viewModel?.refresh()
+        tableView.reloadData()
+    }
+
 }

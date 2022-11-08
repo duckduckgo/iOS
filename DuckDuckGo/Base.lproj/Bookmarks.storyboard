@@ -330,7 +330,6 @@
                         <outlet property="selectorHeightConstraint" destination="S2Q-FV-giu" id="DEb-RM-R7m"/>
                         <outlet property="tableView" destination="vYN-5M-awE" id="4rq-bu-ZLw"/>
                         <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddOrEditBookmarkFolder" id="Uhm-2I-Xo5"/>
-                        <segue destination="tP5-Vr-ZSr" kind="presentation" identifier="AddOrEditBookmark" id="kRh-P9-7ag"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aer-3h-Azc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -355,7 +354,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfL-jE-h6e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1177" y="1621"/>
+            <point key="canvasLocation" x="791" y="1621"/>
         </scene>
         <!--Add Folder-->
         <scene sceneID="CJo-jI-HMh">
@@ -366,11 +365,11 @@
                         <viewControllerLayoutGuide type="bottom" id="bjg-95-sbS"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZKl-y5-8OG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63r-nO-tSp">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <connections>
                                     <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="zyO-WQ-z92"/>
                                 </connections>
@@ -396,6 +395,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddFolder" id="lPi-F9-wDg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjy-HW-Gvk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -406,7 +408,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BookmarkFoldersViewController" id="o1q-bZ-7v3" userLabel="Bookmark Folders" customClass="BookmarkFoldersViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V1z-bn-1Gk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
                         <prototypes>
@@ -544,7 +546,7 @@
                                     <outlet property="urlTextField" destination="YqY-sP-hhb" id="b8Y-vb-Msu"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BookmarkFolderCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddFolderCell" id="oXz-7u-Skm">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="AddFolderCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddFolderCell" id="oXz-7u-Skm">
                                 <rect key="frame" x="16" y="232" width="343" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oXz-7u-Skm" id="xfk-px-QiT">
@@ -590,79 +592,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wPV-8g-VdM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2448.8000000000002" y="2379.3103448275865"/>
-        </scene>
-        <!--Add Bookmark-->
-        <scene sceneID="dBL-ta-aZ3">
-            <objects>
-                <viewController id="lMj-DP-NIV" userLabel="Add Bookmark" customClass="AddOrEditBookmarkViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="QCC-7t-XrT"/>
-                        <viewControllerLayoutGuide type="bottom" id="QdE-VD-rGM"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="PHO-rE-hZ4">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vS5-16-4wa">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
-                                <connections>
-                                    <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="Q6P-k0-1D4"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" name="BookmarksTableViewBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="vS5-16-4wa" firstAttribute="leading" secondItem="PHO-rE-hZ4" secondAttribute="leading" id="Dmg-w2-u4h"/>
-                            <constraint firstAttribute="trailing" secondItem="vS5-16-4wa" secondAttribute="trailing" id="O8R-gq-yem"/>
-                            <constraint firstItem="vS5-16-4wa" firstAttribute="top" secondItem="QCC-7t-XrT" secondAttribute="bottom" id="aKv-j3-Sqw"/>
-                            <constraint firstAttribute="bottom" secondItem="vS5-16-4wa" secondAttribute="bottom" id="cy6-tD-QBo"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Add Bookmark" id="qA0-bu-lRC">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="BpN-gk-OEn">
-                            <connections>
-                                <action selector="onCancelPressed:" destination="lMj-DP-NIV" id="SwF-CD-FXm"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="cZ5-DS-6T0">
-                            <connections>
-                                <action selector="onSavePressed:" destination="lMj-DP-NIV" id="Vyd-e4-la7"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddFolderFromBookmark" id="bDN-md-SJE"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ofO-dp-I1e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2932" y="1622"/>
-        </scene>
-        <!--Themable Navigation Controller-->
-        <scene sceneID="rok-j4-3Xm">
-            <objects>
-                <navigationController storyboardIdentifier="AddOrEditBookmarkAlertViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tP5-Vr-ZSr" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="k8L-C1-KwX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" name="BookmarksNavBarBackgroundColor"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" name="BookmarksNavBarTitleColor"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="lMj-DP-NIV" kind="relationship" relationship="rootViewController" id="1AY-d5-ZEP"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6eD-J9-o3x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3646" y="1621"/>
+            <point key="canvasLocation" x="3092" y="1621"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zyO-WQ-z92"/>
-        <segue reference="bDN-md-SJE"/>
+        <segue reference="9So-lE-9eZ"/>
+        <segue reference="lPi-F9-wDg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarkFavoritesHero" width="150" height="116"/>

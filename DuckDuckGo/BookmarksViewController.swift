@@ -81,7 +81,11 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let context = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
         let storage = CoreDataBookmarksLogic(context: context)
         return BookmarkListViewModel(storage: storage, currentFolder: nil)
-    }()
+    }() {
+        didSet {
+            dataSource = BookmarksDataSource(viewModel: viewModel)
+        }
+    }
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
         let dataSource = BookmarksDataSource(viewModel: viewModel)
@@ -92,20 +96,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate var searchDataSource = SearchBookmarksDataSource()
     private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
 
+    var isNested: Bool {
+        viewModel.currentFolder != nil
+    }
+
     var favoritesController: FavoritesViewController?
 
     fileprivate var onDidAppearAction: () -> Void = {}
-    private var isNested: Bool
-
-    init?(coder: NSCoder, isNested: Bool = false) {
-        self.isNested = isNested
-        super.init(coder: coder)
-    }
-
-    required init?(coder: NSCoder) {
-        isNested = false
-        super.init(coder: coder)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -203,12 +200,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func drillIntoFolder(_ parent: BookmarkEntity) {
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
-            BookmarksViewController(coder: coder, isNested: true)
+            let controller = BookmarksViewController(coder: coder)
+            controller?.viewModel = self.viewModel.viewModelForFolder(parent)
+            controller?.delegate = self.delegate
+            return controller
         })
 
-        let viewModel = viewModel.viewModelForFolder(parent)
-        viewController.dataSource = BookmarksDataSource(viewModel: viewModel)
-        viewController.delegate = delegate
         navigationController?.pushViewController(viewController, animated: true)
     }
     

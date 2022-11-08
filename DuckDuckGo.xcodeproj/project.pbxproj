@@ -3639,8 +3639,8 @@
 			isa = PBXGroup;
 			children = (
 				CBAA195B27C3982A00A4BD49 /* PrivacyFeatures.swift */,
-				CBAA195627BFDD9800A4BD49 /* SmarterEncryption */,
 				F11E23051ED33D8B00523BC9 /* API */,
+				CBAA195627BFDD9800A4BD49 /* SmarterEncryption */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
 				837774491F8E1ECE00E17A29 /* ContentBlocker */,
 				F143C2E61E4A4CD400CFDE3A /* Core.h */,

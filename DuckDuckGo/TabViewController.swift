@@ -79,8 +79,6 @@ class TabViewController: UIViewController {
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
 
-    lazy var bookmarksManager = BookmarksManager()
-
     private(set) var urlToSiteRating: [URL: SiteRating] = [:]
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab

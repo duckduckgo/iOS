@@ -24,6 +24,7 @@ import Lottie
 import Kingfisher
 import os.log
 import BrowserServicesKit
+import Bookmarks
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -92,11 +93,13 @@ class MainViewController: UIViewController {
     fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
+    
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(viewContext: BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType))
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
     
-    /// Do not referecen directly, use `presentedMenuButton`
+    /// Do not reference directly, use `presentedMenuButton`
     let menuButton = MenuButton()
     var presentedMenuButton: MenuButton {
         AppWidthObserver.shared.isLargeWidth ? omniBar.menuButtonContent : menuButton
@@ -1148,7 +1151,7 @@ extension MainViewController: OmniBarDelegate {
     private func launchBrowsingMenu() async {
         guard let tab = currentTab else { return }
 
-        let entries = await tab.buildBrowsingMenu()
+        let entries = tab.buildBrowsingMenu(with: menuBookmarksViewModel)
         let controller = BrowsingMenuViewController.instantiate(headerEntries: tab.buildBrowsingMenuHeaderContent(),
                                                                 menuEntries: entries)
 

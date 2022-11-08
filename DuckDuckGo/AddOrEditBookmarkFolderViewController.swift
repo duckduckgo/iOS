@@ -80,13 +80,15 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
         if let id = id {
             isNew = false
             editingFolder = context.object(with: id) as? BookmarkEntity
+            assert(editingFolder != nil)
         } else {
             isNew = true
-            editingFolder = BookmarkEntity(context: context)
-            editingFolder?.uuid = UUID().uuidString
-            editingFolder?.isFolder = true
-            editingFolder?.isFavorite = false
-            editingFolder?.parent = parentFolder
+            let newFolder = BookmarkEntity(context: context)
+            newFolder.uuid = UUID().uuidString
+            newFolder.isFolder = true
+            newFolder.isFavorite = false
+            newFolder.parent = parentFolder
+            editingFolder = newFolder
         }
     }
 

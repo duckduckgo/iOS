@@ -167,19 +167,16 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         refreshEditButton()
     }
 
-    func openEditFormWhenPresented(bookmark: Bookmark) {
+    func openEditFormWhenPresented(bookmark: BookmarkEntity) {
         onDidAppearAction = { [weak self] in
             self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
         }
     }
     
     func openEditFormWhenPresented(link: Link) {
-        fatalError("Not implemented")
 //        onDidAppearAction = { [weak self] in
-//            self?.dataSource.bookmarksManager.bookmark(forURL: link.url) { bookmark in
-//                if let bookmark = bookmark {
-//                    self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
-//                }
+//            if let bookmark = viewModel.bookmarkForURL(link.url) {
+//                self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
 //            }
 //        }
     }
@@ -192,6 +189,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             performSegue(withIdentifier: bookmark.isFolder ? "AddOrEditBookmarkFolder" : "AddOrEditBookmark", sender: bookmark.objectID)
         } else if bookmark.isFolder {
             drillIntoFolder(bookmark)
+            onDidAppearAction = { [weak self] in
+                self?.viewModel.refresh()
+            }
         } else {
             select(bookmark: bookmark)
         }

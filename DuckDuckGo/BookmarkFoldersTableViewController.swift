@@ -36,17 +36,9 @@ class BookmarkFoldersViewController: UITableViewController {
     var parentFolder: BookmarkEntity?
     var folderList = [BookmarkEntity]()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("***", #function, editingFolder, parentFolder)
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        #warning("Allow selecting an item in the list")
     }
-    
-//    func save(delegate: BookmarkItemDetailsDataSourceDidSaveDelegate? = nil) {
-//        dataSource?.save(tableView, delegate: delegate)
-//    }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
@@ -69,15 +61,9 @@ class BookmarkFoldersViewController: UITableViewController {
         return section == 0 ? 1 : folderList.count
     }
 
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return section == 1 ? folder?.title : nil
-//    }
-//
-//    func select(_ tableView: UITableView, indexPath: IndexPath) {
-//        if indexPath.section != 1 { return }
-//
-// //        bookmarkFoldersSectionDataSource.select(tableView, row: indexPath.row, section: indexPath.section)
-//    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 1 ? UserText.bookmarkFolderSelectTitle : nil
+    }
 
     func detailsCell(_ tableView: UITableView) -> BookmarksTextFieldCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarksTextFieldCell.reuseIdentifier) as? BookmarksTextFieldCell else {
@@ -95,36 +81,13 @@ class BookmarkFoldersViewController: UITableViewController {
         return cell
     }
 
-/*
-    func save(_ tableView: UITableView, delegate: BookmarkItemDetailsDataSourceDidSaveDelegate?) {
-
-        guard let selectedParent = bookmarkFoldersSectionDataSource.selected() else {
-            assertionFailure("BookmarkFoldersSectionDataSource selected folder nil, this shouldn't be possible. Folder will not be saved")
-            return
-        }
-        let title = currentTitle ?? ""
-
-        if let folder = existingFolder {
-            bookmarksManager.update(folderID: folder.objectID, newTitle: title, newParentID: selectedParent.objectID)
-        } else {
-            bookmarksManager.saveNewFolder(withTitle: title, parentID: selectedParent.objectID) { folderID, _ in
-                guard let folderID = folderID else { return }
-                delegate?.bookmarkItemDetailsDataSource(self, createdNewFolderWithObjectID: folderID)
-            }
-        }
-    }
- */
-
     @objc func textFieldDidChange(_ textField: UITextField) {
         editingFolder?.title = textField.text
         delegate?.textDidChange(self)
-//        currentTitle = textField.text
-//        delegate?.bookmarkFolderDetailsDataSource(self, titleTextFieldDidChange: textField)
     }
 
     @objc func textFieldDidReturn() {
         delegate?.textDidReturn(self)
-//        delegate?.bookmarkFolderDetailsDataSourceTextFieldDidReturn(dataSource: self)
     }
 
 }

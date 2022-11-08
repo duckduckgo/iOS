@@ -293,8 +293,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func configureToolbarMoreItem() {
+        #warning("Edit button needs to stay in the middle if the more button dissapears")
 
-        if isEditingBookmarks {
+        if isEditingBookmarks || isNested {
             if toolbarItems?.count ?? 0 >= 5 {
                 toolbarItems?.remove(at: 4)
                 toolbarItems?.remove(at: 3)

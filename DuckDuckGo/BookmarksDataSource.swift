@@ -132,20 +132,12 @@ class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
 class BookmarkCellCreator {
 
     static func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath, inFolder: Bool) -> UITableViewCell {
-        let theme = ThemeManager.shared.currentTheme
-
-        let cell: UITableViewCell
-        if inFolder {
-            cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksInSubfolderCell.reuseIdentifier, for: indexPath)
-        } else {
-            guard let dequeuedCell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier, for: indexPath)
-                    as? NoBookmarksCell else {
-                fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
-            }
-            dequeuedCell.label.textColor = theme.tableCellTextColor
-            cell = dequeuedCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier, for: indexPath)
+                as? NoBookmarksCell else {
+            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
         }
-
+        let theme = ThemeManager.shared.currentTheme
+        cell.label.textColor = theme.tableCellTextColor
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         return cell

@@ -332,8 +332,9 @@ class MainViewController: UIViewController {
             controller.delegate = self
             
             if segue.identifier == "BookmarksEditCurrent",
-               let link = currentTab?.link {
-                controller.openEditFormWhenPresented(link: link)
+                let link = currentTab?.link,
+                let bookmark = menuBookmarksViewModel.bookmark(for: link.url) {
+                controller.openEditFormWhenPresented(bookmark: bookmark)
             } else if segue.identifier == "BookmarksEdit",
                       let bookmark = sender as? BookmarkEntity {
                 controller.openEditFormWhenPresented(bookmark: bookmark)

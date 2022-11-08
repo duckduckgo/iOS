@@ -172,15 +172,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
         }
     }
-    
-    func openEditFormWhenPresented(link: Link) {
-//        onDidAppearAction = { [weak self] in
-//            if let bookmark = viewModel.bookmarkForURL(link.url) {
-//                self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
-//            }
-//        }
-    }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let bookmark = viewModel.bookmarkAt(indexPath.row) else { return }
 

@@ -96,12 +96,13 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
         if let folderVC = segue.destination as? BookmarkFoldersViewController {
             foldersViewController = folderVC
             foldersViewController?.delegate = self
-            foldersViewController?.parentFolder = parentFolder
-            foldersViewController?.editingFolder = editingFolder
-            if let parent = parentFolder {
-                foldersViewController?.folderList = folderList(parent: parent)
-            }
+            foldersViewController?.viewModel = locationSelectorViewModel()
         }
+    }
+
+    private func locationSelectorViewModel() -> BookmarkEditorViewModel {
+        let storage = CoreDataBookmarksLogic(context: context)
+        return BookmarkEditorViewModel(storage: storage, bookmark: editingFolder!)
     }
 
     private func folderList(parent: BookmarkEntity) -> [BookmarkEntity] {

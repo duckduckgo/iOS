@@ -32,12 +32,18 @@ class BookmarkFoldersViewController: UITableViewController {
 
     weak var delegate: BookmarkFoldersViewControllerDelegate?
 
-    var editingFolder: BookmarkEntity?
-    var parentFolder: BookmarkEntity?
-    var folderList = [BookmarkEntity]()
+    var viewModel: BookmarkEditorViewModel?
+    var selected: IndexPath?
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        #warning("Allow selecting an item in the list")
+        guard indexPath.section != 0 else { return }
+        viewModel?.selectLocationAtIndex(indexPath.row)
+        if let selected = selected {
+            tableView.reloadRows(at: [
+                selected,
+                indexPath
+            ], with: .automatic)
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -45,9 +51,13 @@ class BookmarkFoldersViewController: UITableViewController {
             return detailsCell(tableView)
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier, for: indexPath)
-            if let folderCell = cell as? BookmarkFolderCell {
-                folderCell.folder = folderList[indexPath.row]
-                folderCell.isSelected = parentFolder?.objectID == folderCell.folder?.objectID
+            if let viewModel = viewModel, let folderCell = cell as? BookmarkFolderCell {
+                folderCell.folder = viewModel.locations[indexPath.row].bookmark
+                folderCell.depth = viewModel.locations[indexPath.row].depth
+                folderCell.isSelected = viewModel.isSelected(viewModel.locations[indexPath.row].bookmark)
+                if folderCell.isSelected {
+                    selected = indexPath
+                }
             }
             return cell
         }
@@ -58,7 +68,7 @@ class BookmarkFoldersViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : folderList.count
+        return section == 0 ? 1 : viewModel?.locations.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -72,7 +82,7 @@ class BookmarkFoldersViewController: UITableViewController {
         cell.textField.removeTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         cell.textField.removeTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
 
-        cell.title = self.editingFolder?.title
+        cell.title = viewModel?.bookmark.title
         cell.textField.becomeFirstResponder()
         cell.textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         cell.textField.addTarget(self, action: #selector(textFieldDidReturn), for: .editingDidEndOnExit)
@@ -82,7 +92,7 @@ class BookmarkFoldersViewController: UITableViewController {
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
-        editingFolder?.title = textField.text
+        viewModel?.bookmark.title = textField.text?.trimmingWhitespace()
         delegate?.textDidChange(self)
     }
 

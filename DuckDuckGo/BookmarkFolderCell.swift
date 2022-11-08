@@ -35,9 +35,10 @@ class BookmarkFolderCell: UITableViewCell {
             guard let folder = folder else { return }
 
             if folder.uuid == BookmarkUtils.Constants.rootFolderID {
-                title.text = "Bookmarks"
+                title.text = UserText.sectionTitleBookmarks
             } else if folder.uuid == BookmarkUtils.Constants.favoritesFolderID {
                 title.text = "Favorites"
+                assertionFailure("Favorites folder in UI")
             } else {
                 title.text = folder.title
             }

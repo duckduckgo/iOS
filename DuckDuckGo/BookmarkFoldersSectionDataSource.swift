@@ -21,6 +21,7 @@ import UIKit
 import Core
 import CoreData
 
+/*
 protocol BookmarkFoldersSectionDataSourceAddFolderDelegate: AnyObject {
     func bookmarkFoldersSectionDataSourceDidRequestAddNewFolder(_ bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource)
 }
@@ -156,3 +157,4 @@ private extension BookmarkFoldersSectionDataSource {
         return visibleItems
     }
 }
+*/

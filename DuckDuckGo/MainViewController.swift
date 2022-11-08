@@ -1258,8 +1258,8 @@ extension MainViewController: OmniBarDelegate {
 
 extension MainViewController: FavoritesOverlayDelegate {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Core.Bookmark) {
-        guard let url = favorite.url else { return }
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity) {
+        guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
@@ -1341,7 +1341,7 @@ extension MainViewController: HomeControllerDelegate {
         }
     }
     
-    func home(_ home: HomeViewController, didRequestEdit favorite: Core.Bookmark) {
+    func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
         performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
     }
     
@@ -1615,9 +1615,9 @@ extension MainViewController: TabSwitcherDelegate {
 }
 
 extension MainViewController: BookmarksDelegate {
-    func bookmarksDidSelect(bookmark: Core.Bookmark) {
+    func bookmarksDidSelect(bookmark: BookmarkEntity) {
         dismissOmniBar()
-        if let url = bookmark.url {
+        if let url = bookmark.urlObject {
             if url.isBookmarklet() {
                 executeBookmarklet(url)
             } else {

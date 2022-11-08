@@ -24,13 +24,13 @@ import Bookmarks
 protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
-                           didSelect favorite: Bookmark)
+                           didSelect favorite: BookmarkEntity)
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
-                           didRequestEdit favorite: Bookmark)
+                           didRequestEdit favorite: BookmarkEntity)
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
-                           favoriteDeleted favorite: Bookmark)
+                           favoriteDeleted favorite: BookmarkEntity)
 }
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
@@ -79,11 +79,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private var headerHeight: CGFloat {
         return Constants.defaultHeaderHeight
     }
-    
-    func install(into controller: HomeViewController) {
-        self.controller = controller
-    }
-    
+
     func install(into controller: UIViewController & FavoritesHomeViewSectionRendererDelegate) {
         self.controller = controller
     }
@@ -173,7 +169,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         viewModel.delete(favorite)
         collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [indexPath])
-            // self.controller?.favoritesRenderer(self, favoriteDeleted: favorite)
+            self.controller?.favoritesRenderer(self, favoriteDeleted: favorite)
         }
     }
     

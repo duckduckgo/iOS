@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Bookmarks
 
 class BookmarkFolderCell: UITableViewCell {
 
@@ -29,10 +30,18 @@ class BookmarkFolderCell: UITableViewCell {
     
     @IBOutlet weak var leadingPaddingConstraint: NSLayoutConstraint!
 
-    var folder: BookmarkFolder? {
+    var folder: BookmarkEntity? {
         didSet {
             guard let folder = folder else { return }
-            title.text = folder.title
+
+            if folder.uuid == BookmarkUtils.Constants.rootFolderID {
+                title.text = "Bookmarks"
+            } else if folder.uuid == BookmarkUtils.Constants.favoritesFolderID {
+                title.text = "Favorites"
+            } else {
+                title.text = folder.title
+            }
+
             folderImageView.image = UIImage(named: "Folder")
         }
     }

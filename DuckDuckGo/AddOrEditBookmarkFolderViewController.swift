@@ -19,95 +19,126 @@
 
 import UIKit
 import Core
+import CoreData
+import Bookmarks
+
+protocol AddOrEditBookmarkFolderViewControllerDelegate: AnyObject {
+
+    func folderFinishedEditing(_: AddOrEditBookmarkFolderViewController)
+
+}
 
 class AddOrEditBookmarkFolderViewController: UIViewController {
-    
-    weak var createdNewFolderDelegate: BookmarkItemDetailsDataSourceDidSaveDelegate?
-        
+
+    weak var delegate: AddOrEditBookmarkFolderViewControllerDelegate?
+
     private var foldersViewController: BookmarkFoldersViewController?
-    
-    private var existingFolder: BookmarkFolder?
-    private var initialParentFolder: BookmarkFolder?
-    
+
+    private var isNew = true
+    private var editingFolder: BookmarkEntity?
+    private var parentFolder: BookmarkEntity?
+
+    let context = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpTitle()
-        setUpSaveButton()
-        
+
+        updateTitle()
+        updateSaveButton()
+
         applyTheme(ThemeManager.shared.currentTheme)
     }
-    
-    func setUpTitle() {
-        if existingFolder != nil {
-            title = UserText.editFolderScreenTitle
-        } else {
+
+    func updateTitle() {
+        if isNew {
             title = UserText.addFolderScreenTitle
+        } else {
+            title = UserText.editFolderScreenTitle
         }
     }
+
+    var canSave: Bool {
+        editingFolder?.title?.trimmingWhitespace().count ?? 0 > 0
+    }
     
-    func setUpSaveButton() {
+    func updateSaveButton() {
         guard let saveButton = navigationItem.rightBarButtonItem else { return }
-        if let title = existingFolder?.title, title.trimmingWhitespace().count > 0 {
+        if canSave {
             saveButton.isEnabled = true
         } else {
             saveButton.isEnabled = false
         }
     }
-    
-    func setExistingFolder(_ existingFolder: BookmarkFolder?, initialParentFolder: BookmarkFolder?) {
-        #warning("Not implemented")
-        fatalError("Not implemented")
-//        self.existingFolder = existingFolder
-//        self.initialParentFolder = initialParentFolder
-//        foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(
-//            delegate: self,
-//            addFolderDelegate: nil,
-//            existingFolder: existingFolder,
-//            initialParentFolder: initialParentFolder)
-//        setUpTitle()
+
+    func setExistingID(_ id: NSManagedObjectID?, withParentID parentID: NSManagedObjectID?) {
+        if let parentID = parentID {
+            parentFolder = context.object(with: parentID) as? BookmarkEntity
+        } else {
+            parentFolder = BookmarkUtils.fetchRootFolder(context)
+        }
+
+        if let id = id {
+            isNew = false
+            editingFolder = context.object(with: id) as? BookmarkEntity
+        } else {
+            isNew = true
+            editingFolder = BookmarkEntity(context: context)
+            editingFolder?.uuid = UUID().uuidString
+            editingFolder?.isFolder = true
+            editingFolder?.isFavorite = false
+            editingFolder?.parent = parentFolder
+        }
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        #warning("Not implemented")
-        fatalError("Not implemented")
-//        if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
-//            foldersViewController = segue.destination as? BookmarkFoldersViewController
-//            foldersViewController?.dataSource = BookmarkFolderDetailsDataSource(
-//                delegate: self,
-//                addFolderDelegate: nil,
-//                existingFolder: existingFolder,
-//                initialParentFolder: initialParentFolder)
-//        }
+        if let folderVC = segue.destination as? BookmarkFoldersViewController {
+            foldersViewController = folderVC
+            foldersViewController?.delegate = self
+            foldersViewController?.parentFolder = parentFolder
+            foldersViewController?.editingFolder = editingFolder
+            if let parent = parentFolder {
+                foldersViewController?.folderList = folderList(parent: parent)
+            }
+        }
     }
-    
+
+    private func folderList(parent: BookmarkEntity) -> [BookmarkEntity] {
+        return [parent]
+    }
+
     @IBAction func onCancelPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onSavePressed(_ sender: Any) {
-        foldersViewController?.save(delegate: createdNewFolderDelegate)
+        saveAndDismiss()
+    }
+
+    func saveAndDismiss() {
+        do {
+            if context.hasChanges {
+                try context.save()
+            }
+        } catch {
+            assertionFailure("\(error)")
+        }
+        self.delegate?.folderFinishedEditing(self)
         dismiss(animated: true, completion: nil)
     }
 }
 
-extension AddOrEditBookmarkFolderViewController: BookmarkFolderDetailsDataSourceDelegate {
-    
-    func bookmarkFolderDetailsDataSource(_ dataSource: BookmarkFolderDetailsDataSource, titleTextFieldDidChange textField: UITextField) {
-        
-        guard let saveButton = navigationItem.rightBarButtonItem else { return }
-        let title = textField.text?.trimmingWhitespace() ?? ""
-        saveButton.isEnabled = !title.isEmpty
+extension AddOrEditBookmarkFolderViewController: BookmarkFoldersViewControllerDelegate {
+
+    func textDidChange(_ controller: BookmarkFoldersViewController) {
+        updateSaveButton()
     }
-    
-    func bookmarkFolderDetailsDataSourceTextFieldDidReturn(dataSource: BookmarkFolderDetailsDataSource) {
-        
-        guard let saveButton = navigationItem.rightBarButtonItem else { return }
-        if saveButton.isEnabled {
-            DispatchQueue.main.async {
-                self.onSavePressed(self)
-            }
+
+    func textDidReturn(_ controller: BookmarkFoldersViewController) {
+        if canSave {
+            saveAndDismiss()
         }
     }
+
 }
 
 extension AddOrEditBookmarkFolderViewController: Themable {

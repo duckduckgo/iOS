@@ -25,8 +25,8 @@ import Persistence
 
 protocol FavoritesViewControllerDelegate: NSObjectProtocol {
 
-    func favoritesViewController(_ controller: FavoritesViewController, didSelectFavorite: Bookmark)
-    func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite: Bookmark)
+    func favoritesViewController(_ controller: FavoritesViewController, didSelectFavorite: BookmarkEntity)
+    func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite: BookmarkEntity)
 
 }
 
@@ -129,15 +129,15 @@ class FavoritesViewController: UIViewController {
 
 extension FavoritesViewController: FavoritesHomeViewSectionRendererDelegate {
 
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
         delegate?.favoritesViewController(self, didSelectFavorite: favorite)
     }
 
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: BookmarkEntity) {
         delegate?.favoritesViewController(self, didRequestEditFavorite: favorite)
     }
 
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
         updateHeroImage()
     }
 

@@ -23,6 +23,7 @@ import MobileCoreServices
 import os.log
 import UniformTypeIdentifiers
 import Bookmarks
+import CoreData
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -187,29 +188,28 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = viewModel.bookmarkAt(indexPath.row) else { return }
-        
+        guard let bookmark = viewModel.bookmarkAt(indexPath.row) else { return }
+
         if isEditingBookmarks {
             tableView.deselectRow(at: indexPath, animated: true)
-            if let bookmark = item as? Bookmark {
-                performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
-            } else if let folder = item as? BookmarkFolder {
-                performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: folder)
-            }
+            performSegue(withIdentifier: bookmark.isFolder ? "AddOrEditBookmarkFolder" : "AddOrEditBookmark", sender: bookmark.objectID)
+        } else if bookmark.isFolder {
+            drillIntoFolder(bookmark)
         } else {
-            if let bookmark = item as? Bookmark {
-                select(bookmark: bookmark)
-            } else if let folder = item as? BookmarkFolder {
-                fatalError("Not implemented")
-//                let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
-//                let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
-//                    BookmarksViewController(coder: coder, isNested: true)
-//                })
-//                viewController.dataSource = DefaultBookmarksDataSource(alertDelegate: viewController, parentFolder: folder)
-//                viewController.delegate = delegate
-//                navigationController?.pushViewController(viewController, animated: true)
-            }
+            select(bookmark: bookmark)
         }
+    }
+
+    private func drillIntoFolder(_ parent: BookmarkEntity) {
+        let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
+        let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
+            BookmarksViewController(coder: coder, isNested: true)
+        })
+
+        let viewModel = viewModel.viewModelForFolder(parent)
+        viewController.dataSource = BookmarksDataSource(viewModel: viewModel)
+        viewController.delegate = delegate
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -286,11 +286,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         // Edit button is at position 2
         configureToolbarMoreItem()
 
-        #warning("Set appropriate navigation title")
-        title = "Not implemented"
-//        if let dataSourceTitle = dataSource.navigationTitle {
-//            title = dataSourceTitle
-//        }
+        if let title = viewModel.currentFolder?.title {
+            self.title = title
+        }
         refreshEditButton()
     }
 
@@ -578,7 +576,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
     }
 
-    fileprivate func select(bookmark: Bookmark) {
+    fileprivate func select(bookmark: BookmarkEntity) {
         dismiss()
         delegate?.bookmarksDidSelect(bookmark: bookmark)
     }
@@ -597,10 +595,26 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 //            viewController.hidesBottomBarWhenPushed = true
 //            viewController.setExistingBookmark(sender as? Bookmark, initialParentFolder: dataSource.folder)
 //        } else
+
+        if let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
+            viewController.hidesBottomBarWhenPushed = true
+            viewController.setExistingID(sender as? NSManagedObjectID,
+                                         withParentID: viewModel.currentFolder?.objectID)
+            viewController.delegate = self
+        } else
         if let viewController = segue.destination as? FavoritesViewController {
             viewController.delegate = self
             favoritesController = viewController
         }
+    }
+
+}
+
+extension BookmarksViewController: AddOrEditBookmarkFolderViewControllerDelegate {
+
+    func folderFinishedEditing(_: AddOrEditBookmarkFolderViewController) {
+        viewModel.refresh()
+        tableView.reloadData()
     }
 
 }
@@ -675,11 +689,11 @@ extension BookmarksViewController: UIDocumentPickerDelegate {
 
 extension BookmarksViewController: FavoritesViewControllerDelegate {
 
-    func favoritesViewController(_ controller: FavoritesViewController, didSelectFavorite favorite: Bookmark) {
+    func favoritesViewController(_ controller: FavoritesViewController, didSelectFavorite favorite: BookmarkEntity) {
         select(bookmark: favorite)
     }
 
-    func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite favorite: Bookmark) {
+    func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite favorite: BookmarkEntity) {
         performSegue(withIdentifier: "AddOrEditBookmark", sender: favorite)
     }
 

@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Bookmarks
 import os.log
 
 class HomeViewController: UIViewController {
@@ -248,18 +249,18 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
-        guard let url = favorite.url else { return }
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
+        guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
         delegate?.home(self, didRequestUrl: url)
     }
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: BookmarkEntity) {
         delegate?.home(self, didRequestEdit: favorite)
     }
 
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
         delegate?.home(self, didRequestHideLogo: renderer.viewModel.count > 0)
     }
 

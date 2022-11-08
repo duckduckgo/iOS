@@ -136,7 +136,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">
-                                    <rect key="frame" x="0.0" y="545.5" width="375" height="82"/>
+                                    <rect key="frame" x="0.0" y="510.5" width="375" height="82"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
@@ -626,7 +626,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="zyO-WQ-z92"/>
-        <segue reference="Uhm-2I-Xo5"/>
+        <segue reference="bDN-md-SJE"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarkFavoritesHero" width="150" height="116"/>

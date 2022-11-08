@@ -76,11 +76,11 @@ class AddOrEditBookmarkViewController: UIViewController {
     }
     
     private func setUpDataSource() {
-        if existingBookmark?.isFavorite ?? isFavorite {
-            foldersViewController?.dataSource = FavoriteDetailsDataSource(delegate: self, existingBookmark: existingBookmark)
-        } else {
-            foldersViewController?.dataSource = BookmarkDetailsDataSource(delegate: self, addFolderDelegate: self, existingBookmark: existingBookmark)
-        }
+//        if existingBookmark?.isFavorite ?? isFavorite {
+//            foldersViewController?.dataSource = FavoriteDetailsDataSource(delegate: self, existingBookmark: existingBookmark)
+//        } else {
+//            foldersViewController?.dataSource = BookmarkDetailsDataSource(delegate: self, addFolderDelegate: self, existingBookmark: existingBookmark)
+//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -91,7 +91,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         if segue.identifier == "AddFolderFromBookmark",
            let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
             
-            viewController.createdNewFolderDelegate = self
+            // viewController.createdNewFolderDelegate = self
         }
     }
     
@@ -100,52 +100,52 @@ class AddOrEditBookmarkViewController: UIViewController {
     }
     
     @IBAction func onSavePressed(_ sender: Any) {
-        foldersViewController?.save()
+//        foldersViewController?.save()
         dismiss(animated: true, completion: nil)
     }
 }
 
-extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDelegate {
-    
-    func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource,
-                                             textFieldDidChangeWithTitleText titleText: String?,
-                                             urlText: String?) {
-        
-        guard let doneButton = navigationItem.rightBarButtonItem else { return }
-        let title = titleText?.trimmingWhitespace() ?? ""
-        let url = urlText?.trimmingWhitespace() ?? ""
-        
-        doneButton.isEnabled = !title.isEmpty && !url.isEmpty
-    }
-    
-    func bookmarkOrFavoriteDetailsDataSourceTextFieldDidReturn(dataSource: BookmarkOrFavoriteDetailsDataSource) {
-        
-        guard let doneButton = navigationItem.rightBarButtonItem else { return }
-        if doneButton.isEnabled {
-            DispatchQueue.main.async {
-                self.onSavePressed(self)
-            }
-        }
-    }
-}
+//extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDelegate {
+//
+//    func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource,
+//                                             textFieldDidChangeWithTitleText titleText: String?,
+//                                             urlText: String?) {
+//
+//        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+//        let title = titleText?.trimmingWhitespace() ?? ""
+//        let url = urlText?.trimmingWhitespace() ?? ""
+//
+//        doneButton.isEnabled = !title.isEmpty && !url.isEmpty
+//    }
+//
+//    func bookmarkOrFavoriteDetailsDataSourceTextFieldDidReturn(dataSource: BookmarkOrFavoriteDetailsDataSource) {
+//
+//        guard let doneButton = navigationItem.rightBarButtonItem else { return }
+//        if doneButton.isEnabled {
+//            DispatchQueue.main.async {
+//                self.onSavePressed(self)
+//            }
+//        }
+//    }
+//}
 
-extension AddOrEditBookmarkViewController: BookmarkItemDetailsDataSourceDidSaveDelegate {
-    
-    func bookmarkItemDetailsDataSource(_ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource,
-                                       createdNewFolderWithObjectID objectID: NSManagedObjectID) {
-        
-        if let viewController = foldersViewController, let dataSource = viewController.dataSource as? BookmarkDetailsDataSource {
-            dataSource.refreshFolders(viewController.tableView, section: 0, andSelectFolderWithObjectID: objectID)
-        }
-    }
-}
+//extension AddOrEditBookmarkViewController: BookmarkItemDetailsDataSourceDidSaveDelegate {
+//
+//    func bookmarkItemDetailsDataSource(_ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource,
+//                                       createdNewFolderWithObjectID objectID: NSManagedObjectID) {
+//
+//        if let viewController = foldersViewController, let dataSource = viewController.dataSource as? BookmarkDetailsDataSource {
+//            dataSource.refreshFolders(viewController.tableView, section: 0, andSelectFolderWithObjectID: objectID)
+//        }
+//    }
+//}
 
-extension AddOrEditBookmarkViewController: BookmarkFoldersSectionDataSourceAddFolderDelegate {
-    
-    func bookmarkFoldersSectionDataSourceDidRequestAddNewFolder(_ bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource) {
-        performSegue(withIdentifier: "AddFolderFromBookmark", sender: nil)
-    }
-}
+//extension AddOrEditBookmarkViewController: BookmarkFoldersSectionDataSourceAddFolderDelegate {
+//    
+//    func bookmarkFoldersSectionDataSourceDidRequestAddNewFolder(_ bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource) {
+//        performSegue(withIdentifier: "AddFolderFromBookmark", sender: nil)
+//    }
+//}
 
 extension AddOrEditBookmarkViewController: Themable {
     

@@ -19,10 +19,11 @@
 
 import UIKit
 import Core
+import Bookmarks
 
 protocol FavoritesOverlayDelegate: AnyObject {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Bookmark)
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity)
 }
 
 class FavoritesOverlay: UIViewController {
@@ -103,15 +104,15 @@ class FavoritesOverlay: UIViewController {
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
         delegate?.favoritesOverlay(self, didSelect: favorite)
     }
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: BookmarkEntity) {
         // currently can't edit favorites from overlay
     }
 
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
         // currently can't delete favorites from overlay
     }
     

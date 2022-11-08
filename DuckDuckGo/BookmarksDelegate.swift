@@ -18,11 +18,11 @@
 //
 
 import Foundation
-import Core
+import Bookmarks
 
 protocol BookmarksDelegate: AnyObject {
 
-    func bookmarksDidSelect(bookmark: Bookmark)
+    func bookmarksDidSelect(bookmark: BookmarkEntity)
     
     func bookmarksUpdated()
     

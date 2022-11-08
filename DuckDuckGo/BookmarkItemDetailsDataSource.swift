@@ -21,6 +21,7 @@ import UIKit
 import Core
 import CoreData
 
+/*
 protocol BookmarkItemDetailsDataSource: UITableViewDataSource {
     func select(_ tableView: UITableView, indexPath: IndexPath)
     func save(_ tableView: UITableView, delegate: BookmarkItemDetailsDataSourceDidSaveDelegate?)
@@ -307,3 +308,4 @@ class FavoriteDetailsDataSource: BookmarkOrFavoriteDetailsDataSource, BookmarkIt
     }
     
 }
+*/

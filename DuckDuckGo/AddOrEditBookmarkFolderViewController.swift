@@ -105,10 +105,6 @@ class AddOrEditBookmarkFolderViewController: UIViewController {
         return BookmarkEditorViewModel(storage: storage, bookmark: editingFolder!)
     }
 
-    private func folderList(parent: BookmarkEntity) -> [BookmarkEntity] {
-        return [parent]
-    }
-
     @IBAction func onCancelPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -140,6 +136,10 @@ extension AddOrEditBookmarkFolderViewController: BookmarkFoldersViewControllerDe
         if canSave {
             saveAndDismiss()
         }
+    }
+
+    func addFolder(_ controller: BookmarkFoldersViewController) {
+
     }
 
 }

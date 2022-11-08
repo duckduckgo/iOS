@@ -136,7 +136,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">
-                                    <rect key="frame" x="0.0" y="510.5" width="375" height="82"/>
+                                    <rect key="frame" x="0.0" y="545.5" width="375" height="82"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
@@ -544,6 +544,42 @@
                                     <outlet property="urlTextField" destination="YqY-sP-hhb" id="b8Y-vb-Msu"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BookmarkFolderCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddFolderCell" id="oXz-7u-Skm">
+                                <rect key="frame" x="16" y="232" width="343" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oXz-7u-Skm" id="xfk-px-QiT">
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="c3O-4F-9vA">
+                                            <rect key="frame" x="16" y="10" width="311" height="24"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FolderWithPlus" translatesAutoresizingMaskIntoConstraints="NO" id="lwP-jU-PzJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                                    <color key="tintColor" name="BookmarksFolderColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="YVm-Uh-gN1"/>
+                                                        <constraint firstAttribute="width" constant="24" id="kPy-Fo-BUQ"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Folder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8e-rz-6qx">
+                                                    <rect key="frame" x="40" y="0.0" width="271" height="24"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                    <color key="textColor" name="BookmarksCellLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="c3O-4F-9vA" secondAttribute="trailing" id="9fp-58-WIr"/>
+                                        <constraint firstItem="c3O-4F-9vA" firstAttribute="centerY" secondItem="xfk-px-QiT" secondAttribute="centerY" id="fa6-3R-ZMQ"/>
+                                        <constraint firstItem="c3O-4F-9vA" firstAttribute="leading" secondItem="xfk-px-QiT" secondAttribute="leadingMargin" id="hdF-AL-e5p"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" name="BookmarksCellColor"/>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="o1q-bZ-7v3" id="K8a-wW-1Y4"/>
@@ -626,12 +662,13 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="zyO-WQ-z92"/>
-        <segue reference="Uhm-2I-Xo5"/>
+        <segue reference="bDN-md-SJE"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarkFavoritesHero" width="150" height="116"/>
         <image name="DisclosureIndicator" width="8" height="13"/>
         <image name="Folder" width="24" height="24"/>
+        <image name="FolderWithPlus" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
         <namedColor name="BookmarksCellColor">
             <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

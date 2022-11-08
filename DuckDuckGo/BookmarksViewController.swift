@@ -169,16 +169,16 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     func openEditFormWhenPresented(bookmark: BookmarkEntity) {
         onDidAppearAction = { [weak self] in
-            self?.performSegue(withIdentifier: "AddOrEditBookmark", sender: bookmark)
+            self?.performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: bookmark.objectID)
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let bookmark = viewModel.bookmarkAt(indexPath.row) else { return }
 
+        tableView.deselectRow(at: indexPath, animated: true)
         if isEditingBookmarks {
-            tableView.deselectRow(at: indexPath, animated: true)
-            performSegue(withIdentifier: bookmark.isFolder ? "AddOrEditBookmarkFolder" : "AddOrEditBookmark", sender: bookmark.objectID)
+            performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: bookmark.objectID)
         } else if bookmark.isFolder {
             drillIntoFolder(bookmark)
             onDidAppearAction = { [weak self] in
@@ -688,7 +688,7 @@ extension BookmarksViewController: FavoritesViewControllerDelegate {
     }
 
     func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite favorite: BookmarkEntity) {
-        performSegue(withIdentifier: "AddOrEditBookmark", sender: favorite)
+        performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: favorite)
     }
 
 }

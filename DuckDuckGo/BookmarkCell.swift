@@ -64,7 +64,7 @@ class BookmarkCell: UITableViewCell {
 
                 accessoryView = nil
 
-                itemImage.loadFavicon(forDomain: bookmark?.urlObject?.host, usingCache: .bookmarks)
+                itemImage.loadFavicon(forDomain: bookmark?.urlObject?.host?.droppingWwwPrefix(), usingCache: .bookmarks)
             }
 
         }

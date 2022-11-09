@@ -176,10 +176,8 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell),
               let favorite = viewModel.favorite(atIndex: indexPath.row) else { return }
-        
         Pixel.fire(pixel: .homeScreenEditFavorite)
-        
-        // controller?.favoritesRenderer(self, didRequestEdit: favorite)
+        controller?.favoritesRenderer(self, didRequestEdit: favorite)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -276,7 +274,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
         guard let favorite = viewModel.favorite(atIndex: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
-        // controller?.favoritesRenderer(self, didSelect: favorite)
+        controller?.favoritesRenderer(self, didSelect: favorite)
     }
 
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {

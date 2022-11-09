@@ -271,7 +271,6 @@ class HomeViewSectionRenderers: NSObject,
 
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
         guard let section = destinationIndexPath?.section else {
-            print("***", #function, "NO SECTION")
             return UICollectionViewDropProposal(operation: .forbidden)
         }
         return renderers[section].collectionView(collectionView, dropSessionDidUpdate: session, withDestinationIndexPath: destinationIndexPath)

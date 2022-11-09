@@ -116,23 +116,27 @@ class FavoriteHomeCell: UICollectionViewCell {
         self.favorite = favorite
         
         let host = favorite.host
+        let color = UIColor.forDomain(host)
         
         isAccessibilityElement = true
         accessibilityTraits = .button
         accessibilityLabel = "\(favorite.displayTitle). \(UserText.favorite)"
         
         titleLabel.text = favorite.displayTitle
-        iconBackground.backgroundColor = UIColor.forDomain(host)
+        iconBackground.backgroundColor = color
 
+        let iconImage = self.iconImage
         let domain = favorite.host
-        if let fakeFavicon = FaviconsHelper.createFakeFavicon(forDomain: domain,
-                                                              backgroundColor: UIColor.forDomain(domain),
-                                                              bold: false) {
-            iconImage.image = fakeFavicon
-        }
+        let fakeFavicon = FaviconsHelper.createFakeFavicon(forDomain: domain,
+                                                           backgroundColor: color,
+                                                           bold: false)
+        iconImage?.image = fakeFavicon
 
-        iconImage.loadFavicon(forDomain: domain, usingCache: .bookmarks, useFakeFavicon: false) { image, _ in
-            guard let image = image else { return }
+        iconImage?.loadFavicon(forDomain: domain, usingCache: .bookmarks, useFakeFavicon: false) { image, _ in
+            guard let image = image else {
+                iconImage?.image = fakeFavicon
+                return
+            }
 
             let useBorder = Self.appUrls.isDuckDuckGo(domain: domain) || image.size.width < Constants.largeFaviconSize
             self.useImageBorder(useBorder)
@@ -167,12 +171,20 @@ class FavoriteHomeCell: UICollectionViewCell {
 private extension BookmarkEntity {
 
     var displayTitle: String {
-        ""
+        if let title = title?.trimmingWhitespace() {
+            return title
+        }
+
+        if let host = urlObject?.host?.droppingWwwPrefix() {
+            return host
+        }
+
+        assertionFailure("Unable to create display title")
+        return ""
     }
 
     var host: String {
-        guard let url = url else { return "" }
-        return URL(string: url)?.host?.droppingWwwPrefix() ?? ""
+        return urlObject?.host?.droppingWwwPrefix() ?? ""
     }
 
 }

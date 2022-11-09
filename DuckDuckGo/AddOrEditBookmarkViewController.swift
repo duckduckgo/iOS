@@ -20,132 +20,147 @@
 import UIKit
 import Core
 import CoreData
+import Bookmarks
+
+protocol AddOrEditBookmarkViewControllerDelegate: AnyObject {
+
+    func finishedEditing(_: AddOrEditBookmarkViewController)
+
+}
 
 class AddOrEditBookmarkViewController: UIViewController {
-    
+
+    weak var delegate: AddOrEditBookmarkViewControllerDelegate?
+
     private var foldersViewController: BookmarkFoldersViewController?
-    
-    var isFavorite = false
-    
-    private var existingBookmark: Bookmark?
-    private var initialParentFolder: BookmarkFolder?
-    
+
+    private var isNew = true
+    private var editingFolder: BookmarkEntity?
+    private var parentFolder: BookmarkEntity?
+
+    lazy var context: NSManagedObjectContext = {
+        BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpTitle()
-        setUpDoneButton()
-                
+
+        updateTitle()
+        updateSaveButton()
+
         applyTheme(ThemeManager.shared.currentTheme)
     }
-    
-    private func setUpTitle() {
-        if let bookmark = existingBookmark {
-            if bookmark.isFavorite {
-                title = UserText.editFavoriteScreenTitle
-            } else {
-                title = UserText.editBookmarkScreenTitle
-            }
+
+    func updateTitle() {
+        if isNew {
+            title = UserText.addFolderScreenTitle
         } else {
-            if isFavorite {
-                title = UserText.addFavoriteScreenTitle
-            } else {
-                title = UserText.addBookmarkScreenTitle
-            }
+            title = UserText.editFolderScreenTitle
         }
     }
+
+    var canSave: Bool {
+        editingFolder?.title?.trimmingWhitespace().count ?? 0 > 0
+    }
     
-    func setUpDoneButton() {
-        guard let doneButton = navigationItem.rightBarButtonItem else { return }
-        if let bookmark = existingBookmark,
-           let title = bookmark.title,
-           title.trimmingWhitespace().count > 0,
-           let url = bookmark.url,
-           url.absoluteString.count > 0 {
-            
-            doneButton.isEnabled = true
+    func updateSaveButton() {
+        guard let saveButton = navigationItem.rightBarButtonItem else { return }
+        if canSave {
+            saveButton.isEnabled = true
         } else {
-            doneButton.isEnabled = false
+            saveButton.isEnabled = false
         }
     }
-    
-    func setExistingBookmark(_ existingBookmark: Bookmark?, initialParentFolder: BookmarkFolder?) {
-        self.existingBookmark = existingBookmark
-        self.initialParentFolder = initialParentFolder
-        setUpTitle()
-        setUpDataSource()
+
+    func setExistingID(_ id: NSManagedObjectID?, withParentID parentID: NSManagedObjectID?) {
+        if let parentID = parentID {
+            parentFolder = context.object(with: parentID) as? BookmarkEntity
+        } else {
+            parentFolder = BookmarkUtils.fetchRootFolder(context)
+        }
+
+        if let id = id {
+            isNew = false
+            editingFolder = context.object(with: id) as? BookmarkEntity
+            assert(editingFolder != nil)
+        } else {
+            isNew = true
+            let newFolder = BookmarkEntity(context: context)
+            newFolder.uuid = UUID().uuidString
+            newFolder.isFolder = true
+            newFolder.isFavorite = false
+            newFolder.parent = parentFolder
+            editingFolder = newFolder
+        }
     }
-    
-    private func setUpDataSource() {
-//        if existingBookmark?.isFavorite ?? isFavorite {
-//            foldersViewController?.dataSource = FavoriteDetailsDataSource(delegate: self, existingBookmark: existingBookmark)
-//        } else {
-//            foldersViewController?.dataSource = BookmarkDetailsDataSource(delegate: self, addFolderDelegate: self, existingBookmark: existingBookmark)
-//        }
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "EmbedFoldersTableViewControllerSegue" {
-            foldersViewController = segue.destination as? BookmarkFoldersViewController
-            setUpDataSource()
-        }
-        if segue.identifier == "AddFolderFromBookmark",
-           let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
-            
-            // viewController.createdNewFolderDelegate = self
+        if let controller = segue.destination as? BookmarkFoldersViewController {
+            controller.delegate = self
+            controller.viewModel = locationSelectorViewModel()
+            foldersViewController = controller
+        } else
+        if let controller = segue.destination.children.first as? AddOrEditBookmarkViewController {
+            controller.setExistingID(nil, withParentID: editingFolder?.parent?.objectID)
+            controller.delegate = self
         }
     }
-    
+
+    private func locationSelectorViewModel() -> BookmarkEditorViewModel {
+        let storage = CoreDataBookmarksLogic(context: context)
+        return BookmarkEditorViewModel(storage: storage, bookmark: editingFolder!)
+    }
+
     @IBAction func onCancelPressed(_ sender: Any) {
+        editingFolder = nil
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onSavePressed(_ sender: Any) {
-//        foldersViewController?.save()
+        saveAndDismiss()
+    }
+
+    func saveAndDismiss() {
+        do {
+            if context.hasChanges {
+                try context.save()
+            }
+        } catch {
+            assertionFailure("\(error)")
+        }
+        self.delegate?.finishedEditing(self)
         dismiss(animated: true, completion: nil)
     }
 }
 
-//extension AddOrEditBookmarkViewController: BookmarkOrFavoriteDetailsDataSourceDelegate {
-//
-//    func bookmarkOrFavoriteDetailsDataSource(_ dataSource: BookmarkOrFavoriteDetailsDataSource,
-//                                             textFieldDidChangeWithTitleText titleText: String?,
-//                                             urlText: String?) {
-//
-//        guard let doneButton = navigationItem.rightBarButtonItem else { return }
-//        let title = titleText?.trimmingWhitespace() ?? ""
-//        let url = urlText?.trimmingWhitespace() ?? ""
-//
-//        doneButton.isEnabled = !title.isEmpty && !url.isEmpty
-//    }
-//
-//    func bookmarkOrFavoriteDetailsDataSourceTextFieldDidReturn(dataSource: BookmarkOrFavoriteDetailsDataSource) {
-//
-//        guard let doneButton = navigationItem.rightBarButtonItem else { return }
-//        if doneButton.isEnabled {
-//            DispatchQueue.main.async {
-//                self.onSavePressed(self)
-//            }
-//        }
-//    }
-//}
+extension AddOrEditBookmarkViewController: BookmarkFoldersViewControllerDelegate {
 
-//extension AddOrEditBookmarkViewController: BookmarkItemDetailsDataSourceDidSaveDelegate {
-//
-//    func bookmarkItemDetailsDataSource(_ bookmarkItemDetailsDataSource: BookmarkItemDetailsDataSource,
-//                                       createdNewFolderWithObjectID objectID: NSManagedObjectID) {
-//
-//        if let viewController = foldersViewController, let dataSource = viewController.dataSource as? BookmarkDetailsDataSource {
-//            dataSource.refreshFolders(viewController.tableView, section: 0, andSelectFolderWithObjectID: objectID)
-//        }
-//    }
-//}
+    func textDidChange(_ controller: BookmarkFoldersViewController) {
+        updateSaveButton()
+    }
 
-//extension AddOrEditBookmarkViewController: BookmarkFoldersSectionDataSourceAddFolderDelegate {
-//    
-//    func bookmarkFoldersSectionDataSourceDidRequestAddNewFolder(_ bookmarkFoldersSectionDataSource: BookmarkFoldersSectionDataSource) {
-//        performSegue(withIdentifier: "AddFolderFromBookmark", sender: nil)
-//    }
-//}
+    func textDidReturn(_ controller: BookmarkFoldersViewController) {
+        if canSave {
+            saveAndDismiss()
+        }
+    }
+
+    func addFolder(_ controller: BookmarkFoldersViewController) {
+        performSegue(withIdentifier: "AddFolder", sender: nil)
+    }
+
+}
+
+extension AddOrEditBookmarkViewController: AddOrEditBookmarkViewControllerDelegate {
+
+    func finishedEditing(_ controller: AddOrEditBookmarkViewController) {
+        if let folderID = controller.editingFolder?.objectID {
+            foldersViewController?.viewModel?.bookmark.parent = context.object(with: folderID) as? BookmarkEntity
+        }
+        foldersViewController?.refresh()
+    }
+
+}
 
 extension AddOrEditBookmarkViewController: Themable {
     

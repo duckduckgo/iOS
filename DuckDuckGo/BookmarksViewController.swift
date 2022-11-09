@@ -285,7 +285,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func configureToolbarMoreItem() {
         #warning("Edit button needs to stay in the middle if the more button dissapears")
 
-        if isEditingBookmarks || isNested {
+        if isEditingBookmarks {
             if toolbarItems?.count ?? 0 >= 5 {
                 toolbarItems?.remove(at: 4)
                 toolbarItems?.remove(at: 3)
@@ -321,7 +321,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func refreshMoreButton() {
-        if isEditingBookmarks || currentDataSource === searchDataSource  || viewModel.currentFolder != nil {
+        if isNested || isEditingBookmarks || currentDataSource === searchDataSource  || viewModel.currentFolder != nil {
             disableMoreButton()
         } else {
             enableMoreButton()
@@ -578,7 +578,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination.children.first as? AddOrEditBookmarkFolderViewController {
+        if let viewController = segue.destination.children.first as? AddOrEditBookmarkViewController {
             viewController.hidesBottomBarWhenPushed = true
             viewController.setExistingID(sender as? NSManagedObjectID,
                                          withParentID: viewModel.currentFolder?.objectID)
@@ -592,9 +592,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
 }
 
-extension BookmarksViewController: AddOrEditBookmarkFolderViewControllerDelegate {
+extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
 
-    func finishedEditing(_: AddOrEditBookmarkFolderViewController) {
+    func finishedEditing(_: AddOrEditBookmarkViewController) {
         viewModel.refresh()
         tableView.reloadData()
     }
@@ -680,7 +680,7 @@ extension BookmarksViewController: FavoritesViewControllerDelegate {
     }
 
     func favoritesViewController(_ controller: FavoritesViewController, didRequestEditFavorite favorite: BookmarkEntity) {
-        performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: favorite)
+        performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: favorite.objectID)
     }
 
 }

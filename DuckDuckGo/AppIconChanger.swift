@@ -26,7 +26,7 @@ class AppIconChanger {
     
     private var currentlySetAppIcon: AppIcon!
     private var appIconToChangeTo: AppIcon!
-    private var completionHandlerToExecuteUponAppChange: ((Error?) -> Void)? = nil
+    private var completionHandlerToExecuteUponAppChange: ((Error?) -> Void)?
     
     init() {}
     

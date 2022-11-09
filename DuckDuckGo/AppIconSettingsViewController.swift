@@ -23,7 +23,7 @@ import Core
 class AppIconSettingsViewController: UICollectionViewController {
     
     let dataSource = AppIconDataSource()
-    let worker = AppIconWorker()
+    let appIconChanger = AppIconChanger()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,8 +43,8 @@ class AppIconSettingsViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let appIcon = dataSource.appIcons[indexPath.row]
-        worker.changeAppIcon(appIcon) { success in
-            if success {
+        appIconChanger.changeAppIcon(appIcon) { error in
+            if error != nil {
                 self.initSelection()
             }
         }
@@ -73,26 +73,6 @@ class AppIconDataSource: NSObject, UICollectionViewDataSource {
 
         return cell
     }
-}
-
-class AppIconWorker {
-        
-    public func changeAppIcon(_ appIcon: AppIcon,
-                              completion: @escaping (_ success: Bool) -> Void) {
-        AppIconManager.shared.changeAppIcon(appIcon) { error in
-            guard error == nil else {
-                DispatchQueue.main.async {
-                    completion(true)
-                }
-                return
-            }
-
-            DispatchQueue.main.async {
-                completion(false)
-            }
-        }
-    }
-
 }
 
 extension AppIconSettingsViewController: Themable {

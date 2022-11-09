@@ -383,30 +383,32 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     func importBookmarks(fromHtml html: String) {
-        fatalError("Not implemented")
-//        Task {
-//            let bookmarkCountBeforeImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
-//
-//            let result = await BookmarksImporter().parseAndSave(html: html)
-//            switch result {
-//            case .success:
+        
+        let bookmarkCountBeforeImport = dataSource.viewModel.getTotalBookmarksCount()
+        
+        Task {
+
+            let result = await BookmarksImporter().parseAndSave(html: html)
+            switch result {
+            case .success:
+                // FixMe
 //                dataSource.bookmarksManager.reloadWidgets()
-//
-//                let bookmarkCountAfterImport = await dataSource.bookmarksManager.allBookmarksAndFavoritesFlat().count
-//                let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
-//                Pixel.fire(pixel: .bookmarkImportSuccess,
-//                           withAdditionalParameters: [PixelParameters.bookmarkCount: "\(bookmarksImported)"])
-//                DispatchQueue.main.async {
-//                    ActionMessageView.present(message: UserText.importBookmarksSuccessMessage)
-//                }
-//            case .failure(let bookmarksImportError):
-//                os_log("Bookmarks import error %s", type: .debug, bookmarksImportError.localizedDescription)
-//                Pixel.fire(pixel: .bookmarkImportFailure)
-//                DispatchQueue.main.async {
-//                    ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
-//                }
-//            }
-//        }
+
+                DispatchQueue.main.async { [weak self] in
+                    let bookmarkCountAfterImport = self?.dataSource.viewModel.getTotalBookmarksCount() ?? 0
+                    let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
+                    Pixel.fire(pixel: .bookmarkImportSuccess,
+                               withAdditionalParameters: [PixelParameters.bookmarkCount: "\(bookmarksImported)"])
+                    ActionMessageView.present(message: UserText.importBookmarksSuccessMessage)
+                }
+            case .failure(let bookmarksImportError):
+                os_log("Bookmarks import error %s", type: .debug, bookmarksImportError.localizedDescription)
+                Pixel.fire(pixel: .bookmarkImportFailure)
+                DispatchQueue.main.async {
+                    ActionMessageView.present(message: UserText.importBookmarksFailedMessage)
+                }
+            }
+        }
     }
 
     // MARK: Export bookmarks

@@ -122,17 +122,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                       destination: context!)
             }
         }
-
-        /*
-        Task { @MainActor in
-
-            await OldDatabase.load
-            await NewDatabase.load
-            await NewDatabase.migrate(from: oldDatabase)
-            WidgetCenter.shared.reloadAllTimelines()
-
-        }
-        */
         
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
             WidgetCenter.shared.reloadAllTimelines()

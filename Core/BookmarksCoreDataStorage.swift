@@ -19,6 +19,7 @@
 
 import Foundation
 import CoreData
+import Bookmarks
 import os.log
 
 // swiftlint:disable file_length

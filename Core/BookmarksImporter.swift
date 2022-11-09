@@ -19,6 +19,8 @@
 
 import Foundation
 import SwiftSoup
+import Bookmarks
+import Persistence
 import os.log
 
 public enum BookmarksImportError: Error {
@@ -37,10 +39,10 @@ final public class BookmarksImporter {
     }
 
     private(set) var importedBookmarks: [BookmarkOrFolder] = []
-    private(set) var coreDataStorage: BookmarksCoreDataStorage
+    private(set) var coreDataStorage: BookmarkCoreDataImporter
 
-    public init(coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
-        coreDataStorage = coreDataStore
+    public init(coreDataStore: CoreDataDatabase = BookmarksDatabase.shared) {
+        coreDataStorage = BookmarkCoreDataImporter(database: coreDataStore)
     }
 
     func isDocumentInSafariFormat(_ document: Document) -> Bool {

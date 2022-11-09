@@ -1,5 +1,5 @@
 //
-//  AppIconManager.swift
+//  AppIconContainer.swift
 //  DuckDuckGo
 //
 //  Copyright © 2020 DuckDuckGo. All rights reserved.
@@ -21,26 +21,15 @@ import UIKit
 import Core
 import os.log
 
-class AppIconManager {
-
-    static var shared = AppIconManager()
-
-    var isAppIconChangeSupported: Bool {
-        UIApplication.shared.supportsAlternateIcons
-    }
+class AppIconContainer {
     
-    var appIcon: AppIcon {
+    static var appIcon: AppIcon {
         guard let appIconName = UIApplication.shared.alternateIconName,
             let appIcon = AppIcon(rawValue: appIconName) else {
              return AppIcon.defaultAppIcon
         }
 
         return appIcon
-    }
-
-    func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)? = nil) {
-        let appIconChanger = AppIconChanger()
-        appIconChanger.changeAppIcon(appIcon, completionHandler: completionHandler)
     }
     
 }

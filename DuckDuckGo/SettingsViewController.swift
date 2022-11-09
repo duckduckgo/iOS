@@ -167,8 +167,8 @@ class SettingsViewController: UITableViewController {
     }
 
     private func configureIconViews() {
-        if AppIconManager.shared.isAppIconChangeSupported {
-            appIconImageView.image = AppIconManager.shared.appIcon.smallImage
+        if UIApplication.shared.supportsAlternateIcons {
+            appIconImageView.image = AppIconContainer.appIcon.smallImage
         } else {
             appIconCell.isHidden = true
         }

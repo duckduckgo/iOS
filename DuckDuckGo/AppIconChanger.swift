@@ -39,7 +39,7 @@ class AppIconChanger {
     }
     
     private func setCurrentAppIcon() {
-        self.currentlySetAppIcon = AppIconManager.shared.appIcon
+        self.currentlySetAppIcon = AppIconContainer.appIcon
     }
     
     private func setAppIconToChangeTo(appIcon: AppIcon) {

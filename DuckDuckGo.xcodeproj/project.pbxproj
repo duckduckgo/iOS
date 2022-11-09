@@ -456,7 +456,7 @@
 		AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */; };
 		AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */; };
 		AA3D854923DA1DFB00788410 /* AppIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA3D854823DA1DFB00788410 /* AppIcon.swift */; };
-		AA4D6A6A23DB87B1007E8790 /* AppIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4D6A6923DB87B1007E8790 /* AppIconManager.swift */; };
+		AA4D6A6A23DB87B1007E8790 /* AppIconContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4D6A6923DB87B1007E8790 /* AppIconContainer.swift */; };
 		AA4D6A8C23DE49A5007E8790 /* AppIconBlack40x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA4D6A8223DE49A4007E8790 /* AppIconBlack40x40@2x.png */; };
 		AA4D6A8D23DE49A5007E8790 /* AppIconBlack40x40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA4D6A8323DE49A4007E8790 /* AppIconBlack40x40@3x.png */; };
 		AA4D6A8E23DE49A5007E8790 /* AppIconBlack60x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA4D6A8423DE49A4007E8790 /* AppIconBlack60x60@2x.png */; };
@@ -1886,7 +1886,7 @@
 		AA3D854423D9942200788410 /* AppIconSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsViewController.swift; sourceTree = "<group>"; };
 		AA3D854623D9E88E00788410 /* AppIconSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconSettingsCell.swift; sourceTree = "<group>"; };
 		AA3D854823DA1DFB00788410 /* AppIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIcon.swift; sourceTree = "<group>"; };
-		AA4D6A6923DB87B1007E8790 /* AppIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconManager.swift; sourceTree = "<group>"; };
+		AA4D6A6923DB87B1007E8790 /* AppIconContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconContainer.swift; sourceTree = "<group>"; };
 		AA4D6A8223DE49A4007E8790 /* AppIconBlack40x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconBlack40x40@2x.png"; sourceTree = "<group>"; };
 		AA4D6A8323DE49A4007E8790 /* AppIconBlack40x40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconBlack40x40@3x.png"; sourceTree = "<group>"; };
 		AA4D6A8423DE49A4007E8790 /* AppIconBlack60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIconBlack60x60@2x.png"; sourceTree = "<group>"; };
@@ -3220,7 +3220,7 @@
 		AA4D6A8023DE4973007E8790 /* AppIcon */ = {
 			isa = PBXGroup;
 			children = (
-				AA4D6A6923DB87B1007E8790 /* AppIconManager.swift */,
+				AA4D6A6923DB87B1007E8790 /* AppIconContainer.swift */,
 				69128D88291C286A0082FBF5 /* AppIconChanger.swift */,
 				AA3D854823DA1DFB00788410 /* AppIcon.swift */,
 				AA4D6A8123DE4981007E8790 /* Black */,
@@ -5183,7 +5183,7 @@
 				311BD1B12836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift in Sources */,
 				B652DF13287C373A00C12A9C /* ScriptSourceProviding.swift in Sources */,
 				F1CA3C391F045885005FADB3 /* PrivacyUserDefaults.swift in Sources */,
-				AA4D6A6A23DB87B1007E8790 /* AppIconManager.swift in Sources */,
+				AA4D6A6A23DB87B1007E8790 /* AppIconContainer.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				980891A32237146B00313A70 /* Feedback.swift in Sources */,
 				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,

@@ -33,7 +33,7 @@ class AppIconSettingsViewController: UICollectionViewController {
     }
 
     private func initSelection() {
-        let icon = AppIconManager.shared.appIcon
+        let icon = AppIconContainer.appIcon
         let index = dataSource.appIcons.firstIndex(of: icon) ?? 0
         let indexPath = IndexPath(row: index, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .top)

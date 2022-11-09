@@ -83,7 +83,7 @@ class BookmarkFoldersViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let viewModel = viewModel else { return 0 }
-        return section == 0 ? 1 : viewModel.locations.count + (viewModel.canAddNew ? 1 : 0)
+        return section == 0 ? 1 : viewModel.locations.count + (viewModel.canAddNewFolder ? 1 : 0)
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

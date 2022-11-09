@@ -86,7 +86,7 @@ class TabViewController: UIViewController {
 
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
-    private(set) var previousPrivacyInfosByURL: [URL: PrivacyInfo] = [:]
+    private var previousPrivacyInfosByURL: [URL: PrivacyInfo] = [:]
     
     private let requeryLogic = RequeryLogic()
 
@@ -783,7 +783,7 @@ class TabViewController: UIViewController {
     
     private var didGoBackForward: Bool = false
 
-    private func resetPrivacyInfo() {
+    private func resetDashboardInfo() {
         if let url = url {
             if didGoBackForward, let privacyInfo = previousPrivacyInfosByURL[url] {
                 self.privacyInfo = privacyInfo
@@ -1012,7 +1012,7 @@ extension TabViewController: WKNavigationDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        resetPrivacyInfo()
+        resetDashboardInfo()
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)

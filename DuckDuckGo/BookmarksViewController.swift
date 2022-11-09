@@ -352,6 +352,18 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         dismiss()
     }
 
+    @IBSegueAction func onCreateEditor(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AddOrEditBookmarkViewController? {
+        let id = sender as? NSManagedObjectID
+        guard let controller = AddOrEditBookmarkViewController(coder: coder,
+                                                               editingEntityID: id,
+                                                               parentFolderID: viewModel.currentFolder?.objectID) else {
+            assertionFailure("Failed to create controller")
+            return nil
+        }
+
+        return controller
+    }
+    
     // MARK: Import bookmarks
 
     func importAction() -> UIAction {
@@ -578,12 +590,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination.children.first as? AddOrEditBookmarkViewController {
-            viewController.hidesBottomBarWhenPushed = true
-            viewController.setExistingID(sender as? NSManagedObjectID,
-                                         withParentID: viewModel.currentFolder?.objectID)
-            viewController.delegate = self
-        } else
         if let viewController = segue.destination as? FavoritesViewController {
             viewController.delegate = self
             favoritesController = viewController

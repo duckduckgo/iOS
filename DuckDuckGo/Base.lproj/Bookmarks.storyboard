@@ -341,7 +341,7 @@
             <objects>
                 <navigationController id="DPG-CO-7kQ" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="i4b-6A-etd">
-                        <rect key="frame" x="0.0" y="20" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="BookmarksNavBarBackgroundColor"/>
                         <textAttributes key="titleTextAttributes">
@@ -349,7 +349,7 @@
                         </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="gvC-OM-VDO" kind="relationship" relationship="rootViewController" id="9So-lE-9eZ"/>
+                        <segue destination="gvC-OM-VDO" kind="relationship" relationship="rootViewController" destinationCreationSelector="onCreateEditor:sender:segueIdentifier:" id="9So-lE-9eZ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cfL-jE-h6e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -365,11 +365,11 @@
                         <viewControllerLayoutGuide type="bottom" id="bjg-95-sbS"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZKl-y5-8OG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63r-nO-tSp">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                                 <connections>
                                     <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="zyO-WQ-z92"/>
                                 </connections>
@@ -408,7 +408,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BookmarkFoldersViewController" id="o1q-bZ-7v3" userLabel="Bookmark Folders" customClass="BookmarkFoldersViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V1z-bn-1Gk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
                         <prototypes>

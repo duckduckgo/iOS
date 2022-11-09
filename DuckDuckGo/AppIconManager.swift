@@ -28,24 +28,7 @@ class AppIconManager {
     var isAppIconChangeSupported: Bool {
         UIApplication.shared.supportsAlternateIcons
     }
-
-    func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)? = nil) {
-        if self.appIcon == appIcon {
-            completionHandler?(nil)
-            return
-        }
-
-        let alternateIconName = appIcon != AppIcon.defaultAppIcon ? appIcon.rawValue : nil
-        UIApplication.shared.setAlternateIconName(alternateIconName) { error in
-            if let error = error {
-                os_log("Error while changing app icon: %s", log: generalLog, type: .debug, error.localizedDescription)
-                completionHandler?(error)
-            } else {
-                completionHandler?(nil)
-            }
-        }
-    }
-
+    
     var appIcon: AppIcon {
         guard let appIconName = UIApplication.shared.alternateIconName,
             let appIcon = AppIcon(rawValue: appIconName) else {
@@ -55,4 +38,9 @@ class AppIconManager {
         return appIcon
     }
 
+    func changeAppIcon(_ appIcon: AppIcon, completionHandler: ((Error?) -> Void)? = nil) {
+        let appIconChanger = AppIconChanger()
+        appIconChanger.changeAppIcon(appIcon, completionHandler: completionHandler)
+    }
+    
 }

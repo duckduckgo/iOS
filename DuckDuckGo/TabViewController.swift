@@ -807,21 +807,11 @@ class TabViewController: UIViewController {
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
                                       protectionStatus: makeProtectionStatus(for: host),
-                                      serverTrust: makeServerTrust())
+                                      serverTrust: webView.serverTrust)
         
         previousPrivacyInfosByURL[url] = privacyInfo
         
         return privacyInfo
-    }
-    
-    private func makeServerTrust() -> ServerTrust? {
-        var serverTrust: ServerTrust?
-        
-        if let domain = tabModel.link?.url.host, let trust = webView.serverTrust {
-            serverTrust = ServerTrust(host: domain, secTrust: trust)
-        }
-        
-        return serverTrust
     }
     
     private func makeProtectionStatus(for host: String) -> ProtectionStatus {

@@ -806,8 +806,8 @@ class TabViewController: UIViewController {
         
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
-                                      protectionStatus: makeProtectionStatus(for: host),
-                                      serverTrust: webView.serverTrust)
+                                      protectionStatus: makeProtectionStatus(for: host))
+        privacyInfo.serverTrust = webView.serverTrust
         
         previousPrivacyInfosByURL[url] = privacyInfo
         

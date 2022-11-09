@@ -41,13 +41,11 @@ class AddOrEditBookmarkViewController: UIViewController {
 //    init(editingEntityID: NSManagedObjectID?, parentFolderID: NSManagedObjectID?) {
         context = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
 
-        let isNew: Bool
         let editingEntity: BookmarkEntity
         if let editingEntityID = editingEntityID {
             guard let entity = context.object(with: editingEntityID) as? BookmarkEntity else {
                 fatalError("Failed to load entity when expected")
             }
-            isNew = false
             editingEntity = entity
         } else {
 
@@ -59,20 +57,15 @@ class AddOrEditBookmarkViewController: UIViewController {
             }
             assert(parent != nil)
 
-            editingEntity = BookmarkEntity(context: context)
-            editingEntity.uuid = UUID().uuidString
-            editingEntity.parent = parent
-
             // We don't support creating bookmarks from scratch at this time, so it must be a folder
-            editingEntity.isFolder = true
-            editingEntity.isFavorite = false
-
-            isNew = true
+            editingEntity = BookmarkEntity.makeFolder(title: "",
+                                                      parent: parent!,
+                                                      context: context)
         }
 
         viewModel = BookmarkEditorViewModel(storage: CoreDataBookmarksLogic(context: context),
                                             bookmark: editingEntity,
-                                            isNew: isNew)
+                                            isNew: editingEntity.isInserted)
 
         super.init(coder: coder)
     }

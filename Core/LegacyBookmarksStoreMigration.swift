@@ -63,7 +63,7 @@ public class LegacyBookmarksStoreMigration {
         }
         
         guard let newRoot = BookmarkUtils.fetchRootFolder(destination),
-              let newFavorites = BookmarkUtils.fetchFavoritesFolder(destination)?.mutableOrderedSetValue(forKeyPath: #keyPath(BookmarkEntity.favorites)) else {
+              let newFavoritesRoot = BookmarkUtils.fetchFavoritesFolder(destination) else {
             fatalError("Could not write to Bookmarks DB")
         }
         
@@ -120,9 +120,8 @@ public class LegacyBookmarksStoreMigration {
                                                               parent: newParent,
                                                               context: destination)
                 
-                newBookmark.isFavorite = bookmark.isFavorite
-                if newBookmark.isFavorite {
-                    newFavorites.add(newBookmark)
+                if bookmark.isFavorite {
+                    newBookmark.addToFavorites(favoritesRoot: newFavoritesRoot)
                 }
             }
             

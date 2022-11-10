@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Sugestão de preenchimento automático";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Marcador";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Marcador";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Abrir website";
+"action.suggestion.type.website" = "Abrir website";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Pesquisar no DuckDuckGo";
+"action.suggestion.type.search" = "Pesquisar no DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Adicionar";
@@ -28,8 +28,8 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Preenchimento automático de inícios de sessão";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Marcador";
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
+"action.title.bookmark" = "Adicionar aos marcadores";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Marcadores";

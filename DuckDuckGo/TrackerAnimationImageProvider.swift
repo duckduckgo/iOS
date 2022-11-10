@@ -20,6 +20,7 @@
 import Core
 import UIKit
 import Lottie
+import PrivacyDashboard
 
 private enum Const {
     static let maxNumberOfIcons = 4

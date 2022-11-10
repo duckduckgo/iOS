@@ -24,6 +24,10 @@ import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
+import PrivacyDashboard
+import UserScript
+import ContentBlocking
+import TrackerRadarKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -82,7 +86,7 @@ class TabViewController: UIViewController {
 
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
-    private(set) var previousPrivacyInfosByURL: [URL: PrivacyInfo] = [:]
+    private var previousPrivacyInfosByURL: [URL: PrivacyInfo] = [:]
     
     private let requeryLogic = RequeryLogic()
 
@@ -639,6 +643,7 @@ class TabViewController: UIViewController {
         guard webView.url != nil else { return }
         scheduleNavigationExpectation(destinationURL: webView.url)
         webView.reload()
+        privacyDashboard?.dismiss(animated: true)
     }
 
     func updateContentMode() {
@@ -778,7 +783,7 @@ class TabViewController: UIViewController {
     
     private var didGoBackForward: Bool = false
 
-    private func resetPrivacyInfo() {
+    private func resetDashboardInfo() {
         if let url = url {
             if didGoBackForward, let privacyInfo = previousPrivacyInfosByURL[url] {
                 self.privacyInfo = privacyInfo
@@ -801,22 +806,12 @@ class TabViewController: UIViewController {
         
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entity,
-                                      protectionStatus: makeProtectionStatus(for: host),
-                                      serverTrust: makeServerTrust())
+                                      protectionStatus: makeProtectionStatus(for: host))
+        privacyInfo.serverTrust = webView.serverTrust
         
         previousPrivacyInfosByURL[url] = privacyInfo
         
         return privacyInfo
-    }
-    
-    private func makeServerTrust() -> ServerTrust? {
-        var serverTrust: ServerTrust?
-        
-        if let domain = tabModel.link?.url.host, let trust = webView.serverTrust {
-            serverTrust = ServerTrust(host: domain, secTrust: trust)
-        }
-        
-        return serverTrust
     }
     
     private func makeProtectionStatus(for host: String) -> ProtectionStatus {
@@ -838,10 +833,6 @@ class TabViewController: UIViewController {
     }
  
     private func onPrivacyInfoChanged() {
-        if isError {
-            privacyInfo = nil
-        }
-        
         delegate?.tab(self, didChangePrivacyInfo: privacyInfo)
         privacyDashboard?.updatePrivacyInfo(privacyInfo)
     }
@@ -1011,7 +1002,7 @@ extension TabViewController: WKNavigationDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        resetPrivacyInfo()
+        resetDashboardInfo()
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
@@ -1132,9 +1123,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
-        
-        onPrivacyInfoChanged()
-        
+                
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -1229,8 +1218,10 @@ extension TabViewController: WKNavigationDelegate {
         os_log("webpageLoading failed", log: generalLog, type: .debug)
         if isError {
             showBars(animated: true)
+            privacyInfo = nil
+            onPrivacyInfoChanged()
         }
-        onPrivacyInfoChanged()
+        
         self.delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -1266,9 +1257,10 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
+        
         self.privacyInfo = makePrivacyInfo(url: url)
-
         onPrivacyInfoChanged()
+        
         checkLoginDetectionAfterNavigation()
     }
     
@@ -2158,7 +2150,6 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
         }
 
         privacyInfo?.trackerInfo.add(detectedTracker: tracker)
-        onPrivacyInfoChanged()
     }
 }
 

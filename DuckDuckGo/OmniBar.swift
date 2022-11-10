@@ -20,7 +20,7 @@
 import UIKit
 import Core
 import os.log
-import BrowserServicesKit
+import PrivacyDashboard
 
 extension OmniBar: NibLoading {}
 

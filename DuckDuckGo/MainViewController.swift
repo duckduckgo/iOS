@@ -24,6 +24,7 @@ import Lottie
 import Kingfisher
 import os.log
 import BrowserServicesKit
+import PrivacyDashboard
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -1710,7 +1711,6 @@ extension MainViewController: AutoClearWorker {
     func forgetData() {
         findInPageView?.done()
         
-        ServerTrustCache.shared.clear()
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)

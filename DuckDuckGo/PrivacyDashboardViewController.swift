@@ -22,7 +22,7 @@ import WebKit
 import Combine
 import Core
 import BrowserServicesKit
-import PrivacyDashboardResources
+import PrivacyDashboard
 
 class PrivacyDashboardViewController: UIViewController {
     
@@ -38,13 +38,13 @@ class PrivacyDashboardViewController: UIViewController {
           privacyInfo: PrivacyInfo?,
           privacyConfigurationManager: PrivacyConfigurationManaging,
           contentBlockingManager: ContentBlockerRulesManager) {
-        privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo)
+        self.privacyDashboardController = PrivacyDashboardController(privacyInfo: privacyInfo)
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
         
         super.init(coder: coder)
         
-        setupPrivacyDashboardControllerHandlers()
+        self.privacyDashboardController.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -62,28 +62,6 @@ class PrivacyDashboardViewController: UIViewController {
     public override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         privacyDashboardController.cleanUp()
-    }
-    
-    private func setupPrivacyDashboardControllerHandlers() {
-        privacyDashboardController.onProtectionSwitchChange = { [weak self] isEnabled in
-            self?.privacyDashboardProtectionSwitchChangeHandler(enabled: isEnabled)
-        }
-        
-        privacyDashboardController.onCloseTapped = { [weak self] in
-            self?.privacyDashboardCloseTappedHandler()
-        }
-        
-        privacyDashboardController.onShowReportBrokenSiteTapped = { [weak self] in
-            self?.performSegue(withIdentifier: "ReportBrokenSite", sender: self)
-        }
-        
-        privacyDashboardController.onOpenUrlInNewTab = { [weak self] url in
-            guard let mainViewController = self?.presentingViewController as? MainViewController else { return }
-            
-            self?.dismiss(animated: true) {
-                mainViewController.loadUrlInNewTab(url, inheritedAttribution: nil)
-            }
-        }
     }
     
     public func updatePrivacyInfo(_ privacyInfo: PrivacyInfo?) {
@@ -137,6 +115,29 @@ extension PrivacyDashboardViewController: Themable {
         case .dark: return .dark
         default: return .light
         }
+    }
+}
+
+extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
+    
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didChangeProtectionSwitch isEnabled: Bool) {
+        privacyDashboardProtectionSwitchChangeHandler(enabled: isEnabled)
+    }
+    
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboardController, didRequestOpenUrlInNewTab url: URL) {
+        guard let mainViewController = presentingViewController as? MainViewController else { return }
+        
+        dismiss(animated: true) {
+            mainViewController.loadUrlInNewTab(url, inheritedAttribution: nil)
+        }
+    }
+    
+    func privacyDashboardControllerDidTapClose(_ privacyDashboardController: PrivacyDashboardController) {
+        privacyDashboardCloseTappedHandler()
+    }
+    
+    func privacyDashboardControllerDidRequestShowReportBrokenSite(_ privacyDashboardController: PrivacyDashboardController) {
+        performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
 }
 

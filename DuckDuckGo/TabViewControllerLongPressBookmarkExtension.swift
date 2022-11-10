@@ -24,27 +24,27 @@ import Bookmarks
 
 extension TabViewController {
     func saveAsBookmark(favorite: Bool, viewModel: MenuBookmarksViewModel = .make()) {
-        
         guard let link = link, !isError else {
-            os_log("Invalid bookmark link found on bookmark long press", log: generalLog, type: .debug)
+            assertionFailure()
             return
         }
 
         let bookmark = viewModel.bookmark(for: link.url)
 
-        if favorite {
-            if bookmark?.isFavorite == false {
-                viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
-                DispatchQueue.main.async {
-                    ActionMessageView.present(message: UserText.webSaveFavoriteDone)
-                }
+        if favorite && bookmark?.isFavorite == false {
+            viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webSaveFavoriteDone)
             }
         } else if bookmark == nil {
             viewModel.createBookmark(title: link.displayTitle, url: link.url)
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveBookmarkDone)
             }
+        } else {
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
+            }
         }
-
     }
 }

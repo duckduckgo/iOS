@@ -302,8 +302,7 @@ class MainViewController: UIViewController {
         }
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
-        
-        currentTab!.saveAsBookmark(favorite: true)
+        currentTab?.saveAsBookmark(favorite: true)
     }
     
     // swiftlint:disable cyclomatic_complexity

@@ -331,7 +331,6 @@ class TabViewController: UIViewController {
     }
 
     override func buildActivities() -> [UIActivity] {
-        #warning("activities should use new bookmarks and missing toggle favorite")
         var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
 
         activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))

@@ -1053,11 +1053,14 @@ extension TabViewController: WKNavigationDelegate {
 
             } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager
                 .downloadMetaData(for: navigationResponse.response) {
-
-                self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                    self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                } cancelHandler: {
+                if view.window == nil {
                     decisionHandler(.cancel)
+                } else {
+                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                        self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+                    } cancelHandler: {
+                        decisionHandler(.cancel)
+                    }
                 }
             } else {
                 Pixel.fire(pixel: .unhandledDownload)

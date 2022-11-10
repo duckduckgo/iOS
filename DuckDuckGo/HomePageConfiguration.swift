@@ -29,7 +29,8 @@ final class HomePageConfiguration {
         case favorites
         case homeMessage
     }
-    
+
+    #warning("Use new database")
     func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
         let fixed = bookmarksManager.favoritesCount == 0
         return [

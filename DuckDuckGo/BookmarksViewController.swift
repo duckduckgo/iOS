@@ -221,10 +221,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                selector: #selector(onApplicationBecameActive),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
-        NotificationCenter.default.addObserver(self, selector:
-                                                #selector(dataDidChange),
-                                               name: BookmarksManager.Notifications.bookmarksDidChange,
-                                               object: nil)
     }
 
     private func configureSelector() {
@@ -302,9 +298,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private func refreshEditButton() {
         if !favoritesContainer.isHidden {
-            #warning("refer to favorites view model")
-//            editButton.isEnabled = dataSource.bookmarksManager.favoritesCount > 0
-//            editButton.title = UserText.actionGenericEdit
+            #warning("add has favorites method")
+            // editButton.isEnabled = viewModel.hasFavorites
+            editButton.title = UserText.actionGenericEdit
         } else if (currentDataSource.isEmpty && !isEditingBookmarks) || currentDataSource === searchDataSource {
             disableEditButton()
         } else if !isEditingBookmarks {

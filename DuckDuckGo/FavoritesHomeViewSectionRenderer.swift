@@ -224,6 +224,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        print("***", #function)
         return previewForConfiguration(configuration, inCollectionView: collectionView)
     }
 

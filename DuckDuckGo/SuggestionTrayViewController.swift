@@ -20,6 +20,7 @@
 import UIKit
 import Core
 
+#warning("still using bookmarks manager")
 class SuggestionTrayViewController: UIViewController {
     
     @IBOutlet weak var backgroundView: UIView!

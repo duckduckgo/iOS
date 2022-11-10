@@ -21,6 +21,7 @@ import UIKit
 import Core
 import WidgetKit
 
+#warning("still using bookmarks manager")
 class ImageCacheDebugViewController: UITableViewController {
 
     private let titles = [

@@ -21,6 +21,7 @@ import Foundation
 import Core
 import os.log
 
+#warning("still using bookmarks manager")
 extension TabViewController {
     func saveAsBookmark(favorite: Bool) {
         

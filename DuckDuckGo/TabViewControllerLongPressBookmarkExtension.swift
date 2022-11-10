@@ -20,37 +20,31 @@
 import Foundation
 import Core
 import os.log
+import Bookmarks
 
-#warning("still using bookmarks manager")
 extension TabViewController {
-    func saveAsBookmark(favorite: Bool) {
+    func saveAsBookmark(favorite: Bool, viewModel: MenuBookmarksViewModel = .make()) {
         
         guard let link = link, !isError else {
             os_log("Invalid bookmark link found on bookmark long press", log: generalLog, type: .debug)
             return
         }
 
-        let bookmarksManager = BookmarksManager()
-        bookmarksManager.contains(url: link.url) { contains in
-            
-            if contains {
+        let bookmark = viewModel.bookmark(for: link.url)
+
+        if favorite {
+            if bookmark?.isFavorite == false {
+                viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
                 DispatchQueue.main.async {
-                    ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
-                }
-            } else {
-                if favorite {
-                    bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url)
-                    DispatchQueue.main.async {
-                        ActionMessageView.present(message: UserText.webSaveFavoriteDone)
-                    }
-                } else {
-                    bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
-                    DispatchQueue.main.async {
-                        ActionMessageView.present(message: UserText.webSaveBookmarkDone)
-                    }
+                    ActionMessageView.present(message: UserText.webSaveFavoriteDone)
                 }
             }
-            
+        } else if bookmark == nil {
+            viewModel.createBookmark(title: link.displayTitle, url: link.url)
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+            }
         }
+
     }
 }

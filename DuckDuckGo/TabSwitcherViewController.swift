@@ -23,7 +23,6 @@ import WebKit
 import os.log
 import Bookmarks
 
-#warning("use new database")
 // swiftlint:disable file_length
 class TabSwitcherViewController: UIViewController {
     
@@ -34,7 +33,10 @@ class TabSwitcherViewController: UIViewController {
         static let cellMaxHeight: CGFloat = 209.0
     }
 
-    typealias BookmarkAllResult = (newBookmarksCount: Int, existingBookmarksCount: Int)
+    struct BookmarkAllResult {
+        let newCount: Int
+        let existingCount: Int
+    }
     
     @IBOutlet weak var titleView: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -208,50 +210,15 @@ class TabSwitcherViewController: UIViewController {
     }
     
     fileprivate func displayBookmarkAllStatusMessage(with results: BookmarkAllResult, openTabsCount: Int) {
-        if results.newBookmarksCount == openTabsCount {
+        if results.newCount == openTabsCount {
             ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         } else {
-            let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
+            let failedToSaveCount = openTabsCount - results.newCount - results.existingCount
             os_log("Failed to save %d tabs", log: generalLog, type: .debug, failedToSaveCount)
             ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
         }
     }
-    
-    fileprivate func bookmarkAll(tabsToBookmark: [Tab],
-                                 newBookmarksCount: Int = 0,
-                                 existingBookmarksCount: Int = 0,
-                                 bookmarksManager: BookmarksManager,
-                                 completion: @escaping (BookmarkAllResult) -> Void) {
-        
-        if tabsToBookmark.count == 0 {
-            completion((newBookmarksCount: newBookmarksCount, existingBookmarksCount: existingBookmarksCount))
-            return
-        }
-        
-        let tab = tabsToBookmark[0]
-        if let link = tab.link {
-            bookmarksManager.contains(url: link.url) { contains in
-                if contains {
-                    self.bookmarkAll(tabsToBookmark: Array(tabsToBookmark.dropFirst()),
-                                     newBookmarksCount: newBookmarksCount,
-                                     existingBookmarksCount: existingBookmarksCount + 1,
-                                     bookmarksManager: bookmarksManager,
-                                     completion: completion)
-                } else {
-                    bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil) { _, _ in
-                        self.bookmarkAll(tabsToBookmark: Array(tabsToBookmark.dropFirst()),
-                                         newBookmarksCount: newBookmarksCount + 1,
-                                         existingBookmarksCount: existingBookmarksCount,
-                                         bookmarksManager: bookmarksManager,
-                                         completion: completion)
-                    }
-                }
-            }
-        } else {
-            os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
-        }
-    }
-    
+   
     @IBAction func onBookmarkAllOpenTabsPressed(_ sender: UIButton) {
          
         let alert = UIAlertController(title: UserText.alertBookmarkAllTitle,
@@ -260,13 +227,24 @@ class TabSwitcherViewController: UIViewController {
         alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
-            self.bookmarkAll(tabsToBookmark: self.tabsModel.tabs, bookmarksManager: BookmarksManager()) { bookmarkAllResult in
-                
-                self.displayBookmarkAllStatusMessage(with: bookmarkAllResult, openTabsCount: self.tabsModel.tabs.count)
-            }
+            let result = self.bookmarkAll()
+            self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
         }
         
         present(alert, animated: true, completion: nil)
+    }
+
+    private func bookmarkAll(viewModel: MenuBookmarksViewModel = .make()) -> BookmarkAllResult {
+        let tabs = self.tabsModel.tabs
+        var newCount = 0
+        tabs.forEach { tab in
+            guard let link = tab.link else { return }
+            if viewModel.bookmark(for: link.url) == nil {
+                viewModel.createBookmark(title: link.displayTitle, url: link.url)
+                newCount += 1
+            }
+        }
+        return .init(newCount: newCount, existingCount: tabs.count - newCount)
     }
     
     @IBAction func onDisplayModeButtonPressed(_ sender: UIButton) {

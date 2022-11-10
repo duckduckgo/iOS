@@ -24,10 +24,18 @@ import Persistence
 
 extension FavoritesListViewModel {
 
-    static func make(db: CoreDataDatabase = BookmarksDatabase.shared,
-                     concurrencyType: NSManagedObjectContextConcurrencyType = .mainQueueConcurrencyType) -> FavoritesListViewModel {
+    static func make(db: CoreDataDatabase = BookmarksDatabase.shared) -> FavoritesListViewModel {
         let context = db.makeContext(concurrencyType: .mainQueueConcurrencyType)
         return FavoritesListViewModel(storage: CoreDataFavoritesLogic(context: context))
+    }
+
+}
+
+extension MenuBookmarksViewModel {
+
+    static func make(db: CoreDataDatabase = BookmarksDatabase.shared) -> MenuBookmarksViewModel {
+        let context = db.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        return MenuBookmarksViewModel(viewContext: context)
     }
 
 }

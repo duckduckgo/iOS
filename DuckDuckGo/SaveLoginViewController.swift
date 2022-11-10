@@ -26,12 +26,15 @@ protocol SaveLoginViewControllerDelegate: AnyObject {
     func saveLoginViewController(_ viewController: SaveLoginViewController, didSaveCredentials credentials: SecureVaultModels.WebsiteCredentials)
     func saveLoginViewController(_ viewController: SaveLoginViewController, didUpdateCredentials credentials: SecureVaultModels.WebsiteCredentials)
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController)
+    func saveLoginViewController(_ viewController: SaveLoginViewController,
+                                 didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController)
 }
 
 class SaveLoginViewController: UIViewController {
     weak var delegate: SaveLoginViewControllerDelegate?
     private let credentialManager: SaveAutofillLoginManager
     private let domainLastShownOn: String?
+    private var viewModel: SaveLoginViewModel?
 
     internal init(credentialManager: SaveAutofillLoginManager, domainLastShownOn: String? = nil) {
         self.credentialManager = credentialManager
@@ -58,10 +61,37 @@ class SaveLoginViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        guard let viewModel = viewModel else { return }
+        
+        if viewModel.didSave {
+            return
+        }
+        switch viewModel.layoutType {
+        case .newUser:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed)
+        case .saveLogin:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed)
+        case .savePassword:
+            Pixel.fire(pixel: .autofillLoginsSavePasswordModalDismissed)
+        case .saveAdditionalLogin:
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDismissed)
+        case .updateUsername:
+            Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDismissed)
+        case .updatePassword:
+            Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalDismissed)
+        }
+        
+        viewModel.viewControllerDidDisappear()
+    }
 
     private func setupSaveLoginView() {
         let saveViewModel = SaveLoginViewModel(credentialManager: credentialManager, domainLastShownOn: domainLastShownOn)
         saveViewModel.delegate = self
+        self.viewModel = saveViewModel
 
         let saveLoginView = SaveLoginView(viewModel: saveViewModel)
         let controller = UIHostingController(rootView: saveLoginView)
@@ -70,7 +100,7 @@ class SaveLoginViewController: UIViewController {
         
         switch saveViewModel.layoutType {
         case .newUser:
-            Pixel.fire(pixel: .autofillLoginsSaveLoginModalOnboardingDisplayed)
+            Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
         case .saveLogin:
             Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
         case .savePassword:
@@ -78,7 +108,7 @@ class SaveLoginViewController: UIViewController {
         case .saveAdditionalLogin:
             Pixel.fire(pixel: .autofillLoginsSaveLoginModalDisplayed)
         case .updateUsername:
-            Pixel.fire(pixel: .autofillLoginsUpdateUsernameModelDisplayed)
+            Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalDisplayed)
         case .updatePassword:
             Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalDisplayed)
         }
@@ -99,7 +129,7 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
             if viewModel.layoutType == .updatePassword {
                 Pixel.fire(pixel: .autofillLoginsUpdatePasswordModalConfirmed)
             } else {
-                Pixel.fire(pixel: .autofillLoginsUpdateUsernameModelConfirmed)
+                Pixel.fire(pixel: .autofillLoginsUpdateUsernameModalConfirmed)
             }
             delegate?.saveLoginViewController(self, didUpdateCredentials: credentialManager.credentials)
         }
@@ -109,7 +139,10 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
         delegate?.saveLoginViewControllerDidCancel(self)
     }
 
-    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel) {
+    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel, isAlreadyDismissed: Bool) {
+        
+        let isSelfPresentingAlert = !isAlreadyDismissed
+        
         let alertController = UIAlertController(title: UserText.autofillKeepEnabledAlertTitle,
                                                 message: UserText.autofillKeepEnabledAlertMessage,
                                                 preferredStyle: .alert)
@@ -117,13 +150,17 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
 
         let disableAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertDisableAction, style: .cancel) { _ in
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillDisabled)
-            self.delegate?.saveLoginViewControllerDidCancel(self)
+            if isSelfPresentingAlert {
+                self.delegate?.saveLoginViewControllerDidCancel(self)
+            }
             AppDependencyProvider.shared.appSettings.autofillCredentialsEnabled = false
         }
 
         let keepUsingAction = UIAlertAction(title: UserText.autofillKeepEnabledAlertKeepUsingAction, style: .default) { _ in
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptAutofillKept)
-            self.delegate?.saveLoginViewControllerDidCancel(self)
+            if isSelfPresentingAlert {
+                self.delegate?.saveLoginViewControllerDidCancel(self)
+            }
         }
 
         alertController.addAction(disableAction)
@@ -131,7 +168,11 @@ extension SaveLoginViewController: SaveLoginViewModelDelegate {
 
         alertController.preferredAction = keepUsingAction
 
-        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
-        present(alertController, animated: true)
+        if isAlreadyDismissed {
+            delegate?.saveLoginViewController(self, didRequestPresentConfirmKeepUsingAlertController: alertController)
+        } else {
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
+            present(alertController, animated: true)
+        }
     }
 }

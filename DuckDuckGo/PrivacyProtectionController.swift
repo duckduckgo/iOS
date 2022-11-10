@@ -25,9 +25,8 @@ protocol PrivacyProtectionDelegate: AnyObject {
 
     func omniBarTextTapped()
 
-    func reload(scripts: Bool)
-
     func getCurrentWebsiteInfo() -> BrokenSiteInfo
+
 }
 
 class PrivacyProtectionController: ThemableNavigationController {
@@ -40,7 +39,7 @@ class PrivacyProtectionController: ThemableNavigationController {
     var errorText: String?
   
     private var storageCache = AppDependencyProvider.shared.storageCache.current
-    private var privacyConfig = ContentBlocking.privacyConfigurationManager.privacyConfig
+    private var privacyConfig = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +65,7 @@ class PrivacyProtectionController: ThemableNavigationController {
             PrivacyProtectionErrorController(coder: coder, configuration: self.privacyConfig)
         }) else { return }
         controller.errorText = errorText
+        controller.delegate = self
         pushViewController(controller, animated: true)
     }
 
@@ -135,7 +135,6 @@ extension PrivacyProtectionController: PrivacyProtectionErrorDelegate {
             if let newCache = newCache {
                 self.storageCache = newCache
                 controller.dismiss(animated: true)
-                self.privacyProtectionDelegate?.reload(scripts: true)
             } else {
                 controller.resetTryAgain()
             }

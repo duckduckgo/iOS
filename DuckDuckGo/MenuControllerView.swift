@@ -22,7 +22,7 @@ import UIKit
 
 extension View {
 
-    func menuController(_ title: String, secondaryTitle: String? = "", action: @escaping () -> Void, secondaryAction:(() -> Void)? = nil, onOpen: (() -> Void)? = nil, onClose: (() -> Void)? = nil) -> some View {
+    func menuController(_ title: String, secondaryTitle: String? = "", action: @escaping () -> Void, secondaryAction: (() -> Void)? = nil, onOpen: (() -> Void)? = nil, onClose: (() -> Void)? = nil) -> some View {
         MenuControllerView(content: self,
                            title: title,
                            secondaryTitle: secondaryTitle,

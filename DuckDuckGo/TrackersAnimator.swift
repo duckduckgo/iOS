@@ -125,8 +125,8 @@ class TrackersAnimator {
                           duration: Constants.hideRevealAnimatonTime,
                           options: .transitionCrossDissolve,
                           animations: {
-                            omniBar.siteRatingView.mode = .ready
-                            omniBar.siteRatingView.refresh(with: ContentBlocking.privacyConfigurationManager.privacyConfig)
+            omniBar.siteRatingView.mode = .ready
+            omniBar.siteRatingView.refresh(with: ContentBlocking.shared.privacyConfigurationManager.privacyConfig)
         })
     }
     

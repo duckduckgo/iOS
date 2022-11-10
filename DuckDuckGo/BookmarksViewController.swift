@@ -558,7 +558,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func prepareForSearching() {
-        print("***", #function, "TODO")
+#warning("prepare for searching")
         finishEditing()
         disableEditButton()
         disableAddFolderButton()

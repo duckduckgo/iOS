@@ -69,11 +69,5 @@ class BookmarkFolderCell: UITableViewCell {
             accessoryType = isSelected ? .checkmark : .none
         }
     }
-    
-    func setUpAddFolderCell() {
-        depth = 0
-        title.text = UserText.addbookmarkFolderButton
-        folderImageView.image = UIImage(named: "FolderWithPlus")
-    }
-    
+       
 }

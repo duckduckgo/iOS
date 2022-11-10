@@ -94,7 +94,8 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(viewContext: BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType))
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(
+        viewContext: BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType))
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()

@@ -176,6 +176,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell),
               let favorite = viewModel.favorite(atIndex: indexPath.row) else { return }
+        #warning("needs fix")
         Pixel.fire(pixel: .homeScreenEditFavorite)
         controller?.favoritesRenderer(self, didRequestEdit: favorite)
     }

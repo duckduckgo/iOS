@@ -38,7 +38,6 @@ class AddOrEditBookmarkViewController: UIViewController {
     let viewModel: BookmarkEditorViewModel
 
     init?(coder: NSCoder, editingEntityID: NSManagedObjectID?, parentFolderID: NSManagedObjectID?) {
-//    init(editingEntityID: NSManagedObjectID?, parentFolderID: NSManagedObjectID?) {
         context = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
 
         let editingEntity: BookmarkEntity
@@ -63,7 +62,8 @@ class AddOrEditBookmarkViewController: UIViewController {
                                                       context: context)
         }
 
-        viewModel = BookmarkEditorViewModel(storage: CoreDataBookmarksLogic(context: context),
+        viewModel = BookmarkEditorViewModel(context: context,
+                                            storage: CoreDataBookmarksLogic(context: context),
                                             bookmark: editingEntity,
                                             isNew: editingEntity.isInserted)
 

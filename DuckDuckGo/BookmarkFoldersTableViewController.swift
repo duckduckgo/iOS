@@ -36,6 +36,11 @@ class BookmarkFoldersViewController: UITableViewController {
     var viewModel: BookmarkEditorViewModel?
     var selected: IndexPath?
 
+    var locationCount: Int {
+        guard let viewModel = viewModel else { return 0 }
+        return viewModel.locations.count
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section != 0 else { return }
         guard let viewModel = viewModel else {
@@ -57,40 +62,100 @@ class BookmarkFoldersViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            return viewModel?.bookmark.isFolder == true ?
-                detailCellForFolder(tableView) :
-                detailCellForBookmark(tableView)
-        } else if indexPath.row >= viewModel?.locations.count ?? 0 {
-            return tableView.dequeueReusableCell(withIdentifier: "AddFolderCell")!
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier)
-            if let viewModel = viewModel, let folderCell = cell as? BookmarkFolderCell {
-                folderCell.folder = viewModel.locations[indexPath.row].bookmark
-                folderCell.depth = viewModel.locations[indexPath.row].depth
-                folderCell.isSelected = viewModel.isSelected(viewModel.locations[indexPath.row].bookmark)
-                if folderCell.isSelected {
-                    selected = indexPath
-                }
+
+        if viewModel?.bookmark.isFolder == true {
+            switch indexPath.section {
+            case 0:
+                return detailCellForFolder(tableView)
+
+            case 1:
+                return folderSelectorCell(tableView, forIndexPath: indexPath)
+
+            default:
+                fatalError("Unexpected section")
             }
-            return cell!
+        } else {
+            switch indexPath.section {
+            case 0:
+                return titleAndUrlCellForBookmark(tableView)
+
+            case 1:
+                return favoriteCellForBookmark(tableView)
+
+            case 2:
+                return indexPath.row >= locationCount ?
+                    tableView.dequeueReusableCell(withIdentifier: "AddFolderCell")! :
+                    folderSelectorCell(tableView, forIndexPath: indexPath)
+
+            default:
+                fatalError("Unexpected section")
+            }
         }
     }
 
+    func folderSelectorCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkFolderCell.reuseIdentifier) else {
+            fatalError("Failed to dequeue cell for BookmarkFolder")
+        }
+        if let viewModel = viewModel, let folderCell = cell as? BookmarkFolderCell {
+            folderCell.folder = viewModel.locations[indexPath.row].bookmark
+            folderCell.depth = viewModel.locations[indexPath.row].depth
+            folderCell.isSelected = viewModel.isSelected(viewModel.locations[indexPath.row].bookmark)
+            if folderCell.isSelected {
+                selected = indexPath
+            }
+        }
+        return cell
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return viewModel?.bookmark.isFolder == true ? 2 : 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let viewModel = viewModel else { return 0 }
-        return section == 0 ? 1 : viewModel.locations.count + (viewModel.canAddNewFolder ? 1 : 0)
+        guard let viewModel = viewModel else {
+            assertionFailure()
+            return 0
+        }
+
+        let locationCount = self.locationCount + (viewModel.canAddNewFolder ? 1 : 0)
+        if viewModel.bookmark.isFolder {
+            switch section {
+            case 0: return 1
+            case 1: return locationCount
+            default: fatalError("Unexpected section")
+            }
+        } else {
+            switch section {
+            case 0: return 1
+            case 1: return 1
+            case 2: return locationCount
+            default: fatalError("Unexpected section")
+            }
+        }
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 1 ? UserText.bookmarkFolderSelectTitle : nil
+        if viewModel?.bookmark.isFolder == true {
+            return section == 1 ? UserText.bookmarkFolderSelectTitle : nil
+        } else {
+            return section == 2 ? UserText.bookmarkFolderSelectTitle : nil
+        }
     }
 
-    func detailCellForBookmark(_ tableView: UITableView) -> BookmarkDetailsCell {
+    func favoriteCellForBookmark(_ tableView: UITableView) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.reuseIdentifier) as? FavoriteCell else {
+            fatalError("Failed to dequeue \(FavoriteCell.reuseIdentifier) as FavoriteCell")
+        }
+
+        cell.favoriteToggle.isOn = viewModel?.bookmark.isFavorite == true
+        cell.favoriteToggle.removeTarget(self, action: #selector(favoriteToggleDidChange(_:)), for: .valueChanged)
+        cell.favoriteToggle.addTarget(self, action: #selector(favoriteToggleDidChange(_:)), for: .valueChanged)
+
+        return cell
+    }
+
+    func titleAndUrlCellForBookmark(_ tableView: UITableView) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkDetailsCell.reuseIdentifier) as? BookmarkDetailsCell else {
             fatalError("Failed to dequeue \(BookmarkDetailsCell.reuseIdentifier) as BookmarkDetailsCell")
         }
@@ -130,6 +195,14 @@ class BookmarkFoldersViewController: UITableViewController {
         return cell
     }
 
+    @objc func favoriteToggleDidChange(_ toggle: UISwitch) {
+        if toggle.isOn {
+            viewModel?.addToFavorites()
+        } else {
+            viewModel?.removeFromFavorites()
+        }
+    }
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         viewModel?.bookmark.title = textField.text?.trimmingWhitespace()
         delegate?.textDidChange(self)
@@ -154,5 +227,13 @@ class BookmarkFoldersViewController: UITableViewController {
         viewModel?.refresh()
         tableView.reloadData()
     }
+
+}
+
+class FavoriteCell: UITableViewCell {
+
+    static let reuseIdentifier = "FavoriteCell"
+
+    @IBOutlet var favoriteToggle: UISwitch!
 
 }

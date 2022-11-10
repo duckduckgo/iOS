@@ -21,10 +21,6 @@ import Foundation
 import CoreData
 import Bookmarks
 
-// swiftlint:disable line_length
-// swiftlint:disable cyclomatic_complexity
-// swiftlint:disable function_body_length
-
 public class LegacyBookmarksStoreMigration {
     
     internal enum LegacyTopLevelFolderType {
@@ -48,7 +44,9 @@ public class LegacyBookmarksStoreMigration {
         // In case of corruption, we can cat more than one 'root'
         return results
     }
-    
+
+    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable function_body_length
     public static func migrate(source: NSManagedObjectContext, destination: NSManagedObjectContext) {
         
         // Do not migrate more than once
@@ -136,5 +134,7 @@ public class LegacyBookmarksStoreMigration {
             fatalError("Could not migrate Bookmarks")
         }
     }
-    
+    // swiftlint:enable cyclomatic_complexity
+    // swiftlint:enable function_body_length
+
 }

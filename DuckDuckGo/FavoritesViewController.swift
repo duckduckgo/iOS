@@ -225,11 +225,3 @@ extension FavoritesViewController: Themable {
         view.backgroundColor = .clear
     }
 }
-
-extension FavoritesListViewModel {
-
-    static func make(db: CoreDataDatabase = BookmarksDatabase.shared) -> FavoritesListViewModel {
-        FavoritesListViewModel(storage: CoreDataFavoritesLogic(context: db.makeContext(concurrencyType: .mainQueueConcurrencyType)))
-    }
-
-}

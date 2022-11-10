@@ -21,6 +21,7 @@ import Foundation
 import BrowserServicesKit
 import Core
 import os.log
+import Bookmarks
 
 final class HomePageConfiguration {
     
@@ -30,9 +31,8 @@ final class HomePageConfiguration {
         case homeMessage
     }
 
-    #warning("Use new database")
-    func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
-        let fixed = bookmarksManager.favoritesCount == 0
+    func components(favoritesViewModel: FavoritesListViewModel = .make()) -> [Component] {
+        let fixed = favoritesViewModel.count == 0
         return [
             .navigationBarSearch(fixed: fixed),
             .homeMessage,

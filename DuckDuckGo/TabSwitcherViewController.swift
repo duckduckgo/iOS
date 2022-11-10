@@ -21,6 +21,7 @@ import UIKit
 import Core
 import WebKit
 import os.log
+import Bookmarks
 
 #warning("use new database")
 // swiftlint:disable file_length

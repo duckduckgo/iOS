@@ -44,7 +44,7 @@ class AutocompleteRequestTests: XCTestCase {
         })
 
         let expect = expectation(description: "test")
-        request.execute { _, _ in
+        request.performAutoCompleteRequest { _, _ in
             expect.fulfill()
         }
         waitForExpectations(timeout: 1.0, handler: nil)
@@ -60,7 +60,7 @@ class AutocompleteRequestTests: XCTestCase {
         })
 
         let expect = expectation(description: "test")
-        request.execute { suggestions, _ in
+        request.performAutoCompleteRequest { suggestions, _ in
             XCTAssertNotNil(suggestions?[0].url)
             XCTAssertNil(suggestions?[1].url)
             expect.fulfill()
@@ -78,7 +78,7 @@ class AutocompleteRequestTests: XCTestCase {
         })
 
         let expect = expectation(description: "test")
-        request.execute { suggestions, _ in
+        request.performAutoCompleteRequest { suggestions, _ in
             XCTAssertNotNil(suggestions?[0].url)
             XCTAssertNil(suggestions?[1].url)
             expect.fulfill()
@@ -96,7 +96,7 @@ class AutocompleteRequestTests: XCTestCase {
         })
 
         let expect = expectation(description: "test")
-        request.execute { suggestions, _ in
+        request.performAutoCompleteRequest { suggestions, _ in
             XCTAssertEqual(2, suggestions?.count)
             expect.fulfill()
         }

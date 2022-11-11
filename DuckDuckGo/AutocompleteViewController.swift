@@ -136,7 +136,7 @@ class AutocompleteViewController: UIViewController {
 
     private func cancelInFlightRequests() {
         if let inFlightRequest = lastRequest {
-            inFlightRequest.cancel()
+            inFlightRequest.cancelAutoCompleteRequest()
             lastRequest = nil
         }
     }
@@ -154,7 +154,7 @@ class AutocompleteViewController: UIViewController {
             return
         }
 
-        lastRequest!.execute { [weak self] (suggestions, error) in
+        lastRequest!.performAutoCompleteRequest { [weak self] (suggestions, error) in
             guard let strongSelf = self else { return }
             
             strongSelf.bookmarksSearch.search(query: query) { matches in

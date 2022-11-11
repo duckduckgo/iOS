@@ -26,16 +26,24 @@ class AutocompleteRequest {
 
     private let url: URL
     private var task: URLSessionDataTask?
+    private var request: URLRequest!
 
     init(query: String) throws {
         self.url = try AppUrls().autocompleteUrl(forText: query)
+        self.initializeRequestWithURL()
+        self.configureRequestHTTPHeaderFields()
+    }
+        
+    private func initializeRequestWithURL() {
+        self.request = URLRequest.developerInitiated(self.url)
+    }
+    
+    private func configureRequestHTTPHeaderFields() {
+        self.request.allHTTPHeaderFields = APIHeaders().defaultHeaders
     }
 
-    func execute(completion: @escaping Completion) {
-        var request = URLRequest.developerInitiated(url)
-        request.allHTTPHeaderFields = APIHeaders().defaultHeaders
-
-        task = URLSession.shared.dataTask(with: request) { [weak self] (data, _, error) -> Void in
+    func performAutoCompleteRequest(completion: @escaping Completion) {
+        task = URLSession.shared.dataTask(with: self.request) { [weak self] (data, _, error) -> Void in
             guard let weakSelf = self else { return }
             do {
                 let suggestions = try weakSelf.processResult(data: data, error: error)
@@ -48,24 +56,6 @@ class AutocompleteRequest {
     }
 
     private func processResult(data: Data?, error: Error?) throws -> [Suggestion] {
-//        if let error = error { throw error }
-//        guard let data = data else { throw ApiRequestError.noData }
-//        let entries = try JSONDecoder().decode([AutocompleteEntry].self, from: data)
-//
-//        return entries.compactMap {
-//            guard let phrase = $0.phrase else { return nil }
-//
-//            if let isNav = $0.isNav {
-//                // We definitely have a nav indication so use it. Phrase should be a fully qualified URL.
-//                //  Assume HTTP and that we'll auto-upgrade if needed.
-//                let url = isNav ? URL(string: "http://\(phrase)") : nil
-//                return Suggestion(source: .remote, suggestion: phrase, url: url)
-//            } else {
-//                // We need to infer nav based on the phrase to maintain previous behaviour (ie treat phrase that look like URLs like URLs)
-//                let url = URL.webUrl(from: phrase)
-//                return Suggestion(source: .remote, suggestion: phrase, url: url)
-//            }
-//        }
         let autocompleteRequestResultProcessor = AutocompleteRequestResultProcessor()
         return try autocompleteRequestResultProcessor.processResult(data: data, error: error)
     }
@@ -82,7 +72,8 @@ class AutocompleteRequest {
         }
     }
 
-    func cancel() {
+    func cancelAutoCompleteRequest() {
         task?.cancel()
     }
+    
 }

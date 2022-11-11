@@ -121,7 +121,7 @@ class AutocompleteRequestResultProcessor {
         listOfSuggestionsFromAutocompleteData.append(nonNilNavAutoCompleteSuggestion)
     }
     
-    private func createNonNilNavAutoCompleteSuggestionFromEntry(autocompleteEntry : AutocompleteEntry) -> Suggestion {
+    private func createNonNilNavAutoCompleteSuggestionFromEntry(autocompleteEntry: AutocompleteEntry) -> Suggestion {
         if isEntryANav(autocompleteEntry) {
             return createNavAutoCompleteSuggestionFromEntry(autocompleteEntry: autocompleteEntry)
         }
@@ -132,12 +132,12 @@ class AutocompleteRequestResultProcessor {
         return entry.isNav!
     }
     
-    private func createNavAutoCompleteSuggestionFromEntry(autocompleteEntry : AutocompleteEntry) -> Suggestion {
+    private func createNavAutoCompleteSuggestionFromEntry(autocompleteEntry: AutocompleteEntry) -> Suggestion {
         let url = URL(string: "http://\(autocompleteEntry.phrase!)")
         return createSuggestionFromPhraseAndURL(autocompletePhrase: autocompleteEntry.phrase!, url: url)
     }
     
-    private func createNonNavAutoCompleteSuggeztionFromEntry(autocompleteEntry : AutocompleteEntry) -> Suggestion {
+    private func createNonNavAutoCompleteSuggeztionFromEntry(autocompleteEntry: AutocompleteEntry) -> Suggestion {
         return createSuggestionFromPhraseAndURL(autocompletePhrase: autocompleteEntry.phrase!, url: nil)
     }
     

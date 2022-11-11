@@ -226,7 +226,7 @@ class TabViewController: UIViewController {
             && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
             && !self.jsAlertController.isShown
             // disable new alerts to appear when navigation is expected
-            && navigationExpectationTimer == nil
+            && !navigationExpected
     }
 
     func present(_ alert: WebJSAlert) {
@@ -239,56 +239,10 @@ class TabViewController: UIViewController {
         }
     }
 
-    private var navigationExpectationTimer: Timer? {
-        willSet {
-            navigationExpectationTimer?.invalidate()
-        }
-    }
+    private var navigationExpected = false
 
     private func scheduleNavigationExpectation(destinationURL: URL?, onSessionRestored: (() -> Void)? = nil) {
-        // continuous schedule calls may mean user is trying to hit all the buttons while we‘re waiting
-        guard !forceExpectedNavigationIfNeeded() else { return }
-
-        navigationExpectationTimer = Timer.scheduledTimer(withTimeInterval: Constants.navigationExpectationInterval,
-                                                          repeats: false) { [weak self] _ in
-            Pixel.fire(pixel: .webKitDidBecomeUnresponsive)
-            self?.navigationExpectationTimer = nil
-
-            #if DEBUG
-                func fileLine(file: StaticString = #file, line: Int = #line) -> String {
-                    return "\(("\(file)" as NSString).lastPathComponent):\(line + 1)"
-                }
-                os_log("""
-                    -----------------------------------------------------------------------
-                    BREAK: WebView process has appeared hung and will be TERMINATED
-                    Check %s to temporarily disable this behaviour
-                    Hit Continue (^⌘Y) to continue program execution
-                    -----------------------------------------------------------------------
-                """, log: generalLog, type: .debug, fileLine())
-                // DEBUG: Comment out the following line to disable stopping at this breakpoint:
-                raise(SIGINT)
-                // DEBUG: Uncomment the following line to disable WebView process termination:
-//                return
-            #endif
-
-            if case .sessionRestored = self?.recreateWebView(destinationURL: destinationURL) {
-                onSessionRestored?()
-            }
-        }
-    }
-
-    @discardableResult
-    private func forceExpectedNavigationIfNeeded() -> Bool {
-        func timePassed(sinceScheduling timer: Timer) -> TimeInterval {
-            Constants.navigationExpectationInterval - Date().distance(to: timer.fireDate)
-        }
-        if let timer = navigationExpectationTimer,
-           timePassed(sinceScheduling: timer) > Constants.forceExpectedNavigationThreshold {
-            Pixel.fire(pixel: .expectedNavigationForcedWebViewRecreation)
-            timer.fire()
-            return true
-        }
-        return false
+        navigationExpected = true
     }
 
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
@@ -419,36 +373,6 @@ class TabViewController: UIViewController {
                 guard url != cleanURL || loadingStopped || !loadingInitiatedByParentTab else { return }
                 self?.load(urlRequest: .userInitiated(cleanURL))
             })
-        }
-    }
-
-    private enum WebViewRecreationResult {
-        case sessionRestored
-        case navigationPerformed
-    }
-    private func recreateWebView(destinationURL: URL?) -> WebViewRecreationResult {
-        var sessionStateData: Any?
-        if #available(iOS 15.0, *) {
-            sessionStateData = self.webView.interactionState
-        }
-        let configuration = self.webView.configuration
-
-        self.removeObservers()
-        self.webView.removeFromSuperview()
-        self.webView = nil
-
-        if #available(iOS 15.0, *),
-           let sessionStateData = sessionStateData {
-
-            self.attachWebView(configuration: configuration, andLoadRequest: nil, consumeCookies: false)
-            self.webView.interactionState = sessionStateData
-
-            return .sessionRestored
-        } else {
-            self.attachWebView(configuration: configuration,
-                               andLoadRequest: destinationURL.map(URLRequest.userInitiated),
-                               consumeCookies: false)
-            return .navigationPerformed
         }
     }
 
@@ -1023,7 +947,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        navigationExpectationTimer = nil
+        navigationExpected = false
 
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
@@ -1078,7 +1002,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        navigationExpectationTimer = nil
+        navigationExpected = false
         lastError = nil
         cancelTrackerNetworksAnimation()
         shouldReloadOnError = false
@@ -1314,7 +1238,7 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        navigationExpectationTimer = nil
+        navigationExpected = false
 
         if let url = navigationAction.request.url,
            !appUrls.isDuckDuckGoSearch(url: url),
@@ -1954,9 +1878,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
-              canDisplayJavaScriptAlert
-        else {
+        guard canDisplayJavaScriptAlert else {
             completionHandler()
             return
         }
@@ -1978,9 +1900,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
-              canDisplayJavaScriptAlert
-        else {
+        guard canDisplayJavaScriptAlert else {
             completionHandler(false)
             return
         }
@@ -2003,9 +1923,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
-              canDisplayJavaScriptAlert
-        else {
+        guard canDisplayJavaScriptAlert else {
             completionHandler(nil)
             return
         }
@@ -2129,7 +2047,7 @@ extension TabViewController: UserContentControllerDelegate {
                 updateEvent.changes[$0.rawValue]?.contains(.notification) == true
             }) {
 
-            navigationExpectationTimer = nil
+            navigationExpected = false
             reload()
         }
     }

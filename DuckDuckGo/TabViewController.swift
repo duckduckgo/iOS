@@ -270,10 +270,10 @@ class TabViewController: UIViewController {
                 // DEBUG: Uncomment the following line to disable WebView process termination:
 //                return
             #endif
-
-            if case .sessionRestored = self?.recreateWebView(destinationURL: destinationURL) {
-                onSessionRestored?()
-            }
+            // temporarily disabled
+            // if case .sessionRestored = self?.recreateWebView(destinationURL: destinationURL) {
+            //    onSessionRestored?()
+            // }
         }
     }
 

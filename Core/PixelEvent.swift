@@ -280,7 +280,8 @@ extension Pixel {
         case remoteMessageShownSecondaryActionClicked
         
         // MARK: debug pixels
-        
+        case dbCrashDetected
+
         case dbMigrationError
         case dbRemovalError
         case dbDestroyError
@@ -632,7 +633,8 @@ extension Pixel.Event {
         case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
 
         // MARK: debug pixels
-            
+
+        case .dbCrashDetected: return "m_d_crash"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"

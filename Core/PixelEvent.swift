@@ -318,6 +318,7 @@ extension Pixel {
         
         case webKitDidTerminate
         case webKitDidBecomeUnresponsive
+        case expectedNavigationForcedWebViewRecreation
         case webKitTerminationDidReloadCurrentTab
         
         case backgroundTaskSubmissionFailed
@@ -670,6 +671,7 @@ extension Pixel.Event {
             
         case .webKitDidTerminate: return "m_d_wkt"
         case .webKitDidBecomeUnresponsive: return "m_d_wkunresponsive"
+        case .expectedNavigationForcedWebViewRecreation: return "m_d_wkforceterminate"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"

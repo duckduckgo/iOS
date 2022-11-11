@@ -284,7 +284,7 @@ class TabViewController: UIViewController {
         }
         if let timer = navigationExpectationTimer,
            timePassed(sinceScheduling: timer) > Constants.forceExpectedNavigationThreshold {
-
+            Pixel.fire(pixel: .expectedNavigationForcedWebViewRecreation)
             timer.fire()
             return true
         }

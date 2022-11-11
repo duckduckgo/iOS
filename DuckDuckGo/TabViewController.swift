@@ -36,6 +36,9 @@ class TabViewController: UIViewController {
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
         
         static let secGPCHeader = "Sec-GPC"
+
+        static let navigationExpectationInterval = 3.0
+        static let forceExpectedNavigationThreshold = 1.0
     }
     
     @IBOutlet private(set) weak var error: UIView!
@@ -242,12 +245,11 @@ class TabViewController: UIViewController {
         }
     }
 
-    private static let navigationExpectationInterval = 3.0
     private func scheduleNavigationExpectation(destinationURL: URL?, onSessionRestored: (() -> Void)? = nil) {
         // continuous schedule calls may mean user is trying to hit all the buttons while we‘re waiting
         guard !forceExpectedNavigationIfNeeded() else { return }
 
-        navigationExpectationTimer = Timer.scheduledTimer(withTimeInterval: Self.navigationExpectationInterval,
+        navigationExpectationTimer = Timer.scheduledTimer(withTimeInterval: Constants.navigationExpectationInterval,
                                                           repeats: false) { [weak self] _ in
             Pixel.fire(pixel: .webKitDidBecomeUnresponsive)
             self?.navigationExpectationTimer = nil
@@ -277,8 +279,13 @@ class TabViewController: UIViewController {
 
     @discardableResult
     private func forceExpectedNavigationIfNeeded() -> Bool {
-        if let navigationExpectationTimer = navigationExpectationTimer {
-            navigationExpectationTimer.fire()
+        func timePassed(sinceScheduling timer: Timer) -> TimeInterval {
+            Constants.navigationExpectationInterval - Date().distance(to: timer.fireDate)
+        }
+        if let timer = navigationExpectationTimer,
+           timePassed(sinceScheduling: timer) > Constants.forceExpectedNavigationThreshold {
+
+            timer.fire()
             return true
         }
         return false
@@ -2121,6 +2128,8 @@ extension TabViewController: UserContentControllerDelegate {
             || notificationsTriggeringReload.contains(where: {
                 updateEvent.changes[$0.rawValue]?.contains(.notification) == true
             }) {
+
+            navigationExpectationTimer = nil
             reload()
         }
     }

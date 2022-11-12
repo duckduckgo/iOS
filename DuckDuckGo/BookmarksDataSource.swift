@@ -79,8 +79,16 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
         guard let bookmark = viewModel.bookmarkAt(indexPath.row) else { return }
 
         func delete() {
+            let oldCount = viewModel.bookmarks.count
             viewModel.deleteBookmark(bookmark)
-            tableView.reloadSections([0], with: .automatic)
+            let newCount = viewModel.bookmarks.count
+            
+            // Make sure we are animating only single removal
+            if newCount + 1 == oldCount {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            } else {
+                tableView.reloadSections([0], with: .automatic)
+            }
             delegate?.bookmarkDeleted(self)
         }
 

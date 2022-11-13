@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Pokaži predlog za samodokončanje";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Zaznamek";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Zaznamek";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Odpri spletno mesto";
+"action.suggestion.type.website" = "Odpri spletno mesto";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Iskanje v DuckDuckGo";
+"action.suggestion.type.search" = "Iskanje v DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
@@ -28,8 +28,8 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Samodejno izpolnjevanje obrazcev za prijavo";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Zaznamek";
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
+"action.title.bookmark" = "Dodaj med zaznamke";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Zaznamki";

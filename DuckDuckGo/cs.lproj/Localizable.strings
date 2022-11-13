@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Použít návrh automatického doplňování";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Záložka";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Záložka";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Otevřít webovou stránku";
+"action.suggestion.type.website" = "Otevřít webovou stránku";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Hledat na DuckDuckGo";
+"action.suggestion.type.search" = "Hledat na DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Přidat";
@@ -28,8 +28,8 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Automatické vyplňování přihlašovacích údajů";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Záložka";
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
+"action.title.bookmark" = "Přidat do záložek";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Záložky";

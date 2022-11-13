@@ -53,7 +53,7 @@ public class PrivacyPractices {
         termsOfServiceStore.terms.forEach {
             let derivedScore = $0.value.derivedScore
 
-            if let entity = entityMapping.findEntity(forHost: $0.key, in: ContentBlocking.trackerDataManager.trackerData) {
+            if let entity = entityMapping.findEntity(forHost: $0.key, in: ContentBlocking.shared.trackerDataManager.trackerData) {
                 if entityScores[entity.displayName ?? ""] == nil || entityScores[entity.displayName ?? ""]! < derivedScore {
                     entityScores[entity.displayName ?? ""] = derivedScore
                 }
@@ -75,7 +75,7 @@ public class PrivacyPractices {
         guard let domain = tld.domain(host) else { return Constants.unknown }
         guard let term = termsOfServiceStore.terms[domain] else { return Constants.unknown }
         let entityScore = entityScores[entityMapping.findEntity(forHost: domain,
-                                                                in: ContentBlocking.trackerDataManager.trackerData)?.displayName ?? ""]
+                                                                in: ContentBlocking.shared.trackerDataManager.trackerData)?.displayName ?? ""]
         return Practice(score: entityScore ?? term.derivedScore,
                         summary: term.summary,
                         goodReasons: term.goodReasons,

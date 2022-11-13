@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Automaattisen täydennyksen ehdotus";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Lisää kirjanmerkki";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Kirjanmerkki";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Avaa verkkosivusto";
+"action.suggestion.type.website" = "Avaa verkkosivusto";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Hae DuckDuckGosta";
+"action.suggestion.type.search" = "Hae DuckDuckGosta";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Lisää";
@@ -28,8 +28,8 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Täytä kirjautumistiedot automaattisesti";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Lisää kirjanmerkki";
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
+"action.title.bookmark" = "Lisää kirjanmerkkeihin";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Kirjanmerkit";

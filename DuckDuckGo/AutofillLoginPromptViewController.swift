@@ -75,7 +75,11 @@ class AutofillLoginPromptViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisplayed)
+        if trigger == AutofillUserScript.GetTriggerType.autoprompt {
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAutopromptDisplayed)
+        } else {
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDisplayed)
+        }
     }
     
     private var isExpanded: Bool {
@@ -94,6 +98,11 @@ class AutofillLoginPromptViewController: UIViewController {
 
 extension AutofillLoginPromptViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        if self.trigger == AutofillUserScript.GetTriggerType.autoprompt {
+            Pixel.fire(pixel: .autofillLoginsAutopromptDismissed)
+        } else {
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDismissed)
+        }
         completion?(nil)
     }
     
@@ -106,7 +115,11 @@ extension AutofillLoginPromptViewController: UISheetPresentationControllerDelega
 extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegate {
     func autofillLoginPromptViewModel(_ viewModel: AutofillLoginPromptViewModel, didSelectAccount account: SecureVaultModels.WebsiteAccount) {
         
-        Pixel.fire(pixel: .autofillLoginsFillLoginInlineConfirmed)
+        if trigger == AutofillUserScript.GetTriggerType.autoprompt {
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAutopromptConfirmed)
+        } else {
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualConfirmed)
+        }
         
         let context = LAContext()
         context.localizedCancelTitle = UserText.autofillLoginPromptAuthenticationCancelButton
@@ -118,6 +131,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             let completion = self.completion
             dismiss(animated: true, completion: nil)
             let reason = reason
+            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceDisplayed)
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
             
                 DispatchQueue.main.async {
@@ -125,7 +139,11 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
                         Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated)
                         completion?(account)
                     } else {
-                        Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed)
+                        if let error = error as? NSError, error.code == LAError.userCancel.rawValue {
+                            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthCancelled)
+                        } else {
+                            Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed)
+                        }
                         print(error?.localizedDescription ?? "Failed to authenticate but error nil")
                         completion?(nil)
                     }
@@ -146,6 +164,8 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
         dismiss(animated: true) {
             if self.trigger == AutofillUserScript.GetTriggerType.autoprompt {
                 Pixel.fire(pixel: .autofillLoginsAutopromptDismissed)
+            } else {
+                Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualDismissed)
             }
             
             self.completion?(nil)

@@ -40,7 +40,7 @@ final class AppTrackerDataSetProvider: EmbeddedDataProvider {
             return url
         }
         
-        return Bundle(for: ContentBlocking.self).url(forResource: "trackerData", withExtension: "json")!
+        return Bundle(for: Self.self).url(forResource: "trackerData", withExtension: "json")!
     }
 
     static func loadEmbeddedAsData() -> Data {

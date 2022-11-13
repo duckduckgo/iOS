@@ -302,10 +302,10 @@
 "autofill.logins.list.title" = "Autofill Logins";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.subtitle" = "A passcode is required to protect your Autofill details. Use the Settings app to set up a passcode.";
+"autofill.logins.no-auth.subtitle" = "A passcode is required to protect your Autofill details. Go to device Settings to set up a passcode.";
 
 /* Title for view displayed when autofill is locked on devices where a passcode has not been set */
-"autofill.logins.no-auth.title" = "Set up a device passcode to use Autofill";
+"autofill.logins.no-auth.title" = "Set up your device passcode to use Autofill";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Cancel";

@@ -19,11 +19,35 @@
 
 import Foundation
 
-struct PasswordHider {
-    let password: String
-    var hiddenPassword: String {
-        let maximumPasswordDisplayCount = 40
-        let passwordCount = password.count > maximumPasswordDisplayCount ? maximumPasswordDisplayCount : password.count
-        return String(repeating: "•", count: passwordCount)
+class PasswordHider {
+    
+    private var unhiddenPassword: String!
+    private var maximumNumberOfCharactersThatHiddenPasswordToDisplay: Int!
+    private var hiddenPassword: String!
+    
+    init(unhiddenPassword : String) {
+        self.unhiddenPassword = unhiddenPassword
+        self.maximumNumberOfCharactersThatHiddenPasswordToDisplay = 40
+        self.createHiddenPasswordString()
     }
+    
+    private func createHiddenPasswordString() {
+        self.hiddenPassword = String(repeating: "•", count: getNumberOfCharactersToDisplayInHiddenPasswordString())
+    }
+    
+    private func getNumberOfCharactersToDisplayInHiddenPasswordString() -> Int {
+        if isUnhiddenPasswordLongerThanMaximumNumberOfCharactersThatHiddenPasswordToDisplay() {
+            return maximumNumberOfCharactersThatHiddenPasswordToDisplay
+        }
+        return unhiddenPassword.count
+    }
+    
+    private func isUnhiddenPasswordLongerThanMaximumNumberOfCharactersThatHiddenPasswordToDisplay() -> Bool {
+        return unhiddenPassword.count > maximumNumberOfCharactersThatHiddenPasswordToDisplay
+    }
+        
+    public func getHiddenPasswordString() -> String {
+        return hiddenPassword
+    }
+    
 }

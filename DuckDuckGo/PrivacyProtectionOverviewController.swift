@@ -67,8 +67,8 @@ class PrivacyProtectionOverviewController: UITableViewController {
     fileprivate var popRecognizer: InteractivePopRecognizer!
     
     private var siteRating: SiteRating!
-    private var privacyConfiguration: PrivacyConfiguration = ContentBlocking.privacyConfigurationManager.privacyConfig
-    private let rulesManager: ContentBlockerRulesManager = ContentBlocking.contentBlockingManager
+    private var privacyConfiguration: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+    private let rulesManager: ContentBlockerRulesManager = ContentBlocking.shared.contentBlockingManager
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -350,7 +350,7 @@ class TrackerNetworkPillView: UIView {
 private extension PPTrackerNetwork {
 
     var image: UIImage {
-        let currentTrackerData = ContentBlocking.contentBlockingManager.currentMainRules?.trackerData
+        let currentTrackerData = ContentBlocking.shared.contentBlockingManager.currentMainRules?.trackerData
         let name = currentTrackerData?.findEntity(byName: self.name ?? "")?.displayName ?? ""
         let imageName = "PP Pill \(name.lowercased())"
         return UIImage(named: imageName) ?? #imageLiteral(resourceName: "PP Pill Generic")

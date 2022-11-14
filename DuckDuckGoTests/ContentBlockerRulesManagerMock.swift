@@ -1,6 +1,5 @@
 //
-//  PrivacyFeatures.swift
-//  DuckDuckGo
+//  ContentBlockerRulesManagerMock.swift
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
 //
@@ -17,11 +16,20 @@
 //  limitations under the License.
 //
 
+@testable import DuckDuckGo
 import BrowserServicesKit
+import Combine
 
-public final class PrivacyFeatures {
-    
-    public static let httpsUpgradeStore = AppHTTPSUpgradeStore()
-    public static let httpsUpgrade = HTTPSUpgrade(store: httpsUpgradeStore, privacyManager: ContentBlocking.shared.privacyConfigurationManager)
-    
+final class ContentBlockerRulesManagerMock: ContentBlockerRulesManagerProtocol {
+    var currentMainRules: BrowserServicesKit.ContentBlockerRulesManager.Rules?
+    var currentAttributionRules: BrowserServicesKit.ContentBlockerRulesManager.Rules?
+
+    var updatesPublisher: AnyPublisher<ContentBlockerRulesManager.UpdateEvent, Never> {
+        updatesSubject.eraseToAnyPublisher()
+    }
+
+    let updatesSubject = PassthroughSubject<ContentBlockerRulesManager.UpdateEvent, Never>()
+
+    var currentRules: [ContentBlockerRulesManager.Rules] = []
+
 }

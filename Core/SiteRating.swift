@@ -67,7 +67,7 @@ public class SiteRating {
         os_log("new SiteRating(url: %s, httpsForced: %s)", log: lifecycleLog, type: .debug, url.absoluteString, String(describing: httpsForced))
 
         if let host = url.host, let entity = entityMapping.findEntity(forHost: host,
-                                                                      in: ContentBlocking.trackerDataManager.trackerData) {
+                                                                      in: ContentBlocking.shared.trackerDataManager.trackerData) {
             self.grade.setParentEntity(named: entity.displayName ?? "", withPrevalence: entity.prevalence ?? 0)
             self.entity = entity
         } else {

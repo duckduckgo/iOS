@@ -91,8 +91,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
     
     var userVisiblePassword: String {
-        let passwordHider = PasswordHider(password: password)
-        return isPasswordHidden ? passwordHider.hiddenPassword : passwordHider.password
+        let passwordHider = PasswordHider(unhiddenPassword: password)
+        return isPasswordHidden ? passwordHider.getHiddenPasswordString() : self.password
     }
 
     var usernameDisplayString: String {

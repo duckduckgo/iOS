@@ -22,12 +22,12 @@ import Foundation
 class PasswordHider {
     
     private var unhiddenPassword: String!
-    private var maximumNumberOfCharactersThatHiddenPasswordToDisplay: Int!
+    private var maximumLengthOfHiddenPassword: Int!
     private var hiddenPassword: String!
     
-    init(unhiddenPassword : String) {
+    init(unhiddenPassword: String) {
         self.unhiddenPassword = unhiddenPassword
-        self.maximumNumberOfCharactersThatHiddenPasswordToDisplay = 40
+        self.maximumLengthOfHiddenPassword = 40
         self.createHiddenPasswordString()
     }
     
@@ -36,14 +36,14 @@ class PasswordHider {
     }
     
     private func getNumberOfCharactersToDisplayInHiddenPasswordString() -> Int {
-        if isUnhiddenPasswordLongerThanMaximumNumberOfCharactersThatHiddenPasswordToDisplay() {
-            return maximumNumberOfCharactersThatHiddenPasswordToDisplay
+        if isUnhiddenPasswordLongerThanMaximumLengthOfHiddenPassword() {
+            return maximumLengthOfHiddenPassword
         }
         return unhiddenPassword.count
     }
     
-    private func isUnhiddenPasswordLongerThanMaximumNumberOfCharactersThatHiddenPasswordToDisplay() -> Bool {
-        return unhiddenPassword.count > maximumNumberOfCharactersThatHiddenPasswordToDisplay
+    private func isUnhiddenPasswordLongerThanMaximumLengthOfHiddenPassword() -> Bool {
+        return unhiddenPassword.count > maximumLengthOfHiddenPassword
     }
         
     public func getHiddenPasswordString() -> String {

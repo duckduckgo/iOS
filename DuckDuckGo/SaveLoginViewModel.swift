@@ -70,7 +70,7 @@ final class SaveLoginViewModel: ObservableObject {
     }
 
     var hiddenPassword: String {
-        PasswordHider(password: credentialManager.visiblePassword).hiddenPassword
+        PasswordHider(unhiddenPassword: credentialManager.visiblePassword).getHiddenPasswordString()
     }
     
     var username: String {

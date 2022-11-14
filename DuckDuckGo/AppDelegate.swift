@@ -67,9 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         #endif
 
-        CrashCollection.run { params in
-            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params)
-        }   
+        CrashCollection.start()
 
         clearTmp()
 

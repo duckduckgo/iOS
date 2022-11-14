@@ -20,8 +20,8 @@
 import UIKit
 import Core
 import WidgetKit
+import Bookmarks
 
-#warning("still using bookmarks manager")
 class ImageCacheDebugViewController: UITableViewController {
 
     private let titles = [
@@ -38,10 +38,11 @@ class ImageCacheDebugViewController: UITableViewController {
 
     let imageNotFound = UIImage(systemName: "exclamationmark.circle")
     let imageError = UIImage(systemName: "exclamationmark.triangle")
-    let bookmarksManager = BookmarksManager()
     let tabsModel = TabsModel.get() ?? TabsModel(desktop: false)
-    
-    private var bookmarksAndFavorites = [Bookmark]()
+
+    private let bookmarksContext = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+
+    private var bookmarksAndFavorites = [BookmarkEntity]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,11 +53,16 @@ class ImageCacheDebugViewController: UITableViewController {
                                              action: #selector(presentClearCachePrompt(_:)))
         clearCacheItem.tintColor = .systemRed
         navigationItem.rightBarButtonItem = clearCacheItem
-        
-        bookmarksManager.allBookmarksAndFavoritesFlat { bookmarks in
-            self.bookmarksAndFavorites = bookmarks
-            self.tableView.reloadData()
-        }
+
+        loadAllBookmarks()
+    }
+
+    private func loadAllBookmarks() {
+        let request = BookmarkEntity.fetchRequest()
+        request.sortDescriptors = [ .init(keyPath: \BookmarkEntity.title, ascending: true) ]
+        request.predicate = .init(format: "isFolder == false")
+        request.returnsObjectsAsFaults = false
+        bookmarksAndFavorites = (try? bookmarksContext.fetch(request)) ?? []
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,8 +80,8 @@ class ImageCacheDebugViewController: UITableViewController {
 
         case .bookmarks:
             let bookmark = bookmarksAndFavorites[indexPath.row]
-            cell.textLabel?.text = bookmark.url?.host
-            cell.imageView?.loadFavicon(forDomain: bookmark.url?.host, usingCache: .bookmarks) {
+            cell.textLabel?.text = bookmark.urlObject?.host
+            cell.imageView?.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .bookmarks) {
                 cell.imageView?.image = $1 ? self.imageNotFound : $0 ?? self.imageError
                 cell.detailTextLabel?.text = self.describe($1 ? nil : $0)
             }
@@ -111,7 +117,7 @@ class ImageCacheDebugViewController: UITableViewController {
 
         let host: String?
         switch Sections(rawValue: indexPath.section) {
-        case .bookmarks: host = bookmarksAndFavorites[indexPath.row].url?.host
+        case .bookmarks: host = bookmarksAndFavorites[indexPath.row].urlObject?.host
         case .tabs: host = tabsModel.get(tabAt: indexPath.row).link?.url.host
         default: host = nil
         }

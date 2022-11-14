@@ -3661,6 +3661,7 @@
 		F143C2E51E4A4CD400CFDE3A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				CBAA195627BFDD9800A4BD49 /* SmarterEncryption */,
 				F11E23051ED33D8B00523BC9 /* API */,
 				CBAA195627BFDD9800A4BD49 /* SmarterEncryption */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,

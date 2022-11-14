@@ -2080,6 +2080,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload()
         }
     }
+
 }
 
 // MARK: - UserContentControllerDelegate

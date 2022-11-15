@@ -431,6 +431,8 @@ public class Favicons {
             completion(bestImage)
         }
     }
+    
+    private lazy var session = URLSession(configuration: .ephemeral)
 
     private func loadImage(url: URL) -> UIImage? {
         var image: UIImage?
@@ -439,7 +441,7 @@ public class Favicons {
 
         let group = DispatchGroup()
         group.enter()
-        let task = URLSession.shared.dataTask(with: request) { data, _, _ in
+        let task = session.dataTask(with: request) { data, _, _ in
             if let data = data {
                 image = UIImage(data: data)
             }

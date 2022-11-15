@@ -38,7 +38,6 @@ class TabViewController: UIViewController {
         static let secGPCHeader = "Sec-GPC"
 
         static let navigationExpectationInterval = 3.0
-        static let forceExpectedNavigationThreshold = 1.0
     }
     
     @IBOutlet private(set) weak var error: UIView!
@@ -246,8 +245,7 @@ class TabViewController: UIViewController {
     }
 
     private func scheduleNavigationExpectation(destinationURL: URL?, onSessionRestored: (() -> Void)? = nil) {
-        // continuous schedule calls may mean user is trying to hit all the buttons while we‘re waiting
-        guard !forceExpectedNavigationIfNeeded() else { return }
+        guard navigationExpectationTimer == nil else { return }
 
         navigationExpectationTimer = Timer.scheduledTimer(withTimeInterval: Constants.navigationExpectationInterval,
                                                           repeats: false) { [weak self] _ in
@@ -275,20 +273,6 @@ class TabViewController: UIViewController {
                 onSessionRestored?()
             }
         }
-    }
-
-    @discardableResult
-    private func forceExpectedNavigationIfNeeded() -> Bool {
-        func timePassed(sinceScheduling timer: Timer) -> TimeInterval {
-            Constants.navigationExpectationInterval - Date().distance(to: timer.fireDate)
-        }
-        if let timer = navigationExpectationTimer,
-           timePassed(sinceScheduling: timer) > Constants.forceExpectedNavigationThreshold {
-            Pixel.fire(pixel: .expectedNavigationForcedWebViewRecreation)
-            timer.fire()
-            return true
-        }
-        return false
     }
 
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
@@ -1954,7 +1938,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
+        guard navigationExpectationTimer == nil,
               canDisplayJavaScriptAlert
         else {
             completionHandler()
@@ -1978,7 +1962,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
+        guard navigationExpectationTimer == nil,
               canDisplayJavaScriptAlert
         else {
             completionHandler(false)
@@ -2003,7 +1987,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
+        guard navigationExpectationTimer == nil,
               canDisplayJavaScriptAlert
         else {
             completionHandler(nil)

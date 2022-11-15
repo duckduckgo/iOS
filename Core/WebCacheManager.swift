@@ -225,7 +225,7 @@ public class WebCacheManager {
                     var parameters = summary.makeDictionaryRepresentation()
                     
                     if let tabCountInfo = tabCountInfo {
-                        parameters.merge(tabCountInfo.makeDictionaryRepresentation(), uniquingKeysWith: { _, new in new } )
+                        parameters.merge(tabCountInfo.makeDictionaryRepresentation(), uniquingKeysWith: { _, new in new })
                     }
                     
                     Pixel.fire(pixel: .cookieDeletionLeftovers,

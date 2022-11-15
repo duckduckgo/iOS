@@ -19,6 +19,7 @@
 
 import WebKit
 import BrowserServicesKit
+import UserScript
 
 public class FullScreenVideoUserScript: NSObject, UserScript {
     public var source: String {

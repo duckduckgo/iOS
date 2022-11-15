@@ -19,6 +19,7 @@
 
 import WebKit
 import BrowserServicesKit
+import UserScript
 
 public protocol FaviconUserScriptDelegate: NSObjectProtocol {
     

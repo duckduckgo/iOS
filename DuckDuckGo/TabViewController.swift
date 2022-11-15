@@ -23,6 +23,7 @@ import StoreKit
 import LocalAuthentication
 import os.log
 import BrowserServicesKit
+import UserScript
 import SwiftUI
 
 // swiftlint:disable file_length

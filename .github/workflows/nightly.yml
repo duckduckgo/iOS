@@ -1,4 +1,4 @@
-name: Nightly Integrations Tests
+name: Nightly Integration Tests
 
 on: 
   push:

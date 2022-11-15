@@ -20,6 +20,7 @@
 import XCTest
 import SwiftSoup
 @testable import Core
+import Bookmarks
 
 class BookmarksImporterTests: XCTestCase {
 
@@ -38,7 +39,8 @@ class BookmarksImporterTests: XCTestCase {
         storage.saveContext()
         storage.loadStoreAndCaches { _ in }
 
-        importer = BookmarksImporter(coreDataStore: storage)
+        #warning("wrong storage")
+        // importer = BookmarksImporter(coreDataStore: storage)
     }
 
     override func tearDownWithError() throws {

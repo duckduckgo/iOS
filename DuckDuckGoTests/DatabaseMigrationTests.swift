@@ -22,6 +22,7 @@ import CoreData
 import BrowserServicesKit
 @testable import Core
 @testable import DuckDuckGo
+import Persistence
 
 class DatabaseMigrationTests: XCTestCase {
     

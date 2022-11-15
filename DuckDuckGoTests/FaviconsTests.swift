@@ -36,7 +36,9 @@ class FaviconsTests: XCTestCase {
         let url = URL(string: "http://duckduckgo.com")!
         let simpleStore = MockBookmarkSearchStore()
         simpleStore.bookmarks = [MockBookmark(title: "bookmark test 1", url: url, isFavorite: false)]
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+
+        #warning("wrong store")
+        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
 
         favicons = Favicons(sourcesProvider: DefaultFaviconSourcesProvider(),
                             bookmarksStore: BookmarkUserDefaults(),

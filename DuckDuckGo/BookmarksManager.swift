@@ -21,7 +21,8 @@ import Core
 import WidgetKit
 import CoreData
 
-class BookmarksManager {
+#warning("renamed, but can probably be deleted")
+class LegacyBookmarksManager {
     
     public struct Notifications {
         public static let bookmarksDidChange = Notification.Name("com.duckduckgo.app.BookmarksDidChange")
@@ -38,7 +39,7 @@ class BookmarksManager {
     }
     
     @objc func dataDidChange(notification: Notification) {
-        NotificationCenter.default.post(name: BookmarksManager.Notifications.bookmarksDidChange, object: nil)
+        NotificationCenter.default.post(name: Self.Notifications.bookmarksDidChange, object: nil)
     }
 
     var topLevelBookmarkItemsCount: Int {
@@ -226,7 +227,7 @@ class BookmarksManager {
 
 // MARK: Debug menu methods (used in ImageCacheDebugViewController)
 
-extension BookmarksManager {
+extension LegacyBookmarksManager {
 
     func allBookmarksAndFavoritesFlat(completion: @escaping ([BookmarkManagedObject]) -> Void) {
         coreDataStorage.allBookmarksAndFavoritesFlat(completion: completion)

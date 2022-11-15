@@ -106,8 +106,9 @@ class BookmarksCachingSearchTests: XCTestCase {
     }
 
     func testWhenSearchingThenOnlyBeginingsOfWordsAreMatched() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+
+        #warning("wrong store")
+        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         let expectations = [
             expectation(description: "test for correct number of search results"),
             expectation(description: "test for correct number of search results"),
@@ -146,7 +147,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     
     func testWhenSearchingThenBeginingOfTitlesArePromoted() throws {
         
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        #warning("wrong store")
+        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         
         let expectation1 = expectation(description: "t")
         engine.search(query: "t") { resultSingleLetter in
@@ -209,8 +211,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     }
     
     func testWhenSearchingFullStringThenExactMatchesAreFirst() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        #warning("wrong store")
+        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         
         let expectation1 = expectation(description: "fav 1")
         engine.search(query: "fav 1") { result in
@@ -227,8 +229,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     }
     
     func testWhenSearchingThenFavoritesAreFirst() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        #warning("wrong store")
+        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         
         let expectation1 = expectation(description: "1")
         engine.search(query: "1") { result in
@@ -247,8 +249,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     }
 
     func testWhenSearchingMultipleWordsThenAllMustBeFound() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        #warning("wrong store")
+        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         
         let expectation1 = expectation(description: "te bo")
         engine.search(query: "te bo") { result in
@@ -266,8 +268,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     }
     
     func testWhenSearchingThenNotFindingAnythingIsAlsoValid() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        #warning("wrong store")
+        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         
         let expectation1 = expectation(description: "testing")
         engine.search(query: "testing") { result in
@@ -280,8 +282,8 @@ class BookmarksCachingSearchTests: XCTestCase {
     }
     
     func testWhenMatchingURLThenDomainMatchesArePromoted() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: urlStore)
+        #warning("wrong store")
+        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         
         let expectation1 = expectation(description: "exam")
         engine.search(query: "exam") { result in
@@ -323,15 +325,18 @@ class BookmarksCachingSearchTests: XCTestCase {
     }
 
     func testWhenBookmarkExistsThenContainsDomain() throws {
-        let engineUrlStore = BookmarksCachingSearch(bookmarksStore: urlStore)
+        #warning("wrong store")
+        let engineUrlStore = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         XCTAssertTrue(engineUrlStore.containsDomain("duckduckgo.com"))
 
-        let engineSimpleStore = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        #warning("wrong store")
+        let engineSimpleStore = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
         XCTAssertTrue(engineSimpleStore.containsDomain("duckduckgo.com"))
     }
 
     func testWhenBookmarkSavedThenContainsDomain() async throws {
-        let bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: storage)
+        #warning("wrong store")
+        let bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
 
         guard let topLevelBookMarksFolder = storage.topLevelBookmarksFolder else {
             XCTFail("must have topLevelBookMarkFolder")

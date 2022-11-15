@@ -38,8 +38,9 @@ class BookmarksExporterTests: XCTestCase {
         storage.saveContext()
         storage.loadStoreAndCaches { _ in }
 
-        importer = BookmarksImporter(coreDataStore: storage)
-        exporter = BookmarksExporter(coreDataStore: storage)
+        #warning("Wrong storage?")
+//        importer = BookmarksImporter(coreDataStore: storage)
+//        exporter = BookmarksExporter(coreDataStore: storage)
     }
 
     override func tearDownWithError() throws {

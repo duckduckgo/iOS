@@ -7,9 +7,7 @@ on:
 
 jobs:
   atb-ui-tests:
-
     name: ATB UI Tests
-
     runs-on: macos-12
     timeout-minutes: 30
 
@@ -23,6 +21,29 @@ jobs:
       run: |
         set -o pipefail && xcodebuild test \
           -scheme "AtbUITests" \
+          -destination "platform=iOS Simulator,name=iPhone 8" \
+          | xcpretty -r junit -o unittests.xml
+
+    - name: Publish unit tests report
+      uses: mikepenz/action-junit-report@v3
+      with:
+        report_paths: unittests.xml
+
+  fingerprinting-ui-tests:
+    name: Fingerprinting UI Tests
+    runs-on: macos-12
+    timeout-minutes: 30
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Build and test
+      run: |
+        set -o pipefail && xcodebuild test \
+          -scheme "FingerprintingUITests" \
           -destination "platform=iOS Simulator,name=iPhone 8" \
           | xcpretty -r junit -o unittests.xml
 

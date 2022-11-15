@@ -156,15 +156,16 @@ class AutocompleteViewController: UIViewController {
 
         lastRequest!.execute { [weak self] (suggestions, error) in
             guard let strongSelf = self else { return }
-            
-            strongSelf.bookmarksSearch.search(query: query) { matches in
-                let notQueryMatches = matches.filter { $0.url?.absoluteString != query }
+
+            Task { @MainActor in
+                let matches = await strongSelf.bookmarksSearch.search(query: query)
+                let notQueryMatches = matches.filter { $0.url.absoluteString != query }
                 let filteredMatches = notQueryMatches.prefix(Constants.maxLocalItems)
                 let localSuggestions = filteredMatches.map { Suggestion(source: .local,
                                                                         suggestion: $0.title,
                                                                         url: $0.url)
                 }
-                
+
                 guard let suggestions = suggestions, error == nil else {
                     os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
                     self?.updateSuggestions(localSuggestions)

@@ -54,14 +54,14 @@ class FavoriteHomeCell: UICollectionViewCell {
         favorite?.title
     }
     
-    var onDelete: (() -> Void)?
+    var onRemove: (() -> Void)?
     var onEdit: (() -> Void)?
     
     var favorite: BookmarkEntity?
     private var theme: Theme?
     
     struct Actions {
-        static let delete = #selector(FavoriteHomeCell.doDelete(sender:))
+        static let remove = #selector(FavoriteHomeCell.doRemove(sender:))
         static let edit = #selector(FavoriteHomeCell.doEdit(sender:))
     }
     
@@ -89,8 +89,8 @@ class FavoriteHomeCell: UICollectionViewCell {
         return super.hitTest(point, with: event)
     }
 
-    @objc func doDelete(sender: Any?) {
-        onDelete?()
+    @objc func doRemove(sender: Any?) {
+        onRemove?()
     }
     
     @objc func doEdit(sender: Any?) {
@@ -98,11 +98,11 @@ class FavoriteHomeCell: UICollectionViewCell {
     }
     
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return [ Actions.delete, Actions.edit ].contains(action)
+        return [ Actions.remove, Actions.edit ].contains(action)
     }
 
-    @IBAction func onDeletePressed() {
-        doDelete(sender: nil)
+    @IBAction func onRemovePressed() {
+        doRemove(sender: nil)
     }
     
     func updateFor(favorite: BookmarkEntity) {

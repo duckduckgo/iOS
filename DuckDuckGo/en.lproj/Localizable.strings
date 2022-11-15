@@ -674,10 +674,10 @@
 "favorite" = "Favorite";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Delete";
+"favorite.menu.edit" = "Edit";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Edit";
+"favorite.menu.remove" = "Remove";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Ad and pop-up blocking";

@@ -146,11 +146,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         cell.isEditing = isEditing
 
         // can't use captured index path because deleting items can change it
-        cell.onDelete = { [weak self, weak collectionView, weak cell] in
+        cell.onRemove = { [weak self, weak collectionView, weak cell] in
             guard let collectionView = collectionView else { return }
             guard let cell = cell else { return }
             
-            self?.deleteFavorite(cell, collectionView)
+            self?.removeFavorite(cell, collectionView)
         }
         cell.onEdit = { [weak self, weak collectionView, weak cell] in
             guard let collectionView = collectionView else { return }
@@ -162,11 +162,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
     }
     
-    private func deleteFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
+    private func removeFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell),
         let favorite = viewModel.favorite(atIndex: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
-        viewModel.delete(favorite)
+        viewModel.remove(favorite)
         collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [indexPath])
             self.controller?.favoritesRenderer(self, favoriteDeleted: favorite)
@@ -248,9 +248,9 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             self?.editFavorite(cell, collectionView)
         }
 
-        let delete = UIAction(title: UserText.favoriteMenuDelete,
+        let remove = UIAction(title: UserText.favoriteMenuRemove,
                               image: UIImage(named: "Trash")) { [weak self] _ in
-            self?.deleteFavorite(cell, collectionView)
+            self?.removeFavorite(cell, collectionView)
         }
 
         let context = UIContextMenuConfiguration(identifier: indexPath as NSIndexPath) {
@@ -265,7 +265,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
             return UIMenu(title: title, options: .displayInline, children: [
                 edit,
-                delete
+                remove
             ])
         }
 

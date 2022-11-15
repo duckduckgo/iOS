@@ -41,7 +41,7 @@ public class BookmarksCachingSearch {
 
     public struct ScoredBookmark {
         public let title: String
-        public let url: URL?
+        public let url: URL
         var score: Int
         
         init?(bookmark: [String: Any]) {
@@ -118,7 +118,7 @@ public class BookmarksCachingSearch {
 	}
 
     public func containsDomain(_ domain: String) -> Bool {
-        return bookmarksAndFavorites.contains { $0.url?.host == domain }
+        return bookmarksAndFavorites.contains { $0.url.host == domain }
     }
 // ---------
 
@@ -183,7 +183,7 @@ public class BookmarksCachingSearch {
                 input[index].score += 100
             }
             
-            let domain = entry.url?.host?.droppingWwwPrefix() ?? ""
+            let domain = entry.url.host?.droppingWwwPrefix() ?? ""
             
             // Tokenized matches
             
@@ -224,12 +224,9 @@ public class BookmarksCachingSearch {
     }
     // swiftlint:enable cyclomatic_complexity
 
-    public func search(query: String,
-                       sortByRelevance: Bool = true,
-                       completion: @escaping ([ScoredBookmark]) -> Void) {
+    public func search(query: String, sortByRelevance: Bool = true) async -> [ScoredBookmark] {
         guard hasData else {
-            completion([])
-            return
+            return []
         }
         
         let bookmarks = bookmarksAndFavorites
@@ -239,9 +236,7 @@ public class BookmarksCachingSearch {
         if sortByRelevance {
             finalResult = finalResult.sorted { $0.score > $1.score }
         }
-        
-        DispatchQueue.main.async {
-            completion(finalResult)
-        }
+
+        return finalResult
     }
 }

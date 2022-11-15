@@ -93,8 +93,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         return dataSource
     }()
 
-    fileprivate var searchDataSource = SearchBookmarksDataSource()
-    private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
+    fileprivate var searchDataSource = SearchBookmarksDataSource(searchEngine: BookmarksCachingSearch())
 
     var isNested: Bool {
         viewModel.currentFolder != nil
@@ -126,16 +125,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         onDidAppearAction = {}
 
         tableView.reloadData()
-    }
-    
-    @objc func dataDidChange(notification: Notification) {
-        tableView.reloadData()
-        if currentDataSource.isEmpty && isEditingBookmarks {
-            finishEditing()
-        }
-        refreshEditButton()
-        refreshFooterView()
-        refreshMoreButton()
     }
 
     @IBAction func onViewSelectorChanged(_ segment: UISegmentedControl) {
@@ -175,9 +164,24 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let bookmark = viewModel.bookmarkAt(indexPath.row) else { return }
+        if tableView.dataSource === searchDataSource {
+            didSelectScoredBookmarkAtIndex(indexPath.row)
+        } else {
+            didSelectBookmarkAtIndex(indexPath.row)
+        }
 
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    private func didSelectScoredBookmarkAtIndex(_ index: Int) {
+        guard searchDataSource.results.indices.contains(index) else { return }
+        dismiss()
+        delegate?.bookmarksDidSelect(url: searchDataSource.results[index].url)
+    }
+
+    private func didSelectBookmarkAtIndex(_ index: Int) {
+        guard let bookmark = viewModel.bookmarkAt(index) else { return }
+
         if isEditingBookmarks {
             performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: bookmark.objectID)
         } else if bookmark.isFolder {
@@ -188,6 +192,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         } else {
             select(bookmark: bookmark)
         }
+
     }
 
     private func drillIntoFolder(_ parent: BookmarkEntity) {
@@ -250,16 +255,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         refreshFooterView()
     }
 
-#warning("should return correct datasource")
-    private var currentDataSource: BookmarksDataSource {
-        return dataSource
-
-//        if tableView.dataSource === dataSource {
-//            return dataSource
-//        }
-//        return searchDataSource
-    }
-
     @objc func onApplicationBecameActive(notification: NSNotification) {
         tableView.reloadData()
     }
@@ -279,8 +274,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func configureToolbarMoreItem() {
-        #warning("Edit button needs to stay in the middle if the more button dissapears")
-
         if isEditingBookmarks {
             if toolbarItems?.count ?? 0 >= 5 {
                 toolbarItems?.remove(at: 4)
@@ -301,7 +294,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             #warning("add has favorites method")
             // editButton.isEnabled = viewModel.hasFavorites
             editButton.title = UserText.actionGenericEdit
-        } else if (currentDataSource.isEmpty && !isEditingBookmarks) || currentDataSource === searchDataSource {
+        } else if (dataSource.isEmpty && !isEditingBookmarks) || dataSource === searchDataSource {
             disableEditButton()
         } else if !isEditingBookmarks {
             enableEditButton()
@@ -309,7 +302,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     private func refreshAddFolderButton() {
-        if currentDataSource === searchDataSource {
+        if dataSource === searchDataSource {
             disableAddFolderButton()
         } else {
             enableAddFolderButton()
@@ -317,7 +310,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func refreshMoreButton() {
-        if isNested || isEditingBookmarks || currentDataSource === searchDataSource  || viewModel.currentFolder != nil {
+        if isNested || isEditingBookmarks || dataSource === searchDataSource  || viewModel.currentFolder != nil {
             disableMoreButton()
         } else {
             enableMoreButton()
@@ -325,7 +318,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     private func refreshFooterView() {
-        if !isNested && dataSource.isEmpty && currentDataSource !== searchDataSource {
+        if !isNested && dataSource.isEmpty && dataSource !== searchDataSource {
             enableFooterView()
         } else {
             disableFooterView()
@@ -412,7 +405,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     func exportAction() -> UIAction {
         return UIAction(title: UserText.exportBookmarksActionTitle,
                 image: UIImage(named: Constants.exportBookmarkImage),
-                attributes: currentDataSource.isEmpty ? .disabled : []) { [weak self] _ in
+                attributes: dataSource.isEmpty ? .disabled : []) { [weak self] _ in
             self?.exportHtmlFile()
         }
     }
@@ -578,8 +571,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     fileprivate func select(bookmark: BookmarkEntity) {
+        guard let url = bookmark.urlObject else { return }
         dismiss()
-        delegate?.bookmarksDidSelect(bookmark: bookmark)
+        delegate?.bookmarksDidSelect(url: url)
     }
 
     private func dismiss() {
@@ -615,15 +609,15 @@ extension BookmarksViewController: UISearchBarDelegate {
             return
         }
         
-        if currentDataSource !== searchDataSource {
+        if dataSource !== searchDataSource {
             prepareForSearching()
             tableView.dataSource = searchDataSource
         }
 
-        fatalError("Not implemented")
-//        searchDataSource.performSearch(query: searchText, searchEngine: bookmarksCachingSearch) {
-//            self.tableView.reloadData()
-//        }
+        Task { @MainActor in
+            await self.searchDataSource.performSearch(searchText)
+            self.tableView.reloadData()
+        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

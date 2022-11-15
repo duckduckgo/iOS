@@ -19,6 +19,7 @@
 
 import UIKit
 import Bookmarks
+import Core
 
 class BookmarkCell: UITableViewCell {
 
@@ -51,23 +52,32 @@ class BookmarkCell: UITableViewCell {
                 accesoryImage.frame = CGRect(x: 0, y: 0, width: 8, height: 13)
                 accesoryImage.tintColor = theme.tableCellAccessoryColor
                 accessoryView = accesoryImage
-
             } else {
-                numberOfChildrenLabel.isHidden = true
-                imageWidthConstraint.constant = 24
-                imageHeightConstraint.constant = 24
-                if let linkTitle = bookmark?.title?.trimmingWhitespace(), !linkTitle.isEmpty {
-                    title.text = linkTitle
-                } else {
-                    title.text = bookmark?.urlObject?.host?.droppingWwwPrefix() ?? ""
-                }
-
-                accessoryView = nil
-
-                itemImage.loadFavicon(forDomain: bookmark?.urlObject?.host?.droppingWwwPrefix(), usingCache: .bookmarks)
+                refreshForBookmarkWithTitle(bookmark?.title, url: bookmark?.urlObject)
             }
-
         }
+    }
+
+    var scoredBookmark: BookmarksCachingSearch.ScoredBookmark? {
+        didSet {
+            refreshForBookmarkWithTitle(scoredBookmark?.title, url: scoredBookmark?.url)
+        }
+    }
+
+    func refreshForBookmarkWithTitle(_ title: String?, url: URL?) {
+        numberOfChildrenLabel.isHidden = true
+        imageWidthConstraint.constant = 24
+        imageHeightConstraint.constant = 24
+
+        if let linkTitle = title?.trimmingWhitespace(), !linkTitle.isEmpty {
+            self.title.text = linkTitle
+        } else {
+            self.title.text = url?.host?.droppingWwwPrefix() ?? ""
+        }
+
+        accessoryView = nil
+
+        itemImage.loadFavicon(forDomain: url?.host?.droppingWwwPrefix(), usingCache: .bookmarks)
     }
 
     override func awakeFromNib() {

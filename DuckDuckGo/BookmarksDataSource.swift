@@ -56,17 +56,8 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             fatalError("No bookmark at index \(indexPath.row)")
         }
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier, for: indexPath) as? BookmarkCell else {
-            fatalError("Failed to dequeue bookmark item")
-        }
-
+        let cell = BookmarkCellCreator.bookmarkCell(tableView, forIndexPath: indexPath)
         cell.bookmark = bookmark
-
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.title.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-
         return cell
     }
 
@@ -127,12 +118,26 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
 class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
 
+    let searchEngine: BookmarksCachingSearch
+
+    var results = [BookmarksCachingSearch.ScoredBookmark]()
+
+    init(searchEngine: BookmarksCachingSearch) {
+        self.searchEngine = searchEngine
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return results.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        fatalError("not implemented")
+        let cell = BookmarkCellCreator.bookmarkCell(tableView, forIndexPath: indexPath)
+        cell.scoredBookmark = results[indexPath.row]
+        return cell
+    }
+
+    func performSearch(_ text: String) async {
+        results = await searchEngine.search(query: text)
     }
 
 }
@@ -147,6 +152,18 @@ class BookmarkCellCreator {
         let theme = ThemeManager.shared.currentTheme
         cell.label.textColor = theme.tableCellTextColor
         cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        return cell
+    }
+
+    static func bookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> BookmarkCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier, for: indexPath) as? BookmarkCell else {
+            fatalError("Failed to dequeue bookmark item")
+        }
+
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.title.textColor = theme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
         return cell
     }

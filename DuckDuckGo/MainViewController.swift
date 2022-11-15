@@ -1616,14 +1616,12 @@ extension MainViewController: TabSwitcherDelegate {
 }
 
 extension MainViewController: BookmarksDelegate {
-    func bookmarksDidSelect(bookmark: BookmarkEntity) {
+    func bookmarksDidSelect(url: URL) {
         dismissOmniBar()
-        if let url = bookmark.urlObject {
-            if url.isBookmarklet() {
-                executeBookmarklet(url)
-            } else {
-                loadUrl(url)
-            }
+        if url.isBookmarklet() {
+            executeBookmarklet(url)
+        } else {
+            loadUrl(url)
         }
     }
     

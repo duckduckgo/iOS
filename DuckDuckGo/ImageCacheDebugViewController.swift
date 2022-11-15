@@ -57,6 +57,7 @@ class ImageCacheDebugViewController: UITableViewController {
         loadAllBookmarks()
     }
 
+    // Access core data directly because this is just a debug view
     private func loadAllBookmarks() {
         let request = BookmarkEntity.fetchRequest()
         request.sortDescriptors = [ .init(keyPath: \BookmarkEntity.title, ascending: true) ]

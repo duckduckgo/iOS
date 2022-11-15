@@ -19,8 +19,8 @@
 
 import UIKit
 import Core
+import Bookmarks
 
-#warning("still using bookmarks manager")
 class SuggestionTrayViewController: UIViewController {
     
     @IBOutlet weak var backgroundView: UIView!
@@ -37,7 +37,6 @@ class SuggestionTrayViewController: UIViewController {
     var dismissHandler: (() -> Void)?
     
     private let appSettings = AppUserDefaults()
-    private let bookmarkManager = BookmarksManager()
 
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
@@ -192,8 +191,9 @@ class SuggestionTrayViewController: UIViewController {
         containerView.addGestureRecognizer(foregroundTap)
     }
     
+    #warning("should avoid creating this here?")
     private var canDisplayFavorites: Bool {
-        bookmarkManager.favoritesCount != 0
+        FavoritesListViewModel.make().count > 0
     }
     
     private func displayFavoritesIfNeeded(onInstall: @escaping () -> Void = {}) {

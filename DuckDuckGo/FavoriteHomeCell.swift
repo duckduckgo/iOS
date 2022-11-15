@@ -36,14 +36,6 @@ class FavoriteHomeCell: UICollectionViewCell {
     @IBOutlet weak var deleteButton: UIButton!
 
     static let appUrls = AppUrls()
-    
-    var isReordering = false {
-        didSet {
-            let scale: CGFloat = isReordering ? 1.2 : 1.0
-            transform = CGAffineTransform.identity.scaledBy(x: scale, y: scale)
-            contentView.alpha = isReordering ? 0.5 : 1.0
-        }
-    }
 
     var isEditing = false {
         didSet {
@@ -87,6 +79,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         super.awakeFromNib()
         FavoriteHomeCell.applyDropshadow(to: iconBackground)
         FavoriteHomeCell.applyDropshadow(to: deleteButton)
+        layer.cornerRadius = 8
     }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {

@@ -90,14 +90,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func install(into controller: UIViewController & FavoritesHomeViewSectionRendererDelegate) {
         self.controller = controller
     }
-    
-    func endReordering() {
-        if let cell = reorderingCell {
-            cell.isReordering = false
-            reorderingCell = nil
-        }
-    }
-    
+
     func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
         if controller is FavoritesOverlay {
             return Constants.largeModeMargin
@@ -224,7 +217,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-        print("***", #function)
         return previewForConfiguration(configuration, inCollectionView: collectionView)
     }
 
@@ -295,18 +287,23 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
               let favorite = cell.favorite
         else { return }
 
-        cell.isReordering = false
+        collectionView.performBatchUpdates {
+            viewModel.move(favorite, toIndex: destinationPath.row)
+            collectionView.deleteItems(at: [sourcePath])
+            collectionView.insertItems(at: [destinationPath])
+        }
 
-        viewModel.move(favorite, toIndex: destinationPath.row)
         coordinator.drop(dragItem, toItemAt: destinationPath)
 
-        collectionView.performBatchUpdates {
-            collectionView.moveItem(at: sourcePath, to: destinationPath)
-        }
     }
 
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         guard let cell = self.collectionView(collectionView, cellForItemAt: indexPath) as? FavoriteHomeCell else { return [] }
+
+        cell.titleLabel.isHidden = true
+        cell.backgroundView?.backgroundColor = .orange
+        cell.backgroundColor = .clear
+        cell.contentView.backgroundColor = .green
 
         UIGraphicsBeginImageContextWithOptions(cell.iconBackground.frame.size, true, 1.0)
         defer {
@@ -314,7 +311,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
 
         cell.iconBackground.drawHierarchy(in: cell.iconBackground.frame, afterScreenUpdates: false)
-        cell.isReordering = true
         guard let image = UIGraphicsGetImageFromCurrentImageContext() else {
             assertionFailure("Unable to create image from context")
             return []

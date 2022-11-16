@@ -21,6 +21,7 @@ import Foundation
 import CoreData
 import Persistence
 import Bookmarks
+import os
 
 public class BookmarksDatabase {
 
@@ -31,10 +32,21 @@ public class BookmarksDatabase {
     private init() { }
 
     static func make() -> CoreDataDatabase {
+        os_log("BookmarksDatabase.make - IN")
         let bundle = Bookmarks.bundle
-        let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel")!
-        let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: databaseGroupID)!
-        return CoreDataDatabase(name: "Bookmarks", containerLocation: location, model: model)
+        guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel") else {
+            os_log("BookmarksDatabase.make - OUT, failed to loadModel")
+            fatalError("Failed to load model")
+        }
+
+        guard let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: databaseGroupID) else {
+            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", databaseGroupID)
+            fatalError("Failed to get location")
+        }
+
+        let db = CoreDataDatabase(name: "Bookmarks", containerLocation: location, model: model)
+        os_log("BookmarksDatabase.make - OUT")
+        return db
     }
 
 }

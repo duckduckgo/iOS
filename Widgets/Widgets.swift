@@ -22,6 +22,8 @@ import SwiftUI
 import Core
 import CoreData
 import Kingfisher
+import Bookmarks
+import os
 
 struct Favorite {
 
@@ -45,7 +47,7 @@ struct Favorite {
 struct Provider: TimelineProvider {
 
     typealias Entry = FavoritesEntry
-    
+
     func getSnapshot(in context: Context, completion: @escaping (FavoritesEntry) -> Void) {
         createEntry(in: context) { entry in
             completion(entry)
@@ -63,28 +65,22 @@ struct Provider: TimelineProvider {
         }
     }
     
-    private func coreDataFavoritesToFavorites(_ coreDataFavorites: [Bookmark], returningNoMoreThan maxLength: Int) -> [Favorite] {
+    private func coreDataFavoritesToFavorites(_ coreDataFavorites: [BookmarkEntity], returningNoMoreThan maxLength: Int) -> [Favorite] {
         
-        let coreDataFavorites: [Favorite] = coreDataFavorites.compactMap {
-            guard let url = $0.url,
-                  !url.isBookmarklet() else { return nil }
+        let favorites: [Favorite] = coreDataFavorites.compactMap { favorite -> Favorite? in
+            guard let url = favorite.urlObject,
+                  !url.isBookmarklet(),
+                  let domain = url.host?.droppingWwwPrefix()
+            else { return nil }
+
             return Favorite(url: DeepLinks.createFavoriteLauncher(forUrl: url),
-                            domain: url.host?.droppingWwwPrefix() ?? "",
-                            title: $0.displayTitle ?? "",
+                            domain: domain,
+                            title: favorite.title ?? domain,
                             favicon: loadImageFromCache(forDomain: url.host) )
         }
         
-        return Array(coreDataFavorites.prefix(maxLength))
+        return Array(favorites.prefix(maxLength))
             
-    }
-    
-    private func getCoreDataFavorites(completion: @escaping ([Bookmark]) -> Void) {
-        
-        let coreData = BookmarksCoreDataStorage()
-        coreData.loadStoreOnlyForWidget()
-        coreData.favoritesUncachedForWidget { favorites in
-            completion(favorites)
-        }
     }
 
     private func createEntry(in context: Context, completion: @escaping (FavoritesEntry) -> Void) {
@@ -102,12 +98,19 @@ struct Provider: TimelineProvider {
         }
         
         if maxFavorites > 0 {
-            getCoreDataFavorites { coreDataFavorites in
-                let favorites = coreDataFavoritesToFavorites(coreDataFavorites, returningNoMoreThan: maxFavorites)
-                
-                let entry = FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)
-                completion(entry)
-            }
+            BookmarksDatabase.shared.loadStore()
+            os_log("BookmarksDatabase load store started")
+            let dbContext = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+            os_log("dbContext created")
+            let storage = CoreDataFavoritesLogic(context: dbContext)
+            os_log("storage created")
+            let dbFavorites = storage.fetchFavorites()
+            os_log("dbFavorites loaded %d", dbFavorites.count)
+            let favorites = coreDataFavoritesToFavorites(dbFavorites, returningNoMoreThan: maxFavorites)
+            os_log("favorites converted %d", favorites.count)
+            let entry = FavoritesEntry(date: Date(), favorites: favorites, isPreview: favorites.isEmpty && context.isPreview)
+            os_log("entry created")
+            completion(entry)
         } else {
             let entry = FavoritesEntry(date: Date(), favorites: [], isPreview: context.isPreview)
             completion(entry)

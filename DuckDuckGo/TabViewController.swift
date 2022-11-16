@@ -352,6 +352,13 @@ class TabViewController: UIViewController {
     func applyInheritedAttribution(_ attribution: AdClickAttributionLogic.State?) {
         adClickAttributionLogic.applyInheritedAttribution(state: attribution)
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        webView.frame.size = size
+    }
+    
+
 
     // The `consumeCookies` is legacy behaviour from the previous Fireproofing implementation. Cookies no longer need to be consumed after invocations
     // of the Fire button, but the app still does so in the event that previously persisted cookies have not yet been consumed.
@@ -366,7 +373,6 @@ class TabViewController: UIViewController {
         userContentController.delegate = self
 
         webView = WKWebView(frame: view.bounds, configuration: configuration)
-        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         webView.allowsLinkPreview = true
         webView.allowsBackForwardNavigationGestures = true

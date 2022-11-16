@@ -42,7 +42,7 @@ extension CrashCollection {
         if first {
             params["first"] = "1"
         }
-        Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params)
+        Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: params, includedParameters: [.appVersion])
     }
 
     static func start() {

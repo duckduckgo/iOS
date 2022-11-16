@@ -746,10 +746,6 @@ class MainViewController: UIViewController {
             // Do this on the next UI thread pass so we definitely have the right width
             self.applyWidthToTrayController()
             
-            if DaxDialogs.shared.shouldShowFireButtonPulse {
-                self.showFireButtonPulse()
-            }
-            
             self.refreshMenuButtonState()
         }
     }

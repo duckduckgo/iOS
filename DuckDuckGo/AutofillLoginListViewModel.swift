@@ -57,6 +57,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     let authenticator = AutofillLoginListAuthenticator()
     var isSearching: Bool = false
+    var authenticationNotRequired = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
@@ -84,6 +85,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     init(appSettings: AppSettings) {
         self.appSettings = appSettings
         updateData()
+        authenticationNotRequired = !hasAccountsSaved
         setupCancellables()
     }
     
@@ -204,7 +206,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private func updateViewState() {
         var newViewState: AutofillLoginListViewModel.ViewState
         
-        if authenticator.state == .loggedOut {
+        if authenticator.state == .loggedOut && !authenticationNotRequired {
             newViewState = .authLocked
         } else if isSearching {
             if sections.count == 0 {

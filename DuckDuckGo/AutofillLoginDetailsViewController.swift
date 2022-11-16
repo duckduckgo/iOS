@@ -35,6 +35,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     private var authenticator = AutofillLoginListAuthenticator()
     private let lockedView = AutofillItemsLockedView()
     private var contentView: UIView?
+    private var authenticationNotRequired: Bool
 
     private lazy var saveBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
@@ -50,9 +51,10 @@ class AutofillLoginDetailsViewController: UIViewController {
         return barButtonItem
     }()
 
-    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil) {
+    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil, authenticationNotRequired: Bool = false) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account)
         self.authenticator = authenticator
+        self.authenticationNotRequired = authenticationNotRequired
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
 
@@ -75,7 +77,9 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        authenticator.authenticate()
+        if !authenticationNotRequired {
+            authenticator.authenticate()
+        }
     }
     
     private func installSubviews() {
@@ -130,8 +134,8 @@ class AutofillLoginDetailsViewController: UIViewController {
     private func updateAuthViews() {
         switch authenticator.state {
         case .loggedOut:
-            lockedView.isHidden = false
-            self.contentView?.isHidden = true
+            lockedView.isHidden = authenticationNotRequired
+            self.contentView?.isHidden = !authenticationNotRequired
         case .loggedIn:
             lockedView.isHidden = true
             self.contentView?.isHidden = false

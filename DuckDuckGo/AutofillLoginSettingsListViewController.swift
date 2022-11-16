@@ -142,13 +142,16 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     @objc
     func addButtonPressed() {
-        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, authenticationNotRequired: viewModel.authenticationNotRequired)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
+                                                                   authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: true)
     }
     
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
-        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, account: account, authenticationNotRequired: viewModel.authenticationNotRequired)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
+                                                                   account: account,
+                                                                   authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: animated)
     }

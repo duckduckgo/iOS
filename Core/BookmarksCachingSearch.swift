@@ -137,7 +137,7 @@ public class BookmarksCachingSearch {
     public func registerForCoreDataStorageNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(dataDidChange),
-                                               name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                               name: NSManagedObjectContext.didSaveObjectsNotification,
                                                object: nil)
     }
 
@@ -148,6 +148,8 @@ public class BookmarksCachingSearch {
     }
 
     @objc func dataDidChange(notification: Notification) {
+        guard let externalContext = notification.object as? NSManagedObjectContext,
+              externalContext.persistentStoreCoordinator == bookmarksStore.coordinator else { return }
         refreshCache()
     }
 

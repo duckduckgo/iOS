@@ -139,7 +139,7 @@
                                     </connections>
                                 </searchBar>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">
-                                    <rect key="frame" x="0.0" y="510" width="375" height="82"/>
+                                    <rect key="frame" x="0.0" y="510.5" width="375" height="82"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
@@ -183,19 +183,9 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PR2-eO-J5d">
-                                                    <rect key="frame" x="326.5" y="-78.5" width="0.5" height="200.5"/>
-                                                    <color key="backgroundColor" name="BookmarksCellSeperatorColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="0.5" id="mhd-N9-6nH"/>
-                                                        <constraint firstAttribute="height" constant="200" id="y16-eI-lfQ"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="PR2-eO-J5d" secondAttribute="trailing" constant="16" id="5aV-ti-WjS"/>
-                                                <constraint firstItem="PR2-eO-J5d" firstAttribute="centerY" secondItem="2vh-lJ-WoO" secondAttribute="centerY" id="HES-g6-KH8"/>
                                                 <constraint firstItem="PlS-RF-bTZ" firstAttribute="leading" secondItem="2vh-lJ-WoO" secondAttribute="leadingMargin" id="LLv-0X-qGs"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PlS-RF-bTZ" secondAttribute="trailing" id="XvA-Gb-fcx"/>
                                                 <constraint firstItem="PlS-RF-bTZ" firstAttribute="centerY" secondItem="2vh-lJ-WoO" secondAttribute="centerY" id="kCg-G1-s27"/>
@@ -242,22 +232,12 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8hl-Yy-faj">
-                                                    <rect key="frame" x="300" y="-78.5" width="0.5" height="200.5"/>
-                                                    <color key="backgroundColor" name="BookmarksCellSeperatorColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="200" id="HMZ-UF-M0J"/>
-                                                        <constraint firstAttribute="width" constant="0.5" id="ul3-Qw-Yd0"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="8hl-Yy-faj" secondAttribute="trailing" constant="16" id="APL-wv-5jr"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="9wR-fm-8Rn" secondAttribute="trailing" id="Aao-vG-LnV"/>
                                                 <constraint firstItem="9wR-fm-8Rn" firstAttribute="leading" secondItem="1hV-h5-0bK" secondAttribute="leadingMargin" id="MUX-Ml-LnD"/>
                                                 <constraint firstItem="9wR-fm-8Rn" firstAttribute="centerY" secondItem="1hV-h5-0bK" secondAttribute="centerY" id="NVL-lH-uDP"/>
-                                                <constraint firstItem="8hl-Yy-faj" firstAttribute="centerY" secondItem="1hV-h5-0bK" secondAttribute="centerY" id="i0m-y8-KNs"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="BookmarksCellColor"/>

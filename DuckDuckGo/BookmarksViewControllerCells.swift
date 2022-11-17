@@ -37,6 +37,11 @@ class FolderCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var childrenCountLabel: UILabel!
 
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        childrenCountLabel.isHidden = editing
+    }
+
 }
 
 class NoBookmarksCell: UITableViewCell {
@@ -69,6 +74,7 @@ class BookmarksViewControllerCellFactory {
         cell.backgroundColor = theme.tableCellBackgroundColor
         cell.titleLabel.textColor = theme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        cell.editingAccessoryType = .disclosureIndicator
         return cell
     }
 
@@ -82,6 +88,7 @@ class BookmarksViewControllerCellFactory {
         cell.titleLabel.textColor = theme.tableCellTextColor
         cell.childrenCountLabel.textColor = theme.tableCellTextColor
         cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
+        cell.editingAccessoryType = .disclosureIndicator
         return cell
     }
 

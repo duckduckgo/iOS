@@ -14,5 +14,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: "--dangerfile loremattei/danger-settings/org/iosSettings.ts@main"
+          args: "--dangerfile loremattei/danger-settings/org/allPRs.ts@main"
 

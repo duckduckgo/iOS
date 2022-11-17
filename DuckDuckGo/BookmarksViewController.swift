@@ -113,7 +113,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewModelCancellable = viewModel.updates.sink { [weak self] _ in
+        viewModelCancellable = viewModel.externalUpdates.sink { [weak self] _ in
             self?.tableView.reloadData()
         }
 

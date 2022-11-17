@@ -45,6 +45,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var selectorContainer: UIView!
     @IBOutlet weak var selectorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectorControl: UISegmentedControl!
+    
+    private let bookmarksDBProvider = BookmarksDatabase.shared
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -78,9 +80,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     weak var delegate: BookmarksDelegate?
 
     fileprivate lazy var viewModel: BookmarkListViewModel = {
-        let context = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
-        let storage = CoreDataBookmarksLogic(context: context)
-        return BookmarkListViewModel(storage: storage, currentFolder: nil)
+        return BookmarkListViewModel(dbProvider: bookmarksDBProvider, currentFolder: nil)
     }() {
         didSet {
             dataSource = BookmarksDataSource(viewModel: viewModel)
@@ -199,7 +199,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
             let controller = BookmarksViewController(coder: coder)
-            controller?.viewModel = self.viewModel.viewModelForFolder(parent)
+            controller?.viewModel = BookmarkListViewModel(dbProvider: self.bookmarksDBProvider, currentFolder: parent)
             controller?.delegate = self.delegate
             return controller
         })

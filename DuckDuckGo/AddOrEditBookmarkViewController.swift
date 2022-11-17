@@ -34,38 +34,15 @@ class AddOrEditBookmarkViewController: UIViewController {
 
     private var foldersViewController: BookmarkFoldersViewController?
 
-    let context: NSManagedObjectContext
     let viewModel: BookmarkEditorViewModel
+    
+    private let bookmarksDBProvider = BookmarksDatabase.shared
 
     init?(coder: NSCoder, editingEntityID: NSManagedObjectID?, parentFolderID: NSManagedObjectID?) {
-        context = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
 
-        let editingEntity: BookmarkEntity
-        if let editingEntityID = editingEntityID {
-            guard let entity = context.object(with: editingEntityID) as? BookmarkEntity else {
-                fatalError("Failed to load entity when expected")
-            }
-            editingEntity = entity
-        } else {
-
-            let parent: BookmarkEntity?
-            if let parentFolderID = parentFolderID {
-                parent = context.object(with: parentFolderID) as? BookmarkEntity
-            } else {
-                parent = BookmarkUtils.fetchRootFolder(context)
-            }
-            assert(parent != nil)
-
-            // We don't support creating bookmarks from scratch at this time, so it must be a folder
-            editingEntity = BookmarkEntity.makeFolder(title: "",
-                                                      parent: parent!,
-                                                      context: context)
-        }
-
-        viewModel = BookmarkEditorViewModel(context: context,
-                                            storage: CoreDataBookmarksLogic(context: context),
-                                            bookmark: editingEntity,
-                                            isNew: editingEntity.isInserted)
+        viewModel = BookmarkEditorViewModel(dbProvider: bookmarksDBProvider,
+                                            editingEntityID: editingEntityID,
+                                            parentFolderID: parentFolderID)
 
         super.init(coder: coder)
     }
@@ -117,13 +94,7 @@ class AddOrEditBookmarkViewController: UIViewController {
     }
 
     func saveAndDismiss() {
-        do {
-            if context.hasChanges {
-                try context.save()
-            }
-        } catch {
-            assertionFailure("\(error)")
-        }
+        viewModel.save()
         self.delegate?.finishedEditing(self)
         dismiss(animated: true, completion: nil)
     }

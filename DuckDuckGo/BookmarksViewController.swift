@@ -24,6 +24,7 @@ import os.log
 import UniformTypeIdentifiers
 import Bookmarks
 import CoreData
+import Combine
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -79,11 +80,15 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private var searchController: UISearchController?
     weak var delegate: BookmarksDelegate?
 
+    fileprivate var viewModelCancellable: AnyCancellable?
     fileprivate lazy var viewModel: BookmarkListViewModel = {
         return BookmarkListViewModel(dbProvider: bookmarksDBProvider, currentFolder: nil)
     }() {
         didSet {
             dataSource = BookmarksDataSource(viewModel: viewModel)
+            viewModelCancellable = viewModel.$bookmarks.sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
         }
     }
 
@@ -380,7 +385,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             let result = await BookmarksImporter().parseAndSave(html: html)
             switch result {
             case .success:
-                // FixMe
+                #warning("reload widgets")
 //                dataSource.bookmarksManager.reloadWidgets()
 
                 DispatchQueue.main.async { [weak self] in

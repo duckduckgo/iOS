@@ -142,22 +142,12 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             return cell
         }
 
-        cell.updateFor(favorite: favorite)
-        cell.isEditing = isEditing
-
-        // can't use captured index path because deleting items can change it
-        cell.onRemove = { [weak self, weak collectionView, weak cell] in
-            guard let collectionView = collectionView else { return }
-            guard let cell = cell else { return }
-            
+        cell.onRemove = { [weak self] in
             self?.removeFavorite(cell, collectionView)
         }
-        cell.onEdit = { [weak self, weak collectionView, weak cell] in
-            guard let collectionView = collectionView else { return }
-            guard let cell = cell else { return }
-            
-            self?.editFavorite(cell, collectionView)
-        }
+
+        cell.updateFor(favorite: favorite)
+        cell.isEditing = isEditing
         return cell
 
     }
@@ -254,8 +244,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
 
         let context = UIContextMenuConfiguration(identifier: indexPath as NSIndexPath) {
-            guard let image = cell.iconImage.image else { return nil }
-            return UIImageViewController(image: image)
+            return nil
         } actionProvider: { _ in
 
             let title = [
@@ -300,23 +289,11 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         guard let cell = self.collectionView(collectionView, cellForItemAt: indexPath) as? FavoriteHomeCell else { return [] }
 
-        cell.titleLabel.isHidden = true
-        cell.backgroundView?.backgroundColor = .orange
-        cell.backgroundColor = .clear
-        cell.contentView.backgroundColor = .green
-
-        UIGraphicsBeginImageContextWithOptions(cell.iconBackground.frame.size, true, 1.0)
-        defer {
-            UIGraphicsEndImageContext()
+        if let size = cell.iconImage.image?.size.width, size <= 32 {
+            cell.iconBackground.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
         }
 
-        cell.iconBackground.drawHierarchy(in: cell.iconBackground.frame, afterScreenUpdates: false)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else {
-            assertionFailure("Unable to create image from context")
-            return []
-        }
-
-        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
+        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: "" as NSString))
         dragItem.previewProvider = { () -> UIDragPreview? in
             return UIDragPreview(view: cell.iconBackground)
         }

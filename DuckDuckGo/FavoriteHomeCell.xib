@@ -82,7 +82,7 @@
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" title=" " image="RemoveFavoriteIcon"/>
                         <connections>
-                            <action selector="onRemovePressed" destination="ico-ty-UiT" eventType="touchUpInside" id="jnF-3W-xWx"/>
+                            <action selector="onRemoveAction" destination="ico-ty-UiT" eventType="touchUpInside" id="Jqi-Xl-vf6"/>
                         </connections>
                     </button>
                 </subviews>

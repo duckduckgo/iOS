@@ -307,7 +307,6 @@
 		85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */; };
 		85C743902154E981005CF998 /* GradeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C7438F2154E981005CF998 /* GradeCache.swift */; };
 		85C861E628FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C861E528FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift */; };
-		85C861E828FF480A00189466 /* UIImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C861E728FF480A00189466 /* UIImageViewController.swift */; };
 		85C91CA224671F4C00A11132 /* AppDeepLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17D723B1E8BB374003E8B0E /* AppDeepLinks.swift */; };
 		85CA53A824BB343700A6288C /* Favicons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA53A324B9F2BD00A6288C /* Favicons.swift */; };
 		85CA53AA24BB376800A6288C /* NotFoundCachingDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CA53A924BB376800A6288C /* NotFoundCachingDownloader.swift */; };
@@ -1115,7 +1114,6 @@
 		85C7438D2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedTermsOfServiceStoreTests.swift; sourceTree = "<group>"; };
 		85C7438F2154E981005CF998 /* GradeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradeCache.swift; sourceTree = "<group>"; };
 		85C861E528FF1B5F00189466 /* HomeViewSectionRenderersExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewSectionRenderersExtension.swift; sourceTree = "<group>"; };
-		85C861E728FF480A00189466 /* UIImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewController.swift; sourceTree = "<group>"; };
 		85CA53A324B9F2BD00A6288C /* Favicons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Favicons.swift; path = ../DuckDuckGo/Favicons.swift; sourceTree = "<group>"; };
 		85CA53A924BB376800A6288C /* NotFoundCachingDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundCachingDownloader.swift; sourceTree = "<group>"; };
 		85CA53AB24BBD39300A6288C /* FaviconRequestModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconRequestModifier.swift; sourceTree = "<group>"; };
@@ -4143,7 +4141,6 @@
 				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
 				4B6484E627FD1E340050A7A1 /* FontExtension.swift */,
 				319A37162829C8AD0079FBCE /* UITableViewExtension.swift */,
-				85C861E728FF480A00189466 /* UIImageViewController.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -5199,7 +5196,6 @@
 				310742A62848CD780012660B /* BackForwardMenuHistoryItem.swift in Sources */,
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
 				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,
-				85C861E828FF480A00189466 /* UIImageViewController.swift in Sources */,
 				F4F6DFB826EA9AA600ED7E12 /* BookmarksTextFieldCell.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
 				4B6484ED27FD1E350050A7A1 /* MacBrowserWaitlist.swift in Sources */,

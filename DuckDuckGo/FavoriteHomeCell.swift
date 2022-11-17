@@ -53,18 +53,12 @@ class FavoriteHomeCell: UICollectionViewCell {
     var title: String? {
         favorite?.title
     }
-    
+
     var onRemove: (() -> Void)?
-    var onEdit: (() -> Void)?
-    
+     
     var favorite: BookmarkEntity?
     private var theme: Theme?
-    
-    struct Actions {
-        static let remove = #selector(FavoriteHomeCell.doRemove(sender:))
-        static let edit = #selector(FavoriteHomeCell.doEdit(sender:))
-    }
-    
+
     override var isHighlighted: Bool {
         didSet {
             highlightMask.isHidden = !isHighlighted
@@ -89,22 +83,10 @@ class FavoriteHomeCell: UICollectionViewCell {
         return super.hitTest(point, with: event)
     }
 
-    @objc func doRemove(sender: Any?) {
-        onRemove?()
-    }
-    
-    @objc func doEdit(sender: Any?) {
-        onEdit?()
-    }
-    
-    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        return [ Actions.remove, Actions.edit ].contains(action)
+    @IBAction func onRemoveAction() {
+        self.onRemove?()
     }
 
-    @IBAction func onRemovePressed() {
-        doRemove(sender: nil)
-    }
-    
     func updateFor(favorite: BookmarkEntity) {
         self.favorite = favorite
         
@@ -121,6 +103,7 @@ class FavoriteHomeCell: UICollectionViewCell {
         let iconImage = self.iconImage
         let domain = favorite.host
         let fakeFavicon = FaviconsHelper.createFakeFavicon(forDomain: domain,
+                                                           size: iconImage?.frame.width ?? 64,
                                                            backgroundColor: color,
                                                            bold: false)
         iconImage?.image = fakeFavicon

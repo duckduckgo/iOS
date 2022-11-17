@@ -93,7 +93,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate var searchDataSource = SearchBookmarksDataSource(searchEngine: BookmarksCachingSearch())
 
     var isNested: Bool {
-        viewModel.currentFolder != nil
+        viewModel.currentFolder?.uuid != BookmarkEntity.Constants.rootFolderID
     }
 
     var favoritesController: FavoritesViewController?

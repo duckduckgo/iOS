@@ -645,7 +645,7 @@
 		F1D477CB1F2149C40031ED49 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D477CA1F2149C40031ED49 /* Type.swift */; };
 		F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D796EB1E7AB8930019D451 /* SaveBookmarkActivity.swift */; };
 		F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */; };
-		F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D796EF1E7B07610019D451 /* BookmarkCell.swift */; };
+		F1D796F01E7B07610019D451 /* BookmarksViewControllerCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D796EF1E7B07610019D451 /* BookmarksViewControllerCells.swift */; };
 		F1D796F41E7C2A410019D451 /* BookmarksDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */; };
 		F1DA2F7D1EBCF23700313F51 /* ExternalUrlSchemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA2F7C1EBCF23700313F51 /* ExternalUrlSchemeTests.swift */; };
 		F1DE78581E5CAE350058895A /* TabViewGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DE78571E5CAE350058895A /* TabViewGridCell.swift */; };
@@ -2081,7 +2081,7 @@
 		F1D477C81F2139410031ED49 /* SmallOmniBarStateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallOmniBarStateTests.swift; sourceTree = "<group>"; };
 		F1D477CA1F2149C40031ED49 /* Type.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		F1D796EB1E7AB8930019D451 /* SaveBookmarkActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveBookmarkActivity.swift; sourceTree = "<group>"; };
-		F1D796EF1E7B07610019D451 /* BookmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
+		F1D796EF1E7B07610019D451 /* BookmarksViewControllerCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewControllerCells.swift; sourceTree = "<group>"; };
 		F1D796F31E7C2A410019D451 /* BookmarksDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDelegate.swift; sourceTree = "<group>"; };
 		F1D934021E610DCE00A6F0D6 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Point.swift; path = ../Core/Point.swift; sourceTree = "<group>"; };
 		F1DA2F7C1EBCF23700313F51 /* ExternalUrlSchemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalUrlSchemeTests.swift; sourceTree = "<group>"; };
@@ -3807,7 +3807,6 @@
 			isa = PBXGroup;
 			children = (
 				F4F6DFB126E6AEC100ED7E12 /* AddOrEditBookmarkViewController.swift */,
-				F1D796EF1E7B07610019D451 /* BookmarkCell.swift */,
 				F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */,
 				F4F6DFB326E6B63700ED7E12 /* BookmarkFolderCell.swift */,
 				F4F6DFB526E6B71300ED7E12 /* BookmarkFoldersTableViewController.swift */,
@@ -3817,10 +3816,11 @@
 				F103076A1E800DC30059FEC7 /* BookmarksManager.swift */,
 				F4F6DFB726EA9AA600ED7E12 /* BookmarksTextFieldCell.swift */,
 				F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */,
+				F1D796EF1E7B07610019D451 /* BookmarksViewControllerCells.swift */,
+				85CF6128291D35280010CC28 /* BookmarkViewModelExtensions.swift */,
 				85E58C2B28FDA94F006A801A /* FavoritesViewController.swift */,
 				F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */,
 				F1D796EB1E7AB8930019D451 /* SaveBookmarkActivity.swift */,
-				85CF6128291D35280010CC28 /* BookmarkViewModelExtensions.swift */,
 			);
 			name = Bookmarks;
 			sourceTree = "<group>";
@@ -5173,7 +5173,7 @@
 				AA4D6A6A23DB87B1007E8790 /* AppIconManager.swift in Sources */,
 				8563A03C1F9288D600F04442 /* BrowserChromeManager.swift in Sources */,
 				980891A32237146B00313A70 /* Feedback.swift in Sources */,
-				F1D796F01E7B07610019D451 /* BookmarkCell.swift in Sources */,
+				F1D796F01E7B07610019D451 /* BookmarksViewControllerCells.swift in Sources */,
 				85058369219F424500ED4EDB /* UIColorExtension.swift in Sources */,
 				85058368219C49E000ED4EDB /* HomeViewSectionRenderers.swift in Sources */,
 				F456B3B525810BB900B79B90 /* FireButtonAnimationSettingsViewController.swift in Sources */,

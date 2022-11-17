@@ -483,7 +483,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         // necessary in case a cell is swiped (which would mean isEditing is already true, and setting it again wouldn't do anything)
         tableView.isEditing = false
         
-        tableView.isEditing = true
+        tableView.setEditing(true, animated: true)
         favoritesController?.isEditing = true
 
         self.isEditingBookmarks = true
@@ -499,7 +499,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             return
         }
 
-        tableView.isEditing = false
+        tableView.setEditing(false, animated: true)
         self.isEditingBookmarks = false
         refreshEditButton()
         enableDoneButton()

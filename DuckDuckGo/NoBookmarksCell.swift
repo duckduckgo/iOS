@@ -19,14 +19,4 @@
 
 import UIKit
 
-class NoBookmarksCell: UITableViewCell {
-    
-    @IBOutlet var label: UILabel!
-    
-    static let reuseIdentifier = "NoBookmarksCell"
-}
-
-class NoBookmarksInSubfolderCell: UITableViewCell {
-    
-    static let reuseIdentifier = "NoBookmarksInSubfolderCell"
-}
+#warning("delete empty file")

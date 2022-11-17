@@ -49,16 +49,24 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard !viewModel.bookmarks.isEmpty else {
-            return BookmarkCellCreator.createEmptyCell(tableView, forIndexPath: indexPath, inFolder: viewModel.currentFolder != nil)
+            return BookmarksViewControllerCellFactory.makeEmptyCell(tableView, forIndexPath: indexPath, inFolder: viewModel.currentFolder != nil)
         }
 
         guard let bookmark = viewModel.bookmarkAt(indexPath.row) else {
             fatalError("No bookmark at index \(indexPath.row)")
         }
 
-        let cell = BookmarkCellCreator.bookmarkCell(tableView, forIndexPath: indexPath)
-        cell.bookmark = bookmark
-        return cell
+        if bookmark.isFolder {
+            let cell = BookmarksViewControllerCellFactory.makeFolderCell(tableView, forIndexPath: indexPath)
+            cell.titleLabel.text = bookmark.title
+            cell.childrenCountLabel.text = "\(bookmark.childrenArray.count)"
+            return cell
+        } else {
+            let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
+            cell.faviconImageView.loadFavicon(forDomain: bookmark.urlObject?.host?.droppingWwwPrefix(), usingCache: .bookmarks)
+            cell.titleLabel.text = bookmark.title
+            return cell
+        }
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -131,41 +139,14 @@ class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = BookmarkCellCreator.bookmarkCell(tableView, forIndexPath: indexPath)
-        cell.scoredBookmark = results[indexPath.row]
+        let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
+        cell.faviconImageView.loadFavicon(forDomain: results[indexPath.row].url.host?.droppingWwwPrefix(), usingCache: .bookmarks)
+        cell.titleLabel.text = results[indexPath.row].title
         return cell
     }
 
     func performSearch(_ text: String) async {
         results = await searchEngine.search(query: text)
-    }
-
-}
-
-class BookmarkCellCreator {
-
-    static func createEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath, inFolder: Bool) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier, for: indexPath)
-                as? NoBookmarksCell else {
-            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
-        }
-        let theme = ThemeManager.shared.currentTheme
-        cell.label.textColor = theme.tableCellTextColor
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        return cell
-    }
-
-    static func bookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> BookmarkCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier, for: indexPath) as? BookmarkCell else {
-            fatalError("Failed to dequeue bookmark item")
-        }
-
-        let theme = ThemeManager.shared.currentTheme
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.title.textColor = theme.tableCellTextColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        return cell
     }
 
 }

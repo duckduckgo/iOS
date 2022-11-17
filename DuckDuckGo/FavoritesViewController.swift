@@ -80,16 +80,14 @@ class FavoritesViewController: UIViewController {
         
         viewModelCancellable = renderer.viewModel.externalUpdates.sink { [weak self] _ in
             self?.collectionView.reloadData()
+            self?.updateHeroImage()
         }
 
         registerForKeyboardNotifications()
 
-        applyTheme(ThemeManager.shared.currentTheme)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         updateHeroImage()
+
+        applyTheme(ThemeManager.shared.currentTheme)
     }
 
     override func viewDidLayoutSubviews() {

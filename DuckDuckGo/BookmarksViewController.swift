@@ -115,6 +115,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
         viewModelCancellable = viewModel.externalUpdates.sink { [weak self] _ in
             self?.tableView.reloadData()
+            self?.refreshAll()
         }
 
         tableView.delegate = self
@@ -150,13 +151,20 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
     }
 
+    private func refreshAll() {
+        refreshEditButton()
+        refreshFooterView()
+        refreshMoreButton()
+        refreshAddFolderButton()
+    }
+
     private func showBookmarksView() {
         tableView.isHidden = false
         favoritesContainer.isHidden = true
         addFolderButton.isHidden = false
         moreButton.isHidden = false
         navigationItem.title = UserText.sectionTitleBookmarks
-        refreshEditButton()
+        refreshAll()
     }
 
     private func showFavoritesView() {
@@ -165,7 +173,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         addFolderButton.isHidden = true
         moreButton.isHidden = true
         navigationItem.title = UserText.sectionTitleFavorites
-        refreshEditButton()
+        refreshAll()
     }
 
     func openEditFormWhenPresented(bookmark: BookmarkEntity) {
@@ -300,9 +308,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func refreshEditButton() {
+        if isEditingBookmarks {
+            changeEditButtonToDone()
+            return
+        }
+
         if !favoritesContainer.isHidden {
-            #warning("add has favorites method")
-            // editButton.isEnabled = viewModel.hasFavorites
+            editButton.isEnabled = favoritesController?.isEditing == true || viewModel.hasFavorites
             editButton.title = UserText.actionGenericEdit
         } else if (dataSource.isEmpty && !isEditingBookmarks) || dataSource === searchDataSource {
             disableEditButton()
@@ -320,7 +332,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func refreshMoreButton() {
-        if isNested || isEditingBookmarks || dataSource === searchDataSource  || viewModel.currentFolder != nil {
+        if isNested || isEditingBookmarks || dataSource === searchDataSource  || viewModel.currentFolder?.isRoot == false {
             disableMoreButton()
         } else {
             enableMoreButton()

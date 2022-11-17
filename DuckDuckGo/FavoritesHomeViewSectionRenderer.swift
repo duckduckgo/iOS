@@ -249,7 +249,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         }
 
         let remove = UIAction(title: UserText.favoriteMenuRemove,
-                              image: UIImage(named: "Trash")) { [weak self] _ in
+                              image: UIImage(named: "RemoveFavoriteMenuIcon")) { [weak self] _ in
             self?.removeFavorite(cell, collectionView)
         }
 

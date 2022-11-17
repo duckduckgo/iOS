@@ -37,7 +37,7 @@ final class UserScripts: UserScriptsProvider {
     private(set) var findInPageScript = FindInPageUserScript()
     private(set) var fullScreenVideoScript = FullScreenVideoUserScript()
     private(set) var printingUserScript = PrintingUserScript()
-    private(set) var textSizeUserScript = TextSizeUserScript()
+    private(set) var textSizeUserScript = TextSizeUserScript(textSizeAdjustmentInPercents: AppDependencyProvider.shared.appSettings.textSize)
     private(set) var debugScript = DebugUserScript()
 
     init(with sourceProvider: ScriptSourceProviding) {

@@ -25,6 +25,7 @@ import UniformTypeIdentifiers
 import Bookmarks
 import CoreData
 import Combine
+import Persistence
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -81,16 +82,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     weak var delegate: BookmarksDelegate?
 
     fileprivate var viewModelCancellable: AnyCancellable?
-    fileprivate lazy var viewModel: BookmarkListViewModel = {
-        return BookmarkListViewModel(dbProvider: bookmarksDBProvider, currentFolder: nil)
-    }() {
-        didSet {
-            dataSource = BookmarksDataSource(viewModel: viewModel)
-            viewModelCancellable = viewModel.$bookmarks.sink { [weak self] _ in
-                self?.tableView.reloadData()
-            }
-        }
-    }
+    fileprivate let viewModel: BookmarkListViewModel
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
         let dataSource = BookmarksDataSource(viewModel: viewModel)
@@ -108,8 +100,22 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     fileprivate var onDidAppearAction: () -> Void = {}
 
+    init?(coder: NSCoder, bookmarksDBProvider: CoreDataDatabase = BookmarksDatabase.shared, parentID: NSManagedObjectID?) {
+        viewModel = BookmarkListViewModel(dbProvider: bookmarksDBProvider, parentID: parentID)
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        viewModel = BookmarkListViewModel(dbProvider: bookmarksDBProvider, parentID: nil)
+        super.init(coder: coder)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        viewModelCancellable = viewModel.$bookmarks.sink { [weak self] _ in
+            self?.tableView.reloadData()
+        }
 
         tableView.delegate = self
 
@@ -203,8 +209,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func drillIntoFolder(_ parent: BookmarkEntity) {
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
-            let controller = BookmarksViewController(coder: coder)
-            controller?.viewModel = BookmarkListViewModel(dbProvider: self.bookmarksDBProvider, currentFolder: parent)
+            let controller = BookmarksViewController(coder: coder, parentID: parent.objectID)
             controller?.delegate = self.delegate
             return controller
         })
@@ -357,7 +362,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
         return controller
     }
-    
+
     // MARK: Import bookmarks
 
     func importAction() -> UIAction {

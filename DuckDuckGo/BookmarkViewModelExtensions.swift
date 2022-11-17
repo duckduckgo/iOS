@@ -23,10 +23,9 @@ import CoreData
 import Persistence
 
 extension FavoritesListViewModel {
-
+    #warning("we probably should remove that")
     static func make(db: CoreDataDatabase = BookmarksDatabase.shared) -> FavoritesListViewModel {
-        let context = db.makeContext(concurrencyType: .mainQueueConcurrencyType)
-        return FavoritesListViewModel(storage: CoreDataFavoritesLogic(context: context))
+        return FavoritesListViewModel(dbProvider: db)
     }
 
 }

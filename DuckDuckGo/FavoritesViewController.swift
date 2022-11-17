@@ -22,6 +22,7 @@ import UIKit
 import Core
 import Bookmarks
 import Persistence
+import Combine
 
 protocol FavoritesViewControllerDelegate: NSObjectProtocol {
 
@@ -46,6 +47,10 @@ class FavoritesViewController: UIViewController {
     private var theme: Theme!
 
     weak var delegate: FavoritesViewControllerDelegate?
+    
+    private var bookmarksDBProvider = BookmarksDatabase.shared
+    
+    fileprivate var viewModelCancellable: AnyCancellable?
 
     override var isEditing: Bool {
         didSet {
@@ -69,8 +74,13 @@ class FavoritesViewController: UIViewController {
 
         view.addSubview(collectionView)
         
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true, viewModel: .make())
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
+                                                    viewModel: FavoritesListViewModel(dbProvider: bookmarksDBProvider))
         renderer.install(into: self)
+        
+        viewModelCancellable = renderer.viewModel.externalUpdates.sink { [weak self] _ in
+            self?.collectionView.reloadData()
+        }
 
         registerForKeyboardNotifications()
 

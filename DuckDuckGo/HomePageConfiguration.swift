@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Core
 import os.log
 import Bookmarks
+import Persistence
 
 final class HomePageConfiguration {
     
@@ -44,12 +45,16 @@ final class HomePageConfiguration {
     
     private var homeMessageStorage: HomeMessageStorage
     private var remoteMessagingStore: RemoteMessagingStore
+    private var bookmarksDBProvider: CoreDataDatabase
 
     var homeMessages: [HomeMessage] = []
 
-    init(variantManager: VariantManager? = nil, remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()) {
+    init(variantManager: VariantManager? = nil,
+         remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore(),
+         bookmarksDBProvider: CoreDataDatabase = BookmarksDatabase.shared) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
         self.remoteMessagingStore = remoteMessagingStore
+        self.bookmarksDBProvider = bookmarksDBProvider
         homeMessages = buildHomeMessages()
     }
 

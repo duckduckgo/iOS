@@ -100,11 +100,9 @@ struct Provider: TimelineProvider {
         if maxFavorites > 0 {
             BookmarksDatabase.shared.loadStore()
             os_log("BookmarksDatabase load store started")
-            let dbContext = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
-            os_log("dbContext created")
-            let storage = CoreDataFavoritesLogic(context: dbContext)
-            os_log("storage created")
-            let dbFavorites = storage.fetchFavorites()
+            let model = FavoritesListViewModel(dbProvider: BookmarksDatabase.shared)
+            os_log("model created")
+            let dbFavorites = model.favorites
             os_log("dbFavorites loaded %d", dbFavorites.count)
             let favorites = coreDataFavoritesToFavorites(dbFavorites, returningNoMoreThan: maxFavorites)
             os_log("favorites converted %d", favorites.count)

@@ -166,7 +166,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         guard let indexPath = collectionView.indexPath(for: cell),
         let favorite = viewModel.favorite(atIndex: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
-        viewModel.remove(favorite)
+        viewModel.removeFavorite(favorite)
         collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [indexPath])
             self.controller?.favoritesRenderer(self, favoriteDeleted: favorite)
@@ -288,7 +288,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         else { return }
 
         collectionView.performBatchUpdates {
-            viewModel.move(favorite, toIndex: destinationPath.row)
+            viewModel.moveFavorite(favorite, fromIndex: sourcePath.row, toIndex: destinationPath.row)
             collectionView.deleteItems(at: [sourcePath])
             collectionView.insertItems(at: [destinationPath])
         }

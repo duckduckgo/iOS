@@ -41,6 +41,8 @@ class FavoritesOverlay: UIViewController {
     
     weak var delegate: FavoritesOverlayDelegate?
     
+    private var bookmarksDBProvider = BookmarksDatabase.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,7 +55,8 @@ class FavoritesOverlay: UIViewController {
 
         view.addSubview(collectionView)
         
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false, viewModel: .make())
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
+                                                    viewModel: FavoritesListViewModel(dbProvider: bookmarksDBProvider))
         renderer.install(into: self)
         
         registerForKeyboardNotifications()

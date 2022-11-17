@@ -58,8 +58,10 @@ final class AutofillLoginListViewModel: ObservableObject {
     let authenticator = AutofillLoginListAuthenticator()
     var isSearching: Bool = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
+    private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
+    private var currentTabUrl: URL?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
@@ -81,8 +83,9 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings) {
+    init(appSettings: AppSettings, currentTabUrl: URL? = nil) {
         self.appSettings = appSettings
+        self.currentTabUrl = currentTabUrl
         updateData()
         setupCancellables()
     }
@@ -142,6 +145,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     func updateData() {
         self.accounts = fetchAccounts()
+        self.accountsToSuggest = fetchSuggestedAccounts()
         self.sections = makeSections(with: accounts)
     }
     
@@ -177,12 +181,33 @@ final class AutofillLoginListViewModel: ObservableObject {
             return []
         }
     }
+
+    private func fetchSuggestedAccounts() -> [SecureVaultModels.WebsiteAccount] {
+        guard let url = currentTabUrl,
+              let host = url.host,
+              let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
+            os_log("Failed to make vault")
+            return []
+        }
+
+        do {
+            return try secureVault.accountsFor(domain: host)
+        } catch {
+            os_log("Failed to fetch suggested accounts")
+            return []
+        }
+    }
     
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
         var newSections = [AutofillLoginListSectionType]()
 
         if !isSearching {
             newSections.append(.enableAutofill)
+        }
+
+        if !accountsToSuggest.isEmpty {
+            let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0) }
+            newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
         }
 
         let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()

@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Parolayı gizle";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Devre dışı bırak";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Kullanmaya Devam Edin";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Otomatik Doldurmayı istediğiniz zaman Ayarlar'dan devre dışı bırakabilirsiniz.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Otomatik Doldurma özelliğini kullanmaya devam etmek istiyor musunuz?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Görüntüle";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Giriş güncellendi";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "%@ Ögesini Kopyala";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adres kopyalandı";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Notlar kopyalandı";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Şifre kopyalandı";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Kullanıcı adı kopyalandı";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "Web sitesi URL'si";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Oturum Aç";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Girişi Sil";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Girişi Sil";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Bu Girişi silmek istediğinizden emin misiniz?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Girişi Düzenle";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Parola";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Title";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "ornek.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "kullaniciadi@ornek.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Giriş son güncelleme: %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Giriş Başlığı";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Giriş Ekle";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Notlar";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Web sitesini aç";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Parola";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "Tamam";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Bu kullanıcı adı ve web sitesi için zaten bir girişiniz var.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Yinelenen Giriş";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Otomatik Doldurmayı Aç";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Kullanıcı adı";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Girişler yalnızca bu cihazda güvenli bir şekilde saklanır";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Henüz kaydedilmiş giriş yok";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Girişleri kaydetmeye başlamak için Otomatik Doldurmayı etkinleştirin";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "İptal";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Kayıtlı Girişi Kullanmak İçin Kilidi Açın";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Kapat";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Girişleri Kaydet ve Otomatik Doldur";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "%@ için giriş silindi";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Giriş Ara";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Girişleri Otomatik Doldur";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Face ID'yi Ayarlayın";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Otomatik Doldurulan Giriş bilgilerinizi korumak için Face ID ve Parola gereklidir.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Otomatik Doldur'u kullanmak için Face ID'yi etkinleştirme";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Touch ID'yi Ayarlayın";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Otomatik Doldurulan Giriş bilgilerinizi korumak için Touch ID ve Parola gereklidir.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Otomatik Doldurma özelliğini kullanmak için Touch ID'yi etkinleştirin";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "İptal";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Kayıtlı Girişi Kullanmak İçin Kilidi Açın";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Diğer Seçenekler";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Kayıtlı Giriş kullanılsın mı?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "\"%@\" için";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Sonuç yok";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Bu, bu site için ek bir Giriş kaydedecektir.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Girişler yalnızca bu cihazda güvenli bir şekilde saklanır ve Ayarlar'daki Otomatik Doldurma menüsünden yönetilebilir.";
+"autofill.save-login.new-user.message" = "DuckDuckGo bu Girişi cihazınızda güvenli bir şekilde saklayacaktır.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "DuckDuckGo'nun Girişinizi kaydetmesini istiyor musunuz?";

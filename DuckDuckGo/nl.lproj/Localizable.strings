@@ -175,6 +175,18 @@
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Wachtwoord verbergen";
 
+/* Disable action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.disable" = "Uitschakelen";
+
+/* Confirm action for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.keep-using" = "Blijven gebruiken";
+
+/* Message for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.message" = "Je kunt Automatisch invullen op elk moment uitschakelen in de instellingen.";
+
+/* Title for alert when asking the user if they want to keep using autofill */
+"autofill.keep-enabled.alert.title" = "Wil je Automatisch invullen blijven gebruiken?";
+
 /* Button displayed after saving/updating an autofill login that takes the user to the saved login */
 "autofill.login-save-action-button.toast" = "Weergeven";
 
@@ -184,11 +196,155 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Login bijgewerkt";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "%@ kopiëren";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Adres gekopieerd";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Opmerkingen gekopieerd";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Wachtwoord gekopieerd";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Gebruikersnaam gekopieerd";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "URL van de website";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Inloggen";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Aanmeldgegevens verwijderen";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Aanmeldgegevens verwijderen";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Weet je zeker dat je deze aanmeldgegevens wilt verwijderen?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Aanmeldgegevens bewerken";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Wachtwoord";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Titel";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "voorbeeld.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "gebruikersnaam@voorbeeld.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Aanmeldgegevens laatst bijgewerkt op %s";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Aanmeldgegevens Titel";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Aanmeldgegevens toevoegen";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Opmerkingen";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Website openen";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Wachtwoord";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "Je hebt al aanmeldgegevens voor deze gebruikersnaam en website.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Dubbele aanmeldgegevens";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Automatisch invullen ontgrendelen";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Gebruikersnaam";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Aanmeldgegevens worden alleen op dit apparaat veilig opgeslagen";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "Nog geen aanmeldgegevens opgeslagen";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Schakel Automatisch invullen in om aanmeldgegevens op te slaan";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Annuleren";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Ontgrendelen om opgeslagen aanmeldgegevens te gebruiken";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Sluiten";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Aanmeldgegevens opslaan en automatisch invullen";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Aanmeldgegevens voor %@ verwijderd";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Aanmeldgegevens zoeken";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Login met automatisch invullen";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Face ID instellen";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Face ID en een toegangscode zijn vereist om je aanmeldgegevens voor Automatisch invullen te beschermen.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Schakel Face ID in om Automatisch invullen te gebruiken";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Touch ID configureren";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID en een toegangscode zijn vereist om je aanmeldgegevens voor Automatisch invullen te beschermen.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Schakel Touch ID in om Automatisch invullen te gebruiken";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Annuleren";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Ontgrendelen om opgeslagen aanmeldgegevens te gebruiken";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "Meer opties";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Opgeslagen aanmeldgegevens gebruiken?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "voor '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "Geen resultaten";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "Dit bespaart een extra login voor deze site.";
 
 /* Message displayed on modal asking for the user to save the login for the first time */
-"autofill.save-login.new-user.message" = "Logingegevens worden enkel op dit apparaat veilig opgeslagen en kunnen worden beheerd via het menu Automatisch invullen in Instellingen.";
+"autofill.save-login.new-user.message" = "DuckDuckGo slaat deze aanmeldgegevens veilig op je apparaat op.";
 
 /* Title displayed on modal asking for the user to save the login for the first time */
 "autofill.save-login.new-user.title" = "Wil je dat DuckDuckGo je login opslaat?";

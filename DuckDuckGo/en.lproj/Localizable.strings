@@ -193,6 +193,150 @@
 /* Message displayed after updating an autofill login */
 "autofill.login-updated.toast" = "Login updated";
 
+/* Menu item text for copying autofill login details */
+"autofill.logins.copy-prompt" = "Copy %@";
+
+/* Title for toast when copying address */
+"autofill.logins.copy-toast.address-copied" = "Address copied";
+
+/* Title for toast when copying notes */
+"autofill.logins.copy-toast.notes-copied" = "Notes copied";
+
+/* Title for toast when copying password */
+"autofill.logins.copy-toast.password-copied" = "Password copied";
+
+/* Title for toast when copying username */
+"autofill.logins.copy-toast.username-copied" = "Username copied";
+
+/* Address label for login details on autofill */
+"autofill.logins.details.address" = "Website URL";
+
+/* Title for autofill login details */
+"autofill.logins.details.default-title" = "Login";
+
+/* Delete button when deleting an autofill login */
+"autofill.logins.details.delete" = "Delete Login";
+
+/* Autofill alert button confirming delete autofill login */
+"autofill.logins.details.delete-confirmation.button" = "Delete Login";
+
+/* Title of confirmation alert when deleting an autofill login */
+"autofill.logins.details.delete-confirmation.title" = "Are you sure you want to delete this Login?";
+
+/* Title when editing autofill login details */
+"autofill.logins.details.edit-title" = "Edit Login";
+
+/* Placeholder for password field on autofill login details */
+"autofill.logins.details.edit.password-placeholder" = "Password";
+
+/* Placeholder for title field on autofill login details */
+"autofill.logins.details.edit.title-placeholder" = "Title";
+
+/* Placeholder for url field on autofill login details */
+"autofill.logins.details.edit.url-placeholder" = "example.com";
+
+/* Placeholder for userbane field on autofill login details */
+"autofill.logins.details.edit.username-placeholder" = "username@example.com";
+
+/* Message displaying when the login was last updated by */
+"autofill.logins.details.last-updated" = "Login last updated %@";
+
+/* Login name label for login details on autofill */
+"autofill.logins.details.login-name" = "Login Title";
+
+/* Title when adding new autofill login */
+"autofill.logins.details.new-title" = "Add Login";
+
+/* Notes label for login details on autofill */
+"autofill.logins.details.notes" = "Notes";
+
+/* Menu item title for option to open website from selected url */
+"autofill.logins.details.open-website-prompt.title" = "Open Website";
+
+/* Password label for login details on autofill */
+"autofill.logins.details.password" = "Password";
+
+/* Action text for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.action" = "OK";
+
+/* Message for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.message" = "You already have a login for this username and website.";
+
+/* Title for alert when attempting to save a duplicate login */
+"autofill.logins.details.save-duplicate-alert.title" = "Duplicated Login";
+
+/* Title for view displayed when autofill is locked */
+"autofill.logins.details.title" = "Unlock Autofill";
+
+/* Username label for login details on autofill */
+"autofill.logins.details.username" = "Username";
+
+/* Subtitle for view displayed when autofill has no items */
+"autofill.logins.empty-view.subtitle" = "Logins are stored securely on this device only";
+
+/* Title for view displayed when autofill has no items */
+"autofill.logins.empty-view.title" = "No logins saved yet";
+
+/* Title for view displayed when autofill is disabled and has no items */
+"autofill.logins.empty-view.title-disabled" = "Enable Autofill to start saving Logins";
+
+/* Cancel button for auth when opening login list */
+"autofill.logins.list.auth.cancel" = "Cancel";
+
+/* Reason for auth when opening login list */
+"autofill.logins.list.auth.reason" = "Unlock To Use Saved Login";
+
+/* Title for close navigation button */
+"autofill.logins.list.close-title" = "Close";
+
+/* Title for a toggle that enables autofill */
+"autofill.logins.list.enable" = "Save and Autofill Logins";
+
+/* Toast message when a login item is deleted */
+"autofill.logins.list.login-deleted-message" = "Login for %@ deleted";
+
+/* Placeholder for search field on autofill login listing */
+"autofill.logins.list.search-placeholder" = "Search Logins";
+
+/* Title for screen listing autofill logins */
+"autofill.logins.list.title" = "Autofill Logins";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.button" = "Set Up Face ID";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.subtitle" = "Face ID & Passcode are required to protect your Autofill Login details.";
+
+/* Title for view displayed when autofill is locked on devices with faceID */
+"autofill.logins.no-auth.face-id.title" = "Enable Face ID to use Autofill";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.button" = "Set Up Touch ID";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID & Passcode are required to protect your Autofill Login details.";
+
+/* Title for view displayed when autofill is locked on devices with touchID */
+"autofill.logins.no-auth.touch-id.title" = "Enable Touch ID to use Autofill";
+
+/* Cancel button for auth during login prompt */
+"autofill.logins.prompt.auth.cancel" = "Cancel";
+
+/* Reason for auth during login prompt */
+"autofill.logins.prompt.auth.reason" = "Unlock To Use Saved Login";
+
+/* Button title for autofill login prompt if more options are available */
+"autofill.logins.prompt.more-options" = "More Options";
+
+/* Title for autofill login prompt */
+"autofill.logins.prompt.title" = "Use Saved Login?";
+
+/* Subtitle displayed when there are no results on Autofill search, example : No Result (Title) for Duck (Subtitle) */
+"autofill.logins.search.no-results.subtitle" = "for '%@'";
+
+/* Title displayed when there are no results on Autofill search */
+"autofill.logins.search.no-results.title" = "No Results";
+
 /* Message displayed on modal explaining that an additional login will be saved. */
 "autofill.save-login.additional-login.message" = "This will save an additional Login for this site.";
 

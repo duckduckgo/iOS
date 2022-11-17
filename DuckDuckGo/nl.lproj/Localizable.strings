@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Suggestie automatisch aanvullen";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Toevoegen als bladwijzer";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Bladwijzer";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Website openen";
+"action.suggestion.type.website" = "Website openen";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Zoeken op DuckDuckGo";
+"action.suggestion.type.search" = "Zoeken op DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Toevoegen";
@@ -28,8 +28,8 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Login met automatisch invullen";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Toevoegen als bladwijzer";
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
+"action.title.bookmark" = "Toevoegen aan bladwijzers";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Bladwijzers";

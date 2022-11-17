@@ -21,8 +21,9 @@ import Foundation
 import Core
 import BrowserServicesKit
 import TrackerRadarKit
+import UserScript
 
-final class UserScripts: BrowserServicesKit.UserScriptsProvider {
+final class UserScripts: UserScriptsProvider {
 
     let contentBlockerUserScript: ContentBlockerRulesUserScript
     let surrogatesScript: SurrogatesUserScript

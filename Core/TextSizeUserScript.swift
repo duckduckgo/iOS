@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import WebKit
+import UserScript
 
 public class TextSizeUserScript: NSObject, UserScript {
     

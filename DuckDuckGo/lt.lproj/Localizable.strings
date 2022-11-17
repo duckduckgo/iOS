@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Automatinio užbaigimo pasiūlymas";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Žymė";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Žymė";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Atidaryti svetainę";
+"action.suggestion.type.website" = "Atidaryti svetainę";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Ieškoti „DuckDuckGo“";
+"action.suggestion.type.search" = "Ieškoti „DuckDuckGo“";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Papildyti";
@@ -28,8 +28,8 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Automatiškai užpildyti prisijungimus";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Žymė";
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
+"action.title.bookmark" = "Pridėti prie žymų";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Žymės";

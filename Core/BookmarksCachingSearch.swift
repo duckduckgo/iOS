@@ -167,6 +167,7 @@ public class BookmarksCachingSearch {
 
     // swiftlint:disable cyclomatic_complexity
     private func score(query: String, input: [ScoredBookmark]) -> [ScoredBookmark] {
+        let query = query.lowercased()
         let tokens = query.split(separator: " ").filter { !$0.isEmpty }.map { String($0).lowercased() }
         
         var input = input

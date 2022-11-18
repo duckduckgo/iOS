@@ -21,8 +21,9 @@ import Foundation
 import Core
 import BrowserServicesKit
 import TrackerRadarKit
+import UserScript
 
-final class UserScripts: BrowserServicesKit.UserScriptsProvider {
+final class UserScripts: UserScriptsProvider {
 
     let contentBlockerUserScript: ContentBlockerRulesUserScript
     let surrogatesScript: SurrogatesUserScript
@@ -35,7 +36,7 @@ final class UserScripts: BrowserServicesKit.UserScriptsProvider {
     private(set) var findInPageScript = FindInPageUserScript()
     private(set) var fullScreenVideoScript = FullScreenVideoUserScript()
     private(set) var printingUserScript = PrintingUserScript()
-    private(set) var textSizeUserScript = TextSizeUserScript()
+    private(set) var textSizeUserScript = TextSizeUserScript(textSizeAdjustmentInPercents: AppDependencyProvider.shared.appSettings.textSize)
     private(set) var debugScript = DebugUserScript()
 
     init(with sourceProvider: ScriptSourceProviding) {

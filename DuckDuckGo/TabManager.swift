@@ -269,3 +269,11 @@ extension TabManager {
         }
     }
 }
+
+extension TabManager {
+ 
+    func makeTabCountInfo() -> TabCountInfo {
+        TabCountInfo(tabsModelCount: model.count,
+                     tabControllerCacheCount: tabControllerCache.count)
+    }
+}

@@ -20,6 +20,7 @@
 import WebKit
 import os
 import BrowserServicesKit
+import UserScript
 
 public class DebugUserScript: NSObject, UserScript {
     

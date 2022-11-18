@@ -2149,7 +2149,9 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
         }
 
-        privacyInfo?.trackerInfo.add(detectedTracker: tracker)
+        if tracker.pageUrl == url?.absoluteString {
+            privacyInfo?.trackerInfo.add(detectedTracker: tracker)
+        }
     }
 }
 

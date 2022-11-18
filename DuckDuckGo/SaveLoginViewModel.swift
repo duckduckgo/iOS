@@ -74,7 +74,7 @@ final class SaveLoginViewModel: ObservableObject {
     }
     
     var username: String {
-        AutofillInterfaceEmailTruncator.truncateEmail(credentialManager.username, maxLength: 36)
+        EmailTruncator().truncateEmailToLength(credentialManager.username, 36)
     }
     
     lazy var layoutType: SaveLoginView.LayoutType = {

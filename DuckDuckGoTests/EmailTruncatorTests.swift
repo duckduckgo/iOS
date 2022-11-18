@@ -1,5 +1,5 @@
 //
-//  AutofillInterfaceEmailTruncatorTests.swift
+//  EmailTruncatorTests.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -20,13 +20,13 @@
 import XCTest
 @testable import DuckDuckGo
 
-class AutofillInterfaceEmailTruncatorTests: XCTestCase {
+class EmailTruncatorTests: XCTestCase {
 
     func testRegularSizeEmailWithoutTruncating() {
         let email = "daxtheduck@duck.com"
         let expectedEmail = "daxtheduck@duck.com"
         
-        let result = AutofillInterfaceEmailTruncator.truncateEmail(email, maxLength: 20)
+        let result = EmailTruncator().truncateEmailToLength(email, 20)
         
         XCTAssertEqual(expectedEmail, result, "emails should match")
     }
@@ -35,7 +35,7 @@ class AutofillInterfaceEmailTruncatorTests: XCTestCase {
         let email = "daxtheduck@duck.com"
         let expectedEmail = "dax...@duck.com"
         
-        let result = AutofillInterfaceEmailTruncator.truncateEmail(email, maxLength: 10)
+        let result = EmailTruncator().truncateEmailToLength(email, 10)
         
         XCTAssertEqual(expectedEmail, result, "emails should match")
     }
@@ -44,7 +44,7 @@ class AutofillInterfaceEmailTruncatorTests: XCTestCase {
         let email = "daxtheduckthebestduckyoucouldevermeet@duck.com"
         let expectedEmail = "dax...@duck.com"
         
-        let result = AutofillInterfaceEmailTruncator.truncateEmail(email, maxLength: 10)
+        let result = EmailTruncator().truncateEmailToLength(email, 10)
         
         XCTAssertEqual(expectedEmail, result, "emails should match")
     }
@@ -53,7 +53,7 @@ class AutofillInterfaceEmailTruncatorTests: XCTestCase {
         let email = "daxtheduck@duckduckduckduckduckgo.com"
         let expectedEmail = "dax...@duckduckduckduckduckgo.com"
         
-        let result = AutofillInterfaceEmailTruncator.truncateEmail(email, maxLength: 15)
+        let result = EmailTruncator().truncateEmailToLength(email, 15)
         
         XCTAssertEqual(expectedEmail, result, "emails should match")
     }
@@ -62,7 +62,7 @@ class AutofillInterfaceEmailTruncatorTests: XCTestCase {
         let email = ""
         let expectedEmail = ""
         
-        let result = AutofillInterfaceEmailTruncator.truncateEmail(email, maxLength: 10)
+        let result = EmailTruncator().truncateEmailToLength(email, 10)
         
         XCTAssertEqual(expectedEmail, result, "emails should match")
     }
@@ -71,7 +71,7 @@ class AutofillInterfaceEmailTruncatorTests: XCTestCase {
         let email = "dgfoisdfsdfsgdsgdfgfdhfghfhf"
         let expectedEmail = "dgfoisdfsdfsgdsgdfgfdhfghfhf"
         
-        let result = AutofillInterfaceEmailTruncator.truncateEmail(email, maxLength: 10)
+        let result = EmailTruncator().truncateEmailToLength(email, 10)
         
         XCTAssertEqual(expectedEmail, result, "emails should match")
     }
@@ -80,7 +80,7 @@ class AutofillInterfaceEmailTruncatorTests: XCTestCase {
         let email = "daxtheduck@duck.com"
         let expectedEmail = "daxtheduck@duck.com"
         
-        let result = AutofillInterfaceEmailTruncator.truncateEmail(email, maxLength: 19)
+        let result = EmailTruncator().truncateEmailToLength(email, 19)
         
         XCTAssertEqual(expectedEmail, result, "emails should match")
     }
@@ -89,7 +89,7 @@ class AutofillInterfaceEmailTruncatorTests: XCTestCase {
         let email = "daxtheduck@duck.com"
         let expectedEmail = "daxthe...@duck.com"
         
-        let result = AutofillInterfaceEmailTruncator.truncateEmail(email, maxLength: 18)
+        let result = EmailTruncator().truncateEmailToLength(email, 18)
         
         XCTAssertEqual(expectedEmail, result, "emails should match")
     }

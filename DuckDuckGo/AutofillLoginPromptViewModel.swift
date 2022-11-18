@@ -32,7 +32,7 @@ struct AccountViewModel: Hashable {
     let account: SecureVaultModels.WebsiteAccount
     var displayString: String {
         if account.username.count > 0 {
-            return AutofillInterfaceEmailTruncator.truncateEmail(account.username, maxLength: 36)
+            return EmailTruncator().truncateEmailToLength(account.username, 36)
         } else {
             let urlString = URL(string: account.domain)?.absoluteString.droppingWwwPrefix()
             let string = urlString ?? account.domain

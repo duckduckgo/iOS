@@ -79,7 +79,7 @@
 		316931D727BD10BB0095F5ED /* SaveToDownloadsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316931D627BD10BB0095F5ED /* SaveToDownloadsAlert.swift */; };
 		316931D927BD22A80095F5ED /* DownloadActionMessageViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316931D827BD22A80095F5ED /* DownloadActionMessageViewHelper.swift */; };
 		3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3170048127A9504F00C03F35 /* DownloadMocks.swift */; };
-		317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */; };
+		317045C02858C6B90016ED1F /* EmailTruncatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317045BF2858C6B90016ED1F /* EmailTruncatorTests.swift */; };
 		31951E8E2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */; };
 		31951E95282310FF00CAF535 /* WebsiteAccountExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31951E94282310FF00CAF535 /* WebsiteAccountExtension.swift */; };
 		319A371028299A850079FBCE /* PasswordHider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A370F28299A850079FBCE /* PasswordHider.swift */; };
@@ -679,7 +679,7 @@
 		F4A96BE328479DE30025C8E0 /* FeatureFlaggingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A96BE0284796A60025C8E0 /* FeatureFlaggingTests.swift */; };
 		F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */; };
 		F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */; };
-		F4C9FBF528340DDA002281CC /* AutofillInterfaceEmailTruncator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C9FBF428340DDA002281CC /* AutofillInterfaceEmailTruncator.swift */; };
+		F4C9FBF528340DDA002281CC /* EmailTruncator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C9FBF428340DDA002281CC /* EmailTruncator.swift */; };
 		F4CE6D1B257EA33C00D0A6AA /* FireButtonAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CE6D1A257EA33C00D0A6AA /* FireButtonAnimator.swift */; };
 		F4D7220E26F15529007D6193 /* AddOrEditBookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7220D26F15529007D6193 /* AddOrEditBookmarkViewController.swift */; };
 		F4D7221026F29A70007D6193 /* BookmarkDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */; };
@@ -874,7 +874,7 @@
 		316931D627BD10BB0095F5ED /* SaveToDownloadsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveToDownloadsAlert.swift; sourceTree = "<group>"; };
 		316931D827BD22A80095F5ED /* DownloadActionMessageViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadActionMessageViewHelper.swift; sourceTree = "<group>"; };
 		3170048127A9504F00C03F35 /* DownloadMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadMocks.swift; sourceTree = "<group>"; };
-		317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceEmailTruncatorTests.swift; sourceTree = "<group>"; };
+		317045BF2858C6B90016ED1F /* EmailTruncatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTruncatorTests.swift; sourceTree = "<group>"; };
 		31794BFF2821DFB600F18633 /* DuckUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DuckUI; sourceTree = "<group>"; };
 		31951E8D2823003200CAF535 /* AutofillLoginDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillLoginDetailsHeaderView.swift; sourceTree = "<group>"; };
 		31951E94282310FF00CAF535 /* WebsiteAccountExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteAccountExtension.swift; sourceTree = "<group>"; };
@@ -2111,7 +2111,7 @@
 		F4A96BE0284796A60025C8E0 /* FeatureFlaggingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlaggingTests.swift; sourceTree = "<group>"; };
 		F4B0B78B252CAFF700830156 /* OnboardingWidgetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsViewController.swift; sourceTree = "<group>"; };
 		F4B0B795252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWidgetsDetailsViewController.swift; sourceTree = "<group>"; };
-		F4C9FBF428340DDA002281CC /* AutofillInterfaceEmailTruncator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutofillInterfaceEmailTruncator.swift; sourceTree = "<group>"; };
+		F4C9FBF428340DDA002281CC /* EmailTruncator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTruncator.swift; sourceTree = "<group>"; };
 		F4CE6D1A257EA33C00D0A6AA /* FireButtonAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireButtonAnimator.swift; sourceTree = "<group>"; };
 		F4D7220D26F15529007D6193 /* AddOrEditBookmarkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddOrEditBookmarkViewController.swift; sourceTree = "<group>"; };
 		F4D7220F26F29A70007D6193 /* BookmarkDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkDetailsCell.swift; sourceTree = "<group>"; };
@@ -2397,7 +2397,7 @@
 		317045BE2858C69A0016ED1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				317045BF2858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift */,
+				317045BF2858C6B90016ED1F /* EmailTruncatorTests.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2405,7 +2405,7 @@
 		31951E9328230D8900CAF535 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				F4C9FBF428340DDA002281CC /* AutofillInterfaceEmailTruncator.swift */,
+				F4C9FBF428340DDA002281CC /* EmailTruncator.swift */,
 				31A42563285A09E800049386 /* FaviconView.swift */,
 				31A42565285A0A6300049386 /* FaviconViewModel.swift */,
 			);
@@ -5090,7 +5090,7 @@
 				31CB4251273AF50700FA0F3F /* SpeechRecognizerProtocol.swift in Sources */,
 				319A37172829C8AD0079FBCE /* UITableViewExtension.swift in Sources */,
 				85EE7F59224673C5000FE757 /* WebContainerNavigationController.swift in Sources */,
-				F4C9FBF528340DDA002281CC /* AutofillInterfaceEmailTruncator.swift in Sources */,
+				F4C9FBF528340DDA002281CC /* EmailTruncator.swift in Sources */,
 				6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */,
@@ -5376,7 +5376,7 @@
 				9847C00527A41A0A00DB07AA /* WebViewTestHelper.swift in Sources */,
 				830C37671F6C4A6200E317A7 /* TermsOfServiceListParserTests.swift in Sources */,
 				3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */,
-				317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */,
+				317045C02858C6B90016ED1F /* EmailTruncatorTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */,
 				834DF992248FDE1A0075EA48 /* UserAgentTests.swift in Sources */,

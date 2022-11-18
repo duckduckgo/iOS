@@ -1,5 +1,5 @@
 //
-//  AutofillInterfaceEmailTruncator.swift
+//  EmailTruncator.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -19,29 +19,6 @@
 
 import Foundation
 
-struct AutofillInterfaceEmailTruncator {
-    static func truncateEmail(_ email: String, maxLength: Int) -> String {
-        let emailComponents = email.components(separatedBy: "@")
-        if emailComponents.count > 1 && email.count > maxLength {
-            let ellipsis = "..."
-            let minimumPrefixSize = 3
-            
-            let difference = email.count - maxLength + ellipsis.count
-            if let username = emailComponents.first,
-               let domain = emailComponents.last {
-                
-                var prefixCount = username.count - difference
-                prefixCount = prefixCount < 0 ? minimumPrefixSize : prefixCount
-                let prefix = username.prefix(prefixCount)
-                
-                return "\(prefix)\(ellipsis)@\(domain)"
-            }
-        }
-        
-        return email
-    }
-}
-
 class EmailTruncator {
 
     private var ellipsis: String!
@@ -60,7 +37,6 @@ class EmailTruncator {
     public func truncateEmailToLength(_ email: String, _ maxLength: Int) -> String {
         self.setEmailToTruncate(email)
         self.setMaximumLengthOfEmailToTruncate(maxLength)
-        self.setEmailComponentsFromUntruncatedEmail()
         return self.getTruncatedEmail()
     }
     
@@ -72,14 +48,9 @@ class EmailTruncator {
         self.maximumLengthOfEmailToTruncate = maxLength
     }
     
-    private func setEmailComponentsFromUntruncatedEmail() {
-        let emailComponents = unTruncatedEmail.components(separatedBy: "@")
-        self.userName = emailComponents.first
-        self.domainName = emailComponents.last
-    }
-
     private func getTruncatedEmail() -> String {
         if shouldPerformTruncationOnEmail() {
+            self.setEmailComponentsFromUntruncatedEmail()
             self.setNumberOfPrefixCharactersToIncludeInUserName()
             self.correctNumberOfCharactersToPrefixUserNameIfNegative()
             return self.getNewTruncatedEmail()
@@ -88,15 +59,21 @@ class EmailTruncator {
     }
 
     private func shouldPerformTruncationOnEmail() -> Bool {
-        return areUserNameAndDomainNameNotNil() && isEmailLongerThanMaximumLengthOfEmailToTruncate()
+        return doesEmailContainAtSymbol() && isEmailLongerThanMaximumLengthOfEmailToTruncate()
     }
-    
-    private func areUserNameAndDomainNameNotNil() -> Bool {
-        return self.userName != nil && self.domainName != nil
+        
+    private func doesEmailContainAtSymbol() -> Bool {
+        return unTruncatedEmail.contains("@")
     }
     
     private func isEmailLongerThanMaximumLengthOfEmailToTruncate() -> Bool {
         return unTruncatedEmail.count > maximumLengthOfEmailToTruncate
+    }
+    
+    private func setEmailComponentsFromUntruncatedEmail() {
+        let emailComponents = unTruncatedEmail.components(separatedBy: "@")
+        self.userName = emailComponents.first
+        self.domainName = emailComponents.last
     }
     
     private func setNumberOfPrefixCharactersToIncludeInUserName() {
@@ -118,7 +95,7 @@ class EmailTruncator {
     }
     
     private func getNewTruncatedEmail() -> String {
-        return "\(getTruncatedUserName())@\(domainName!)"
+        return "\(getTruncatedUserName())\(ellipsis!)@\(domainName!)"
     }
     
     private func getTruncatedUserName() -> String {

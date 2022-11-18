@@ -96,7 +96,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     }
 
     var usernameDisplayString: String {
-        AutofillInterfaceEmailTruncator.truncateEmail(username, maxLength: 36)
+        EmailTruncator().truncateEmailToLength(username, 36)
     }
 
     internal init(account: SecureVaultModels.WebsiteAccount? = nil) {

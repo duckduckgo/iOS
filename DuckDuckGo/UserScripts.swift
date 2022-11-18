@@ -29,10 +29,9 @@ final class UserScripts: UserScriptsProvider {
     let surrogatesScript: SurrogatesUserScript
     let autofillUserScript: AutofillUserScript
     let loginFormDetectionScript: LoginFormDetectionUserScript?
-    let doNotSellScript: DoNotSellUserScript?
+    let contentScopeUserScript: ContentScopeUserScript
 
     private(set) var faviconScript = FaviconUserScript()
-    private(set) var fingerprintScript = FingerprintUserScript()
     private(set) var navigatorPatchScript = NavigatorSharePatchUserScript()
     private(set) var findInPageScript = FindInPageUserScript()
     private(set) var fullScreenVideoScript = FullScreenVideoUserScript()
@@ -46,7 +45,8 @@ final class UserScripts: UserScriptsProvider {
         autofillUserScript = AutofillUserScript(scriptSourceProvider: sourceProvider.autofillSourceProvider)
 
         loginFormDetectionScript = sourceProvider.loginDetectionEnabled ? LoginFormDetectionUserScript() : nil
-        doNotSellScript = sourceProvider.sendDoNotSell ? DoNotSellUserScript() : nil
+        contentScopeUserScript = ContentScopeUserScript(sourceProvider.privacyConfigurationManager,
+                                                        properties: sourceProvider.contentScopeProperties)
     }
 
     lazy var userScripts: [UserScript] = [
@@ -56,13 +56,12 @@ final class UserScripts: UserScriptsProvider {
         navigatorPatchScript,
         surrogatesScript,
         contentBlockerUserScript,
-        fingerprintScript,
         faviconScript,
         fullScreenVideoScript,
         autofillUserScript,
         printingUserScript,
         loginFormDetectionScript,
-        doNotSellScript
+        contentScopeUserScript
     ].compactMap({ $0 })
 
     lazy var scripts = userScripts.map { $0.makeWKUserScript() }

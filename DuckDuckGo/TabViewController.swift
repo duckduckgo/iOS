@@ -337,7 +337,7 @@ class TabViewController: UIViewController {
         adClickAttributionLogic.delegate = self
         adClickAttributionDetection.delegate = adClickAttributionLogic
     }
-
+    
     func updateTabModel() {
         if let url = url {
             tabModel.link = Link(title: title, url: url)
@@ -2071,6 +2071,7 @@ extension TabViewController: UIGestureRecognizerDelegate {
             reload()
         }
     }
+
 }
 
 // MARK: - UserContentControllerDelegate

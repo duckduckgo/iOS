@@ -41,3 +41,88 @@ struct AutofillInterfaceEmailTruncator {
         return email
     }
 }
+
+class EmailTruncator {
+
+    private var ellipsis: String!
+    private var minimumSizeOfPrefix: Int!
+    private var unTruncatedEmail: String!
+    private var maximumLengthOfEmailToTruncate: Int!
+    private var userName: String?
+    private var domainName: String?
+    private var numberOfCharactersToPrefixUserName: Int!
+
+    init() {
+        self.ellipsis = "..."
+        self.minimumSizeOfPrefix = 3
+    }
+    
+    public func truncateEmailToLength(_ email: String, _ maxLength: Int) -> String {
+        self.setEmailToTruncate(email)
+        self.setMaximumLengthOfEmailToTruncate(maxLength)
+        self.setEmailComponentsFromUntruncatedEmail()
+        return self.getTruncatedEmail()
+    }
+    
+    private func setEmailToTruncate(_ email: String) {
+        self.unTruncatedEmail = email
+    }
+    
+    private func setMaximumLengthOfEmailToTruncate(_ maxLength: Int) {
+        self.maximumLengthOfEmailToTruncate = maxLength
+    }
+    
+    private func setEmailComponentsFromUntruncatedEmail() {
+        let emailComponents = unTruncatedEmail.components(separatedBy: "@")
+        self.userName = emailComponents.first
+        self.domainName = emailComponents.last
+    }
+
+    private func getTruncatedEmail() -> String {
+        if shouldPerformTruncationOnEmail() {
+            self.setNumberOfPrefixCharactersToIncludeInUserName()
+            self.correctNumberOfCharactersToPrefixUserNameIfNegative()
+            return self.getNewTruncatedEmail()
+        }
+        return unTruncatedEmail
+    }
+
+    private func shouldPerformTruncationOnEmail() -> Bool {
+        return areUserNameAndDomainNameNotNil() && isEmailLongerThanMaximumLengthOfEmailToTruncate()
+    }
+    
+    private func areUserNameAndDomainNameNotNil() -> Bool {
+        return self.userName != nil && self.domainName != nil
+    }
+    
+    private func isEmailLongerThanMaximumLengthOfEmailToTruncate() -> Bool {
+        return unTruncatedEmail.count > maximumLengthOfEmailToTruncate
+    }
+    
+    private func setNumberOfPrefixCharactersToIncludeInUserName() {
+        self.numberOfCharactersToPrefixUserName = self.getNumberOfPrefixCharactersToIncludeInUserName()
+    }
+    
+    private func getNumberOfPrefixCharactersToIncludeInUserName() -> Int {
+        return userName!.count - self.getDifference()
+    }
+        
+    private func getDifference() -> Int {
+        return unTruncatedEmail.count - maximumLengthOfEmailToTruncate + ellipsis.count
+    }
+    
+    private func correctNumberOfCharactersToPrefixUserNameIfNegative() {
+        if self.numberOfCharactersToPrefixUserName < 0 {
+            self.numberOfCharactersToPrefixUserName = minimumSizeOfPrefix
+        }
+    }
+    
+    private func getNewTruncatedEmail() -> String {
+        return "\(getTruncatedUserName())@\(domainName!)"
+    }
+    
+    private func getTruncatedUserName() -> String {
+        return String(userName!.prefix(numberOfCharactersToPrefixUserName))
+    }
+    
+}

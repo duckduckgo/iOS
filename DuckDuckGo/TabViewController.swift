@@ -2165,7 +2165,7 @@ extension TabViewController: SurrogatesUserScriptDelegate {
     func surrogatesUserScript(_ script: SurrogatesUserScript,
                               detectedTracker tracker: DetectedRequest,
                               withSurrogate host: String) {
-        if privacyInfo?.url.absoluteString == tracker.pageUrl {
+        if tracker.pageUrl == url?.absoluteString {
             privacyInfo?.trackerInfo.add(installedSurrogateHost: host)
         }
         userScriptDetectedTracker(tracker)

@@ -20,6 +20,7 @@
 import Core
 import WebKit
 import BrowserServicesKit
+import UserScript
 
 public class FindInPageUserScript: NSObject, UserScript {
 

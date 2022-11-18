@@ -7205,10 +7205,10 @@
 		};
 		98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/duckduckgo/BrowserServicesKit";
+			repositoryURL = "https://github.com/brindy/BrowserServicesKit";
 			requirement = {
-				kind = revision;
-				revision = eb073e71f9fc031a9b9b0fbd099c9bf1c033c33e;
+				kind = exactVersion;
+				version = 2.0.0;
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

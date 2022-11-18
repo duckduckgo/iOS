@@ -2142,6 +2142,8 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     }
 
     fileprivate func userScriptDetectedTracker(_ tracker: DetectedRequest) {
+        guard let url = url else { return }
+        
         adClickAttributionLogic.onRequestDetected(request: tracker)
         
         if tracker.isBlocked && fireWoFollowUp {
@@ -2149,9 +2151,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
         }
 
-        if tracker.pageUrl == url?.absoluteString {
-            privacyInfo?.trackerInfo.add(detectedTracker: tracker)
-        }
+        privacyInfo?.trackerInfo.addDetectedTracker(tracker, onPageWithURL: url)
     }
 }
 
@@ -2165,9 +2165,9 @@ extension TabViewController: SurrogatesUserScriptDelegate {
     func surrogatesUserScript(_ script: SurrogatesUserScript,
                               detectedTracker tracker: DetectedRequest,
                               withSurrogate host: String) {
-        if tracker.pageUrl == url?.absoluteString {
-            privacyInfo?.trackerInfo.add(installedSurrogateHost: host)
-        }
+        guard let url = url else { return }
+        
+        privacyInfo?.trackerInfo.addInstalledSurrogateHost(host, for: tracker, onPageWithURL: url)
         userScriptDetectedTracker(tracker)
     }
 

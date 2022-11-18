@@ -1022,7 +1022,7 @@ extension TabViewController: WKNavigationDelegate {
 
         if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             url = webView.url
-            if let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
+            if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
                 decisionHandler(decision)
             } else {
                 if navigationResponse.isForMainFrame && isSuccessfulResponse {

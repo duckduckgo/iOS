@@ -21,10 +21,11 @@ import UIKit
 import Core
 import CoreData
 import Bookmarks
+import Combine
 
 protocol AddOrEditBookmarkViewControllerDelegate: AnyObject {
 
-    func finishedEditing(_: AddOrEditBookmarkViewController)
+    func finishedEditing(_: AddOrEditBookmarkViewController, entityID: NSManagedObjectID)
 
 }
 
@@ -33,10 +34,10 @@ class AddOrEditBookmarkViewController: UIViewController {
     weak var delegate: AddOrEditBookmarkViewControllerDelegate?
 
     private var foldersViewController: BookmarkFoldersViewController?
-
-    let viewModel: BookmarkEditorViewModel
-    
+    private let viewModel: BookmarkEditorViewModel
     private let bookmarksDBProvider = BookmarksDatabase.shared
+
+    private var viewModelCancellable: AnyCancellable?
 
     init?(coder: NSCoder, editingEntityID: NSManagedObjectID?, parentFolderID: NSManagedObjectID?) {
 
@@ -58,6 +59,10 @@ class AddOrEditBookmarkViewController: UIViewController {
         updateSaveButton()
 
         applyTheme(ThemeManager.shared.currentTheme)
+
+        viewModelCancellable = viewModel.externalUpdates.sink { [weak self] _ in
+            self?.foldersViewController?.refresh()
+        }
     }
 
     func updateTitle() {
@@ -95,7 +100,7 @@ class AddOrEditBookmarkViewController: UIViewController {
 
     func saveAndDismiss() {
         viewModel.save()
-        self.delegate?.finishedEditing(self)
+        self.delegate?.finishedEditing(self, entityID: viewModel.bookmark.objectID)
         dismiss(animated: true, completion: nil)
     }
 
@@ -130,8 +135,8 @@ extension AddOrEditBookmarkViewController: BookmarkFoldersViewControllerDelegate
 
 extension AddOrEditBookmarkViewController: AddOrEditBookmarkViewControllerDelegate {
 
-    func finishedEditing(_ controller: AddOrEditBookmarkViewController) {
-        #warning("if this was saved, set the parent to the new folder")
+    func finishedEditing(_ controller: AddOrEditBookmarkViewController, entityID: NSManagedObjectID) {
+        viewModel.setParentWithID(entityID)
         foldersViewController?.refresh()
     }
 

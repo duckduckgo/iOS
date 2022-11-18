@@ -612,15 +612,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
 }
 
-extension BookmarksViewController: AddOrEditBookmarkViewControllerDelegate {
-
-    func finishedEditing(_: AddOrEditBookmarkViewController) {
-        viewModel.refresh()
-        tableView.reloadData()
-    }
-
-}
-
 extension BookmarksViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

@@ -21,64 +21,31 @@ import Foundation
 import Bookmarks
 import Persistence
 import CoreData
+import Combine
 
 public protocol BookmarksSearchStore {
-    var hasData: Bool { get }
-    func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void)
-}
-
-extension BookmarksCoreDataStorage: BookmarksSearchStore {
-    public var hasData: Bool {
-        !topLevelBookmarksItems.isEmpty || !favorites.isEmpty
-    }
     
-    public func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
-        allBookmarksAndFavoritesFlat(completion: completion)
-    }
+    var dataDidChange: AnyPublisher<Void, Never> { get }
+    
+    func bookmarksAndFavorites(completion: @escaping ([BookmarksCachingSearch.ScoredBookmark]) -> Void)
 }
 
-public class BookmarksCachingSearch {
-
-    public struct ScoredBookmark {
-        public let title: String
-        public let url: URL
-        var score: Int
-        
-        init?(bookmark: [String: Any]) {
-            guard let title = bookmark[#keyPath(BookmarkEntity.title)] as? String,
-                  let urlString = bookmark[#keyPath(BookmarkEntity.url)] as? String,
-                  let url = URL(string: urlString) else {
-                return nil
-            }
-            
-            self.title = title
-            self.url = url
-            
-            if (bookmark[#keyPath(BookmarkEntity.isFavorite)] as? NSNumber)?.boolValue ?? false {
-                score = 0
-            } else {
-                score = -1
-            }
-        }
-        
-    }
+public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
     
     private let bookmarksStore: CoreDataDatabase
-
+    
+    private let subject = PassthroughSubject<Void, Never>()
+    public var dataDidChange: AnyPublisher<Void, Never>
+    
     public init(bookmarksStore: CoreDataDatabase = BookmarksDatabase.shared) {
         self.bookmarksStore = bookmarksStore
-        loadCache()
+        self.dataDidChange = self.subject.eraseToAnyPublisher()
+        
         registerForNotifications()
     }
-
-    public var hasData: Bool {
-        return cachedBookmarksAndFavorites.count > 0
-    }
     
-    private var cachedBookmarksAndFavorites = [ScoredBookmark]()
-    private var cacheLoadedCondition = RunLoop.ResumeCondition()
-    
-    private func loadCache() {
+    public func bookmarksAndFavorites(completion: @escaping ([BookmarksCachingSearch.ScoredBookmark]) -> Void) {
+        
         let context = bookmarksStore.makeContext(concurrencyType: .privateQueueConcurrencyType)
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "BookmarkEntity")
@@ -90,12 +57,111 @@ public class BookmarksCachingSearch {
         
         context.perform {
             let result = try? context.fetch(fetchRequest) as? [Dictionary<String, Any>]
+            
+            let bookmarksAndFavorites = result?.compactMap(BookmarksCachingSearch.ScoredBookmark.init) ?? []
 
             DispatchQueue.main.async {
-                self.cachedBookmarksAndFavorites = result?.compactMap(ScoredBookmark.init) ?? []
-                if !self.cacheLoadedCondition.isResolved {
-                    self.cacheLoadedCondition.resolve()
-                }
+                completion(bookmarksAndFavorites)
+            }
+        }
+    }
+    
+    private func registerForNotifications() {
+        registerForCoreDataStorageNotifications()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(importDidBegin),
+                                               name: BookmarksImporter.Notifications.importDidBegin,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(importDidEnd),
+                                               name: BookmarksImporter.Notifications.importDidEnd,
+                                               object: nil)
+    }
+    
+    private func registerForCoreDataStorageNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(coreDataDidSave),
+                                               name: NSManagedObjectContext.didSaveObjectsNotification,
+                                               object: nil)
+    }
+    
+    @objc func coreDataDidSave(notification: Notification) {
+        guard let externalContext = notification.object as? NSManagedObjectContext,
+              externalContext.persistentStoreCoordinator == bookmarksStore.coordinator else { return }
+        subject.send()
+    }
+    
+    @objc func importDidBegin(notification: Notification) {
+        // preemptively deregisterForNotifications so that bookmarksCachingSearch is not saturated with notification events
+        // and constantly rebuilding while bookmarks are being imported (bookmark files could be very large)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: BookmarksCoreDataStorage.Notifications.dataDidChange,
+                                                  object: nil)
+    }
+
+    @objc func importDidEnd(notification: Notification) {
+        // force refresh of cached data and re-enable notification observer
+        subject.send()
+        registerForCoreDataStorageNotifications()
+    }
+}
+
+public class BookmarksCachingSearch {
+
+    public struct ScoredBookmark {
+        public let title: String
+        public let url: URL
+        var score: Int
+        
+        init(title: String, url: URL, isFavorite: Bool) {
+            self.title = title
+            self.url = url
+            
+            if isFavorite {
+                score = 0
+            } else {
+                score = -1
+            }
+        }
+        
+        init?(bookmark: [String: Any]) {
+            guard let title = bookmark[#keyPath(BookmarkEntity.title)] as? String,
+                  let urlString = bookmark[#keyPath(BookmarkEntity.url)] as? String,
+                  let url = URL(string: urlString) else {
+                return nil
+            }
+            
+            self.init(title: title,
+                      url: url,
+                      isFavorite: (bookmark[#keyPath(BookmarkEntity.isFavorite)] as? NSNumber)?.boolValue ?? false)
+        }
+        
+    }
+    
+    private let bookmarksStore: BookmarksSearchStore
+
+    public init(bookmarksStore: BookmarksSearchStore = CoreDataBookmarksSearchStore.init()) {
+        self.bookmarksStore = bookmarksStore
+        loadCache()
+        
+        bookmarksStore.dataDidChange.sink { [weak self] _ in
+            self?.refreshCache()
+        }
+    }
+
+    public var hasData: Bool {
+        return cachedBookmarksAndFavorites.count > 0
+    }
+    
+    private var cachedBookmarksAndFavorites = [ScoredBookmark]()
+    private var cacheLoadedCondition = RunLoop.ResumeCondition()
+    
+    private func loadCache() {
+        bookmarksStore.bookmarksAndFavorites { result in
+            self.cachedBookmarksAndFavorites = result
+            if !self.cacheLoadedCondition.isResolved {
+                self.cacheLoadedCondition.resolve()
             }
         }
     }
@@ -122,49 +188,10 @@ public class BookmarksCachingSearch {
     }
 // ---------
 
-    private func registerForNotifications() {
-        registerForCoreDataStorageNotifications()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(importDidBegin),
-                                               name: BookmarksImporter.Notifications.importDidBegin,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(importDidEnd),
-                                               name: BookmarksImporter.Notifications.importDidEnd,
-                                               object: nil)
-    }
-
-    public func registerForCoreDataStorageNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(dataDidChange),
-                                               name: NSManagedObjectContext.didSaveObjectsNotification,
-                                               object: nil)
-    }
-
     public func refreshCache() {
         // setting cacheLoadedCondition back to initialized state
         cacheLoadedCondition = RunLoop.ResumeCondition()
         loadCache()
-    }
-
-    @objc func dataDidChange(notification: Notification) {
-        guard let externalContext = notification.object as? NSManagedObjectContext,
-              externalContext.persistentStoreCoordinator == bookmarksStore.coordinator else { return }
-        refreshCache()
-    }
-
-    @objc func importDidBegin(notification: Notification) {
-        // preemptively deregisterForNotifications so that bookmarksCachingSearch is not saturated with notification events
-        // and constantly rebuilding while bookmarks are being imported (bookmark files could be very large)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: BookmarksCoreDataStorage.Notifications.dataDidChange,
-                                                  object: nil)
-    }
-
-    @objc func importDidEnd(notification: Notification) {
-        // force refresh of cached data and re-enable notification observer
-        refreshCache()
-        registerForCoreDataStorageNotifications()
     }
 
     // swiftlint:disable cyclomatic_complexity

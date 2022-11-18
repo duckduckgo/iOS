@@ -77,6 +77,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
                 _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
             }
+            BookmarksDatabase.shared.loadStore { context, _ in
+                let source = BookmarksCoreDataStorage.shared.getTemporaryPrivateContext()
+                source.performAndWait {
+                    LegacyBookmarksStoreMigration.migrate(source: source,
+                                                          destination: context!)
+                }
+            }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
         }

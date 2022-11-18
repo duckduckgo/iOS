@@ -34,11 +34,10 @@ class FaviconsTests: XCTestCase {
         BookmarkUserDefaults().favorites = []
 
         let url = URL(string: "http://duckduckgo.com")!
-        let simpleStore = MockBookmarkSearchStore()
-        simpleStore.bookmarks = [MockBookmark(title: "bookmark test 1", url: url, isFavorite: false)]
+        let simpleStore = MockBookmarksSearchStore()
+        simpleStore.dataSet = [BookmarksCachingSearch.ScoredBookmark(title: "bookmark test 1", url: url, isFavorite: false)]
 
-        #warning("wrong store")
-        let engine = BookmarksCachingSearch(bookmarksStore: BookmarksDatabase.shared)
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
 
         favicons = Favicons(sourcesProvider: DefaultFaviconSourcesProvider(),
                             bookmarksStore: BookmarkUserDefaults(),

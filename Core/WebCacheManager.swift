@@ -140,6 +140,7 @@ public class WebCacheManager {
 
     public func clear(dataStore: WebCacheManagerDataStore = WKWebsiteDataStore.default(),
                       logins: PreserveLogins = PreserveLogins.shared,
+                      tabCountInfo: TabCountInfo? = nil,
                       completion: @escaping () -> Void) {
 
         dataStore.removeAllDataExceptCookies {
@@ -193,7 +194,7 @@ public class WebCacheManager {
                         HTTPCookieStorage.shared.deleteCookie(storageCookie)
                     }
                     
-                    self.performSanityCheck(for: cookieStore, summary: cookieClearingSummary)
+                    self.performSanityCheck(for: cookieStore, summary: cookieClearingSummary, tabCountInfo: tabCountInfo)
                     
                     DispatchQueue.main.async {
                         completion()
@@ -203,7 +204,7 @@ public class WebCacheManager {
         }
     }
     
-    private func performSanityCheck(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary) {
+    private func performSanityCheck(for cookieStore: WebCacheManagerCookieStore, summary: WebStoreCookieClearingSummary, tabCountInfo: TabCountInfo?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             cookieStore.getAllCookies { cookiesAfterCleaning in
                 let storageCookiesAfterCleaning = HTTPCookieStorage.shared.cookies ?? []
@@ -221,8 +222,14 @@ public class WebCacheManager {
                     os_log("Error removing cookies: %d cookies left in WKHTTPCookieStore, %d cookies left in HTTPCookieStorage",
                            log: generalLog, type: .debug, cookieStoreDiff, cookieStorageDiff)
                     
+                    var parameters = summary.makeDictionaryRepresentation()
+                    
+                    if let tabCountInfo = tabCountInfo {
+                        parameters.merge(tabCountInfo.makeDictionaryRepresentation(), uniquingKeysWith: { _, new in new })
+                    }
+                    
                     Pixel.fire(pixel: .cookieDeletionLeftovers,
-                               withAdditionalParameters: summary.makeDictionaryRepresentation())
+                               withAdditionalParameters: parameters)
                 }
             }
         }
@@ -287,5 +294,22 @@ final class WebStoreCookieClearingSummary {
          PixelParameters.storageAfterDeletionCount: "\(storageAfterDeletionCount)",
          PixelParameters.storeAfterDeletionDiffCount: "\(storeAfterDeletionDiffCount)",
          PixelParameters.storageAfterDeletionDiffCount: "\(storageAfterDeletionDiffCount)"]
+    }
+}
+
+public final class TabCountInfo {
+    var tabsModelCount: Int = 0
+    var tabControllerCacheCount: Int = 0
+    
+    public init() { }
+        
+    public init(tabsModelCount: Int, tabControllerCacheCount: Int) {
+        self.tabsModelCount = tabsModelCount
+        self.tabControllerCacheCount = tabControllerCacheCount
+    }
+    
+    func makeDictionaryRepresentation() -> [String: String] {
+        [PixelParameters.tabsModelCount: "\(tabsModelCount)",
+         PixelParameters.tabControllerCacheCount: "\(tabControllerCacheCount)"]
     }
 }

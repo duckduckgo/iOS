@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import WebKit
+import UserScript
 
 public class TextSizeUserScript: NSObject, UserScript {
     
@@ -31,6 +32,10 @@ public class TextSizeUserScript: NSObject, UserScript {
     public var injectionTime: WKUserScriptInjectionTime = .atDocumentStart
     public var forMainFrameOnly: Bool = false
     public var messageNames: [String] = []
+    
+    public init(textSizeAdjustmentInPercents: Int) {
+        self.textSizeAdjustmentInPercents = textSizeAdjustmentInPercents
+    }
 
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) { }
     

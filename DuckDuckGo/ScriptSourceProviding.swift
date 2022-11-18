@@ -30,6 +30,7 @@ protocol ScriptSourceProviding {
     var surrogatesConfig: SurrogatesUserScriptConfig { get }
     var privacyConfigurationManager: PrivacyConfigurationManaging { get }
     var autofillSourceProvider: AutofillUserScriptSourceProvider { get }
+    var contentScopeProperties: ContentScopeProperties { get }
     var sessionKey: String { get }
 
 }
@@ -42,6 +43,7 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     let contentBlockerRulesConfig: ContentBlockerUserScriptConfig
     let surrogatesConfig: SurrogatesUserScriptConfig
     let autofillSourceProvider: AutofillUserScriptSourceProvider
+    let contentScopeProperties: ContentScopeProperties
     let sessionKey: String
 
     let privacyConfigurationManager: PrivacyConfigurationManaging
@@ -50,39 +52,35 @@ struct DefaultScriptSourceProvider: ScriptSourceProviding {
     init(appSettings: AppSettings = AppDependencyProvider.shared.appSettings,
          privacyConfigurationManager: PrivacyConfigurationManaging = ContentBlocking.shared.privacyConfigurationManager,
          contentBlockingManager: ContentBlockerRulesManagerProtocol = ContentBlocking.shared.contentBlockingManager) {
-
-        self.sendDoNotSell = appSettings.sendDoNotSell
-
+        
+        sendDoNotSell = appSettings.sendDoNotSell
+        
         self.privacyConfigurationManager = privacyConfigurationManager
         self.contentBlockingManager = contentBlockingManager
-
-        self.contentBlockerRulesConfig = Self.buildContentBlockerRulesConfig(contentBlockingManager: contentBlockingManager,
-                                                                             privacyConfigurationManager: privacyConfigurationManager)
-        self.surrogatesConfig = Self.buildSurrogatesConfig(contentBlockingManager: contentBlockingManager,
-                                                           privacyConfigurationManager: privacyConfigurationManager)
-        self.sessionKey = Self.generateSessionKey()
-        self.autofillSourceProvider = Self.buildAutofillSource(gpcEnabled: self.sendDoNotSell,
-                                                               sessionKey: self.sessionKey,
-                                                               privacyConfigurationManager: privacyConfigurationManager)
+        
+        contentBlockerRulesConfig = Self.buildContentBlockerRulesConfig(contentBlockingManager: contentBlockingManager,
+                                                                        privacyConfigurationManager: privacyConfigurationManager)
+        surrogatesConfig = Self.buildSurrogatesConfig(contentBlockingManager: contentBlockingManager,
+                                                      privacyConfigurationManager: privacyConfigurationManager)
+        sessionKey = Self.generateSessionKey()
+        contentScopeProperties = ContentScopeProperties(gpcEnabled: appSettings.sendDoNotSell,
+                                                        sessionKey: sessionKey,
+                                                        featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
+        autofillSourceProvider = Self.makeAutofillSource(privacyConfigurationManager: privacyConfigurationManager,
+                                                         properties: contentScopeProperties)
     }
 
-    private static func generateSessionKey() -> String {
-        return UUID().uuidString
+    private static func generateSessionKey() -> String { UUID().uuidString }
+    
+    private static func makeAutofillSource(privacyConfigurationManager: PrivacyConfigurationManaging,
+                                           properties: ContentScopeProperties) -> AutofillUserScriptSourceProvider {
+        DefaultAutofillSourceProvider(privacyConfigurationManager: privacyConfigurationManager,
+                                      properties: properties)
     }
-
-    public static func buildAutofillSource(gpcEnabled: Bool,
-                                           sessionKey: String,
-                                           privacyConfigurationManager: PrivacyConfigurationManaging) -> AutofillUserScriptSourceProvider {
-        let prefs = ContentScopeProperties(gpcEnabled: gpcEnabled,
-                                           sessionKey: sessionKey,
-                                           featureToggles: ContentScopeFeatureToggles.supportedFeaturesOniOS)
-
-        return DefaultAutofillSourceProvider(privacyConfigurationManager: privacyConfigurationManager, properties: prefs)
-    }
-
+    
     private static func buildContentBlockerRulesConfig(contentBlockingManager: ContentBlockerRulesManagerProtocol,
                                                        privacyConfigurationManager: PrivacyConfigurationManaging) -> ContentBlockerUserScriptConfig {
-
+        
         let currentMainRules = contentBlockingManager.currentMainRules
         let privacyConfig = privacyConfigurationManager.privacyConfig
 

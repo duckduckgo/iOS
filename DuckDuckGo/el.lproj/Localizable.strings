@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Πρόταση αυτόματης συμπλήρωσης";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Σελιδοδείκτης";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Σελιδοδείκτης";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Άνοιγμα ιστότοπου";
+"action.suggestion.type.website" = "Άνοιγμα ιστότοπου";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Αναζήτηση στο DuckDuckGo";
+"action.suggestion.type.search" = "Αναζήτηση στο DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Προσθήκη";
@@ -28,8 +28,8 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Συνδέσεις αυτόματης συμπλήρωσης";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Σελιδοδείκτης";
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
+"action.title.bookmark" = "Προσθήκη στους Σελιδοδείκτες";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Σελιδοδείκτες";

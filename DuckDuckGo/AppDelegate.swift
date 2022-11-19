@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
+    private var bookmarksDatabaseStack: CoreDataDatabase = BookmarksDatabase.shared // Switch to make() when no longer singleton
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -122,7 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
 
-        BookmarksDatabase.shared.loadStore { context, _ in
+        bookmarksDatabaseStack.loadStore { context, _ in
             let source = BookmarksCoreDataStorage.shared.getTemporaryPrivateContext()
             source.performAndWait {
                 LegacyBookmarksStoreMigration.migrate(source: source,
@@ -144,10 +145,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
-        if let main = mainViewController {
-            autoClear = AutoClear(worker: main)
-            autoClear?.applicationDidLaunch()
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        guard let main = storyboard.instantiateInitialViewController(creator: { coder in
+            MainViewController(coder: coder, bookmarksStack: self.bookmarksDatabaseStack)
+        }) else {
+            fatalError("Could not load MainViewController")
         }
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = main
+        window?.makeKeyAndVisible()
+        
+        autoClear = AutoClear(worker: main)
+        autoClear?.applicationDidLaunch()
         
         clearLegacyAllowedDomainCookies()
         
@@ -157,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        RemoteMessaging.registerBackgroundRefreshTaskHandler()
+        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: BookmarksDatabase.shared)
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -285,7 +296,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess()
+            try? await RemoteMessaging.fetchAndProcess(bookmarksDatabase: self.bookmarksDatabaseStack)
         }
     }
 

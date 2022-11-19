@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C1X-Zd-UbA">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +20,7 @@
         <!--Main View Controller-->
         <scene sceneID="DKA-ax-iTU">
             <objects>
-                <viewController definesPresentationContext="YES" id="C1X-Zd-UbA" customClass="MainViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" definesPresentationContext="YES" id="C1X-Zd-UbA" customClass="MainViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vxt-xD-aBt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -47,28 +47,28 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylj-oJ-fqD">
-                                <rect key="frame" x="0.0" y="96" width="414" height="717"/>
+                                <rect key="frame" x="0.0" y="100" width="414" height="713"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </containerView>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vw-jR-X6Q" userLabel="Suggestion Tray">
-                                <rect key="frame" x="0.0" y="96" width="414" height="717"/>
+                                <rect key="frame" x="0.0" y="100" width="414" height="713"/>
                                 <connections>
                                     <segue destination="j6c-LM-dZE" kind="embed" id="1ri-Fa-CEp"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJT-0B-l2J">
-                                <rect key="frame" x="0.0" y="96" width="414" height="0.0"/>
+                                <rect key="frame" x="0.0" y="100" width="414" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="g5u-N0-iSI"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iiL-6e-jxs" userLabel="Status BG">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="96"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agl-Nk-nUH" userLabel="Tabs Container">
-                                <rect key="frame" x="0.0" y="44" width="414" height="40"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="vZY-9N-j4a"/>
                                 </constraints>
@@ -77,14 +77,14 @@
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQT-PV-ULm" userLabel="Navigation Bar">
-                                <rect key="frame" x="0.0" y="44" width="414" height="52"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="52"/>
                                 <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="XOq-1B-9oE"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kFG-OX-YkL" customClass="ProgressView" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="93" width="414" height="3"/>
+                                <rect key="frame" x="0.0" y="97" width="414" height="3"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="ysF-8z-Vg0"/>
@@ -425,15 +425,15 @@
             <objects>
                 <viewController id="j6c-LM-dZE" customClass="SuggestionTrayViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jEf-yR-5Dz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="713"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IT2-Wd-hHA" userLabel="Background View">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="713"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TFZ-vQ-cny">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="717"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="713"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="908" id="Jcf-as-Vyd"/>

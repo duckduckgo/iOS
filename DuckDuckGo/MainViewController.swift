@@ -25,6 +25,7 @@ import Kingfisher
 import os.log
 import BrowserServicesKit
 import Bookmarks
+import Persistence
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -94,6 +95,8 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     
+    private let bookmarksStack: CoreDataDatabase
+    
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(
         viewContext: BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType))
 
@@ -122,6 +125,16 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
+    
+    required init?(coder: NSCoder,
+                   bookmarksStack: CoreDataDatabase) {
+        self.bookmarksStack = bookmarksStack
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Use init?(code:")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

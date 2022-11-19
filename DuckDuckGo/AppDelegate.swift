@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
                 _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
             }
-            BookmarksDatabase.shared.loadStore { context, _ in
+            bookmarksDatabaseStack.loadStore { context, _ in
                 let source = BookmarksCoreDataStorage.shared.getTemporaryPrivateContext()
                 source.performAndWait {
                     LegacyBookmarksStoreMigration.migrate(source: source,
@@ -168,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: BookmarksDatabase.shared)
+        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabaseStack)
 
         UNUserNotificationCenter.current().delegate = self
         

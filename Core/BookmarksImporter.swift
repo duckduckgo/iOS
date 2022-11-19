@@ -41,7 +41,7 @@ final public class BookmarksImporter {
     private(set) var importedBookmarks: [BookmarkOrFolder] = []
     private(set) var coreDataStorage: BookmarkCoreDataImporter
 
-    public init(coreDataStore: CoreDataDatabase = BookmarksDatabase.shared) {
+    public init(coreDataStore: CoreDataDatabase) {
         coreDataStorage = BookmarkCoreDataImporter(database: coreDataStore)
     }
 

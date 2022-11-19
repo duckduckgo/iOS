@@ -29,7 +29,7 @@ public struct BookmarksExporter {
 
     private(set) var coreDataStorage: CoreDataDatabase
 
-    public init(coreDataStore: CoreDataDatabase = BookmarksDatabase.shared) {
+    public init(coreDataStore: CoreDataDatabase) {
         coreDataStorage = coreDataStore
     }
 

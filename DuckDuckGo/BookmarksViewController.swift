@@ -48,7 +48,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var selectorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectorControl: UISegmentedControl!
     
-    private let bookmarksDBProvider = BookmarksDatabase.shared
+    private let bookmarksDatabaseStack: CoreDataDatabase
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -100,14 +100,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     fileprivate var onDidAppearAction: () -> Void = {}
 
-    init?(coder: NSCoder, bookmarksDBProvider: CoreDataDatabase = BookmarksDatabase.shared, parentID: NSManagedObjectID?) {
-        viewModel = BookmarkListViewModel(dbProvider: bookmarksDBProvider, parentID: parentID)
+    init?(coder: NSCoder, bookmarksDatabaseStack: CoreDataDatabase, parentID: NSManagedObjectID? = nil) {
+        self.bookmarksDatabaseStack = bookmarksDatabaseStack
+        self.viewModel = BookmarkListViewModel(bookmarksDatabaseStack: bookmarksDatabaseStack, parentID: parentID)
         super.init(coder: coder)
     }
-
+    
     required init?(coder: NSCoder) {
-        viewModel = BookmarkListViewModel(dbProvider: bookmarksDBProvider, parentID: nil)
-        super.init(coder: coder)
+        fatalError("Not implemented")
     }
 
     override func viewDidLoad() {
@@ -217,7 +217,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func drillIntoFolder(_ parent: BookmarkEntity) {
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
-            let controller = BookmarksViewController(coder: coder, parentID: parent.objectID)
+            let controller = BookmarksViewController(coder: coder,
+                                                     bookmarksDatabaseStack: self.bookmarksDatabaseStack,
+                                                     parentID: parent.objectID)
             controller?.delegate = self.delegate
             return controller
         })
@@ -367,7 +369,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let id = sender as? NSManagedObjectID
         guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                editingEntityID: id,
-                                                               parentFolderID: viewModel.currentFolder?.objectID) else {
+                                                               parentFolderID: viewModel.currentFolder?.objectID,
+                                                               bookmarksDatabaseStack: bookmarksDatabaseStack) else {
             assertionFailure("Failed to create controller")
             return nil
         }
@@ -396,10 +399,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     func importBookmarks(fromHtml html: String) {
         
         let bookmarkCountBeforeImport = dataSource.viewModel.getTotalBookmarksCount()
-        
+        let bookmarksDatabaseStack = bookmarksDatabaseStack
         Task {
 
-            let result = await BookmarksImporter().parseAndSave(html: html)
+            let result = await BookmarksImporter(coreDataStore: bookmarksDatabaseStack).parseAndSave(html: html)
             switch result {
             case .success:
                 #warning("reload widgets")
@@ -436,7 +439,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         // create file to export
         let tempFileUrl = FileManager.default.temporaryDirectory.appendingPathComponent(Constants.bookmarksFileName)
         do {
-            try BookmarksExporter().exportBookmarksTo(url: tempFileUrl)
+            try BookmarksExporter(coreDataStore: bookmarksDatabaseStack).exportBookmarksTo(url: tempFileUrl)
         } catch {
             os_log("bookmarks failed to export %s", type: .debug, error.localizedDescription)
             ActionMessageView.present(message: UserText.exportBookmarksFailedMessage)

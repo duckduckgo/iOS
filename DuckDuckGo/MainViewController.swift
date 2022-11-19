@@ -98,7 +98,7 @@ class MainViewController: UIViewController {
     private let bookmarksStack: CoreDataDatabase
     
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(
-        viewContext: BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType))
+        viewContext: bookmarksStack.makeContext(concurrencyType: .mainQueueConcurrencyType))
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -318,8 +318,6 @@ class MainViewController: UIViewController {
         currentTab?.saveAsBookmark(favorite: true)
     }
     
-    // swiftlint:disable cyclomatic_complexity
-    // swiftlint:disable function_body_length
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
@@ -337,21 +335,6 @@ class MainViewController: UIViewController {
         if let controller = segue.destination as? TabsBarViewController {
             controller.delegate = self
             tabsBarController = controller
-            return
-        }
-
-        if segue.destination.children.count > 0,
-            let controller = segue.destination.children[0] as? BookmarksViewController {
-            controller.delegate = self
-            
-            if segue.identifier == "BookmarksEditCurrent",
-                let link = currentTab?.link,
-                let bookmark = menuBookmarksViewModel.bookmark(for: link.url) {
-                controller.openEditFormWhenPresented(bookmark: bookmark)
-            } else if segue.identifier == "BookmarksEdit",
-                      let bookmark = sender as? BookmarkEntity {
-                controller.openEditFormWhenPresented(bookmark: bookmark)
-            }
             return
         }
 
@@ -387,8 +370,25 @@ class MainViewController: UIViewController {
         }
 
     }
-    // swiftlint:enable cyclomatic_complexity
-    // swiftlint:enable function_body_length
+    
+    @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
+        guard let controller = BookmarksViewController(coder: coder,
+                                                       bookmarksDatabaseStack: self.bookmarksStack) else {
+            fatalError("Failed to create controller")
+        }
+        controller.delegate = self
+        
+        if segueIdentifier == "BookmarksEditCurrent",
+            let link = currentTab?.link,
+            let bookmark = menuBookmarksViewModel.bookmark(for: link.url) {
+            controller.openEditFormWhenPresented(bookmark: bookmark)
+        } else if segueIdentifier == "BookmarksEdit",
+                  let bookmark = sender as? BookmarkEntity {
+            controller.openEditFormWhenPresented(bookmark: bookmark)
+        }
+        
+        return controller
+    }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)

@@ -21,6 +21,7 @@ import UIKit
 import Core
 import CoreData
 import Bookmarks
+import Persistence
 import Combine
 
 protocol AddOrEditBookmarkViewControllerDelegate: AnyObject {
@@ -35,15 +36,19 @@ class AddOrEditBookmarkViewController: UIViewController {
 
     private var foldersViewController: BookmarkFoldersViewController?
     private let viewModel: BookmarkEditorViewModel
-    private let bookmarksDBProvider = BookmarksDatabase.shared
+    private let bookmarksDatabaseStack: CoreDataDatabase
 
     private var viewModelCancellable: AnyCancellable?
 
-    init?(coder: NSCoder, editingEntityID: NSManagedObjectID?, parentFolderID: NSManagedObjectID?) {
-
-        viewModel = BookmarkEditorViewModel(dbProvider: bookmarksDBProvider,
-                                            editingEntityID: editingEntityID,
-                                            parentFolderID: parentFolderID)
+    init?(coder: NSCoder,
+          editingEntityID: NSManagedObjectID?,
+          parentFolderID: NSManagedObjectID?,
+          bookmarksDatabaseStack: CoreDataDatabase) {
+        
+        self.bookmarksDatabaseStack = bookmarksDatabaseStack
+        self.viewModel = BookmarkEditorViewModel(bookmarksDatabaseStack: bookmarksDatabaseStack,
+                                                 editingEntityID: editingEntityID,
+                                                 parentFolderID: parentFolderID)
 
         super.init(coder: coder)
     }
@@ -107,7 +112,8 @@ class AddOrEditBookmarkViewController: UIViewController {
     @IBSegueAction func onCreateEditor(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AddOrEditBookmarkViewController? {
         guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                editingEntityID: nil,
-                                                               parentFolderID: viewModel.bookmark.parent?.objectID) else {
+                                                               parentFolderID: viewModel.bookmark.parent?.objectID,
+                                                               bookmarksDatabaseStack: bookmarksDatabaseStack) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self

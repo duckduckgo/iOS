@@ -140,14 +140,15 @@ public class BookmarksCachingSearch {
     }
     
     private let bookmarksStore: BookmarksSearchStore
+    private var cancellable: AnyCancellable?
 
     public init(bookmarksStore: BookmarksSearchStore = CoreDataBookmarksSearchStore.init()) {
         self.bookmarksStore = bookmarksStore
-        loadCache()
-        
-        bookmarksStore.dataDidChange.sink { [weak self] _ in
+        self.cancellable = bookmarksStore.dataDidChange.sink { [weak self] _ in
             self?.refreshCache()
         }
+        
+        loadCache()
     }
 
     public var hasData: Bool {

@@ -36,9 +36,10 @@ class BookmarksImporterTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        try storage.tearDown(deleteStores: true)
         htmlLoader = nil
         importer = nil
+        
+        try storage.tearDown(deleteStores: true)
 
         try super.tearDownWithError()
     }

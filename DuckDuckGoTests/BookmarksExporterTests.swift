@@ -37,12 +37,12 @@ class BookmarksExporterTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        try storage.tearDown(deleteStores: true)
-        
-        htmlLoader = nil
         importer = nil
         exporter = nil
-
+        htmlLoader = nil
+        
+        try storage.tearDown(deleteStores: true)
+        
         try super.tearDownWithError()
     }
     
@@ -162,6 +162,10 @@ class BookmarksExporterTests: XCTestCase {
             content.append(buildCommonContent(level: 3))
             content.append(BookmarksExporter.Template.closeFolder(level: 2))
             content.append(BookmarksExporter.Template.openFolder(level: 2, named: "DuckDuckGo Favorites"))
+            content.append(BookmarksExporter.Template.bookmark(level: 3,
+                                                               title: "Apple (United Kingdom)",
+                                                               url: "https://www.apple.com/uk/",
+                                                               isFavorite: true))
             content.append(BookmarksExporter.Template.closeFolder(level: 2))
             content.append(BookmarksExporter.Template.footer)
 
@@ -180,11 +184,11 @@ class BookmarksExporterTests: XCTestCase {
             }
 
             var content = [BookmarksExporter.Template.header]
+            content.append(buildCommonContent())
             content.append(BookmarksExporter.Template.bookmark(level: 2,
                                                                title: "Apple (United Kingdom)",
                                                                url: "https://www.apple.com/uk/",
                                                                isFavorite: true))
-            content.append(buildCommonContent())
             content.append(BookmarksExporter.Template.footer)
 
             XCTAssertEqual(exportedHtml, content.joined())

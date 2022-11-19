@@ -30,18 +30,21 @@ public class BookmarksDatabase {
     public static let shared = make()
 
     private init() { }
+    
+    private static var defaultDBLocation: URL = {
+        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: databaseGroupID) else {
+            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", databaseGroupID)
+            fatalError("Failed to get location")
+        }
+        return url
+    }()
 
-    static func make() -> CoreDataDatabase {
+    static func make(location: URL = defaultDBLocation) -> CoreDataDatabase {
         os_log("BookmarksDatabase.make - IN")
         let bundle = Bookmarks.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel") else {
             os_log("BookmarksDatabase.make - OUT, failed to loadModel")
             fatalError("Failed to load model")
-        }
-
-        guard let location = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: databaseGroupID) else {
-            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", databaseGroupID)
-            fatalError("Failed to get location")
         }
 
         let db = CoreDataDatabase(name: "Bookmarks", containerLocation: location, model: model)

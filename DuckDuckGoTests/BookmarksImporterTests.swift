@@ -24,7 +24,7 @@ import Bookmarks
 
 class BookmarksImporterTests: XCTestCase {
 
-    private var storage: MockBookmarksCoreDataStore!
+    private var storage = MockBookmarksDatabase.make()
     private var importer: BookmarksImporter!
     private var htmlLoader: HtmlTestDataLoader!
 
@@ -32,20 +32,12 @@ class BookmarksImporterTests: XCTestCase {
         try super.setUpWithError()
 
         htmlLoader = HtmlTestDataLoader()
-        storage = MockBookmarksCoreDataStore()
-        _ = BookmarksCoreDataStorage.rootFolderManagedObject(storage.viewContext)
-        _ = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(storage.viewContext)
-
-        storage.saveContext()
-        storage.loadStoreAndCaches { _ in }
-
-        #warning("wrong storage")
-        // importer = BookmarksImporter(coreDataStore: storage)
+        importer = BookmarksImporter(coreDataStore: storage)
     }
 
     override func tearDownWithError() throws {
+        try storage.tearDown(deleteStores: true)
         htmlLoader = nil
-        storage = nil
         importer = nil
 
         try super.tearDownWithError()
@@ -135,7 +127,12 @@ class BookmarksImporterTests: XCTestCase {
         try await importer.saveBookmarks(importer.importedBookmarks)
 
         // Note: exhaustive hierarchy is tested in BookmarksExporterTests.testExportHtml
-        XCTAssertEqual(storage.topLevelBookmarksItems.count, 10)
+        let context = storage.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        guard let topLevelFolder = BookmarkUtils.fetchRootFolder(context) else {
+            XCTFail("Root folder missing")
+            return
+        }
+        XCTAssertEqual(topLevelFolder.children?.count ?? 0, 10)
     }
 
     func test_WhenParseHtmlAndSave_ThenDataSaved() async {

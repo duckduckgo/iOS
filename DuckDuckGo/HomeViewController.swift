@@ -257,7 +257,7 @@ extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     }
 
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
-        delegate?.home(self, didRequestHideLogo: renderer.viewModel.count > 0)
+        delegate?.home(self, didRequestHideLogo: renderer.viewModel.favorites.count > 0)
     }
 
 }

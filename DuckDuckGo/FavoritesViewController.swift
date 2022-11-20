@@ -113,7 +113,7 @@ class FavoritesViewController: UIViewController {
     }
 
     private func updateHeroImage() {
-        emptyHeroView.isHidden = renderer.viewModel.count > 0
+        emptyHeroView.isHidden = renderer.viewModel.favorites.count > 0
     }
 
     private func registerForKeyboardNotifications() {

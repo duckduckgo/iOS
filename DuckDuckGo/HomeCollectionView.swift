@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Bookmarks
 
 class HomeCollectionView: UICollectionView {
     
@@ -79,7 +80,7 @@ class HomeCollectionView: UICollectionView {
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
                 
             case .favorites:
-                renderers.install(renderer: FavoritesHomeViewSectionRenderer(viewModel: .make()))
+                renderers.install(renderer: FavoritesHomeViewSectionRenderer(viewModel: FavoritesListViewModel.make()))
                 
             case .homeMessage:
                 renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))

@@ -45,7 +45,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
-    let viewModel: FavoritesListViewModel
+    let viewModel: FavoritesListInteracting
 
     private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)?
     
@@ -61,7 +61,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
 
-    init(allowsEditing: Bool = true, viewModel: FavoritesListViewModel) {
+    init(allowsEditing: Bool = true, viewModel: FavoritesListInteracting) {
         guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
             fatalError("Failed to load FavoriteHomeCell")
         }
@@ -138,7 +138,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             fatalError("not a FavoriteCell")
         }
 
-        guard let favorite = viewModel.favorite(atIndex: indexPath.row) else {
+        guard let favorite = viewModel.favorite(at: indexPath.row) else {
             return cell
         }
 
@@ -154,7 +154,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private func removeFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell),
-        let favorite = viewModel.favorite(atIndex: indexPath.row) else { return }
+        let favorite = viewModel.favorite(at: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
         viewModel.removeFavorite(favorite)
         collectionView.performBatchUpdates {
@@ -165,7 +165,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell),
-              let favorite = viewModel.favorite(atIndex: indexPath.row) else { return }
+              let favorite = viewModel.favorite(at: indexPath.row) else { return }
         #warning("needs fix")
         Pixel.fire(pixel: .homeScreenEditFavorite)
         controller?.favoritesRenderer(self, didRequestEdit: favorite)
@@ -262,7 +262,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
-        guard let favorite = viewModel.favorite(atIndex: indexPath.row) else { return }
+        guard let favorite = viewModel.favorite(at: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
         controller?.favoritesRenderer(self, didSelect: favorite)
     }

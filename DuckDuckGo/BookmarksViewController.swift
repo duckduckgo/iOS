@@ -82,7 +82,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     weak var delegate: BookmarksDelegate?
 
     fileprivate var viewModelCancellable: AnyCancellable?
-    fileprivate let viewModel: BookmarkListViewModel
+    fileprivate let viewModel: BookmarkListInteracting
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
         let dataSource = BookmarksDataSource(viewModel: viewModel)
@@ -203,7 +203,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func didSelectBookmarkAtIndex(_ index: Int) {
-        guard let bookmark = viewModel.bookmarkAt(index) else { return }
+        guard let bookmark = viewModel.bookmark(at: index) else { return }
 
         if isEditingBookmarks {
             performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: bookmark.objectID)
@@ -233,7 +233,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let item = viewModel.bookmarkAt(indexPath.row),
+        guard let item = viewModel.bookmark(at: indexPath.row),
                 !item.isFolder else {
             return nil
         }
@@ -321,6 +321,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
 
         if !favoritesContainer.isHidden {
+            #warning("Is 'viewModel.hasFavorites' condition valid? What about nested favorites?")
             editButton.isEnabled = favoritesController?.isEditing == true || viewModel.hasFavorites
             editButton.title = UserText.actionGenericEdit
         } else if (dataSource.isEmpty && !isEditingBookmarks) || dataSource === searchDataSource {
@@ -411,7 +412,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     func importBookmarks(fromHtml html: String) {
         
-        let bookmarkCountBeforeImport = dataSource.viewModel.getTotalBookmarksCount()
+        let bookmarkCountBeforeImport = dataSource.viewModel.totalBookmarksCount
         let bookmarksDatabaseStack = bookmarksDatabaseStack
         Task {
 
@@ -422,7 +423,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 //                dataSource.bookmarksManager.reloadWidgets()
 
                 DispatchQueue.main.async { [weak self] in
-                    let bookmarkCountAfterImport = self?.dataSource.viewModel.getTotalBookmarksCount() ?? 0
+                    let bookmarkCountAfterImport = self?.dataSource.viewModel.totalBookmarksCount ?? 0
                     let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
                     Pixel.fire(pixel: .bookmarkImportSuccess,
                                withAdditionalParameters: [PixelParameters.bookmarkCount: "\(bookmarksImported)"])
@@ -601,7 +602,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     fileprivate func showShareSheet(for indexPath: IndexPath) {
 
-        if let bookmark = viewModel.bookmarkAt(indexPath.row) {
+        if let bookmark = viewModel.bookmark(at: indexPath.row) {
             presentShareSheet(withItems: [bookmark], fromView: self.view)
         } else {
             os_log("Invalid share link found", log: generalLog, type: .debug)

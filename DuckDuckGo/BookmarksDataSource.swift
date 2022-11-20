@@ -32,13 +32,13 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
     weak var delegate: BookmarksDataSourceDelegate?
 
-    let viewModel: BookmarkListViewModel
+    let viewModel: BookmarkListInteracting
 
     var isEmpty: Bool {
         viewModel.bookmarks.isEmpty
     }
 
-    init(viewModel: BookmarkListViewModel) {
+    init(viewModel: BookmarkListInteracting) {
         self.viewModel = viewModel
         super.init()
     }
@@ -52,7 +52,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             return BookmarksViewControllerCellFactory.makeEmptyCell(tableView, forIndexPath: indexPath, inFolder: viewModel.currentFolder != nil)
         }
 
-        guard let bookmark = viewModel.bookmarkAt(indexPath.row) else {
+        guard let bookmark = viewModel.bookmark(at: indexPath.row) else {
             fatalError("No bookmark at index \(indexPath.row)")
         }
 
@@ -75,7 +75,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }
-        guard let bookmark = viewModel.bookmarkAt(indexPath.row) else { return }
+        guard let bookmark = viewModel.bookmark(at: indexPath.row) else { return }
 
         func delete() {
             let oldCount = viewModel.bookmarks.count
@@ -118,7 +118,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard let bookmark = viewModel.bookmarkAt(sourceIndexPath.row) else { return }
+        guard let bookmark = viewModel.bookmark(at: sourceIndexPath.row) else { return }
         viewModel.moveBookmark(bookmark, fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
     }
 

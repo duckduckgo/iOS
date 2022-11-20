@@ -44,7 +44,7 @@ class SuggestionTrayViewController: UIViewController {
     private var willRemoveAutocomplete = false
     private let bookmarksSearch: BookmarksStringSearch
     private let bookmarksDatabaseStack: CoreDataDatabase
-    private let favoritesModel: FavoritesListViewModel
+    private let favoritesModel: FavoritesListInteracting
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -208,7 +208,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private var canDisplayFavorites: Bool {
-        favoritesModel.count > 0
+        favoritesModel.favorites.count > 0
     }
     
     private func displayFavoritesIfNeeded(onInstall: @escaping () -> Void = {}) {

@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import Bookmarks
+import Persistence
 
 protocol FavoritesOverlayDelegate: AnyObject {
     
@@ -41,7 +42,15 @@ class FavoritesOverlay: UIViewController {
     
     weak var delegate: FavoritesOverlayDelegate?
     
-    private var bookmarksDBProvider = BookmarksDatabase.shared
+    init(viewModel: FavoritesListViewModel) {
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
+                                                    viewModel: viewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,8 +64,6 @@ class FavoritesOverlay: UIViewController {
 
         view.addSubview(collectionView)
         
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
-                                                    viewModel: FavoritesListViewModel(dbProvider: bookmarksDBProvider))
         renderer.install(into: self)
         
         registerForKeyboardNotifications()

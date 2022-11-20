@@ -23,6 +23,16 @@ import Persistence
 import CoreData
 import Combine
 
+public protocol BookmarksStringSearch {
+    var hasData: Bool { get }
+    func search(query: String) -> [BookmarksStringSearchResult]
+}
+
+public protocol BookmarksStringSearchResult {
+    var title: String { get }
+    var url: URL { get }
+}
+
 public protocol BookmarksSearchStore {
     
     var dataDidChange: AnyPublisher<Void, Never> { get }
@@ -107,9 +117,9 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
     }
 }
 
-public class BookmarksCachingSearch {
+public class BookmarksCachingSearch: BookmarksStringSearch {
 
-    public struct ScoredBookmark {
+    public struct ScoredBookmark: BookmarksStringSearchResult {
         public let title: String
         public let url: URL
         var score: Int
@@ -243,7 +253,7 @@ public class BookmarksCachingSearch {
     }
     // swiftlint:enable cyclomatic_complexity
 
-    public func search(query: String, sortByRelevance: Bool = true) async -> [ScoredBookmark] {
+    public func search(query: String) -> [BookmarksStringSearchResult] {
         guard hasData else {
             return []
         }
@@ -252,9 +262,7 @@ public class BookmarksCachingSearch {
                     
         let trimmed = query.trimmingWhitespace()
         var finalResult = self.score(query: trimmed, input: bookmarks)
-        if sortByRelevance {
-            finalResult = finalResult.sorted { $0.score > $1.score }
-        }
+        finalResult = finalResult.sorted { $0.score > $1.score }
 
         return finalResult
     }

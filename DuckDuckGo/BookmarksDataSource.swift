@@ -126,11 +126,10 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
 
 class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
 
-    let searchEngine: BookmarksCachingSearch
+    let searchEngine: BookmarksStringSearch
+    var results = [BookmarksStringSearchResult]()
 
-    var results = [BookmarksCachingSearch.ScoredBookmark]()
-
-    init(searchEngine: BookmarksCachingSearch) {
+    init(searchEngine: BookmarksStringSearch) {
         self.searchEngine = searchEngine
     }
 
@@ -145,8 +144,8 @@ class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
         return cell
     }
 
-    func performSearch(_ text: String) async {
-        results = await searchEngine.search(query: text)
+    func performSearch(_ text: String) {
+        results = searchEngine.search(query: text)
     }
 
 }

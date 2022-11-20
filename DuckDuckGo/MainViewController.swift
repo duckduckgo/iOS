@@ -113,7 +113,7 @@ class MainViewController: UIViewController {
     
     private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
-    private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
+    private var bookmarksCachingSearch: BookmarksCachingSearch
 
     fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
@@ -129,6 +129,7 @@ class MainViewController: UIViewController {
     required init?(coder: NSCoder,
                    bookmarksStack: CoreDataDatabase) {
         self.bookmarksStack = bookmarksStack
+        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksStack))
         super.init(coder: coder)
     }
     
@@ -323,14 +324,6 @@ class MainViewController: UIViewController {
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-
-        if let controller = segue.destination as? SuggestionTrayViewController {
-            controller.dismissHandler = dismissSuggestionTray
-            controller.autocompleteDelegate = self
-            controller.favoritesOverlayDelegate = self
-            suggestionTrayController = controller
-            return
-        }
         
         if let controller = segue.destination as? TabsBarViewController {
             controller.delegate = self
@@ -371,9 +364,25 @@ class MainViewController: UIViewController {
 
     }
     
+    @IBSegueAction func onCreateSuggestionTray(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SuggestionTrayViewController {
+        guard let controller = SuggestionTrayViewController(coder: coder,
+                                                            bookmarksDatabaseStack: self.bookmarksStack,
+                                                            bookmarksSearch: bookmarksCachingSearch) else {
+            fatalError("Failed to create controller")
+        }
+        
+        controller.dismissHandler = dismissSuggestionTray
+        controller.autocompleteDelegate = self
+        controller.favoritesOverlayDelegate = self
+        suggestionTrayController = controller
+        
+        return controller
+    }
+    
     @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
         guard let controller = BookmarksViewController(coder: coder,
-                                                       bookmarksDatabaseStack: self.bookmarksStack) else {
+                                                       bookmarksDatabaseStack: self.bookmarksStack,
+                                                       bookmarksSearch: bookmarksCachingSearch) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self
@@ -1127,7 +1136,7 @@ extension MainViewController: OmniBarDelegate {
                 }
             }
         } else {
-            tryToShowSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksCachingSearch))
+            tryToShowSuggestionTray(.autocomplete(query: updatedQuery))
         }
         
     }
@@ -1228,7 +1237,7 @@ extension MainViewController: OmniBarDelegate {
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
-            tryToShowSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksCachingSearch))
+            tryToShowSuggestionTray(.autocomplete(query: query))
         } else {
             tryToShowSuggestionTray(.favorites)
         }

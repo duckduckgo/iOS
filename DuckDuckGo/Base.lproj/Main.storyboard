@@ -53,7 +53,7 @@
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vw-jR-X6Q" userLabel="Suggestion Tray">
                                 <rect key="frame" x="0.0" y="100" width="414" height="713"/>
                                 <connections>
-                                    <segue destination="j6c-LM-dZE" kind="embed" id="1ri-Fa-CEp"/>
+                                    <segue destination="j6c-LM-dZE" kind="embed" destinationCreationSelector="onCreateSuggestionTray:sender:segueIdentifier:" id="1ri-Fa-CEp"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lJT-0B-l2J">

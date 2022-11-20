@@ -90,7 +90,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         return dataSource
     }()
 
-    fileprivate var searchDataSource = SearchBookmarksDataSource(searchEngine: BookmarksCachingSearch())
+    var searchDataSource: SearchBookmarksDataSource
 
     var isNested: Bool {
         viewModel.currentFolder?.uuid != BookmarkEntity.Constants.rootFolderID
@@ -100,8 +100,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     fileprivate var onDidAppearAction: () -> Void = {}
 
-    init?(coder: NSCoder, bookmarksDatabaseStack: CoreDataDatabase, parentID: NSManagedObjectID? = nil) {
+    init?(coder: NSCoder,
+          bookmarksDatabaseStack: CoreDataDatabase,
+          bookmarksSearch: BookmarksStringSearch,
+          parentID: NSManagedObjectID? = nil) {
         self.bookmarksDatabaseStack = bookmarksDatabaseStack
+        self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
         self.viewModel = BookmarkListViewModel(bookmarksDatabaseStack: bookmarksDatabaseStack, parentID: parentID)
         super.init(coder: coder)
     }
@@ -219,6 +223,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
             let controller = BookmarksViewController(coder: coder,
                                                      bookmarksDatabaseStack: self.bookmarksDatabaseStack,
+                                                     bookmarksSearch: self.searchDataSource.searchEngine,
                                                      parentID: parent.objectID)
             controller?.delegate = self.delegate
             return controller
@@ -373,6 +378,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                                bookmarksDatabaseStack: bookmarksDatabaseStack) else {
             assertionFailure("Failed to create controller")
             return nil
+        }
+
+        return controller
+    }
+    
+    @IBSegueAction func onCreateFavoritesView(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> FavoritesViewController {
+        guard let controller = FavoritesViewController(coder: coder, bookmarksDatabaseStack: bookmarksDatabaseStack) else {
+            fatalError("Failed to create controller")
         }
 
         return controller

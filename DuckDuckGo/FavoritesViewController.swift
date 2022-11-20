@@ -48,7 +48,7 @@ class FavoritesViewController: UIViewController {
 
     weak var delegate: FavoritesViewControllerDelegate?
     
-    private var bookmarksDBProvider = BookmarksDatabase.shared
+    private let bookmarksDatabaseStack: CoreDataDatabase
     
     fileprivate var viewModelCancellable: AnyCancellable?
 
@@ -57,6 +57,15 @@ class FavoritesViewController: UIViewController {
             renderer.isEditing = isEditing
             collectionView.reloadData()
         }
+    }
+    
+    init?(coder: NSCoder, bookmarksDatabaseStack: CoreDataDatabase) {
+        self.bookmarksDatabaseStack = bookmarksDatabaseStack
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
     }
 
     override func viewDidLoad() {
@@ -75,7 +84,7 @@ class FavoritesViewController: UIViewController {
         view.addSubview(collectionView)
         
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
-                                                    viewModel: FavoritesListViewModel(dbProvider: bookmarksDBProvider))
+                                                    viewModel: FavoritesListViewModel(dbProvider: bookmarksDatabaseStack))
         renderer.install(into: self)
         
         viewModelCancellable = renderer.viewModel.externalUpdates.sink { [weak self] _ in

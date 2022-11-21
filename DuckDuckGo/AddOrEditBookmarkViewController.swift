@@ -53,6 +53,9 @@ class AddOrEditBookmarkViewController: UIViewController {
         super.init(coder: coder)
     }
 
+    // If you hit this constructor you probably decided to try and instanciate this VC directly.
+    //  However, if it is part of a navigation controller stack this construct gets called.
+    //  Check the segue actions defined in the storyboard. 
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }

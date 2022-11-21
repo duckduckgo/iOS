@@ -158,7 +158,7 @@ class AutocompleteViewController: UIViewController {
             guard let strongSelf = self else { return }
 
             Task { @MainActor in
-                let matches = await strongSelf.bookmarksSearch.search(query: query)
+                let matches = strongSelf.bookmarksSearch.search(query: query)
                 let notQueryMatches = matches.filter { $0.url.absoluteString != query }
                 let filteredMatches = notQueryMatches.prefix(Constants.maxLocalItems)
                 let localSuggestions = filteredMatches.map { Suggestion(source: .local,

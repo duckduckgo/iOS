@@ -96,8 +96,7 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
            bookmark.children?.count ?? 0 > 0 {
 
             let title = String(format: UserText.deleteBookmarkFolderAlertTitle, bookmark.title ?? "")
-#warning("original code recursively counted the children")
-            let count = bookmark.children?.count ?? 0
+            let count = countAllChildrenInFolder(bookmark)
             let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
@@ -120,6 +119,17 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let bookmark = viewModel.bookmark(at: sourceIndexPath.row) else { return }
         viewModel.moveBookmark(bookmark, fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
+    }
+
+    private func countAllChildrenInFolder(_ folder: BookmarkEntity) -> Int {
+        var count = 0
+        folder.childrenArray.forEach { bookmark in
+            count += 1
+            if bookmark.isFolder {
+                count += countAllChildrenInFolder(bookmark)
+            }
+        }
+        return count
     }
 
 }

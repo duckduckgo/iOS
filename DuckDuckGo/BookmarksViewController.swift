@@ -209,9 +209,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             performSegue(withIdentifier: "AddOrEditBookmarkFolder", sender: bookmark.objectID)
         } else if bookmark.isFolder {
             drillIntoFolder(bookmark)
-            onDidAppearAction = { [weak self] in
-                self?.viewModel.refresh()
-            }
         } else {
             select(bookmark: bookmark)
         }
@@ -321,8 +318,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         }
 
         if !favoritesContainer.isHidden {
-            #warning("Is 'viewModel.hasFavorites' condition valid? What about nested favorites?")
-            editButton.isEnabled = favoritesController?.isEditing == true || viewModel.hasFavorites
+            editButton.isEnabled = favoritesController?.isEditing == true || (favoritesController?.hasFavorites ?? false)
             editButton.title = UserText.actionGenericEdit
         } else if (dataSource.isEmpty && !isEditingBookmarks) || dataSource === searchDataSource {
             disableEditButton()
@@ -644,10 +640,8 @@ extension BookmarksViewController: UISearchBarDelegate {
             tableView.dataSource = searchDataSource
         }
 
-        Task { @MainActor in
-            await self.searchDataSource.performSearch(searchText)
-            self.tableView.reloadData()
-        }
+        searchDataSource.performSearch(searchText)
+        tableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

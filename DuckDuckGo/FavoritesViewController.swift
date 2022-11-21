@@ -51,6 +51,10 @@ class FavoritesViewController: UIViewController {
     private let bookmarksDatabaseStack: CoreDataDatabase
     
     fileprivate var viewModelCancellable: AnyCancellable?
+    
+    var hasFavorites: Bool {
+        renderer.viewModel.favorites.count > 0
+    }
 
     override var isEditing: Bool {
         didSet {

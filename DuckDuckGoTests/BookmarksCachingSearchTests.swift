@@ -85,29 +85,29 @@ class BookmarksCachingSearchTests: XCTestCase {
 
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
-        var bookmarks = await engine.search(query: "t")
+        var bookmarks = engine.search(query: "t")
         XCTAssertEqual(bookmarks.count, 8)
         
-        bookmarks = await engine.search(query: "b")
+        bookmarks = engine.search(query: "b")
         XCTAssertEqual(bookmarks.count, 4)
         
-        bookmarks = await engine.search(query: "1")
+        bookmarks = engine.search(query: "1")
         XCTAssertEqual(bookmarks.count, 6)
         
-        bookmarks = await engine.search(query: "a")
+        bookmarks = engine.search(query: "a")
         XCTAssertEqual(bookmarks.count, 2)
         
-        bookmarks = await engine.search(query: "k")
+        bookmarks = engine.search(query: "k")
         XCTAssertEqual(bookmarks.count, 0)
         
-        bookmarks = await engine.search(query: "e")
+        bookmarks = engine.search(query: "e")
         XCTAssertEqual(bookmarks.count, 0)
     }
     
     func testWhenSearchingThenBeginingOfTitlesArePromoted() async throws {
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
-        let resultSingleLetter = await engine.search(query: "t")
+        let resultSingleLetter = engine.search(query: "t")
         XCTAssertEqual(resultSingleLetter[0].title, Entry.f2.rawValue)
         XCTAssertEqual(resultSingleLetter[1].title, Entry.f12a.rawValue)
         
@@ -121,7 +121,7 @@ class BookmarksCachingSearchTests: XCTestCase {
         XCTAssertEqual(resultSingleLetter[7].title, Entry.b12.rawValue)
 
 
-        let resultWord = await engine.search(query: "tes")
+        let resultWord = engine.search(query: "tes")
         
         XCTAssertEqual(resultWord[0].title, Entry.f2.rawValue)
         XCTAssertEqual(resultWord[1].title, Entry.f12a.rawValue)
@@ -135,14 +135,14 @@ class BookmarksCachingSearchTests: XCTestCase {
         XCTAssertEqual(resultWord[6].title, Entry.b1.rawValue)
         XCTAssertEqual(resultWord[7].title, Entry.b12.rawValue)
             
-        let resultFullWord = await engine.search(query: "bookmark")
+        let resultFullWord = engine.search(query: "bookmark")
         
         XCTAssertEqual(resultFullWord[0].title, Entry.b1.rawValue)
         XCTAssertEqual(resultFullWord[1].title, Entry.b12.rawValue)
         XCTAssertEqual(resultFullWord[2].title, Entry.b2.rawValue)
         XCTAssertEqual(resultFullWord[3].title, Entry.b12a.rawValue)
         
-        let resultSentence = await engine.search(query: "tes fav")
+        let resultSentence = engine.search(query: "tes fav")
         
         XCTAssertEqual(resultSentence[0].title, Entry.f2.rawValue)
         XCTAssertEqual(resultSentence[1].title, Entry.f12a.rawValue)
@@ -153,7 +153,7 @@ class BookmarksCachingSearchTests: XCTestCase {
     func testWhenSearchingFullStringThenExactMatchesAreFirst() async throws {
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
-        let result = await engine.search(query: "fav 1")
+        let result = engine.search(query: "fav 1")
         
         XCTAssertEqual(result.count, 3)
         XCTAssertEqual(result[0].title, Entry.f12a.rawValue)
@@ -164,7 +164,7 @@ class BookmarksCachingSearchTests: XCTestCase {
     func testWhenSearchingThenFavoritesAreFirst() async throws {
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
-        let result = await engine.search(query: "1")
+        let result = engine.search(query: "1")
         XCTAssertEqual(result.count, 6)
         XCTAssertEqual(result[0].title, Entry.f1.rawValue)
         XCTAssertEqual(result[1].title, Entry.f12.rawValue)
@@ -177,7 +177,7 @@ class BookmarksCachingSearchTests: XCTestCase {
     func testWhenSearchingMultipleWordsThenAllMustBeFound() async throws {
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
-        let result = await engine.search(query: "te bo")
+        let result = engine.search(query: "te bo")
         XCTAssertEqual(result.count, 4)
         // Prioritize if first word match the beginning of the title
         XCTAssertEqual(result[0].title, Entry.b2.rawValue)
@@ -189,29 +189,28 @@ class BookmarksCachingSearchTests: XCTestCase {
     func testWhenSearchingThenNotFindingAnythingIsAlsoValid() async throws {
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
-        let result = await engine.search(query: "testing")
+        let result = engine.search(query: "testing")
         XCTAssertEqual(result.count, 0)
     }
     
     func testWhenMatchingURLThenDomainMatchesArePromoted() async throws {
-        #warning("wrong store")
         let engine = BookmarksCachingSearch(bookmarksStore: urlStore)
         
-        let result = await engine.search(query: "exam")
+        let result = engine.search(query: "exam")
         XCTAssertEqual(result.count, 2)
         XCTAssertEqual(result[0].title, Entry.urlExample1.rawValue)
         XCTAssertEqual(result[1].title, Entry.urlExample2.rawValue)
         
-        let result2 = await engine.search(query: "exam 2")
+        let result2 = engine.search(query: "exam 2")
         
         XCTAssertEqual(result2.count, 1)
         XCTAssertEqual(result2[0].title, Entry.urlExample2.rawValue)
             
-        let result3 = await engine.search(query: "test")
+        let result3 = engine.search(query: "test")
         
         XCTAssertEqual(result3.count, 4)
         
-        let result4 = await engine.search(query: "duck")
+        let result4 = engine.search(query: "duck")
         
         XCTAssertEqual(result4.count, 2)
         XCTAssertEqual(result4[0].title, Entry.urlDDG.rawValue)

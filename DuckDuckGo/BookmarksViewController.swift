@@ -26,6 +26,7 @@ import Bookmarks
 import CoreData
 import Combine
 import Persistence
+import WidgetKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -415,9 +416,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             let result = await BookmarksImporter(coreDataStore: bookmarksDatabaseStack).parseAndSave(html: html)
             switch result {
             case .success:
-                #warning("reload widgets")
-//                dataSource.bookmarksManager.reloadWidgets()
-
+                WidgetCenter.shared.reloadAllTimelines()
                 DispatchQueue.main.async { [weak self] in
                     let bookmarkCountAfterImport = self?.dataSource.viewModel.totalBookmarksCount ?? 0
                     let bookmarksImported = bookmarkCountAfterImport - bookmarkCountBeforeImport
@@ -582,7 +581,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func prepareForSearching() {
-#warning("prepare for searching")
         finishEditing()
         disableEditButton()
         disableAddFolderButton()

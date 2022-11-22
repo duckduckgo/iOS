@@ -1,7 +1,7 @@
 name: Nightly Integration Tests
 
 on:
-  workflow_dispatch:
+  push: [ sam/implement-nightly-test-suite-runs-on-gha ]
   schedule:
     - cron: '0 2 * * *' # Run at 2 AM UTC
 

@@ -105,7 +105,7 @@ private extension PrivacyDashboardViewController {
 extension PrivacyDashboardViewController: Themable {
     
     func decorate(with theme: Theme) {
-        view.backgroundColor = theme.backgroundColor
+        view.backgroundColor = theme.privacyDashboardWebviewBackgroundColor
         privacyDashboardController.theme = privacyDashboardTheme(from: theme)
     }
     

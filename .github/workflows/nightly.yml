@@ -1,7 +1,8 @@
 name: Nightly Integration Tests
 
 on:
-  push: [ sam/implement-nightly-test-suite-runs-on-gha ]
+  push:
+    branches: [ sam/implement-nightly-test-suite-runs-on-gha ]
   schedule:
     - cron: '0 2 * * *' # Run at 2 AM UTC
 

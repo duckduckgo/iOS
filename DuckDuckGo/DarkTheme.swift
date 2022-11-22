@@ -125,4 +125,5 @@ struct DarkTheme: Theme {
     var autofillEmptySearchViewTextColor = UIColor.gray20
     var autofillLockedViewTextColor = UIColor.lightMercury
 
+    var privacyDashboardWebviewBackgroundColor = UIColor.nearlyBlackLight
 }

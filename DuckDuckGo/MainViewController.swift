@@ -119,6 +119,8 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
+    
+    fileprivate var tabCountInfo: TabCountInfo?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -1683,7 +1685,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
 }
 
 extension MainViewController: AutoClearWorker {
-
+    
     func clearNavigationStack() {
         dismissOmniBar()
 
@@ -1710,7 +1712,7 @@ extension MainViewController: AutoClearWorker {
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        WebCacheManager.shared.clear {
+        WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
     }
@@ -1722,6 +1724,8 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
+        
+        self.tabCountInfo = tabManager.makeTabCountInfo()
         
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         

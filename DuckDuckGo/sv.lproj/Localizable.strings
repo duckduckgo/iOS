@@ -13,14 +13,14 @@
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "action.suggestion.autocomplete" = "Komplettera automatiskt-förslag";
 
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Spara bokmärke";
+/* Voice-over title for a Bookmark suggestion. Noun */
+"action.suggestion.type.bookmark" = "Bokmärk";
 
 /* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Öppna webbplatsen";
+"action.suggestion.type.website" = "Öppna webbplatsen";
 
 /* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Sök på DuckDuckGo";
+"action.suggestion.type.search" = "Sök på DuckDuckGo";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Lägg till";
@@ -28,8 +28,8 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Fyll i inloggningar automatiskt";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
-"action.title.bookmark" = "Spara bokmärke";
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
+"action.title.bookmark" = "Lägg till i bokmärken";
 
 /* Button: Open bookmarks list */
 "action.title.bookmarks" = "Bokmärken";

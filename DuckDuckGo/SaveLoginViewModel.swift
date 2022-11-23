@@ -24,7 +24,7 @@ import Core
 protocol SaveLoginViewModelDelegate: AnyObject {
     func saveLoginViewModelDidSave(_ viewModel: SaveLoginViewModel)
     func saveLoginViewModelDidCancel(_ viewModel: SaveLoginViewModel)
-    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel)
+    func saveLoginViewModelConfirmKeepUsing(_ viewModel: SaveLoginViewModel, isAlreadyDismissed: Bool)
 }
 
 final class SaveLoginViewModel: ObservableObject {
@@ -51,6 +51,10 @@ final class SaveLoginViewModel: ObservableObject {
     private let numberOfRejectionsToTurnOffAutofill = 3
     private let maximumPasswordDisplayCount = 40
     private let credentialManager: SaveAutofillLoginManagerProtocol
+    
+    private var dismissButtonWasPressed = false
+    var didSave = false
+    
     weak var delegate: SaveLoginViewModelDelegate?
 
     var accountDomain: String {
@@ -124,17 +128,30 @@ final class SaveLoginViewModel: ObservableObject {
         return autofillSaveModalRejectionCount >= numberOfRejectionsToTurnOffAutofill
     }
     
-    func cancel() {
+    private func cancel() {
         updateRejectionCountIfNeeded()
         if shouldShowAutofillKeepUsingConfirmation() {
-            delegate?.saveLoginViewModelConfirmKeepUsing(self)
+            delegate?.saveLoginViewModelConfirmKeepUsing(self, isAlreadyDismissed: !dismissButtonWasPressed)
             autofillSaveModalDisablePromptShown = true
         } else {
             delegate?.saveLoginViewModelDidCancel(self)
         }
     }
     
+    func cancelButtonPressed() {
+        dismissButtonWasPressed = true
+        cancel()
+    }
+    
+    func viewControllerDidDisappear() {
+        if dismissButtonWasPressed || didSave {
+            return
+        }
+        cancel()
+    }
+    
     func save() {
+        didSave = true
         autofillFirstTimeUser = false
         delegate?.saveLoginViewModelDidSave(self)
     }

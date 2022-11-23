@@ -25,7 +25,7 @@
 /* Autofill Logins menu item opening the login list */
 "action.title.autofill.logins" = "Autofill Logins";
 
-/* Confirmation of Bookmark action in add to bookmark alert */
+/* Confirmation of Add to Bookmarks action in Add All Open Tabs to Bookmarks alert */
 "action.title.bookmark" = "Bookmark";
 
 /* Button: Open bookmarks list */
@@ -1170,6 +1170,9 @@ https://duckduckgo.com/mac";
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privacy Protection enabled for %@";
+
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "An unknown error occurred.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Settings";

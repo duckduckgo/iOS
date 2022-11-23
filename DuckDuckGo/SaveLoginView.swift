@@ -113,7 +113,7 @@ struct SaveLoginView: View {
     
     private var closeButton: some View {
         Button {
-            viewModel.cancel()
+            viewModel.cancelButtonPressed()
         } label: {
             Image(systemName: "xmark")
                 .resizable()
@@ -184,7 +184,7 @@ struct SaveLoginView: View {
             }.buttonStyle(PrimaryButtonStyle())
             
             Button {
-                viewModel.cancel()
+                viewModel.cancelButtonPressed()
             } label: {
                 Text(UserText.autofillSaveLoginNotNowCTA)
             }

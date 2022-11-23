@@ -76,6 +76,9 @@ public struct PixelParameters {
     public static let storeAfterDeletionDiffCount = "store_after_deletion_diff_count"
     public static let storageAfterDeletionDiffCount = "storage_after_deletion_diff_count"
     
+    public static let tabsModelCount = "tabs_model_count"
+    public static let tabControllerCacheCount = "tab_controller_cache_count"
+    
     public static let count = "count"
 
     public static let textSizeInitial = "text_size_initial"

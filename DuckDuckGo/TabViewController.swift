@@ -23,6 +23,7 @@ import StoreKit
 import LocalAuthentication
 import os.log
 import BrowserServicesKit
+import UserScript
 import SwiftUI
 import PrivacyDashboard
 import UserScript
@@ -40,6 +41,8 @@ class TabViewController: UIViewController {
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
         
         static let secGPCHeader = "Sec-GPC"
+
+        static let navigationExpectationInterval = 3.0
     }
     
     @IBOutlet private(set) weak var error: UIView!
@@ -243,12 +246,10 @@ class TabViewController: UIViewController {
         }
     }
 
-    private static let navigationExpectationInterval = 3.0
     private func scheduleNavigationExpectation(destinationURL: URL?, onSessionRestored: (() -> Void)? = nil) {
-        // continuous schedule calls may mean user is trying to hit all the buttons while we‘re waiting
-        guard !forceExpectedNavigationIfNeeded() else { return }
+        guard navigationExpectationTimer == nil else { return }
 
-        navigationExpectationTimer = Timer.scheduledTimer(withTimeInterval: Self.navigationExpectationInterval,
+        navigationExpectationTimer = Timer.scheduledTimer(withTimeInterval: Constants.navigationExpectationInterval,
                                                           repeats: false) { [weak self] _ in
             Pixel.fire(pixel: .webKitDidBecomeUnresponsive)
             self?.navigationExpectationTimer = nil
@@ -274,15 +275,6 @@ class TabViewController: UIViewController {
                 onSessionRestored?()
             }
         }
-    }
-
-    @discardableResult
-    private func forceExpectedNavigationIfNeeded() -> Bool {
-        if let navigationExpectationTimer = navigationExpectationTimer {
-            navigationExpectationTimer.fire()
-            return true
-        }
-        return false
     }
 
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
@@ -346,7 +338,7 @@ class TabViewController: UIViewController {
         adClickAttributionLogic.delegate = self
         adClickAttributionDetection.delegate = adClickAttributionLogic
     }
-
+    
     func updateTabModel() {
         if let url = url {
             tabModel.link = Link(title: title, url: url)
@@ -1032,7 +1024,7 @@ extension TabViewController: WKNavigationDelegate {
 
         if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             url = webView.url
-            if let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
+            if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
                 decisionHandler(decision)
             } else {
                 if navigationResponse.isForMainFrame && isSuccessfulResponse {
@@ -1055,11 +1047,14 @@ extension TabViewController: WKNavigationDelegate {
 
             } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager
                 .downloadMetaData(for: navigationResponse.response) {
-
-                self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                    self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                } cancelHandler: {
+                if view.window == nil {
                     decisionHandler(.cancel)
+                } else {
+                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                        self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+                    } cancelHandler: {
+                        decisionHandler(.cancel)
+                    }
                 }
             } else {
                 Pixel.fire(pixel: .unhandledDownload)
@@ -1940,7 +1935,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
+        guard navigationExpectationTimer == nil,
               canDisplayJavaScriptAlert
         else {
             completionHandler()
@@ -1964,7 +1959,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
+        guard navigationExpectationTimer == nil,
               canDisplayJavaScriptAlert
         else {
             completionHandler(false)
@@ -1989,7 +1984,7 @@ extension TabViewController: WKUIDelegate {
 
         // when we‘re in a navigation expectation state and a new alert arrives
         // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
+        guard navigationExpectationTimer == nil,
               canDisplayJavaScriptAlert
         else {
             completionHandler(nil)
@@ -2056,19 +2051,20 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
     func refresh() {
         let url: URL?
-        if isError {
+        if isError || webView.url == nil {
             url = URL(string: chromeDelegate?.omniBar.textField.text ?? "")
         } else {
             url = webView.url
         }
 
         requeryLogic.onRefresh()
-        if isError, let url = url {
+        if isError || webView.url == nil, let url = url {
             load(url: url)
         } else {
             reload()
         }
     }
+
 }
 
 // MARK: - UserContentControllerDelegate
@@ -2114,6 +2110,8 @@ extension TabViewController: UserContentControllerDelegate {
             || notificationsTriggeringReload.contains(where: {
                 updateEvent.changes[$0.rawValue]?.contains(.notification) == true
             }) {
+
+            navigationExpectationTimer = nil
             reload()
         }
     }
@@ -2502,6 +2500,12 @@ extension TabViewController: SaveLoginViewControllerDelegate {
     
     func saveLoginViewControllerDidCancel(_ viewController: SaveLoginViewController) {
         viewController.dismiss(animated: true)
+    }
+    
+    func saveLoginViewController(_ viewController: SaveLoginViewController,
+                                 didRequestPresentConfirmKeepUsingAlertController alertController: UIAlertController) {
+        Pixel.fire(pixel: .autofillLoginsFillLoginInlineDisablePromptShown)
+        present(alertController, animated: true)
     }
 }
 

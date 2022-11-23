@@ -361,6 +361,7 @@ extension TabViewController {
     }
     
     private func onOpenAutofillLoginsAction() {
+        Pixel.fire(pixel: .browsingMenuAutofill)
         delegate?.tabDidRequestAutofillLogins(tab: self)
     }
     

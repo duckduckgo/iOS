@@ -34,8 +34,8 @@ public class APIRequest {
         return queue
     }()
     
-    private static let defaultSession = URLSession(configuration: .default, delegate: nil, delegateQueue: defaultCallbackQueue)
-    private static let mainThreadCallbackSession = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
+    private static let defaultSession = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: defaultCallbackQueue)
+    private static let mainThreadCallbackSession = URLSession(configuration: .ephemeral, delegate: nil, delegateQueue: OperationQueue.main)
     
     public struct Response {
         

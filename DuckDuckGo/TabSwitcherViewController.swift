@@ -68,6 +68,8 @@ class TabSwitcherViewController: UIViewController {
     private var tabSwitcherSettings: TabSwitcherSettings = DefaultTabSwitcherSettings()
     private var isProcessingUpdates = false
 
+    let favicons = Favicons.shared
+
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshTitle()
@@ -241,6 +243,7 @@ class TabSwitcherViewController: UIViewController {
             guard let link = tab.link else { return }
             if viewModel.bookmark(for: link.url) == nil {
                 viewModel.createBookmark(title: link.displayTitle, url: link.url)
+                favicons.loadFavicon(forDomain: link.url.host?.droppingWwwPrefix(), intoCache: .bookmarks, fromCache: .tabs)
                 newCount += 1
             }
         }

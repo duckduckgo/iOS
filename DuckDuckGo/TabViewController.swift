@@ -85,6 +85,7 @@ class TabViewController: UIViewController {
     private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
 
+    let favicons = Favicons.shared
     private let requeryLogic = RequeryLogic()
 
     private static let tld = AppDependencyProvider.shared.storageCache.current.tld

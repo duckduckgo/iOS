@@ -318,9 +318,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             return
         }
 
+        editButton.title = UserText.actionGenericEdit
         if !favoritesContainer.isHidden {
             editButton.isEnabled = favoritesController?.isEditing == true || (favoritesController?.hasFavorites ?? false)
-            editButton.title = UserText.actionGenericEdit
+            editButton.title = UserText.actionManageFavorites
         } else if (dataSource.isEmpty && !isEditingBookmarks) || dataSource === searchDataSource {
             disableEditButton()
         } else if !isEditingBookmarks {

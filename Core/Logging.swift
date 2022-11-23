@@ -27,3 +27,5 @@ public let contentBlockingLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdenti
 public let adAttributionLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
                                              category: "DDG AdAttribution")
 public let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG Lifecycle")
+public let autoconsentLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
+                                         category: "DDG Autoconsent")

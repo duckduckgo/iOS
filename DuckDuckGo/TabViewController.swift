@@ -2097,6 +2097,7 @@ extension TabViewController: UserContentControllerDelegate {
         userScripts.printingUserScript.delegate = self
         userScripts.textSizeUserScript.textSizeAdjustmentInPercents = appSettings.textSize
         userScripts.loginFormDetectionScript?.delegate = self
+        userScripts.autoconsentUserScript.delegate = self
 
         adClickAttributionLogic.onRulesChanged(latestRules: ContentBlocking.shared.contentBlockingManager.currentRules)
 
@@ -2192,6 +2193,33 @@ extension TabViewController: PrintingUserScriptDelegate {
         controller.present(animated: true, completionHandler: nil)
     }
 
+}
+
+// MARK: - AutoconsentUserScriptDelegate
+extension TabViewController: AutoconsentUserScriptDelegate {
+  
+    func autoconsentUserScript(_ script: AutoconsentUserScript, didUpdateCookieConsentStatus cookieConsentStatus: PrivacyDashboard.CookieConsentInfo) {
+        // TODO: This should trigger animation
+        ActionMessageView.present(message: "🍪 Cookies managed")
+        privacyInfo?.cookieConsentManaged = cookieConsentStatus
+    }
+    
+    func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
+        // TODO: This should be handled via new Dax dialog for cookies
+        let alert = UIAlertController(title: "Looks like this site has a cookie consent pop-up👇",
+                                      message: "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.",
+                                      preferredStyle: .alert)
+        alert.overrideUserInterfaceStyle()
+        
+        alert.addAction(UIAlertAction(title: "Manage Cookie Pop-ups", style: .default, handler: { _ in
+            completion(true)
+        }))
+        alert.addAction(UIAlertAction(title: "No Thanks", style: .cancel, handler: { _ in
+            completion(false)
+        }))
+        delegate?.tab(self, didRequestPresentingAlert: alert)
+    }
+  
 }
 
 // MARK: - AdClickAttributionLogicDelegate

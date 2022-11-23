@@ -170,6 +170,10 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
     
+// TODO: Support properly storing of the value
+    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: nil)
+    var autoconsentEnabled: Bool? // { return true }
+    
     @UserDefaultsWrapper(key: .autofillCredentialsEnabled, defaultValue: true)
     var autofillCredentialsEnabled: Bool
     

@@ -181,6 +181,14 @@
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FavoriteColor" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
+                                                            <rect key="frame" x="311" y="0.0" width="24" height="24"/>
+                                                            <color key="tintColor" name="BookmarksFolderColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="24" id="Ryb-sj-pZe"/>
+                                                                <constraint firstAttribute="height" constant="24" id="x53-Oq-oQ3"/>
+                                                            </constraints>
+                                                        </imageView>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -197,6 +205,7 @@
                                         </accessibility>
                                         <connections>
                                             <outlet property="faviconImageView" destination="J8h-Tf-FM1" id="XS7-PQ-3fF"/>
+                                            <outlet property="favoriteImageView" destination="1fK-xP-Cxw" id="te4-2i-Vfu"/>
                                             <outlet property="titleLabel" destination="cV4-pj-JNb" id="gwU-ec-jnx"/>
                                         </connections>
                                     </tableViewCell>
@@ -358,11 +367,11 @@
                         <viewControllerLayoutGuide type="bottom" id="bjg-95-sbS"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZKl-y5-8OG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63r-nO-tSp">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                                 <connections>
                                     <segue destination="o1q-bZ-7v3" kind="embed" identifier="EmbedFoldersTableViewControllerSegue" id="zyO-WQ-z92"/>
                                 </connections>
@@ -401,7 +410,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="BookmarkFoldersViewController" id="o1q-bZ-7v3" userLabel="Bookmark Folders" customClass="BookmarkFoldersViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V1z-bn-1Gk">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
                         <prototypes>
@@ -630,12 +639,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9So-lE-9eZ"/>
-        <segue reference="lPi-F9-wDg"/>
+        <segue reference="Uhm-2I-Xo5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarkFavoriteIcon" width="24" height="24"/>
         <image name="BookmarkFavoritesHero" width="150" height="116"/>
+        <image name="FavoriteColor" width="24" height="24"/>
         <image name="Folder" width="24" height="24"/>
         <image name="FolderWithPlus" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>

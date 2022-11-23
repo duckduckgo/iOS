@@ -29,8 +29,11 @@ public protocol BookmarksStringSearch {
 }
 
 public protocol BookmarksStringSearchResult {
+    var objectID: NSManagedObjectID { get }
     var title: String { get }
     var url: URL { get }
+    var isFavorite: Bool { get }
+    func togglingFavorite() -> BookmarksStringSearchResult
 }
 
 public protocol BookmarksSearchStore {
@@ -63,7 +66,8 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         fetchRequest.resultType = .dictionaryResultType
         fetchRequest.propertiesToFetch = [#keyPath(BookmarkEntity.title),
                                           #keyPath(BookmarkEntity.url),
-                                          #keyPath(BookmarkEntity.isFavorite)]
+                                          #keyPath(BookmarkEntity.isFavorite),
+                                          #keyPath(BookmarkEntity.objectID)]
         
         context.perform {
             let result = try? context.fetch(fetchRequest) as? [Dictionary<String, Any>]
@@ -120,13 +124,17 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
 public class BookmarksCachingSearch: BookmarksStringSearch {
 
     public struct ScoredBookmark: BookmarksStringSearchResult {
+        public let objectID: NSManagedObjectID
         public let title: String
         public let url: URL
+        public let isFavorite: Bool
         var score: Int
         
-        init(title: String, url: URL, isFavorite: Bool) {
+        init(objectID: NSManagedObjectID, title: String, url: URL, isFavorite: Bool) {
+            self.objectID = objectID
             self.title = title
             self.url = url
+            self.isFavorite = isFavorite
             
             if isFavorite {
                 score = 0
@@ -138,15 +146,20 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
         init?(bookmark: [String: Any]) {
             guard let title = bookmark[#keyPath(BookmarkEntity.title)] as? String,
                   let urlString = bookmark[#keyPath(BookmarkEntity.url)] as? String,
-                  let url = URL(string: urlString) else {
+                  let url = URL(string: urlString),
+                  let objectID = bookmark[#keyPath(BookmarkEntity.objectID)] as? NSManagedObjectID else {
                 return nil
             }
             
-            self.init(title: title,
+            self.init(objectID: objectID,
+                      title: title,
                       url: url,
                       isFavorite: (bookmark[#keyPath(BookmarkEntity.isFavorite)] as? NSNumber)?.boolValue ?? false)
         }
-        
+
+        public func togglingFavorite() -> BookmarksStringSearchResult {
+            return Self.init(objectID: objectID, title: title, url: url, isFavorite: !isFavorite)
+        }
     }
     
     private let bookmarksStore: BookmarksSearchStore
@@ -181,6 +194,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
         RunLoop.current.run(until: cacheLoadedCondition)
         return cachedBookmarksAndFavorites
     }
+    
 // Todo: To remove
     public func containsDomain(_ domain: String) -> Bool {
         return bookmarksAndFavorites.contains { $0.url.host == domain }

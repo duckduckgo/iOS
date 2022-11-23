@@ -86,9 +86,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate let viewModel: BookmarkListInteracting
 
     fileprivate lazy var dataSource: BookmarksDataSource = {
-        let dataSource = BookmarksDataSource(viewModel: viewModel)
-        dataSource.delegate = self
-        return dataSource
+        return BookmarksDataSource(viewModel: viewModel)
     }()
 
     var searchDataSource: SearchBookmarksDataSource
@@ -132,6 +130,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
         applyTheme(ThemeManager.shared.currentTheme)
 
+        navigationItem.title = UserText.sectionTitleBookmarks
         selectorContainer.isHidden = isNested
     }
     
@@ -231,17 +230,47 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        guard let item = viewModel.bookmark(at: indexPath.row),
-                !item.isFolder else {
+        guard let bookmark = bookmarkForSwipeAtIndexPath(indexPath),
+                !bookmark.isFolder else {
             return nil
         }
-     
-        let shareContextualAction = UIContextualAction(style: .normal, title: UserText.actionShare) { (_, _, completionHandler) in
-            self.showShareSheet(for: indexPath)
+
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.tintColor = .black
+
+        let title = bookmark.isFavorite ? UserText.actionRemoveFavorite : UserText.favorite
+        let iconName = bookmark.isFavorite ? "RemoveFavoriteMenuIcon" : "BookmarkFavoriteIcon"
+
+        let toggleFavoriteAction = UIContextualAction(style: .normal, title: title) { [weak self] (_, _, completionHandler) in
             completionHandler(true)
+            self?.toggleFavoriteAfterSwipe(bookmark, indexPath)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-        shareContextualAction.backgroundColor = UIColor.cornflowerBlue
-        return UISwipeActionsConfiguration(actions: [shareContextualAction])
+        toggleFavoriteAction.image = UIImage(named: iconName)?.withTintColor(.black, renderingMode: .alwaysOriginal)
+        toggleFavoriteAction.backgroundColor = UIColor.yellow60
+        return UISwipeActionsConfiguration(actions: [toggleFavoriteAction])
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let bookmark = bookmarkForSwipeAtIndexPath(indexPath) else {
+            return nil
+        }
+
+        let deleteAction = UIContextualAction(style: .destructive, title:
+                                                UserText.deleteBookmarkFolderAlertDeleteButton) { _, _, completion in
+            self.deleteBookmarkAfterSwipe(bookmark, indexPath, completion)
+        }
+        deleteAction.image = UIImage(named: "Trash")
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+
+    private func bookmarkForSwipeAtIndexPath(_ indexPath: IndexPath) -> BookmarkEntity? {
+        if tableView.dataSource is BookmarksDataSource {
+            return viewModel.bookmark(at: indexPath.row)
+        } else if let dataSource = tableView.dataSource as? SearchBookmarksDataSource {
+            return viewModel.bookmark(with: dataSource.results[indexPath.row].objectID)
+        }
+        return nil
     }
 
     private func registerForNotifications() {
@@ -249,6 +278,69 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
                                                selector: #selector(onApplicationBecameActive),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
+    }
+
+    private func toggleFavoriteAfterSwipe(_ bookmark: BookmarkEntity, _ indexPath: IndexPath) {
+        self.viewModel.toggleFavorite(bookmark)
+
+        if let dataSource = tableView.dataSource as? SearchBookmarksDataSource {
+            dataSource.toggleFavorite(at: indexPath.row)
+        }
+
+    }
+
+    private func deleteBookmarkAfterSwipe(_ bookmark: BookmarkEntity,
+                                          _ indexPath: IndexPath,
+                                          _ completion: @escaping (Bool) -> Void) {
+
+        func delete() {
+            let oldCount = viewModel.bookmarks.count
+            viewModel.deleteBookmark(bookmark)
+            let newCount = viewModel.bookmarks.count
+
+            // Make sure we are animating only single removal
+            if newCount > 0 && newCount + 1 == oldCount {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            } else {
+                tableView.reloadSections([indexPath.section], with: .none)
+            }
+            refreshFooterView()
+        }
+
+        func countAllChildrenInFolder(_ folder: BookmarkEntity) -> Int {
+            var count = 0
+            folder.childrenArray.forEach { bookmark in
+                count += 1
+                if bookmark.isFolder {
+                    count += countAllChildrenInFolder(bookmark)
+                }
+            }
+            return count
+        }
+
+        if let dataSource = tableView.dataSource as? SearchBookmarksDataSource {
+            dataSource.results.remove(at: indexPath.row)
+            delete()
+            return
+        }
+
+        if bookmark.isFolder, bookmark.children?.count ?? 0 > 0 {
+            let title = String(format: UserText.deleteBookmarkFolderAlertTitle, bookmark.title ?? "")
+            let count = countAllChildrenInFolder(bookmark)
+            let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
+                delete()
+                completion(true)
+            }
+            alertController.addAction(title: UserText.actionCancel, style: .cancel) {
+                completion(true)
+            }
+            present(alertController, animated: true)
+        } else {
+            delete()
+            completion(true)
+        }
     }
 
     private func configureSelector() {
@@ -595,15 +687,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         enableAddFolderButton()
     }
 
-    fileprivate func showShareSheet(for indexPath: IndexPath) {
-
-        if let bookmark = viewModel.bookmark(at: indexPath.row) {
-            presentShareSheet(withItems: [bookmark], fromView: self.view)
-        } else {
-            os_log("Invalid share link found", log: generalLog, type: .debug)
-        }
-    }
-
     fileprivate func select(bookmark: BookmarkEntity) {
         guard let url = bookmark.urlObject else { return }
         dismiss()
@@ -652,18 +735,6 @@ extension BookmarksViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         finishEditing()
     }
-}
-
-extension BookmarksViewController: BookmarksDataSourceDelegate {
-
-    func viewControllerForAlert(_: BookmarksDataSource) -> UIViewController {
-        return self
-    }
-
-    func bookmarkDeleted(_: BookmarksDataSource) {
-        refreshFooterView()
-    }
-
 }
 
 extension BookmarksViewController: Themable {

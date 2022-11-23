@@ -21,16 +21,7 @@ import UIKit
 import Bookmarks
 import Core
 
-protocol BookmarksDataSourceDelegate: NSObjectProtocol {
-
-    func viewControllerForAlert(_: BookmarksDataSource) -> UIViewController
-    func bookmarkDeleted(_: BookmarksDataSource)
-
-}
-
 class BookmarksDataSource: NSObject, UITableViewDataSource {
-
-    weak var delegate: BookmarksDataSourceDelegate?
 
     let viewModel: BookmarkListInteracting
 
@@ -65,51 +56,13 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
             let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
             cell.faviconImageView.loadFavicon(forDomain: bookmark.urlObject?.host?.droppingWwwPrefix(), usingCache: .bookmarks)
             cell.titleLabel.text = bookmark.title
+            cell.favoriteImageView.isHidden = !bookmark.isFavorite
             return cell
         }
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return !viewModel.bookmarks.isEmpty
-    }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete else { return }
-        guard let bookmark = viewModel.bookmark(at: indexPath.row) else { return }
-
-        func delete() {
-            let oldCount = viewModel.bookmarks.count
-            viewModel.deleteBookmark(bookmark)
-            let newCount = viewModel.bookmarks.count
-            
-            // Make sure we are animating only single removal
-            if newCount + 1 == oldCount {
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            } else {
-                tableView.reloadSections([0], with: .automatic)
-            }
-            delegate?.bookmarkDeleted(self)
-        }
-
-        if let delegate = delegate,
-           bookmark.isFolder,
-           bookmark.children?.count ?? 0 > 0 {
-
-            let title = String(format: UserText.deleteBookmarkFolderAlertTitle, bookmark.title ?? "")
-            let count = countAllChildrenInFolder(bookmark)
-            let message = UserText.deleteBookmarkFolderAlertMessage(numberOfChildren: count)
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertController.addAction(title: UserText.deleteBookmarkFolderAlertDeleteButton, style: .default) {
-                delete()
-            }
-            alertController.addAction(title: UserText.actionCancel, style: .cancel)
-            let viewController = delegate.viewControllerForAlert(self)
-            viewController.present(alertController, animated: true)
-
-        } else {
-            delete()
-        }
-
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -119,17 +72,6 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         guard let bookmark = viewModel.bookmark(at: sourceIndexPath.row) else { return }
         viewModel.moveBookmark(bookmark, fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
-    }
-
-    private func countAllChildrenInFolder(_ folder: BookmarkEntity) -> Int {
-        var count = 0
-        folder.childrenArray.forEach { bookmark in
-            count += 1
-            if bookmark.isFolder {
-                count += countAllChildrenInFolder(bookmark)
-            }
-        }
-        return count
     }
 
 }
@@ -151,11 +93,16 @@ class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
         let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
         cell.faviconImageView.loadFavicon(forDomain: results[indexPath.row].url.host?.droppingWwwPrefix(), usingCache: .bookmarks)
         cell.titleLabel.text = results[indexPath.row].title
+        cell.favoriteImageView.isHidden = !results[indexPath.row].isFavorite
         return cell
     }
 
     func performSearch(_ text: String) {
         results = searchEngine.search(query: text)
+    }
+
+    func toggleFavorite(at index: Int) {
+        results[index] = results[index].togglingFavorite()
     }
 
 }

@@ -29,6 +29,7 @@
 		1E60989F290011E600A508F9 /* PrivacyDashboard in Frameworks */ = {isa = PBXBuildFile; productRef = 1E60989E290011E600A508F9 /* PrivacyDashboard */; };
 		1E6098A1290011E600A508F9 /* UserScript in Frameworks */ = {isa = PBXBuildFile; productRef = 1E6098A0290011E600A508F9 /* UserScript */; };
 		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
+		1E722729292EB24D003B5F53 /* AppSettingsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AD9E3C28D46FD50019CDE9 /* AppSettingsMock.swift */; };
 		1E8146AD28C8ABF000D1AF63 /* TrackerAnimationLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146A728C8AB3F00D1AF63 /* TrackerAnimationLogicTests.swift */; };
 		1E8146AE28C8ABF400D1AF63 /* PrivacyIconLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146A928C8AB8200D1AF63 /* PrivacyIconLogicTests.swift */; };
 		1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */; };
@@ -5093,6 +5094,7 @@
 				F13B4BF91F18CA0600814661 /* TabsModelTests.swift in Sources */,
 				98B31290218CCB2200E54DE1 /* MockDependencyProvider.swift in Sources */,
 				B6AD9E3828D4512E0019CDE9 /* EmbeddedTrackerDataTests.swift in Sources */,
+				1E722729292EB24D003B5F53 /* AppSettingsMock.swift in Sources */,
 				8536A1C8209AF2410050739E /* MockVariantManager.swift in Sources */,
 				C1B7B53428944EFA0098FD6A /* CoreDataTestUtilities.swift in Sources */,
 				85C271E61FD065D8007216B4 /* AppHTTPSUpgradeStoreTests.swift in Sources */,

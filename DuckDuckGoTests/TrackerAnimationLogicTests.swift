@@ -21,6 +21,8 @@ import Foundation
 import XCTest
 import TrackerRadarKit
 import BrowserServicesKit
+import ContentBlocking
+import PrivacyDashboard
 @testable import Core
 @testable import DuckDuckGo
 
@@ -51,23 +53,26 @@ class TrackerAnimationLogicTests: XCTestCase {
         
         let entity = Entity(displayName: "E", domains: [], prevalence: 1.0)
         let trackers = [DetectedRequest(url: "a",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity,
                                         state: .allowed(reason: .ownedByFirstParty),
                                         pageUrl: pageURL.absoluteString),
                         DetectedRequest(url: "b",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity,
                                         state: .allowed(reason: .otherThirdPartyRequest),
                                         pageUrl: pageURL.absoluteString),
                         DetectedRequest(url: "c",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity,
                                         state: .blocked,
                                         pageUrl: pageURL.absoluteString)]
         
         for tracker in trackers {
-            trackerInfo.add(detectedTracker: tracker)
+            trackerInfo.addDetectedTracker(tracker, onPageWithURL: pageURL)
         }
         
         return trackerInfo
@@ -78,18 +83,20 @@ class TrackerAnimationLogicTests: XCTestCase {
         
         let entity = Entity(displayName: "E", domains: [], prevalence: 1.0)
         let trackers = [DetectedRequest(url: "a",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity,
                                         state: .allowed(reason: .ownedByFirstParty),
                                         pageUrl: pageURL.absoluteString),
                         DetectedRequest(url: "b",
+                                        eTLDplus1: nil,
                                         knownTracker: nil,
                                         entity: entity,
                                         state: .allowed(reason: .otherThirdPartyRequest),
                                         pageUrl: pageURL.absoluteString)]
         
         for tracker in trackers {
-            trackerInfo.add(detectedTracker: tracker)
+            trackerInfo.addDetectedTracker(tracker, onPageWithURL: pageURL)
         }
         
         return trackerInfo

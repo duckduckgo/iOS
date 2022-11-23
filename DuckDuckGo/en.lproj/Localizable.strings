@@ -7,18 +7,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Undo";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Autocomplete suggestion";
-
-/* Open suggested bookmark action accessibility title */
-"action.suggestion.open.bookmark" = "Bookmark";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.open.website" = "Open website";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.search" = "Search at DuckDuckGo";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Add";
 
@@ -1171,8 +1159,17 @@ https://duckduckgo.com/mac";
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privacy Protection enabled for %@";
 
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "An unknown error occurred.";
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Autocomplete suggestion";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Bookmark";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Search at DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Open website";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Settings";

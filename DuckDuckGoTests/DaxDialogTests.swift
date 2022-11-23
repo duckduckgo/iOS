@@ -22,6 +22,8 @@ import XCTest
 @testable import Core
 import BrowserServicesKit
 import TrackerRadarKit
+import ContentBlocking
+import PrivacyDashboard
 
 private struct MockEntityProvider: EntityProviding {
     
@@ -114,7 +116,7 @@ final class DaxDialog: XCTestCase {
             
             testCase.urls.forEach { url in
                 let detectedTracker = detectedTrackerFrom(url, pageUrl: URLs.example.absoluteString)
-                privacyInfo.trackerInfo.add(detectedTracker: detectedTracker)
+                privacyInfo.trackerInfo.addDetectedTracker(detectedTracker, onPageWithURL: URLs.example)
             }
             
             XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
@@ -131,7 +133,8 @@ final class DaxDialog: XCTestCase {
 
     func testWhenTrackersShownThenFireEducationShown() {
         let privacyInfo = makePrivacyInfo(url: URLs.example)
-        privacyInfo.trackerInfo.add(detectedTracker: detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString))
+        privacyInfo.trackerInfo.addDetectedTracker(detectedTrackerFrom(URLs.google, pageUrl: URLs.example.absoluteString),
+                                                   onPageWithURL: URLs.example)
         XCTAssertFalse(onboarding.shouldShowFireButtonPulse)
         XCTAssertNotNil(onboarding.nextBrowsingMessage(privacyInfo: privacyInfo))
         XCTAssertTrue(onboarding.shouldShowFireButtonPulse)
@@ -309,9 +312,10 @@ final class DaxDialog: XCTestCase {
     }
     
     private func makePrivacyInfo(url: URL) -> PrivacyInfo {
+        let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: false, denylisted: false)
         let privacyInfo = PrivacyInfo(url: url,
                                       parentEntity: entityProvider.entity(forHost: url.host!),
-                                      isProtected: true)
+                                      protectionStatus: protectionStatus)
         return privacyInfo
     }
 }

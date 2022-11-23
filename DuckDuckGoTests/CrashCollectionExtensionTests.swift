@@ -57,7 +57,7 @@ class CrashCollectionExtensionTests: XCTestCase {
 
         // 2 pixels with no first parameter
         CrashCollection.firstCrash = false
-        CrashCollection.start()
+        CrashCollection.start { _ in }
         CrashCollection.collector.didReceive([
             MockPayload(mockCrashes: [
                 MXCrashDiagnostic(),
@@ -89,7 +89,7 @@ class CrashCollectionExtensionTests: XCTestCase {
 
         // 2 pixels with first = true attached
         XCTAssertTrue(CrashCollection.firstCrash)
-        CrashCollection.start()
+        CrashCollection.start { _ in }
         CrashCollection.collector.didReceive([
             MockPayload(mockCrashes: [
                 MXCrashDiagnostic(),

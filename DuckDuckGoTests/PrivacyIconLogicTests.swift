@@ -21,6 +21,7 @@ import Foundation
 import XCTest
 import TrackerRadarKit
 import BrowserServicesKit
+import PrivacyDashboard
 @testable import Core
 @testable import DuckDuckGo
 
@@ -72,7 +73,8 @@ class PrivacyIconLogicTests: XCTestCase {
     func testPrivacyIconIsShieldWithDotForHTTP() {
         let url = PrivacyIconLogicTests.insecurePageURL
         let entity = Entity(displayName: "E", domains: [], prevalence: TrackerInfo.Constants.majorNetworkPrevalence - 1.0)
-        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: true)
+        let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: false, denylisted: false)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, protectionStatus: protectionStatus)
 
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         
@@ -85,7 +87,8 @@ class PrivacyIconLogicTests: XCTestCase {
     func testPrivacyIconIsShieldWithDotForMajorTrackerNetwork() {
         let url = PrivacyIconLogicTests.pageURL
         let entity = Entity(displayName: "E", domains: [], prevalence: TrackerInfo.Constants.majorNetworkPrevalence + 1.0)
-        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, isProtected: true)
+        let protectionStatus = ProtectionStatus(unprotectedTemporary: false, enabledFeatures: [], allowlisted: false, denylisted: false)
+        let privacyInfo = PrivacyInfo(url: url, parentEntity: entity, protectionStatus: protectionStatus)
         
         let icon = PrivacyIconLogic.privacyIcon(for: privacyInfo)
         

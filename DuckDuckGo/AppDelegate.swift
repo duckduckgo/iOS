@@ -25,6 +25,7 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 import BrowserServicesKit
+import Bookmarks
 import Persistence
 
 // swiftlint:disable file_length
@@ -45,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var overlayWindow: UIWindow?
     var window: UIWindow?
 
-    private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
+//    private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
     private var bookmarksDatabaseStack: CoreDataDatabase = BookmarksDatabase.shared // Switch to make() when no longer singleton
     private var autoClear: AutoClear?
@@ -75,15 +76,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
-                _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
-            }
-            bookmarksDatabaseStack.loadStore { context, _ in
-                let source = BookmarksCoreDataStorage.shared.getTemporaryPrivateContext()
-                source.performAndWait {
-                    LegacyBookmarksStoreMigration.migrate(source: source,
-                                                          destination: context!)
+            bookmarksDatabaseStack.loadStore { context, error in
+                guard let context = context else {
+                    fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
                 }
+
+                LegacyBookmarksStoreMigration.migrate(to: context)
             }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
@@ -116,19 +114,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             DatabaseMigration.migrate(to: context)
         }
-        
-        BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
-            if BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context) {
-                WidgetCenter.shared.reloadAllTimelines()
-            }
-        }
 
-        bookmarksDatabaseStack.loadStore { context, _ in
-            let source = BookmarksCoreDataStorage.shared.getTemporaryPrivateContext()
-            source.performAndWait {
-                LegacyBookmarksStoreMigration.migrate(source: source,
-                                                      destination: context!)
+        bookmarksDatabaseStack.loadStore { context, error in
+            guard let context = context else {
+                #warning("error handling")
+                return
             }
+
+            LegacyBookmarksStoreMigration.migrate(to: context)
+            WidgetCenter.shared.reloadAllTimelines()
         }
         
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {

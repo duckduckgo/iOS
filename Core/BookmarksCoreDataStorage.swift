@@ -42,8 +42,6 @@ public typealias BookmarkConvertedBackgroundThreadCompletion = ((Bool, Bookmarks
 
 public class BookmarksCoreDataStorage {
     
-    public static let shared = BookmarksCoreDataStorage()
-    
     public struct Notifications {
         public static let dataDidChange = Notification.Name("com.duckduckgo.app.BookmarksCoreDataDidChange")
     }
@@ -84,7 +82,12 @@ public class BookmarksCoreDataStorage {
         return NSPersistentStoreDescription(url: storeURL)
     }
     
-    public init() {
+    public init?() {
+        guard let storeURL = Self.storeDescription.url,
+              FileManager.default.fileExists(atPath: storeURL.absoluteString) else {
+            return nil
+        }
+        
         persistentContainer = NSPersistentContainer(name: Constants.databaseName, managedObjectModel: BookmarksCoreDataStorage.managedObjectModel)
         persistentContainer.persistentStoreDescriptions = [BookmarksCoreDataStorage.storeDescription]
     }
@@ -96,15 +99,6 @@ public class BookmarksCoreDataStorage {
         RunLoop.current.run(until: storeLoadedCondition)
         cacheReadOnlyTopLevelBookmarksFolder()
         cacheReadOnlyTopLevelFavoritesFolder()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(contextDidSave),
-                                               name: .NSManagedObjectContextDidSave,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(objectsDidChange),
-                                               name: .NSManagedObjectContextObjectsDidChange,
-                                               object: nil)
     }
     
     internal func loadStore(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
@@ -119,7 +113,7 @@ public class BookmarksCoreDataStorage {
             let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
             context.persistentStoreCoordinator = self.persistentContainer.persistentStoreCoordinator
             context.name = "Migration"
-            context.perform {
+            context.performAndWait {
                 handler(context)
                 self.storeLoadedCondition.resolve()
             }

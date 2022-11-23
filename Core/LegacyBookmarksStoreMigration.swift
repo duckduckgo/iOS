@@ -28,6 +28,35 @@ public class LegacyBookmarksStoreMigration {
         case bookmark
     }
     
+    public static func migrate(to context: NSManagedObjectContext) {
+        let legacyStorage = BookmarksCoreDataStorage()
+        if let legacyStorage = legacyStorage {
+            // Perform migration form ancient store.
+            legacyStorage.loadStoreAndCaches { context in
+                var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
+                
+                _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: bookmarkStore,
+                                                              context: context)
+            }
+        }
+        
+        if let legacyStorage = legacyStorage {
+            // Perform migration from legacy store.
+            let source = legacyStorage.getTemporaryPrivateContext()
+            source.performAndWait {
+                LegacyBookmarksStoreMigration.migrate(source: source,
+                                                      destination: context)
+            }
+        } else {
+            do {
+                try BookmarkUtils.prepareFoldersStructure(in: context)
+                try context.save()
+            } catch {
+                #warning("error pixel")
+            }
+        }
+    }
+    
     private static func fetchTopLevelFolder(_ folderType: LegacyTopLevelFolderType,
                                             in context: NSManagedObjectContext) -> [BookmarkFolderManagedObject] {
         
@@ -47,7 +76,7 @@ public class LegacyBookmarksStoreMigration {
 
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
-    public static func migrate(source: NSManagedObjectContext, destination: NSManagedObjectContext) {
+    private static func migrate(source: NSManagedObjectContext, destination: NSManagedObjectContext) {
         
         // Do not migrate more than once
         guard BookmarkUtils.fetchRootFolder(destination) == nil else {

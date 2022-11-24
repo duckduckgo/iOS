@@ -49,11 +49,11 @@ class BookmarksMigrationTests: XCTestCase {
         try destinationStack.tearDown(deleteStores: true)
     }
     
+    private func url(for title: String) -> URL {
+        URL(string: "https://\(title).com")!
+    }
+    
     func prepareDB(with bookmarksDB: BookmarksCoreDataStorage) async throws {
-        
-        func url(for title: String) -> URL {
-            URL(string: "https://\(title).com")!
-        }
         
         guard let topLevelBookmarksFolder = bookmarksDB.topLevelBookmarksFolder else {
             XCTFail("Missing folder structure")
@@ -67,19 +67,22 @@ class BookmarksMigrationTests: XCTestCase {
         //   - Folder B/
         //       - Three
         
+        _ = try await bookmarksDB.saveNewBookmark(withTitle: "One", url: url(for: "one"), parentID: nil)
         let fAId = try await bookmarksDB.saveNewFolder(withTitle: "Folder A", parentID: topLevelBookmarksFolder.objectID)
+        
+        _ = try await bookmarksDB.saveNewBookmark(withTitle: "Two", url: url(for: "two"), parentID: fAId)
         let fBId = try await bookmarksDB.saveNewFolder(withTitle: "Folder B", parentID: fAId)
         
-        _ = try await bookmarksDB.saveNewBookmark(withTitle: "One", url: url(for: "one"), parentID: nil)
-        _ = try await bookmarksDB.saveNewBookmark(withTitle: "Two", url: url(for: "two"), parentID: fAId)
         _ = try await bookmarksDB.saveNewBookmark(withTitle: "Three", url: url(for: "three"), parentID: fBId)
         
         // Favorites:
         // First
         // Two (duplicate)
+        // Third
         
         _ = try await bookmarksDB.saveNewFavorite(withTitle: "First", url: url(for: "first"))
         _ = try await bookmarksDB.saveNewFavorite(withTitle: "Two", url: url(for: "two"))
+        _ = try await bookmarksDB.saveNewFavorite(withTitle: "Third", url: url(for: "third"))
         
         bookmarksDB.viewContext.refreshAllObjects()
         XCTAssert((topLevelBookmarksFolder.children?.count ?? 0) > 0)
@@ -121,10 +124,46 @@ class BookmarksMigrationTests: XCTestCase {
         XCTAssertNotNil(BookmarkUtils.fetchFavoritesFolder(context))
         
         let topLevel = BookmarkListViewModel(bookmarksDatabaseStack: destinationStack, parentID: nil)
+        XCTAssertEqual(topLevel.bookmarks.count, 4)
         
-        let topLevelNames = Set(topLevel.bookmarks.map { $0.title })
-        XCTAssertEqual(topLevelNames, Set(["One", "Folder A", "First"]))
+        let topLevelNames = topLevel.bookmarks.map { $0.title }
+        // Order matters: first favorites (minus duplicates), then bookmarks
+        XCTAssertEqual(topLevelNames, ["First", "Third", "One", "Folder A"])
         
+        let favFirst = topLevel.bookmarks[0]
+        XCTAssertEqual(favFirst.isFolder, false)
+        XCTAssertEqual(favFirst.isFavorite, true)
+        XCTAssertEqual(favFirst.title, "First")
+        XCTAssertEqual(favFirst.url, url(for: "first").absoluteString)
+
+        let favThird = topLevel.bookmarks[1]
+        XCTAssertEqual(favThird.isFolder, false)
+        XCTAssertEqual(favThird.isFavorite, true)
+        XCTAssertEqual(favThird.title, "Third")
+        
+        let bookOne = topLevel.bookmarks[2]
+        XCTAssertEqual(bookOne.isFolder, false)
+        XCTAssertEqual(bookOne.isFavorite, false)
+        XCTAssertEqual(bookOne.title, "One")
+
+        let folderA = topLevel.bookmarks[3]
+        XCTAssertEqual(folderA.title, "Folder A")
+        XCTAssertTrue(folderA.isFolder)
+
+        let folderAContents = folderA.childrenArray
+        XCTAssertEqual(folderAContents[0].isFolder, false)
+        XCTAssertEqual(folderAContents[0].isFavorite, true)
+        XCTAssertEqual(folderAContents[0].title, "Two")
+
+        let folderB = folderAContents[1]
+        XCTAssertEqual(folderB.title, "Folder B")
+        XCTAssertTrue(folderB.isFolder)
+
+        let folderBContents = folderB.childrenArray
+        XCTAssertEqual(folderBContents.count, 1)
+        XCTAssertEqual(folderBContents[0].isFolder, false)
+        XCTAssertEqual(folderBContents[0].isFavorite, false)
+        XCTAssertEqual(folderBContents[0].title, "Three")
     }
     
 }

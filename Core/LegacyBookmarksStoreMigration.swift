@@ -91,13 +91,14 @@ public class LegacyBookmarksStoreMigration {
         var index = 0
         var folderMap = [NSManagedObjectID: BookmarkEntity]()
         
+        var favoritesToMigrate = [BookmarkItemManagedObject]()
         var bookmarksToMigrate = [BookmarkItemManagedObject]()
         
         // Map old roots to new one, prepare list of top level bookmarks to migrate
         for folder in favoriteRoots {
             folderMap[folder.objectID] = newRoot
             
-            bookmarksToMigrate.append(contentsOf: folder.children?.array as? [BookmarkItemManagedObject] ?? [])
+            favoritesToMigrate.append(contentsOf: folder.children?.array as? [BookmarkItemManagedObject] ?? [])
         }
         
         for folder in bookmarkRoots {
@@ -105,6 +106,8 @@ public class LegacyBookmarksStoreMigration {
             
             bookmarksToMigrate.append(contentsOf: folder.children?.array as? [BookmarkItemManagedObject] ?? [])
         }
+        
+        var urlToBookmarkMap = [URL: BookmarkEntity]()
         
         // Iterate over bookmarks to migrate
         while index < bookmarksToMigrate.count {
@@ -137,18 +140,37 @@ public class LegacyBookmarksStoreMigration {
                                                               parent: newParent,
                                                               context: destination)
                 
-                if bookmark.isFavorite {
-                    newBookmark.addToFavorites(favoritesRoot: newFavoritesRoot)
-                }
+                urlToBookmarkMap[url] = newBookmark
             }
             
             index += 1
         }
         
-        // ToDo: clean source store
+        // Process favorites starting from the last one, so we preserve the order while adding at begining
+        for favorite in favoritesToMigrate.reversed() {
+            guard let favorite = favorite as? BookmarkManagedObject,
+                  let title = favorite.title,
+                  let url = favorite.url else { continue }
+            
+            let bookmark = {
+                if let existingBookmark = urlToBookmarkMap[url] {
+                    return existingBookmark
+                } else {
+                    return BookmarkEntity.makeBookmark(title: title,
+                                                       url: url.absoluteString,
+                                                       parent: newRoot,
+                                                       insertAtBeginning: true,
+                                                       context: destination)
+                }
+            }()
+            bookmark.addToFavorites(insertAtBeginning: true,
+                                    favoritesRoot: newFavoritesRoot)
+        }
         
         do {
             try destination.save()
+            
+            #warning("clean source store")
         } catch {
             fatalError("Could not migrate Bookmarks")
         }

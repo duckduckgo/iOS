@@ -25,6 +25,7 @@ import os.log
 import BrowserServicesKit
 import UserScript
 import SwiftUI
+import Bookmarks
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -124,6 +125,7 @@ class TabViewController: UIViewController {
     private var blobDownloadTargetFrame: WKFrameInfo?
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+    lazy var faviconUpdater = BookmarkFaviconUpdater(bookmarksDatabase: BookmarksDatabase.shared, tab: tabModel, favicons: Favicons.shared)
 
     public var url: URL? {
         willSet {
@@ -2094,7 +2096,7 @@ extension TabViewController: UserContentControllerDelegate {
                                updateEvent: ContentBlockerRulesManager.UpdateEvent) {
         guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
 
-        userScripts.faviconScript.delegate = self
+        userScripts.faviconScript.delegate = faviconUpdater
         userScripts.debugScript.instrumentation = instrumentation
         userScripts.surrogatesScript.delegate = self
         userScripts.contentBlockerUserScript.delegate = self
@@ -2186,19 +2188,6 @@ extension TabViewController: SurrogatesUserScriptDelegate {
         userScriptDetectedTracker(tracker)
     }
 
-}
-
-// MARK: - FaviconUserScriptDelegate
-extension TabViewController: FaviconUserScriptDelegate {
-    
-    func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String? {
-        return webView.url?.host
-    }
-    
-    func faviconUserScript(_ script: FaviconUserScript, didFinishLoadingFavicon image: UIImage) {
-        tabModel.didUpdateFavicon()
-    }
-    
 }
 
 // MARK: - PrintingUserScriptDelegate

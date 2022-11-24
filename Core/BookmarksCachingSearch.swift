@@ -194,12 +194,6 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
         RunLoop.current.run(until: cacheLoadedCondition)
         return cachedBookmarksAndFavorites
     }
-    
-// Todo: To remove
-    public func containsDomain(_ domain: String) -> Bool {
-        return bookmarksAndFavorites.contains { $0.url.host == domain }
-    }
-// ---------
 
     public func refreshCache() {
         // setting cacheLoadedCondition back to initialized state

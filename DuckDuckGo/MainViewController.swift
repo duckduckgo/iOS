@@ -140,12 +140,6 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        Favicons.shared.migrateIfNeeded {
-            DispatchQueue.main.async {
-                self.homeController?.collectionView.reloadData()
-            }
-        }
-         
         attachOmniBar()
 
         view.addInteraction(UIDropInteraction(delegate: self))

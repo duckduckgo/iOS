@@ -171,8 +171,7 @@ class BookmarkFoldersViewController: UITableViewController {
         cell.urlTextField.addTarget(self, action: #selector(urlTextFieldDidChange(_:)), for: .editingChanged)
         cell.urlTextField.addTarget(self, action: #selector(urlTextFieldDidReturn), for: .editingDidEndOnExit)
 
-        cell.faviconImageView.loadFavicon(forDomain: viewModel?.bookmark.urlObject?.host?.droppingWwwPrefix(),
-                                          usingCache: .bookmarks)
+        cell.faviconImageView.loadFavicon(forDomain: viewModel?.bookmark.urlObject?.host, usingCache: .bookmarks)
 
         cell.selectionStyle = .none
         cell.title = viewModel?.bookmark.title

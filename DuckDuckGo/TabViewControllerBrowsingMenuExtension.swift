@@ -213,7 +213,7 @@ extension TabViewController {
                                            with bookmarksInterface: MenuBookmarksInteracting) {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
         bookmarksInterface.createBookmark(title: link.title ?? "", url: link.url)
-        favicons.loadFavicon(forDomain: link.url.host?.droppingWwwPrefix(), intoCache: .bookmarks, fromCache: .tabs)
+        favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit, onAction: {
@@ -258,7 +258,7 @@ extension TabViewController {
     private func performAddFavoriteAction(for link: Link,
                                           with bookmarksInterface: MenuBookmarksInteracting) {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
-        favicons.loadFavicon(forDomain: link.url.host?.droppingWwwPrefix(), intoCache: .bookmarks, fromCache: .tabs)
+        favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
         
         ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo, onAction: {
             self.performRemoveFavoriteAction(for: link, with: bookmarksInterface)

@@ -160,7 +160,7 @@ private extension BookmarkEntity {
     }
 
     var host: String {
-        return urlObject?.host?.droppingWwwPrefix() ?? ""
+        return urlObject?.host ?? ""
     }
 
 }

@@ -87,7 +87,7 @@ public class Favicons {
         private func baseCacheURL() -> URL? {
             switch self {
             case .bookmarks:
-                let groupName = BookmarkUserDefaults.Constants.groupName
+                let groupName = BookmarksDatabase.Constants.bookmarksGroupID
                 return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
                        
             case .tabs:
@@ -98,9 +98,6 @@ public class Favicons {
     }
 
     public static let shared = Favicons()
-
-    @UserDefaultsWrapper(key: .faviconsNeedMigration, defaultValue: true)
-    var needsMigration: Bool
 
     @UserDefaultsWrapper(key: .faviconSizeNeedsMigration, defaultValue: true)
     var sizeNeedsMigration: Bool

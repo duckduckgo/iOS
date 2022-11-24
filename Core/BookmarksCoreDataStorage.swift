@@ -81,7 +81,7 @@ public class BookmarksCoreDataStorage {
     }
     
     public static var defaultStoreURL: URL {
-        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!
+        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: BookmarksDatabase.Constants.bookmarksGroupID)!
         return containerURL.appendingPathComponent("\(Constants.databaseName).sqlite")
     }
     
@@ -944,77 +944,8 @@ extension BookmarksCoreDataStorage {
         static let folderClassName = "BookmarkFolderManagedObject"
 
         static let databaseName = "BookmarksAndFolders"
-
-        static let groupName = "\(Global.groupIdPrefix).bookmarks"
     }
 }
-
-public class BookmarksCoreDataStorageMigration {
-    
-    @UserDefaultsWrapper(key: .bookmarksMigratedFromUserDefaultsToCD, defaultValue: false)
-    private static var migratedFromUserDefaults: Bool
-    
-    /// Migrates bookmark data to Core Data.
-    ///
-    /// - Returns: A boolean representing whether the migration took place. If the migration has already happened and this function is called, it returns `false`.
-    public static func migrate(fromBookmarkStore bookmarkStore: BookmarkStore, context: NSManagedObjectContext) -> Bool {
-        if migratedFromUserDefaults {
-            return false
-        }
-        
-        context.performAndWait {
-            let countRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: BookmarksCoreDataStorage.Constants.folderClassName)
-            countRequest.fetchLimit = 1
-            let result = (try? context.count(for: countRequest)) ?? 0
-            
-            guard result == 0 else {
-                // Already migrated
-                return
-            }
-            
-            let favoritesFolder = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(context)
-            let bookmarksFolder = BookmarksCoreDataStorage.rootFolderManagedObject(context)
-            
-            func migrateLink(_ link: Link, isFavorite: Bool) {
-                let managedObject = NSEntityDescription.insertNewObject(
-                    forEntityName: BookmarksCoreDataStorage.Constants.bookmarkClassName,
-                    into: context)
-                guard let bookmark = managedObject as? BookmarkManagedObject else {
-                    assertionFailure("Inserting new bookmark failed")
-                    return
-                }
-                bookmark.url = link.url
-                bookmark.title = link.title
-                bookmark.isFavorite = isFavorite
-                
-                let folder = isFavorite ? favoritesFolder : bookmarksFolder
-                bookmark.parent = folder
-            }
-            
-            let favorites = bookmarkStore.favorites
-            for favorite in favorites {
-                migrateLink(favorite, isFavorite: true)
-            }
-            
-            let bookmarks = bookmarkStore.bookmarks
-            for bookmark in bookmarks {
-                migrateLink(bookmark, isFavorite: false)
-            }
-                        
-            do {
-                try context.save()
-            } catch {
-                fatalError("Error creating top level bookmark folders")
-            }
-            
-            bookmarkStore.deleteAllData()
-        }
-
-        migratedFromUserDefaults = true
-        return true
-    }
-}
-
 
 // MARK: - CoreData structure fixer
 // https://app.asana.com/0/414709148257752/1202779945035904/f

@@ -233,14 +233,6 @@ class BookmarksCachingSearchTests: XCTestCase {
         XCTAssertEqual(result4[0].title, Entry.urlDDG.rawValue)
         XCTAssertEqual(result4[1].title, Entry.urlNasa.rawValue)
     }
-
-    func testWhenBookmarkExistsThenContainsDomain() throws {
-        let engineUrlStore = BookmarksCachingSearch(bookmarksStore: urlStore)
-        XCTAssertTrue(engineUrlStore.containsDomain("duckduckgo.com"))
-
-        let engineSimpleStore = BookmarksCachingSearch(bookmarksStore: urlStore)
-        XCTAssertTrue(engineSimpleStore.containsDomain("duckduckgo.com"))
-    }
 }
 
 private extension BookmarksCachingSearchTests {

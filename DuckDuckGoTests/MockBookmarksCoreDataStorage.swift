@@ -30,17 +30,19 @@ class MockBookmarksDatabase {
         FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     }
     
-    static func make() -> CoreDataDatabase {
+    static func make(prepareFolderStructure: Bool = true) -> CoreDataDatabase {
         let db = BookmarksDatabase.make(location: tempDBDir())
         db.loadStore()
         
-        let context = db.makeContext(concurrencyType: .privateQueueConcurrencyType)
-        context.performAndWait {
-            do {
-                try BookmarkUtils.prepareFoldersStructure(in: context)
-                try context.save()
-            } catch {
-                fatalError("Could not setup mock DB")
+        if prepareFolderStructure {
+            let context = db.makeContext(concurrencyType: .privateQueueConcurrencyType)
+            context.performAndWait {
+                do {
+                    try BookmarkUtils.prepareFoldersStructure(in: context)
+                    try context.save()
+                } catch {
+                    fatalError("Could not setup mock DB")
+                }
             }
         }
         

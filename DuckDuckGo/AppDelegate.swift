@@ -82,16 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 let legacyStorage = BookmarksCoreDataStorage()
-                if let legacyStorage = legacyStorage {
-                    // Perform migration form ancient store.
-                    legacyStorage.loadStoreAndCaches { context in
-                        let bookmarkStore: BookmarkStore = BookmarkUserDefaults()
-                        
-                        _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: bookmarkStore,
-                                                                      context: context)
-                    }
-                }
-
+                legacyStorage?.loadStoreAndCaches()
                 LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                       to: context)
             }
@@ -134,16 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             let legacyStorage = BookmarksCoreDataStorage()
-            if let legacyStorage = legacyStorage {
-                // Perform migration form ancient store.
-                legacyStorage.loadStoreAndCaches { context in
-                    let bookmarkStore: BookmarkStore = BookmarkUserDefaults()
-                    
-                    _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: bookmarkStore,
-                                                                  context: context)
-                }
-            }
-
+            legacyStorage?.loadStoreAndCaches()
             LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                   to: context)
             WidgetCenter.shared.reloadAllTimelines()

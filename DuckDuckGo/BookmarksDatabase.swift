@@ -26,7 +26,7 @@ import os
 public class BookmarksDatabase {
 
     public enum Constants {
-        static let databaseGroupID = "\(Global.groupIdPrefix).bookmarks"
+        public static let bookmarksGroupID = "\(Global.groupIdPrefix).bookmarks"
     }
 
     public static let shared = make()
@@ -34,8 +34,8 @@ public class BookmarksDatabase {
     private init() { }
     
     private static var defaultDBLocation: URL = {
-        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.databaseGroupID) else {
-            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", Constants.databaseGroupID)
+        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.bookmarksGroupID) else {
+            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", Constants.bookmarksGroupID)
             fatalError("Failed to get location")
         }
         return url

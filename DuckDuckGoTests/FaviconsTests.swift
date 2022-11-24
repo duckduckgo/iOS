@@ -38,25 +38,8 @@ class FaviconsTests: XCTestCase {
         try? BookmarkUtils.prepareFoldersStructure(in: inMemoryStore.viewContext)
         mockObjectID = BookmarkUtils.fetchRootFolder(inMemoryStore.viewContext)?.objectID
         XCTAssertNotNil(mockObjectID)
-        
-        setupUserDefault(with: #file)
-
-        BookmarkUserDefaults().bookmarks = []
-        BookmarkUserDefaults().favorites = []
-
-        let url = URL(string: "http://duckduckgo.com")!
-        let simpleStore = MockBookmarksSearchStore()
-        
-        simpleStore.dataSet = [BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID,
-                                                                     title: "bookmark test 1",
-                                                                     url: url,
-                                                                     isFavorite: false)]
-
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
 
         favicons = Favicons(sourcesProvider: DefaultFaviconSourcesProvider(),
-                            bookmarksStore: BookmarkUserDefaults(),
-                            bookmarksCachingSearch: engine,
                             downloader: NotFoundCachingDownloader())
 
         Favicons.Constants.tabsCache.clearDiskCache()
@@ -73,16 +56,6 @@ class FaviconsTests: XCTestCase {
         inMemoryStore = nil
 
         try super.tearDownWithError()
-    }
-
-    func testWhenFreshInstallThenNeedsMigration() {
-        XCTAssertTrue(favicons.needsMigration)
-        let migrationExpectation = expectation(description: "migrateIfNeeded")
-        favicons.migrateIfNeeded {
-            migrationExpectation.fulfill()
-        }
-        waitForExpectations(timeout: 5.0, handler: nil)
-        XCTAssertFalse(favicons.needsMigration)
     }
     
     func testWhenGeneratingKingfisherOptionsThenOptionsAreConfiguredCorrectly() {

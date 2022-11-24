@@ -91,7 +91,6 @@ class MainViewController: UIViewController {
 
     var tabManager: TabManager!
     private let previewsSource = TabPreviewsSource()
-    fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     

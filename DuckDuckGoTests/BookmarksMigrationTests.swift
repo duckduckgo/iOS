@@ -26,7 +26,7 @@ import Bookmarks
 @MainActor
 class BookmarksMigrationTests: XCTestCase {
     
-    let destinationStack = BookmarksDatabase.make(location: MockBookmarksDatabase.tempDBDir())
+    let destinationStack = MockBookmarksDatabase.make(prepareFolderStructure: false)
     var sourceStack: BookmarksCoreDataStorage!
     
     override func setUp() async throws {

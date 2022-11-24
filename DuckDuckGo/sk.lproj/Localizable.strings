@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Vrátenie späť";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Zobraziť návrhy automatického dopĺňania";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Záložka";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Otvoriť webovú lokalitu";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Vyhľadávať na DuckDuckGo";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Pridať";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ – začalo sa sťahovanie";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Zrušiť";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vitajte v\nprehliadači DuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Pozývací kód";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Tu sa zobrazí vaša pozvánka, keď na vás budeme pripravení. Prajete si %1$@, keď bude k dispozícii? %2$@ o beta verzii prehliadača pre macOS.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "dostať upozornenie";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Pošleme vám upozornenie, keď na vás budeme pripravení. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Tu bude vaša pozvánka na vyskúšanie DuckDuckGo pre Mac. Čoskoro sa sem vráťte. Môžeme vám tiež poslať upozornenie, keď budete na rade.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Pošleme vám upozornenie, keď bude váš prehliadač DuckDuckGo pre Mac pripravený na stiahnutie.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ o beta verzii.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Aplikácia DuckDuckGo Privacy pre Mac má rýchlosť, ktorú potrebujete, funkcie prehliadača, ktoré očakávate a prichádza vybavená prvotriednymi súčasťami na ochranu súkromia.";
+"mac-browser.waitlist.summary" = "DuckDuckGo pre Mac má rýchlosť, ktorú potrebujete, funkcie prehliadania, ktoré očakávate, a obsahuje naše prvotriedne privacy essentials.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Otvorte svoju pozvánku";
@@ -991,29 +955,11 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopírovať";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Navštívte URL vo svojom Macu na stiahnutie:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "V počítači Mac prejdite na:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. krok";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Otvorte súbor na inštaláciu a zadajte pozývací kód na odomknutie.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. krok";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Ste pripravený/-á na súkromné prehliadanie stránok v Macu?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Ste pozvaný/-á!";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Pridajte sa do súkromného zoznamu čakateľov";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Pridáva sa na zoznam čakateľov...";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Zdieľať odkaz";
 
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Vyskúšajte DuckDuckGo pre Mac!";
@@ -1021,29 +967,14 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Verzia pre Windows bude k dispozícii čoskoro!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Môžeme vám poslať upozornenie, keď na vás príde rad, ale pre DuckDuckGo sú v súčasnosti upozornenia vypnuté.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Pri pridávaní sa na zoznam čakateľov nemusíte zadávať žiadne osobné údaje. Svoje miesto si zabezpečíte časovou pečiatkou, ktorá existuje výlučne vo vašom zariadení, aby sme vás mohli upozorniť, keď budete na rade.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Ste na zozname čakateľov!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "K dispozícii na stiahnutie pre Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Prezerajte súkromne stránky s našou aplikáciou pre Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Ste na zozname čakateľov!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Ste pozvaný/-á! \n\nSte pripravený/-á začať súkromne prehliadať v Macu? \n\n 1. krok \n Na stiahnutie navštívte túto adresu URL vo svojom Macu: \n https://duckduckgo.com/mac \n\n2. krok\nOtvorte súbor na inštaláciu a potom zadajte pozývací kód na odomknutie.\n\nPozývací kód: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Ste pripravení začať so súkromným prehliadaním v Mac-u?\n\nNa stiahnutie navštívte túto adresu URL vo svojom Mac-u:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Ste pozvaný/-á!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo pre Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "Aplikácia DuckDuckGo pre počítač";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "O našej ochrane pred sledovaním činnosti na webe";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "Logo DuckDuckGo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "O ochrane vyhľadávania a reklamách";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Klepnutím otvoríte obrazovku Panel nástrojov ochrany súkromia";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Ako naše reklamy vo vyhľadávaní ovplyvňujú našu ochranu";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritmus";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bitov";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Pri prijímaní certifikátu sa vyskytla chyba";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Všeobecný názov";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Efektívna veľkosť";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-mail";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Šifrované pripojenie";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Nútené šifrovanie";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Šifrované pripojenie";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Túto webovú stránku sme prinútili, aby používala šifrované pripojenie, čím zabránime odposluchu akýchkoľvek osobných informácií, ktoré odošlete.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Šifrované pripojenie zabraňuje odposluchu akýchkoľvek osobných informácií, ktoré odošlete na webovú stránku.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Kľúčový identifikátor subjektu";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Emitent";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Verejný kľúč";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Veľkosť kľúča";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Zmiešané šifrovanie";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Táto stránka má zmiešané šifrovanie, pretože určitý obsah sa zobrazuje prostredníctvom nezašifrovaných pripojení.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Nie";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Trvalé";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Verejný kľúč";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Šifrované pripojenie zabraňuje odposluchu akýchkoľvek osobných informácií, ktoré odošlete na webovú stránku.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Názov subjektu";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Zhrnutie";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Pri zadávaní osobných údajov na tejto stránke si dávajte pozor.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Nezašifrované pripojenie";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Neznáme";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Používanie";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Dešifrovať";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Odvodiť";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Šifrovať";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Podpísať";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Rozbaliť";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Overiť";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Zabaliť";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Áno";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "OCHRANA STRÁNKY ZAKÁZANÁ";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "ROZŠÍRENÉ Z $1 NA $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "STUPEŇ OCHRANY SÚKROMIA";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Našli sa hlavné siete sledovacích zariadení";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nenašla sa žiadna veľká sieť sledovacích zariadení";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Siete sledovacích zariadení sa našli na %1$@%% webových stránkach, ktoré ste navštívili od %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Naďalej zhromažďujeme údaje s cieľom zistiť,\nkoľko sledovacích zariadení sme zablokovali.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Neboli načítané žiadne požiadavky tretích strán";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Požiadavky nasledujúcej domény boli načítané, pretože nedávno ste klikli na reklamu %@ na DuckDuckGo. Tieto žiadosti pomáhajú vyhodnotiť účinnosť reklám. Všetky reklamy na DuckDuckGo sú neprofilujúce.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Požiadavky nasledujúcej domény boli načítané, aby sa zabránilo rozbitiu stránky.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Nasledujúce požiadavky domény boli načítané, pretože sú spojené s %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Boli načítané nasledujúce požiadavky na domény tretích strán. Ak sú požiadavky spoločnosti načítané, môže im to umožniť profilovať vás, hoci naše ostatné ochrany sledovania webu stále platia.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Načítanie žiadnych požiadaviek tretích strán nebolo zablokované, pretože ochrana je pre túto stránku vypnutá. Ak sú požiadavky spoločnosti načítané, môže im to umožniť profilovať vás.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Boli načítané nasledujúce požiadavky na sledovanie domén.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Boli načítané aj nasledujúce požiadavky domény.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Boli načítané požiadavky nasledujúcich domén.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Boli načítané požiadavky nasledujúcich domén.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Nezistili sme požiadavky zo žiadnych domén tretích strán.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Požiadavky tretích strán boli načítané";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Upozornenie: obmedzenia platformy môžu obmedziť našu schopnosť zistiť všetky požiadavky.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Neprofilovanie";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Spôsoby ochrany súkromia od ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Spôsoby ochrany súkromia naznačujú mieru ochrany osobných údajov, ktoré zdieľate s webovými stránkami.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Táto webová stránka vás upozorní pred tým, ako prenesie vaše informácie v prípade zlúčenia alebo obstarávania";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Postupy ochrany súkromia na tejto webovej stránke neboli skontrolované.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Stupeň ochrany súkromia %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Stlačením otvoríte obrazovku ochrany súkromia";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Tieto štatistiky sa ukladajú iba vo vašom zariadení a nikde sa neodosielajú. Nikdy.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Osvedčené spôsoby ochrany súkromia";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Zmiešané spôsoby ochrany súkromia";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Nedostatočné spôsoby ochrany súkromia";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Neznáme spôsoby ochrany súkromia";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sledovače činnosti pomáhajú spoločnostiam profilovať vás. Zablokovali sme načítavanie týchto sledovacích prvkov a monitorovanie vašej činnosti na tejto stránke.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Nebolo zablokované žiadne načítavanie požiadaviek na sledovanie, pretože ochrana je pre túto stránku vypnutá. Ak sú požiadavky spoločnosti načítané, môže im to umožniť profilovať vás.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nezistili sme žiadne požiadavky na sledovanie.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Načítanie požiadaviek nasledujúcich domén tretích strán bolo zablokované, pretože boli identifikované ako požiadavky na sledovanie. Ak sú načítané požiadavky spoločnosti, môže im umožniť profilovať vás.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Načítavanie žiadostí je zablokované";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Našli sa požiadavky na sledovanie";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nie sú blokované žiadne žiadosti o sledovanie";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nenašli sa žiadne požiadavky na sledovanie";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Ikona ochrany súkromia";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Zrušiť";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Ochrana súkromia na doméne %@ bola zapnutá";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Vyskytla sa neznáma chyba.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Nastavenia";

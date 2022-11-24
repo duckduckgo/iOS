@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Angre";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Forslag fra autofullfør";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Bokmerke";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Åpne nettsted";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Søk med DuckDuckGo";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Legg til";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Nedlasting av %@ har startet";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Avbryt";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Invitasjonskode";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Invitasjonen vises her når vi er klare for deg. Vil du %1$@ når den kommer? %2$@ om betaversjonen av macOS-nettleseren.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "få et varsel";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Vi sender deg et varsel når vi er klare for deg. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Invitasjonen til å prøve DuckDuckGo for Mac kommer hit. Kom tilbake snart, eller vi kan sende deg et varsel når det er din tur.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Vi sender et varsel til deg når ditt eksemplar av DuckDuckGo for Mac er klar til nedlasting.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ om betaversjonen.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "DuckDuckGo personvernapp for Mac har hastigheten du trenger, nettleserfunksjonene du forventer og er stappfull av våre førsteklasses personvernfunksjoner.";
+"mac-browser.waitlist.summary" = "DuckDuckGo for Mac har hastigheten du trenger, nettleserfunksjonene du forventer, og er stappfull av våre førsteklasses personvernfunksjoner.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Åpne invitasjonen din";
@@ -991,59 +955,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopier";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Gå til denne nettadressen på Mac-en din for å laste ned:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "På Mac går du til:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Trinn 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Åpne filen som skal installeres og oppgi invitasjonskoden for å låse den opp.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Trinn 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Er du klar til å begynne å surfe privat på Mac?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Du er invitert!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Del lenke";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Sett deg på den private ventelisten";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Setter deg på ventelisten…";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Prøv DuckDuckGo for Mac!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Skaff deg DuckDuckGo for Mac!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows kommer snart!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Vi kan varsle deg når det er din tur, men varsler er for øyeblikket deaktivert for DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Du behøver ikke å dele noen personopplysninger for å sette deg på ventelisten. Du sikrer plassen din i køen med et tidsstempel som kun eksisterer på enheten din, så vi kan varsle deg når det er din tur.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Du står på listen!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Tilgjengelig for nedlasting på Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Surf privat med vår app for Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Du står på listen!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Du er invitert!\n\nEr du klar til å begynne å surfe privat på Mac?\n\nTrinn 1\nGå til denne nettadressen på Mac-en din for å laste ned:\nhttps://duckduckgo.com/mac\n\nTrinn 2\nÅpne filen som skal installeres og oppgi invitasjonskoden for å låse den opp.\n\nInvitasjonskode: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Er du klar til å begynne å surfe privat på Mac?\n\nGå til denne nettadressen på Mac-en din for å laste ned:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Du er invitert!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo for Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo skrivebordsapp";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Om nettsporingsbeskyttelsen vår";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "DuckDuckGo-logo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Om søkebeskyttelsene og annonsene våre";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Trykk for å åpne dashbordet for personvern";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Hvordan søkeannonsene våre påvirker beskyttelsen vår";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritme";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bits";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Feil ved utpakking av sertifikat";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Navn";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Effektiv størrelse";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-post";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Kryptert tilkobling";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Tvungen kryptering";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Kryptert tilkobling";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Vi har tvunget dette nettstedet til å bruke en kryptert tilkobling, noe som hindrer tyvlytting av personlige opplysninger du sender gjennom denne tilkoblingen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "En kryptert tilkobling forhindrer at noen tyvlytter til personlige opplysninger du sender til et nettsted.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Identifikator for subjektnøkkel";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Utsteder";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Offentlig nøkkel";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Nøkkelstørrelse";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Blandet kryptering";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Denne siden har blandet kryptering siden noe innhold sendes gjennom ikke-krypterte forbindelser.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Nei";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Permanent";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Offentlig nøkkel";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "En kryptert tilkobling forhindrer at noen tyvlytter til personlige opplysninger du sender til et nettsted.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Utsteders navn";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Sammendrag";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Vær forsiktig med å oppgi personlig informasjon på denne siden.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Ukryptert tilkobling";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Ukjent";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Bruk";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Dekrypter";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Hent fra";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Krypter";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Signer";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Pakk ut";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Verifiser";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Pakk inn";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Ja";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "BESKYTTELSE DEAKTIVERT FOR NETTSTEDET";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "FORBEDRET FRA $1 TIL $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "GRAD AV PERSONVERN";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Store sporingsnettverk oppdaget";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Ingen større sporingsnettverk ble oppdaget";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Sporingsnettverk ble funnet på %1$@ %% av nettstedene du har besøkt siden %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Vi samler fortsatt inn data for å vise deg\nhvor mange sporinger vi har blokkert.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Ingen tredjepartsforespørsler lastet";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Forespørslene fra følgende domene ble lastet fordi en %@-annonse på DuckDuckGo nylig ble klikket på. Disse forespørslene bidrar til å evaluere annonseeffektiviteten. Alle annonser på DuckDuckGo er ikke-profilerende.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Forespørslene fra følgende domene ble lastet for å forhindre feil på nettstedet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Forespørslene fra følgende domene ble lastet fordi de er tilknyttet %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Forespørslene fra følgende tredjepartsdomener ble lastet. Hvis forespørslene fra et selskap blir lastet, har selskapet mulighet til å profilere deg, selv om de andre nettsporingsbeskyttelsene våre fremdeles gjelder.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Ingen tredjepartsforespørsler ble blokkert fra lasting, fordi beskyttelse er slått av for dette nettstedet. Hvis forespørslene fra et selskap blir lastet, har selskapet mulighet til å profilere deg.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Sporingsforespørslene fra følgende domene ble lastet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Forespørslene fra følgende domene ble også lastet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Forespørslene fra følgende domener ble lastet.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Forespørslene fra følgende domener ble lastet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Vi oppdaget ingen forespørsler fra tredjepartsdomener.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Tredjepartsforespørsler lastet";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Merk: Plattformbegrensninger kan begrense kapasiteten vår til å oppdage alle forespørsler.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Ikke-profilerende";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Personvernpraksis fra ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Personvernpraksis indikerer i hvilken grad den personlige informasjonen du deler med et nettsted er beskyttet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Nettstedet varsler deg før de overfører informasjonen din ved tilfeller av fusjon eller kjøp";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Personvenpraksisen til dette nettstedet har ikke blitt vurdert.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Grad av personvern %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Trykk for å åpne Personvernskjermen";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Denne statistikken lagres kun på enheten din, og sendes ikke noe sted. Aldri.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "God personvernpraksis";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Blandet personvernpraksis";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Dårlig personvernpraksis";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Ukjent personvernpraksis";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Sporere hjelper selskaper å profilere deg. Vi blokkerte disse sporerne fra å laste og overvåke aktiviteten din på denne siden.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Ingen sporingsforespørsler ble blokkert fra lasting, fordi beskyttelse er slått av for dette nettstedet. Hvis forespørslene fra et selskap blir lastet, har selskapet mulighet til å profilere deg.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Vi oppdaget ingen sporingsforespørsler.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Forespørslene fra følgende tredjepartsdomener ble blokkert fra lasting, fordi de ble identifisert som sporingsforespørsler. Hvis forespørslene fra et selskap blir lastet, har selskapet mulighet til å profilere deg.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Forespørsler blokkert fra lasting";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Sporingsforespørsler funnet";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Ingen sporingsforespørsler blokkert";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Ingen sporingsforespørsler funnet";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Personvernikon";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Avbryt";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Personvern er aktivert for %@";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Det oppstod en ukjent feil.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Innstillinger";

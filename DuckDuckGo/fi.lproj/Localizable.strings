@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Kumoa";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Automaattisen täydennyksen ehdotus";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Kirjanmerkki";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Avaa verkkosivusto";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Hae DuckDuckGosta";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Lisää";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Tiedoston %@ lataus aloitettu";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Peruuta";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tervetuloa\nDuckDuckGo-sovellukseen!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Kutsukoodi";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Kutsusi näytetään tässä, kun olemme valmiita. Haluatko %1$@, kun se saapuu? %2$@ macOS-selaimen beetaversiosta.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "ilmoitus";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Lähetämme sinulle ilmoituksen, kun olemme valmiita. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Saat kutsusi Macin DuckDuckGon käyttöön tänne. Tarkista tilanne pian uudelleen. Voimme myös lähettää sinulle ilmoituksen, kun on sinun vuorosi.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Lähetämme sinulle ilmoituksen, kun voit ladata Macin DuckDuckGon.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ beetaversiosta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Macin DuckDuckGo Privacy -sovellus tarjoaa kaipaamasi nopeuden, odottamasi selaintoiminnot sekä luokkansa parhaat tietosuojaominaisuudet.";
+"mac-browser.waitlist.summary" = "Macin DuckDuckGo tarjoaa kaipaamasi nopeuden, odottamasi selaintoiminnot ja luokkansa parhaat tietosuojaominaisuudet.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Avaa kutsusi";
@@ -991,29 +955,11 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopioi";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Lataa se siirtymällä Macilla tähän URL-osoitteeseen:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Siirry Mac-tietokoneellasi osoitteeseen:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Vaihe 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Asenna se avaamalla tiedosto ja avaa sitten lukitus antamalla kutsukoodisi.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Vaihe 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Oletko valmis aloittamaan yksityisen selaamisen Macilla?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Sinut on kutsuttu!";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Liity yksityiselle odotuslistalle";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Liitytään odotuslistalle...";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Jaa linkki";
 
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Kokeile Macin DuckDuckGota!";
@@ -1021,29 +967,14 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows-versio on tulossa pian!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Voimme ilmoittaa sinulle, kun on sinun vuorosi, mutta ilmoitukset ovat tällä hetkellä poissa käytöstä DuckDuckGossa.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Sinun ei tarvitse jakaa henkilötietoja liittyäksesi jonotuslistalle. Varmistat paikkasi jonossa aikaleimalla, joka on olemassa vain laitteessasi. Näin voimme ilmoittaa sinulle, kun on sinun vuorosi.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Olet odotuslistalla!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Ladattavissa Macille";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Selaa yksityisesti Mac-sovelluksellamme";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Olet odotuslistalla!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Sinut on kutsuttu!\n\nOletko valmis aloittamaan yksityisen selaamisen Macilla? \n\n Vaihe 1\n Lataa sovellus siirtymällä tähän URL-osoitteeseen Macillasi:\nhttps://duckduckgo.com/mac.\n\nVaihe 2\nAsenna sovellus avaamalla tiedosto ja avaa sitten lukitus antamalla kutsukoodisi.\n\nKutsukoodi: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Oletko valmis aloittamaan yksityisen selaamisen Macilla?\n\n Lataa sovellus Macillesi osoitteesta:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Sinut on kutsuttu!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo-työpöytäsovellus";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Tietoa verkkoseurantasuojauksistamme";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "DuckDuckGo-logo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Tietoa hakusuojauksistamme ja mainoksistamme";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Avaa tietosuojan ohjauspaneeli napauttamalla";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Miten hakumainoksemme vaikuttavat suojauksiimme";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritmi";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bittiä";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Virhe todennusta purettaessa";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Yleinen nimi";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Tehokas koko";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "Sähköposti";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Salattu yhteys";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Pakotettu salaus";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Salattu yhteys";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Olemme pakottaneet tämän sivuston käyttämään salattua yhteyttä, jotta sille lähettämiäsi henkilötietoja ei voida urkkia.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Salattu yhteys estää sivustolle lähettämiesi henkilötietojen urkkimisen.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Hakija-avaimen tunniste";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Myöntäjä";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Julkinen avain";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Avaimen koko";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Yhdistetty salaus";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Tällä sivustolla on yhdistetty salaus, sillä osa sisällöstä tarjotaan salaamattomalla yhteydellä.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Ei";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Pysyvä";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Julkinen avain";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Salattu yhteys estää sivustolle lähettämiesi henkilötietojen urkkimisen.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Hakijan nimi";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Yhteenveto";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Ole varovainen antaessasi henkilökohtaisia tietoja tällä sivustolla.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Salaamaton yhteys";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Tuntematon";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Käyttö";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Pura salaus";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Johda";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Salaa";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Allekirjoita";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Poista rivitys";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Vahvista";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Rivitä";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Kyllä";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "SIVUSTOSUOJAUS EI KÄYTÖSSÄ";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "PARANNETTU ARVOSTA $1 ARVOON $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "TIETOSUOJA-ARVOSANA";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Merkittäviä seurantaverkostoja löytynyt";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Merkittäviä seurantaverkostoja ei löytynyt";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "%1$@%%:lta sivustoista, joilla olet käynyt %2$@ jälkeen, löytyi seurantaverkostoja.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Keräämme edelleen tietoja näyttääksemme,\nkuinka monta seurantapalvelinta olemme estäneet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Kolmannen osapuolen pyyntöjä ei ole ladattu";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Seuraavan verkkotunnuksen pyynnöt ladattiin, koska %@-mainosta DuckDuckGossa napsautettiin äskettäin. Nämä pyynnöt auttavat arvioimaan mainosten tehokkuutta. Kaikki DuckDuckGon mainokset ovat ei-profiloivia.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Seuraavan verkkotunnuksen pyynnöt ladattiin sivuston rikkoutumisen estämiseksi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Seuraavan verkkotunnuksen pyynnöt ladattiin, koska ne liittyvät kohteeseen %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Seuraavien kolmansien osapuolten verkkotunnusten pyynnöt ladattiin. Jos yrityksen pyynnöt ladataan, se voi antaa yritykselle mahdollisuuden profiloida sinut, vaikka muut verkkoseurantasuojamme ovat edelleen voimassa.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Kolmannen osapuolen pyyntöjä ei estetty latautumasta, koska suojaukset on poistettu käytöstä tältä sivustolta. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Seuraavien verkkotunnusten seurantapyynnöt ladattiin.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Myös seuraavan verkkotunnuksen pyynnöt ladattiin.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Seuraavien verkkotunnusten pyynnöt ladattiin.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Seuraavan verkkotunnuksen pyynnöt ladattiin.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Emme havainneet pyyntöjä kolmannen osapuolen verkkotunnuksilta.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Kolmannen osapuolen pyynnöt ladattu";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Huomaa: alustan rajoitukset voivat rajoittaa kykyämme havaita kaikki pyynnöt.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Ei-profiloiva";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "ToS;DR:n tietosuojakäytäntö.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Tietosuojakäytännöt kertovat, missä määrin verkkosivuston kanssa jakamiasi henkilötietoja suojataan.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Tämä verkkosivusto lähettää sinulle ilmoituksen ennen kuin tietojasi siirretään fuusion tai yrityskaupan yhteydessä";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Tämän verkkosivuston tietosuojakäytäntöjä ei ole tarkistettu.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Tietosuojaluokka %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Avaa yksityisyydensuojanäyttö painamalla";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Nämä tilastot tallennetaan vain omalle laitteellesi eikä niitä lähetetä minnekään muualle. Ikinä.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Hyvät tietosuojakäytännöt";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Vaihtelevat tietosuojakäytännöt";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Huonot tietosuojakäytännöt";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Tuntemattomat tietosuojakäytännöt";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Seurantaohjelmat auttavat yrityksiä profiloimaan sinut. Olemme estäneet näitä seurantalaitteita lataamasta ja seuraamasta toimintaasi tällä sivulla.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Seurantapyyntöjä ei estetty latautumasta, koska suojaukset on poistettu käytöstä tältä sivustolta. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Emme havainneet seurantapyyntöjä.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Seuraavien kolmansien osapuolten verkkotunnusten pyyntöjen lataaminen estettiin, koska ne tunnistettiin seurantapyynnöiksi. Jos yrityksen pyynnöt ladataan, yritys voi mahdollisesti profiloida sinut.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Pyynnöt, joiden lataaminen estetty";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Löydetyt seurantapyynnöt";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Ei estettyjä seurantapyyntöjä";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Seurantapyyntöjä ei löytynyt";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Tietosuojakuvake";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Peruuta";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Yksityisyydensuoja otettu käyttöön osoitteessa %@";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Tapahtui tuntematon virhe.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Asetukset";

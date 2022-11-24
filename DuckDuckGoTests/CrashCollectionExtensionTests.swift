@@ -38,26 +38,11 @@ class CrashCollectionExtensionTests: XCTestCase {
     }
 
     func testSubsequentPixelsDontSendFirstFlag() {
-
-        let expectation = XCTestExpectation()
-        var pixelCount = 0
-
-        stub(condition: { req in
-            return req.url?.path.hasPrefix("/t/m_d_crash_") == true
-        }, response: { request -> HTTPStubsResponse in
-            XCTAssertNil(request.url?.getParameter(named: "first"))
-            pixelCount += 1
-
-            if pixelCount == 2 {
-                expectation.fulfill()
-            }
-
-            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
-        })
-
         // 2 pixels with no first parameter
         CrashCollection.firstCrash = false
-        CrashCollection.start()
+        CrashCollection.start {
+            XCTAssertNil($0["first"])
+        }
         CrashCollection.collector.didReceive([
             MockPayload(mockCrashes: [
                 MXCrashDiagnostic(),
@@ -65,31 +50,14 @@ class CrashCollectionExtensionTests: XCTestCase {
             ])
         ])
         XCTAssertFalse(CrashCollection.firstCrash)
-
-        wait(for: [expectation], timeout: 3.0)
-
     }
 
     func testFirstCrashFlagSent() {
-        let expectation = XCTestExpectation()
-        var pixelCount = 0
-
-        stub(condition: { req in
-            return req.url?.path.hasPrefix("/t/m_d_crash_") == true
-        }, response: { request -> HTTPStubsResponse in
-            XCTAssertEqual("1", request.url?.getParameter(named: "first"))
-            pixelCount += 1
-
-            if pixelCount == 2 {
-                expectation.fulfill()
-            }
-
-            return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
-        })
-
         // 2 pixels with first = true attached
         XCTAssertTrue(CrashCollection.firstCrash)
-        CrashCollection.start()
+        CrashCollection.start {
+            XCTAssertNotNil($0["first"])
+        }
         CrashCollection.collector.didReceive([
             MockPayload(mockCrashes: [
                 MXCrashDiagnostic(),
@@ -97,8 +65,6 @@ class CrashCollectionExtensionTests: XCTestCase {
             ])
         ])
         XCTAssertFalse(CrashCollection.firstCrash)
-
-        wait(for: [expectation], timeout: 3.0)
     }
 
     private func clearUserDefaults() {

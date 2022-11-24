@@ -28,18 +28,8 @@ public class LegacyBookmarksStoreMigration {
         case bookmark
     }
     
-    public static func migrate(to context: NSManagedObjectContext) {
-        let legacyStorage = BookmarksCoreDataStorage()
-        if let legacyStorage = legacyStorage {
-            // Perform migration form ancient store.
-            legacyStorage.loadStoreAndCaches { context in
-                var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
-                
-                _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: bookmarkStore,
-                                                              context: context)
-            }
-        }
-        
+    public static func migrate(from legacyStorage: BookmarksCoreDataStorage?,
+                               to context: NSManagedObjectContext) {
         if let legacyStorage = legacyStorage {
             // Perform migration from legacy store.
             let source = legacyStorage.getTemporaryPrivateContext()

@@ -25,6 +25,7 @@ public enum BookmarksExporterError: Error {
     case brokenDatabaseStructure
 }
 
+@MainActor
 public struct BookmarksExporter {
 
     private(set) var coreDataStorage: CoreDataDatabase

@@ -31,6 +31,7 @@ public enum BookmarksImportError: Error {
     case unknown
 }
 
+@MainActor
 final public class BookmarksImporter {
 
     public enum Notifications {

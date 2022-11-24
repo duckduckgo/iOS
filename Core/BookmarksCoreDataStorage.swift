@@ -76,20 +76,27 @@ public class BookmarksCoreDataStorage {
         return managedObjectModel
     }
     
-    private static var storeDescription: NSPersistentStoreDescription {
-        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!
-        let storeURL = containerURL.appendingPathComponent("\(Constants.databaseName).sqlite")
+    private var storeDescription: NSPersistentStoreDescription {
         return NSPersistentStoreDescription(url: storeURL)
     }
     
-    public init?() {
-        guard let storeURL = Self.storeDescription.url,
-              FileManager.default.fileExists(atPath: storeURL.absoluteString) else {
+    public static var defaultStoreURL: URL {
+        let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.groupName)!
+        return containerURL.appendingPathComponent("\(Constants.databaseName).sqlite")
+    }
+    
+    private let storeURL: URL
+    
+    public init?(storeURL: URL = defaultStoreURL, createIfNeeded: Bool = false) {
+        if !FileManager.default.fileExists(atPath: storeURL.path),
+           createIfNeeded == false {
             return nil
         }
         
+        self.storeURL = storeURL
+        
         persistentContainer = NSPersistentContainer(name: Constants.databaseName, managedObjectModel: BookmarksCoreDataStorage.managedObjectModel)
-        persistentContainer.persistentStoreDescriptions = [BookmarksCoreDataStorage.storeDescription]
+        persistentContainer.persistentStoreDescriptions = [storeDescription]
     }
     
     public func loadStoreAndCaches(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
@@ -104,7 +111,7 @@ public class BookmarksCoreDataStorage {
     internal func loadStore(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
 
         persistentContainer = NSPersistentContainer(name: Constants.databaseName, managedObjectModel: BookmarksCoreDataStorage.managedObjectModel)
-        persistentContainer.persistentStoreDescriptions = [BookmarksCoreDataStorage.storeDescription]
+        persistentContainer.persistentStoreDescriptions = [storeDescription]
         persistentContainer.loadPersistentStores { _, error in
             if let error = error {
                 fatalError("Unable to load persistent stores: \(error)")

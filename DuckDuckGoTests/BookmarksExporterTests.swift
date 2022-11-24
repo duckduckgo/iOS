@@ -20,6 +20,7 @@
 import XCTest
 @testable import Core
 
+@MainActor
 class BookmarksExporterTests: XCTestCase {
 
     private var storage = MockBookmarksDatabase.make()

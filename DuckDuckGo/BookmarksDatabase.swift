@@ -25,22 +25,24 @@ import os
 
 public class BookmarksDatabase {
 
-    static let databaseGroupID = "\(Global.groupIdPrefix).database"
+    public enum Constants {
+        static let databaseGroupID = "\(Global.groupIdPrefix).bookmarks"
+    }
 
     public static let shared = make()
 
     private init() { }
     
     private static var defaultDBLocation: URL = {
-        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: databaseGroupID) else {
-            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", databaseGroupID)
+        guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.databaseGroupID) else {
+            os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", Constants.databaseGroupID)
             fatalError("Failed to get location")
         }
         return url
     }()
 
     static func make(location: URL = defaultDBLocation) -> CoreDataDatabase {
-        os_log("BookmarksDatabase.make - IN")
+        os_log("BookmarksDatabase.make - IN - %@", location as CVarArg)
         let bundle = Bookmarks.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel") else {
             os_log("BookmarksDatabase.make - OUT, failed to loadModel")

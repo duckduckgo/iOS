@@ -22,6 +22,7 @@ import SwiftSoup
 @testable import Core
 import Bookmarks
 
+@MainActor
 class BookmarksImporterTests: XCTestCase {
 
     private var storage = MockBookmarksDatabase.make()

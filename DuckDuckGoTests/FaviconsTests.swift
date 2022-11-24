@@ -20,13 +20,24 @@
 import XCTest
 @testable import Core
 import Kingfisher
+import CoreData
+import Bookmarks
 
 class FaviconsTests: XCTestCase {
 
     private var favicons: Favicons!
+    
+    private var mockObjectID: NSManagedObjectID!
+    private var inMemoryStore: NSPersistentContainer!
 
     override func setUp() {
         super.setUp()
+        
+        inMemoryStore = CoreData.createInMemoryPersistentContainer(modelName: "BookmarksModel",
+                                                                  bundle: Bookmarks.bundle)
+        try? BookmarkUtils.prepareFoldersStructure(in: inMemoryStore.viewContext)
+        mockObjectID = BookmarkUtils.fetchRootFolder(inMemoryStore.viewContext)?.objectID
+        XCTAssertNotNil(mockObjectID)
         
         setupUserDefault(with: #file)
 
@@ -35,7 +46,11 @@ class FaviconsTests: XCTestCase {
 
         let url = URL(string: "http://duckduckgo.com")!
         let simpleStore = MockBookmarksSearchStore()
-        simpleStore.dataSet = [BookmarksCachingSearch.ScoredBookmark(title: "bookmark test 1", url: url, isFavorite: false)]
+        
+        simpleStore.dataSet = [BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID,
+                                                                     title: "bookmark test 1",
+                                                                     url: url,
+                                                                     isFavorite: false)]
 
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
 
@@ -54,6 +69,8 @@ class FaviconsTests: XCTestCase {
 
     override func tearDownWithError() throws {
         favicons = nil
+        mockObjectID = nil
+        inMemoryStore = nil
 
         try super.tearDownWithError()
     }

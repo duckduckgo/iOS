@@ -80,8 +80,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 guard let context = context else {
                     fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
                 }
+                
+                let legacyStorage = BookmarksCoreDataStorage()
+                if let legacyStorage = legacyStorage {
+                    // Perform migration form ancient store.
+                    legacyStorage.loadStoreAndCaches { context in
+                        let bookmarkStore: BookmarkStore = BookmarkUserDefaults()
+                        
+                        _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: bookmarkStore,
+                                                                      context: context)
+                    }
+                }
 
-                LegacyBookmarksStoreMigration.migrate(to: context)
+                LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
+                                                      to: context)
             }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
@@ -120,8 +132,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 #warning("error handling")
                 return
             }
+            
+            let legacyStorage = BookmarksCoreDataStorage()
+            if let legacyStorage = legacyStorage {
+                // Perform migration form ancient store.
+                legacyStorage.loadStoreAndCaches { context in
+                    let bookmarkStore: BookmarkStore = BookmarkUserDefaults()
+                    
+                    _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: bookmarkStore,
+                                                                  context: context)
+                }
+            }
 
-            LegacyBookmarksStoreMigration.migrate(to: context)
+            LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
+                                                  to: context)
             WidgetCenter.shared.reloadAllTimelines()
         }
         

@@ -54,7 +54,7 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         self.bookmarksStore = bookmarksStore
         self.dataDidChange = self.subject.eraseToAnyPublisher()
         
-        registerForNotifications()
+        registerForCoreDataStorageNotifications()
     }
     
     public func bookmarksAndFavorites(completion: @escaping ([BookmarksCachingSearch.ScoredBookmark]) -> Void) {
@@ -80,19 +80,6 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         }
     }
     
-    private func registerForNotifications() {
-        registerForCoreDataStorageNotifications()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(importDidBegin),
-                                               name: BookmarksImporter.Notifications.importDidBegin,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(importDidEnd),
-                                               name: BookmarksImporter.Notifications.importDidEnd,
-                                               object: nil)
-    }
-    
     private func registerForCoreDataStorageNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(coreDataDidSave),
@@ -104,20 +91,6 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
         guard let externalContext = notification.object as? NSManagedObjectContext,
               externalContext.persistentStoreCoordinator == bookmarksStore.coordinator else { return }
         subject.send()
-    }
-    
-    @objc func importDidBegin(notification: Notification) {
-        // preemptively deregisterForNotifications so that bookmarksCachingSearch is not saturated with notification events
-        // and constantly rebuilding while bookmarks are being imported (bookmark files could be very large)
-        NotificationCenter.default.removeObserver(self,
-                                                  name: BookmarksCoreDataStorage.Notifications.dataDidChange,
-                                                  object: nil)
-    }
-
-    @objc func importDidEnd(notification: Notification) {
-        // force refresh of cached data and re-enable notification observer
-        subject.send()
-        registerForCoreDataStorageNotifications()
     }
 }
 

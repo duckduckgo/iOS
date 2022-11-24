@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
                 }
                 
-                let legacyStorage = BookmarksCoreDataStorage()
+                let legacyStorage = LegacyBookmarksCoreDataStorage()
                 legacyStorage?.loadStoreAndCaches()
                 LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                       to: context)
@@ -124,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
             
-            let legacyStorage = BookmarksCoreDataStorage()
+            let legacyStorage = LegacyBookmarksCoreDataStorage()
             legacyStorage?.loadStoreAndCaches()
             LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                   to: context)

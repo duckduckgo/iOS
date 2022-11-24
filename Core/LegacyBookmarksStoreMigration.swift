@@ -28,7 +28,7 @@ public class LegacyBookmarksStoreMigration {
         case bookmark
     }
     
-    public static func migrate(from legacyStorage: BookmarksCoreDataStorage?,
+    public static func migrate(from legacyStorage: LegacyBookmarksCoreDataStorage?,
                                to context: NSManagedObjectContext) {
         if let legacyStorage = legacyStorage {
             // Perform migration from legacy store.
@@ -50,7 +50,7 @@ public class LegacyBookmarksStoreMigration {
     private static func fetchTopLevelFolder(_ folderType: LegacyTopLevelFolderType,
                                             in context: NSManagedObjectContext) -> [BookmarkFolderManagedObject] {
         
-        let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: BookmarksCoreDataStorage.Constants.folderClassName)
+        let fetchRequest = NSFetchRequest<BookmarkFolderManagedObject>(entityName: LegacyBookmarksCoreDataStorage.Constants.folderClassName)
         fetchRequest.predicate = NSPredicate(format: "%K == nil AND %K == %@",
                                              #keyPath(BookmarkManagedObject.parent),
                                              #keyPath(BookmarkManagedObject.isFavorite),

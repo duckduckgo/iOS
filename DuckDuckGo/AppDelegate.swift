@@ -85,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 legacyStorage?.loadStoreAndCaches()
                 LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                       to: context)
+                legacyStorage?.removeStore()
             }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
@@ -128,6 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             legacyStorage?.loadStoreAndCaches()
             LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
                                                   to: context)
+            legacyStorage?.removeStore()
             WidgetCenter.shared.reloadAllTimelines()
         }
         

@@ -77,6 +77,32 @@ public class LegacyBookmarksCoreDataStorage {
         persistentContainer.persistentStoreDescriptions = [storeDescription]
     }
     
+    public func removeStore() {
+        
+        typealias StoreInfo = (url: URL?, type: String)
+        
+        do {
+            var storesToDelete = [StoreInfo]()
+            for store in persistentContainer.persistentStoreCoordinator.persistentStores {
+                storesToDelete.append((url: store.url, type: store.type))
+                try persistentContainer.persistentStoreCoordinator.remove(store)
+            }
+            
+            for (url, type) in storesToDelete {
+                if let url = url {
+                    try persistentContainer.persistentStoreCoordinator.destroyPersistentStore(at: url,
+                                                                                              ofType: type)
+                }
+            }
+        } catch {
+            #warning("Pixel")
+        }
+        
+        try? FileManager.default.removeItem(atPath: storeURL.path)
+        try? FileManager.default.removeItem(atPath: storeURL.path.appending("-wal"))
+        try? FileManager.default.removeItem(atPath: storeURL.path.appending("-shm"))
+    }
+    
     public func loadStoreAndCaches(andMigrate handler: @escaping (NSManagedObjectContext) -> Void = { _ in }) {
         
         loadStore(andMigrate: handler)

@@ -40,7 +40,9 @@ public class LegacyBookmarksStoreMigration {
         } else {
             do {
                 try BookmarkUtils.prepareFoldersStructure(in: context)
-                try context.save()
+                if context.hasChanges {
+                    try context.save()
+                }
             } catch {
                 #warning("error pixel")
             }
@@ -66,21 +68,25 @@ public class LegacyBookmarksStoreMigration {
 
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
+    
     private static func migrate(source: NSManagedObjectContext, destination: NSManagedObjectContext) {
         
         // Do not migrate more than once
         guard BookmarkUtils.fetchRootFolder(destination) == nil else {
+#warning("Pixel, should be rare")
             return
         }
         
         do {
             try BookmarkUtils.prepareFoldersStructure(in: destination)
         } catch {
+#warning("Pixel")
             fatalError("Could not write to Bookmarks DB")
         }
         
         guard let newRoot = BookmarkUtils.fetchRootFolder(destination),
               let newFavoritesRoot = BookmarkUtils.fetchFavoritesFolder(destination) else {
+#warning("Pixel")
             fatalError("Could not write to Bookmarks DB")
         }
         
@@ -168,10 +174,10 @@ public class LegacyBookmarksStoreMigration {
         }
         
         do {
+            #warning("Check - can save fail on validation here?")
             try destination.save()
-            
-            #warning("clean source store")
         } catch {
+            #warning("Pixel")
             fatalError("Could not migrate Bookmarks")
         }
     }

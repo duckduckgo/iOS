@@ -159,6 +159,7 @@
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
 		85010502292FB1000033978F /* BookmarkFaviconUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85010501292FB1000033978F /* BookmarkFaviconUpdater.swift */; };
+		85010504292FFB080033978F /* BookmarkFaviconUpdaterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85010503292FFB080033978F /* BookmarkFaviconUpdaterTests.swift */; };
 		850118632900154D00BDEE27 /* Bookmarks in Frameworks */ = {isa = PBXBuildFile; productRef = 850118622900154D00BDEE27 /* Bookmarks */; };
 		85011867290028C400BDEE27 /* BookmarksDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8501186529001D6900BDEE27 /* BookmarksDatabase.swift */; };
 		850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */; };
@@ -965,6 +966,7 @@
 		84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341AC1E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85010501292FB1000033978F /* BookmarkFaviconUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFaviconUpdater.swift; sourceTree = "<group>"; };
+		85010503292FFB080033978F /* BookmarkFaviconUpdaterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkFaviconUpdaterTests.swift; sourceTree = "<group>"; };
 		8501186529001D6900BDEE27 /* BookmarksDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookmarksDatabase.swift; path = ../DuckDuckGo/BookmarksDatabase.swift; sourceTree = "<group>"; };
 		850250B220D803F4002199C7 /* AtbAndVariantCleanup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AtbAndVariantCleanup.swift; path = ../Core/AtbAndVariantCleanup.swift; sourceTree = "<group>"; };
 		850250B420D80419002199C7 /* AtbAndVariantCleanupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtbAndVariantCleanupTests.swift; sourceTree = "<group>"; };
@@ -3553,13 +3555,12 @@
 		F12D98401F266B30003C2EE3 /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				317045BE2858C69A0016ED1F /* Utils */,
-				31C138A127A334F600FFD4B2 /* Downloads */,
 				F17669A21E411D63003D3222 /* Application */,
 				981FED7222045FFA008488D7 /* AutoClear */,
 				85E5602D26541D0900F4DC44 /* AutoComplete */,
 				F40F843228C92B1C0081AE75 /* Autofill */,
 				98559FD0267099F400A83094 /* ContentBlocker */,
+				31C138A127A334F600FFD4B2 /* Downloads */,
 				83134D7F20E2E013006CE65D /* Feedback */,
 				8588026724E4249800C24AB6 /* iPad */,
 				851DFD88212C5ED600D95F20 /* Main */,
@@ -3571,6 +3572,7 @@
 				98EA2C3A218B9A880023E1DC /* Themes */,
 				F12790DD1EBBDDF3001D3AEC /* Tutorials */,
 				F194FAF91F14E605009B4DF8 /* UserInterface */,
+				317045BE2858C69A0016ED1F /* Utils */,
 				4B6484F927FFCF520050A7A1 /* Waitlist */,
 			);
 			name = DuckDuckGo;
@@ -3660,11 +3662,12 @@
 		F13B4BF71F18C9E800814661 /* Tabs */ = {
 			isa = PBXGroup;
 			children = (
-				F13B4BF81F18CA0600814661 /* TabsModelTests.swift */,
-				F13B4BFA1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift */,
-				F189AED61F18F6DE001EBAE1 /* TabTests.swift */,
+				85010503292FFB080033978F /* BookmarkFaviconUpdaterTests.swift */,
 				8565A34C1FC8DFE400239327 /* LaunchTabNotificationTests.swift */,
 				984D035F24AF49160066CFB8 /* TabPreviewsSourceTests.swift */,
+				F13B4BFA1F18E3D900814661 /* TabsModelPersistenceExtensionTests.swift */,
+				F13B4BF81F18CA0600814661 /* TabsModelTests.swift */,
+				F189AED61F18F6DE001EBAE1 /* TabTests.swift */,
 			);
 			name = Tabs;
 			sourceTree = "<group>";
@@ -5333,6 +5336,7 @@
 				98DDF9F322C4029D00DE38DB /* InitHelpers.swift in Sources */,
 				B6AD9E3628D4510A0019CDE9 /* ContentBlockerRulesManagerMock.swift in Sources */,
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
+				85010504292FFB080033978F /* BookmarkFaviconUpdaterTests.swift in Sources */,
 				B6AD9E3D28D46FD50019CDE9 /* AppSettingsMock.swift in Sources */,
 				85C7438E2152A66D005CF998 /* EmbeddedTermsOfServiceStoreTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* SmallOmniBarStateTests.swift in Sources */,

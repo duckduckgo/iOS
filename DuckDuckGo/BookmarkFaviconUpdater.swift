@@ -22,34 +22,52 @@ import Persistence
 import Bookmarks
 import CoreData
 
+protocol TabNotifying {
+    func didUpdateFavicon()
+}
+
+extension Tab: TabNotifying {}
+
+protocol FaviconProviding {
+
+    func loadFavicon(forDomain domain: String, fromURL url: URL?, intoCache cacheType: Favicons.CacheType, completion: ((UIImage?) -> Void)?)
+    func replaceBookmarksFavicon(forDomain domain: String?, withImage: UIImage)
+
+}
+
+extension Favicons: FaviconProviding {
+
+    func loadFavicon(forDomain domain: String, fromURL url: URL?, intoCache cacheType: CacheType, completion: ((UIImage?) -> Void)?) {
+        self.loadFavicon(forDomain: domain, fromURL: url, intoCache: cacheType, fromCache: nil, completion: completion)
+    }
+
+}
+
 class BookmarkFaviconUpdater: NSObject, FaviconUserScriptDelegate {
 
     let context: NSManagedObjectContext
-    let tab: Tab
-    let favicons: Favicons
+    let tab: TabNotifying
+    let favicons: FaviconProviding
 
-    let viewModel: MenuBookmarksViewModel
-
-    init(bookmarksDatabase: CoreDataDatabase, tab: Tab, favicons: Favicons) {
+    init(bookmarksDatabase: CoreDataDatabase, tab: TabNotifying, favicons: FaviconProviding) {
         self.context = bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType)
         self.tab = tab
         self.favicons = favicons
-        self.viewModel = MenuBookmarksViewModel(viewContext: bookmarksDatabase.makeContext(concurrencyType: .mainQueueConcurrencyType))
     }
 
     func faviconUserScript(_ script: FaviconUserScript, didRequestUpdateFaviconForHost host: String, withUrl url: URL?) {
         assert(Thread.isMainThread)
 
         favicons.loadFavicon(forDomain: host, fromURL: url, intoCache: .tabs) { [weak self] image in
-            guard let self = self,
-                  let image = image else { return }
-
+            guard let self = self else { return }
             self.tab.didUpdateFavicon()
 
-            if self.bookmarkExists(for: host) {
-                self.favicons.replaceBookmarksFavicon(forDomain: host, withImage: image)
-            }
+            guard self.bookmarkExists(for: host),
+                  let image = image else { return }
+
+            self.favicons.replaceBookmarksFavicon(forDomain: host, withImage: image)
         }
+
     }
 
     private func bookmarkExists(for domain: String) -> Bool {

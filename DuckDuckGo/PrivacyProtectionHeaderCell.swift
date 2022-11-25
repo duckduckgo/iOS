@@ -75,7 +75,6 @@ class PrivacyProtectionHeaderConfigurator {
         }
     }
     
-    // swiftlint:disable function_body_length
     private static func makeEnhancedProtectionLabel(_ siteRating: SiteRating, fromText: NSAttributedString) -> NSAttributedString? {
         let siteGradeImages = siteRating.siteGradeImages()
         

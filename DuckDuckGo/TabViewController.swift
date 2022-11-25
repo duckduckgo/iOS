@@ -1692,7 +1692,7 @@ extension TabViewController {
         // temporary delegate held strongly in callbacks
         // after destination decision WKDownload delegate will be set
         // to a WKDownloadSession and passed to Download Manager
-        delegate.decideDestinationCallback = { [weak self] _, response, suggestedFilename, callback in
+        delegate.decideDestinationCallback = { [weak self] _, _, suggestedFilename, callback in
             withExtendedLifetime(delegate) {
                 let downloadManager = AppDependencyProvider.shared.downloadManager
                 guard let self = self,

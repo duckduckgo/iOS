@@ -95,6 +95,7 @@ class MainViewController: UIViewController {
     private var launchTabObserver: LaunchTabNotification.Observer?
     
     private let bookmarksStack: CoreDataDatabase
+    private let favoritesViewModel: FavoritesListInteracting
     
     lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(
         viewContext: bookmarksStack.makeContext(concurrencyType: .mainQueueConcurrencyType))
@@ -128,6 +129,7 @@ class MainViewController: UIViewController {
     required init?(coder: NSCoder,
                    bookmarksStack: CoreDataDatabase) {
         self.bookmarksStack = bookmarksStack
+        self.favoritesViewModel = FavoritesListViewModel(dbProvider: bookmarksStack)
         self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksStack))
         super.init(coder: coder)
     }
@@ -359,7 +361,7 @@ class MainViewController: UIViewController {
     
     @IBSegueAction func onCreateSuggestionTray(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SuggestionTrayViewController {
         guard let controller = SuggestionTrayViewController(coder: coder,
-                                                            bookmarksDatabaseStack: self.bookmarksStack,
+                                                            favoritesViewModel: favoritesViewModel,
                                                             bookmarksSearch: bookmarksCachingSearch) else {
             fatalError("Failed to create controller")
         }
@@ -487,7 +489,7 @@ class MainViewController: UIViewController {
         removeHomeScreen()
 
         let tabModel = currentTab?.tabModel
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
         homeController = controller
 
         controller.chromeDelegate = self

@@ -31,7 +31,7 @@ final class HomePageConfiguration {
         case homeMessage
     }
 
-    func components(favoritesViewModel: FavoritesListInteracting = FavoritesListViewModel.make()) -> [Component] {
+    func components(favoritesViewModel: FavoritesListInteracting) -> [Component] {
         let fixed = favoritesViewModel.favorites.count == 0
         return [
             .navigationBarSearch(fixed: fixed),

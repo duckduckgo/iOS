@@ -22,14 +22,6 @@ import Bookmarks
 import CoreData
 import Persistence
 
-extension FavoritesListViewModel {
-    #warning("we probably should remove that")
-    static func make(db: CoreDataDatabase = BookmarksDatabase.shared) -> FavoritesListViewModel {
-        return FavoritesListViewModel(dbProvider: db)
-    }
-
-}
-
 extension MenuBookmarksViewModel {
 
     static func make(db: CoreDataDatabase = BookmarksDatabase.shared) -> MenuBookmarksViewModel {

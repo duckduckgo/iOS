@@ -20,7 +20,6 @@
 import UIKit
 import Core
 import Bookmarks
-import Persistence
 
 class SuggestionTrayViewController: UIViewController {
     
@@ -43,7 +42,6 @@ class SuggestionTrayViewController: UIViewController {
     private var favoritesOverlay: FavoritesOverlay?
     private var willRemoveAutocomplete = false
     private let bookmarksSearch: BookmarksStringSearch
-    private let bookmarksDatabaseStack: CoreDataDatabase
     private let favoritesModel: FavoritesListInteracting
 
     var selectedSuggestion: Suggestion? {
@@ -74,11 +72,9 @@ class SuggestionTrayViewController: UIViewController {
         }
     }
     
-    #warning("Most likely can keep model in MainVC")
-    required init?(coder: NSCoder, bookmarksDatabaseStack: CoreDataDatabase, bookmarksSearch: BookmarksStringSearch) {
-        self.bookmarksDatabaseStack = bookmarksDatabaseStack
+    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksSearch: BookmarksStringSearch) {
+        self.favoritesModel = favoritesViewModel
         self.bookmarksSearch = bookmarksSearch
-        self.favoritesModel = FavoritesListViewModel(dbProvider: bookmarksDatabaseStack)
         super.init(coder: coder)
     }
     

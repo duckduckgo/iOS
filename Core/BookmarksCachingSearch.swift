@@ -50,7 +50,7 @@ public class CoreDataBookmarksSearchStore: BookmarksSearchStore {
     private let subject = PassthroughSubject<Void, Never>()
     public var dataDidChange: AnyPublisher<Void, Never>
     
-    public init(bookmarksStore: CoreDataDatabase = BookmarksDatabase.shared) {
+    public init(bookmarksStore: CoreDataDatabase) {
         self.bookmarksStore = bookmarksStore
         self.dataDidChange = self.subject.eraseToAnyPublisher()
         
@@ -138,7 +138,7 @@ public class BookmarksCachingSearch: BookmarksStringSearch {
     private let bookmarksStore: BookmarksSearchStore
     private var cancellable: AnyCancellable?
 
-    public init(bookmarksStore: BookmarksSearchStore = CoreDataBookmarksSearchStore.init()) {
+    public init(bookmarksStore: BookmarksSearchStore) {
         self.bookmarksStore = bookmarksStore
         self.cancellable = bookmarksStore.dataDidChange.sink { [weak self] _ in
             self?.refreshCache()

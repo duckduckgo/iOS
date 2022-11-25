@@ -1,3 +1,4 @@
+mimimum_swiftlint_version: 0.50.0
 
 disabled_rules:
   - discarded_notification_center_observer

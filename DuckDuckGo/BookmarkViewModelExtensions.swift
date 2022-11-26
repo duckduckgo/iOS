@@ -25,8 +25,7 @@ import Persistence
 extension MenuBookmarksViewModel {
 
     static func make(db: CoreDataDatabase = BookmarksDatabase.shared) -> MenuBookmarksViewModel {
-        let context = db.makeContext(concurrencyType: .mainQueueConcurrencyType)
-        return MenuBookmarksViewModel(viewContext: context)
+        return MenuBookmarksViewModel(bookmarksDatabase: db)
     }
 
 }

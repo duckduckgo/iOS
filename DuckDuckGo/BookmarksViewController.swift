@@ -49,7 +49,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var selectorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectorControl: UISegmentedControl!
     
-    private let bookmarksDatabaseStack: CoreDataDatabase
+    private let bookmarksDatabase: CoreDataDatabase
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
     private lazy var addFolderButton: UIButton = {
@@ -100,12 +100,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     fileprivate var onDidAppearAction: () -> Void = {}
 
     init?(coder: NSCoder,
-          bookmarksDatabaseStack: CoreDataDatabase,
+          bookmarksDatabase: CoreDataDatabase,
           bookmarksSearch: BookmarksStringSearch,
           parentID: NSManagedObjectID? = nil) {
-        self.bookmarksDatabaseStack = bookmarksDatabaseStack
+        self.bookmarksDatabase = bookmarksDatabase
         self.searchDataSource = SearchBookmarksDataSource(searchEngine: bookmarksSearch)
-        self.viewModel = BookmarkListViewModel(bookmarksDatabaseStack: bookmarksDatabaseStack, parentID: parentID)
+        self.viewModel = BookmarkListViewModel(bookmarksDatabase: bookmarksDatabase, parentID: parentID)
         super.init(coder: coder)
     }
     
@@ -219,7 +219,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         let storyboard = UIStoryboard(name: "Bookmarks", bundle: nil)
         let viewController = storyboard.instantiateViewController(identifier: "BookmarksViewController", creator: { coder in
             let controller = BookmarksViewController(coder: coder,
-                                                     bookmarksDatabaseStack: self.bookmarksDatabaseStack,
+                                                     bookmarksDatabase: self.bookmarksDatabase,
                                                      bookmarksSearch: self.searchDataSource.searchEngine,
                                                      parentID: parent.objectID)
             controller?.delegate = self.delegate
@@ -466,7 +466,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                editingEntityID: id,
                                                                parentFolderID: viewModel.currentFolder?.objectID,
-                                                               bookmarksDatabaseStack: bookmarksDatabaseStack) else {
+                                                               bookmarksDatabase: bookmarksDatabase) else {
             assertionFailure("Failed to create controller")
             return nil
         }
@@ -475,7 +475,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     @IBSegueAction func onCreateFavoritesView(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> FavoritesViewController {
-        guard let controller = FavoritesViewController(coder: coder, bookmarksDatabaseStack: bookmarksDatabaseStack) else {
+        guard let controller = FavoritesViewController(coder: coder, bookmarksDatabase: bookmarksDatabase) else {
             fatalError("Failed to create controller")
         }
 
@@ -503,10 +503,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     func importBookmarks(fromHtml html: String) {
         
         let bookmarkCountBeforeImport = dataSource.viewModel.totalBookmarksCount
-        let bookmarksDatabaseStack = bookmarksDatabaseStack
+        let bookmarksDatabase = bookmarksDatabase
         Task {
 
-            let result = await BookmarksImporter(coreDataStore: bookmarksDatabaseStack).parseAndSave(html: html)
+            let result = await BookmarksImporter(coreDataStore: bookmarksDatabase).parseAndSave(html: html)
             switch result {
             case .success:
                 WidgetCenter.shared.reloadAllTimelines()
@@ -541,7 +541,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         // create file to export
         let tempFileUrl = FileManager.default.temporaryDirectory.appendingPathComponent(Constants.bookmarksFileName)
         do {
-            try BookmarksExporter(coreDataStore: bookmarksDatabaseStack).exportBookmarksTo(url: tempFileUrl)
+            try BookmarksExporter(coreDataStore: bookmarksDatabase).exportBookmarksTo(url: tempFileUrl)
         } catch {
             os_log("bookmarks failed to export %s", type: .debug, error.localizedDescription)
             ActionMessageView.present(message: UserText.exportBookmarksFailedMessage)

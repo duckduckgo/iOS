@@ -48,7 +48,7 @@ class FavoritesViewController: UIViewController {
 
     weak var delegate: FavoritesViewControllerDelegate?
     
-    private let bookmarksDatabaseStack: CoreDataDatabase
+    private let bookmarksDatabase: CoreDataDatabase
     
     fileprivate var viewModelCancellable: AnyCancellable?
     
@@ -63,8 +63,8 @@ class FavoritesViewController: UIViewController {
         }
     }
     
-    init?(coder: NSCoder, bookmarksDatabaseStack: CoreDataDatabase) {
-        self.bookmarksDatabaseStack = bookmarksDatabaseStack
+    init?(coder: NSCoder, bookmarksDatabase: CoreDataDatabase) {
+        self.bookmarksDatabase = bookmarksDatabase
         super.init(coder: coder)
     }
     
@@ -88,7 +88,7 @@ class FavoritesViewController: UIViewController {
         view.addSubview(collectionView)
         
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
-                                                    viewModel: FavoritesListViewModel(dbProvider: bookmarksDatabaseStack))
+                                                    viewModel: FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase))
         renderer.install(into: self)
         
         viewModelCancellable = renderer.viewModel.externalUpdates.sink { [weak self] _ in

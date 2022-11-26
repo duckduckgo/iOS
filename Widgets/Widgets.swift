@@ -100,7 +100,7 @@ struct Provider: TimelineProvider {
         if maxFavorites > 0 {
             BookmarksDatabase.shared.loadStore()
             os_log("BookmarksDatabase load store started")
-            let model = FavoritesListViewModel(dbProvider: BookmarksDatabase.shared)
+            let model = FavoritesListViewModel(bookmarksDatabase: BookmarksDatabase.shared)
             os_log("model created")
             let dbFavorites = model.favorites
             os_log("dbFavorites loaded %d", dbFavorites.count)

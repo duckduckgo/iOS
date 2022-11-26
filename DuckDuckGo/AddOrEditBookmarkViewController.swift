@@ -36,17 +36,17 @@ class AddOrEditBookmarkViewController: UIViewController {
 
     private var foldersViewController: BookmarkFoldersViewController?
     private let viewModel: BookmarkEditorViewModel
-    private let bookmarksDatabaseStack: CoreDataDatabase
+    private let bookmarksDatabase: CoreDataDatabase
 
     private var viewModelCancellable: AnyCancellable?
 
     init?(coder: NSCoder,
           editingEntityID: NSManagedObjectID?,
           parentFolderID: NSManagedObjectID?,
-          bookmarksDatabaseStack: CoreDataDatabase) {
+          bookmarksDatabase: CoreDataDatabase) {
         
-        self.bookmarksDatabaseStack = bookmarksDatabaseStack
-        self.viewModel = BookmarkEditorViewModel(bookmarksDatabaseStack: bookmarksDatabaseStack,
+        self.bookmarksDatabase = bookmarksDatabase
+        self.viewModel = BookmarkEditorViewModel(bookmarksDatabase: bookmarksDatabase,
                                                  editingEntityID: editingEntityID,
                                                  parentFolderID: parentFolderID)
 
@@ -116,7 +116,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         guard let controller = AddOrEditBookmarkViewController(coder: coder,
                                                                editingEntityID: nil,
                                                                parentFolderID: viewModel.bookmark.parent?.objectID,
-                                                               bookmarksDatabaseStack: bookmarksDatabaseStack) else {
+                                                               bookmarksDatabase: bookmarksDatabase) else {
             fatalError("Failed to create controller")
         }
         controller.delegate = self

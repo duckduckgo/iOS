@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //    private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
-    private var bookmarksDatabaseStack: CoreDataDatabase = BookmarksDatabase.shared // Switch to make() when no longer singleton
+    private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.shared // Switch to make() when no longer singleton
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            bookmarksDatabaseStack.loadStore { context, error in
+            bookmarksDatabase.loadStore { context, error in
                 guard let context = context else {
                     fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
                 }
@@ -124,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DatabaseMigration.migrate(to: context)
         }
 
-        bookmarksDatabaseStack.loadStore { context, error in
+        bookmarksDatabase.loadStore { context, error in
             guard let context = context else {
                 #warning("error handling")
                 return
@@ -155,7 +155,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         
         guard let main = storyboard.instantiateInitialViewController(creator: { coder in
-            MainViewController(coder: coder, bookmarksStack: self.bookmarksDatabaseStack)
+            MainViewController(coder: coder, bookmarksDatabase: self.bookmarksDatabase)
         }) else {
             fatalError("Could not load MainViewController")
         }
@@ -175,7 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabaseStack)
+        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -303,7 +303,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess(bookmarksDatabase: self.bookmarksDatabaseStack)
+            try? await RemoteMessaging.fetchAndProcess(bookmarksDatabase: self.bookmarksDatabase)
         }
     }
 

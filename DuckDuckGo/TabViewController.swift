@@ -26,6 +26,7 @@ import BrowserServicesKit
 import UserScript
 import SwiftUI
 import Bookmarks
+import Common
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length

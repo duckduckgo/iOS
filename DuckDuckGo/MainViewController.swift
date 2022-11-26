@@ -94,11 +94,10 @@ class MainViewController: UIViewController {
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
     
-    private let bookmarksStack: CoreDataDatabase
+    private let bookmarksDatabase: CoreDataDatabase
     private let favoritesViewModel: FavoritesListInteracting
     
-    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(
-        viewContext: bookmarksStack.makeContext(concurrencyType: .mainQueueConcurrencyType))
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
@@ -127,10 +126,10 @@ class MainViewController: UIViewController {
     private var skipSERPFlow = true
     
     required init?(coder: NSCoder,
-                   bookmarksStack: CoreDataDatabase) {
-        self.bookmarksStack = bookmarksStack
-        self.favoritesViewModel = FavoritesListViewModel(dbProvider: bookmarksStack)
-        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksStack))
+                   bookmarksDatabase: CoreDataDatabase) {
+        self.bookmarksDatabase = bookmarksDatabase
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
         super.init(coder: coder)
     }
     
@@ -378,7 +377,7 @@ class MainViewController: UIViewController {
     
     @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
         guard let controller = BookmarksViewController(coder: coder,
-                                                       bookmarksDatabaseStack: self.bookmarksStack,
+                                                       bookmarksDatabase: self.bookmarksDatabase,
                                                        bookmarksSearch: bookmarksCachingSearch) else {
             fatalError("Failed to create controller")
         }

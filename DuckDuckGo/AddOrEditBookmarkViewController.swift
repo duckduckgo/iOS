@@ -41,14 +41,23 @@ class AddOrEditBookmarkViewController: UIViewController {
     private var viewModelCancellable: AnyCancellable?
 
     init?(coder: NSCoder,
-          editingEntityID: NSManagedObjectID?,
+          editingEntityID: NSManagedObjectID,
+          bookmarksDatabase: CoreDataDatabase) {
+        
+        self.bookmarksDatabase = bookmarksDatabase
+        self.viewModel = BookmarkEditorViewModel(editingEntityID: editingEntityID,
+                                                 bookmarksDatabase: bookmarksDatabase)
+
+        super.init(coder: coder)
+    }
+    
+    init?(coder: NSCoder,
           parentFolderID: NSManagedObjectID?,
           bookmarksDatabase: CoreDataDatabase) {
         
         self.bookmarksDatabase = bookmarksDatabase
-        self.viewModel = BookmarkEditorViewModel(bookmarksDatabase: bookmarksDatabase,
-                                                 editingEntityID: editingEntityID,
-                                                 parentFolderID: parentFolderID)
+        self.viewModel = BookmarkEditorViewModel(creatingFolderWithParentID: parentFolderID,
+                                                 bookmarksDatabase: bookmarksDatabase)
 
         super.init(coder: coder)
     }
@@ -114,7 +123,6 @@ class AddOrEditBookmarkViewController: UIViewController {
 
     @IBSegueAction func onCreateEditor(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AddOrEditBookmarkViewController? {
         guard let controller = AddOrEditBookmarkViewController(coder: coder,
-                                                               editingEntityID: nil,
                                                                parentFolderID: viewModel.bookmark.parent?.objectID,
                                                                bookmarksDatabase: bookmarksDatabase) else {
             fatalError("Failed to create controller")

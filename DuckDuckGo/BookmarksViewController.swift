@@ -462,16 +462,25 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     @IBSegueAction func onCreateEditor(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> AddOrEditBookmarkViewController? {
-        let id = sender as? NSManagedObjectID
-        guard let controller = AddOrEditBookmarkViewController(coder: coder,
-                                                               editingEntityID: id,
-                                                               parentFolderID: viewModel.currentFolder?.objectID,
-                                                               bookmarksDatabase: bookmarksDatabase) else {
-            assertionFailure("Failed to create controller")
-            return nil
+        if let id = sender as? NSManagedObjectID {
+            guard let controller = AddOrEditBookmarkViewController(coder: coder,
+                                                                   editingEntityID: id,
+                                                                   bookmarksDatabase: bookmarksDatabase) else {
+                assertionFailure("Failed to create controller")
+                return nil
+            }
+            
+            return controller
+        } else {
+            guard let controller = AddOrEditBookmarkViewController(coder: coder,
+                                                                   parentFolderID: viewModel.currentFolder?.objectID,
+                                                                   bookmarksDatabase: bookmarksDatabase) else {
+                assertionFailure("Failed to create controller")
+                return nil
+            }
+            
+            return controller
         }
-
-        return controller
     }
     
     @IBSegueAction func onCreateFavoritesView(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> FavoritesViewController {

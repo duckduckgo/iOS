@@ -32,6 +32,8 @@ final class PrivacyIconAndTrackersAnimator {
     private let trackerAnimationImageProvider = TrackerAnimationImageProvider()
     private(set) var isAnimatingForDaxDialog: Bool = false
     
+    var onAnimationCompletion: (() -> Void)?
+    
     func configure(_ container: PrivacyInfoContainerView, with privacyInfo: PrivacyInfo) {
         isAnimatingForDaxDialog = false
         
@@ -74,7 +76,7 @@ final class PrivacyIconAndTrackersAnimator {
         currentTrackerAnimation?.play()
         
         let currentShieldAnimation = container.privacyIcon.shieldAnimationView(for: privacyIcon)
-        currentShieldAnimation?.play { [weak container] _ in
+        currentShieldAnimation?.play { [weak self, weak container] _ in
             container?.privacyIcon.updateIcon(privacyIcon)
             
             UIView.animate(withDuration: Constants.textFieldFadeDuration) {
@@ -82,6 +84,8 @@ final class PrivacyIconAndTrackersAnimator {
             }
             
             container?.privacyIcon.refresh()
+            
+            self?.onAnimationCompletion?()
         }
     }
     

@@ -2188,6 +2188,13 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		1E7A71152934E4C700B7EA19 /* OmniBarNotifications */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = OmniBarNotifications;
+			sourceTree = "<group>";
+		};
 		1E8146A628C8AAF500D1AF63 /* PrivacyIconAndTrackers */ = {
 			isa = PBXGroup;
 			children = (
@@ -3849,6 +3856,7 @@
 				85DFEDEE24C7EA3B00973FE7 /* SmallOmniBarState.swift */,
 				98AA92B22456FBE100ED4B9E /* SearchFieldContainerView.swift */,
 				1EEF123E2850A68A003DDE57 /* PrivacyInfoContainerView.swift */,
+				1E7A71152934E4C700B7EA19 /* OmniBarNotifications */,
 				1EE411F42857C5130003FE64 /* PrivacyIconAndTrackers */,
 			);
 			name = OmniBar;

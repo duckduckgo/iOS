@@ -1,3 +1,5 @@
-• Bug fixes and other improvements
+• Bug: Find in page not working after 7.70.8
+• Send crash pixel using metrics API
+• macOS bug ?: validate outgoing credentials id by domain
 
 Join our fully distributed team and help raise the standard of trust online — from anywhere! https://duckduckgo.com/hiring

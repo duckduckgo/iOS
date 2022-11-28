@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1668786174197,
+    "version": 1669370108102,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -69,6 +69,10 @@
                 {
                     "domain": "www.audiosciencereview.com",
                     "reason": "Pages on the site end up in redirect loops in Firefox."
+                },
+                {
+                    "domain": "identity.ibs.bankwest.com.au",
+                    "reason": "Breaks auth flow: https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1545"
                 }
             ],
             "settings": {
@@ -95,7 +99,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "8668c1396cf49ac18e2e057c48dac1a7"
+            "hash": "62576f16d5b019c8d22cc289c2be6ebd"
         },
         "autoconsent": {
             "exceptions": [
@@ -213,13 +217,17 @@
                     {
                         "domain": "xfinity.com",
                         "reason": "Stream page shows an incompatibility warning and does not load further."
+                    },
+                    {
+                        "domain": "homedepot.ca",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/554"
                     }
                 ],
                 "omitVersionSites": []
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "0cdbfd6c0ee82201b90ab950650e48b9"
+            "hash": "5356242530ab6725e911bec47a5e1bf2"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -1568,7 +1576,7 @@
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/362"
                             },
                             {
-                                "rule": "static-app.klaviyo.com/",
+                                "rule": "klaviyo.com/",
                                 "domains": [
                                     "kmail-lists.com"
                                 ],
@@ -2091,7 +2099,21 @@
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/477"
                             },
                             {
+                                "rule": "api.usercentrics.eu/translations",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/477"
+                            },
+                            {
                                 "rule": "app.usercentrics.eu/browser",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/477"
+                            },
+                            {
+                                "rule": "app.usercentrics.eu/session/",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -2106,6 +2128,13 @@
                             },
                             {
                                 "rule": "privacy-proxy.usercentrics.eu/latest/",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/477"
+                            },
+                            {
+                                "rule": "aggregator.service.usercentrics.eu/aggregate",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3024,7 +3053,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "8ce84b1afb495ee7169b69f1c3fdf16e"
+            "hash": "45d798a17eafc4a383cce1fbf17d3ee9"
         },
         "trackingCookies1p": {
             "settings": {

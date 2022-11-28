@@ -34,6 +34,12 @@ class MainViewController: UIViewController {
         return ThemeManager.shared.currentTheme.statusBarStyle
     }
     
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+        
+        return isIPad ? [.left, .right] : []
+    }
+    
     @IBOutlet weak var progressView: ProgressView!
 
     @IBOutlet weak var suggestionTrayContainer: UIView!

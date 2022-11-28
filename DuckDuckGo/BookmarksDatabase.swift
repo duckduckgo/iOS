@@ -33,7 +33,7 @@ public class BookmarksDatabase {
 
     private init() { }
     
-    private static var defaultDBLocation: URL = {
+    public static var defaultDBLocation: URL = {
         guard let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Constants.bookmarksGroupID) else {
             os_log("BookmarksDatabase.make - OUT, failed to get location %{public}s", Constants.bookmarksGroupID)
             fatalError("Failed to get location")
@@ -41,7 +41,7 @@ public class BookmarksDatabase {
         return url
     }()
 
-    static func make(location: URL = defaultDBLocation) -> CoreDataDatabase {
+    public static func make(location: URL = defaultDBLocation, readOnly: Bool = false) -> CoreDataDatabase {
         os_log("BookmarksDatabase.make - IN - %@", location as CVarArg)
         let bundle = Bookmarks.bundle
         guard let model = CoreDataDatabase.loadModel(from: bundle, named: "BookmarksModel") else {
@@ -49,7 +49,10 @@ public class BookmarksDatabase {
             fatalError("Failed to load model")
         }
 
-        let db = CoreDataDatabase(name: "Bookmarks", containerLocation: location, model: model)
+        let db = CoreDataDatabase(name: "Bookmarks",
+                                  containerLocation: location,
+                                  model: model,
+                                  readOnly: readOnly)
         os_log("BookmarksDatabase.make - OUT")
         return db
     }

@@ -21,6 +21,7 @@ import Foundation
 import Core
 import os.log
 import Bookmarks
+import WidgetKit
 
 extension TabViewController {
     func saveAsBookmark(favorite: Bool, viewModel: MenuBookmarksViewModel = .make()) {
@@ -33,6 +34,8 @@ extension TabViewController {
 
         if favorite && bookmark?.isFavorite == false {
             viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
+            WidgetCenter.shared.reloadAllTimelines()
+            
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveFavoriteDone)
             }

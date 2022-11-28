@@ -282,6 +282,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private func toggleFavoriteAfterSwipe(_ bookmark: BookmarkEntity, _ indexPath: IndexPath) {
         self.viewModel.toggleFavorite(bookmark)
+        WidgetCenter.shared.reloadAllTimelines()
 
         if let dataSource = tableView.dataSource as? SearchBookmarksDataSource {
             dataSource.toggleFavorite(at: indexPath.row)

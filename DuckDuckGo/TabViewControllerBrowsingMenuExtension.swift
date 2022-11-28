@@ -22,6 +22,7 @@ import Core
 import BrowserServicesKit
 import Bookmarks
 import simd
+import WidgetKit
 
 // swiftlint:disable file_length
 extension TabViewController {
@@ -259,6 +260,7 @@ extension TabViewController {
                                           with bookmarksInterface: MenuBookmarksInteracting) {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
         favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
+        WidgetCenter.shared.reloadAllTimelines()
         
         ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo, onAction: {
             self.performRemoveFavoriteAction(for: link, with: bookmarksInterface)
@@ -268,6 +270,8 @@ extension TabViewController {
     private func performRemoveFavoriteAction(for link: Link,
                                              with bookmarksInterface: MenuBookmarksInteracting) {
         bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
+        WidgetCenter.shared.reloadAllTimelines()
+        
         ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo, onAction: {
             self.performAddFavoriteAction(for: link, with: bookmarksInterface)
         })

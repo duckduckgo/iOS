@@ -23,6 +23,7 @@ import CoreData
 import Bookmarks
 import Persistence
 import Combine
+import WidgetKit
 
 protocol AddOrEditBookmarkViewControllerDelegate: AnyObject {
 
@@ -117,6 +118,7 @@ class AddOrEditBookmarkViewController: UIViewController {
 
     func saveAndDismiss() {
         viewModel.save()
+        WidgetCenter.shared.reloadAllTimelines()
         self.delegate?.finishedEditing(self, entityID: viewModel.bookmark.objectID)
         dismiss(animated: true, completion: nil)
     }

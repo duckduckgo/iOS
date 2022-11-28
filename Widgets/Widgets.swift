@@ -24,6 +24,7 @@ import CoreData
 import Kingfisher
 import Bookmarks
 import os
+import Persistence
 
 struct Favorite {
 
@@ -44,9 +45,11 @@ struct Favorite {
 
 }
 
-struct Provider: TimelineProvider {
+class Provider: TimelineProvider {
 
     typealias Entry = FavoritesEntry
+    
+    var bookmarksDB: CoreDataDatabase?
 
     func getSnapshot(in context: Context, completion: @escaping (FavoritesEntry) -> Void) {
         createEntry(in: context) { entry in
@@ -97,10 +100,19 @@ struct Provider: TimelineProvider {
             maxFavorites = 0
         }
         
-        if maxFavorites > 0 {
-            BookmarksDatabase.shared.loadStore()
+        if bookmarksDB == nil {
+            let db = BookmarksDatabase.make(readOnly: true)
             os_log("BookmarksDatabase load store started")
-            let model = FavoritesListViewModel(bookmarksDatabase: BookmarksDatabase.shared)
+            db.loadStore { _, error in
+                guard error == nil else { return }
+                self.bookmarksDB = db
+            }
+            os_log("BookmarksDatabase store loaded")
+        }
+        
+        if maxFavorites > 0,
+           let db = bookmarksDB {
+            let model = FavoritesListViewModel(bookmarksDatabase: db)
             os_log("model created")
             let dbFavorites = model.favorites
             os_log("dbFavorites loaded %d", dbFavorites.count)

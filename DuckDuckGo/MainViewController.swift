@@ -332,15 +332,6 @@ class MainViewController: UIViewController {
             tabsBarController = controller
             return
         }
-
-        if let controller = segue.destination as? TabSwitcherViewController {
-            controller.transitioningDelegate = tabSwitcherTransition
-            controller.delegate = self
-            controller.tabsModel = tabManager.model
-            controller.previewsSource = previewsSource
-            tabSwitcherController = controller
-            return
-        }
         
         if let navController = segue.destination as? UINavigationController,
             let brokenSiteScreen = navController.topViewController as? ReportBrokenSiteViewController {
@@ -406,6 +397,13 @@ class MainViewController: UIViewController {
                                                          bookmarksDatabase: bookmarksDatabase) else {
             fatalError("Failed to create controller")
         }
+        
+        controller.transitioningDelegate = tabSwitcherTransition
+        controller.delegate = self
+        controller.tabsModel = tabManager.model
+        controller.previewsSource = previewsSource
+        tabSwitcherController = controller
+        
         return controller
     }
     

@@ -38,13 +38,15 @@ public class LegacyBookmarksStoreMigration {
                                                       destination: context)
             }
         } else {
-            do {
-                try BookmarkUtils.prepareFoldersStructure(in: context)
-                if context.hasChanges {
-                    try context.save()
+            // Initialize structure if needed
+            BookmarkUtils.prepareFoldersStructure(in: context)
+            if context.hasChanges {
+                do {
+                    try context.save(onErrorFire: .bookmarksCouldNotPrepareDatabase)
+                } catch {
+                    Thread.sleep(forTimeInterval: 1)
+                    fatalError("Could not prepare Bookmarks DB structure")
                 }
-            } catch {
-                #warning("error pixel")
             }
         }
     }
@@ -73,20 +75,16 @@ public class LegacyBookmarksStoreMigration {
         
         // Do not migrate more than once
         guard BookmarkUtils.fetchRootFolder(destination) == nil else {
-#warning("Pixel, should be rare")
+            Pixel.fire(pixel: .bookmarksMigrationAlreadyPerformed)
             return
         }
         
-        do {
-            try BookmarkUtils.prepareFoldersStructure(in: destination)
-        } catch {
-#warning("Pixel")
-            fatalError("Could not write to Bookmarks DB")
-        }
+        BookmarkUtils.prepareFoldersStructure(in: destination)
         
         guard let newRoot = BookmarkUtils.fetchRootFolder(destination),
               let newFavoritesRoot = BookmarkUtils.fetchFavoritesFolder(destination) else {
-#warning("Pixel")
+            Pixel.fire(pixel: .bookmarksMigrationCouldNotPrepareDatabase)
+            Thread.sleep(forTimeInterval: 2)
             fatalError("Could not write to Bookmarks DB")
         }
         
@@ -174,11 +172,17 @@ public class LegacyBookmarksStoreMigration {
         }
         
         do {
-            #warning("Check - can save fail on validation here?")
-            try destination.save()
+            try destination.save(onErrorFire: .bookmarksMigrationFailed)
         } catch {
-            #warning("Pixel")
-            fatalError("Could not migrate Bookmarks")
+            destination.reset()
+            
+            BookmarkUtils.prepareFoldersStructure(in: destination)
+            do {
+                try destination.save(onErrorFire: .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration)
+            } catch {
+                Thread.sleep(forTimeInterval: 2)
+                fatalError("Could not write to Bookmarks DB")
+            }
         }
     }
     // swiftlint:enable cyclomatic_complexity

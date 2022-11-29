@@ -46,7 +46,7 @@ class BookmarkFaviconUpdaterTests: XCTestCase, TabNotifying, FaviconProviding {
         db.loadStore()
 
         let context = db.makeContext(concurrencyType: .mainQueueConcurrencyType)
-        try BookmarkUtils.prepareFoldersStructure(in: context)
+        BookmarkUtils.prepareFoldersStructure(in: context)
         try context.save()
     }
 

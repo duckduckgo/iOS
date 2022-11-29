@@ -18,6 +18,7 @@
 //
 
 import CoreData
+import Persistence
 
 protocol Managed: NSFetchRequestResult {
     static var entityName: String { get }
@@ -33,5 +34,35 @@ extension NSManagedObjectContext {
             fatalError("Wrong object type")
         }
         return obj
+    }
+}
+
+extension NSManagedObjectContext {
+    
+    public func save(onErrorFire event: Pixel.Event) throws {
+        do {
+            try save()
+        } catch {
+            let nsError = error as NSError
+            
+            let processedErrors = CoreDataErrorsParser.parse(error: nsError)
+            
+            let params: [String: String]
+            if let first = processedErrors.first {
+                params = [PixelParameters.errorCount: "\(processedErrors.count)",
+                          PixelParameters.coreDataErrorCode: "\(first.code)",
+                          PixelParameters.coreDataErrorDomain: first.domain,
+                          PixelParameters.coreDataErrorEntity: first.entity ?? "empty",
+                          PixelParameters.coreDataErrorAttribute: first.property ?? "empty"]
+            } else {
+                params = [PixelParameters.errorCount: "\(processedErrors.count)"]
+            }
+            
+            Pixel.fire(pixel: event,
+                       error: error,
+                       withAdditionalParameters: params)
+            
+            throw error
+        }
     }
 }

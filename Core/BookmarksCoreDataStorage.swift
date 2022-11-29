@@ -95,7 +95,8 @@ public class LegacyBookmarksCoreDataStorage {
                 }
             }
         } catch {
-            #warning("Pixel")
+            Pixel.fire(pixel: .bookmarksMigrationCouldNotRemoveOldStore,
+                       error: error)
         }
         
         try? FileManager.default.removeItem(atPath: storeURL.path)

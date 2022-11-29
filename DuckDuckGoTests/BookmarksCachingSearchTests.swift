@@ -71,7 +71,7 @@ class BookmarksCachingSearchTests: XCTestCase {
         
         inMemoryStore = CoreData.createInMemoryPersistentContainer(modelName: "BookmarksModel",
                                                                   bundle: Bookmarks.bundle)
-        try? BookmarkUtils.prepareFoldersStructure(in: inMemoryStore.viewContext)
+        BookmarkUtils.prepareFoldersStructure(in: inMemoryStore.viewContext)
         mockObjectID = BookmarkUtils.fetchRootFolder(inMemoryStore.viewContext)?.objectID
         XCTAssertNotNil(mockObjectID)
     

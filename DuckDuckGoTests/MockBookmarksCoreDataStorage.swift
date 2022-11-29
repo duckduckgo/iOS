@@ -38,7 +38,7 @@ class MockBookmarksDatabase {
             let context = db.makeContext(concurrencyType: .privateQueueConcurrencyType)
             context.performAndWait {
                 do {
-                    try BookmarkUtils.prepareFoldersStructure(in: context)
+                    BookmarkUtils.prepareFoldersStructure(in: context)
                     try context.save()
                 } catch {
                     fatalError("Could not setup mock DB")

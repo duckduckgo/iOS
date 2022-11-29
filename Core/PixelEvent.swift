@@ -22,6 +22,7 @@ import BrowserServicesKit
 import Bookmarks
 
 // swiftlint:disable file_length
+// swiftlint:disable line_length
 // swiftlint:disable identifier_name
 // swiftlint:disable type_body_length
 extension Pixel {
@@ -377,6 +378,15 @@ extension Pixel {
         case indexOutOfRange(BookmarksModelError.ModelType)
         case saveFailed(BookmarksModelError.ModelType)
         case missingParent(BookmarksModelError.ObjectType)
+        
+        case bookmarksCouldNotLoadDatabase
+        case bookmarksCouldNotPrepareDatabase
+        case bookmarksMigrationAlreadyPerformed
+        case bookmarksMigrationFailed
+        case bookmarksMigrationCouldNotPrepareDatabase
+        case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
+        case bookmarksMigrationCouldNotValidateDatabase
+        case bookmarksMigrationCouldNotRemoveOldStore
     }
     
 }
@@ -742,6 +752,15 @@ extension Pixel.Event {
         case .indexOutOfRange(let modelType): return "m_d_bookmarks_index_out_of_range_\(modelType.rawValue)"
         case .saveFailed(let modelType): return "m_d_bookmarks_view_model_save_failed_\(modelType.rawValue)"
         case .missingParent(let objectType): return "m_d_bookmark_model_missing_parent_\(objectType.rawValue)"
+            
+        case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
+        case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
+        case .bookmarksMigrationAlreadyPerformed: return "m_d_bookmarks_migration_already_performed"
+        case .bookmarksMigrationFailed: return "m_d_bookmarks_migration_failed"
+        case .bookmarksMigrationCouldNotPrepareDatabase: return "m_d_bookmarks_migration_could_not_prepare_database"
+        case .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration: return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
+        case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
+        case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
         }
         
     }

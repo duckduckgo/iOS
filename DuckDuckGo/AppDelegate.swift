@@ -126,8 +126,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         bookmarksDatabase.loadStore { context, error in
             guard let context = context else {
-                #warning("error handling")
-                return
+                if let error = error {
+                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+                               error: error)
+                } else {
+                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
+                }
+
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
             }
             
             let legacyStorage = LegacyBookmarksCoreDataStorage()

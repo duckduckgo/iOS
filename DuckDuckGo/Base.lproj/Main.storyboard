@@ -124,7 +124,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Tabs"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="p9L-cF-4aL" kind="presentation" identifier="ShowTabs" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
+                                            <segue destination="p9L-cF-4aL" kind="presentation" identifier="ShowTabs" destinationCreationSelector="onCreateTabSwitcher:sender:segueIdentifier:" modalPresentationStyle="overCurrentContext" id="v48-wg-SoN"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="hL8-s1-UNT"/>
@@ -161,13 +161,13 @@
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 of 12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSE-zZ-iud">
-                                                        <rect key="frame" x="231" y="0.0" width="37" height="36"/>
+                                                        <rect key="frame" x="224.5" y="0.0" width="43.5" height="36"/>
                                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="IBB-TQ-d5c">
-                                                        <rect key="frame" x="38" y="0.0" width="185" height="36"/>
+                                                        <rect key="frame" x="38" y="0.0" width="178.5" height="36"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <accessibility key="accessibilityConfiguration">
                                                             <accessibilityTraits key="traits" searchField="YES"/>

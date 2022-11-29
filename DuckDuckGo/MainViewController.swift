@@ -318,7 +318,7 @@ class MainViewController: UIViewController {
         }
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
-        currentTab?.saveAsBookmark(favorite: true)
+        currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -398,6 +398,14 @@ class MainViewController: UIViewController {
             controller.openEditFormWhenPresented(bookmark: bookmark)
         }
         
+        return controller
+    }
+    
+    @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
+        guard let controller = TabSwitcherViewController(coder: coder,
+                                                         bookmarksDatabase: bookmarksDatabase) else {
+            fatalError("Failed to create controller")
+        }
         return controller
     }
     

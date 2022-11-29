@@ -338,9 +338,13 @@ class TabViewController: UIViewController {
     }
 
     override func buildActivities() -> [UIActivity] {
-        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
+                                                             viewModel: viewModel)]
 
-        activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
+        activities.append(SaveBookmarkActivity(controller: self,
+                                               isFavorite: true,
+                                               viewModel: viewModel))
         activities.append(FindInPageActivity(controller: self))
 
         return activities

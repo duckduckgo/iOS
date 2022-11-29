@@ -228,7 +228,7 @@ extension MainViewController {
     @objc func keyboardNoOperation() { }
 
     private func saveBookmark(favorite: Bool) {
-        currentTab?.saveAsBookmark(favorite: favorite)
+        currentTab?.saveAsBookmark(favorite: favorite, viewModel: menuBookmarksViewModel)
     }
 
 }

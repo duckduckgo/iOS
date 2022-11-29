@@ -31,7 +31,7 @@ class SaveBookmarkActivity: UIActivity {
     
     private var activityViewControllerAccessed = false
 
-    init(controller: TabViewController, isFavorite: Bool = false, viewModel: MenuBookmarksViewModel = .make()) {
+    init(controller: TabViewController, isFavorite: Bool = false, viewModel: MenuBookmarksViewModel) {
         self.viewModel = viewModel
         self.controller = controller
         self.isFavorite = isFavorite
@@ -61,7 +61,7 @@ class SaveBookmarkActivity: UIActivity {
     override var activityViewController: UIViewController? {
         guard !activityViewControllerAccessed else { return nil }
         activityViewControllerAccessed = true
-        controller?.saveAsBookmark(favorite: isFavorite)
+        controller?.saveAsBookmark(favorite: isFavorite, viewModel: viewModel)
         activityDidFinish(true)
         return nil
     }

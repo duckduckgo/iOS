@@ -22,6 +22,7 @@ import Core
 import WebKit
 import os.log
 import Bookmarks
+import Persistence
 
 // swiftlint:disable file_length
 class TabSwitcherViewController: UIViewController {
@@ -59,6 +60,8 @@ class TabSwitcherViewController: UIViewController {
     weak var tabsModel: TabsModel!
     weak var previewsSource: TabPreviewsSource!
     
+    private var bookmarksDatabase: CoreDataDatabase
+    
     weak var reorderGestureRecognizer: UIGestureRecognizer?
     
     override var canBecomeFirstResponder: Bool { return true }
@@ -69,6 +72,16 @@ class TabSwitcherViewController: UIViewController {
     private var isProcessingUpdates = false
 
     let favicons = Favicons.shared
+    
+    required init?(coder: NSCoder,
+                   bookmarksDatabase: CoreDataDatabase) {
+        self.bookmarksDatabase = bookmarksDatabase
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -229,14 +242,15 @@ class TabSwitcherViewController: UIViewController {
         alert.overrideUserInterfaceStyle()
         alert.addAction(UIAlertAction(title: UserText.actionCancel, style: .cancel))
         alert.addAction(title: UserText.actionBookmark, style: .default) {
-            let result = self.bookmarkAll()
+            let model = MenuBookmarksViewModel(bookmarksDatabase: self.bookmarksDatabase)
+            let result = self.bookmarkAll(viewModel: model)
             self.displayBookmarkAllStatusMessage(with: result, openTabsCount: self.tabsModel.tabs.count)
         }
         
         present(alert, animated: true, completion: nil)
     }
 
-    private func bookmarkAll(viewModel: MenuBookmarksViewModel = .make()) -> BookmarkAllResult {
+    private func bookmarkAll(viewModel: MenuBookmarksInteracting) -> BookmarkAllResult {
         let tabs = self.tabsModel.tabs
         var newCount = 0
         tabs.forEach { tab in

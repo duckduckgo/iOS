@@ -24,7 +24,7 @@ import Bookmarks
 import WidgetKit
 
 extension TabViewController {
-    func saveAsBookmark(favorite: Bool, viewModel: MenuBookmarksViewModel = .make()) {
+    func saveAsBookmark(favorite: Bool, viewModel: MenuBookmarksInteracting) {
         guard let link = link, !isError else {
             assertionFailure()
             return

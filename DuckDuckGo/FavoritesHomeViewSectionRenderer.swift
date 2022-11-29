@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import Bookmarks
+import WidgetKit
 
 protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
@@ -157,6 +158,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         let favorite = viewModel.favorite(at: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
         viewModel.removeFavorite(favorite)
+        WidgetCenter.shared.reloadAllTimelines()
         collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [indexPath])
             self.controller?.favoritesRenderer(self, favoriteDeleted: favorite)
@@ -277,6 +279,7 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
 
         collectionView.performBatchUpdates {
             viewModel.moveFavorite(favorite, fromIndex: sourcePath.row, toIndex: destinationPath.row)
+            WidgetCenter.shared.reloadAllTimelines()
             collectionView.deleteItems(at: [sourcePath])
             collectionView.insertItems(at: [destinationPath])
         }

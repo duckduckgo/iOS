@@ -87,7 +87,7 @@ class AddOrEditBookmarkViewController: UIViewController {
         if viewModel.isNew {
             title = UserText.addFolderScreenTitle
         } else {
-            title = UserText.editFolderScreenTitle
+            title = viewModel.bookmark.isFolder ? UserText.editFolderScreenTitle : UserText.editBookmarkScreenTitle
         }
     }
     

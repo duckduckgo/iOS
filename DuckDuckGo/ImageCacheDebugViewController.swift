@@ -40,7 +40,7 @@ class ImageCacheDebugViewController: UITableViewController {
     let imageError = UIImage(systemName: "exclamationmark.triangle")
     let tabsModel = TabsModel.get() ?? TabsModel(desktop: false)
 
-    private let bookmarksContext = BookmarksDatabase.shared.makeContext(concurrencyType: .mainQueueConcurrencyType)
+    private let bookmarksContext = BookmarksDatabase.globalReferenceForDebug!.makeContext(concurrencyType: .mainQueueConcurrencyType)
 
     private var bookmarksAndFavorites = [BookmarkEntity]()
 

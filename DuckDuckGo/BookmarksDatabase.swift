@@ -29,7 +29,8 @@ public class BookmarksDatabase {
         public static let bookmarksGroupID = "\(Global.groupIdPrefix).bookmarks"
     }
 
-    public static let shared = make()
+    // Used only in debug screen
+    public static var globalReferenceForDebug: CoreDataDatabase?
 
     private init() { }
     
@@ -54,6 +55,7 @@ public class BookmarksDatabase {
                                   model: model,
                                   readOnly: readOnly)
         os_log("BookmarksDatabase.make - OUT")
+        globalReferenceForDebug = db
         return db
     }
 

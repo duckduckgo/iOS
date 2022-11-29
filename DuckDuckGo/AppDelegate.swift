@@ -47,9 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var overlayWindow: UIWindow?
     var window: UIWindow?
 
-//    private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
-    private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.shared // Switch to make() when no longer singleton
+    private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?

@@ -37,6 +37,23 @@ extension NSManagedObjectContext {
     }
 }
 
+extension Array where Element == CoreDataErrorsParser.ErrorInfo {
+    
+    var errorPixelParameters: [String: String] {
+        let params: [String: String]
+        if let first = first {
+            params = [PixelParameters.errorCount: "\(count)",
+                      PixelParameters.coreDataErrorCode: "\(first.code)",
+                      PixelParameters.coreDataErrorDomain: first.domain,
+                      PixelParameters.coreDataErrorEntity: first.entity ?? "empty",
+                      PixelParameters.coreDataErrorAttribute: first.property ?? "empty"]
+        } else {
+            params = [PixelParameters.errorCount: "\(count)"]
+        }
+        return params
+    }
+}
+
 extension NSManagedObjectContext {
     
     public func save(onErrorFire event: Pixel.Event) throws {
@@ -44,23 +61,11 @@ extension NSManagedObjectContext {
             try save()
         } catch {
             let nsError = error as NSError
-            
             let processedErrors = CoreDataErrorsParser.parse(error: nsError)
-            
-            let params: [String: String]
-            if let first = processedErrors.first {
-                params = [PixelParameters.errorCount: "\(processedErrors.count)",
-                          PixelParameters.coreDataErrorCode: "\(first.code)",
-                          PixelParameters.coreDataErrorDomain: first.domain,
-                          PixelParameters.coreDataErrorEntity: first.entity ?? "empty",
-                          PixelParameters.coreDataErrorAttribute: first.property ?? "empty"]
-            } else {
-                params = [PixelParameters.errorCount: "\(processedErrors.count)"]
-            }
             
             Pixel.fire(pixel: event,
                        error: error,
-                       withAdditionalParameters: params)
+                       withAdditionalParameters: processedErrors.errorPixelParameters)
             
             throw error
         }

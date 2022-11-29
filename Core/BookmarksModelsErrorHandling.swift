@@ -26,8 +26,9 @@ import CoreData
 public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
     
     init() {
-        super.init { event, _, _, _ in
+        super.init { event, error, _, _ in
             let domainEvent: Pixel.Event
+            var params = [String: String]()
             switch event {
                 
             case .bookmarkFolderExpected:
@@ -46,11 +47,21 @@ public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
                 domainEvent = .indexOutOfRange(model)
             case .saveFailed(let model):
                 domainEvent = .saveFailed(model)
+                
+                if let error = error as? NSError {
+                    let processedErrors = CoreDataErrorsParser.parse(error: error)
+                    params = processedErrors.errorPixelParameters
+                }
+                
             case .missingParent(let object):
                 domainEvent = .missingParent(object)
             }
             
-            Pixel.fire(pixel: domainEvent)
+            if let error = error {
+                Pixel.fire(pixel: domainEvent, error: error, withAdditionalParameters: params)
+            } else {
+                Pixel.fire(pixel: domainEvent)
+            }
         }
     }
     

@@ -26,6 +26,7 @@ import BrowserServicesKit
 import UserScript
 import SwiftUI
 import Bookmarks
+import Persistence
 import Common
 
 // swiftlint:disable file_length
@@ -85,7 +86,7 @@ class TabViewController: UIViewController {
 
     private(set) var urlToSiteRating: [URL: SiteRating] = [:]
     private(set) var siteRating: SiteRating?
-    private(set) var tabModel: Tab
+    let tabModel: Tab
 
     let favicons = Favicons.shared
     private let requeryLogic = RequeryLogic()
@@ -126,7 +127,9 @@ class TabViewController: UIViewController {
     private var blobDownloadTargetFrame: WKFrameInfo?
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
-    lazy var faviconUpdater = BookmarkFaviconUpdater(bookmarksDatabase: BookmarksDatabase.shared, tab: tabModel, favicons: Favicons.shared)
+    
+    let bookmarksDatabase: CoreDataDatabase
+    lazy var faviconUpdater = BookmarkFaviconUpdater(bookmarksDatabase: bookmarksDatabase, tab: tabModel, favicons: Favicons.shared)
 
     public var url: URL? {
         willSet {
@@ -281,12 +284,13 @@ class TabViewController: UIViewController {
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
-    static func loadFromStoryboard(model: Tab) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
-        guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
-            fatalError("Failed to instantiate controller as TabViewController")
-        }
-        controller.tabModel = model
+        let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
+            TabViewController(coder: coder,
+                              tabModel: model,
+                              bookmarksDatabase: bookmarksDatabase)
+        })
         return controller
     }
     
@@ -301,10 +305,17 @@ class TabViewController: UIViewController {
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
+    
+    required init?(coder aDecoder: NSCoder,
+                   tabModel: Tab,
+                   bookmarksDatabase: CoreDataDatabase) {
+            self.tabModel = tabModel
+            self.bookmarksDatabase = bookmarksDatabase
+            super.init(coder: aDecoder)
+    }
 
     required init?(coder aDecoder: NSCoder) {
-        tabModel = Tab(link: nil)
-        super.init(coder: aDecoder)
+        fatalError("Not implemented")
     }
     
     override func viewDidLoad() {

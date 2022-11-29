@@ -442,6 +442,7 @@ class MainViewController: UIViewController {
         }
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
+                                bookmarksDatabase: bookmarksDatabase,
                                 delegate: self)
     }
 

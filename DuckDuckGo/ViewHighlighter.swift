@@ -37,7 +37,9 @@ class ViewHighlighter {
         highlightView.frame = CGRect(x: 0, y: 0, width: size, height: size)
         highlightView.center = center
         highlightView.isUserInteractionEnabled = false
-        window.addSubview(highlightView)
+        
+        let parentView = window.subviews.first { view.isDescendant(of: $0) }
+        parentView?.addSubview(highlightView)
 
         highlightView.contentMode = .scaleToFill
         highlightView.loopMode = .loop

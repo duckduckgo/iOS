@@ -71,7 +71,7 @@ extension TabViewController {
         let linkEntries = await buildLinkEntries()
         entries.append(contentsOf: linkEntries)
             
-        if let domain = self.siteRating?.domain {
+        if let domain = self.privacyInfo?.domain {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))
         }
 

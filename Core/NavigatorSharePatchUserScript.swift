@@ -19,7 +19,6 @@
 
 import UIKit
 import WebKit
-import BrowserServicesKit
 import UserScript
 
 public class NavigatorSharePatchUserScript: NSObject, UserScript {

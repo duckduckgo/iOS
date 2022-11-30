@@ -46,6 +46,7 @@ extension Pixel {
         case privacyDashboardProtectionEnabled
         case privacyDashboardManageProtection
         case privacyDashboardReportBrokenSite
+        case privacyDashboardPixelFromJS(rawPixel: String)
         
         case tabSwitcherNewLayoutSeen
         case tabSwitcherListEnabled
@@ -280,7 +281,8 @@ extension Pixel {
         case remoteMessageShownSecondaryActionClicked
         
         // MARK: debug pixels
-        
+        case dbCrashDetected
+
         case dbMigrationError
         case dbRemovalError
         case dbDestroyError
@@ -317,7 +319,6 @@ extension Pixel {
         case contentBlockingIdentifierError
         
         case webKitDidTerminate
-        case webKitDidBecomeUnresponsive
         case webKitTerminationDidReloadCurrentTab
         
         case backgroundTaskSubmissionFailed
@@ -393,6 +394,7 @@ extension Pixel.Event {
         case .privacyDashboardProtectionEnabled: return "mp_wlr"
         case .privacyDashboardManageProtection: return "mp_mw"
         case .privacyDashboardReportBrokenSite: return "mp_rb"
+        case .privacyDashboardPixelFromJS(let rawPixel): return rawPixel
             
         case .tabSwitcherNewLayoutSeen: return "m_ts_n"
         case .tabSwitcherListEnabled: return "m_ts_l"
@@ -632,7 +634,8 @@ extension Pixel.Event {
         case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
 
         // MARK: debug pixels
-            
+
+        case .dbCrashDetected: return "m_d_crash"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"
@@ -669,7 +672,6 @@ extension Pixel.Event {
         case .contentBlockingIdentifierError: return "m_d_cb_ie"
             
         case .webKitDidTerminate: return "m_d_wkt"
-        case .webKitDidBecomeUnresponsive: return "m_d_wkunresponsive"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"

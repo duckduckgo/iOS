@@ -19,6 +19,8 @@
 
 import XCTest
 import TrackerRadarKit
+import DuckDuckGo
+import PrivacyDashboard
 @testable import BrowserServicesKit
 @testable import Core
 
@@ -51,7 +53,7 @@ extension TrackerDataManager {
         
         let entity = tds.findEntity(forHost: domain)
         XCTAssertNotNil(entity, "no entity found for domain \(domain)", file: file, line: line)
-        XCTAssertGreaterThan(entity?.prevalence ?? 0, SiteRating.Constants.majorNetworkPrevalence, file: file, line: line)
+        XCTAssertGreaterThan(entity?.prevalence ?? 0, TrackerInfo.Constants.majorNetworkPrevalence, file: file, line: line)
     }
 
     func assertEntityAndDomainLookups(file: StaticString = #file, line: UInt = #line) {

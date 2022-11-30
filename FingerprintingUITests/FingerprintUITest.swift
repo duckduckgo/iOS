@@ -120,7 +120,7 @@ class FingerprintUITest: XCTestCase {
         
         // Clear all tabs and data
         app.toolbars["Toolbar"].buttons["Fire"].tap()
-        app.sheets.scrollViews.otherElements.buttons["Close Tabs and Clear Data"].tap()
+        app.buttons["Close Tabs and Clear Data"].tap()
         
         sleep(2)
         

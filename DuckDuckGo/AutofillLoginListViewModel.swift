@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import Common
 import UIKit
 import Combine
 import os.log
@@ -60,6 +61,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
+    private let tld: TLD
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
@@ -81,8 +83,9 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings) {
+    init(appSettings: AppSettings, tld: TLD) {
         self.appSettings = appSettings
+        self.tld = tld
         updateData()
         setupCancellables()
     }
@@ -150,7 +153,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         
         if let query = query, query.count > 0 {
             filteredAccounts = filteredAccounts.filter { account in
-                if !account.name.lowercased().contains(query.lowercased()) &&
+                if !account.name(tld: tld).lowercased().contains(query.lowercased()) &&
                     !account.domain.lowercased().contains(query.lowercased()) &&
                     !account.username.lowercased().contains(query.lowercased()) {
                     return false
@@ -185,7 +188,7 @@ final class AutofillLoginListViewModel: ObservableObject {
             newSections.append(.enableAutofill)
         }
 
-        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()
+        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
         let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
         
         newSections.append(contentsOf: accountSections)
@@ -264,14 +267,14 @@ extension AutofillLoginListItemViewModel: Comparable {
 
 internal extension Array where Element == SecureVaultModels.WebsiteAccount {
     
-    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter() -> [String: [AutofillLoginListItemViewModel]] {
+    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: TLD) -> [String: [AutofillLoginListItemViewModel]] {
         reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
             
             // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
             // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
             // Apple's own apps (e.g. contacts) seem to suffer from the same problem
             let key: String
-            if let firstChar = account.name.first,
+            if let firstChar = account.name(tld: tld).first,
                let deDistinctionedChar = String(firstChar).folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil).first,
                deDistinctionedChar.isLetter {
                 
@@ -280,7 +283,7 @@ internal extension Array where Element == SecureVaultModels.WebsiteAccount {
                 key = AutofillLoginListSectionType.miscSectionHeading
             }
             
-            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account))
+            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account, tld: tld))
         }
     }
 }

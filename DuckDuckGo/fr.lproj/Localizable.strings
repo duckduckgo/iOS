@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Annuler";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Saisie semi-automatique de la suggestion";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Signet";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Ouvrir le site Web";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Rechercher sur DuckDuckGo";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Ajouter";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Début du téléchargement pour %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuler";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Bienvenue sur\nDuckDuckGo !";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Code d'invitation";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Votre invitation s'affichera ici lorsque vous aurez accès à la fonctionnalité. Vous souhaitez %1$@ de son lancement ? %2$@ sur le navigateur macOS bêta.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "être prévenu(e)";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Nous vous enverrons une notification lorsque nous serons prêts. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Votre invitation à essayer DuckDuckGo pour Mac arrivera ici. Vous pouvez revenir dans quelques temps ou attendre de recevoir une notification de notre part.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Nous vous avertirons lorsque vous pourrez télécharger DuckDuckGo pour Mac.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ sur la version bêta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "L'application de confidentialité DuckDuckGo pour Mac répond à vos besoins de rapidité et de fonctionnalités de navigation, et dispose des meilleurs outils de leur catégorie pour protéger votre vie privée.";
+"mac-browser.waitlist.summary" = "DuckDuckGo pour Mac répond à vos besoins de rapidité et de fonctionnalités de navigation, et dispose des meilleurs outils de leur catégorie pour protéger votre vie privée.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Ouvrez votre invitation";
@@ -991,59 +955,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copier";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Accédez à cette URL sur votre Mac pour télécharger l'application :";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Sur votre Mac, accédez à :";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Étape 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Ouvrez le fichier à installer, puis saisissez votre code d'invitation pour le débloquer.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Étape 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Prêt(e) à naviguer incognito sur Mac ?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Vous avez reçu une invitation !";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Partager le lien";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Rejoindre la liste d'attente privée";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Inscription à la liste d'attente...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Essayez DuckDuckGo pour Mac !";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Procurez-vous DuckDuckGo pour Mac !";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Des places vont bientôt se libérer !";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Nous pouvons vous avertir lorsque ce sera votre tour, mais les notifications sont actuellement désactivées pour DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Vous n'aurez pas à fournir d'informations personnelles pour vous inscrire sur la liste d'attente. Votre place sera assurée par un horodatage associé uniquement à votre appareil, qui nous permettra de vous informer quand viendra votre tour.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Vous êtes sur liste d'attente !";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Disponible en téléchargement sur Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Naviguez incognito avec notre application pour Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Vous êtes sur liste d'attente !";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Vous avez reçu une invitation !\n\nPrêt(e) à naviguer incognito sur Mac ?\n\nÉtape 1\nAccédez à cette URL sur votre Mac pour télécharger l'application :\nhttps://duckduckgo.com/mac\n\nÉtape 2\nOuvrez le fichier à installer, puis saisissez votre code d'invitation pour le débloquer.\n\nCode d'invitation : %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Prêt(e) à naviguer incognito sur Mac ?\n\nAccédez à cette URL sur votre Mac pour télécharger l'application :\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Vous avez reçu une invitation !";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo pour Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "Application de bureau DuckDuckGo";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "À propos de nos protections contre le suivi Web";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "Logo DuckDuckGo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "À propos de nos protections des recherches et publicités";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Appuyez pour ouvrir l'écran Tableau de bord de confidentialité";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Impact de nos publicités de recherche sur nos protections";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algorithme";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bits";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Erreur lors de l'extraction du certificat";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Nom commun";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Taille réelle";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "Adresse électronique";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Connexion chiffrée";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Cryptage forcé";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Connexion chiffrée";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Nous avons obligé ce site à utiliser une connexion chiffrée, ce qui l'empêchera d'espionner les informations personnelles que vous lui enverrez.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Une connexion chiffrée empêche l'espionnage des informations personnelles que vous envoyez à un site Web.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Identifiant de la clé du sujet";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Émetteur";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Clé publique";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Taille de la clé";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Cryptage mixte";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Ce site a un cryptage mixte car une partie de son contenu passe par des connexions non chiffrées.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Non";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Permanent";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Clé publique";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Une connexion chiffrée empêche l'espionnage des informations personnelles que vous envoyez à un site Web.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Nom de l'émetteur";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Résumé";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Faites attention lorsque vous saisissez des informations personnelles sur ce site.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Connexion non chiffrée";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Inconnu";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Utilisation";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Décrypter";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Dériver";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Chiffrer";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Signer";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Déballer";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Vérifier";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Emballer";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Oui";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "PROTECTION DU SITE DÉSACTIVÉE";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "AMÉLIORÉ DE $1 À $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "DEGRÉ DE CONFIDENTIALITÉ";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Principaux réseaux de suivi trouvés";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Aucun réseau majeur de traqueurs trouvé";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Des réseaux de traqueurs ont été trouvés sur %1$@%% des sites Web que vous avez visités depuis le %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Nous recueillons toujours des données pour indiquer\nle nombre de traqueurs que nous avons bloqués.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Aucune demande tierce chargée";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Les demandes du domaine suivant ont été chargées car une publicité %@ sur DuckDuckGo a récemment fait l'objet d'un clic. Ces demandes permettent d'évaluer l'efficacité des publicités. Toutes les publicités sur DuckDuckGo sont sans profilage.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Les demandes du domaine suivant ont été chargées pour éviter toute coupure du site.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Les demandes du domaine suivant ont été chargées car elles sont associées à %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Les demandes des domaines tiers suivants ont été chargées. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil, bien que nos autres protections en matière de suivi sur Internet restent applicables.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Aucune demande tierce n'a vu son chargement bloqué car les protections sont désactivées pour ce site. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Les demandes de suivi des domaines suivants ont été chargées.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Les demandes du domaine suivant ont également été chargées.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Les demandes des domaines suivants ont été chargées.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Les demandes du domaine suivant ont été chargées.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Nous n'avons détecté aucune demande provenant de domaines tiers.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Demandes tierces chargées";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Remarque : les limites de la plateforme peuvent restreindre notre capacité à détecter toutes les demandes.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Absence de profilage";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Les pratiques de confidentialité de ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Les pratiques de confidentialité indiquent dans quelle mesure les informations personnelles que vous partagez avec un site Web sont protégées.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Ce site Web vous avertira avant de transférer vos informations en cas de fusion ou de rachat";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Les pratiques de confidentialité de ce site Web n'ont pas été vérifiées.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Degré de confidentialité %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Appuyer pour accéder à l'écran de protection de la confidentialité";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Ces statistiques sont uniquement enregistrées sur votre appareil et ne seront envoyées nulle part. Jamais.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Bonnes pratiques de confidentialité";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Pratiques de confidentialité mixtes";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Mauvaises pratiques de confidentialité";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Pratiques de confidentialité inconnues";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Les traqueurs aident les entreprises à établir votre profil. Nous avons empêché ces traqueurs de charger et de surveiller votre activité sur cette page.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Aucune demande de suivi n'a vu son chargement bloqué car les protections sont désactivées pour ce site. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nous n'avons détecté aucune demande de suivi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Les demandes des domaines tiers suivants ont vu leur chargement bloqué, car elles ont été identifiées comme des demandes de suivi. Si les demandes d'une entreprise sont chargées, cela peut lui permettre d'établir votre profil.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Demandes dont le chargement a été bloqué";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Demandes de suivi trouvées";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Aucune demande de suivi bloquée";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Aucune demande de suivi trouvée";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Icône de confidentialité";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Annuler";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Protection de la confidentialité activée pour %@";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Une erreur inconnue s'est produite.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Paramètres";

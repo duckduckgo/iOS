@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Отменить";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Предложение для автозаполнения";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Закладка";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Открыть сайт";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Поиск в DuckDuckGo";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Добавить";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Началась загрузка файла %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Отменить";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Добро пожаловать в\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Код приглашения";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Ваше приглашение появится здесь, когда подойдет ваша очередь. Хотите %1$@, когда оно придет? %2$@ о бета-версии для браузера macOS.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "получить уведомление";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Вы получите уведомление, когда подойдет ваша очередь. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Приглашение на DuckDuckGo для Mac появится здесь. Зайдите сюда позже. Мы также можем отправить вам уведомление, когда придет ваша очередь.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Когда можно будет загрузить вашу копию DuckDuckGo для Mac, мы отправим вам уведомление.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ о бета-версии.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Приложение DuckDuckGo для Mac — это высокая скорость, ожидаемый функционал и полная конфиденциальность.";
+"mac-browser.waitlist.summary" = "Приложение DuckDuckGo для Mac — это высокая скорость, функциональность и беспрецедентная конфиденциальность.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Откройте приглашение";
@@ -991,29 +955,11 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Копировать";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Для загрузки DuckDuckGo на Mac откройте эту ссылку:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Перейдите на компьютере Mac по ссылке:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1.";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Откройте установочный файл и введите код приглашения для разблокировки.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2.";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Хотите просматривать на Mac сайты в полной конфиденциальности?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Вас пригласили!";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Приглашаем встать в очередь";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Добавление в список ожидания...";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Поделиться ссылкой";
 
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "DuckDuckGo для Mac!";
@@ -1021,29 +967,14 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Скоро — для Windows!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Мы можем уведомить вас, когда подойдет ваша очередь, но для этого нужно включить уведомления от DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Чтобы записаться в список ожидания, не нужно делиться личной информацией. Временная метка, хранящаяся только на вашем устройстве, позволит нам определить, когда подойдет ваша очередь, о чем мы сообщим вам дополнительно.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Вы в списке!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Доступна версия для Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Полная конфиденциальность в Интернете, благодаря нашему приложению для Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Вы в списке!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Вас пригласили!\n\nХотите просматривать на Mac сайты в полной конфиденциальности?\n\n1.\nЗагрузите приложение на Mac, перейдя по этой ссылке:\nhttps://duckduckgo.com/mac\n\n2.\nОткройте установочный файл и введите код приглашения для разблокировки.\n\nКод приглашения: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Конфиденциальность в Интернете на Mac? Не проблема!\n\nЗагрузите наше приложение по ссылке:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Вас пригласили!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo для Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "Настольное приложение DuckDuckGo";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Хорошо";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "О нашей защите от отслеживания онлайн";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "Логотип DuckDuckGo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "О рекламе и защите в поисковых системах";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Нажмите, чтобы открыть панель конфиденциальности";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Как реклама при поиске влияет на защиту";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Алгоритм";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d бит";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Ошибка извлечения сертификата";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Общепринятое название";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Фактический размер";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "Электронная почта";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Зашифрованное соединение";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Принудительное шифрование";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Зашифрованное соединение";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Чтобы защитить вас от перехвата личной информации, мы заставили этот сайт зашифровать соединение.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Зашифрованное соединение не позволит злоумышленникам перехватить личную информацию, которую вы передаете сайту.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Идентификатор ключа субъекта";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Кем выдан";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Открытый ключ";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Размер ключа";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Смешанное шифрование";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Данный сайт предлагает смешанное шифрование, то есть часть содержимого передается по незащищенным каналам.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Нет";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Постоянный";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Открытый ключ";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Зашифрованное соединение не позволит злоумышленникам перехватить личную информацию, которую вы передаете сайту.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Имя субъекта";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Сводка";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Проявляйте бдительность при вводе личной информации на этом сайте.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Незашифрованное соединение";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Неизвестно";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Применение";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Расшифровка";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Производные";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Шифрование";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Подпись";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Развертка";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Подтверждение";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Сворачивание";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Да";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "ЗАЩИТА САЙТА ОТКЛЮЧЕНА";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "УРОВЕНЬ ЗАЩИТЫ ПОВЫШЕН С $1 ДО $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "УРОВЕНЬ КОНФИДЕНЦИАЛЬНОСТИ";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Обнаружены крупные сети трекеров";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Не обнаружено ни одной крупной сети трекеров";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Сети трекеров были обнаружены на %1$@%% сайтах, которые вы посетили с %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Мы все еще собираем данные\nо количестве заблокированных трекеров.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Не загружено ни одного стороннего запроса";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Запросы этого домена были загружены в результате недавнего нажатия на рекламу %@ в DuckDuckGo. Такие запросы помогают оценить эффективность рекламы. Рекламные объявления в DuckDuckGo не профилируют пользователей.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Запросы этого домена были загружены для предотвращения неполадок в работе сайта.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Запросы этого домена были загружены, так как они связаны с %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Ниже приведен список загруженных запросов сторонних доменов. Благодаря этим запросам компании могут вас профилировать, однако мы по-прежнему защищаем вас от отслеживания в сети другими способами.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Мы не заблокировали ни одной загрузки сторонних запросов, так как защита на этом сайте отключена. Загруженные запросы позволяют компаниям вас профилировать.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Загружены трекинг-запросы следующих доменов.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Также загружены запросы следующего домена.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Загружены запросы следующих доменов.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Загружены запросы следующего домена.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Запросов от сторонних доменов не обнаружено.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Загружены сторонние запросы";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Внимание: наши возможности обнаружения запросов зависят от ограничений платформы.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Без профилирования";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Стандарты конфиденциальности ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Уровень конфиденциальности показывает, насколько защищены персональные данные, которые вы передаёте сайту.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Этот сайт предупредит вас о передаче вашей информации в случае слияния или поглощения";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Стандарты конфиденциальности этого сайта не проверены.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Уровень защиты: %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Нажмите, чтобы открыть страницу защиты конфиденциальности";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Эта статистика хранится только на вашем устройстве и никуда не передается. Никогда.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Высокий уровень конфиденциальности";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Средний уровень конфиденциальности";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Низкий уровень конфиденциальности";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Уровень конфиденциальности неизвестен";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Трекеры применяются для профилирования посетителей сайтов. Мы предотвратили загрузку этих трекеров и не дали им отследить ваши действия на данной странице.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Мы не заблокировали ни одного трекинг-запроса, так как защита на этом сайте отключена. Загруженные запросы позволяют компаниям вас профилировать.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Мы не обнаружили ни одного трекинг-запроса.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Мы заблокировали загрузку следующих запросов сторонних доменов, так как распознали в них трекинг-запросы. Загруженные запросы позволяют компаниям вас профилировать.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Заблокирована загрузка запросов";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Обнаружены трекинг-запросы";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Трекинг-запросы не заблокированы";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Трекинг-запросы не обнаружены";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Значок конфиденциальности";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Отменить";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Защита конфиденциальности на %@ включена";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Произошла неизвестная ошибка.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Настройки";

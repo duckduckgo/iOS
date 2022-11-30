@@ -32,7 +32,7 @@ protocol OmniBarState {
     var allowsTrackersAnimation: Bool { get }
     var showSearchLoupe: Bool { get }
     var showCancel: Bool { get }
-    var showSiteRating: Bool { get }
+    var showPrivacyIcon: Bool { get }
     var showBackground: Bool { get }
     var showClear: Bool { get }
     var showRefresh: Bool { get }

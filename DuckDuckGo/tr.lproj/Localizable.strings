@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Geri al";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Otomatik tamamlama önerisi";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Yer imi";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Web sitesini aç";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "DuckDuckGo'da ara";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ için indirme başlatıldı";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "İptal";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo'ya\nHoş Geldiniz!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Davet Kodu";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Özellik hazır olduğunda davetiyeniz burada gösterilecek. Hazır olduğunda %1$@ ister misiniz? macOS tarayıcı beta hakkında %2$@.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "bildirim almak";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Özellik hazır olduğunda bir bildirim göndereceğiz. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Mac için DuckDuckGo'yu deneme davetiniz buraya gelecek. Kısa süre içinde tekrar kontrol edin ya da sıranız geldiğinde size bir bildirim gönderebiliriz.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Mac için DuckDuckGo kopyanız indirilmeye hazır olduğunda size bir bildirim göndereceğiz.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "Beta hakkında %@.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Mac için DuckDuckGo Gizlilik Uygulaması, ihtiyacınız olan hız ve beklediğiniz tarama özelliklerinin yanı sıra sınıfının en iyisi gizlilik özellikleri sunuyor.";
+"mac-browser.waitlist.summary" = "Mac için DuckDuckGo, ihtiyacınız olan hız ve beklediğiniz tarama özelliklerinin yanı sıra sınıfındaki en iyi gizlilik özelliklerini (Privacy Essentials) sunuyor.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Davetiyenizi açın";
@@ -991,59 +955,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopyala";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "İndirmek için Mac'inizde bu URL'yi ziyaret edin:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Mac cihazınızda şu adrese gidin:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. Adım";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Yüklemek için dosyayı açın, ardından kilidini açmak için davet kodunuzu girin.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. Adım";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Mac'te gizliliğinizi koruyarak gezinmeye başlamaya hazır mısınız?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Davetlisiniz!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Bağlantıyı paylaş";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Özel Bekleme Listesine Katılın";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Bekleme listesine katılıyorsunuz...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Mac için DuckDuckGo'yu deneyin!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Mac için DuckDuckGo'yu edinin!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows sürümü çok yakında!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Sıra size geldiğinde bunu bildirebiliriz, ancak bildirimler şu anda DuckDuckGo için devre dışı bırakılmış.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Bekleme listesine katılmak için kişisel bilgilerinizi paylaşmanız gerekmez. Yerinizi yalnızca cihazınıza yerleştirilen bir zaman damgası ile güvence altına alacaksınız. Böylece sıranız geldiğinde sizi bilgilendirebiliriz.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Listedesiniz!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Mac cihazlarda indirilebilir";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Mac için uygulamamızla internette gezinirken gizliliğinizi koruyun";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Listedesiniz!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Davetlisiniz!\n\nMac'te gizliliğinizi koruyarak gezinmeye başlamaya hazır mısınız?\n\n1. Adım\nİndirmek için Mac'inizde bu URL'yi ziyaret edin:\nhttps://duckduckgo.com/mac\n\n2. Adım\nYüklemek için dosyayı açın, ardından kilidini açmak için davet kodunuzu girin.\n\nDavet kodu: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Mac'te gizliliğinizi koruyarak gezinmeye hazır mısınız?\n\nİndirmek için Mac'inizde bu URL'yi ziyaret edin:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Davetlisiniz!";
+"mac-waitlist.share-sheet.title" = "Mac için DuckDuckGo";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo Masaüstü Uygulaması";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Tamam";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Web İzleme Korumalarımız hakkında";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "DuckDuckGo logosu";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Arama korumalarımız ve reklamlarımız hakkında";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Gizlilik Kontrol Paneli ekranını açmak için dokunun";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Arama ağı reklamlarımız korumalarımızı nasıl etkiler?";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritma";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bit";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Sertifika ayıklanırken hata oluştu";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Ortak Ad";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Geçerli Boyut";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-posta";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Şifreli Bağlantı";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Zorunlu Şifreleme";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Şifreli Bağlantı";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Bu siteyi şifreli bir bağlantı kullanmaya zorladık. Bu sayede, siteye gönderdiğiniz kişisel bilgiler kaydedilemeyecek.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Şifreli bağlantı, web sitelerine gönderdiğiniz kişisel bilgilerin ele geçirilmesini önler.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Konu Anahtarı Tanımlayıcısı";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Sertifikayı Veren";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Ortak Anahtar";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Anahtar Boyutu";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Karışık Şifreleme";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Bazı içerikler şifrelenmemiş bağlantılar üzerinden sunulduğu için bu sitede karışık şifreleme kullanılıyor.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Hayır";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Kalıcı";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Ortak Anahtar";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Şifreli bağlantı, web sitelerine gönderdiğiniz kişisel bilgilerin ele geçirilmesini önler.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Konu Adı";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Özet";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Bu siteye kişisel bilgiler girerken dikkatli olun.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Şifrelenmemiş Bağlantı";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Bilinmiyor";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Kullanım";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Şifre çözme";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Türev";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Şifreleme";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "İmzala";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Paket açma";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Doğrulama";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Paketleme";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Evet";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "SİTE KORUMASI KAPATILDI";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "YÜKSELTİLDİ: $1 -> $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "GİZLİLİK DERECESİ";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Başlıca İzleyici Ağları Bulundu";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Başlıca İzleyici Ağı Tespit Edilmedi";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "%2$@ yılından beri ziyaret ettiğiniz web sitelerinin %%%1$@ kadarında izleyici ağları bulundu.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Kaç izleyiciyi engellediğimizi göstermek için\nhâlâ veri topluyoruz.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Yüklenen Üçüncü Taraf İsteği Yok";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "DuckDuckGo'daki bir %@ reklamı yakın zamanda tıklandığı için aşağıdaki alan adının istekleri yüklendi. Bu istekler, reklamların ne kadar etkili olduğunun değerlendirilmesine yardımcı olur. DuckDuckGo'daki reklamlar profil oluşturma için kullanılmaz.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Site kopmasını önlemek için aşağıdaki alan adının istekleri yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "%@ ile ilişkili oldukları için aşağıdaki alan adının istekleri yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Aşağıdaki üçüncü taraf alan adlarının istekleri yüklendi. Bir şirketin istekleri yüklenirse, diğer web izleme korumalarımıza rağmen profilinizi oluşturmaları mümkün olabilir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Bu site için Korumalar kapalı olduğundan hiçbir üçüncü taraf isteğin yüklenmesi engellenmedi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Aşağıdaki alan adlarının izleme istekleri yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Aşağıdaki alan adlarının istekleri de yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Aşağıdaki alanların istekleri yüklendi.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Aşağıdaki alanın istekleri yüklendi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Herhangi bir üçüncü taraf alan adından gelen istek algılanmadı.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Üçüncü Taraf İstekleri Yüklendi";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Not: Platform sınırlamaları yüzünden tüm istekleri belirlememiz mümkün olmayabilir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Profil Oluşturmama";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Gizlilik Uygulamaları: ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Gizlilik uygulamaları, bir web sitesiyle paylaştığınız kişisel bilgilerin ne kadar korunduğunu gösterir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Bu web sitesi, birleşme veya satın alma durumunda bilgilerinizi aktarmadan önce sizi bilgilendirecektir";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Bu web sitesinin gizlilik uygulamaları gözden geçirilmemiştir.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Gizlilik derecesi %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Gizlilik Koruması ekranını açmak için basın";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Bu istatistikler yalnızca cihazınızda depolanır ve hiçbir yere gönderilmez. Asla.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Öne Çıkan Gizlilik Uygulamaları";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Karma Gizlilik Uygulamaları";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Kötü Gizlilik Uygulamaları";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Bilinmeyen Gizlilik Uygulamaları";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Şirketler izleyici kullanarak profilinizi çıkarabilir. Bu izleyicilerin yüklenmesini ve bu sayfadaki etkinliğinizi izlemesini engelledik.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Bu site için Korumalar kapalı olduğundan hiçbir izleme isteğinin yüklenmesi engellenmedi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Herhangi bir izleme isteği algılanmadı.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Aşağıdaki üçüncü taraf alan adlarının isteklerinin yüklenmesi, izleme istekleri olarak tanımlandıkları için engellendi. Bir şirketin istekleri yüklenirse profilinizi oluşturmaları mümkün olabilir.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Yüklenmesi Engellenen İstekler";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "İzleme İstekleri Bulundu";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Hiçbir İzleme İsteği Engellenmedi";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "İzleme İsteği Bulunamadı";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Gizlilik Simgesi";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "İptal";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Gizlilik Koruması %@ için etkinleştirildi";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Bilinmeyen bir hata oluştu.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Ayarlar";

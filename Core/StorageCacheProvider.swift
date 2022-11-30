@@ -59,8 +59,7 @@ public class StorageCacheProvider {
                 return
             }
             
-            let newCache = StorageCache(tld: currentCache.tld,
-                                        termsOfServiceStore: currentCache.termsOfServiceStore)
+            let newCache = StorageCache(tld: currentCache.tld)
             loader.applyUpdate(to: newCache)
             
             self.current = newCache

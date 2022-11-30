@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Ongedaan maken";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Suggestie automatisch aanvullen";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Bladwijzer";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Website openen";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Zoeken op DuckDuckGo";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Toevoegen";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Downloaden gestart voor %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuleren";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Welkom bij\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Uitnodigingscode";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Je uitnodiging wordt hier weergegeven als je aan de beurt bent. Wil je %1$@ wanneer deze beschikbaar is? %2$@ over de bètaversie van de browser voor macOS.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "krijg een melding";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "We sturen je een melding wanneer we klaar zijn. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Je vindt hier je uitnodiging om DuckDuckGo voor Mac te proberen. Kom binnenkort terug, of ontvang een melding wanneer jij aan de beurt bent.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "We sturen je een melding wanneer je DuckDuckGo voor Mac kunt downloaden.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ over de bèta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "De DuckDuckGo Privacy-app voor Mac heeft de snelheid die je nodig hebt en de browsefuncties die je verwacht, en zit boordevol onze allerbeste privacy essentials.";
+"mac-browser.waitlist.summary" = "DuckDuckGo voor Mac heeft de snelheid die je nodig hebt en de browsefuncties die je verwacht, en zit boordevol met onze allerbeste privacy essentials.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Open je uitnodiging";
@@ -991,59 +955,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopiëren";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Bezoek deze URL op je Mac om te downloaden:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Ga op je Mac naar:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Stap 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Open het installatiebestand en voer vervolgens je uitnodigingscode in om de app te ontgrendelen.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Stap 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Klaar om privé te browsen op je Mac?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Je bent uitgenodigd!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Link delen";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Schrijf je in voor de privéwachtlijst";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Deelnemen aan wachtlijst ...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Probeer DuckDuckGo voor Mac!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Download DuckDuckGo voor Mac!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Binnenkort ook beschikbaar voor Windows!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "We kunnen je informeren wanneer je aan de beurt bent, maar meldingen zijn momenteel uitgeschakeld voor DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Je hoeft geen persoonsgegevens te delen om op de wachtlijst te komen. Je stelt je plaats veilig met een tijdstempel die alleen op jouw apparaat bestaat. Zo kunnen we je informeren wanneer je aan de beurt bent.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Je staat op de lijst!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Beschikbaar om te downloaden op Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Browse privé met onze app voor Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Je staat op de lijst!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Je bent uitgenodigd!\n\nKlaar om privé te browsen op de Mac? \n\nStap 1 \nBezoek deze URL op je Mac om te downloaden: \nhttps://duckduckgo.com/mac \n\nStap 2\nOpen het installatiebestand en voer vervolgens je uitnodigingscode in om de app te ontgrendelen.\n\nUitnodigingscode: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Klaar om privé te browsen op de Mac?\n\nBezoek deze URL op je Mac om DuckDuckGo te downloaden:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Je bent uitgenodigd!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo voor Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo-bureaubladapp";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Over onze bescherming tegen webtracking";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "Logo DuckDuckGo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Over onze zoekbescherming en advertenties";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Tik om het scherm Privacy Dashboard te openen";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Hoe onze zoekadvertenties onze bescherming beïnvloeden";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritme";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bits";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Fout bij het ophalen van certificaat";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Algemene naam";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Effectieve grootte";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-mail";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Gecodeerde verbinding";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Geforceerde versleuteling";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Gecodeerde verbinding";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "We hebben deze site gedwongen om een versleutelde verbinding te gebruiken, om het afluisteren te voorkomen van persoonlijke gegevens die je verstuurt.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Een versleutelde verbinding voorkomt het afluisteren van persoonlijke gegevens die je naar een website verstuurt.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Identificatie van de onderwerpsleutel";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Uitgever";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Openbare sleutel";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Sleutelgrootte";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Gemengde versleuteling";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Deze site heeft een gemengde versleuteling omdat een gedeelte van de content wordt aangeboden via niet-versleutelde verbindingen.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Nee";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Permanent";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Openbare sleutel";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Een versleutelde verbinding voorkomt het afluisteren van persoonlijke gegevens die je naar een website verstuurt.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Onderwerpnaam";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Overzicht";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Wees voorzichtig bij het invoeren van persoonlijke informatie op deze site.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Niet-gecodeerde verbinding";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Onbekend";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Gebruik";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Ontsleutelen";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Afleiden";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Versleutelen";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Tekenen";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Uitpakken";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Verifiëren";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Inpakken";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Ja";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "BESCHERMING VAN DE SITE UITGESCHAKELD";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "VERBETERD VAN $1 NAAR $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "PRIVACYKLASSE";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Grote trackernetwerken gevonden";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Geen grote trackernetwerken gevonden";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Er zijn trackernetwerken gevonden op %1$@%% van de websites die je sinds %2$@ hebt bezocht.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "We verzamelen nog steeds gegevens om te laten zien\nhoeveel trackers we hebben geblokkeerd.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Geen verzoeken van derden geladen";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "De verzoeken van het volgende domein zijn geladen omdat er onlangs op een advertentie van %@ op DuckDuckGo is geklikt. Deze verzoeken helpen de effectiviteit van advertenties te evalueren. Geen enkele advertentie op DuckDuckGo maakt een profiel van je.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "De verzoeken van het volgende domein werden geladen om te voorkomen dat de site niet meer geladen zou worden.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "De verzoeken van het volgende domein zijn geladen omdat ze zijn gekoppeld aan %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "De volgende verzoeken van domeinen van derden zijn geladen. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken, hoewel onze andere beschermingen tegen webtracking nog steeds van toepassing zijn.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Verzoeken van derden werden niet verhinderd om te laden omdat beschermingen zijn uitgeschakeld voor deze site. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "De trackingverzoeken van de volgende domeinen zijn geladen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "De verzoeken van het volgende domein zijn ook geladen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "De aanvragen van de volgende domeinen zijn geladen.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "De verzoeken van het volgende domein werden geladen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "We hebben geen verzoeken van domeinen van derden gedetecteerd.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Verzoeken van derden geladen";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Let op: beperkingen op het platform kunnen ons vermogen om alle verzoeken te detecteren beperken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Geen profiel maken";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Privacypraktijken van ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Privacypraktijken geven aan in hoeverre de persoonsgegevens die u deelt met een website beschermd zijn.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Deze website stuurt je een melding voordat je gegevens worden overdragen in het geval van een fusie of overname";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "De privacypraktijken van deze website zijn niet gecontroleerd.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privacyklasse %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Druk hierop om het scherm Privacybescherming te openen";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Deze statistieken worden alleen op je apparaat opgeslagen en worden nergens naartoe gestuurd. Nooit.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Goede privacypraktijken";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Gemengde privacypraktijken";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Slechte privacypraktijken";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Onbekende privacypraktijken";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Trackers helpen bedrijven om een profiel van je te maken. We hebben verhinderd dat deze trackers je activiteit op deze pagina laden en volgen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Trackingverzoeken werden niet verhinderd om te laden omdat beschermingen zijn uitgeschakeld voor deze site. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "We hebben geen trackingverzoeken gedetecteerd.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "De volgende verzoeken van domeinen van derden werden geblokkeerd omdat ze werden geïdentificeerd als trackingverzoeken. Als de verzoeken van een bedrijf worden geladen, kunnen ze een profiel van je maken.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Verzoeken geblokkeerd bij laden";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Trackingverzoeken gevonden";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Geen trackingverzoeken geblokkeerd";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Geen trackingverzoeken gevonden";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Privacy-pictogram";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Annuleren";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privacybescherming ingeschakeld voor %@";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Er is een onbekende fout opgetreden.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Instellingen";

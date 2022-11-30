@@ -46,6 +46,7 @@ extension Pixel {
         case privacyDashboardProtectionEnabled
         case privacyDashboardManageProtection
         case privacyDashboardReportBrokenSite
+        case privacyDashboardPixelFromJS(rawPixel: String)
         
         case tabSwitcherNewLayoutSeen
         case tabSwitcherListEnabled
@@ -393,6 +394,7 @@ extension Pixel.Event {
         case .privacyDashboardProtectionEnabled: return "mp_wlr"
         case .privacyDashboardManageProtection: return "mp_mw"
         case .privacyDashboardReportBrokenSite: return "mp_rb"
+        case .privacyDashboardPixelFromJS(let rawPixel): return rawPixel
             
         case .tabSwitcherNewLayoutSeen: return "m_ts_n"
         case .tabSwitcherListEnabled: return "m_ts_l"

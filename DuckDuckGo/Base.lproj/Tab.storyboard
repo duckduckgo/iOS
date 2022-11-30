@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -148,7 +148,7 @@
                         <outlet property="errorMessage" destination="Cjw-mk-QL3" id="b1N-1W-IGs"/>
                         <outlet property="showBarsTapGestureRecogniser" destination="Y72-bH-DMy" id="SAY-KX-OEJ"/>
                         <outlet property="webViewContainer" destination="3yc-Gh-Vqe" id="kNL-fm-49U"/>
-                        <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyProtection" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">
+                        <segue destination="5Os-y0-IaV" kind="popoverPresentation" identifier="PrivacyDashboard" destinationCreationSelector="makePrivacyDashboardViewControllerWithCoder:" popoverAnchorView="ypz-s2-KJB" id="nKl-8K-k03">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
                         </segue>
                         <segue destination="fuG-ev-dKt" kind="presentation" identifier="DaxDialog" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="cG3-cw-u7d"/>
@@ -164,10 +164,10 @@
             </objects>
             <point key="canvasLocation" x="1181.5999999999999" y="445.72713643178412"/>
         </scene>
-        <!--PrivacyProtection-->
+        <!--PrivacyDashboard-->
         <scene sceneID="L6K-iW-ae0">
             <objects>
-                <viewControllerPlaceholder storyboardName="PrivacyProtection" id="5Os-y0-IaV" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="PrivacyDashboard" id="5Os-y0-IaV" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UuK-nd-xhd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1771" y="445"/>

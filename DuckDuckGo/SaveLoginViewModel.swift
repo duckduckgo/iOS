@@ -51,6 +51,7 @@ final class SaveLoginViewModel: ObservableObject {
     private let numberOfRejectionsToTurnOffAutofill = 3
     private let maximumPasswordDisplayCount = 40
     private let credentialManager: SaveAutofillLoginManagerProtocol
+    private let appSettings: AppSettings
     
     private var dismissButtonWasPressed = false
     var didSave = false
@@ -107,8 +108,9 @@ final class SaveLoginViewModel: ObservableObject {
     
     private var attributedLayoutType: SaveLoginView.LayoutType?
     
-    internal init(credentialManager: SaveAutofillLoginManagerProtocol, layoutType: SaveLoginView.LayoutType? = nil, domainLastShownOn: String? = nil) {
+    internal init(credentialManager: SaveAutofillLoginManagerProtocol, appSettings: AppSettings, layoutType: SaveLoginView.LayoutType? = nil, domainLastShownOn: String? = nil) {
         self.credentialManager = credentialManager
+        self.appSettings = appSettings
         self.attributedLayoutType = layoutType
         self.domainLastShownOn = domainLastShownOn
     }
@@ -141,6 +143,10 @@ final class SaveLoginViewModel: ObservableObject {
     func cancelButtonPressed() {
         dismissButtonWasPressed = true
         cancel()
+    }
+    
+    func viewControllerDidAppear() {
+        appSettings.autofillCredentialsSavePromptShowAtLeastOnce = true
     }
     
     func viewControllerDidDisappear() {

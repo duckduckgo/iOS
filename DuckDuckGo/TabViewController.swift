@@ -2265,16 +2265,19 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         manager.prepareData { [weak self] in
-
-            let saveLoginController = SaveLoginViewController(credentialManager: manager, domainLastShownOn: self?.domainSaveLoginPromptLastShownOn)
-            self?.domainSaveLoginPromptLastShownOn = self?.url?.host
+            guard let self = self else { return }
+            
+            let saveLoginController = SaveLoginViewController(credentialManager: manager,
+                                                              appSettings: self.appSettings,
+                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn)
+            self.domainSaveLoginPromptLastShownOn = self.url?.host
             saveLoginController.delegate = self
             if #available(iOS 15.0, *) {
                 if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
                     presentationController.detents = [.medium(), .large()]
                 }
             }
-            self?.present(saveLoginController, animated: true, completion: nil)
+            self.present(saveLoginController, animated: true, completion: nil)
         }
     }
     

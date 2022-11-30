@@ -1063,257 +1063,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Om våra webbspårningsskydd";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "DuckDuckGos logotyp";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Om våra sökskydd och annonser";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Tryck för att öppna sekretesspanelen";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Hur våra sökannonser påverkar vårt skydd";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritm";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bitar";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Fel vid extraktion av certifikat";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Vanligt namn";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Verklig storlek";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-post";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Krypterad anslutning";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Tvingad kryptering";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Krypterad anslutning";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Vi har tvingat denna webbplats att använda en krypterad anslutning för att förhindra avlyssning av personlig information som du skickar till den.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "En krypterad anslutning förhindrar avlyssning av personlig information som du skickar till en webbplats.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Nyckelidentifierare för certifikatmottagare";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Utfärdare";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Offentlig nyckel";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Nyckelstorlek";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Blandad kryptering";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Denna webbplats har blandad kryptering eftersom en del innehåll levereras via okrypterade anslutningar.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Nej";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Permanent";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Offentlig nyckel";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "En krypterad anslutning förhindrar avlyssning av personlig information som du skickar till en webbplats.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Certifikatutgivarens namn";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Sammanfattning";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Var försiktig när du anger personlig information på den här webbplatsen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Okrypterad anslutning";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Okänd";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Användning";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Dekryptera";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Härled";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Kryptera";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Underteckna";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Packa upp";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Verifiera";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Packa in";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Ja";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "WEBBPLATSSKYDD INAKTIVERAT";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "FÖRBÄTTRAD FRÅN $1 TILL $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "SEKRETESSKLASS";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Större spårningsnätverk hittades";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Inga större spårningsnätverk hittades";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Spårningsnätverk hittades på %1$@%% av de webbplatser som du har besökt sedan %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Vi samlar fortfarande in data för att visa \nhur många spårare vi har blockerat.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Inga förfrågningar från tredje part lästes in";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Följande domäns förfrågningar lästes in eftersom du nyligen klickade på en annons från %@ på DuckDuckGo. Dessa förfrågningar hjälper till att utvärdera annonsens effektivitet. Alla annonser på DuckDuckGo är icke-profilerande.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Följande domäns förfrågningar lästes in för att förhindra fel på webbplatsen.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Följande domäns förfrågningar lästes in eftersom de är kopplade till %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Följande tredjepartsdomäners förfrågningar lästes in. Om ett företags förfrågningar läses in kan det göra det möjligt för företaget att profilera dig, även om våra övriga webbspårningsskydd fortfarande är aktiva.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Inga förfrågningar från tredje part blockerades från att läsas in eftersom skyddet är avstängt för den här webbplatsen. Om ett företags förfrågningar läses in kan det göra det möjligt för företaget att profilera dig.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Följande domäners spårningsförfrågningar lästes in.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Följande domäns förfrågningar lästes också in.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Följande domäners förfrågningar lästes in.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Följande domäns förfrågningar lästes in.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Vi upptäckte inga förfrågningar från några tredjepartsdomäner.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Förfrågningar från tredje part lästes in";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Obs! Plattformsbegränsningar kan begränsa vår förmåga att upptäcka alla förfrågningar.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Icke-profilerande";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Integritetspraxis från ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Integritetspraxis indikerar hur stor andel av den personliga information du delar med dig av till en webbplats som är skyddad.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Denna webbplats kommer att meddela dig innan de överför din information vid sammanslagning eller förvärv";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Integritetspraxis på denna webbplats har inte granskats.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Sekretessklass %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Tryck för att öppna skärmen för integritetsskydd";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Denna statistik lagras endast på din enhet och skickas ingenstans. Någonsin.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "God integritetspraxis";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Halvgod integritetspraxis";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Dålig integritetspraxis";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Okänd integritetspraxis";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Spårare hjälper företag att profilera dig. Vi har blockerat dessa spårare från att läsas in och övervaka din aktivitet på den här sidan.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Inga spårningsförfrågningar blockerades från att läsas in eftersom skyddet är avstängt för den här webbplatsen. Om ett företags förfrågningar läses in kan det göra det möjligt för företaget att profilera dig.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Vi har inte upptäckt några spårningsförfrågningar.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Följande tredjepartsdomäners förfrågningar blockerades från att läsas in eftersom de identifierades som spårningsförfrågningar. Om ett företags förfrågningar läses in kan det göra det möjligt för företaget att profilera dig.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Förfrågningar blockerades från att läsas in";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Spårningsförfrågningar hittades";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Inga spårningsförfrågningar blockerades";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Inga spårningsförfrågningar hittades";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Integritetsikon";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Avbryt";
@@ -1405,6 +1162,7 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Integritetsskydd aktiverat för %@";
 
+<<<<<<< HEAD
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ett okänt fel uppstod.";
 
@@ -1420,6 +1178,8 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Öppna webbplatsen";
 
+=======
+>>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Inställningar";
 

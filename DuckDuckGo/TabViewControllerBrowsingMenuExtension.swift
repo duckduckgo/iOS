@@ -72,7 +72,7 @@ extension TabViewController {
         let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
             
-        if let domain = self.siteRating?.domain {
+        if let domain = self.privacyInfo?.domain {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))
         }
 

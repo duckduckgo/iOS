@@ -31,7 +31,7 @@ struct LargeOmniBarState {
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = false
         let showRefresh = false
@@ -60,7 +60,7 @@ struct LargeOmniBarState {
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = true
         let showRefresh = false
@@ -89,7 +89,7 @@ struct LargeOmniBarState {
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = true
         let showClear = false
         let showRefresh = false
@@ -118,7 +118,7 @@ struct LargeOmniBarState {
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = false
         let showRefresh = false
@@ -147,7 +147,7 @@ struct LargeOmniBarState {
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = true
         let showRefresh = false
@@ -176,7 +176,7 @@ struct LargeOmniBarState {
         let clearTextOnStart = false
         let allowsTrackersAnimation = true
         let showSearchLoupe = false
-        let showSiteRating = true
+        let showPrivacyIcon = true
         let showBackground = true
         let showClear = false
         let showRefresh = true

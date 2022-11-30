@@ -37,11 +37,9 @@ public class Database {
         let coreBundle = Bundle(identifier: "com.duckduckgo.mobile.ios.Core")!
         
         guard let appRatingModel = CoreDataDatabase.loadModel(from: mainBundle, named: "AppRatingPrompt"),
-              let networkLeaderboardModel = CoreDataDatabase.loadModel(from: mainBundle, named: "NetworkLeaderboard"),
               let remoteMessagingModel = CoreDataDatabase.loadModel(from: mainBundle, named: "RemoteMessaging"),
               let smarterEncryptionModel = CoreDataDatabase.loadModel(from: coreBundle, named: "HTTPSUpgrade"),
               let managedObjectModel = NSManagedObjectModel(byMerging: [appRatingModel,
-                                                                        networkLeaderboardModel,
                                                                        remoteMessagingModel,
                                                                        smarterEncryptionModel]) else {
             fatalError("No DB scheme found")

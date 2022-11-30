@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -90,66 +91,133 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                     <rect key="frame" x="30" y="0.0" width="345" height="40"/>
                                     <subviews>
-                                        <view clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4JV-px-Ypi" customClass="SiteRatingContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGG-5L-D8Q" customClass="PrivacyInfoContainerView" customModule="DuckDuckGo" customModuleProvider="target">
+                                            <rect key="frame" x="2" y="0.0" width="138" height="40"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon more" translatesAutoresizingMaskIntoConstraints="NO" id="0eq-5H-Wed">
-                                                    <rect key="frame" x="91" y="0.0" width="44" height="40"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7qa-DK-tfO" userLabel="Trackers Animation Wrapper">
+                                                    <rect key="frame" x="-15" y="0.0" width="158" height="40"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xsT-yZ-wg7" customClass="AnimationView" customModule="Lottie">
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHJ-ya-QS7" customClass="AnimationView" customModule="Lottie">
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8n-8r-JML" customClass="AnimationView" customModule="Lottie">
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                        </view>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" priority="999" constant="44" id="tni-MT-xSK"/>
+                                                        <constraint firstAttribute="bottom" secondItem="E8n-8r-JML" secondAttribute="bottom" id="1fX-TB-gbx"/>
+                                                        <constraint firstAttribute="bottom" secondItem="xsT-yZ-wg7" secondAttribute="bottom" id="2VD-00-BAH"/>
+                                                        <constraint firstItem="E8n-8r-JML" firstAttribute="top" secondItem="7qa-DK-tfO" secondAttribute="top" id="A7K-v5-7cG"/>
+                                                        <constraint firstItem="xsT-yZ-wg7" firstAttribute="top" secondItem="7qa-DK-tfO" secondAttribute="top" id="COl-0P-yYq"/>
+                                                        <constraint firstAttribute="trailing" secondItem="jHJ-ya-QS7" secondAttribute="trailing" id="EYf-cT-l0L"/>
+                                                        <constraint firstItem="E8n-8r-JML" firstAttribute="leading" secondItem="7qa-DK-tfO" secondAttribute="leading" id="Erm-aL-mht"/>
+                                                        <constraint firstAttribute="width" constant="158" id="OzJ-RV-nEh"/>
+                                                        <constraint firstAttribute="trailing" secondItem="xsT-yZ-wg7" secondAttribute="trailing" id="Pxm-B7-Ivi"/>
+                                                        <constraint firstItem="xsT-yZ-wg7" firstAttribute="leading" secondItem="7qa-DK-tfO" secondAttribute="leading" id="gG9-dQ-2Co"/>
+                                                        <constraint firstItem="jHJ-ya-QS7" firstAttribute="leading" secondItem="7qa-DK-tfO" secondAttribute="leading" id="jhN-sl-duj"/>
+                                                        <constraint firstAttribute="bottom" secondItem="jHJ-ya-QS7" secondAttribute="bottom" id="lvF-xs-Vhp"/>
+                                                        <constraint firstAttribute="trailing" secondItem="E8n-8r-JML" secondAttribute="trailing" id="qiR-YC-cty"/>
+                                                        <constraint firstItem="jHJ-ya-QS7" firstAttribute="top" secondItem="7qa-DK-tfO" secondAttribute="top" id="u06-Te-up6"/>
                                                     </constraints>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon yahoo!" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-ih-Wyc">
-                                                    <rect key="frame" x="60" y="0.0" width="26" height="40"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cx-oo-bpe">
+                                                    <rect key="frame" x="-6.5" y="7.5" width="32" height="25"/>
+                                                    <color key="backgroundColor" systemColor="systemYellowColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" priority="999" constant="26" id="Apc-Zx-Y0T"/>
+                                                        <constraint firstAttribute="height" constant="25" id="70i-Wj-DR0"/>
+                                                        <constraint firstAttribute="width" constant="32" id="73T-PN-GzL"/>
                                                     </constraints>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PP Network Icon google" translatesAutoresizingMaskIntoConstraints="NO" id="oPd-Lo-c9m">
-                                                    <rect key="frame" x="31" y="0.0" width="26" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" priority="999" constant="26" id="bIP-ra-VYG"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlF-fr-tSl" customClass="SiteRatingView" customModule="DuckDuckGo" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="40"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="siteRating">
-                                                        <accessibilityTraits key="traits" notEnabled="YES"/>
-                                                        <bool key="isElement" value="NO"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99p-YW-bjm" customClass="PrivacyIconView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="-8" y="0.0" width="43" height="40"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmK-n8-JJZ" userLabel="Shield Animations Wrapper">
+                                                            <rect key="frame" x="-12" y="0.0" width="158" height="40"/>
+                                                            <subviews>
+                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="jQy-me-Afa" customClass="AnimationView" customModule="Lottie">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                                </view>
+                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="KE6-Wh-7Yp" customClass="AnimationView" customModule="Lottie">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                                </view>
+                                                                <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="dqb-pm-Da8" customClass="AnimationView" customModule="Lottie">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                                </view>
+                                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="D46-aN-352" customClass="AnimationView" customModule="Lottie">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="158" height="40"/>
+                                                                </view>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="KE6-Wh-7Yp" secondAttribute="bottom" id="1bA-ur-5It"/>
+                                                                <constraint firstAttribute="bottom" secondItem="jQy-me-Afa" secondAttribute="bottom" id="6w7-kd-fFF"/>
+                                                                <constraint firstItem="KE6-Wh-7Yp" firstAttribute="top" secondItem="TmK-n8-JJZ" secondAttribute="top" id="9Kb-Ct-KRC"/>
+                                                                <constraint firstItem="D46-aN-352" firstAttribute="leading" secondItem="TmK-n8-JJZ" secondAttribute="leading" id="MDs-1F-iVW"/>
+                                                                <constraint firstAttribute="trailing" secondItem="dqb-pm-Da8" secondAttribute="trailing" id="QWr-Ix-s3j"/>
+                                                                <constraint firstAttribute="trailing" secondItem="D46-aN-352" secondAttribute="trailing" id="WPX-7x-Ywz"/>
+                                                                <constraint firstAttribute="bottom" secondItem="dqb-pm-Da8" secondAttribute="bottom" id="WrP-ph-vmL"/>
+                                                                <constraint firstItem="KE6-Wh-7Yp" firstAttribute="leading" secondItem="TmK-n8-JJZ" secondAttribute="leading" id="Xs4-DO-Ctb"/>
+                                                                <constraint firstItem="jQy-me-Afa" firstAttribute="top" secondItem="TmK-n8-JJZ" secondAttribute="top" id="auU-QX-vmk"/>
+                                                                <constraint firstAttribute="trailing" secondItem="KE6-Wh-7Yp" secondAttribute="trailing" id="gy0-CG-Xam"/>
+                                                                <constraint firstAttribute="bottom" secondItem="D46-aN-352" secondAttribute="bottom" id="iK1-Nd-eNx"/>
+                                                                <constraint firstItem="dqb-pm-Da8" firstAttribute="leading" secondItem="TmK-n8-JJZ" secondAttribute="leading" id="iei-vU-evI"/>
+                                                                <constraint firstAttribute="trailing" secondItem="jQy-me-Afa" secondAttribute="trailing" id="kxs-UE-H5S"/>
+                                                                <constraint firstItem="jQy-me-Afa" firstAttribute="leading" secondItem="TmK-n8-JJZ" secondAttribute="leading" id="nf6-tE-TBe"/>
+                                                                <constraint firstItem="D46-aN-352" firstAttribute="top" secondItem="TmK-n8-JJZ" secondAttribute="top" id="q2q-mq-fty"/>
+                                                                <constraint firstItem="dqb-pm-Da8" firstAttribute="top" secondItem="TmK-n8-JJZ" secondAttribute="top" id="qHI-aQ-SBa"/>
+                                                                <constraint firstAttribute="width" constant="158" id="yFt-j7-mPi"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LogoIcon" translatesAutoresizingMaskIntoConstraints="NO" id="eoZ-Ly-QHi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="43" height="40"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" button="YES"/>
+                                                        <bool key="isElement" value="YES"/>
                                                     </accessibility>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" priority="900" constant="30" id="vqc-wd-f2C"/>
+                                                        <constraint firstItem="eoZ-Ly-QHi" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="2K9-i4-lfC"/>
+                                                        <constraint firstAttribute="trailing" secondItem="eoZ-Ly-QHi" secondAttribute="trailing" id="3ae-7C-euU"/>
+                                                        <constraint firstItem="TmK-n8-JJZ" firstAttribute="top" secondItem="99p-YW-bjm" secondAttribute="top" id="AQ7-2Q-kEO"/>
+                                                        <constraint firstAttribute="bottom" secondItem="eoZ-Ly-QHi" secondAttribute="bottom" id="Dbo-hu-FiF"/>
+                                                        <constraint firstAttribute="bottom" secondItem="TmK-n8-JJZ" secondAttribute="bottom" id="Duu-07-es7"/>
+                                                        <constraint firstAttribute="width" constant="43" id="QTw-yw-ZiM"/>
+                                                        <constraint firstItem="TmK-n8-JJZ" firstAttribute="leading" secondItem="99p-YW-bjm" secondAttribute="leading" constant="-12" id="RUr-2B-PAB"/>
+                                                        <constraint firstItem="eoZ-Ly-QHi" firstAttribute="leading" secondItem="99p-YW-bjm" secondAttribute="leading" id="VgX-60-gzX"/>
                                                     </constraints>
                                                     <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="rMk-3Z-VLM"/>
+                                                        <outlet property="daxLogoImageView" destination="eoZ-Ly-QHi" id="aTN-UG-1Em"/>
+                                                        <outlet property="shieldAnimationView" destination="dqb-pm-Da8" id="m3S-lp-2hi"/>
+                                                        <outlet property="shieldDotAnimationView" destination="D46-aN-352" id="yuP-Tc-fZl"/>
+                                                        <outlet property="staticShieldAnimationView" destination="jQy-me-Afa" id="pez-0Q-5Gq"/>
+                                                        <outlet property="staticShieldDotAnimationView" destination="KE6-Wh-7Yp" id="92x-it-Oyn"/>
+                                                        <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="3xf-ou-ORG"/>
                                                     </connections>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" systemColor="systemGreenColor"/>
                                             <constraints>
-                                                <constraint firstItem="0eq-5H-Wed" firstAttribute="top" secondItem="4JV-px-Ypi" secondAttribute="top" id="4UG-2d-2Rr"/>
-                                                <constraint firstAttribute="bottom" secondItem="tlF-fr-tSl" secondAttribute="bottom" id="7GM-ZS-eeM"/>
-                                                <constraint firstAttribute="width" constant="120" id="9Gj-UT-Uea"/>
-                                                <constraint firstAttribute="bottom" secondItem="oPd-Lo-c9m" secondAttribute="bottom" id="JfC-hY-SUd"/>
-                                                <constraint firstItem="oPd-Lo-c9m" firstAttribute="leading" secondItem="4JV-px-Ypi" secondAttribute="leading" constant="31" id="ZkR-Hh-a4K"/>
-                                                <constraint firstItem="tlF-fr-tSl" firstAttribute="top" secondItem="4JV-px-Ypi" secondAttribute="top" id="jzN-gl-Aaj"/>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="tlF-fr-tSl" secondAttribute="width" priority="750" id="moU-7N-CsC"/>
-                                                <constraint firstItem="oPd-Lo-c9m" firstAttribute="top" secondItem="4JV-px-Ypi" secondAttribute="top" id="nIo-bT-tA9"/>
-                                                <constraint firstItem="0eq-5H-Wed" firstAttribute="leading" secondItem="4JV-px-Ypi" secondAttribute="leading" constant="91" id="nZr-Xv-4SO"/>
-                                                <constraint firstItem="Zez-ih-Wyc" firstAttribute="leading" secondItem="4JV-px-Ypi" secondAttribute="leading" constant="60" id="niU-W1-lpz"/>
-                                                <constraint firstAttribute="bottom" secondItem="Zez-ih-Wyc" secondAttribute="bottom" id="oqI-6s-OMR"/>
-                                                <constraint firstItem="tlF-fr-tSl" firstAttribute="leading" secondItem="4JV-px-Ypi" secondAttribute="leading" id="oyw-z6-jyV"/>
-                                                <constraint firstAttribute="bottom" secondItem="0eq-5H-Wed" secondAttribute="bottom" id="qgs-Gt-EdK"/>
-                                                <constraint firstItem="Zez-ih-Wyc" firstAttribute="top" secondItem="4JV-px-Ypi" secondAttribute="top" id="y6t-LZ-jbJ"/>
+                                                <constraint firstAttribute="width" constant="138" id="5h0-qa-R1c"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="138" id="8Ts-e7-w2H"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" constant="-8" id="GAx-rD-lZc"/>
+                                                <constraint firstAttribute="bottom" secondItem="7qa-DK-tfO" secondAttribute="bottom" id="KZY-PZ-Iwo"/>
+                                                <constraint firstAttribute="height" constant="40" id="LSj-2a-VE0"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="centerX" secondItem="9cx-oo-bpe" secondAttribute="centerX" constant="4" id="Ugc-cl-4dt"/>
+                                                <constraint firstItem="7qa-DK-tfO" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="WCV-DY-APL"/>
+                                                <constraint firstAttribute="bottom" secondItem="99p-YW-bjm" secondAttribute="bottom" id="aem-pq-tV0"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="bmH-ac-kEx"/>
+                                                <constraint firstItem="99p-YW-bjm" firstAttribute="centerY" secondItem="9cx-oo-bpe" secondAttribute="centerY" id="iCu-xb-Cyh"/>
+                                                <constraint firstItem="7qa-DK-tfO" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" constant="-15" id="tG4-A7-Swk"/>
                                             </constraints>
                                             <connections>
-                                                <outlet property="siteRatingView" destination="tlF-fr-tSl" id="Bnn-u3-oIX"/>
-                                                <outletCollection property="trackerIcons" destination="oPd-Lo-c9m" collectionClass="NSMutableArray" id="21D-KI-RpJ"/>
-                                                <outletCollection property="trackerIcons" destination="Zez-ih-Wyc" collectionClass="NSMutableArray" id="Z8p-3z-DEX"/>
-                                                <outletCollection property="trackerIcons" destination="0eq-5H-Wed" collectionClass="NSMutableArray" id="JlK-xq-P3R"/>
-                                                <outletCollection property="trackerIconConstraints" destination="ZkR-Hh-a4K" collectionClass="NSMutableArray" id="axq-Fz-Cuq"/>
-                                                <outletCollection property="trackerIconConstraints" destination="niU-W1-lpz" collectionClass="NSMutableArray" id="h1P-Jy-zwp"/>
-                                                <outletCollection property="trackerIconConstraints" destination="nZr-Xv-4SO" collectionClass="NSMutableArray" id="Y5X-nB-a50"/>
+                                                <outlet property="maskingView" destination="9cx-oo-bpe" id="ChF-SL-hTW"/>
+                                                <outlet property="privacyIcon" destination="99p-YW-bjm" id="Yqa-NH-yN7"/>
+                                                <outlet property="trackers1Animation" destination="xsT-yZ-wg7" id="4by-KL-flD"/>
+                                                <outlet property="trackers2Animation" destination="jHJ-ya-QS7" id="a4W-MS-j43"/>
+                                                <outlet property="trackers3Animation" destination="E8n-8r-JML" id="txQ-Qp-gP8"/>
                                             </connections>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
@@ -179,15 +247,14 @@
                                     <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="fqM-N4-jNd" secondAttribute="bottom" id="1UK-P3-SRc"/>
-                                        <constraint firstAttribute="bottom" secondItem="4JV-px-Ypi" secondAttribute="bottom" id="W9k-IB-cgh"/>
-                                        <constraint firstItem="4JV-px-Ypi" firstAttribute="top" secondItem="sek-4Y-GoT" secondAttribute="top" id="hRW-VV-aIL"/>
-                                        <constraint firstItem="4JV-px-Ypi" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" id="k7i-Ra-Rtw"/>
+                                        <constraint firstItem="yGG-5L-D8Q" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" constant="2" id="EJL-WX-9M4"/>
+                                        <constraint firstAttribute="bottom" secondItem="yGG-5L-D8Q" secondAttribute="bottom" id="b8i-Js-e1Z"/>
+                                        <constraint firstItem="yGG-5L-D8Q" firstAttribute="top" secondItem="sek-4Y-GoT" secondAttribute="top" id="nq3-Zw-TIq"/>
                                         <constraint firstItem="fqM-N4-jNd" firstAttribute="top" secondItem="sek-4Y-GoT" secondAttribute="top" id="x9M-BQ-esy"/>
                                         <constraint firstItem="fqM-N4-jNd" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" constant="30" id="xbK-P6-01p"/>
                                         <constraint firstAttribute="trailing" secondItem="fqM-N4-jNd" secondAttribute="trailing" id="zci-q3-cEm"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="privacyViewWidth" destination="9Gj-UT-Uea" id="Io2-PS-NXZ"/>
                                         <outlet property="textFieldOffset" destination="xbK-P6-01p" id="HPr-xK-Kj1"/>
                                         <outletCollection property="gestureRecognizers" destination="N3q-x6-xYr" appends="YES" id="oez-nJ-1QO"/>
                                     </connections>
@@ -341,6 +408,7 @@
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
                 <outlet property="omniBarLeadingConstraint" destination="D0r-SA-Vnj" id="07M-d7-p5r"/>
                 <outlet property="omniBarTrailingConstraint" destination="yKn-ev-mu1" id="rhL-LT-9RL"/>
+                <outlet property="privacyInfoContainer" destination="yGG-5L-D8Q" id="aag-7F-YTq"/>
                 <outlet property="refreshButton" destination="Qea-QY-LVl" id="lwI-BW-l99"/>
                 <outlet property="rightButtonsSpacingConstraint" destination="4w4-aZ-P7u" id="i9f-O1-Ts9"/>
                 <outlet property="searchContainer" destination="5D5-iT-bUk" id="Saj-y6-2mi"/>
@@ -353,15 +421,14 @@
                 <outlet property="separatorView" destination="hD7-j4-fpl" id="xlg-WZ-peq"/>
                 <outlet property="settingsButton" destination="1rB-5w-de3" id="KCF-tv-9xx"/>
                 <outlet property="shareButton" destination="hor-Jd-3kw" id="tc5-Us-Mba"/>
-                <outlet property="siteRatingContainer" destination="4JV-px-Ypi" id="VRT-kc-Ijt"/>
                 <outlet property="textField" destination="fqM-N4-jNd" id="wRU-Ha-HpH"/>
                 <outlet property="voiceSearchButton" destination="ita-iD-8ad" id="6ms-wg-lln"/>
             </connections>
             <point key="canvasLocation" x="-229.06295754026354" y="-108.3984375"/>
         </view>
-        <tapGestureRecognizer id="qXd-RO-1cS" userLabel="Site Rating Tap Recogniser">
+        <tapGestureRecognizer id="qXd-RO-1cS" userLabel="Privacy Icon Tap Recogniser">
             <connections>
-                <action selector="onSiteRatingPressed:" destination="ojX-nM-dyN" id="aWb-03-h7C"/>
+                <action selector="onPrivacyIconPressed:" destination="ojX-nM-dyN" id="log-73-IsZ"/>
             </connections>
         </tapGestureRecognizer>
         <tapGestureRecognizer id="N3q-x6-xYr">
@@ -380,13 +447,17 @@
         <image name="BrowseNext" width="24" height="24"/>
         <image name="BrowsePrevious" width="24" height="24"/>
         <image name="ClearText" width="24" height="24"/>
+        <image name="LogoIcon" width="24" height="24"/>
         <image name="MenuShare" width="24" height="24"/>
         <image name="MicrophoneSolid" width="24" height="24"/>
-        <image name="PP Network Icon google" width="24" height="24"/>
-        <image name="PP Network Icon more" width="22" height="22"/>
-        <image name="PP Network Icon yahoo!" width="24" height="24"/>
         <image name="Refresh" width="24" height="24"/>
         <image name="Settings" width="24" height="24"/>
         <image name="SuggestLoupe" width="24" height="24"/>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

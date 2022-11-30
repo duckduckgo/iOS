@@ -1063,257 +1063,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Sobre as nossas proteções contra o rastreamento na internet";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "Logótipo do DuckDuckGo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Sobre as nossas proteções em pesquisas e anúncios";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Toca para abrir o ecrã do Painel de Privacidade";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Como os nossos anúncios de pesquisa afetam as nossas proteções";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritmo";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bits";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Erro ao extrair o certificado";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Nome comum";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Tamanho efetivo";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-mail";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Ligação encriptada";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Criptografia forçada";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Ligação encriptada";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Forçamos este site a usar uma ligação encriptada, para impedir a escuta não autorizada de qualquer informação pessoal que lhe envie.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Uma ligação encriptada previne uma escuta não autorizada de qualquer informação pessoal que envie a um website.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Identificador da chave do utilizador";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Emissor";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Chave pública";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Tamanho da chave";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Encriptação mista";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Este site tem encriptação mista porque algum do conteúdo está a ser servido em ligações não encriptadas.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Não";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Permanente";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Chave pública";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Uma ligação encriptada previne uma escuta não autorizada de qualquer informação pessoal que envie a um website.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Nome do utilizador";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Resumo";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Tenha cuidado ao inserir informações pessoais neste site.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Ligação não encriptada";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Desconhecido";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Uso";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Desencriptar";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Derivar";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Encriptar";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Assinar";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Desembrulhar";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Verificar";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Embrulhar";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Sim";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "PROTEÇÃO DO SITE DESATIVADA";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "MELHORADO DE $1 PARA $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "GRAU DE PRIVACIDADE";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Principais redes de rastreamento encontradas";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nenhuma rede de rastreamento principal encontrada";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Foram encontradas redes de rastreamento em %1$@%% dos websites que visitou desde %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Ainda estamos a recolher dados para mostrar\nquantos rastreadores bloqueámos.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Nenhum pedido de terceiros carregado";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Os pedidos do seguinte domínio foram carregados devido a um clique recente num anúncio de %@ no DuckDuckGo. Estes pedidos ajudam a avaliar a eficácia dos anúncios. Nenhum anúncio no DuckDuckGo é utilizado para criação de perfis.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Os pedidos do seguinte domínio foram carregados para impedir a falha do site.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Os pedidos do seguinte domínio foram carregados porque estão associados a %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Os pedidos dos seguintes domínios de terceiros foram carregados. Se os pedidos de uma empresa forem carregados, a empresa pode conseguir criar um perfil sobre ti, embora sejam aplicadas as nossas outras proteções contra rastreamento na internet.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Não foi bloqueado o carregamento de nenhum pedido de terceiros porque as proteções estão desativadas para este site. Se os pedidos de uma empresa forem carregados, a empresa pode conseguir criar um perfil sobre ti.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Os pedidos de rastreamento dos seguintes domínios foram carregados.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Os pedidos de rastreamento do seguinte domínio também foram carregados.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Os pedidos dos seguintes domínios foram carregados.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Os pedidos do seguinte domínio foram carregados.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Não detetámos pedidos de domínios de terceiros.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Pedidos de terceiros carregados";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Nota: as limitações da plataforma podem limitar a nossa capacidade de detetar todos os pedidos.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Sem criação de perfis";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Práticas privadas de ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "As práticas de privacidade indicam o nível de proteção das informações pessoais que partilha com um site.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Este website irá notificá-lo antes de transferir a sua informação em caso de fusão ou aquisição";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "As práticas de privacidade deste website não foram examinadas.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Grau de privacidade %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Premir para abrir o ecrã de Proteção de Privacidade";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Estas estatísticas são apenas armazenadas no seu dispositivo e não são enviadas para lado nenhum. Nunca.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Boas práticas de privacidade";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Práticas de privacidade mistas";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Más práticas de privacidade";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Práticas de privacidade desconhecidas";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Os rastreadores ajudam as empresas a criar perfis sobre ti. Bloqueámos o carregamento destes rastreadores e a monitorização da tua atividade nesta página.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Não foram bloqueados pedidos de terceiros porque as Proteções estão desativadas para este site. Se os pedidos de uma empresa forem carregados, a empresa pode conseguir criar um perfil sobre ti.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Não detetámos nenhum pedido de rastreamento.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Foi bloqueado o carregamento dos pedidos dos seguintes domínios de terceiros porque foram identificados como pedidos de rastreamento. Se os pedidos de uma empresa forem carregados, a empresa pode conseguir criar um perfil sobre ti.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Pedidos com carregamento bloqueado";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Pedidos de rastreamento encontrados";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nenhum pedido de rastreamento bloqueado";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nenhum pedido de rastreamento encontrado";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Ícone de privacidade";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Cancelar";
@@ -1405,6 +1162,7 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Proteção de privacidade ativada para %@";
 
+<<<<<<< HEAD
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ocorreu um erro desconhecido.";
 
@@ -1420,6 +1178,8 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Abrir website";
 
+=======
+>>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Definições";
 

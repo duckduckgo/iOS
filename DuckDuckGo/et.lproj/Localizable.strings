@@ -1063,257 +1063,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Meie veebijälgimise kaitsete teave";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "DuckDuckGo logo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Meie otsingukaitsete ja reklaamide teave";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Puuduta privaatsuse juhtpaneeli kuva avamiseks";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Kuidas meie otsingu reklaamid meie kaitset mõjutavad?";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritm";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bitti";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Tõrge sertifikaadi ekstraktimisel";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Üldine nimi";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Efektiivne suurus";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-post";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Krüptitud ühendus";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Sunnitud krüpteerimine";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Krüptitud ühendus";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Sundisime seda saiti kasutama krüpteeritud ühendust, vältides sellele saadetud isikuandmete pealtkuulamist.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Krüpteeritud ühendus takistab veebisaidile saadetud isikuandmete pealtkuulamist.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Teema võtme identifikaator";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Väljaandja";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Avalik võti";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Võtme suurus";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Segatud krüpteerimine";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Sellel saidil on segatud krüpteerimine, kuna mõnda sisu pakutakse krüpteerimata ühenduste kaudu.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Ei";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Püsiv";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Avalik võti";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Krüpteeritud ühendus takistab veebisaidile saadetud isikuandmete pealtkuulamist.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Teema nimi";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Kokkuvõte";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Ole ettevaatlik, kui sisestad isikuandmeid sellele saidile.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Krüptimata ühendus";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Tundmatu";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Kasutamine";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Dekrüpteeri";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Tuleta";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Krüpteeri";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Logi sisse";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Paki lahti";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Kinnita";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Paki";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Jah";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "SAIDI KAITSE ON KEELATUD";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "ÜLENDATUD $1-lt $2-le";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "PRIVAATSUSASTE";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Leitud peamised jälgimisvõrgud";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Ühtegi peamist jälgimisvõrku ei leitud";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Jälgija võrgud leiti %1$@%% veebisaitidest, mida sa oled külastanud alates %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Kogume endiselt andmeid, et näidata, kui\npalju jälgijaid oleme blokeerinud.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Kolmanda poole päringud pole laaditud";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Järgmise domeeni päringud laaditi, sest hiljuti klõpsati DuckDuckGo's %@ reklaamil. Need päringud aitavad hinnata reklaamide tõhusust. Kõik DuckDuckGo' reklaamid on mitteprofileerivad.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Laaditi järgmise domeeni päringud, et vältida saidi töö häirimist.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Laaditi järgmise domeeni päringud, sest nendega on seotud %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Laaditi järgmiste kolmanda poole domeenide päringud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida, kuigi meie teised veebi jälgimise kaitsemeetmed kehtivad endiselt.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Kolmandate poolte päringute laadimist ei blokeeritud, sest selle saidi jaoks on kaitsed välja lülitatud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Laaditi järgmiste domeenide jälgimispäringud.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Laaditi ka järgmise domeeni päringud.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Laaditi ka järgmiste domeenide päringud.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Laaditi ka järgmise domeeni päringud.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Me ei tuvastanud kolmanda poole domeenide päringuid.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Kolmanda poole päringud on laaditud";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Pane tähele: platvormi piirangud võivad piirata meie võimet tuvastada kõiki päringuid.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Mitte-profileeriv";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Privaatsustava tuleneb ToS; DR-ist.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Privaatsustavad näitavad, kui palju on veebisaidiga jagatav isiklik teave kaitstud.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "See veebisait teavitab sind enne sinu andmete edastamist ühinemise või omandamise korral";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Selle veebisaidi privaatsustavasid ei ole üle vaadatud.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privaatsusaste %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Vajuta, et avada privaatsuse kaitse aken";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "See statistika salvestatakse ainult sinu seadmesse ja seda ei saadeta kuhugi. Mitte kunagi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Hea privaatsustava";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Erinevad privaatsustavad";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Kehv privaatsustava";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Teadmata privaatsustava";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Jälgurid aitavad ettevõtetel sind profileerida. Me blokeerisime nende jälgurite laadimise ja sinu tegevuse jälgimise sellel lehel.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Jälgimispäringute laadimist ei blokeeritud, sest selle saidi jaoks on kaitsed välja lülitatud. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Me ei tuvastanud ühtegi jälgimistaotlust.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Järgmiste kolmanda poole domeenide päringute laadimine blokeeriti, sest need tuvastati jälgimispäringutena. Kui ettevõtte päringud laaditakse, võib see võimaldada neil sind profileerida.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Päringute laadimine on blokeeritud";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Leitud jälgimispäringud";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Ühtegi jälgimispäringut pole blokeeritud";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Jälgimispäringuid ei leitud";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Privaatsuse ikoon";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Tühista";
@@ -1405,6 +1162,7 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "%@ privaatsuse kaitse on lubatud";
 
+<<<<<<< HEAD
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Tekkis tundmatu tõrge.";
 
@@ -1420,6 +1178,8 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Ava veebisait";
 
+=======
+>>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Seaded";
 

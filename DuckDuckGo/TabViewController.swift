@@ -23,11 +23,14 @@ import StoreKit
 import LocalAuthentication
 import os.log
 import BrowserServicesKit
-import UserScript
 import SwiftUI
 import Bookmarks
 import Persistence
 import Common
+import PrivacyDashboard
+import UserScript
+import ContentBlocking
+import TrackerRadarKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -71,12 +74,13 @@ class TabViewController: UIViewController {
         set { findInPageScript?.findInPage = newValue }
     }
 
+    let favicons = Favicons.shared
     let progressWorker = WebProgressWorker()
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
-    private weak var privacyController: PrivacyProtectionController?
-
+    private weak var privacyDashboard: PrivacyDashboardViewController?
+    
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
@@ -84,11 +88,10 @@ class TabViewController: UIViewController {
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
 
-    private(set) var urlToSiteRating: [URL: SiteRating] = [:]
-    private(set) var siteRating: SiteRating?
-    let tabModel: Tab
-
-    let favicons = Favicons.shared
+    private(set) var tabModel: Tab
+    private(set) var privacyInfo: PrivacyInfo?
+    private var previousPrivacyInfosByURL: [URL: PrivacyInfo] = [:]
+    
     private let requeryLogic = RequeryLogic()
 
     private static let tld = AppDependencyProvider.shared.storageCache.current.tld
@@ -100,10 +103,7 @@ class TabViewController: UIViewController {
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
-
-    private var trackerNetworksDetectedOnPage = Set<String>()
-    private var pageHasTrackers = false
-
+        
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
 
@@ -387,7 +387,6 @@ class TabViewController: UIViewController {
 
     private func addObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
@@ -435,6 +434,7 @@ class TabViewController: UIViewController {
     private func load(url: URL, didUpgradeURL: Bool) {
         if !didUpgradeURL {
             lastUpgradedURL = nil
+            privacyInfo?.connectionUpgradedTo = nil
         }
         
         if !url.isBookmarklet() {
@@ -489,9 +489,6 @@ class TabViewController: UIViewController {
         case #keyPath(WKWebView.estimatedProgress):
             progressWorker.progressDidChange(webView.estimatedProgress)
             
-        case #keyPath(WKWebView.hasOnlySecureContent):
-            hasOnlySecureContentChanged(hasOnlySecureContent: webView.hasOnlySecureContent)
-            
         case #keyPath(WKWebView.url):
             webViewUrlHasChanged()
             
@@ -515,12 +512,6 @@ class TabViewController: UIViewController {
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
         }
-    }
-    
-    func hasOnlySecureContentChanged(hasOnlySecureContent: Bool) {
-        guard webView.url?.host == siteRating?.url.host else { return }
-        siteRating?.hasOnlySecureContent = hasOnlySecureContent
-        updateSiteRating()
     }
     
     func enableFireproofingForDomain(_ domain: String) {
@@ -570,6 +561,7 @@ class TabViewController: UIViewController {
     public func reload() {
         updateContentMode()
         webView.reload()
+        privacyDashboard?.dismiss(animated: true)
     }
     
     func updateContentMode() {
@@ -621,20 +613,15 @@ class TabViewController: UIViewController {
 
         guard let chromeDelegate = chromeDelegate else { return }
 
-        if let controller = segue.destination as? PrivacyProtectionController {
+        if let controller = segue.destination as? PrivacyDashboardViewController {
             controller.popoverPresentationController?.delegate = controller
 
-            if let siteRatingView = chromeDelegate.omniBar.siteRatingContainer.siteRatingView {
-                controller.popoverPresentationController?.sourceView = siteRatingView
-                controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
+            if let iconView = chromeDelegate.omniBar.privacyInfoContainer.privacyIcon {
+                controller.popoverPresentationController?.sourceView = iconView
+                controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
-
-            controller.privacyProtectionDelegate = self
-            privacyController = controller
-            controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
-            controller.omniBarText = chromeDelegate.omniBar.textField.text
-            controller.siteRating = siteRating
-            controller.errorText = isError ? errorText : nil
+            privacyDashboard = controller
+            privacyDashboard?.tabViewController = self
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -655,6 +642,13 @@ class TabViewController: UIViewController {
         return self.jsAlertController
     }
 
+    @IBSegueAction
+    private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
+        PrivacyDashboardViewController(coder: coder,
+                                       privacyInfo: privacyInfo,
+                                       privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager)
+    }
     private func addTextSizeObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onTextSizeChange),
@@ -694,50 +688,63 @@ class TabViewController: UIViewController {
 
     func showPrivacyDashboard() {
         Pixel.fire(pixel: .privacyDashboardOpened)
-        performSegue(withIdentifier: "PrivacyProtection", sender: self)
+        performSegue(withIdentifier: "PrivacyDashboard", sender: self)
     }
     
     private var didGoBackForward: Bool = false
 
-    private func resetSiteRating() {
+    private func resetDashboardInfo() {
         if let url = url {
-            if didGoBackForward, let siteRating = urlToSiteRating[url] {
-                self.siteRating = siteRating
+            if didGoBackForward, let privacyInfo = previousPrivacyInfosByURL[url] {
+                self.privacyInfo = privacyInfo
                 didGoBackForward = false
             } else {
-                siteRating = makeSiteRating(url: url)
+                privacyInfo = makePrivacyInfo(url: url)
             }
         } else {
-            siteRating = nil
+            privacyInfo = nil
         }
-        onSiteRatingChanged()
+        
+        onPrivacyInfoChanged()
     }
     
-    private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = EntityMapping()
-        let privacyPractices = PrivacyPractices(tld: storageCache.tld,
-                                                termsOfServiceStore: storageCache.termsOfServiceStore,
-                                                entityMapping: entityMapping)
+    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+        guard let host = url.host else { return nil }
         
-        let siteRating = SiteRating(url: url,
-                                    httpsForced: httpsForced,
-                                    entityMapping: entityMapping,
-                                    privacyPractices: privacyPractices)
-        urlToSiteRating[url] = siteRating
+        let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
         
-        return siteRating
+        
+        let privacyInfo = PrivacyInfo(url: url,
+                                      parentEntity: entity,
+                                      protectionStatus: makeProtectionStatus(for: host))
+        privacyInfo.serverTrust = webView.serverTrust
+        
+        previousPrivacyInfosByURL[url] = privacyInfo
+        
+        return privacyInfo
     }
-
-    private func updateSiteRating() {
-        if isError {
-            siteRating = nil
+    
+    private func makeProtectionStatus(for host: String) -> ProtectionStatus {
+        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+        
+        let isTempUnprotected = config.isTempUnprotected(domain: host)
+        let isAllowlisted = config.isUserUnprotected(domain: host)
+        
+        var enabledFeatures: [String] = []
+        
+        if !config.isInExceptionList(domain: host, forFeature: .contentBlocking) {
+            enabledFeatures.append(PrivacyFeature.contentBlocking.rawValue)
         }
-        onSiteRatingChanged()
+        
+        return ProtectionStatus(unprotectedTemporary: isTempUnprotected,
+                                enabledFeatures: enabledFeatures,
+                                allowlisted: isAllowlisted,
+                                denylisted: false)
     }
-
-    private func onSiteRatingChanged() {
-        delegate?.tab(self, didChangeSiteRating: siteRating)
-        privacyController?.updateSiteRating(siteRating)
+ 
+    private func onPrivacyInfoChanged() {
+        delegate?.tab(self, didChangePrivacyInfo: privacyInfo)
+        privacyDashboard?.updatePrivacyInfo(privacyInfo)
     }
     
     func didLaunchBrowsingMenu() {
@@ -782,6 +789,7 @@ class TabViewController: UIViewController {
     }
 
     func dismiss() {
+        presentedViewController?.dismiss(animated: true)
         progressWorker.progressBar = nil
         chromeDelegate?.omniBar.cancelAllAnimations()
         cancelTrackerNetworksAnimation()
@@ -792,7 +800,6 @@ class TabViewController: UIViewController {
 
     private func removeObservers() {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
@@ -800,12 +807,12 @@ class TabViewController: UIViewController {
     }
         
     public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
-        let blockedTrackerDomains = siteRating?.trackersBlocked.compactMap { $0.domain } ?? []
+        let blockedTrackerDomains = privacyInfo?.trackerInfo.trackersBlocked.compactMap { $0.domain } ?? []
         
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: siteRating?.installedSurrogates.map { $0 } ?? [],
+                              installedSurrogates: privacyInfo?.trackerInfo.installedSurrogates.map { $0 } ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
                               ampUrl: linkProtection.lastAMPURLString,
@@ -868,8 +875,6 @@ extension TabViewController: WKNavigationDelegate {
             performBasicHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)
-            guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
-            ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
         }
     }
     
@@ -907,17 +912,13 @@ extension TabViewController: WKNavigationDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        resetSiteRating()
+        resetDashboardInfo()
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
-
-        trackerNetworksDetectedOnPage.removeAll()
-        pageHasTrackers = false
-        NetworkLeaderboard.shared.incrementPagesLoaded()
         
         appRatingPrompt.registerUsage()
-        
+     
         if let scene = self.view.window?.windowScene, appRatingPrompt.shouldPrompt() {
             SKStoreReviewController.requestReview(in: scene)
             appRatingPrompt.shown()
@@ -988,7 +989,6 @@ extension TabViewController: WKNavigationDelegate {
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
-        chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
         linkProtection.setMainFrameUrl(webView.url)
         referrerTrimming.onBeginNavigation(to: webView.url)
@@ -1033,9 +1033,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
-        
-        siteRating?.finishedLoading = true
-        updateSiteRating()
+                
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -1050,7 +1048,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        guard let siteRating = self.siteRating,
+        guard let privacyInfo = self.privacyInfo,
               !isShowingFullScreenDaxDialog else {
 
             scheduleTrackerNetworksAnimation(collapsing: true)
@@ -1062,7 +1060,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        guard let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
+        guard let spec = DaxDialogs.shared.nextBrowsingMessage(privacyInfo: privacyInfo) else {
             
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 delegate?.tabDidRequestFireButtonPulse(tab: self)
@@ -1097,8 +1095,8 @@ extension TabViewController: WKNavigationDelegate {
     
     private func scheduleTrackerNetworksAnimation(collapsing: Bool) {
         let trackersWorkItem = DispatchWorkItem {
-            guard let siteRating = self.siteRating else { return }
-            self.delegate?.tab(self, didRequestPresentingTrackerAnimation: siteRating, isCollapsing: collapsing)
+            guard let privacyInfo = self.privacyInfo else { return }
+            self.delegate?.tab(self, didRequestPresentingTrackerAnimation: privacyInfo, isCollapsing: collapsing)
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,
@@ -1130,9 +1128,10 @@ extension TabViewController: WKNavigationDelegate {
         os_log("webpageLoading failed", log: generalLog, type: .debug)
         if isError {
             showBars(animated: true)
+            privacyInfo = nil
+            onPrivacyInfoChanged()
         }
-        siteRating?.finishedLoading = true
-        updateSiteRating()
+        
         self.delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -1168,8 +1167,10 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
-        self.siteRating = makeSiteRating(url: url)
-        updateSiteRating()
+        
+        self.privacyInfo = makePrivacyInfo(url: url)
+        onPrivacyInfoChanged()
+        
         checkLoginDetectionAfterNavigation()
     }
     
@@ -1342,6 +1343,7 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
+            privacyInfo?.connectionUpgradedTo = nil
         }
 
         guard navigationAction.request.mainDocumentURL != nil else {
@@ -1431,8 +1433,8 @@ extension TabViewController: WKNavigationDelegate {
             switch result {
             case let .success(upgradedUrl):
                 if lastUpgradedURL != upgradedUrl {
-                    NetworkLeaderboard.shared.incrementHttpsUpgrades()
                     lastUpgradedURL = upgradedUrl
+                    privacyInfo?.connectionUpgradedTo = upgradedUrl
                     load(url: upgradedUrl, didUpgradeURL: true)
                     completion(.cancel)
                 } else {
@@ -1814,16 +1816,6 @@ extension TabViewController {
             Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
         }
     }
-
-}
-
-// MARK: - PrivacyProtectionDelegate
-extension TabViewController: PrivacyProtectionDelegate {
-
-    func omniBarTextTapped() {
-        chromeDelegate?.omniBar.becomeFirstResponder()
-    }
-
 }
 
 // MARK: - WKUIDelegate
@@ -2032,7 +2024,7 @@ extension TabViewController: UserContentControllerDelegate {
 extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
     func contentBlockerRulesUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
-        return siteRating?.isFor(self.url) ?? false
+        return privacyInfo?.isFor(self.url) ?? false
     }
     
     func contentBlockerRulesUserScriptShouldProcessCTLTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
@@ -2046,10 +2038,12 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
     func contentBlockerRulesUserScript(_ script: ContentBlockerRulesUserScript,
                                        detectedThirdPartyRequest request: DetectedRequest) {
-        siteRating?.thirdPartyRequestDetected(request)
+        privacyInfo?.trackerInfo.add(detectedThirdPartyRequest: request)
     }
 
     fileprivate func userScriptDetectedTracker(_ tracker: DetectedRequest) {
+        guard let url = url else { return }
+        
         adClickAttributionLogic.onRequestDetected(request: tracker)
         
         if tracker.isBlocked && fireWoFollowUp {
@@ -2057,21 +2051,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
         }
 
-        siteRating?.trackerDetected(tracker)
-        onSiteRatingChanged()
-
-        if !pageHasTrackers {
-            NetworkLeaderboard.shared.incrementPagesWithTrackers()
-            pageHasTrackers = true
-        }
-
-        if let networkName = tracker.ownerName {
-            if !trackerNetworksDetectedOnPage.contains(networkName) {
-                trackerNetworksDetectedOnPage.insert(networkName)
-                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
-            }
-            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
-        }
+        privacyInfo?.trackerInfo.addDetectedTracker(tracker, onPageWithURL: url)
     }
 }
 
@@ -2079,15 +2059,15 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
 extension TabViewController: SurrogatesUserScriptDelegate {
 
     func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
-        return siteRating?.isFor(self.url) ?? false
+        return privacyInfo?.isFor(self.url) ?? false
     }
 
     func surrogatesUserScript(_ script: SurrogatesUserScript,
                               detectedTracker tracker: DetectedRequest,
                               withSurrogate host: String) {
-        if siteRating?.url.absoluteString == tracker.pageUrl {
-            siteRating?.surrogateInstalled(host)
-        }
+        guard let url = url else { return }
+        
+        privacyInfo?.trackerInfo.addInstalledSurrogateHost(host, for: tracker, onPageWithURL: url)
         userScriptDetectedTracker(tracker)
     }
 

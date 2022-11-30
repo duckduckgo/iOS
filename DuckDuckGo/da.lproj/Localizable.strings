@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Fortryd";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Autoudfyld forslaget";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Bogmærke";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Åbn websted";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Søg på DuckDuckGo";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Administrer";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Tilføj";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download startet for %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annullér";
 
@@ -680,10 +668,10 @@
 "favorite" = "Favorit";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Slet";
+"favorite.menu.edit" = "Rediger";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Rediger";
+"favorite.menu.remove" = "Fjern";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokering af annoncer og pop op-vinduer";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Velkommen til\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Invitationskode";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Din invitation vises her, når vi er klar til dig. Vil du %1$@, når den ankommer? %2$@ om macOS-betabrowseren.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "have besked";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Vi sender dig en meddelelse, når vi er klar til dig. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Din invitation til at prøve DuckDuckGo til Mac sendes hertil. Kom snart tilbage. Vi kan også sende dig en meddelelse, når det er din tur.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Vi sender dig en meddelelse, når din kopi af DuckDuckGo til Mac er klar til download.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ om betaversionen.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Appen DuckDuckGo Privacy til Mac har den hastighed, du har brug for, de browsing-funktioner, du forventer, og er spækket med vores førsteklasses basale nødvendigheder til databeskyttelse.";
+"mac-browser.waitlist.summary" = "DuckDuckGo til Mac har den hastighed, du har brug for, de browserfunktioner, du forventer, og leveres spækket med vores bedste privatlivsartikler i klassen.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Åbn din invitation";
@@ -991,29 +958,11 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopi";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Besøg denne URL på din Mac for at downloade:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "På din Mac skal du gå til:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Trin 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Åbn filen for at installere, og indtast derefter din invitationskode for at låse op.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Trin 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Er du klar til at begynde at browse privat på Mac?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Du er inviteret!";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Slut dig til den private venteliste";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Tilmelder dig ventelisten ...";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Del link";
 
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Prøv DuckDuckGo til Mac!";
@@ -1021,29 +970,14 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows kommer snart!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Vi kan give dig besked, når det er din tur, men beskeder er i øjeblikket deaktiveret for DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Du behøver ikke at dele nogen personlige oplysninger for at komme på ventelisten. Du sikrer din plads i køen med et tidsstempel, der udelukkende findes på din enhed, så vi kan give dig besked, når det er din tur.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Du er på listen!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Kan downloades på Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Browse privat med vores app til Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Du er på listen!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Du er inviteret!\n\nEr du klar til at begynde at browse privat på Mac?\n\nTrin 1\nBesøg denne URL på din Mac for at downloade:\nhttps://duckduckgo.com/mac\n\nTrin 2\nÅbn filen for at installere, og indtast derefter din invitationskode for at låse op.\n\nInvitationskode: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Er du klar til at begynde at browse privat på Mac?\n\nBesøg denne URL på din Mac for at downloade:\nhttps://duckduckgo.com/mac\n\n";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Du er inviteret!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo til Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo skrivebordsapp";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Der opstod en ukendt fejl.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Autoudfyld forslaget";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Bogmærke";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Søg på DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Åbn websted";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Indstillinger";

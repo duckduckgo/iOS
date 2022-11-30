@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Geri al";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Otomatik tamamlama önerisi";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Yer imi";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Web sitesini aç";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "DuckDuckGo'da ara";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Yönet";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Ekle";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ için indirme başlatıldı";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "İptal";
 
@@ -680,10 +668,10 @@
 "favorite" = "Favori";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Sil";
+"favorite.menu.edit" = "Düzenle";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Düzenle";
+"favorite.menu.remove" = "Kaldır";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklam ve pop-up engelleme";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo'ya\nHoş Geldiniz!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Davet Kodu";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Özellik hazır olduğunda davetiyeniz burada gösterilecek. Hazır olduğunda %1$@ ister misiniz? macOS tarayıcı beta hakkında %2$@.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "bildirim almak";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Özellik hazır olduğunda bir bildirim göndereceğiz. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Mac için DuckDuckGo'yu deneme davetiniz buraya gelecek. Kısa süre içinde tekrar kontrol edin ya da sıranız geldiğinde size bir bildirim gönderebiliriz.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Mac için DuckDuckGo kopyanız indirilmeye hazır olduğunda size bir bildirim göndereceğiz.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "Beta hakkında %@.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Mac için DuckDuckGo Gizlilik Uygulaması, ihtiyacınız olan hız ve beklediğiniz tarama özelliklerinin yanı sıra sınıfının en iyisi gizlilik özellikleri sunuyor.";
+"mac-browser.waitlist.summary" = "Mac için DuckDuckGo, ihtiyacınız olan hız ve beklediğiniz tarama özelliklerinin yanı sıra sınıfındaki en iyi gizlilik özelliklerini (Privacy Essentials) sunuyor.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Davetiyenizi açın";
@@ -991,59 +958,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopyala";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "İndirmek için Mac'inizde bu URL'yi ziyaret edin:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Mac cihazınızda şu adrese gidin:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. Adım";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Yüklemek için dosyayı açın, ardından kilidini açmak için davet kodunuzu girin.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. Adım";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Mac'te gizliliğinizi koruyarak gezinmeye başlamaya hazır mısınız?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Davetlisiniz!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Bağlantıyı paylaş";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Özel Bekleme Listesine Katılın";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Bekleme listesine katılıyorsunuz...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Mac için DuckDuckGo'yu deneyin!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Mac için DuckDuckGo'yu edinin!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows sürümü çok yakında!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Sıra size geldiğinde bunu bildirebiliriz, ancak bildirimler şu anda DuckDuckGo için devre dışı bırakılmış.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Bekleme listesine katılmak için kişisel bilgilerinizi paylaşmanız gerekmez. Yerinizi yalnızca cihazınıza yerleştirilen bir zaman damgası ile güvence altına alacaksınız. Böylece sıranız geldiğinde sizi bilgilendirebiliriz.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Listedesiniz!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Mac cihazlarda indirilebilir";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Mac için uygulamamızla internette gezinirken gizliliğinizi koruyun";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Listedesiniz!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Davetlisiniz!\n\nMac'te gizliliğinizi koruyarak gezinmeye başlamaya hazır mısınız?\n\n1. Adım\nİndirmek için Mac'inizde bu URL'yi ziyaret edin:\nhttps://duckduckgo.com/mac\n\n2. Adım\nYüklemek için dosyayı açın, ardından kilidini açmak için davet kodunuzu girin.\n\nDavet kodu: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Mac'te gizliliğinizi koruyarak gezinmeye hazır mısınız?\n\nİndirmek için Mac'inizde bu URL'yi ziyaret edin:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Davetlisiniz!";
+"mac-waitlist.share-sheet.title" = "Mac için DuckDuckGo";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo Masaüstü Uygulaması";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Bilinmeyen bir hata oluştu.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Otomatik tamamlama önerisi";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Yer imi";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "DuckDuckGo'da ara";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Web sitesini aç";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Ayarlar";

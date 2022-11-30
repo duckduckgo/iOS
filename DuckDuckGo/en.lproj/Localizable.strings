@@ -655,9 +655,6 @@
 /* Empty list state placholder */
 "empty.bookmarks" = "No bookmarks added yet";
 
-/* Empty list state placholder */
-"empty.favorites" = "No favorites added yet";
-
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "No matches found";
 

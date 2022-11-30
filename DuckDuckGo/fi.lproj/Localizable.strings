@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Kumoa";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Automaattisen täydennyksen ehdotus";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Kirjanmerkki";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Avaa verkkosivusto";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Hae DuckDuckGosta";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Hallitse";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Lisää";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Tiedoston %@ lataus aloitettu";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Peruuta";
 
@@ -680,10 +668,10 @@
 "favorite" = "Suosikki";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Poista";
+"favorite.menu.edit" = "Muokkaa";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Muokkaa";
+"favorite.menu.remove" = "Poista";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Mainosten ja ponnahdusikkunoiden esto";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Tervetuloa\nDuckDuckGo-sovellukseen!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Kutsukoodi";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Kutsusi näytetään tässä, kun olemme valmiita. Haluatko %1$@, kun se saapuu? %2$@ macOS-selaimen beetaversiosta.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "ilmoitus";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Lähetämme sinulle ilmoituksen, kun olemme valmiita. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Saat kutsusi Macin DuckDuckGon käyttöön tänne. Tarkista tilanne pian uudelleen. Voimme myös lähettää sinulle ilmoituksen, kun on sinun vuorosi.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Lähetämme sinulle ilmoituksen, kun voit ladata Macin DuckDuckGon.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ beetaversiosta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Macin DuckDuckGo Privacy -sovellus tarjoaa kaipaamasi nopeuden, odottamasi selaintoiminnot sekä luokkansa parhaat tietosuojaominaisuudet.";
+"mac-browser.waitlist.summary" = "Macin DuckDuckGo tarjoaa kaipaamasi nopeuden, odottamasi selaintoiminnot ja luokkansa parhaat tietosuojaominaisuudet.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Avaa kutsusi";
@@ -991,29 +958,11 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopioi";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Lataa se siirtymällä Macilla tähän URL-osoitteeseen:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Siirry Mac-tietokoneellasi osoitteeseen:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Vaihe 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Asenna se avaamalla tiedosto ja avaa sitten lukitus antamalla kutsukoodisi.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Vaihe 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Oletko valmis aloittamaan yksityisen selaamisen Macilla?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Sinut on kutsuttu!";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Liity yksityiselle odotuslistalle";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Liitytään odotuslistalle...";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Jaa linkki";
 
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Kokeile Macin DuckDuckGota!";
@@ -1021,29 +970,14 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows-versio on tulossa pian!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Voimme ilmoittaa sinulle, kun on sinun vuorosi, mutta ilmoitukset ovat tällä hetkellä poissa käytöstä DuckDuckGossa.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Sinun ei tarvitse jakaa henkilötietoja liittyäksesi jonotuslistalle. Varmistat paikkasi jonossa aikaleimalla, joka on olemassa vain laitteessasi. Näin voimme ilmoittaa sinulle, kun on sinun vuorosi.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Olet odotuslistalla!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Ladattavissa Macille";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Selaa yksityisesti Mac-sovelluksellamme";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Olet odotuslistalla!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Sinut on kutsuttu!\n\nOletko valmis aloittamaan yksityisen selaamisen Macilla? \n\n Vaihe 1\n Lataa sovellus siirtymällä tähän URL-osoitteeseen Macillasi:\nhttps://duckduckgo.com/mac.\n\nVaihe 2\nAsenna sovellus avaamalla tiedosto ja avaa sitten lukitus antamalla kutsukoodisi.\n\nKutsukoodi: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Oletko valmis aloittamaan yksityisen selaamisen Macilla?\n\n Lataa sovellus Macillesi osoitteesta:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Sinut on kutsuttu!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo-työpöytäsovellus";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Tapahtui tuntematon virhe.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Automaattisen täydennyksen ehdotus";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Kirjanmerkki";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Hae DuckDuckGosta";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Avaa verkkosivusto";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Asetukset";

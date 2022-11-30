@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Atsaukt";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Automātiski pabeigt ieteikumu";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Grāmatzīme";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Atvērt tīmekļa vietni";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Meklēt vietnē DuckDuckGo";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Pārvaldīt";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Pievienot";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ lejupielāde sākta";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atcelt";
 
@@ -680,10 +668,10 @@
 "favorite" = "Izlase";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Dzēst";
+"favorite.menu.edit" = "Rediģēt";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Rediģēt";
+"favorite.menu.remove" = "Noņemt";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklāmu un uznirstošo logu bloķēšana";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Laipni lūdzam\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Uzaicinājuma kods";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Tavs uzaicinājums parādīsies šeit, kad būsim gatavi tevi uzņemt. Vai vēlies %1$@, kad tas atnāks? %2$@ par macOS pārlūkprogrammas beta versiju.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "saņemt paziņojumu";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Mēs nosūtīsim tev paziņojumu, kad būsim gatavi tevi uzņemt. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Tavs uzaicinājums izmēģināt DuckDuckGo Mac datoram parādīsies šeit. Drīzumā pārbaudi vēlreiz, vai arī mēs varam tev nosūtīt paziņojumu, kad pienāks tava kārta.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Mēs nosūtīsim tev paziņojumu, kad tavs DuckDuckGo Mac datoram būs gatavs lejupielādei.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ par beta versiju.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "DuckDuckGo privātuma lietotnei Mac datoram ir ātrums, kādu tev vajag, pārlūkošanas funkcijas, ko tu gaidi, un tā ir aprīkota ar mūsu klasē labākajiem privātuma pamatiem.";
+"mac-browser.waitlist.summary" = "DuckDuckGo Mac datoram sniedz nepieciešamo ātrumu, ierastās pārlūkošanas funkcijas un savā klasē labākās privātuma pamatfunkcijas.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Atver savu ielūgumu";
@@ -991,59 +958,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopēt";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Apmeklē šo URL savā Mac datorā, lai lejupielādētu:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Savā Mac datorā dodies uz:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. solis";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Atver instalējamo failu un pēc tam ievadi uzaicinājuma kodu, lai atbloķētu.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. solis";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Vai esi gatavs sākt privātu pārlūkošanu savā Mac datorā?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Tu esi uzaicināts!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Kopīgot saiti";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Pievienojies privātajam nogaides sarakstam";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Notiek pievienošanās gaidīšanas sarakstam...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Izmēģini DuckDuckGo Mac datoram!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Iegūsti DuckDuckGo Mac datoram!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows drīzumā!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Mēs varam tev paziņot, kad būs pienākusi tava kārta, taču pašlaik DuckDuckGo paziņojumi ir atspējoti.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Lai pievienotos gaidīšanas sarakstam, tev nav jādalās ar personisku informāciju. Tu ieņemsi vietu rindā, izmantojot laikspiedolu, kas pastāv tikai tavā ierīcē, lai mēs varētu tevi informēt, kad pienāks tava kārta.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Tu esi sarakstā!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Pieejams lejupielādei Mac datorā";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Pārlūko privāti, izmantojot mūsu Mac lietotni";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Tu esi sarakstā!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Tu esi uzaicināts! \n\nVai esi gatavs sākt privātu pārlūkošanu savā Mac? \n\n 1. solis \nApmeklē šo URL savā Mac datorā, lai lejupielādētu: \nhttps://duckduckgo.com/mac \n\n2. solis \nAtver instalējamo failu, pēc tam ievadi uzaicinājuma kodu, lai atbloķētu. \n\nUzaicinājuma kods: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Vai esi gatavs sākt privātu pārlūkošanu savā Mac? \n\n Apmeklē šo URL savā Mac datorā, lai lejupielādētu:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Tu esi uzaicināts!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo Mac datoram";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo darbvirsmas lietotne";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Radās nezināma kļūda.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Automātiski pabeigt ieteikumu";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Grāmatzīme";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Meklēt vietnē DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Atvērt tīmekļa vietni";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Iestatījumi";

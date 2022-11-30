@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Visszavonás";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Automatikus kiegészítési javaslat";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Könyvjelző";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Webhely megnyitása";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Keresés a DuckDuckGón";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Kezelés";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Hozzáadás";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "A letöltés elindult: %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Mégsem";
 
@@ -680,10 +668,10 @@
 "favorite" = "Kedvenc";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Törlés";
+"favorite.menu.edit" = "Szerkesztés";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Szerkesztés";
+"favorite.menu.remove" = "Eltávolítás";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Hirdetések és felugró ablakok letiltása";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Meghívókód";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "A meghívód itt fog megjelenni, amikor készen állunk. Szeretnél %1$@, amikor megérkezik? %2$@ a macOS rendszerre készült böngésző béta verziójáról.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "értesítést kapni";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Értesítést küldünk, amikor készen állunk. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "A DuckDuckGo Maces verziójának kipróbálására szóló meghívód ide fog érkezni. Látogass vissza mielőbb, vagy küldhetünk értesítést, ha sorra kerülsz.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Értesítést küldünk, ha a DuckDuckGo Maces verziója letölthetővé válik a számodra.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ a béta verzióról.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "A DuckDuckGo Privacy alkalmazás Maces verziója gyors, böngészési funkciókban gazdag, és kategóriája legjobb adatvédelmi megoldásait kínálja.";
+"mac-browser.waitlist.summary" = "A DuckDuckGo Mac verziója gyors, böngészési funkciókban gazdag, és kategóriája legjobb adatvédelmi megoldásait kínálja.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Meghívó megnyitása";
@@ -991,59 +958,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Másolás";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "A letöltéshez látogass el erre az URL-címre a Maceden:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Macen lépj a következőre:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. lépés";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Nyisd meg a fájlt a telepítéshez, majd írd be a meghívókódot a feloldáshoz.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. lépés";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Készen állsz a privát böngészésre a Macen?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Meghívót kaptál!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Link megosztása";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Csatlakozz a privát várólistához";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Csatlakozás a várólistához…";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Próbáld ki a DuckDuckGo Maces verzióját!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Töltsd le a DuckDuckGo Mac verzióját!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Hamarosan érkezik a Windows verzió!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Értesíthetünk, ha sorra kerülsz, de a DuckDuckGo értesítései jelenleg le vannak tiltva.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Nem kell megosztanod a személyes adataid a várólistához való csatlakozáshoz. A sorban elfoglalt helyedet egy olyan időbélyegző igazolja, amely kizárólag az eszközödön található meg, így értesíteni tudunk, amikor sorra kerülsz.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Felkerültél a listára!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Letölthető Macre";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Privát böngészés Maces alkalmazásunkkal";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Felkerültél a listára!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Meghívót kaptál!\n\nKészen állsz a privát böngészésre a Macen?\n\n1. lépés\nA letöltéshez látogass el erre az URL-címre a Maceden:\nhttps://duckduckgo.com/mac\n\n2. lépés\nNyisd meg a fájlt a telepítéshez, majd írd be a meghívókódot a feloldáshoz.\n\nMeghívókód: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Készen állsz a privát böngészésre a Macen?\n\nA letöltéshez látogass el erre az URL-címre a Macen:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Meghívót kaptál!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo Mac verzió";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo asztali alkalmazás";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Ismeretlen hiba történt.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Automatikus kiegészítési javaslat";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Könyvjelző";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Keresés a DuckDuckGón";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Webhely megnyitása";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Beállítások";

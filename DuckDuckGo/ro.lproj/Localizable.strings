@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Anulați";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Sugestie de completare automată";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Marchează";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Deschide site-ul";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Caută pe DuckDuckGo";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Gestionează";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Adăugați";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Descărcarea a început pentru %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Renunță";
 
@@ -680,10 +668,10 @@
 "favorite" = "Preferință";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Ștergere";
+"favorite.menu.edit" = "Editați";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Editați";
+"favorite.menu.remove" = "Elimină";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blocarea anunțurilor și ferestrelor pop-up";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Bine ai venit la\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Codul de invitație";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Invitația ta va apărea aici, când vom fi pregătiți pentru tine. Vrei să %1$@ în momentul în care sosește? %2$@ despre browserul macOS beta.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "primește o notificare";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Îți vom trimite o notificare când suntem pregătiți pentru tine. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Invitația ta să încerci DuckDuckGo pentru Mac va sosi aici. Revino în curând sau îți putem trimite o notificare când este rândul tău.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Îți vom trimite o notificare când copia ta DuckDuckGo pentru Mac este pregătită pentru a fi descărcată.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ despre versiunea beta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Aplicația pentru confidențialitate DuckDuckGo pentru Mac are viteza de care ai nevoie, funcționalitățile de răsfoire pe care ți le dorești și este prevăzută cu cele mai bune caracteristici de bază în privința confidențialității din domeniu.";
+"mac-browser.waitlist.summary" = "DuckDuckGo pentru Mac are viteza de care ai nevoie, funcționalitățile de răsfoire pe care ți le dorești și este prevăzută cu cele mai bune caracteristici de bază în privința confidențialității din domeniu.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Deschide invitația ta";
@@ -991,59 +958,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copiere";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Vizitează această adresă URL pe computerul tău Mac pentru a descărca:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Pe dispozitivul tău Mac, accesează:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Pasul 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Deschide fișierul de instalat, apoi introdu codul de invitație pentru a debloca.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Pasul 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Ești gata să începi să răsfoiești în modul privat pe Mac?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Ești invitat(ă)!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Trimite linkul";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Alătură-te listei de așteptare private";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Te alături listei de așteptare...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Încearcă DuckDuckGo pentru Mac!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Obține DuckDuckGo pentru Mac!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Va fi disponibil în curând și pentru Windows!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Te putem înștiința când este rândul tău, însă notificările sunt momentan dezactivate pentru DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Nu va trebui să comunici informații personale, pentru a te înscrie pe lista de așteptare. Îți vei asigura locul la coadă, folosind o marcă de timp care există numai pe dispozitivul tău, astfel încât să te putem înștiința când ți-a sosit rândul.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Ești pe listă!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Disponibilă pentru descărcare pe Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Răsfoiește în mod privat, cu aplicația noastră pentru Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Ești pe listă!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Ești invitat(ă)!\n\nEști pregătit(ă) să răsfoiești privat pe Mac?\n\nPasul 1\nVizitează această adresă URL pe computerul tău Mac pentru a descărca:\nhttps://duckduckgo.com/mac\n\nPasul 2\nDescarcă fișierul pentru a instala, apoi introdu codul de invitație pentru a debloca.\n\nCod de invitație: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Ești gata să răsfoiești în mod privat pe Mac?\n\nVizitează această adresă URL pe dispozitivul tău Mac pentru a descărca:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Ești invitat(ă)!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo pentru Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "Aplicația DuckDuckGo pentru desktop";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "A apărut o eroare necunoscută.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Sugestie de completare automată";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Marchează";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Caută pe DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Deschide site-ul";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Setări";

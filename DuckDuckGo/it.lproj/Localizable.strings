@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Annulla";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Mostra suggerimenti di completamento automatico";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Segnalibro";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Apri il sito web";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Cerca su DuckDuckGo";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Gestisci";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Aggiungi";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Download di %@ avviato";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annulla";
 
@@ -680,10 +668,10 @@
 "favorite" = "Preferito";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Cancella";
+"favorite.menu.edit" = "Modifica";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Modifica";
+"favorite.menu.remove" = "Rimuovi";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blocco di annunci e popup";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "DuckDuckGo\nti dà il benvenuto!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Codice invito";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Vedrai il tuo invito qui quando saremo pronti per te. Vuoi %1$@ quando arriva? %2$@ sulla versione beta del browser macOS.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "ricevere una notifica";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Ti invieremo una notifica quando saremo pronti per te. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "L'invito a provare DuckDuckGo per Mac arriverà qui. Torna a trovarci a breve, oppure possiamo inviarti una notifica non appena sarà il tuo turno.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Ti invieremo una notifica quando la tua copia di DuckDuckGo per Mac sarà pronta per il download.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ sulla versione beta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "L'app DuckDuckGo Privacy per Mac ti offre la velocità di cui hai bisogno, le funzioni di navigazione che desideri e i migliori strumenti per la privacy.";
+"mac-browser.waitlist.summary" = "DuckDuckGo per Mac ti offre la velocità di cui hai bisogno, le funzioni di navigazione che desideri e i migliori strumenti per la privacy.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Apri il tuo invito";
@@ -991,59 +958,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copia";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Visita questo URL sul tuo Mac per scaricare:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Sul tuo Mac, visita:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Passaggio 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Esegui il file da installare, poi inserisci il tuo codice di invito per sbloccare.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Passaggio 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Vuoi iniziare a navigare privatamente su Mac?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Hai ricevuto un invito!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Condividi link";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Iscriviti alla lista d'attesa privata";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Iscrizione alla lista d'attesa...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Prova DuckDuckGo per Mac!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Scarica DuckDuckGo per Mac.";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "La versione per Windows arriverà presto!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Possiamo informarti non appena sarà il tuo turno, tuttavia le notifiche sono attualmente disabilitate per DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Per iscriverti alla lista d'attesa non dovrai comunicare alcuna informazione personale. Ti assicurerai un posto in fila con un timestamp presente esclusivamente sul tuo dispositivo, così potremo avvisarti quando sarà il tuo turno.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Sei in lista d'attesa.";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Disponibile per il download su Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Naviga in privato con la nostra app per Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Sei in lista d'attesa.";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Hai ricevuto un invito!\n\nVuoi iniziare a navigare privatamente su Mac?\n\nPassaggio 1\nVisita il seguente URL sul tuo Mac per scaricare:\nhttps://duckduckgo.com/mac\n\nPassaggio 2\nEsegui il file da installare, poi inserisci il tuo codice di invito per sbloccare.\n\nCodice invito: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Vuoi iniziare a navigare privatamente su Mac?\n\nVisita il seguente URL sul tuo Mac per scaricare:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Hai ricevuto un invito!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo per Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "App desktop DuckDuckGo";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Si è verificato un errore sconosciuto.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Mostra suggerimenti di completamento automatico";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Segnalibro";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Cerca su DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Apri il sito web";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Impostazioni";

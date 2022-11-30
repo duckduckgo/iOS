@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Vrátenie späť";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Zobraziť návrhy automatického dopĺňania";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Záložka";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Otvoriť webovú lokalitu";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Vyhľadávať na DuckDuckGo";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Spravujte stránku";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Pridať";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ – začalo sa sťahovanie";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Zrušiť";
 
@@ -680,10 +668,10 @@
 "favorite" = "Obľúbené položky";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Vymazať";
+"favorite.menu.edit" = "Upraviť";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Upraviť";
+"favorite.menu.remove" = "Odstrániť";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Blokovanie reklám a automaticky otváraných okien";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Vitajte v\nprehliadači DuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Pozývací kód";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Tu sa zobrazí vaša pozvánka, keď na vás budeme pripravení. Prajete si %1$@, keď bude k dispozícii? %2$@ o beta verzii prehliadača pre macOS.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "dostať upozornenie";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Pošleme vám upozornenie, keď na vás budeme pripravení. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Tu bude vaša pozvánka na vyskúšanie DuckDuckGo pre Mac. Čoskoro sa sem vráťte. Môžeme vám tiež poslať upozornenie, keď budete na rade.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Pošleme vám upozornenie, keď bude váš prehliadač DuckDuckGo pre Mac pripravený na stiahnutie.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ o beta verzii.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Aplikácia DuckDuckGo Privacy pre Mac má rýchlosť, ktorú potrebujete, funkcie prehliadača, ktoré očakávate a prichádza vybavená prvotriednymi súčasťami na ochranu súkromia.";
+"mac-browser.waitlist.summary" = "DuckDuckGo pre Mac má rýchlosť, ktorú potrebujete, funkcie prehliadania, ktoré očakávate, a obsahuje naše prvotriedne privacy essentials.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Otvorte svoju pozvánku";
@@ -991,29 +958,11 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopírovať";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Navštívte URL vo svojom Macu na stiahnutie:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "V počítači Mac prejdite na:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. krok";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Otvorte súbor na inštaláciu a zadajte pozývací kód na odomknutie.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. krok";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Ste pripravený/-á na súkromné prehliadanie stránok v Macu?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Ste pozvaný/-á!";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Pridajte sa do súkromného zoznamu čakateľov";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Pridáva sa na zoznam čakateľov...";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Zdieľať odkaz";
 
 /* Title for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Vyskúšajte DuckDuckGo pre Mac!";
@@ -1021,29 +970,14 @@
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Verzia pre Windows bude k dispozícii čoskoro!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Môžeme vám poslať upozornenie, keď na vás príde rad, ale pre DuckDuckGo sú v súčasnosti upozornenia vypnuté.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Pri pridávaní sa na zoznam čakateľov nemusíte zadávať žiadne osobné údaje. Svoje miesto si zabezpečíte časovou pečiatkou, ktorá existuje výlučne vo vašom zariadení, aby sme vás mohli upozorniť, keď budete na rade.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Ste na zozname čakateľov!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "K dispozícii na stiahnutie pre Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Prezerajte súkromne stránky s našou aplikáciou pre Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Ste na zozname čakateľov!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Ste pozvaný/-á! \n\nSte pripravený/-á začať súkromne prehliadať v Macu? \n\n 1. krok \n Na stiahnutie navštívte túto adresu URL vo svojom Macu: \n https://duckduckgo.com/mac \n\n2. krok\nOtvorte súbor na inštaláciu a potom zadajte pozývací kód na odomknutie.\n\nPozývací kód: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Ste pripravení začať so súkromným prehliadaním v Mac-u?\n\nNa stiahnutie navštívte túto adresu URL vo svojom Mac-u:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Ste pozvaný/-á!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo pre Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "Aplikácia DuckDuckGo pre počítač";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Vyskytla sa neznáma chyba.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Zobraziť návrhy automatického dopĺňania";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Záložka";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Vyhľadávať na DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Otvoriť webovú lokalitu";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Nastavenia";

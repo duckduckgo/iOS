@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Anuliuoti";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Automatinio užbaigimo pasiūlymas";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Žymė";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Atidaryti svetainę";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Ieškoti „DuckDuckGo“";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Tvarkyti";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Papildyti";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ atsiusntimas prasidėjo.";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atšaukti";
 
@@ -680,10 +668,10 @@
 "favorite" = "Mėgstamas";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Trinti";
+"favorite.menu.edit" = "Redaguoti";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Redaguoti";
+"favorite.menu.remove" = "Pašalinti";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Reklamų ir iššokančiųjų langų blokavimas";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Sveiki atvykę į\n„DuckDuckGo“!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Pakvietimo kodas";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Kai viską paruošime, pakvietimą matysite čia. Ar norite %1$@, kai gausite pakvietimą? %2$@ apie „macOS“ naršyklės beta versiją.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "gauti pranešimą";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Atsiųsime jums pranešimą, kai viską paruošime. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Pakvietimą išbandyti „DuckDuckGo for Mac“ matysite čia. Netrukus patikrinkite arba galime jums atsiųsti pranešimą, kai bus jūsų eilė.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Atsiųsime jums pranešimą, kai jūsų „DuckDuckGo for Mac“ kopija bus paruošta atsisiųsti.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ apie beta versiją.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "„DuckDuckGo Privacy App for Mac“ pasižymi jums reikiama sparta, naršymo funkcijomis ir aukščiausios klasės privatumo įrankiais.";
+"mac-browser.waitlist.summary" = "„Mac“ skirta „DuckDuckGo“ pasižymi jums reikiama sparta, naršymo funkcijomis ir aukščiausios klasės privatumo įrankiais.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Atidaryti pakvietimą";
@@ -991,59 +958,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopijuoti";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Spustelėkite šį URL „Mac“ kompiuteryje, kad atsisiųstumėte:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "„Mac“ kompiuteryje eikite į:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1 veiksmas";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Atidarykite įdiegiamą failą, tuomet įveskite pakvietimo kodą, kad atrakintumėte.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2 veiksmas";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Pasiruošę naršyti privačiai „Mac“?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Esate pakviesti!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Bendrinti nuorodą";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Prisijungti prie privataus laukimo sąrašo";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Prisijungiama prie laukimo sąrašo...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Išbandykite „DuckDuckGo for Mac“!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Gaukite „Mac“ skirtą „DuckDuckGo“!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "„Windows“ jau greitai!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Galime jus informuoti, kai bus jūsų eilė, tačiau šiuo metu pranešimai yra išjungti „DuckDuckGo“.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Jums nereikia dalintis savo asmenine informacija, kad prisijungtumėte prie laukimo sąrašo. Užsitikrinsite vietą eilėje laiko žyma, kuri egzistuoja tik jūsų įrenginyje, kad galėtume jus įspėti, kai ateis jūsų eilė.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Esate sąraše!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Galima atsisiųsti „Mac“";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Naršykite privačiai su mūsų „Mac“ skirta programa";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Esate sąraše!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Esate pakviesti!\n\nPasiruošę naršyti privačiai „Mac“?\n\n1 veiksmas\nSpustelėkite šį URL „Mac“ kompiuteryje, kad atsisiųstumėte:\nhttps://duckduckgo.com/mac\n\n2 veiksmas\nAtidarykite įdiegiamą failą, tuomet įveskite pakvietimo kodą, kad atrakintumėte.\n\nPakvietimo kodas: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Pasiruošę naršyti privačiai „Mac“?\n\nSpustelėkite šį URL „Mac“ kompiuteryje, kad atsisiųstumėte:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Esate pakviesti!";
+"mac-waitlist.share-sheet.title" = "„Mac“ skirta „DuckDuckGo“";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "„DuckDuckGo“ darbalaukio programa";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Įvyko nežinoma klaida.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Automatinio užbaigimo pasiūlymas";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Žymė";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Ieškoti „DuckDuckGo“";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Atidaryti svetainę";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Nustatymai";

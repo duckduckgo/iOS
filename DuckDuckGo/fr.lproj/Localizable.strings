@@ -10,17 +10,8 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Annuler";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Saisie semi-automatique de la suggestion";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Signet";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Ouvrir le site Web";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Rechercher sur DuckDuckGo";
+/* Button label for managing favorites */
+"action.manage.favorites" = "Gérer";
 
 /* Add action - button shown in alert */
 "action.title.add" = "Ajouter";
@@ -634,9 +625,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Début du téléchargement pour %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Annuler";
 
@@ -680,10 +668,10 @@
 "favorite" = "Favori";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Supprimer";
+"favorite.menu.edit" = "Modifier";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Modifier";
+"favorite.menu.remove" = "Supprimer";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Bloquer les publicités et les fenêtres contextuelles";
@@ -958,29 +946,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Bienvenue sur\nDuckDuckGo !";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Code d'invitation";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Votre invitation s'affichera ici lorsque vous aurez accès à la fonctionnalité. Vous souhaitez %1$@ de son lancement ? %2$@ sur le navigateur macOS bêta.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "être prévenu(e)";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Nous vous enverrons une notification lorsque nous serons prêts. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Votre invitation à essayer DuckDuckGo pour Mac arrivera ici. Vous pouvez revenir dans quelques temps ou attendre de recevoir une notification de notre part.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Nous vous avertirons lorsque vous pourrez télécharger DuckDuckGo pour Mac.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ sur la version bêta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "L'application de confidentialité DuckDuckGo pour Mac répond à vos besoins de rapidité et de fonctionnalités de navigation, et dispose des meilleurs outils de leur catégorie pour protéger votre vie privée.";
+"mac-browser.waitlist.summary" = "DuckDuckGo pour Mac répond à vos besoins de rapidité et de fonctionnalités de navigation, et dispose des meilleurs outils de leur catégorie pour protéger votre vie privée.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Ouvrez votre invitation";
@@ -991,59 +958,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copier";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Accédez à cette URL sur votre Mac pour télécharger l'application :";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Sur votre Mac, accédez à :";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Étape 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Ouvrez le fichier à installer, puis saisissez votre code d'invitation pour le débloquer.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Étape 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Prêt(e) à naviguer incognito sur Mac ?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Vous avez reçu une invitation !";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Partager le lien";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Rejoindre la liste d'attente privée";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Inscription à la liste d'attente...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Essayez DuckDuckGo pour Mac !";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Procurez-vous DuckDuckGo pour Mac !";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Des places vont bientôt se libérer !";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Nous pouvons vous avertir lorsque ce sera votre tour, mais les notifications sont actuellement désactivées pour DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Vous n'aurez pas à fournir d'informations personnelles pour vous inscrire sur la liste d'attente. Votre place sera assurée par un horodatage associé uniquement à votre appareil, qui nous permettra de vous informer quand viendra votre tour.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Vous êtes sur liste d'attente !";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Disponible en téléchargement sur Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Naviguez incognito avec notre application pour Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Vous êtes sur liste d'attente !";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Vous avez reçu une invitation !\n\nPrêt(e) à naviguer incognito sur Mac ?\n\nÉtape 1\nAccédez à cette URL sur votre Mac pour télécharger l'application :\nhttps://duckduckgo.com/mac\n\nÉtape 2\nOuvrez le fichier à installer, puis saisissez votre code d'invitation pour le débloquer.\n\nCode d'invitation : %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Prêt(e) à naviguer incognito sur Mac ?\n\nAccédez à cette URL sur votre Mac pour télécharger l'application :\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Vous avez reçu une invitation !";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo pour Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "Application de bureau DuckDuckGo";
@@ -1473,6 +1407,18 @@
 
 /* No comment provided by engineer. */
 "unknown.error.occurred" = "Une erreur inconnue s'est produite.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Saisie semi-automatique de la suggestion";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Signet";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Rechercher sur DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Ouvrir le site Web";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Paramètres";

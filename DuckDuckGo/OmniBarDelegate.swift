@@ -29,7 +29,7 @@ protocol OmniBarDelegate: AnyObject {
     
     func onDismissed()
     
-    func onSiteRatingPressed()
+    func onPrivacyIconPressed()
     
     func onMenuPressed()
     
@@ -74,7 +74,7 @@ extension OmniBarDelegate {
         
     }
     
-    func onSiteRatingPressed() {
+    func onPrivacyIconPressed() {
         
     }
     

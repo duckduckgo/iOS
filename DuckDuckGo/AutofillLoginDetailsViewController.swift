@@ -20,6 +20,7 @@
 import UIKit
 import SwiftUI
 import BrowserServicesKit
+import Common
 import Combine
 
 protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
@@ -51,8 +52,8 @@ class AutofillLoginDetailsViewController: UIViewController {
         return barButtonItem
     }()
 
-    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil, authenticationNotRequired: Bool = false) {
-        self.viewModel = AutofillLoginDetailsViewModel(account: account)
+    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD, authenticationNotRequired: Bool = false) {
+        self.viewModel = AutofillLoginDetailsViewModel(account: account, tld: tld)
         self.authenticator = authenticator
         self.authenticationNotRequired = authenticationNotRequired
         super.init(nibName: nil, bundle: nil)

@@ -132,4 +132,6 @@ protocol Theme {
     var autofillEmptySearchViewTextColor: UIColor { get }
     var autofillLockedViewTextColor: UIColor { get }
 
+    var privacyDashboardWebviewBackgroundColor: UIColor { get }
+
 }

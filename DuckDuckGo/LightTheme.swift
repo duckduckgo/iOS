@@ -126,4 +126,5 @@ struct LightTheme: Theme {
     var autofillEmptySearchViewTextColor = UIColor.gray50
     var autofillLockedViewTextColor = UIColor.nearlyBlack
 
+    var privacyDashboardWebviewBackgroundColor = UIColor.white
 }

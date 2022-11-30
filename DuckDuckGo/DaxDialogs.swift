@@ -21,6 +21,8 @@ import Foundation
 import Core
 import TrackerRadarKit
 import BrowserServicesKit
+import Common
+import PrivacyDashboard
 
 // swiftlint:disable type_body_length
 
@@ -257,16 +259,16 @@ final class DaxDialogs {
         return ActionSheetSpec.fireButtonEducation
     }
 
-    func nextBrowsingMessage(siteRating: SiteRating) -> BrowsingSpec? {
+    func nextBrowsingMessage(privacyInfo: PrivacyInfo) -> BrowsingSpec? {
         guard isEnabled, nextHomeScreenMessageOverride == nil else { return nil }
-        guard let host = siteRating.domain else { return nil }
+        guard let host = privacyInfo.domain else { return nil }
         
-        if appUrls.isDuckDuckGoSearch(url: siteRating.url) {
+        if appUrls.isDuckDuckGoSearch(url: privacyInfo.url) {
             return searchMessage()
         }
         
         // won't be shown if owned by major tracker message has already been shown
-        if isFacebookOrGoogle(siteRating.url) {
+        if isFacebookOrGoogle(privacyInfo.url) {
             return majorTrackerMessage(host)
         }
         
@@ -275,7 +277,7 @@ final class DaxDialogs {
             return majorTrackerOwnerMessage(host, owner)
         }
         
-        if let entityNames = blockedEntityNames(siteRating) {
+        if let entityNames = blockedEntityNames(privacyInfo.trackerInfo) {
             return trackersBlockedMessage(entityNames)
         }
         
@@ -365,10 +367,10 @@ final class DaxDialogs {
         }
     }
  
-    private func blockedEntityNames(_ siteRating: SiteRating) -> [String]? {
-        guard !siteRating.trackersBlocked.isEmpty else { return nil }
+    private func blockedEntityNames(_ trackerInfo: TrackerInfo) -> [String]? {
+        guard !trackerInfo.trackersBlocked.isEmpty else { return nil }
         
-        return siteRating.trackersBlocked.removingDuplicates { $0.entityName }
+        return trackerInfo.trackersBlocked.removingDuplicates { $0.entityName }
             .sorted(by: { $0.prevalence ?? 0.0 > $1.prevalence ?? 0.0 })
             .compactMap { $0.entityName }
     }

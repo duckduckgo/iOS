@@ -320,7 +320,6 @@ extension Pixel {
         case contentBlockingIdentifierError
         
         case webKitDidTerminate
-        case webKitDidBecomeUnresponsive
         case webKitTerminationDidReloadCurrentTab
         
         case backgroundTaskSubmissionFailed
@@ -693,7 +692,6 @@ extension Pixel.Event {
         case .contentBlockingIdentifierError: return "m_d_cb_ie"
             
         case .webKitDidTerminate: return "m_d_wkt"
-        case .webKitDidBecomeUnresponsive: return "m_d_wkunresponsive"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"

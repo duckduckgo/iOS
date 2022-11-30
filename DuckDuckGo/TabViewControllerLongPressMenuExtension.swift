@@ -58,8 +58,9 @@ extension TabViewController {
     }
     
     private func onOpenAction(forUrl url: URL) {
-        guard webView != nil else { return }
-        self.load(url: url)
+        if let webView = webView {
+            webView.load(URLRequest.userInitiated(url))
+        }
     }
     
     private func onShareAction(forUrl url: URL, atPoint point: Point?) {

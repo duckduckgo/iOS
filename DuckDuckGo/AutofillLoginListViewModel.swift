@@ -228,11 +228,12 @@ final class AutofillLoginListViewModel: ObservableObject {
     @discardableResult
     func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
-              let accountID = account.id else { return false }
+              let accountID = account.id,
+              let accountIdInt = Int64(accountID) else { return false }
         
         do {
-            cachedDeletedCredentials = try secureVault.websiteCredentialsFor(accountId: accountID)
-            try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
+            cachedDeletedCredentials = try secureVault.websiteCredentialsFor(accountId: accountIdInt)
+            try secureVault.deleteWebsiteCredentialsFor(accountId: accountIdInt)
             return true
         } catch {
             Pixel.fire(pixel: .secureVaultError)

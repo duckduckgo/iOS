@@ -179,14 +179,16 @@ extension TabViewController {
     
     private func buildBookmarkEntries(for link: Link,
                                       with bookmarksInterface: MenuBookmarksInteracting) -> (bookmark: BrowsingMenuEntry,
-                                                                                             favorite: BrowsingMenuEntry) {
-        let existingBookmark = bookmarksInterface.bookmark(for: link.url)
+                                                                                             favorite:
+                                                                                                BrowsingMenuEntry) {
+        let existingFavorite = bookmarksInterface.favorite(for: link.url)
+        let existingBookmark = existingFavorite ?? bookmarksInterface.bookmark(for: link.url)
         
         return (bookmark: buildBookmarkEntry(for: link,
                                              bookmark: existingBookmark,
                                              with: bookmarksInterface),
                 favorite: buildFavoriteEntry(for: link,
-                                             bookmark: existingBookmark,
+                                             bookmark: existingFavorite,
                                              with: bookmarksInterface))
     }
 

@@ -34,6 +34,19 @@ class RootDebugViewController: UITableViewController {
         presentShareSheet(withItems: [DiagnosticReportDataSource(delegate: self)], fromButtonItem: shareButton)
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.cellForRow(at: indexPath)?.tag == 666 {
+            fatalError(#function)
+        }
+
+        if tableView.cellForRow(at: indexPath)?.tag == 667 {
+            var arrays = [String]()
+            while 1 != 2 {
+                arrays.append(UUID().uuidString)
+            }
+        }
+    }
+
 }
 
 extension RootDebugViewController: DiagnosticReportDataSourceDelegate {

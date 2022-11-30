@@ -25,6 +25,7 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 import BrowserServicesKit
+import Crashes
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -65,6 +66,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .forEach { $0.perform(setHardwareLayout, with: nil) }
         }
         #endif
+
+        CrashCollection.start {
+            Pixel.fire(pixel: .dbCrashDetected, withAdditionalParameters: $0, includedParameters: [.appVersion])
+        }
 
         clearTmp()
 

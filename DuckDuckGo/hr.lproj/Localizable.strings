@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Poništi";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Prijedlog za automatsko ispunjavanje";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Knjižna oznaka";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Otvori web lokaciju";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Pretraži na DuckDuckGou";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Dodaj";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Preuzimanje je počelo za %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Otkaži";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Dobro došao/la u\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Pozivni kôd";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Vaša pozivnica pojavit će se ovdje kad budemo spremni za vas. Želite li %1$@ kad stigne? %2$@ o beta verziji preglednika macOS.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "primite obavijest";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Poslat ćemo vam obavijest kada budemo spremni za vas. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Vaša pozivnica da isprobate DuckDuckGo za Mac stići će ovdje. Provjerite ponovno uskoro, ili vam možemo poslati obavijest kada dođete na red.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Poslat ćemo vam obavijest kad vaš primjerak programa DuckDuckGo za Mac bude spreman za preuzimanje.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ o beta verziji.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Aplikacija DuckDuckGo Privacy za Mac pruža vam potrebnu brzinu i očekivane značajke pretraživanja, a isporučuje se s našim najboljim elementima za privatnost u svojoj klasi.";
+"mac-browser.waitlist.summary" = "Aplikacija DuckDuckGo za Mac pruža ti potrebnu brzinu i značajke pretraživanja kakve očekuješ, a isporučuje se s našim najboljim alatima za privatnost u svojoj klasi - privacy essentials.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Otvori svoju pozivnicu";
@@ -991,59 +955,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopiraj";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Posjetite ovaj URL na svom Macu za preuzimanje:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Na Macu idi na:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. korak";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Otvorite datoteku za instalaciju, a zatim unesite pozivni kôd za otključavanje.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. korak";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Jeste li spremni za početak privatnog pretraživanja na Macu?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Pozvani ste!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Podijeli poveznicu";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Pridružite se privatnoj listi čekanja";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Pridruživanje listi čekanja...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Isprobajte DuckDuckGo za Mac!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Nabavi DuckDuckGo za Mac!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Uskoro i za Windows!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Možemo vas obavijestiti kada dođete na red, ali obavijesti su trenutačno onemogućene za DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Nećete morati podijeliti nikakve osobne podatke za pridruživanje listi čekanja. Svoje ćete mjesto osigurati u skladu s vremenskom oznakom koja postoji samo na vašem uređaju kako bismo vas mogli obavijestiti kada na vas dođe red.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Na popisu ste!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Dostupno za preuzimanje na Macu";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Pretražujte privatno s našom aplikacijom za Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Na popisu ste!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Pozvani ste!\n\nJeste li spremni za početak privatnog pretraživanja na Macu? \n\n1. korak\n Posjetite ovaj URL na svom Macu za preuzimanje:\nhttps://duckduckgo.com/mac\n\n2. korak\nOtvorite datoteku za instalaciju, a zatim unesite pozivni kôd za otključavanje.\n\nPozivni kôd: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Jesi li spreman za početak privatnog pretraživanja na Macu? \n\nPosjeti ovaj URL na svom Macu za preuzimanje:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Pozvani ste!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo za Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo aplikacija za osobno računalo";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "U redu";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "O našoj zaštiti od praćenja na webu";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "Logotip DuckDuckGo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "O našoj zaštiti pretraživanja i oglasa";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Dodirni za otvaranje zaslona nadzorne ploče privatnosti";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Kako naši pretraživački oglasi utječu na našu zaštitu";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritam";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bita";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Pogreška pri izdvajanju certifikata";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Uobičajeno ime";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Efektivna veličina";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-pošta";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Šifrirana veza";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Prisilna enkripcija";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Šifrirana veza";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Prisilili smo ovo web-mjesto da koristi kriptiranu vezu, sprečavajući prisluškivanje bilo kakvih osobnih podataka koje mu pošalješ.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Kriptirana veza sprječava prisluškivanje bilo kakvih osobnih podataka koje šalješ web-mjestu.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Identifikator subjektovog ključa";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Izdavatelj";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Javni ključ";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Veličina ključa";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Mješovita enkripcija";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Ovo web-mjesto ima mješovitu enkripciju, jer se neki sadržaj poslužuje preko nekriptiranih veza.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Ne";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Trajno";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Javni ključ";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Kriptirana veza sprječava prisluškivanje bilo kakvih osobnih podataka koje šalješ web-mjestu.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Ime subjekta";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Sažetak";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Budi oprezan/na prilikom unošenja osobnih podataka na ovo mjesto.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Nešifrirana veza";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Nepoznato";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Upotreba";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Dekriptiranje";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Derivacija";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Enkripcija";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Potpis";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Odmotavanje";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Provjera";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Zamotavanje";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Da";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "ZAŠTITA WEB-MJESTA ISKLJUČENA JE";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "POBOLJŠANO S $1 NA $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "OCJENA ZAŠTITE PRIVATNOSTI";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Pronađene glavne mreže za praćenje";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nije pronađena nijedna veća mreža za praćenje";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Mreže za praćenje pronađene su na %1$@%% web-mjesta koje ste posjetili od %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Još uvijek prikupljamo podatke kako bismo pokazali koliko\nsmo tragača blokirali.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Nema učitanih zahtjeva trećih strana";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Sljedeći zahtjevi domene učitani su jer je nedavno kliknut oglas %@ na DuckDuckGou. Ovi zahtjevi pomažu u procjeni učinkovitosti oglasa. Svi oglasi na DuckDuckGou su neprofilirajući.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Sljedeći zahtjevi domene učitani su kako bi se spriječio pad web stranice.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Sljedeći zahtjevi domene učitani su jer su povezani s %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Učitani su sljedeći zahtjevi domena trećih strana. Ako su zahtjevi tvrtke učitani, to im može omogućiti da vas profiliraju, iako se i dalje primjenjuju naše druge zaštite web praćenja.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Učitavanje zahtjeva trećih strana nije blokirano jer su zaštite isključene za ovo web-mjesto. Ako su zahtjevi tvrtke učitani, to im može omogućiti da te profiliraju.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Učitani su zahtjevi za praćenje sljedećih domena.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Učitani su i sljedeći zahtjevi domene.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Učitani su zahtjevi sljedećih domena.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Učitani su zahtjevi sljedeće domene.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Nismo otkrili zahtjeve s domena trećih strana.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Učitani su zahtjevi trećih strana";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Imajte na umu: ograničenja platforme mogu ograničiti našu sposobnost otkrivanja svih zahtjeva.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Neprofiliranje";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Prakse zaštite privatnosti iz ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Prakse zaštite privatnosti pokazuju koliko su zaštićeni osobni podaci koje dijelite s web-mjestom.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Ovo web-mjesto obavijestit će te prije prijenosa tvojih podataka u slučaju spajanja ili preuzimanja";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Prakse zaštite privatnosti na ovom web-mjestu nisu provjerene.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Ocjena privatnosti %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Pritisnite za otvaranje zaslona za zaštitu privatnosti";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Te se statistike pohranjuju samo na tvom uređaju i nikada se nikamo ne šalju.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Dobre prakse zaštite privatnosti";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Miješane prakse zaštite privatnosti";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Loše prakse zaštite privatnosti";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Nepoznate prakse zaštite privatnosti";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Alati za praćenje pomažu tvrtkama da te profiliraju. Blokirali smo ove alate za praćenje učitavanja i praćenja tvojih aktivnosti na ovoj stranici.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Učitavanje zahtjeva za praćenje nije blokirano jer su zaštite isključene za ovo web-mjesto. Ako su zahtjevi tvrtke učitani, to im može omogućiti da te profiliraju.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nismo otkrili nikakve zahtjeve za praćenje.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Sljedećim zahtjevima domena trećih strana blokirano je učitavanje jer su identificirani kao zahtjevi za praćenje. Ako su zahtjevi tvrtke učitani, to im može omogućiti da te profiliraju.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Zahtjevi blokirani od učitavanja";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Pronađeni zahtjevi za praćenje";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nema blokiranih zahtjeva za praćenje";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nije pronađen nijedan zahtjev za praćenje";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Ikona privatnosti";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Otkaži";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Zaštita privatnosti je omogućena za %@";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Došlo je do nepoznate pogreške.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Postavke";

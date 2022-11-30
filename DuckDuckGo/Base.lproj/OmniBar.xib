@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -197,13 +197,22 @@
                                                         <outletCollection property="gestureRecognizers" destination="qXd-RO-1cS" appends="YES" id="3xf-ou-ORG"/>
                                                     </connections>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEJ-P3-HpO" customClass="OmniBarNotificationView" customModule="DuckDuckGo" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="420" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="420" id="JKC-Bt-wlh"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemGreenColor"/>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="yEJ-P3-HpO" secondAttribute="bottom" id="57g-Hk-0Wg"/>
                                                 <constraint firstAttribute="width" constant="138" id="5h0-qa-R1c"/>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="138" id="8Ts-e7-w2H"/>
                                                 <constraint firstItem="99p-YW-bjm" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" constant="-8" id="GAx-rD-lZc"/>
+                                                <constraint firstItem="yEJ-P3-HpO" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="Ilv-Ix-Gz4"/>
                                                 <constraint firstAttribute="bottom" secondItem="7qa-DK-tfO" secondAttribute="bottom" id="KZY-PZ-Iwo"/>
+                                                <constraint firstItem="yEJ-P3-HpO" firstAttribute="leading" secondItem="yGG-5L-D8Q" secondAttribute="leading" id="LPP-na-irK"/>
                                                 <constraint firstAttribute="height" constant="40" id="LSj-2a-VE0"/>
                                                 <constraint firstItem="99p-YW-bjm" firstAttribute="centerX" secondItem="9cx-oo-bpe" secondAttribute="centerX" constant="4" id="Ugc-cl-4dt"/>
                                                 <constraint firstItem="7qa-DK-tfO" firstAttribute="top" secondItem="yGG-5L-D8Q" secondAttribute="top" id="WCV-DY-APL"/>
@@ -406,6 +415,7 @@
                 <outlet property="forwardButton" destination="aXg-p3-oeq" id="J7v-AS-zDp"/>
                 <outlet property="leftButtonsSpacingConstraint" destination="qCb-MN-wKZ" id="k3Y-3n-0Np"/>
                 <outlet property="menuButton" destination="nJo-2d-gri" id="PjK-JB-crC"/>
+                <outlet property="notificationContainer" destination="yEJ-P3-HpO" id="D20-lB-qBr"/>
                 <outlet property="omniBarLeadingConstraint" destination="D0r-SA-Vnj" id="07M-d7-p5r"/>
                 <outlet property="omniBarTrailingConstraint" destination="yKn-ev-mu1" id="rhL-LT-9RL"/>
                 <outlet property="privacyInfoContainer" destination="yGG-5L-D8Q" id="aag-7F-YTq"/>

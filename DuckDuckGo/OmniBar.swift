@@ -35,6 +35,7 @@ class OmniBar: UIView {
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
     @IBOutlet weak var privacyInfoContainer: PrivacyInfoContainerView!
+    @IBOutlet weak var notificationContainer: OmniBarNotificationView!
     @IBOutlet weak var textField: TextFieldWithInsets!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!
@@ -67,6 +68,7 @@ class OmniBar: UIView {
     private var safeAreaInsetsObservation: NSKeyValueObservation?
     
     private var privacyIconAndTrackersAnimator = PrivacyIconAndTrackersAnimator()
+    private var notificationAnimator = OmniBarNotificationAnimator()
     
     
     static func loadFromXib() -> OmniBar {
@@ -253,7 +255,7 @@ class OmniBar: UIView {
     
     private func animateCookiesManagedBadge() {
         print("Cookies Managed!")
-        
+        notificationAnimator.showNotification(in: self)
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {

@@ -30,6 +30,10 @@
 		1E6098A1290011E600A508F9 /* UserScript in Frameworks */ = {isa = PBXBuildFile; productRef = 1E6098A0290011E600A508F9 /* UserScript */; };
 		1E61BC2A27074BED00B2854D /* TextSizeUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */; };
 		1E722729292EB24D003B5F53 /* AppSettingsMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AD9E3C28D46FD50019CDE9 /* AppSettingsMock.swift */; };
+		1E7A71172934EB6400B7EA19 /* OmniBarNotificationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A71162934EB6400B7EA19 /* OmniBarNotificationAnimator.swift */; };
+		1E7A71192934EC6100B7EA19 /* OmniBarNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A71182934EC6100B7EA19 /* OmniBarNotificationView.swift */; };
+		1E7A711C2934EEBC00B7EA19 /* CookiesManagedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A711B2934EEBC00B7EA19 /* CookiesManagedView.swift */; };
+		1E7A711E2934EF4C00B7EA19 /* CookiesManagedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A711D2934EF4C00B7EA19 /* CookiesManagedViewController.swift */; };
 		1E8146AD28C8ABF000D1AF63 /* TrackerAnimationLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146A728C8AB3F00D1AF63 /* TrackerAnimationLogicTests.swift */; };
 		1E8146AE28C8ABF400D1AF63 /* PrivacyIconLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8146A928C8AB8200D1AF63 /* PrivacyIconLogicTests.swift */; };
 		1E865AF0272042DB001C74F3 /* TextSizeSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */; };
@@ -797,6 +801,10 @@
 		1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeUserScript.swift; sourceTree = "<group>"; };
+		1E7A71162934EB6400B7EA19 /* OmniBarNotificationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationAnimator.swift; sourceTree = "<group>"; };
+		1E7A71182934EC6100B7EA19 /* OmniBarNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmniBarNotificationView.swift; sourceTree = "<group>"; };
+		1E7A711B2934EEBC00B7EA19 /* CookiesManagedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookiesManagedView.swift; sourceTree = "<group>"; };
+		1E7A711D2934EF4C00B7EA19 /* CookiesManagedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookiesManagedViewController.swift; sourceTree = "<group>"; };
 		1E8146A728C8AB3F00D1AF63 /* TrackerAnimationLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerAnimationLogicTests.swift; sourceTree = "<group>"; };
 		1E8146A928C8AB8200D1AF63 /* PrivacyIconLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyIconLogicTests.swift; sourceTree = "<group>"; };
 		1E865AEF272042DB001C74F3 /* TextSizeSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeSettingsViewController.swift; sourceTree = "<group>"; };
@@ -2191,8 +2199,20 @@
 		1E7A71152934E4C700B7EA19 /* OmniBarNotifications */ = {
 			isa = PBXGroup;
 			children = (
+				1E7A711A2934EE6800B7EA19 /* CookiesManaged */,
+				1E7A71162934EB6400B7EA19 /* OmniBarNotificationAnimator.swift */,
+				1E7A71182934EC6100B7EA19 /* OmniBarNotificationView.swift */,
 			);
 			name = OmniBarNotifications;
+			sourceTree = "<group>";
+		};
+		1E7A711A2934EE6800B7EA19 /* CookiesManaged */ = {
+			isa = PBXGroup;
+			children = (
+				1E7A711B2934EEBC00B7EA19 /* CookiesManagedView.swift */,
+				1E7A711D2934EF4C00B7EA19 /* CookiesManagedViewController.swift */,
+			);
+			name = CookiesManaged;
 			sourceTree = "<group>";
 		};
 		1E8146A628C8AAF500D1AF63 /* PrivacyIconAndTrackers */ = {
@@ -5019,6 +5039,7 @@
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
 				F4118EC52761725800CA91CA /* BookmarkSectionDataSources.swift in Sources */,
+				1E7A71192934EC6100B7EA19 /* OmniBarNotificationView.swift in Sources */,
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,
 				02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */,
@@ -5028,7 +5049,9 @@
 				F17922DB1E717C8D006E3D97 /* Suggestion.swift in Sources */,
 				F1617C191E573EA800DEDCAF /* TabSwitcherDelegate.swift in Sources */,
 				310742A62848CD780012660B /* BackForwardMenuHistoryItem.swift in Sources */,
+				1E7A711E2934EF4C00B7EA19 /* CookiesManagedViewController.swift in Sources */,
 				858566FB252E55D6007501B8 /* ImageCacheDebugViewController.swift in Sources */,
+				1E7A71172934EB6400B7EA19 /* OmniBarNotificationAnimator.swift in Sources */,
 				85C2971A248162CA0063A335 /* DaxOnboardingPadViewController.swift in Sources */,
 				F4F6DFB826EA9AA600ED7E12 /* BookmarksTextFieldCell.swift in Sources */,
 				84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */,
@@ -5053,6 +5076,7 @@
 				4B6484EE27FD1E350050A7A1 /* MacBrowserWaitlistDebugViewController.swift in Sources */,
 				F1D796EE1E7AF2EB0019D451 /* UIViewControllerExtension.swift in Sources */,
 				1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */,
+				1E7A711C2934EEBC00B7EA19 /* CookiesManagedView.swift in Sources */,
 				F15D43201E706CC500BF2CDC /* AutocompleteViewController.swift in Sources */,
 				F45B37762760183800CDCCA9 /* BookmarkItemDetailsDataSource.swift in Sources */,
 				98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */,

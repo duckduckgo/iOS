@@ -21,6 +21,7 @@ import UIKit
 import Combine
 import Core
 import BrowserServicesKit
+import Common
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -40,7 +41,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     private let emptyView = AutofillItemsEmptyView()
     private let lockedView = AutofillItemsLockedView()
     private let emptySearchView = AutofillEmptySearchView()
-    
+    private let tld: TLD = TLD()
+
     private lazy var addBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
     }()
@@ -91,7 +93,7 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }()
 
     init(appSettings: AppSettings) {
-        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings)
+        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -142,13 +144,13 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     @objc
     func addButtonPressed() {
-        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, tld: tld)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: true)
     }
     
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
-        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, account: account)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, account: account, tld: tld)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: animated)
     }

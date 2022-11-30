@@ -20,6 +20,7 @@
 import Foundation
 import BrowserServicesKit
 import UIKit
+import Common
 
 final class AutofillLoginListItemViewModel: Identifiable, Hashable {
     @Published var image = UIImage(systemName: "globe")!
@@ -29,9 +30,9 @@ final class AutofillLoginListItemViewModel: Identifiable, Hashable {
     let subtitle: String
     let id = UUID()
 
-    internal init(account: SecureVaultModels.WebsiteAccount) {
+    internal init(account: SecureVaultModels.WebsiteAccount, tld: TLD) {
         self.account = account
-        self.title = account.name
+        self.title = account.name(tld: tld)
         self.subtitle = account.username
         
         fetchImage()

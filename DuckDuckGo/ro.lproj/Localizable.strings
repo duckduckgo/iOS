@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Anulați";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Sugestie de completare automată";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Marchează";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Deschide site-ul";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Caută pe DuckDuckGo";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Adăugați";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "Descărcarea a început pentru %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Renunță";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Bine ai venit la\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Codul de invitație";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Invitația ta va apărea aici, când vom fi pregătiți pentru tine. Vrei să %1$@ în momentul în care sosește? %2$@ despre browserul macOS beta.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "primește o notificare";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Îți vom trimite o notificare când suntem pregătiți pentru tine. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Invitația ta să încerci DuckDuckGo pentru Mac va sosi aici. Revino în curând sau îți putem trimite o notificare când este rândul tău.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Îți vom trimite o notificare când copia ta DuckDuckGo pentru Mac este pregătită pentru a fi descărcată.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ despre versiunea beta.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "Aplicația pentru confidențialitate DuckDuckGo pentru Mac are viteza de care ai nevoie, funcționalitățile de răsfoire pe care ți le dorești și este prevăzută cu cele mai bune caracteristici de bază în privința confidențialității din domeniu.";
+"mac-browser.waitlist.summary" = "DuckDuckGo pentru Mac are viteza de care ai nevoie, funcționalitățile de răsfoire pe care ți le dorești și este prevăzută cu cele mai bune caracteristici de bază în privința confidențialității din domeniu.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Deschide invitația ta";
@@ -991,59 +955,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Copiere";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Vizitează această adresă URL pe computerul tău Mac pentru a descărca:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Pe dispozitivul tău Mac, accesează:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "Pasul 1";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Deschide fișierul de instalat, apoi introdu codul de invitație pentru a debloca.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "Pasul 2";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Ești gata să începi să răsfoiești în modul privat pe Mac?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Ești invitat(ă)!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Trimite linkul";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Alătură-te listei de așteptare private";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Te alături listei de așteptare...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Încearcă DuckDuckGo pentru Mac!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Obține DuckDuckGo pentru Mac!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Va fi disponibil în curând și pentru Windows!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Te putem înștiința când este rândul tău, însă notificările sunt momentan dezactivate pentru DuckDuckGo.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Nu va trebui să comunici informații personale, pentru a te înscrie pe lista de așteptare. Îți vei asigura locul la coadă, folosind o marcă de timp care există numai pe dispozitivul tău, astfel încât să te putem înștiința când ți-a sosit rândul.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Ești pe listă!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Disponibilă pentru descărcare pe Mac";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Răsfoiește în mod privat, cu aplicația noastră pentru Mac";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Ești pe listă!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Ești invitat(ă)!\n\nEști pregătit(ă) să răsfoiești privat pe Mac?\n\nPasul 1\nVizitează această adresă URL pe computerul tău Mac pentru a descărca:\nhttps://duckduckgo.com/mac\n\nPasul 2\nDescarcă fișierul pentru a instala, apoi introdu codul de invitație pentru a debloca.\n\nCod de invitație: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Ești gata să răsfoiești în mod privat pe Mac?\n\nVizitează această adresă URL pe dispozitivul tău Mac pentru a descărca:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Ești invitat(ă)!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo pentru Mac";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "Aplicația DuckDuckGo pentru desktop";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Despre protecțiile noastre împotriva urmăririi pe internet";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "Logoul DuckDuckGo";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Despre elementele de protecție pentru căutare și reclame";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Atinge pentru a deschide ecranul Panou de confidențialitate";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "În ce mod anunțurile noastre de căutare ne afectează măsurile de protecție";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritm";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d biți";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Eroare la extragerea certificatului";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Denumirea comună";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Dimensiune efectivă";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-mail";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Conexiune criptată";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Criptare forțată";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Conexiune criptată";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Am forțat acest site să utilizeze o conexiune criptată, împiedicând interceptarea oricăror informații personale pe care i le trimiți.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "O conexiune criptată împiedică interceptarea oricăror informații personale pe care le trimiți unui site web.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Identificator cheie subiect";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Emitent";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Cheie publică";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Dimensiunea cheii";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Criptare mixtă";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Acest site are criptare mixtă, deoarece un anumit conținut este servit prin conexiuni necriptate.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Nu";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Permanent";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Cheie publică";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "O conexiune criptată împiedică interceptarea oricăror informații personale pe care le trimiți unui site web.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Numele subiectului";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Rezumat";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Ai grijă când introduci informații personale pe acest site.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Conexiune necriptată";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Necunoscut";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Utilizare";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Decriptare";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Derivare";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Criptare";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Semn";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Anulare încadrare";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Verificare";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Încadrare";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Da";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "PROTECȚIE SITE DEZACTIVATĂ";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "MĂRIT DE LA $1 LA $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "GRAD DE CONFIDENȚIALITATE";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "S-au găsit rețele de urmărire majore";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nu a fost găsită nicio rețea de urmărire majoră";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Rețele de urmărire au fost găsite pe %1$@%% de site-uri web pe care le-ai vizitat din %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Continuă să colectăm date pentru a arăta câte\n instrumente de urmărire am blocat.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Nu au fost încărcate solicitări terță parte";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Solicitările următorului domeniu au fost încărcate deoarece s-a făcut recent clic pe o reclamă %@ de pe DuckDuckGo. Aceste solicitări ajută la evaluarea eficienței anunțurilor. Nicio reclamă de pe DuckDuckGo nu creează profiluri.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Solicitările următoarelor domenii au fost încărcate pentru a preveni întreruperea site-ului.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Cererile următorului domeniu au fost încărcate deoarece sunt asociate cu %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Au fost încărcate următoarele solicitări ale domeniilor terțe. În cazul în care solicitările unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil, deși celelalte măsuri de protecție ale noastre împotriva urmăririi pe internet se aplică în continuare.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Nu a fost blocată încărcarea niciunei cereri de la terți, deoarece protecțiile sunt dezactivate pentru acest site. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Au fost încărcate solicitările de urmărire ale următoarelor domenii.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Au fost încărcate și următoarele solicitări ale domeniului.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Au fost încărcate solicitările următoarelor domenii.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Solicitările următorului domeniu au fost încărcate.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Nu am detectat solicitări de la niciun domeniu terț.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Solicitări de la terți încărcate";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Reține: limitările platformei ne pot limita capacitatea de a detecta toate solicitările.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Fără crearea de profiluri";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Practici de confidențialitate de la ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Practicile privind confidențialitatea indică în ce măsură datele cu caracter personal pe care le partajați cu un site web sunt protejate.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Acest site web te va anunța înainte de a transfera informațiile tale în cazul unei fuziuni sau achiziții";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Practicile de confidențialitate ale acestui site nu au fost revizuite.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Grad de confidențialitate %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Apăsați pentru a deschide ecranul de protecție a confidențialității";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Aceste statistici sunt stocate doar pe dispozitivul tău și nu sunt trimise nicăieri. Niciodată.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Bune practici privind confidențialitatea";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Practici mixte privind confidențialitatea”";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "„Practici inadecvate privind confidențialitatea”";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Practici necunoscute privind confidențialitatea";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Instrumentele de urmărire ajută societățile să îți creeze profilul. Am blocat încărcarea acestor instrumente de urmărire și monitorizarea activității tale pe această pagină.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Nu a fost blocată încărcarea niciunei cereri de urmărire, deoarece protecțiile sunt dezactivate pentru acest site. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nu am detectat nicio solicitare de urmărire.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Încărcarea cererilor următoarelor domenii terțe a fost blocată, deoarece au fost identificate ca fiind cereri de urmărire. În cazul în care cererile unei societăți sunt încărcate, aceasta îi poate permite să îți creeze un profil.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Solicitări a căror încărcare a fost blocată";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "S-au găsit solicitări de urmărire";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nu a fost blocată nicio solicitare de urmărire";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nu au fost găsite solicitări de urmărire";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Pictograma de confidențialitate";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Renunță";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Protecția confidențialității este activată pentru %@";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "A apărut o eroare necunoscută.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Setări";

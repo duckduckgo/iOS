@@ -20,6 +20,7 @@
 import UIKit
 import SwiftUI
 import BrowserServicesKit
+import Common
 import Combine
 
 protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
@@ -65,9 +66,9 @@ class AutofillLoginDetailsViewController: UIViewController {
                                   multiplier: 1,
                                   constant: 144)
     }()
-
-    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil) {
-        self.viewModel = AutofillLoginDetailsViewModel(account: account)
+    
+    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD) {
+        self.viewModel = AutofillLoginDetailsViewModel(account: account, tld: tld)
         self.authenticator = authenticator
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
@@ -104,7 +105,7 @@ class AutofillLoginDetailsViewController: UIViewController {
             }
         }
     }
-    
+
     private func installSubviews() {
         installContentView()
         view.addSubview(lockedView)

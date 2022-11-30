@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Visszavonás";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Automatikus kiegészítési javaslat";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Könyvjelző";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Webhely megnyitása";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Keresés a DuckDuckGón";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Hozzáadás";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "A letöltés elindult: %@";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Mégsem";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Üdvözlünk a\nDuckDuckGo-ban!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Meghívókód";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "A meghívód itt fog megjelenni, amikor készen állunk. Szeretnél %1$@, amikor megérkezik? %2$@ a macOS rendszerre készült böngésző béta verziójáról.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "értesítést kapni";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Értesítést küldünk, amikor készen állunk. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "A DuckDuckGo Maces verziójának kipróbálására szóló meghívód ide fog érkezni. Látogass vissza mielőbb, vagy küldhetünk értesítést, ha sorra kerülsz.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Értesítést küldünk, ha a DuckDuckGo Maces verziója letölthetővé válik a számodra.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ a béta verzióról.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "A DuckDuckGo Privacy alkalmazás Maces verziója gyors, böngészési funkciókban gazdag, és kategóriája legjobb adatvédelmi megoldásait kínálja.";
+"mac-browser.waitlist.summary" = "A DuckDuckGo Mac verziója gyors, böngészési funkciókban gazdag, és kategóriája legjobb adatvédelmi megoldásait kínálja.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Meghívó megnyitása";
@@ -991,59 +955,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Másolás";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "A letöltéshez látogass el erre az URL-címre a Maceden:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Macen lépj a következőre:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. lépés";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Nyisd meg a fájlt a telepítéshez, majd írd be a meghívókódot a feloldáshoz.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. lépés";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Készen állsz a privát böngészésre a Macen?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Meghívót kaptál!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Link megosztása";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Csatlakozz a privát várólistához";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Csatlakozás a várólistához…";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Próbáld ki a DuckDuckGo Maces verzióját!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Töltsd le a DuckDuckGo Mac verzióját!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Hamarosan érkezik a Windows verzió!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Értesíthetünk, ha sorra kerülsz, de a DuckDuckGo értesítései jelenleg le vannak tiltva.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Nem kell megosztanod a személyes adataid a várólistához való csatlakozáshoz. A sorban elfoglalt helyedet egy olyan időbélyegző igazolja, amely kizárólag az eszközödön található meg, így értesíteni tudunk, amikor sorra kerülsz.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Felkerültél a listára!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Letölthető Macre";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Privát böngészés Maces alkalmazásunkkal";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Felkerültél a listára!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Meghívót kaptál!\n\nKészen állsz a privát böngészésre a Macen?\n\n1. lépés\nA letöltéshez látogass el erre az URL-címre a Maceden:\nhttps://duckduckgo.com/mac\n\n2. lépés\nNyisd meg a fájlt a telepítéshez, majd írd be a meghívókódot a feloldáshoz.\n\nMeghívókód: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Készen állsz a privát böngészésre a Macen?\n\nA letöltéshez látogass el erre az URL-címre a Macen:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Meghívót kaptál!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo Mac verzió";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo asztali alkalmazás";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "OK";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "A webes követés elleni védelmünkről";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "DuckDuckGo logó";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "A keresés védelméről és a hirdetésekről";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Koppints ide az Adatvédelmi műszerfal képernyőjének megnyitásához";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Hogyan hatnak a keresési hirdetéseink a védelmünkre";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritmus";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d bit";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Hiba a tanúsítvány kibontása közben";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Közhasználatú név";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Effektív méret";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-mail";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Titkosított kapcsolat";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Kényszerített titkosítás";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Titkosított kapcsolat";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Ezt a webhelyet arra kényszerítettük, hogy titkosított kapcsolatot használjon, megakadályozva ezzel a részére küldött személyes adatok lehallgatását.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "A titkosított kapcsolat megakadályozza a webhelyre küldött személyes adatok lehallgatását.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Alany kulcs azonosítója";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Kibocsátó";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Nyilvános kulcs";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Kulcs mérete";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Vegyes titkosítás";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Ez a webhely vegyes titkosítással rendelkezik, mert bizonyos tartalmakat titkosítatlan kapcsolatokon keresztül szolgáltatnak.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Nem";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Állandó";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Nyilvános kulcs";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "A titkosított kapcsolat megakadályozza a webhelyre küldött személyes adatok lehallgatását.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Alany neve";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Összefoglalás";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Legyél óvatos, amikor személyes adatokat adsz meg ezen a weboldalon.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Titkosítatlan kapcsolat";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Ismeretlen";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Használat";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Dekódolás";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Származtatás";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Titkosítás";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Jel";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Kibontás";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Érvényesítés";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Becsomagolás";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Igen";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "WEBOLDAL VÉDELME LETILTVA";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "TOVÁBBFEJLESZTVE ERRŐL: $1, ERRE: $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "ADATVÉDELMI FOKOZAT";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Nagy nyomkövető hálózatok találhatók";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nem található nagyobb nyomkövető hálózat";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "A %2$@ óta meglátogatott weboldalak %1$@%%-án lehetett nyomkövető hálózatokat találni.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Folyamatosan gyűjtjük az adatokat, hogy bemutathassuk, hány\nnyomkövetőt tiltottunk le.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Nincsenek harmadik féltől származó kérések betöltve";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "A következő tartomány kérései azért lettek betöltve, mert a DuckDuckGón nemrég rákattintottak a(z) %@ hirdetésére. Ezek a kérések segítenek értékelni a hirdetések hatékonyságát. A DuckDuckGo egyik hirdetése sem profilozó.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "A következő tartomány kérései a webhely megszakadásának megelőzése érdekében lettek betöltve.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "A következő tartomány kérései azért lettek betöltve, mert a következőhöz vannak társítva: %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "A következő harmadik fél tartományok kérései be lettek töltve. Ha egy cég kérései betöltődnek, ez lehetővé teheti számukra, hogy profilokat készítsenek rólad, bár a többi webes nyomkövetési védelmünk továbbra is működik.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "A harmadik féltől származó kérések betöltése nincs blokkolva, mert a védelem ki van kapcsolva ehhez a webhelyhez. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek rólad.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "A következő tartományok követési kérései lettek betöltve.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "A következő tartomány kérései is be lettek töltve.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "A következő tartományok kérései lettek betöltve.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "A következő tartomány kérései lettek betöltve.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Nem észleltünk harmadik fél tartományából származó kéréseket.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "A harmadik fél kérései be lettek töltve";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Fontos tudni: a platformkorlátozások korlátozhatják az összes kérés észlelését.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Nem profilozó";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "Adatvédelmi gyakorlatok forrása: ToS;DR.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Az adatvédelmi gyakorlatok jelzik, hogy a weboldalakkal megosztott személyes adataid védelme mennyire garantált.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Ez a weboldal értesíteni fog téged, mielőtt egyesülés vagy felvásárlás esetén továbbítaná az adataidat.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "A weboldal adatvédelmi gyakorlatát nem vizsgálták felül.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Adatvédelmi fokozat: %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Nyomd meg az adatvédelmi képernyő megnyitásához";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Ezek a statisztikák csak az eszközödön tárolódnak, és sehová nem küldik el őket. Soha.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Jó adatvédelmi gyakorlatok";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Vegyes adatvédelmi gyakorlatok”";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "„Rossz adatvédelmi gyakorlatok”";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Ismeretlen adatvédelmi gyakorlatok";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "A nyomkövetők segítségével a cégek profilt alkothatnak rólad. Megakadályoztuk, hogy ezek a nyomkövetők betöltődjenek, és nyomon kövessék a tevékenységedet ezen az oldalon.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "A nyomkövető kérések betöltése nincs blokkolva, mert a védelem ki van kapcsolva ehhez a webhelyhez. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek rólad.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Nem észleltünk nyomkövetési kérést.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "A következő harmadik fél tartományok kéréseinek betöltése blokkolva van, mivel nyomkövető kérésként lettek beazonosítva. Ha egy cég kérései betöltődnek, az lehetővé teheti számukra, hogy profilokat készítsenek rólad.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Kérések betöltése blokkolva";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Nyomkövető kérések találhatók";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nincsenek nyomkövetési kérések blokkolva";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nem találhatók nyomkövetési kérések";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Adatvédelmi ikon";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Mégsem";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Adatvédelem engedélyezve a következőhöz: %@";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Ismeretlen hiba történt.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Beállítások";

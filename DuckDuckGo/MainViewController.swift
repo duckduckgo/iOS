@@ -24,6 +24,7 @@ import Lottie
 import Kingfisher
 import os.log
 import BrowserServicesKit
+import PrivacyDashboard
 
 // swiftlint:disable type_body_length
 // swiftlint:disable file_length
@@ -32,6 +33,12 @@ class MainViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ThemeManager.shared.currentTheme.statusBarStyle
+    }
+    
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+        
+        return isIPad ? [.left, .right] : []
     }
     
     @IBOutlet weak var progressView: ProgressView!
@@ -118,6 +125,8 @@ class MainViewController: UIViewController {
     
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
+    
+    fileprivate var tabCountInfo: TabCountInfo?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -526,10 +535,6 @@ class MainViewController: UIViewController {
         Pixel.fire(pixel: .tabBarForwardPressed)
         currentTab?.goForward()
     }
-
-    public var siteRating: SiteRating? {
-        return currentTab?.siteRating
-    }
     
     func didReturnFromBackground() {
         skipSERPFlow = true
@@ -688,12 +693,16 @@ class MainViewController: UIViewController {
         }
 
         omniBar.refreshText(forUrl: tab.url)
-        updateSiteRating(tab.siteRating)
+
+        if tab.isError {
+            omniBar.hidePrivacyIcon()
+        } else if let privacyInfo = tab.privacyInfo, privacyInfo.url.host == tab.url?.host {
+            omniBar.updatePrivacyIcon(for: privacyInfo)
+        } else {
+            omniBar.resetPrivacyIcon(for: tab.url)
+        }
+            
         omniBar.startBrowsing()
-    }
-    
-    private func updateSiteRating(_ siteRating: SiteRating?) {
-        omniBar.updateSiteRating(siteRating, with: ContentBlocking.shared.privacyConfigurationManager.privacyConfig)
     }
 
     func dismissOmniBar() {
@@ -744,10 +753,6 @@ class MainViewController: UIViewController {
             
             // Do this on the next UI thread pass so we definitely have the right width
             self.applyWidthToTrayController()
-            
-            if DaxDialogs.shared.shouldShowFireButtonPulse {
-                self.showFireButtonPulse()
-            }
             
             self.refreshMenuButtonState()
         }
@@ -825,7 +830,7 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    fileprivate func launchReportBrokenSite() {
+    func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
@@ -1124,8 +1129,9 @@ extension MainViewController: OmniBarDelegate {
         showHomeRowReminder()
     }
 
-    func onSiteRatingPressed() {
-        if isSERPPresented { return }
+    func onPrivacyIconPressed() {
+        guard !isSERPPresented else { return }
+
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
@@ -1449,9 +1455,9 @@ extension MainViewController: TabDelegate {
 
     }
 
-    func tab(_ tab: TabViewController, didChangeSiteRating siteRating: SiteRating?) {
+    func tab(_ tab: TabViewController, didChangePrivacyInfo privacyInfo: PrivacyInfo?) {
         if currentTab == tab {
-            updateSiteRating(siteRating)
+            omniBar.updatePrivacyIcon(for: privacyInfo)
         }
     }
 
@@ -1518,10 +1524,10 @@ extension MainViewController: TabDelegate {
     }
 
     func tab(_ tab: TabViewController,
-             didRequestPresentingTrackerAnimation siteRating: SiteRating,
+             didRequestPresentingTrackerAnimation privacyInfo: PrivacyInfo,
              isCollapsing: Bool) {
         guard tabManager.current === tab else { return }
-        omniBar?.startTrackersAnimation(Array(siteRating.trackersBlocked), collapsing: isCollapsing)
+        omniBar?.startTrackersAnimation(privacyInfo, forDaxDialog: !isCollapsing)
     }
     
     func tabDidRequestShowingMenuHighlighter(tab: TabViewController) {
@@ -1685,7 +1691,7 @@ extension MainViewController: GestureToolbarButtonDelegate {
 }
 
 extension MainViewController: AutoClearWorker {
-
+    
     func clearNavigationStack() {
         dismissOmniBar()
 
@@ -1709,11 +1715,10 @@ extension MainViewController: AutoClearWorker {
     func forgetData() {
         findInPageView?.done()
         
-        ServerTrustCache.shared.clear()
         URLSession.shared.configuration.urlCache?.removeAllCachedResponses()
 
         let pixel = TimedPixel(.forgetAllDataCleared)
-        WebCacheManager.shared.clear {
+        WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
     }
@@ -1725,6 +1730,8 @@ extension MainViewController: AutoClearWorker {
     func forgetAllWithAnimation(transitionCompletion: (() -> Void)? = nil, showNextDaxDialog: Bool = false) {
         let spid = Instruments.shared.startTimedEvent(.clearingData)
         Pixel.fire(pixel: .forgetAllExecuted)
+        
+        self.tabCountInfo = tabManager.makeTabCountInfo()
         
         tabManager.prepareAllTabsExceptCurrentForDataClearing()
         

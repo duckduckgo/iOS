@@ -22,6 +22,8 @@ import Core
 
 class AutocompleteRequest {
 
+    private static let session = URLSession(configuration: .ephemeral)
+    
     typealias Completion = ([Suggestion]?, Error?) -> Void
 
     private let url: URL
@@ -35,7 +37,7 @@ class AutocompleteRequest {
         var request = URLRequest.developerInitiated(url)
         request.allHTTPHeaderFields = APIHeaders().defaultHeaders
 
-        task = URLSession.shared.dataTask(with: request) { [weak self] (data, _, error) -> Void in
+        task = AutocompleteRequest.session.dataTask(with: request) { [weak self] (data, _, error) -> Void in
             guard let weakSelf = self else { return }
             do {
                 let suggestions = try weakSelf.processResult(data: data, error: error)

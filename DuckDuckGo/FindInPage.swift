@@ -30,7 +30,7 @@ protocol FindInPageDelegate: NSObjectProtocol {
 class FindInPage: NSObject {
 
     weak var delegate: FindInPageDelegate?
-    let webView: WKWebView
+    weak var webView: WKWebView?
 
     var searchTerm: String = ""
     var current: Int = 0
@@ -42,16 +42,16 @@ class FindInPage: NSObject {
     }
 
     func done() {
-        webView.evaluateJavaScript("window.__firefox__.findDone()")
+        evaluate(js: "window.__firefox__.findDone()")
     }
 
     func next() {
-        webView.evaluateJavaScript("window.__firefox__.findNext()")
+        evaluate(js: "window.__firefox__.findNext()")
     }
 
     func previous() {
         delegate?.updated(findInPage: self)
-        webView.evaluateJavaScript("window.__firefox__.findPrevious()")
+        evaluate(js: "window.__firefox__.findPrevious()")
     }
 
     func search(forText text: String) -> Bool {
@@ -61,10 +61,14 @@ class FindInPage: NSObject {
         let escaped =
         text.replacingOccurrences(of: "\\", with: "\\\\")
             .replacingOccurrences(of: "\'", with: "\\\'")
-        
-        webView.evaluateJavaScript("window.__firefox__.find('\(escaped)')")
-        
+
+        evaluate(js: "window.__firefox__.find('\(escaped)')")
+
         return true
+    }
+
+    private func evaluate(js: String) {
+        webView?.evaluateJavaScript(js, in: nil, in: .defaultClient)
     }
 
     func update(currentResult: Int?, totalResults: Int?) {

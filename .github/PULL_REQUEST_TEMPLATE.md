@@ -1,5 +1,7 @@
 <!--
 Note: This checklist is a reminder of our shared engineering expectations. Feel free to change it, although assigning a GitHub reviewer and the items in bold are required.
+
+⚠️ If you're an external contributor, please file an issue first before working on a PR, as we can't guarantee that we will accept your changes if they haven't been discussed ahead of time. Thanks!
 -->
 
 Task/Issue URL:

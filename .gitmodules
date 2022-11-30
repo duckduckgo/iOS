@@ -1,9 +1,6 @@
 [submodule "submodules/ios-js-support"]
 	path = submodules/ios-js-support
 	url = https://github.com/duckduckgo/ios-js-support.git
-[submodule "submodules/privacy-grade"]
-	path = submodules/privacy-grade
-	url = https://github.com/duckduckgo/privacy-grade
 [submodule "submodules/privacy-reference-tests"]
 	path = submodules/privacy-reference-tests
 	url = https://github.com/duckduckgo/privacy-reference-tests

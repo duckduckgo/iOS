@@ -757,7 +757,8 @@ extension BookmarksViewController: Themable {
         
         overrideSystemTheme(with: theme)
         searchController?.searchBar.searchTextField.textColor = theme.searchBarTextColor
-                
+
+        tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
         
         navigationController?.view.backgroundColor = tableView.backgroundColor

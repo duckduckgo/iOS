@@ -37,7 +37,7 @@ class SaveLoginViewController: UIViewController {
     private let domainLastShownOn: String?
     private var viewModel: SaveLoginViewModel?
 
-    internal init(credentialManager: SaveAutofillLoginManager, appSettings: AppSettings,  domainLastShownOn: String? = nil) {
+    internal init(credentialManager: SaveAutofillLoginManager, appSettings: AppSettings, domainLastShownOn: String? = nil) {
         self.credentialManager = credentialManager
         self.appSettings = appSettings
         self.domainLastShownOn = domainLastShownOn

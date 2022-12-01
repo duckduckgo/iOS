@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Bejelentkezési adatok automatikus kitöltése";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Arcfelismerés beállítása";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Az automatikusan kitölthető adatok védelméhez jelszóra van szükség. Jelszó beállításához lépj az eszköz beállításaira.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Az automatikusan kitölthető bejelentkezési adatok védelméhez arcfelismerésre és jelszóra van szükség.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Arcfelismerés engedélyezése az automatikus kitöltés használatához";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Ujjlenyomat-felismerés beállítása";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Az automatikusan kitölthető bejelentkezési adatok védelméhez ujjlenyomat-felismerésre és jelszóra van szükség.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Ujjlenyomat-felismerés engedélyezése az automatikus kitöltés használatához";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Az automatikus kitöltés használatához állítsd be az eszköz jelszavát";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Mégsem";

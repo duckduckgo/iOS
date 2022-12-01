@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Sisesta sisselogimisandmed automaatselt";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Seadista Face ID";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Sinu automaatselt sisestatavate andmete kaitsmiseks on vaja parooli. Parooli seadistamiseks ava seadme seaded.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Sisselogimisandmete automaatse sisestamise kaitsmiseks on vaja Face ID-d ja pääsukoodi.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Automaatse täitmise kasutamiseks luba Face ID";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Seadista Touch ID";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Sisselogimisandmete automaatse sisestamise kaitsmiseks on vaja Touch ID-d ja pääsukoodi.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Automaatse täitmise kasutamiseks luba Touch ID";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Määra automaatsisestuse kasutamiseks oma seadme parool";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Tühista";

@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Anmeldedaten automatisch ausfüllen";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Face ID einrichten";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Es ist ein Passcode erforderlich, um deine Anmeldedaten für das automatische Ausfüllen zu schützen. Gehe zu den Geräteeinstellungen, um einen Passcode einzurichten.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Face ID und Passcode sind erforderlich, um deine Anmeldedaten für das automatische Ausfüllen zu schützen.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Face ID aktivieren, um Autovervollständigen zu verwenden";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Touch ID einrichten";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID und Passcode sind erforderlich, um deine Anmeldedaten für das automatische Ausfüllen zu schützen.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Touch ID aktivieren, um Autovervollständigen zu verwenden";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Richte deinen Gerätepasscode ein, um das automatische Ausfüllen zu verwenden";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Abbrechen";

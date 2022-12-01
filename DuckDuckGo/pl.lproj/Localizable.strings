@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Autouzupełnianie logowania";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Skonfiguruj Face ID";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Do ochrony danych przy autouzupełnianiu wymagany jest kod dostępu. Przejdź do ustawień urządzenia, aby skonfigurować kod dostępu.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Face ID i kod dostępu są wymagane do ochrony danych logowania przy autouzupełnianiu.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Włącz Face ID, aby korzystać z funkcji autouzupełniania";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Konfiguracja Touch ID";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID i kod dostępu są wymagane do ochrony danych logowania przy autouzupełnianiu.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Włącz Touch ID, aby korzystać z funkcji autouzupełniania";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Skonfiguruj kod dostępu urządzenia, aby korzystać z autouzupełniania";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Anuluj";

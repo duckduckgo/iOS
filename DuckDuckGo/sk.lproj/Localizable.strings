@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Automatické vyplňovanie prihlasovacích údajov";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Nastavenie ID tváre";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Na ochranu údajov automatického vypĺňania je potrebný prístupový kód. Prejdite na Nastavenia zariadenia a nastavte prístupový kód.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Na ochranu prihlasovacích údajov pri automatickom vypĺňaní sa vyžaduje ID tváre a prístupový kód.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Ak chcete používať automatické vypĺňanie, povoľte ID tváre";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Nastavenie ID dotyku";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Na ochranu prihlasovacích údajov pri automatickom vypĺňaní je potrebné ID dotyku a heslo.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Ak chcete používať automatické dopĺňanie, povoľte ID dotyku";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Ak chcete používať Automatické dopĺňanie, nastavte pre zariadenie prístupový kód";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Zrušiť";

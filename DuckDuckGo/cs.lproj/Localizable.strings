@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Automatické vyplňování přihlašovacích údajů";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Nastavení Face ID";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "K ochraně údajů se při automatickém vyplňování požaduje heslo. Přejdi do Nastavení a heslo si vytvoř.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "K ochraně přihlašovacích údajů při automatickém vyplňování je vyžadováno Face ID.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Pokud chceš používat automatické vyplňování, zapni Face ID";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Nastavení Touch ID";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "K ochraně přihlašovacích údajů při automatickém vyplňování je vyžadováno Touch ID.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Pokud chceš používat automatické vyplňování, zapni Touch ID";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Nastav si na zařízení heslo, ať můžeš používat automatické vyplňování";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Zrušit";

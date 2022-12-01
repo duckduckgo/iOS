@@ -82,7 +82,7 @@ class FavoritesViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.dragDelegate = self
         collectionView.dropDelegate = self
-        
+        collectionView.contentInset = .init(top: 8, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)

@@ -352,7 +352,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func configureTableView() {
-        tableView.contentInset = .init(top: isNested ? -12 : -2, left: 0,
+        // -1 hides the header, by default
+        tableView.contentInset = .init(top: isNested ? -12 : -1, left: 0,
                                        bottom: isNested ? 0 : -24, right: 0)
 
         if isNested {
@@ -383,7 +384,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         // Edit button is at position 2
         configureToolbarMoreItem()
 
-        if let title = viewModel.currentFolder?.title {
+        if isNested, let title = viewModel.currentFolder?.title {
             self.title = title
         }
         refreshEditButton()

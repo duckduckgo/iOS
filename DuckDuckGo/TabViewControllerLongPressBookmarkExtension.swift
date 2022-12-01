@@ -30,16 +30,14 @@ extension TabViewController {
             return
         }
 
-        let bookmark = viewModel.bookmark(for: link.url)
-
-        if favorite && bookmark?.isFavorite == false {
+        if favorite && nil == viewModel.favorite(for: link.url) {
             viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
             WidgetCenter.shared.reloadAllTimelines()
             
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveFavoriteDone)
             }
-        } else if bookmark == nil {
+        } else if nil == viewModel.bookmark(for: link.url) {
             viewModel.createBookmark(title: link.displayTitle, url: link.url)
             DispatchQueue.main.async {
                 ActionMessageView.present(message: UserText.webSaveBookmarkDone)

@@ -82,7 +82,6 @@ class FavoritesViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.dragDelegate = self
         collectionView.dropDelegate = self
-        collectionView.contentInset = .init(top: 8, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = .clear
 
         view.addSubview(collectionView)
@@ -90,7 +89,10 @@ class FavoritesViewController: UIViewController {
         renderer = FavoritesHomeViewSectionRenderer(allowsEditing: true,
                                                     viewModel: FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase))
         renderer.install(into: self)
-        
+
+        // Has to happen after the renderer is installed
+        collectionView.contentInset = .init(top: 8, left: 0, bottom: 0, right: 0)
+
         viewModelCancellable = renderer.viewModel.externalUpdates.sink { [weak self] _ in
             self?.collectionView.reloadData()
             self?.updateHeroImage()

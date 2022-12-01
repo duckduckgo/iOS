@@ -45,9 +45,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var importFooterButton: UIButton!
     @IBOutlet weak var favoritesContainer: UIView!
-    @IBOutlet weak var selectorContainer: UIView!
-    @IBOutlet weak var selectorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var selectorControl: UISegmentedControl!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     private let bookmarksDatabase: CoreDataDatabase
 
@@ -130,8 +129,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
         applyTheme(ThemeManager.shared.currentTheme)
 
-        navigationItem.title = UserText.sectionTitleBookmarks
-        selectorContainer.isHidden = isNested
+        selectorControl.removeFromSuperview()
+        if !isNested {
+            navigationController?.navigationBar.topItem?.titleView = selectorControl
+        } else {
+            navigationItem.title = viewModel.currentFolder?.title
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -167,16 +170,15 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         favoritesContainer.isHidden = true
         addFolderButton.isHidden = false
         moreButton.isHidden = false
-        navigationItem.title = UserText.sectionTitleBookmarks
         refreshAll()
     }
 
     private func showFavoritesView() {
+        searchBar.resignFirstResponder()
         tableView.isHidden = true
         favoritesContainer.isHidden = false
         addFolderButton.isHidden = true
         moreButton.isHidden = true
-        navigationItem.title = UserText.sectionTitleFavorites
         refreshAll()
     }
 
@@ -346,16 +348,9 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private func configureSelector() {
         favoritesContainer.backgroundColor = tableView.backgroundColor
-        selectorContainer.backgroundColor = tableView.backgroundColor
-        selectorContainer.isHidden = isNested
-        selectorHeightConstraint.constant = isNested ? 0 : selectorHeightConstraint.constant
     }
 
     private func configureTableView() {
-        // -1 hides the header, by default
-        tableView.contentInset = .init(top: isNested ? -12 : -1, left: 0,
-                                       bottom: isNested ? 0 : -24, right: 0)
-
         if isNested {
             tableView.tableHeaderView = nil
         }

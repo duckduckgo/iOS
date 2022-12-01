@@ -26,7 +26,7 @@
                         <viewControllerLayoutGuide type="bottom" id="pjw-Jr-9f0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yLW-ha-WmV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="FPe-OG-g5a">
@@ -98,37 +98,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZH1-Ia-TsP">
-                                <rect key="frame" x="0.0" y="44" width="375" height="64"/>
-                                <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NJH-oV-DbS">
-                                        <rect key="frame" x="22" y="16" width="331" height="33"/>
-                                        <segments>
-                                            <segment title="All Bookmarks"/>
-                                            <segment title="Favorites"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="onViewSelectorChanged:" destination="aq5-lx-Pms" eventType="valueChanged" id="Nxx-x5-tGK"/>
-                                        </connections>
-                                    </segmentedControl>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemMintColor"/>
-                                <constraints>
-                                    <constraint firstItem="NJH-oV-DbS" firstAttribute="top" secondItem="ZH1-Ia-TsP" secondAttribute="top" constant="16" id="Mlg-F7-z8F"/>
-                                    <constraint firstAttribute="height" constant="64" id="S2Q-FV-giu"/>
-                                    <constraint firstAttribute="trailing" secondItem="NJH-oV-DbS" secondAttribute="trailing" constant="22" id="S69-Bz-rCM"/>
-                                    <constraint firstItem="NJH-oV-DbS" firstAttribute="leading" secondItem="ZH1-Ia-TsP" secondAttribute="leading" constant="22" id="Szz-zP-Ib7"/>
-                                    <constraint firstAttribute="bottom" secondItem="NJH-oV-DbS" secondAttribute="bottom" constant="16" id="e2s-Zo-Z4J"/>
-                                </constraints>
-                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NJH-oV-DbS">
+                                <rect key="frame" x="22" y="317" width="331" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="All Bookmarks"/>
+                                    <segment title="Favorites"/>
+                                </segments>
+                                <connections>
+                                    <action selector="onViewSelectorChanged:" destination="aq5-lx-Pms" eventType="valueChanged" id="Nxx-x5-tGK"/>
+                                </connections>
+                            </segmentedControl>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRM-18-dYh">
-                                <rect key="frame" x="0.0" y="108" width="375" height="510"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <connections>
                                     <segue destination="pYs-v1-gvr" kind="embed" identifier="FavoritesTab" destinationCreationSelector="onCreateFavoritesView:sender:segueIdentifier:" id="bY2-W6-VAQ"/>
                                 </connections>
                             </containerView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
-                                <rect key="frame" x="0.0" y="108" width="375" height="510"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" preservesSuperviewLayoutMargins="YES" searchBarStyle="minimal" id="1tO-s1-k2W">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -139,7 +127,7 @@
                                     </connections>
                                 </searchBar>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">
-                                    <rect key="frame" x="0.0" y="510" width="375" height="82"/>
+                                    <rect key="frame" x="0.0" y="574" width="375" height="82"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
@@ -295,16 +283,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="width" secondItem="dl2-Hs-8PH" secondAttribute="width" id="9zH-wq-Hv7"/>
+                            <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="dl2-Hs-8PH" secondAttribute="top" id="G5b-Nd-SvT"/>
                             <constraint firstAttribute="trailing" secondItem="vYN-5M-awE" secondAttribute="trailing" id="Jrz-9n-TYg"/>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="centerX" secondItem="dl2-Hs-8PH" secondAttribute="centerX" id="We9-7y-nQ6"/>
-                            <constraint firstItem="ZH1-Ia-TsP" firstAttribute="top" secondItem="FEP-Q2-zTZ" secondAttribute="bottom" id="WuI-Xm-wrJ"/>
-                            <constraint firstAttribute="trailing" secondItem="ZH1-Ia-TsP" secondAttribute="trailing" id="atb-i1-qgp"/>
-                            <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="ZH1-Ia-TsP" secondAttribute="bottom" id="cLI-Ny-hsn"/>
-                            <constraint firstItem="rRM-18-dYh" firstAttribute="top" secondItem="ZH1-Ia-TsP" secondAttribute="bottom" id="gyG-Nk-aYo"/>
-                            <constraint firstItem="vYN-5M-awE" firstAttribute="bottom" secondItem="rGL-tq-B12" secondAttribute="top" id="k33-5w-Pqt"/>
-                            <constraint firstItem="ZH1-Ia-TsP" firstAttribute="leading" secondItem="dl2-Hs-8PH" secondAttribute="leading" id="kNG-Ze-Dnn"/>
+                            <constraint firstItem="rRM-18-dYh" firstAttribute="top" secondItem="FEP-Q2-zTZ" secondAttribute="bottom" id="iLn-lz-sEA"/>
+                            <constraint firstItem="vYN-5M-awE" firstAttribute="bottom" secondItem="dl2-Hs-8PH" secondAttribute="bottom" id="k33-5w-Pqt"/>
                             <constraint firstAttribute="leading" secondItem="vYN-5M-awE" secondAttribute="leading" id="nEW-Yf-us5"/>
-                            <constraint firstItem="rGL-tq-B12" firstAttribute="top" secondItem="rRM-18-dYh" secondAttribute="bottom" id="w5u-gF-Okq"/>
+                            <constraint firstAttribute="bottom" secondItem="rRM-18-dYh" secondAttribute="bottom" id="w5u-gF-Okq"/>
                         </constraints>
                     </view>
                     <toolbarItems>
@@ -327,9 +312,8 @@
                         <outlet property="editButton" destination="Ksa-Pd-Mv5" id="VNS-MT-YxS"/>
                         <outlet property="favoritesContainer" destination="rRM-18-dYh" id="N76-id-b2D"/>
                         <outlet property="importFooterButton" destination="R7T-q4-qHz" id="JZd-ar-KeL"/>
-                        <outlet property="selectorContainer" destination="ZH1-Ia-TsP" id="tdG-dE-c8f"/>
+                        <outlet property="searchBar" destination="1tO-s1-k2W" id="5AZ-6I-Dq5"/>
                         <outlet property="selectorControl" destination="NJH-oV-DbS" id="tVX-k9-DgN"/>
-                        <outlet property="selectorHeightConstraint" destination="S2Q-FV-giu" id="DEb-RM-R7m"/>
                         <outlet property="tableView" destination="vYN-5M-awE" id="4rq-bu-ZLw"/>
                         <segue destination="DPG-CO-7kQ" kind="presentation" identifier="AddOrEditBookmarkFolder" id="Uhm-2I-Xo5"/>
                     </connections>
@@ -674,9 +658,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

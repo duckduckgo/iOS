@@ -572,7 +572,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" name="BookmarksCellColor"/>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FavoriteCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteCell" id="Uew-BN-bP6" userLabel="FavoriteFolderCell" customClass="FavoriteCell" customModule="DuckDuckGo" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FavoriteCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="FavoriteCell" id="Uew-BN-bP6" userLabel="FavoriteFolderCell" customClass="FavoriteCell" customModule="DuckDuckGo" customModuleProvider="target">
                                 <rect key="frame" x="16" y="275.5" width="343" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uew-BN-bP6" id="Kwd-kN-eFx">

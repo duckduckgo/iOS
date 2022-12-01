@@ -30,7 +30,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="FPe-OG-g5a">
-                                <rect key="frame" x="22" y="82" width="331" height="157.5"/>
+                                <rect key="frame" x="22" y="82" width="331" height="154.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkFavoritesHero" translatesAutoresizingMaskIntoConstraints="NO" id="FRF-MC-5eG">
                                         <rect key="frame" x="0.0" y="0.0" width="331" height="115.5"/>
@@ -39,8 +39,8 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No favorites added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8y-oO-xBm">
-                                        <rect key="frame" x="0.0" y="137.5" width="331" height="20"/>
-                                        <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="137.5" width="331" height="17"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -468,7 +468,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="XHp-zE-tVW"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
                                     </subviews>
@@ -504,7 +504,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="999" constant="44" id="tZz-vQ-lla"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" textContentType="url"/>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rT4-Yr-P8D">
@@ -513,7 +513,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="hfT-Mz-7EA"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVp-1a-TkJ">

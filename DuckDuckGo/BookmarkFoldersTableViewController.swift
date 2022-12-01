@@ -151,6 +151,7 @@ class BookmarkFoldersViewController: UITableViewController {
         cell.favoriteToggle.isOn = viewModel?.bookmark.isFavorite == true
         cell.favoriteToggle.removeTarget(self, action: #selector(favoriteToggleDidChange(_:)), for: .valueChanged)
         cell.favoriteToggle.addTarget(self, action: #selector(favoriteToggleDidChange(_:)), for: .valueChanged)
+        cell.favoriteToggle.onTintColor = ThemeManager.shared.currentTheme.buttonTintColor
 
         return cell
     }

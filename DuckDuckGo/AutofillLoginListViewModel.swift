@@ -209,7 +209,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
 
         if !accountsToSuggest.isEmpty {
-            let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0) }
+            let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0, tld: tld) }
             newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
         }
         

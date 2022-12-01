@@ -42,11 +42,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
-    @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var importFooterButton: UIButton!
     @IBOutlet weak var favoritesContainer: UIView!
     @IBOutlet weak var selectorControl: UISegmentedControl!
     @IBOutlet weak var searchBar: UISearchBar!
+
+    // Need to retain this as we're going to remove it from the view hierarchy
+    @IBOutlet var doneButton: UIBarButtonItem!
 
     @UserDefaultsWrapper(key: .bookmarksOrFavoritesState, defaultValue: 0)
     var bookmarksOrFavoritesState: Int
@@ -658,11 +660,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     private func changeEditButtonToDone() {
         editButton.title = UserText.navigationTitleDone
         doneButton.title = ""
+
+        navigationItem.rightBarButtonItem = nil
         doneButton.isEnabled = false
     }
     
     private func enableDoneButton() {
         doneButton.title = UserText.navigationTitleDone
+        navigationItem.rightBarButtonItem = doneButton
         doneButton.isEnabled = true
     }
     

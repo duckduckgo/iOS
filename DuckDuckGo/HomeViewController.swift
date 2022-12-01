@@ -19,7 +19,6 @@
 
 import UIKit
 import Core
-import Bookmarks
 import os.log
 import Bookmarks
 

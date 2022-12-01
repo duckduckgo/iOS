@@ -26,7 +26,7 @@
                         <viewControllerLayoutGuide type="bottom" id="pjw-Jr-9f0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yLW-ha-WmV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="680"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="FPe-OG-g5a">
@@ -65,7 +65,7 @@
         <!--Themable Navigation Controller-->
         <scene sceneID="eey-lA-vN2">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" id="LwJ-9t-P9z" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" toolbarHidden="NO" id="LwJ-9t-P9z" customClass="ThemableNavigationController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="zS6-pF-vUE"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="UeR-D3-osZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -76,7 +76,10 @@
                         </textAttributes>
                     </navigationBar>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="5un-qa-asC">
+                        <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <toolbarAppearance key="standardAppearance"/>
+                        <toolbarAppearance key="scrollEdgeAppearance"/>
                     </toolbar>
                     <connections>
                         <segue destination="aq5-lx-Pms" kind="relationship" relationship="rootViewController" destinationCreationSelector="onCreateBookmarksList:sender:segueIdentifier:" id="xze-KF-Wpc"/>
@@ -110,13 +113,13 @@
                                 </connections>
                             </segmentedControl>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRM-18-dYh">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="680"/>
                                 <connections>
                                     <segue destination="pYs-v1-gvr" kind="embed" identifier="FavoritesTab" destinationCreationSelector="onCreateFavoritesView:sender:segueIdentifier:" id="bY2-W6-VAQ"/>
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" preservesSuperviewLayoutMargins="YES" searchBarStyle="minimal" id="1tO-s1-k2W">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -283,13 +286,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="width" secondItem="dl2-Hs-8PH" secondAttribute="width" id="9zH-wq-Hv7"/>
-                            <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="dl2-Hs-8PH" secondAttribute="top" id="G5b-Nd-SvT"/>
+                            <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="dl2-Hs-8PH" secondAttribute="topMargin" id="G5b-Nd-SvT"/>
                             <constraint firstAttribute="trailing" secondItem="vYN-5M-awE" secondAttribute="trailing" id="Jrz-9n-TYg"/>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="centerX" secondItem="dl2-Hs-8PH" secondAttribute="centerX" id="We9-7y-nQ6"/>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="top" secondItem="FEP-Q2-zTZ" secondAttribute="bottom" id="iLn-lz-sEA"/>
                             <constraint firstItem="vYN-5M-awE" firstAttribute="bottom" secondItem="dl2-Hs-8PH" secondAttribute="bottom" id="k33-5w-Pqt"/>
                             <constraint firstAttribute="leading" secondItem="vYN-5M-awE" secondAttribute="leading" id="nEW-Yf-us5"/>
-                            <constraint firstAttribute="bottom" secondItem="rRM-18-dYh" secondAttribute="bottom" id="w5u-gF-Okq"/>
+                            <constraint firstAttribute="bottom" secondItem="rRM-18-dYh" secondAttribute="bottomMargin" id="w5u-gF-Okq"/>
                         </constraints>
                     </view>
                     <toolbarItems>

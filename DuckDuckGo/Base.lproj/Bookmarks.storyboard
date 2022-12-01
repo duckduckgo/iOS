@@ -102,7 +102,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="64"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NJH-oV-DbS">
-                                        <rect key="frame" x="22" y="16.5" width="331" height="32"/>
+                                        <rect key="frame" x="22" y="16" width="331" height="33"/>
                                         <segments>
                                             <segment title="All Bookmarks"/>
                                             <segment title="Favorites"/>
@@ -114,11 +114,11 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemMintColor"/>
                                 <constraints>
+                                    <constraint firstItem="NJH-oV-DbS" firstAttribute="top" secondItem="ZH1-Ia-TsP" secondAttribute="top" constant="16" id="Mlg-F7-z8F"/>
                                     <constraint firstAttribute="height" constant="64" id="S2Q-FV-giu"/>
                                     <constraint firstAttribute="trailing" secondItem="NJH-oV-DbS" secondAttribute="trailing" constant="22" id="S69-Bz-rCM"/>
                                     <constraint firstItem="NJH-oV-DbS" firstAttribute="leading" secondItem="ZH1-Ia-TsP" secondAttribute="leading" constant="22" id="Szz-zP-Ib7"/>
-                                    <constraint firstItem="NJH-oV-DbS" firstAttribute="centerY" secondItem="ZH1-Ia-TsP" secondAttribute="centerY" id="fvO-ch-b3A"/>
-                                    <constraint firstItem="NJH-oV-DbS" firstAttribute="centerX" secondItem="ZH1-Ia-TsP" secondAttribute="centerX" id="nIJ-vd-dr1"/>
+                                    <constraint firstAttribute="bottom" secondItem="NJH-oV-DbS" secondAttribute="bottom" constant="16" id="e2s-Zo-Z4J"/>
                                 </constraints>
                             </view>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRM-18-dYh">

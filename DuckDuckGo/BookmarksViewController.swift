@@ -352,7 +352,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func configureTableView() {
-        tableView.contentInset = .init(top: isNested ? -12 : -1, left: 0,
+        tableView.contentInset = .init(top: isNested ? -12 : -2, left: 0,
                                        bottom: isNested ? 0 : -24, right: 0)
 
         if isNested {

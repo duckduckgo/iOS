@@ -289,6 +289,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Търсене на данни за вход";
 
+/* Section title for group of suggested saved logins */
+"autofill.logins.list.suggested" = "Предложения";
+
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Автоматично попълване на данни за вход";
 

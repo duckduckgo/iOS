@@ -289,6 +289,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Bejelentkezési adatok keresése";
 
+/* Section title for group of suggested saved logins */
+"autofill.logins.list.suggested" = "Javasolt";
+
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Bejelentkezési adatok automatikus kitöltése";
 

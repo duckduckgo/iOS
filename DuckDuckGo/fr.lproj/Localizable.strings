@@ -289,6 +289,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Recherche d'identifiants";
 
+/* Section title for group of suggested saved logins */
+"autofill.logins.list.suggested" = "Suggéré";
+
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Saisie automatique des identifiants";
 

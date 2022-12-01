@@ -286,7 +286,7 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Search Logins";
 
-/* Placeholder for search field on autofill login listing */
+/* Section title for group of suggested saved logins */
 "autofill.logins.list.suggested" = "Suggested";
 
 /* Title for screen listing autofill logins */

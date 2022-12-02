@@ -173,7 +173,7 @@
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FavoriteColor" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MenuFavoriteSolid" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
                                                             <rect key="frame" x="311" y="0.0" width="24" height="24"/>
                                                             <color key="tintColor" name="BookmarksFolderColor"/>
                                                             <constraints>
@@ -632,10 +632,10 @@
     <resources>
         <image name="BookmarkFavoriteIcon" width="24" height="24"/>
         <image name="BookmarkFavoritesHero" width="150" height="116"/>
-        <image name="FavoriteColor" width="24" height="24"/>
         <image name="Folder" width="24" height="24"/>
         <image name="FolderWithPlus" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
+        <image name="MenuFavoriteSolid" width="16" height="16"/>
         <namedColor name="BookmarksCellColor">
             <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -192,7 +192,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
     
     @objc private func appWillMoveToForegroundCallback() {
-        authenticate()
+        // AutofillLoginDetailsViewController will handle calling authenticate() if it is the top view controller
+        guard let presentingViewController = navigationController?.topViewController as? AutofillLoginDetailsViewController else {
+            authenticate()
+            return
+        }
     }
     
     @objc private func appWillMoveToBackgroundCallback() {

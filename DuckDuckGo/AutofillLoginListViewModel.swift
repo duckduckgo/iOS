@@ -120,6 +120,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     func lockUI() {
+        authenticationNotRequired = !hasAccountsSaved
         authenticator.logOut()
     }
     

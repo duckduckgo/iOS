@@ -60,7 +60,11 @@ class AutofillLoginDetailsViewController: UIViewController {
         self.viewModel.delegate = self
 
     }
-    
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -74,6 +78,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         setupTableViewAppearance()
         applyTheme(ThemeManager.shared.currentTheme)
         installConstraints()
+        configureNotifications()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -99,7 +104,30 @@ class AutofillLoginDetailsViewController: UIViewController {
         ])
     }
 
-    
+    private func configureNotifications() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self,
+                                       selector: #selector(appWillMoveToForegroundCallback),
+                                       name: UIApplication.willEnterForegroundNotification, object: nil)
+
+        notificationCenter.addObserver(self,
+                                       selector: #selector(appWillMoveToBackgroundCallback),
+                                       name: UIApplication.willResignActiveNotification, object: nil)
+    }
+
+    @objc private func appWillMoveToForegroundCallback() {
+        if !authenticationNotRequired {
+            authenticator.authenticate()
+        }
+    }
+
+    @objc private func appWillMoveToBackgroundCallback() {
+        if viewModel.viewMode != .new || viewModel.shouldShowSaveButton {
+            authenticationNotRequired = false
+        }
+        authenticator.logOut()
+    }
+
     private func setupTableViewAppearance() {
         let appearance = UITableView.appearance(whenContainedInInstancesOf: [AutofillLoginDetailsViewController.self])
         appearance.backgroundColor = UIColor(named: "ListBackground")

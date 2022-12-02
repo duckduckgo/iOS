@@ -93,8 +93,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                            constant: (tableView.frame.height / 2))
     }()
 
-    init(appSettings: AppSettings) {
-        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld)
+    init(appSettings: AppSettings, currentTabUrl: URL? = nil) {
+        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, currentTabUrl: currentTabUrl)
         super.init(nibName: nil, bundle: nil)
     }
     

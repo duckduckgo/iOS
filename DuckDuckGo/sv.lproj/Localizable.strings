@@ -289,6 +289,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Sök inloggningar";
 
+/* Section title for group of suggested saved logins */
+"autofill.logins.list.suggested" = "Förslag";
+
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Fyll i inloggningar automatiskt";
 

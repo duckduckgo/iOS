@@ -289,6 +289,9 @@
 /* Placeholder for search field on autofill login listing */
 "autofill.logins.list.search-placeholder" = "Pesquisar inícios de sessão";
 
+/* Section title for group of suggested saved logins */
+"autofill.logins.list.suggested" = "Sugerido";
+
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Preenchimento automático de inícios de sessão";
 

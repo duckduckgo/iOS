@@ -116,7 +116,7 @@ class OmniBar: UIView {
         menuButton.isPointerInteractionEnabled = true
 
         refreshButton.isPointerInteractionEnabled = true
-        refreshButton.pointerStyleProvider = { button, effect, _ -> UIPointerStyle? in
+        refreshButton.pointerStyleProvider = { button, _, _ -> UIPointerStyle? in
             return .init(effect: .lift(.init(view: button)))
         }
     }

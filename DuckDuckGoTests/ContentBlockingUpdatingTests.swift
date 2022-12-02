@@ -23,7 +23,6 @@ import TrackerRadarKit
 import BrowserServicesKit
 @testable import DuckDuckGo
 
-// swiftlint:disable type_body_length
 class ContentBlockingUpdatingTests: XCTestCase {
     let appSettings = AppSettingsMock()
     let configManager = PrivacyConfigurationManagerMock()

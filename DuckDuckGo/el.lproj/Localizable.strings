@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Συνδέσεις αυτόματης συμπλήρωσης";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Ρύθμιση του Face ID";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Για προστασία των στοιχείων Αυτόματης συμπλήρωσης απαιτείται κωδικός πρόσβασης. Μεταβείτε στις Ρυθμίσεις της συσκευής για να ορίσετε κωδικό πρόσβασης.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Απαιτούνται Face ID και Κωδικός πρόσβασης για προστασία των στοιχείων Αυτόματης συμπλήρωσης της σύνδεσής σας.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Ενεργοποιήστε το Face ID για χρήση της Αυτόματης συμπλήρωσης";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Ρύθμιση του Touch ID";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Απαιτούνται Touch ID και Κωδικός πρόσβασης για προστασία των στοιχείων Αυτόματης συμπλήρωσης της σύνδεσής σας.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Ενεργοποιήστε το Touch ID για χρήση της Αυτόματης συμπλήρωσης";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Ορίστε τον κωδικό πρόσβασης της συσκευής σας για χρήση της Αυτόματης συμπλήρωσης";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Ακύρωση";

@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Automatisk udfyldning ved login";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Opsætning af Face ID";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Der kræves en adgangskode for at beskytte dine oplysninger ved automatisk udfyldning. Gå til enhedens sindstillinger for at konfigurere en adgangskode.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Face ID og adgangskode er påkrævet for at beskytte dine automatisk udfyldte login-oplysninger";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Aktivér Face ID for at bruge automatisk udfyldning";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Opsætning af Touch ID";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID og adgangskode er påkrævet for at beskytte dine automatisk udfyldte login-oplysninger.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Aktivér Touch ID for at bruge automatisk udfyldning";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Konfigurer din enheds adgangskode for at bruge automatisk udfyldning.";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annullér";

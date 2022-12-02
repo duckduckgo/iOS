@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Login met automatisch invullen";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Face ID instellen";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Er is een toegangscode vereist om je gegevens voor Automatisch invullen te beschermen. Ga naar de instellingen van het apparaat om een toegangscode in te stellen.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Face ID en een toegangscode zijn vereist om je aanmeldgegevens voor Automatisch invullen te beschermen.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Schakel Face ID in om Automatisch invullen te gebruiken";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Touch ID configureren";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID en een toegangscode zijn vereist om je aanmeldgegevens voor Automatisch invullen te beschermen.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Schakel Touch ID in om Automatisch invullen te gebruiken";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Stel de toegangscode van je apparaat in om Automatisch invullen te gebruiken";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Annuleren";

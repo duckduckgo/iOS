@@ -474,12 +474,8 @@ public struct UserText {
     public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use Saved Login?", comment: "Title for autofill login prompt")
     public static let autofillLoginPromptMoreOptions = NSLocalizedString("autofill.logins.prompt.more-options", value:"More Options", comment: "Button title for autofill login prompt if more options are available")
 
-    public static let autofillNoAuthViewFaceIDTitle = NSLocalizedString("autofill.logins.no-auth.face-id.title", value:"Enable Face ID to use Autofill", comment: "Title for view displayed when autofill is locked on devices with faceID")
-    public static let autofillNoAuthViewTouchIDTitle = NSLocalizedString("autofill.logins.no-auth.touch-id.title", value:"Enable Touch ID to use Autofill", comment: "Title for view displayed when autofill is locked on devices with touchID")
-    public static let autofillNoAuthViewFaceIDSubtitle = NSLocalizedString("autofill.logins.no-auth.face-id.subtitle", value:"Face ID & Passcode are required to protect your Autofill Login details.", comment: "Title for view displayed when autofill is locked on devices with faceID")
-    public static let autofillNoAuthViewTouchIDSubtitle = NSLocalizedString("autofill.logins.no-auth.touch-id.subtitle", value:"Touch ID & Passcode are required to protect your Autofill Login details.", comment: "Title for view displayed when autofill is locked on devices with touchID")
-    public static let autofillNoAuthViewFaceIDButton = NSLocalizedString("autofill.logins.no-auth.face-id.button", value:"Set Up Face ID", comment: "Title for view displayed when autofill is locked on devices with faceID")
-    public static let autofillNoAuthViewTouchIDButton = NSLocalizedString("autofill.logins.no-auth.touch-id.button", value:"Set Up Touch ID", comment: "Title for view displayed when autofill is locked on devices with touchID")
+    public static let autofillNoAuthViewTitle = NSLocalizedString("autofill.logins.no-auth.title", value:"Set up your device passcode to use Autofill", comment: "Title for view displayed when autofill is locked on devices where a passcode has not been set")
+    public static let autofillNoAuthViewSubtitle = NSLocalizedString("autofill.logins.no-auth.subtitle", value:"A passcode is required to protect your Autofill details. Go to device Settings to set up a passcode.", comment: "Title for view displayed when autofill is locked on devices where a passcode has not been set")
 
     public static let autofillOpenWebsitePrompt = NSLocalizedString("autofill.logins.details.open-website-prompt.title", value:"Open Website", comment: "Menu item title for option to open website from selected url")
     public static func autofillCopyPrompt(for type: String) -> String {

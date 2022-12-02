@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Samodejno izpolnjevanje obrazcev za prijavo";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Nastavitev identifikacije s prepoznavo obraza";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Za zaščito podatkov samodejnega izpolnjevanja je potrebna koda za dostop. Odprite nastavitve naprave in nastavite kodo za dostop.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Identifikacija s prepoznavo obraza in koda za dostop sta potrebni za zaščito podatkov samodejnega izpolnjevanja podatkov za prijavo.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Omogočite identifikacijo obraza za uporabo samodejnega izpolnjevanja";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Nastavitev identifikacije s prstnim odtisom";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Za zaščito podatkov samodejnega izpolnjevanja prijave je treba uporabiti identifikacijo s prstnim odtisom.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Omogoči identifikacijo s prstnim odtisom za uporabo samodejnega izpolnjevanja";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Za uporabo samodejnega izpolnjevanja nastavite kodo za dostop do naprave";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Prekliči";

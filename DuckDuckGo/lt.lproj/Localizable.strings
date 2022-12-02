@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Automatiškai užpildyti prisijungimus";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "„Face ID“ nustatymas";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Norint apsaugoti automatinio pildymo duomenis, reikia įvesti prieigos kodą. Eikite į įrenginio nustatymus, kad nustatytumėte prieigos kodą.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "„Face ID“ ir slaptasis kodas reikalingas automatiškai užpildytiems prisijungimo duomenims apsaugoti.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Įgalinkite „Face ID“, kad galėtumėte naudoti automatinį užpildymą";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "„Touch ID“ nustatymas";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "„Touch ID“ ir slaptasis kodas reikalingas automatiškai užpildytiems prisijungimo duomenims apsaugoti.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Įgalinkite „Touch ID“, kad galėtumėte naudoti automatinį užpildymą";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Nustatykite savo įrenginio prieigos kodą, kad galėtumėte naudoti automatinį pildymą";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Atšaukti";

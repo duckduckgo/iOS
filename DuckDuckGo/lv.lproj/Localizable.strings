@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Automātiski aizpildīt pieteikšanās datus";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Iestati Face ID";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Lai aizsargātu automātiskās aizpildīšanas informāciju, ir nepieciešams piekļuves kods. Dodies uz ierīces iestatījumiem, lai iestatītu piekļuves kodu.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Lai aizsargātu automātiskās aizpildīšanas pieteikšanās datus, ir nepieciešams Face ID un paroles kods.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Iespējo Face ID, lai izmantotu automātisko aizpildīšanu";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Iestati Touch ID";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Lai aizsargātu automātiskās aizpildīšanas pieteikšanās datus, ir nepieciešams Touch ID un paroles kods.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Iespējo Touch ID, lai izmantotu automātisko aizpildīšanu";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Iestati ierīces piekļuves kodu, lai izmantotu automātisko aizpildīšanu";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Atcelt";

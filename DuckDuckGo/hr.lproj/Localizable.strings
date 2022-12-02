@@ -292,23 +292,11 @@
 /* Title for screen listing autofill logins */
 "autofill.logins.list.title" = "Automatsko popunjavanje prijave";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.button" = "Postavljanje Face ID-a";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.subtitle" = "Šifra je potrebna za zaštitu tvojih podataka za automatsko popunjavanje. Za postavljanje lozinke idi na postavke uređaja.";
 
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.subtitle" = "Face ID i lozinka potrebni su za zaštitu tvojih podataka za prijavu automatskim popunjavanjem.";
-
-/* Title for view displayed when autofill is locked on devices with faceID */
-"autofill.logins.no-auth.face-id.title" = "Omogući Face ID za korištenje automatskog popunjavanja";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.button" = "Postavljanje Touch ID-a";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.subtitle" = "Touch ID i lozinka potrebni su za zaštitu tvojih podataka za prijavu automatskim popunjavanjem.";
-
-/* Title for view displayed when autofill is locked on devices with touchID */
-"autofill.logins.no-auth.touch-id.title" = "Omogući Touch ID za korištenje automatskog popunjavanja";
+/* Title for view displayed when autofill is locked on devices where a passcode has not been set */
+"autofill.logins.no-auth.title" = "Postavi lozinku uređaja za korištenje automatskog popunjavanja";
 
 /* Cancel button for auth during login prompt */
 "autofill.logins.prompt.auth.cancel" = "Otkaži";

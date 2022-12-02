@@ -46,6 +46,7 @@ extension Pixel {
         case privacyDashboardProtectionEnabled
         case privacyDashboardManageProtection
         case privacyDashboardReportBrokenSite
+        case privacyDashboardPixelFromJS(rawPixel: String)
         
         case tabSwitcherNewLayoutSeen
         case tabSwitcherListEnabled
@@ -318,7 +319,6 @@ extension Pixel {
         case contentBlockingIdentifierError
         
         case webKitDidTerminate
-        case webKitDidBecomeUnresponsive
         case webKitTerminationDidReloadCurrentTab
         
         case backgroundTaskSubmissionFailed
@@ -394,6 +394,7 @@ extension Pixel.Event {
         case .privacyDashboardProtectionEnabled: return "mp_wlr"
         case .privacyDashboardManageProtection: return "mp_mw"
         case .privacyDashboardReportBrokenSite: return "mp_rb"
+        case .privacyDashboardPixelFromJS(let rawPixel): return rawPixel
             
         case .tabSwitcherNewLayoutSeen: return "m_ts_n"
         case .tabSwitcherListEnabled: return "m_ts_l"
@@ -671,7 +672,6 @@ extension Pixel.Event {
         case .contentBlockingIdentifierError: return "m_d_cb_ie"
             
         case .webKitDidTerminate: return "m_d_wkt"
-        case .webKitDidBecomeUnresponsive: return "m_d_wkunresponsive"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"

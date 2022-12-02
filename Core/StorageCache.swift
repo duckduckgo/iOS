@@ -33,19 +33,16 @@ public class StorageCache: StorageCacheUpdating {
     
     // Read only
     public let tld: TLD
-    public let termsOfServiceStore: TermsOfServiceStore
     
     public init() {
         tld = TLD()
-        termsOfServiceStore = EmbeddedTermsOfServiceStore()
         
         // Remove legacy data
         _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")
     }
     
-    public init(tld: TLD, termsOfServiceStore: TermsOfServiceStore) {
+    public init(tld: TLD) {
         self.tld = tld
-        self.termsOfServiceStore = termsOfServiceStore
         
         // Remove legacy data
         _ = fileStore.removeData(forFile: "temporaryUnprotectedSites")

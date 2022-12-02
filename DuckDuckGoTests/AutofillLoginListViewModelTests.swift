@@ -23,6 +23,8 @@ import XCTest
 @testable import DuckDuckGo
 @testable import Core
 @testable import BrowserServicesKit
+@testable import Common
+
 
 class AutofillLoginListSectionTypeTests: XCTestCase {
     
@@ -50,13 +52,15 @@ class AutofillLoginListSectionTypeTests: XCTestCase {
 }
 
 class AutofillLoginListItemViewModelTests: XCTestCase {
-    
+
+    let tld = TLD()
+
     func testWhenCreatingViewModelsThenDiacriticsGroupedCorrectly() {
         let domain = "whateverNotImportantForThisTest"
         let testData = [SecureVaultModels.WebsiteAccount(title: nil, username: "c", domain: domain),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "ç", domain: domain),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "C", domain: domain)]
-        let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()
+        let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
         // Diacritics should be grouped with the root letter (in most cases), and grouping should be case insensative
         XCTAssertEqual(result.count, 1)
     }
@@ -72,7 +76,7 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
                         SecureVaultModels.WebsiteAccount(title: nil, username: "?????", domain: domain),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "&%$£$%", domain: domain),
                         SecureVaultModels.WebsiteAccount(title: nil, username: "99999", domain: domain)]
-        let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()
+        let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
         // All non letters should be grouped together
         XCTAssertEqual(result.count, 1)
     }
@@ -80,12 +84,12 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
     func testWhenCreatingSectionsThenTitlesWithinASectionAreSortedCorrectly() {
         let domain = "whateverNotImportantForThisTest"
         let testData = ["e": [
-            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "elephant", username: "1", domain: domain)),
-            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "elephants", username: "2", domain: domain)),
-            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "Elephant", username: "3", domain: domain)),
-            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "èlephant", username: "4", domain: domain)),
-            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "è", username: "5", domain: domain)),
-            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: nil, username: "ezy", domain: domain))]]
+            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "elephant", username: "1", domain: domain), tld: tld),
+            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "elephants", username: "2", domain: domain), tld: tld),
+            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "Elephant", username: "3", domain: domain), tld: tld),
+            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "èlephant", username: "4", domain: domain), tld: tld),
+            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: "è", username: "5", domain: domain), tld: tld),
+            AutofillLoginListItemViewModel(account: SecureVaultModels.WebsiteAccount(title: nil, username: "ezy", domain: domain), tld: tld)]]
         let result = testData.autofillLoginListSectionsForViewModelsSortedByTitle()
         if case .credentials(_, let viewModels) = result[0] {
             XCTAssertEqual(viewModels[0].title, "è")
@@ -96,5 +100,20 @@ class AutofillLoginListItemViewModelTests: XCTestCase {
         } else {
             XCTFail("Expected section did not exist")
         }
+    }
+
+    func testWhenCreatingSectionsWithoutTitlesThenDomainsGroupedCorrectly() {
+        let testData = [SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "example.com"),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "sub.example.com"),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "example.co.uk"),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "example.fr"),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "auth.example.fr"),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "mylogin.example.co.uk"),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "auth.test.example.com"),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "https://www.auth.example.com"),
+                        SecureVaultModels.WebsiteAccount(title: nil, username: "test", domain: "https://www.example.com")]
+        let result = testData.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
+        // Diacritics should be grouped with the root letter (in most cases), and grouping should be case insensative
+        XCTAssertEqual(result.count, 1)
     }
 }

@@ -12,8 +12,8 @@ NAME="DuckDuckGo-$SUFFIX`date "+%Y-%m-%d-%H-%M"`"
 echo Building $NAME
 echo
 
-xcodebuild -allowProvisioningUpdates -scheme DuckDuckGo clean archive -configuration release -sdk iphoneos -archivePath $1/$NAME.xcarchive
-xcodebuild -allowProvisioningUpdates -exportArchive -archivePath $1/$NAME.xcarchive -exportOptionsPlist ./adhocExportOptions.plist -exportPath $1/$NAME
+xcodebuild -scmProvider xcode -allowProvisioningUpdates -scheme DuckDuckGo clean archive -configuration release -sdk iphoneos -archivePath $1/$NAME.xcarchive
+xcodebuild -scmProvider xcode -allowProvisioningUpdates -exportArchive -archivePath $1/$NAME.xcarchive -exportOptionsPlist ./adhocExportOptions.plist -exportPath $1/$NAME
 
 mv $1/$NAME/DuckDuckGo.ipa $1/$NAME/$NAME.ipa
 

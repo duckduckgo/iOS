@@ -10,18 +10,6 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Atsaukt";
 
-/* Autocomplete selected suggestion into the Address Bar button accessibility label */
-"action.suggestion.autocomplete" = "Automātiski pabeigt ieteikumu";
-
-/* Voice-over title for a Bookmark suggestion. Noun */
-"action.suggestion.type.bookmark" = "Grāmatzīme";
-
-/* Open suggested website action accessibility title */
-"action.suggestion.type.website" = "Atvērt tīmekļa vietni";
-
-/* Search for suggestion action accessibility title */
-"action.suggestion.type.search" = "Meklēt vietnē DuckDuckGo";
-
 /* Add action - button shown in alert */
 "action.title.add" = "Pievienot";
 
@@ -634,9 +622,6 @@
 /* Message confirming that the download process has started. Parameter is downloaded file's filename */
 "downloads.message.download-started" = "%@ lejupielāde sākta";
 
-/* No comment provided by engineer. */
-"duckduckgo.com/mac" = "duckduckgo.com/mac";
-
 /* Cancel option for the email alias alert */
 "email.aliasAlert.decline" = "Atcelt";
 
@@ -958,29 +943,8 @@
 /* Please preserve newline character */
 "launchscreenWelcomeMessage" = "Laipni lūdzam\nDuckDuckGo!";
 
-/* Label text for the invite code */
-"mac-browser.waitlist.invite-code" = "Uzaicinājuma kods";
-
-/* First parameter is 'get a notification', second is 'Learn more'. */
-"mac-browser.waitlist.joined.no-notification" = "Tavs uzaicinājums parādīsies šeit, kad būsim gatavi tevi uzņemt. Vai vēlies %1$@, kad tas atnāks? %2$@ par macOS pārlūkprogrammas beta versiju.";
-
-/* Notification text for the macOS waitlist */
-"mac-browser.waitlist.joined.no-notification.get-notification" = "saņemt paziņojumu";
-
-/* Description text for the macOS waitlist. Parameter is 'Learn more.' */
-"mac-browser.waitlist.joined.notification" = "Mēs nosūtīsim tev paziņojumu, kad būsim gatavi tevi uzņemt. %@.";
-
-/* Label text for the Joined Waitlist state with notifications declined */
-"mac-browser.waitlist.joined.notifications-declined" = "Tavs uzaicinājums izmēģināt DuckDuckGo Mac datoram parādīsies šeit. Drīzumā pārbaudi vēlreiz, vai arī mēs varam tev nosūtīt paziņojumu, kad pienāks tava kārta.";
-
-/* Label text for the Joined Waitlist state with notifications enabled */
-"mac-browser.waitlist.joined.notifications-enabled" = "Mēs nosūtīsim tev paziņojumu, kad tavs DuckDuckGo Mac datoram būs gatavs lejupielādei.";
-
-/* Footer text for the macOS waitlist. Parameter is 'Learn more'. */
-"mac-browser.waitlist.learn-more" = "%@ par beta versiju.";
-
 /* Summary text for the macOS browser waitlist */
-"mac-browser.waitlist.summary" = "DuckDuckGo privātuma lietotnei Mac datoram ir ātrums, kādu tev vajag, pārlūkošanas funkcijas, ko tu gaidi, un tā ir aprīkota ar mūsu klasē labākajiem privātuma pamatiem.";
+"mac-browser.waitlist.summary" = "DuckDuckGo Mac datoram sniedz nepieciešamo ātrumu, ierastās pārlūkošanas funkcijas un savā klasē labākās privātuma pamatfunkcijas.";
 
 /* Body text for the macOS waitlist notification */
 "mac-waitlist.available.notification.body" = "Atver savu ielūgumu";
@@ -991,59 +955,26 @@
 /* Title for the copy action */
 "mac-waitlist.copy" = "Kopēt";
 
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-1.description" = "Apmeklē šo URL savā Mac datorā, lai lejupielādētu:";
+/* Description text above the Share Link button */
+"mac-waitlist.join-waitlist-screen.on-your-mac-go-to" = "Savā Mac datorā dodies uz:";
 
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-1.title" = "1. solis";
-
-/* Description on the invite screen */
-"mac-waitlist.invite-screen.step-2.description" = "Atver instalējamo failu un pēc tam ievadi uzaicinājuma kodu, lai atbloķētu.";
-
-/* Title on the invite screen */
-"mac-waitlist.invite-screen.step-2.title" = "2. solis";
-
-/* Subtitle for the Mac Waitlist Invite screen */
-"mac-waitlist.invite-screen.subtitle" = "Vai esi gatavs sākt privātu pārlūkošanu savā Mac datorā?";
-
-/* Title for the invite code screen */
-"mac-waitlist.invite-screen.youre-invited" = "Tu esi uzaicināts!";
+/* Title for the Share Link button */
+"mac-waitlist.join-waitlist-screen.share-link" = "Kopīgot saiti";
 
 /* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.join" = "Pievienojies privātajam nogaides sarakstam";
-
-/* Temporary status text for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.joining" = "Notiek pievienošanās gaidīšanas sarakstam...";
-
-/* Title for the Join Waitlist screen */
-"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Izmēģini DuckDuckGo Mac datoram!";
+"mac-waitlist.join-waitlist-screen.try-duckduckgo-for-mac" = "Iegūsti DuckDuckGo Mac datoram!";
 
 /* Disclaimer for the Join Waitlist screen */
 "mac-waitlist.join-waitlist-screen.windows" = "Windows drīzumā!";
 
-/* Text used for the Notifications Disabled state */
-"mac-waitlist.notification.disabled" = "Mēs varam tev paziņot, kad būs pienākusi tava kārta, taču pašlaik DuckDuckGo paziņojumi ir atspējoti.";
-
-/* Privacy disclaimer for the Mac Waitlist feature */
-"mac-waitlist.privacy-disclaimer" = "Lai pievienotos gaidīšanas sarakstam, tev nav jādalās ar personisku informāciju. Tu ieņemsi vietu rindā, izmantojot laikspiedolu, kas pastāv tikai tavā ierīcē, lai mēs varētu tevi informēt, kad pienāks tava kārta.";
-
-/* Title for the queue screen */
-"mac-waitlist.queue-screen.on-the-list" = "Tu esi sarakstā!";
-
-/* Title for the settings subtitle */
-"mac-waitlist.settings.available-for-download" = "Pieejams lejupielādei Mac datorā";
-
 /* Title for the settings subtitle */
 "mac-waitlist.settings.browse-privately" = "Pārlūko privāti, izmantojot mūsu Mac lietotni";
 
-/* Title for the settings subtitle */
-"mac-waitlist.settings.on-the-list" = "Tu esi sarakstā!";
-
-/* Message used when sharing to iMessage. Parameter is an eight digit invite code. */
-"mac-waitlist.share-sheet.message" = "Tu esi uzaicināts! \n\nVai esi gatavs sākt privātu pārlūkošanu savā Mac? \n\n 1. solis \nApmeklē šo URL savā Mac datorā, lai lejupielādētu: \nhttps://duckduckgo.com/mac \n\n2. solis \nAtver instalējamo failu, pēc tam ievadi uzaicinājuma kodu, lai atbloķētu. \n\nUzaicinājuma kods: %@";
+/* Message used when sharing to iMessage */
+"mac-waitlist.share-sheet.message" = "Vai esi gatavs sākt privātu pārlūkošanu savā Mac? \n\n Apmeklē šo URL savā Mac datorā, lai lejupielādētu:\nhttps://duckduckgo.com/mac";
 
 /* Title for the share sheet entry */
-"mac-waitlist.share-sheet.title" = "Tu esi uzaicināts!";
+"mac-waitlist.share-sheet.title" = "DuckDuckGo Mac datoram";
 
 /* Title for the Mac Waitlist feature */
 "mac-waitlist.title" = "DuckDuckGo darbvirsmas lietotne";
@@ -1129,257 +1060,14 @@
 /* Confirmation button in alert */
 "preserveLogins.remove.all.ok" = "Labi";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.protections.link" = "Par mūsu Tīmekļa izsekošanas aizsardzību";
+/* Privacy Icon accessibility title */
+"privacy.icon.dax" = "DuckDuckGo logotips";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link" = "Par mūsu meklēšanas aizsardzību un reklāmām";
+/* Privacy Icon accessibility hint */
+"privacy.icon.hint" = "Pieskaries, lai atvērtu ekrānu Privātuma informācijas panelis";
 
-/* No comment provided by engineer. */
-"privacy.protection.about.search.protections.link.new" = "Kā mūsu meklēšanas reklāmas ietekmē mūsu aizsardzību";
-
-/* Part of certificate info */
-"privacy.protection.encryption.algorithm" = "Algoritms";
-
-/* Certificate Key size info - number (integer) of bits */
-"privacy.protection.encryption.bits" = "%d biti";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.cert.error" = "Kļūda, izgūstot sertifikātu";
-
-/* Part of certificate info */
-"privacy.protection.encryption.common.name" = "Parastais nosaukums";
-
-/* Part of certificate info */
-"privacy.protection.encryption.effective.size" = "Derīgs izmērs";
-
-/* Part of certificate info */
-"privacy.protection.encryption.email" = "E-pasts";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.encrypted.heading" = "Šifrēts savienojums";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading" = "Piespiedu šifrēšana";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.heading.new" = "Šifrēts savienojums";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.forced.message" = "Mēs piespiedām šo vietni izmantot šifrētu savienojumu, lai nepieļautu, ka slepeni tiek novērota tevis nosūtītā personīgā informācija.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.header" = "Šifrēts savienojums novērš jebkādu tavas personīgās informācijas, ko tu nosūti kādai vietnei, novērošanu.";
-
-/* Part of certificate info */
-"privacy.protection.encryption.id" = "Objekta atslēgas identifikators";
-
-/* Part of certificate info */
-"privacy.protection.encryption.issuer" = "Izdevējs";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key" = "Publiska atslēga";
-
-/* Part of certificate info */
-"privacy.protection.encryption.key.size" = "Atslēgas izmērs";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.heading" = "Jaukta šifrēšana";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.mixed.message" = "Šai vietnei ir jaukta šifrēšana, jo daļa satura tiek piegādāta, izmantojot nešifrētus savienojumus.";
-
-/* Info that certificate is not permanent */
-"privacy.protection.encryption.no" = "Nē";
-
-/* Part of certificate info - Permanent in this context means that certificate is stored on the device (so it’s not temporary one). */
-"privacy.protection.encryption.permanent" = "Pastāvīgs";
-
-/* Public Key of a certficate */
-"privacy.protection.encryption.public.key" = "Publiska atslēga";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.standard.message" = "Šifrēts savienojums novērš jebkādu tavas personīgās informācijas, ko tu nosūti kādai vietnei, novērošanu.";
-
-/* Header of a section that provides infomration about certificate issuer */
-"privacy.protection.encryption.subject.name" = "Objekta nosaukums";
-
-/* Part of certificate info */
-"privacy.protection.encryption.summary" = "Kopsavilkums";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted" = "Esi piesardzīgs, ievadot personisku informāciju šajā vietnē.";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unencrypted.heading" = "Nešifrēts savienojums";
-
-/* No comment provided by engineer. */
-"privacy.protection.encryption.unknown" = "Nezināms";
-
-/* Part of certificate info */
-"privacy.protection.encryption.usage" = "Lietojums";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.decrypt" = "Atšifrēt";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.derive" = "Atvasināt";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.encrypt" = "Šifrēt";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.sign" = "Parakstīt";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.unwrap" = "Izsaiņot";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.verify" = "Pārbaudīt";
-
-/* Usage of a certificate */
-"privacy.protection.encryption.usage.wrap" = "Iesaiņot";
-
-/* Confirmation that certificate is permanent */
-"privacy.protection.encryption.yes" = "Jā";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.first.party.trackers.loaded" = "privacy.protection.first.party.trackers.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.disabled" = "VIETNES AIZSARDZĪBA IR ATSPĒJOTA";
-
-/* $1 and $2 are grades - letters. Example: Enhanced from D to B */
-"privacy.protection.main.enhanced" = "UZLABOTS NO $1 UZ $2";
-
-/* No comment provided by engineer. */
-"privacy.protection.main.grade" = "PRIVĀTUMA LĪMENIS";
-
-/* Major trackers blocked */
-"privacy.protection.major.trackers.blocked" = "privacy.protection.major.trackers.blocked";
-
-/* Major trackers found */
-"privacy.protection.major.trackers.found" = "privacy.protection.major.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.found.new" = "Atrastie lielie izsekotāju tīkli";
-
-/* No comment provided by engineer. */
-"privacy.protection.major.trackers.not.found" = "Nav atrasts neviens lielāko izsekotāju tīkls";
-
-/* First parameter (%@) is a number (percent), %% is a percent sign, second %@ is a date */
-"privacy.protection.network.leaderboard" = "Izsekotāju tīkli tika atrasti %1$@%% vietņu, kuras apmeklēji kopš %2$@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.network.leaderboard.gathering" = "Mēs joprojām apkopojam datus, lai parādītu, cik daudz\nizsekotāju esam bloķējuši.";
-
-/* No comment provided by engineer. */
-"privacy.protection.no.other.third.party.domains.loaded" = "Nav ielādēts neviens trešo pušu pieprasījums";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.adclickattribution" = "Šā domēna pieprasījumi tika ielādēti, jo nesen tika noklikšķināts uz %@ reklāmas DuckDuckGo. Šie pieprasījumi palīdz novērtēt reklāmu efektivitāti. Neviena reklāma DuckDuckGo nav profilējoša.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.exceptions" = "Šī domēna pieprasījumi tika ielādēti, lai novērstu vietnes darbības traucējumus.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.firstparty" = "Šī domēna pieprasījumi tika ielādēti, jo tie ir saistīti ar %@.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info" = "Tika ielādēti šādi trešo pušu domēnu pieprasījumi. Ja tiek ielādēti uzņēmuma pieprasījumi, tas var ļaut uzņēmumam tevi profilēt, lai gan joprojām ir spēkā citi mūsu tīmekļa izsekošanas aizsardzības līdzekļi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.disabled.protection" = "Netika bloķēta nekādu trešo pušu pieprasījumu ielāde, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut uzņēmumam veidot tavu profilu.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection" = "Tika ielādēti šādu domēnu izsekošanas pieprasījumi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.also.new" = "Tika ielādēti arī šāda domēna pieprasījumi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.info.header.disabled.protection.new" = "Tika ielādēti šādu domēnu pieprasījumi.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.other.domains.loaded" = "privacy.protection.other.domains.loaded";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties" = "Tika ielādēti šāda domēna pieprasījumi.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.domains.thirdparties.empty" = "Mēs neatklājām nevienu pieprasījumu no trešo pušu domēniem.";
-
-/* No comment provided by engineer. */
-"privacy.protection.other.third.party.domains.loaded" = "Ielādētie trešo pušu pieprasījumi";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.limitations.footer.info" = "Lūdzu, ņemiet vērā: platformas ierobežojumi var ierobežot mūsu spēju noteikt visus pieprasījumus.";
-
-/* No comment provided by engineer. */
-"privacy.protection.platform.tracker.category.non.profiling" = "Bez profilēšanas";
-
-/* ToS;DR is an organization */
-"privacy.protection.practices.footer.info" = "ToS;DR privātuma prakse.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.header.info" = "Privātuma prakse norāda, cik aizsargāta ir personiskā informācija, ko tu kopīgo ar vietni.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.reviewed.info" = "Šī vietne tevi informēs pirms tavas informācijas nodošanas uzņēmumu apvienošanās vai pārņemšanas gadījumā.";
-
-/* No comment provided by engineer. */
-"privacy.protection.practices.unknown.info" = "Šīs vietnes privātuma prakse nav pārskatīta.";
-
-/* Replacement string is a single letter: A/B/C/D */
-"privacy.protection.site.grade" = "Privātuma līmenis: %@";
-
-/* No comment provided by engineer. */
-"privacy.protection.site.hint" = "Nospied, lai atvērtu privātuma aizsardzības ekrānu";
-
-/* No comment provided by engineer. */
-"privacy.protection.top.offenders.info" = "Šie statistikas dati tiek glabāti tikai tavā ierīcē un nekur netiek sūtīti. Nekad.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.good" = "Laba privātuma prakse";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.mixed" = "Jaukta privātuma prakse";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.poor" = "Slikta privātuma prakse";
-
-/* No comment provided by engineer. */
-"privacy.protection.tos.unknown" = "Nezināma privātuma prakse";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info" = "Izsekotāji palīdz uzņēmumiem veidot tavu profilu. Mēs bloķējām šo izsekotāju ielādēšanu un tavu darbību novērošanu šajā lapā.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty" = "Netika bloķēta neviena izsekošanas pieprasījuma ielāde, jo šai vietnei ir izslēgta aizsardzība. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut uzņēmumam veidot tavu profilu.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.empty.no.trackers" = "Mēs neatradām nevienu izsekošanas pieprasījumu.";
-
-/* No comment provided by engineer. */
-"privacy.protection.tracker.networks.info.new" = "Turpmāk norādīto trešo pušu domēnu pieprasījumu ielāde tika bloķēta, jo tie tika identificēti kā izsekošanas pieprasījumi. Ja uzņēmuma pieprasījumi tiek ielādēti, tas var ļaut uzņēmumam veidot tavu profilu.";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.blocked" = "privacy.protection.trackers.blocked";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.blocked.new" = "Pieprasījumi, kuru ielādēšana ir bloķēta";
-
-/* Do not translate - stringsdict entry */
-"privacy.protection.trackers.found" = "privacy.protection.trackers.found";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.found.new" = "Atrastie izsekošanas pieprasījumi";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.blocked" = "Nav bloķēts neviens izsekošanas pieprasījums";
-
-/* No comment provided by engineer. */
-"privacy.protection.trackers.not.found" = "Nav atrasts neviens izsekošanas pieprasījums";
+/* Privacy Icon accessibility title */
+"privacy.icon.shield" = "Privātuma ikona";
 
 /* Deny action */
 "prompt.custom.url.scheme.dontopen" = "Atcelt";
@@ -1470,9 +1158,6 @@
 
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "%@ ir iespējota privātuma aizsardzība";
-
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Radās nezināma kļūda.";
 
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Iestatījumi";

@@ -1,0 +1,59 @@
+name: Nightly Integration Tests
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Run at 2 AM UTC
+
+jobs:
+  atb-ui-tests:
+    name: ATB UI Tests
+    runs-on: macos-12
+    timeout-minutes: 30
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_14.1.app/Contents/Developer
+
+    - name: Build and test
+      run: |
+        set -o pipefail && xcodebuild test \
+          -scheme "AtbUITests" \
+          -destination "platform=iOS Simulator,name=iPhone 12" \
+          | xcpretty -r junit -o unittests.xml
+
+    - name: Publish unit tests report
+      uses: mikepenz/action-junit-report@v3
+      with:
+        report_paths: unittests.xml
+
+  fingerprinting-ui-tests:
+    name: Fingerprinting UI Tests
+    runs-on: macos-12
+    timeout-minutes: 30
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_14.1.app/Contents/Developer
+
+    - name: Build and test
+      run: |
+        set -o pipefail && xcodebuild test \
+          -scheme "FingerprintingUITests" \
+          -destination "platform=iOS Simulator,name=iPhone 12" \
+          | xcpretty -r junit -o unittests.xml
+
+    - name: Publish unit tests report
+      uses: mikepenz/action-junit-report@v3
+      with:
+        report_paths: unittests.xml
+

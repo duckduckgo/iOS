@@ -35,14 +35,10 @@ class BookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(1, viewModel.bookmarks.count)
+        return viewModel.bookmarks.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard !viewModel.bookmarks.isEmpty else {
-            return BookmarksViewControllerCellFactory.makeEmptyCell(tableView, forIndexPath: indexPath, inFolder: viewModel.currentFolder != nil)
-        }
-
         guard let bookmark = viewModel.bookmark(at: indexPath.row) else {
             fatalError("No bookmark at index \(indexPath.row)")
         }

@@ -119,7 +119,7 @@
                                 </connections>
                             </containerView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
                                 <inset key="separatorInset" minX="52" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" preservesSuperviewLayoutMargins="YES" searchBarStyle="minimal" placeholder="Search" id="1tO-s1-k2W">
@@ -131,22 +131,35 @@
                                     </connections>
                                 </searchBar>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">
-                                    <rect key="frame" x="0.0" y="574.5" width="375" height="82"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <rect key="frame" x="0.0" y="357" width="375" height="300"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
-                                            <rect key="frame" x="19" y="30" width="337" height="31"/>
-                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Import bookmark file from another browser"/>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="22" id="s5A-qr-wei">
+                                            <rect key="frame" x="55" y="50" width="263" height="202"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkFavoritesHero" translatesAutoresizingMaskIntoConstraints="NO" id="qlm-0s-MVq">
+                                                    <rect key="frame" x="56.5" y="0.0" width="150" height="115"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="115.40000000000001" id="ezx-Lp-bY2"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bookmarks added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jdA-wE-Hkh">
+                                                    <rect key="frame" x="37" y="137" width="189" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
+                                                    <rect key="frame" x="0.0" y="176" width="263" height="26"/>
+                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Import bookmark file from another browser"/>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="R7T-q4-qHz" secondAttribute="bottom" constant="21" id="W89-AQ-zqD"/>
-                                        <constraint firstItem="R7T-q4-qHz" firstAttribute="leading" secondItem="PgY-PQ-Rpw" secondAttribute="leading" constant="19" id="bdf-8D-b1b"/>
-                                        <constraint firstAttribute="trailing" secondItem="R7T-q4-qHz" secondAttribute="trailing" constant="19" id="cKh-UL-FSM"/>
-                                        <constraint firstItem="R7T-q4-qHz" firstAttribute="top" secondItem="PgY-PQ-Rpw" secondAttribute="top" constant="30" id="mCc-og-m28"/>
-                                    </constraints>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" rowHeight="44" id="14A-Y0-GYO" customClass="BookmarkCell" customModule="DuckDuckGo" customModuleProvider="target">
@@ -250,44 +263,13 @@
                                             <outlet property="titleLabel" destination="7VM-DV-W3e" id="vVj-hO-Dxl"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoBookmarksCell" rowHeight="44" id="k5c-O7-NAf" userLabel="Empty" customClass="NoBookmarksCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="187.5" width="343" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k5c-O7-NAf" id="L5l-gj-zLA">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bookmarks added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SrQ-51-yie">
-                                                    <rect key="frame" x="32" y="10" width="279" height="24"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="EO9-pl-WdS"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstItem="SrQ-51-yie" firstAttribute="leading" secondItem="L5l-gj-zLA" secondAttribute="leadingMargin" constant="16" id="H5r-QR-8XC"/>
-                                                <constraint firstItem="SrQ-51-yie" firstAttribute="centerY" secondItem="L5l-gj-zLA" secondAttribute="centerY" id="YFP-f7-mwS"/>
-                                                <constraint firstItem="SrQ-51-yie" firstAttribute="top" secondItem="L5l-gj-zLA" secondAttribute="top" constant="10" id="fWs-e5-iyC"/>
-                                                <constraint firstAttribute="bottom" secondItem="SrQ-51-yie" secondAttribute="bottom" constant="10" id="j60-4q-bma"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="SrQ-51-yie" secondAttribute="trailing" constant="16" id="u8g-AA-rKO"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" name="BookmarksCellColor"/>
-                                        <connections>
-                                            <outlet property="label" destination="SrQ-51-yie" id="6ci-1q-Eeg"/>
-                                        </connections>
-                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="width" secondItem="dl2-Hs-8PH" secondAttribute="width" id="9zH-wq-Hv7"/>
-                            <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="dl2-Hs-8PH" secondAttribute="topMargin" id="G5b-Nd-SvT"/>
+                            <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="dl2-Hs-8PH" secondAttribute="top" id="G5b-Nd-SvT"/>
                             <constraint firstAttribute="trailing" secondItem="vYN-5M-awE" secondAttribute="trailing" id="Jrz-9n-TYg"/>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="centerX" secondItem="dl2-Hs-8PH" secondAttribute="centerX" id="We9-7y-nQ6"/>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="top" secondItem="FEP-Q2-zTZ" secondAttribute="bottom" id="iLn-lz-sEA"/>

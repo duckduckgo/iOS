@@ -147,7 +147,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         } else {
             navigationItem.title = viewModel.currentFolder?.title
         }
-        
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -378,6 +378,10 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
             self?.presentDocumentPicker()
         }, for: .touchUpInside)
         
+        if viewModel.totalBookmarksCount == 0 {
+            tableView.tableHeaderView?.removeFromSuperview()
+        }
+
         refreshFooterView()
     }
 

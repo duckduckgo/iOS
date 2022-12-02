@@ -54,18 +54,6 @@ class NoBookmarksCell: UITableViewCell {
 
 class BookmarksViewControllerCellFactory {
 
-    static func makeEmptyCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath, inFolder: Bool) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoBookmarksCell.reuseIdentifier, for: indexPath)
-                as? NoBookmarksCell else {
-            fatalError("Failed to dequeue \(NoBookmarksCell.reuseIdentifier) as NoBookmarksCell")
-        }
-        let theme = ThemeManager.shared.currentTheme
-        cell.label.textColor = theme.tableCellTextColor
-        cell.backgroundColor = theme.tableCellBackgroundColor
-        cell.setHighlightedStateBackgroundColor(theme.tableCellHighlightedBackgroundColor)
-        return cell
-    }
-
     static func makeBookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> BookmarkCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier, for: indexPath) as? BookmarkCell else {
             fatalError("Failed to dequeue bookmark item")

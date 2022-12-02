@@ -165,11 +165,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     
     private func setupPassword(with account: SecureVaultModels.WebsiteAccount) {
         do {
-            if let accountID = account.id {
+            if let accountID = account.id, let accountIdInt = Int64(accountID) {
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
                 
                 if let credential = try
-                    vault.websiteCredentialsFor(accountId: accountID) {
+                    vault.websiteCredentialsFor(accountId: accountIdInt) {
                     self.password = String(data: credential.password, encoding: .utf8) ?? ""
                 }
             }
@@ -192,7 +192,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             }
                            
             do {
-                if var credential = try vault.websiteCredentialsFor(accountId: accountID) {
+                if let accountIdInt = Int64(accountID),
+                   var credential = try vault.websiteCredentialsFor(accountId: accountIdInt) {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = address
@@ -203,7 +204,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     delegate?.autofillLoginDetailsViewModelDidSave()
                     
                     // Refetch after save to get updated properties like "lastUpdated"
-                    if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
+                    if let newCredential = try vault.websiteCredentialsFor(accountId: accountIdInt) {
                         self.updateData(with: newCredential.account)
                     }
                     viewMode = .view

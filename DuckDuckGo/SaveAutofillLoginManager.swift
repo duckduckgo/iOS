@@ -109,13 +109,13 @@ final class SaveAutofillLoginManager: SaveAutofillLoginManagerProtocol {
             var result = [SecureVaultModels.WebsiteCredentials]()
             
             self.vaultManager.autofillUserScript(self.autofillScript,
-                                                 didRequestAccountsForDomain: self.accountDomain) { [weak self] accounts in
+                                                 didRequestAccountsForDomain: self.accountDomain) { [weak self] accounts, _ in
                 guard let self = self else { return }
                 accounts.forEach { account in
                     
                     if let credentialID = account.id {
                         self.vaultManager.autofillUserScript(self.autofillScript,
-                                                             didRequestCredentialsForAccount: credentialID) { credentials in
+                                                             didRequestCredentialsForAccount: credentialID) { credentials, _ in
                             
                             if let credentials = credentials {
                                 result.append(credentials)

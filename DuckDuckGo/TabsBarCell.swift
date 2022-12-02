@@ -46,7 +46,7 @@ class TabsBarCell: UICollectionViewCell {
         super.awakeFromNib()
         
         removeButton.isPointerInteractionEnabled = true
-        removeButton.pointerStyleProvider = { button, effect, _ -> UIPointerStyle? in
+        removeButton.pointerStyleProvider = { button, _, _ -> UIPointerStyle? in
             return .init(effect: .lift(.init(view: button)))
         }
         

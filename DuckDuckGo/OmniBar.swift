@@ -118,7 +118,7 @@ class OmniBar: UIView {
         menuButton.isPointerInteractionEnabled = true
 
         refreshButton.isPointerInteractionEnabled = true
-        refreshButton.pointerStyleProvider = { button, effect, _ -> UIPointerStyle? in
+        refreshButton.pointerStyleProvider = { button, _, _ -> UIPointerStyle? in
             return .init(effect: .lift(.init(view: button)))
         }
     }
@@ -252,7 +252,7 @@ class OmniBar: UIView {
     public func completeAnimationForDaxDialog() {
         privacyIconAndTrackersAnimator.completeAnimationForDaxDialog(in: self)
     }
-    
+
     private func animateCookiesManagedBadge() {
         print("Cookies Managed!")
         notificationAnimator.showNotification(in: self)

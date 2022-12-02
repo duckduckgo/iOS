@@ -4,7 +4,6 @@ disabled_rules:
   - orphaned_doc_comment
   - todo
   - unused_capture_list
-  - identifier_name
 
 opt_in_rules:
   - closure_end_indentation
@@ -20,9 +19,7 @@ legacy_hashing: error
 
 identifier_name:
   min_length: 1
-  max_length:
-    warning: 40
-    error: 60
+  max_length: 1000
   excluded:
     - i
     - id

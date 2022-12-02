@@ -136,12 +136,18 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
         selectorControl.removeFromSuperview()
         if !isNested {
-            navigationController?.navigationBar.topItem?.titleView = selectorControl
+            let stack = UIStackView(arrangedSubviews: [selectorControl])
+            stack.alignment = .center
+            stack.axis = .vertical
+
+            navigationController?.navigationBar.topItem?.titleView = stack
+
             selectorControl.selectedSegmentIndex = bookmarksOrFavoritesState
             onViewSelectorChanged(selectorControl)
         } else {
             navigationItem.title = viewModel.currentFolder?.title
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {

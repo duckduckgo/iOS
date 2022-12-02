@@ -22,9 +22,11 @@ import SwiftUI
 
 class CookiesManagedViewController: UIViewController {
     
-    private let hostingController = UIHostingController(rootView: BadgeAnimationView(animationModel: BadgeNotificationAnimationModel(),
-                                                                                     iconView: AnyView(Image(systemName: "trash")),
-                                                                                     text: "Cookies Managed!"))
+//    private let hostingController = UIHostingController(rootView: BadgeAnimationView(animationModel: BadgeNotificationAnimationModel(),
+//                                                                                     iconView: AnyView(Image(systemName: "trash")),
+//                                                                                     text: "Cookies Managed!"))
+    
+    private let hostingController = UIHostingController(rootView: OmniBarNotification(model: OmniBarModel()))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,7 @@ class CookiesManagedViewController: UIViewController {
     }
     
     private func setupConstraints() {
+        hostingController.view.backgroundColor = .clear
         hostingController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
@@ -50,9 +53,9 @@ class CookiesManagedViewController: UIViewController {
 extension CookiesManagedViewController: OmniBarNotificationAnimated {
 
     func startAnimation(_ completion: @escaping () -> Void) {
-        hostingController.rootView.animationModel.state = .expanded
+        hostingController.rootView.model.isOpen = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            self.hostingController.rootView.animationModel.state = .retracted
+            self.hostingController.rootView.model.isOpen = false
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.6) {

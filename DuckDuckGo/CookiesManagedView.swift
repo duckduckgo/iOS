@@ -19,6 +19,86 @@
 
 import SwiftUI
 
+class OmniBarModel: ObservableObject {
+    @Published var isOpen: Bool = false
+}
+
+struct OmniBarNotification: View {
+    var model: OmniBarModel
+    
+    @State var textOffset: CGFloat = 0
+    @State var textWidth: CGFloat = 0
+    
+    @State var size: CGSize = .zero
+    
+    
+    var body: some View {
+        
+        HStack {
+            HStack(spacing: 0) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 5)
+                        .foregroundColor(.clear)
+                        .frame(width: 30, height: 30)
+                    Image(systemName: "globe")
+                        .imageScale(.large)
+                        .foregroundColor(.black.opacity(0.6))
+                }
+                
+                Text("Cookies Managed")
+                    .lineLimit(1)
+                    .offset(x: textOffset)
+                    .padding(.trailing, 10)
+                    .clipShape(Rectangle().inset(by: -5))
+                    .onReceive(model.$isOpen) { isOpen in
+                        withAnimation(.easeInOut(duration: 0.6)) {
+                            textOffset = isOpen ? 0 : -textWidth
+                        }
+                    }
+                    .modifier(SizeModifier())
+                    .onPreferenceChange(SizePreferenceKey.self) {
+                        textWidth = $0.width
+                        textOffset = -textWidth
+                    }
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundColor(.gray)
+                    .offset(x: textOffset)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+            )
+            
+            Spacer()
+        }
+        
+    }
+}
+
+
+struct SizePreferenceKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
+
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+struct SizeModifier: ViewModifier {
+    private var sizeView: some View {
+        GeometryReader { geometry in
+            Color.clear.preference(key: SizePreferenceKey.self, value: geometry.size)
+        }
+    }
+
+    func body(content: Content) -> some View {
+        content.background(sizeView)
+    }
+}
+
+
+//
+
+
 final class BadgeNotificationAnimationModel: ObservableObject {
     let duration: CGFloat
     let secondPhaseDelay: CGFloat

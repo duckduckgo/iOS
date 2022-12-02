@@ -2348,6 +2348,11 @@ extension TabViewController: SecureVaultManagerDelegate {
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }
+    
+    func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
+        Pixel.fire(pixel: .autofillJSPixelFired(pixel))
+    }
+    
 }
 
 extension TabViewController: SaveLoginViewControllerDelegate {

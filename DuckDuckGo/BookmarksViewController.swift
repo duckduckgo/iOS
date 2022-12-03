@@ -51,9 +51,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var footerContainer: UIView!
     @IBOutlet var searchBar: UISearchBar!
 
-    @UserDefaultsWrapper(key: .bookmarksOrFavoritesState, defaultValue: 0)
-    var bookmarksOrFavoritesState: Int
-
     private let bookmarksDatabase: CoreDataDatabase
 
     /// Creating left and right toolbar UIBarButtonItems with customView so that 'Edit' button is centered
@@ -143,7 +140,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
             navigationController?.navigationBar.topItem?.titleView = stack
 
-            selectorControl.selectedSegmentIndex = bookmarksOrFavoritesState
             onViewSelectorChanged(selectorControl)
         } else {
             navigationItem.title = viewModel.currentFolder?.title
@@ -161,7 +157,6 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     @IBAction func onViewSelectorChanged(_ segment: UISegmentedControl) {
-        bookmarksOrFavoritesState = selectorControl.selectedSegmentIndex
         switch selectorControl.selectedSegmentIndex {
         case 0:
             showBookmarksView()

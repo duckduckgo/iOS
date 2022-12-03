@@ -29,33 +29,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="680"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="FPe-OG-g5a">
-                                <rect key="frame" x="22" y="82" width="331" height="154.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1eC-a5-SUb">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="383"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkFavoritesHero" translatesAutoresizingMaskIntoConstraints="NO" id="FRF-MC-5eG">
-                                        <rect key="frame" x="0.0" y="0.0" width="331" height="115.5"/>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FavoritesEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="FRF-MC-5eG">
+                                        <rect key="frame" x="236.5" y="-20.5" width="194" height="144"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="115.40000000000001" id="nKK-XC-tDl"/>
+                                            <constraint firstAttribute="width" constant="194" id="lBr-7M-79W"/>
+                                            <constraint firstAttribute="height" constant="144" id="nKK-XC-tDl"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No favorites added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8y-oO-xBm">
-                                        <rect key="frame" x="0.0" y="137.5" width="331" height="17"/>
+                                        <rect key="frame" x="0.0" y="145.5" width="667" height="17"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                            </stackView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="y8y-oO-xBm" firstAttribute="top" secondItem="FRF-MC-5eG" secondAttribute="bottom" constant="22" id="4As-ux-Eg7"/>
+                                    <constraint firstItem="FRF-MC-5eG" firstAttribute="centerX" secondItem="1eC-a5-SUb" secondAttribute="centerX" id="KGB-eZ-5jb"/>
+                                    <constraint firstItem="y8y-oO-xBm" firstAttribute="centerX" secondItem="1eC-a5-SUb" secondAttribute="centerX" id="RYf-SB-Aym"/>
+                                    <constraint firstItem="FRF-MC-5eG" firstAttribute="centerY" secondItem="1eC-a5-SUb" secondAttribute="centerY" constant="-140" id="aM1-Y7-6Kv"/>
+                                    <constraint firstItem="y8y-oO-xBm" firstAttribute="width" secondItem="1eC-a5-SUb" secondAttribute="width" id="qlq-bB-YQF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="FPe-OG-g5a" firstAttribute="centerX" secondItem="yLW-ha-WmV" secondAttribute="centerX" id="h4i-lb-gLF"/>
-                            <constraint firstAttribute="trailing" secondItem="FPe-OG-g5a" secondAttribute="trailing" constant="22" id="l4m-f8-V0j"/>
-                            <constraint firstItem="FPe-OG-g5a" firstAttribute="leading" secondItem="yLW-ha-WmV" secondAttribute="leading" constant="22" id="m1l-Cr-HN8"/>
-                            <constraint firstItem="FPe-OG-g5a" firstAttribute="top" secondItem="urO-HF-PLt" secondAttribute="bottom" constant="82" id="xbf-bw-cgt"/>
+                            <constraint firstItem="1eC-a5-SUb" firstAttribute="width" secondItem="yLW-ha-WmV" secondAttribute="width" id="36h-rA-iyJ"/>
+                            <constraint firstItem="1eC-a5-SUb" firstAttribute="centerY" secondItem="yLW-ha-WmV" secondAttribute="centerY" id="XCK-Ux-Ay4"/>
+                            <constraint firstItem="1eC-a5-SUb" firstAttribute="centerX" secondItem="yLW-ha-WmV" secondAttribute="centerX" id="Ygx-2S-vW8"/>
+                            <constraint firstItem="1eC-a5-SUb" firstAttribute="height" secondItem="yLW-ha-WmV" secondAttribute="height" id="g5V-li-dTv"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="emptyHeroView" destination="FPe-OG-g5a" id="8vE-4y-4Oh"/>
+                        <outlet property="emptyHeroView" destination="1eC-a5-SUb" id="gZb-fG-2vO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSH-GN-MfA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -131,35 +140,38 @@
                                     </connections>
                                 </searchBar>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="PgY-PQ-Rpw">
-                                    <rect key="frame" x="0.0" y="357" width="375" height="300"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    <rect key="frame" x="0.0" y="356.5" width="375" height="300"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="22" id="s5A-qr-wei">
-                                            <rect key="frame" x="55" y="50" width="263" height="202"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkFavoritesHero" translatesAutoresizingMaskIntoConstraints="NO" id="qlm-0s-MVq">
-                                                    <rect key="frame" x="56.5" y="0.0" width="150" height="115"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="115.40000000000001" id="ezx-Lp-bY2"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bookmarks added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jdA-wE-Hkh">
-                                                    <rect key="frame" x="37" y="137" width="189" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
-                                                    <rect key="frame" x="0.0" y="176" width="263" height="26"/>
-                                                    <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="Import bookmark file from another browser"/>
-                                                </button>
-                                            </subviews>
-                                        </stackView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarksEmpty" translatesAutoresizingMaskIntoConstraints="NO" id="qlm-0s-MVq">
+                                            <rect key="frame" x="91.5" y="78" width="192" height="144"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="144" id="ezx-Lp-bY2"/>
+                                                <constraint firstAttribute="width" constant="192" id="zCW-hg-WhG"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No bookmarks added yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdA-wE-Hkh">
+                                            <rect key="frame" x="93" y="230" width="189" height="17"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="R7T-q4-qHz">
+                                            <rect key="frame" x="0.0" y="269" width="375" height="26"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Import bookmark file from another browser"/>
+                                        </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="qlm-0s-MVq" firstAttribute="centerX" secondItem="PgY-PQ-Rpw" secondAttribute="centerX" id="4Vk-Cu-wRv"/>
+                                        <constraint firstItem="jdA-wE-Hkh" firstAttribute="top" secondItem="qlm-0s-MVq" secondAttribute="bottom" constant="8" symbolic="YES" id="Dbs-rf-1YS"/>
+                                        <constraint firstItem="qlm-0s-MVq" firstAttribute="centerY" secondItem="PgY-PQ-Rpw" secondAttribute="centerY" id="NTL-7X-bco"/>
+                                        <constraint firstItem="R7T-q4-qHz" firstAttribute="centerX" secondItem="jdA-wE-Hkh" secondAttribute="centerX" id="aHT-5n-gx4"/>
+                                        <constraint firstItem="R7T-q4-qHz" firstAttribute="width" secondItem="PgY-PQ-Rpw" secondAttribute="width" id="dZF-PE-FeI"/>
+                                        <constraint firstItem="jdA-wE-Hkh" firstAttribute="bottom" secondItem="R7T-q4-qHz" secondAttribute="top" constant="-22" id="dcG-9f-ERC"/>
+                                        <constraint firstItem="R7T-q4-qHz" firstAttribute="centerX" secondItem="qlm-0s-MVq" secondAttribute="centerX" id="igS-qm-U8g"/>
+                                    </constraints>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" rowHeight="44" id="14A-Y0-GYO" customClass="BookmarkCell" customModule="DuckDuckGo" customModuleProvider="target">
@@ -268,6 +280,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="vYN-5M-awE" firstAttribute="height" secondItem="rRM-18-dYh" secondAttribute="height" multiplier="0.980882" id="7eJ-tE-xX5"/>
                             <constraint firstItem="rRM-18-dYh" firstAttribute="width" secondItem="dl2-Hs-8PH" secondAttribute="width" id="9zH-wq-Hv7"/>
                             <constraint firstItem="vYN-5M-awE" firstAttribute="top" secondItem="dl2-Hs-8PH" secondAttribute="top" id="G5b-Nd-SvT"/>
                             <constraint firstAttribute="trailing" secondItem="vYN-5M-awE" secondAttribute="trailing" id="Jrz-9n-TYg"/>
@@ -392,7 +405,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8R7-gf-yWn">
-                                            <rect key="frame" x="16" y="10" width="311" height="24"/>
+                                            <rect key="frame" x="16" y="10" width="595" height="24"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Folder" translatesAutoresizingMaskIntoConstraints="NO" id="8qY-sA-7P1">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -403,7 +416,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2O-E5-pyF">
-                                                    <rect key="frame" x="40" y="0.0" width="271" height="24"/>
+                                                    <rect key="frame" x="40" y="0.0" width="555" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" name="BookmarksCellLabelColor"/>
                                                     <nil key="highlightedColor"/>
@@ -433,7 +446,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KiU-Wb-7jj">
-                                            <rect key="frame" x="16" y="0.0" width="315" height="44"/>
+                                            <rect key="frame" x="16" y="0.0" width="599" height="44"/>
                                             <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="XHp-zE-tVW"/>
@@ -469,7 +482,7 @@
                                             </constraints>
                                         </imageView>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-sP-hhb">
-                                            <rect key="frame" x="88" y="44" width="243" height="44"/>
+                                            <rect key="frame" x="88" y="44" width="527" height="44"/>
                                             <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="999" constant="44" id="tZz-vQ-lla"/>
@@ -478,7 +491,7 @@
                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" textContentType="url"/>
                                         </textField>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rT4-Yr-P8D">
-                                            <rect key="frame" x="88" y="0.0" width="243" height="44"/>
+                                            <rect key="frame" x="88" y="0.0" width="527" height="44"/>
                                             <color key="backgroundColor" name="BookmarksCellColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="hfT-Mz-7EA"/>
@@ -487,7 +500,7 @@
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVp-1a-TkJ">
-                                            <rect key="frame" x="88" y="44" width="255" height="0.5"/>
+                                            <rect key="frame" x="88" y="44" width="539" height="0.5"/>
                                             <color key="backgroundColor" name="BookmarksCellSeperatorColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="750" constant="0.5" id="RDj-dx-Yf1"/>
@@ -526,7 +539,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="c3O-4F-9vA">
-                                            <rect key="frame" x="16" y="10" width="311" height="24"/>
+                                            <rect key="frame" x="16" y="10" width="595" height="24"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FolderWithPlus" translatesAutoresizingMaskIntoConstraints="NO" id="lwP-jU-PzJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -537,7 +550,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Folder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8e-rz-6qx">
-                                                    <rect key="frame" x="40" y="0.0" width="271" height="24"/>
+                                                    <rect key="frame" x="40" y="0.0" width="555" height="24"/>
                                                     <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                     <color key="textColor" name="BookmarksCellLabelColor"/>
                                                     <nil key="highlightedColor"/>
@@ -562,13 +575,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Favorite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRK-XI-Rr8">
-                                            <rect key="frame" x="56" y="14" width="214" height="16"/>
+                                            <rect key="frame" x="56" y="14" width="498" height="16"/>
                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                             <color key="textColor" name="BookmarksCellLabelColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0pM-zQ-xZT">
-                                            <rect key="frame" x="278" y="6.5" width="51" height="31"/>
+                                            <rect key="frame" x="562" y="6.5" width="51" height="31"/>
                                         </switch>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BookmarkFavoriteIcon" translatesAutoresizingMaskIntoConstraints="NO" id="bJP-Vc-uWK">
                                             <rect key="frame" x="16" y="10" width="24" height="24"/>
@@ -613,7 +626,8 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="BookmarkFavoriteIcon" width="24" height="24"/>
-        <image name="BookmarkFavoritesHero" width="150" height="116"/>
+        <image name="BookmarksEmpty" width="128" height="96"/>
+        <image name="FavoritesEmpty" width="128" height="96"/>
         <image name="Folder" width="24" height="24"/>
         <image name="FolderWithPlus" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>

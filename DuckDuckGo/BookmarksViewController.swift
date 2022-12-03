@@ -42,10 +42,11 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
-    @IBOutlet weak var importFooterButton: UIButton!
     @IBOutlet weak var favoritesContainer: UIView!
     @IBOutlet weak var selectorControl: UISegmentedControl!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var footerContainer: UIView!
+    @IBOutlet weak var importFooterButton: UIButton!
 
     // Need to retain this as we're going to remove it from the view hierarchy
     @IBOutlet var doneButton: UIBarButtonItem!
@@ -362,6 +363,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     private func configureSelector() {
         favoritesContainer.backgroundColor = tableView.backgroundColor
+        selectorControl.setTitle(UserText.sectionTitleBookmarks, forSegmentAt: 0)
     }
 
     private func configureTableView() {
@@ -691,11 +693,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func enableFooterView() {
+        footerContainer.isHidden = false
         importFooterButton.isHidden = false
         importFooterButton.isEnabled = true
     }
 
     private func disableFooterView() {
+        footerContainer.isHidden = true
         importFooterButton.isHidden = true
         importFooterButton.isEnabled = false
     }

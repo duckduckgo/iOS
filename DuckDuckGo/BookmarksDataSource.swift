@@ -82,10 +82,14 @@ class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return results.count
+        return max(1, results.count)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if results.isEmpty {
+            return BookmarksViewControllerCellFactory.makeNoResultsCell(tableView)
+        }
+
         let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
         cell.faviconImageView.loadFavicon(forDomain: results[indexPath.row].url.host, usingCache: .bookmarks)
         cell.titleLabel.text = results[indexPath.row].title

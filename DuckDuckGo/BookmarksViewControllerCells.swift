@@ -45,14 +45,26 @@ class FolderCell: UITableViewCell {
 
 }
 
-class NoBookmarksCell: UITableViewCell {
+class NoResultsCell: UITableViewCell {
 
     @IBOutlet var label: UILabel!
 
-    static let reuseIdentifier = "NoBookmarksCell"
+    static let reuseIdentifier = "NoResultsCell"
 }
 
 class BookmarksViewControllerCellFactory {
+
+    static func makeNoResultsCell(_ tableView: UITableView) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NoResultsCell.reuseIdentifier) as? NoResultsCell else {
+            fatalError("Failed to dequeue no results cell")
+        }
+
+        let theme = ThemeManager.shared.currentTheme
+        cell.backgroundColor = theme.tableCellBackgroundColor
+        cell.label.textColor = theme.tableCellTextColor
+
+        return cell
+    }
 
     static func makeBookmarkCell(_ tableView: UITableView, forIndexPath indexPath: IndexPath) -> BookmarkCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookmarkCell.reuseIdentifier, for: indexPath) as? BookmarkCell else {

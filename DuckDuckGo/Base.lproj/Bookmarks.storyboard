@@ -130,7 +130,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="insetGrouped" allowsSelectionDuringEditing="YES" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="vYN-5M-awE">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="separatorColor" name="BookmarksCellSeperatorColor"/>
-                                <inset key="separatorInset" minX="52" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" preservesSuperviewLayoutMargins="YES" searchBarStyle="minimal" placeholder="Search" id="1tO-s1-k2W">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -226,8 +225,42 @@
                                             <outlet property="titleLabel" destination="cV4-pj-JNb" id="gwU-ec-jnx"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FolderCell" rowHeight="44" id="KGu-j0-KJK" userLabel="FolderCell" customClass="FolderCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoResultsCell" rowHeight="44" id="F5Y-vs-m8j" customClass="NoResultsCell" customModule="DuckDuckGo" customModuleProvider="target">
                                         <rect key="frame" x="16" y="143.5" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F5Y-vs-m8j" id="e0A-ci-ZLj">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xfD-A4-SRJ">
+                                                    <rect key="frame" x="16" y="14" width="311" height="16"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="744" text="No matches found" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqG-b3-Fq3">
+                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="16"/>
+                                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
+                                                            <color key="textColor" name="AlertButtonDestructiveTitleColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xfD-A4-SRJ" secondAttribute="trailing" id="3OK-RF-Oxc"/>
+                                                <constraint firstItem="xfD-A4-SRJ" firstAttribute="centerY" secondItem="e0A-ci-ZLj" secondAttribute="centerY" id="I8L-Tm-amL"/>
+                                                <constraint firstItem="xfD-A4-SRJ" firstAttribute="leading" secondItem="e0A-ci-ZLj" secondAttribute="leadingMargin" id="fHt-IB-Glv"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="BookmarksCellColor"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" button="YES"/>
+                                        </accessibility>
+                                        <connections>
+                                            <outlet property="label" destination="hqG-b3-Fq3" id="JNE-Lc-omU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FolderCell" rowHeight="44" id="KGu-j0-KJK" userLabel="FolderCell" customClass="FolderCell" customModule="DuckDuckGo" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="187.5" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGu-j0-KJK" id="1hV-h5-0bK">
                                             <rect key="frame" x="0.0" y="0.0" width="316.5" height="44"/>
@@ -310,6 +343,7 @@
                         <outlet property="doneButton" destination="RuZ-zV-tu8" id="lry-qp-OIs"/>
                         <outlet property="editButton" destination="Ksa-Pd-Mv5" id="VNS-MT-YxS"/>
                         <outlet property="favoritesContainer" destination="rRM-18-dYh" id="N76-id-b2D"/>
+                        <outlet property="footerContainer" destination="PgY-PQ-Rpw" id="F72-bA-dTB"/>
                         <outlet property="importFooterButton" destination="R7T-q4-qHz" id="JZd-ar-KeL"/>
                         <outlet property="searchBar" destination="1tO-s1-k2W" id="5AZ-6I-Dq5"/>
                         <outlet property="selectorControl" destination="NJH-oV-DbS" id="tVX-k9-DgN"/>
@@ -632,6 +666,9 @@
         <image name="FolderWithPlus" width="24" height="24"/>
         <image name="GlobeSmall" width="24" height="24"/>
         <image name="MenuFavoriteSolid" width="16" height="16"/>
+        <namedColor name="AlertButtonDestructiveTitleColor">
+            <color red="0.92549019607843142" green="0.21568627450980393" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="BookmarksCellColor">
             <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

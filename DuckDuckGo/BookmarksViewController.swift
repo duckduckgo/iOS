@@ -44,12 +44,12 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var favoritesContainer: UIView!
     @IBOutlet weak var selectorControl: UISegmentedControl!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var footerContainer: UIView!
     @IBOutlet weak var importFooterButton: UIButton!
 
-    // Need to retain this as we're going to remove it from the view hierarchy
+    // Need to retain these as we're going to add/remove them from the view hierarchy
     @IBOutlet var doneButton: UIBarButtonItem!
+    @IBOutlet var footerContainer: UIView!
+    @IBOutlet var searchBar: UISearchBar!
 
     @UserDefaultsWrapper(key: .bookmarksOrFavoritesState, defaultValue: 0)
     var bookmarksOrFavoritesState: Int
@@ -693,15 +693,17 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func enableFooterView() {
-        footerContainer.isHidden = false
+        tableView.addSubview(footerContainer)
         importFooterButton.isHidden = false
         importFooterButton.isEnabled = true
+        searchBar.removeFromSuperview()
     }
 
     private func disableFooterView() {
-        footerContainer.isHidden = true
+        footerContainer.removeFromSuperview()
         importFooterButton.isHidden = true
         importFooterButton.isEnabled = false
+        tableView.tableHeaderView = searchBar
     }
 
     private func prepareForSearching() {

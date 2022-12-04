@@ -295,7 +295,9 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
             cell.iconBackground.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
         }
 
-        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: "" as NSString))
+        let item = viewModel.favorite(at: indexPath.row)
+        // Using the URL allows this item to be dragged into other apps
+        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: (item?.url ?? "") as NSString))
         dragItem.previewProvider = { () -> UIDragPreview? in
             return UIDragPreview(view: cell.iconBackground)
         }

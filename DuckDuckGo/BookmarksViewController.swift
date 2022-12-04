@@ -166,6 +166,8 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
         default: assertionFailure("Invalid selected segment index")
         }
+
+        refreshFooterView()
     }
 
     private func refreshAll() {
@@ -450,10 +452,13 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
     
     private func refreshFooterView() {
-        if !isNested && dataSource.isEmpty && dataSource !== searchDataSource {
-            enableFooterView()
+        if !isNested &&
+            dataSource.isEmpty &&
+            dataSource !== searchDataSource &&
+            selectorControl.selectedSegmentIndex == 0 {
+            showEmptyState()
         } else {
-            disableFooterView()
+            hideEmptyState()
         }
     }
 
@@ -687,15 +692,15 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
         moreButton.isEnabled = false
     }
 
-    private func enableFooterView() {
-        tableView.addSubview(footerContainer)
+    private func showEmptyState() {
+        footerContainer.isHidden = false
         importFooterButton.isHidden = false
         importFooterButton.isEnabled = true
         searchBar.removeFromSuperview()
     }
 
-    private func disableFooterView() {
-        footerContainer.removeFromSuperview()
+    private func hideEmptyState() {
+        footerContainer.isHidden = true
         importFooterButton.isHidden = true
         importFooterButton.isEnabled = false
         tableView.tableHeaderView = searchBar

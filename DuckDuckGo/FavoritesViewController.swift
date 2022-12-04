@@ -245,6 +245,8 @@ extension FavoritesViewController: Themable {
 
     func decorate(with theme: Theme) {
         self.theme = theme
-        view.backgroundColor = .clear
+        view.backgroundColor = theme.backgroundColor
+        collectionView.backgroundColor = .clear
+        emptyHeroView.backgroundColor = .clear
     }
 }

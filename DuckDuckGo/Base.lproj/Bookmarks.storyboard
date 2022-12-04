@@ -64,7 +64,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="emptyHeroView" destination="1eC-a5-SUb" id="gZb-fG-2vO"/>
+                        <outlet property="emptyStateContainer" destination="1eC-a5-SUb" id="gZb-fG-2vO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XSH-GN-MfA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -344,8 +344,8 @@
                     <connections>
                         <outlet property="doneButton" destination="RuZ-zV-tu8" id="lry-qp-OIs"/>
                         <outlet property="editButton" destination="Ksa-Pd-Mv5" id="VNS-MT-YxS"/>
+                        <outlet property="emptyStateContainer" destination="PgY-PQ-Rpw" id="F72-bA-dTB"/>
                         <outlet property="favoritesContainer" destination="rRM-18-dYh" id="N76-id-b2D"/>
-                        <outlet property="footerContainer" destination="PgY-PQ-Rpw" id="F72-bA-dTB"/>
                         <outlet property="importFooterButton" destination="R7T-q4-qHz" id="JZd-ar-KeL"/>
                         <outlet property="searchBar" destination="1tO-s1-k2W" id="5AZ-6I-Dq5"/>
                         <outlet property="selectorControl" destination="NJH-oV-DbS" id="tVX-k9-DgN"/>

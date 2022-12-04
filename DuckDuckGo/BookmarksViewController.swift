@@ -48,7 +48,7 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
 
     // Need to retain these as we're going to add/remove them from the view hierarchy
     @IBOutlet var doneButton: UIBarButtonItem!
-    @IBOutlet var footerContainer: UIView!
+    @IBOutlet var emptyStateContainer: UIView!
     @IBOutlet var searchBar: UISearchBar!
 
     private let bookmarksDatabase: CoreDataDatabase
@@ -693,14 +693,14 @@ class BookmarksViewController: UIViewController, UITableViewDelegate {
     }
 
     private func showEmptyState() {
-        footerContainer.isHidden = false
+        emptyStateContainer.isHidden = false
         importFooterButton.isHidden = false
         importFooterButton.isEnabled = true
         searchBar.removeFromSuperview()
     }
 
     private func hideEmptyState() {
-        footerContainer.isHidden = true
+        emptyStateContainer.isHidden = true
         importFooterButton.isHidden = true
         importFooterButton.isEnabled = false
         tableView.tableHeaderView = searchBar

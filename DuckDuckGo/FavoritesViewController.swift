@@ -33,7 +33,7 @@ protocol FavoritesViewControllerDelegate: NSObjectProtocol {
 
 class FavoritesViewController: UIViewController {
 
-    @IBOutlet weak var emptyHeroView: UIView!
+    @IBOutlet weak var emptyStateContainer: UIView!
 
     struct Constants {
         static let margin: CGFloat = 12
@@ -119,7 +119,7 @@ class FavoritesViewController: UIViewController {
     }
 
     private func updateHeroImage() {
-        emptyHeroView.isHidden = renderer.viewModel.favorites.count > 0
+        emptyStateContainer.isHidden = renderer.viewModel.favorites.count > 0
     }
 
     private func registerForKeyboardNotifications() {
@@ -247,6 +247,6 @@ extension FavoritesViewController: Themable {
         self.theme = theme
         view.backgroundColor = theme.backgroundColor
         collectionView.backgroundColor = .clear
-        emptyHeroView.backgroundColor = .clear
+        emptyStateContainer.backgroundColor = .clear
     }
 }

@@ -21,7 +21,6 @@ import Foundation
 import BrowserServicesKit
 
 // swiftlint:disable file_length
-// swiftlint:disable identifier_name
 // swiftlint:disable type_body_length
 extension Pixel {
     

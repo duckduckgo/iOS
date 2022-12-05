@@ -50,6 +50,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     enum ViewState {
         case authLocked
+        case noAuthAvailable
         case empty
         case showItems
         case searching
@@ -59,9 +60,11 @@ final class AutofillLoginListViewModel: ObservableObject {
     let authenticator = AutofillLoginListAuthenticator()
     var isSearching: Bool = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
+    private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
     private let tld: TLD
+    private var currentTabUrl: URL?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
@@ -83,9 +86,10 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings, tld: TLD) {
+    init(appSettings: AppSettings, tld: TLD, currentTabUrl: URL? = nil) {
         self.appSettings = appSettings
         self.tld = tld
+        self.currentTabUrl = currentTabUrl
         updateData()
         setupCancellables()
     }
@@ -122,7 +126,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
-        if viewState != .authLocked {
+        if viewState != .authLocked && viewState != .noAuthAvailable {
             completion(nil)
             return
         }
@@ -145,6 +149,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     func updateData() {
         self.accounts = fetchAccounts()
+        self.accountsToSuggest = fetchSuggestedAccounts()
         self.sections = makeSections(with: accounts)
     }
     
@@ -180,7 +185,23 @@ final class AutofillLoginListViewModel: ObservableObject {
             return []
         }
     }
-    
+
+    private func fetchSuggestedAccounts() -> [SecureVaultModels.WebsiteAccount] {
+        guard let url = currentTabUrl,
+              let host = url.host,
+              let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
+            os_log("Failed to make vault")
+            return []
+        }
+
+        do {
+            return try secureVault.accountsFor(domain: host)
+        } catch {
+            os_log("Failed to fetch suggested accounts")
+            return []
+        }
+    }
+
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
         var newSections = [AutofillLoginListSectionType]()
 
@@ -188,6 +209,11 @@ final class AutofillLoginListViewModel: ObservableObject {
             newSections.append(.enableAutofill)
         }
 
+        if !accountsToSuggest.isEmpty {
+            let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0, tld: tld) }
+            newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
+        }
+        
         let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
         let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
         
@@ -209,6 +235,8 @@ final class AutofillLoginListViewModel: ObservableObject {
         
         if authenticator.state == .loggedOut {
             newViewState = .authLocked
+        } else if authenticator.state == .notAvailable {
+            newViewState = .noAuthAvailable
         } else if isSearching {
             if sections.count == 0 {
                 newViewState = .searchingNoResults
@@ -216,7 +244,7 @@ final class AutofillLoginListViewModel: ObservableObject {
                 newViewState = .searching
             }
         } else {
-            newViewState = self.sections.count > 1 ? .showItems : .empty
+            newViewState = sections.count > 1 ? .showItems : .empty
         }
         
         // Avoid unnecessary updates
@@ -228,11 +256,12 @@ final class AutofillLoginListViewModel: ObservableObject {
     @discardableResult
     func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
-              let accountID = account.id else { return false }
+              let accountID = account.id,
+              let accountIdInt = Int64(accountID) else { return false }
         
         do {
-            cachedDeletedCredentials = try secureVault.websiteCredentialsFor(accountId: accountID)
-            try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
+            cachedDeletedCredentials = try secureVault.websiteCredentialsFor(accountId: accountIdInt)
+            try secureVault.deleteWebsiteCredentialsFor(accountId: accountIdInt)
             return true
         } catch {
             Pixel.fire(pixel: .secureVaultError)

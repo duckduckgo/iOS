@@ -27,7 +27,7 @@ class BookmarkCell: UITableViewCell {
 
     @IBOutlet weak var faviconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var favoriteImageView: UIImageView!
+    @IBOutlet weak var favoriteImageViewContainer: UIView!
 
 }
 

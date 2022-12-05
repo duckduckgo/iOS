@@ -158,19 +158,30 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="744" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cV4-pj-JNb">
-                                                            <rect key="frame" x="32" y="0.0" width="279" height="24"/>
+                                                            <rect key="frame" x="32" y="0.0" width="247" height="24"/>
                                                             <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="16"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MenuFavoriteSolid" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
-                                                            <rect key="frame" x="311" y="0.0" width="24" height="24"/>
-                                                            <color key="tintColor" name="BookmarksFolderColor"/>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mUo-IX-WrZ">
+                                                            <rect key="frame" x="287" y="0.0" width="24" height="24"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MenuFavoriteSolid" translatesAutoresizingMaskIntoConstraints="NO" id="1fK-xP-Cxw">
+                                                                    <rect key="frame" x="4" y="4" width="16" height="16"/>
+                                                                    <color key="tintColor" name="BookmarksFolderColor"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="16" id="Ryb-sj-pZe"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="x53-Oq-oQ3"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                            </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="24" id="Ryb-sj-pZe"/>
-                                                                <constraint firstAttribute="height" constant="24" id="x53-Oq-oQ3"/>
+                                                                <constraint firstItem="1fK-xP-Cxw" firstAttribute="centerX" secondItem="mUo-IX-WrZ" secondAttribute="centerX" id="KIl-go-HEq"/>
+                                                                <constraint firstAttribute="height" constant="24" id="R9b-KR-TWD"/>
+                                                                <constraint firstAttribute="width" constant="24" id="uvd-W4-mXq"/>
+                                                                <constraint firstItem="1fK-xP-Cxw" firstAttribute="centerY" secondItem="mUo-IX-WrZ" secondAttribute="centerY" id="yOc-5r-MbT"/>
                                                             </constraints>
-                                                        </imageView>
+                                                        </view>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -187,7 +198,7 @@
                                         </accessibility>
                                         <connections>
                                             <outlet property="faviconImageView" destination="J8h-Tf-FM1" id="XS7-PQ-3fF"/>
-                                            <outlet property="favoriteImageView" destination="1fK-xP-Cxw" id="te4-2i-Vfu"/>
+                                            <outlet property="favoriteImageViewContainer" destination="mUo-IX-WrZ" id="u6U-4b-Y8d"/>
                                             <outlet property="titleLabel" destination="cV4-pj-JNb" id="gwU-ec-jnx"/>
                                         </connections>
                                     </tableViewCell>

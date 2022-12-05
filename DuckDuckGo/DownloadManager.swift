@@ -196,7 +196,7 @@ extension DownloadManager {
         return convertToUniqueFilename(filename)
     }
     
-    //https://app.asana.com/0/0/1201734618649839/f
+    // https://app.asana.com/0/0/1201734618649839/f
     private func sanitizeFilename(_ originalFilename: String?, mimeType: String?) -> String {
         var filename = originalFilename ?? "unknown"
 

@@ -23,13 +23,13 @@ import os.log
 import Core
 
 final class AutofillLoginListAuthenticator {
-    enum AuthError {
+    enum AuthError: Equatable {
         case noAuthAvailable
         case failedToAuthenticate
     }
     
     enum AuthenticationState {
-        case loggedIn, loggedOut
+        case loggedIn, loggedOut, notAvailable
     }
 
     public struct Notifications {
@@ -71,6 +71,7 @@ final class AutofillLoginListAuthenticator {
                 }
             }
         } else {
+            state = .notAvailable
             completion?(.noAuthAvailable)
         }
     }

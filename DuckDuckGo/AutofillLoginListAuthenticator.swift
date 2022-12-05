@@ -46,10 +46,17 @@ final class AutofillLoginListAuthenticator {
     func authenticate(completion: ((AuthError?) -> Void)? = nil) {
        
         if state == .loggedIn {
+            AppDependencyProvider.shared.autofillLoginSession.startSession()
             completion?(nil)
             return
         }
-        
+
+        if AppDependencyProvider.shared.autofillLoginSession.isValidSession {
+            state = .loggedIn
+            completion?(nil)
+            return
+        }
+
         context = LAContext()
         context.localizedCancelTitle = UserText.autofillLoginListAuthenticationCancelButton
         let reason = UserText.autofillLoginListAuthenticationReason
@@ -63,15 +70,18 @@ final class AutofillLoginListAuthenticator {
                 DispatchQueue.main.async {
                     if success {
                         self.state = .loggedIn
+                        AppDependencyProvider.shared.autofillLoginSession.startSession()
                         completion?(nil)
                     } else {
                         os_log("Failed to authenticate: %s", log: generalLog, type: .debug, error?.localizedDescription ?? "nil error")
+                        AppDependencyProvider.shared.autofillLoginSession.endSession()
                         completion?(.failedToAuthenticate)
                     }
                 }
             }
         } else {
             state = .notAvailable
+            AppDependencyProvider.shared.autofillLoginSession.endSession()
             completion?(.noAuthAvailable)
         }
     }

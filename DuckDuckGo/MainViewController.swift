@@ -848,6 +848,10 @@ class MainViewController: UIViewController {
                                                                                           target: self,
                                                                                           action: #selector(closeAutofillModal))
         self.present(navigationController, animated: true, completion: nil)
+
+        if let account = AppDependencyProvider.shared.autofillLoginSession.lastAccessedAccount {
+            autofillSettingsViewController.showAccountDetails(account, animated: true)
+        }
     }
     
     @objc private func closeAutofillModal() {

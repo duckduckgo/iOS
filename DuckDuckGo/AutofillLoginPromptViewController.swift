@@ -120,7 +120,13 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
         } else {
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineManualConfirmed)
         }
-        
+
+        if AppDependencyProvider.shared.autofillLoginSession.isValidSession {
+            dismiss(animated: true, completion: nil)
+            completion?(account)
+            return
+        }
+
         let context = LAContext()
         context.localizedCancelTitle = UserText.autofillLoginPromptAuthenticationCancelButton
         let reason = UserText.autofillLoginPromptAuthenticationReason
@@ -137,6 +143,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
                 DispatchQueue.main.async {
                     if success {
                         Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthAuthenticated)
+                        AppDependencyProvider.shared.autofillLoginSession.startSession()
                         completion?(account)
                     } else {
                         if let error = error as? NSError, error.code == LAError.userCancel.rawValue {
@@ -145,6 +152,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
                             Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthFailed)
                         }
                         print(error?.localizedDescription ?? "Failed to authenticate but error nil")
+                        AppDependencyProvider.shared.autofillLoginSession.endSession()
                         completion?(nil)
                     }
                 }
@@ -154,6 +162,7 @@ extension AutofillLoginPromptViewController: AutofillLoginPromptViewModelDelegat
             // This should never happen since we check for auth avaiablity before showing anything
             // (or rarely if the user backgrounds the app, turns auth off, then comes back) 
             Pixel.fire(pixel: .autofillLoginsFillLoginInlineAuthenticationDeviceAuthUnavailable)
+            AppDependencyProvider.shared.autofillLoginSession.endSession()
             dismiss(animated: true) {
                 self.completion?(nil)
             }

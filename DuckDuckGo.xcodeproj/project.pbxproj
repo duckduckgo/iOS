@@ -6938,7 +6938,7 @@
 			repositoryURL = "https://github.com/DuckDuckGo/BrowserServicesKit";
 			requirement = {
 				kind = branch;
-				version = "dharb/bump-css-pin-3.4.1";
+				branch = "dharb/bump-css-pin-3.4.1";
 			};
 		};
 		C14882EB27F211A000D59F0C /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

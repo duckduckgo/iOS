@@ -24,7 +24,8 @@ import Persistence
 import CoreData
 
 public class BookmarksModelsErrorHandling: EventMapping<BookmarksModelError> {
-    
+
+    // swiftlint:disable:next cyclomatic_complexity
     init() {
         super.init { event, error, _, _ in
             let domainEvent: Pixel.Event

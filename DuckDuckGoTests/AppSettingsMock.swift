@@ -22,6 +22,10 @@ import Foundation
 
 class AppSettingsMock: AppSettings {
     var autofillCredentialsEnabled: Bool = false
+    
+    var autofillCredentialsSavePromptShowAtLeastOnce: Bool = false
+    
+    var autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary: Bool = false
 
     var autocomplete: Bool = true
 

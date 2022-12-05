@@ -838,9 +838,9 @@ class MainViewController: UIViewController {
         performSegue(withIdentifier: "Downloads", sender: self)
     }
     
-    fileprivate func launchAutofillLogins() {
+    fileprivate func launchAutofillLogins(with currentTabUrl: URL? = nil) {
         let appSettings = AppDependencyProvider.shared.appSettings
-        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings)
+        let autofillSettingsViewController = AutofillLoginSettingsListViewController(appSettings: appSettings, currentTabUrl: currentTabUrl)
         autofillSettingsViewController.delegate = self
         let navigationController = UINavigationController(rootViewController: autofillSettingsViewController)
         autofillSettingsViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: UserText.autofillNavigationButtonItemTitleClose,
@@ -1480,7 +1480,7 @@ extension MainViewController: TabDelegate {
     }
     
     func tabDidRequestAutofillLogins(tab: TabViewController) {
-        launchAutofillLogins()
+        launchAutofillLogins(with: currentTab?.url)
     }
     
     func tabDidRequestSettings(tab: TabViewController) {

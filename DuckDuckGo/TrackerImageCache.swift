@@ -58,7 +58,6 @@ final class TrackerImageCache {
     }
     
     // swiftlint:disable cyclomatic_complexity
-    // swiftlint:disable function_body_length
     private func loadTrackerLogoImage(for entityName: String) -> CGImage? {
         switch entityName {
         case "adform": return UIImage(named: "adform", in: nil, compatibleWith: trait)!.cgImage!

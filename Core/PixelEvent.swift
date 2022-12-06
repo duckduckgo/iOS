@@ -21,7 +21,6 @@ import Foundation
 import BrowserServicesKit
 
 // swiftlint:disable file_length
-// swiftlint:disable identifier_name
 // swiftlint:disable type_body_length
 extension Pixel {
     
@@ -242,6 +241,8 @@ extension Pixel {
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
+        
+        case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
 
         case secureVaultInitError
         case secureVaultError
@@ -597,6 +598,9 @@ extension Pixel.Event {
         case .autofillLoginsSettingsDisabled: return "m_autofill_logins_settings_disabled"
         case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
             return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
+            
+        case .autofillJSPixelFired(let pixel):
+            return "m_ios_\(pixel.pixelName)"
             
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"

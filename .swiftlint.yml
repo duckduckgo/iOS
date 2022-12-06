@@ -19,9 +19,7 @@ legacy_hashing: error
 
 identifier_name:
   min_length: 1
-  max_length:
-    warning: 40
-    error: 60
+  max_length: 1000
   excluded:
     - i
     - id

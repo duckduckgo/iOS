@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1669638447100,
+    "version": 1669921466865,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -268,7 +268,7 @@
                     },
                     {
                         "selector": "[class*='bannerAd']",
-                        "type": "closest-empty"
+                        "type": "hide-empty"
                     },
                     {
                         "selector": ".ad-container",
@@ -523,7 +523,7 @@
                 ]
             },
             "state": "disabled",
-            "hash": "34eb0d2856d6d6c5146d2858ed249cef"
+            "hash": "06df7e5edc350785822747f710072574"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -1423,9 +1423,10 @@
                                 "rule": "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
                                 "domains": [
                                     "magicgameworld.com",
-                                    "youmath.it"
+                                    "youmath.it",
+                                    "duden.de"
                                 ],
-                                "reason": "Adwall displays with an overlay, preventing further interaction with the site."
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/388"
                             },
                             {
                                 "rule": "tpc.googlesyndication.com/pagead/js/loader21.html",
@@ -3053,7 +3054,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "45d798a17eafc4a383cce1fbf17d3ee9"
+            "hash": "27259f4b8a173295de481b66da9e531a"
         },
         "trackingCookies1p": {
             "settings": {
@@ -3078,7 +3079,11 @@
             "exceptions": [],
             "settings": {
                 "parameters": [
-                    "utm_[a-zA-Z]*",
+                    "utm_source",
+                    "utm_medium",
+                    "utm_campaign",
+                    "utm_term",
+                    "utm_content",
                     "gclid",
                     "fbclid",
                     "fb_action_ids",
@@ -3102,7 +3107,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "69fbd3a82a04b8dfcf93498113009e23"
+            "hash": "4eb7caeea36d5a0d96fe06386d403d54"
         },
         "userAgentRotation": {
             "settings": {

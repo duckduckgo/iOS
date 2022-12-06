@@ -29,12 +29,17 @@ protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
 }
 
 class AutofillLoginDetailsViewController: UIViewController {
-    
+
+    private enum Constants {
+        static let padding: CGFloat = 16
+    }
+
     weak var delegate: AutofillLoginDetailsViewControllerDelegate?
     private let viewModel: AutofillLoginDetailsViewModel
     private var cancellables: Set<AnyCancellable> = []
     private var authenticator = AutofillLoginListAuthenticator()
     private let lockedView = AutofillItemsLockedView()
+    private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private var contentView: UIView?
     private var authenticationNotRequired: Bool
 
@@ -52,6 +57,17 @@ class AutofillLoginDetailsViewController: UIViewController {
         return barButtonItem
     }()
 
+    private lazy var lockedViewBottomConstraint: NSLayoutConstraint? = {
+        guard let view = view else { return nil }
+        return NSLayoutConstraint(item: view,
+                                  attribute: .bottom,
+                                  relatedBy: .equal,
+                                  toItem: lockedView,
+                                  attribute: .bottom,
+                                  multiplier: 1,
+                                  constant: 144)
+    }()
+
     init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD, authenticationNotRequired: Bool = false) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account, tld: tld)
         self.authenticator = authenticator
@@ -60,7 +76,7 @@ class AutofillLoginDetailsViewController: UIViewController {
         self.viewModel.delegate = self
 
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -83,21 +99,53 @@ class AutofillLoginDetailsViewController: UIViewController {
             authenticator.authenticate()
         }
     }
-    
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        coordinator.animate(alongsideTransition: nil) { _ in
+            self.updateConstraintConstants()
+            if self.view.subviews.contains(self.noAuthAvailableView) {
+                self.noAuthAvailableView.refreshConstraints()
+            }
+        }
+    }
+
     private func installSubviews() {
         installContentView()
         view.addSubview(lockedView)
+        view.addSubview(noAuthAvailableView)
     }
 
     private func installConstraints() {
         lockedView.translatesAutoresizingMaskIntoConstraints = false
-        
+        noAuthAvailableView.translatesAutoresizingMaskIntoConstraints = false
+
+        updateConstraintConstants()
+
         NSLayoutConstraint.activate([
             lockedView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lockedView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            lockedView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            lockedView.heightAnchor.constraint(equalToConstant: 140)
+            lockedView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            lockedView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding),
+
+            noAuthAvailableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noAuthAvailableView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            noAuthAvailableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.padding),
+            noAuthAvailableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.padding)
         ])
+    }
+
+    private func updateConstraintConstants() {
+        guard let lockedViewBottomConstraint = lockedViewBottomConstraint else { return }
+
+        lockedViewBottomConstraint.isActive = true
+
+        let isIPhoneLandscape = traitCollection.containsTraits(in: UITraitCollection(verticalSizeClass: .compact))
+        if isIPhoneLandscape {
+            lockedViewBottomConstraint.constant = (view.frame.height / 2 - max(lockedView.frame.height, 120.0) / 2)
+        } else {
+            lockedViewBottomConstraint.constant = view.frame.height * 0.15
+        }
     }
 
     private func configureNotifications() {
@@ -155,15 +203,31 @@ class AutofillLoginDetailsViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
-    
+
     private func updateAuthViews() {
         switch authenticator.state {
         case .loggedOut:
             lockedView.isHidden = authenticationNotRequired
+            noAuthAvailableView.isHidden = true
             self.contentView?.isHidden = !authenticationNotRequired
+        case .notAvailable:
+            lockedView.isHidden = true
+            noAuthAvailableView.isHidden = false
+            self.contentView?.isHidden = true
         case .loggedIn:
             lockedView.isHidden = true
+            noAuthAvailableView.isHidden = true
             self.contentView?.isHidden = false
+        }
+        updateNavigationBarButtons()
+    }
+
+    private func updateNavigationBarButtons() {
+        switch authenticator.state {
+        case .loggedOut, .notAvailable:
+            navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
+        case .loggedIn:
+            navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }
         }
     }
     
@@ -245,7 +309,9 @@ extension AutofillLoginDetailsViewController: Themable {
     func decorate(with theme: Theme) {
         lockedView.decorate(with: theme)
         lockedView.backgroundColor = theme.backgroundColor
-        
+
+        noAuthAvailableView.decorate(with: theme)
+
         view.backgroundColor = theme.backgroundColor
 
         navigationController?.navigationBar.barTintColor = theme.barBackgroundColor

@@ -57,6 +57,8 @@ public class AppUserDefaults: AppSettings {
         static let longPressPreviews = "com.duckduckgo.app.longPressPreviews"
         
         static let currentFireButtonAnimationKey = "com.duckduckgo.app.currentFireButtonAnimationKey"
+        
+        static let autofillCredentialsEnabled = "com.duckduckgo.ios.autofillCredentialsEnabled"
     }
 
     private var userDefaults: UserDefaults? {
@@ -170,8 +172,34 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
     
-    @UserDefaultsWrapper(key: .autofillCredentialsEnabled, defaultValue: true)
-    var autofillCredentialsEnabled: Bool
+    private func setAutofillCredentialsEnabledAutomaticallyIfNecessary() {
+        if autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary {
+            return
+        }
+        if !autofillCredentialsSavePromptShowAtLeastOnce {
+            autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = true
+            autofillCredentialsEnabled = true
+        }
+    }
+    
+    var autofillCredentialsEnabled: Bool {
+        get {
+            // In future, we'll use setAutofillCredentialsEnabledAutomaticallyIfNecessary() here to automatically turn on autofill for people
+            // That haven't seen the save prompt before.
+            // For now, whilst internal testing is still happening, it's still set to default to be enabled
+            return userDefaults?.object(forKey: Keys.autofillCredentialsEnabled) as? Bool ?? true
+        }
+        
+        set {
+            userDefaults?.set(newValue, forKey: Keys.autofillCredentialsEnabled)
+        }
+    }
+    
+    @UserDefaultsWrapper(key: .autofillCredentialsSavePromptShowAtLeastOnce, defaultValue: false)
+    var autofillCredentialsSavePromptShowAtLeastOnce: Bool
+    
+    @UserDefaultsWrapper(key: .autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary, defaultValue: false)
+    var autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary: Bool
     
     @UserDefaultsWrapper(key: .voiceSearchEnabled, defaultValue: false)
     var voiceSearchEnabled: Bool

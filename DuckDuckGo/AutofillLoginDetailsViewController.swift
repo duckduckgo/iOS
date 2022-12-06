@@ -41,6 +41,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     private let lockedView = AutofillItemsLockedView()
     private let noAuthAvailableView = AutofillNoAuthAvailableView()
     private var contentView: UIView?
+    private var authenticationNotRequired: Bool
 
     private lazy var saveBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
@@ -66,10 +67,11 @@ class AutofillLoginDetailsViewController: UIViewController {
                                   multiplier: 1,
                                   constant: 144)
     }()
-    
-    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD) {
+
+    init(authenticator: AutofillLoginListAuthenticator, account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD, authenticationNotRequired: Bool = false) {
         self.viewModel = AutofillLoginDetailsViewModel(account: account, tld: tld)
         self.authenticator = authenticator
+        self.authenticationNotRequired = authenticationNotRequired
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
 
@@ -88,11 +90,14 @@ class AutofillLoginDetailsViewController: UIViewController {
         setupTableViewAppearance()
         applyTheme(ThemeManager.shared.currentTheme)
         installConstraints()
+        configureNotifications()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        authenticator.authenticate()
+        if !authenticationNotRequired {
+            authenticator.authenticate()
+        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -143,6 +148,30 @@ class AutofillLoginDetailsViewController: UIViewController {
         }
     }
 
+    private func configureNotifications() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self,
+                                       selector: #selector(appWillMoveToForegroundCallback),
+                                       name: UIApplication.willEnterForegroundNotification, object: nil)
+
+        notificationCenter.addObserver(self,
+                                       selector: #selector(appWillMoveToBackgroundCallback),
+                                       name: UIApplication.willResignActiveNotification, object: nil)
+    }
+
+    @objc private func appWillMoveToForegroundCallback() {
+        if !authenticationNotRequired {
+            authenticator.authenticate()
+        }
+    }
+
+    @objc private func appWillMoveToBackgroundCallback() {
+        if viewModel.viewMode != .new || viewModel.shouldShowSaveButton {
+            authenticationNotRequired = false
+        }
+        authenticator.logOut()
+    }
+
     private func setupTableViewAppearance() {
         let appearance = UITableView.appearance(whenContainedInInstancesOf: [AutofillLoginDetailsViewController.self])
         appearance.backgroundColor = UIColor(named: "ListBackground")
@@ -178,9 +207,9 @@ class AutofillLoginDetailsViewController: UIViewController {
     private func updateAuthViews() {
         switch authenticator.state {
         case .loggedOut:
-            lockedView.isHidden = false
+            lockedView.isHidden = authenticationNotRequired
             noAuthAvailableView.isHidden = true
-            self.contentView?.isHidden = true
+            self.contentView?.isHidden = !authenticationNotRequired
         case .notAvailable:
             lockedView.isHidden = true
             noAuthAvailableView.isHidden = false

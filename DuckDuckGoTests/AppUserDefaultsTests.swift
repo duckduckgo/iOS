@@ -89,4 +89,31 @@ class AppUserDefaultsTests: XCTestCase {
         XCTAssertEqual(appUserDefaults.currentThemeName, .systemDefault)
     }
     
+    /*
+     These tests aren't required until we make autofill default to off, and then enable turning it on automatically
+    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeThenAutofillCredentialsEnabled() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.autofillCredentialsEnabled = false
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
+        appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
+        XCTAssertEqual(appUserDefaults.autofillCredentialsEnabled, true)
+    }
+    
+    func testWhenAutofillCredentialsIsDisabledAndHasNotBeenTurnedOnAutomaticallyBeforeAndPromptHasBeenSeenThenAutofillCredentialsStaysDisabled() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.autofillCredentialsEnabled = false
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = true
+        appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = false
+        XCTAssertEqual(appUserDefaults.autofillCredentialsEnabled, false)
+    }
+    
+    func testWhenAutofillCredentialsIsDisabledAndButHasBeenTurnedOnAutomaticallyBeforeThenAutofillCredentialsStaysDisabled() {
+        let appUserDefaults = AppUserDefaults(groupName: testGroupName)
+        appUserDefaults.autofillCredentialsEnabled = false
+        appUserDefaults.autofillCredentialsSavePromptShowAtLeastOnce = false
+        appUserDefaults.autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary = true
+        XCTAssertEqual(appUserDefaults.autofillCredentialsEnabled, false)
+    }
+     */
+    
 }

@@ -59,6 +59,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     let authenticator = AutofillLoginListAuthenticator()
     var isSearching: Bool = false
+    var authenticationNotRequired = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
     private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
@@ -91,6 +92,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.tld = tld
         self.currentTabUrl = currentTabUrl
         updateData()
+        authenticationNotRequired = !hasAccountsSaved
         setupCancellables()
     }
     
@@ -122,6 +124,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     func lockUI() {
+        authenticationNotRequired = !hasAccountsSaved
         authenticator.logOut()
     }
     
@@ -233,7 +236,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private func updateViewState() {
         var newViewState: AutofillLoginListViewModel.ViewState
         
-        if authenticator.state == .loggedOut {
+        if authenticator.state == .loggedOut && !authenticationNotRequired {
             newViewState = .authLocked
         } else if authenticator.state == .notAvailable {
             newViewState = .noAuthAvailable

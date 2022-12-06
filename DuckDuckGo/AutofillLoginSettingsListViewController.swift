@@ -148,13 +148,18 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     
     @objc
     func addButtonPressed() {
-        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, tld: tld)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
+                                                                   tld: tld,
+                                                                   authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: true)
     }
     
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
-        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator, account: account, tld: tld)
+        let detailsController = AutofillLoginDetailsViewController(authenticator: viewModel.authenticator,
+                                                                   account: account,
+                                                                   tld: tld,
+                                                                   authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
         navigationController?.pushViewController(detailsController, animated: animated)
     }
@@ -191,7 +196,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }
     
     @objc private func appWillMoveToForegroundCallback() {
-        authenticate()
+        // AutofillLoginDetailsViewController will handle calling authenticate() if it is the top view controller
+        guard navigationController?.topViewController is AutofillLoginDetailsViewController else {
+            authenticate()
+            return
+        }
     }
     
     @objc private func appWillMoveToBackgroundCallback() {

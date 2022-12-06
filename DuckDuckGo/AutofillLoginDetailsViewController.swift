@@ -61,10 +61,6 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

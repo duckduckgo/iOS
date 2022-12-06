@@ -22,11 +22,15 @@ import BrowserServicesKit
 
 class AutofillLoginSession {
 
+    private enum Constants {
+        static let timeout: TimeInterval = 15
+    }
+
     private var sessionCreationDate: Date?
     private var sessionAccount: SecureVaultModels.WebsiteAccount?
     private let sessionTimeout: TimeInterval
 
-    init(sessionTimeout: TimeInterval = 15) {
+    init(sessionTimeout: TimeInterval = Constants.timeout) {
         self.sessionTimeout = sessionTimeout
     }
 

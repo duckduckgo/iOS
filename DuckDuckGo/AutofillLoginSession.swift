@@ -36,7 +36,9 @@ class AutofillLoginSession {
 
     var isValidSession: Bool {
         guard let sessionCreationDate = sessionCreationDate else { return false }
-        return Date().timeIntervalSince(sessionCreationDate) < sessionTimeout
+        let timeInterval = Date().timeIntervalSince(sessionCreationDate)
+        // Check that timeInterval is > 0 to prevent a user circumventing by changing their device clock time
+        return timeInterval > 0 && timeInterval < sessionTimeout
     }
 
     var lastAccessedAccount: SecureVaultModels.WebsiteAccount? {

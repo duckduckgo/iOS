@@ -271,7 +271,7 @@ class AutofillLoginDetailsViewController: UIViewController {
     
     @objc private func cancel() {
         if viewModel.viewMode == .new {
-            navigationController?.popViewController(animated: true)
+            dismiss(animated: true)
         } else {
             toggleEditMode()
         }

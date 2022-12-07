@@ -152,7 +152,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
-        navigationController?.pushViewController(detailsController, animated: true)
+        let detailsNavigationController = UINavigationController(rootViewController: detailsController)
+        navigationController?.present(detailsNavigationController, animated: true)
     }
     
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {

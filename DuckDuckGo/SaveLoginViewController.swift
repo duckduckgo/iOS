@@ -33,11 +33,13 @@ protocol SaveLoginViewControllerDelegate: AnyObject {
 class SaveLoginViewController: UIViewController {
     weak var delegate: SaveLoginViewControllerDelegate?
     private let credentialManager: SaveAutofillLoginManager
+    private let appSettings: AppSettings
     private let domainLastShownOn: String?
     private var viewModel: SaveLoginViewModel?
 
-    internal init(credentialManager: SaveAutofillLoginManager, domainLastShownOn: String? = nil) {
+    internal init(credentialManager: SaveAutofillLoginManager, appSettings: AppSettings, domainLastShownOn: String? = nil) {
         self.credentialManager = credentialManager
+        self.appSettings = appSettings
         self.domainLastShownOn = domainLastShownOn
         super.init(nibName: nil, bundle: nil)
     }
@@ -56,6 +58,7 @@ class SaveLoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        viewModel?.viewControllerDidAppear()
     }
     
     override func viewDidLayoutSubviews() {
@@ -89,7 +92,7 @@ class SaveLoginViewController: UIViewController {
     }
 
     private func setupSaveLoginView() {
-        let saveViewModel = SaveLoginViewModel(credentialManager: credentialManager, domainLastShownOn: domainLastShownOn)
+        let saveViewModel = SaveLoginViewModel(credentialManager: credentialManager, appSettings: appSettings, domainLastShownOn: domainLastShownOn)
         saveViewModel.delegate = self
         self.viewModel = saveViewModel
 

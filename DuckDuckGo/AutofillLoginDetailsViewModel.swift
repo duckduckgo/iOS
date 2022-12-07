@@ -107,6 +107,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel()
         if let account = account {
             self.updateData(with: account)
+            AppDependencyProvider.shared.autofillLoginSession.lastAccessedAccount = account
         } else {
             viewMode = .new
         }

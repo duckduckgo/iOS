@@ -22,7 +22,6 @@ import os.log
 import BrowserServicesKit
 
 // swiftlint:enable type_body_length
-// swiftlint:enable identifier_name
 
 public struct PixelParameters {
     public static let url = "url"

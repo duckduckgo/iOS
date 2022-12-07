@@ -1175,44 +1175,20 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
-        /*
-         For now, the GPC header is only applied to sites known to be honoring GPC (nytimes.com, washingtonpost.com),
-         while the DOM signal is available to all websites.
-         This is done to avoid an issue with back navigation when adding the header (e.g. with 't.co').
-         */
-        guard let url = incomingRequest.url, appUrls.isGPCEnabled(url: url) else { return nil }
-        
-        var request = incomingRequest
-        // Add Do Not sell header if needed
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let domain = incomingRequest.url?.host
-        let urlAllowed = config.isFeature(.gpc, enabledForDomain: domain)
-        
-        if appSettings.sendDoNotSell && urlAllowed {
-            if let headers = request.allHTTPHeaderFields,
-               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
-                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
-
-                if #available(iOS 15.0, *) {
-                    request.attribution = .user
-                }
-
-                return request
-            }
-        } else {
-            // Check if DN$ header is still there and remove it
-            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
-                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
-
-                if #available(iOS 15.0, *) {
-                    request.attribution = .user
-                }
-
-                return request
-            }
+        guard var request = GPCRequestFactory().requestForGPC(basedOn: incomingRequest,
+                                                              config: config,
+                                                              gpcEnabled: appSettings.sendDoNotSell) else {
+            return nil
         }
-        return nil
+        
+        if #available(iOS 15.0, *) {
+            request.attribution = .user
+        }
+
+        return request
     }
+    
     // swiftlint:disable function_body_length
     // swiftlint:disable cyclomatic_complexity
 
@@ -2269,16 +2245,19 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         manager.prepareData { [weak self] in
-
-            let saveLoginController = SaveLoginViewController(credentialManager: manager, domainLastShownOn: self?.domainSaveLoginPromptLastShownOn)
-            self?.domainSaveLoginPromptLastShownOn = self?.url?.host
+            guard let self = self else { return }
+            
+            let saveLoginController = SaveLoginViewController(credentialManager: manager,
+                                                              appSettings: self.appSettings,
+                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn)
+            self.domainSaveLoginPromptLastShownOn = self.url?.host
             saveLoginController.delegate = self
             if #available(iOS 15.0, *) {
                 if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
                     presentationController.detents = [.medium(), .large()]
                 }
             }
-            self?.present(saveLoginController, animated: true, completion: nil)
+            self.present(saveLoginController, animated: true, completion: nil)
         }
     }
     
@@ -2348,7 +2327,6 @@ extension TabViewController: SecureVaultManagerDelegate {
         false
     }
     
-    // swiftlint:disable:next identifier_name
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }

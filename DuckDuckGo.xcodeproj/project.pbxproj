@@ -2305,14 +2305,6 @@
 			name = FilePreview;
 			sourceTree = "<group>";
 		};
-		314A3EFA293905D100D3D4C8 /* BrokenSiteReporting */ = {
-			isa = PBXGroup;
-			children = (
-				314A3EFB293905EC00D3D4C8 /* BrokenSiteReportingTests.swift */,
-			);
-			name = BrokenSiteReporting;
-			sourceTree = "<group>";
-		};
 		3151F0E827357F8F00226F58 /* VoiceSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -3309,6 +3301,7 @@
 			isa = PBXGroup;
 			children = (
 				EA39B7E1268A1A35000C62CD /* privacy-reference-tests */,
+				314A3EFB293905EC00D3D4C8 /* BrokenSiteReportingTests.swift */,
 				EAB19ED9268963510015D3EA /* DomainMatchingTests.swift */,
 				98DA35C3268CC81E00159906 /* DomainMatchingReportTests.swift */,
 			);
@@ -3432,7 +3425,6 @@
 		F12D98401F266B30003C2EE3 /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				314A3EFA293905D100D3D4C8 /* BrokenSiteReporting */,
 				317045BE2858C69A0016ED1F /* Utils */,
 				31C138A127A334F600FFD4B2 /* Downloads */,
 				F17669A21E411D63003D3222 /* Application */,

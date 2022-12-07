@@ -540,9 +540,13 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
 // MARK: AutofillLoginDetailsViewControllerDelegate
 
 extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewControllerDelegate {
-    func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController) {
+    func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController, account: SecureVaultModels.WebsiteAccount?) {
         viewModel.updateData()
         tableView.reloadData()
+
+        if let account = account {
+            showAccountDetails(account)
+        }
     }
 
     func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount) {

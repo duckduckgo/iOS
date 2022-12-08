@@ -772,7 +772,7 @@ class TabViewController: UIViewController {
     }
 
     func dismiss() {
-        presentedViewController?.dismiss(animated: true)
+        privacyDashboard?.dismiss(animated: true)
         progressWorker.progressBar = nil
         chromeDelegate?.omniBar.cancelAllAnimations()
         cancelTrackerNetworksAnimation()

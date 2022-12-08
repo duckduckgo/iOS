@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -221,7 +221,7 @@
                                             </connections>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEJ-P3-HpO" customClass="OmniBarNotificationView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="345" height="40"/>
+                                            <rect key="frame" x="-4" y="0.0" width="349" height="40"/>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="30" y="0.0" width="315" height="40"/>
@@ -253,7 +253,7 @@
                                         <constraint firstItem="yEJ-P3-HpO" firstAttribute="top" secondItem="sek-4Y-GoT" secondAttribute="top" id="3XQ-M9-bzy"/>
                                         <constraint firstItem="yGG-5L-D8Q" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" constant="2" id="EJL-WX-9M4"/>
                                         <constraint firstAttribute="trailing" secondItem="yEJ-P3-HpO" secondAttribute="trailing" id="V1I-5E-EYc"/>
-                                        <constraint firstItem="yEJ-P3-HpO" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" id="Xg7-c6-YD5"/>
+                                        <constraint firstItem="yEJ-P3-HpO" firstAttribute="leading" secondItem="sek-4Y-GoT" secondAttribute="leading" constant="-4" id="Xg7-c6-YD5"/>
                                         <constraint firstAttribute="bottom" secondItem="yGG-5L-D8Q" secondAttribute="bottom" id="b8i-Js-e1Z"/>
                                         <constraint firstItem="yGG-5L-D8Q" firstAttribute="top" secondItem="sek-4Y-GoT" secondAttribute="top" id="nq3-Zw-TIq"/>
                                         <constraint firstAttribute="bottom" secondItem="yEJ-P3-HpO" secondAttribute="bottom" id="wPx-kc-485"/>

@@ -21,36 +21,64 @@ import SwiftUI
 
 class OmniBarModel: ObservableObject {
     @Published var isOpen: Bool = false
+    @Published var visible: Bool = false
+    
+    func show() {
+        visible.toggle()
+     
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.isOpen = true
+        }
+        
+        withAnimation(.easeInOut(duration: 0.6).delay(1)) {
+            
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.isOpen = false
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            self.visible = false
+        }
+    }
 }
 
 struct OmniBarNotification: View {
-    var model: OmniBarModel
+    
+    @ObservedObject var model: OmniBarModel
+    
+    @State var isAnimatingCookie: Bool = false
     
     @State var textOffset: CGFloat = 0
     @State var textWidth: CGFloat = 0
     
-    @State var size: CGSize = .zero
-    
-    
+    @State var opacity: Double = 0
+ 
     var body: some View {
+//        let _ = Self._printChanges()
         
         HStack {
             HStack(spacing: 0) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 5)
+                    Rectangle()
                         .foregroundColor(.clear)
-                        .frame(width: 30, height: 30)
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                        .foregroundColor(.black.opacity(0.6))
+
+                    LottieView(lottieFile: "cookie-icon-animated-40-light",
+                               isAnimating: $isAnimatingCookie)
+                    .frame(width: Constants.Size.animatedIcon.width, height: Constants.Size.animatedIcon.height)
                 }
+                .frame(width: Constants.Size.animatedIconContainer.width, height: Constants.Size.animatedIconContainer.height)
                 
-                Text("Cookies Managed")
+                Text("Cookies managed")
+                    .font(Constants.Fonts.text)
+                    .foregroundColor(Constants.Colors.text)
                     .lineLimit(1)
                     .offset(x: textOffset)
-                    .padding(.trailing, 10)
-                    .clipShape(Rectangle().inset(by: -5))
+                    .padding(.trailing, Constants.Spacing.textTrailingPadding)
+                    .clipShape(Rectangle().inset(by: Constants.Spacing.textClippingShapeOffset))
                     .onReceive(model.$isOpen) { isOpen in
+                        isAnimatingCookie = isOpen
                         withAnimation(.easeInOut(duration: 0.6)) {
                             textOffset = isOpen ? 0 : -textWidth
                         }
@@ -62,18 +90,22 @@ struct OmniBarNotification: View {
                     }
             }
             .background(
-                RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(.gray)
+                Capsule()
+                    .foregroundColor(Constants.Colors.background)
                     .offset(x: textOffset)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    .clipShape(Capsule())
             )
+            .opacity(opacity)
+            .onReceive(model.$visible) { isOpen in
+                withAnimation() {
+                    opacity = isOpen ? 1 : 0
+                }
+            }
             
             Spacer()
         }
-        
     }
 }
-
 
 struct SizePreferenceKey: PreferenceKey {
     static var defaultValue: CGSize = .zero
@@ -95,161 +127,26 @@ struct SizeModifier: ViewModifier {
     }
 }
 
-
-//
-
-
-final class BadgeNotificationAnimationModel: ObservableObject {
-    let duration: CGFloat
-    let secondPhaseDelay: CGFloat
-    @Published var state: AnimationState = .unstarted
-
-    init(duration: CGFloat = AnimationDefaultConsts.totalDuration, secondPhaseDelay: CGFloat = AnimationDefaultConsts.secondPhaseDelay) {
-        self.duration = duration
-        self.secondPhaseDelay = secondPhaseDelay
-    }
+private enum Constants {
     
-    enum AnimationState {
-        case unstarted
-        case expanded
-        case retracted
-    }
-}
-
-private enum AnimationDefaultConsts {
-    static let totalDuration: CGFloat = 0.3
-    static let secondPhaseDelay: CGFloat = 3.0
-}
-
-struct ViewSizeKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
-
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-        value = nextValue()
-    }
-}
-
-struct ViewGeometry: View {
-    var body: some View {
-        GeometryReader { geometry in
-            Color.clear
-                .preference(key: ViewSizeKey.self, value: geometry.size)
-        }
-    }
-}
-
-struct BadgeAnimationView: View {
-    var animationModel: BadgeNotificationAnimationModel = BadgeNotificationAnimationModel()
-    let iconView: AnyView
-    let text: String
-    @State var textSize: CGSize = .zero
-    @State var textOffset: CGFloat = -999  // -Consts.View.textScrollerOffset
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                ExpandableRectangle(animationModel: animationModel)
-                    .frame(width: geometry.size.height, height: geometry.size.height)
-                
-                HStack {
-                    Text(text)
-                        .foregroundColor(.primary)
-                        .font(.body)
-                        .offset(x: textOffset)
-                        .onReceive(animationModel.$state, perform: { state in
-                            switch state {
-                            case .expanded:
-                                withAnimation(.easeInOut(duration: animationModel.duration)) {
-                                    textOffset = 0
-                                }
-                            case .retracted:
-                                withAnimation(.easeInOut(duration: animationModel.duration)) {
-                                    textOffset = -textSize.width // -Consts.View.textScrollerOffset
-                                }
-                            default:
-                                break
-                            }
-                        })
-//                        .padding(.leading, geometry.size.height)
-                        .background(ViewGeometry())
-                        .onPreferenceChange(ViewSizeKey.self) {
-                            textSize = $0
-                            textOffset = -$0.width
-                        }
-                        
-                    
-                    Spacer()
-                }.clipped()
-                
-                // Opaque view
-//                HStack {
-//                    Rectangle()
-//                        .foregroundColor(Color.blue10)
-//                        .cornerRadius(Consts.View.cornerRadius)
-//                        .frame(width: geometry.size.height - Consts.View.opaqueViewOffset, height: geometry.size.height)
-//                    Spacer()
-//                }
-                
-//                HStack {
-//                    iconView
-//                        .frame(width: geometry.size.height, height: geometry.size.height)
-//                    Spacer()
-//                }
-            }
-        }
-    }
-}
-
-struct ExpandableRectangle: View {
-    @ObservedObject var animationModel: BadgeNotificationAnimationModel
-    @State var width: CGFloat = 0
-
-    var body: some View {
-        GeometryReader { geometry in
-            Rectangle()
-                .fill(Color.orange)
-                .cornerRadius(Consts.View.cornerRadius)
-                .frame(width: geometry.size.height + width, height: geometry.size.height)
-                .onReceive(animationModel.$state, perform: { state in
-                    switch state {
-                    case .expanded:
-                        withAnimation(.easeInOut(duration: animationModel.duration)) {
-                            width = geometry.size.width - geometry.size.height
-                        }
-                        
-                    case .retracted:
-                        withAnimation(.easeInOut(duration: animationModel.duration)) {
-                                width = 0
-                        }
-                    default:
-                        break
-                    }
-                })
-        }
-    }
-}
-
-struct BadgeAnimationView_Previews: PreviewProvider {
-    static var previews: some View {
-        if #available(macOS 11.0, *) {
-            BadgeAnimationView(animationModel: BadgeNotificationAnimationModel(),
-                               iconView: AnyView(Image(systemName: "globle")),
-                                                 text: "Test")
-            .frame(width: 100, height: 30)
-        } else {
-            Text("No Preview")
-        }
-    }
-}
-
-private enum Consts {
-    enum View {
-        static let cornerRadius: CGFloat = 5
-        static let opaqueViewOffset: CGFloat = 8
-        static let textScrollerOffset: CGFloat = 120
+    enum Fonts {
+        static let text = Font(UIFont.systemFont(ofSize: 16))
     }
     
     enum Colors {
-        static let badgeBackgroundColor = Color.red //  Color("URLNotificationBadgeBackground")
+        static let text = Color.init(white: 0.14) // Color("DownloadsListFilenameColor")
+        static let background = Color.init(white: 0.98) // Color("DownloadsListFilenameColor")
+    }
+
+    enum Spacing {
+        static let textClippingShapeOffset: CGFloat = -7
+        static let textTrailingPadding: CGFloat = 18
+    }
+    
+    enum Size {
+        static let animatedIcon = CGSize(width: 22, height: 22)
+        static let animatedIconContainer = CGSize(width: 36, height: 36)
+        static let cancel = CGSize(width: 13, height: 13)
+        static let rowHeight: CGFloat = 76
     }
 }

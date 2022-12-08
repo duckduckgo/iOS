@@ -53,10 +53,13 @@ class CookiesManagedViewController: UIViewController {
 extension CookiesManagedViewController: OmniBarNotificationAnimated {
 
     func startAnimation(_ completion: @escaping () -> Void) {
-        hostingController.rootView.model.isOpen = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            self.hostingController.rootView.model.isOpen = false
-        }
+//        hostingController.rootView.model.isOpen = true
+        
+        hostingController.rootView.model.show()
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//            self.hostingController.rootView.model.isOpen = false
+//        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.6) {
             completion()

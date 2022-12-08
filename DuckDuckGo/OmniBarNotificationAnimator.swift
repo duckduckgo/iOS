@@ -23,24 +23,28 @@ final class OmniBarNotificationAnimator: NSObject {
     
     func showNotification(in omniBar: OmniBar) {
         
-        
+        omniBar.notificationContainer.alpha = 0
         omniBar.notificationContainer.prepareAnimation(.cookiesManaged)
         omniBar.textField.alpha = 0
         
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.3) {
             omniBar.notificationContainer.alpha = 1
+            omniBar.privacyInfoContainer.alpha = 0
         }
     
-        
-        omniBar.notificationContainer.startAnimation {
-            print("done!")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            omniBar.notificationContainer.startAnimation {
+                
+                print("done!")
             
-            
-            UIView.animate(withDuration: 0.2) {
-                omniBar.textField.alpha = 1
-                omniBar.notificationContainer.alpha = 0
+                UIView.animate(withDuration: 0.3) {
+                    omniBar.textField.alpha = 1
+                    omniBar.privacyInfoContainer.alpha = 1
+                    omniBar.notificationContainer.alpha = 0
+                }
             }
         }
+        
         
     }
 }

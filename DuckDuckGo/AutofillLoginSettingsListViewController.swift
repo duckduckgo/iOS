@@ -152,7 +152,8 @@ final class AutofillLoginSettingsListViewController: UIViewController {
                                                                    tld: tld,
                                                                    authenticationNotRequired: viewModel.authenticationNotRequired)
         detailsController.delegate = self
-        navigationController?.pushViewController(detailsController, animated: true)
+        let detailsNavigationController = UINavigationController(rootViewController: detailsController)
+        navigationController?.present(detailsNavigationController, animated: true)
     }
     
     func showAccountDetails(_ account: SecureVaultModels.WebsiteAccount, animated: Bool = true) {
@@ -539,9 +540,13 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
 // MARK: AutofillLoginDetailsViewControllerDelegate
 
 extension AutofillLoginSettingsListViewController: AutofillLoginDetailsViewControllerDelegate {
-    func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController) {
+    func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController, account: SecureVaultModels.WebsiteAccount?) {
         viewModel.updateData()
         tableView.reloadData()
+
+        if let account = account {
+            showAccountDetails(account)
+        }
     }
 
     func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount) {

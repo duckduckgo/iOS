@@ -761,7 +761,8 @@ extension Pixel.Event {
         case .bookmarksMigrationAlreadyPerformed: return "m_d_bookmarks_migration_already_performed"
         case .bookmarksMigrationFailed: return "m_d_bookmarks_migration_failed"
         case .bookmarksMigrationCouldNotPrepareDatabase: return "m_d_bookmarks_migration_could_not_prepare_database"
-        case .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration: return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
+        case .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration:
+            return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
         case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
         case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
         }

@@ -225,19 +225,6 @@ public struct AppUrls {
         return true
     }
 
-    public func isGPCEnabled(url: URL,
-                             config: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> Bool {
-        guard let gpcUrls = config.settings(for: .gpc)["gpcHeaderEnabledSites"] as? [String] else {
-            return false
-        }
-
-        for gpcHost in gpcUrls where url.isPart(ofDomain: gpcHost) {
-            return true
-        }
-
-        return false
-    }
-
     public func isDuckDuckGoEmailProtection(url: URL) -> Bool {
         return url.absoluteString.starts(with: Url.emailProtectionLink)
     }

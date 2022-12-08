@@ -290,6 +290,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         displayBlankSnapshotWindow()
         autoClear?.applicationDidEnterBackground()
         lastBackgroundDate = Date()
+        AppDependencyProvider.shared.autofillLoginSession.endSession()
     }
 
     func application(_ application: UIApplication,

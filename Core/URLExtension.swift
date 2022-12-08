@@ -90,11 +90,6 @@ extension URL {
         }
         return true
     }
-    
-    public func isPart(ofDomain domain: String) -> Bool {
-        guard let host = host else { return false }
-        return host == domain || host.hasSuffix(".\(domain)")
-    }
 
     public func normalized() -> URL? {
         var components = URLComponents(url: self, resolvingAgainstBaseURL: true)

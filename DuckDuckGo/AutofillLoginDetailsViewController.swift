@@ -24,7 +24,7 @@ import Common
 import Combine
 
 protocol AutofillLoginDetailsViewControllerDelegate: AnyObject {
-    func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController)
+    func autofillLoginDetailsViewControllerDidSave(_ controller: AutofillLoginDetailsViewController, account: SecureVaultModels.WebsiteAccount?)
     func autofillLoginDetailsViewControllerDelete(account: SecureVaultModels.WebsiteAccount)
 }
 
@@ -271,12 +271,11 @@ class AutofillLoginDetailsViewController: UIViewController {
     
     @objc private func save() {
         viewModel.save()
-        delegate?.autofillLoginDetailsViewControllerDidSave(self)
     }
     
     @objc private func cancel() {
         if viewModel.viewMode == .new {
-            navigationController?.popViewController(animated: true)
+            dismiss(animated: true)
         } else {
             toggleEditMode()
         }
@@ -285,7 +284,14 @@ class AutofillLoginDetailsViewController: UIViewController {
 
 extension AutofillLoginDetailsViewController: AutofillLoginDetailsViewModelDelegate {
     func autofillLoginDetailsViewModelDidSave() {
-        
+        if viewModel.viewMode == .new {
+            dismiss(animated: true) { [weak self] in
+                guard let self = self else { return }
+                self.delegate?.autofillLoginDetailsViewControllerDidSave(self, account: self.viewModel.account)
+            }
+        } else {
+            delegate?.autofillLoginDetailsViewControllerDidSave(self, account: nil)
+        }
     }
     
     func autofillLoginDetailsViewModelDidAttemptToSaveDuplicateLogin() {

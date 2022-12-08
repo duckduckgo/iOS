@@ -229,7 +229,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     self.updateData(with: newCredential.account)
                 }
                 
-                viewMode = .view
             } catch let error {
                 if case SecureVaultError.duplicateRecord = error {
                     Pixel.fire(pixel: .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate)

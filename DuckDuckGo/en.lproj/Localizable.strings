@@ -157,6 +157,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Disabled";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Enabled";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 

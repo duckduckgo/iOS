@@ -41,6 +41,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var rememberLoginsAccessoryText: UILabel!
     @IBOutlet weak var doNotSellCell: UITableViewCell!
     @IBOutlet weak var doNotSellAccessoryText: UILabel!
+    @IBOutlet weak var autoconsentCell: UITableViewCell!
+    @IBOutlet weak var autoconsentAccessoryText: UILabel!
     @IBOutlet weak var emailProtectionCell: UITableViewCell!
     @IBOutlet weak var emailProtectionAccessoryText: UILabel!
     @IBOutlet weak var macBrowserWaitlistCell: UITableViewCell!
@@ -111,6 +113,7 @@ class SettingsViewController: UITableViewController {
         configureAutoClearCellAccessory()
         configureRememberLogins()
         configureDoNotSell()
+        configureAutoconsent()
         configureIconViews()
         configureEmailProtectionAccessoryText()
         configureMacBrowserWaitlistCell()
@@ -192,6 +195,12 @@ class SettingsViewController: UITableViewController {
     
     private func configureDoNotSell() {
         doNotSellAccessoryText.text = appSettings.sendDoNotSell ? UserText.doNotSellEnabled : UserText.doNotSellDisabled
+    }
+    
+    private func configureAutoconsent() {
+        #warning("display value depending on autoconsent setting value")
+        autoconsentAccessoryText.text = "enabled"
+//        autoconsentAccessoryText.text = appSettings.autoconsent ? UserText.autoconsentEnabled : UserText.autoconsentDisabled
     }
      
     private func configureRememberLogins() {

@@ -150,6 +150,7 @@ class MainViewController: UIViewController {
         loadInitialView()
         previewsSource.prepare()
         addLaunchTabNotificationObserver()
+        addDuckDuckGoEmailAuthenticationObservers()
 
         findInPageView.delegate = self
         findInPageBottomLayoutConstraint.constant = 0
@@ -989,6 +990,32 @@ class MainViewController: UIViewController {
         let alertController = NoMicPermissionAlert.buildAlert()
         present(alertController, animated: true, completion: nil)
     }
+    
+    private func addDuckDuckGoEmailAuthenticationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onDuckDuckGoEmailSignIn), name: .emailDidSignIn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDuckDuckGoEmailSignOut), name: .emailDidSignOut, object: nil)
+    }
+
+    @objc
+    private func onDuckDuckGoEmailSignIn(_ notification: Notification) {
+        fireEmailPixel(.emailEnabled, notification: notification)
+    }
+    
+    @objc
+    private func onDuckDuckGoEmailSignOut(_ notification: Notification) {
+        fireEmailPixel(.emailDisabled, notification: notification)
+    }
+    
+    private func fireEmailPixel(_ pixel: Pixel.Event, notification: Notification) {
+        var pixelParameters: [String: String] = [:]
+        
+        if let userInfo = notification.userInfo as? [String: String], let cohort = userInfo[EmailManager.NotificationParameter.cohort] {
+            pixelParameters[PixelParameters.emailCohort] = cohort
+        }
+        
+        Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
+    }
+    
 }
 
 extension MainViewController: FindInPageDelegate {

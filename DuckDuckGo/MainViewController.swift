@@ -997,20 +997,19 @@ class MainViewController: UIViewController {
     }
 
     @objc
-    private func onDuckDuckGoEmailSignIn() {
-        fireEmailPixel(.emailEnabled)
+    private func onDuckDuckGoEmailSignIn(_ notification: Notification) {
+        fireEmailPixel(.emailEnabled, notification: notification)
     }
     
     @objc
-    private func onDuckDuckGoEmailSignOut() {
-        fireEmailPixel(.emailDisabled)
+    private func onDuckDuckGoEmailSignOut(_ notification: Notification) {
+        fireEmailPixel(.emailDisabled, notification: notification)
     }
     
-    private func fireEmailPixel(_ pixel: Pixel.Event) {
-        let emailManager = EmailManager()
+    private func fireEmailPixel(_ pixel: Pixel.Event, notification: Notification) {
         var pixelParameters: [String: String] = [:]
         
-        if let cohort = emailManager.cohort {
+        if let userInfo = notification.userInfo as? [String: String], let cohort = userInfo[EmailManager.NotificationParameter.cohort] {
             pixelParameters[PixelParameters.emailCohort] = cohort
         }
         

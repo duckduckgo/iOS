@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1669921466865,
+    "version": 1670457062879,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -251,6 +251,18 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": "[id*='dfp_']",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "#google_ads",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": ".adsbygoogle",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": "[id*='taboola-']",
                         "type": "closest-empty"
                     },
@@ -263,12 +275,36 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": ".ad",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[class*='ad-content']",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".ad-leaderboard",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".leaderboard",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "#leaderboard",
                         "type": "closest-empty"
                     },
                     {
                         "selector": "[class*='bannerAd']",
                         "type": "hide-empty"
+                    },
+                    {
+                        "selector": "#credential_picker_container",
+                        "type": "hide"
+                    },
+                    {
+                        "selector": ".ad_container",
+                        "type": "closest-empty"
                     },
                     {
                         "selector": ".ad-container",
@@ -279,11 +315,23 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": ".advertisement",
+                        "type": "closest-empty"
+                    },
+                    {
                         "selector": ".ad-slot",
                         "type": "closest-empty"
                     },
                     {
                         "selector": ".ad-wrapper",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".ads-wrapper",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[class*='adWrapper']",
                         "type": "closest-empty"
                     },
                     {
@@ -303,25 +351,62 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": "[data-ad]",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".bordeaux-slot",
                         "type": "closest-empty"
+                    },
+                    {
+                        "selector": "#spotim-specific",
+                        "type": "hide"
                     }
                 ],
                 "adLabelStrings": [
                     "advertisement",
+                    "advertisment",
                     "advertisementclose",
+                    "advertisement\ncontinue reading the main story",
+                    "advertisement - scroll to continue",
                     "advertising",
                     "ad feedback",
+                    "anzeige",
                     "sponsored",
+                    "sponsorisé",
+                    "publicité",
+                    "publicidade",
                     "reklama",
                     "continue reading the main story"
                 ],
                 "domains": [
                     {
+                        "domain": "abc.es",
+                        "rules": [
+                            {
+                                "selector": ".voc-advertising",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "apnews.com",
+                        "rules": [
+                            {
+                                "selector": ".proper-dynamic-insertion",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "bbc.com",
                         "rules": [
                             {
                                 "selector": ".dotcom-ad",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".leaderboard-ad-placeholder",
                                 "type": "closest-empty"
                             }
                         ]
@@ -336,11 +421,38 @@
                         ]
                     },
                     {
+                        "domain": "bloomberg.com",
+                        "rules": [
+                            {
+                                "selector": ".unsupported-browser-notification-container",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "coingecko.com",
+                        "rules": [
+                            {
+                                "selector": "[data-target='ads.banner']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "cyclingtips.com",
                         "rules": [
                             {
                                 "selector": "[data-block-name='ads']",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "ebay-kleinanzeigen.de",
+                        "rules": [
+                            {
+                                "selector": "[data-liberty-position-name]",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -389,10 +501,54 @@
                         ]
                     },
                     {
+                        "domain": "huffpost.com",
+                        "rules": [
+                            {
+                                "selector": ".connatix-player",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "indiatimes.com",
+                        "rules": [
+                            {
+                                "selector": ".ad-cls",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "indy100.com",
                         "rules": [
                             {
                                 "selector": "[id*='thirdparty']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "leboncoin.fr",
+                        "rules": [
+                            {
+                                "selector": "#lht-space-ad",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[class*='styles__ad']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "macrumors.com",
+                        "rules": [
+                            {
+                                "selector": ".tertiary",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[class*='sidebarblock']",
                                 "type": "hide-empty"
                             }
                         ]
@@ -403,6 +559,15 @@
                             {
                                 "selector": ".j-ad",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "orange.fr",
+                        "rules": [
+                            {
+                                "selector": ".tag-rm",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -429,11 +594,29 @@
                         ]
                     },
                     {
+                        "domain": "skysports.com",
+                        "rules": [
+                            {
+                                "selector": "[data-format='leaderboard']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "snopes.com",
                         "rules": [
                             {
                                 "selector": ".proper-dynamic-insertion",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "uol.com.br",
+                        "rules": [
+                            {
+                                "selector": ".model-base-bnr",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -454,11 +637,7 @@
                         "domain": "wsj.com",
                         "rules": [
                             {
-                                "selector": "[class*='adWrapper']",
-                                "type": "closest-empty"
-                            },
-                            {
-                                "selector": "[id*='cx-']",
+                                "selector": "#cx-what-to-read-next",
                                 "type": "closest-empty"
                             }
                         ]
@@ -477,6 +656,14 @@
                         "rules": [
                             {
                                 "selector": "[class*='DFP-']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[id*='banC']",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".indexPremium__adv",
                                 "type": "hide-empty"
                             }
                         ]
@@ -519,11 +706,53 @@
                                 "type": "closest-empty"
                             }
                         ]
+                    },
+                    {
+                        "domain": "first-party.site",
+                        "rules": [
+                            {
+                                "selector": ".hide-test",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".hide-empty-test",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".closest-empty-test",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".ad-container",
+                                "type": "override"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "privacy-test-pages.glitch.me",
+                        "rules": [
+                            {
+                                "selector": ".hide-test",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".hide-empty-test",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".closest-empty-test",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".ad-container",
+                                "type": "override"
+                            }
+                        ]
                     }
                 ]
             },
             "state": "disabled",
-            "hash": "06df7e5edc350785822747f710072574"
+            "hash": "1608a1e4daf968c7d5fea23f22a33131"
         },
         "fingerprintingAudio": {
             "state": "disabled",

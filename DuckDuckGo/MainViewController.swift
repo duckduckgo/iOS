@@ -1014,7 +1014,7 @@ class MainViewController: UIViewController {
             pixelParameters[PixelParameters.emailCohort] = cohort
         }
         
-        Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters)
+        Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters, includedParameters: [.atb])
     }
     
 }

@@ -998,12 +998,23 @@ class MainViewController: UIViewController {
 
     @objc
     private func onDuckDuckGoEmailSignIn() {
-        Pixel.fire(pixel: .emailEnabled)
+        fireEmailPixel(.emailEnabled)
     }
     
     @objc
     private func onDuckDuckGoEmailSignOut() {
-        Pixel.fire(pixel: .emailDisabled)
+        fireEmailPixel(.emailDisabled)
+    }
+    
+    private func fireEmailPixel(_ pixel: Pixel.Event) {
+        let emailManager = EmailManager()
+        var pixelParameters: [String: String] = [:]
+        
+        if let cohort = emailManager.cohort {
+            pixelParameters[PixelParameters.emailCohort] = cohort
+        }
+        
+        Pixel.fire(pixel: pixel, withAdditionalParameters: pixelParameters)
     }
     
 }

@@ -26,6 +26,10 @@ class AutofillLoginSession {
         static let timeout: TimeInterval = 15
     }
 
+    public struct Notifications {
+        public static let devicePasscodeStatusChanged = Notification.Name("com.duckduckgo.app.AutofillLoginSession.devicePasscodeStatusChanged")
+    }
+
     private var sessionCreationDate: Date?
     private var sessionAccount: SecureVaultModels.WebsiteAccount?
     private let sessionTimeout: TimeInterval
@@ -50,6 +54,8 @@ class AutofillLoginSession {
         }
     }
 
+    var devicePasscodeEnabled: Bool?
+
     func startSession() {
         sessionCreationDate = Date()
     }
@@ -57,5 +63,11 @@ class AutofillLoginSession {
     func endSession() {
         sessionCreationDate = nil
         lastAccessedAccount = nil
+    }
+
+    func checkDevicePasscodeStatus() {
+        if let passcodeEnabled = devicePasscodeEnabled, passcodeEnabled != ContentScopeFeatureToggles.supportedFeaturesOniOS.credentialsAutofill {
+            NotificationCenter.default.post(name: Notifications.devicePasscodeStatusChanged, object: nil)
+        }
     }
 }

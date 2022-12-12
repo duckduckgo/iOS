@@ -284,6 +284,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         beginAuthentication()
         autoClear?.applicationWillMoveToForeground()
         showKeyboardIfSettingOn = true
+        AppDependencyProvider.shared.autofillLoginSession.checkDevicePasscodeStatus()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {

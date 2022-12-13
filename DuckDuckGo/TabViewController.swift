@@ -1966,7 +1966,8 @@ extension TabViewController: UserContentControllerDelegate {
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
             PreserveLogins.Notifications.loginDetectionStateChanged,
-            AppUserDefaults.Notifications.doNotSellStatusChange
+            AppUserDefaults.Notifications.doNotSellStatusChange,
+            AutofillLoginSession.Notifications.devicePasscodeStatusChanged
         ]
         if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) == true
             || notificationsTriggeringReload.contains(where: {

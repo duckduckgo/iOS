@@ -39,6 +39,8 @@ final class OmniBarNotificationView: UIView {
             viewToAnimate = CookiesManagedViewController()
         }
         
+        #warning("pass the VC here")
+        window?.rootViewController?.addChild(viewToAnimate)
         
         addSubview(viewToAnimate.view)
         animatedView = viewToAnimate

@@ -54,6 +54,7 @@
 		1EBE3E80292BBF4000AA62EC /* autoconsent-bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EBE3E7D292BBF3F00AA62EC /* autoconsent-bundle.js */; };
 		1EBE3E81292BBF4000AA62EC /* AutoconsentUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBE3E7E292BBF3F00AA62EC /* AutoconsentUserScript.swift */; };
 		1EBE3E82292BBF4000AA62EC /* AutoconsentManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBE3E7F292BBF3F00AA62EC /* AutoconsentManagement.swift */; };
+		1EC458462948932500CB2B13 /* UIHostingControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC458452948932500CB2B13 /* UIHostingControllerExtension.swift */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
 		1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE411F02857C3640003FE64 /* TrackerAnimationImageProvider.swift */; };
 		1EE411F52857C95B0003FE64 /* CollectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE411F22857C4A30003FE64 /* CollectionExtension.swift */; };
@@ -828,6 +829,7 @@
 		1EBE3E7D292BBF3F00AA62EC /* autoconsent-bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "autoconsent-bundle.js"; sourceTree = "<group>"; };
 		1EBE3E7E292BBF3F00AA62EC /* AutoconsentUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoconsentUserScript.swift; sourceTree = "<group>"; };
 		1EBE3E7F292BBF3F00AA62EC /* AutoconsentManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoconsentManagement.swift; sourceTree = "<group>"; };
+		1EC458452948932500CB2B13 /* UIHostingControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingControllerExtension.swift; sourceTree = "<group>"; };
 		1EC51CD828D8C0DF00E9D05A /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeDebugViewController.swift; sourceTree = "<group>"; };
 		1EE411F02857C3640003FE64 /* TrackerAnimationImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerAnimationImageProvider.swift; sourceTree = "<group>"; };
@@ -3997,6 +3999,7 @@
 				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
 				4B6484E627FD1E340050A7A1 /* FontExtension.swift */,
 				319A37162829C8AD0079FBCE /* UITableViewExtension.swift */,
+				1EC458452948932500CB2B13 /* UIHostingControllerExtension.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -5035,6 +5038,7 @@
 				9817C9C321EF594700884F65 /* AutoClear.swift in Sources */,
 				310C4B47281B60E300BA79A9 /* AutofillLoginDetailsViewModel.swift in Sources */,
 				85EE7F572246685B000FE757 /* WebContainerViewController.swift in Sources */,
+				1EC458462948932500CB2B13 /* UIHostingControllerExtension.swift in Sources */,
 				1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */,
 				311BD1B12836C0CA00AEF6C1 /* AutofillLoginListAuthenticator.swift in Sources */,
 				B652DF13287C373A00C12A9C /* ScriptSourceProviding.swift in Sources */,

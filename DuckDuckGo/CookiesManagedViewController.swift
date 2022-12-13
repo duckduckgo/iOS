@@ -26,7 +26,7 @@ class CookiesManagedViewController: UIViewController {
 //                                                                                     iconView: AnyView(Image(systemName: "trash")),
 //                                                                                     text: "Cookies Managed!"))
     
-    private let hostingController = UIHostingController(rootView: OmniBarNotification(model: OmniBarModel()))
+    private let hostingController = UIHostingController(rootView: OmniBarNotification(model: OmniBarModel()), ignoreSafeArea: true)
     
     override func viewDidLoad() {
         super.viewDidLoad()

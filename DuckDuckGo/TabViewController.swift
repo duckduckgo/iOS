@@ -789,7 +789,7 @@ class TabViewController: UIViewController {
     }
 
     func dismiss() {
-        presentedViewController?.dismiss(animated: true)
+        privacyDashboard?.dismiss(animated: true)
         progressWorker.progressBar = nil
         chromeDelegate?.omniBar.cancelAllAnimations()
         cancelTrackerNetworksAnimation()
@@ -1983,7 +1983,8 @@ extension TabViewController: UserContentControllerDelegate {
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
             PreserveLogins.Notifications.loginDetectionStateChanged,
-            AppUserDefaults.Notifications.doNotSellStatusChange
+            AppUserDefaults.Notifications.doNotSellStatusChange,
+            AutofillLoginSession.Notifications.devicePasscodeStatusChanged
         ]
         if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) == true
             || notificationsTriggeringReload.contains(where: {

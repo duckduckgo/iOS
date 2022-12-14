@@ -109,7 +109,7 @@ public class StatisticsLoader {
                 completion()
                 return
             }
-            if let data = response?.data, let atb  = try? self.parser.convert(fromJsonData: data) {
+            if let data = response?.data, let atb = try? self.parser.convert(fromJsonData: data) {
                 self.statisticsStore.appRetentionAtb = atb.version
                 self.storeUpdateVersionIfPresent(atb)
             }

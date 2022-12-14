@@ -78,8 +78,6 @@ final class FireButtonReferenceTests: XCTestCase {
             return
         }
         
-        
-        
         dataStore.cookieStore?.setCookie(cookie, completionHandler: {
             WebCacheManager.shared.clear(dataStore: self.dataStore,
                                          logins: self.preservedLogins) {

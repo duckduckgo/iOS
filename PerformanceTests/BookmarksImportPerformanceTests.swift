@@ -83,7 +83,7 @@ class BookmarksImportPerformanceTests: XCTestCase {
                 expectation.fulfill()
             }
         
-            wait(for: [expectation], timeout: 60)
+            wait(for: [expectation], timeout: 120)
             stopMeasuring()
             print("==============================")
             print("Completed in \(CACurrentMediaTime() - time)")

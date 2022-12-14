@@ -40,15 +40,6 @@ class BookmarksSearchPerformanceTests: XCTestCase {
         db = CoreDataDatabase(name: "Test", containerLocation: dir, model: model)
         db.loadStore()
         try populateData()
-        
-        
-        Task { @MainActor in
-            let e = BookmarksExporter(coreDataStore: db)
-            
-            try e.exportBookmarksTo(url: dir.appendingPathComponent("data.html"))
-            
-        }
-        
     }
     
     override func tearDownWithError() throws {
@@ -59,6 +50,7 @@ class BookmarksSearchPerformanceTests: XCTestCase {
     
     func populateData() throws {
         let context = db.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        // 30k+ entries
         try BookmarksTestData().generate(bookmarksPerFolder: 21, foldersPerFolder: 4, levels: 5, in: context)
     }
     
@@ -66,6 +58,7 @@ class BookmarksSearchPerformanceTests: XCTestCase {
         _ = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: db))
         
         measure {
+            Thread.sleep(forTimeInterval: 1)
             _ = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: db))
         }
     }

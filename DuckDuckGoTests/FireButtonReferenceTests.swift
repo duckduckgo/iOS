@@ -42,18 +42,25 @@ final class FireButtonReferenceTests: XCTestCase {
         
         // Remove fireproofed sites
         for site in testData.fireButtonFireproofing.fireproofedSites {
-            os_log("Removing %s from fireproofed sites", site)
-            PreserveLogins.shared.remove(domain: site)
+            let sanitizedSite = sanitizedSite(site)
+            os_log("Removing %s from fireproofed sites", sanitizedSite)
+            PreserveLogins.shared.remove(domain: sanitizedSite)
         }
         
         referenceTests.removeAll()
+    }
+    
+    private func sanitizedSite(_ site: String) -> String {
+        let url = URL(string: site)!
+        return url.host!
     }
 
     func testFireproofing() throws {
         // Setup fireproofed sites
         for site in testData.fireButtonFireproofing.fireproofedSites {
-            os_log("Adding %s to fireproofed sites", site)
-            preservedLogins.addToAllowed(domain: site)
+            let sanitizedSite = sanitizedSite(site)
+            os_log("Adding %s to fireproofed sites", sanitizedSite)
+            preservedLogins.addToAllowed(domain: sanitizedSite)
 
         }
        
@@ -79,6 +86,7 @@ final class FireButtonReferenceTests: XCTestCase {
         }
         
         dataStore.cookieStore?.setCookie(cookie, completionHandler: {
+            
             WebCacheManager.shared.clear(dataStore: self.dataStore,
                                          logins: self.preservedLogins) {
                 
@@ -91,7 +99,17 @@ final class FireButtonReferenceTests: XCTestCase {
                         XCTAssertNotNil(testCookie, "Cookie should exist for test: \(test.name)")
                     }
                     
-                    DispatchQueue.main.async {
+                    
+                    // Remove all cookies from this test
+                    let group = DispatchGroup()
+                    for cookie in hotCookies {
+                        group.enter()
+                        self.dataStore.cookieStore?.delete(cookie, completionHandler: {
+                            group.leave()
+                        })
+                    }
+                    
+                    group.notify(queue: .main) {
                         onTestExecuted.fulfill()
                         self.runReferenceTests(onTestExecuted: onTestExecuted)
                     }

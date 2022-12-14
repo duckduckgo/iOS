@@ -123,6 +123,47 @@ class BookmarksImporterTests: XCTestCase {
         XCTAssertNotNil(createdBookmark)
         XCTAssertEqual(createdBookmark.type, .bookmark)
     }
+    
+    func test_WhenImportingBookmarks_ThenDuplicatesAreSkipped() async throws {
+        let existingBookmarkURL = "https://first.com/1.png"
+        let existingFavoriteURL = "https://second.com/1.png"
+        let otherURL = "https://third.com/1.png"
+        
+        let initialBookmarks = [BookmarkOrFolder(name: "first",
+                                                 type: .bookmark,
+                                                 urlString: existingBookmarkURL,
+                                                 children: nil),
+                                BookmarkOrFolder(name: "second",
+                                                 type: .favorite,
+                                                 urlString: existingFavoriteURL,
+                                                 children: nil)]
+        
+        try await importer.saveBookmarks(initialBookmarks)
+        
+        let countRequest = BookmarkEntity.fetchRequest()
+        countRequest.predicate = NSPredicate(format: "%K == false", #keyPath(BookmarkEntity.isFolder))
+        
+        let count = try storage.makeContext(concurrencyType: .mainQueueConcurrencyType).count(for: countRequest)
+        XCTAssertEqual(count, 2)
+        
+        // One duplicates existing bookmark, another two are duplicates in imported data set
+        let importedBookmarks = [BookmarkOrFolder(name: "first",
+                                                  type: .favorite,
+                                                  urlString: existingBookmarkURL,
+                                                  children: nil),
+                                 BookmarkOrFolder(name: "other",
+                                                  type: .favorite,
+                                                  urlString: otherURL,
+                                                  children: nil),
+                                 BookmarkOrFolder(name: "another",
+                                                  type: .favorite,
+                                                  urlString: otherURL,
+                                                  children: nil)]
+        
+        try await importer.saveBookmarks(importedBookmarks)
+        let newCount = try storage.makeContext(concurrencyType: .mainQueueConcurrencyType).count(for: countRequest)
+        XCTAssertEqual(newCount, 3)
+    }
 
     func test_WhenSaveBookmarks_ThenDataSaved() async throws {
         try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_safari.html"))

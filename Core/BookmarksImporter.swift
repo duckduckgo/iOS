@@ -206,7 +206,7 @@ final public class BookmarksImporter {
 
     func saveBookmarks(_ bookmarks: [BookmarkOrFolder]) async throws {
         do {
-            try await coreDataStorage.importBookmarks(importedBookmarks)
+            try await coreDataStorage.importBookmarks(bookmarks)
         } catch {
             os_log("Failed to save imported bookmarks to core data %s", type: .debug, error.localizedDescription)
             throw BookmarksImportError.saveFailure

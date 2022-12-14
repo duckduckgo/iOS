@@ -27,24 +27,34 @@ final class OmniBarNotificationAnimator: NSObject {
         omniBar.notificationContainer.prepareAnimation(.cookiesManaged)
         omniBar.textField.alpha = 0
         
-        UIView.animate(withDuration: 0.3) {
-            omniBar.notificationContainer.alpha = 1
+        let fadeDuration = Constants.Duration.fade
+        
+        UIView.animate(withDuration: fadeDuration) {
             omniBar.privacyInfoContainer.alpha = 0
         }
-    
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            omniBar.notificationContainer.startAnimation {
-                
-                print("done!")
+        
+        UIView.animate(withDuration: fadeDuration, delay: fadeDuration) {
+            omniBar.notificationContainer.alpha = 1
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2 * fadeDuration) {
             
-                UIView.animate(withDuration: 0.3) {
+            omniBar.notificationContainer.startAnimation {
+                UIView.animate(withDuration: fadeDuration) {
+                    omniBar.notificationContainer.alpha = 0
+                }
+                
+                UIView.animate(withDuration: fadeDuration, delay: fadeDuration) {
                     omniBar.textField.alpha = 1
                     omniBar.privacyInfoContainer.alpha = 1
-                    omniBar.notificationContainer.alpha = 0
                 }
             }
         }
-        
-        
+    }
+}
+
+private enum Constants {
+    enum Duration {
+        static let fade: TimeInterval = 0.25
     }
 }

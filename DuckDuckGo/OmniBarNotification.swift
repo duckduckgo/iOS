@@ -1,5 +1,5 @@
 //
-//  CookiesManagedOmniBarNotificationView.swift
+//  OmniBarNotification.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -19,34 +19,9 @@
 
 import SwiftUI
 
-class OmniBarModel: ObservableObject {
-    @Published var isOpen: Bool = false
-    @Published var visible: Bool = false
-    
-    func show() {
-        visible.toggle()
-     
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.isOpen = true
-        }
-        
-        withAnimation(.easeInOut(duration: 0.6).delay(1)) {
-            
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.isOpen = false
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            self.visible = false
-        }
-    }
-}
-
 struct OmniBarNotification: View {
     
-    @ObservedObject var model: OmniBarModel
+    @ObservedObject var model: OmniBarNotificationModel
     
     @State var isAnimatingCookie: Bool = false
     
@@ -64,13 +39,13 @@ struct OmniBarNotification: View {
                     Rectangle()
                         .foregroundColor(.clear)
 
-                    LottieView(lottieFile: "cookie-icon-animated-40-light",
+                    LottieView(lottieFile: model.animationName,
                                isAnimating: $isAnimatingCookie)
                     .frame(width: Constants.Size.animatedIcon.width, height: Constants.Size.animatedIcon.height)
                 }
                 .frame(width: Constants.Size.animatedIconContainer.width, height: Constants.Size.animatedIconContainer.height)
                 
-                Text("Cookies managed")
+                Text(model.text)
                     .font(Constants.Fonts.text)
                     .foregroundColor(Constants.Colors.text)
                     .lineLimit(1)
@@ -78,10 +53,12 @@ struct OmniBarNotification: View {
                     .padding(.trailing, Constants.Spacing.textTrailingPadding)
                     .clipShape(Rectangle().inset(by: Constants.Spacing.textClippingShapeOffset))
                     .onReceive(model.$isOpen) { isOpen in
-                        isAnimatingCookie = isOpen
-                        withAnimation(.easeInOut(duration: 0.6)) {
+                        withAnimation(.easeInOut(duration: OmniBarNotificationModel.Duration.notificationSlide)) {
                             textOffset = isOpen ? 0 : -textWidth
                         }
+                    }
+                    .onReceive(model.$animateCookie) { animateCookie in
+                        isAnimatingCookie = animateCookie
                     }
                     .modifier(SizeModifier())
                     .onPreferenceChange(SizePreferenceKey.self) {
@@ -95,12 +72,6 @@ struct OmniBarNotification: View {
                     .offset(x: textOffset)
                     .clipShape(Capsule())
             )
-            .opacity(opacity)
-            .onReceive(model.$visible) { isOpen in
-                withAnimation() {
-                    opacity = isOpen ? 1 : 0
-                }
-            }
             
             Spacer()
         }
@@ -134,6 +105,7 @@ private enum Constants {
     }
     
     enum Colors {
+        #warning("set the right colors")
         static let text = Color.init(white: 0.14) // Color("DownloadsListFilenameColor")
         static let background = Color.init(white: 0.98) // Color("DownloadsListFilenameColor")
     }

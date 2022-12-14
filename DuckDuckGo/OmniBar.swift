@@ -35,7 +35,7 @@ class OmniBar: UIView {
     @IBOutlet weak var searchStackContainer: UIStackView!
     @IBOutlet weak var searchFieldContainer: SearchFieldContainerView!
     @IBOutlet weak var privacyInfoContainer: PrivacyInfoContainerView!
-    @IBOutlet weak var notificationContainer: OmniBarNotificationView!
+    @IBOutlet weak var notificationContainer: OmniBarNotificationContainerView!
     @IBOutlet weak var textField: TextFieldWithInsets!
     @IBOutlet weak var editingBackground: RoundedRectangleView!
     @IBOutlet weak var clearButton: UIButton!

@@ -29,8 +29,6 @@ struct LottieView: UIViewRepresentable {
     let animationView = AnimationView()
  
     func makeUIView(context: Context) -> some AnimationView {
-        print("recreating view")
-        
         animationView.animation = Animation.named(lottieFile)
         animationView.contentMode = .scaleAspectFit
         animationView.clipsToBounds = false
@@ -39,15 +37,10 @@ struct LottieView: UIViewRepresentable {
     }
  
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        if isAnimating {
-            print("isAnimating !")
-            uiView.play()
-        } else {
-            print("resetting !")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                uiView.stop()
-            }
-        }
+        guard isAnimating, !uiView.isAnimationPlaying else { return }
+        
+        uiView.play(completion: { _ in
+            self.isAnimating = false
+        })
     }
-
 }

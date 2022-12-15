@@ -23,7 +23,7 @@ import Persistence
 import Bookmarks
 import DuckDuckGo
 
-fileprivate extension FavoritesListViewModel {
+private extension FavoritesListViewModel {
     
     convenience init(bookmarksDatabase: CoreDataDatabase) {
         self.init(bookmarksDatabase: bookmarksDatabase,
@@ -130,7 +130,7 @@ class FavoriteListViewModelTests: XCTestCase {
         let expectation = expectation(description: "Errors reported")
         expectation.expectedFulfillmentCount = 3
         let viewModel = FavoritesListViewModel(bookmarksDatabase: db,
-                                              errorEvents: .init(mapping: { event, error, params, onComplete in
+                                              errorEvents: .init(mapping: { event, _, _, _ in
             let expectedEvent = expectedEvents.popLast()
             XCTAssertEqual(event, expectedEvent)
             expectation.fulfill()

@@ -388,6 +388,12 @@
 		986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA624171C6000A3557D /* BrokenSiteCategories.swift */; };
 		986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */; };
 		986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986DA94924884B18004A7E39 /* WebViewTransition.swift */; };
+		987130C4294AAB9F00AB05E0 /* FavoriteListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987130BE294AAB9E00AB05E0 /* FavoriteListViewModelTests.swift */; };
+		987130C5294AAB9F00AB05E0 /* BookmarkEditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987130BF294AAB9E00AB05E0 /* BookmarkEditorViewModelTests.swift */; };
+		987130C6294AAB9F00AB05E0 /* BookmarkListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987130C0294AAB9E00AB05E0 /* BookmarkListViewModelTests.swift */; };
+		987130C7294AAB9F00AB05E0 /* MenuBookmarksViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987130C1294AAB9E00AB05E0 /* MenuBookmarksViewModelTests.swift */; };
+		987130C8294AAB9F00AB05E0 /* BookmarksTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987130C2294AAB9E00AB05E0 /* BookmarksTestHelpers.swift */; };
+		987130C9294AAB9F00AB05E0 /* BookmarkUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987130C3294AAB9E00AB05E0 /* BookmarkUtilsTests.swift */; };
 		98728E822417E3300033960E /* BrokenSiteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98728E812417E3300033960E /* BrokenSiteInfo.swift */; };
 		9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */; };
 		9874F9EE2187AFCE00CAF33D /* Themable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9874F9ED2187AFCE00CAF33D /* Themable.swift */; };
@@ -1687,6 +1693,12 @@
 		986C7FA82417ADE700A3557D /* ReportBrokenSiteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBrokenSiteViewController.swift; sourceTree = "<group>"; };
 		986DA94924884B18004A7E39 /* WebViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTransition.swift; sourceTree = "<group>"; };
 		98710C7C24A518CA0049F515 /* HTTPSUpgrade 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "HTTPSUpgrade 2.xcdatamodel"; sourceTree = "<group>"; };
+		987130BE294AAB9E00AB05E0 /* FavoriteListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteListViewModelTests.swift; sourceTree = "<group>"; };
+		987130BF294AAB9E00AB05E0 /* BookmarkEditorViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkEditorViewModelTests.swift; sourceTree = "<group>"; };
+		987130C0294AAB9E00AB05E0 /* BookmarkListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkListViewModelTests.swift; sourceTree = "<group>"; };
+		987130C1294AAB9E00AB05E0 /* MenuBookmarksViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuBookmarksViewModelTests.swift; sourceTree = "<group>"; };
+		987130C2294AAB9E00AB05E0 /* BookmarksTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTestHelpers.swift; sourceTree = "<group>"; };
+		987130C3294AAB9E00AB05E0 /* BookmarkUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkUtilsTests.swift; sourceTree = "<group>"; };
 		98728E812417E3300033960E /* BrokenSiteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrokenSiteInfo.swift; sourceTree = "<group>"; };
 		9872D204247DCAC100CEF398 /* TabPreviewsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPreviewsSource.swift; sourceTree = "<group>"; };
 		9874F9ED2187AFCE00CAF33D /* Themable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themable.swift; sourceTree = "<group>"; };
@@ -3101,6 +3113,19 @@
 			name = ContentBlocker;
 			sourceTree = "<group>";
 		};
+		987130BD294AAB8200AB05E0 /* BSK */ = {
+			isa = PBXGroup;
+			children = (
+				987130BF294AAB9E00AB05E0 /* BookmarkEditorViewModelTests.swift */,
+				987130C0294AAB9E00AB05E0 /* BookmarkListViewModelTests.swift */,
+				987130C3294AAB9E00AB05E0 /* BookmarkUtilsTests.swift */,
+				987130BE294AAB9E00AB05E0 /* FavoriteListViewModelTests.swift */,
+				987130C1294AAB9E00AB05E0 /* MenuBookmarksViewModelTests.swift */,
+				987130C2294AAB9E00AB05E0 /* BookmarksTestHelpers.swift */,
+			);
+			name = BSK;
+			sourceTree = "<group>";
+		};
 		989DF82722C628DC0077AA55 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -3270,6 +3295,7 @@
 		C14882DD27F20D7300D59F0C /* Bookmarks */ = {
 			isa = PBXGroup;
 			children = (
+				987130BD294AAB8200AB05E0 /* BSK */,
 				98AAF8E3292EB46000DBDF06 /* BookmarksMigrationTests.swift */,
 				98983095255B5019003339A2 /* BookmarksCachingSearchTests.swift */,
 				C14882DE27F20D7E00D59F0C /* ImportExport */,
@@ -5173,6 +5199,7 @@
 				85C11E4120904BBE00BFFEB4 /* VariantManagerTests.swift in Sources */,
 				F1134ECE1F40EA9C00B73467 /* AtbParserTests.swift in Sources */,
 				F189AEE41F18FDAF001EBAE1 /* LinkTests.swift in Sources */,
+				987130C7294AAB9F00AB05E0 /* MenuBookmarksViewModelTests.swift in Sources */,
 				858650D32469BFAD00C36F8A /* DaxDialogTests.swift in Sources */,
 				31C138B227A4097800FFD4B2 /* DownloadTestsHelper.swift in Sources */,
 				98EA2C41218BB5400023E1DC /* SettingsViewControllerTests.swift in Sources */,
@@ -5183,6 +5210,7 @@
 				F198D78E1E39762C0088DA8A /* StringExtensionTests.swift in Sources */,
 				31B1FA87286EFC5C00CA3C1C /* XCTestCaseExtension.swift in Sources */,
 				1E8146AE28C8ABF400D1AF63 /* PrivacyIconLogicTests.swift in Sources */,
+				987130C4294AAB9F00AB05E0 /* FavoriteListViewModelTests.swift in Sources */,
 				8565A34D1FC8DFE400239327 /* LaunchTabNotificationTests.swift in Sources */,
 				F1134EC41F40E25800B73467 /* AppVersionExtensionTests.swift in Sources */,
 				4B62C4BA25B930DD008912C6 /* AppConfigurationFetchTests.swift in Sources */,
@@ -5194,6 +5222,7 @@
 				F4A96BE328479DE30025C8E0 /* FeatureFlaggingTests.swift in Sources */,
 				851CD674244D7E6000331B98 /* UserDefaultsExtension.swift in Sources */,
 				850559D223CF710C0055C0D5 /* WebCacheManagerTests.swift in Sources */,
+				987130C5294AAB9F00AB05E0 /* BookmarkEditorViewModelTests.swift in Sources */,
 				8341D807212D5E8D000514C2 /* HashExtensionTest.swift in Sources */,
 				C1D21E2F293A599C006E5A05 /* AutofillLoginSessionTests.swift in Sources */,
 				85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */,
@@ -5220,6 +5249,8 @@
 				F1E092C11E92A72E00732CCC /* UIColorExtensionTests.swift in Sources */,
 				85010504292FFB080033978F /* BookmarkFaviconUpdaterTests.swift in Sources */,
 				F1D477C91F2139410031ED49 /* SmallOmniBarStateTests.swift in Sources */,
+				987130C9294AAB9F00AB05E0 /* BookmarkUtilsTests.swift in Sources */,
+				987130C8294AAB9F00AB05E0 /* BookmarksTestHelpers.swift in Sources */,
 				F198D7981E3A45D90088DA8A /* WKWebViewConfigurationExtensionTests.swift in Sources */,
 				8521FDE6238D414B00A44CC3 /* FileStoreTests.swift in Sources */,
 				F14E491F1E391CE900DC037C /* URLExtensionTests.swift in Sources */,
@@ -5230,6 +5261,7 @@
 				9847C00527A41A0A00DB07AA /* WebViewTestHelper.swift in Sources */,
 				3170048227A9504F00C03F35 /* DownloadMocks.swift in Sources */,
 				317045C02858C6B90016ED1F /* AutofillInterfaceEmailTruncatorTests.swift in Sources */,
+				987130C6294AAB9F00AB05E0 /* BookmarkListViewModelTests.swift in Sources */,
 				F1134ED21F40EF3A00B73467 /* JsonTestDataLoader.swift in Sources */,
 				850250B520D80419002199C7 /* AtbAndVariantCleanupTests.swift in Sources */,
 				834DF992248FDE1A0075EA48 /* UserAgentTests.swift in Sources */,

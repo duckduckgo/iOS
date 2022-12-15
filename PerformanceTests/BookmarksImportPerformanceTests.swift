@@ -54,7 +54,7 @@ class BookmarksImportPerformanceTests: XCTestCase {
     
     func testImportPerformance() {
         
-        let html = loadHtmlFile("bookmarks_3k.html")
+        let html = loadHtmlFile("bookmarks_30k.html")
         
         measureMetrics(XCTestCase.defaultPerformanceMetrics, automaticallyStartMeasuring: false) {
             

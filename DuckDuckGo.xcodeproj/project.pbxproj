@@ -416,6 +416,7 @@
 		989B337522D7EF2100437824 /* EmptyCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B337422D7EF2100437824 /* EmptyCollectionReusableView.swift */; };
 		989DF82922C628F80077AA55 /* ContentBlockerLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989DF82822C628F80077AA55 /* ContentBlockerLoaderTests.swift */; };
 		98A16C2D28A11D6200A6C003 /* BrowserServicesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 98A16C2C28A11D6200A6C003 /* BrowserServicesKit */; };
+		98A50962294B48A400D10880 /* Bookmarks in Frameworks */ = {isa = PBXBuildFile; productRef = 98A50961294B48A400D10880 /* Bookmarks */; };
 		98A54A8422AFCB2D00E541F4 /* Instruments.instrpkg in Sources */ = {isa = PBXBuildFile; fileRef = 98A54A8322AFCB2D00E541F4 /* Instruments.instrpkg */; };
 		98AA92B32456FBE100ED4B9E /* SearchFieldContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AA92B22456FBE100ED4B9E /* SearchFieldContainerView.swift */; };
 		98AAF8E4292EB46000DBDF06 /* BookmarksMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AAF8E3292EB46000DBDF06 /* BookmarksMigrationTests.swift */; };
@@ -2158,6 +2159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98A50962294B48A400D10880 /* Bookmarks in Frameworks */,
 				1E60989B290009C700A508F9 /* Common in Frameworks */,
 				1E60989D290011E600A508F9 /* ContentBlocking in Frameworks */,
 				4B82E98025B634B800656FE7 /* TrackerRadarKit in Frameworks */,
@@ -4387,6 +4389,7 @@
 				1E60989C290011E600A508F9 /* ContentBlocking */,
 				1E60989E290011E600A508F9 /* PrivacyDashboard */,
 				1E6098A0290011E600A508F9 /* UserScript */,
+				98A50961294B48A400D10880 /* Bookmarks */,
 			);
 			productName = Core;
 			productReference = F143C2E41E4A4CD400CFDE3A /* Core.framework */;
@@ -7198,6 +7201,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
 			productName = BrowserServicesKit;
+		};
+		98A50961294B48A400D10880 /* Bookmarks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98A16C2928A11BDE00A6C003 /* XCRemoteSwiftPackageReference "BrowserServicesKit" */;
+			productName = Bookmarks;
 		};
 		C14882EC27F211A000D59F0C /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

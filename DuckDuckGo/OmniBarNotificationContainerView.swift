@@ -53,7 +53,9 @@ final class OmniBarNotificationContainerView: UIView {
     }
     
     private func removeOldNotificationView() {
-        currentNotificationController?.view.removeFromSuperview()
+        guard let notificationView = currentNotificationController?.view else { return }
+        
+        notificationView.removeFromSuperview()
     }
     
     private func setupConstraints() {

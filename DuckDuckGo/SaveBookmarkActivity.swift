@@ -19,10 +19,11 @@
 
 import UIKit
 import Core
+import Bookmarks
 
 class SaveBookmarkActivity: UIActivity {
 
-    private let bookmarksManager: BookmarksManager
+    private let viewModel: MenuBookmarksViewModel
     private var bookmarkURL: URL?
     
     private weak var controller: TabViewController?
@@ -30,8 +31,8 @@ class SaveBookmarkActivity: UIActivity {
     
     private var activityViewControllerAccessed = false
 
-    init(controller: TabViewController, isFavorite: Bool = false, bookmarksManager: BookmarksManager = BookmarksManager()) {
-        self.bookmarksManager = bookmarksManager
+    init(controller: TabViewController, isFavorite: Bool = false, viewModel: MenuBookmarksViewModel) {
+        self.viewModel = viewModel
         self.controller = controller
         self.isFavorite = isFavorite
         super.init()
@@ -60,42 +61,8 @@ class SaveBookmarkActivity: UIActivity {
     override var activityViewController: UIViewController? {
         guard !activityViewControllerAccessed else { return nil }
         activityViewControllerAccessed = true
-
-        guard let bookmarkURL = bookmarkURL else {
-            activityDidFinish(true)
-            return nil
-        }
-
-        bookmarksManager.contains(url: bookmarkURL) { contains in
-            if contains {
-                DispatchQueue.main.async {
-                    ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
-                    self.activityDidFinish(true)
-                }
-            } else {
-                let linkForTitle: Link
-                // Get the proper title from the webview if we can
-                if let link = self.controller?.link, link.url == bookmarkURL {
-                    linkForTitle = link
-                } else {
-                    linkForTitle = Link(title: nil, url: bookmarkURL)
-                }
-                let title = linkForTitle.displayTitle ?? bookmarkURL.absoluteString
-                if self.isFavorite {
-                    self.bookmarksManager.saveNewFavorite(withTitle: title, url: bookmarkURL)
-                    DispatchQueue.main.async {
-                        ActionMessageView.present(message: UserText.webSaveFavoriteDone)
-                        self.activityDidFinish(true)
-                    }
-                } else {
-                    self.bookmarksManager.saveNewBookmark(withTitle: title, url: bookmarkURL, parentID: nil)
-                    DispatchQueue.main.async {
-                        ActionMessageView.present(message: UserText.webSaveBookmarkDone)
-                        self.activityDidFinish(true)
-                    }
-                }
-            }
-        }
+        controller?.saveAsBookmark(favorite: isFavorite, viewModel: viewModel)
+        activityDidFinish(true)
         return nil
     }
 }

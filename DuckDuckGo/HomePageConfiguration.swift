@@ -21,6 +21,7 @@ import Foundation
 import BrowserServicesKit
 import Core
 import os.log
+import Bookmarks
 
 final class HomePageConfiguration {
     
@@ -29,9 +30,9 @@ final class HomePageConfiguration {
         case favorites
         case homeMessage
     }
-    
-    func components(bookmarksManager: BookmarksManager = BookmarksManager()) -> [Component] {
-        let fixed = bookmarksManager.favoritesCount == 0
+
+    func components(favoritesViewModel: FavoritesListInteracting) -> [Component] {
+        let fixed = favoritesViewModel.favorites.count == 0
         return [
             .navigationBarSearch(fixed: fixed),
             .homeMessage,
@@ -46,7 +47,8 @@ final class HomePageConfiguration {
 
     var homeMessages: [HomeMessage] = []
 
-    init(variantManager: VariantManager? = nil, remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()) {
+    init(variantManager: VariantManager? = nil,
+         remoteMessagingStore: RemoteMessagingStore = RemoteMessagingStore()) {
         homeMessageStorage = HomeMessageStorage(variantManager: variantManager)
         self.remoteMessagingStore = remoteMessagingStore
         homeMessages = buildHomeMessages()

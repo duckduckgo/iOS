@@ -19,49 +19,33 @@
 
 import XCTest
 import CoreData
+import Combine
+import Bookmarks
 
 @testable import Core
 
-class MockBookmarkSearchStore: BookmarksSearchStore {
-    var hasData: Bool {
-        return true
-    }
+public class MockBookmarksSearchStore: BookmarksSearchStore {
     
-    func bookmarksAndFavorites(completion: @escaping ([Bookmark]) -> Void) {
-        completion(bookmarks + favorites)
-    }
-    
-    var bookmarks = [Bookmark]()
-    var favorites = [Bookmark]()
-}
+    let subject = PassthroughSubject<Void, Never>()
+    public var dataDidChange: AnyPublisher<Void, Never>
 
-class MockBookmark: Bookmark {
+    var dataSet = [BookmarksCachingSearch.ScoredBookmark]()
     
-    var title: String?
-    var url: URL?
-    var isFavorite: Bool
-    
-    init(title: String, url: URL, isFavorite: Bool) {
-        self.title = title
-        self.url = url
-        self.isFavorite = isFavorite
+    init() {
+        dataDidChange = subject.eraseToAnyPublisher()
     }
     
-    var objectID: NSManagedObjectID {
-        fatalError("objectID should exist")
+    public func bookmarksAndFavorites(completion: @escaping ([BookmarksCachingSearch.ScoredBookmark]) -> Void) {
+        completion(dataSet)
     }
-    
-    var parentFolder: BookmarkFolder?
 }
 
 class BookmarksCachingSearchTests: XCTestCase {
-
-    let url = URL(string: "http://duckduckgo.com")!
-    let simpleStore = MockBookmarkSearchStore()
     
-    let urlStore = MockBookmarkSearchStore()
-
-    private var storage: MockBookmarksCoreDataStore!
+    let url = URL(string: "http://duckduckgo.com")!
+    
+    let simpleStore = MockBookmarksSearchStore()
+    let urlStore = MockBookmarksSearchStore()
     
     enum Entry: String {
         case b1 = "bookmark test 1"
@@ -79,281 +63,175 @@ class BookmarksCachingSearchTests: XCTestCase {
         case urlDDG = "Test D 1"
     }
     
+    private var mockObjectID: NSManagedObjectID!
+    private var inMemoryStore: NSPersistentContainer!
+
     override func setUp() {
         super.setUp()
         
-        simpleStore.bookmarks = [MockBookmark(title: Entry.b1.rawValue, url: url, isFavorite: false),
-                                 MockBookmark(title: Entry.b2.rawValue, url: url, isFavorite: false),
-                                 MockBookmark(title: Entry.b12.rawValue, url: url, isFavorite: false),
-                                 MockBookmark(title: Entry.b12a.rawValue, url: url, isFavorite: false)]
+        inMemoryStore = CoreData.createInMemoryPersistentContainer(modelName: "BookmarksModel",
+                                                                  bundle: Bookmarks.bundle)
+        BookmarkUtils.prepareFoldersStructure(in: inMemoryStore.viewContext)
+        mockObjectID = BookmarkUtils.fetchRootFolder(inMemoryStore.viewContext)?.objectID
+        XCTAssertNotNil(mockObjectID)
+    
+        simpleStore.dataSet = [BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b1.rawValue, url: url, isFavorite: false),
+                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b2.rawValue, url: url, isFavorite: false),
+                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b12.rawValue, url: url, isFavorite: false),
+                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.b12a.rawValue, url: url, isFavorite: false),
+                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f1.rawValue, url: url, isFavorite: true),
+                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f2.rawValue, url: url, isFavorite: true),
+                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f12.rawValue, url: url, isFavorite: true),
+                               BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.f12a.rawValue, url: url, isFavorite: true)]
         
-        simpleStore.favorites = [MockBookmark(title: Entry.f1.rawValue, url: url, isFavorite: true),
-                                 MockBookmark(title: Entry.f2.rawValue, url: url, isFavorite: true),
-                                 MockBookmark(title: Entry.f12.rawValue, url: url, isFavorite: true),
-                                 MockBookmark(title: Entry.f12a.rawValue, url: url, isFavorite: true)]
-        
-        urlStore.favorites = [
-            MockBookmark(title: Entry.urlExample1.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
-            MockBookmark(title: Entry.urlExample2.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
-            MockBookmark(title: Entry.urlNasa.rawValue, url: URL(string: "https://www.nasa.gov")!, isFavorite: true),
-            MockBookmark(title: Entry.urlDDG.rawValue, url: url, isFavorite: true)]
-
-        storage = MockBookmarksCoreDataStore()
-        _ = BookmarksCoreDataStorage.rootFolderManagedObject(storage.viewContext)
-        _ = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(storage.viewContext)
-        storage.saveContext()
-        storage.loadStoreAndCaches { _ in }
-    }
-
-    func testWhenSearchingThenOnlyBeginingsOfWordsAreMatched() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
-        let expectations = [
-            expectation(description: "test for correct number of search results"),
-            expectation(description: "test for correct number of search results"),
-            expectation(description: "test for correct number of search results"),
-            expectation(description: "test for correct number of search results"),
-            expectation(description: "test for correct number of search results"),
-            expectation(description: "test for correct number of search results")]
-        
-        engine.search(query: "t") { bookmarks in
-            XCTAssertEqual(bookmarks.count, 8)
-            expectations[0].fulfill()
-        }
-        engine.search(query: "b") { bookmarks in
-            XCTAssertEqual(bookmarks.count, 4)
-            expectations[1].fulfill()
-        }
-        engine.search(query: "1") { bookmarks in
-            XCTAssertEqual(bookmarks.count, 6)
-            expectations[2].fulfill()
-        }
-        engine.search(query: "a") { bookmarks in
-            XCTAssertEqual(bookmarks.count, 2)
-            expectations[3].fulfill()
-        }
-        engine.search(query: "k") { bookmarks in
-            XCTAssertEqual(bookmarks.count, 0)
-            expectations[4].fulfill()
-        }
-        engine.search(query: "e") { bookmarks in
-            XCTAssertEqual(bookmarks.count, 0)
-            expectations[5].fulfill()
-        }
-        
-        waitForExpectations(timeout: 5)
+        urlStore.dataSet = [
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlExample1.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlExample2.rawValue, url: URL(string: "https://example.com")!, isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlNasa.rawValue, url: URL(string: "https://www.nasa.gov")!, isFavorite: true),
+            BookmarksCachingSearch.ScoredBookmark(objectID: mockObjectID, title: Entry.urlDDG.rawValue, url: url, isFavorite: true)]
     }
     
-    func testWhenSearchingThenBeginingOfTitlesArePromoted() throws {
+    override func tearDown() {
+        mockObjectID = nil
+        inMemoryStore = nil
         
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
-        
-        let expectation1 = expectation(description: "t")
-        engine.search(query: "t") { resultSingleLetter in
-            XCTAssertEqual(resultSingleLetter[0].title, Entry.f2.rawValue)
-            XCTAssertEqual(resultSingleLetter[1].title, Entry.f12a.rawValue)
-            
-            XCTAssertEqual(resultSingleLetter[2].title, Entry.b2.rawValue)
-            XCTAssertEqual(resultSingleLetter[3].title, Entry.b12a.rawValue)
-            
-            XCTAssertEqual(resultSingleLetter[4].title, Entry.f1.rawValue)
-            XCTAssertEqual(resultSingleLetter[5].title, Entry.f12.rawValue)
-            
-            XCTAssertEqual(resultSingleLetter[6].title, Entry.b1.rawValue)
-            XCTAssertEqual(resultSingleLetter[7].title, Entry.b12.rawValue)
-            
-            expectation1.fulfill()
-        }
-                
-        let expectation2 = expectation(description: "tes")
-        engine.search(query: "tes") { resultWord in
-        
-            XCTAssertEqual(resultWord[0].title, Entry.f2.rawValue)
-            XCTAssertEqual(resultWord[1].title, Entry.f12a.rawValue)
-            
-            XCTAssertEqual(resultWord[2].title, Entry.b2.rawValue)
-            XCTAssertEqual(resultWord[3].title, Entry.b12a.rawValue)
-            
-            XCTAssertEqual(resultWord[4].title, Entry.f1.rawValue)
-            XCTAssertEqual(resultWord[5].title, Entry.f12.rawValue)
-            
-            XCTAssertEqual(resultWord[6].title, Entry.b1.rawValue)
-            XCTAssertEqual(resultWord[7].title, Entry.b12.rawValue)
-            
-            expectation2.fulfill()
-        }
-            
-        let expectation3 = expectation(description: "bookmark")
-        engine.search(query: "bookmark") { resultFullWord in
-        
-            XCTAssertEqual(resultFullWord[0].title, Entry.b1.rawValue)
-            XCTAssertEqual(resultFullWord[1].title, Entry.b12.rawValue)
-            XCTAssertEqual(resultFullWord[2].title, Entry.b2.rawValue)
-            XCTAssertEqual(resultFullWord[3].title, Entry.b12a.rawValue)
-            
-            expectation3.fulfill()
-        }
-        
-        let expectation4 = expectation(description: "tes fav")
-        engine.search(query: "tes fav") { resultSentence in
-        
-            XCTAssertEqual(resultSentence[0].title, Entry.f2.rawValue)
-            XCTAssertEqual(resultSentence[1].title, Entry.f12a.rawValue)
-            XCTAssertEqual(resultSentence[2].title, Entry.f1.rawValue)
-            XCTAssertEqual(resultSentence[3].title, Entry.f12.rawValue)
-            
-            expectation4.fulfill()
-        }
-        
-        waitForExpectations(timeout: 5)
-    }
-    
-    func testWhenSearchingFullStringThenExactMatchesAreFirst() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
-        
-        let expectation1 = expectation(description: "fav 1")
-        engine.search(query: "fav 1") { result in
-        
-            XCTAssertEqual(result.count, 3)
-            XCTAssertEqual(result[0].title, Entry.f12a.rawValue)
-            XCTAssertEqual(result[1].title, Entry.f1.rawValue)
-            XCTAssertEqual(result[2].title, Entry.f12.rawValue)
-            
-            expectation1.fulfill()
-        }
-        
-        waitForExpectations(timeout: 5)
-    }
-    
-    func testWhenSearchingThenFavoritesAreFirst() throws {
-        
-        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
-        
-        let expectation1 = expectation(description: "1")
-        engine.search(query: "1") { result in
-            XCTAssertEqual(result.count, 6)
-            XCTAssertEqual(result[0].title, Entry.f1.rawValue)
-            XCTAssertEqual(result[1].title, Entry.f12.rawValue)
-            XCTAssertEqual(result[2].title, Entry.f12a.rawValue)
-            XCTAssertEqual(result[3].title, Entry.b1.rawValue)
-            XCTAssertEqual(result[4].title, Entry.b12.rawValue)
-            XCTAssertEqual(result[5].title, Entry.b12a.rawValue)
-            
-            expectation1.fulfill()
-        }
-        
-        waitForExpectations(timeout: 5)
+        super.tearDown()
     }
 
-    func testWhenSearchingMultipleWordsThenAllMustBeFound() throws {
-        
+    func testWhenSearchingThenOnlyBeginingsOfWordsAreMatched() async throws {
+
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
-        let expectation1 = expectation(description: "te bo")
-        engine.search(query: "te bo") { result in
-            XCTAssertEqual(result.count, 4)
-            // Prioritize if first word match the begining of the title
-            XCTAssertEqual(result[0].title, Entry.b2.rawValue)
-            XCTAssertEqual(result[1].title, Entry.b12a.rawValue)
-            XCTAssertEqual(result[2].title, Entry.b1.rawValue)
-            XCTAssertEqual(result[3].title, Entry.b12.rawValue)
-            
-            expectation1.fulfill()
-        }
+        var bookmarks = engine.search(query: "t")
+        XCTAssertEqual(bookmarks.count, 8)
         
-        waitForExpectations(timeout: 5)
+        bookmarks = engine.search(query: "b")
+        XCTAssertEqual(bookmarks.count, 4)
+        
+        bookmarks = engine.search(query: "1")
+        XCTAssertEqual(bookmarks.count, 6)
+        
+        bookmarks = engine.search(query: "a")
+        XCTAssertEqual(bookmarks.count, 2)
+        
+        bookmarks = engine.search(query: "k")
+        XCTAssertEqual(bookmarks.count, 0)
+        
+        bookmarks = engine.search(query: "e")
+        XCTAssertEqual(bookmarks.count, 0)
     }
     
-    func testWhenSearchingThenNotFindingAnythingIsAlsoValid() throws {
-        
+    func testWhenSearchingThenBeginingOfTitlesArePromoted() async throws {
         let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
-        let expectation1 = expectation(description: "testing")
-        engine.search(query: "testing") { result in
-            XCTAssertEqual(result.count, 0)
-            
-            expectation1.fulfill()
-        }
+        let resultSingleLetter = engine.search(query: "t")
+        XCTAssertEqual(resultSingleLetter[0].title, Entry.f2.rawValue)
+        XCTAssertEqual(resultSingleLetter[1].title, Entry.f12a.rawValue)
         
-        waitForExpectations(timeout: 5)
+        XCTAssertEqual(resultSingleLetter[2].title, Entry.b2.rawValue)
+        XCTAssertEqual(resultSingleLetter[3].title, Entry.b12a.rawValue)
+        
+        XCTAssertEqual(resultSingleLetter[4].title, Entry.f1.rawValue)
+        XCTAssertEqual(resultSingleLetter[5].title, Entry.f12.rawValue)
+        
+        XCTAssertEqual(resultSingleLetter[6].title, Entry.b1.rawValue)
+        XCTAssertEqual(resultSingleLetter[7].title, Entry.b12.rawValue)
+
+
+        let resultWord = engine.search(query: "tes")
+        
+        XCTAssertEqual(resultWord[0].title, Entry.f2.rawValue)
+        XCTAssertEqual(resultWord[1].title, Entry.f12a.rawValue)
+        
+        XCTAssertEqual(resultWord[2].title, Entry.b2.rawValue)
+        XCTAssertEqual(resultWord[3].title, Entry.b12a.rawValue)
+        
+        XCTAssertEqual(resultWord[4].title, Entry.f1.rawValue)
+        XCTAssertEqual(resultWord[5].title, Entry.f12.rawValue)
+        
+        XCTAssertEqual(resultWord[6].title, Entry.b1.rawValue)
+        XCTAssertEqual(resultWord[7].title, Entry.b12.rawValue)
+            
+        let resultFullWord = engine.search(query: "bookmark")
+        
+        XCTAssertEqual(resultFullWord[0].title, Entry.b1.rawValue)
+        XCTAssertEqual(resultFullWord[1].title, Entry.b12.rawValue)
+        XCTAssertEqual(resultFullWord[2].title, Entry.b2.rawValue)
+        XCTAssertEqual(resultFullWord[3].title, Entry.b12a.rawValue)
+        
+        let resultSentence = engine.search(query: "tes fav")
+        
+        XCTAssertEqual(resultSentence[0].title, Entry.f2.rawValue)
+        XCTAssertEqual(resultSentence[1].title, Entry.f12a.rawValue)
+        XCTAssertEqual(resultSentence[2].title, Entry.f1.rawValue)
+        XCTAssertEqual(resultSentence[3].title, Entry.f12.rawValue)
     }
     
-    func testWhenMatchingURLThenDomainMatchesArePromoted() throws {
+    func testWhenSearchingFullStringThenExactMatchesAreFirst() async throws {
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
         
+        let result = engine.search(query: "fav 1")
+        
+        XCTAssertEqual(result.count, 3)
+        XCTAssertEqual(result[0].title, Entry.f12a.rawValue)
+        XCTAssertEqual(result[1].title, Entry.f1.rawValue)
+        XCTAssertEqual(result[2].title, Entry.f12.rawValue)
+    }
+    
+    func testWhenSearchingThenFavoritesAreFirst() async throws {
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        
+        let result = engine.search(query: "1")
+        XCTAssertEqual(result.count, 6)
+        XCTAssertEqual(result[0].title, Entry.f1.rawValue)
+        XCTAssertEqual(result[1].title, Entry.f12.rawValue)
+        XCTAssertEqual(result[2].title, Entry.f12a.rawValue)
+        XCTAssertEqual(result[3].title, Entry.b1.rawValue)
+        XCTAssertEqual(result[4].title, Entry.b12.rawValue)
+        XCTAssertEqual(result[5].title, Entry.b12a.rawValue)
+    }
+
+    func testWhenSearchingMultipleWordsThenAllMustBeFound() async throws {
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        
+        let result = engine.search(query: "te bo")
+        XCTAssertEqual(result.count, 4)
+        // Prioritize if first word match the beginning of the title
+        XCTAssertEqual(result[0].title, Entry.b2.rawValue)
+        XCTAssertEqual(result[1].title, Entry.b12a.rawValue)
+        XCTAssertEqual(result[2].title, Entry.b1.rawValue)
+        XCTAssertEqual(result[3].title, Entry.b12.rawValue)
+    }
+    
+    func testWhenSearchingThenNotFindingAnythingIsAlsoValid() async throws {
+        let engine = BookmarksCachingSearch(bookmarksStore: simpleStore)
+        
+        let result = engine.search(query: "testing")
+        XCTAssertEqual(result.count, 0)
+    }
+    
+    func testWhenMatchingURLThenDomainMatchesArePromoted() async throws {
         let engine = BookmarksCachingSearch(bookmarksStore: urlStore)
         
-        let expectation1 = expectation(description: "exam")
-        engine.search(query: "exam") { result in
-            XCTAssertEqual(result.count, 2)
-            XCTAssertEqual(result[0].title, Entry.urlExample1.rawValue)
-            XCTAssertEqual(result[1].title, Entry.urlExample2.rawValue)
-            
-            expectation1.fulfill()
-        }
-                
-        let expectation2 = expectation(description: "exam 2")
-        engine.search(query: "exam 2") { result2 in
+        let result = engine.search(query: "exam")
+        XCTAssertEqual(result.count, 2)
+        XCTAssertEqual(result[0].title, Entry.urlExample1.rawValue)
+        XCTAssertEqual(result[1].title, Entry.urlExample2.rawValue)
         
-            XCTAssertEqual(result2.count, 1)
-            XCTAssertEqual(result2[0].title, Entry.urlExample2.rawValue)
-            
-            expectation2.fulfill()
-        }
-            
-        let expectation3 = expectation(description: "test")
-        engine.search(query: "test") { result3 in
+        let result2 = engine.search(query: "exam 2")
         
-            XCTAssertEqual(result3.count, 4)
+        XCTAssertEqual(result2.count, 1)
+        XCTAssertEqual(result2[0].title, Entry.urlExample2.rawValue)
             
-            expectation3.fulfill()
-        }
+        let result3 = engine.search(query: "test")
         
-        let expectation4 = expectation(description: "duck")
-        engine.search(query: "duck") { result4 in
+        XCTAssertEqual(result3.count, 4)
         
-            XCTAssertEqual(result4.count, 2)
-            XCTAssertEqual(result4[0].title, Entry.urlDDG.rawValue)
-            XCTAssertEqual(result4[1].title, Entry.urlNasa.rawValue)
-            
-            expectation4.fulfill()
-        }
+        let result4 = engine.search(query: "duck")
         
-        waitForExpectations(timeout: 5)
-    }
-
-    func testWhenBookmarkExistsThenContainsDomain() throws {
-        let engineUrlStore = BookmarksCachingSearch(bookmarksStore: urlStore)
-        XCTAssertTrue(engineUrlStore.containsDomain("duckduckgo.com"))
-
-        let engineSimpleStore = BookmarksCachingSearch(bookmarksStore: simpleStore)
-        XCTAssertTrue(engineSimpleStore.containsDomain("duckduckgo.com"))
-    }
-
-    func testWhenBookmarkSavedThenContainsDomain() async throws {
-        let bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: storage)
-
-        guard let topLevelBookMarksFolder = storage.topLevelBookmarksFolder else {
-            XCTFail("must have topLevelBookMarkFolder")
-            return
-        }
-
-        let managedObjectID = try await storage.saveNewBookmark(withTitle: Constants.bookmarkTitle,
-                                                                url: Constants.bookmarkURL,
-                                                                parentID: topLevelBookMarksFolder.objectID)
-        XCTAssertNotNil(managedObjectID)
-
-        guard let bookmarkManagedObject = await storage.bookmark(forURL: Constants.bookmarkURL) else {
-            XCTFail("bookmark should exist")
-            return
-        }
-
-        XCTAssertNotNil(bookmarkManagedObject)
-        XCTAssertEqual(bookmarkManagedObject.title, Constants.bookmarkTitle)
-        XCTAssertEqual(bookmarkManagedObject.parentFolder?.objectID, topLevelBookMarksFolder.objectID)
-        XCTAssertEqual(bookmarkManagedObject.url, Constants.bookmarkURL)
-
-        XCTAssertTrue(bookmarksCachingSearch.containsDomain("www.apple.com"))
+        XCTAssertEqual(result4.count, 2)
+        XCTAssertEqual(result4[0].title, Entry.urlDDG.rawValue)
+        XCTAssertEqual(result4[1].title, Entry.urlNasa.rawValue)
     }
 }
 

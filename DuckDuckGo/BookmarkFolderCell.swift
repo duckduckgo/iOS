@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Bookmarks
 
 class BookmarkFolderCell: UITableViewCell {
 
@@ -29,10 +30,19 @@ class BookmarkFolderCell: UITableViewCell {
     
     @IBOutlet weak var leadingPaddingConstraint: NSLayoutConstraint!
 
-    var folder: BookmarkFolder? {
+    var folder: BookmarkEntity? {
         didSet {
             guard let folder = folder else { return }
-            title.text = folder.title
+
+            if folder.uuid == BookmarkEntity.Constants.rootFolderID {
+                title.text = UserText.sectionTitleBookmarks
+            } else if folder.uuid == BookmarkEntity.Constants.favoritesFolderID {
+                title.text = "Favorites"
+                assertionFailure("Favorites folder in UI")
+            } else {
+                title.text = folder.title
+            }
+
             folderImageView.image = UIImage(named: "Folder")
         }
     }
@@ -59,11 +69,5 @@ class BookmarkFolderCell: UITableViewCell {
             accessoryType = isSelected ? .checkmark : .none
         }
     }
-    
-    func setUpAddFolderCell() {
-        depth = 0
-        title.text = UserText.addbookmarkFolderButton
-        folderImageView.image = UIImage(named: "FolderWithPlus")
-    }
-    
+       
 }

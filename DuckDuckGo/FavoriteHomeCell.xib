@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -14,7 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="favorite" id="ico-ty-UiT" customClass="FavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="favorite" id="ico-ty-UiT" customClass="FavoriteHomeCell" customModule="DuckDuckGo" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="68" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -53,7 +53,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DuckDuckGo - Paoli, PA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="igl-3v-DMO">
-                        <rect key="frame" x="0.0" y="72" width="68" height="26"/>
+                        <rect key="frame" x="0.0" y="72" width="68" height="24"/>
                         <accessibility key="accessibilityConfiguration">
                             <bool key="isElement" value="NO"/>
                         </accessibility>
@@ -77,6 +77,14 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h1L-Cf-oUY" userLabel="Remove Button">
+                        <rect key="frame" x="50" y="-10" width="33" height="28"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title=" " image="RemoveFavoriteIcon"/>
+                        <connections>
+                            <action selector="onRemoveAction" destination="ico-ty-UiT" eventType="touchUpInside" id="Jqi-Xl-vf6"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <constraints>
@@ -87,18 +95,24 @@
                 <constraint firstItem="bW3-He-Unt" firstAttribute="top" secondItem="0FF-Ic-U0T" secondAttribute="top" id="Rhd-cr-2JX"/>
                 <constraint firstItem="0FF-Ic-U0T" firstAttribute="top" secondItem="ico-ty-UiT" secondAttribute="top" id="RzA-6W-flZ"/>
                 <constraint firstItem="bW3-He-Unt" firstAttribute="leading" secondItem="0FF-Ic-U0T" secondAttribute="leading" id="W1u-6F-xWR"/>
+                <constraint firstItem="h1L-Cf-oUY" firstAttribute="top" secondItem="ico-ty-UiT" secondAttribute="top" constant="-10" id="bXe-1S-uVr"/>
                 <constraint firstItem="igl-3v-DMO" firstAttribute="top" secondItem="0FF-Ic-U0T" secondAttribute="bottom" constant="8" id="bb8-RC-f4d"/>
+                <constraint firstAttribute="trailing" secondItem="h1L-Cf-oUY" secondAttribute="trailing" constant="-15" id="fq4-iw-rP0"/>
                 <constraint firstItem="igl-3v-DMO" firstAttribute="centerX" secondItem="ico-ty-UiT" secondAttribute="centerX" id="liy-lM-Qld"/>
             </constraints>
             <size key="customSize" width="134" height="110"/>
             <connections>
+                <outlet property="deleteButton" destination="h1L-Cf-oUY" id="RuJ-hu-e4u"/>
                 <outlet property="highlightMask" destination="bW3-He-Unt" id="S8k-yC-G19"/>
                 <outlet property="iconBackground" destination="0FF-Ic-U0T" id="NZd-EV-VJL"/>
                 <outlet property="iconImage" destination="SnK-Bc-1oh" id="YCV-0I-sqI"/>
                 <outlet property="iconSize" destination="7cy-wR-boG" id="Ipf-Of-G81"/>
                 <outlet property="titleLabel" destination="igl-3v-DMO" id="wNh-Jl-GUm"/>
             </connections>
-            <point key="canvasLocation" x="139" y="117"/>
+            <point key="canvasLocation" x="137.68115942028987" y="116.51785714285714"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="RemoveFavoriteIcon" width="28" height="28"/>
+    </resources>
 </document>

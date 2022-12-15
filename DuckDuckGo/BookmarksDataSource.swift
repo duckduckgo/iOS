@@ -18,209 +18,91 @@
 //
 
 import UIKit
+import Bookmarks
 import Core
-import CoreData
-
-protocol MainBookmarksViewDataSource: UITableViewDataSource {
-    var isEmpty: Bool { get }
-    var showSearch: Bool { get }
-    var favoritesSectionIndex: Int? { get }
-    var navigationTitle: String? { get }
-    var folder: BookmarkFolder? { get }
-    var bookmarksManager: BookmarksManager { get }
-    
-    func item(at indexPath: IndexPath) -> BookmarkItem?
-}
-
-extension MainBookmarksViewDataSource {
-    var folder: BookmarkFolder? {
-        return nil
-    }
-}
 
 class BookmarksDataSource: NSObject, UITableViewDataSource {
-    
-    fileprivate var sectionDataSources: [BookmarkItemsSectionDataSource] = []
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionDataSources.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sectionDataSources[section].numberOfRows
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionDataSources[section].title()
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dataSource = sectionDataSources[indexPath.section]
-        return dataSource.cell(tableView, forIndex: indexPath.row)
-    }
-}
 
-class DefaultBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
-    
-    let bookmarksManager: BookmarksManager
+    let viewModel: BookmarkListInteracting
 
-    var parentFolder: BookmarkFolder?
-        
-    init(alertDelegate: BookmarksSectionDataSourceDelegate?,
-         parentFolder: BookmarkFolder? = nil,
-         bookmarksManager: BookmarksManager = BookmarksManager()) {
-        
-        self.parentFolder = parentFolder
-        self.bookmarksManager = bookmarksManager
-        super.init()
-        let bookmarksDataSource = BookmarksSectionDataSource(parentFolder: parentFolder, delegate: alertDelegate, bookmarksManager: bookmarksManager)
-        if parentFolder != nil {
-            self.sectionDataSources = [bookmarksDataSource]
-        } else {
-            let favoritesDataSource = FavoritesSectionDataSource(bookmarksManager: bookmarksManager)
-            self.sectionDataSources = [favoritesDataSource, bookmarksDataSource]
-        }
-    }
-    
-    var favoritesSectionIndex: Int? {
-        return parentFolder == nil ? 0 : nil
-    }
-    
-    var folder: BookmarkFolder? {
-        return parentFolder
-    }
-    
     var isEmpty: Bool {
-        let isSectionsEmpty = sectionDataSources.map { $0.isEmpty }
-        return !isSectionsEmpty.contains(where: { !$0 })
+        viewModel.bookmarks.isEmpty
     }
-    
-    var showSearch: Bool {
-        return sectionDataSources.count > 1
+
+    init(viewModel: BookmarkListInteracting) {
+        self.viewModel = viewModel
+        super.init()
     }
-    
-    var navigationTitle: String? {
-        let bookmarksDataSource = sectionDataSources.first {
-            $0.self is BookmarksSectionDataSource
-        } as? BookmarksSectionDataSource
-        return bookmarksDataSource?.navigationTitle()
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.bookmarks.count
     }
-    
-    func item(at indexPath: IndexPath) -> BookmarkItem? {
-        if sectionDataSources.count <= indexPath.section {
-            return nil
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let bookmark = viewModel.bookmark(at: indexPath.row) else {
+            fatalError("No bookmark at index \(indexPath.row)")
         }
-        return sectionDataSources[indexPath.section].bookmarkItem(at: indexPath.row)
+
+        if bookmark.isFolder {
+            let cell = BookmarksViewControllerCellFactory.makeFolderCell(tableView, forIndexPath: indexPath)
+            cell.titleLabel.text = bookmark.title
+            cell.childrenCountLabel.text = "\(bookmark.childrenArray.count)"
+            return cell
+        } else {
+            let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
+            cell.faviconImageView.loadFavicon(forDomain: bookmark.urlObject?.host, usingCache: .bookmarks)
+            cell.titleLabel.text = bookmark.title
+            cell.favoriteImageViewContainer.isHidden = !bookmark.isFavorite
+            return cell
+        }
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return !sectionDataSources[indexPath.section].isEmpty
+        return !viewModel.bookmarks.isEmpty
     }
 
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return !sectionDataSources[indexPath.section].isEmpty
+        return !viewModel.bookmarks.isEmpty
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        sectionDataSources[indexPath.section].commit(tableView, editingStyle: editingStyle, forRowAt: indexPath.row, section: indexPath.section)
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 
-        guard let item = item(at: sourceIndexPath) else {
-            assertionFailure("Item does not exist")
-            return
-        }
-        
-        if sourceIndexPath.section == destinationIndexPath.section {
-            bookmarksManager.updateIndex(of: item.objectID, newIndex: destinationIndexPath.row)
-        } else if sourceIndexPath.section == 0 && destinationIndexPath.section == 1 {
-            bookmarksManager.convertFavoriteToBookmark(item.objectID, newIndex: destinationIndexPath.row)
-        } else if sourceIndexPath.section == 1 && destinationIndexPath.section == 0 {
-            guard let bookmark = item as? Bookmark else {
-                fatalError("Folders aren't allowed in favorites. We shouldn't be able to get here")
-            }
-            bookmarksManager.convertBookmarkToFavorite(bookmark.objectID, newIndex: destinationIndexPath.row)
-        }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard let bookmark = viewModel.bookmark(at: sourceIndexPath.row) else { return }
+        viewModel.moveBookmark(bookmark, fromIndex: sourceIndexPath.row, toIndex: destinationIndexPath.row)
     }
+
 }
 
-class SearchBookmarksDataSource: BookmarksDataSource, MainBookmarksViewDataSource {
-    
-    let bookmarksManager: BookmarksManager
-    
-    init(bookmarksManager: BookmarksManager = BookmarksManager()) {
-        self.bookmarksManager = bookmarksManager
+class SearchBookmarksDataSource: NSObject, UITableViewDataSource {
+
+    let searchEngine: BookmarksStringSearch
+    var results = [BookmarksStringSearchResult]()
+
+    init(searchEngine: BookmarksStringSearch) {
+        self.searchEngine = searchEngine
     }
-    
-    var searchResults = [Bookmark]()
-    
-    var favoritesSectionIndex: Int? {
-        return nil
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return max(1, results.count)
     }
-    
-    var isEmpty: Bool {
-        return searchResults.isEmpty
-    }
-    
-    var showSearch: Bool {
-        sectionDataSources.count > 1
-    }
-    
-    var navigationTitle: String?
-    
-    func performSearch(query: String, searchEngine: BookmarksCachingSearch, completion: @escaping () -> Void) {
-        let query = query.lowercased()
-        searchEngine.search(query: query, sortByRelevance: false) { results in
-            self.searchResults = results
-            completion()
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if results.isEmpty {
+            return BookmarksViewControllerCellFactory.makeNoResultsCell(tableView)
         }
-    }
-    
-    func item(at indexPath: IndexPath) -> BookmarkItem? {
-        return item(at: indexPath.row)
-    }
-    
-    func item(at index: Int) -> Bookmark? {
-        guard index < searchResults.count else {
-            return nil
-        }
-        return searchResults[index]
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return item(at: indexPath.row) != nil
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return max(1, searchResults.count)
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return nil
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isEmpty {
-            return createEmptyCell(tableView, forIndex: indexPath.row)
-        } else {
-            let item = item(at: indexPath.row)
-            return createCell(tableView, withItem: item)
-        }
-    }
-    
-    func createCell(_ tableView: UITableView, withItem item: Bookmark?) -> UITableViewCell {
-        BookmarkCellCreator.createCell(tableView, withItem: item)
-    }
-    
-    func createEmptyCell(_ tableView: UITableView, forIndex index: Int) -> NoBookmarksCell {
-        let cell = BookmarkCellCreator.createEmptyCell(tableView, forIndex: index)
-        cell.label.text = UserText.noMatchesFound
+
+        let cell = BookmarksViewControllerCellFactory.makeBookmarkCell(tableView, forIndexPath: indexPath)
+        cell.faviconImageView.loadFavicon(forDomain: results[indexPath.row].url.host, usingCache: .bookmarks)
+        cell.titleLabel.text = results[indexPath.row].title
+        cell.favoriteImageViewContainer.isHidden = !results[indexPath.row].isFavorite
         return cell
     }
+
+    func performSearch(_ text: String) {
+        results = searchEngine.search(query: text)
+    }
+
+    func toggleFavorite(at index: Int) {
+        results[index] = results[index].togglingFavorite()
+    }
+
 }

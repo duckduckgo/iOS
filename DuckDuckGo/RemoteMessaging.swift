@@ -22,6 +22,8 @@ import Core
 import BackgroundTasks
 import BrowserServicesKit
 import os.log
+import Persistence
+import Bookmarks
 
 struct RemoteMessaging {
 
@@ -41,14 +43,14 @@ struct RemoteMessaging {
         return Date().timeIntervalSince(Self.lastRemoteMessagingRefreshDate) > Constants.minimumConfigurationRefreshInterval
     }
 
-    static func registerBackgroundRefreshTaskHandler() {
+    static func registerBackgroundRefreshTaskHandler(bookmarksDatabase: CoreDataDatabase) {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: Constants.backgroundRefreshTaskIdentifier, using: nil) { task in
             guard shouldRefresh else {
                 task.setTaskCompleted(success: true)
                 scheduleBackgroundRefreshTask()
                 return
             }
-            backgroundRefreshTaskHandler(bgTask: task)
+            backgroundRefreshTaskHandler(bgTask: task, bookmarksDatabase: bookmarksDatabase)
         }
     }
 
@@ -74,10 +76,10 @@ struct RemoteMessaging {
         #endif
     }
 
-    static func backgroundRefreshTaskHandler(bgTask: BGTask) {
+    static func backgroundRefreshTaskHandler(bgTask: BGTask, bookmarksDatabase: CoreDataDatabase) {
         let fetchAndProcessTask = Task {
             do {
-                try await Self.fetchAndProcess()
+                try await Self.fetchAndProcess(bookmarksDatabase: bookmarksDatabase)
                 Self.lastRemoteMessagingRefreshDate = Date()
                 scheduleBackgroundRefreshTask()
                 bgTask.setTaskCompleted(success: true)
@@ -94,14 +96,25 @@ struct RemoteMessaging {
     }
 
     /// Convenience function
-    static func fetchAndProcess() async throws {
-        let bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
-        let bookmarksCount = await MainActor.run {
-            return bookmarksCachingSearch.bookmarksCount
+    static func fetchAndProcess(bookmarksDatabase: CoreDataDatabase) async throws {
+        
+        var bookmarksCount = 0
+        var favoritesCount = 0
+        let context = bookmarksDatabase.makeContext(concurrencyType: .privateQueueConcurrencyType)
+        context.performAndWait {
+            let bookmarksCountRequest = BookmarkEntity.fetchRequest()
+            bookmarksCountRequest.predicate = NSPredicate(format: "%K == false AND %K == false",
+                                                 #keyPath(BookmarkEntity.isFavorite),
+                                                 #keyPath(BookmarkEntity.isFolder))
+            bookmarksCount = (try? context.count(for: bookmarksCountRequest)) ?? 0
+            
+            let favoritesCountRequest = BookmarkEntity.fetchRequest()
+            bookmarksCountRequest.predicate = NSPredicate(format: "%K == true AND %K == false",
+                                                 #keyPath(BookmarkEntity.isFavorite),
+                                                 #keyPath(BookmarkEntity.isFolder))
+            favoritesCount = (try? context.count(for: favoritesCountRequest)) ?? 0
         }
-        let favoritesCount = await MainActor.run {
-            return bookmarksCachingSearch.favoritesCount
-        }
+        
         let isWidgetInstalled = await AppDependencyProvider.shared.appSettings.isWidgetInstalled()
 
         try await Self.fetchAndProcess(bookmarksCount: bookmarksCount,

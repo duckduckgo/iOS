@@ -36,6 +36,11 @@ final class BrokenSiteReportingTests: XCTestCase {
     private enum Resource {
         static let tests = "privacy-reference-tests/broken-site-reporting/tests.json"
     }
+    
+    override func tearDown() {
+        HTTPStubs.removeAllStubs()
+        super.tearDown()
+    }
 
     func testBrokenSiteReporting() throws {
         let testJSON = data.fromJsonFile(Resource.tests)

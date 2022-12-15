@@ -19,12 +19,13 @@
 
 import UIKit
 import Core
+import Bookmarks
 
 protocol HomeControllerDelegate: AnyObject {
 
     func home(_ home: HomeViewController, didRequestUrl url: URL)
     
-    func home(_ home: HomeViewController, didRequestEdit favorite: Bookmark)
+    func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity)
 
     func home(_ home: HomeViewController, didRequestQuery query: String)
     

@@ -20,36 +20,32 @@
 import Foundation
 import Core
 import os.log
+import Bookmarks
+import WidgetKit
 
 extension TabViewController {
-    func saveAsBookmark(favorite: Bool) {
-        
+    func saveAsBookmark(favorite: Bool, viewModel: MenuBookmarksInteracting) {
         guard let link = link, !isError else {
-            os_log("Invalid bookmark link found on bookmark long press", log: generalLog, type: .debug)
+            assertionFailure()
             return
         }
 
-        let bookmarksManager = BookmarksManager()
-        bookmarksManager.contains(url: link.url) { contains in
+        if favorite && nil == viewModel.favorite(for: link.url) {
+            viewModel.createOrToggleFavorite(title: link.displayTitle, url: link.url)
+            WidgetCenter.shared.reloadAllTimelines()
             
-            if contains {
-                DispatchQueue.main.async {
-                    ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
-                }
-            } else {
-                if favorite {
-                    bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url)
-                    DispatchQueue.main.async {
-                        ActionMessageView.present(message: UserText.webSaveFavoriteDone)
-                    }
-                } else {
-                    bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
-                    DispatchQueue.main.async {
-                        ActionMessageView.present(message: UserText.webSaveBookmarkDone)
-                    }
-                }
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webSaveFavoriteDone)
             }
-            
+        } else if nil == viewModel.bookmark(for: link.url) {
+            viewModel.createBookmark(title: link.displayTitle, url: link.url)
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webSaveBookmarkDone)
+            }
+        } else {
+            DispatchQueue.main.async {
+                ActionMessageView.present(message: UserText.webBookmarkAlreadySaved)
+            }
         }
     }
 }

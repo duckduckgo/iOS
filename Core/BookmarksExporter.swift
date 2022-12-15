@@ -18,12 +18,19 @@
 //
 
 import Foundation
+import Bookmarks
+import Persistence
 
+public enum BookmarksExporterError: Error {
+    case brokenDatabaseStructure
+}
+
+@MainActor
 public struct BookmarksExporter {
 
-    private(set) var coreDataStorage: BookmarksCoreDataStorage
+    private(set) var coreDataStorage: CoreDataDatabase
 
-    public init(coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
+    public init(coreDataStore: CoreDataDatabase) {
         coreDataStorage = coreDataStore
     }
 
@@ -33,29 +40,30 @@ public struct BookmarksExporter {
 
     func exportBookmarksToContent() throws -> String {
         var content = [Template.header]
-        let topLevelBookmarksAndFavorites = coreDataStorage.favorites + coreDataStorage.topLevelBookmarksItems
+        
+        let context = coreDataStorage.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        guard let rootFolder = BookmarkUtils.fetchRootFolder(context) else {
+            throw BookmarksExporterError.brokenDatabaseStructure
+        }
+        
+        let topLevelBookmarksAndFavorites = rootFolder.childrenArray
         content.append(contentsOf: export(topLevelBookmarksAndFavorites, level: 2))
         content.append(Template.footer)
         return content.joined()
     }
 
-    func export(_ entities: [BookmarkItemManagedObject], level: Int) -> [String] {
+    func export(_ entities: [BookmarkEntity], level: Int) -> [String] {
         var content = [String]()
         for entity in entities {
-            if let bookmark = entity as? Bookmark {
-                content.append(Template.bookmark(level: level,
-                                                 title: bookmark.displayTitle!.escapedForHTML,
-                                                 url: bookmark.url!,
-                                                 isFavorite: bookmark.isFavorite))
-            }
-
-            if let folder = entity as? BookmarkFolder {
-                content.append(Template.openFolder(level: level, named: folder.title!))
-                if let arrayChildren: [BookmarkItemManagedObject] = folder.children?.array as? [BookmarkItemManagedObject] {
-                    content.append(contentsOf: export(arrayChildren, level: level + 1))
-                }
-                        
+            if entity.isFolder {
+                content.append(Template.openFolder(level: level, named: entity.title!))
+                content.append(contentsOf: export(entity.childrenArray, level: level + 1))
                 content.append(Template.closeFolder(level: level))
+            } else {
+                content.append(Template.bookmark(level: level,
+                                                 title: entity.title!.escapedForHTML,
+                                                 url: entity.url!,
+                                                 isFavorite: entity.isFavorite))
             }
         }
         return content
@@ -85,9 +93,9 @@ extension BookmarksExporter {
         </HTML>
         """
 
-        static func bookmark(level: Int, title: String, url: URL, isFavorite: Bool = false) -> String {
+        static func bookmark(level: Int, title: String, url: String, isFavorite: Bool = false) -> String {
             """
-            \(String.indent(by: level))<DT><A HREF="\(url.absoluteString)"\(isFavorite ? " duckduckgo:favorite=\"true\"" : "")>\(title)</A>
+            \(String.indent(by: level))<DT><A HREF="\(url)"\(isFavorite ? " duckduckgo:favorite=\"true\"" : "")>\(title)</A>
 
             """
         }

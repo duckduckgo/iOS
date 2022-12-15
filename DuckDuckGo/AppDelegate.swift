@@ -25,6 +25,8 @@ import Kingfisher
 import WidgetKit
 import BackgroundTasks
 import BrowserServicesKit
+import Bookmarks
+import Persistence
 import Crashes
 
 // swiftlint:disable file_length
@@ -45,8 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var overlayWindow: UIWindow?
     var window: UIWindow?
 
-    private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
     private lazy var privacyStore = PrivacyUserDefaults()
+    private var bookmarksDatabase: CoreDataDatabase = BookmarksDatabase.make()
     private var autoClear: AutoClear?
     private var showKeyboardIfSettingOn = true
     private var lastBackgroundDate: Date?
@@ -78,8 +80,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if testing {
             _ = DefaultUserAgentManager.shared
             Database.shared.loadStore { _, _ in }
-            BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
-                _ = BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context)
+            bookmarksDatabase.loadStore { context, error in
+                guard let context = context else {
+                    fatalError("Error: \(error?.localizedDescription ?? "<unknown>")")
+                }
+                
+                let legacyStorage = LegacyBookmarksCoreDataStorage()
+                legacyStorage?.loadStoreAndCaches()
+                LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
+                                                      to: context)
+                legacyStorage?.removeStore()
             }
             window?.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
             return true
@@ -112,11 +122,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             DatabaseMigration.migrate(to: context)
         }
-        
-        BookmarksCoreDataStorage.shared.loadStoreAndCaches { context in
-            if BookmarksCoreDataStorageMigration.migrate(fromBookmarkStore: self.bookmarkStore, context: context) {
-                WidgetCenter.shared.reloadAllTimelines()
+
+        bookmarksDatabase.loadStore { context, error in
+            guard let context = context else {
+                if let error = error {
+                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase,
+                               error: error)
+                } else {
+                    Pixel.fire(pixel: .bookmarksCouldNotLoadDatabase)
+                }
+
+                Thread.sleep(forTimeInterval: 1)
+                fatalError("Could not create Bookmarks database stack: \(error?.localizedDescription ?? "err")")
             }
+            
+            let legacyStorage = LegacyBookmarksCoreDataStorage()
+            legacyStorage?.loadStoreAndCaches()
+            LegacyBookmarksStoreMigration.migrate(from: legacyStorage,
+                                                  to: context)
+            legacyStorage?.removeStore()
+            WidgetCenter.shared.reloadAllTimelines()
         }
         
         Favicons.shared.migrateFavicons(to: Favicons.Constants.maxFaviconSize) {
@@ -133,10 +158,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DaxDialogs.shared.primeForUse()
         }
 
-        if let main = mainViewController {
-            autoClear = AutoClear(worker: main)
-            autoClear?.applicationDidLaunch()
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        
+        guard let main = storyboard.instantiateInitialViewController(creator: { coder in
+            MainViewController(coder: coder, bookmarksDatabase: self.bookmarksDatabase)
+        }) else {
+            fatalError("Could not load MainViewController")
         }
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = main
+        window?.makeKeyAndVisible()
+        
+        autoClear = AutoClear(worker: main)
+        autoClear?.applicationDidLaunch()
         
         clearLegacyAllowedDomainCookies()
         
@@ -146,7 +181,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Having both in `didBecomeActive` can sometimes cause the exception when running on a physical device, so registration happens here.
         AppConfigurationFetch.registerBackgroundRefreshTaskHandler()
         MacBrowserWaitlist.shared.registerBackgroundRefreshTaskHandler()
-        RemoteMessaging.registerBackgroundRefreshTaskHandler()
+        RemoteMessaging.registerBackgroundRefreshTaskHandler(bookmarksDatabase: bookmarksDatabase)
 
         UNUserNotificationCenter.current().delegate = self
         
@@ -274,7 +309,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func refreshRemoteMessages() {
         Task {
-            try? await RemoteMessaging.fetchAndProcess()
+            try? await RemoteMessaging.fetchAndProcess(bookmarksDatabase: self.bookmarksDatabase)
         }
     }
 

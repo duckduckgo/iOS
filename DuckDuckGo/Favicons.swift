@@ -87,7 +87,7 @@ public class Favicons {
         private func baseCacheURL() -> URL? {
             switch self {
             case .bookmarks:
-                let groupName = BookmarkUserDefaults.Constants.groupName
+                let groupName = BookmarksDatabase.Constants.bookmarksGroupID
                 return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: groupName)
                        
             case .tabs:
@@ -99,55 +99,22 @@ public class Favicons {
 
     public static let shared = Favicons()
 
-    @UserDefaultsWrapper(key: .faviconsNeedMigration, defaultValue: true)
-    var needsMigration: Bool
-
     @UserDefaultsWrapper(key: .faviconSizeNeedsMigration, defaultValue: true)
     var sizeNeedsMigration: Bool
 
     let sourcesProvider: FaviconSourcesProvider
-    let bookmarksStore: BookmarkStore
-    let bookmarksCachingSearch: BookmarksCachingSearch
     let downloader: NotFoundCachingDownloader
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
 
     init(sourcesProvider: FaviconSourcesProvider = DefaultFaviconSourcesProvider(),
-         bookmarksStore: BookmarkStore = BookmarkUserDefaults(),
-         bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch,
          downloader: NotFoundCachingDownloader = NotFoundCachingDownloader()) {
         self.sourcesProvider = sourcesProvider
-        self.bookmarksStore = bookmarksStore
-        self.bookmarksCachingSearch = bookmarksCachingSearch
         self.downloader = downloader
 
         // Prevents the caches being cleaned up
         NotificationCenter.default.removeObserver(Constants.bookmarksCache)
         NotificationCenter.default.removeObserver(Constants.tabsCache)
-    }
-    
-    public func migrateIfNeeded(afterMigrationHandler: @escaping () -> Void) {
-        guard needsMigration else { return }
-
-        DispatchQueue.global(qos: .utility).async {
-            ImageCache.default.clearDiskCache()
-            
-            let links = ((self.bookmarksStore.bookmarks + self.bookmarksStore.favorites).compactMap { $0.url.host })
-                + PreserveLogins.shared.allowedDomains
-            
-            let group = DispatchGroup()
-            Set(links).forEach { domain in
-                group.enter()
-                self.loadFavicon(forDomain: domain, intoCache: .bookmarks) { _ in
-                    group.leave()
-                }
-            }
-            group.wait()
-
-            self.needsMigration = false
-            afterMigrationHandler()
-        }
-        
     }
 
     public func migrateFavicons(to size: CGSize, afterMigrationHandler: @escaping () -> Void) {
@@ -195,16 +162,11 @@ public class Favicons {
         }
     }
 
-    func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
+    public func replaceBookmarksFavicon(forDomain domain: String?, withImage image: UIImage) {
         
         guard let domain = domain,
               let resource = defaultResource(forDomain: domain),
               let options = kfOptions(forDomain: domain, usingCache: .bookmarks) else { return }
-
-        if !isFaviconCachedForBookmarks(forDomain: domain, resource: resource) {
-            loadFaviconForBookmarks(forDomain: domain)
-            return
-        }
 
         let faviconImage = scaleDownIfNeeded(image: image, toFit: Constants.maxFaviconSize)
 
@@ -213,14 +175,16 @@ public class Favicons {
             Constants.bookmarksCache.store(faviconImage, forKey: resource.cacheKey, options: .init(options))
         }
         
-        // only replace if it exists and new one is bigger
         Constants.bookmarksCache.retrieveImageInDiskCache(forKey: resource.cacheKey, options: [.onlyFromCache ]) { result in
             switch result {
                 
             case .success(let cachedImage):
-                if let cachedImage = cachedImage, cachedImage.size.width < faviconImage.size.width {
-                    replace()
-                } else if self.bookmarksStore.contains(domain: domain) {
+                if let cachedImage = cachedImage {
+                    // it's in the cache so only replace if the new one is bigger
+                    if cachedImage.size.width < faviconImage.size.width {
+                        replace()
+                    }
+                } else { // Nothing in the cache so 'add' it
                     replace()
                 }
                 
@@ -231,16 +195,7 @@ public class Favicons {
     }
 
     func isFaviconCachedForBookmarks(forDomain domain: String, resource: ImageResource) -> Bool {
-        return Constants.bookmarksCache.isCached(forKey: resource.cacheKey) || bookmarksStore.contains(domain: domain)
-    }
-
-    func loadFaviconForBookmarks(forDomain domain: String) {
-        // If the favicon is not cached for bookmarks, we need to:
-        // 1. check if a bookmark exists for the domain
-        // 2. if it does, we need to load the favicon for the domain
-        if bookmarksCachingSearch.containsDomain(domain) {
-            loadFavicon(forDomain: domain, intoCache: .bookmarks, fromCache: .tabs)
-        }
+        return Constants.bookmarksCache.isCached(forKey: resource.cacheKey)
     }
 
     public func clearCache(_ cacheType: CacheType) {
@@ -260,10 +215,7 @@ public class Favicons {
     }
 
     public func removeFireproofFavicon(forDomain domain: String) {
-
-        guard !bookmarksStore.contains(domain: domain) else { return }
-        removeFavicon(forDomain: domain, fromCache: .bookmarks)
-
+       removeFavicon(forDomain: domain, fromCache: .bookmarks)
     }
     
     private func copyFavicon(forDomain domain: String, fromCache: CacheType, toCache: CacheType, completion: ((UIImage?) -> Void)? = nil) {

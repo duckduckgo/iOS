@@ -80,7 +80,7 @@ class FileSizeDebugViewController: UITableViewController {
     }
     
     private var sharedBookmarksContainerURL: URL? {
-        let identifier = "\(Global.groupIdPrefix).bookmarks"
+        let identifier = BookmarksDatabase.Constants.bookmarksGroupID
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier)
     }
     

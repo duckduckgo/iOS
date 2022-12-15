@@ -19,6 +19,8 @@
 
 import Foundation
 import SwiftSoup
+import Bookmarks
+import Persistence
 import os.log
 
 public enum BookmarksImportError: Error {
@@ -29,6 +31,7 @@ public enum BookmarksImportError: Error {
     case unknown
 }
 
+@MainActor
 final public class BookmarksImporter {
 
     public enum Notifications {
@@ -37,10 +40,10 @@ final public class BookmarksImporter {
     }
 
     private(set) var importedBookmarks: [BookmarkOrFolder] = []
-    private(set) var coreDataStorage: BookmarksCoreDataStorage
+    private(set) var coreDataStorage: BookmarkCoreDataImporter
 
-    public init(coreDataStore: BookmarksCoreDataStorage = BookmarksCoreDataStorage.shared) {
-        coreDataStorage = coreDataStore
+    public init(coreDataStore: CoreDataDatabase) {
+        coreDataStorage = BookmarkCoreDataImporter(database: coreDataStore)
     }
 
     func isDocumentInSafariFormat(_ document: Document) -> Bool {
@@ -203,7 +206,7 @@ final public class BookmarksImporter {
 
     func saveBookmarks(_ bookmarks: [BookmarkOrFolder]) async throws {
         do {
-            try await coreDataStorage.importBookmarks(importedBookmarks)
+            try await coreDataStorage.importBookmarks(bookmarks)
         } catch {
             os_log("Failed to save imported bookmarks to core data %s", type: .debug, error.localizedDescription)
             throw BookmarksImportError.saveFailure

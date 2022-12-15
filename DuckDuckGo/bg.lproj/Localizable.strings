@@ -10,6 +10,9 @@
 /* Button label for Undo action */
 "action.generic.undo" = "Отмяна";
 
+/* Button label for managing favorites */
+"action.manage.favorites" = "Управление";
+
 /* Add action - button shown in alert */
 "action.title.add" = "Добавяне";
 
@@ -656,10 +659,10 @@
 "favorite" = "Любим";
 
 /* No comment provided by engineer. */
-"favorite.menu.delete" = "Изтриване";
+"favorite.menu.edit" = "Редактиране";
 
 /* No comment provided by engineer. */
-"favorite.menu.edit" = "Редактиране";
+"favorite.menu.remove" = "Премахване";
 
 /* No comment provided by engineer. */
 "feedback.browserFeatures.ads" = "Блокиране на реклами и изскачащи прозорци";
@@ -1150,6 +1153,24 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Активирана защита на поверителността за %@";
 
+<<<<<<< HEAD
+/* No comment provided by engineer. */
+"unknown.error.occurred" = "Възникна неизвестна грешка.";
+
+/* Autocomplete selected suggestion into the Address Bar button accessibility label */
+"voiceover.action.suggestion.autocomplete" = "Предложение за автоматично довършване";
+
+/* Voice-over title for a Bookmark suggestion. Noun */
+"voiceover.suggestion.type.bookmark" = "Отметка";
+
+/* Search for suggestion action accessibility title */
+"voiceover.suggestion.type.search" = "Търсене в DuckDuckGo";
+
+/* Open suggested website action accessibility title */
+"voiceover.suggestion.type.website" = "Отваряне на уебсайта";
+
+=======
+>>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Настройки";
 

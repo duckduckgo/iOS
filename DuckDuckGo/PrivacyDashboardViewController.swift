@@ -137,6 +137,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
     }
     
     func privacyDashboardControllerDidRequestShowReportBrokenSite(_ privacyDashboardController: PrivacyDashboardController) {
+        Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
 }

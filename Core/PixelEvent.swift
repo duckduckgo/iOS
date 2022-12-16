@@ -37,11 +37,6 @@ extension Pixel {
         case forgetAllDataCleared
         
         case privacyDashboardOpened
-        case privacyDashboardScorecard
-        case privacyDashboardEncryption
-        case privacyDashboardNetworks
-        case privacyDashboardPrivacyPractices
-        case privacyDashboardGlobalStats
         case privacyDashboardProtectionDisabled
         case privacyDashboardProtectionEnabled
         case privacyDashboardManageProtection
@@ -405,11 +400,7 @@ extension Pixel.Event {
         case .forgetAllDataCleared: return "mf_dc"
             
         case .privacyDashboardOpened: return "mp"
-        case .privacyDashboardScorecard: return "mp_c"
-        case .privacyDashboardEncryption: return "mp_e"
-        case .privacyDashboardNetworks: return "mp_n"
-        case .privacyDashboardPrivacyPractices: return "mp_p"
-        case .privacyDashboardGlobalStats: return "mp_s"
+
         case .privacyDashboardProtectionDisabled: return "mp_wla"
         case .privacyDashboardProtectionEnabled: return "mp_wlr"
         case .privacyDashboardManageProtection: return "mp_mw"

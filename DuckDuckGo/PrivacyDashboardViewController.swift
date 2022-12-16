@@ -95,6 +95,8 @@ private extension PrivacyDashboardViewController {
         contentBlockingManager.scheduleCompilation()
         
         privacyDashboardController.didStartRulesCompilation()
+        
+        Pixel.fire(pixel: enabled ? .privacyDashboardProtectionEnabled : .privacyDashboardProtectionDisabled)
     }
     
     func privacyDashboardCloseTappedHandler() {

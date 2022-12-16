@@ -39,7 +39,6 @@ extension Pixel {
         case privacyDashboardOpened
         case privacyDashboardProtectionDisabled
         case privacyDashboardProtectionEnabled
-        case privacyDashboardManageProtection
         case privacyDashboardReportBrokenSite
         case privacyDashboardPixelFromJS(rawPixel: String)
         
@@ -403,7 +402,6 @@ extension Pixel.Event {
 
         case .privacyDashboardProtectionDisabled: return "mp_wla"
         case .privacyDashboardProtectionEnabled: return "mp_wlr"
-        case .privacyDashboardManageProtection: return "mp_mw"
         case .privacyDashboardReportBrokenSite: return "mp_rb"
         case .privacyDashboardPixelFromJS(let rawPixel): return rawPixel
             

@@ -19,7 +19,7 @@
 
 import Foundation
 import CoreData
-import BrowserServicesKit
+import Persistence
 
 public class Database {
     

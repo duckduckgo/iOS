@@ -18,7 +18,7 @@
 //
 
 import XCTest
-@testable import Core
+import Bookmarks
 
 class BookmarkOrFolderTests: XCTestCase {
 

@@ -37,17 +37,17 @@ public class Link: NSObject, NSCoding {
     public let url: URL
     public let localFileURL: URL?
     
-    public var displayTitle: String? {
+    public var displayTitle: String {
         let host = url.host?.droppingWwwPrefix() ?? url.absoluteString
-        
+
         var displayTitle = (title?.isEmpty ?? true) ? host : title
-        
+
         if Self.appUrls.isDuckDuckGo(url: url),
             let title = displayTitle, title.hasSuffix(Constants.ddgSuffix) {
             displayTitle = String(title.dropLast(Constants.ddgSuffix.count))
         }
-        
-        return displayTitle
+
+        return displayTitle ?? url.absoluteString
     }
 
     public required init(title: String?, url: URL, localPath: URL? = nil) {

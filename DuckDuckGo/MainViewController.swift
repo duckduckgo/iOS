@@ -24,6 +24,8 @@ import Lottie
 import Kingfisher
 import os.log
 import BrowserServicesKit
+import Bookmarks
+import Persistence
 import PrivacyDashboard
 
 // swiftlint:disable type_body_length
@@ -96,14 +98,18 @@ class MainViewController: UIViewController {
 
     var tabManager: TabManager!
     private let previewsSource = TabPreviewsSource()
-    fileprivate lazy var bookmarkStore: BookmarkUserDefaults = BookmarkUserDefaults()
     fileprivate lazy var appSettings: AppSettings = AppUserDefaults()
     private var launchTabObserver: LaunchTabNotification.Observer?
+    
+    private let bookmarksDatabase: CoreDataDatabase
+    private let favoritesViewModel: FavoritesListInteracting
+    
+    lazy var menuBookmarksViewModel: MenuBookmarksInteracting = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
 
     weak var tabSwitcherController: TabSwitcherViewController?
     let tabSwitcherButton = TabSwitcherButton()
     
-    /// Do not referecen directly, use `presentedMenuButton`
+    /// Do not reference directly, use `presentedMenuButton`
     let menuButton = MenuButton()
     var presentedMenuButton: MenuButton {
         AppWidthObserver.shared.isLargeWidth ? omniBar.menuButtonContent : menuButton
@@ -113,7 +119,7 @@ class MainViewController: UIViewController {
     
     private lazy var fireButtonAnimator: FireButtonAnimator = FireButtonAnimator(appSettings: appSettings)
     
-    private lazy var bookmarksCachingSearch: BookmarksCachingSearch = CoreDependencyProvider.shared.bookmarksCachingSearch
+    private var bookmarksCachingSearch: BookmarksCachingSearch
 
     fileprivate lazy var tabSwitcherTransition = TabSwitcherTransitionDelegate()
     var currentTab: TabViewController? {
@@ -126,17 +132,23 @@ class MainViewController: UIViewController {
     // Skip SERP flow (focusing on autocomplete logic) and prepare for new navigation when selecting search bar
     private var skipSERPFlow = true
     
+    required init?(coder: NSCoder,
+                   bookmarksDatabase: CoreDataDatabase) {
+        self.bookmarksDatabase = bookmarksDatabase
+        self.favoritesViewModel = FavoritesListViewModel(bookmarksDatabase: bookmarksDatabase)
+        self.bookmarksCachingSearch = BookmarksCachingSearch(bookmarksStore: CoreDataBookmarksSearchStore(bookmarksStore: bookmarksDatabase))
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Use init?(code:")
+    }
+
     fileprivate var tabCountInfo: TabCountInfo?
 
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        Favicons.shared.migrateIfNeeded {
-            DispatchQueue.main.async {
-                self.homeController?.collectionView.reloadData()
-            }
-        }
-         
         attachOmniBar()
 
         view.addInteraction(UIDropInteraction(delegate: self))
@@ -308,52 +320,18 @@ class MainViewController: UIViewController {
         }
         
         Pixel.fire(pixel: .tabBarBookmarksLongPressed)
-        
-        currentTab!.saveAsBookmark(favorite: true)
+        currentTab?.saveAsBookmark(favorite: true, viewModel: menuBookmarksViewModel)
     }
     
-    // swiftlint:disable cyclomatic_complexity
-    // swiftlint:disable function_body_length
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if !DaxDialogs.shared.shouldShowFireButtonPulse {
             ViewHighlighter.hideAll()
         }
-
-        if let controller = segue.destination as? SuggestionTrayViewController {
-            controller.dismissHandler = dismissSuggestionTray
-            controller.autocompleteDelegate = self
-            controller.favoritesOverlayDelegate = self
-            suggestionTrayController = controller
-            return
-        }
         
         if let controller = segue.destination as? TabsBarViewController {
             controller.delegate = self
             tabsBarController = controller
-            return
-        }
-
-        if segue.destination.children.count > 0,
-            let controller = segue.destination.children[0] as? BookmarksViewController {
-            controller.delegate = self
-            
-            if segue.identifier == "BookmarksEditCurrent",
-               let link = currentTab?.link {
-                controller.openEditFormWhenPresented(link: link)
-            } else if segue.identifier == "BookmarksEdit",
-                      let bookmark = sender as? Core.Bookmark {
-                controller.openEditFormWhenPresented(bookmark: bookmark)
-            }
-            return
-        }
-
-        if let controller = segue.destination as? TabSwitcherViewController {
-            controller.transitioningDelegate = tabSwitcherTransition
-            controller.delegate = self
-            controller.tabsModel = tabManager.model
-            controller.previewsSource = previewsSource
-            tabSwitcherController = controller
             return
         }
         
@@ -380,8 +358,56 @@ class MainViewController: UIViewController {
         }
 
     }
-    // swiftlint:enable cyclomatic_complexity
-    // swiftlint:enable function_body_length
+    
+    @IBSegueAction func onCreateSuggestionTray(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> SuggestionTrayViewController {
+        guard let controller = SuggestionTrayViewController(coder: coder,
+                                                            favoritesViewModel: favoritesViewModel,
+                                                            bookmarksSearch: bookmarksCachingSearch) else {
+            fatalError("Failed to create controller")
+        }
+        
+        controller.dismissHandler = dismissSuggestionTray
+        controller.autocompleteDelegate = self
+        controller.favoritesOverlayDelegate = self
+        suggestionTrayController = controller
+        
+        return controller
+    }
+    
+    @IBSegueAction func onCreateBookmarksList(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> BookmarksViewController {
+        guard let controller = BookmarksViewController(coder: coder,
+                                                       bookmarksDatabase: self.bookmarksDatabase,
+                                                       bookmarksSearch: bookmarksCachingSearch) else {
+            fatalError("Failed to create controller")
+        }
+        controller.delegate = self
+        
+        if segueIdentifier == "BookmarksEditCurrent",
+            let link = currentTab?.link,
+            let bookmark = menuBookmarksViewModel.favorite(for: link.url) ?? menuBookmarksViewModel.bookmark(for: link.url) {
+            controller.openEditFormWhenPresented(bookmark: bookmark)
+        } else if segueIdentifier == "BookmarksEdit",
+                  let bookmark = sender as? BookmarkEntity {
+            controller.openEditFormWhenPresented(bookmark: bookmark)
+        }
+        
+        return controller
+    }
+    
+    @IBSegueAction func onCreateTabSwitcher(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> TabSwitcherViewController {
+        guard let controller = TabSwitcherViewController(coder: coder,
+                                                         bookmarksDatabase: bookmarksDatabase) else {
+            fatalError("Failed to create controller")
+        }
+        
+        controller.transitioningDelegate = tabSwitcherTransition
+        controller.delegate = self
+        controller.tabsModel = tabManager.model
+        controller.previewsSource = previewsSource
+        tabSwitcherController = controller
+        
+        return controller
+    }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -424,6 +450,7 @@ class MainViewController: UIViewController {
         }
         tabManager = TabManager(model: tabsModel,
                                 previewsSource: previewsSource,
+                                bookmarksDatabase: bookmarksDatabase,
                                 delegate: self)
     }
 
@@ -478,7 +505,7 @@ class MainViewController: UIViewController {
         removeHomeScreen()
 
         let tabModel = currentTab?.tabModel
-        let controller = HomeViewController.loadFromStoryboard(model: tabModel!)
+        let controller = HomeViewController.loadFromStoryboard(model: tabModel!, favoritesViewModel: favoritesViewModel)
         homeController = controller
 
         controller.chromeDelegate = self
@@ -1146,7 +1173,7 @@ extension MainViewController: OmniBarDelegate {
                 }
             }
         } else {
-            tryToShowSuggestionTray(.autocomplete(query: updatedQuery, bookmarksCachingSearch: bookmarksCachingSearch))
+            tryToShowSuggestionTray(.autocomplete(query: updatedQuery))
         }
         
     }
@@ -1185,7 +1212,7 @@ extension MainViewController: OmniBarDelegate {
     private func launchBrowsingMenu() async {
         guard let tab = currentTab else { return }
 
-        let entries = await tab.buildBrowsingMenu()
+        let entries = tab.buildBrowsingMenu(with: menuBookmarksViewModel)
         let controller = BrowsingMenuViewController.instantiate(headerEntries: tab.buildBrowsingMenuHeaderContent(),
                                                                 menuEntries: entries)
 
@@ -1248,7 +1275,7 @@ extension MainViewController: OmniBarDelegate {
         guard homeController == nil else { return }
         
         if !skipSERPFlow, isSERPPresented, let query = omniBar.textField.text {
-            tryToShowSuggestionTray(.autocomplete(query: query, bookmarksCachingSearch: bookmarksCachingSearch))
+            tryToShowSuggestionTray(.autocomplete(query: query))
         } else {
             tryToShowSuggestionTray(.favorites)
         }
@@ -1292,8 +1319,8 @@ extension MainViewController: OmniBarDelegate {
 
 extension MainViewController: FavoritesOverlayDelegate {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Core.Bookmark) {
-        guard let url = favorite.url else { return }
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity) {
+        guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         homeController?.chromeDelegate = nil
         dismissOmniBar()
@@ -1375,7 +1402,7 @@ extension MainViewController: HomeControllerDelegate {
         }
     }
     
-    func home(_ home: HomeViewController, didRequestEdit favorite: Core.Bookmark) {
+    func home(_ home: HomeViewController, didRequestEdit favorite: BookmarkEntity) {
         performSegue(withIdentifier: "BookmarksEdit", sender: favorite)
     }
     
@@ -1649,14 +1676,12 @@ extension MainViewController: TabSwitcherDelegate {
 }
 
 extension MainViewController: BookmarksDelegate {
-    func bookmarksDidSelect(bookmark: Core.Bookmark) {
+    func bookmarksDidSelect(url: URL) {
         dismissOmniBar()
-        if let url = bookmark.url {
-            if url.isBookmarklet() {
-                executeBookmarklet(url)
-            } else {
-                loadUrl(url)
-            }
+        if url.isBookmarklet() {
+            executeBookmarklet(url)
+        } else {
+            loadUrl(url)
         }
     }
     

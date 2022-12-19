@@ -21,11 +21,9 @@ import WebKit
 import UserScript
 
 public protocol FaviconUserScriptDelegate: NSObjectProtocol {
-    
-    func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String?
-    
-    func faviconUserScript(_ script: FaviconUserScript, didFinishLoadingFavicon image: UIImage)
-    
+
+    func faviconUserScript(_ script: FaviconUserScript, didRequestUpdateFaviconForHost host: String, withUrl url: URL?)
+
 }
 
 public class FaviconUserScript: NSObject, UserScript {
@@ -92,14 +90,8 @@ public class FaviconUserScript: NSObject, UserScript {
             url = nil
         }
 
-        // Always call this even if URL was nil, so that tabs cache is populated
-        let host = delegate?.faviconUserScriptDidRequestCurrentHost(self)
-        Favicons.shared.loadFavicon(forDomain: host, fromURL: url, intoCache: .tabs) { [weak self] image in
-            guard let self = self, let image = image else { return }
-            Favicons.shared.replaceBookmarksFavicon(forDomain: host, withImage: image)
-            self.delegate?.faviconUserScript(self, didFinishLoadingFavicon: image)
-        }
-
+        let host = message.messageHost
+        delegate?.faviconUserScript(self, didRequestUpdateFaviconForHost: host, withUrl: url)
     }
         
 }

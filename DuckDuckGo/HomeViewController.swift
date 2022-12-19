@@ -20,6 +20,7 @@
 import UIKit
 import Core
 import os.log
+import Bookmarks
 
 class HomeViewController: UIViewController {
     
@@ -58,20 +59,25 @@ class HomeViewController: UIViewController {
     private var viewHasAppeared = false
     private var defaultVerticalAlignConstant: CGFloat = 0
     
-    private(set) var tabModel: Tab
+    private let tabModel: Tab
+    private let favoritesViewModel: FavoritesListInteracting
     
-    static func loadFromStoryboard(model: Tab) -> HomeViewController {
+    static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        guard let controller = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController else {
-            fatalError("Failed to instantiate correct view controller for Home")
-        }
-        controller.tabModel = model
+        let controller = storyboard.instantiateViewController(identifier: "HomeViewController", creator: { coder in
+            HomeViewController(coder: coder, tabModel: model, favoritesViewModel: favoritesViewModel)
+        })
         return controller
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        tabModel = Tab(link: nil)
-        super.init(coder: aDecoder)
+    required init?(coder: NSCoder, tabModel: Tab, favoritesViewModel: FavoritesListInteracting) {
+        self.tabModel = tabModel
+        self.favoritesViewModel = favoritesViewModel
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
     }
     
     override func viewDidLoad() {
@@ -82,10 +88,6 @@ class HomeViewController: UIViewController {
 
         configureCollectionView()
         applyTheme(ThemeManager.shared.currentTheme)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(bookmarksDidChange),
-                                               name: BookmarksManager.Notifications.bookmarksDidChange,
-                                               object: nil)
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(remoteMessagesDidChange),
@@ -104,7 +106,9 @@ class HomeViewController: UIViewController {
     }
 
     func configureCollectionView() {
-        collectionView.configure(withController: self, andTheme: ThemeManager.shared.currentTheme)
+        collectionView.configure(withController: self,
+                                 favoritesViewModel: favoritesViewModel,
+                                 andTheme: ThemeManager.shared.currentTheme)
     }
     
     func enableContentUnderflow() -> CGFloat {
@@ -248,15 +252,19 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: FavoritesHomeViewSectionRendererDelegate {
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
-        guard let url = favorite.url else { return }
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
+        guard let url = favorite.urlObject else { return }
         Pixel.fire(pixel: .homeScreenFavouriteLaunched)
         Favicons.shared.loadFavicon(forDomain: url.host, intoCache: .bookmarks, fromCache: .tabs)
         delegate?.home(self, didRequestUrl: url)
     }
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: BookmarkEntity) {
         delegate?.home(self, didRequestEdit: favorite)
+    }
+
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
+        delegate?.home(self, didRequestHideLogo: renderer.viewModel.favorites.count > 0)
     }
 
 }

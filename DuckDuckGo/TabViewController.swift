@@ -24,6 +24,9 @@ import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
+import Bookmarks
+import Persistence
+import Common
 import PrivacyDashboard
 import UserScript
 import ContentBlocking
@@ -71,6 +74,7 @@ class TabViewController: UIViewController {
         set { findInPageScript?.findInPage = newValue }
     }
 
+    let favicons = Favicons.shared
     let progressWorker = WebProgressWorker()
 
     private(set) var webView: WKWebView!
@@ -83,8 +87,6 @@ class TabViewController: UIViewController {
 
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
-
-    lazy var bookmarksManager = BookmarksManager()
 
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
@@ -125,6 +127,9 @@ class TabViewController: UIViewController {
     private var blobDownloadTargetFrame: WKFrameInfo?
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+    
+    let bookmarksDatabase: CoreDataDatabase
+    lazy var faviconUpdater = BookmarkFaviconUpdater(bookmarksDatabase: bookmarksDatabase, tab: tabModel, favicons: Favicons.shared)
 
     public var url: URL? {
         willSet {
@@ -240,12 +245,13 @@ class TabViewController: UIViewController {
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
-    static func loadFromStoryboard(model: Tab) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
-        guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
-            fatalError("Failed to instantiate controller as TabViewController")
-        }
-        controller.tabModel = model
+        let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
+            TabViewController(coder: coder,
+                              tabModel: model,
+                              bookmarksDatabase: bookmarksDatabase)
+        })
         return controller
     }
     
@@ -260,10 +266,17 @@ class TabViewController: UIViewController {
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
+    
+    required init?(coder aDecoder: NSCoder,
+                   tabModel: Tab,
+                   bookmarksDatabase: CoreDataDatabase) {
+            self.tabModel = tabModel
+            self.bookmarksDatabase = bookmarksDatabase
+            super.init(coder: aDecoder)
+    }
 
     required init?(coder aDecoder: NSCoder) {
-        tabModel = Tab(link: nil)
-        super.init(coder: aDecoder)
+        fatalError("Not implemented")
     }
     
     override func viewDidLoad() {
@@ -286,9 +299,13 @@ class TabViewController: UIViewController {
     }
 
     override func buildActivities() -> [UIActivity] {
-        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
+                                                             viewModel: viewModel)]
 
-        activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
+        activities.append(SaveBookmarkActivity(controller: self,
+                                               isFavorite: true,
+                                               viewModel: viewModel))
         activities.append(FindInPageActivity(controller: self))
 
         return activities
@@ -1951,7 +1968,7 @@ extension TabViewController: UserContentControllerDelegate {
                                updateEvent: ContentBlockerRulesManager.UpdateEvent) {
         guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
 
-        userScripts.faviconScript.delegate = self
+        userScripts.faviconScript.delegate = faviconUpdater
         userScripts.debugScript.instrumentation = instrumentation
         userScripts.surrogatesScript.delegate = self
         userScripts.contentBlockerUserScript.delegate = self
@@ -2031,19 +2048,6 @@ extension TabViewController: SurrogatesUserScriptDelegate {
         userScriptDetectedTracker(tracker)
     }
 
-}
-
-// MARK: - FaviconUserScriptDelegate
-extension TabViewController: FaviconUserScriptDelegate {
-    
-    func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String? {
-        return webView.url?.host
-    }
-    
-    func faviconUserScript(_ script: FaviconUserScript, didFinishLoadingFavicon image: UIImage) {
-        tabModel.didUpdateFavicon()
-    }
-    
 }
 
 // MARK: - PrintingUserScriptDelegate

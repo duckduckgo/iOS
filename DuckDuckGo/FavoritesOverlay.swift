@@ -19,10 +19,12 @@
 
 import UIKit
 import Core
+import Bookmarks
+import Persistence
 
 protocol FavoritesOverlayDelegate: AnyObject {
     
-    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: Bookmark)
+    func favoritesOverlay(_ overlay: FavoritesOverlay, didSelect favorite: BookmarkEntity)
 }
 
 class FavoritesOverlay: UIViewController {
@@ -40,6 +42,16 @@ class FavoritesOverlay: UIViewController {
     
     weak var delegate: FavoritesOverlayDelegate?
     
+    init(viewModel: FavoritesListInteracting) {
+        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false,
+                                                    viewModel: viewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,7 +64,6 @@ class FavoritesOverlay: UIViewController {
 
         view.addSubview(collectionView)
         
-        renderer = FavoritesHomeViewSectionRenderer(allowsEditing: false)
         renderer.install(into: self)
         
         registerForKeyboardNotifications()
@@ -103,12 +114,16 @@ class FavoritesOverlay: UIViewController {
 
 extension FavoritesOverlay: FavoritesHomeViewSectionRendererDelegate {
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didSelect favorite: BookmarkEntity) {
         delegate?.favoritesOverlay(self, didSelect: favorite)
     }
     
-    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: Bookmark) {
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, didRequestEdit favorite: BookmarkEntity) {
         // currently can't edit favorites from overlay
+    }
+
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer, favoriteDeleted favorite: BookmarkEntity) {
+        // currently can't delete favorites from overlay
     }
     
 }

@@ -19,18 +19,23 @@
 
 import UIKit
 import Core
+import Bookmarks
+import WidgetKit
 
 protocol FavoritesHomeViewSectionRendererDelegate: AnyObject {
     
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
-                           didSelect favorite: Bookmark)
+                           didSelect favorite: BookmarkEntity)
+
     func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
-                           didRequestEdit favorite: Bookmark)
-    
+                           didRequestEdit favorite: BookmarkEntity)
+
+    func favoritesRenderer(_ renderer: FavoritesHomeViewSectionRenderer,
+                           favoriteDeleted favorite: BookmarkEntity)
 }
 
 class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
-    
+
     struct Constants {
         
         static let searchWidth: CGFloat = 380
@@ -41,12 +46,14 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         
     }
     
-    let bookmarksManager: BookmarksManager
+    let viewModel: FavoritesListInteracting
 
     private weak var controller: (UIViewController & FavoritesHomeViewSectionRendererDelegate)?
     
     private weak var reorderingCell: FavoriteHomeCell?
-    
+
+    var isEditing = false
+
     private let allowsEditing: Bool
     private let cellWidth: CGFloat
     private let cellHeight: CGFloat
@@ -55,40 +62,36 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return controller?.traitCollection.horizontalSizeClass == .regular
     }
 
-    init(allowsEditing: Bool = true, bookmarksManager: BookmarksManager = BookmarksManager()) {
+    init(allowsEditing: Bool = true, viewModel: FavoritesListInteracting) {
         guard let cell = (UINib(nibName: "FavoriteHomeCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? UIView) else {
             fatalError("Failed to load FavoriteHomeCell")
         }
         
         self.allowsEditing = allowsEditing
-        self.bookmarksManager = bookmarksManager
         self.cellHeight = cell.frame.height
         self.cellWidth = cell.frame.width
+        self.viewModel = viewModel
     }
     
     private var numberOfItems: Int {
-        return bookmarksManager.favoritesCount
+        return viewModel.favorites.count
     }
     
     private var headerHeight: CGFloat {
         return Constants.defaultHeaderHeight
     }
-    
+
     func install(into controller: HomeViewController) {
         self.controller = controller
+        if numberOfItems > 0 {
+            controller.hideLogo()
+        }
     }
-    
+
     func install(into controller: UIViewController & FavoritesHomeViewSectionRendererDelegate) {
         self.controller = controller
     }
-    
-    func endReordering() {
-        if let cell = reorderingCell {
-            cell.isReordering = false
-            reorderingCell = nil
-        }
-    }
-    
+
     func sectionMargin(in collectionView: UICollectionView) -> CGFloat {
         if controller is FavoritesOverlay {
             return Constants.largeModeMargin
@@ -132,50 +135,40 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "favorite", for: indexPath) as? FavoriteHomeCell else {
             fatalError("not a FavoriteCell")
         }
 
-        guard let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else {
+        guard let favorite = viewModel.favorite(at: indexPath.row) else {
             return cell
         }
 
-        cell.updateFor(favorite: favorite)
+        cell.onRemove = { [weak self] in
+            self?.removeFavorite(cell, collectionView)
+        }
 
-        // can't use captured index path because deleting items can change it
-        cell.onDelete = { [weak self, weak collectionView, weak cell] in
-            guard let collectionView = collectionView else { return }
-            guard let cell = cell else { return }
-            
-            self?.deleteFavorite(cell, collectionView)
-        }
-        cell.onEdit = { [weak self, weak collectionView, weak cell] in
-            guard let collectionView = collectionView else { return }
-            guard let cell = cell else { return }
-            
-            self?.editFavorite(cell, collectionView)
-        }
+        cell.updateFor(favorite: favorite)
+        cell.isEditing = isEditing
         return cell
 
     }
     
-    private func deleteFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
+    private func removeFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell),
-        let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
+        let favorite = viewModel.favorite(at: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenDeleteFavorite)
-        bookmarksManager.delete(favorite)
-        collectionView.performBatchUpdates({
+        viewModel.removeFavorite(favorite)
+        WidgetCenter.shared.reloadAllTimelines()
+        collectionView.performBatchUpdates {
             collectionView.deleteItems(at: [indexPath])
-        })
+            self.controller?.favoritesRenderer(self, favoriteDeleted: favorite)
+        }
     }
     
     private func editFavorite(_ cell: FavoriteHomeCell, _ collectionView: UICollectionView) {
         guard let indexPath = collectionView.indexPath(for: cell),
-              let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
-        
+              let favorite = viewModel.favorite(at: indexPath.row) else { return }
         Pixel.fire(pixel: .homeScreenEditFavorite)
-        
         controller?.favoritesRenderer(self, didRequestEdit: favorite)
     }
     
@@ -187,32 +180,6 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
     
     func supportsReordering() -> Bool {
         return true
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        guard allowsEditing else {
-            return false
-        }
-        
-        if let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell {
-            cell.isReordering = true
-            reorderingCell = cell
-            return true
-        }
-        return false
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard let favorite = bookmarksManager.favorite(atIndex: sourceIndexPath.row) else {
-            return
-        }
-        bookmarksManager.updateIndex(of: favorite.objectID, newIndex: destinationIndexPath.row)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, targetIndexPathForMoveFromItemAt originalIndexPath: IndexPath,
-                        toProposedIndexPath proposedIndexPath: IndexPath) -> IndexPath? {
-        guard originalIndexPath.section == proposedIndexPath.section else { return originalIndexPath }
-        return proposedIndexPath
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -227,25 +194,125 @@ class FavoritesHomeViewSectionRenderer: NSObject, HomeViewSectionRenderer {
         return CGSize(width: 1, height: Constants.defaultHeaderHeight)
     }
 
-    func menuItemsFor(itemAt: Int) -> [UIMenuItem]? {
-        return [
-            UIMenuItem(title: UserText.favoriteMenuDelete, action: FavoriteHomeCell.Actions.delete),
-            UIMenuItem(title: UserText.favoriteMenuEdit, action: FavoriteHomeCell.Actions.edit)
-        ]
-    }
-
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        launchFavorite(in: collectionView, at: indexPath)
+        if isEditing {
+            guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return }
+            editFavorite(cell, collectionView)
+        } else {
+            launchFavorite(in: collectionView, at: indexPath)
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return previewForConfiguration(configuration, inCollectionView: collectionView)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        return previewForConfiguration(configuration, inCollectionView: collectionView)
+    }
+
+    func previewForConfiguration(_ configuration: UIContextMenuConfiguration, inCollectionView collectionView: UICollectionView) -> UITargetedPreview? {
+        guard let indexPath = configuration.identifier as? IndexPath,
+                let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else {
+            return nil
+        }
+
+        let targetedPreview = UITargetedPreview(view: cell.iconBackground)
+        targetedPreview.parameters.backgroundColor = .clear
+        return targetedPreview
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        contextMenuConfigurationForItemAt indexPath: IndexPath,
+                        point: CGPoint) -> UIContextMenuConfiguration? {
+
+        guard allowsEditing else { return nil }
+
+        guard let cell = collectionView.cellForItem(at: indexPath) as? FavoriteHomeCell else { return nil }
+
+        let edit = UIAction(title: UserText.favoriteMenuEdit,
+                            image: UIImage(named: "Edit")) { [weak self] _ in
+            self?.editFavorite(cell, collectionView)
+        }
+
+        let remove = UIAction(title: UserText.favoriteMenuRemove,
+                              image: UIImage(named: "RemoveFavoriteMenuIcon")) { [weak self] _ in
+            self?.removeFavorite(cell, collectionView)
+        }
+
+        let context = UIContextMenuConfiguration(identifier: indexPath as NSIndexPath) {
+            return nil
+        } actionProvider: { _ in
+
+            let title = [
+                cell.title,
+                cell.truncatedUrlString
+            ].compactMap { $0 }.joined(separator: "\n")
+
+            return UIMenu(title: title, options: .displayInline, children: [
+                edit,
+                remove
+            ])
+        }
+
+        return context
     }
 
     private func launchFavorite(in: UICollectionView, at indexPath: IndexPath) {
-        guard let favorite = bookmarksManager.favorite(atIndex: indexPath.row) else { return }
+        guard let favorite = viewModel.favorite(at: indexPath.row) else { return }
         UISelectionFeedbackGenerator().selectionChanged()
         controller?.favoritesRenderer(self, didSelect: favorite)
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        guard coordinator.proposal.operation == .move,
+              let dragItem = coordinator.items.first?.dragItem,
+              let sourcePath = coordinator.items.first?.sourceIndexPath,
+              let destinationPath = coordinator.destinationIndexPath,
+              let cell = self.collectionView(collectionView, cellForItemAt: sourcePath) as? FavoriteHomeCell,
+              let favorite = cell.favorite
+        else { return }
+
+        collectionView.performBatchUpdates {
+            viewModel.moveFavorite(favorite, fromIndex: sourcePath.row, toIndex: destinationPath.row)
+            WidgetCenter.shared.reloadAllTimelines()
+            collectionView.deleteItems(at: [sourcePath])
+            collectionView.insertItems(at: [destinationPath])
+        }
+
+        coordinator.drop(dragItem, toItemAt: destinationPath)
+
+    }
+
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        guard let cell = self.collectionView(collectionView, cellForItemAt: indexPath) as? FavoriteHomeCell else { return [] }
+
+        if let size = cell.iconImage.image?.size.width, size <= 32 {
+            cell.iconBackground.backgroundColor = ThemeManager.shared.currentTheme.backgroundColor
+        }
+
+        let item = viewModel.favorite(at: indexPath.row)
+        // Using the URL allows this item to be dragged into other apps
+        let dragItem = UIDragItem(itemProvider: NSItemProvider(object: (item?.url ?? "") as NSString))
+        dragItem.previewProvider = { () -> UIDragPreview? in
+            return UIDragPreview(view: cell.iconBackground)
+        }
+        return [ dragItem ]
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        dropSessionDidUpdate session: UIDropSession,
+                        withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+
+        guard collectionView.hasActiveDrag else {
+            return UICollectionViewDropProposal(operation: .forbidden)
+        }
+
+        return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+
 }

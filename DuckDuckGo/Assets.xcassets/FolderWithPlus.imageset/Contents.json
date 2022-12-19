@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Add-folder.pdf",
+      "filename" : "Folder-Add-24.svg",
       "idiom" : "universal"
     }
   ],
@@ -10,6 +10,7 @@
     "version" : 1
   },
   "properties" : {
+    "preserves-vector-representation" : true,
     "template-rendering-intent" : "template"
   }
 }

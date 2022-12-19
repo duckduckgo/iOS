@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import Bookmarks
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -364,6 +365,26 @@ extension Pixel {
         case debugMissingTopFolderFixHasBookmarks
         
         case debugCantSaveBookmarkFix
+        
+        // Errors from Bookmarks Module
+        case bookmarkFolderExpected
+        case bookmarksListIndexNotMatchingBookmark
+        case bookmarksListMissingFolder
+        case editorNewParentMissing
+        case favoritesListIndexNotMatchingBookmark
+        case fetchingRootItemFailed(BookmarksModelError.ModelType)
+        case indexOutOfRange(BookmarksModelError.ModelType)
+        case saveFailed(BookmarksModelError.ModelType)
+        case missingParent(BookmarksModelError.ObjectType)
+        
+        case bookmarksCouldNotLoadDatabase
+        case bookmarksCouldNotPrepareDatabase
+        case bookmarksMigrationAlreadyPerformed
+        case bookmarksMigrationFailed
+        case bookmarksMigrationCouldNotPrepareDatabase
+        case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
+        case bookmarksMigrationCouldNotValidateDatabase
+        case bookmarksMigrationCouldNotRemoveOldStore
     }
     
 }
@@ -720,6 +741,26 @@ extension Pixel.Event {
         case .adAttributionLogicRequestingAttributionTimedOut: return "m_attribution_logic_requesting_attribution_timed_out"
         case .adAttributionLogicWrongVendorOnSuccessfulCompilation: return "m_attribution_logic_wrong_vendor_on_successful_compilation"
         case .adAttributionLogicWrongVendorOnFailedCompilation: return "m_attribution_logic_wrong_vendor_on_failed_compilation"
+            
+        case .bookmarkFolderExpected: return "m_d_bookmark_folder_expected"
+        case .bookmarksListIndexNotMatchingBookmark: return "m_d_bookmarks_list_index_not_matching_bookmark"
+        case .bookmarksListMissingFolder: return "m_d_bookmarks_list_missing_folder"
+        case .editorNewParentMissing: return "m_d_bookmarks_editor_new_parent_missing"
+        case .favoritesListIndexNotMatchingBookmark: return "m_d_favorites_list_index_not_matching_bookmark"
+        case .fetchingRootItemFailed(let modelType): return "m_d_bookmarks_fetching_root_item_failed_\(modelType.rawValue)"
+        case .indexOutOfRange(let modelType): return "m_d_bookmarks_index_out_of_range_\(modelType.rawValue)"
+        case .saveFailed(let modelType): return "m_d_bookmarks_view_model_save_failed_\(modelType.rawValue)"
+        case .missingParent(let objectType): return "m_d_bookmark_model_missing_parent_\(objectType.rawValue)"
+            
+        case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
+        case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
+        case .bookmarksMigrationAlreadyPerformed: return "m_d_bookmarks_migration_already_performed"
+        case .bookmarksMigrationFailed: return "m_d_bookmarks_migration_failed"
+        case .bookmarksMigrationCouldNotPrepareDatabase: return "m_d_bookmarks_migration_could_not_prepare_database"
+        case .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration:
+            return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
+        case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
+        case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
         }
         
     }

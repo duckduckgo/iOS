@@ -51,7 +51,6 @@ public struct UserDefaultsWrapper<T> {
         case fireButtonPulseDateShown = "com.duckduckgo.ios.fireButtonPulseDateShown"
 
         case notFoundCache = "com.duckduckgo.ios.favicons.notFoundCache"
-        case faviconsNeedMigration = "com.duckduckgo.ios.favicons.needsMigration"
         case faviconSizeNeedsMigration = "com.duckduckgo.ios.favicons.sizeNeedsMigration"
 
         case legacyCovidInfo = "com.duckduckgo.ios.home.covidInfo"
@@ -68,7 +67,6 @@ public struct UserDefaultsWrapper<T> {
         case downloadedSurrogatesCount = "com.duckduckgo.app.downloadedSurrogatesCount"
         case downloadedTrackerDataSetCount = "com.duckduckgo.app.downloadedTrackerDataSetCount"
         case downloadedPrivacyConfigurationCount = "com.duckduckgo.app.downloadedPrivacyConfigurationCount"
-        case bookmarksMigratedFromUserDefaultsToCD = "com.duckduckgo.app.bookmarksMigratedFromUserDefaultsToCoreData"
         case textSize = "com.duckduckgo.ios.textSize"
         
         case emailWaitlistShouldReceiveNotifications = "com.duckduckgo.ios.showWaitlistNotification"

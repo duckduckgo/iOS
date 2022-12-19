@@ -129,7 +129,13 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
-        if viewState != .authLocked && viewState != .noAuthAvailable {
+        if !authenticator.canAuthenticate() {
+            viewState = .noAuthAvailable
+            completion(nil)
+            return
+        }
+
+        if viewState != .authLocked {
             completion(nil)
             return
         }

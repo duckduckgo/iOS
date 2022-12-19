@@ -42,7 +42,13 @@ final class AutofillLoginListAuthenticator {
     func logOut() {
         state = .loggedOut
     }
-    
+
+    func canAuthenticate() -> Bool {
+        var error: NSError?
+        let canAuthenticate = LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+        return canAuthenticate
+    }
+
     func authenticate(completion: ((AuthError?) -> Void)? = nil) {
        
         if state == .loggedIn {
@@ -63,7 +69,7 @@ final class AutofillLoginListAuthenticator {
         context.localizedReason = reason
         
         var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+        if canAuthenticate() {
             let reason = reason
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
             

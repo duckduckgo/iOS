@@ -104,6 +104,8 @@ class AutofillLoginDetailsViewController: UIViewController {
         super.viewWillDisappear(animated)
         if isMovingFromParent {
             AppDependencyProvider.shared.autofillLoginSession.lastAccessedAccount = nil
+        } else if authenticator.canAuthenticate() {
+            AppDependencyProvider.shared.autofillLoginSession.startSession()
         }
     }
 

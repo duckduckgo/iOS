@@ -1015,8 +1015,10 @@ extension TabViewController: WKNavigationDelegate {
             guard let webView = self?.webView else { completion(nil); return }
             UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
             webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
-            self?.jsAlertController.view.drawHierarchy(in: self!.jsAlertController.view.bounds,
-                                                       afterScreenUpdates: false)
+            if let jsAlertController = self?.jsAlertController {
+                jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds,
+                                                     afterScreenUpdates: false)
+            }
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             completion(image)

@@ -38,9 +38,10 @@ class PrivacyInfoContainerView: UIView {
         
         maskingView.round(corners: .allCorners, radius: 75)
         
-        trackers1Animation.contentMode = .scaleAspectFill
-        trackers2Animation.contentMode = .scaleAspectFill
-        trackers3Animation.contentMode = .scaleAspectFill
+        [trackers1Animation, trackers2Animation, trackers3Animation].forEach { animationView in
+            animationView.contentMode = .scaleAspectFill
+            animationView.backgroundBehavior = .pauseAndRestore
+        }
         
         loadAnimations(for: ThemeManager.shared.currentTheme)
     }

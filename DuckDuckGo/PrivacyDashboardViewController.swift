@@ -95,6 +95,8 @@ private extension PrivacyDashboardViewController {
         contentBlockingManager.scheduleCompilation()
         
         privacyDashboardController.didStartRulesCompilation()
+        
+        Pixel.fire(pixel: enabled ? .privacyDashboardProtectionEnabled : .privacyDashboardProtectionDisabled)
     }
     
     func privacyDashboardCloseTappedHandler() {
@@ -137,6 +139,7 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
     }
     
     func privacyDashboardControllerDidRequestShowReportBrokenSite(_ privacyDashboardController: PrivacyDashboardController) {
+        Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
 }

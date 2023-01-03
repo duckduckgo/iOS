@@ -1021,6 +1021,12 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.tabLoadingStateDidChange(tab: self)
 
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
+        
+        #warning("to be removed")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.showCookieManagementDaxDialog()
+        }
+        
     }
 
     func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
@@ -2107,17 +2113,51 @@ extension TabViewController: AutoconsentUserScriptDelegate {
 //        delegate?.tab(self, didRequestPresentingAlert: alert)
         
         
-        let daxDialog = UIHostingController(rootView: CookiesDaxDialog(), ignoreSafeArea: true)
+       
+    }
+    
+    private func showCookieManagementDaxDialog() {
+        
+        let daxDialog = makeCookieManagementDaxDialog()
+        present(daxDialog, animated: true)
+
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//            self.dismiss(animated: true)
+//        }
+    }
+    
+    private func makeCookieManagementDaxDialog() -> UIViewController {
+        let model = makeCookieManagementDaxDialogModel()
+        
+        let daxDialog = UIHostingController(rootView: CookiesDaxDialog(model: model), ignoreSafeArea: true)
         daxDialog.modalPresentationStyle = .overFullScreen
         daxDialog.modalTransitionStyle = .crossDissolve
         daxDialog.view.backgroundColor = UIColor(white: 0.5, alpha: 0.25)
         
-        present(daxDialog, animated: true)
-
+        return daxDialog
+    }
+    
+    private func okAction() {
+        Swift.print("ok")
+    }
+    
+    private func noAction() {
+        Swift.print("no")
+        self.dismiss(animated: true)
+    }
+    
+    private func makeCookieManagementDaxDialogModel() -> DialogModel {
+        let string1 = "Looks like this site has a cookie consent pop-up👇"
+        let string2 = "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these."
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            self.dismiss(animated: true)
-        }
+        
+        let model = DialogModel(content: [.text(text: string1),
+                                          .animation(name: "cloud.heavyrain.fill"),
+                                          .text(text: string2)],
+                                buttons: [.init(label: "Manage Cookie Pop-ups", style: .bordered, action: okAction),
+                                          .init(label: "No Thanks", style: .borderless, action: noAction)])
+        return model
     }
 }
 

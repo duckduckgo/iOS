@@ -19,14 +19,149 @@
 
 import SwiftUI
 
+enum DialogContentItem: Hashable {
+    case text(text: String)
+    case animation(name: String)
+}
+
+struct DialogButtonItem: Hashable {
+    let label: String
+    let style: DialogButtonStyle
+    let action: () -> Void
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(label)
+        hasher.combine(style)
+    }
+    
+    static func == (lhs: DialogButtonItem, rhs: DialogButtonItem) -> Bool {
+        lhs.label == rhs.label && lhs.style == rhs.style
+    }
+}
+
+enum DialogButtonStyle {
+    case bordered, borderless
+}
+
+struct DialogModel {
+    let content: [DialogContentItem]
+    let buttons: [DialogButtonItem]
+}
+
+struct DebugModel {
+    var count: Int = 0
+}
+
 struct CookiesDaxDialog: View {
     
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    
+    @State var model: DialogModel
+    
     var body: some View {
-        
-        HStack {
+        ZStack {
             Rectangle()
-                .foregroundColor(.red)
-                .frame(width: 200, height: 500)
+                .foregroundColor(.black)
+                .opacity(0.5)
+      
+            VStack(alignment: .leading, spacing: 0) {
+                Spacer()
+                
+                VStack(spacing: 8) {
+                    Circle()
+                        .frame(width: 54, height: 54)
+                        .foregroundColor(.white)
+                    Triangle()
+                        .frame(width: 15, height: 7)
+                        .foregroundColor(.white)
+                }
+                .padding(.leading, 24)
+                
+                VStack(spacing: 16) {
+                    ForEach(model.content, id: \.self) { element in
+                        switch element {
+                        case .text(let text):
+                            Text(text).frame(maxWidth: .infinity, alignment: .leading)
+                        case .animation(let name):
+                            Image(systemName: name)
+                                .font(.largeTitle)
+                        }
+                    }
+                    
+                    ForEach(model.buttons, id: \.self) { button in
+                        switch button.style {
+                        case .bordered:
+                            Button(action: {
+                                button.action()
+                            },
+                                   label: {
+                                Text(button.label)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            })
+                            .frame(height: 44)
+//                            .buttonStyle(.bordered)
+                            .foregroundColor(.white)
+                            .background(Capsule().foregroundColor(Color.yellow))
+                        case .borderless:
+                            Button(action: button.action, label: {
+                                Text(button.label)
+                                    .frame(maxHeight: .infinity)
+                            })
+                            .frame(height: 44)
+                            .buttonStyle(.borderless)
+                            .foregroundColor(.black)
+                            .clipShape(Capsule())
+                        }
+                        
+                    }
+
+                }
+                .padding(EdgeInsets(top: 24, leading: 16, bottom: 24, trailing: 16))
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .foregroundColor(.white)
+                )
+                
+                Spacer()
+                    .frame(height: 24)
+            }
+            .padding(.leading, 8)
+            .padding(.trailing, 8)
+            .padding(.bottom, 70)
+            .if(horizontalSizeClass == .regular || verticalSizeClass == .compact) { view in
+                view.frame(width: 380)
+            }
         }
-    }    
+        
+    }
+}
+
+struct Triangle: Shape {
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+
+        return path
+    }
+}
+
+extension View {
+    /// Applies the given transform if the given condition evaluates to `true`.
+    /// - Parameters:
+    ///   - condition: The condition to evaluate.
+    ///   - transform: The transform to apply to the source `View`.
+    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
 }

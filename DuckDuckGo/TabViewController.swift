@@ -1295,7 +1295,9 @@ extension TabViewController: WKNavigationDelegate {
 
     private func shouldWaitUntilContentBlockingIsLoaded(_ completion: @Sendable @escaping @MainActor () -> Void) -> Bool {
         // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
-        if userContentController.contentBlockingAssetsInstalled {
+        if userContentController.contentBlockingAssetsInstalled
+            || !ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+
             RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
             return false
         }

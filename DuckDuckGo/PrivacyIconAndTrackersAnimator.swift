@@ -85,7 +85,9 @@ final class PrivacyIconAndTrackersAnimator {
             
             container?.privacyIcon.refresh()
             
-            self?.onAnimationCompletion?()
+            DispatchQueue.main.async {
+                self?.onAnimationCompletion?()
+            }
         }
     }
     

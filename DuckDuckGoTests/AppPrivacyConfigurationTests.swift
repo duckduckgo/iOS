@@ -31,13 +31,12 @@ class AppPrivacyConfigurationTests: XCTestCase {
                        "Error: please update SHA and ETag when changing embedded config")
     }
     
-    func testWhenEmbeddedDataIsUsedThenItCanBeParsed() {
+    func testWhenEmbeddedDataIsUsedThenItCanBeParsed() throws {
         
         let provider = AppPrivacyConfigurationDataProvider()
         
         let jsonData = provider.embeddedData
-        let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-        let configData = PrivacyConfigurationData(json: json!)
+        let configData = try PrivacyConfigurationData(data: jsonData)
 
         let config = AppPrivacyConfiguration(data: configData,
                                              identifier: "",

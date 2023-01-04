@@ -18,6 +18,7 @@
 //
 
 import UIKit
+import Bookmarks
 
 class HomeCollectionView: UICollectionView {
     
@@ -46,12 +47,8 @@ class HomeCollectionView: UICollectionView {
         
         register(UINib(nibName: "FavoriteHomeCell", bundle: nil),
                  forCellWithReuseIdentifier: "favorite")
-        register(UINib(nibName: "PrivacyProtectionHomeCell", bundle: nil),
-                 forCellWithReuseIdentifier: "PrivacyHomeCell")
         register(UINib(nibName: "HomeMessageCell", bundle: nil),
                  forCellWithReuseIdentifier: "homeMessageCell")
-        register(UINib(nibName: "ExtraContentHomeCell", bundle: nil),
-                 forCellWithReuseIdentifier: "extraContent")
         
         register(HomeMessageCollectionViewCell.self, forCellWithReuseIdentifier: "HomeMessageCell")
         
@@ -69,17 +66,19 @@ class HomeCollectionView: UICollectionView {
         UIMenuController.shared.hideMenu()
     }
     
-    func configure(withController controller: HomeViewController, andTheme theme: Theme) {
+    func configure(withController controller: HomeViewController,
+                   favoritesViewModel: FavoritesListInteracting,
+                   andTheme theme: Theme) {
         self.controller = controller
         renderers = HomeViewSectionRenderers(controller: controller, theme: theme)
         
-        homePageConfiguration.components().forEach { component in
+        homePageConfiguration.components(favoritesViewModel: favoritesViewModel).forEach { component in
             switch component {
             case .navigationBarSearch(let fixed):
                 renderers.install(renderer: NavigationSearchHomeViewSectionRenderer(fixed: fixed))
                 
             case .favorites:
-                renderers.install(renderer: FavoritesHomeViewSectionRenderer())
+                renderers.install(renderer: FavoritesHomeViewSectionRenderer(viewModel: favoritesViewModel))
                 
             case .homeMessage:
                 renderers.install(renderer: HomeMessageViewSectionRenderer(homePageConfiguration: homePageConfiguration))
@@ -89,6 +88,9 @@ class HomeCollectionView: UICollectionView {
         
         dataSource = renderers
         delegate = renderers
+        dropDelegate = renderers
+        dragDelegate = renderers
+
         collectionViewReorderingGesture.delegate = self
         addGestureRecognizer(collectionViewReorderingGesture)
     }

@@ -20,10 +20,12 @@
 import XCTest
 import SwiftSoup
 @testable import Core
+import Bookmarks
 
+@MainActor
 class BookmarksImporterTests: XCTestCase {
 
-    private var storage: MockBookmarksCoreDataStore!
+    private var storage = MockBookmarksDatabase.make()
     private var importer: BookmarksImporter!
     private var htmlLoader: HtmlTestDataLoader!
 
@@ -31,20 +33,14 @@ class BookmarksImporterTests: XCTestCase {
         try super.setUpWithError()
 
         htmlLoader = HtmlTestDataLoader()
-        storage = MockBookmarksCoreDataStore()
-        _ = BookmarksCoreDataStorage.rootFolderManagedObject(storage.viewContext)
-        _ = BookmarksCoreDataStorage.rootFavoritesFolderManagedObject(storage.viewContext)
-
-        storage.saveContext()
-        storage.loadStoreAndCaches { _ in }
-
         importer = BookmarksImporter(coreDataStore: storage)
     }
 
     override func tearDownWithError() throws {
         htmlLoader = nil
-        storage = nil
         importer = nil
+        
+        try storage.tearDown(deleteStores: true)
 
         try super.tearDownWithError()
     }
@@ -127,13 +123,59 @@ class BookmarksImporterTests: XCTestCase {
         XCTAssertNotNil(createdBookmark)
         XCTAssertEqual(createdBookmark.type, .bookmark)
     }
+    
+    func test_WhenImportingBookmarks_ThenDuplicatesAreSkipped() async throws {
+        let existingBookmarkURL = "https://first.com/1.png"
+        let existingFavoriteURL = "https://second.com/1.png"
+        let otherURL = "https://third.com/1.png"
+        
+        let initialBookmarks = [BookmarkOrFolder(name: "first",
+                                                 type: .bookmark,
+                                                 urlString: existingBookmarkURL,
+                                                 children: nil),
+                                BookmarkOrFolder(name: "second",
+                                                 type: .favorite,
+                                                 urlString: existingFavoriteURL,
+                                                 children: nil)]
+        
+        try await importer.saveBookmarks(initialBookmarks)
+        
+        let countRequest = BookmarkEntity.fetchRequest()
+        countRequest.predicate = NSPredicate(format: "%K == false", #keyPath(BookmarkEntity.isFolder))
+        
+        let count = try storage.makeContext(concurrencyType: .mainQueueConcurrencyType).count(for: countRequest)
+        XCTAssertEqual(count, 2)
+        
+        // One duplicates existing bookmark, another two are duplicates in imported data set
+        let importedBookmarks = [BookmarkOrFolder(name: "first",
+                                                  type: .favorite,
+                                                  urlString: existingBookmarkURL,
+                                                  children: nil),
+                                 BookmarkOrFolder(name: "other",
+                                                  type: .favorite,
+                                                  urlString: otherURL,
+                                                  children: nil),
+                                 BookmarkOrFolder(name: "another",
+                                                  type: .favorite,
+                                                  urlString: otherURL,
+                                                  children: nil)]
+        
+        try await importer.saveBookmarks(importedBookmarks)
+        let newCount = try storage.makeContext(concurrencyType: .mainQueueConcurrencyType).count(for: countRequest)
+        XCTAssertEqual(newCount, 3)
+    }
 
     func test_WhenSaveBookmarks_ThenDataSaved() async throws {
         try await importer.parseHtml(htmlLoader.fromHtmlFile("MockFiles/bookmarks_safari.html"))
         try await importer.saveBookmarks(importer.importedBookmarks)
 
         // Note: exhaustive hierarchy is tested in BookmarksExporterTests.testExportHtml
-        XCTAssertEqual(storage.topLevelBookmarksItems.count, 10)
+        let context = storage.makeContext(concurrencyType: .mainQueueConcurrencyType)
+        guard let topLevelFolder = BookmarkUtils.fetchRootFolder(context) else {
+            XCTFail("Root folder missing")
+            return
+        }
+        XCTAssertEqual(topLevelFolder.children?.count ?? 0, 10)
     }
 
     func test_WhenParseHtmlAndSave_ThenDataSaved() async {

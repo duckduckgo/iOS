@@ -1,41 +1,53 @@
-/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "1oZ-re-yKW"; */
-"1oZ-re-yKW.title" = "Hotovo";
+/* Class = "UILabel"; text = "Label"; ObjectID = "7VM-DV-W3e"; */
+"7VM-DV-W3e.text" = "Štítek";
 
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "Buv-ez-2Lr"; */
-"Buv-ez-2Lr.text" = "Zatím nebyly přidány žádné záložky.";
+/* Class = "UILabel"; text = "Label"; ObjectID = "061-pX-T9z"; */
+"061-pX-T9z.text" = "Štítek";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cV4-pj-JNb"; */
+"cV4-pj-JNb.text" = "Štítek";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "K2O-E5-pyF"; */
 "K2O-E5-pyF.text" = "Štítek";
 
+/* Class = "UILabel"; text = "Add Folder"; ObjectID = "K8e-rz-6qx"; */
+"K8e-rz-6qx.text" = "Přidat složku";
+
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "KiU-Wb-7jj"; */
 "KiU-Wb-7jj.placeholder" = "Název";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
-"Lqe-Wh-Evj.text" = "Štítek";
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "Ksa-Pd-Mv5"; */
+"Ksa-Pd-Mv5.title" = "Upravit";
 
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
-"N2X-jQ-cbU.text" = "Zatím nebyly přidány žádné záložky.";
+/* Class = "UILabel"; text = "Favorite"; ObjectID = "mRK-XI-Rr8"; */
+"mRK-XI-Rr8.text" = "Oblíbené";
 
-/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "pwj-Ie-VbJ"; */
-"pwj-Ie-VbJ.title" = "Upravit";
+/* Class = "UISegmentedControl"; NJH-oV-DbS.segmentTitles[0] = "All Bookmarks"; ObjectID = "NJH-oV-DbS"; */
+"NJH-oV-DbS.segmentTitles[0]" = "Všechny záložky";
 
-/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "pyc-rk-XMJ"; */
-"pyc-rk-XMJ.normalTitle" = "Import souboru se záložkami z jiného prohlížeče";
+/* Class = "UISegmentedControl"; NJH-oV-DbS.segmentTitles[1] = "Favorites"; ObjectID = "NJH-oV-DbS"; */
+"NJH-oV-DbS.segmentTitles[1]" = "Oblíbené";
 
-/* Class = "UINavigationItem"; title = "Add Bookmark"; ObjectID = "qA0-bu-lRC"; */
-"qA0-bu-lRC.title" = "Přidat záložku";
+/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "oMv-60-GGW"; */
+"oMv-60-GGW.title" = "Záložky";
 
 /* Class = "UINavigationItem"; title = "Add Folder"; ObjectID = "qaZ-4Z-o70"; */
 "qaZ-4Z-o70.title" = "Přidat složku";
 
+/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "R7T-q4-qHz"; */
+"R7T-q4-qHz.normalTitle" = "Import souboru se záložkami z jiného prohlížeče";
+
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "rT4-Yr-P8D"; */
 "rT4-Yr-P8D.placeholder" = "Název";
 
-/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
-"tVt-jc-YaY.title" = "Záložky";
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "RuZ-zV-tu8"; */
+"RuZ-zV-tu8.title" = "Hotovo";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "vil-gw-sgh"; */
-"vil-gw-sgh.text" = "Štítek";
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "SrQ-51-yie"; */
+"SrQ-51-yie.text" = "Zatím nebyly přidány žádné záložky.";
+
+/* Class = "UILabel"; text = "No favorites added yet"; ObjectID = "y8y-oO-xBm"; */
+"y8y-oO-xBm.text" = "Zatím nebyly přidány žádné oblíbené položky";
 
 /* Class = "UITextField"; placeholder = "URL"; ObjectID = "YqY-sP-hhb"; */
 "YqY-sP-hhb.placeholder" = "URL adresa";

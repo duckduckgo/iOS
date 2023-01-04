@@ -24,6 +24,13 @@ import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
+import Bookmarks
+import Persistence
+import Common
+import PrivacyDashboard
+import UserScript
+import ContentBlocking
+import TrackerRadarKit
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -36,6 +43,8 @@ class TabViewController: UIViewController {
         static let trackerNetworksAnimationDelay: TimeInterval = 0.7
         
         static let secGPCHeader = "Sec-GPC"
+
+        static let navigationExpectationInterval = 3.0
     }
     
     @IBOutlet private(set) weak var error: UIView!
@@ -65,12 +74,13 @@ class TabViewController: UIViewController {
         set { findInPageScript?.findInPage = newValue }
     }
 
+    let favicons = Favicons.shared
     let progressWorker = WebProgressWorker()
 
     private(set) var webView: WKWebView!
     private lazy var appRatingPrompt: AppRatingPrompt = AppRatingPrompt()
-    private weak var privacyController: PrivacyProtectionController?
-
+    private weak var privacyDashboard: PrivacyDashboardViewController?
+    
     private(set) lazy var appUrls: AppUrls = AppUrls()
     private var storageCache: StorageCache = AppDependencyProvider.shared.storageCache.current
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
@@ -78,12 +88,10 @@ class TabViewController: UIViewController {
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
 
-    lazy var bookmarksManager = BookmarksManager()
-
-    private(set) var urlToSiteRating: [URL: SiteRating] = [:]
-    private(set) var siteRating: SiteRating?
     private(set) var tabModel: Tab
-
+    private(set) var privacyInfo: PrivacyInfo?
+    private var previousPrivacyInfosByURL: [URL: PrivacyInfo] = [:]
+    
     private let requeryLogic = RequeryLogic()
 
     private static let tld = AppDependencyProvider.shared.storageCache.current.tld
@@ -95,10 +103,7 @@ class TabViewController: UIViewController {
     private var lastError: Error?
     private var shouldReloadOnError = false
     private var failingUrls = Set<String>()
-
-    private var trackerNetworksDetectedOnPage = Set<String>()
-    private var pageHasTrackers = false
-
+        
     private var detectedLoginURL: URL?
     private var preserveLoginsWorker: PreserveLoginsWorker?
 
@@ -122,6 +127,9 @@ class TabViewController: UIViewController {
     private var blobDownloadTargetFrame: WKFrameInfo?
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+    
+    let bookmarksDatabase: CoreDataDatabase
+    lazy var faviconUpdater = BookmarkFaviconUpdater(bookmarksDatabase: bookmarksDatabase, tab: tabModel, favicons: Favicons.shared)
 
     public var url: URL? {
         willSet {
@@ -217,13 +225,11 @@ class TabViewController: UIViewController {
                          contentBlockingManager: ContentBlocking.shared.contentBlockingManager,
                          tld: AppDependencyProvider.shared.storageCache.current.tld)
     }()
-
+        
     private var canDisplayJavaScriptAlert: Bool {
         return presentedViewController == nil
             && delegate?.tabCheckIfItsBeingCurrentlyPresented(self) ?? false
             && !self.jsAlertController.isShown
-            // disable new alerts to appear when navigation is expected
-            && navigationExpectationTimer == nil
     }
 
     func present(_ alert: WebJSAlert) {
@@ -236,63 +242,16 @@ class TabViewController: UIViewController {
         }
     }
 
-    private var navigationExpectationTimer: Timer? {
-        willSet {
-            navigationExpectationTimer?.invalidate()
-        }
-    }
-
-    private static let navigationExpectationInterval = 3.0
-    private func scheduleNavigationExpectation(destinationURL: URL?, onSessionRestored: (() -> Void)? = nil) {
-        // continuous schedule calls may mean user is trying to hit all the buttons while we‘re waiting
-        guard !forceExpectedNavigationIfNeeded() else { return }
-
-        navigationExpectationTimer = Timer.scheduledTimer(withTimeInterval: Self.navigationExpectationInterval,
-                                                          repeats: false) { [weak self] _ in
-            Pixel.fire(pixel: .webKitDidBecomeUnresponsive)
-            self?.navigationExpectationTimer = nil
-
-            #if DEBUG
-                func fileLine(file: StaticString = #file, line: Int = #line) -> String {
-                    return "\(("\(file)" as NSString).lastPathComponent):\(line + 1)"
-                }
-                os_log("""
-                    -----------------------------------------------------------------------
-                    BREAK: WebView process has appeared hung and will be TERMINATED
-                    Check %s to temporarily disable this behaviour
-                    Hit Continue (^⌘Y) to continue program execution
-                    -----------------------------------------------------------------------
-                """, log: generalLog, type: .debug, fileLine())
-                // DEBUG: Comment out the following line to disable stopping at this breakpoint:
-                raise(SIGINT)
-                // DEBUG: Uncomment the following line to disable WebView process termination:
-//                return
-            #endif
-
-            if case .sessionRestored = self?.recreateWebView(destinationURL: destinationURL) {
-                onSessionRestored?()
-            }
-        }
-    }
-
-    @discardableResult
-    private func forceExpectedNavigationIfNeeded() -> Bool {
-        if let navigationExpectationTimer = navigationExpectationTimer {
-            navigationExpectationTimer.fire()
-            return true
-        }
-        return false
-    }
-
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
-    static func loadFromStoryboard(model: Tab) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
-        guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
-            fatalError("Failed to instantiate controller as TabViewController")
-        }
-        controller.tabModel = model
+        let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
+            TabViewController(coder: coder,
+                              tabModel: model,
+                              bookmarksDatabase: bookmarksDatabase)
+        })
         return controller
     }
     
@@ -307,10 +266,17 @@ class TabViewController: UIViewController {
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
+    
+    required init?(coder aDecoder: NSCoder,
+                   tabModel: Tab,
+                   bookmarksDatabase: CoreDataDatabase) {
+            self.tabModel = tabModel
+            self.bookmarksDatabase = bookmarksDatabase
+            super.init(coder: aDecoder)
+    }
 
     required init?(coder aDecoder: NSCoder) {
-        tabModel = Tab(link: nil)
-        super.init(coder: aDecoder)
+        fatalError("Not implemented")
     }
     
     override func viewDidLoad() {
@@ -333,9 +299,13 @@ class TabViewController: UIViewController {
     }
 
     override func buildActivities() -> [UIActivity] {
-        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
+                                                             viewModel: viewModel)]
 
-        activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
+        activities.append(SaveBookmarkActivity(controller: self,
+                                               isFavorite: true,
+                                               viewModel: viewModel))
         activities.append(FindInPageActivity(controller: self))
 
         return activities
@@ -345,7 +315,7 @@ class TabViewController: UIViewController {
         adClickAttributionLogic.delegate = self
         adClickAttributionDetection.delegate = adClickAttributionLogic
     }
-
+    
     func updateTabModel() {
         if let url = url {
             tabModel.link = Link(title: title, url: url)
@@ -353,11 +323,11 @@ class TabViewController: UIViewController {
             tabModel.link = nil
         }
     }
-
+        
     @objc func onApplicationWillResignActive() {
         shouldReloadOnError = true
     }
-
+    
     func applyInheritedAttribution(_ attribution: AdClickAttributionLogic.State?) {
         adClickAttributionLogic.applyInheritedAttribution(state: attribution)
     }
@@ -389,7 +359,7 @@ class TabViewController: UIViewController {
         updateContentMode()
 
         instrumentation.didPrepareWebView()
-
+        
         if consumeCookies {
             consumeCookiesThenLoadRequest(request)
         } else if let url = request?.url {
@@ -415,39 +385,8 @@ class TabViewController: UIViewController {
         }
     }
 
-    private enum WebViewRecreationResult {
-        case sessionRestored
-        case navigationPerformed
-    }
-    private func recreateWebView(destinationURL: URL?) -> WebViewRecreationResult {
-        var sessionStateData: Any?
-        if #available(iOS 15.0, *) {
-            sessionStateData = self.webView.interactionState
-        }
-        let configuration = self.webView.configuration
-
-        self.removeObservers()
-        self.webView.removeFromSuperview()
-        self.webView = nil
-
-        if #available(iOS 15.0, *),
-           let sessionStateData = sessionStateData {
-
-            self.attachWebView(configuration: configuration, andLoadRequest: nil, consumeCookies: false)
-            self.webView.interactionState = sessionStateData
-
-            return .sessionRestored
-        } else {
-            self.attachWebView(configuration: configuration,
-                               andLoadRequest: destinationURL.map(URLRequest.userInitiated),
-                               consumeCookies: false)
-            return .navigationPerformed
-        }
-    }
-
     private func addObservers() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward), options: .new, context: nil)
@@ -476,29 +415,16 @@ class TabViewController: UIViewController {
             webView.evaluateJavaScript(js)
         }
     }
-
+    
     public func load(url: URL) {
         webView.stopLoading()
         dismissJSAlertIfNeeded()
 
         load(url: url, didUpgradeURL: false)
     }
-
+    
     public func load(backForwardListItem: WKBackForwardListItem) {
         webView.stopLoading()
-        let destinationURL = backForwardListItem.url
-        let itemOffset = webView.backForwardList.index(of: backForwardListItem)
-
-        scheduleNavigationExpectation(destinationURL: destinationURL,
-                                      onSessionRestored: { [weak self] in
-            guard let self = self,
-                  let item = itemOffset.flatMap(self.webView.backForwardList.item(at:))
-            else {
-                self?.load(url: destinationURL)
-                return
-            }
-            self.load(backForwardListItem: item)
-        })
         dismissJSAlertIfNeeded()
 
         updateContentMode()
@@ -508,6 +434,7 @@ class TabViewController: UIViewController {
     private func load(url: URL, didUpgradeURL: Bool) {
         if !didUpgradeURL {
             lastUpgradedURL = nil
+            privacyInfo?.connectionUpgradedTo = nil
         }
         
         if !url.isBookmarklet() {
@@ -544,11 +471,6 @@ class TabViewController: UIViewController {
             assert(urlRequest.attribution == .user, "WebView requests should be user attributed")
         }
 
-        scheduleNavigationExpectation(destinationURL: urlRequest.url, onSessionRestored: { [weak self] in
-            self?.load(urlRequest: urlRequest)
-        })
-        dismissJSAlertIfNeeded()
-
         webView.stopLoading()
         webView.load(urlRequest)
     }
@@ -566,9 +488,6 @@ class TabViewController: UIViewController {
             
         case #keyPath(WKWebView.estimatedProgress):
             progressWorker.progressDidChange(webView.estimatedProgress)
-            
-        case #keyPath(WKWebView.hasOnlySecureContent):
-            hasOnlySecureContentChanged(hasOnlySecureContent: webView.hasOnlySecureContent)
             
         case #keyPath(WKWebView.url):
             webViewUrlHasChanged()
@@ -593,12 +512,6 @@ class TabViewController: UIViewController {
         } else if let currentHost = url?.host, let newHost = webView.url?.host, currentHost == newHost {
             url = webView.url
         }
-    }
-    
-    func hasOnlySecureContentChanged(hasOnlySecureContent: Bool) {
-        guard webView.url?.host == siteRating?.url.host else { return }
-        siteRating?.hasOnlySecureContent = hasOnlySecureContent
-        updateSiteRating()
     }
     
     func enableFireproofingForDomain(_ domain: String) {
@@ -646,22 +559,16 @@ class TabViewController: UIViewController {
     }
 
     public func reload() {
-        dismissJSAlertIfNeeded()
         updateContentMode()
-        guard webView.url != nil else { return }
-        scheduleNavigationExpectation(destinationURL: webView.url)
         webView.reload()
+        privacyDashboard?.dismiss(animated: true)
     }
-
+    
     func updateContentMode() {
         webView.configuration.defaultWebpagePreferences.preferredContentMode = tabModel.isDesktop ? .desktop : .mobile
     }
 
     func goBack() {
-        scheduleNavigationExpectation(destinationURL: webView.backForwardList.backItem?.url,
-                                      onSessionRestored: { [weak self] in
-            self?.goBack()
-        })
         dismissJSAlertIfNeeded()
 
         if isError {
@@ -678,10 +585,6 @@ class TabViewController: UIViewController {
     }
 
     func goForward() {
-        scheduleNavigationExpectation(destinationURL: webView.backForwardList.forwardItem?.url,
-                                      onSessionRestored: { [weak self] in
-            self?.goForward()
-        })
         dismissJSAlertIfNeeded()
 
         if webView.goForward() != nil {
@@ -710,20 +613,15 @@ class TabViewController: UIViewController {
 
         guard let chromeDelegate = chromeDelegate else { return }
 
-        if let controller = segue.destination as? PrivacyProtectionController {
+        if let controller = segue.destination as? PrivacyDashboardViewController {
             controller.popoverPresentationController?.delegate = controller
 
-            if let siteRatingView = chromeDelegate.omniBar.siteRatingContainer.siteRatingView {
-                controller.popoverPresentationController?.sourceView = siteRatingView
-                controller.popoverPresentationController?.sourceRect = siteRatingView.bounds
+            if let iconView = chromeDelegate.omniBar.privacyInfoContainer.privacyIcon {
+                controller.popoverPresentationController?.sourceView = iconView
+                controller.popoverPresentationController?.sourceRect = iconView.bounds
             }
-
-            controller.privacyProtectionDelegate = self
-            privacyController = controller
-            controller.omniDelegate = chromeDelegate.omniBar.omniDelegate
-            controller.omniBarText = chromeDelegate.omniBar.textField.text
-            controller.siteRating = siteRating
-            controller.errorText = isError ? errorText : nil
+            privacyDashboard = controller
+            privacyDashboard?.tabViewController = self
         }
         
         if let controller = segue.destination as? FullscreenDaxDialogViewController {
@@ -744,6 +642,13 @@ class TabViewController: UIViewController {
         return self.jsAlertController
     }
 
+    @IBSegueAction
+    private func makePrivacyDashboardViewController(coder: NSCoder) -> PrivacyDashboardViewController? {
+        PrivacyDashboardViewController(coder: coder,
+                                       privacyInfo: privacyInfo,
+                                       privacyConfigurationManager: ContentBlocking.shared.privacyConfigurationManager,
+                                       contentBlockingManager: ContentBlocking.shared.contentBlockingManager)
+    }
     private func addTextSizeObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onTextSizeChange),
@@ -783,50 +688,63 @@ class TabViewController: UIViewController {
 
     func showPrivacyDashboard() {
         Pixel.fire(pixel: .privacyDashboardOpened)
-        performSegue(withIdentifier: "PrivacyProtection", sender: self)
+        performSegue(withIdentifier: "PrivacyDashboard", sender: self)
     }
     
     private var didGoBackForward: Bool = false
 
-    private func resetSiteRating() {
+    private func resetDashboardInfo() {
         if let url = url {
-            if didGoBackForward, let siteRating = urlToSiteRating[url] {
-                self.siteRating = siteRating
+            if didGoBackForward, let privacyInfo = previousPrivacyInfosByURL[url] {
+                self.privacyInfo = privacyInfo
                 didGoBackForward = false
             } else {
-                siteRating = makeSiteRating(url: url)
+                privacyInfo = makePrivacyInfo(url: url)
             }
         } else {
-            siteRating = nil
+            privacyInfo = nil
         }
-        onSiteRatingChanged()
+        
+        onPrivacyInfoChanged()
     }
     
-    private func makeSiteRating(url: URL) -> SiteRating {
-        let entityMapping = EntityMapping()
-        let privacyPractices = PrivacyPractices(tld: storageCache.tld,
-                                                termsOfServiceStore: storageCache.termsOfServiceStore,
-                                                entityMapping: entityMapping)
+    private func makePrivacyInfo(url: URL) -> PrivacyInfo? {
+        guard let host = url.host else { return nil }
         
-        let siteRating = SiteRating(url: url,
-                                    httpsForced: httpsForced,
-                                    entityMapping: entityMapping,
-                                    privacyPractices: privacyPractices)
-        urlToSiteRating[url] = siteRating
+        let entity = ContentBlocking.shared.trackerDataManager.trackerData.findEntity(forHost: host)
         
-        return siteRating
+        
+        let privacyInfo = PrivacyInfo(url: url,
+                                      parentEntity: entity,
+                                      protectionStatus: makeProtectionStatus(for: host))
+        privacyInfo.serverTrust = webView.serverTrust
+        
+        previousPrivacyInfosByURL[url] = privacyInfo
+        
+        return privacyInfo
     }
-
-    private func updateSiteRating() {
-        if isError {
-            siteRating = nil
+    
+    private func makeProtectionStatus(for host: String) -> ProtectionStatus {
+        let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
+        
+        let isTempUnprotected = config.isTempUnprotected(domain: host)
+        let isAllowlisted = config.isUserUnprotected(domain: host)
+        
+        var enabledFeatures: [String] = []
+        
+        if !config.isInExceptionList(domain: host, forFeature: .contentBlocking) {
+            enabledFeatures.append(PrivacyFeature.contentBlocking.rawValue)
         }
-        onSiteRatingChanged()
+        
+        return ProtectionStatus(unprotectedTemporary: isTempUnprotected,
+                                enabledFeatures: enabledFeatures,
+                                allowlisted: isAllowlisted,
+                                denylisted: false)
     }
-
-    private func onSiteRatingChanged() {
-        delegate?.tab(self, didChangeSiteRating: siteRating)
-        privacyController?.updateSiteRating(siteRating)
+ 
+    private func onPrivacyInfoChanged() {
+        delegate?.tab(self, didChangePrivacyInfo: privacyInfo)
+        privacyDashboard?.updatePrivacyInfo(privacyInfo)
     }
     
     func didLaunchBrowsingMenu() {
@@ -871,6 +789,7 @@ class TabViewController: UIViewController {
     }
 
     func dismiss() {
+        privacyDashboard?.dismiss(animated: true)
         progressWorker.progressBar = nil
         chromeDelegate?.omniBar.cancelAllAnimations()
         cancelTrackerNetworksAnimation()
@@ -881,7 +800,6 @@ class TabViewController: UIViewController {
 
     private func removeObservers() {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.hasOnlySecureContent))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoForward))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
@@ -889,12 +807,12 @@ class TabViewController: UIViewController {
     }
         
     public func getCurrentWebsiteInfo() -> BrokenSiteInfo {
-        let blockedTrackerDomains = siteRating?.trackersBlocked.compactMap { $0.domain } ?? []
+        let blockedTrackerDomains = privacyInfo?.trackerInfo.trackersBlocked.compactMap { $0.domain } ?? []
         
         return BrokenSiteInfo(url: url,
                               httpsUpgrade: httpsForced,
                               blockedTrackerDomains: blockedTrackerDomains,
-                              installedSurrogates: siteRating?.installedSurrogates.map { $0 } ?? [],
+                              installedSurrogates: privacyInfo?.trackerInfo.installedSurrogates.map { $0 } ?? [],
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
                               ampUrl: linkProtection.lastAMPURLString,
@@ -957,8 +875,6 @@ extension TabViewController: WKNavigationDelegate {
             performBasicHTTPAuthentication(protectionSpace: challenge.protectionSpace, completionHandler: completionHandler)
         } else {
             completionHandler(.performDefaultHandling, nil)
-            guard let serverTrust = challenge.protectionSpace.serverTrust else { return }
-            ServerTrustCache.shared.put(serverTrust: serverTrust, forDomain: challenge.protectionSpace.host)
         }
     }
     
@@ -996,17 +912,13 @@ extension TabViewController: WKNavigationDelegate {
         self.httpsForced = httpsForced
         delegate?.showBars()
 
-        resetSiteRating()
+        resetDashboardInfo()
         
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
-
-        trackerNetworksDetectedOnPage.removeAll()
-        pageHasTrackers = false
-        NetworkLeaderboard.shared.incrementPagesLoaded()
         
         appRatingPrompt.registerUsage()
-        
+     
         if let scene = self.view.window?.windowScene, appRatingPrompt.shouldPrompt() {
             SKStoreReviewController.requestReview(in: scene)
             appRatingPrompt.shown()
@@ -1016,8 +928,6 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        navigationExpectationTimer = nil
-
         let mimeType = MIMEType(from: navigationResponse.response.mimeType)
 
         let httpResponse = navigationResponse.response as? HTTPURLResponse
@@ -1030,7 +940,7 @@ extension TabViewController: WKNavigationDelegate {
 
         if navigationResponse.canShowMIMEType && !FilePreviewHelper.canAutoPreviewMIMEType(mimeType) {
             url = webView.url
-            if let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
+            if navigationResponse.isForMainFrame, let decision = setupOrClearTemporaryDownload(for: navigationResponse.response) {
                 decisionHandler(decision)
             } else {
                 if navigationResponse.isForMainFrame && isSuccessfulResponse {
@@ -1053,11 +963,14 @@ extension TabViewController: WKNavigationDelegate {
 
             } else if let downloadMetadata = AppDependencyProvider.shared.downloadManager
                 .downloadMetaData(for: navigationResponse.response) {
-
-                self.presentSaveToDownloadsAlert(with: downloadMetadata) {
-                    self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
-                } cancelHandler: {
+                if view.window == nil {
                     decisionHandler(.cancel)
+                } else {
+                    self.presentSaveToDownloadsAlert(with: downloadMetadata) {
+                        self.startDownload(with: navigationResponse, decisionHandler: decisionHandler)
+                    } cancelHandler: {
+                        decisionHandler(.cancel)
+                    }
                 }
             } else {
                 Pixel.fire(pixel: .unhandledDownload)
@@ -1071,13 +984,11 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        navigationExpectationTimer = nil
         lastError = nil
         cancelTrackerNetworksAnimation()
         shouldReloadOnError = false
         hideErrorMessage()
         showProgressIndicator()
-        chromeDelegate?.omniBar.startLoadingAnimation(for: webView.url)
         linkProtection.cancelOngoingExtraction()
         linkProtection.setMainFrameUrl(webView.url)
         referrerTrimming.onBeginNavigation(to: webView.url)
@@ -1122,9 +1033,7 @@ extension TabViewController: WKNavigationDelegate {
     
     private func onWebpageDidFinishLoading() {
         os_log("webpageLoading finished", log: generalLog, type: .debug)
-        
-        siteRating?.finishedLoading = true
-        updateSiteRating()
+                
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
 
@@ -1139,7 +1048,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
 
-        guard let siteRating = self.siteRating,
+        guard let privacyInfo = self.privacyInfo,
               !isShowingFullScreenDaxDialog else {
 
             scheduleTrackerNetworksAnimation(collapsing: true)
@@ -1151,7 +1060,7 @@ extension TabViewController: WKNavigationDelegate {
             return
         }
         
-        guard let spec = DaxDialogs.shared.nextBrowsingMessage(siteRating: siteRating) else {
+        guard let spec = DaxDialogs.shared.nextBrowsingMessage(privacyInfo: privacyInfo) else {
             
             if DaxDialogs.shared.shouldShowFireButtonPulse {
                 delegate?.tabDidRequestFireButtonPulse(tab: self)
@@ -1186,8 +1095,8 @@ extension TabViewController: WKNavigationDelegate {
     
     private func scheduleTrackerNetworksAnimation(collapsing: Bool) {
         let trackersWorkItem = DispatchWorkItem {
-            guard let siteRating = self.siteRating else { return }
-            self.delegate?.tab(self, didRequestPresentingTrackerAnimation: siteRating, isCollapsing: collapsing)
+            guard let privacyInfo = self.privacyInfo else { return }
+            self.delegate?.tab(self, didRequestPresentingTrackerAnimation: privacyInfo, isCollapsing: collapsing)
         }
         trackersInfoWorkItem = trackersWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + Constants.trackerNetworksAnimationDelay,
@@ -1219,9 +1128,10 @@ extension TabViewController: WKNavigationDelegate {
         os_log("webpageLoading failed", log: generalLog, type: .debug)
         if isError {
             showBars(animated: true)
+            privacyInfo = nil
+            onPrivacyInfoChanged()
         }
-        siteRating?.finishedLoading = true
-        updateSiteRating()
+        
         self.delegate?.tabLoadingStateDidChange(tab: self)
     }
     
@@ -1257,57 +1167,34 @@ extension TabViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         guard let url = webView.url else { return }
         self.url = url
-        self.siteRating = makeSiteRating(url: url)
-        updateSiteRating()
+        
+        self.privacyInfo = makePrivacyInfo(url: url)
+        onPrivacyInfoChanged()
+        
         checkLoginDetectionAfterNavigation()
     }
     
     private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
-        /*
-         For now, the GPC header is only applied to sites known to be honoring GPC (nytimes.com, washingtonpost.com),
-         while the DOM signal is available to all websites.
-         This is done to avoid an issue with back navigation when adding the header (e.g. with 't.co').
-         */
-        guard let url = incomingRequest.url, appUrls.isGPCEnabled(url: url) else { return nil }
-        
-        var request = incomingRequest
-        // Add Do Not sell header if needed
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let domain = incomingRequest.url?.host
-        let urlAllowed = config.isFeature(.gpc, enabledForDomain: domain)
-        
-        if appSettings.sendDoNotSell && urlAllowed {
-            if let headers = request.allHTTPHeaderFields,
-               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
-                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
-
-                if #available(iOS 15.0, *) {
-                    request.attribution = .user
-                }
-
-                return request
-            }
-        } else {
-            // Check if DN$ header is still there and remove it
-            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
-                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
-
-                if #available(iOS 15.0, *) {
-                    request.attribution = .user
-                }
-
-                return request
-            }
+        guard var request = GPCRequestFactory().requestForGPC(basedOn: incomingRequest,
+                                                              config: config,
+                                                              gpcEnabled: appSettings.sendDoNotSell) else {
+            return nil
         }
-        return nil
+        
+        if #available(iOS 15.0, *) {
+            request.attribution = .user
+        }
+
+        return request
     }
+    
     // swiftlint:disable function_body_length
     // swiftlint:disable cyclomatic_complexity
 
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        navigationExpectationTimer = nil
 
         if let url = navigationAction.request.url,
            !appUrls.isDuckDuckGoSearch(url: url),
@@ -1434,6 +1321,7 @@ extension TabViewController: WKNavigationDelegate {
         if navigationAction.isTargetingMainFrame()
             && tld.domain(navigationAction.request.mainDocumentURL?.host) != tld.domain(lastUpgradedURL?.host) {
             lastUpgradedURL = nil
+            privacyInfo?.connectionUpgradedTo = nil
         }
 
         guard navigationAction.request.mainDocumentURL != nil else {
@@ -1523,8 +1411,8 @@ extension TabViewController: WKNavigationDelegate {
             switch result {
             case let .success(upgradedUrl):
                 if lastUpgradedURL != upgradedUrl {
-                    NetworkLeaderboard.shared.incrementHttpsUpgrades()
                     lastUpgradedURL = upgradedUrl
+                    privacyInfo?.connectionUpgradedTo = upgradedUrl
                     load(url: upgradedUrl, didUpgradeURL: true)
                     completion(.cancel)
                 } else {
@@ -1699,7 +1587,7 @@ extension TabViewController {
         // temporary delegate held strongly in callbacks
         // after destination decision WKDownload delegate will be set
         // to a WKDownloadSession and passed to Download Manager
-        delegate.decideDestinationCallback = { [weak self] _, response, suggestedFilename, callback in
+        delegate.decideDestinationCallback = { [weak self] _, _, suggestedFilename, callback in
             withExtendedLifetime(delegate) {
                 let downloadManager = AppDependencyProvider.shared.downloadManager
                 guard let self = self,
@@ -1903,19 +1791,11 @@ extension TabViewController {
         if mostRecentAutoPreviewDownloadID == download.id {
             fileHandler.preview()
         } else {
-            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
+            let pixelParameters = [PixelParameters.mimeType: download.mimeType.rawValue,
+                                   PixelParameters.downloadListCount: "\(AppDependencyProvider.shared.downloadManager.downloadList.count)"]
+            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab, withAdditionalParameters: pixelParameters)
         }
     }
-
-}
-
-// MARK: - PrivacyProtectionDelegate
-extension TabViewController: PrivacyProtectionDelegate {
-
-    func omniBarTextTapped() {
-        chromeDelegate?.omniBar.becomeFirstResponder()
-    }
-
 }
 
 // MARK: - WKUIDelegate
@@ -1941,21 +1821,17 @@ extension TabViewController: WKUIDelegate {
         Pixel.fire(pixel: .webKitDidTerminate)
         delegate?.tabContentProcessDidTerminate(tab: self)
     }
-
+    
     func webView(_ webView: WKWebView,
                  runJavaScriptAlertPanelWithMessage message: String,
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping () -> Void) {
-
-        // when we‘re in a navigation expectation state and a new alert arrives
-        // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
-              canDisplayJavaScriptAlert
-        else {
+        
+        guard canDisplayJavaScriptAlert else {
             completionHandler()
             return
         }
-
+        
         let alert = WebJSAlert(domain: frame.request.url?.host
                                // in case the web view is navigating to another host
                                ?? webView.backForwardList.currentItem?.url.host
@@ -1965,21 +1841,17 @@ extension TabViewController: WKUIDelegate {
                                alertType: .alert(handler: completionHandler))
         self.present(alert)
     }
-
+    
     func webView(_ webView: WKWebView,
                  runJavaScriptConfirmPanelWithMessage message: String,
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (Bool) -> Void) {
-
-        // when we‘re in a navigation expectation state and a new alert arrives
-        // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
-              canDisplayJavaScriptAlert
-        else {
+        
+        guard canDisplayJavaScriptAlert else {
             completionHandler(false)
             return
         }
-
+        
         let alert = WebJSAlert(domain: frame.request.url?.host
                                // in case the web view is navigating to another host
                                ?? webView.backForwardList.currentItem?.url.host
@@ -1989,22 +1861,18 @@ extension TabViewController: WKUIDelegate {
                                alertType: .confirm(handler: completionHandler))
         self.present(alert)
     }
-
+    
     func webView(_ webView: WKWebView,
                  runJavaScriptTextInputPanelWithPrompt prompt: String,
                  defaultText: String?,
                  initiatedByFrame frame: WKFrameInfo,
                  completionHandler: @escaping (String?) -> Void) {
-
-        // when we‘re in a navigation expectation state and a new alert arrives
-        // we won‘t display it and navigation stack will hang, so just terminate web process
-        guard !forceExpectedNavigationIfNeeded(),
-              canDisplayJavaScriptAlert
-        else {
+        
+        guard canDisplayJavaScriptAlert else {
             completionHandler(nil)
             return
         }
-
+        
         let alert = WebJSAlert(domain: frame.request.url?.host
                                // in case the web view is navigating to another host
                                ?? webView.backForwardList.currentItem?.url.host
@@ -2015,6 +1883,7 @@ extension TabViewController: WKUIDelegate {
                                                 defaultText: defaultText))
         self.present(alert)
     }
+    
 }
 
 // MARK: - UIPopoverPresentationControllerDelegate
@@ -2065,19 +1934,20 @@ extension TabViewController: UIGestureRecognizerDelegate {
 
     func refresh() {
         let url: URL?
-        if isError {
+        if isError || webView.url == nil {
             url = URL(string: chromeDelegate?.omniBar.textField.text ?? "")
         } else {
             url = webView.url
         }
-
+        
         requeryLogic.onRefresh()
-        if isError, let url = url {
+        if isError || webView.url == nil, let url = url {
             load(url: url)
         } else {
             reload()
         }
     }
+
 }
 
 // MARK: - UserContentControllerDelegate
@@ -2102,7 +1972,7 @@ extension TabViewController: UserContentControllerDelegate {
                                updateEvent: ContentBlockerRulesManager.UpdateEvent) {
         guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
 
-        userScripts.faviconScript.delegate = self
+        userScripts.faviconScript.delegate = faviconUpdater
         userScripts.debugScript.instrumentation = instrumentation
         userScripts.surrogatesScript.delegate = self
         userScripts.contentBlockerUserScript.delegate = self
@@ -2117,12 +1987,14 @@ extension TabViewController: UserContentControllerDelegate {
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
             PreserveLogins.Notifications.loginDetectionStateChanged,
-            AppUserDefaults.Notifications.doNotSellStatusChange
+            AppUserDefaults.Notifications.doNotSellStatusChange,
+            AutofillLoginSession.Notifications.devicePasscodeStatusChanged
         ]
         if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) == true
             || notificationsTriggeringReload.contains(where: {
                 updateEvent.changes[$0.rawValue]?.contains(.notification) == true
             }) {
+
             reload()
         }
     }
@@ -2133,7 +2005,7 @@ extension TabViewController: UserContentControllerDelegate {
 extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
     func contentBlockerRulesUserScriptShouldProcessTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
-        return siteRating?.isFor(self.url) ?? false
+        return privacyInfo?.isFor(self.url) ?? false
     }
     
     func contentBlockerRulesUserScriptShouldProcessCTLTrackers(_ script: ContentBlockerRulesUserScript) -> Bool {
@@ -2147,10 +2019,12 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
     
     func contentBlockerRulesUserScript(_ script: ContentBlockerRulesUserScript,
                                        detectedThirdPartyRequest request: DetectedRequest) {
-        siteRating?.thirdPartyRequestDetected(request)
+        privacyInfo?.trackerInfo.add(detectedThirdPartyRequest: request)
     }
 
     fileprivate func userScriptDetectedTracker(_ tracker: DetectedRequest) {
+        guard let url = url else { return }
+        
         adClickAttributionLogic.onRequestDetected(request: tracker)
         
         if tracker.isBlocked && fireWoFollowUp {
@@ -2158,21 +2032,7 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
             Pixel.fire(pixel: .daxDialogsWithoutTrackersFollowUp)
         }
 
-        siteRating?.trackerDetected(tracker)
-        onSiteRatingChanged()
-
-        if !pageHasTrackers {
-            NetworkLeaderboard.shared.incrementPagesWithTrackers()
-            pageHasTrackers = true
-        }
-
-        if let networkName = tracker.ownerName {
-            if !trackerNetworksDetectedOnPage.contains(networkName) {
-                trackerNetworksDetectedOnPage.insert(networkName)
-                NetworkLeaderboard.shared.incrementDetectionCount(forNetworkNamed: networkName)
-            }
-            NetworkLeaderboard.shared.incrementTrackersCount(forNetworkNamed: networkName)
-        }
+        privacyInfo?.trackerInfo.addDetectedTracker(tracker, onPageWithURL: url)
     }
 }
 
@@ -2180,31 +2040,18 @@ extension TabViewController: ContentBlockerRulesUserScriptDelegate {
 extension TabViewController: SurrogatesUserScriptDelegate {
 
     func surrogatesUserScriptShouldProcessTrackers(_ script: SurrogatesUserScript) -> Bool {
-        return siteRating?.isFor(self.url) ?? false
+        return privacyInfo?.isFor(self.url) ?? false
     }
 
     func surrogatesUserScript(_ script: SurrogatesUserScript,
                               detectedTracker tracker: DetectedRequest,
                               withSurrogate host: String) {
-        if siteRating?.url.absoluteString == tracker.pageUrl {
-            siteRating?.surrogateInstalled(host)
-        }
+        guard let url = url else { return }
+        
+        privacyInfo?.trackerInfo.addInstalledSurrogateHost(host, for: tracker, onPageWithURL: url)
         userScriptDetectedTracker(tracker)
     }
 
-}
-
-// MARK: - FaviconUserScriptDelegate
-extension TabViewController: FaviconUserScriptDelegate {
-    
-    func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String? {
-        return webView.url?.host
-    }
-    
-    func faviconUserScript(_ script: FaviconUserScript, didFinishLoadingFavicon image: UIImage) {
-        tabModel.didUpdateFavicon()
-    }
-    
 }
 
 // MARK: - PrintingUserScriptDelegate
@@ -2403,16 +2250,19 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         manager.prepareData { [weak self] in
-
-            let saveLoginController = SaveLoginViewController(credentialManager: manager, domainLastShownOn: self?.domainSaveLoginPromptLastShownOn)
-            self?.domainSaveLoginPromptLastShownOn = self?.url?.host
+            guard let self = self else { return }
+            
+            let saveLoginController = SaveLoginViewController(credentialManager: manager,
+                                                              appSettings: self.appSettings,
+                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn)
+            self.domainSaveLoginPromptLastShownOn = self.url?.host
             saveLoginController.delegate = self
             if #available(iOS 15.0, *) {
                 if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
                     presentationController.detents = [.medium(), .large()]
                 }
             }
-            self?.present(saveLoginController, animated: true, completion: nil)
+            self.present(saveLoginController, animated: true, completion: nil)
         }
     }
     
@@ -2474,7 +2324,7 @@ extension TabViewController: SecureVaultManagerDelegate {
         }
     }
 
-    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: Int64) {
+    func secureVaultManager(_: SecureVaultManager, didAutofill type: AutofillType, withObjectId objectId: String) {
         // No-op, don't need to do anything here
     }
     
@@ -2482,10 +2332,14 @@ extension TabViewController: SecureVaultManagerDelegate {
         false
     }
     
-    // swiftlint:disable:next identifier_name
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }
+    
+    func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
+        Pixel.fire(pixel: .autofillJSPixelFired(pixel))
+    }
+    
 }
 
 extension TabViewController: SaveLoginViewControllerDelegate {

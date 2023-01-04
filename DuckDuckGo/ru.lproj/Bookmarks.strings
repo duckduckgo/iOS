@@ -1,41 +1,53 @@
-/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "1oZ-re-yKW"; */
-"1oZ-re-yKW.title" = "Готово";
+/* Class = "UILabel"; text = "Label"; ObjectID = "7VM-DV-W3e"; */
+"7VM-DV-W3e.text" = "Метка";
 
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "Buv-ez-2Lr"; */
-"Buv-ez-2Lr.text" = "Закладок пока нет";
+/* Class = "UILabel"; text = "Label"; ObjectID = "061-pX-T9z"; */
+"061-pX-T9z.text" = "Метка";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cV4-pj-JNb"; */
+"cV4-pj-JNb.text" = "Метка";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "K2O-E5-pyF"; */
 "K2O-E5-pyF.text" = "Метка";
 
+/* Class = "UILabel"; text = "Add Folder"; ObjectID = "K8e-rz-6qx"; */
+"K8e-rz-6qx.text" = "Добавить папку";
+
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "KiU-Wb-7jj"; */
 "KiU-Wb-7jj.placeholder" = "Название";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
-"Lqe-Wh-Evj.text" = "Метка";
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "Ksa-Pd-Mv5"; */
+"Ksa-Pd-Mv5.title" = "Редактировать";
 
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
-"N2X-jQ-cbU.text" = "Закладок пока нет";
+/* Class = "UILabel"; text = "Favorite"; ObjectID = "mRK-XI-Rr8"; */
+"mRK-XI-Rr8.text" = "Избранное";
 
-/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "pwj-Ie-VbJ"; */
-"pwj-Ie-VbJ.title" = "Редактировать";
+/* Class = "UISegmentedControl"; NJH-oV-DbS.segmentTitles[0] = "All Bookmarks"; ObjectID = "NJH-oV-DbS"; */
+"NJH-oV-DbS.segmentTitles[0]" = "Все закладки";
 
-/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "pyc-rk-XMJ"; */
-"pyc-rk-XMJ.normalTitle" = "Импортировать закладки из другого браузера";
+/* Class = "UISegmentedControl"; NJH-oV-DbS.segmentTitles[1] = "Favorites"; ObjectID = "NJH-oV-DbS"; */
+"NJH-oV-DbS.segmentTitles[1]" = "Избранное";
 
-/* Class = "UINavigationItem"; title = "Add Bookmark"; ObjectID = "qA0-bu-lRC"; */
-"qA0-bu-lRC.title" = "Добавить закладку";
+/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "oMv-60-GGW"; */
+"oMv-60-GGW.title" = "Закладки";
 
 /* Class = "UINavigationItem"; title = "Add Folder"; ObjectID = "qaZ-4Z-o70"; */
 "qaZ-4Z-o70.title" = "Добавить папку";
 
+/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "R7T-q4-qHz"; */
+"R7T-q4-qHz.normalTitle" = "Импортировать закладки из другого браузера";
+
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "rT4-Yr-P8D"; */
 "rT4-Yr-P8D.placeholder" = "Название";
 
-/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
-"tVt-jc-YaY.title" = "Закладки";
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "RuZ-zV-tu8"; */
+"RuZ-zV-tu8.title" = "Готово";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "vil-gw-sgh"; */
-"vil-gw-sgh.text" = "Метка";
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "SrQ-51-yie"; */
+"SrQ-51-yie.text" = "Закладок пока нет";
+
+/* Class = "UILabel"; text = "No favorites added yet"; ObjectID = "y8y-oO-xBm"; */
+"y8y-oO-xBm.text" = "В избранное пока ничего не добавлено";
 
 /* Class = "UITextField"; placeholder = "URL"; ObjectID = "YqY-sP-hhb"; */
 "YqY-sP-hhb.placeholder" = "URL";

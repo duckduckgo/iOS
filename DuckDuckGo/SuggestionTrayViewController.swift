@@ -19,6 +19,7 @@
 
 import UIKit
 import Core
+import Bookmarks
 
 class SuggestionTrayViewController: UIViewController {
     
@@ -36,11 +37,12 @@ class SuggestionTrayViewController: UIViewController {
     var dismissHandler: (() -> Void)?
     
     private let appSettings = AppUserDefaults()
-    private let bookmarkManager = BookmarksManager()
 
     private var autocompleteController: AutocompleteViewController?
     private var favoritesOverlay: FavoritesOverlay?
     private var willRemoveAutocomplete = false
+    private let bookmarksSearch: BookmarksStringSearch
+    private let favoritesModel: FavoritesListInteracting
 
     var selectedSuggestion: Suggestion? {
         autocompleteController?.selectedSuggestion
@@ -48,7 +50,7 @@ class SuggestionTrayViewController: UIViewController {
     
     enum SuggestionType: Equatable {
     
-        case autocomplete(query: String, bookmarksCachingSearch: BookmarksCachingSearch)
+        case autocomplete(query: String)
         case favorites
         
         func hideOmnibarSeparator() -> Bool {
@@ -60,7 +62,7 @@ class SuggestionTrayViewController: UIViewController {
         
         static func == (lhs: SuggestionTrayViewController.SuggestionType, rhs: SuggestionTrayViewController.SuggestionType) -> Bool {
             switch (lhs, rhs) {
-            case let (.autocomplete(queryLHS, _), .autocomplete(queryRHS, _)):
+            case let (.autocomplete(queryLHS), .autocomplete(queryRHS)):
                 return queryLHS == queryRHS
             case (.favorites, .favorites):
                 return true
@@ -68,6 +70,16 @@ class SuggestionTrayViewController: UIViewController {
                 return false
             }
         }
+    }
+    
+    required init?(coder: NSCoder, favoritesViewModel: FavoritesListInteracting, bookmarksSearch: BookmarksStringSearch) {
+        self.favoritesModel = favoritesViewModel
+        self.bookmarksSearch = bookmarksSearch
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Not implemented")
     }
 
     override func viewDidLoad() {
@@ -84,7 +96,7 @@ class SuggestionTrayViewController: UIViewController {
     func canShow(for type: SuggestionType) -> Bool {
         var canShow = false
         switch type {
-        case .autocomplete(let query, _):
+        case .autocomplete(let query):
             canShow = canDisplayAutocompleteSuggestions(forQuery: query)
         case.favorites:
             canShow = canDisplayFavorites
@@ -94,8 +106,8 @@ class SuggestionTrayViewController: UIViewController {
     
     func show(for type: SuggestionType) {
         switch type {
-        case .autocomplete(let query, let bookmarksCachingSearch):
-            displayAutocompleteSuggestions(forQuery: query, bookmarksCachingSearch: bookmarksCachingSearch)
+        case .autocomplete(let query):
+            displayAutocompleteSuggestions(forQuery: query)
         case .favorites:
             if isPad {
                 removeAutocomplete()
@@ -192,7 +204,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private var canDisplayFavorites: Bool {
-        bookmarkManager.favoritesCount != 0
+        favoritesModel.favorites.count > 0
     }
     
     private func displayFavoritesIfNeeded(onInstall: @escaping () -> Void = {}) {
@@ -202,7 +214,7 @@ class SuggestionTrayViewController: UIViewController {
     }
     
     private func installFavoritesOverlay(onInstall: @escaping () -> Void = {}) {
-        let controller = FavoritesOverlay()
+        let controller = FavoritesOverlay(viewModel: favoritesModel)
         controller.delegate = favoritesOverlayDelegate
         install(controller: controller, completion: onInstall)
         favoritesOverlay = controller
@@ -216,19 +228,15 @@ class SuggestionTrayViewController: UIViewController {
         return canDisplay
     }
     
-    private func displayAutocompleteSuggestions(forQuery query: String, bookmarksCachingSearch: BookmarksCachingSearch) {
-        installAutocompleteSuggestionsIfNeeded(with: bookmarksCachingSearch)
+    private func displayAutocompleteSuggestions(forQuery query: String) {
+        if autocompleteController == nil {
+            installAutocompleteSuggestions()
+        }
         autocompleteController?.updateQuery(query: query)
     }
     
-    private func installAutocompleteSuggestionsIfNeeded(with bookmarksCachingSearch: BookmarksCachingSearch) {
-        if autocompleteController == nil {
-            installAutocompleteSuggestions(with: bookmarksCachingSearch)
-        }
-    }
-    
-    private func installAutocompleteSuggestions(with bookmarksCachingSearch: BookmarksCachingSearch) {
-        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksCachingSearch: bookmarksCachingSearch)
+    private func installAutocompleteSuggestions() {
+        let controller = AutocompleteViewController.loadFromStoryboard(bookmarksSearch: bookmarksSearch)
         install(controller: controller)
         controller.delegate = autocompleteDelegate
         controller.presentationDelegate = self

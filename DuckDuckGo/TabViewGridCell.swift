@@ -84,14 +84,14 @@ class TabViewGridCell: TabViewCell {
         previewTrailingConstraint?.isActive = true
     }
     
-    private static var darkThemeUnreadImage = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
-                                                                                     borderWidth: 6.0,
-                                                                                     foregroundColor: .cornflowerBlue,
-                                                                                     borderColor: DarkTheme().tabSwitcherCellBackgroundColor)
-    private static var lighThemeUnreadImage = PrivacyProtectionIconSource.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
-                                                                                     borderWidth: 6.0,
-                                                                                     foregroundColor: .cornflowerBlue,
-                                                                                     borderColor: LightTheme().tabSwitcherCellBackgroundColor)
+    private static var darkThemeUnreadImage = UIImage.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
+                                                                       borderWidth: 6.0,
+                                                                       foregroundColor: .cornflowerBlue,
+                                                                       borderColor: DarkTheme().tabSwitcherCellBackgroundColor)
+    private static var lighThemeUnreadImage = UIImage.stackedIconImage(withIconImage: UIImage(named: "TabUnread")!,
+                                                                       borderWidth: 6.0,
+                                                                       foregroundColor: .cornflowerBlue,
+                                                                       borderColor: LightTheme().tabSwitcherCellBackgroundColor)
     
     private static func unreadImage(for theme: Theme) -> UIImage {
         switch theme.currentImageSet {
@@ -135,8 +135,8 @@ class TabViewGridCell: TabViewCell {
         border.layer.borderWidth = isCurrent ? Constants.selectedBorderWidth : Constants.unselectedBorderWidth
 
         if let link = tab.link {
-            removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
-            title.accessibilityLabel = UserText.openTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
+            removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle, atAddress: link.url.host ?? "")
+            title.accessibilityLabel = UserText.openTab(withTitle: link.displayTitle, atAddress: link.url.host ?? "")
             title.text = tab.link?.displayTitle
         }
         

@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import Common
 import UIKit
 import Combine
 import os.log
@@ -49,6 +50,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     enum ViewState {
         case authLocked
+        case noAuthAvailable
         case empty
         case showItems
         case searching
@@ -57,9 +59,13 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     let authenticator = AutofillLoginListAuthenticator()
     var isSearching: Bool = false
+    var authenticationNotRequired = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
+    private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
+    private let tld: TLD
+    private var currentTabUrl: URL?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
@@ -81,9 +87,12 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings) {
+    init(appSettings: AppSettings, tld: TLD, currentTabUrl: URL? = nil) {
         self.appSettings = appSettings
+        self.tld = tld
+        self.currentTabUrl = currentTabUrl
         updateData()
+        authenticationNotRequired = !hasAccountsSaved
         setupCancellables()
     }
     
@@ -115,10 +124,17 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     func lockUI() {
+        authenticationNotRequired = !hasAccountsSaved
         authenticator.logOut()
     }
     
     func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
+        if !authenticator.canAuthenticate() {
+            viewState = .noAuthAvailable
+            completion(nil)
+            return
+        }
+
         if viewState != .authLocked {
             completion(nil)
             return
@@ -142,6 +158,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     func updateData() {
         self.accounts = fetchAccounts()
+        self.accountsToSuggest = fetchSuggestedAccounts()
         self.sections = makeSections(with: accounts)
     }
     
@@ -150,7 +167,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         
         if let query = query, query.count > 0 {
             filteredAccounts = filteredAccounts.filter { account in
-                if !account.name.lowercased().contains(query.lowercased()) &&
+                if !account.name(tld: tld).lowercased().contains(query.lowercased()) &&
                     !account.domain.lowercased().contains(query.lowercased()) &&
                     !account.username.lowercased().contains(query.lowercased()) {
                     return false
@@ -177,7 +194,23 @@ final class AutofillLoginListViewModel: ObservableObject {
             return []
         }
     }
-    
+
+    private func fetchSuggestedAccounts() -> [SecureVaultModels.WebsiteAccount] {
+        guard let url = currentTabUrl,
+              let host = url.host,
+              let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
+            os_log("Failed to make vault")
+            return []
+        }
+
+        do {
+            return try secureVault.accountsFor(domain: host)
+        } catch {
+            os_log("Failed to fetch suggested accounts")
+            return []
+        }
+    }
+
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
         var newSections = [AutofillLoginListSectionType]()
 
@@ -185,7 +218,12 @@ final class AutofillLoginListViewModel: ObservableObject {
             newSections.append(.enableAutofill)
         }
 
-        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter()
+        if !accountsToSuggest.isEmpty {
+            let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0, tld: tld) }
+            newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
+        }
+        
+        let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
         let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
         
         newSections.append(contentsOf: accountSections)
@@ -204,8 +242,10 @@ final class AutofillLoginListViewModel: ObservableObject {
     private func updateViewState() {
         var newViewState: AutofillLoginListViewModel.ViewState
         
-        if authenticator.state == .loggedOut {
+        if authenticator.state == .loggedOut && !authenticationNotRequired {
             newViewState = .authLocked
+        } else if authenticator.state == .notAvailable {
+            newViewState = .noAuthAvailable
         } else if isSearching {
             if sections.count == 0 {
                 newViewState = .searchingNoResults
@@ -213,7 +253,7 @@ final class AutofillLoginListViewModel: ObservableObject {
                 newViewState = .searching
             }
         } else {
-            newViewState = self.sections.count > 1 ? .showItems : .empty
+            newViewState = sections.count > 1 ? .showItems : .empty
         }
         
         // Avoid unnecessary updates
@@ -225,11 +265,12 @@ final class AutofillLoginListViewModel: ObservableObject {
     @discardableResult
     func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
         guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
-              let accountID = account.id else { return false }
+              let accountID = account.id,
+              let accountIdInt = Int64(accountID) else { return false }
         
         do {
-            cachedDeletedCredentials = try secureVault.websiteCredentialsFor(accountId: accountID)
-            try secureVault.deleteWebsiteCredentialsFor(accountId: accountID)
+            cachedDeletedCredentials = try secureVault.websiteCredentialsFor(accountId: accountIdInt)
+            try secureVault.deleteWebsiteCredentialsFor(accountId: accountIdInt)
             return true
         } catch {
             Pixel.fire(pixel: .secureVaultError)
@@ -264,14 +305,14 @@ extension AutofillLoginListItemViewModel: Comparable {
 
 internal extension Array where Element == SecureVaultModels.WebsiteAccount {
     
-    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter() -> [String: [AutofillLoginListItemViewModel]] {
+    func autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: TLD) -> [String: [AutofillLoginListItemViewModel]] {
         reduce(into: [String: [AutofillLoginListItemViewModel]]()) { result, account in
             
             // Unfortunetly, folding doesn't produce perfect results despite respecting the system locale
             // E.g. Romainian should treat letters with diacritics as seperate letters, but folding doesn't
             // Apple's own apps (e.g. contacts) seem to suffer from the same problem
             let key: String
-            if let firstChar = account.name.first,
+            if let firstChar = account.name(tld: tld).first,
                let deDistinctionedChar = String(firstChar).folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil).first,
                deDistinctionedChar.isLetter {
                 
@@ -280,7 +321,7 @@ internal extension Array where Element == SecureVaultModels.WebsiteAccount {
                 key = AutofillLoginListSectionType.miscSectionHeading
             }
             
-            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account))
+            return result[key, default: []].append(AutofillLoginListItemViewModel(account: account, tld: tld))
         }
     }
 }

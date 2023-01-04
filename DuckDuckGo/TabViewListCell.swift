@@ -55,8 +55,8 @@ class TabViewListCell: TabViewCell {
         decorate(with: ThemeManager.shared.currentTheme)
 
         if let link = tab.link {
-            removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
-            title.accessibilityLabel = UserText.openTab(withTitle: link.displayTitle ?? "", atAddress: link.url.host ?? "")
+            removeButton.accessibilityLabel = UserText.closeTab(withTitle: link.displayTitle, atAddress: link.url.host ?? "")
+            title.accessibilityLabel = UserText.openTab(withTitle: link.displayTitle, atAddress: link.url.host ?? "")
             title.text = tab.link?.displayTitle
         }
         

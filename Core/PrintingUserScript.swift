@@ -18,8 +18,8 @@
 //
 
 import Foundation
-import BrowserServicesKit
 import WebKit
+import UserScript
 
 public protocol PrintingUserScriptDelegate: AnyObject {
 

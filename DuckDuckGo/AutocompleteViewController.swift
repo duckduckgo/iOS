@@ -40,7 +40,7 @@ class AutocompleteViewController: UIViewController {
     fileprivate var suggestions = [Suggestion]()
     fileprivate var selectedItem = -1
     
-    private var bookmarksSearch: BookmarksCachingSearch!
+    private var bookmarksSearch: BookmarksStringSearch!
 
     var showBackground = true {
         didSet {
@@ -60,12 +60,12 @@ class AutocompleteViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var shouldOffsetY = false
     
-    static func loadFromStoryboard(bookmarksCachingSearch: BookmarksCachingSearch) -> AutocompleteViewController {
+    static func loadFromStoryboard(bookmarksSearch: BookmarksStringSearch) -> AutocompleteViewController {
         let storyboard = UIStoryboard(name: "Autocomplete", bundle: nil)
         guard let controller = storyboard.instantiateInitialViewController() as? AutocompleteViewController else {
             fatalError("Failed to instatiate correct Autocomplete view controller")
         }
-        controller.bookmarksSearch = bookmarksCachingSearch
+        controller.bookmarksSearch = bookmarksSearch
         return controller
     }
 
@@ -156,12 +156,16 @@ class AutocompleteViewController: UIViewController {
 
         lastRequest!.execute { [weak self] (suggestions, error) in
             guard let strongSelf = self else { return }
-            
-            strongSelf.bookmarksSearch.search(query: query) { matches in
-                let notQueryMatches = matches.filter { $0.url?.absoluteString != query }
-                let filteredMatches = notQueryMatches.filter { $0.displayTitle != nil }.prefix(Constants.maxLocalItems)
-                let localSuggestions = filteredMatches.map { Suggestion(source: .local, suggestion: $0.displayTitle!, url: $0.url) }
-                
+
+            Task { @MainActor in
+                let matches = strongSelf.bookmarksSearch.search(query: query)
+                let notQueryMatches = matches.filter { $0.url.absoluteString != query }
+                let filteredMatches = notQueryMatches.prefix(Constants.maxLocalItems)
+                let localSuggestions = filteredMatches.map { Suggestion(source: .local,
+                                                                        suggestion: $0.title,
+                                                                        url: $0.url)
+                }
+
                 guard let suggestions = suggestions, error == nil else {
                     os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
                     self?.updateSuggestions(localSuggestions)

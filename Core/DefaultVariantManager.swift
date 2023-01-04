@@ -49,9 +49,9 @@ public struct VariantIOS: Variant {
     public static let defaultVariants: [Variant] = [
 
         // SERP testing
-        VariantIOS(name: "sc", weight: doNotAllocate, isIncluded: When.always, features: []),
+        VariantIOS(name: "sc", weight: 1, isIncluded: When.always, features: []),
         VariantIOS(name: "sd", weight: doNotAllocate, isIncluded: When.always, features: []),
-        VariantIOS(name: "se", weight: doNotAllocate, isIncluded: When.always, features: [])
+        VariantIOS(name: "se", weight: 1, isIncluded: When.always, features: [])
         
     ]
     

@@ -30,8 +30,8 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = false
         let showRefresh = false
@@ -59,8 +59,8 @@ struct SmallOmniBarState {
         let showShareButton: Bool = false
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
-        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isSpeechRecognizerAvailable
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = true
         let showRefresh = false
@@ -89,7 +89,7 @@ struct SmallOmniBarState {
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = true
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = true
         let showClear = false
         let showRefresh = false
@@ -118,7 +118,7 @@ struct SmallOmniBarState {
         let clearTextOnStart = true
         let allowsTrackersAnimation = false
         let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = false
         let showRefresh = false
@@ -147,7 +147,7 @@ struct SmallOmniBarState {
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = true
         let showRefresh = false
@@ -176,7 +176,7 @@ struct SmallOmniBarState {
         let clearTextOnStart = false
         let allowsTrackersAnimation = true
         let showSearchLoupe = false
-        let showSiteRating = true
+        let showPrivacyIcon = true
         let showBackground = true
         let showClear = false
         let showRefresh = true
@@ -205,7 +205,7 @@ struct SmallOmniBarState {
         let clearTextOnStart = false
         let allowsTrackersAnimation = false
         let showSearchLoupe = !AppDependencyProvider.shared.voiceSearchHelper.isVoiceSearchEnabled
-        let showSiteRating = false
+        let showPrivacyIcon = false
         let showBackground = false
         let showClear = true
         let showRefresh = false

@@ -19,6 +19,7 @@
 
 import Foundation
 import BrowserServicesKit
+import Common
 import SwiftUI
 import Core
 
@@ -45,7 +46,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     
     weak var delegate: AutofillLoginDetailsViewModelDelegate?
     var account: SecureVaultModels.WebsiteAccount?
-    
+    private let tld: TLD
+
     @ObservedObject var headerViewModel: AutofillLoginDetailsHeaderViewModel
     @Published var isPasswordHidden = true
     @Published var username = ""
@@ -99,11 +101,13 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         AutofillInterfaceEmailTruncator.truncateEmail(username, maxLength: 36)
     }
 
-    internal init(account: SecureVaultModels.WebsiteAccount? = nil) {
+    internal init(account: SecureVaultModels.WebsiteAccount? = nil, tld: TLD) {
         self.account = account
+        self.tld = tld
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel()
         if let account = account {
             self.updateData(with: account)
+            AppDependencyProvider.shared.autofillLoginSession.lastAccessedAccount = account
         } else {
             viewMode = .new
         }
@@ -113,9 +117,9 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.account = account
         username = account.username
         address = account.domain
-        title = account.name
+        title = account.name(tld: tld)
         notes = account.notes ?? ""
-        headerViewModel.updateData(with: account)
+        headerViewModel.updateData(with: account, tld: tld)
         setupPassword(with: account)
     }
     
@@ -162,11 +166,11 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
     
     private func setupPassword(with account: SecureVaultModels.WebsiteAccount) {
         do {
-            if let accountID = account.id {
+            if let accountID = account.id, let accountIdInt = Int64(accountID) {
                 let vault = try SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
                 
                 if let credential = try
-                    vault.websiteCredentialsFor(accountId: accountID) {
+                    vault.websiteCredentialsFor(accountId: accountIdInt) {
                     self.password = String(data: credential.password, encoding: .utf8) ?? ""
                 }
             }
@@ -189,7 +193,8 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
             }
                            
             do {
-                if var credential = try vault.websiteCredentialsFor(accountId: accountID) {
+                if let accountIdInt = Int64(accountID),
+                   var credential = try vault.websiteCredentialsFor(accountId: accountIdInt) {
                     credential.account.username = username
                     credential.account.title = title
                     credential.account.domain = address
@@ -200,7 +205,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     delegate?.autofillLoginDetailsViewModelDidSave()
                     
                     // Refetch after save to get updated properties like "lastUpdated"
-                    if let newCredential = try vault.websiteCredentialsFor(accountId: accountID) {
+                    if let newCredential = try vault.websiteCredentialsFor(accountId: accountIdInt) {
                         self.updateData(with: newCredential.account)
                     }
                     viewMode = .view
@@ -224,7 +229,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     self.updateData(with: newCredential.account)
                 }
                 
-                viewMode = .view
             } catch let error {
                 if case SecureVaultError.duplicateRecord = error {
                     Pixel.fire(pixel: .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate)
@@ -266,8 +270,8 @@ final class AutofillLoginDetailsHeaderViewModel: ObservableObject {
     @Published var subtitle: String = ""
     @Published var domain: String = ""
     
-    func updateData(with account: SecureVaultModels.WebsiteAccount) {
-        self.title = account.name
+    func updateData(with account: SecureVaultModels.WebsiteAccount, tld: TLD) {
+        self.title = account.name(tld: tld)
         self.subtitle = UserText.autofillLoginDetailsLastUpdated(for: (dateFormatter.string(from: account.lastUpdated)))
         self.domain = account.domain
     }

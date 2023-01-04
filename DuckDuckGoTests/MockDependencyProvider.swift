@@ -32,6 +32,7 @@ class MockDependencyProvider: DependencyProvider {
     var storageCache: StorageCacheProvider
     var voiceSearchHelper: VoiceSearchHelperProtocol
     var downloadManager: DownloadManager
+    var autofillLoginSession: AutofillLoginSession
 
     init() {
         let defaultProvider = AppDependencyProvider()
@@ -44,5 +45,6 @@ class MockDependencyProvider: DependencyProvider {
         storageCache = defaultProvider.storageCache
         voiceSearchHelper = defaultProvider.voiceSearchHelper
         downloadManager = defaultProvider.downloadManager
+        autofillLoginSession = defaultProvider.autofillLoginSession
     }
 }

@@ -31,6 +31,7 @@ protocol DependencyProvider {
     var storageCache: StorageCacheProvider { get }
     var voiceSearchHelper: VoiceSearchHelperProtocol { get }
     var downloadManager: DownloadManager { get }
+    var autofillLoginSession: AutofillLoginSession { get }
 }
 
 /// Provides dependencies for objects that are not directly instantiated
@@ -55,4 +56,5 @@ class AppDependencyProvider: DependencyProvider {
     let storageCache = StorageCacheProvider()
     let voiceSearchHelper: VoiceSearchHelperProtocol = VoiceSearchHelper()
     let downloadManager = DownloadManager()
+    let autofillLoginSession = AutofillLoginSession()
 }

@@ -23,13 +23,13 @@ import os.log
 import Core
 
 final class AutofillLoginListAuthenticator {
-    enum AuthError {
+    enum AuthError: Equatable {
         case noAuthAvailable
         case failedToAuthenticate
     }
     
     enum AuthenticationState {
-        case loggedIn, loggedOut
+        case loggedIn, loggedOut, notAvailable
     }
 
     public struct Notifications {
@@ -42,35 +42,52 @@ final class AutofillLoginListAuthenticator {
     func logOut() {
         state = .loggedOut
     }
-    
+
+    func canAuthenticate() -> Bool {
+        var error: NSError?
+        let canAuthenticate = LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
+        return canAuthenticate
+    }
+
     func authenticate(completion: ((AuthError?) -> Void)? = nil) {
        
         if state == .loggedIn {
+            AppDependencyProvider.shared.autofillLoginSession.startSession()
             completion?(nil)
             return
         }
-        
+
+        if AppDependencyProvider.shared.autofillLoginSession.isValidSession {
+            state = .loggedIn
+            completion?(nil)
+            return
+        }
+
         context = LAContext()
         context.localizedCancelTitle = UserText.autofillLoginListAuthenticationCancelButton
         let reason = UserText.autofillLoginListAuthenticationReason
         context.localizedReason = reason
         
         var error: NSError?
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+        if canAuthenticate() {
             let reason = reason
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
             
                 DispatchQueue.main.async {
                     if success {
                         self.state = .loggedIn
+                        AppDependencyProvider.shared.autofillLoginSession.startSession()
                         completion?(nil)
                     } else {
                         os_log("Failed to authenticate: %s", log: generalLog, type: .debug, error?.localizedDescription ?? "nil error")
+                        AppDependencyProvider.shared.autofillLoginSession.endSession()
                         completion?(.failedToAuthenticate)
                     }
                 }
             }
         } else {
+            state = .notAvailable
+            AppDependencyProvider.shared.autofillLoginSession.endSession()
             completion?(.noAuthAvailable)
         }
     }

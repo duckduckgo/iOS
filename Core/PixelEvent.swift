@@ -19,9 +19,9 @@
 
 import Foundation
 import BrowserServicesKit
+import Bookmarks
 
 // swiftlint:disable file_length
-// swiftlint:disable identifier_name
 // swiftlint:disable type_body_length
 extension Pixel {
     
@@ -37,15 +37,10 @@ extension Pixel {
         case forgetAllDataCleared
         
         case privacyDashboardOpened
-        case privacyDashboardScorecard
-        case privacyDashboardEncryption
-        case privacyDashboardNetworks
-        case privacyDashboardPrivacyPractices
-        case privacyDashboardGlobalStats
         case privacyDashboardProtectionDisabled
         case privacyDashboardProtectionEnabled
-        case privacyDashboardManageProtection
         case privacyDashboardReportBrokenSite
+        case privacyDashboardPixelFromJS(rawPixel: String)
         
         case tabSwitcherNewLayoutSeen
         case tabSwitcherListEnabled
@@ -149,6 +144,8 @@ extension Pixel {
         case widgetsOnboardingDeclineOptionPressed
         case widgetsOnboardingMovedToBackground
         
+        case emailEnabled
+        case emailDisabled
         case emailUserPressedUseAddress
         case emailUserPressedUseAlias
         case emailUserCreatedAlias
@@ -157,10 +154,6 @@ extension Pixel {
         case voiceSearchDone
         case openVoiceSearch
         case voiceSearchCancelled
-        
-        case emailDidShowWaitlistDialog
-        case emailDidPressWaitlistDialogDismiss
-        case emailDidPressWaitlistDialogNotifyMe
         
         case bookmarksFolderCreated
         
@@ -241,6 +234,8 @@ extension Pixel {
         case autofillLoginsSettingsEnabled
         case autofillLoginsSettingsDisabled
         case autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate
+        
+        case autofillJSPixelFired(_ pixel: AutofillUserScript.JSPixel)
 
         case secureVaultInitError
         case secureVaultError
@@ -280,7 +275,8 @@ extension Pixel {
         case remoteMessageShownSecondaryActionClicked
         
         // MARK: debug pixels
-        
+        case dbCrashDetected
+
         case dbMigrationError
         case dbRemovalError
         case dbDestroyError
@@ -317,7 +313,6 @@ extension Pixel {
         case contentBlockingIdentifierError
         
         case webKitDidTerminate
-        case webKitDidBecomeUnresponsive
         case webKitTerminationDidReloadCurrentTab
         
         case backgroundTaskSubmissionFailed
@@ -364,6 +359,26 @@ extension Pixel {
         case debugMissingTopFolderFixHasBookmarks
         
         case debugCantSaveBookmarkFix
+        
+        // Errors from Bookmarks Module
+        case bookmarkFolderExpected
+        case bookmarksListIndexNotMatchingBookmark
+        case bookmarksListMissingFolder
+        case editorNewParentMissing
+        case favoritesListIndexNotMatchingBookmark
+        case fetchingRootItemFailed(BookmarksModelError.ModelType)
+        case indexOutOfRange(BookmarksModelError.ModelType)
+        case saveFailed(BookmarksModelError.ModelType)
+        case missingParent(BookmarksModelError.ObjectType)
+        
+        case bookmarksCouldNotLoadDatabase
+        case bookmarksCouldNotPrepareDatabase
+        case bookmarksMigrationAlreadyPerformed
+        case bookmarksMigrationFailed
+        case bookmarksMigrationCouldNotPrepareDatabase
+        case bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration
+        case bookmarksMigrationCouldNotValidateDatabase
+        case bookmarksMigrationCouldNotRemoveOldStore
     }
     
 }
@@ -384,15 +399,11 @@ extension Pixel.Event {
         case .forgetAllDataCleared: return "mf_dc"
             
         case .privacyDashboardOpened: return "mp"
-        case .privacyDashboardScorecard: return "mp_c"
-        case .privacyDashboardEncryption: return "mp_e"
-        case .privacyDashboardNetworks: return "mp_n"
-        case .privacyDashboardPrivacyPractices: return "mp_p"
-        case .privacyDashboardGlobalStats: return "mp_s"
+
         case .privacyDashboardProtectionDisabled: return "mp_wla"
         case .privacyDashboardProtectionEnabled: return "mp_wlr"
-        case .privacyDashboardManageProtection: return "mp_mw"
         case .privacyDashboardReportBrokenSite: return "mp_rb"
+        case .privacyDashboardPixelFromJS(let rawPixel): return rawPixel
             
         case .tabSwitcherNewLayoutSeen: return "m_ts_n"
         case .tabSwitcherListEnabled: return "m_ts_l"
@@ -496,6 +507,8 @@ extension Pixel.Event {
         case .widgetsOnboardingDeclineOptionPressed: return "m_o_w_d"
         case .widgetsOnboardingMovedToBackground: return "m_o_w_b"
             
+        case .emailEnabled: return "email_enabled"
+        case .emailDisabled: return "email_disabled"
         case .emailUserPressedUseAddress: return "email_filled_main"
         case .emailUserPressedUseAlias: return "email_filled_random"
         case .emailUserCreatedAlias: return "email_generated_button"
@@ -504,10 +517,6 @@ extension Pixel.Event {
         case .voiceSearchDone: return "m_voice_search_done"
         case .openVoiceSearch: return "m_open_voice_search"
         case .voiceSearchCancelled: return "m_voice_search_cancelled"
-            
-        case .emailDidShowWaitlistDialog: return "email_did_show_waitlist_dialog"
-        case .emailDidPressWaitlistDialogDismiss: return "email_did_press_waitlist_dialog_dismiss"
-        case .emailDidPressWaitlistDialogNotifyMe: return "email_did_press_waitlist_dialog_notify_me"
             
         case .bookmarksFolderCreated: return "m_bookmarks_folder_created"
             
@@ -596,6 +605,9 @@ extension Pixel.Event {
         case .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate:
             return "m_autofill_logins_settings_add-new-login_error_attempted-to-create-duplicate"
             
+        case .autofillJSPixelFired(let pixel):
+            return "m_ios_\(pixel.pixelName)"
+            
         case .secureVaultInitError: return "m_secure_vault_init_error"
         case .secureVaultError: return "m_secure_vault_error"
             
@@ -632,7 +644,8 @@ extension Pixel.Event {
         case .remoteMessageShownSecondaryActionClicked: return "m_remote_message_secondary_action_clicked"
 
         // MARK: debug pixels
-            
+
+        case .dbCrashDetected: return "m_d_crash"
         case .dbMigrationError: return "m_d_dbme"
         case .dbRemovalError: return "m_d_dbre"
         case .dbDestroyError: return "m_d_dbde"
@@ -669,7 +682,6 @@ extension Pixel.Event {
         case .contentBlockingIdentifierError: return "m_d_cb_ie"
             
         case .webKitDidTerminate: return "m_d_wkt"
-        case .webKitDidBecomeUnresponsive: return "m_d_wkunresponsive"
         case .webKitTerminationDidReloadCurrentTab: return "m_d_wktct"
             
         case .backgroundTaskSubmissionFailed: return "m_bt_rf"
@@ -718,6 +730,26 @@ extension Pixel.Event {
         case .adAttributionLogicRequestingAttributionTimedOut: return "m_attribution_logic_requesting_attribution_timed_out"
         case .adAttributionLogicWrongVendorOnSuccessfulCompilation: return "m_attribution_logic_wrong_vendor_on_successful_compilation"
         case .adAttributionLogicWrongVendorOnFailedCompilation: return "m_attribution_logic_wrong_vendor_on_failed_compilation"
+            
+        case .bookmarkFolderExpected: return "m_d_bookmark_folder_expected"
+        case .bookmarksListIndexNotMatchingBookmark: return "m_d_bookmarks_list_index_not_matching_bookmark"
+        case .bookmarksListMissingFolder: return "m_d_bookmarks_list_missing_folder"
+        case .editorNewParentMissing: return "m_d_bookmarks_editor_new_parent_missing"
+        case .favoritesListIndexNotMatchingBookmark: return "m_d_favorites_list_index_not_matching_bookmark"
+        case .fetchingRootItemFailed(let modelType): return "m_d_bookmarks_fetching_root_item_failed_\(modelType.rawValue)"
+        case .indexOutOfRange(let modelType): return "m_d_bookmarks_index_out_of_range_\(modelType.rawValue)"
+        case .saveFailed(let modelType): return "m_d_bookmarks_view_model_save_failed_\(modelType.rawValue)"
+        case .missingParent(let objectType): return "m_d_bookmark_model_missing_parent_\(objectType.rawValue)"
+            
+        case .bookmarksCouldNotLoadDatabase: return "m_d_bookmarks_could_not_load_database"
+        case .bookmarksCouldNotPrepareDatabase: return "m_d_bookmarks_could_not_prepare_database"
+        case .bookmarksMigrationAlreadyPerformed: return "m_d_bookmarks_migration_already_performed"
+        case .bookmarksMigrationFailed: return "m_d_bookmarks_migration_failed"
+        case .bookmarksMigrationCouldNotPrepareDatabase: return "m_d_bookmarks_migration_could_not_prepare_database"
+        case .bookmarksMigrationCouldNotPrepareDatabaseOnFailedMigration:
+            return "m_d_bookmarks_migration_could_not_prepare_database_on_failed_migration"
+        case .bookmarksMigrationCouldNotValidateDatabase: return "m_d_bookmarks_migration_could_not_validate_database"
+        case .bookmarksMigrationCouldNotRemoveOldStore: return "m_d_bookmarks_migration_could_not_remove_old_store"
         }
         
     }

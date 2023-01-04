@@ -1789,7 +1789,9 @@ extension TabViewController {
         if mostRecentAutoPreviewDownloadID == download.id {
             fileHandler.preview()
         } else {
-            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
+            let pixelParameters = [PixelParameters.mimeType: download.mimeType.rawValue,
+                                   PixelParameters.downloadListCount: "\(AppDependencyProvider.shared.downloadManager.downloadList.count)"]
+            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab, withAdditionalParameters: pixelParameters)
         }
     }
 }

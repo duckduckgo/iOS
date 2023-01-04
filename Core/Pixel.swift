@@ -91,6 +91,7 @@ public struct PixelParameters {
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
+    public static let downloadListCount = "download_list_count"
     
     public static let bookmarkCount = "bco"
     

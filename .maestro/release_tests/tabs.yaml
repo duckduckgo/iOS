@@ -1,0 +1,76 @@
+# tabs.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.glitch.me"
+- pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    when:
+      visible:
+        text: "Got It"
+        index: 0
+    file: ../shared/onboarding_browsing.yaml
+    
+- assertVisible: ".*Privacy Test Pages.*"
+
+# Add tab
+- assertVisible:
+    id: "Tabs"
+- tapOn: 
+    id: "Tabs"
+- assertVisible: ".*Privacy Test Pages.*"
+- assertVisible: 
+    id: "Add"
+- tapOn:
+    id: "Add"
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://www.search-company.site"
+- pressKey: Enter
+- assertVisible: "Search engine"
+
+# Switch Tab
+- assertVisible:
+    id: "Tabs"
+- tapOn: 
+    id: "Tabs"
+- assertVisible: ".*Privacy Test Pages.*"
+- assertVisible: ".*Ad Click Flow.*"
+- assertVisible: "2 Private Tabs"
+- tapOn: "Open \"Privacy Test Pages - Home\" at privacy-test-pages.glitch.me"
+- assertNotVisible: ".*Ad Click Flow.*"
+- assertVisible: ".*Privacy Test Pages.*"
+- tapOn: "Refresh Page"
+
+# Close Tab
+- assertVisible:
+    id: "Tabs"
+- tapOn: 
+    id: "Tabs"
+- assertVisible: ".*Privacy Test Pages.*"
+- assertVisible: ".*Ad Click Flow.*"
+- assertVisible: "2 Private Tabs"
+- assertVisible: "Close \"Ad Click Flow\" at www.search-company.site" 
+- tapOn: "Close \"Ad Click Flow\" at www.search-company.site"
+- assertNotVisible: ".*Ad Click Flow.*"
+- assertVisible: "1 Private Tab"
+- tapOn: "Done"

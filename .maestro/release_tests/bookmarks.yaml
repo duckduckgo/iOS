@@ -1,0 +1,58 @@
+# bookmarks.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.glitch.me"
+- pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    when:
+      visible:
+        text: "Got It"
+        index: 0
+    file: ../shared/onboarding_browsing.yaml
+    
+# Bookmark site
+- assertVisible: "Browsing menu"
+- tapOn: "Browsing menu"
+- assertVisible: "Add Bookmark"
+- tapOn: "Add Bookmark"
+
+# Verify site has been bookmarked
+- assertVisible: "Browsing menu"
+- tapOn: "Browsing menu"
+- assertVisible: "Bookmarks"
+- tapOn: "Bookmarks"
+- assertVisible: "Privacy Test Pages - Home"
+
+# Delete bookmark
+- assertVisible: "Edit"
+- tapOn: "Edit"
+- assertVisible: "Delete Privacy Test Pages - Home"
+- tapOn: "Delete Privacy Test Pages - Home"
+- assertVisible: 
+    text: "Delete"
+    index: 0
+- tapOn: 
+    text: "Delete"
+    index: 0
+
+# Verify site has been removed from bookmarks
+- assertNotVisible: "Privacy Test Pages - Home"
+- assertVisible: "No bookmarks added yet"

@@ -83,7 +83,6 @@ public final class ContentBlockingUpdating {
             .combineLatest(onNotificationWithInitial(PreserveLogins.Notifications.loginDetectionStateChanged), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.doNotSellStatusChange), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.autofillEnabledChange), combine)
-            .combineLatest(onNotificationWithInitial(AutofillLoginSession.Notifications.devicePasscodeStatusChanged), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.textSizeChange), combine)
             .combineLatest(onNotificationWithInitial(AppUserDefaults.Notifications.didVerifyInternalUser), combine)
             .combineLatest(onNotificationWithInitial(StorageCacheProvider.didUpdateStorageCacheNotification)

@@ -30,7 +30,6 @@ extension ContentScopeFeatureToggles {
         let context = LAContext()
         var error: NSError?
         let canAuthenticate = context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)
-        AppDependencyProvider.shared.autofillLoginSession.devicePasscodeEnabled = canAuthenticate
         return featureFlagger.isFeatureOn(.autofill) && appSettings.autofillCredentialsEnabled && canAuthenticate
     }
     

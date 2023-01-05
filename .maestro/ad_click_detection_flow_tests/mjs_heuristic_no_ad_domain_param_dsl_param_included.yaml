@@ -1,0 +1,65 @@
+# mjs_heuristic_no_ad_domain_param_dsl_param_included.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://www.search-company.site/"
+- pressKey: Enter
+
+# Manage onboarding
+- runFlow:
+    when:
+      visible:
+        text: "Got It"
+        index: 0
+    file: ../shared/onboarding_browsing.yaml
+
+- assertVisible: "Search engine"
+
+# Test Ad2
+- assertVisible:
+    text: "[Ad 2] Shopping Tab Ad (heuristic)"
+- tapOn:
+    text: "[Ad 2] Shopping Tab Ad (heuristic)"
+- assertVisible:
+    text: "Publisher site"
+- tapOn: 
+    point: "6%,10%" # Shield icon.
+- assertVisible:
+    text: "View Tracker Companies"
+- tapOn:
+    text: "View Tracker Companies"
+- assertVisible:
+    text: "The following third-party domains’ requests were blocked from loading because they were identified as tracking requests. If a company's requests are loaded, it can allow them to profile you."
+- assertVisible:
+    text: "About our Web Tracking Protections"
+- assertVisible:
+    text: ".*Ad Company"
+- assertVisible:
+    text: "convert.ad-company.site"
+- assertVisible:
+    text: "ad-company.site"
+- tapOn: "Back"
+- assertVisible:
+    text: "View Non-Tracker Companies"
+- tapOn:
+    text: "View Non-Tracker Companies"
+- assertVisible:
+    text: "We did not identify any requests from third-party domains."
+- assertVisible:
+    text: "About our Web Tracking Protections"

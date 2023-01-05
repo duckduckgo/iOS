@@ -1,0 +1,14 @@
+# onboarding.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+
+- assertVisible:
+    text: "Let’s Do It!"
+    index: 0
+- tapOn:
+    text: "Let’s Do It!"
+    index: 0
+- assertVisible: "Make DuckDuckGo your default browser."
+- tapOn:
+    id: "Skip"

@@ -1,0 +1,22 @@
+# browsing.yaml
+
+appId: com.duckduckgo.mobile.ios
+---
+# Set up 
+- clearState
+- launchApp
+- runFlow: 
+    when: 
+      visible: 
+        text: "Let’s Do It!"
+        index: 0
+    file: ../shared/onboarding.yaml
+
+# Load Site
+- assertVisible:
+    id: "searchEntry"
+- tapOn: 
+    id: "searchEntry"
+- inputText: "https://privacy-test-pages.glitch.me"
+- pressKey: Enter
+- assertVisible: ".*Privacy Test Pages.*"

@@ -46,19 +46,13 @@ do
 
 	LENGTH=`LC_CTYPE=en_US.UTF-8 wc -m < $FILEPATH | xargs`
 
-	echo "Checking: $FILEPATH ($LENGTH/$ALLOWED_LENGTH)"
+	# echo "Checking: $FILEPATH ($LENGTH/$ALLOWED_LENGTH)"
 
 	if ((LENGTH > ALLOWED_LENGTH)); then
 		ERROR="error: $FILEPATH length exceeded ($LENGTH/$ALLOWED_LENGTH)"
 		ALL_ERRORS+=("$ERROR")
-
-		if [[ $FILENAME == "subtitle.txt" ]]; then
-			echo `cat $FILEPATH`
-		fi
 	fi
 done
-
-echo $LC_CTYPE
 
 if [ ${#ALL_ERRORS[@]} -eq 0 ]; then
     echo "🎉 All strings fit, hooray!"

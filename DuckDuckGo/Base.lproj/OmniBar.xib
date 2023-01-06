@@ -61,10 +61,10 @@
                     </subviews>
                 </stackView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5D5-iT-bUk">
-                    <rect key="frame" x="267" y="6" width="475" height="40"/>
+                    <rect key="frame" x="266" y="6" width="477" height="40"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Atk-JN-lv8" customClass="RoundedRectangleView" customModule="DuckDuckGo" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="475" height="40"/>
+                            <rect key="frame" x="0.0" y="0.0" width="477" height="40"/>
                             <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="boolean" keyPath="dropShadow" value="NO"/>
@@ -80,7 +80,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="N6K-Lj-Fn6">
-                            <rect key="frame" x="6" y="0.0" width="463" height="40"/>
+                            <rect key="frame" x="6" y="0.0" width="465" height="40"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="SuggestLoupe" translatesAutoresizingMaskIntoConstraints="NO" id="u6L-hZ-ptn">
                                     <rect key="frame" x="0.0" y="8" width="30" height="24"/>
@@ -89,7 +89,7 @@
                                     </constraints>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                    <rect key="frame" x="30" y="0.0" width="343" height="40"/>
+                                    <rect key="frame" x="30" y="0.0" width="345" height="40"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGG-5L-D8Q" customClass="PrivacyInfoContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="138" height="40"/>
@@ -220,11 +220,11 @@
                                                 <outlet property="trackers3Animation" destination="E8n-8r-JML" id="txQ-Qp-gP8"/>
                                             </connections>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEJ-P3-HpO" customClass="OmniBarNotificationView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="-4" y="0.0" width="347" height="40"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEJ-P3-HpO" customClass="OmniBarNotificationContainerView" customModule="DuckDuckGo" customModuleProvider="target">
+                                            <rect key="frame" x="-4" y="0.0" width="349" height="40"/>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="30" y="0.0" width="313" height="40"/>
+                                            <rect key="frame" x="30" y="0.0" width="315" height="40"/>
                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <accessibility key="accessibilityConfiguration" identifier="searchEntry">
                                                 <accessibilityTraits key="traits" searchField="YES"/>
@@ -267,7 +267,7 @@
                                     </connections>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ita-iD-8ad" userLabel="Voice Button">
-                                    <rect key="frame" x="373" y="5" width="30" height="30"/>
+                                    <rect key="frame" x="375" y="5" width="30" height="30"/>
                                     <accessibility key="accessibilityConfiguration" label="Voice Search"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="80Y-p8-kj7"/>
@@ -279,7 +279,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-We-5tV">
-                                    <rect key="frame" x="403" y="0.0" width="30" height="40"/>
+                                    <rect key="frame" x="405" y="0.0" width="30" height="40"/>
                                     <accessibility key="accessibilityConfiguration" label="Clear Text"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="Ym5-FI-uOP"/>
@@ -290,7 +290,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qea-QY-LVl">
-                                    <rect key="frame" x="433" y="8" width="30" height="24"/>
+                                    <rect key="frame" x="435" y="8" width="30" height="24"/>
                                     <accessibility key="accessibilityConfiguration" label="Refresh Page"/>
                                     <constraints>
                                         <constraint firstAttribute="width" priority="900" constant="30" id="PHR-dd-ThY"/>
@@ -326,7 +326,7 @@
                     </constraints>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="Xrl-6Y-ll0" userLabel="RightButtons">
-                    <rect key="frame" x="766" y="4.5" width="227" height="43"/>
+                    <rect key="frame" x="767" y="4.5" width="226" height="43"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hor-Jd-3kw">
                             <rect key="frame" x="0.0" y="0.0" width="30" height="43"/>
@@ -362,7 +362,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHT-9R-ERy">
-                            <rect key="frame" x="162" y="0.0" width="65" height="43"/>
+                            <rect key="frame" x="162" y="0.0" width="64" height="43"/>
                             <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="17"/>
                             <inset key="contentEdgeInsets" minX="6" minY="0.0" maxX="6" maxY="0.0"/>
                             <state key="normal" title="Cancel">
@@ -447,7 +447,7 @@
     </objects>
     <designables>
         <designable name="fqM-N4-jNd">
-            <size key="intrinsicContentSize" width="10" height="21.5"/>
+            <size key="intrinsicContentSize" width="10" height="18.5"/>
         </designable>
     </designables>
     <resources>

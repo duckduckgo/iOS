@@ -100,7 +100,6 @@ struct CookiesDaxDialog: View {
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                             })
                             .frame(height: 44)
-//                            .buttonStyle(.bordered)
                             .foregroundColor(.white)
                             .background(Capsule().foregroundColor(Color.yellow))
                         case .borderless:
@@ -128,8 +127,10 @@ struct CookiesDaxDialog: View {
             }
             .padding(.leading, 8)
             .padding(.trailing, 8)
-            .padding(.bottom, 70)
-            .if(horizontalSizeClass == .regular || verticalSizeClass == .compact) { view in
+            .if(verticalSizeClass == .regular) { view in
+                view.padding(.bottom, 70)
+            }
+            .if(horizontalSizeClass == .regular) { view in
                 view.frame(width: 380)
             }
         }

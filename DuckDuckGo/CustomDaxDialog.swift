@@ -65,9 +65,9 @@ struct CustomDaxDialog: View {
                 Spacer()
                 
                 VStack(spacing: 8) {
-                    Circle()
+                    Image.daxLogo
+                        .resizable()
                         .frame(width: 54, height: 54)
-                        .foregroundColor(.white)
                     Triangle()
                         .frame(width: 15, height: 7)
                         .foregroundColor(.white)
@@ -161,4 +161,8 @@ extension View {
             self
         }
     }
+}
+
+private extension Image {
+    static let daxLogo = Image("Logo")
 }

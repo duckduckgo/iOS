@@ -23,11 +23,17 @@ import Lottie
 struct LottieView: UIViewRepresentable {
     
     let lottieFile: String
- 
-    @Binding var isAnimating: Bool
+    let delay: TimeInterval
+    var isAnimating: Binding<Bool>
         
     let animationView = AnimationView()
- 
+    
+    init(lottieFile: String, delay: TimeInterval = 0, isAnimating: Binding<Bool> = .constant(true)) {
+        self.lottieFile = lottieFile
+        self.delay = delay
+        self.isAnimating = isAnimating
+    }
+
     func makeUIView(context: Context) -> some AnimationView {
         animationView.animation = Animation.named(lottieFile)
         animationView.contentMode = .scaleAspectFit
@@ -37,10 +43,14 @@ struct LottieView: UIViewRepresentable {
     }
  
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        guard isAnimating, !uiView.isAnimationPlaying else { return }
+        guard isAnimating.wrappedValue, !uiView.isAnimationPlaying else { return }
         
-        uiView.play(completion: { _ in
-            self.isAnimating = false
-        })
+        if uiView.loopMode == .playOnce && uiView.currentProgress == 1 { return }
+                
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            uiView.play(completion: { _ in
+                self.isAnimating.wrappedValue = false
+            })
+        }
     }
 }

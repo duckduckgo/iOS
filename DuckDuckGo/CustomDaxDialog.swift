@@ -1,5 +1,5 @@
 //
-//  CookiesDaxDialog.swift
+//  CustomDaxDialog.swift
 //  DuckDuckGo
 //
 //  Copyright © 2022 DuckDuckGo. All rights reserved.
@@ -48,11 +48,7 @@ struct DialogModel {
     let buttons: [DialogButtonItem]
 }
 
-struct DebugModel {
-    var count: Int = 0
-}
-
-struct CookiesDaxDialog: View {
+struct CustomDaxDialog: View {
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass

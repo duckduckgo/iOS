@@ -2130,7 +2130,7 @@ extension TabViewController: AutoconsentUserScriptDelegate {
     private func makeCookieManagementDaxDialog() -> UIViewController {
         let model = makeCookieManagementDaxDialogModel()
         
-        let daxDialog = UIHostingController(rootView: CookiesDaxDialog(model: model), ignoreSafeArea: true)
+        let daxDialog = UIHostingController(rootView: CustomDaxDialog(model: model), ignoreSafeArea: true)
         daxDialog.modalPresentationStyle = .overFullScreen
         daxDialog.modalTransitionStyle = .crossDissolve
         daxDialog.view.backgroundColor = UIColor(white: 0.5, alpha: 0.25)

@@ -43,7 +43,7 @@ enum DialogButtonStyle {
     case bordered, borderless
 }
 
-struct DialogModel {
+struct CustomDaxDialogModel {
     let content: [DialogContentItem]
     let buttons: [DialogButtonItem]
 }
@@ -53,7 +53,7 @@ struct CustomDaxDialog: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
-    @State var model: DialogModel
+    @State var model: CustomDaxDialogModel
     
     var body: some View {
         ZStack {
@@ -80,8 +80,8 @@ struct CustomDaxDialog: View {
                         case .text(let text):
                             Text(text).frame(maxWidth: .infinity, alignment: .leading)
                         case .animation(let name):
-                            Image(systemName: name)
-                                .font(.largeTitle)
+                            LottieView(lottieFile: name)
+                                .fixedSize()
                         }
                     }
                     
@@ -130,36 +130,31 @@ struct CustomDaxDialog: View {
                 view.frame(width: 380)
             }
         }
-        
     }
 }
 
-struct Triangle: Shape {
+private enum Constants {
     
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
+//    enum Fonts {
+//        static let text = Font(UIFont.systemFont(ofSize: 16))
+//    }
+    
+//    enum Colors {
+//        #warning("set the right colors")
+//        static let text = Color.init(white: 0.14) // Color("DownloadsListFilenameColor")
+//        static let background = Color.init(white: 0.98) // Color("DownloadsListFilenameColor")
+//    }
 
-        path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-
-        return path
-    }
-}
-
-extension View {
-    /// Applies the given transform if the given condition evaluates to `true`.
-    /// - Parameters:
-    ///   - condition: The condition to evaluate.
-    ///   - transform: The transform to apply to the source `View`.
-    /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
-    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
-        if condition {
-            transform(self)
-        } else {
-            self
-        }
+//    enum Spacing {
+//        static let textClippingShapeOffset: CGFloat = -7
+//        static let textTrailingPadding: CGFloat = 18
+//    }
+    
+    enum Size {
+        static let animatIcon = CGSize(width: 22, height: 22)
+//        static let animatedIconContainer = CGSize(width: 36, height: 36)
+//        static let cancel = CGSize(width: 13, height: 13)
+//        static let rowHeight: CGFloat = 76
     }
 }
 

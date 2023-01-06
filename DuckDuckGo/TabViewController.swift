@@ -2147,16 +2147,16 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         self.dismiss(animated: true)
     }
     
-    private func makeCookieManagementDaxDialogModel() -> DialogModel {
+    private func makeCookieManagementDaxDialogModel() -> CustomDaxDialogModel {
         let string1 = "Looks like this site has a cookie consent pop-up👇"
         let string2 = "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these."
         
         
-        let model = DialogModel(content: [.text(text: string1),
-                                          .animation(name: "cloud.heavyrain.fill"),
-                                          .text(text: string2)],
-                                buttons: [.init(label: "Manage Cookie Pop-ups", style: .bordered, action: okAction),
-                                          .init(label: "No Thanks", style: .borderless, action: noAction)])
+        let model = CustomDaxDialogModel(content: [.text(text: string1),
+                                                   .animation(name: "cookie-banner-illustration-animated"),
+                                                   .text(text: string2)],
+                                         buttons: [.init(label: "Manage Cookie Pop-ups", style: .bordered, action: okAction),
+                                                   .init(label: "No Thanks", style: .borderless, action: noAction)])
         return model
     }
 }

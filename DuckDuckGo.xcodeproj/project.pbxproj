@@ -20,6 +20,10 @@
 		1E016AB6294A5EB100F21625 /* CustomDaxDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */; };
 		1E0A75EA27A2FBD000A2BFB6 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */; };
 		1E16260229683C650004127F /* CustomDaxDialog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E16260129683C650004127F /* CustomDaxDialog.xcassets */; };
+		1E162605296840D80004127F /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E162604296840D80004127F /* Triangle.swift */; };
+		1E1626072968413B0004127F /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1626062968413B0004127F /* ViewExtension.swift */; };
+		1E16260B296845120004127F /* cookie-banner-illustration-animated.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E162609296845120004127F /* cookie-banner-illustration-animated.json */; };
+		1E16260C296845120004127F /* cookie-banner-illustration-animated-dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E16260A296845120004127F /* cookie-banner-illustration-animated-dark.json */; };
 		1E24295E293F57FA00584836 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E24295D293F57FA00584836 /* LottieView.swift */; };
 		1E242960293F585300584836 /* cookie-icon-animated-40-light.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E24295F293F585300584836 /* cookie-icon-animated-40-light.json */; };
 		1E4DCF4627B6A33600961E25 /* DownloadsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4527B6A33600961E25 /* DownloadsListViewModel.swift */; };
@@ -802,6 +806,10 @@
 		1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDaxDialog.swift; sourceTree = "<group>"; };
 		1E0A75E927A2FBD000A2BFB6 /* Downloads.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
 		1E16260129683C650004127F /* CustomDaxDialog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = CustomDaxDialog.xcassets; sourceTree = "<group>"; };
+		1E162604296840D80004127F /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
+		1E1626062968413B0004127F /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		1E162609296845120004127F /* cookie-banner-illustration-animated.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-banner-illustration-animated.json"; sourceTree = "<group>"; };
+		1E16260A296845120004127F /* cookie-banner-illustration-animated-dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-banner-illustration-animated-dark.json"; sourceTree = "<group>"; };
 		1E24295D293F57FA00584836 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		1E24295F293F585300584836 /* cookie-icon-animated-40-light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-icon-animated-40-light.json"; sourceTree = "<group>"; };
 		1E4DCF4527B6A33600961E25 /* DownloadsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListViewModel.swift; sourceTree = "<group>"; };
@@ -2176,10 +2184,30 @@
 		1E16260029683B4D0004127F /* CustomDaxDialog */ = {
 			isa = PBXGroup;
 			children = (
+				1E1626082968418F0004127F /* Animations */,
 				1E016AB5294A5EB100F21625 /* CustomDaxDialog.swift */,
 				1E16260129683C650004127F /* CustomDaxDialog.xcassets */,
 			);
 			name = CustomDaxDialog;
+			sourceTree = "<group>";
+		};
+		1E162603296840790004127F /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				1E24295D293F57FA00584836 /* LottieView.swift */,
+				1E162604296840D80004127F /* Triangle.swift */,
+				1E1626062968413B0004127F /* ViewExtension.swift */,
+			);
+			name = SwiftUI;
+			sourceTree = "<group>";
+		};
+		1E1626082968418F0004127F /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				1E16260A296845120004127F /* cookie-banner-illustration-animated-dark.json */,
+				1E162609296845120004127F /* cookie-banner-illustration-animated.json */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 		1E4DCF4227B6A29D00961E25 /* View */ = {
@@ -2232,7 +2260,6 @@
 		1E7A711A2934EE6800B7EA19 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				1E24295D293F57FA00584836 /* LottieView.swift */,
 				1E24295F293F585300584836 /* cookie-icon-animated-40-light.json */,
 			);
 			name = Animations;
@@ -3985,8 +4012,9 @@
 		F1D796ED1E7AE4090019D451 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
-				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
+				1E162603296840790004127F /* SwiftUI */,
 				859872221F5743AF00041CB8 /* FireAnimation */,
+				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
 				985AAE4424899369007A43EC /* HomeScreenTransition.swift */,
 				F1D934021E610DCE00A6F0D6 /* Point.swift */,
 				985892512260B1B200EEB31B /* ProgressView.swift */,
@@ -4540,6 +4568,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E16260C296845120004127F /* cookie-banner-illustration-animated-dark.json in Resources */,
 				F1EEAC541EAFC783006128D9 /* proximanova-bold.otf in Resources */,
 				AA4D6A8D23DE49A5007E8790 /* AppIconBlack40x40@3x.png in Resources */,
 				F47E53DB250A9A1C0037C686 /* Onboarding.xcassets in Resources */,
@@ -4602,6 +4631,7 @@
 				9865DFFD22A84CF300D27829 /* FavoriteHomeCell.xib in Resources */,
 				1EE411FE2858B9300003FE64 /* dark-shield.json in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
+				1E16260B296845120004127F /* cookie-banner-illustration-animated.json in Resources */,
 				AA4D6AD323DE4D27007E8790 /* AppIconPurple29x29@2x.png in Resources */,
 				AA4D6AA123DE4CC4007E8790 /* AppIconBlue60x60@3x.png in Resources */,
 				981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */,
@@ -4874,6 +4904,7 @@
 				8590CB69268A4E190089F6BF /* DebugEtagStorage.swift in Sources */,
 				F1CA3C371F045878005FADB3 /* PrivacyStore.swift in Sources */,
 				F4E1936625AF722F001D2666 /* HighlightCutOutView.swift in Sources */,
+				1E162605296840D80004127F /* Triangle.swift in Sources */,
 				B609D5522862EAFF0088CAC2 /* InlineWKDownloadDelegate.swift in Sources */,
 				B652DEFD287BE67400C12A9C /* UserScripts.swift in Sources */,
 				31DD208427395A5A008FB313 /* VoiceSearchHelper.swift in Sources */,
@@ -4918,6 +4949,7 @@
 				986B16C425E92DF0007D23E8 /* BrowsingMenuViewController.swift in Sources */,
 				988AC355257E47C100793C64 /* RequeryLogic.swift in Sources */,
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
+				1E1626072968413B0004127F /* ViewExtension.swift in Sources */,
 				31A42566285A0A6300049386 /* FaviconViewModel.swift in Sources */,
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,

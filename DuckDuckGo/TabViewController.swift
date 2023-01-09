@@ -2089,75 +2089,63 @@ extension TabViewController: PrintingUserScriptDelegate {
 
 // MARK: - AutoconsentUserScriptDelegate
 extension TabViewController: AutoconsentUserScriptDelegate {
-  
+    
     func autoconsentUserScript(_ script: AutoconsentUserScript, didUpdateCookieConsentStatus cookieConsentStatus: PrivacyDashboard.CookieConsentInfo) {
-        #warning("This should trigger cookie manage animation")
-//        ActionMessageView.present(message: "🍪 Cookies managed")
+#warning("This should trigger cookie manage animation")
+        //        ActionMessageView.present(message: "🍪 Cookies managed")
         privacyInfo?.cookieConsentManaged = cookieConsentStatus
     }
     
     func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
         // TODO: This should be handled via new Dax dialog for cookies
         
-//        let alert = UIAlertController(title: "Looks like this site has a cookie consent pop-up👇",
-//                                      message: "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.",
-//                                      preferredStyle: .alert)
-//        alert.overrideUserInterfaceStyle()
-//
-//        alert.addAction(UIAlertAction(title: "Manage Cookie Pop-ups", style: .default, handler: { _ in
-//            completion(true)
-//        }))
-//        alert.addAction(UIAlertAction(title: "No Thanks", style: .cancel, handler: { _ in
-//            completion(false)
-//        }))
-//        delegate?.tab(self, didRequestPresentingAlert: alert)
+        //        let alert = UIAlertController(title: "Looks like this site has a cookie consent pop-up👇",
+        //                                      message: "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.",
+        //                                      preferredStyle: .alert)
+        //        alert.overrideUserInterfaceStyle()
+        //
+        //        alert.addAction(UIAlertAction(title: "Manage Cookie Pop-ups", style: .default, handler: { _ in
+        //            completion(true)
+        //        }))
+        //        alert.addAction(UIAlertAction(title: "No Thanks", style: .cancel, handler: { _ in
+        //            completion(false)
+        //        }))
+        //        delegate?.tab(self, didRequestPresentingAlert: alert)
         
         
-       
+        
     }
     
     private func showCookieManagementDaxDialog() {
         
         let daxDialog = makeCookieManagementDaxDialog()
         present(daxDialog, animated: true)
-
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//            self.dismiss(animated: true)
-//        }
+        
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        //            self.dismiss(animated: true)
+        //        }
     }
     
     private func makeCookieManagementDaxDialog() -> UIViewController {
-        let model = makeCookieManagementDaxDialogModel()
+        
+        let model = CookieConsentDaxDialogModel(okAction: okActionForDialog, noAction: noAction)
         
         let daxDialog = UIHostingController(rootView: CustomDaxDialog(model: model), ignoreSafeArea: true)
         daxDialog.modalPresentationStyle = .overFullScreen
         daxDialog.modalTransitionStyle = .crossDissolve
-        daxDialog.view.backgroundColor = UIColor(white: 0.5, alpha: 0.25)
-        
+        daxDialog.view.backgroundColor = .clear
+
         return daxDialog
     }
     
-    private func okAction() {
+    private func okActionForDialog() {
         Swift.print("ok")
     }
     
     private func noAction() {
         Swift.print("no")
         self.dismiss(animated: true)
-    }
-    
-    private func makeCookieManagementDaxDialogModel() -> CustomDaxDialogModel {
-        let string1 = "Looks like this site has a cookie consent pop-up👇"
-        let string2 = "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these."
-        
-        
-        let model = CustomDaxDialogModel(content: [.text(text: string1),
-                                                   .animation(name: "cookie-banner-illustration-animated", delay: 0.35),
-                                                   .text(text: string2)],
-                                         buttons: [.init(label: "Manage Cookie Pop-ups", style: .bordered, action: okAction),
-                                                   .init(label: "No Thanks", style: .borderless, action: noAction)])
-        return model
     }
 }
 

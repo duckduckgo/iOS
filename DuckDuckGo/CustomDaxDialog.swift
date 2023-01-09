@@ -19,35 +19,6 @@
 
 import SwiftUI
 
-enum DialogContentItem: Hashable {
-    case text(text: String)
-    case animation(name: String, delay: TimeInterval = 0)
-}
-
-struct DialogButtonItem: Hashable {
-    let label: String
-    let style: DialogButtonStyle
-    let action: () -> Void
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(label)
-        hasher.combine(style)
-    }
-    
-    static func == (lhs: DialogButtonItem, rhs: DialogButtonItem) -> Bool {
-        lhs.label == rhs.label && lhs.style == rhs.style
-    }
-}
-
-enum DialogButtonStyle {
-    case bordered, borderless
-}
-
-struct CustomDaxDialogModel {
-    let content: [DialogContentItem]
-    let buttons: [DialogButtonItem]
-}
-
 struct CustomDaxDialog: View {
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -89,22 +60,19 @@ struct CustomDaxDialog: View {
                     }
                     
                     ForEach(model.buttons, id: \.self) { button in
-                        switch button.style {
-                        case .bordered:
-                            Button(action: {
-                                button.action()
-                            },
-                                   label: {
-                                Text(button.label)
+                        switch button {
+                        case .bordered(let label, let action):
+                            Button(action: action, label: {
+                                Text(label)
                                     .font(Constants.Fonts.button)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                             })
                             .frame(height: Constants.Size.buttonHeight)
                             .foregroundColor(Constants.Colors.borderedButtonText)
                             .background(Capsule().foregroundColor(Constants.Colors.borderedButtonBackground))
-                        case .borderless:
-                            Button(action: button.action, label: {
-                                Text(button.label)
+                        case .borderless(let label, let action):
+                            Button(action: action, label: {
+                                Text(label)
                                     .font(Constants.Fonts.button)
                                     .frame(maxHeight: .infinity)
                             })

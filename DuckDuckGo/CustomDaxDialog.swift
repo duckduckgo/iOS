@@ -58,8 +58,7 @@ struct CustomDaxDialog: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .foregroundColor(.black)
-                .opacity(0.5)
+                .foregroundColor(Constants.Colors.overlay)
       
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
@@ -70,7 +69,7 @@ struct CustomDaxDialog: View {
                         .frame(width: 54, height: 54)
                     Triangle()
                         .frame(width: 15, height: 7)
-                        .foregroundColor(.white)
+                        .foregroundColor(Constants.Colors.background)
                 }
                 .padding(.leading, 24)
                 
@@ -78,7 +77,11 @@ struct CustomDaxDialog: View {
                     ForEach(model.content, id: \.self) { element in
                         switch element {
                         case .text(let text):
-                            Text(text).frame(maxWidth: .infinity, alignment: .leading)
+                            Text(text)
+                                .font(Constants.Fonts.text)
+                                .foregroundColor(Constants.Colors.text)
+                                .lineSpacing(5)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         case .animation(let name):
                             LottieView(lottieFile: name)
                                 .fixedSize()
@@ -93,19 +96,21 @@ struct CustomDaxDialog: View {
                             },
                                    label: {
                                 Text(button.label)
+                                    .font(Constants.Fonts.button)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                             })
                             .frame(height: 44)
-                            .foregroundColor(.white)
-                            .background(Capsule().foregroundColor(Color.yellow))
+                            .foregroundColor(Constants.Colors.borderedButtonText)
+                            .background(Capsule().foregroundColor(Constants.Colors.borderedButtonBackground))
                         case .borderless:
                             Button(action: button.action, label: {
                                 Text(button.label)
+                                    .font(Constants.Fonts.button)
                                     .frame(maxHeight: .infinity)
                             })
                             .frame(height: 44)
                             .buttonStyle(.borderless)
-                            .foregroundColor(.black)
+                            .foregroundColor(Constants.Colors.borderlessButtonText)
                             .clipShape(Capsule())
                         }
                         
@@ -115,7 +120,7 @@ struct CustomDaxDialog: View {
                 .padding(EdgeInsets(top: 24, leading: 16, bottom: 24, trailing: 16))
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .foregroundColor(.white)
+                        .foregroundColor(Constants.Colors.background)
                 )
                 
                 Spacer()
@@ -135,15 +140,19 @@ struct CustomDaxDialog: View {
 
 private enum Constants {
     
-//    enum Fonts {
-//        static let text = Font(UIFont.systemFont(ofSize: 16))
-//    }
+    enum Fonts {
+        static let text = Font(UIFont.appFont(ofSize: 17))
+        static let button = Font(UIFont.boldAppFont(ofSize: 16))
+    }
     
-//    enum Colors {
-//        #warning("set the right colors")
-//        static let text = Color.init(white: 0.14) // Color("DownloadsListFilenameColor")
-//        static let background = Color.init(white: 0.98) // Color("DownloadsListFilenameColor")
-//    }
+    enum Colors {
+        static let overlay = Color("CustomDaxDialogOverlayColor")
+        static let background = Color("CustomDaxDialogBackgroundColor")
+        static let text = Color("CustomDaxDialogTextColor")
+        static let borderedButtonText = Color("CustomDaxDialogBorderedButtonTextColor")
+        static let borderlessButtonText = Color("CustomDaxDialogBorderlessButtonTextColor")
+        static let borderedButtonBackground = Color("CustomDaxDialogBorderedButtonBackgroundColor")
+    }
 
 //    enum Spacing {
 //        static let textClippingShapeOffset: CGFloat = -7
@@ -151,7 +160,7 @@ private enum Constants {
 //    }
     
     enum Size {
-        static let animatIcon = CGSize(width: 22, height: 22)
+//        static let animatIcon = CGSize(width: 22, height: 22)
 //        static let animatedIconContainer = CGSize(width: 36, height: 36)
 //        static let cancel = CGSize(width: 13, height: 13)
 //        static let rowHeight: CGFloat = 76

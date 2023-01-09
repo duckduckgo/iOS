@@ -21,7 +21,7 @@ import SwiftUI
 
 enum DialogContentItem: Hashable {
     case text(text: String)
-    case animation(name: String)
+    case animation(name: String, delay: TimeInterval = 0)
 }
 
 struct DialogButtonItem: Hashable {
@@ -82,8 +82,8 @@ struct CustomDaxDialog: View {
                                 .foregroundColor(Constants.Colors.text)
                                 .lineSpacing(5)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                        case .animation(let name):
-                            LottieView(lottieFile: name)
+                        case .animation(let name, let delay):
+                            LottieView(lottieFile: name, delay: delay)
                                 .fixedSize()
                         }
                     }

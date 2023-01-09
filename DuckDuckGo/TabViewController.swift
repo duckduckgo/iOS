@@ -2153,7 +2153,7 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         
         
         let model = CustomDaxDialogModel(content: [.text(text: string1),
-                                                   .animation(name: "cookie-banner-illustration-animated"),
+                                                   .animation(name: "cookie-banner-illustration-animated", delay: 0.35),
                                                    .text(text: string2)],
                                          buttons: [.init(label: "Manage Cookie Pop-ups", style: .bordered, action: okAction),
                                                    .init(label: "No Thanks", style: .borderless, action: noAction)])

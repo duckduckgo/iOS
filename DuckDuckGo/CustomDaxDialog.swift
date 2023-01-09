@@ -59,28 +59,28 @@ struct CustomDaxDialog: View {
         ZStack {
             Rectangle()
                 .foregroundColor(Constants.Colors.overlay)
-      
-            VStack(alignment: .leading, spacing: 0) {
+            
+            VStack(alignment: .leading, spacing: .zero) {
                 Spacer()
                 
-                VStack(spacing: 8) {
+                VStack(spacing: Constants.Spacing.daxLogoAndArrow) {
                     Image.daxLogo
                         .resizable()
-                        .frame(width: 54, height: 54)
+                        .frame(width: Constants.Size.daxLogo.width, height: Constants.Size.daxLogo.height)
                     Triangle()
-                        .frame(width: 15, height: 7)
+                        .frame(width: Constants.Size.bubbleArrow.width, height: Constants.Size.bubbleArrow.height)
                         .foregroundColor(Constants.Colors.background)
                 }
-                .padding(.leading, 24)
+                .padding(.leading, Constants.Padding.daxLogoAndArrow)
                 
-                VStack(spacing: 16) {
+                VStack(spacing: Constants.Spacing.dialogElements) {
                     ForEach(model.content, id: \.self) { element in
                         switch element {
                         case .text(let text):
                             Text(text)
                                 .font(Constants.Fonts.text)
                                 .foregroundColor(Constants.Colors.text)
-                                .lineSpacing(5)
+                                .lineSpacing(Constants.Spacing.textLineSpacing)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         case .animation(let name, let delay):
                             LottieView(lottieFile: name, delay: delay)
@@ -99,7 +99,7 @@ struct CustomDaxDialog: View {
                                     .font(Constants.Fonts.button)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                             })
-                            .frame(height: 44)
+                            .frame(height: Constants.Size.buttonHeight)
                             .foregroundColor(Constants.Colors.borderedButtonText)
                             .background(Capsule().foregroundColor(Constants.Colors.borderedButtonBackground))
                         case .borderless:
@@ -108,31 +108,25 @@ struct CustomDaxDialog: View {
                                     .font(Constants.Fonts.button)
                                     .frame(maxHeight: .infinity)
                             })
-                            .frame(height: 44)
+                            .frame(height: Constants.Size.buttonHeight)
                             .buttonStyle(.borderless)
                             .foregroundColor(Constants.Colors.borderlessButtonText)
                             .clipShape(Capsule())
                         }
-                        
                     }
-
                 }
-                .padding(EdgeInsets(top: 24, leading: 16, bottom: 24, trailing: 16))
+                .padding(Constants.Padding.dialogInsets)
                 .background(
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(cornerRadius: Constants.Size.dialogCornerRadius)
                         .foregroundColor(Constants.Colors.background)
                 )
-                
-                Spacer()
-                    .frame(height: 24)
             }
-            .padding(.leading, 8)
-            .padding(.trailing, 8)
+            .padding([.leading, .trailing], Constants.Padding.dialogHorizontal)
             .if(verticalSizeClass == .regular) { view in
-                view.padding(.bottom, 70)
+                view.padding(.bottom, Constants.Padding.dialogBottom)
             }
             .if(horizontalSizeClass == .regular) { view in
-                view.frame(width: 380)
+                view.frame(width: Constants.Size.fixedDialogWidth)
             }
         }
     }
@@ -154,16 +148,25 @@ private enum Constants {
         static let borderedButtonBackground = Color("CustomDaxDialogBorderedButtonBackgroundColor")
     }
 
-//    enum Spacing {
-//        static let textClippingShapeOffset: CGFloat = -7
-//        static let textTrailingPadding: CGFloat = 18
-//    }
+    enum Spacing {
+        static let daxLogoAndArrow: CGFloat = 8
+        static let dialogElements: CGFloat = 16
+        static let textLineSpacing: CGFloat = 5
+    }
+    
+    enum Padding {
+        static let daxLogoAndArrow: CGFloat = 24
+        static let dialogInsets = EdgeInsets(top: 24, leading: 16, bottom: 24, trailing: 16)
+        static let dialogHorizontal: CGFloat = 8
+        static let dialogBottom: CGFloat = 92
+    }
     
     enum Size {
-//        static let animatIcon = CGSize(width: 22, height: 22)
-//        static let animatedIconContainer = CGSize(width: 36, height: 36)
-//        static let cancel = CGSize(width: 13, height: 13)
-//        static let rowHeight: CGFloat = 76
+        static let daxLogo = CGSize(width: 54, height: 54)
+        static let bubbleArrow = CGSize(width: 15, height: 7)
+        static let buttonHeight: CGFloat = 44
+        static let fixedDialogWidth: CGFloat = 380
+        static let dialogCornerRadius: CGFloat = 16
     }
 }
 

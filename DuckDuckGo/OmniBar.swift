@@ -203,7 +203,7 @@ class OmniBar: UIView {
     }
     
     public func resetPrivacyIcon(for url: URL?) {
-        privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        cancelAllAnimations()
         privacyInfoContainer.privacyIcon.isHidden = false
         
         let icon = PrivacyIconLogic.privacyIcon(for: url)
@@ -247,6 +247,7 @@ class OmniBar: UIView {
     
     public func cancelAllAnimations() {
         privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        notificationAnimator.cancelAnimations(in: self)
     }
     
     public func completeAnimationForDaxDialog() {
@@ -265,7 +266,7 @@ class OmniBar: UIView {
                 clear()
             }
             state = newState
-            privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+            cancelAllAnimations()
         }
         
         searchFieldContainer.adjustTextFieldOffset(for: state)
@@ -421,7 +422,7 @@ class OmniBar: UIView {
     }
 
     @IBAction func onTrackersViewPressed(_ sender: Any) {
-        privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        cancelAllAnimations()
         textField.becomeFirstResponder()
     }
 
@@ -435,7 +436,7 @@ class OmniBar: UIView {
     
     @IBAction func onRefreshPressed(_ sender: Any) {
         Pixel.fire(pixel: .refreshPressed)
-        privacyIconAndTrackersAnimator.cancelAnimations(in: self)
+        cancelAllAnimations()
         omniDelegate?.onRefreshPressed()
     }
     

@@ -51,6 +51,13 @@ final class OmniBarNotificationAnimator: NSObject {
             }
         }
     }
+    
+    func cancelAnimations(in omniBar: OmniBar) {
+        omniBar.privacyInfoContainer.alpha = 0
+        omniBar.notificationContainer.stopAnimation()
+        omniBar.textField.alpha = 1
+        omniBar.privacyInfoContainer.alpha = 1
+    }
 }
 
 private enum Constants {

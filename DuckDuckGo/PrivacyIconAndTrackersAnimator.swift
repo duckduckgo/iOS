@@ -76,7 +76,7 @@ final class PrivacyIconAndTrackersAnimator {
         currentTrackerAnimation?.play()
         
         let currentShieldAnimation = container.privacyIcon.shieldAnimationView(for: privacyIcon)
-        currentShieldAnimation?.play { [weak self, weak container] _ in
+        currentShieldAnimation?.play { [weak self, weak container] completed in
             container?.privacyIcon.updateIcon(privacyIcon)
             
             UIView.animate(withDuration: Constants.textFieldFadeDuration) {
@@ -85,7 +85,7 @@ final class PrivacyIconAndTrackersAnimator {
             
             container?.privacyIcon.refresh()
             
-            DispatchQueue.main.async {
+            if completed {
                 self?.onAnimationCompletion?()
             }
         }

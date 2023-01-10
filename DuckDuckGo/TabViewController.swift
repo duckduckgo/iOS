@@ -2118,9 +2118,9 @@ extension TabViewController: AutoconsentUserScriptDelegate {
     
     private func showCookieManagementDaxDialog() {
         
-        let daxDialog = makeCookieManagementDaxDialog()
-        present(daxDialog, animated: true)
-        
+//        let daxDialog = makeCookieManagementDaxDialog()
+//        present(daxDialog, animated: true)
+//        
         
         //        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
         //            self.dismiss(animated: true)

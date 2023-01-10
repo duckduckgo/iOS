@@ -71,7 +71,7 @@ class ShareViewController: SLComposeServiceViewController {
         textProvider.loadItem(forTypeIdentifier: Identifier.text, options: nil) { [weak self] (item, _) in
             guard let query = item as? String else { return }
             guard let url = AppUrls().url(forQuery: query) else {
-                os_log("Couldn‘t form URL for query “%s”", log: lifecycleLog, type: .error, query)
+                os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
                 return
             }
             self?.open(url: url)

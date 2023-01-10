@@ -485,7 +485,7 @@ class TabViewController: UIViewController {
             title = webView.title
 
         default:
-            os_log("Unhandled keyPath %s", log: generalLog, type: .debug, keyPath)
+            os_log("Unhandled keyPath %s", log: .generalLog, type: .debug, keyPath)
         }
     }
     
@@ -887,7 +887,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidStartLoading(httpsForced: Bool) {
-        os_log("webpageLoading started", log: generalLog, type: .debug)
+        os_log("webpageLoading started", log: .generalLog, type: .debug)
 
         // Only fire when on the same page that the without trackers Dax Dialog was shown
         self.fireWoFollowUp = false
@@ -1015,7 +1015,7 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func onWebpageDidFinishLoading() {
-        os_log("webpageLoading finished", log: generalLog, type: .debug)
+        os_log("webpageLoading finished", log: .generalLog, type: .debug)
                 
         tabModel.link = link
         delegate?.tabLoadingStateDidChange(tab: self)
@@ -1114,7 +1114,7 @@ extension TabViewController: WKNavigationDelegate {
     }
 
     private func webpageDidFailToLoad() {
-        os_log("webpageLoading failed", log: generalLog, type: .debug)
+        os_log("webpageLoading failed", log: .generalLog, type: .debug)
         if isError {
             showBars(animated: true)
             privacyInfo = nil

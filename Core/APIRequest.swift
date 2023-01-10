@@ -109,7 +109,7 @@ public class APIRequest {
                                               completion: @escaping APIRequestCompletion) -> URLSessionDataTask
     where C.Element == (key: String, value: String) {
 
-        os_log("Requesting %s", log: generalLog, type: .debug, url.absoluteString)
+        os_log("Requesting %s", log: .generalLog, type: .debug, url.absoluteString)
 
         let urlRequest = urlRequestFor(url: url,
                                        method: method,
@@ -125,7 +125,7 @@ public class APIRequest {
             let httpResponse = response as? HTTPURLResponse
             
             os_log("Request for %s completed with response code: %s and headers %s",
-                   log: generalLog,
+                   log: .generalLog,
                    type: .debug,
                    url.absoluteString,
                    String(describing: httpResponse?.statusCode),

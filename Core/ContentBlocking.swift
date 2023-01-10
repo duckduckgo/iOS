@@ -60,7 +60,7 @@ public final class ContentBlocking {
                                                             exceptionsSource: exceptionsSource,
                                                             lastCompiledRulesStore: lastCompiledRulesStore,
                                                             errorReporting: Self.debugEvents,
-                                                            logger: contentBlockingLog)
+                                                            logger: .contentBlockingLog)
 
         adClickAttributionRulesProvider = AdClickAttributionRulesProvider(config: adClickAttribution,
                                                                           compiledRulesSource: contentBlockingManager,
@@ -130,7 +130,7 @@ public final class ContentBlocking {
                                     tld: tld,
                                     eventReporting: attributionEvents,
                                     errorReporting: attributionDebugEvents,
-                                    log: adAttributionLog)
+                                    log: .adAttributionLog)
     }
     
     public func makeAdClickAttributionLogic(tld: TLD) -> AdClickAttributionLogic {
@@ -139,7 +139,7 @@ public final class ContentBlocking {
                                 tld: tld,
                                 eventReporting: attributionEvents,
                                 errorReporting: attributionDebugEvents,
-                                log: adAttributionLog)
+                                log: .adAttributionLog)
     }
     
     private let attributionEvents = EventMapping<AdClickAttributionEvents> { event, _, parameters, _ in

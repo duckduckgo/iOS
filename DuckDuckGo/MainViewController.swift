@@ -546,7 +546,7 @@ class MainViewController: UIViewController {
     func loadQueryInNewTab(_ query: String, reuseExisting: Bool = false) {
         dismissOmniBar()
         guard let url = appUrls.url(forQuery: query) else {
-            os_log("Couldn‘t form URL for query “%s”", log: lifecycleLog, type: .error, query)
+            os_log("Couldn‘t form URL for query “%s”", log: .lifecycleLog, type: .error, query)
             return
         }
         loadUrlInNewTab(url, reuseExisting: reuseExisting, inheritedAttribution: nil)
@@ -581,7 +581,7 @@ class MainViewController: UIViewController {
     fileprivate func loadQuery(_ query: String) {
         guard let url = appUrls.url(forQuery: query, queryContext: currentTab?.url) else {
             os_log("Couldn‘t form URL for query “%s” with context “%s”",
-                   log: lifecycleLog,
+                   log: .lifecycleLog,
                    type: .error,
                    query,
                    currentTab?.url?.absoluteString ?? "<nil>")
@@ -1290,7 +1290,7 @@ extension MainViewController: AutocompleteViewControllerDelegate {
         } else if let url = appUrls.searchUrl(text: suggestion.suggestion) {
             loadUrl(url)
         } else {
-            os_log("Couldn‘t form URL for suggestion “%s”", log: lifecycleLog, type: .error, suggestion.suggestion)
+            os_log("Couldn‘t form URL for suggestion “%s”", log: .lifecycleLog, type: .error, suggestion.suggestion)
             return
         }
         showHomeRowReminder()

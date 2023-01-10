@@ -27,7 +27,7 @@ class DebugEtagStorage {
 
     func etag(for list: String) -> String? {
         let etag = defaults?.string(forKey: list)
-        os_log("stored etag for %s %s", log: generalLog, type: .debug, list, etag ?? "nil")
+        os_log("stored etag for %s %s", log: .generalLog, type: .debug, list, etag ?? "nil")
         return etag
     }
 

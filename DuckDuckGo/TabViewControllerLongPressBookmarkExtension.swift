@@ -25,7 +25,7 @@ extension TabViewController {
     func saveAsBookmark(favorite: Bool) {
         
         guard let link = link, !isError else {
-            os_log("Invalid bookmark link found on bookmark long press", log: generalLog, type: .debug)
+            os_log("Invalid bookmark link found on bookmark long press", log: .generalLog, type: .debug)
             return
         }
 

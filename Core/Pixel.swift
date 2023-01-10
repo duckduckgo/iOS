@@ -160,7 +160,7 @@ public class Pixel {
         
         APIRequest.request(url: url, parameters: newParams, headers: headers, callBackOnMainThread: true) { (_, error) in
             
-            os_log("Pixel fired %s %s", log: generalLog, type: .debug, pixel.name, "\(params)")
+            os_log("Pixel fired %s %s", log: .generalLog, type: .debug, pixel.name, "\(params)")
             onComplete(error)
         }
     }

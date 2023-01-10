@@ -535,7 +535,7 @@ class BookmarksViewController: UITableViewController {
             let bookmark = item as? Bookmark {
             presentShareSheet(withItems: [bookmark], fromView: self.view)
         } else {
-            os_log("Invalid share link found", log: generalLog, type: .debug)
+            os_log("Invalid share link found", log: .generalLog, type: .debug)
         }
     }
 

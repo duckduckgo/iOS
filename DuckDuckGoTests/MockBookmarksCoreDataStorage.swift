@@ -55,7 +55,7 @@ class MockBookmarksCoreDataStore: BookmarksCoreDataStorage {
                 do {
                     try viewContext.save()
                 } catch {
-                    os_log("Failed to save context %s", log: generalLog, type: .error, error.localizedDescription)
+                    os_log("Failed to save context %s", log: .generalLog, type: .error, error.localizedDescription)
                 }
             }
         }

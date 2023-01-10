@@ -90,9 +90,9 @@ struct FeedbackSubmitter: FeedbackSender {
 
         APIRequest.request(url: AppUrls().feedback, method: .post, parameters: parameters) { _, error in
             if let error = error {
-                os_log("Feedback request failed, %s", log: generalLog, type: .debug, error.localizedDescription)
+                os_log("Feedback request failed, %s", log: .generalLog, type: .debug, error.localizedDescription)
             } else {
-                os_log("Feedback response successful", log: generalLog, type: .debug)
+                os_log("Feedback response successful", log: .generalLog, type: .debug)
             }
         }
     }

@@ -210,7 +210,7 @@ class TabSwitcherViewController: UIViewController {
             ActionMessageView.present(message: UserText.bookmarkAllTabsSaved)
         } else {
             let failedToSaveCount = openTabsCount - results.newBookmarksCount - results.existingBookmarksCount
-            os_log("Failed to save %d tabs", log: generalLog, type: .debug, failedToSaveCount)
+            os_log("Failed to save %d tabs", log: .generalLog, type: .debug, failedToSaveCount)
             ActionMessageView.present(message: UserText.bookmarkAllTabsFailedToSave)
         }
     }
@@ -246,7 +246,7 @@ class TabSwitcherViewController: UIViewController {
                 }
             }
         } else {
-            os_log("no valid link found for tab %s", log: generalLog, type: .debug, String(describing: tab))
+            os_log("no valid link found for tab %s", log: .generalLog, type: .debug, String(describing: tab))
         }
     }
     

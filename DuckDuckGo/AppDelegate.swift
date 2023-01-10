@@ -299,7 +299,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        os_log("App launched with url %s", log: lifecycleLog, type: .debug, url.absoluteString)
+        os_log("App launched with url %s", log: .lifecycleLog, type: .debug, url.absoluteString)
         NotificationCenter.default.post(name: AutofillLoginListAuthenticator.Notifications.invalidateContext, object: nil)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
@@ -337,7 +337,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-        os_log(#function, log: lifecycleLog, type: .debug)
+        os_log(#function, log: .lifecycleLog, type: .debug)
 
         AppConfigurationFetch().start(isBackgroundFetch: true) { newData in
             completionHandler(newData ? .newData : .noData)
@@ -432,7 +432,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) {
-        os_log("Handling shortcut item: %s", log: generalLog, type: .debug, shortcutItem.type)
+        os_log("Handling shortcut item: %s", log: .generalLog, type: .debug, shortcutItem.type)
         mainViewController?.clearNavigationStack()
         autoClear?.applicationWillMoveToForeground()
         if shortcutItem.type ==  ShortcutKey.clipboard, let query = UIPasteboard.general.string {

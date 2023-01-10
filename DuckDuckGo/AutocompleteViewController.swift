@@ -148,7 +148,7 @@ class AutocompleteViewController: UIViewController {
             lastRequest = try AutocompleteRequest(query: query)
             pendingRequest = true
         } catch {
-            os_log("Couldn‘t form AutocompleteRequest for query “%s”: %s", log: lifecycleLog, type: .debug, query, error.localizedDescription)
+            os_log("Couldn‘t form AutocompleteRequest for query “%s”: %s", log: .lifecycleLog, type: .debug, query, error.localizedDescription)
             lastRequest = nil
             pendingRequest = false
             return
@@ -163,7 +163,7 @@ class AutocompleteViewController: UIViewController {
                 let localSuggestions = filteredMatches.map { Suggestion(source: .local, suggestion: $0.displayTitle!, url: $0.url) }
                 
                 guard let suggestions = suggestions, error == nil else {
-                    os_log("%s", log: generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
+                    os_log("%s", log: .generalLog, type: .debug, error?.localizedDescription ?? "Failed to retrieve suggestions")
                     self?.updateSuggestions(localSuggestions)
                     return
                 }

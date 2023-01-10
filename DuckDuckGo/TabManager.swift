@@ -70,7 +70,7 @@ class TabManager {
         if let controller = controller(for: tab) {
             return controller
         } else {
-            os_log("Tab not in cache, creating", log: generalLog, type: .debug)
+            os_log("Tab not in cache, creating", log: .generalLog, type: .debug)
             let controller = buildController(forTab: tab, inheritedAttribution: nil)
             tabControllerCache.append(controller)
             return controller

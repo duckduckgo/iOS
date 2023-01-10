@@ -21,11 +21,47 @@ import Foundation
 import os.log
 import BrowserServicesKit
 
-public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG General")
-public let contentBlockingLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                             category: "DDG Content Blocking")
-public let adAttributionLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                             category: "DDG AdAttribution")
-public let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier, category: "DDG Lifecycle")
-public let autoconsentLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
-                                         category: "DDG Autoconsent")
+public extension OSLog {
+    
+    static var generalLog: OSLog {
+        Logging.generalLoggingEnabled ? Logging.generalLog : .disabled
+    }
+    
+    static var contentBlockingLog: OSLog {
+        Logging.contentBlockingLoggingEnabled ? Logging.contentBlockingLog : .disabled
+    }
+
+    static var adAttributionLog: OSLog {
+        Logging.adAttributionLoggingEnabled ? Logging.adAttributionLog : .disabled
+    }
+    
+    static var lifecycleLog: OSLog {
+        Logging.lifecycleLoggingEnabled ? Logging.lifecycleLog : .disabled
+    }
+    
+    static var autoconsentLog: OSLog {
+        Logging.autoconsentLoggingEnabled ? Logging.autoconsentLog : .disabled
+    }
+}
+
+struct Logging {
+    fileprivate static let generalLoggingEnabled = true
+    fileprivate static let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
+                                                     category: "DDG General")
+    
+    fileprivate static let contentBlockingLoggingEnabled = true
+    fileprivate static let contentBlockingLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
+                                                             category: "DDG Content Blocking")
+    
+    fileprivate static let adAttributionLoggingEnabled = true
+    fileprivate static let adAttributionLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
+                                                           category: "DDG AdAttribution")
+    
+    fileprivate static let lifecycleLoggingEnabled = true
+    fileprivate static let lifecycleLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
+                                                       category: "DDG Lifecycle")
+    
+    fileprivate static let autoconsentLoggingEnabled = false
+    fileprivate static let autoconsentLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? AppVersion.shared.identifier,
+                                                         category: "DDG Autoconsent")
+}

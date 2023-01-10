@@ -51,7 +51,7 @@ public class ContentBlockerLoader {
         for _ in 0 ..< numberOfRequests {
             semaphore.wait()
         }
-        os_log("ContentBlockerLoader completed %d", log: generalLog, type: .debug, self.newData.count)
+        os_log("ContentBlockerLoader completed %d", log: .generalLog, type: .debug, self.newData.count)
         
         return !newData.isEmpty
     }
@@ -62,7 +62,7 @@ public class ContentBlockerLoader {
             if cache.update(config, with: info, etag: etags[config]), let etag = etags[config] {
                 etagStorage.set(etag: etag, for: config)
             } else {
-                os_log("Failed to apply update to %d", log: generalLog, type: .debug, self.newData.count)
+                os_log("Failed to apply update to %d", log: .generalLog, type: .debug, self.newData.count)
             }
         }
     }
@@ -123,7 +123,7 @@ public class ContentBlockerLoader {
             }
             
             if let storedSpecification = self.httpsUpgradeStore.bloomFilterSpecification, storedSpecification == specification {
-                os_log("Bloom filter already downloaded", log: generalLog, type: .debug)
+                os_log("Bloom filter already downloaded", log: .generalLog, type: .debug)
                 progress?(.httpsBloomFilter)
                 semaphore.signal()
                 return

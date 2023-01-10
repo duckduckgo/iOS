@@ -47,7 +47,7 @@ public class StatisticsLoader {
     private func requestInstallStatistics(completion: @escaping Completion = {}) {
         APIRequest.request(url: appUrls.initialAtb) { response, error in
             if let error = error {
-                os_log("Initial atb request failed with error %s", log: generalLog, type: .debug, error.localizedDescription)
+                os_log("Initial atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
                 return
             }
@@ -65,7 +65,7 @@ public class StatisticsLoader {
         let installAtb = atb.version + (statisticsStore.variant ?? "")
         APIRequest.request(url: appUrls.exti(forAtb: installAtb)) { _, error in
             if let error = error {
-                os_log("Exti request failed with error %s", log: generalLog, type: .debug, error.localizedDescription)
+                os_log("Exti request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
                 return
             }
@@ -84,7 +84,7 @@ public class StatisticsLoader {
         
         APIRequest.request(url: url) { response, error in
             if let error = error {
-                os_log("Search atb request failed with error %s", log: generalLog, type: .debug, error.localizedDescription)
+                os_log("Search atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
                 return
             }
@@ -105,7 +105,7 @@ public class StatisticsLoader {
         
         APIRequest.request(url: url) { response, error in
             if let error = error {
-                os_log("App atb request failed with error %s", log: generalLog, type: .debug, error.localizedDescription)
+                os_log("App atb request failed with error %s", log: .generalLog, type: .debug, error.localizedDescription)
                 completion()
                 return
             }

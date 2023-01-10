@@ -1,0 +1,10 @@
+storage_mode "git"
+git_url "git@github.com:duckduckgo/Apple-certificates.git"
+git_branch "ios"
+platform "ios"
+
+type "appstore"
+app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExtension", "com.duckduckgo.mobile.ios.OpenAction2", "com.duckduckgo.mobile.ios.Widgets"]
+generate_apple_certs false
+
+template_name "Default Web Browser iOS (Dist)"

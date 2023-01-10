@@ -83,14 +83,14 @@ final class OmniBarNotificationContainerView: UIView {
     }
     
     private func makeNotificationModel(for type: AnimationType) -> OmniBarNotificationModel {
-        let isLightTheme = ThemeManager.shared.currentTheme.currentImageSet == .light
+        let useLightStyle = ThemeManager.shared.currentTheme.currentImageSet == .light
         let notificationText: String
         let notificationAnimationName: String
         switch type {
         case .cookiesManaged:
             #warning("get the text from UserText and animation based on theme")
             notificationText = "Cookies managed"
-            notificationAnimationName = isLightTheme ? "cookie-icon-animated-40-light" : "cookie-icon-animated-40-light"
+            notificationAnimationName = useLightStyle ? "cookie-icon-animated-40-light" : "cookie-icon-animated-40-dark"
         }
         
         return OmniBarNotificationModel(text: notificationText, animationName: notificationAnimationName)

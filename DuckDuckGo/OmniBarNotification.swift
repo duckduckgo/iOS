@@ -31,7 +31,6 @@ struct OmniBarNotification: View {
     @State var opacity: Double = 0
  
     var body: some View {
-//        let _ = Self._printChanges()
         
         HStack {
             HStack(spacing: 0) {
@@ -105,9 +104,8 @@ private enum Constants {
     }
     
     enum Colors {
-        #warning("set the right colors")
-        static let text = Color.init(white: 0.14) // Color("DownloadsListFilenameColor")
-        static let background = Color.init(white: 0.98) // Color("DownloadsListFilenameColor")
+        static let text = Color("OmniBarNotificationTextColor")
+        static let background = Color("OmniBarNotificationBackgroundColor")
     }
 
     enum Spacing {

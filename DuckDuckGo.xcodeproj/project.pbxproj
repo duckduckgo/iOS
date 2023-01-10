@@ -26,6 +26,8 @@
 		1E16260C296845120004127F /* cookie-banner-illustration-animated-dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E16260A296845120004127F /* cookie-banner-illustration-animated-dark.json */; };
 		1E162610296C5C630004127F /* CustomDaxDialogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16260F296C5C630004127F /* CustomDaxDialogModel.swift */; };
 		1E162613296C62820004127F /* CookieConsentDaxDialogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E162612296C62820004127F /* CookieConsentDaxDialogModel.swift */; };
+		1E162615296D910F0004127F /* cookie-icon-animated-40-dark.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E162614296D910F0004127F /* cookie-icon-animated-40-dark.json */; };
+		1E162618296D96430004127F /* OmniBarNotification.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E162617296D96430004127F /* OmniBarNotification.xcassets */; };
 		1E24295E293F57FA00584836 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E24295D293F57FA00584836 /* LottieView.swift */; };
 		1E242960293F585300584836 /* cookie-icon-animated-40-light.json in Resources */ = {isa = PBXBuildFile; fileRef = 1E24295F293F585300584836 /* cookie-icon-animated-40-light.json */; };
 		1E4DCF4627B6A33600961E25 /* DownloadsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4527B6A33600961E25 /* DownloadsListViewModel.swift */; };
@@ -814,6 +816,8 @@
 		1E16260A296845120004127F /* cookie-banner-illustration-animated-dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-banner-illustration-animated-dark.json"; sourceTree = "<group>"; };
 		1E16260F296C5C630004127F /* CustomDaxDialogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDaxDialogModel.swift; sourceTree = "<group>"; };
 		1E162612296C62820004127F /* CookieConsentDaxDialogModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieConsentDaxDialogModel.swift; sourceTree = "<group>"; };
+		1E162614296D910F0004127F /* cookie-icon-animated-40-dark.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-icon-animated-40-dark.json"; sourceTree = "<group>"; };
+		1E162617296D96430004127F /* OmniBarNotification.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OmniBarNotification.xcassets; sourceTree = "<group>"; };
 		1E24295D293F57FA00584836 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		1E24295F293F585300584836 /* cookie-icon-animated-40-light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cookie-icon-animated-40-light.json"; sourceTree = "<group>"; };
 		1E4DCF4527B6A33600961E25 /* DownloadsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListViewModel.swift; sourceTree = "<group>"; };
@@ -2224,6 +2228,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		1E162616296D962A0004127F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1E016AB32949FEB500F21625 /* OmniBarNotificationModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		1E4DCF4227B6A29D00961E25 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -2263,10 +2275,11 @@
 			isa = PBXGroup;
 			children = (
 				1E7A711A2934EE6800B7EA19 /* Animations */,
+				1E162616296D962A0004127F /* Model */,
 				1E7A71162934EB6400B7EA19 /* OmniBarNotificationAnimator.swift */,
 				1E7A71182934EC6100B7EA19 /* OmniBarNotificationContainerView.swift */,
 				1E7A711B2934EEBC00B7EA19 /* OmniBarNotification.swift */,
-				1E016AB32949FEB500F21625 /* OmniBarNotificationModel.swift */,
+				1E162617296D96430004127F /* OmniBarNotification.xcassets */,
 			);
 			name = OmniBarNotifications;
 			sourceTree = "<group>";
@@ -2275,6 +2288,7 @@
 			isa = PBXGroup;
 			children = (
 				1E24295F293F585300584836 /* cookie-icon-animated-40-light.json */,
+				1E162614296D910F0004127F /* cookie-icon-animated-40-dark.json */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -4615,6 +4629,7 @@
 				AA4D6AD123DE4D27007E8790 /* AppIconPurple40x40@2x.png in Resources */,
 				9880723725FA4E450039EF4B /* menu_dark.json in Resources */,
 				AAF2E28B23E049DF00962AF8 /* AppIconYellow83.5x83.5@2x.png in Resources */,
+				1E162615296D910F0004127F /* cookie-icon-animated-40-dark.json in Resources */,
 				85514FFD2372DA0100DBC528 /* ios13-home-row.mp4 in Resources */,
 				984147AB24F025F700362052 /* Autocomplete.storyboard in Resources */,
 				AA4D6A9423DE49A5007E8790 /* AppIconBlack29x29@2x.png in Resources */,
@@ -4646,6 +4661,7 @@
 				1EE411FE2858B9300003FE64 /* dark-shield.json in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				1E16260B296845120004127F /* cookie-banner-illustration-animated.json in Resources */,
+				1E162618296D96430004127F /* OmniBarNotification.xcassets in Resources */,
 				AA4D6AD323DE4D27007E8790 /* AppIconPurple29x29@2x.png in Resources */,
 				AA4D6AA123DE4CC4007E8790 /* AppIconBlue60x60@3x.png in Resources */,
 				981FED712202519C008488D7 /* BlankSnapshot.storyboard in Resources */,

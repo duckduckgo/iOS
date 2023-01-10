@@ -26,14 +26,10 @@ protocol OmniBarNotificationAnimated: UIViewController {
 }
 
 final class OmniBarNotificationContainerView: UIView {
-    
-    enum AnimationType {
-        case cookiesManaged
-    }
-    
+
     var currentNotificationController: UIHostingController<OmniBarNotification>?
     
-    func prepareAnimation(_ type: AnimationType) {
+    func prepareAnimation(_ type: OmniBarNotificationType) {
         cleanUpPreviousNotification()
 
         let model = makeNotificationModel(for: type)
@@ -82,14 +78,14 @@ final class OmniBarNotificationContainerView: UIView {
         ])
     }
     
-    private func makeNotificationModel(for type: AnimationType) -> OmniBarNotificationModel {
+    private func makeNotificationModel(for type: OmniBarNotificationType) -> OmniBarNotificationModel {
         let useLightStyle = ThemeManager.shared.currentTheme.currentImageSet == .light
         let notificationText: String
         let notificationAnimationName: String
+        
         switch type {
         case .cookiesManaged:
-            #warning("get the text from UserText and animation based on theme")
-            notificationText = "Cookies managed"
+            notificationText = UserText.omnibarNotificationCookiesManaged
             notificationAnimationName = useLightStyle ? "cookie-icon-animated-40-light" : "cookie-icon-animated-40-dark"
         }
         

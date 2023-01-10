@@ -256,7 +256,7 @@ class OmniBar: UIView {
 
     private func animateCookiesManagedBadge() {
         print("Cookies Managed!")
-        notificationAnimator.showNotification(in: self)
+        notificationAnimator.showNotification(.cookiesManaged, in: self)
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {

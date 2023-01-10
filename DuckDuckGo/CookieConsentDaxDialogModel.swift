@@ -29,11 +29,11 @@ final class CookieConsentDaxDialogModel: CustomDaxDialogModel {
         self.noAction = noAction
     }
 
-    #warning("move strings to UserText and use light/dark variants for animation")
-    lazy var content: [DialogContentItem] = [.text(text: "Looks like this site has a cookie consent pop-up👇"),
+    #warning("use light/dark variants for animation")
+    lazy var content: [DialogContentItem] = [.text(text: UserText.daxDialogCookieConsentFirst),
                                              .animation(name: "cookie-banner-illustration-animated", delay: 0.35),
-                                             .text(text: "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.")]
+                                             .text(text: UserText.daxDialogCookieConsentSecond)]
     
-    lazy var buttons: [DialogButtonItem] = [.bordered(label: "Manage Cookie Pop-ups", action: self.okAction),
-                                            .borderless(label: "No Thanks", action: self.noAction)]
+    lazy var buttons: [DialogButtonItem] = [.bordered(label: UserText.daxDialogCookieConsentAcceptButton, action: self.okAction),
+                                            .borderless(label: UserText.daxDialogCookieConsentRejectButton, action: self.noAction)]
 }

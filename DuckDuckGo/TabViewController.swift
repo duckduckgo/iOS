@@ -2111,32 +2111,20 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         //            completion(false)
         //        }))
         //        delegate?.tab(self, didRequestPresentingAlert: alert)
-        
-        
-        
     }
     
     private func showCookieManagementDaxDialog() {
-        
-//        let daxDialog = makeCookieManagementDaxDialog()
-//        present(daxDialog, animated: true)
-//        
-        
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-        //            self.dismiss(animated: true)
-        //        }
+        let model = CookieConsentDaxDialogModel(okAction: okActionForDialog, noAction: noAction)
+        showCustomDaxDialog(model: model)
     }
     
-    private func makeCookieManagementDaxDialog() -> UIViewController {
-        
-        let model = CookieConsentDaxDialogModel(okAction: okActionForDialog, noAction: noAction)
-        
+    private func showCustomDaxDialog(model: CustomDaxDialogModel) {
         let daxDialog = UIHostingController(rootView: CustomDaxDialog(model: model), ignoreSafeArea: true)
         daxDialog.modalPresentationStyle = .overFullScreen
         daxDialog.modalTransitionStyle = .crossDissolve
         daxDialog.view.backgroundColor = .clear
 
-        return daxDialog
+        present(daxDialog, animated: true)
     }
     
     private func okActionForDialog() {

@@ -481,6 +481,18 @@
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Yesterday";
 
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Manage Cookie Pop-ups";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "No Thanks";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Looks like this site has a cookie consent pop-up👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.";
+
 /* No comment provided by engineer. */
 "dax.hide.button" = "Hide Tips Forever";
 
@@ -984,6 +996,9 @@ https://duckduckgo.com/mac";
 
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
+
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Cookies managed";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";

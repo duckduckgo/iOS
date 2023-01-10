@@ -19,12 +19,16 @@
 
 import UIKit
 
+enum OmniBarNotificationType {
+    case cookiesManaged
+}
+
 final class OmniBarNotificationAnimator: NSObject {
     
-    func showNotification(in omniBar: OmniBar) {
+    func showNotification(_ type: OmniBarNotificationType, in omniBar: OmniBar) {
         
         omniBar.notificationContainer.alpha = 0
-        omniBar.notificationContainer.prepareAnimation(.cookiesManaged)
+        omniBar.notificationContainer.prepareAnimation(type)
         omniBar.textField.alpha = 0
         
         let fadeDuration = Constants.Duration.fade

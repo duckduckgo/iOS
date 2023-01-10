@@ -2,17 +2,27 @@ fastlane_version "2.150.0"
 
 default_platform :ios
 
-lane :release do 
+#################################################
+# Public lanes
+#################################################
 
-  gym(
-    export_method: "app-store",
-    scheme: "DuckDuckGo",
-    export_options: "appStoreExportOptions.plist"
-  )
+desc 'Fetches and updates certificates and provisioning profiles for App Store distribution'
+lane :sync_signing do
+  do_sync_signing
+end
+
+desc 'Fetches and updates certificates and provisioning profiles for development'
+lane :sync_signing_dev do
+  do_sync_signing
+end
+
+desc 'Makes App Store release build and uploads it to App Store Connect'
+lane :release_appstore do
+  build_release
 
   deliver(
     submit_for_review: false,
-    automatic_release: false, 
+    automatic_release: false,
     phased_release: true,
     force: true,
     skip_screenshots: true,
@@ -22,4 +32,44 @@ lane :release do
     }
   )
 
+end
+
+#################################################
+# Private lanes
+#################################################
+
+private_lane :build_release do
+  sync_signing
+
+  build_app(
+    export_method: "app-store",
+    scheme: "DuckDuckGo",
+    export_options: "appStoreExportOptions.plist"
+  )
+end
+
+private_lane :get_api_key do
+  has_api_key = [
+    "APPLE_API_KEY_ID",
+    "APPLE_API_KEY_ISSUER",
+    "APPLE_API_KEY_BASE64"
+  ].map {|x| ENV.has_key? x}.reduce(&:&)
+
+  if has_api_key
+    app_store_connect_api_key(
+      key_id: ENV["APPLE_API_KEY_ID"],
+      issuer_id: ENV["APPLE_API_KEY_ISSUER"],
+      key_content: ENV["APPLE_API_KEY_BASE64"],
+      is_key_content_base64: true
+    )
+  else
+    nil
+  end
+end
+
+private_lane :do_sync_signing do
+  sync_code_signing(
+    api_key: get_api_key,
+    readonly: is_ci
+  )
 end

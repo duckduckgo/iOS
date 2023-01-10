@@ -8,3 +8,9 @@ app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExt
 generate_apple_certs false
 
 template_name "Default Web Browser iOS (Dist)"
+
+for_lane :sync_signing_dev do
+  type "development"
+  app_identifier ["com.duckduckgo.mobile.ios", "com.duckduckgo.mobile.ios.ShareExtension", "com.duckduckgo.mobile.ios.OpenAction2", "com.duckduckgo.mobile.ios.Widgets"]
+  generate_apple_certs true
+end

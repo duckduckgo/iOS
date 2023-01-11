@@ -55,7 +55,8 @@ private_lane :build_release do
   build_app(
     export_method: "app-store",
     scheme: "DuckDuckGo",
-    export_options: "appStoreExportOptions.plist"
+    export_options: "appStoreExportOptions.plist",
+    derived_data_path: "/tmp/ddata"
   )
 end
 

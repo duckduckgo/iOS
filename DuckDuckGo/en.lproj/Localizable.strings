@@ -452,6 +452,9 @@
 "brokensite.category.content" = "Content is missing";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Cookie pop-up wasn't managed";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Images didn’t load";
 
 /* Broken Site Category */

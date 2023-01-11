@@ -816,7 +816,8 @@ class TabViewController: UIViewController {
                               isDesktop: tabModel.isDesktop,
                               tdsETag: ContentBlocking.shared.contentBlockingManager.currentMainRules?.etag ?? "",
                               ampUrl: linkProtection.lastAMPURLString,
-                              urlParametersRemoved: linkProtection.urlParametersRemoved)
+                              urlParametersRemoved: linkProtection.urlParametersRemoved,
+                              cookieConsentInfo: privacyInfo?.cookieConsentManaged)
     }
     
     public func print() {

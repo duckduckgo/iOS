@@ -34,6 +34,15 @@ lane :release_appstore do
 
 end
 
+desc 'Makes App Store release build and uploads it to TestFlight'
+lane :release_testflight do
+  build_release
+
+  upload_to_testflight(
+    api_key: get_api_key
+  )
+end
+
 #################################################
 # Private lanes
 #################################################

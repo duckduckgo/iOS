@@ -1,20 +1,16 @@
 name: Make App Store Connect Release
 
-on:
-  push:
-    branches: [ "jacek/match" ]
-
-# on: 
-#   workflow_dispatch:
-#     inputs:
-#       destination:
-#         description: "Upload destination (TestFlight or App Store)"
-#         required: true
-#         default: appstore
-#         type: choice
-#         options:
-#         - testflight
-#         - appstore
+on: 
+  workflow_dispatch:
+    inputs:
+      destination:
+        description: "Upload destination (App Store or TestFlight)"
+        required: true
+        default: appstore
+        type: choice
+        options:
+        - appstore
+        - testflight
 
 jobs:
   make-release:
@@ -52,4 +48,4 @@ jobs:
           APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
           APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: bundle exec fastlane release_testflight
+        run: bundle exec fastlane release_${{ github.event.inputs.destination }}

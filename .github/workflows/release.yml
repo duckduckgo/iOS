@@ -16,36 +16,43 @@ jobs:
   make-release:
 
     runs-on: macos-12
-    
     name: Make App Store Connect Release
 
     steps:
 
-      - name: Register SSH keys for access to certificates
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
+    - name: Assert release branch
+      run: |
+        case "${{ github.ref }}" in
+          *release/*) ;;
+          *hotfix/*) ;;
+          *) echo "👎 Not a release or hotfix branch"; exit 1 ;;
+        esac
 
-      - name: Check out the code
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
+    - name: Register SSH keys for access to certificates
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
 
-      - name: Decrypt the fonts
-        env:
-          FONTS_ENCRYPTION_KEY: ${{ secrets.FONTS_ENCRYPTION_KEY }}
-        run: ./decrypt_fonts.sh
+    - name: Check out the code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_14.1.app/Contents/Developer
+    - name: Decrypt the fonts
+      env:
+        FONTS_ENCRYPTION_KEY: ${{ secrets.FONTS_ENCRYPTION_KEY }}
+      run: ./decrypt_fonts.sh
 
-      - name: Prepare fastlane
-        run: bundle install
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_14.1.app/Contents/Developer
 
-      - name: Archive and upload the app
-        env:
-          APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
-          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
-          APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-        run: bundle exec fastlane release_${{ github.event.inputs.destination }}
+    - name: Prepare fastlane
+      run: bundle install
+
+    - name: Archive and upload the app
+      env:
+        APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+        APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+        APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      run: bundle exec fastlane release_${{ github.event.inputs.destination }}

@@ -81,7 +81,6 @@ end
 private_lane :do_sync_signing do
   sync_code_signing(
     api_key: get_api_key,
-    readonly: is_ci,
-    verbose: true
+    readonly: is_ci
   )
 end

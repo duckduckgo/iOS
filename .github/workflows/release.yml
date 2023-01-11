@@ -43,11 +43,8 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_14.1.app/Contents/Developer
 
-      - name: Set up ruby env
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7.2
-          bundler-cache: true
+      - name: Prepare fastlane
+        run: bundle install
 
       - name: Archive and upload the app
         env:

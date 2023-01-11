@@ -55,8 +55,7 @@ private_lane :build_release do
   build_app(
     export_method: "app-store",
     scheme: "DuckDuckGo",
-    export_options: "appStoreExportOptions.plist",
-    cloned_source_packages_path: "/tmp/SourcePackages"
+    export_options: "appStoreExportOptions.plist"
   )
 end
 

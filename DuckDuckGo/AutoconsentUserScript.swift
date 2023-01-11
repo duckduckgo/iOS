@@ -24,7 +24,7 @@ import UserScript
 import PrivacyDashboard
 
 protocol AutoconsentPreferences {
-    var autoconsentPromptShown: Bool { get set }
+    var autoconsentPromptSeen: Bool { get set }
     var autoconsentEnabled: Bool { get set }
 }
 
@@ -220,7 +220,7 @@ extension AutoconsentUserScript {
             return
         }
 
-        if preferences.autoconsentPromptShown == true && preferences.autoconsentEnabled == false {
+        if preferences.autoconsentPromptSeen == true && preferences.autoconsentEnabled == false {
             // this will only happen if the user has just declined a prompt in this tab
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return
@@ -244,8 +244,6 @@ extension AutoconsentUserScript {
         }
         let remoteConfig = self.config.settings(for: .autoconsent)
         let disabledCMPs = remoteConfig["disabledCMPs"] as? [String] ?? []
-        
-        let cookiePromptShown = preferences.autoconsentPromptShown
 
         replyHandler([
             "type": "initResp",
@@ -253,10 +251,10 @@ extension AutoconsentUserScript {
             "config": [
                 "enabled": true,
                 // if it's the first time, disable autoAction
-                "autoAction": cookiePromptShown ? "optOut" : nil,
+                "autoAction": preferences.autoconsentPromptSeen ? "optOut" : nil,
                 "disabledCmps": disabledCMPs,
                 // the very first time (autoconsentEnabled = nil), make sure the popup is visible
-                "enablePrehide": cookiePromptShown,
+                "enablePrehide": preferences.autoconsentPromptSeen,
                 "detectRetries": 20
             ]
         ], nil)
@@ -302,7 +300,7 @@ extension AutoconsentUserScript {
     
     @MainActor
     func handlePopupFound(message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
-        guard preferences.autoconsentPromptShown == false else {
+        guard preferences.autoconsentPromptSeen == false else {
 //             if feature is already enabled, opt-out will happen automatically
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return
@@ -424,7 +422,7 @@ extension AutoconsentUserScript {
         management.promptLastShown = now
         self.delegate?.autoconsentUserScript(self, didRequestAskingUserForConsent: { result in
             self.preferences.autoconsentEnabled = result
-            self.preferences.autoconsentPromptShown = true
+            self.preferences.autoconsentPromptSeen = true
             callback(result)
         })
     }

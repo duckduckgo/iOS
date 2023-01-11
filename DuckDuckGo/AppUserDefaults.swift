@@ -217,8 +217,8 @@ public class AppUserDefaults: AppSettings {
         }
     }
     
-    @UserDefaultsWrapper(key: .autoconsentPromptShown, defaultValue: false)
-    var autoconsentPromptShown: Bool
+    @UserDefaultsWrapper(key: .autoconsentPromptSeen, defaultValue: false)
+    var autoconsentPromptSeen: Bool
     
     @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
     var autoconsentEnabled: Bool

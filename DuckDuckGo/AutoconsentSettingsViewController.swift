@@ -60,7 +60,7 @@ class AutoconsentSettingsViewController: UITableViewController {
     
     @IBAction func onAutoconsentValueChanged(_ sender: Any) {
         appSettings.autoconsentEnabled = autoconsentToggle.isOn
-        appSettings.autoconsentPromptShown = true
+        appSettings.autoconsentPromptSeen = true
         
 #warning("do we want to fire pixels on change?")
 //        Pixel.fire(pixel: doNotSellToggle.isOn ? .settingsDoNotSellOn : .settingsDoNotSellOff)

@@ -42,6 +42,6 @@ protocol AppSettings: AnyObject {
 
     func isWidgetInstalled() async -> Bool
     
-    var autoconsentPromptShown: Bool { get set }
+    var autoconsentPromptSeen: Bool { get set }
     var autoconsentEnabled: Bool { get set }
 }

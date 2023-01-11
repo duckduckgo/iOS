@@ -1039,12 +1039,6 @@ extension TabViewController: WKNavigationDelegate {
         delegate?.tabLoadingStateDidChange(tab: self)
 
         showDaxDialogOrStartTrackerNetworksAnimationIfNeeded()
-        
-        #warning("to be removed")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.showCookieManagementDaxDialog()
-        }
-        
     }
 
     func showDaxDialogOrStartTrackerNetworksAnimationIfNeeded() {
@@ -2096,9 +2090,9 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         //            completion(false)
         //        }))
         //        delegate?.tab(self, didRequestPresentingAlert: alert)
-    }
-    
-    private func showCookieManagementDaxDialog() {
+        
+        
+        
         let model = CookieConsentDaxDialogModel(okAction: okActionForDialog, noAction: noAction)
         showCustomDaxDialog(model: model)
     }

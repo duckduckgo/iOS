@@ -53,5 +53,7 @@ class AppSettingsMock: AppSettings {
     func isWidgetInstalled() async -> Bool {
         widgetInstalled
     }
-
+    
+    var autoconsentPromptShown = true
+    var autoconsentEnabled = true
 }

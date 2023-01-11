@@ -198,9 +198,7 @@ class SettingsViewController: UITableViewController {
     }
     
     private func configureAutoconsent() {
-        #warning("display value depending on autoconsent setting value")
-        autoconsentAccessoryText.text = "enabled"
-//        autoconsentAccessoryText.text = appSettings.autoconsent ? UserText.autoconsentEnabled : UserText.autoconsentDisabled
+        autoconsentAccessoryText.text = appSettings.autoconsentEnabled ? UserText.autoconsentEnabled : UserText.autoconsentDisabled
     }
      
     private func configureRememberLogins() {

@@ -24,7 +24,8 @@ import UserScript
 import PrivacyDashboard
 
 protocol AutoconsentPreferences {
-    var autoconsentEnabled: Bool? { get set }
+    var autoconsentPromptShown: Bool { get set }
+    var autoconsentEnabled: Bool { get set }
 }
 
 extension AppUserDefaults: AutoconsentPreferences { }

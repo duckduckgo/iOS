@@ -32,8 +32,7 @@ class AutoconsentSettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-#warning("set initial toggle value")
-//        doNotSellToggle.isOn = appSettings.sendDoNotSell
+        autoconsentToggle.isOn = appSettings.autoconsentEnabled
         infoTextView.backgroundColor = .clear
         
         applyTheme(ThemeManager.shared.currentTheme)
@@ -60,10 +59,10 @@ class AutoconsentSettingsViewController: UITableViewController {
     }
     
     @IBAction func onAutoconsentValueChanged(_ sender: Any) {
-#warning("update setting on toggle change")
-//        appSettings.sendDoNotSell = doNotSellToggle.isOn
+        appSettings.autoconsentEnabled = autoconsentToggle.isOn
+        
+#warning("do we want to fire pixels on change?")
 //        Pixel.fire(pixel: doNotSellToggle.isOn ? .settingsDoNotSellOn : .settingsDoNotSellOff)
-//        NotificationCenter.default.post(name: AppUserDefaults.Notifications.doNotSellStatusChange, object: nil)
     }
     
 }
@@ -72,7 +71,7 @@ extension AutoconsentSettingsViewController: Themable {
     
     /// Apply attributes for NSAtrtributedStrings for copy text
     func applyAttributes(theme: Theme) {
-#warning("style the header")
+#warning("style the settings sub-screen header according to designs")
 //        let fontSize = SettingsViewController.fontSizeForHeaderView
 //        let paragraphStyle = NSMutableParagraphStyle()
 //        paragraphStyle.lineHeightMultiple = 1.16

@@ -172,10 +172,6 @@ public class AppUserDefaults: AppSettings {
     @UserDefaultsWrapper(key: .textSize, defaultValue: 100)
     var textSize: Int
 
-// TODO: Support properly storing of the value
-    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: nil)
-    var autoconsentEnabled: Bool? // { return true }
-
     private func setAutofillCredentialsEnabledAutomaticallyIfNecessary() {
         if autofillCredentialsHasBeenEnabledAutomaticallyIfNecessary {
             return
@@ -220,6 +216,12 @@ public class AppUserDefaults: AppSettings {
             }
         }
     }
+    
+    @UserDefaultsWrapper(key: .autoconsentPromptShown, defaultValue: false)
+    var autoconsentPromptShown: Bool
+    
+    @UserDefaultsWrapper(key: .autoconsentEnabled, defaultValue: false)
+    var autoconsentEnabled: Bool
 }
 
 extension AppUserDefaults: AppConfigurationFetchStatistics {

@@ -18,9 +18,13 @@ on:
 
 jobs:
   make-release:
-    runs-on: macos-latest
+
+    runs-on: macos-12
+    
+    name: Make App Store Connect Release
 
     steps:
+
       - name: Register SSH keys for access to certificates
         uses: webfactory/ssh-agent@v0.7.0
         with:

@@ -35,6 +35,12 @@ class RootDebugViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView.cellForRow(at: indexPath)?.tag == 665 {
+            AppUserDefaults().autoconsentPromptShown = false
+            AppUserDefaults().autoconsentEnabled = false
+        }
+        
         if tableView.cellForRow(at: indexPath)?.tag == 666 {
             fatalError(#function)
         }

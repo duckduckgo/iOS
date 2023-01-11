@@ -61,6 +61,8 @@ public struct UserText {
     public static let actionEditBookmark = NSLocalizedString("action.title.edit.bookmark", value: "Edit Bookmark", comment: "Edit Bookmark action")
     public static let actionRemoveFavorite = NSLocalizedString("action.title.remove.favorite", value: "Remove Favorite", comment: "Remove Favorite action")
 
+    public static let actionManageFavorites = NSLocalizedString("action.manage.favorites", value: "Manage", comment: "Button label for managing favorites")
+
     public static let voiceoverSuggestionTypeWebsite = NSLocalizedString("voiceover.suggestion.type.website", value: "Open website", comment: "Open suggested website action accessibility title")
     public static let voiceoverSuggestionTypeBookmark = NSLocalizedString("voiceover.suggestion.type.bookmark", value: "Bookmark", comment: "Voice-over title for a Bookmark suggestion. Noun")
     public static let voiceoverSuggestionTypeSearch = NSLocalizedString("voiceover.suggestion.type.search", value: "Search at DuckDuckGo", comment: "Search for suggestion action accessibility title")
@@ -117,11 +119,10 @@ public struct UserText {
     public static let sectionTitleBookmarks = NSLocalizedString("section.title.bookmarks", value: "Bookmarks", comment: "")
     public static let sectionTitleFavorites = NSLocalizedString("section.title.favorites", value: "Favorites", comment: "")
     
-    public static let favoriteMenuDelete = NSLocalizedString("favorite.menu.delete", value: "Delete", comment: "")
+    public static let favoriteMenuRemove = NSLocalizedString("favorite.menu.remove", value: "Remove", comment: "")
     public static let favoriteMenuEdit = NSLocalizedString("favorite.menu.edit", value: "Edit", comment: "")
     
     public static let emptyBookmarks = NSLocalizedString("empty.bookmarks", value: "No bookmarks added yet", comment: "Empty list state placholder")
-    public static let emptyFavorites = NSLocalizedString("empty.favorites", value: "No favorites added yet", comment: "Empty list state placholder")
     public static let noMatchesFound = NSLocalizedString("empty.search", value: "No matches found", comment: "Empty search placeholder on bookmarks search")
     
     public static let bookmarkTitlePlaceholder = NSLocalizedString("bookmark.title.placeholder", value: "Website title", comment: "Placeholder in the add bookmark form")
@@ -471,7 +472,8 @@ public struct UserText {
     public static let autofillEnableSettings = NSLocalizedString("autofill.logins.list.enable", value:"Save and Autofill Logins", comment: "Title for a toggle that enables autofill")
     public static let autofillLoginListTitle = NSLocalizedString("autofill.logins.list.title", value:"Autofill Logins", comment: "Title for screen listing autofill logins")
     public static let autofillLoginListSearchPlaceholder = NSLocalizedString("autofill.logins.list.search-placeholder", value:"Search Logins", comment: "Placeholder for search field on autofill login listing")
-    
+    public static let autofillLoginListSuggested = NSLocalizedString("autofill.logins.list.suggested", value:"Suggested", comment: "Section title for group of suggested saved logins")
+
     public static let autofillLoginPromptAuthenticationCancelButton = NSLocalizedString("autofill.logins.prompt.auth.cancel", value:"Cancel", comment: "Cancel button for auth during login prompt")
     public static let autofillLoginPromptAuthenticationReason = NSLocalizedString("autofill.logins.prompt.auth.reason", value:"Unlock To Use Saved Login", comment: "Reason for auth during login prompt")
     public static let autofillLoginPromptTitle = NSLocalizedString("autofill.logins.prompt.title", value:"Use Saved Login?", comment: "Title for autofill login prompt")

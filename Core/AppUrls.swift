@@ -74,6 +74,7 @@ public struct AppUrls {
         static let verticalRewrite = "iar"
         static let verticalMaps = "iaxm"
         static let enableNavSuggestions = "is_nav"
+        static let email = "email"
     }
 
     private struct ParamValue {
@@ -81,6 +82,8 @@ public struct AppUrls {
         static let appUsage = "app_use"
         static let searchHeader = "-1"
         static let enableNavSuggestions = "1"
+        static let emailEnabled = "1"
+        static let emailDisabled = "0"
 
         static let majorVerticals: Set<String> = ["images", "videos", "news"]
     }
@@ -137,7 +140,8 @@ public struct AppUrls {
         return URL(string: Url.atb)?
             .appendingParameters([
                 Param.atb: atbWithVariant,
-                Param.setAtb: setAtb
+                Param.setAtb: setAtb,
+                Param.email: EmailManager().isSignedIn ? ParamValue.emailEnabled : ParamValue.emailDisabled
             ])
     }
     
@@ -145,11 +149,13 @@ public struct AppUrls {
         guard let atbWithVariant = statisticsStore.atbWithVariant, let setAtb = statisticsStore.appRetentionAtb else {
             return nil
         }
+        
         return URL(string: Url.atb)?
             .appendingParameters([
                 Param.activityType: ParamValue.appUsage,
                 Param.atb: atbWithVariant,
-                Param.setAtb: setAtb
+                Param.setAtb: setAtb,
+                Param.email: EmailManager().isSignedIn ? ParamValue.emailEnabled : ParamValue.emailDisabled
             ])
     }
 
@@ -223,19 +229,6 @@ public struct AppUrls {
         if !isDuckDuckGo(url: url) { return false }
         guard DDGStaticURL(rawValue: url.path) != nil else { return false }
         return true
-    }
-
-    public func isGPCEnabled(url: URL,
-                             config: PrivacyConfiguration = ContentBlocking.shared.privacyConfigurationManager.privacyConfig) -> Bool {
-        guard let gpcUrls = config.settings(for: .gpc)["gpcHeaderEnabledSites"] as? [String] else {
-            return false
-        }
-
-        for gpcHost in gpcUrls where url.isPart(ofDomain: gpcHost) {
-            return true
-        }
-
-        return false
     }
 
     public func isDuckDuckGoEmailProtection(url: URL) -> Bool {

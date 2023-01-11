@@ -107,6 +107,7 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
         self.headerViewModel = AutofillLoginDetailsHeaderViewModel()
         if let account = account {
             self.updateData(with: account)
+            AppDependencyProvider.shared.autofillLoginSession.lastAccessedAccount = account
         } else {
             viewMode = .new
         }
@@ -228,7 +229,6 @@ final class AutofillLoginDetailsViewModel: ObservableObject {
                     self.updateData(with: newCredential.account)
                 }
                 
-                viewMode = .view
             } catch let error {
                 if case SecureVaultError.duplicateRecord = error {
                     Pixel.fire(pixel: .autofillLoginsSettingsAddNewLoginErrorAttemptedToCreateDuplicate)

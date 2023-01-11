@@ -24,6 +24,9 @@ import LocalAuthentication
 import os.log
 import BrowserServicesKit
 import SwiftUI
+import Bookmarks
+import Persistence
+import Common
 import PrivacyDashboard
 import UserScript
 import ContentBlocking
@@ -71,6 +74,7 @@ class TabViewController: UIViewController {
         set { findInPageScript?.findInPage = newValue }
     }
 
+    let favicons = Favicons.shared
     let progressWorker = WebProgressWorker()
 
     private(set) var webView: WKWebView!
@@ -83,8 +87,6 @@ class TabViewController: UIViewController {
 
     internal lazy var featureFlagger = AppDependencyProvider.shared.featureFlagger
     private lazy var featureFlaggerInternalUserDecider = AppDependencyProvider.shared.featureFlaggerInternalUserDecider
-
-    lazy var bookmarksManager = BookmarksManager()
 
     private(set) var tabModel: Tab
     private(set) var privacyInfo: PrivacyInfo?
@@ -125,6 +127,9 @@ class TabViewController: UIViewController {
     private var blobDownloadTargetFrame: WKFrameInfo?
 
     let userAgentManager: UserAgentManager = DefaultUserAgentManager.shared
+    
+    let bookmarksDatabase: CoreDataDatabase
+    lazy var faviconUpdater = BookmarkFaviconUpdater(bookmarksDatabase: bookmarksDatabase, tab: tabModel, favicons: Favicons.shared)
 
     public var url: URL? {
         willSet {
@@ -240,12 +245,13 @@ class TabViewController: UIViewController {
     private var rulesCompiledCondition: RunLoop.ResumeCondition? = RunLoop.ResumeCondition()
     private let rulesCompilationMonitor = RulesCompilationMonitor.shared
 
-    static func loadFromStoryboard(model: Tab) -> TabViewController {
+    static func loadFromStoryboard(model: Tab, bookmarksDatabase: CoreDataDatabase) -> TabViewController {
         let storyboard = UIStoryboard(name: "Tab", bundle: nil)
-        guard let controller = storyboard.instantiateViewController(withIdentifier: "TabViewController") as? TabViewController else {
-            fatalError("Failed to instantiate controller as TabViewController")
-        }
-        controller.tabModel = model
+        let controller = storyboard.instantiateViewController(identifier: "TabViewController", creator: { coder in
+            TabViewController(coder: coder,
+                              tabModel: model,
+                              bookmarksDatabase: bookmarksDatabase)
+        })
         return controller
     }
     
@@ -260,10 +266,17 @@ class TabViewController: UIViewController {
     private var userContentController: UserContentController {
         (webView.configuration.userContentController as? UserContentController)!
     }
+    
+    required init?(coder aDecoder: NSCoder,
+                   tabModel: Tab,
+                   bookmarksDatabase: CoreDataDatabase) {
+            self.tabModel = tabModel
+            self.bookmarksDatabase = bookmarksDatabase
+            super.init(coder: aDecoder)
+    }
 
     required init?(coder aDecoder: NSCoder) {
-        tabModel = Tab(link: nil)
-        super.init(coder: aDecoder)
+        fatalError("Not implemented")
     }
     
     override func viewDidLoad() {
@@ -286,9 +299,13 @@ class TabViewController: UIViewController {
     }
 
     override func buildActivities() -> [UIActivity] {
-        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self)]
+        let viewModel = MenuBookmarksViewModel(bookmarksDatabase: bookmarksDatabase)
+        var activities: [UIActivity] = [SaveBookmarkActivity(controller: self,
+                                                             viewModel: viewModel)]
 
-        activities.append(SaveBookmarkActivity(controller: self, isFavorite: true))
+        activities.append(SaveBookmarkActivity(controller: self,
+                                               isFavorite: true,
+                                               viewModel: viewModel))
         activities.append(FindInPageActivity(controller: self))
 
         return activities
@@ -772,7 +789,7 @@ class TabViewController: UIViewController {
     }
 
     func dismiss() {
-        presentedViewController?.dismiss(animated: true)
+        privacyDashboard?.dismiss(animated: true)
         progressWorker.progressBar = nil
         chromeDelegate?.omniBar.cancelAllAnimations()
         cancelTrackerNetworksAnimation()
@@ -1164,44 +1181,20 @@ extension TabViewController: WKNavigationDelegate {
     }
     
     private func requestForDoNotSell(basedOn incomingRequest: URLRequest) -> URLRequest? {
-        /*
-         For now, the GPC header is only applied to sites known to be honoring GPC (nytimes.com, washingtonpost.com),
-         while the DOM signal is available to all websites.
-         This is done to avoid an issue with back navigation when adding the header (e.g. with 't.co').
-         */
-        guard let url = incomingRequest.url, appUrls.isGPCEnabled(url: url) else { return nil }
-        
-        var request = incomingRequest
-        // Add Do Not sell header if needed
         let config = ContentBlocking.shared.privacyConfigurationManager.privacyConfig
-        let domain = incomingRequest.url?.host
-        let urlAllowed = config.isFeature(.gpc, enabledForDomain: domain)
-        
-        if appSettings.sendDoNotSell && urlAllowed {
-            if let headers = request.allHTTPHeaderFields,
-               headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) == nil {
-                request.addValue("1", forHTTPHeaderField: Constants.secGPCHeader)
-
-                if #available(iOS 15.0, *) {
-                    request.attribution = .user
-                }
-
-                return request
-            }
-        } else {
-            // Check if DN$ header is still there and remove it
-            if let headers = request.allHTTPHeaderFields, headers.firstIndex(where: { $0.key == Constants.secGPCHeader }) != nil {
-                request.setValue(nil, forHTTPHeaderField: Constants.secGPCHeader)
-
-                if #available(iOS 15.0, *) {
-                    request.attribution = .user
-                }
-
-                return request
-            }
+        guard var request = GPCRequestFactory().requestForGPC(basedOn: incomingRequest,
+                                                              config: config,
+                                                              gpcEnabled: appSettings.sendDoNotSell) else {
+            return nil
         }
-        return nil
+        
+        if #available(iOS 15.0, *) {
+            request.attribution = .user
+        }
+
+        return request
     }
+    
     // swiftlint:disable function_body_length
     // swiftlint:disable cyclomatic_complexity
 
@@ -1308,7 +1301,9 @@ extension TabViewController: WKNavigationDelegate {
 
     private func shouldWaitUntilContentBlockingIsLoaded(_ completion: @Sendable @escaping @MainActor () -> Void) -> Bool {
         // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
-        if userContentController.contentBlockingAssetsInstalled {
+        if userContentController.contentBlockingAssetsInstalled
+            || !ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+
             RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
             return false
         }
@@ -1802,7 +1797,9 @@ extension TabViewController {
         if mostRecentAutoPreviewDownloadID == download.id {
             fileHandler.preview()
         } else {
-            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
+            let pixelParameters = [PixelParameters.mimeType: download.mimeType.rawValue,
+                                   PixelParameters.downloadListCount: "\(AppDependencyProvider.shared.downloadManager.downloadList.count)"]
+            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab, withAdditionalParameters: pixelParameters)
         }
     }
 }
@@ -1981,7 +1978,7 @@ extension TabViewController: UserContentControllerDelegate {
                                updateEvent: ContentBlockerRulesManager.UpdateEvent) {
         guard let userScripts = userScripts as? UserScripts else { fatalError("Unexpected UserScripts") }
 
-        userScripts.faviconScript.delegate = self
+        userScripts.faviconScript.delegate = faviconUpdater
         userScripts.debugScript.instrumentation = instrumentation
         userScripts.surrogatesScript.delegate = self
         userScripts.contentBlockerUserScript.delegate = self
@@ -2061,19 +2058,6 @@ extension TabViewController: SurrogatesUserScriptDelegate {
         userScriptDetectedTracker(tracker)
     }
 
-}
-
-// MARK: - FaviconUserScriptDelegate
-extension TabViewController: FaviconUserScriptDelegate {
-    
-    func faviconUserScriptDidRequestCurrentHost(_ script: FaviconUserScript) -> String? {
-        return webView.url?.host
-    }
-    
-    func faviconUserScript(_ script: FaviconUserScript, didFinishLoadingFavicon image: UIImage) {
-        tabModel.didUpdateFavicon()
-    }
-    
 }
 
 // MARK: - PrintingUserScriptDelegate
@@ -2322,16 +2306,19 @@ extension TabViewController: SecureVaultManagerDelegate {
 
         let manager = SaveAutofillLoginManager(credentials: credentials, vaultManager: vault, autofillScript: autofillUserScript)
         manager.prepareData { [weak self] in
-
-            let saveLoginController = SaveLoginViewController(credentialManager: manager, domainLastShownOn: self?.domainSaveLoginPromptLastShownOn)
-            self?.domainSaveLoginPromptLastShownOn = self?.url?.host
+            guard let self = self else { return }
+            
+            let saveLoginController = SaveLoginViewController(credentialManager: manager,
+                                                              appSettings: self.appSettings,
+                                                              domainLastShownOn: self.domainSaveLoginPromptLastShownOn)
+            self.domainSaveLoginPromptLastShownOn = self.url?.host
             saveLoginController.delegate = self
             if #available(iOS 15.0, *) {
                 if let presentationController = saveLoginController.presentationController as? UISheetPresentationController {
                     presentationController.detents = [.medium(), .large()]
                 }
             }
-            self?.present(saveLoginController, animated: true, completion: nil)
+            self.present(saveLoginController, animated: true, completion: nil)
         }
     }
     
@@ -2401,10 +2388,14 @@ extension TabViewController: SecureVaultManagerDelegate {
         false
     }
     
-    // swiftlint:disable:next identifier_name
     func secureVaultManager(_: SecureVaultManager, didRequestAuthenticationWithCompletionHandler: @escaping (Bool) -> Void) {
         // We don't have auth yet
     }
+    
+    func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
+        Pixel.fire(pixel: .autofillJSPixelFired(pixel))
+    }
+    
 }
 
 extension TabViewController: SaveLoginViewControllerDelegate {

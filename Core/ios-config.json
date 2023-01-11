@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1669638447100,
+    "version": 1672755248244,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -69,10 +69,6 @@
                 {
                     "domain": "www.audiosciencereview.com",
                     "reason": "Pages on the site end up in redirect loops in Firefox."
-                },
-                {
-                    "domain": "identity.ibs.bankwest.com.au",
-                    "reason": "Breaks auth flow: https://github.com/duckduckgo/duckduckgo-privacy-extension/issues/1545"
                 }
             ],
             "settings": {
@@ -99,7 +95,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "62576f16d5b019c8d22cc289c2be6ebd"
+            "hash": "8668c1396cf49ac18e2e057c48dac1a7"
         },
         "autoconsent": {
             "exceptions": [
@@ -150,6 +146,14 @@
                 {
                     "domain": "heise.de",
                     "reason": "infinite reload"
+                },
+                {
+                    "domain": "voici.fr",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/66"
+                },
+                {
+                    "domain": "tfl.gov.uk",
+                    "reason": "https://github.com/duckduckgo/autoconsent/issues/68"
                 }
             ],
             "settings": {
@@ -158,7 +162,7 @@
                 ]
             },
             "state": "disabled",
-            "hash": "4308f34f46e1a478afca3d66bf5fedbf"
+            "hash": "0a3a8f86897f6cf7b0a17eabfabce21d"
         },
         "autofill": {
             "exceptions": [
@@ -207,6 +211,10 @@
                         "reason": "Homepage UI elements appear squashed together, preventing interaction with the site."
                     },
                     {
+                        "domain": "digid.nl",
+                        "reason": "https://github.com/duckduckgo/privacy-configuration/issues/602"
+                    },
+                    {
                         "domain": "cvs.com",
                         "reason": "Navigation section at the top of the main page renders as text."
                     },
@@ -227,7 +235,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "5356242530ab6725e911bec47a5e1bf2"
+            "hash": "2e98efc4d0a584d3d3d81eb4505f512b"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -235,12 +243,41 @@
             "hash": "728493ef7a1488e4781656d3f9db84aa"
         },
         "elementHiding": {
-            "exceptions": [],
+            "exceptions": [
+                {
+                    "domain": "politico.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
+                },
+                {
+                    "domain": "bild.de",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/589"
+                },
+                {
+                    "domain": "kbb.com",
+                    "reason": "Adblocker wall"
+                },
+                {
+                    "domain": "speedtest.net",
+                    "reason": "main content hidden"
+                },
+                {
+                    "domain": "tvlistings.zap2it.com",
+                    "reason": "main content hidden"
+                },
+                {
+                    "domain": "manhwascan.net",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
+                },
+                {
+                    "domain": "wiwo.de",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
+                }
+            ],
             "settings": {
                 "rules": [
                     {
                         "selector": "[id*='gpt-']",
-                        "type": "closest-empty"
+                        "type": "hide-empty"
                     },
                     {
                         "selector": "[class*='gpt-']",
@@ -248,7 +285,23 @@
                     },
                     {
                         "selector": "[class*='dfp-']",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": "[id*='dfp_']",
                         "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[id*='google_ads_iframe']",
+                        "type": "hide"
+                    },
+                    {
+                        "selector": "#google_ads",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": ".adsbygoogle",
+                        "type": "hide-empty"
                     },
                     {
                         "selector": "[id*='taboola-']",
@@ -263,19 +316,59 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": ".ad",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": "[class*='ad-content']",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".ad-leaderboard",
                         "type": "closest-empty"
                     },
                     {
+                        "selector": ".leaderboard",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "#leaderboard",
+                        "type": "closest-empty"
+                    },
+                    {
                         "selector": "[class*='bannerAd']",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": "#credential_picker_container",
+                        "type": "hide"
+                    },
+                    {
+                        "selector": "#credential_picker_iframe",
+                        "type": "hide"
+                    },
+                    {
+                        "selector": ".google-one-tap-modal-div",
+                        "type": "hide"
+                    },
+                    {
+                        "selector": ".google-one-tap",
+                        "type": "hide-empty"
+                    },
+                    {
+                        "selector": ".ad_container",
                         "type": "closest-empty"
                     },
                     {
                         "selector": ".ad-container",
-                        "type": "closest-empty"
+                        "type": "hide-empty"
                     },
                     {
                         "selector": ".adcontainer",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".advertisement",
                         "type": "closest-empty"
                     },
                     {
@@ -283,7 +376,19 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": ".ad-wrap",
+                        "type": "closest-empty"
+                    },
+                    {
                         "selector": ".ad-wrapper",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": ".ads-wrapper",
+                        "type": "closest-empty"
+                    },
+                    {
+                        "selector": "[class*='adWrapper']",
                         "type": "closest-empty"
                     },
                     {
@@ -303,25 +408,62 @@
                         "type": "closest-empty"
                     },
                     {
+                        "selector": "[data-ad]",
+                        "type": "hide-empty"
+                    },
+                    {
                         "selector": ".bordeaux-slot",
                         "type": "closest-empty"
                     }
                 ],
                 "adLabelStrings": [
                     "advertisement",
+                    "advertisment",
                     "advertisementclose",
+                    "advertisement\ncontinue reading the main story",
+                    "advertisement - scroll to continue",
                     "advertising",
+                    "advertising\nskip ad",
+                    "advertising\nskip ad\nskip ad\nskip ad",
                     "ad feedback",
+                    "anzeige",
                     "sponsored",
+                    "sponsorisé",
+                    "story continues below advertisement",
+                    "publicité",
+                    "publicidade",
                     "reklama",
+                    "skip ad",
                     "continue reading the main story"
                 ],
                 "domains": [
+                    {
+                        "domain": "abc.es",
+                        "rules": [
+                            {
+                                "selector": ".voc-advertising",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "apnews.com",
+                        "rules": [
+                            {
+                                "selector": ".proper-dynamic-insertion",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
                     {
                         "domain": "bbc.com",
                         "rules": [
                             {
                                 "selector": ".dotcom-ad",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".leaderboard-ad-placeholder",
                                 "type": "closest-empty"
                             }
                         ]
@@ -336,11 +478,86 @@
                         ]
                     },
                     {
+                        "domain": "bloomberg.com",
+                        "rules": [
+                            {
+                                "selector": ".unsupported-browser-notification-container",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "bostonglobe.com",
+                        "rules": [
+                            {
+                                "selector": ".arc_ad",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "cbc.ca",
+                        "rules": [
+                            {
+                                "selector": ".ad-risingstar-container",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".bigBoxContainer",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".stickyRailAd",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "cbssports.com",
+                        "rules": [
+                            {
+                                "selector": ".leaderboard-wrap",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".skybox-top-wrapper",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "coingecko.com",
+                        "rules": [
+                            {
+                                "selector": "[data-target='ads.banner']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "cyclingtips.com",
                         "rules": [
                             {
                                 "selector": "[data-block-name='ads']",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "ebay.com",
+                        "rules": [
+                            {
+                                "selector": "#g-yolo-overlay-holder",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "ebay-kleinanzeigen.de",
+                        "rules": [
+                            {
+                                "selector": "[data-liberty-position-name]",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -389,10 +606,63 @@
                         ]
                     },
                     {
+                        "domain": "foxnews.com",
+                        "rules": [
+                            {
+                                "selector": ".vendor-unit",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "huffpost.com",
+                        "rules": [
+                            {
+                                "selector": ".connatix-player",
+                                "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "indiatimes.com",
+                        "rules": [
+                            {
+                                "selector": ".ad-cls",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "indy100.com",
                         "rules": [
                             {
                                 "selector": "[id*='thirdparty']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "leboncoin.fr",
+                        "rules": [
+                            {
+                                "selector": "#lht-space-ad",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[class*='styles__ad']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "macrumors.com",
+                        "rules": [
+                            {
+                                "selector": ".tertiary",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "[class*='sidebarblock']",
                                 "type": "hide-empty"
                             }
                         ]
@@ -407,11 +677,51 @@
                         ]
                     },
                     {
+                        "domain": "nbcsports.com",
+                        "rules": [
+                            {
+                                "selector": ".block-mps",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": "#nbcsports-leaderboard",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "orange.fr",
+                        "rules": [
+                            {
+                                "selector": ".tag-rm",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "psypost.com",
+                        "rules": [
+                            {
+                                "selector": ".jeg_midbar",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "qz.com",
                         "rules": [
                             {
                                 "selector": "#marquee-ad",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "reuters.com",
+                        "rules": [
+                            {
+                                "selector": "[testid='ResponsiveAdSlot']",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -429,11 +739,38 @@
                         ]
                     },
                     {
+                        "domain": "skysports.com",
+                        "rules": [
+                            {
+                                "selector": "[data-format='leaderboard']",
+                                "type": "hide-empty"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "snopes.com",
                         "rules": [
                             {
                                 "selector": ".proper-dynamic-insertion",
                                 "type": "closest-empty"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "tripadvisor.com",
+                        "rules": [
+                            {
+                                "selector": "#tripGoogleOnetapContainer",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "uol.com.br",
+                        "rules": [
+                            {
+                                "selector": ".model-base-bnr",
+                                "type": "hide"
                             }
                         ]
                     },
@@ -447,6 +784,10 @@
                             {
                                 "selector": "#leaderboard-wrapper",
                                 "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".outbrain-wrapper",
+                                "type": "hide-empty"
                             }
                         ]
                     },
@@ -454,11 +795,7 @@
                         "domain": "wsj.com",
                         "rules": [
                             {
-                                "selector": "[class*='adWrapper']",
-                                "type": "closest-empty"
-                            },
-                            {
-                                "selector": "[id*='cx-']",
+                                "selector": "#cx-what-to-read-next",
                                 "type": "closest-empty"
                             }
                         ]
@@ -477,6 +814,14 @@
                         "rules": [
                             {
                                 "selector": "[class*='DFP-']",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": "[id*='banC']",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".indexPremium__adv",
                                 "type": "hide-empty"
                             }
                         ]
@@ -519,11 +864,53 @@
                                 "type": "closest-empty"
                             }
                         ]
+                    },
+                    {
+                        "domain": "first-party.site",
+                        "rules": [
+                            {
+                                "selector": ".hide-test",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".hide-empty-test",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".closest-empty-test",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".ad-container",
+                                "type": "override"
+                            }
+                        ]
+                    },
+                    {
+                        "domain": "privacy-test-pages.glitch.me",
+                        "rules": [
+                            {
+                                "selector": ".hide-test",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".hide-empty-test",
+                                "type": "hide-empty"
+                            },
+                            {
+                                "selector": ".closest-empty-test",
+                                "type": "closest-empty"
+                            },
+                            {
+                                "selector": ".ad-container",
+                                "type": "override"
+                            }
+                        ]
                     }
                 ]
             },
-            "state": "disabled",
-            "hash": "34eb0d2856d6d6c5146d2858ed249cef"
+            "state": "enabled",
+            "hash": "de63929cb4071637408a65f79ecce089"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -855,6 +1242,46 @@
                     "alicdn.com": {
                         "rules": [
                             {
+                                "rule": "aeis.alicdn.com/",
+                                "domains": [
+                                    "aliexpress.com",
+                                    "aliexpress.us"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
+                            },
+                            {
+                                "rule": "aeu.alicdn.com/",
+                                "domains": [
+                                    "aliexpress.com",
+                                    "aliexpress.us"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
+                            },
+                            {
+                                "rule": "assets.alicdn.com/",
+                                "domains": [
+                                    "aliexpress.com",
+                                    "aliexpress.us"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
+                            },
+                            {
+                                "rule": "is.alicdn.com/",
+                                "domains": [
+                                    "aliexpress.com",
+                                    "aliexpress.us"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
+                            },
+                            {
+                                "rule": "u.alicdn.com/",
+                                "domains": [
+                                    "aliexpress.com",
+                                    "aliexpress.us"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
+                            },
+                            {
                                 "rule": "alicdn.com",
                                 "domains": [
                                     "aliexpress.us"
@@ -1171,6 +1598,14 @@
                                     "<all>"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/356"
+                            },
+                            {
+                                "rule": "alicdn.com.edgekey.net/",
+                                "domains": [
+                                    "aliexpress.com",
+                                    "aliexpress.us"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/570"
                             }
                         ]
                     },
@@ -1222,6 +1657,16 @@
                                     "masslottery.com"
                                 ],
                                 "reason": "https://github.com/duckduckgo/privacy-configuration/issues/332"
+                            },
+                            {
+                                "rule": "ticketmaster4.map.fastly.net/eps-d",
+                                "domains": [
+                                    "ticketmaster.com",
+                                    "ticketmaster.ca",
+                                    "ticketmaster.com.au",
+                                    "ticketmaster.com.mx"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/575"
                             }
                         ]
                     },
@@ -1423,9 +1868,10 @@
                                 "rule": "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js",
                                 "domains": [
                                     "magicgameworld.com",
-                                    "youmath.it"
+                                    "youmath.it",
+                                    "duden.de"
                                 ],
-                                "reason": "Adwall displays with an overlay, preventing further interaction with the site."
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/388"
                             },
                             {
                                 "rule": "tpc.googlesyndication.com/pagead/js/loader21.html",
@@ -2934,6 +3380,74 @@
                             }
                         ]
                     },
+                    "aliexpress.com": {
+                        "rules": [
+                            {
+                                "rule": "login.aliexpress.com/",
+                                "domains": [
+                                    "aliexpress.com",
+                                    "aliexpress.us"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "ticketmaster.ca": {
+                        "rules": [
+                            {
+                                "rule": "epsf.ticketmaster.ca/eps-d",
+                                "domains": [
+                                    "ticketmaster.ca",
+                                    "ticketmaster.com",
+                                    "ticketmaster.com.au",
+                                    "ticketmaster.com.mx"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: ticketmaster4.map.fastly.net"
+                            }
+                        ]
+                    },
+                    "ticketmaster.com": {
+                        "rules": [
+                            {
+                                "rule": "epsf.ticketmaster.com/eps-d",
+                                "domains": [
+                                    "ticketmaster.ca",
+                                    "ticketmaster.com",
+                                    "ticketmaster.com.au",
+                                    "ticketmaster.com.mx"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: ticketmaster4.map.fastly.net"
+                            }
+                        ]
+                    },
+                    "ticketmaster.com.au": {
+                        "rules": [
+                            {
+                                "rule": "identity.ticketmaster.com.au/eps-d",
+                                "domains": [
+                                    "ticketmaster.ca",
+                                    "ticketmaster.com",
+                                    "ticketmaster.com.au",
+                                    "ticketmaster.com.mx"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: ticketmaster4.map.fastly.net"
+                            }
+                        ]
+                    },
+                    "ticketmaster.com.mx": {
+                        "rules": [
+                            {
+                                "rule": "identity.ticketmaster.com.mx/eps-d",
+                                "domains": [
+                                    "ticketmaster.ca",
+                                    "ticketmaster.com",
+                                    "ticketmaster.com.au",
+                                    "ticketmaster.com.mx"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: ticketmaster4.map.fastly.net"
+                            }
+                        ]
+                    },
                     "citi.com": {
                         "rules": [
                             {
@@ -3053,7 +3567,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "45d798a17eafc4a383cce1fbf17d3ee9"
+            "hash": "8728cb323505446d8c64c6b82d5eded4"
         },
         "trackingCookies1p": {
             "settings": {
@@ -3078,7 +3592,11 @@
             "exceptions": [],
             "settings": {
                 "parameters": [
-                    "utm_[a-zA-Z]*",
+                    "utm_source",
+                    "utm_medium",
+                    "utm_campaign",
+                    "utm_term",
+                    "utm_content",
                     "gclid",
                     "fbclid",
                     "fb_action_ids",
@@ -3102,7 +3620,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "69fbd3a82a04b8dfcf93498113009e23"
+            "hash": "4eb7caeea36d5a0d96fe06386d403d54"
         },
         "userAgentRotation": {
             "settings": {

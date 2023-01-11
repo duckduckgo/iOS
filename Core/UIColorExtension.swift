@@ -120,6 +120,10 @@ extension UIColor {
     public static var destructive: UIColor {
         return UIColor.systemRed
     }
+
+    public static var yellow60: UIColor {
+        return UIColor(hex: "F9BE1A")
+    }
     
 }
 

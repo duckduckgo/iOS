@@ -1,41 +1,53 @@
-/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "1oZ-re-yKW"; */
-"1oZ-re-yKW.title" = "Končano";
+/* Class = "UILabel"; text = "Label"; ObjectID = "7VM-DV-W3e"; */
+"7VM-DV-W3e.text" = "Oznaka";
 
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "Buv-ez-2Lr"; */
-"Buv-ez-2Lr.text" = "Zaznamki še niso dodani";
+/* Class = "UILabel"; text = "Label"; ObjectID = "061-pX-T9z"; */
+"061-pX-T9z.text" = "Oznaka";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cV4-pj-JNb"; */
+"cV4-pj-JNb.text" = "Oznaka";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "K2O-E5-pyF"; */
 "K2O-E5-pyF.text" = "Oznaka";
 
+/* Class = "UILabel"; text = "Add Folder"; ObjectID = "K8e-rz-6qx"; */
+"K8e-rz-6qx.text" = "Dodaj mapo";
+
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "KiU-Wb-7jj"; */
 "KiU-Wb-7jj.placeholder" = "Naslov";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
-"Lqe-Wh-Evj.text" = "Oznaka";
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "Ksa-Pd-Mv5"; */
+"Ksa-Pd-Mv5.title" = "Uredi";
 
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
-"N2X-jQ-cbU.text" = "Zaznamki še niso dodani";
+/* Class = "UILabel"; text = "Favorite"; ObjectID = "mRK-XI-Rr8"; */
+"mRK-XI-Rr8.text" = "Priljubljeni";
 
-/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "pwj-Ie-VbJ"; */
-"pwj-Ie-VbJ.title" = "Uredi";
+/* Class = "UISegmentedControl"; NJH-oV-DbS.segmentTitles[0] = "All Bookmarks"; ObjectID = "NJH-oV-DbS"; */
+"NJH-oV-DbS.segmentTitles[0]" = "Vsi zaznamki";
 
-/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "pyc-rk-XMJ"; */
-"pyc-rk-XMJ.normalTitle" = "Uvoz datoteke z zaznamki iz drugega brskalnika";
+/* Class = "UISegmentedControl"; NJH-oV-DbS.segmentTitles[1] = "Favorites"; ObjectID = "NJH-oV-DbS"; */
+"NJH-oV-DbS.segmentTitles[1]" = "Priljubljeni";
 
-/* Class = "UINavigationItem"; title = "Add Bookmark"; ObjectID = "qA0-bu-lRC"; */
-"qA0-bu-lRC.title" = "Dodaj zaznamek";
+/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "oMv-60-GGW"; */
+"oMv-60-GGW.title" = "Zaznamki";
 
 /* Class = "UINavigationItem"; title = "Add Folder"; ObjectID = "qaZ-4Z-o70"; */
 "qaZ-4Z-o70.title" = "Dodaj mapo";
 
+/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "R7T-q4-qHz"; */
+"R7T-q4-qHz.normalTitle" = "Uvoz datoteke z zaznamki iz drugega brskalnika";
+
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "rT4-Yr-P8D"; */
 "rT4-Yr-P8D.placeholder" = "Naslov";
 
-/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
-"tVt-jc-YaY.title" = "Zaznamki";
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "RuZ-zV-tu8"; */
+"RuZ-zV-tu8.title" = "Končano";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "vil-gw-sgh"; */
-"vil-gw-sgh.text" = "Oznaka";
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "SrQ-51-yie"; */
+"SrQ-51-yie.text" = "Zaznamki še niso dodani";
+
+/* Class = "UILabel"; text = "No favorites added yet"; ObjectID = "y8y-oO-xBm"; */
+"y8y-oO-xBm.text" = "Priljubljeni še niso dodani";
 
 /* Class = "UITextField"; placeholder = "URL"; ObjectID = "YqY-sP-hhb"; */
 "YqY-sP-hhb.placeholder" = "URL";

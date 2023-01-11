@@ -47,12 +47,21 @@ public struct BrokenSiteInfo {
     private let tdsETag: String?
     private let ampUrl: String?
     private let urlParametersRemoved: Bool
+    private let model: String
+    private let manufacturer: String
+    private let systemVersion: String
+    private let gpc: Bool
     
     public init(url: URL?, httpsUpgrade: Bool,
                 blockedTrackerDomains: [String], installedSurrogates: [String],
                 isDesktop: Bool, tdsETag: String?,
                 ampUrl: String?,
-                urlParametersRemoved: Bool) {
+                urlParametersRemoved: Bool,
+                model: String = UIDevice.current.model,
+                manufacturer: String = "Apple",
+                systemVersion: String = UIDevice.current.systemVersion,
+                gpc: Bool? = nil) {
+        
         self.url = url
         self.httpsUpgrade = httpsUpgrade
         self.blockedTrackerDomains = blockedTrackerDomains
@@ -61,6 +70,15 @@ public struct BrokenSiteInfo {
         self.tdsETag = tdsETag
         self.ampUrl = ampUrl
         self.urlParametersRemoved = urlParametersRemoved
+        self.model = model
+        self.manufacturer = manufacturer
+        self.systemVersion = systemVersion
+        
+        if let gpcParam = gpc {
+            self.gpc = gpcParam
+        } else {
+            self.gpc = AppDependencyProvider.shared.appSettings.sendDoNotSell
+        }
     }
     
     func send(with category: String) {
@@ -73,10 +91,10 @@ public struct BrokenSiteInfo {
                           Keys.blockedTrackers: blockedTrackerDomains.joined(separator: ","),
                           Keys.surrogates: installedSurrogates.joined(separator: ","),
                           Keys.atb: StatisticsUserDefaults().atb ?? "",
-                          Keys.os: UIDevice.current.systemVersion,
-                          Keys.manufacturer: "Apple",
-                          Keys.model: UIDevice.current.model,
-                          Keys.gpc: AppDependencyProvider.shared.appSettings.sendDoNotSell ? "true" : "false",
+                          Keys.os: systemVersion,
+                          Keys.manufacturer: manufacturer,
+                          Keys.model: model,
+                          Keys.gpc: gpc ? "true" : "false",
                           Keys.ampUrl: ampUrl ?? "",
                           Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"]
         

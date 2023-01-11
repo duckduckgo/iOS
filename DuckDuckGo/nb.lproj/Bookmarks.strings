@@ -1,41 +1,53 @@
-/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "1oZ-re-yKW"; */
-"1oZ-re-yKW.title" = "Ferdig";
+/* Class = "UILabel"; text = "Label"; ObjectID = "7VM-DV-W3e"; */
+"7VM-DV-W3e.text" = "Etikett";
 
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "Buv-ez-2Lr"; */
-"Buv-ez-2Lr.text" = "Ingen bokmerker lagt til ennå";
+/* Class = "UILabel"; text = "Label"; ObjectID = "061-pX-T9z"; */
+"061-pX-T9z.text" = "Etikett";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cV4-pj-JNb"; */
+"cV4-pj-JNb.text" = "Etikett";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "K2O-E5-pyF"; */
 "K2O-E5-pyF.text" = "Etikett";
 
+/* Class = "UILabel"; text = "Add Folder"; ObjectID = "K8e-rz-6qx"; */
+"K8e-rz-6qx.text" = "Legg til mappe";
+
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "KiU-Wb-7jj"; */
 "KiU-Wb-7jj.placeholder" = "Tittel";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "Lqe-Wh-Evj"; */
-"Lqe-Wh-Evj.text" = "Etikett";
+/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "Ksa-Pd-Mv5"; */
+"Ksa-Pd-Mv5.title" = "Rediger";
 
-/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "N2X-jQ-cbU"; */
-"N2X-jQ-cbU.text" = "Ingen bokmerker lagt til ennå";
+/* Class = "UILabel"; text = "Favorite"; ObjectID = "mRK-XI-Rr8"; */
+"mRK-XI-Rr8.text" = "Favoritt";
 
-/* Class = "UIBarButtonItem"; title = "Edit"; ObjectID = "pwj-Ie-VbJ"; */
-"pwj-Ie-VbJ.title" = "Rediger";
+/* Class = "UISegmentedControl"; NJH-oV-DbS.segmentTitles[0] = "All Bookmarks"; ObjectID = "NJH-oV-DbS"; */
+"NJH-oV-DbS.segmentTitles[0]" = "Alle bokmerker";
 
-/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "pyc-rk-XMJ"; */
-"pyc-rk-XMJ.normalTitle" = "Importer bokmerkefil fra en annen nettleser";
+/* Class = "UISegmentedControl"; NJH-oV-DbS.segmentTitles[1] = "Favorites"; ObjectID = "NJH-oV-DbS"; */
+"NJH-oV-DbS.segmentTitles[1]" = "Favoritter";
 
-/* Class = "UINavigationItem"; title = "Add Bookmark"; ObjectID = "qA0-bu-lRC"; */
-"qA0-bu-lRC.title" = "Legg til bokmerke";
+/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "oMv-60-GGW"; */
+"oMv-60-GGW.title" = "Bokmerker";
 
 /* Class = "UINavigationItem"; title = "Add Folder"; ObjectID = "qaZ-4Z-o70"; */
 "qaZ-4Z-o70.title" = "Legg til mappe";
 
+/* Class = "UIButton"; normalTitle = "Import bookmark file from another browser"; ObjectID = "R7T-q4-qHz"; */
+"R7T-q4-qHz.normalTitle" = "Importer bokmerkefil fra en annen nettleser";
+
 /* Class = "UITextField"; placeholder = "Title"; ObjectID = "rT4-Yr-P8D"; */
 "rT4-Yr-P8D.placeholder" = "Tittel";
 
-/* Class = "UINavigationItem"; title = "Bookmarks"; ObjectID = "tVt-jc-YaY"; */
-"tVt-jc-YaY.title" = "Bokmerker";
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "RuZ-zV-tu8"; */
+"RuZ-zV-tu8.title" = "Ferdig";
 
-/* Class = "UILabel"; text = "Label"; ObjectID = "vil-gw-sgh"; */
-"vil-gw-sgh.text" = "Etikett";
+/* Class = "UILabel"; text = "No bookmarks added yet"; ObjectID = "SrQ-51-yie"; */
+"SrQ-51-yie.text" = "Ingen bokmerker lagt til ennå";
+
+/* Class = "UILabel"; text = "No favorites added yet"; ObjectID = "y8y-oO-xBm"; */
+"y8y-oO-xBm.text" = "Ingen favoritter ennå";
 
 /* Class = "UITextField"; placeholder = "URL"; ObjectID = "YqY-sP-hhb"; */
 "YqY-sP-hhb.placeholder" = "URL";

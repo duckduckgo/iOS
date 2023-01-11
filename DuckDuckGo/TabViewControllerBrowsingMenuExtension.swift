@@ -20,7 +20,9 @@
 import UIKit
 import Core
 import BrowserServicesKit
+import Bookmarks
 import simd
+import WidgetKit
 
 // swiftlint:disable file_length
 extension TabViewController {
@@ -64,11 +66,10 @@ extension TabViewController {
     
     var favoriteEntryIndex: Int { 1 }
 
-    @MainActor
-    func buildBrowsingMenu() async -> [BrowsingMenuEntry] {
+    func buildBrowsingMenu(with bookmarksInterface: MenuBookmarksInteracting) -> [BrowsingMenuEntry] {
         var entries = [BrowsingMenuEntry]()
         
-        let linkEntries = await buildLinkEntries()
+        let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
             
         if let domain = self.privacyInfo?.domain {
@@ -107,20 +108,15 @@ extension TabViewController {
         return entries
     }
 
-    @MainActor
-    private func buildLinkEntries() async -> [BrowsingMenuEntry] {
+    private func buildLinkEntries(with bookmarksInterface: MenuBookmarksInteracting) -> [BrowsingMenuEntry] {
         guard let link = link, !isError else { return [] }
 
         var entries = [BrowsingMenuEntry]()
 
-        if let bookmarkEntry = await buildBookmarkEntry(for: link) {
-            entries.append(bookmarkEntry)
-        }
-            
-        if let favoriteEntry = await self.buildFavoriteEntry(for: link) {
-            assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
-            entries.append(favoriteEntry)
-        }
+        let bookmarkEntries = buildBookmarkEntries(for: link, with: bookmarksInterface)
+        entries.append(bookmarkEntries.bookmark)
+        assert(self.favoriteEntryIndex == entries.count, "Entry index should be in sync with entry placement")
+        entries.append(bookmarkEntries.favorite)
                 
         entries.append(BrowsingMenuEntry.regular(name: UserText.actionOpenBookmarks,
                                                  image: UIImage(named: "MenuBookmarks")!,
@@ -180,10 +176,27 @@ extension TabViewController {
             self?.requestFindInPage()
         })
     }
+    
+    private func buildBookmarkEntries(for link: Link,
+                                      with bookmarksInterface: MenuBookmarksInteracting) -> (bookmark: BrowsingMenuEntry,
+                                                                                             favorite:
+                                                                                                BrowsingMenuEntry) {
+        let existingFavorite = bookmarksInterface.favorite(for: link.url)
+        let existingBookmark = existingFavorite ?? bookmarksInterface.bookmark(for: link.url)
+        
+        return (bookmark: buildBookmarkEntry(for: link,
+                                             bookmark: existingBookmark,
+                                             with: bookmarksInterface),
+                favorite: buildFavoriteEntry(for: link,
+                                             bookmark: existingFavorite,
+                                             with: bookmarksInterface))
+    }
 
-    @MainActor
-    private func buildBookmarkEntry(for link: Link) async -> (BrowsingMenuEntry?) {
-        if await bookmarksManager.containsBookmark(url: link.url) {
+    private func buildBookmarkEntry(for link: Link,
+                                    bookmark: BookmarkEntity?,
+                                    with bookmarksInterface: MenuBookmarksInteracting) -> BrowsingMenuEntry {
+        
+        if bookmark != nil {
             return BrowsingMenuEntry.regular(name: UserText.actionEditBookmark,
                                              image: UIImage(named: "MenuBookmarkSolid")!,
                                              action: { [weak self] in
@@ -194,13 +207,16 @@ extension TabViewController {
         return BrowsingMenuEntry.regular(name: UserText.actionSaveBookmark,
                                          image: UIImage(named: "MenuBookmark")!,
                                          action: { [weak self] in
-                                           self?.performSaveBookmarkAction(for: link)
+                                           self?.performSaveBookmarkAction(for: link,
+                                                                           with: bookmarksInterface)
                                          })
     }
 
-    private func performSaveBookmarkAction(for link: Link) {
+    private func performSaveBookmarkAction(for link: Link,
+                                           with bookmarksInterface: MenuBookmarksInteracting) {
         Pixel.fire(pixel: .browsingMenuAddToBookmarks)
-        bookmarksManager.saveNewBookmark(withTitle: link.title ?? "", url: link.url, parentID: nil)
+        bookmarksInterface.createBookmark(title: link.title ?? "", url: link.url)
+        favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
 
         ActionMessageView.present(message: UserText.webSaveBookmarkDone,
                                   actionTitle: UserText.actionGenericEdit, onAction: {
@@ -214,12 +230,13 @@ extension TabViewController {
         delegate?.tabDidRequestEditBookmark(tab: self)
     }
 
-    @MainActor
-    private func buildFavoriteEntry(for link: Link) async -> BrowsingMenuEntry? {
-        if await bookmarksManager.containsFavorite(url: link.url) {
+    private func buildFavoriteEntry(for link: Link,
+                                    bookmark: BookmarkEntity?,
+                                    with bookmarksInterface: MenuBookmarksInteracting) -> BrowsingMenuEntry {
+        if bookmark?.isFavorite ?? false {
             let action: () -> Void = { [weak self] in
                 Pixel.fire(pixel: .browsingMenuRemoveFromFavorites)
-                self?.performRemoveFavoriteAction(for: link)
+                self?.performRemoveFavoriteAction(for: link, with: bookmarksInterface)
             }
 
             let entry = BrowsingMenuEntry.regular(name: UserText.actionRemoveFavorite,
@@ -236,37 +253,30 @@ extension TabViewController {
                                               image: UIImage(named: "MenuFavorite")!,
                                               action: { [weak self] in
             Pixel.fire(pixel: addToFavoriteFlow ? .browsingMenuAddToFavoritesAddFavoriteFlow : .browsingMenuAddToFavorites)
-            self?.performSaveFavoriteAction(for: link)
+            self?.performAddFavoriteAction(for: link, with: bookmarksInterface)
         })
         return entry
     }
     
-    private func performSaveFavoriteAction(for link: Link) {
-        bookmarksManager.saveNewFavorite(withTitle: link.title ?? "", url: link.url) { _, _ in
-            DispatchQueue.main.async {
-                ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo, onAction: {
-                    self.performRemoveFavoriteAction(for: link)
-                })
-            }
-        }
+    private func performAddFavoriteAction(for link: Link,
+                                          with bookmarksInterface: MenuBookmarksInteracting) {
+        bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
+        favicons.loadFavicon(forDomain: link.url.host, intoCache: .bookmarks, fromCache: .tabs)
+        WidgetCenter.shared.reloadAllTimelines()
+        
+        ActionMessageView.present(message: UserText.webSaveFavoriteDone, actionTitle: UserText.actionGenericUndo, onAction: {
+            self.performRemoveFavoriteAction(for: link, with: bookmarksInterface)
+        })
     }
     
-    private func performRemoveFavoriteAction(for link: Link) {
-        let bookmarksManager = BookmarksManager()
-        bookmarksManager.favorite(forURL: link.url) { bookmark in
-            guard let bookmark = bookmark else {
-                return
-            }
-            
-            bookmarksManager.delete(bookmark) { _, _ in
-
-                DispatchQueue.main.async {
-                    ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo, onAction: {
-                        self.performSaveFavoriteAction(for: link)
-                    })
-                }
-            }
-        }
+    private func performRemoveFavoriteAction(for link: Link,
+                                             with bookmarksInterface: MenuBookmarksInteracting) {
+        bookmarksInterface.createOrToggleFavorite(title: link.title ?? "", url: link.url)
+        WidgetCenter.shared.reloadAllTimelines()
+        
+        ActionMessageView.present(message: UserText.webFavoriteRemoved, actionTitle: UserText.actionGenericUndo, onAction: {
+            self.performAddFavoriteAction(for: link, with: bookmarksInterface)
+        })
     }
     
     private func buildUseNewDuckAddressEntry(forLink link: Link) -> BrowsingMenuEntry? {

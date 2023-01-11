@@ -59,10 +59,13 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     let authenticator = AutofillLoginListAuthenticator()
     var isSearching: Bool = false
+    var authenticationNotRequired = false
     private var accounts = [SecureVaultModels.WebsiteAccount]()
+    private var accountsToSuggest = [SecureVaultModels.WebsiteAccount]()
     private var cancellables: Set<AnyCancellable> = []
     private var appSettings: AppSettings
     private let tld: TLD
+    private var currentTabUrl: URL?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
@@ -84,10 +87,12 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings, tld: TLD) {
+    init(appSettings: AppSettings, tld: TLD, currentTabUrl: URL? = nil) {
         self.appSettings = appSettings
         self.tld = tld
+        self.currentTabUrl = currentTabUrl
         updateData()
+        authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isValidSession
         setupCancellables()
     }
     
@@ -119,11 +124,18 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     func lockUI() {
+        authenticationNotRequired = !hasAccountsSaved
         authenticator.logOut()
     }
     
     func authenticate(completion: @escaping(AutofillLoginListAuthenticator.AuthError?) -> Void) {
-        if viewState != .authLocked && viewState != .noAuthAvailable {
+        if !authenticator.canAuthenticate() {
+            viewState = .noAuthAvailable
+            completion(nil)
+            return
+        }
+
+        if viewState != .authLocked {
             completion(nil)
             return
         }
@@ -146,6 +158,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     
     func updateData() {
         self.accounts = fetchAccounts()
+        self.accountsToSuggest = fetchSuggestedAccounts()
         self.sections = makeSections(with: accounts)
     }
     
@@ -181,7 +194,23 @@ final class AutofillLoginListViewModel: ObservableObject {
             return []
         }
     }
-    
+
+    private func fetchSuggestedAccounts() -> [SecureVaultModels.WebsiteAccount] {
+        guard let url = currentTabUrl,
+              let host = url.host,
+              let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
+            os_log("Failed to make vault")
+            return []
+        }
+
+        do {
+            return try secureVault.accountsFor(domain: host)
+        } catch {
+            os_log("Failed to fetch suggested accounts")
+            return []
+        }
+    }
+
     private func makeSections(with accounts: [SecureVaultModels.WebsiteAccount]) -> [AutofillLoginListSectionType] {
         var newSections = [AutofillLoginListSectionType]()
 
@@ -189,6 +218,11 @@ final class AutofillLoginListViewModel: ObservableObject {
             newSections.append(.enableAutofill)
         }
 
+        if !accountsToSuggest.isEmpty {
+            let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0, tld: tld) }
+            newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
+        }
+        
         let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
         let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
         
@@ -208,7 +242,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private func updateViewState() {
         var newViewState: AutofillLoginListViewModel.ViewState
         
-        if authenticator.state == .loggedOut {
+        if authenticator.state == .loggedOut && !authenticationNotRequired {
             newViewState = .authLocked
         } else if authenticator.state == .notAvailable {
             newViewState = .noAuthAvailable

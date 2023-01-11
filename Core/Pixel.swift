@@ -22,7 +22,6 @@ import os.log
 import BrowserServicesKit
 
 // swiftlint:enable type_body_length
-// swiftlint:enable identifier_name
 
 public struct PixelParameters {
     public static let url = "url"
@@ -44,6 +43,11 @@ public struct PixelParameters {
     static let errorCount = "c"
     static let underlyingErrorCode = "ue"
     static let underlyingErrorDomain = "ud"
+    
+    static let coreDataErrorCode = "coreDataCode"
+    static let coreDataErrorDomain = "coreDataDomain"
+    static let coreDataErrorEntity = "coreDataEntity"
+    static let coreDataErrorAttribute = "coreDataAttribute"
 
     public static let tabCount = "tc"
 
@@ -87,6 +91,7 @@ public struct PixelParameters {
     public static let canAutoPreviewMIMEType = "can_auto_preview_mime_type"
     public static let mimeType = "mime_type"
     public static let fileSizeGreaterThan10MB = "file_size_greater_than_10mb"
+    public static let downloadListCount = "download_list_count"
     
     public static let bookmarkCount = "bco"
     

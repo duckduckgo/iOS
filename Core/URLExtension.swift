@@ -38,14 +38,6 @@ extension URL {
         return scheme != nil && !absoluteString.hasPrefix(URLProtocol.http.scheme) && !absoluteString.hasPrefix(URLProtocol.https.scheme)
     }
 
-    public func isBookmarklet() -> Bool {
-        return absoluteString.isBookmarklet()
-    }
-
-    public func toDecodedBookmarklet() -> String? {
-        return absoluteString.toDecodedBookmarklet()
-    }
-    
     // MARK: static
 
     public static func webUrl(from text: String) -> URL? {
@@ -89,11 +81,6 @@ extension URL {
             return exception.description.contains("ReferenceError")
         }
         return true
-    }
-    
-    public func isPart(ofDomain domain: String) -> Bool {
-        guard let host = host else { return false }
-        return host == domain || host.hasSuffix(".\(domain)")
     }
 
     public func normalized() -> URL? {

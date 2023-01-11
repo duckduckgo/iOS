@@ -44,7 +44,8 @@ extension UIHostingController {
                 let safeAreaInsets: @convention(block) (AnyObject) -> UIEdgeInsets = { _ in
                     return .zero
                 }
-                class_addMethod(viewSubclass, #selector(getter: UIView.safeAreaInsets), imp_implementationWithBlock(safeAreaInsets), method_getTypeEncoding(method))
+                class_addMethod(viewSubclass,
+                                #selector(getter: UIView.safeAreaInsets), imp_implementationWithBlock(safeAreaInsets), method_getTypeEncoding(method))
             }
             
             objc_registerClassPair(viewSubclass)

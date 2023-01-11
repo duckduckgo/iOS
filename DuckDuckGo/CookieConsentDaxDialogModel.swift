@@ -37,7 +37,7 @@ final class CookieConsentDaxDialogModel: CustomDaxDialogModel {
                                             .borderless(label: UserText.daxDialogCookieConsentRejectButton, action: self.noAction)]
     
     private var cookieBannerAnimationName: String {
-        var useLightStyle = ThemeManager.shared.currentTheme.currentImageSet == .light
+        let useLightStyle = ThemeManager.shared.currentTheme.currentImageSet == .light
         return useLightStyle ? "cookie-banner-illustration-animated" : "cookie-banner-illustration-animated-dark"
     }
 }

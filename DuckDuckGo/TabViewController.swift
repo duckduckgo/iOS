@@ -2076,24 +2076,16 @@ extension TabViewController: AutoconsentUserScriptDelegate {
     }
     
     func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
-        // TODO: This should be handled via new Dax dialog for cookies
+        // TODO: Check if no Dax dialog is displayed
         
-        //        let alert = UIAlertController(title: "Looks like this site has a cookie consent pop-up👇",
-        //                                      message: "Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.",
-        //                                      preferredStyle: .alert)
-        //        alert.overrideUserInterfaceStyle()
-        //
-        //        alert.addAction(UIAlertAction(title: "Manage Cookie Pop-ups", style: .default, handler: { _ in
-        //            completion(true)
-        //        }))
-        //        alert.addAction(UIAlertAction(title: "No Thanks", style: .cancel, handler: { _ in
-        //            completion(false)
-        //        }))
-        //        delegate?.tab(self, didRequestPresentingAlert: alert)
+        let model = CookieConsentDaxDialogModel(okAction: {
+            completion(true)
+            self.dismiss(animated: true)
+        }, noAction: {
+            completion(false)
+            self.dismiss(animated: false)
+        })
         
-        
-        
-        let model = CookieConsentDaxDialogModel(okAction: okActionForDialog, noAction: noAction)
         showCustomDaxDialog(model: model)
     }
     
@@ -2104,15 +2096,6 @@ extension TabViewController: AutoconsentUserScriptDelegate {
         daxDialog.view.backgroundColor = .clear
 
         present(daxDialog, animated: true)
-    }
-    
-    private func okActionForDialog() {
-        Swift.print("ok")
-    }
-    
-    private func noAction() {
-        Swift.print("no")
-        self.dismiss(animated: true)
     }
 }
 

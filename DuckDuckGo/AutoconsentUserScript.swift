@@ -220,7 +220,7 @@ extension AutoconsentUserScript {
             return
         }
 
-        if preferences.autoconsentEnabled == false {
+        if preferences.autoconsentPromptShown == true && preferences.autoconsentEnabled == false {
             // this will only happen if the user has just declined a prompt in this tab
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return
@@ -244,6 +244,8 @@ extension AutoconsentUserScript {
         }
         let remoteConfig = self.config.settings(for: .autoconsent)
         let disabledCMPs = remoteConfig["disabledCMPs"] as? [String] ?? []
+        
+        let cookiePromptShown = preferences.autoconsentPromptShown
 
         replyHandler([
             "type": "initResp",
@@ -251,10 +253,10 @@ extension AutoconsentUserScript {
             "config": [
                 "enabled": true,
                 // if it's the first time, disable autoAction
-                "autoAction": preferences.autoconsentEnabled == true ? "optOut" : nil,
+                "autoAction": cookiePromptShown ? "optOut" : nil,
                 "disabledCmps": disabledCMPs,
                 // the very first time (autoconsentEnabled = nil), make sure the popup is visible
-                "enablePrehide": preferences.autoconsentEnabled ?? false,
+                "enablePrehide": cookiePromptShown,
                 "detectRetries": 20
             ]
         ], nil)
@@ -300,7 +302,7 @@ extension AutoconsentUserScript {
     
     @MainActor
     func handlePopupFound(message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
-        guard preferences.autoconsentEnabled == nil else {
+        guard preferences.autoconsentPromptShown == false else {
 //             if feature is already enabled, opt-out will happen automatically
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return
@@ -412,17 +414,17 @@ extension AutoconsentUserScript {
 // TODO: obsolete window: NSWindow parameter
 //    func ensurePrompt(window: NSWindow, callback: @escaping (Bool) -> Void) {
         let now = Date.init()
-        guard management.promptLastShown == nil || now > management.promptLastShown!.addingTimeInterval(30) else {
+        guard management.promptLastShown == nil || now > management.promptLastShown!.addingTimeInterval(1) else {
             // user said "not now" recently, don't bother asking
             os_log("Have a recent user response, canceling prompt", log: .autoconsentLog, type: .debug)
-            callback(preferences.autoconsentEnabled ?? false) // if two prompts were scheduled from the same tab, result could be true
+            callback(preferences.autoconsentEnabled) // if two prompts were scheduled from the same tab, result could be true
             return
         }
 
         management.promptLastShown = now
         self.delegate?.autoconsentUserScript(self, didRequestAskingUserForConsent: { result in
-            // TODO: Uncomment when autoconsentEnabled storing is fixed
             self.preferences.autoconsentEnabled = result
+            self.preferences.autoconsentPromptShown = true
             callback(result)
         })
     }

@@ -1777,6 +1777,8 @@ extension MainViewController: AutoClearWorker {
         WebCacheManager.shared.clear(tabCountInfo: tabCountInfo) {
             pixel.fire(withAdditionalParameters: [PixelParameters.tabCount: "\(self.tabManager.count)"])
         }
+        
+        AutoconsentManagement.shared.clearCache()
     }
     
     func stopAllOngoingDownloads() {

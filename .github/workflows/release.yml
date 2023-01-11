@@ -22,6 +22,11 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Decrypt the fonts
+        env:
+          FONTS_ENCRYPTION_KEY: ${{ secrets.FONTS_ENCRYPTION_KEY }}
+        run: ./decrypt_fonts.sh
+
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_14.1.app/Contents/Developer
 

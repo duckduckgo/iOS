@@ -21,7 +21,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Register SSH keys for submodules access
+      - name: Register SSH keys for access to certificates
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}

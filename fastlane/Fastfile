@@ -1,5 +1,9 @@
 default_platform :ios
 
+before_all do
+  setup_ci if is_ci
+end
+
 #################################################
 # Public lanes
 #################################################

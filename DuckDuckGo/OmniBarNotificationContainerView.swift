@@ -91,5 +91,4 @@ final class OmniBarNotificationContainerView: UIView {
         
         return OmniBarNotificationModel(text: notificationText, animationName: notificationAnimationName)
     }
-    
 }

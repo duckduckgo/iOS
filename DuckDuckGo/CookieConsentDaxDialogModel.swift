@@ -29,11 +29,15 @@ final class CookieConsentDaxDialogModel: CustomDaxDialogModel {
         self.noAction = noAction
     }
 
-    #warning("use light/dark variants for animation")
     lazy var content: [DialogContentItem] = [.text(text: UserText.daxDialogCookieConsentFirst),
-                                             .animation(name: "cookie-banner-illustration-animated", delay: 0.35),
+                                             .animation(name: cookieBannerAnimationName, delay: 0.35),
                                              .text(text: UserText.daxDialogCookieConsentSecond)]
     
     lazy var buttons: [DialogButtonItem] = [.bordered(label: UserText.daxDialogCookieConsentAcceptButton, action: self.okAction),
                                             .borderless(label: UserText.daxDialogCookieConsentRejectButton, action: self.noAction)]
+    
+    private var cookieBannerAnimationName: String {
+        var useLightStyle = ThemeManager.shared.currentTheme.currentImageSet == .light
+        return useLightStyle ? "cookie-banner-illustration-animated" : "cookie-banner-illustration-animated-dark"
+    }
 }

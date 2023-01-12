@@ -38,9 +38,6 @@ public struct BrokenSiteInfo {
         static let gpc = "gpc"
         static let ampUrl = "ampUrl"
         static let urlParametersRemoved = "urlParametersRemoved"
-        static let consentManaged = "consentManaged"
-        static let consentOptoutFailed = "consentOptoutFailed"
-        static let consentSelftestFailed = "consentSelftestFailed"
     }
     
     private let url: URL?
@@ -56,10 +53,6 @@ public struct BrokenSiteInfo {
     private let systemVersion: String
     private let gpc: Bool
     
-    private let consentManaged: Bool?
-    private let consentOptoutFailed: Bool?
-    private let consentSelftestFailed: Bool?
-    
     public init(url: URL?, httpsUpgrade: Bool,
                 blockedTrackerDomains: [String], installedSurrogates: [String],
                 isDesktop: Bool, tdsETag: String?,
@@ -68,8 +61,7 @@ public struct BrokenSiteInfo {
                 model: String = UIDevice.current.model,
                 manufacturer: String = "Apple",
                 systemVersion: String = UIDevice.current.systemVersion,
-                gpc: Bool? = nil,
-                cookieConsentInfo: CookieConsentInfo?) {
+                gpc: Bool? = nil) {
         self.url = url
         self.httpsUpgrade = httpsUpgrade
         self.blockedTrackerDomains = blockedTrackerDomains
@@ -88,15 +80,11 @@ public struct BrokenSiteInfo {
         } else {
             self.gpc = AppDependencyProvider.shared.appSettings.sendDoNotSell
         }
-        
-        self.consentManaged = cookieConsentInfo?.consentManaged
-        self.consentOptoutFailed = cookieConsentInfo?.optoutFailed
-        self.consentSelftestFailed = cookieConsentInfo?.selftestFailed
     }
     
     func send(with category: String) {
         
-        var parameters = [Keys.url: normalize(url),
+        let parameters = [Keys.url: normalize(url),
                           Keys.category: category,
                           Keys.upgradedHttps: httpsUpgrade ? "true" : "false",
                           Keys.siteType: isDesktop ? "desktop" : "mobile",
@@ -110,8 +98,6 @@ public struct BrokenSiteInfo {
                           Keys.gpc: gpc ? "true" : "false",
                           Keys.ampUrl: ampUrl ?? "",
                           Keys.urlParametersRemoved: urlParametersRemoved ? "true" : "false"]
-
-        parameters.merge(makeCookieConsentParameters(), uniquingKeysWith: { (_, new) in new })
         
         Pixel.fire(pixel: .brokenSiteReport, withAdditionalParameters: parameters)
     }
@@ -120,20 +106,4 @@ public struct BrokenSiteInfo {
         return url?.normalized()?.absoluteString ?? ""
     }
 
-    private func makeCookieConsentParameters() -> [String: String] {
-        var cookieConsentParameters: [String: String] = [:]
-        
-        if let consentManaged = consentManaged {
-            cookieConsentParameters[Keys.consentManaged] = consentManaged ? "true" : "false"
-            
-            if let consentOptoutFailed = consentOptoutFailed {
-                cookieConsentParameters[Keys.consentOptoutFailed] = consentOptoutFailed ? "true" : "false"
-            }
-            if let consentSelftestFailed = consentSelftestFailed {
-                cookieConsentParameters[Keys.consentSelftestFailed] = consentSelftestFailed ? "true" : "false"
-            }
-        }
-        
-        return cookieConsentParameters
-    }
 }

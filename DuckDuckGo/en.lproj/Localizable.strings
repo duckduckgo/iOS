@@ -166,6 +166,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Enabled";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
 

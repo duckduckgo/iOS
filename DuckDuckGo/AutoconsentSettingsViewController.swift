@@ -24,18 +24,21 @@ class AutoconsentSettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     
     @IBOutlet weak var autoconsentToggle: UISwitch!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var infoTextView: UITextView!
+    @IBOutlet weak var infoText: UILabel!
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyTheme(ThemeManager.shared.currentTheme)
         
         autoconsentToggle.isOn = appSettings.autoconsentEnabled
-        infoTextView.backgroundColor = .clear
         
-        applyTheme(ThemeManager.shared.currentTheme)
+        let fontSize = SettingsViewController.fontSizeForHeaderView
+        let text = NSAttributedString(string: infoText.text ?? "", attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
+        ])
+        infoText.attributedText = text
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,49 +73,15 @@ class AutoconsentSettingsViewController: UITableViewController {
 
 extension AutoconsentSettingsViewController: Themable {
     
-    /// Apply attributes for NSAtrtributedStrings for copy text
-    func applyAttributes(theme: Theme) {
-#warning("style the settings sub-screen header according to designs")
-//        let fontSize = SettingsViewController.fontSizeForHeaderView
-//        let paragraphStyle = NSMutableParagraphStyle()
-//        paragraphStyle.lineHeightMultiple = 1.16
-//        let tempStr = NSMutableAttributedString(string: UserText.doNotSellInfoText + " ",
-//                                                attributes: [
-//                                                    NSAttributedString.Key.kern: -0.08,
-//                                                    NSAttributedString.Key.paragraphStyle: paragraphStyle,
-//                                                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize),
-//                                                    NSAttributedString.Key.foregroundColor: theme.tableHeaderTextColor
-//                                                ])
-//        tempStr.append(NSAttributedString(string: UserText.doNotSellLearnMore,
-//                                          attributes: [
-//                                            NSAttributedString.Key.link: "ddgQuickLink://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/",
-//                                            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
-//                                          ]))
-//        let linkAttributes: [NSAttributedString.Key: Any] = [
-//            NSAttributedString.Key.kern: -0.08,
-//            NSAttributedString.Key.paragraphStyle: paragraphStyle,
-//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize),
-//            NSAttributedString.Key.foregroundColor: theme.searchBarTextColor,
-//            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue
-//        ]
-//
-//        infoTextView.attributedText = tempStr
-//        infoTextView.linkTextAttributes = linkAttributes
-    }
-    
     func decorate(with theme: Theme) {
+        
+        infoText.textColor = theme.tableHeaderTextColor
         
         for label in labels {
             label.textColor = theme.tableCellTextColor
         }
-        
-        infoTextView.textColor = theme.tableHeaderTextColor
-        applyAttributes(theme: theme)
-
         autoconsentToggle.onTintColor = theme.buttonTintColor
         
-        headerView.backgroundColor = theme.backgroundColor
-
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
         

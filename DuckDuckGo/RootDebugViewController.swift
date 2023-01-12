@@ -39,6 +39,7 @@ class RootDebugViewController: UITableViewController {
         if tableView.cellForRow(at: indexPath)?.tag == 665 {
             AppUserDefaults().autoconsentPromptSeen = false
             AppUserDefaults().autoconsentEnabled = false
+            tableView.deselectRow(at: indexPath, animated: true)
         }
         
         if tableView.cellForRow(at: indexPath)?.tag == 666 {

@@ -21,6 +21,7 @@ jobs:
     steps:
 
     - name: Assert release branch
+      if: github.event.inputs.destination == 'appstore'
       run: |
         case "${{ github.ref }}" in
           *release/*) ;;

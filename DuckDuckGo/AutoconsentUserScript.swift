@@ -226,12 +226,11 @@ extension AutoconsentUserScript {
             return
         }
 
-// TODO: Commented to disable feature check for all URLs
-//        guard config.isFeature(.autoconsent, enabledForDomain: url.host) else {
-//            os_log("disabled for site: %s", log: .autoconsentLog, type: .info, String(describing: url.absoluteString))
-//            replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
-//            return
-//        }
+        guard config.isFeature(.autoconsent, enabledForDomain: url.host) else {
+            os_log("disabled for site: %s", log: .autoconsentLog, type: .info, String(describing: url.absoluteString))
+            replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
+            return
+        }
 
         if message.frameInfo.isMainFrame {
             topUrl = url

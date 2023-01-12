@@ -51,6 +51,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var textSizeAccessoryText: UILabel!
     @IBOutlet weak var widgetEducationCell: UITableViewCell!
     @IBOutlet weak var autofillCell: UITableViewCell!
+    @IBOutlet weak var syncCell: UITableViewCell!
     @IBOutlet weak var debugCell: UITableViewCell!
     @IBOutlet weak var voiceSearchCell: UITableViewCell!
     @IBOutlet weak var voiceSearchToggle: UISwitch!
@@ -80,7 +81,7 @@ class SettingsViewController: UITableViewController {
     private lazy var shouldShowAutofillCell: Bool = {
         return featureFlagger.isFeatureOn(.autofill)
     }()
-    
+
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
@@ -218,7 +219,11 @@ class SettingsViewController: UITableViewController {
     private func configureDebugCell() {
         debugCell.isHidden = !shouldShowDebugCell
     }
-    
+
+    private func showSyncManagement(animated: Bool = true) {
+        navigationController?.pushViewController(SyncManagementViewController(), animated: animated)
+    }
+
     private func showAutofill(animated: Bool = true) {
         let autofillController = AutofillLoginSettingsListViewController(appSettings: appSettings)
         autofillController.delegate = self
@@ -269,7 +274,10 @@ class SettingsViewController: UITableViewController {
 
         case autofillCell:
             showAutofill()
-            
+
+        case syncCell:
+            showSyncManagement()
+
         default: break
         }
         
@@ -403,7 +411,16 @@ extension SettingsViewController: Themable {
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
-        
+
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.shadowColor = .clear
+            appearance.backgroundColor = theme.backgroundColor
+
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
+
         UIView.transition(with: view,
                           duration: 0.2,
                           options: .transitionCrossDissolve, animations: {

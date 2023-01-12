@@ -56,3 +56,19 @@ jobs:
         APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       run: bundle exec fastlane release_${{ github.event.inputs.destination }}
+
+    - name: Send Mattermost message
+      env:
+        WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        DESTINATION: ${{ github.event.inputs.destination }}
+      run: |
+        export MM_USER_HANDLE=$(base64 -d <<< ${{ secrets.MM_HANDLES_BASE64 }} | jq ".${{ github.actor }}" | tr -d '"')
+
+        if [[ -z "${MM_USER_HANDLE}" ]]; then
+            echo "Mattermost user handle not known for ${{ github.actor }}, skipping sending message"
+        else
+
+            curl -s -H 'Content-type: application/json' \
+                -d "$(envsubst < ./scripts/assets/appstore-release-mm-template.json)" \
+                ${{ secrets.MM_WEBHOOK_URL }}
+        fi  

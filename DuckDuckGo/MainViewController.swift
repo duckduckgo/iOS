@@ -858,7 +858,7 @@ class MainViewController: UIViewController {
         suggestionTrayController?.didHide()
     }
     
-    func launchReportBrokenSite() {
+    fileprivate func launchReportBrokenSite() {
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
     
@@ -888,6 +888,16 @@ class MainViewController: UIViewController {
     
     fileprivate func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
+    }
+    
+    func launchCookiePopupManagementSettings() {
+        if let navController = SettingsViewController.loadFromStoryboard() as? UINavigationController,
+           let settingsController = navController.topViewController as? SettingsViewController {
+            settingsController.loadViewIfNeeded()
+            
+            settingsController.showCookiePopupManagement(animated: false)
+            self.present(navController, animated: true)
+        }
     }
 
     fileprivate func launchInstructions() {

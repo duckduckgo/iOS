@@ -142,6 +142,14 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
         Pixel.fire(pixel: .privacyDashboardReportBrokenSite)
         performSegue(withIdentifier: "ReportBrokenSite", sender: self)
     }
+    
+    func privacyDashboardController(_ privacyDashboardController: PrivacyDashboard.PrivacyDashboardController, didRequestOpenSettings target: String) {
+        guard let mainViewController = presentingViewController as? MainViewController else { return }
+        
+        dismiss(animated: true) {
+            mainViewController.launchCookiePopupManagementSettings()
+        }
+    }
 }
 
 extension PrivacyDashboardViewController: UIPopoverPresentationControllerDelegate { }

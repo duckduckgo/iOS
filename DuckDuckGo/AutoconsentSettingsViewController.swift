@@ -28,6 +28,10 @@ class AutoconsentSettingsViewController: UITableViewController {
     
     private lazy var appSettings = AppDependencyProvider.shared.appSettings
         
+    static func loadFromStoryboard() -> UIViewController {
+        return UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "AutoconsentSettingsViewController")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         applyTheme(ThemeManager.shared.currentTheme)

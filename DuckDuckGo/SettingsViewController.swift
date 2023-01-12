@@ -122,7 +122,7 @@ class SettingsViewController: UITableViewController {
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is DoNotSellSettingsViewController {
             Pixel.fire(pixel: .settingsDoNotSellShown)
@@ -139,7 +139,7 @@ class SettingsViewController: UITableViewController {
             }
         }
     }
-
+    
     private func configureAutofillCell() {
         autofillCell.isHidden = !shouldShowAutofillCell
     }
@@ -255,7 +255,11 @@ class SettingsViewController: UITableViewController {
     private func showDesktopBrowserWaitlistViewController() {
         navigationController?.pushViewController(MacWaitlistViewController(nibName: nil, bundle: nil), animated: true)
     }
-
+    
+    func showCookiePopupManagement(animated: Bool = true) {
+        navigationController?.pushViewController(AutoconsentSettingsViewController.loadFromStoryboard(), animated: animated)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 

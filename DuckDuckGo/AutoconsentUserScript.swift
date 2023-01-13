@@ -300,7 +300,7 @@ extension AutoconsentUserScript {
     @MainActor
     func handlePopupFound(message: WKScriptMessage, replyHandler: @escaping (Any?, String?) -> Void) {
         guard preferences.autoconsentPromptSeen == false else {
-//             if feature is already enabled, opt-out will happen automatically
+            // if feature is already enabled, opt-out will happen automatically
             replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
             return
         }

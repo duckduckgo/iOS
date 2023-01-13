@@ -19,7 +19,6 @@
 
 import Foundation
 import Core
-import PrivacyDashboard
 
 public struct BrokenSiteInfo {
     

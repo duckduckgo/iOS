@@ -1,0 +1,75 @@
+name: Make App Store Connect Release
+
+on: 
+  workflow_dispatch:
+    inputs:
+      destination:
+        description: "Upload destination (App Store or TestFlight)"
+        required: true
+        default: appstore
+        type: choice
+        options:
+        - appstore
+        - testflight
+
+jobs:
+  make-release:
+
+    runs-on: macos-12
+    name: Make App Store Connect Release
+
+    steps:
+
+    - name: Assert release branch
+      if: github.event.inputs.destination == 'appstore'
+      run: |
+        case "${{ github.ref }}" in
+          *release/*) ;;
+          *hotfix/*) ;;
+          *) echo "👎 Not a release or hotfix branch"; exit 1 ;;
+        esac
+
+    - name: Register SSH keys for access to certificates
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_FASTLANE_MATCH }}
+
+    - name: Check out the code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Decrypt the fonts
+      env:
+        FONTS_ENCRYPTION_KEY: ${{ secrets.FONTS_ENCRYPTION_KEY }}
+      run: ./decrypt_fonts.sh
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_14.1.app/Contents/Developer
+
+    - name: Prepare fastlane
+      run: bundle install
+
+    - name: Archive and upload the app
+      env:
+        APPLE_API_KEY_BASE64: ${{ secrets.APPLE_API_KEY_BASE64 }}
+        APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+        APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      run: bundle exec fastlane release_${{ github.event.inputs.destination }}
+
+    - name: Send Mattermost message
+      env:
+        WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        DESTINATION: ${{ github.event.inputs.destination }}
+      run: |
+        export MM_USER_HANDLE=$(base64 -d <<< ${{ secrets.MM_HANDLES_BASE64 }} | jq ".${{ github.actor }}" | tr -d '"')
+
+        if [[ -z "${MM_USER_HANDLE}" ]]; then
+            echo "Mattermost user handle not known for ${{ github.actor }}, skipping sending message"
+        else
+
+            curl -s -H 'Content-type: application/json' \
+                -d "$(envsubst < ./scripts/assets/appstore-release-mm-template.json)" \
+                ${{ secrets.MM_WEBHOOK_URL }}
+        fi  

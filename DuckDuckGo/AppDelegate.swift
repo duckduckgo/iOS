@@ -326,6 +326,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         autoClear?.applicationDidEnterBackground()
         lastBackgroundDate = Date()
         AppDependencyProvider.shared.autofillLoginSession.endSession()
+        ContentBlocking.shared.contentBlockingManager.resetCompilationTime()
     }
 
     func application(_ application: UIApplication,

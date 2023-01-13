@@ -60,13 +60,15 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
         return hostingController
     }
     
-    func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: Context) { }
+    func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: Context) {
+        context.coordinator.secondaryTitle = secondaryTitle
+    }
     
     class Coordinator<Content: View>: NSObject {
         var responder: UIResponder?
         var observer: Any?
         private let title: String
-        private let secondaryTitle: String?
+        var secondaryTitle: String?
         private let action: () -> Void
         private let secondaryAction: (() -> Void)?
         private let onOpen: (() -> Void)?

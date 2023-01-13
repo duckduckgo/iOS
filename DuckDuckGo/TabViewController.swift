@@ -2075,7 +2075,7 @@ extension TabViewController: AutoconsentUserScriptDelegate {
     }
     
     func autoconsentUserScript(_ script: AutoconsentUserScript, didRequestAskingUserForConsent completion: @escaping (Bool) -> Void) {
-        // TODO: Check if no Dax dialog is displayed
+        guard !isShowingFullScreenDaxDialog else { return }
         
         let model = CookieConsentDaxDialogModel(okAction: {
             completion(true)

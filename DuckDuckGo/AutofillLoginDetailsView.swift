@@ -24,8 +24,6 @@ import DuckUI
 
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
-    @State private var cellMaxWidth: CGFloat?
-    @State private var isShowingPassword: Bool = false
     @State private var actionSheetConfirmDeletePresented: Bool = false
     
     var body: some View {
@@ -99,7 +97,7 @@ struct AutofillLoginDetailsView: View {
             Section {
                 AutofillLoginDetailsHeaderView(viewModel: viewModel.headerViewModel)
             }
-            
+
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsUsername,
                              subtitle: viewModel.usernameDisplayString,
@@ -108,15 +106,18 @@ struct AutofillLoginDetailsView: View {
                              action: { viewModel.copyToPasteboard(.username) },
                              buttonImageName: "Clipboard",
                              buttonAction: { viewModel.copyToPasteboard(.username) })
-
-                CopyablePasswordCell(title: UserText.autofillLoginDetailsPassword,
-                                     password: viewModel.userVisiblePassword,
-                                     selectedCell: $viewModel.selectedCell,
-                                     isPasswordHidden: $viewModel.isPasswordHidden) {
-
-                    viewModel.copyToPasteboard(.password)
-                }
+                
+                CopyableCell(title: UserText.autofillLoginDetailsPassword,
+                             subtitle: viewModel.userVisiblePassword,
+                             selectedCell: $viewModel.selectedCell,
+                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
+                             action: { viewModel.copyToPasteboard(.password) },
+                             secondaryActionTitle: viewModel.isPasswordHidden ? "TODO REVEAL TEXTTTTTTTTTTTTTTTTTT" : "TODO HIDE TEXT",
+                             secondaryAction: { viewModel.isPasswordHidden.toggle() },
+                             buttonImageName: "Clipboard",
+                             buttonAction: { viewModel.copyToPasteboard(.password) })
             }
+
             
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
@@ -128,7 +129,7 @@ struct AutofillLoginDetailsView: View {
                              secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
                              secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil)
             }
-            
+
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsNotes,
                              subtitle: viewModel.notes,
@@ -308,64 +309,6 @@ private struct EditablePasswordCell: View {
         .frame(minHeight: Constants.minRowHeight)
         .listRowInsets(Constants.insets)
     }
-}
-
-private struct CopyablePasswordCell: View {
-    @State private var id = UUID()
-    let title: String
-    let password: String
-    @Binding var selectedCell: UUID?
-    @Binding var isPasswordHidden: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        ZStack {
-            HStack {
-                VStack(alignment: .leading, spacing: Constants.verticalPadding) {
-                    Text(title)
-                        .label4Style()
-                    HStack {
-                        Text(password)
-                            .label4Style(design: .monospaced,
-                                         foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
-                                         foregroundColorDark: .gray30)
-                    }
-                }
-                Spacer(minLength: Constants.passwordImageSize)
-            }
-            .copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: action) {
-                self.selectedCell = self.id
-            } menuClosedAction: {
-                self.selectedCell = nil
-            }
-
-            HStack(alignment: .bottom) {
-                Spacer()
-                Button {
-                    isPasswordHidden.toggle()
-                    self.selectedCell = nil
-                } label: {
-                    VStack(alignment: .trailing) {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Image(isPasswordHidden ? "ShowPasswordEye" : "HidePasswordEye")
-                                    .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
-                                    .opacity(password.isEmpty ? 0 : 1)
-                        }
-                    }
-                    .contentShape(Rectangle())
-                    .frame(width: Constants.passwordImageSize, height: Constants.passwordImageSize)
-                }
-                .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
-                .background(BackgroundColor(isSelected: selectedCell == id).color)
-                .accessibilityLabel(isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword)
-            }
-            .padding(.bottom, Constants.verticalPadding)
-        }
-        .selectableBackground(isSelected: selectedCell == id)
-    }
-
 }
 
 private struct CopyableCell: View {

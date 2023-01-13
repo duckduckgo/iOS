@@ -103,15 +103,17 @@ struct AutofillLoginDetailsView: View {
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsUsername,
                              subtitle: viewModel.usernameDisplayString,
-                             selectedCell: $viewModel.selectedCell) {
-                    viewModel.copyToPasteboard(.username)
-                }
+                             selectedCell: $viewModel.selectedCell,
+                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
+                             action: { viewModel.copyToPasteboard(.username) },
+                             buttonImageName: "Clipboard",
+                             buttonAction: { viewModel.copyToPasteboard(.username) })
 
                 CopyablePasswordCell(title: UserText.autofillLoginDetailsPassword,
                                      password: viewModel.userVisiblePassword,
                                      selectedCell: $viewModel.selectedCell,
                                      isPasswordHidden: $viewModel.isPasswordHidden) {
-                    
+
                     viewModel.copyToPasteboard(.password)
                 }
             }
@@ -120,9 +122,10 @@ struct AutofillLoginDetailsView: View {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
                              subtitle: viewModel.address,
                              selectedCell: $viewModel.selectedCell,
-                             secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
                              truncationMode: .middle,
+                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsAddress),
                              action: { viewModel.copyToPasteboard(.address) },
+                             secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
                              secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil)
             }
             
@@ -132,6 +135,7 @@ struct AutofillLoginDetailsView: View {
                              selectedCell: $viewModel.selectedCell,
                              truncationMode: .middle,
                              multiLine: true,
+                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsNotes),
                              action: {
                     viewModel.copyToPasteboard(.notes)
                 })
@@ -369,42 +373,76 @@ private struct CopyableCell: View {
     let title: String
     let subtitle: String
     @Binding var selectedCell: UUID?
-    var secondaryActionTitle: String?
     var truncationMode: Text.TruncationMode = .tail
     var multiLine: Bool = false
+    
+    var actionTitle: String
     let action: () -> Void
+    
+    var secondaryActionTitle: String?
     var secondaryAction: (() -> Void)?
+    
+    var buttonImageName: String?
+    var buttonAction: (() -> Void)?
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: Constants.verticalPadding) {
-                Text(title)
-                    .label4Style()
-                HStack {
-                    if multiLine {
-                        Text(subtitle)
-                            .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
-                            .truncationMode(truncationMode)
-                            .frame(maxHeight: .greatestFiniteMagnitude)
-                    } else {
-                        Text(subtitle)
-                            .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
-                            .truncationMode(truncationMode)
+        ZStack {
+            HStack {
+                VStack(alignment: .leading, spacing: Constants.verticalPadding) {
+                    Text(title)
+                        .label4Style()
+                    HStack {
+                        if multiLine {
+                            Text(subtitle)
+                                .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                                .truncationMode(truncationMode)
+                                .frame(maxHeight: .greatestFiniteMagnitude)
+                        } else {
+                            Text(subtitle)
+                                .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                                .truncationMode(truncationMode)
+                        }
                     }
                 }
+                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                
+                Spacer(minLength: Constants.passwordImageSize)
             }
-            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+            .copyable(isSelected: selectedCell == id,
+                      menuTitle: actionTitle,
+                      menuAction: action,
+                      menuSecondaryTitle: secondaryActionTitle,
+                      menuSecondaryAction: secondaryAction) {
+                self.selectedCell = self.id
+            } menuClosedAction: {
+                self.selectedCell = nil
+            }
             
-            Spacer()
-        }
-        .copyable(isSelected: selectedCell == id,
-                  menuTitle: title,
-                  menuAction: action,
-                  menuSecondaryTitle: secondaryActionTitle,
-                  menuSecondaryAction: secondaryAction) {
-            self.selectedCell = self.id
-        } menuClosedAction: {
-            self.selectedCell = nil
+            if let buttonImageName = buttonImageName {
+                HStack(alignment: .bottom) {
+                    Spacer()
+                    Button {
+                        buttonAction?()
+                        self.selectedCell = nil
+                    } label: {
+                        VStack(alignment: .trailing) {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Image(buttonImageName)
+                                    .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
+                                    .opacity(subtitle.isEmpty ? 0 : 1)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                        .frame(width: Constants.passwordImageSize, height: Constants.passwordImageSize)
+                    }
+                    .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
+                    .background(BackgroundColor(isSelected: selectedCell == id).color)
+                    .accessibilityLabel(UserText.autofillShowPassword)
+                }
+                .padding(.bottom, Constants.verticalPadding)
+            }
         }
         .selectableBackground(isSelected: selectedCell == id)
     }
@@ -443,7 +481,7 @@ private struct Copyable: ViewModifier {
         ZStack {
             Rectangle()
                 .foregroundColor(.clear)
-                .menuController(UserText.autofillCopyPrompt(for: menuTitle),
+                .menuController(menuTitle,
                                 secondaryTitle: menuSecondaryTitle,
                                 action: menuAction,
                                 secondaryAction: menuSecondaryAction,

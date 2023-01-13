@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1672755248244,
+    "version": 1673629802479,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -154,6 +154,10 @@
                 {
                     "domain": "tfl.gov.uk",
                     "reason": "https://github.com/duckduckgo/autoconsent/issues/68"
+                },
+                {
+                    "domain": "corporatefinanceinstitute.com",
+                    "reason": "CMP gets incorrectly handled / repeatedly opens tabs"
                 }
             ],
             "settings": {
@@ -161,8 +165,8 @@
                     "Sourcepoint-top"
                 ]
             },
-            "state": "disabled",
-            "hash": "0a3a8f86897f6cf7b0a17eabfabce21d"
+            "state": "enabled",
+            "hash": "659eb19df598629f1eaecbe7fa2d7f00"
         },
         "autofill": {
             "exceptions": [
@@ -223,6 +227,10 @@
                         "reason": "When going to the main login page, there is a banner at the top which warns of an 'Unsupported browser'."
                     },
                     {
+                        "domain": "instagram.com",
+                        "reason": "A banner at the bottom which warns of an 'Unsupported browser' and interferes with rest of the UI."
+                    },
+                    {
                         "domain": "xfinity.com",
                         "reason": "Stream page shows an incompatibility warning and does not load further."
                     },
@@ -235,7 +243,7 @@
             },
             "exceptions": [],
             "state": "enabled",
-            "hash": "2e98efc4d0a584d3d3d81eb4505f512b"
+            "hash": "07e012a699eca5beda20298e27dd3f5f"
         },
         "duckPlayer": {
             "exceptions": [],
@@ -270,6 +278,10 @@
                 },
                 {
                     "domain": "wiwo.de",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
+                },
+                {
+                    "domain": "metro.co.uk",
                     "reason": "https://github.com/duckduckgo/privacy-configuration/issues/592"
                 }
             ],
@@ -866,6 +878,19 @@
                         ]
                     },
                     {
+                        "domain": "xfinity.com",
+                        "rules": [
+                            {
+                                "selector": ".f-gpc-flyout",
+                                "type": "hide"
+                            },
+                            {
+                                "selector": ".f-gpc-banner",
+                                "type": "hide"
+                            }
+                        ]
+                    },
+                    {
                         "domain": "first-party.site",
                         "rules": [
                             {
@@ -910,7 +935,7 @@
                 ]
             },
             "state": "enabled",
-            "hash": "de63929cb4071637408a65f79ecce089"
+            "hash": "713823f7d7e219814cb96e879736f4d3"
         },
         "fingerprintingAudio": {
             "state": "disabled",
@@ -1100,6 +1125,14 @@
             "exceptions": [],
             "state": "enabled",
             "hash": "52857469413a66e8b0c7b00de5589162"
+        },
+        "requestFilterer": {
+            "state": "disabled",
+            "exceptions": [],
+            "settings": {
+                "windowInMs": 0
+            },
+            "hash": "9439c856372a09f0cfdc9e2e0fd086fd"
         },
         "trackerAllowlist": {
             "state": "enabled",

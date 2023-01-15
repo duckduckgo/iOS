@@ -1,0 +1,1 @@
+{"channel":"${MM_USER_HANDLE}","username":"GitHub Actions","text":"**iOS app has been successfully uploaded to ${DESTINATION}** :goose_honk_tada: | [:github: Workflow run summary](${WORKFLOW_URL})","icon_url":"https://duckduckgo.com/assets/logo_header.v108.svg"}

@@ -2,27 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-
 	<key>teamID</key>
-    <string>HKE973VLUW</string>
-
-    <key>method</key>
-    <string>app-store</string>
-
-    <key>provisioningProfiles</key>
-    <dict>
-        <key>com.duckduckgo.mobile.ios</key>
-        <string>Bitrise iOS app-store - (com.duckduckgo.mobile.ios)</string>
-
-        <key>com.duckduckgo.mobile.ios.ShareExtension</key>
-        <string>Bitrise iOS app-store - (com.duckduckgo.mobile.ios.ShareExtension)</string>
-
-        <key>com.duckduckgo.mobile.ios.OpenAction2</key>
-        <string>Bitrise iOS app-store - (com.duckduckgo.mobile.ios.OpenAction2)</string>
-
-        <key>com.duckduckgo.mobile.ios.Widgets</key>
-        <string>Bitrise iOS app-store - (com.duckduckgo.mobile.ios.Widgets)</string>
-    </dict>
-
+	<string>HKE973VLUW</string>
+	<key>method</key>
+	<string>app-store</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>com.duckduckgo.mobile.ios</key>
+		<string>match AppStore com.duckduckgo.mobile.ios</string>
+		<key>com.duckduckgo.mobile.ios.ShareExtension</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.ShareExtension</string>
+		<key>com.duckduckgo.mobile.ios.OpenAction2</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.OpenAction2</string>
+		<key>com.duckduckgo.mobile.ios.Widgets</key>
+		<string>match AppStore com.duckduckgo.mobile.ios.Widgets</string>
+	</dict>
 </dict>
 </plist>

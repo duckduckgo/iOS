@@ -92,7 +92,7 @@ final class AutofillLoginListViewModel: ObservableObject {
         self.tld = tld
         self.currentTabUrl = currentTabUrl
         updateData()
-        authenticationNotRequired = !hasAccountsSaved
+        authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isValidSession
         setupCancellables()
     }
     

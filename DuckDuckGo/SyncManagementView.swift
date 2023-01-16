@@ -26,15 +26,6 @@ struct SyncManagementView: View {
     @ObservedObject var model: SyncManagementViewModel
 
     @ViewBuilder
-    func syncSetupView() -> some View {
-        if let model = model.syncSetupViewModel {
-            SyncSetupView(model: model)
-        } else {
-            EmptyView()
-        }
-    }
-
-    @ViewBuilder
     func syncToggle() -> some View {
         Section {
             HStack {
@@ -57,8 +48,6 @@ struct SyncManagementView: View {
             }
         } footer: {
             Text("Sync your bookmarks across your devices and save an encrypted backup on DuckDuckGo’s servers.")
-        }.sheet(isPresented: $model.showSyncSetup) {
-            syncSetupView()
         }
     }
 

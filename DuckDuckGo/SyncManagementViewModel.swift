@@ -22,6 +22,7 @@ import UIKit
 
 protocol SyncManagementViewModelDelegate: AnyObject {
 
+    func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
 
@@ -43,46 +44,36 @@ class SyncManagementViewModel: ObservableObject {
 
     @Published var isSyncEnabled = false
     @Published var isBusy = false
-    @Published var syncSetupViewModel: SyncSetupViewModel?
     @Published var devices = [Device]()
-
-    @Published var showSyncSetup = false {
-        didSet {
-            if !showSyncSetup {
-                setupDismissed()
-            }
-        }
-    }
 
     weak var delegate: SyncManagementViewModelDelegate?
 
     func enableSync() {
         print(#function)
         isBusy = true
-        showSyncSetup = true
-        syncSetupViewModel = SyncSetupViewModel()
+        delegate?.showSyncSetup()
     }
 
     func disableSync() {
         print(#function)
     }
 
-    func setupDismissed() {
-        switch syncSetupViewModel?.state {
-        case .showRecoverData:
-            delegate?.showRecoverData()
-
-        case .showSyncWithAnotherDevice:
-            delegate?.showSyncWithAnotherDevice()
-
-        case .syncWithAnotherDevicePrompt:
-            // Create an account and start syncing
-            createAccount()
-
-        default:
-            isBusy = false
-        }
-    }
+//    func setupDismissed() {
+//        switch syncSetupViewModel?.state {
+//        case .showRecoverData:
+//            delegate?.showRecoverData()
+//
+//        case .showSyncWithAnotherDevice:
+//            delegate?.showSyncWithAnotherDevice()
+//
+//        case .syncWithAnotherDevicePrompt:
+//            // Create an account and start syncing
+//            createAccount()
+//
+//        default:
+//            isBusy = false
+//        }
+//    }
 
     func createAccount() {
         print(#function)

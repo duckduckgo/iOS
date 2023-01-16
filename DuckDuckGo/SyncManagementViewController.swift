@@ -35,11 +35,49 @@ class SyncManagementViewController: UIHostingController<SyncManagementView> {
 
 extension SyncManagementViewController: SyncManagementViewModelDelegate {
 
+    func showSyncSetup() {
+        print(#function)
+        let model = SyncSetupViewModel()
+        let controller = DismissibleUIHostingController(rootView: SyncSetupView(model: model)) {
+            print(#function, "onDismiss", model)
+            self.rootView.model.isBusy = false
+        }
+
+        navigationController?.present(controller, animated: true) {
+            print(#function, "completed")
+        }
+    }
+
     func showRecoverData() {
         print(#function)
     }
 
     func showSyncWithAnotherDevice() {
         print(#function)
+    }
+
+}
+
+@MainActor
+class DismissibleUIHostingController<Content: View>: UIHostingController<Content> {
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ThemeManager.shared.currentTheme.statusBarStyle
+    }
+
+    let onDismiss: () -> Void
+
+    init(rootView: Content, onDismiss: @escaping () -> Void) {
+        self.onDismiss = onDismiss
+        super.init(rootView: rootView)
+    }
+
+    required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        onDismiss()
     }
 }

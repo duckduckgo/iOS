@@ -58,22 +58,23 @@ class SyncManagementViewModel: ObservableObject {
         print(#function)
     }
 
-//    func setupDismissed() {
-//        switch syncSetupViewModel?.state {
-//        case .showRecoverData:
-//            delegate?.showRecoverData()
-//
-//        case .showSyncWithAnotherDevice:
-//            delegate?.showSyncWithAnotherDevice()
-//
-//        case .syncWithAnotherDevicePrompt:
-//            // Create an account and start syncing
-//            createAccount()
-//
-//        default:
-//            isBusy = false
-//        }
-//    }
+    func setupFinished(_ model: SyncSetupViewModel) {
+        isBusy = false
+
+        switch model.state {
+        case .showRecoverData:
+            delegate?.showRecoverData()
+
+        case .showSyncWithAnotherDevice:
+            delegate?.showSyncWithAnotherDevice()
+
+        case .syncWithAnotherDevicePrompt:
+            // Create an account and start syncing
+            createAccount()
+
+        default: break
+        }
+    }
 
     func createAccount() {
         print(#function)

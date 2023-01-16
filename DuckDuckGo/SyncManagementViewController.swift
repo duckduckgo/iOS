@@ -19,6 +19,7 @@
 
 import SwiftUI
 
+@MainActor
 class SyncManagementViewController: UIHostingController<SyncManagementView> {
 
     convenience init() {
@@ -29,6 +30,15 @@ class SyncManagementViewController: UIHostingController<SyncManagementView> {
         super.viewDidLoad()
         rootView.model.delegate = self
         navigationItem.title = "Sync"
+        applyTheme(ThemeManager.shared.currentTheme)
+    }
+
+}
+
+extension SyncManagementViewController: Themable {
+
+    func decorate(with theme: Theme) {
+        view.backgroundColor = theme.backgroundColor
     }
 
 }
@@ -40,7 +50,7 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         let model = SyncSetupViewModel()
         let controller = DismissibleUIHostingController(rootView: SyncSetupView(model: model)) {
             print(#function, "onDismiss", model)
-            self.rootView.model.isBusy = false
+            self.rootView.model.setupFinished(model)
         }
 
         navigationController?.present(controller, animated: true) {

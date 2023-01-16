@@ -80,7 +80,23 @@ struct SyncManagementView: View {
             }
         }
         .navigationTitle("Sync")
+        .hideScrollContentBackground()
+        .onAppear {
+            UITableView.appearance().backgroundColor = .purple
+        }
         .environmentObject(model)
+    }
+
+}
+
+private extension View {
+
+    func hideScrollContentBackground() -> some View {
+        if #available(iOS 16, *) {
+            return self.scrollContentBackground(.hidden)
+        } else {
+            return self
+        }
     }
 
 }

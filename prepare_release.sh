@@ -2,17 +2,16 @@
 
 set -e
 
-mute=">/dev/null 2>&1"
-
-if [ "$2" == "-v" ]; then
-	mute=
-fi
-
 if [ -z "$1" ]; then
     echo Usage:\ \ \ ./prepare_release.sh \<VERSION\>
     echo Example: ./prepare_release.sh 7.77.1
     echo Current version: "$(cut -d' ' -f3 < Configuration/Version.xcconfig)"
     exit 1
+fi
+
+mute=">/dev/null 2>&1"
+if [ "$2" == "-v" ]; then
+	mute=
 fi
 
 version="$1"
@@ -46,7 +45,8 @@ update_marketing_version() {
 
 update_build_version() {
     echo "Setting build version ..."
-    local username="$(git config user.email 2>&1)"
+    local username
+    username="$(git config user.email 2>&1)"
     fastlane increment_build_number_for_version version:"${version}" username:"$username"
     eval git add DuckDuckGo.xcodeproj/project.pbxproj "$mute"
     eval git commit -m \""Update build number\"" "$mute"
@@ -60,7 +60,7 @@ update_embedded_files() {
     eval git add Core/trackerData.json "$mute"
     eval git add Core/AppPrivacyConfigurationDataProvider.swift "$mute"
     eval git add Core/ios-config.json "$mute"
-    eval git commit -m \""Update embedded files\"" "$mute" || echo "\n✅ No changes to embedded files"
+    eval git commit -m \""Update embedded files\"" "$mute" || printf "\n✅ No changes to embedded files\n"
     echo "✅"
 }
 

@@ -27,7 +27,8 @@ git checkout -b release/"$1"-changes
 git add Configuration/Version.xcconfig
 git add DuckDuckGo/Settings.bundle/Root.plist
 
-fastlane increment_build_number_for_version version:"$1"
+USERNAME=$(git config user.email 2>&1)
+fastlane increment_build_number_for_version version:"$1" username:"$USERNAME"
 git add DuckDuckGo.xcodeproj/project.pbxproj
 
 git commit -m "Update version and build numbers"
@@ -41,11 +42,11 @@ git add Core/AppPrivacyConfigurationDataProvider.swift
 git add Core/ios-config.json
 git commit -m "Update embedded files"
 
-# Create a PR against release branch # make sure GH is set up
+# Create a PR against release branch
 
 git push origin release/"$1"
 git push origin release/"$1"-changes
 gh pr create --title "Release $1 [TEST]" --base release/"$1" --body "" --assignee @me
+gh pr comment --body "Make sure to update release notes, metadata and commit the changes."
+gh pr comment --body "Once you validate the diff, go ahead and merge this PR."
 gh pr view --web
-
-#tag and push tag on merge

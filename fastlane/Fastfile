@@ -52,7 +52,8 @@ lane :increment_build_number_for_version do |options|
       latest_testflight_build_number(
         version: options[:version],
         app_identifier: "com.duckduckgo.mobile.ios", 
-        initial_build_number: -1) + 1,
+        initial_build_number: -1,
+        username: options[:username]) + 1,
     skip_info_plist: "true"
   })
 end

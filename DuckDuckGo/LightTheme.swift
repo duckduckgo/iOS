@@ -29,7 +29,7 @@ struct LightTheme: Theme {
     var tabsBarBackgroundColor = UIColor.lightGreyish
     var tabsBarSeparatorColor = UIColor.greyish
     
-    var backgroundColor = UIColor.nearlyWhite
+    var backgroundColor = UIColor.gray10
     
     var barBackgroundColor = UIColor.nearlyWhiteLight
     var barTintColor = UIColor.nearlyBlackLight
@@ -60,9 +60,9 @@ struct LightTheme: Theme {
     var autocompleteSuggestionTextColor = UIColor.black
     var autocompleteCellAccessoryColor = UIColor.darkGreyish
     
-    var tableCellBackgroundColor = UIColor.nearlyWhiteLight
+    var tableCellBackgroundColor = UIColor.white
     var tableCellSelectedColor = UIColor.mercury
-    var tableCellSeparatorColor = UIColor.mercury
+    var tableCellSeparatorColor = UIColor(white: 0, alpha: 0.09)
     var tableCellTextColor = UIColor.darkGreyish
     var tableCellAccessoryTextColor = UIColor.greyish3
     var tableCellAccessoryColor = UIColor.greyish

@@ -59,8 +59,6 @@ class SyncManagementViewModel: ObservableObject {
     }
 
     func setupFinished(_ model: SyncSetupViewModel) {
-        isBusy = false
-
         switch model.state {
         case .showRecoverData:
             delegate?.showRecoverData()
@@ -69,22 +67,22 @@ class SyncManagementViewModel: ObservableObject {
             delegate?.showSyncWithAnotherDevice()
 
         case .syncWithAnotherDevicePrompt:
-            // Create an account and start syncing
-            createAccount()
+            createAccountAndStartSyncing()
 
-        default: break
+        default: // Cancelled
+            isBusy = false
         }
     }
 
-    func createAccount() {
+    func createAccountAndStartSyncing() {
         print(#function)
-        devices = [
-            Device(id: UUID().uuidString, name: UIDevice.current.name, isThisDevice: true)
-        ]
         Task { @MainActor in
             try await Task.sleep(nanoseconds: 1_000_000_000 * 2)
             isBusy = false
             isSyncEnabled = true
+            devices = [
+                Device(id: UUID().uuidString, name: UIDevice.current.name, isThisDevice: true)
+            ]
         }
     }
 

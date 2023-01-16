@@ -9,5 +9,5 @@ if [ -z "$1" ]; then
 fi
 
 echo "MARKETING_VERSION = $1" > Configuration/Version.xcconfig
-echo "CURRENT_PROJECT_VERSION = $2\n" >> Configuration/Version.xcconfig
+echo "CURRENT_PROJECT_VERSION = $2" >> Configuration/Version.xcconfig
 /usr/libexec/PlistBuddy -c "Set :PreferenceSpecifiers:0:DefaultValue $1" DuckDuckGo/Settings.bundle/Root.plist

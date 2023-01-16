@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -46,7 +46,7 @@ update_marketing_version() {
 
 update_build_version() {
     echo "Setting build version ..."
-    local username=$(git config user.email 2>&1)
+    local username="$(git config user.email 2>&1)"
     fastlane increment_build_number_for_version version:"${version}" username:"$username"
     eval git add DuckDuckGo.xcodeproj/project.pbxproj "$mute"
     eval git commit -m \""Update build number\"" "$mute"
@@ -68,9 +68,7 @@ create_pull_request() {
     printf '%s' "Creating PR ... "
     eval git push origin "release/${version}" "$mute"
     eval git push origin "release/${version}-changes" "$mute"
-    val gh pr create --title \""Release ${version} [TEST]\"" --base "release/${version}" --body "" --assignee @me "$mute"
-    eval gh pr comment --body \""Make sure to update release notes, metadata and commit the changes.\"" "$mute"
-    eval gh pr comment --body \""Once you validate the diff, go ahead and merge this PR.\"" "$mute"
+    eval gh pr create --title \""Release ${version} [TEST]\"" --base "release/${version}" --body "" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
     eval gh pr view --web "$mute"
     echo "✅"
 }

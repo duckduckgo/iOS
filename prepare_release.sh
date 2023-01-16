@@ -15,30 +15,38 @@ if [ "$2" == "-v" ]; then
 fi
 
 version="$1"
+base_branch="release/${version}"
+changes_branch="${base_branch}-changes"
 
-printf '%s' "Stashing your changes ... "
-eval git stash "$mute"
-echo "✅"
+stash() {
+    printf '%s' "Stashing your changes ... "
+    eval git stash "$mute"
+    echo "✅"
+}
 
-eval git show-branch "release/$1" >/dev/null 2>&1 "$mute" && echo "💥 Error: Branch release/$1 already exists." && exit 1
-eval git show-branch "release/$1-changes" >/dev/null 2>&1 "$mute" && echo "💥 Error: Branch release/$1-changes already exists." && exit 1
-
-# Git flow start release
+assert_clean_state() {
+    if git show-ref --quiet "refs/heads/${base_branch}"; then
+        echo "💥 Error: Branch ${base_branch} already exists."; exit 1
+    fi
+    if git show-ref --quiet "refs/heads/${changes_branch}"; then
+        echo "💥 Error: Branch ${changes_branch} already exists."; exit 1
+    fi
+}
 
 create_release_branch() {
     printf '%s' "Creating release branch ... "
     eval git checkout develop "$mute"
     eval git pull "$mute"
-    eval git checkout -b "release/${version}" "$mute"
-    eval git checkout -b "release/${version}-changes" "$mute"
+    eval git checkout -b "${base_branch}" "$mute"
+    eval git checkout -b "${changes_branch}" "$mute"
     echo "✅"
 }
 
 update_marketing_version() {
     printf '%s' "Setting app version ... "
     ./set_version.sh "${version}"
-    eval git add Configuration/Version.xcconfig "$mute"
-    eval git add DuckDuckGo/Settings.bundle/Root.plist "$mute"
+    git add Configuration/Version.xcconfig
+    git add DuckDuckGo/Settings.bundle/Root.plist
     eval git commit -m \""Update version number\"" "$mute"
     echo "✅"
 }
@@ -48,32 +56,34 @@ update_build_version() {
     local username
     username="$(git config user.email 2>&1)"
     fastlane increment_build_number_for_version version:"${version}" username:"$username"
-    eval git add DuckDuckGo.xcodeproj/project.pbxproj "$mute"
+    git add DuckDuckGo.xcodeproj/project.pbxproj
     eval git commit -m \""Update build number\"" "$mute"
-    echo "✅ Build version has been set"
+    echo "Setting build version ... ✅"
 }
 
 update_embedded_files() {
     printf '%s' "Updating embedded files ... "
     eval ./update_embedded.sh "$mute"
-    eval git add Core/AppTrackerDataSetProvider.swift "$mute"
-    eval git add Core/trackerData.json "$mute"
-    eval git add Core/AppPrivacyConfigurationDataProvider.swift "$mute"
-    eval git add Core/ios-config.json "$mute"
+    git add Core/AppTrackerDataSetProvider.swift
+    git add Core/trackerData.json
+    git add Core/AppPrivacyConfigurationDataProvider.swift
+    git add Core/ios-config.json
     eval git commit -m \""Update embedded files\"" "$mute" || printf "\n✅ No changes to embedded files\n"
     echo "✅"
 }
 
 create_pull_request() {
     printf '%s' "Creating PR ... "
-    eval git push origin "release/${version}" "$mute"
-    eval git push origin "release/${version}-changes" "$mute"
-    eval gh pr create --title \""Release ${version} [TEST]\"" --base "release/${version}" --body "" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
+    eval git push origin "${base_branch}" "$mute"
+    eval git push origin "${changes_branch}" "$mute"
+    eval gh pr create --title \""Release ${version} [TEST]\"" --base "${base_branch}" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
     eval gh pr view --web "$mute"
     echo "✅"
 }
 
 main() {
+    stash
+    assert_clean_state
     create_release_branch
     update_marketing_version
     update_build_version

@@ -1,21 +1,60 @@
 #!/bin/bash
 
-set -e
-
-if [ -z "$1" ]; then
-    echo Usage:\ \ \ ./prepare_release.sh \<VERSION\>
-    echo Example: ./prepare_release.sh 7.77.1
-    echo Current version: "$(cut -d' ' -f3 < Configuration/Version.xcconfig)"
-    exit 1
-fi
+set -eo pipefail
 
 mute=">/dev/null 2>&1"
-if [ "$2" == "-v" ]; then
-	mute=
+version="$1"
+is_hotfix=false
+
+if ! [[ $common_sh ]]; then
+	cwd="$(dirname "${BASH_SOURCE[0]}")"
+    source "${cwd}/scripts/helpers/common.sh"
 fi
 
-version="$1"
-base_branch="release/${version}"
+print_usage_and_exit() {
+	local reason=$1
+
+	cat <<- EOF
+	Usage:
+	  $ $(basename "$0") \<VERSION\> [-h <hotfix>] [-v <verbose>]
+	  Current version: $(cut -d' ' -f3 < Configuration/Version.xcconfig)
+
+	Options:
+	 -h <hotfix>   Make hotfix release
+	 -v <verbose>  Enable verbose mode
+
+	EOF
+
+	die "${reason}"
+}
+
+read_command_line_arguments() {
+    local regexp="^[0-9]+(\.[0-9]+)*$"
+	if [[ ! "$1" =~ $regexp ]]; then
+		print_usage_and_exit "💥 Error: Wrong app version specified"
+	fi
+
+	shift 1
+
+	while getopts 'hv' option; do
+		case "${option}" in
+			h)
+				is_hotfix=true
+				;;
+			v)
+				mute=
+				;;
+			*)
+				print_usage_and_exit "💥 Error: Unknown option '${option}'"
+				;;
+		esac
+	done
+
+	shift $((OPTIND-1))
+}
+
+ [[ $is_hotfix ]] && branch_name="release" || branch_name="hotfix"
+base_branch="${branch_name}/${version}"
 changes_branch="${base_branch}-changes"
 
 stash() {
@@ -34,8 +73,13 @@ assert_clean_state() {
 }
 
 create_release_branch() {
-    printf '%s' "Creating release branch ... "
-    eval git checkout develop "$mute"
+    if [ ${is_hotfix} = true ]; then
+        printf '%s' "Creating hotfix branch ... "
+        eval git checkout main "$mute"
+    else
+	    printf '%s' "Creating release branch ... "
+        eval git checkout develop "$mute"
+    fi
     eval git pull "$mute"
     eval git checkout -b "${base_branch}" "$mute"
     eval git checkout -b "${changes_branch}" "$mute"
@@ -82,6 +126,7 @@ create_pull_request() {
 }
 
 main() {
+    read_command_line_arguments "$@"
     stash
     assert_clean_state
     create_release_branch
@@ -91,4 +136,4 @@ main() {
     create_pull_request
 }
 
-main
+main "$@"

@@ -51,11 +51,11 @@ read_command_line_arguments() {
 	done
 
 	shift $((OPTIND-1))
-}
 
- [[ $is_hotfix ]] && branch_name="release" || branch_name="hotfix"
-base_branch="${branch_name}/${version}"
-changes_branch="${base_branch}-changes"
+    [[ $is_hotfix = false ]] && branch_name="release" || branch_name="hotfix"
+    base_branch="${branch_name}/${version}"
+    changes_branch="${base_branch}-changes"
+}
 
 stash() {
     printf '%s' "Stashing your changes ... "
@@ -73,12 +73,12 @@ assert_clean_state() {
 }
 
 create_release_branch() {
-    if [ ${is_hotfix} = true ]; then
-        printf '%s' "Creating hotfix branch ... "
-        eval git checkout main "$mute"
-    else
+    if [ ${is_hotfix} = false ]; then
 	    printf '%s' "Creating release branch ... "
         eval git checkout develop "$mute"
+    else
+        printf '%s' "Creating hotfix branch ... "
+        eval git checkout main "$mute"
     fi
     eval git pull "$mute"
     eval git checkout -b "${base_branch}" "$mute"

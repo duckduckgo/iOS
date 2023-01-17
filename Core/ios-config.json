@@ -1,6 +1,6 @@
 {
     "readme": "https://github.com/duckduckgo/privacy-configuration",
-    "version": 1673629802479,
+    "version": 1673947780834,
     "features": {
         "adClickAttribution": {
             "readme": "https://help.duckduckgo.com/duckduckgo-help-pages/privacy/web-tracking-protections/#3rd-party-tracker-loading-protection",
@@ -1090,6 +1090,10 @@
                 {
                     "domain": "allegiantair.com",
                     "reason": "Example URL: https://www.allegiantair.com/seating-checking-boarding; Clicking the 'show details' button in the FAQ sections does nothing."
+                },
+                {
+                    "domain": "web.whatsapp.com",
+                    "reason": "https://github.com/duckduckgo/privacy-configuration/issues/620"
                 }
             ],
             "settings": {
@@ -1101,7 +1105,7 @@
                     "privacy-test-pages.glitch.me"
                 ]
             },
-            "hash": "3609d9c50837933e0b2f4a3f2ebc7e54"
+            "hash": "3de82150dfc3949a3a9fd23d38e74649"
         },
         "https": {
             "state": "enabled",
@@ -1283,7 +1287,7 @@
                                 "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
                             },
                             {
-                                "rule": "aeu.alicdn.com/",
+                                "rule": "aeproductsourcesite.alicdn.com/",
                                 "domains": [
                                     "aliexpress.com",
                                     "aliexpress.us"
@@ -1307,7 +1311,7 @@
                                 "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
                             },
                             {
-                                "rule": "u.alicdn.com/",
+                                "rule": "time-ak.alicdn.com/",
                                 "domains": [
                                     "aliexpress.com",
                                     "aliexpress.us"
@@ -2162,13 +2166,6 @@
                     "onlyfans.com": {
                         "rules": [
                             {
-                                "rule": "static.onlyfans.com/theme/onlyfans/spa/chunk-vendors.js",
-                                "domains": [
-                                    "onlyfans.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: d3oxtup47gylpj.cloudfront.net"
-                            },
-                            {
                                 "rule": "static.onlyfans.com",
                                 "domains": [
                                     "onlyfans.com"
@@ -2466,6 +2463,17 @@
                             }
                         ]
                     },
+                    "spot.im": {
+                        "rules": [
+                            {
+                                "rule": "spot.im/",
+                                "domains": [
+                                    "foxnews.com"
+                                ],
+                                "reason": "https://github.com/duckduckgo/privacy-configuration/issues/622"
+                            }
+                        ]
+                    },
                     "strpst.com": {
                         "rules": [
                             {
@@ -2742,17 +2750,6 @@
                             }
                         ]
                     },
-                    "marksandspencer.com": {
-                        "rules": [
-                            {
-                                "rule": "asset1.marksandspencer.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "bareminerals.com": {
                         "rules": [
                             {
@@ -2764,21 +2761,10 @@
                             }
                         ]
                     },
-                    "biglots.com": {
+                    "hpe.com": {
                         "rules": [
                             {
-                                "rule": "assets.biglots.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
-                    "hdsupplysolutions.com": {
-                        "rules": [
-                            {
-                                "rule": "assets.hdsupplysolutions.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "assets.ext.hpe.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -2790,17 +2776,6 @@
                         "rules": [
                             {
                                 "rule": "assets.langhamhotels.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
-                    "leroymerlin.es": {
-                        "rules": [
-                            {
-                                "rule": "assets.leroymerlin.es/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -2852,10 +2827,10 @@
                             }
                         ]
                     },
-                    "sap.com": {
+                    "microsoft.com": {
                         "rules": [
                             {
-                                "rule": "content.cdn.sap.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "cdn-dynmedia-1.microsoft.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -2878,6 +2853,50 @@
                         "rules": [
                             {
                                 "rule": "digital.ihg.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "accenture.com": {
+                        "rules": [
+                            {
+                                "rule": "dynamicmedia.accenture.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "assaabloy.com": {
+                        "rules": [
+                            {
+                                "rule": "gw-assets.assaabloy.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "benq.com": {
+                        "rules": [
+                            {
+                                "rule": "image.benq.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "acer.com": {
+                        "rules": [
+                            {
+                                "rule": "images.acer.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3028,17 +3047,6 @@
                             }
                         ]
                     },
-                    "nyandcompany.com": {
-                        "rules": [
-                            {
-                                "rule": "images.nyandcompany.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "pfisterfaucets.com": {
                         "rules": [
                             {
@@ -3058,13 +3066,9 @@
                                     "<all>"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
-                    "rosewoodhotels.com": {
-                        "rules": [
+                            },
                             {
-                                "rule": "images.rosewoodhotels.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "www.assets.lighting.philips.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3105,10 +3109,10 @@
                             }
                         ]
                     },
-                    "thenorthface.com": {
+                    "smartwool.com": {
                         "rules": [
                             {
-                                "rule": "images.thenorthface.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "images.smartwool.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3116,10 +3120,21 @@
                             }
                         ]
                     },
-                    "timberland.com": {
+                    "tervis.com": {
                         "rules": [
                             {
-                                "rule": "images.timberland.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "images.tervis.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "thenorthface.com": {
+                        "rules": [
+                            {
+                                "rule": "images.thenorthface.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3215,10 +3230,10 @@
                             }
                         ]
                     },
-                    "castorama.fr": {
+                    "stryker.com": {
                         "rules": [
                             {
-                                "rule": "media.castorama.fr/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "rule": "media-assets.stryker.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3241,17 +3256,6 @@
                         "rules": [
                             {
                                 "rule": "media.direct.playstation.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
-                    "diy.com": {
-                        "rules": [
-                            {
-                                "rule": "media.diy.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3285,17 +3289,6 @@
                         "rules": [
                             {
                                 "rule": "media.musicarts.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
-                    "musiciansfriend.com": {
-                        "rules": [
-                            {
-                                "rule": "media.musiciansfriend.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
                                 "domains": [
                                     "<all>"
                                 ],
@@ -3358,17 +3351,6 @@
                             }
                         ]
                     },
-                    "wwbw.com": {
-                        "rules": [
-                            {
-                                "rule": "media.wwbw.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "bakerdist.com": {
                         "rules": [
                             {
@@ -3391,17 +3373,6 @@
                             }
                         ]
                     },
-                    "shld.net": {
-                        "rules": [
-                            {
-                                "rule": "s.shld.net/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
-                                "domains": [
-                                    "<all>"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
-                            }
-                        ]
-                    },
                     "bluegreenvacations.com": {
                         "rules": [
                             {
@@ -3413,10 +3384,55 @@
                             }
                         ]
                     },
+                    "raiffeisen.ch": {
+                        "rules": [
+                            {
+                                "rule": "scene7.raiffeisen.ch/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "italia.it": {
+                        "rules": [
+                            {
+                                "rule": "tourismmedia.italia.it/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "signify.com": {
+                        "rules": [
+                            {
+                                "rule": "www.assets.signify.com/s7viewersdk/3.11/MixedMediaViewer/js/s7sdk/utils/Utils.js",
+                                "domains": [
+                                    "<all>"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: scene7.com.edgekey.net"
+                            }
+                        ]
+                    },
                     "aliexpress.com": {
                         "rules": [
                             {
                                 "rule": "login.aliexpress.com/",
+                                "domains": [
+                                    "aliexpress.com",
+                                    "aliexpress.us"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: alicdn.com.edgekey.net"
+                            }
+                        ]
+                    },
+                    "aliexpress.us": {
+                        "rules": [
+                            {
+                                "rule": "login.aliexpress.us/",
                                 "domains": [
                                     "aliexpress.com",
                                     "aliexpress.us"
@@ -3453,45 +3469,24 @@
                             }
                         ]
                     },
-                    "ticketmaster.com.au": {
+                    "bupa.com.au": {
                         "rules": [
                             {
-                                "rule": "identity.ticketmaster.com.au/eps-d",
-                                "domains": [
-                                    "ticketmaster.ca",
-                                    "ticketmaster.com",
-                                    "ticketmaster.com.au",
-                                    "ticketmaster.com.mx"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: ticketmaster4.map.fastly.net"
-                            }
-                        ]
-                    },
-                    "ticketmaster.com.mx": {
-                        "rules": [
-                            {
-                                "rule": "identity.ticketmaster.com.mx/eps-d",
-                                "domains": [
-                                    "ticketmaster.ca",
-                                    "ticketmaster.com",
-                                    "ticketmaster.com.au",
-                                    "ticketmaster.com.mx"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: ticketmaster4.map.fastly.net"
-                            }
-                        ]
-                    },
-                    "citi.com": {
-                        "rules": [
-                            {
-                                "rule": "lp-03.chat.online.citi.com",
+                                "rule": "lp-07.customermessaging.bupa.com.au",
                                 "domains": [
                                     "virginmedia.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: liveperson.net"
                             },
                             {
-                                "rule": "lpcdn.chat.online.citi.com",
+                                "rule": "lp-01.customermessaging.bupa.com.au",
+                                "domains": [
+                                    "virginmedia.com"
+                                ],
+                                "reason": "CNAME ENTRY GENERATED FROM: lpsnmedia.net"
+                            },
+                            {
+                                "rule": "lpcdn.customermessaging.bupa.com.au",
                                 "domains": [
                                     "virginmedia.com"
                                 ],
@@ -3514,13 +3509,6 @@
                                     "virginmedia.com"
                                 ],
                                 "reason": "CNAME ENTRY GENERATED FROM: liveperson.net"
-                            },
-                            {
-                                "rule": "lp-01.messaging.optus.com.au",
-                                "domains": [
-                                    "virginmedia.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: lpsnmedia.net"
                             },
                             {
                                 "rule": "lpcdn.messaging.optus.com.au",
@@ -3564,17 +3552,6 @@
                             }
                         ]
                     },
-                    "bupa.com.au": {
-                        "rules": [
-                            {
-                                "rule": "lpcdn.customermessaging.bupa.com.au",
-                                "domains": [
-                                    "virginmedia.com"
-                                ],
-                                "reason": "CNAME ENTRY GENERATED FROM: lpsnmedia.net"
-                            }
-                        ]
-                    },
                     "telstra.com.au": {
                         "rules": [
                             {
@@ -3600,7 +3577,7 @@
                 }
             },
             "exceptions": [],
-            "hash": "8728cb323505446d8c64c6b82d5eded4"
+            "hash": "e682644abcfe5c27c9e24bb6e62c4fb8"
         },
         "trackingCookies1p": {
             "settings": {

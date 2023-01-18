@@ -61,18 +61,23 @@ struct MenuControllerView<Content: View>: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: UIHostingController<Content>, context: Context) {
+        context.coordinator.title = title
         context.coordinator.secondaryTitle = secondaryTitle
+        context.coordinator.action = action
+        context.coordinator.secondaryAction = secondaryAction
+        context.coordinator.onOpen = onOpen
+        context.coordinator.onClose = onClose
     }
     
     class Coordinator<Content: View>: NSObject {
         var responder: UIResponder?
         var observer: Any?
-        private let title: String
+        var title: String
         var secondaryTitle: String?
-        private let action: () -> Void
-        private let secondaryAction: (() -> Void)?
-        private let onOpen: (() -> Void)?
-        private let onClose: (() -> Void)?
+        var action: () -> Void
+        var secondaryAction: (() -> Void)?
+        var onOpen: (() -> Void)?
+        var onClose: (() -> Void)?
         
         init(title: String, secondaryTitle: String?, action: @escaping () -> Void, secondaryAction: (() -> Void)?, onOpen: (() -> Void)?, onClose: (() -> Void)?) {
             self.title = title

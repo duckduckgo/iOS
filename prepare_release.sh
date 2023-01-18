@@ -12,16 +12,16 @@ if ! [[ $common_sh ]]; then
 fi
 
 print_usage_and_exit() {
-	local reason=$1
+    local reason=$1
 
-	cat <<- EOF
-	Usage:
-	  $ $(basename "$0") \<VERSION\> [-h <hotfix>] [-v <verbose>]
-	  Current version: $(cut -d' ' -f3 < Configuration/Version.xcconfig)
+    cat <<- EOF
+    Usage:
+      $ $(basename "$0") <version> [-h] [-v]
+      Current version: $(cut -d' ' -f3 < Configuration/Version.xcconfig)
 
-	Options:
-	 -h <hotfix>   Make hotfix release
-	 -v <verbose>  Enable verbose mode
+    Options:
+     -h  Make hotfix release
+     -v  Enable verbose mode
 
 	EOF
 
@@ -120,7 +120,7 @@ create_pull_request() {
     printf '%s' "Creating PR ... "
     eval git push origin "${base_branch}" "$mute"
     eval git push origin "${changes_branch}" "$mute"
-    eval gh pr create --title \""Release ${version} [TEST]\"" --base "${base_branch}" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
+    eval gh pr create --title \""Release ${version}\"" --base "${base_branch}" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
     eval gh pr view --web "$mute"
     echo "✅"
 }

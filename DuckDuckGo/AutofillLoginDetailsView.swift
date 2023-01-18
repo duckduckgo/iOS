@@ -347,9 +347,9 @@ private struct CopyableCell: View {
                         }
                     }
                 }
-                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
+                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
                 
-                Spacer(minLength: Constants.passwordImageSize)
+                Spacer(minLength: buttonImageName != nil ? Constants.textFieldImageSize : 8)
             }
             .copyable(isSelected: selectedCell == id,
                       menuTitle: actionTitle,
@@ -362,8 +362,10 @@ private struct CopyableCell: View {
             }
             
             if let buttonImageName = buttonImageName {
-                HStack(alignment: .bottom) {
+                let differenceBetweenImageSizeAndTapAreaPerEdge = (Constants.textFieldTapSize - Constants.textFieldImageSize) / 2.0
+                HStack(alignment: .center) {
                     Spacer()
+                    
                     Button {
                         buttonAction?()
                         self.selectedCell = nil
@@ -373,18 +375,22 @@ private struct CopyableCell: View {
                             HStack {
                                 Spacer()
                                 Image(buttonImageName)
-                                    .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
+                                    .resizable()
+                                    .frame(width: Constants.textFieldImageSize, height: Constants.textFieldImageSize)
+                                    .foregroundColor(Color(UIColor.label).opacity(Constants.textFieldImageOpacity))
                                     .opacity(subtitle.isEmpty ? 0 : 1)
+                                Spacer()
                             }
+                            Spacer()
                         }
-                        .contentShape(Rectangle())
-                        .frame(width: Constants.passwordImageSize, height: Constants.passwordImageSize)
                     }
                     .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
                     .background(BackgroundColor(isSelected: selectedCell == id).color)
                     .accessibilityLabel(UserText.autofillShowPassword)
+                    .contentShape(Rectangle())
+                    .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)
                 }
-                .padding(.bottom, Constants.verticalPadding)
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -differenceBetweenImageSizeAndTapAreaPerEdge))
             }
         }
         .selectableBackground(isSelected: selectedCell == id)
@@ -484,7 +490,8 @@ private struct ForegroundColor {
 private struct Constants {
     static let verticalPadding: CGFloat = 4
     static let minRowHeight: CGFloat = 60
-    static let passwordImageOpacity: CGFloat = 0.84
-    static let passwordImageSize: CGFloat = 44
+    static let textFieldImageOpacity: CGFloat = 0.84
+    static let textFieldImageSize: CGFloat = 20
+    static let textFieldTapSize: CGFloat = 44
     static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }

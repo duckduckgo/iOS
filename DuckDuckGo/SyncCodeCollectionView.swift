@@ -49,6 +49,7 @@ struct SyncCodeCollectionView: View {
         }
         .padding(.horizontal)
         .padding(.bottom, 32)
+        .modifier(CameraMaskModifier())
     }
 
     @ViewBuilder
@@ -113,6 +114,7 @@ struct SyncCodeCollectionView: View {
                     Spacer()
                     Image(systemName: "chevron.right")
                 }
+                .frame(height: 40)
             }
 
             Button {
@@ -123,68 +125,81 @@ struct SyncCodeCollectionView: View {
                     Spacer()
                     Image(systemName: "chevron.right")
                 }
+                .frame(height: 40)
             }
 
         }
         .hideScrollContentBackground()
-        .foregroundColor(.primary.opacity(0.9))
+        .foregroundColor(.primary.opacity(0.6))
     }
 
     @ViewBuilder
-    func cameraViewPort() -> some View {
+    func cameraViewPort(width: CGFloat) -> some View {
+        ZStack(alignment: .center) {
+            waitingForCameraPermission()
+            cameraTarget()
+        }
+        .frame(width: width, height: width)
+    }
+
+    @ViewBuilder
+    func cameraTarget() -> some View {
         if model.showCamera {
-            EmptyView()
+            ZStack {
+                ForEach([0.0, 90.0, 180.0, 270.0], id: \.self) { degrees in
+                    RoundedCorner()
+                        .stroke(lineWidth: 8)
+                        .foregroundColor(.white.opacity(0.8))
+                        .rotationEffect(.degrees(degrees), anchor: .center)
+                        .frame(width: 300, height: 300)
+                }
+            }
         }
     }
 
     var body: some View {
-        ZStack {
-            fullscreenCameraBackground()
-
-            VStack {
-                header()
-                    .modifier(CameraMaskModifier())
-
-                GeometryReader { g in
-                    ZStack(alignment: .center) {
-                        cameraViewPort()
-                        waitingForCameraPermission()
-                    }
-                    .frame(width: g.size.width, height: g.size.width)
-                }
+        GeometryReader { g in
+            ZStack {
+                fullscreenCameraBackground()
 
                 VStack {
-                    cameraPermissionDenied()
-                    cameraUnavailable()
-                    instructions()
-                    buttons()
-                    Spacer()
+                    header()
+
+                    cameraViewPort(width: g.size.width)
+
+                    VStack {
+                        cameraPermissionDenied()
+                        cameraUnavailable()
+                        instructions()
+                        buttons()
+                        Spacer()
+                    }
+                    .ignoresSafeArea()
+                    .modifier(CameraMaskModifier())
                 }
-                .ignoresSafeArea()
-                .modifier(CameraMaskModifier())
+                .padding(.horizontal, 0)
             }
-            .padding(.horizontal, 0)
+            .environment(\.colorScheme, .dark)
         }
-        .environment(\.colorScheme, .dark)
     }
 }
 
-struct CameraViewPort: Shape {
-
-    let top: CGFloat
+struct RoundedCorner: Shape {
 
     func path(in rect: CGRect) -> Path {
-        var p = Path()
-        p.move(to: .init(x: 0, y: 0))
-        p.addLine(to: .init(x: rect.width, y: 0))
-        p.addLine(to: .init(x: rect.width, y: top))
-        p.addLine(to: .init(x: 0, y: top))
+        var path = Path()
+        let c = 50.0
+        let r = 30.0
+        let e = c - r
 
-        p.move(to: .init(x: 0, y: top + rect.width))
-        p.addLine(to: .init(x: rect.width, y: top + rect.width))
-        p.addLine(to: .init(x: rect.width, y: rect.height))
-        p.addLine(to: .init(x: 0, y: rect.height))
-        return p
+        path.move(to: CGPoint(x: 0, y: c))
+        path.addLine(to: CGPoint(x: 0, y: e))
+        path.addCurve(to: CGPoint(x: e, y: 0),
+                      control1: CGPoint(x: 0, y: 0),
+                      control2: CGPoint(x: e, y: 0))
+        path.addLine(to: CGPoint(x: c, y: 0))
+
+        return path
     }
 
 }

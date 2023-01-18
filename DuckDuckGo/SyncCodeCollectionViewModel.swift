@@ -28,7 +28,7 @@ class SyncCodeCollectionViewModel: ObservableObject {
 
     @Published var scannedCode: String?
 
-    @Published var showCamera = false
+    @Published var showCamera = true
     @Published var videoPermission: VideoPermission = .unknown
 
     init() {

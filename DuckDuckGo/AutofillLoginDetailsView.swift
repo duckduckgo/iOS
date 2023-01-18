@@ -279,6 +279,7 @@ private struct EditablePasswordCell: View {
             HStack {
                 TextField(placeholderText, text: isPasswordHidden ? $userVisiblePassword : $password) { editing in
                     closeButtonVisible = editing
+                    isPasswordHidden = false
                 } onCommit: {
                     closeButtonVisible = false
                 }
@@ -286,7 +287,6 @@ private struct EditablePasswordCell: View {
                 .disableAutocorrection(true)
                 .keyboardType(.default)
                 .label4Style(design: password.count > 0 ? .monospaced : .default)
-                .disabled(isPasswordHidden)
 
                 Spacer()
 
@@ -295,12 +295,6 @@ private struct EditablePasswordCell: View {
                         Image("ClearTextField")
                             .onTapGesture {
                                 self.password = ""
-                            }
-                    } else {
-                        Image(isPasswordHidden ? "ShowPasswordEye" : "HidePasswordEye")
-                            .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
-                            .onTapGesture {
-                                isPasswordHidden.toggle()
                             }
                     }
                 }

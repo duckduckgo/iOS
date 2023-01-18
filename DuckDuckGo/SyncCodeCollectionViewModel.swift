@@ -28,28 +28,37 @@ class SyncCodeCollectionViewModel: ObservableObject {
 
     @Published var scannedCode: String?
 
-    var videoPermission: VideoPermission {
+    @Published var showCamera = false
+    @Published var videoPermission: VideoPermission = .unknown
+
+    init() {
+        #warning("probably call this from somewhere else")
+        checkCameraPermission()
+    }
+
+    func checkCameraPermission() {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         if status == .notDetermined {
             Task { @MainActor in
                 _ = await AVCaptureDevice.requestAccess(for: .video)
-                self.objectWillChange.send()
+                self.checkCameraPermission()
             }
-            return .unknown
+            return
         }
 
         switch status {
-        case .denied: return .denied
-        case .authorized: return .authorised
+        case .denied: videoPermission = .denied
+        case .authorized: videoPermission = .authorised
         default: assertionFailure("Unexpected status \(status)")
         }
-
-        // Should never hit here
-        return .denied
     }
 
     func codeScanned(_ code: String) {
         scannedCode = code
+    }
+
+    func cameraUnavailable() {
+        showCamera = false
     }
 
 }

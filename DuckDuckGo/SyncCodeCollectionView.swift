@@ -40,6 +40,7 @@ struct SyncCodeCollectionView: View {
                 } label: {
                     Text("Cancel")
                 }
+                .foregroundColor(.primary.opacity(0.9))
                 Spacer()
             }
 
@@ -47,23 +48,24 @@ struct SyncCodeCollectionView: View {
                 .font(.headline)
         }
         .padding(.horizontal)
-        .padding(.bottom, 8)
+        .padding(.bottom, 32)
     }
 
     @ViewBuilder
-    func cameraView() -> some View {
-        if model.videoPermission == .authorised {
-            QRCodeScannerView {
-                model.codeScanned($0)
-            }
-            .ignoresSafeArea()
-
-            GeometryReader { g in
-                CameraViewPort(top: g.safeAreaInsets.top + 50)
-                    .ignoresSafeArea()
-                    .modifier(CameraMaskModifier())
+    func fullscreenCameraBackground() -> some View {
+        Group {
+            if model.showCamera {
+                QRCodeScannerView {
+                    model.codeScanned($0)
+                } onCameraUnavailable: {
+                    model.cameraUnavailable()
+                }
+            } else {
+                Rectangle()
+                    .fill(.black)
             }
         }
+        .ignoresSafeArea()
     }
 
     @ViewBuilder
@@ -76,22 +78,90 @@ struct SyncCodeCollectionView: View {
     @ViewBuilder
     func cameraPermissionDenied() -> some View {
         if model.videoPermission == .denied {
-            Text("Camera denied")
+            Text("Camera permission denied")
+                .padding()
+        }
+    }
+
+    @ViewBuilder
+    func cameraUnavailable() -> some View {
+        if model.videoPermission == .authorised && !model.showCamera {
+            Text("Camera unavailable")
+                .padding()
+        }
+    }
+
+    @ViewBuilder
+    func instructions() -> some View {
+        if model.showCamera {
+            Text("Go to Settings > Sync in the *DuckDuckGo App* on a different device and scan supplied code to connect instantly.")
+                .multilineTextAlignment(.center)
+                .padding()
+        }
+    }
+
+    @ViewBuilder
+    func buttons() -> some View {
+
+        List {
+
+            Button {
+                print("*** keyboard entry")
+            } label: {
+                HStack {
+                    Label("Manually Enter Code", image: "SyncKeyboardIcon")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+            }
+
+            Button {
+                print("*** qr code entry")
+            } label: {
+                HStack {
+                    Label("Show QR Code", image: "SyncQRCodeIcon")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+            }
+
+        }
+        .hideScrollContentBackground()
+        .foregroundColor(.primary.opacity(0.9))
+    }
+
+    @ViewBuilder
+    func cameraViewPort() -> some View {
+        if model.showCamera {
+            EmptyView()
         }
     }
 
     var body: some View {
         ZStack {
-            cameraView()
+            fullscreenCameraBackground()
 
             VStack {
                 header()
+                    .modifier(CameraMaskModifier())
 
-                waitingForCameraPermission()
+                GeometryReader { g in
+                    ZStack(alignment: .center) {
+                        cameraViewPort()
+                        waitingForCameraPermission()
+                    }
+                    .frame(width: g.size.width, height: g.size.width)
+                }
 
-                cameraPermissionDenied()
-
-                Spacer()
+                VStack {
+                    cameraPermissionDenied()
+                    cameraUnavailable()
+                    instructions()
+                    buttons()
+                    Spacer()
+                }
+                .ignoresSafeArea()
+                .modifier(CameraMaskModifier())
             }
             .padding(.horizontal, 0)
         }
@@ -123,9 +193,9 @@ struct CameraMaskModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         if #available(iOS 15.0, *) {
-            content.foregroundStyle(.regularMaterial)
+            content.background(.regularMaterial)
         } else {
-            content.foregroundColor(.black.opacity(0.9))
+            content.background(Rectangle().foregroundColor(.black.opacity(0.9)))
         }
     }
 

@@ -89,7 +89,7 @@ struct SyncManagementView: View {
 
 }
 
-private extension View {
+extension View {
 
     func hideScrollContentBackground() -> some View {
         if #available(iOS 16, *) {

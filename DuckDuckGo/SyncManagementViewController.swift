@@ -93,7 +93,7 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
     func showDeviceConnected() {
         print(#function)
     }
-
+    
     func showRecoveryPDF() {
         print(#function)
     }

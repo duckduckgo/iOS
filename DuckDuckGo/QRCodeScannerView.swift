@@ -24,6 +24,7 @@ import AVFoundation
 struct QRCodeScannerView: UIViewRepresentable {
 
     var onQRCodeScanned: (String) -> Void
+    var onCameraUnavailable: () -> Void
 
     func makeCoordinator() -> Coordinator {
         print(#function)
@@ -61,11 +62,7 @@ struct QRCodeScannerView: UIViewRepresentable {
 
             guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
                   let input = try? AVCaptureDeviceInput(device: backCamera) else {
-                #if targetEnvironment(simulator)
-                print("No input device on simulator")
-                #else
-                assertionFailure("Failed to get device input")
-                #endif
+                cameraView.onCameraUnavailable()
                 return
             }
             session.addInput(input)

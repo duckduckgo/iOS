@@ -316,6 +316,10 @@
 		85D2187924BF6B8B004373D2 /* FaviconSourcesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187724BF6B88004373D2 /* FaviconSourcesProviderTests.swift */; };
 		85D2187B24BF9F85004373D2 /* FaviconUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */; };
 		85D598872927F84C00FA3B1B /* Crashes in Frameworks */ = {isa = PBXBuildFile; productRef = 85D598862927F84C00FA3B1B /* Crashes */; };
+		85DD44252976C827005CC388 /* DismissableUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD44242976C827005CC388 /* DismissableUIHostingController.swift */; };
+		85DD44272976DC5B005CC388 /* SyncCodeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD44262976DC5B005CC388 /* SyncCodeCollectionView.swift */; };
+		85DD44292976F523005CC388 /* SyncCodeCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD44282976F523005CC388 /* SyncCodeCollectionViewModel.swift */; };
+		85DD442B2977255A005CC388 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD442A2977255A005CC388 /* QRCodeScannerView.swift */; };
 		85DF714624F7FE6100C89288 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEC24C7CCA500973FE7 /* AppWidthObserver.swift */; };
 		85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEE24C7EA3B00973FE7 /* SmallOmniBarState.swift */; };
@@ -1116,6 +1120,10 @@
 		85D2187A24BF9F85004373D2 /* FaviconUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviconUserScript.swift; sourceTree = "<group>"; };
 		85D33FCB25C97B6E002B91A6 /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85D33FCF25C97B6E002B91A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85DD44242976C827005CC388 /* DismissableUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableUIHostingController.swift; sourceTree = "<group>"; };
+		85DD44262976DC5B005CC388 /* SyncCodeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeCollectionView.swift; sourceTree = "<group>"; };
+		85DD44282976F523005CC388 /* SyncCodeCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeCollectionViewModel.swift; sourceTree = "<group>"; };
+		85DD442A2977255A005CC388 /* QRCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerView.swift; sourceTree = "<group>"; };
 		85DFEDEC24C7CCA500973FE7 /* AppWidthObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWidthObserver.swift; sourceTree = "<group>"; };
 		85DFEDEE24C7EA3B00973FE7 /* SmallOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallOmniBarState.swift; sourceTree = "<group>"; };
 		85DFEDF024C7EEA400973FE7 /* LargeOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeOmniBarState.swift; sourceTree = "<group>"; };
@@ -2706,8 +2714,6 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				85F98F8C296F0ED100742F4A /* Sync */,
-				3157B43627F4C8380042D3D7 /* Favicons */,
 				AA4D6A8023DE4973007E8790 /* AppIcon */,
 				F1C5ECF31E37812900C599A4 /* Application */,
 				9817C9C121EF58BA00884F65 /* AutoClear */,
@@ -2718,6 +2724,7 @@
 				B652DF02287C01EE00C12A9C /* ContentBlocking */,
 				310D09192799EF5C00DC0060 /* Downloads */,
 				F143C2C51E4A08F300CFDE3A /* DuckDuckGo.entitlements */,
+				3157B43627F4C8380042D3D7 /* Favicons */,
 				839F119520DBC489007CD8C2 /* Feedback */,
 				85F2FFFE2215C163006BB258 /* FindInPage */,
 				F13B4BF31F18C73A00814661 /* Home */,
@@ -2727,11 +2734,12 @@
 				F1C5ECFA1E37B15B00C599A4 /* Main */,
 				85AE668C20971FCA0014CF04 /* Notifications */,
 				F1C4A70C1E5771F800A6CA1B /* OmniBar */,
-				1E87615728A1515400C7C5CE /* PrivacyDashboard */,
 				F1AE54DB1F0425BB00D9A700 /* Privacy */,
+				1E87615728A1515400C7C5CE /* PrivacyDashboard */,
 				C1B7B51D28941F160098FD6A /* RemoteMessaging */,
 				F1AB2B401E3F75A000868554 /* Settings */,
 				0A6CC0EE23904D5400E4F627 /* Settings.bundle */,
+				85F98F8C296F0ED100742F4A /* Sync */,
 				F13B4BF41F18C74500814661 /* Tabs */,
 				F1386BA21E6846320062FC3C /* TabSwitcher */,
 				98F3A1D6217B36EE0011A0D4 /* Themes */,
@@ -3009,6 +3017,14 @@
 			path = IntegrationTests;
 			sourceTree = "<group>";
 		};
+		85DD44232976C7A8005CC388 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				85F98F91296F32BD00742F4A /* SyncManagementViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		85DFEDEB24C7CC7600973FE7 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
@@ -3060,8 +3076,10 @@
 		85F98F8C296F0ED100742F4A /* Sync */ = {
 			isa = PBXGroup;
 			children = (
-				85F98F8E296F0EE000742F4A /* UI */,
+				85F98F97296F4CB100742F4A /* SyncAssets.xcassets */,
+				85DD44232976C7A8005CC388 /* Controllers */,
 				85F98F8D296F0ED900742F4A /* ViewModels */,
+				85F98F8E296F0EE000742F4A /* Views */,
 			);
 			name = Sync;
 			sourceTree = "<group>";
@@ -3069,21 +3087,22 @@
 		85F98F8D296F0ED900742F4A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				85DD44282976F523005CC388 /* SyncCodeCollectionViewModel.swift */,
 				85F98F93296F447F00742F4A /* SyncManagementViewModel.swift */,
 				85F98F99296F622B00742F4A /* SyncSetupViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
 		};
-		85F98F8E296F0EE000742F4A /* UI */ = {
+		85F98F8E296F0EE000742F4A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				85F98F97296F4CB100742F4A /* SyncAssets.xcassets */,
+				85DD442A2977255A005CC388 /* QRCodeScannerView.swift */,
+				85DD44262976DC5B005CC388 /* SyncCodeCollectionView.swift */,
 				85F98F8F296F0EF400742F4A /* SyncManagementView.swift */,
-				85F98F91296F32BD00742F4A /* SyncManagementViewController.swift */,
 				85F98F95296F480A00742F4A /* SyncSetupView.swift */,
 			);
-			name = UI;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		9817C9C121EF58BA00884F65 /* AutoClear */ = {
@@ -4032,9 +4051,14 @@
 		F1D796ED1E7AE4090019D451 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
+				982686B82600C0960011A8D6 /* ActionMessageView.xib */,
+				85DD44242976C827005CC388 /* DismissableUIHostingController.swift */,
 				980891A122369ADB00313A70 /* FeedbackUserText.swift */,
 				859872221F5743AF00041CB8 /* FireAnimation */,
+				4B6484E627FD1E340050A7A1 /* FontExtension.swift */,
 				985AAE4424899369007A43EC /* HomeScreenTransition.swift */,
+				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
 				F1D934021E610DCE00A6F0D6 /* Point.swift */,
 				985892512260B1B200EEB31B /* ProgressView.swift */,
 				F143C32B1E4A9A4800CFDE3A /* RoundedRectangleView.swift */,
@@ -4046,20 +4070,16 @@
 				83004E832193E14C00DA013C /* UIAlertControllerExtension.swift */,
 				F1B745211E549D550072547E /* UIColorExtension.swift */,
 				F194FAEC1F14E2B3009B4DF8 /* UIFontExtension.swift */,
-				850365F223DE087800D0F787 /* UIImageViewExtension.swift */,
 				1EC51CD828D8C0DF00E9D05A /* UIImageExtension.swift */,
+				850365F223DE087800D0F787 /* UIImageViewExtension.swift */,
 				980891A82238504B00313A70 /* UILabelExtension.swift */,
 				9820FF4F2244FECC008D4782 /* UIScrollViewExtension.swift */,
 				982C87C32255559A00919035 /* UITableViewCellExtension.swift */,
+				319A37162829C8AD0079FBCE /* UITableViewExtension.swift */,
 				F143C32C1E4A9A4800CFDE3A /* UIViewControllerExtension.swift */,
 				F1DE78591E5CD2A70058895A /* UIViewExtension.swift */,
 				F1F5337B1F26A9EF00D80D4F /* UserText.swift */,
 				986DA94924884B18004A7E39 /* WebViewTransition.swift */,
-				982686AC2600C0850011A8D6 /* ActionMessageView.swift */,
-				982686B82600C0960011A8D6 /* ActionMessageView.xib */,
-				1EF24234273BB9D200DE3D02 /* IntervalSlider.swift */,
-				4B6484E627FD1E340050A7A1 /* FontExtension.swift */,
-				319A37162829C8AD0079FBCE /* UITableViewExtension.swift */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -4989,17 +5009,20 @@
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				1EEF123F2850A68A003DDE57 /* PrivacyInfoContainerView.swift in Sources */,
 				F4B0B796252CB35700830156 /* OnboardingWidgetsDetailsViewController.swift in Sources */,
+				85DD44292976F523005CC388 /* SyncCodeCollectionViewModel.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
 				310D09212799FD1A00DC0060 /* MIMEType.swift in Sources */,
 				F4147354283BF834004AA7A5 /* AutofillContentScopeFeatureToggles.swift in Sources */,
 				986DA94A24884B18004A7E39 /* WebViewTransition.swift in Sources */,
 				31B524572715BB23002225AB /* WebJSAlert.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
+				85DD44252976C827005CC388 /* DismissableUIHostingController.swift in Sources */,
 				982E5630222C3D5B008D861B /* FeedbackPickerViewController.swift in Sources */,
 				85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */,
 				4B6484F327FD1E350050A7A1 /* MenuControllerView.swift in Sources */,
 				1E8AD1D527C2E22900ABA377 /* DownloadsListSectionViewModel.swift in Sources */,
 				31584616281AFB46004ADB8B /* AutofillLoginDetailsViewController.swift in Sources */,
+				85DD44272976DC5B005CC388 /* SyncCodeCollectionView.swift in Sources */,
 				F47E53D9250A97330037C686 /* OnboardingDefaultBroswerViewController.swift in Sources */,
 				F13B4BD51F183B3600814661 /* TabsModelPersistenceExtension.swift in Sources */,
 				980891A52237D4F500313A70 /* FeedbackNavigator.swift in Sources */,
@@ -5089,6 +5112,7 @@
 				98F78B8E22419093007CACF4 /* ThemableNavigationController.swift in Sources */,
 				CBD4F140279EBFB300B20FD7 /* SwiftUICollectionViewCell.swift in Sources */,
 				31CC224928369B38001654A4 /* AutofillLoginSettingsListViewController.swift in Sources */,
+				85DD442B2977255A005CC388 /* QRCodeScannerView.swift in Sources */,
 				F1D796EC1E7AB8930019D451 /* SaveBookmarkActivity.swift in Sources */,
 				F4B0B78C252CAFF700830156 /* OnboardingWidgetsViewController.swift in Sources */,
 				4B6484EF27FD1E350050A7A1 /* MacWaitlistViewController.swift in Sources */,

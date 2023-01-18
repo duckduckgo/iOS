@@ -18,6 +18,7 @@
 //
 
 import SwiftUI
+import Combine
 
 @MainActor
 class SyncManagementViewController: UIHostingController<SyncManagementView> {
@@ -25,6 +26,8 @@ class SyncManagementViewController: UIHostingController<SyncManagementView> {
     convenience init() {
         self.init(rootView: SyncManagementView(model: SyncManagementViewModel()))
     }
+
+    var scannedCodeCancellable: AnyCancellable?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +51,9 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
     func showSyncSetup() {
         print(#function)
         let model = SyncSetupViewModel()
-        let controller = DismissibleUIHostingController(rootView: SyncSetupView(model: model)) {
+        let controller = DismissibleUIHostingController(rootView: SyncSetupView(model: model)) { [weak self] in
             print(#function, "onDismiss", model)
-            self.rootView.model.setupFinished(model)
+            self?.rootView.model.setupFinished(model)
         }
 
         navigationController?.present(controller, animated: true) {
@@ -64,30 +67,35 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
 
     func showSyncWithAnotherDevice() {
         print(#function)
+
+        let model = SyncCodeCollectionViewModel()
+        let controller = DismissibleUIHostingController(rootView: SyncCodeCollectionView(model: model)) { [weak self] in
+            print(#function, "onDismiss", model)
+            self?.scannedCodeCancellable = nil
+            self?.rootView.model.codeCollectionCancelled()
+        }
+
+        scannedCodeCancellable = model.$scannedCode.sink { [weak self] code in
+            guard let code = code else { return }
+            if self?.rootView.model.codeScanned(code) == .valid {
+                self?.scannedCodeCancellable = nil
+                controller.dismiss(animated: true)
+            }
+        }
+
+        controller.modalPresentationStyle = .fullScreen
+        navigationController?.present(controller, animated: true) {
+            print(#function, "completed")
+        }
+
     }
 
-}
-
-@MainActor
-class DismissibleUIHostingController<Content: View>: UIHostingController<Content> {
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ThemeManager.shared.currentTheme.statusBarStyle
+    func showDeviceConnected() {
+        print(#function)
     }
 
-    let onDismiss: () -> Void
-
-    init(rootView: Content, onDismiss: @escaping () -> Void) {
-        self.onDismiss = onDismiss
-        super.init(rootView: rootView)
+    func showRecoveryPDF() {
+        print(#function)
     }
 
-    required dynamic init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        onDismiss()
-    }
 }

@@ -25,6 +25,8 @@ protocol SyncManagementViewModelDelegate: AnyObject {
     func showSyncSetup()
     func showRecoverData()
     func showSyncWithAnotherDevice()
+    func showDeviceConnected()
+    func showRecoveryPDF()
 
 }
 
@@ -40,6 +42,11 @@ class SyncManagementViewModel: ObservableObject {
         let name: String
         let isThisDevice: Bool
 
+    }
+
+    enum ScannedCodeValidity {
+        case invalid
+        case valid
     }
 
     @Published var isSyncEnabled = false
@@ -84,6 +91,19 @@ class SyncManagementViewModel: ObservableObject {
                 Device(id: UUID().uuidString, name: UIDevice.current.name, isThisDevice: true)
             ]
         }
+    }
+
+    func codeScanned(_ code: String) -> ScannedCodeValidity {
+        #warning("validate the code, assume valid for now")
+        defer {
+            delegate?.showDeviceConnected()
+        }    
+        return .valid
+    }
+
+    func codeCollectionCancelled() {
+        #warning("if we were in the create account state, then show recovery PDF screen")
+        delegate?.showRecoveryPDF()
     }
 
 }

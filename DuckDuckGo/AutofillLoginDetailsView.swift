@@ -104,7 +104,7 @@ struct AutofillLoginDetailsView: View {
                              selectedCell: $viewModel.selectedCell,
                              actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              action: { viewModel.copyToPasteboard(.username) },
-                             buttonImageName: "Clipboard",
+                             buttonImageName: "Copy",
                              buttonAction: { viewModel.copyToPasteboard(.username) })
                 
                 CopyableCell(title: UserText.autofillLoginDetailsPassword,
@@ -114,7 +114,7 @@ struct AutofillLoginDetailsView: View {
                              action: { viewModel.isPasswordHidden.toggle() },
                              secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              secondaryAction: { viewModel.copyToPasteboard(.password) },
-                             buttonImageName: "Clipboard",
+                             buttonImageName: "Copy",
                              buttonAction: { viewModel.copyToPasteboard(.password) })
             }
 

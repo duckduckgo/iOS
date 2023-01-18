@@ -9,31 +9,38 @@ end
 #################################################
 
 desc 'Fetches and updates certificates and provisioning profiles for App Store distribution'
-lane :sync_signing do
-  do_sync_signing
-end
-
-desc 'Fetches and updates certificates and provisioning profiles for development'
-lane :sync_signing_dev do
-  do_sync_signing
+lane :sync_signing do |options|
+  do_sync_signing(options)
 end
 
 desc 'Makes App Store release build and uploads it to App Store Connect'
-lane :release_appstore do
-  build_release
+lane :release_appstore do |options|
+  build_release(options)
 
-  deliver(
-    submit_for_review: false,
-    automatic_release: false,
-    phased_release: true,
-    force: true,
-    skip_screenshots: true,
-    precheck_include_in_app_purchases: false,
-    submission_information: {
-       add_id_info_uses_idfa: false
+  deliver(common_deliver_arguments.merge(options))
+
+  begin
+    upload_metadata(options)
+  rescue => exception
+    UI.user_error! %{Failed to upload metadata: #{exception}
+1. Your build has been successfully uploaded, it's only a problem with App Store metadata.
+2. It's possible that there is a submission for another platform (macOS) in a non-editable state
+  (e.g. Pending Developer Release, Developer Rejected, Rejected or Metadata Rejected).
+3. Before you retry, ensure that the pending macOS release is completed (Ready for Sale) or moved
+  back to "Prepare for Submission". If it can't be done at the moment and you can't wait, you'll need
+  to update metadata manually.
+4. Use upload_metadata lane to only handle metadata (without building the release and uploading a build):
+  $ bundle exec fastlane upload_metadata
     }
-  )
+  end
+end
 
+desc 'Updates App Store metadata'
+lane :upload_metadata do |options|
+  deliver(common_deliver_arguments.merge(options).merge({
+    skip_binary_upload: true,
+    skip_metadata: false
+  }))
 end
 
 desc 'Makes App Store release build and uploads it to TestFlight'
@@ -49,8 +56,8 @@ end
 # Private lanes
 #################################################
 
-private_lane :build_release do
-  sync_signing
+private_lane :build_release do |options|
+  sync_signing(options)
 
   build_app(
     export_method: "app-store",
@@ -78,9 +85,26 @@ private_lane :get_api_key do
   end
 end
 
-private_lane :do_sync_signing do
+private_lane :do_sync_signing do |options|
   sync_code_signing(
     api_key: get_api_key,
+    username: options[:username],
     readonly: is_ci
   )
+end
+
+def common_deliver_arguments
+  {
+    api_key: get_api_key,
+    submit_for_review: false,
+    automatic_release: false,
+    phased_release: true,
+    force: true,
+    skip_screenshots: true,
+    skip_metadata: true,
+    precheck_include_in_app_purchases: false,
+    submission_information: {
+       add_id_info_uses_idfa: false
+    }
+  }
 end

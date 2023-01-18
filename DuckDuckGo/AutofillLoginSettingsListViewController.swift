@@ -479,17 +479,34 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
         switch viewModel.sections[indexPath.section] {
         case .credentials(_, let items):
             if editingStyle == .delete {
-                let shouldDeleteSection = items.count == 1
                 let title = items[indexPath.row].title
-                let deletedSuccessfully = viewModel.delete(at: indexPath)
-                
-                if shouldDeleteSection {
-                    tableView.deleteSections([indexPath.section], with: .automatic)
-                } else {
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                let accountId = items[indexPath.row].account.id
+
+                var sectionsToDelete: [Int] = []
+                var rowsToDelete: [IndexPath] = []
+
+                for (index, section) in viewModel.sections.enumerated() {
+                    if case .credentials(_, let items) = section, items.contains(where: { $0.account.id == accountId }) {
+                        if items.count == 1 {
+                            sectionsToDelete.append(index)
+                        } else if let rowIndex = items.firstIndex(where: { $0.account.id == accountId }) {
+                            rowsToDelete.append(IndexPath(row: rowIndex, section: index))
+                        }
+                    }
                 }
-                
+
+                let deletedSuccessfully = viewModel.delete(at: indexPath)
+
                 if deletedSuccessfully {
+                    tableView.beginUpdates()
+                    if !sectionsToDelete.isEmpty {
+                        tableView.deleteSections(IndexSet(sectionsToDelete), with: .automatic)
+                    }
+                    if !rowsToDelete.isEmpty {
+                        tableView.deleteRows(at: rowsToDelete, with: .automatic)
+                    }
+                    tableView.endUpdates()
+
                     presentDeleteConfirmation(for: title)
                 }
             }

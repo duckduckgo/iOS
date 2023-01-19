@@ -103,7 +103,7 @@ update_build_version() {
 	echo "Setting build version ..."
 	local username
 	username="$(git config user.email 2>&1)"
-	fastlane increment_build_number_for_version version:"${version}" username:"$username"
+	bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username"
 	git add DuckDuckGo.xcodeproj/project.pbxproj
 	eval git commit -m \"Update build number\" "$mute"
 	echo "Setting build version ... ✅"

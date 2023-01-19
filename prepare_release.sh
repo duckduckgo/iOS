@@ -4,6 +4,8 @@ set -eo pipefail
 
 mute=">/dev/null 2>&1"
 version="$1"
+release_branch_parent="develop"
+hotfix_branch_parent="main"
 
 #
 # Output passed arguments to stderr and exit.
@@ -55,8 +57,8 @@ read_command_line_arguments() {
 	shift $((OPTIND-1))
 
 	[[ $is_hotfix ]] && branch_name="hotfix" || branch_name="release"
-	base_branch="${branch_name}/${version}"
-	changes_branch="${base_branch}-changes"
+	release_branch="${branch_name}/${version}"
+	changes_branch="${release_branch}-changes"
 }
 
 stash() {
@@ -66,8 +68,8 @@ stash() {
 }
 
 assert_clean_state() {
-	if git show-ref --quiet "refs/heads/${base_branch}"; then
-		die "💥 Error: Branch ${base_branch} already exists."
+	if git show-ref --quiet "refs/heads/${release_branch}"; then
+		die "💥 Error: Branch ${release_branch} already exists."
 	fi
 	if git show-ref --quiet "refs/heads/${changes_branch}"; then
 		die "💥 Error: Branch ${changes_branch} already exists."
@@ -77,13 +79,13 @@ assert_clean_state() {
 create_release_branch() {
 	if [[ ${is_hotfix} ]]; then
 		printf '%s' "Creating hotfix branch ... "
-		eval git checkout main "$mute"
+		eval git checkout ${hotfix_branch_parent} "$mute"
 	else
 		printf '%s' "Creating release branch ... "
-		eval git checkout develop "$mute"
+		eval git checkout ${release_branch_parent} "$mute"
 	fi
 	eval git pull "$mute"
-	eval git checkout -b "${base_branch}" "$mute"
+	eval git checkout -b "${release_branch}" "$mute"
 	eval git checkout -b "${changes_branch}" "$mute"
 	echo "✅"
 }
@@ -92,7 +94,7 @@ update_marketing_version() {
 	printf '%s' "Setting app version ... "
 	./set_version.sh "${version}"
 	git add Configuration/Version.xcconfig \
-	DuckDuckGo/Settings.bundle/Root.plist
+		DuckDuckGo/Settings.bundle/Root.plist
 	eval git commit -m \"Update version number\" "$mute"
 	echo "✅"
 }
@@ -111,18 +113,18 @@ update_embedded_files() {
 	printf '%s' "Updating embedded files ... "
 	eval ./update_embedded.sh "$mute"
 	git add Core/AppTrackerDataSetProvider.swift \
-	Core/trackerData.json \
-	Core/AppPrivacyConfigurationDataProvider.swift \
-	Core/ios-config.json
+		Core/trackerData.json \
+		Core/AppPrivacyConfigurationDataProvider.swift \
+		Core/ios-config.json
 	eval git commit -m \"Update embedded files\" "$mute" || printf "\n✅ No changes to embedded files\n"
 	echo "✅"
 }
 
 create_pull_request() {
 	printf '%s' "Creating PR ... "
-	eval git push origin "${base_branch}" "$mute"
+	eval git push origin "${release_branch}" "$mute"
 	eval git push origin "${changes_branch}" "$mute"
-	eval gh pr create --title \"Release "${version}"\" --base "${base_branch}" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
+	eval gh pr create --title \"Release "${version}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
 	echo "✅"
 }

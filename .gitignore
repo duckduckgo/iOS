@@ -59,7 +59,6 @@ Carthage/Build
 
 # Bundler
 Gemfile.lock
-.ruby-version
 
 # fastlane
 #

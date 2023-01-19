@@ -44,24 +44,18 @@ extension SyncManagementViewController: Themable {
 
 }
 
-extension SyncManagementViewController: SyncSetupViewModelDelegate {
-
-    func syncSetupFinished(_ model: SyncSetupViewModel) {
-        print(#function, model.state)
-        // assert(navigationController?.topViewController is DismissibleUIHostingController<SyncSetupView>)
-        navigationController?.topViewController?.dismiss(animated: true)
-        rootView.model.setupFinished(model)
-    }
-
-
-}
-
 extension SyncManagementViewController: SyncManagementViewModelDelegate {
 
     func showSyncSetup() {
         print(#function)
-        let model = SyncSetupViewModel()
-        model.delegate = self
+        
+        let model = SyncSetupViewModel { [weak self] model in
+            print(#function, model.state, self?.navigationController?.topViewController.self as Any)
+            // assert(navigationController?.topViewController is DismissibleUIHostingController<SyncSetupView>)
+            self?.navigationController?.topViewController?.dismiss(animated: true)
+            self?.rootView.model.setupFinished(model)
+        }
+
         let controller = DismissibleUIHostingController(rootView: SyncSetupView(model: model)) { [weak self] in
             print(#function, "onDismiss", model)
             self?.rootView.model.setupFinished(model)
@@ -79,10 +73,16 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
     func showSyncWithAnotherDevice() {
         print(#function)
 
-        let model = SyncCodeCollectionViewModel()
+        let model = SyncCodeCollectionViewModel { [weak self] model in
+            print(#function, model, self?.navigationController?.topViewController.self as Any)
+            // assert(navigationController?.topViewController is DismissibleUIHostingController<SyncSetupView>)
+            self?.navigationController?.topViewController?.dismiss(animated: true)
+            // self?.rootView.model.codeCollectionFinished(model)
+        }
+
         let controller = DismissibleUIHostingController(rootView: SyncCodeCollectionView(model: model)) { [weak self] in
             print(#function, "onDismiss", model)
-            self?.rootView.model.codeCollectionCancelled()
+            // self?.rootView.model.codeCollectionFinished(model)
         }
 
         controller.modalPresentationStyle = .fullScreen

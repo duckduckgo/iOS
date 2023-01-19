@@ -19,12 +19,6 @@
 
 import Foundation
 
-protocol SyncSetupViewModelDelegate: AnyObject {
-
-    func syncSetupFinished(_ model: SyncSetupViewModel)
-
-}
-
 class SyncSetupViewModel: ObservableObject {
 
     enum State {
@@ -35,10 +29,10 @@ class SyncSetupViewModel: ObservableObject {
 
     @Published var state: State = .turnOnPrompt
 
-    weak var delegate: SyncSetupViewModelDelegate?
+    let finished: (SyncSetupViewModel) -> Void
 
-    init() {
-        print("*** SyncSetupViewModel init")
+    init(finished: @escaping (SyncSetupViewModel) -> Void) {
+        self.finished = finished
     }
 
     func turnOnSyncAction() {
@@ -49,23 +43,23 @@ class SyncSetupViewModel: ObservableObject {
     func recoverDataAction() {
         print(#function)
         state = .showRecoverData
-        delegate?.syncSetupFinished(self)
+        finished(self)
     }
 
     func syncWithAnotherDeviceAction() {
         print(#function)
         state = .showSyncWithAnotherDevice
-        delegate?.syncSetupFinished(self)
+        finished(self)
     }
 
     func turnOnSyncNowAction() {
         state = .turnOnNow
-        delegate?.syncSetupFinished(self)
+        finished(self)
     }
 
     func cancel() {
         state = .cancelled
-        delegate?.syncSetupFinished(self)
+        finished(self)
     }
 
 }

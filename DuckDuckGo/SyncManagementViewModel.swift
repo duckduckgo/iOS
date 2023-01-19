@@ -101,17 +101,12 @@ class SyncManagementViewModel: ObservableObject {
         }
     }
 
-    func codeScanned(_ code: String) -> ScannedCodeValidity {
-        #warning("validate the code, assume valid for now")
-        defer {
-            delegate?.showDeviceConnected()
-        }
-        return .valid
-    }
+    func codeCollectionFinished(_ model: SyncCodeCollectionViewModel) {
+        print(#function, model)
 
-    func codeCollectionCancelled() {
-        #warning("if we were in the create account state, then show recovery PDF screen")
-        delegate?.showRecoveryPDF()
+        // check if a valid code was collected
+        // determine what to do next
+        
     }
 
 }

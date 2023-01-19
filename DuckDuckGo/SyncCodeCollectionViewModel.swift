@@ -27,9 +27,14 @@ class SyncCodeCollectionViewModel: ObservableObject {
     }
 
     @Published var scannedCode: String?
-
     @Published var showCamera = true
     @Published var videoPermission: VideoPermission = .unknown
+
+    let finished: (SyncCodeCollectionViewModel) -> Void
+
+    init(finished: @escaping (SyncCodeCollectionViewModel) -> Void) {
+        self.finished = finished
+    }
 
     func checkCameraPermission() {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
@@ -49,11 +54,18 @@ class SyncCodeCollectionViewModel: ObservableObject {
     }
 
     func codeScanned(_ code: String) {
+        print(#function, code)
         scannedCode = code
     }
 
     func cameraUnavailable() {
+        print(#function)
         showCamera = false
+    }
+
+    func cancel() {
+        print(#function)
+        finished(self)
     }
 
 }

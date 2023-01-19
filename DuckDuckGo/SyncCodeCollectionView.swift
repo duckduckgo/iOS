@@ -25,21 +25,11 @@ struct SyncCodeCollectionView: View {
 
     @ObservedObject var model: SyncCodeCollectionViewModel
 
-    /// When targetting 15+ we can delete this function and inject it with
-    /// `@Environment(\.dismiss) var dismiss`
-    func dismiss() {
-        presentationMode.wrappedValue.dismiss()
-    }
-
     @ViewBuilder
     func header() -> some View {
         ZStack {
             HStack {
-                Button {
-                    dismiss()
-                } label: {
-                    Text("Cancel")
-                }
+                Button("Cancel", action: model.cancel)
                 .foregroundColor(.primary.opacity(0.9))
                 Spacer()
             }
@@ -47,8 +37,7 @@ struct SyncCodeCollectionView: View {
             Text("Scan QR Code")
                 .font(.headline)
         }
-        .padding(.horizontal)
-        .padding(.bottom, 32)
+        .padding()
         .modifier(CameraMaskModifier())
     }
 
@@ -130,7 +119,6 @@ struct SyncCodeCollectionView: View {
 
         }
         .hideScrollContentBackground()
-        .foregroundColor(.primary.opacity(0.6))
     }
 
     @ViewBuilder

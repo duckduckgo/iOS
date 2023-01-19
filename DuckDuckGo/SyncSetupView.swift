@@ -115,6 +115,8 @@ struct SyncSetupView: View {
             default: EmptyView()
             }
         }
+        .lineLimit(nil)
+        .multilineTextAlignment(.center)
     }
 
 }

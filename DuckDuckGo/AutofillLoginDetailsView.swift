@@ -105,6 +105,7 @@ struct AutofillLoginDetailsView: View {
                              actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              action: { viewModel.copyToPasteboard(.username) },
                              buttonImageName: "Copy",
+                             buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
                              buttonAction: { viewModel.copyToPasteboard(.username) })
                 
                 CopyableCell(title: UserText.autofillLoginDetailsPassword,
@@ -115,6 +116,7 @@ struct AutofillLoginDetailsView: View {
                              secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              secondaryAction: { viewModel.copyToPasteboard(.password) },
                              buttonImageName: "Copy",
+                             buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
                              buttonAction: { viewModel.copyToPasteboard(.password) })
             }
 
@@ -320,6 +322,7 @@ private struct CopyableCell: View {
     var secondaryAction: (() -> Void)?
     
     var buttonImageName: String?
+    var buttonAccessibilityLabel: String?
     var buttonAction: (() -> Void)?
 
     var body: some View {
@@ -355,7 +358,7 @@ private struct CopyableCell: View {
                 self.selectedCell = nil
             }
             
-            if let buttonImageName = buttonImageName {
+            if let buttonImageName = buttonImageName, let buttonAccessibilityLabel = buttonAccessibilityLabel {
                 let differenceBetweenImageSizeAndTapAreaPerEdge = (Constants.textFieldTapSize - Constants.textFieldImageSize) / 2.0
                 HStack(alignment: .center) {
                     Spacer()
@@ -380,7 +383,7 @@ private struct CopyableCell: View {
                     }
                     .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
                     .background(BackgroundColor(isSelected: selectedCell == id).color)
-                    .accessibilityLabel(UserText.autofillShowPassword)
+                    .accessibilityLabel(buttonAccessibilityLabel)
                     .contentShape(Rectangle())
                     .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)
                 }

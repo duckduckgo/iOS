@@ -25,15 +25,13 @@ class SyncManagementViewController: UIHostingController<SyncManagementView> {
 
     convenience init() {
         self.init(rootView: SyncManagementView(model: SyncManagementViewModel()))
-    }
-
-    var scannedCodeCancellable: AnyCancellable?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
         rootView.model.delegate = self
         navigationItem.title = "Sync"
         applyTheme(ThemeManager.shared.currentTheme)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
 
 }
@@ -46,11 +44,24 @@ extension SyncManagementViewController: Themable {
 
 }
 
+extension SyncManagementViewController: SyncSetupViewModelDelegate {
+
+    func syncSetupFinished(_ model: SyncSetupViewModel) {
+        print(#function, model.state)
+        // assert(navigationController?.topViewController is DismissibleUIHostingController<SyncSetupView>)
+        navigationController?.topViewController?.dismiss(animated: true)
+        rootView.model.setupFinished(model)
+    }
+
+
+}
+
 extension SyncManagementViewController: SyncManagementViewModelDelegate {
 
     func showSyncSetup() {
         print(#function)
         let model = SyncSetupViewModel()
+        model.delegate = self
         let controller = DismissibleUIHostingController(rootView: SyncSetupView(model: model)) { [weak self] in
             print(#function, "onDismiss", model)
             self?.rootView.model.setupFinished(model)
@@ -71,21 +82,13 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         let model = SyncCodeCollectionViewModel()
         let controller = DismissibleUIHostingController(rootView: SyncCodeCollectionView(model: model)) { [weak self] in
             print(#function, "onDismiss", model)
-            self?.scannedCodeCancellable = nil
             self?.rootView.model.codeCollectionCancelled()
-        }
-
-        scannedCodeCancellable = model.$scannedCode.sink { [weak self] code in
-            guard let code = code else { return }
-            if self?.rootView.model.codeScanned(code) == .valid {
-                self?.scannedCodeCancellable = nil
-                controller.dismiss(animated: true)
-            }
         }
 
         controller.modalPresentationStyle = .fullScreen
         navigationController?.present(controller, animated: true) {
             print(#function, "completed")
+            model.checkCameraPermission()
         }
 
     }

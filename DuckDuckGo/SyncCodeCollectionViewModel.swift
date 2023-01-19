@@ -31,11 +31,6 @@ class SyncCodeCollectionViewModel: ObservableObject {
     @Published var showCamera = true
     @Published var videoPermission: VideoPermission = .unknown
 
-    init() {
-        #warning("probably call this from somewhere else")
-        checkCameraPermission()
-    }
-
     func checkCameraPermission() {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
         if status == .notDetermined {

@@ -21,21 +21,12 @@ import SwiftUI
 import DuckUI
 
 struct SyncSetupView: View {
-
-    @Environment(\.presentationMode) var presentationMode
-
     @ObservedObject var model: SyncSetupViewModel
-
-    /// When targetting 15+ we can delete this function and inject it with
-    /// `@Environment(\.dismiss) var dismiss`
-    func dismiss() {
-        presentationMode.wrappedValue.dismiss()
-    }
 
     @ViewBuilder
     func header() -> some View {
         HStack {
-            Button("Cancel", action: dismiss)
+            Button("Cancel", action: model.cancel)
                 .foregroundColor(.primary.opacity(0.9))
             Spacer()
         }
@@ -88,7 +79,6 @@ struct SyncSetupView: View {
             } secondaryAction: {
                 // Show the camera to scan another logged in device
                 model.recoverDataAction()
-                dismiss()
             }
         }
     }
@@ -104,10 +94,9 @@ struct SyncSetupView: View {
             buttons(primaryText: "Sync Another Device", secondaryText: "Not Now") {
                 // Show the camera to scan a device that isn't logged in yet
                 model.syncWithAnotherDeviceAction()
-                dismiss()
             } secondaryAction: {
                 // User wants to create an account and enable sync on this device
-                dismiss()
+                model.turnOnSyncNowAction()
             }
         }
     }
@@ -122,6 +111,8 @@ struct SyncSetupView: View {
             case .syncWithAnotherDevicePrompt, .showSyncWithAnotherDevice:
                 syncWithAnotherDeviceView()
                     .transition(.move(edge: .trailing))
+
+            default: EmptyView()
             }
         }
     }

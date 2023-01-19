@@ -53,12 +53,20 @@ class SyncManagementViewModel: ObservableObject {
     @Published var isBusy = false
     @Published var devices = [Device]()
 
-    weak var delegate: SyncManagementViewModelDelegate?
+    weak var delegate: SyncManagementViewModelDelegate? {
+        didSet {
+            print(#function)
+        }
+    }
+
+    init() {
+        print(Self.self, #function)
+    }
 
     func enableSync() {
         print(#function)
         isBusy = true
-        delegate?.showSyncSetup()
+        delegate!.showSyncSetup()
     }
 
     func disableSync() {
@@ -97,7 +105,7 @@ class SyncManagementViewModel: ObservableObject {
         #warning("validate the code, assume valid for now")
         defer {
             delegate?.showDeviceConnected()
-        }    
+        }
         return .valid
     }
 

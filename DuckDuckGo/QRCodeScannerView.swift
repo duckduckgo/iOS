@@ -57,21 +57,25 @@ struct QRCodeScannerView: UIViewRepresentable {
             self.cameraView = cameraView
             self.session = AVCaptureSession()
             super.init()
+        }
 
+        func start(_ uiView: UIView) {
             session.sessionPreset = .high
 
             guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
                   let input = try? AVCaptureDeviceInput(device: backCamera) else {
-                cameraView.onCameraUnavailable()
+
+                // This updates the view so needs to be done in a separate UI cycle
+                DispatchQueue.main.async {
+                    self.cameraView.onCameraUnavailable()
+                }
                 return
             }
             session.addInput(input)
             session.addOutput(metadataOutput)
             metadataOutput.metadataObjectTypes = [.qr]
             metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
-        }
 
-        func start(_ uiView: UIView) {
             let previewLayer = AVCaptureVideoPreviewLayer(session: session)
             previewLayer.frame = uiView.frame
             previewLayer.videoGravity = .resizeAspectFill

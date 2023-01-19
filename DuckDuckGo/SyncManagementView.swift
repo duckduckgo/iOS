@@ -79,11 +79,9 @@ struct SyncManagementView: View {
                 devices()
             }
         }
+        .listStyle(.insetGrouped)
         .navigationTitle("Sync")
         .hideScrollContentBackground()
-        .onAppear {
-            UITableView.appearance().backgroundColor = .purple
-        }
         .environmentObject(model)
     }
 

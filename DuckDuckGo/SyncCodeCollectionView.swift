@@ -21,9 +21,45 @@ import SwiftUI
 
 struct SyncCodeCollectionView: View {
 
-    @Environment(\.presentationMode) var presentationMode
-
     @ObservedObject var model: SyncCodeCollectionViewModel
+
+    var body: some View {
+        Group {
+
+            switch model.state {
+            case .showScanner:
+                ScannerView()
+                    .transition(.move(edge: .leading))
+
+            case .manualEntry:
+                VStack {
+                    Button("Back") {
+                        withAnimation {
+                            model.state = .showScanner
+                        }
+                    }
+
+                    Text("Manual Code Entry")
+                        .transition(.move(edge: .leading))
+                }
+
+            case .showQRCode:
+                Text("QRCode")
+                    .transition(.move(edge: .leading))
+
+            }
+
+        }
+        .environmentObject(model)
+        .environment(\.colorScheme, .dark)
+
+    }
+
+}
+
+struct ScannerView: View {
+
+    @EnvironmentObject var model: SyncCodeCollectionViewModel
 
     @ViewBuilder
     func header() -> some View {
@@ -97,6 +133,9 @@ struct SyncCodeCollectionView: View {
 
             Button {
                 print("*** keyboard entry")
+                withAnimation {
+                    model.state = .manualEntry
+                }
             } label: {
                 HStack {
                     Label("Manually Enter Code", image: "SyncKeyboardIcon")
@@ -108,6 +147,9 @@ struct SyncCodeCollectionView: View {
 
             Button {
                 print("*** qr code entry")
+                withAnimation {
+                    model.state = .showQRCode
+                }
             } label: {
                 HStack {
                     Label("Show QR Code", image: "SyncQRCodeIcon")
@@ -118,6 +160,7 @@ struct SyncCodeCollectionView: View {
             }
 
         }
+        .foregroundColor(.white)
         .hideScrollContentBackground()
     }
 
@@ -167,7 +210,6 @@ struct SyncCodeCollectionView: View {
                 }
                 .padding(.horizontal, 0)
             }
-            .environment(\.colorScheme, .dark)
         }
     }
 }

@@ -26,9 +26,14 @@ class SyncCodeCollectionViewModel: ObservableObject {
         case unknown, authorised, denied
     }
 
+    enum State {
+        case showScanner, manualEntry, showQRCode
+    }
+
     @Published var scannedCode: String?
     @Published var showCamera = true
     @Published var videoPermission: VideoPermission = .unknown
+    @Published var state = State.showScanner
 
     let finished: (SyncCodeCollectionViewModel) -> Void
 

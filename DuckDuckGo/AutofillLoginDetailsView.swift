@@ -334,12 +334,14 @@ private struct CopyableCell: View {
                     HStack {
                         if multiLine {
                             Text(subtitle)
-                                .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                                .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
+                                             foregroundColorDark: .gray30)
                                 .truncationMode(truncationMode)
                                 .frame(maxHeight: .greatestFiniteMagnitude)
                         } else {
                             Text(subtitle)
-                                .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
+                                .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
+                                             foregroundColorDark: .gray30)
                                 .truncationMode(truncationMode)
                         }
                     }

@@ -15,6 +15,13 @@ die() {
 	exit 1
 }
 
+assert_ios_directory() {
+	cwd="$(dirname "${BASH_SOURCE[0]}")"
+	if [[ ${cwd} != "." ]]; then
+		die "💥 Error: Run the script from a top-level directory in the iOS project"
+	fi
+}
+
 print_usage_and_exit() {
 	local reason=$1
 
@@ -130,6 +137,7 @@ create_pull_request() {
 }
 
 main() {
+	assert_ios_directory
 	read_command_line_arguments "$@"
 	stash
 	assert_clean_state

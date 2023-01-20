@@ -111,6 +111,7 @@ struct AutofillLoginDetailsView: View {
                 CopyableCell(title: UserText.autofillLoginDetailsPassword,
                              subtitle: viewModel.userVisiblePassword,
                              selectedCell: $viewModel.selectedCell,
+                             isMonospaced: true, 
                              actionTitle: viewModel.isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword,
                              action: { viewModel.isPasswordHidden.toggle() },
                              secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
@@ -314,6 +315,7 @@ private struct CopyableCell: View {
     @Binding var selectedCell: UUID?
     var truncationMode: Text.TruncationMode = .tail
     var multiLine: Bool = false
+    var isMonospaced: Bool = false
     
     var actionTitle: String
     let action: () -> Void
@@ -334,13 +336,15 @@ private struct CopyableCell: View {
                     HStack {
                         if multiLine {
                             Text(subtitle)
-                                .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
+                                .label4Style(design: isMonospaced ? .monospaced : .default,
+                                             foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
                                              foregroundColorDark: .gray30)
                                 .truncationMode(truncationMode)
                                 .frame(maxHeight: .greatestFiniteMagnitude)
                         } else {
                             Text(subtitle)
-                                .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
+                                .label4Style(design: isMonospaced ? .monospaced : .default,
+                                             foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
                                              foregroundColorDark: .gray30)
                                 .truncationMode(truncationMode)
                         }

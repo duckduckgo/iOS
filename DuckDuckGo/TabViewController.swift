@@ -2336,6 +2336,11 @@ extension TabViewController: SecureVaultManagerDelegate {
     }
     
     func secureVaultManager(_: SecureVaultManager, didReceivePixel pixel: AutofillUserScript.JSPixel) {
+        guard !pixel.isEmailPixel else {
+            // The iOS app uses a native email autofill UI, and sends its pixels separately. Ignore pixels sent from the JS layer.
+            return
+        }
+
         Pixel.fire(pixel: .autofillJSPixelFired(pixel))
     }
     

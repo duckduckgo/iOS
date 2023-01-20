@@ -1,6 +1,6 @@
 name: Make App Store Connect Release
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       destination:
@@ -11,10 +11,15 @@ on:
         options:
         - appstore
         - testflight
+  pull_request:
+    branches:
+    - release/**
+    - '!release/**-' # filter out PRs matching that pattern
+    types: [closed]
 
 jobs:
   make-release:
-
+    if: github.event.action == 0 || github.event.pull_request.merged == true # empty string returns 0; for case when workflow is triggered manually
     runs-on: macos-12
     name: Make App Store Connect Release
 

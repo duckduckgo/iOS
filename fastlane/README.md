@@ -21,14 +21,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Fetches and updates certificates and provisioning profiles for App Store distribution
 
-### sync_signing_dev
-
-```sh
-[bundle exec] fastlane sync_signing_dev
-```
-
-Fetches and updates certificates and provisioning profiles for development
-
 ### release_appstore
 
 ```sh
@@ -36,6 +28,14 @@ Fetches and updates certificates and provisioning profiles for development
 ```
 
 Makes App Store release build and uploads it to App Store Connect
+
+### upload_metadata
+
+```sh
+[bundle exec] fastlane upload_metadata
+```
+
+Updates App Store metadata
 
 ### release_testflight
 

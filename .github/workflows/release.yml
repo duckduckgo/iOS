@@ -25,8 +25,14 @@ jobs:
 
     steps:
 
+    - name: Set destination output
+      id: destination
+      run: |
+        INPUT_DESTINATION=${{ github.event.inputs.destination }}
+        echo "destination=${INPUT_DESTINATION:-"appstore"}" >> $GITHUB_OUTPUT
+
     - name: Assert release branch
-      if: github.event.inputs.destination == 'appstore'
+      if: steps.destination.outputs.destination == 'appstore'
       run: |
         case "${{ github.ref }}" in
           *release/*) ;;
@@ -61,12 +67,12 @@ jobs:
         APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
         APPLE_API_KEY_ISSUER: ${{ secrets.APPLE_API_KEY_ISSUER }}
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      run: bundle exec fastlane release_${{ github.event.inputs.destination }}
+      run: bundle exec fastlane release_${{ steps.destination.outputs.destination }}
 
     - name: Send Mattermost message
       env:
         WORKFLOW_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        DESTINATION: ${{ github.event.inputs.destination }}
+        DESTINATION: ${{ steps.destination.outputs.destination }}
       run: |
         export MM_USER_HANDLE=$(base64 -d <<< ${{ secrets.MM_HANDLES_BASE64 }} | jq ".${{ github.actor }}" | tr -d '"')
 

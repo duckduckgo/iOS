@@ -111,7 +111,7 @@ struct AutofillLoginDetailsView: View {
                 CopyableCell(title: UserText.autofillLoginDetailsPassword,
                              subtitle: viewModel.userVisiblePassword,
                              selectedCell: $viewModel.selectedCell,
-                             isMonospaced: true, 
+                             isMonospaced: true,
                              actionTitle: viewModel.isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword,
                              action: { viewModel.isPasswordHidden.toggle() },
                              secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),

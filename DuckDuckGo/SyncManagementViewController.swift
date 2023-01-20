@@ -77,16 +77,18 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
             print(#function, model, self?.navigationController?.topViewController.self as Any)
             // assert(navigationController?.topViewController is DismissibleUIHostingController<SyncSetupView>)
             self?.navigationController?.topViewController?.dismiss(animated: true)
-            // self?.rootView.model.codeCollectionFinished(model)
+            self?.rootView.model.codeCollectionFinished(model)
         }
 
         let controller = DismissibleUIHostingController(rootView: SyncCodeCollectionView(model: model)) { [weak self] in
             print(#function, "onDismiss", model)
-            // self?.rootView.model.codeCollectionFinished(model)
+            self?.rootView.model.codeCollectionFinished(model)
         }
 
-        controller.modalPresentationStyle = .fullScreen
-        navigationController?.present(controller, animated: true) {
+        let navController = UINavigationController(rootViewController: controller)
+        navController.overrideUserInterfaceStyle = .dark
+        navController.modalPresentationStyle = .fullScreen
+        navigationController?.present(navController, animated: true) {
             print(#function, "completed")
             model.checkCameraPermission()
         }

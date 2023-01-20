@@ -34,6 +34,7 @@ class SyncCodeCollectionViewModel: ObservableObject {
     @Published var showCamera = true
     @Published var videoPermission: VideoPermission = .unknown
     @Published var state = State.showScanner
+    @Published var manuallyEnteredCode = "Recovery code"
 
     let finished: (SyncCodeCollectionViewModel) -> Void
 
@@ -66,6 +67,10 @@ class SyncCodeCollectionViewModel: ObservableObject {
     func cameraUnavailable() {
         print(#function)
         showCamera = false
+    }
+
+    func pasteCode() {
+        
     }
 
     func cancel() {

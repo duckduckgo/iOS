@@ -61,7 +61,6 @@ public extension Color {
     static let gray20 = Color.init(0xEEEEEE)
     static let gray10 = Color.init(0xF5F5F5)
     static let gray0 = Color.init(0xFAFAFA)
-    static let white = Color.init(0xFFFFFF)
 
     static let deprecatedBlue =  Color.init(0x678FFF)
 }

@@ -23,60 +23,6 @@ struct SyncCodeCollectionView: View {
 
     @ObservedObject var model: SyncCodeCollectionViewModel
 
-    var body: some View {
-        Group {
-
-            switch model.state {
-            case .showScanner:
-                ScannerView()
-                    .transition(.move(edge: .leading))
-
-            case .manualEntry:
-                VStack {
-                    Button("Back") {
-                        withAnimation {
-                            model.state = .showScanner
-                        }
-                    }
-
-                    Text("Manual Code Entry")
-                        .transition(.move(edge: .leading))
-                }
-
-            case .showQRCode:
-                Text("QRCode")
-                    .transition(.move(edge: .leading))
-
-            }
-
-        }
-        .environmentObject(model)
-        .environment(\.colorScheme, .dark)
-
-    }
-
-}
-
-struct ScannerView: View {
-
-    @EnvironmentObject var model: SyncCodeCollectionViewModel
-
-    @ViewBuilder
-    func header() -> some View {
-        ZStack {
-            HStack {
-                Button("Cancel", action: model.cancel)
-                .foregroundColor(.primary.opacity(0.9))
-                Spacer()
-            }
-
-            Text("Scan QR Code")
-                .font(.headline)
-        }
-        .padding()
-        .modifier(CameraMaskModifier())
-    }
-
     @ViewBuilder
     func fullscreenCameraBackground() -> some View {
         Group {
@@ -120,57 +66,40 @@ struct ScannerView: View {
     @ViewBuilder
     func instructions() -> some View {
         if model.showCamera {
-            Text("Go to Settings > Sync in the *DuckDuckGo App* on a different device and scan supplied code to connect instantly.")
+            Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
                 .multilineTextAlignment(.center)
-                .padding()
         }
     }
 
     @ViewBuilder
     func buttons() -> some View {
 
-        List {
-
-            Button {
-                print("*** keyboard entry")
-                withAnimation {
-                    model.state = .manualEntry
-                }
-            } label: {
-                HStack {
+        Section {
+            Group {
+                NavigationLink {
+                    SyncCodeManualEntryView(model: model)
+                } label: {
                     Label("Manually Enter Code", image: "SyncKeyboardIcon")
-                    Spacer()
-                    Image(systemName: "chevron.right")
                 }
-                .frame(height: 40)
-            }
 
-            Button {
-                print("*** qr code entry")
-                withAnimation {
-                    model.state = .showQRCode
-                }
-            } label: {
-                HStack {
+                NavigationLink {
+                    Text("Enter Code")
+                        .navigationTitle("Whooop!")
+                } label: {
                     Label("Show QR Code", image: "SyncQRCodeIcon")
-                    Spacer()
-                    Image(systemName: "chevron.right")
                 }
-                .frame(height: 40)
             }
-
+            .frame(height: 40)
+            .foregroundColor(.primary)
         }
-        .foregroundColor(.white)
-        .hideScrollContentBackground()
     }
 
     @ViewBuilder
-    func cameraViewPort(width: CGFloat) -> some View {
+    func cameraViewPort() -> some View {
         ZStack(alignment: .center) {
             waitingForCameraPermission()
             cameraTarget()
         }
-        .frame(width: width, height: width)
     }
 
     @ViewBuilder
@@ -190,25 +119,40 @@ struct ScannerView: View {
 
     var body: some View {
         GeometryReader { g in
-            ZStack {
+            ZStack(alignment: .top) {
                 fullscreenCameraBackground()
 
-                VStack {
-                    header()
+                VStack(spacing: 0) {
+                    Rectangle() // Also acts as the blur for the camera
+                        .fill(.clear)
+                        .frame(height: g.safeAreaInsets.top)
+                        .modifier(CameraMaskModifier())
 
-                    cameraViewPort(width: g.size.width)
-
-                    VStack {
+                    ZStack {
+                        cameraViewPort()
+                            .frame(width: g.size.width, height: g.size.width)
                         cameraPermissionDenied()
                         cameraUnavailable()
+                    }
+
+                    List { // Also acts as the blur for the camera
                         instructions()
                         buttons()
-                        Spacer()
                     }
                     .ignoresSafeArea()
+                    .hideScrollContentBackground()
+                    .disableScrolling()
                     .modifier(CameraMaskModifier())
                 }
                 .padding(.horizontal, 0)
+                .ignoresSafeArea()
+            }
+            .navigationTitle("Scan QR Code")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel", action: model.cancel)
+                        .foregroundColor(.primary)
+                }
             }
         }
     }

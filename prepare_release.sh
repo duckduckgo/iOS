@@ -156,6 +156,10 @@ update_metadata() {
 	fi
 }
 
+validate_metadata() {
+	./check_metadata_length.sh
+}
+
 update_release_notes() {
 	local release_notes_path="fastlane/metadata/default/release_notes.txt"
 	echo "Please update release notes and save the file."
@@ -189,9 +193,10 @@ main() {
 	create_release_branch
 	update_marketing_version
 	update_build_version
-	update_embedded_files
+	update_embedded_files∂
 	if [[ -n "${metadata}" ]]; then
 		update_metadata
+		validate_metadata
 	fi
 	update_release_notes
 	create_pull_request

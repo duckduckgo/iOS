@@ -24,8 +24,6 @@ import DuckUI
 
 struct AutofillLoginDetailsView: View {
     @ObservedObject var viewModel: AutofillLoginDetailsViewModel
-    @State private var cellMaxWidth: CGFloat?
-    @State private var isShowingPassword: Bool = false
     @State private var actionSheetConfirmDeletePresented: Bool = false
     
     var body: some View {
@@ -99,39 +97,49 @@ struct AutofillLoginDetailsView: View {
             Section {
                 AutofillLoginDetailsHeaderView(viewModel: viewModel.headerViewModel)
             }
-            
+
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsUsername,
                              subtitle: viewModel.usernameDisplayString,
-                             selectedCell: $viewModel.selectedCell) {
-                    viewModel.copyToPasteboard(.username)
-                }
-
-                CopyablePasswordCell(title: UserText.autofillLoginDetailsPassword,
-                                     password: viewModel.userVisiblePassword,
-                                     selectedCell: $viewModel.selectedCell,
-                                     isPasswordHidden: $viewModel.isPasswordHidden) {
-                    
-                    viewModel.copyToPasteboard(.password)
-                }
+                             selectedCell: $viewModel.selectedCell,
+                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
+                             action: { viewModel.copyToPasteboard(.username) },
+                             buttonImageName: "Copy",
+                             buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsUsername),
+                             buttonAction: { viewModel.copyToPasteboard(.username) })
+                
+                CopyableCell(title: UserText.autofillLoginDetailsPassword,
+                             subtitle: viewModel.userVisiblePassword,
+                             selectedCell: $viewModel.selectedCell,
+                             isMonospaced: true,
+                             actionTitle: viewModel.isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword,
+                             action: { viewModel.isPasswordHidden.toggle() },
+                             secondaryActionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
+                             secondaryAction: { viewModel.copyToPasteboard(.password) },
+                             buttonImageName: "Copy",
+                             buttonAccessibilityLabel: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsPassword),
+                             buttonAction: { viewModel.copyToPasteboard(.password) })
             }
+
             
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsAddress,
                              subtitle: viewModel.address,
                              selectedCell: $viewModel.selectedCell,
-                             secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
                              truncationMode: .middle,
+                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsAddress),
                              action: { viewModel.copyToPasteboard(.address) },
+                             secondaryActionTitle: viewModel.websiteIsValidUrl ? UserText.autofillOpenWebsitePrompt : nil,
                              secondaryAction: viewModel.websiteIsValidUrl ? { viewModel.openUrl() } : nil)
             }
-            
+
             Section {
                 CopyableCell(title: UserText.autofillLoginDetailsNotes,
                              subtitle: viewModel.notes,
                              selectedCell: $viewModel.selectedCell,
                              truncationMode: .middle,
                              multiLine: true,
+                             actionTitle: UserText.autofillCopyPrompt(for: UserText.autofillLoginDetailsNotes),
                              action: {
                     viewModel.copyToPasteboard(.notes)
                 })
@@ -274,6 +282,7 @@ private struct EditablePasswordCell: View {
             HStack {
                 TextField(placeholderText, text: isPasswordHidden ? $userVisiblePassword : $password) { editing in
                     closeButtonVisible = editing
+                    isPasswordHidden = false
                 } onCommit: {
                     closeButtonVisible = false
                 }
@@ -281,7 +290,6 @@ private struct EditablePasswordCell: View {
                 .disableAutocorrection(true)
                 .keyboardType(.default)
                 .label4Style(design: password.count > 0 ? .monospaced : .default)
-                .disabled(isPasswordHidden)
 
                 Spacer()
 
@@ -290,12 +298,6 @@ private struct EditablePasswordCell: View {
                         Image("ClearTextField")
                             .onTapGesture {
                                 self.password = ""
-                            }
-                    } else {
-                        Image(isPasswordHidden ? "ShowPasswordEye" : "HidePasswordEye")
-                            .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
-                            .onTapGesture {
-                                isPasswordHidden.toggle()
                             }
                     }
                 }
@@ -306,14 +308,25 @@ private struct EditablePasswordCell: View {
     }
 }
 
-private struct CopyablePasswordCell: View {
+private struct CopyableCell: View {
     @State private var id = UUID()
     let title: String
-    let password: String
+    let subtitle: String
     @Binding var selectedCell: UUID?
-    @Binding var isPasswordHidden: Bool
+    var truncationMode: Text.TruncationMode = .tail
+    var multiLine: Bool = false
+    var isMonospaced: Bool = false
+    
+    var actionTitle: String
     let action: () -> Void
     
+    var secondaryActionTitle: String?
+    var secondaryAction: (() -> Void)?
+    
+    var buttonImageName: String?
+    var buttonAccessibilityLabel: String?
+    var buttonAction: (() -> Void)?
+
     var body: some View {
         ZStack {
             HStack {
@@ -321,90 +334,67 @@ private struct CopyablePasswordCell: View {
                     Text(title)
                         .label4Style()
                     HStack {
-                        Text(password)
-                            .label4Style(design: .monospaced,
-                                         foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
-                                         foregroundColorDark: .gray30)
+                        if multiLine {
+                            Text(subtitle)
+                                .label4Style(design: isMonospaced ? .monospaced : .default,
+                                             foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
+                                             foregroundColorDark: .gray30)
+                                .truncationMode(truncationMode)
+                                .frame(maxHeight: .greatestFiniteMagnitude)
+                        } else {
+                            Text(subtitle)
+                                .label4Style(design: isMonospaced ? .monospaced : .default,
+                                             foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color,
+                                             foregroundColorDark: .gray30)
+                                .truncationMode(truncationMode)
+                        }
                     }
                 }
-                Spacer(minLength: Constants.passwordImageSize)
+                .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 8))
+                
+                Spacer(minLength: buttonImageName != nil ? Constants.textFieldImageSize : 8)
             }
-            .copyable(isSelected: selectedCell == id, menuTitle: title, menuAction: action) {
+            .copyable(isSelected: selectedCell == id,
+                      menuTitle: actionTitle,
+                      menuAction: action,
+                      menuSecondaryTitle: secondaryActionTitle,
+                      menuSecondaryAction: secondaryAction) {
                 self.selectedCell = self.id
             } menuClosedAction: {
                 self.selectedCell = nil
             }
-
-            HStack(alignment: .bottom) {
-                Spacer()
-                Button {
-                    isPasswordHidden.toggle()
-                    self.selectedCell = nil
-                } label: {
-                    VStack(alignment: .trailing) {
-                        Spacer()
-                        HStack {
+            
+            if let buttonImageName = buttonImageName, let buttonAccessibilityLabel = buttonAccessibilityLabel {
+                let differenceBetweenImageSizeAndTapAreaPerEdge = (Constants.textFieldTapSize - Constants.textFieldImageSize) / 2.0
+                HStack(alignment: .center) {
+                    Spacer()
+                    
+                    Button {
+                        buttonAction?()
+                        self.selectedCell = nil
+                    } label: {
+                        VStack(alignment: .trailing) {
                             Spacer()
-                            Image(isPasswordHidden ? "ShowPasswordEye" : "HidePasswordEye")
-                                    .foregroundColor(Color(UIColor.label).opacity(Constants.passwordImageOpacity))
-                                    .opacity(password.isEmpty ? 0 : 1)
+                            HStack {
+                                Spacer()
+                                Image(buttonImageName)
+                                    .resizable()
+                                    .frame(width: Constants.textFieldImageSize, height: Constants.textFieldImageSize)
+                                    .foregroundColor(Color(UIColor.label).opacity(Constants.textFieldImageOpacity))
+                                    .opacity(subtitle.isEmpty ? 0 : 1)
+                                Spacer()
+                            }
+                            Spacer()
                         }
                     }
+                    .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
+                    .background(BackgroundColor(isSelected: selectedCell == id).color)
+                    .accessibilityLabel(buttonAccessibilityLabel)
                     .contentShape(Rectangle())
-                    .frame(width: Constants.passwordImageSize, height: Constants.passwordImageSize)
+                    .frame(width: Constants.textFieldTapSize, height: Constants.textFieldTapSize)
                 }
-                .buttonStyle(.plain) // Prevent taps from being forwarded to the container view
-                .background(BackgroundColor(isSelected: selectedCell == id).color)
-                .accessibilityLabel(isPasswordHidden ? UserText.autofillShowPassword : UserText.autofillHidePassword)
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -differenceBetweenImageSizeAndTapAreaPerEdge))
             }
-            .padding(.bottom, Constants.verticalPadding)
-        }
-        .selectableBackground(isSelected: selectedCell == id)
-    }
-
-}
-
-private struct CopyableCell: View {
-    @State private var id = UUID()
-    let title: String
-    let subtitle: String
-    @Binding var selectedCell: UUID?
-    var secondaryActionTitle: String?
-    var truncationMode: Text.TruncationMode = .tail
-    var multiLine: Bool = false
-    let action: () -> Void
-    var secondaryAction: (() -> Void)?
-
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: Constants.verticalPadding) {
-                Text(title)
-                    .label4Style()
-                HStack {
-                    if multiLine {
-                        Text(subtitle)
-                            .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
-                            .truncationMode(truncationMode)
-                            .frame(maxHeight: .greatestFiniteMagnitude)
-                    } else {
-                        Text(subtitle)
-                            .label4Style(foregroundColorLight: ForegroundColor(isSelected: selectedCell == id).color, foregroundColorDark: .gray30)
-                            .truncationMode(truncationMode)
-                    }
-                }
-            }
-            .padding(EdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0))
-            
-            Spacer()
-        }
-        .copyable(isSelected: selectedCell == id,
-                  menuTitle: title,
-                  menuAction: action,
-                  menuSecondaryTitle: secondaryActionTitle,
-                  menuSecondaryAction: secondaryAction) {
-            self.selectedCell = self.id
-        } menuClosedAction: {
-            self.selectedCell = nil
         }
         .selectableBackground(isSelected: selectedCell == id)
     }
@@ -443,7 +433,7 @@ private struct Copyable: ViewModifier {
         ZStack {
             Rectangle()
                 .foregroundColor(.clear)
-                .menuController(UserText.autofillCopyPrompt(for: menuTitle),
+                .menuController(menuTitle,
                                 secondaryTitle: menuSecondaryTitle,
                                 action: menuAction,
                                 secondaryAction: menuSecondaryAction,
@@ -503,7 +493,8 @@ private struct ForegroundColor {
 private struct Constants {
     static let verticalPadding: CGFloat = 4
     static let minRowHeight: CGFloat = 60
-    static let passwordImageOpacity: CGFloat = 0.84
-    static let passwordImageSize: CGFloat = 44
+    static let textFieldImageOpacity: CGFloat = 0.84
+    static let textFieldImageSize: CGFloat = 20
+    static let textFieldTapSize: CGFloat = 44
     static let insets = EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
 }

@@ -131,6 +131,8 @@ create_pull_request() {
 	printf '%s' "Creating PR ... "
 	eval git push origin "${release_branch}" "$mute"
 	eval git push origin "${changes_branch}" "$mute"
+	eval git push --set-upstream origin "${release_branch}" "$mute"
+	eval git push --set-upstream origin "${changes_branch}" "$mute"
 	eval gh pr create --title \"Release "${version}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
 	echo "✅"

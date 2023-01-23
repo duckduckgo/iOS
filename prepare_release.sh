@@ -136,7 +136,7 @@ update_embedded_files() {
 }
 
 update_metadata() {
-	printf '%s' "Updating metadata files ... "
+	echo "Updating metadata files ... "
 	local destination="fastlane/metadata/"
 	if [[ "${metadata}" == *.zip ]]; then
 		mkdir temp_metadata
@@ -147,6 +147,8 @@ update_metadata() {
 		rsync -a --delete "${metadata}/" "${destination}"
 	fi
 
+	./check_metadata_length.sh
+
 	git add fastlane/metadata
 	if [[ $(git diff --cached --exit-code) ]]; then
 		eval git commit -m \"Update metadata files\" "$mute"
@@ -154,10 +156,6 @@ update_metadata() {
 	else
 		printf "\nNo changes to metadata files ✅\n"
 	fi
-}
-
-validate_metadata() {
-	./check_metadata_length.sh
 }
 
 update_release_notes() {
@@ -196,7 +194,6 @@ main() {
 	update_embedded_files∂
 	if [[ -n "${metadata}" ]]; then
 		update_metadata
-		validate_metadata
 	fi
 	update_release_notes
 	create_pull_request

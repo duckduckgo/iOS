@@ -19,6 +19,7 @@
 
 import Foundation
 import AVFoundation
+import UIKit
 
 class SyncCodeCollectionViewModel: ObservableObject {
 
@@ -34,7 +35,7 @@ class SyncCodeCollectionViewModel: ObservableObject {
     @Published var showCamera = true
     @Published var videoPermission: VideoPermission = .unknown
     @Published var state = State.showScanner
-    @Published var manuallyEnteredCode = "Recovery code"
+    @Published var manuallyEnteredCode: String?
 
     let finished: (SyncCodeCollectionViewModel) -> Void
 
@@ -70,7 +71,8 @@ class SyncCodeCollectionViewModel: ObservableObject {
     }
 
     func pasteCode() {
-        
+        guard let string = UIPasteboard.general.string else { return }
+        self.manuallyEnteredCode = string
     }
 
     func cancel() {

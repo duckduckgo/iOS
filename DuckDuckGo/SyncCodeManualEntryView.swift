@@ -30,55 +30,93 @@ struct SyncCodeManualEntryView: View {
 
     @State var isEditingCode = false
 
-    var body: some View {
-        GeometryReader { g in
-            VStack {
-                ZStack {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundColor(.white.opacity(0.09))
+    @ViewBuilder
+    func codeEntryField() -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundColor(.white.opacity(0.09))
 
-                        VStack {
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(.white.opacity(0.24))
 
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundColor(.white.opacity(0.09))
+            ZStack(alignment: .topLeading) {
+                CodeEntryView(focused: $isEditingCode, text: $model.manuallyEnteredCode)
 
-                                ZStack(alignment: .topLeading) {
-                                    CodeEntryView(focused: $isEditingCode)
-
-                                    if !isEditingCode {
-                                        Text("Recovery Code")
-                                    }
-                                }
-
-                            }
-                            .padding()
-
-                            Spacer()
-
-                            Button(action: model.pasteCode) {
-                                Label("Paste", image: "SyncPaste")
-                            }
-                            .buttonStyle(PasteButtonStyle())
-                            .padding(.bottom)
-
-                        }
-                    }.padding()
+                if !isEditingCode && model.manuallyEnteredCode == nil {
+                    Text("Recovery Code")
+                        .foregroundColor(.primary.opacity(0.36))
                 }
-                .frame(width: g.size.width, height: g.size.width)
+            }
+            .padding()
+        }
+    }
+
+    @ViewBuilder
+    func codeEntrySection(size: CGFloat) -> some View {
+        ZStack {
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(.white.opacity(0.09))
 
                 VStack {
-                    Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
 
                     Spacer()
 
-                    Button("Submit", action: {})
-                        .buttonStyle(PrimaryButtonStyle())
+                    ZStack {
+
+                        codeEntryField()
+                            .padding(.horizontal)
+
+                    }
+                    .frame(width: 310, height: 150)
+                    .padding()
+
+                    Spacer()
+
+                    Button(action: model.pasteCode) {
+                        Label("Paste", image: "SyncPaste")
+                    }
+                    .buttonStyle(PasteButtonStyle())
+                    .padding(.bottom)
+
                 }
-                .padding()
-                .padding(.top, 32)
-            }.navigationTitle("Manually Enter Code")
+            }.padding()
+        }
+        .frame(width: size, height: size)
+    }
+
+    var body: some View {
+        GeometryReader { g in
+            ZStack {
+                VStack {
+
+                    codeEntrySection(size: g.size.width)
+
+                    if !isEditingCode {
+                        VStack {
+                            Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
+
+                            Spacer()
+
+                            Button("Submit", action: {})
+                                .buttonStyle(PrimaryButtonStyle())
+                        }
+                        .padding()
+                        .padding(.top, 32)
+                    }
+                }
+                .navigationTitle("Manually Enter Code")
+            }
+            .background(Color.white.opacity(0.001))
+            // This are kinda hacky ways to hide the keyboard
+            .gesture(DragGesture().onChanged({ _ in
+                print("onTapGesture")
+                UIApplication.shared.endEditing()
+            }))
+            .onTapGesture {
+                print("onTapGesture")
+                UIApplication.shared.endEditing()
+            }
         }
     }
 
@@ -108,6 +146,7 @@ struct PasteButtonStyle: ButtonStyle {
 struct CodeEntryView: UIViewRepresentable {
 
     @Binding var focused: Bool
+    @Binding var text: String?
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
@@ -115,12 +154,15 @@ struct CodeEntryView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
+        textView.backgroundColor = .clear
+        textView.font = .monospacedSystemFont(ofSize: 14, weight: .regular)
         textView.delegate = context.coordinator
         return textView
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
-
+        print(#function)
+        uiView.text = text?.groups(ofSize: 4) ?? ""
     }
 
     class Coordinator: NSObject, UITextViewDelegate {
@@ -141,6 +183,40 @@ struct CodeEntryView: UIViewRepresentable {
             view.focused = false
         }
 
+        func textViewDidChange(_ textView: UITextView) {
+            print(#function, textView.text ?? "nil")
+            if textView.text.trimmingWhitespace().isEmpty {
+                view.text = nil
+            } else {
+                let text = textView.text.groups(ofSize: 4)
+                view.text = text
+                textView.text = text
+            }
+        }
+
+    }
+
+}
+
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+extension String {
+    
+    func chunks(ofSize: Int) -> [String] {
+        let chunks = stride(from: 0, to: self.count, by: ofSize).map {
+            let start = self.index(self.startIndex, offsetBy: $0)
+            let end = self.index(start, offsetBy: ofSize, limitedBy: self.endIndex) ?? self.endIndex
+            return String(self[start..<end])
+        }
+        return chunks
+    }
+
+    func groups(ofSize: Int) -> String {
+        return components(separatedBy: .whitespaces).joined().chunks(ofSize: 4).joined(separator: " ")
     }
 
 }

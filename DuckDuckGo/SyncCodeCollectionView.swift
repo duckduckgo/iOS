@@ -65,10 +65,10 @@ struct SyncCodeCollectionView: View {
 
     @ViewBuilder
     func instructions() -> some View {
-        if model.showCamera {
-            Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
-                .multilineTextAlignment(.center)
-        }
+        // if model.showCamera {
+        Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
+            .multilineTextAlignment(.center)
+        // }
     }
 
     @ViewBuilder

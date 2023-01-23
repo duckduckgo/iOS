@@ -321,6 +321,7 @@
 		85DD44292976F523005CC388 /* SyncCodeCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD44282976F523005CC388 /* SyncCodeCollectionViewModel.swift */; };
 		85DD442B2977255A005CC388 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD442A2977255A005CC388 /* QRCodeScannerView.swift */; };
 		85DD442D2979C1AA005CC388 /* SyncCodeManualEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD442C2979C1AA005CC388 /* SyncCodeManualEntryView.swift */; };
+		85DD442F297ADCE6005CC388 /* SyncViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */; };
 		85DF714624F7FE6100C89288 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEC24C7CCA500973FE7 /* AppWidthObserver.swift */; };
 		85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEE24C7EA3B00973FE7 /* SmallOmniBarState.swift */; };
@@ -1126,6 +1127,7 @@
 		85DD44282976F523005CC388 /* SyncCodeCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeCollectionViewModel.swift; sourceTree = "<group>"; };
 		85DD442A2977255A005CC388 /* QRCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerView.swift; sourceTree = "<group>"; };
 		85DD442C2979C1AA005CC388 /* SyncCodeManualEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeManualEntryView.swift; sourceTree = "<group>"; };
+		85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncViewExtensions.swift; sourceTree = "<group>"; };
 		85DFEDEC24C7CCA500973FE7 /* AppWidthObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWidthObserver.swift; sourceTree = "<group>"; };
 		85DFEDEE24C7EA3B00973FE7 /* SmallOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallOmniBarState.swift; sourceTree = "<group>"; };
 		85DFEDF024C7EEA400973FE7 /* LargeOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeOmniBarState.swift; sourceTree = "<group>"; };
@@ -3104,6 +3106,7 @@
 				85F98F8F296F0EF400742F4A /* SyncManagementView.swift */,
 				85F98F95296F480A00742F4A /* SyncSetupView.swift */,
 				85DD442C2979C1AA005CC388 /* SyncCodeManualEntryView.swift */,
+				85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -5201,6 +5204,7 @@
 				AA3D854723D9E88E00788410 /* AppIconSettingsCell.swift in Sources */,
 				316931D927BD22A80095F5ED /* DownloadActionMessageViewHelper.swift in Sources */,
 				9838059F2228208E00385F1A /* PositiveFeedbackViewController.swift in Sources */,
+				85DD442F297ADCE6005CC388 /* SyncViewExtensions.swift in Sources */,
 				F1AB2B421E3F7D5C00868554 /* SettingsViewController.swift in Sources */,
 				8590CB67268A2E520089F6BF /* RootDebugViewController.swift in Sources */,
 				B623C1C22862CA9E0043013E /* DownloadSession.swift in Sources */,

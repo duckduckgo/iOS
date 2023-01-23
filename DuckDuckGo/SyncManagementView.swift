@@ -86,25 +86,3 @@ struct SyncManagementView: View {
     }
 
 }
-
-extension View {
-
-    @ViewBuilder
-    func hideScrollContentBackground() -> some View {
-        if #available(iOS 16, *) {
-            self.scrollContentBackground(.hidden)
-        } else {
-            self
-        }
-    }
-
-    @ViewBuilder
-    func disableScrolling() -> some View {
-        if #available(iOS 16, *) {
-            self.scrollDisabled(true)
-        } else {
-            self
-        }
-    }
-
-}

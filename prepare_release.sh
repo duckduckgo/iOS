@@ -27,12 +27,13 @@ print_usage_and_exit() {
 
 	cat <<- EOF
 	Usage:
-	  $ $(basename "$0") <version> [-h] [-v]
+	  $ $(basename "$0") <version> [-h] [-m] [-v]
 	  Current version: $(cut -d' ' -f3 < Configuration/Version.xcconfig)
 
 	Options:
-	  -h  Make hotfix release
-	  -v  Enable verbose mode
+	  -h         Make hotfix release
+	  -m <path>  Path to updated metadata
+	  -v         Enable verbose mode
 
 	EOF
 
@@ -47,10 +48,13 @@ read_command_line_arguments() {
 
 	shift 1
 
-	while getopts 'hv' option; do
+	while getopts 'hm:v' option; do
 		case "${option}" in
 			h)
 				is_hotfix=1
+				;;
+			m)
+			    metadata=${OPTARG}
 				;;
 			v)
 				mute=
@@ -123,17 +127,34 @@ update_embedded_files() {
 		Core/trackerData.json \
 		Core/AppPrivacyConfigurationDataProvider.swift \
 		Core/ios-config.json
-	if [[ $(git diff --cached --exit-code) ]]; then
+	if [[ "$(git diff --cached --exit-code)" ]]; then
 		eval git commit -m \"Update embedded files\" "$mute"
 		echo "✅"
 	else
-		printf "\nNo changes to embedded files ✅"
+		printf "\nNo changes to embedded files ✅\n"
 	fi
 }
 
-# update_metadata() {
+update_metadata() {
+	printf '%s' "Updating metadata files ... "
+	local destination="fastlane/metadata/"
+	if [[ "${metadata}" == *.zip ]]; then
+		mkdir temp_metadata
+		unzip "${metadata}" -d "temp_metadata"
+		rsync -a --delete temp_metadata/*/ "${destination}"
+		rm -rf temp_metadata
+	else
+		rsync -a --delete "${metadata}/" "${destination}"
+	fi
 
-# }
+	git add fastlane/metadata
+	if [[ $(git diff --cached --exit-code) ]]; then
+		eval git commit -m \"Update metadata files\" "$mute"
+		echo "✅"
+	else
+		printf "\nNo changes to metadata files ✅\n"
+	fi
+}
 
 update_release_notes() {
 	local release_notes_path="fastlane/metadata/default/release_notes.txt"
@@ -141,7 +162,7 @@ update_release_notes() {
 	eval open -a TextEdit "${release_notes_path}" "$mute"
 	read -r -p "Press \`Enter\` when you're done to continue ..."
 	git add "${release_notes_path}"
-	if [[ $(git diff --cached --exit-code) ]]; then
+	if [[ "$(git diff --cached --exit-code)" ]]; then
 		eval git commit -m \"Update release notes\" "$mute"
 		echo "Release notes updated ✅"
 	else
@@ -161,17 +182,19 @@ create_pull_request() {
 }
 
 main() {
-	# assert_ios_directory
-	# read_command_line_arguments "$@"
-	# stash
-	# assert_clean_state
-	# create_release_branch
-	# update_marketing_version
-	# update_build_version
-	# update_embedded_files
-	# update_metadata
+	assert_ios_directory
+	read_command_line_arguments "$@"
+	stash
+	assert_clean_state
+	create_release_branch
+	update_marketing_version
+	update_build_version
+	update_embedded_files
+	if [[ -n "${metadata}" ]]; then
+		update_metadata
+	fi
 	update_release_notes
-	# create_pull_request
+	create_pull_request
 }
 
 main "$@"

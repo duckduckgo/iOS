@@ -176,6 +176,7 @@ class MainViewController: UIViewController {
         applyWidth()
         
         registerForApplicationEvents()
+        registerForCookiesManagedNotification()
     }
 
     override func viewDidAppear(_ animated: Bool) {

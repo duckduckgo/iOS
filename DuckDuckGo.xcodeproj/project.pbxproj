@@ -35,6 +35,7 @@
 		1E4DCF4A27B6A38000961E25 /* DownloadListRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4927B6A38000961E25 /* DownloadListRepresentable.swift */; };
 		1E4DCF4C27B6A4CB00961E25 /* URLFileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4B27B6A4CB00961E25 /* URLFileExtension.swift */; };
 		1E4DCF4E27B6A69600961E25 /* DownloadsListHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4DCF4D27B6A69600961E25 /* DownloadsListHostingController.swift */; };
+		1E4F4A5A297193DE00625985 /* MainViewController+CookiesManaged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4F4A59297193DE00625985 /* MainViewController+CookiesManaged.swift */; };
 		1E4FAA6427D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */; };
 		1E4FAA6627D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */; };
 		1E60989B290009C700A508F9 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 1E7060BD28F88EE200E4CCDB /* Common */; };
@@ -848,6 +849,7 @@
 		1E4DCF4927B6A38000961E25 /* DownloadListRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadListRepresentable.swift; sourceTree = "<group>"; };
 		1E4DCF4B27B6A4CB00961E25 /* URLFileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLFileExtension.swift; sourceTree = "<group>"; };
 		1E4DCF4D27B6A69600961E25 /* DownloadsListHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListHostingController.swift; sourceTree = "<group>"; };
+		1E4F4A59297193DE00625985 /* MainViewController+CookiesManaged.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+CookiesManaged.swift"; sourceTree = "<group>"; };
 		1E4FAA6327D8DFB900ADC5B3 /* OngoingDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OngoingDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E4FAA6527D8DFC800ADC5B3 /* CompleteDownloadRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteDownloadRowViewModel.swift; sourceTree = "<group>"; };
 		1E61BC2927074BED00B2854D /* TextSizeUserScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSizeUserScript.swift; sourceTree = "<group>"; };
@@ -4064,6 +4066,7 @@
 				8C4838B4221C8F7F008A6739 /* GestureToolbarButton.swift */,
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
+				1E4F4A59297193DE00625985 /* MainViewController+CookiesManaged.swift */,
 				981CA7E92617797500E119D5 /* MainViewController+AddFavoriteFlow.swift */,
 				85F2FFCC2211F615006BB258 /* MainViewController+KeyCommands.swift */,
 				98EF177C21837E35006750C1 /* new_tab_dark.json */,
@@ -5076,6 +5079,7 @@
 				C1B7B529289420830098FD6A /* RemoteMessaging.xcdatamodeld in Sources */,
 				986B16C425E92DF0007D23E8 /* BrowsingMenuViewController.swift in Sources */,
 				988AC355257E47C100793C64 /* RequeryLogic.swift in Sources */,
+				1E4F4A5A297193DE00625985 /* MainViewController+CookiesManaged.swift in Sources */,
 				8586A10D24CBA7070049720E /* FindInPageActivity.swift in Sources */,
 				1E1626072968413B0004127F /* ViewExtension.swift in Sources */,
 				31A42566285A0A6300049386 /* FaviconViewModel.swift in Sources */,
@@ -5238,7 +5242,6 @@
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
-				F4118EC52761725800CA91CA /* BookmarkSectionDataSources.swift in Sources */,
 				1E7A71192934EC6100B7EA19 /* OmniBarNotificationContainerView.swift in Sources */,
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,

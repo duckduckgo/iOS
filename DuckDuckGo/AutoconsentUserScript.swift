@@ -41,6 +41,11 @@ protocol UserScriptWithAutoconsent: UserScript {
 
 // @available(macOS 11, *)
 final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, UserScriptWithAutoconsent {
+    
+    struct UserInfoKeys {
+        static let topURL = "com.duckduckgo.autoconsent.top-url"
+    }
+    
     var injectionTime: WKUserScriptInjectionTime { .atDocumentStart }
     var forMainFrameOnly: Bool { false }
     weak var selfTestWebView: WKWebView?
@@ -48,10 +53,6 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     var topUrl: URL?
     var preferences: AutoconsentPreferences = AppUserDefaults()
     let management = AutoconsentManagement.shared
-
-    enum Constants {
-        static let newSitePopupHidden = Notification.Name("newSitePopupHidden")
-    }
 
     public var messageNames: [String] { MessageName.allCases.map(\.rawValue) }
     let source: String
@@ -363,8 +364,8 @@ extension AutoconsentUserScript {
             management.sitesNotifiedCache.insert(host)
             // post popover notification on main thread
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: Constants.newSitePopupHidden, object: self, userInfo: [
-                    "topUrl": self.topUrl ?? url
+                NotificationCenter.default.post(name: .newSiteCookiesManaged, object: self, userInfo: [
+                    UserInfoKeys.topURL: self.topUrl ?? url
                 ])
             }
         }
@@ -425,4 +426,8 @@ extension AutoconsentUserScript {
             callback(result)
         })
     }
+}
+
+extension NSNotification.Name {
+    static let newSiteCookiesManaged: NSNotification.Name = Notification.Name(rawValue: "com.duckduckgo.notification.new-site-cookies-managed")
 }

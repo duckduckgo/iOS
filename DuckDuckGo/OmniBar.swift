@@ -227,21 +227,12 @@ class OmniBar: UIView {
         
         privacyIconAndTrackersAnimator.configure(privacyInfoContainer, with: privacyInfo)
         
-        let cookiesManagedAnimation: () -> Void = { [weak self] in
-            self?.animateCookiesManagedBadge()
-        }
-        
         if TrackerAnimationLogic.shouldAnimateTrackers(for: privacyInfo.trackerInfo) {
-            
-            privacyIconAndTrackersAnimator.onAnimationCompletion = cookiesManagedAnimation
-            
             if forDaxDialog {
                 privacyIconAndTrackersAnimator.startAnimationForDaxDialog(in: self, with: privacyInfo)
             } else {
                 privacyIconAndTrackersAnimator.startAnimating(in: self, with: privacyInfo)
             }
-        } else {
-            cookiesManagedAnimation()
         }
     }
     
@@ -254,9 +245,15 @@ class OmniBar: UIView {
         privacyIconAndTrackersAnimator.completeAnimationForDaxDialog(in: self)
     }
 
-    private func animateCookiesManagedBadge() {
-        print("Cookies Managed!")
-        notificationAnimator.showNotification(.cookiesManaged, in: self)
+    func showOrScheduleCookiesManagedNotification() {
+        if privacyInfoContainer.isAnimationPlaying {
+            privacyIconAndTrackersAnimator.onAnimationCompletion = { [weak self] in
+                guard let self = self else { return }
+                self.notificationAnimator.showNotification(.cookiesManaged, in: self)
+            }
+        } else {
+            notificationAnimator.showNotification(.cookiesManaged, in: self)
+        }
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {

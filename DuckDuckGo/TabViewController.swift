@@ -2069,8 +2069,6 @@ extension TabViewController: PrintingUserScriptDelegate {
 extension TabViewController: AutoconsentUserScriptDelegate {
     
     func autoconsentUserScript(_ script: AutoconsentUserScript, didUpdateCookieConsentStatus cookieConsentStatus: PrivacyDashboard.CookieConsentInfo) {
-#warning("This should trigger cookie manage animation")
-        //        ActionMessageView.present(message: "🍪 Cookies managed")
         privacyInfo?.cookieConsentManaged = cookieConsentStatus
     }
     

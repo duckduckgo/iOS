@@ -1,30 +1,30 @@
-The DuckDuckGo app provides the most comprehensive online privacy protection with the push of a button. With one download, you get a new everyday browser that offers seamless protection while you search and browse, and even access to tracking protection for emails you receive.
+The DuckDuckGo app provides the most comprehensive online privacy protection with the push of a button. With one free download, you get an everyday private Internet browser that offers seamless protection while you search and browse, and even access to tracking protection for emails you receive.
 
 Protecting your privacy online is like protecting your home. Locking the front door won’t stop the most determined folks from getting inside, especially if you’ve left the back door and windows unlocked and an extra key under the doormat. That’s why we offer multiple types of privacy protection, most of which aren’t offered in most popular browsers by default.
-
+ 
 FEATURE HIGHLIGHTS
-• Search Privately by Default — DuckDuckGo Private Search comes built-in, so you can easily search the web without being tracked.
+• Search Privately by Default - DuckDuckGo Private Search comes built-in, so you can easily search the web without being tracked.
 
-• Escape Website Trackers Before They Load  — Automatically stop most hidden trackers (3rd-party scripts) from loading, which prevents companies from collecting and using (e.g. sale, ads, etc.) any data from these trackers. Our cutting-edge tracker blocking technology – called 3rd-Party Tracker Loading Protection – goes above and beyond what you get in most popular browsers by default.
+• Block Tracking Cookies While Browsing - Prevent most 3rd-party Internet cookies from tracking you as you browse online.
+ 
+• Escape Website Trackers Before They Load - Automatically stop most hidden trackers (3rd-party scripts) from loading, which prevents companies from collecting and using any personal data from these trackers. Stay secure with our cutting-edge tracker-blocking technology – 3rd-Party Tracker Loading Protection, which goes above and beyond what you get in most popular web browsers by default.
+ 
+• Automatically Enforce Encryption - Force many sites you visit to automatically use an encrypted (HTTPS) connection, which helps shield your data from Wi-Fi snoopers and network onlookers like your Internet provider.
+ 
+• Block Email Trackers (Beta) - Over 85% of emails sent to Duck Addresses (@duck.com) contain trackers that can detect when you’ve opened a message, where you were when you opened it, and what device you were using. Email Protection makes it easy to block most email trackers and hide your existing address when signing up for things online, all without switching email providers.
 
-• Automatically Enforce Encryption — force many sites you visit to automatically use an encrypted (HTTPS) connection, which helps shield your data from Wi-Fi snoopers and network onlookers like your Internet provider. 
-
-• Enable Built-in Email Protection — Over 85% of emails sent to Duck Addresses contained trackers that can detect when you’ve opened a message, where you were when you opened it, and what device you were using. Email Protection makes it easy to block most email trackers and hide your existing address when signing up for things online, all without switching email providers.
-
-• Escape Fingerprinting — help stop companies from creating a unique identifier for you by blocking their attempts to combine specific information about your browser and device settings.
-
-• Block Tracking Cookies — prevent most 3rd-party cookies from tracking you as you browse from site to site.
-
-We also have many protections not available on most browsers including protection from link tracking, Google AMP tracking, and more.
-
+• Escape Fingerprinting - Help stop companies from creating a unique identifier for you by blocking their attempts to combine specific information about your web browser and device settings.
+ 
+We feature many protections not available on most Internet browsers (even incognito browsers), including protection from link tracking, Google AMP tracking, and more.
+ 
 EVERYDAY PRIVACY CONTROLS
-• Tap Fire Button, Burn Data — Clear your tabs and browsing data with our Fire Button.
-
-• Signal Your Privacy Preference with Global Privacy Control (GPC) — built-into our app, GPC intends to help you express your opt-out rights automatically by telling websites not to sell or share your personal information. Whether it can be used to enforce your legal rights (for example, current or future CCPA, GDPR requirements) depends on the laws in your jurisdiction.
-
+• Tap Fire Button, Burn Data - Clear your tabs and browsing data fast with our Fire Button.
+ 
+• Signal Your Privacy Preference with Global Privacy Control (GPC) - Built in to our app, GPC intends to help you express your opt-out rights automatically by telling websites not to sell or share your personal information. Whether it can be used to enforce your legal rights (for example, current or future CCPA, GDPR requirements) depends on the laws in your jurisdiction.
+ 
 Note about our 3rd-Party Tracker Loading Protection following DuckDuckGo ad clicks: Our 3rd-Party Tracker Protection goes above and beyond what you get in most popular browsers by default, but we’re constantly working to make it more comprehensive. Currently, if an advertiser wants to detect conversions on their own website for our private DuckDuckGo search ads, our 3rd-Party Tracker Loading Protection will not stop bat.bing.com requests from loading on the advertiser’s website following DuckDuckGo ad clicks, but those requests are stopped in all other contexts. This is because DuckDuckGo private search advertising is in partnership with Microsoft. As part of that partnership, viewing ads on DuckDuckGo is anonymous and Microsoft has committed to not profile our users’ ad clicks.
-
-Read more about this and our Tracking Protections at https://help.duckduckgo.com/privacy/web-tracking-protections/
+ 
+Read more about this and our free Tracking Protections at https://help.duckduckgo.com/privacy/web-tracking-protections
 
 You don't need to wait to take back your privacy. Join the millions of people using DuckDuckGo and protect many of your everyday online activities with one app. It's privacy, simplified. 
 

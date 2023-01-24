@@ -1,0 +1,25 @@
+De DuckDuckGo-app biedt met een druk op de knop de uitgebreidste online privacybescherming. Met één gratis download krijg je een privéwebbrowser voor dagelijks gebruik die naadloze bescherming biedt tijdens het zoeken en browsen, en die je beschermt tegen tracking in e-mails die je ontvangt en apps die je gebruikt. Veel van deze beschermingsmethoden worden standaard niet aangeboden in de meeste populaire webbrowsers.
+
+BELANGRIJKSTE FUNCTIEKENMERKEN
+• Zoek standaard via privézoekopdrachten - DuckDuckGo Private Search is ingebouwd.
+
+• Blokkeer trackingcookies - Voorkom dat de meeste cookies van derden je volgen terwijl je surft.
+
+• Blokkeer de meeste trackers voordat ze worden geladen - Voorkom dat bedrijven persoonlijke gegevens verzamelen en gebruiken met trackers die op websites zijn verborgen.
+
+• Dwing versleuteling af - Dwing veel sites die je bezoekt om automatisch een versleutelde verbinding (HTTPS) te gebruiken.
+
+• Blokkeer e-mailtrackers (bèta) - Maak je eigen @duck.com-e-mailadres aan en gebruik Email Protection om de meeste e-mailtrackers te blokkeren, je bestaande adres te verbergen en berichten door te sturen naar je inbox. 
+
+• Ontsnap aan fingerprinting - Help voorkomen dat bedrijven een unieke id voor je maken.
+
+We hebben veel beveiligingsmethoden die in de meeste internetbrowsers (zelfs incognitobrowsers) niet beschikbaar zijn, waaronder bescherming tegen linktracking, Google AMP-tracking en meer.
+
+PRIVACYCONTROLES VOOR ELKE DAG
+• Tik op de Fire Button om gegevens te verbranden - Wis je tabbladen en browsegegevens met één tik op onze Fire Button.
+
+• Geef je privacyvoorkeuren aan met Global Privacy Control (GPC) - Meer informatie vind je op https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
+
+Opmerking over het volgen van klikken op DuckDuckGo-advertenties door onze functie voor het beschermen tegen trackers van derden: onze bescherming tegen trackers van derden gaat verder dan wat de meeste populaire browsers je standaard bieden, maar we werken voortdurend aan verdere uitbreiding ervan. Als een adverteerder conversies voor onze DuckDuckGo-advertenties bij privézoekopdrachten op zijn eigen website wil detecteren, zal onze bescherming tegen trackers van derden niet voorkomen dat bat.bing.com-verzoeken op de website van de adverteerder worden geladen nadat er op DuckDuckGo-advertenties is geklikt. Die verzoeken worden echter gestopt in alle andere contexten. Dat komt doordat voor de advertenties bij privézoekopdrachten in DuckDuckGo wordt samengewerkt met Microsoft. Het bekijken van advertenties op DuckDuckGo is als onderdeel van die samenwerking anoniem. Ook heeft Microsoft afgesproken om de advertentieklikken van onze gebruikers niet te gebruiken om profielen te maken.
+
+Lees meer over deze functie en onze gratis trackingbescherming op https://help.duckduckgo.com/privacy/web-tracking-protections

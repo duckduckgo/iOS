@@ -84,8 +84,12 @@ final class OmniBarNotificationContainerView: UIView {
         let notificationAnimationName: String
         
         switch type {
-        case .cookiesManaged:
+        case .cookiePopupManaged:
             notificationText = UserText.omnibarNotificationCookiesManaged
+            notificationAnimationName = useLightStyle ? "cookie-icon-animated-40-light" : "cookie-icon-animated-40-dark"
+        case .cookiePopupHidden:
+            #warning("fix string for translation")
+            notificationText = "Pop-up hidden"  // UserText.omnibarNotificationCookiesManaged
             notificationAnimationName = useLightStyle ? "cookie-icon-animated-40-light" : "cookie-icon-animated-40-dark"
         }
         

@@ -29,11 +29,13 @@ extension MainViewController {
                                                object: nil)
     }
     
-    @objc private func showCookiesManagedNotification(_ notification: Notification) {        
+    @objc private func showCookiesManagedNotification(_ notification: Notification) {
         guard let topURL = notification.userInfo?[AutoconsentUserScript.UserInfoKeys.topURL] as? URL,
-              topURL == tabManager.current?.url else { return }
-
-        omniBar.showOrScheduleCookiesManagedNotification()
+              let isCosmetic = notification.userInfo?[AutoconsentUserScript.UserInfoKeys.isCosmetic] as? Bool,
+              topURL == tabManager.current?.url
+        else { return }
+        
+        omniBar.showOrScheduleCookiesManagedNotification(isCosmetic: isCosmetic)
     }
     
 }

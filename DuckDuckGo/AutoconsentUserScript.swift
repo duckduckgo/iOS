@@ -44,6 +44,7 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     
     struct UserInfoKeys {
         static let topURL = "com.duckduckgo.autoconsent.top-url"
+        static let isCosmetic = "com.duckduckgo.autoconsent.is-cosmetic"
     }
     
     var injectionTime: WKUserScriptInjectionTime { .atDocumentStart }
@@ -71,8 +72,13 @@ final class AutoconsentUserScript: NSObject, WKScriptMessageHandlerWithReply, Us
     }
 
     @MainActor
-    func refreshDashboardState(consentManaged: Bool, optoutFailed: Bool?, selftestFailed: Bool?) {
-        let cookieConsentStatus = CookieConsentInfo(consentManaged: consentManaged, optoutFailed: optoutFailed, selftestFailed: selftestFailed)
+    func refreshDashboardState(consentManaged: Bool, cosmetic: Bool?, optoutFailed: Bool?, selftestFailed: Bool?) {
+        let cookieConsentStatus = CookieConsentInfo(consentManaged: consentManaged,
+                                                    cosmetic: cosmetic,
+                                                    optoutFailed: optoutFailed,
+                                                    selftestFailed: selftestFailed)
+        
+        os_log("Refreshing dashboard state: %s", log: .autoconsentLog, type: .debug, String(describing: cookieConsentStatus))
         self.delegate?.autoconsentUserScript(self, didUpdateCookieConsentStatus: cookieConsentStatus)
     }
 
@@ -149,6 +155,7 @@ extension AutoconsentUserScript {
         let type: String
         let cmp: String
         let url: String
+        let isCosmetic: Bool
     }
     
     func decodeMessageBody<Input: Any, Target: Codable>(from message: Input) -> Target? {
@@ -238,6 +245,7 @@ extension AutoconsentUserScript {
             // reset dashboard state
             refreshDashboardState(
                 consentManaged: management.sitesNotifiedCache.contains(url.host ?? ""),
+                cosmetic: nil,
                 optoutFailed: nil,
                 selftestFailed: nil
             )
@@ -255,6 +263,7 @@ extension AutoconsentUserScript {
                 "disabledCmps": disabledCMPs,
                 // the very first time (autoconsentEnabled = nil), make sure the popup is visible
                 "enablePrehide": preferences.autoconsentPromptSeen,
+                "enableCosmeticRules": true,
                 "detectRetries": 20
             ]
         ], nil)
@@ -331,7 +340,7 @@ extension AutoconsentUserScript {
         os_log("opt-out result: %s", log: .autoconsentLog, type: .debug, String(describing: messageData))
 
         if !messageData.result {
-            refreshDashboardState(consentManaged: true, optoutFailed: true, selftestFailed: nil)
+            refreshDashboardState(consentManaged: true, cosmetic: nil, optoutFailed: true, selftestFailed: nil)
         } else if messageData.scheduleSelfTest {
             // save a reference to the webview and frame for self-test
             selfTestWebView = message.webView
@@ -356,7 +365,7 @@ extension AutoconsentUserScript {
             return
         }
         
-        refreshDashboardState(consentManaged: true, optoutFailed: false, selftestFailed: nil)
+        refreshDashboardState(consentManaged: true, cosmetic: messageData.isCosmetic, optoutFailed: false, selftestFailed: nil)
         
         // trigger popup once per domain
         if !management.sitesNotifiedCache.contains(host) {
@@ -365,7 +374,8 @@ extension AutoconsentUserScript {
             // post popover notification on main thread
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: .newSiteCookiesManaged, object: self, userInfo: [
-                    UserInfoKeys.topURL: self.topUrl ?? url
+                    UserInfoKeys.topURL: self.topUrl ?? url,
+                    UserInfoKeys.isCosmetic: messageData.isCosmetic
                 ])
             }
         }
@@ -403,7 +413,7 @@ extension AutoconsentUserScript {
         }
         // store self-test result
         os_log("self-test result: %s", log: .autoconsentLog, type: .debug, String(describing: messageData))
-        refreshDashboardState(consentManaged: true, optoutFailed: false, selftestFailed: messageData.result)
+        refreshDashboardState(consentManaged: true, cosmetic: nil, optoutFailed: false, selftestFailed: messageData.result)
         replyHandler([ "type": "ok" ], nil) // this is just to prevent a Promise rejection
     }
 

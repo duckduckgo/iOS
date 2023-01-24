@@ -20,7 +20,8 @@
 import UIKit
 
 enum OmniBarNotificationType {
-    case cookiesManaged
+    case cookiePopupManaged
+    case cookiePopupHidden
 }
 
 final class OmniBarNotificationAnimator: NSObject {

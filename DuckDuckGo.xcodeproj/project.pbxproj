@@ -322,6 +322,8 @@
 		85DD442B2977255A005CC388 /* QRCodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD442A2977255A005CC388 /* QRCodeScannerView.swift */; };
 		85DD442D2979C1AA005CC388 /* SyncCodeManualEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD442C2979C1AA005CC388 /* SyncCodeManualEntryView.swift */; };
 		85DD442F297ADCE6005CC388 /* SyncViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */; };
+		85DD4431297EA400005CC388 /* ShowQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD4430297EA400005CC388 /* ShowQRCodeView.swift */; };
+		85DD4433297EB86C005CC388 /* SyncBackButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DD4432297EB86C005CC388 /* SyncBackButtonModifier.swift */; };
 		85DF714624F7FE6100C89288 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F143C2E41E4A4CD400CFDE3A /* Core.framework */; };
 		85DFEDED24C7CCA500973FE7 /* AppWidthObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEC24C7CCA500973FE7 /* AppWidthObserver.swift */; };
 		85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DFEDEE24C7EA3B00973FE7 /* SmallOmniBarState.swift */; };
@@ -1128,6 +1130,8 @@
 		85DD442A2977255A005CC388 /* QRCodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerView.swift; sourceTree = "<group>"; };
 		85DD442C2979C1AA005CC388 /* SyncCodeManualEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCodeManualEntryView.swift; sourceTree = "<group>"; };
 		85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncViewExtensions.swift; sourceTree = "<group>"; };
+		85DD4430297EA400005CC388 /* ShowQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQRCodeView.swift; sourceTree = "<group>"; };
+		85DD4432297EB86C005CC388 /* SyncBackButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncBackButtonModifier.swift; sourceTree = "<group>"; };
 		85DFEDEC24C7CCA500973FE7 /* AppWidthObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppWidthObserver.swift; sourceTree = "<group>"; };
 		85DFEDEE24C7EA3B00973FE7 /* SmallOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallOmniBarState.swift; sourceTree = "<group>"; };
 		85DFEDF024C7EEA400973FE7 /* LargeOmniBarState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeOmniBarState.swift; sourceTree = "<group>"; };
@@ -3107,6 +3111,8 @@
 				85F98F95296F480A00742F4A /* SyncSetupView.swift */,
 				85DD442C2979C1AA005CC388 /* SyncCodeManualEntryView.swift */,
 				85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */,
+				85DD4430297EA400005CC388 /* ShowQRCodeView.swift */,
+				85DD4432297EB86C005CC388 /* SyncBackButtonModifier.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -4977,6 +4983,7 @@
 				314C92BA27C3E7CB0042EC96 /* QuickLookContainerViewController.swift in Sources */,
 				855D914D2063EF6A00C4B448 /* TabSwitcherTransition.swift in Sources */,
 				4B6484F027FD1E350050A7A1 /* FontExtension.swift in Sources */,
+				85DD4433297EB86C005CC388 /* SyncBackButtonModifier.swift in Sources */,
 				F4F6DFB226E6AEC100ED7E12 /* AddOrEditBookmarkViewController.swift in Sources */,
 				F44D279F27F331BB0037F371 /* AutofillLoginPromptViewController.swift in Sources */,
 				F1F5337C1F26A9EF00D80D4F /* UserText.swift in Sources */,
@@ -5166,6 +5173,7 @@
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,
 				98B31292218CCB8C00E54DE1 /* AppDependencyProvider.swift in Sources */,
+				85DD4431297EA400005CC388 /* ShowQRCodeView.swift in Sources */,
 				02C57C4B2514FEFB009E5129 /* DoNotSellSettingsViewController.swift in Sources */,
 				8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */,
 				85DFEDF924CF3D0E00973FE7 /* TabsBarCell.swift in Sources */,

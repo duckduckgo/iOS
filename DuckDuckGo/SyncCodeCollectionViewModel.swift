@@ -37,6 +37,8 @@ class SyncCodeCollectionViewModel: ObservableObject {
     @Published var state = State.showScanner
     @Published var manuallyEnteredCode: String?
 
+    var showQRCodeModel: ShowQRCodeViewModel?
+
     let finished: (SyncCodeCollectionViewModel) -> Void
 
     init(finished: @escaping (SyncCodeCollectionViewModel) -> Void) {
@@ -78,6 +80,20 @@ class SyncCodeCollectionViewModel: ObservableObject {
     func cancel() {
         print(#function)
         finished(self)
+    }
+
+    func createShowQRCodeViewModel() -> ShowQRCodeViewModel {
+        #warning("should connect to backend and to use the connect mode for generating a QR Code then update this model")
+        let model = ShowQRCodeViewModel()
+        showQRCodeModel = model
+
+        Task { @MainActor in
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            showQRCodeModel?.codeToDisplay = "display code"
+            showQRCodeModel?.codeToShare = "code to share"
+        }
+
+        return model
     }
 
 }

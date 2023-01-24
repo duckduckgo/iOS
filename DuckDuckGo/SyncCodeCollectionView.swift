@@ -65,10 +65,10 @@ struct SyncCodeCollectionView: View {
 
     @ViewBuilder
     func instructions() -> some View {
-        // if model.showCamera {
-        Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
-            .multilineTextAlignment(.center)
-        // }
+        if model.showCamera {
+            Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
+                .multilineTextAlignment(.center)
+        }
     }
 
     @ViewBuilder
@@ -82,9 +82,9 @@ struct SyncCodeCollectionView: View {
                     Label("Manually Enter Code", image: "SyncKeyboardIcon")
                 }
 
+                #warning("Actually, if this is a new installation there won't be any code to show yet.")
                 NavigationLink {
-                    Text("Enter Code")
-                        .navigationTitle("Whooop!")
+                    ShowQRCodeView(model: model.createShowQRCodeViewModel())
                 } label: {
                     Label("Show QR Code", image: "SyncQRCodeIcon")
                 }
@@ -151,7 +151,7 @@ struct SyncCodeCollectionView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel", action: model.cancel)
-                        .foregroundColor(.primary)
+                    .foregroundColor(Color.white)                    
                 }
             }
         }

@@ -108,6 +108,7 @@ struct SyncCodeManualEntryView: View {
                 .navigationTitle("Manually Enter Code")
             }
             .background(Color.white.opacity(0.001))
+            .modifier(SyncBackButtonModifier())
             // This are kinda hacky ways to hide the keyboard
             .gesture(DragGesture().onChanged({ _ in
                 print("onTapGesture")

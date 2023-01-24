@@ -1,0 +1,26 @@
+Aplikacja DuckDuckGo to najbardziej wszechstronne narzędzie do ochrony prywatności w sieci, które możesz obsługiwać jednym przyciskiem. Wystarczy pobrać ją bezpłatnie tylko raz, aby korzystać z prywatnej przeglądarki internetowej, która zapewnia skuteczną ochronę podczas wyszukiwania i przeglądania, a nawet dostęp do ochrony przed śledzeniem w otrzymywanych wiadomościach e-mail i wykorzystywanych aplikacjach. Wiele z tych zabezpieczeń nie jest domyślnie oferowanych w większości popularnych przeglądarek.
+
+NAJWAŻNIEJSZE FUNKCJE
+• Domyślne prywatne wyszukiwanie – funkcja prywatnego wyszukiwania DuckDuckGo jest wbudowana.
+
+• Blokowanie śledzących plików cookie – uniemożliwia większości plików cookie innych firm śledzenie użytkownika podczas przeglądania stron internetowych.
+
+• Zapobieganie śledzeniu stron internetowych jeszcze przed ich załadowaniem – dzięki temu firmy nie mogą gromadzić i wykorzystywać za ich pośrednictwem żadnych danych.
+
+• Wymuszanie szyfrowania – wymuszenie w wielu odwiedzanych witrynach automatycznego korzystania z połączenia szyfrowanego (HTTPS).
+
+• Blokowanie skryptów śledzących wiadomości e-mail (Beta) – utwórz prywatny adres e-mail w domenie @duck.com i używaj ochrony poczty e-mail, aby blokować skrypty śledzące pocztę e-mail i ukryć swój adres, a także przekierowywać wiadomości do Twojej skrzynki odbiorczej. 
+
+• Zapobieganie tworzeniu odcisku cyfrowego – pomaga powstrzymać firmy przed tworzeniem unikalnych identyfikatorów użytkownika.
+
+Mamy też wiele zabezpieczeń niedostępnych w większości przeglądarek (nawet w tych obsługujących tryb incognito), w tym ochronę przed śledzeniem linków, śledzeniem Google AMP i nie tylko.
+
+CODZIENNA KONTROLA PRYWATNOŚCI
+• Dotknij przycisku Zabezpiecz, zniszcz dane – szybko wyczyść wszystkie karty i dane dotknięciem przycisku zabezpieczenia.
+
+• Zasygnalizuj swoje preferencje dotyczące prywatności za pomocą funkcji GPC (Global Privacy Control) - Więcej informacji znajdziesz na stronie https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
+
+Informacja o naszym systemie ochrony przed wczytywaniem reklam przez strony trzecie po kliknięciu reklamy DuckDuckGo: nasza funkcja ochrony przed ładowaniem przez strony trzecie wykracza poza to, co jest domyślnie dostępne w większości popularnych przeglądarek, jednak nieustannie pracujemy nad tym, aby była ona jeszcze bardziej wszechstronna. Obecnie, jeśli reklamodawca chce wykryć konwersje na swojej stronie internetowej dla naszych prywatnych reklam wyszukiwania DuckDuckGo, nasza ochrona przed ładowaniem przez trackery stron trzecich nie blokuje ładowania zapytań bat.bing.com na stronie reklamodawcy po kliknięciu reklamy DuckDuckGo, ale zapytania te są blokowane we wszystkich innych kontekstach. Dzieje się tak dlatego, że reklama w wyszukiwarce prywatnej DuckDuckGo współpracuje z firmą Microsoft. W ramach tego partnerstwa oglądanie reklam w DuckDuckGo jest anonimowe, a firma Microsoft zobowiązała się nie profilować kliknięć reklam przez naszych użytkowników.
+
+Więcej informacji na ten temat oraz na temat naszej bezpłatnej ochrony przed śledzeniem można znaleźć na stronie https://help.duckduckgo.com/privacy/web-tracking-protections
+

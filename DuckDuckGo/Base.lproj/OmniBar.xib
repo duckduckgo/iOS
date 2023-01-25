@@ -91,6 +91,9 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sek-4Y-GoT" customClass="SearchFieldContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                     <rect key="frame" x="30" y="0.0" width="345" height="40"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEJ-P3-HpO" customClass="OmniBarNotificationContainerView" customModule="DuckDuckGo" customModuleProvider="target">
+                                            <rect key="frame" x="-4" y="0.0" width="349" height="40"/>
+                                        </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGG-5L-D8Q" customClass="PrivacyInfoContainerView" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="138" height="40"/>
                                             <subviews>
@@ -219,9 +222,6 @@
                                                 <outlet property="trackers2Animation" destination="jHJ-ya-QS7" id="a4W-MS-j43"/>
                                                 <outlet property="trackers3Animation" destination="E8n-8r-JML" id="txQ-Qp-gP8"/>
                                             </connections>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEJ-P3-HpO" customClass="OmniBarNotificationContainerView" customModule="DuckDuckGo" customModuleProvider="target">
-                                            <rect key="frame" x="-4" y="0.0" width="349" height="40"/>
                                         </view>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fqM-N4-jNd" customClass="TextFieldWithInsets" customModule="DuckDuckGo" customModuleProvider="target">
                                             <rect key="frame" x="30" y="0.0" width="315" height="40"/>

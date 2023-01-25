@@ -61,6 +61,9 @@
 /* Class = "UILabel"; text = "Ask to Fireproof sites on sign-in"; ObjectID = "bIg-0T-UWq"; */
 "bIg-0T-UWq.text" = "Požadovať zakázanie cookie pre stránky pri prihlásení";
 
+/* Class = "UINavigationItem"; title = "Manage Cookie Pop-ups"; ObjectID = "btj-ri-kRr"; */
+"btj-ri-kRr.title" = "Správa kontextových okien súborov cookie";
+
 /* Class = "UILabel"; text = "App Icon"; ObjectID = "cKo-er-HNj"; */
 "cKo-er-HNj.text" = "Ikona aplikácie";
 
@@ -139,6 +142,9 @@
 /* Class = "UILabel"; text = "Privacy, simplified. "; ObjectID = "gji-Fs-EET"; */
 "gji-Fs-EET.text" = "Súkromie, zjednodušene. ";
 
+/* Class = "UILabel"; text = "Manage Cookie Pop-ups"; ObjectID = "GRv-M2-Kx1"; */
+"GRv-M2-Kx1.text" = "Správa kontextových okien súborov cookie";
+
 /* Class = "UINavigationItem"; title = "Theme"; ObjectID = "gS2-mg-l7R"; */
 "gS2-mg-l7R.title" = "Motív";
 
@@ -156,6 +162,9 @@
 
 /* Class = "UILabel"; text = "Share Feedback"; ObjectID = "m23-t6-9cb"; */
 "m23-t6-9cb.text" = "Zdieľať spätnú väzbu";
+
+/* Class = "UILabel"; text = "Let DuckDuckGo manage cookie consent pop-ups"; ObjectID = "nX1-F1-Frd"; */
+"nX1-F1-Frd.text" = "Nech DuckDuckGo spravuje kontextové okná týkajúce sa súhlasu so súbormi cookie";
 
 /* Class = "UILabel"; text = "No Fireproof sites yet"; ObjectID = "OfP-Kw-IOk"; */
 "OfP-Kw-IOk.text" = "Zatiaľ žiadne stránky so zakázanými cookie";

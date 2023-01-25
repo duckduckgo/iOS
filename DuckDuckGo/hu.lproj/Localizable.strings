@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Be";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Letiltva";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Engedélyezve";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Jelszó elrejtése";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Hiányzik a tartalom";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "A felugró sütiablak nem lett kezelve";
+
+/* Broken Site Category */
 "brokensite.category.images" = "A képek nem töltődtek be";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Tegnap";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Felugró sütiablakok kezelése";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Nem, köszönöm";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Úgy tűnik, hogy az oldalon sütik elfogadására szolgáló felugró ablak van👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Elintézzem helyetted? Megpróbálhatom minimalizálni a sütiket, maximalizálni az adatvédelmet, illetve elrejteni az ilyen felugró ablakokat.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ötletek elrejtése örökre";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Még nincsenek könyvjelzők hozzáadva";
-
-/* Empty list state placholder */
-"empty.favorites" = "Még nincsenek hozzáadva kedvencek.";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nincs találat";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Kezelt sütik";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Minialkalmazás hozzáadása";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Adatvédelem engedélyezve a következőhöz: %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Ismeretlen hiba történt.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Automatikus kiegészítési javaslat";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Webhely megnyitása";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Beállítások";
 

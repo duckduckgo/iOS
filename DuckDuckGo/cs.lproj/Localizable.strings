@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aktivní";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Zakázáno";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Povoleno";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skrýt heslo";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Chybí obsah";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Správa vyskakovacích oken pro souhlas s cookies se neaktivovala";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Obrázky se nenačetly";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Včera";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Správa vyskakovacích oken ohledně cookies";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Ne, děkuji";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Vypadá to, že tenhle web má vyskakovací okno pro souhlas se soubory cookie 👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Mám ho vyřešit za tebe? Můžu zkusit vybrat jen nezbytné soubory cookie, maximalizovat ochranu soukromí a podobná vyskakovací okna odteď skrývat.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Navždy skrýt tipy";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatím nebyly přidány žádné záložky.";
-
-/* Empty list state placholder */
-"empty.favorites" = "Zatím nebyly přidány žádné oblíbené položky";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nenalezeny žádné shody";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Správa cookies je aktivní";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Přidat widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Ochrana aktivována u domény %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Vyskytla se neznámá chyba.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Použít návrh automatického doplňování";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Otevřít webovou stránku";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Nastavení";
 

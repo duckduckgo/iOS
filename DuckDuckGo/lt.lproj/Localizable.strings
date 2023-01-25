@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Įjungti";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Išjungta";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Įjungta";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Paslėpti slaptažodį";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Trūksta turinio";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Iškylantysis slapukų langas nebuvo sutvarkytas";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Vaizdai neįkelti";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Vakar";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Valdyti slapukų iššokančiuosius langus";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Ne, dėkoju";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Atrodo, kad šioje svetainėje yra sutikimo su slapukais iššokantysis langas👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Norite, kad viską sutvarkyčiau? Galiu pabandyti sumažinti slapukų skaičių, sustiprinti privatumą ir paslėpti tokius iššokančiuosius langus.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Slėpti patarimus visam laikui";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Žymių dar nepridėta";
-
-/* Empty list state placholder */
-"empty.favorites" = "Mėgstamų dar nepridėta";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Atitikmenų nerasta";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Slapukai valdomi";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pridėti valdiklį";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privatumo apsauga įjungta %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Įvyko nežinoma klaida.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Automatinio užbaigimo pasiūlymas";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Atidaryti svetainę";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Nustatymai";
 

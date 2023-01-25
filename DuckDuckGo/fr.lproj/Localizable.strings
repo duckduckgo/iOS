@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activé";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Désactivé";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Activé";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Masquer le mot de passe";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Le contenu est manquant";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "La fenêtre contextuelle des cookies n'a pas été gérée";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Les images n'ont pas pu être chargées";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Hier";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Gérer les fenêtres contextuelles (cookies)";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Non merci";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Il semble que ce site ait une fenêtre contextuelle de consentement aux cookies👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Voulez-vous que je m'en charge ? Je peux essayer de minimiser les cookies, de maximiser la confidentialité et de masquer les fenêtres contextuelles comme celles-ci.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Masquer les conseils définitivement";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Aucun signet ajouté pour le moment";
-
-/* Empty list state placholder */
-"empty.favorites" = "Aucun favori ajouté pour le moment";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Aucune correspondance trouvée";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Cookies gérés";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Ajouter un widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Protection de la confidentialité activée pour %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Une erreur inconnue s'est produite.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Saisie semi-automatique de la suggestion";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Ouvrir le site Web";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Paramètres";
 

@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ενεργό";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Απενεργοποιήθηκε";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Ενεργοποιήθηκε";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Απόκρυψη κωδικού πρόσβασης";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Το περιεχόμενο λείπει";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Δεν έγινε διαχείριση του αναδυόμενου παραθύρου για cookies";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Οι εικόνες δεν φορτώθηκαν";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Χθες";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Διαχείριση αναδυόμενων παραθύρων cookies";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Όχι, ευχαριστώ";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Φαίνεται ότι αυτός ο ιστότοπος έχει ένα αναδυόμενο παράθυρο συναίνεσης για cookies👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Θέλετε να τα διαχειριστώ αυτά για εσάς; Μπορώ να προσπαθήσω να ελαχιστοποιήσω τα cookies, να μεγιστοποιήσω το απόρρητο και να αποκρύψω αναδυόμενα παράθυρα όπως αυτά.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Απόκρυψη συμβουλών για πάντα";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Δεν προστέθηκαν σελιδοδείκτες ακόμα";
-
-/* Empty list state placholder */
-"empty.favorites" = "Δεν έχουν προστεθεί ακόμα αγαπημένα";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Δεν βρέθηκαν αντιστοιχίες";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Διαχειριζόμενα cookies";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Προσθήκη γραφικού στοιχείου";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Η Προστασία προσωπικών δεδομένων ενεργοποιήθηκε για το %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Προέκυψε άγνωστο σφάλμα.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Πρόταση αυτόματης συμπλήρωσης";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Άνοιγμα ιστότοπου";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Ρυθμίσεις";
 

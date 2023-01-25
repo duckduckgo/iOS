@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "På";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Inaktiverad";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Aktiverad";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Dölj lösenord";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Innehåll saknas";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Popup-fönster för cookies hanterades inte";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Bilder laddades inte";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Igår";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Hantera popup-fönster för cookies";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Nej tack";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Den här webbplatsen verkar ha ett popup-fönster för godkännande av cookies👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Vill du att jag ska hantera dessa åt dig? Jag kan försöka minimera cookies, maximera integriteten och dölja sådana här popup-fönster.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Dölj tipsen för alltid";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Inga bokmärken har lagts till ännu";
-
-/* Empty list state placholder */
-"empty.favorites" = "Inga favoriter har lagts till ännu";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Inga träffar hittades";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Cookies hanterades";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lägg till widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Integritetsskydd aktiverat för %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Ett okänt fel uppstod.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Komplettera automatiskt-förslag";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Öppna webbplatsen";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Inställningar";
 

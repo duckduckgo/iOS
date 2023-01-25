@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Aan";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Uitgeschakeld";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Ingeschakeld";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Wachtwoord verbergen";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Inhoud ontbreekt";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Cookie-pop-up is niet beheerd";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Afbeeldingen zijn niet geladen";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Gisteren";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Cookiepop-ups beheren";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Nee, bedankt";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Het lijkt erop dat deze site een pop-up met toestemming voor cookies heeft👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Wil je dat ik deze voor je afhandel? Ik kan proberen cookies te minimaliseren, privacy te maximaliseren en pop-ups zoals deze te verbergen.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Tips voor altijd verbergen";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nog geen bladwijzers toegevoegd";
-
-/* Empty list state placholder */
-"empty.favorites" = "Nog geen favorieten toegevoegd";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Geen overeenkomsten gevonden";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Beheerde cookies";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget toevoegen";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Privacybescherming ingeschakeld voor %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Er is een onbekende fout opgetreden.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Suggestie automatisch aanvullen";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Website openen";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Instellingen";
 

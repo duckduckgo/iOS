@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Vključeno";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Onemogočeno";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Omogočeno";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skrij geslo";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Vsebina manjka";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Pojavno okno za piškotke ni bilo upravljano";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Slike se niso naložile";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Včeraj";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Upravljanje pojavnih oken za piškotke";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Ne, hvala";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Videti je, da ima to spletno mesto pojavno okno s soglasjem za piškotke👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Želite, da jih uredim namesto vas? Poskušam zmanjšati piškotke, povečati zasebnost in skriti pojavna okna, kot so ta.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Skrivaj nasvete za vedno";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zaznamki še niso dodani";
-
-/* Empty list state placholder */
-"empty.favorites" = "Priljubljeni še niso dodani";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ni zadetkov";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Upravljani piškotki";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Dodaj gradnik";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Zaščita zasebnosti je omogočena za %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Prišlo je do neznane napake.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Pokaži predlog za samodokončanje";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Odpri spletno mesto";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Nastavitve";
 

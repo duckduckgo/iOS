@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Päällä";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Pois käytöstä";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Käytössä";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Piilota salasana";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Sisältöä puuttuu";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Evästeen ponnahdusikkunaa ei hallittu";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Kuvat eivät latautuneet";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Eilen";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Evästeiden hallinnan ponnahdusikkunat";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Ei kiitos";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Näyttää siltä, että tällä sivustolla on evästeiden hallinnan ponnahdusikkuna👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Haluatko, että hoidan nämä puolestasi? Voin yrittää minimoida evästeet, maksimoida yksityisyyden ja piilottaa tällaiset ponnahdusikkunat.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Piilota vinkit ikuisesti";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Kirjanmerkkejä ei ole vielä lisätty";
-
-/* Empty list state placholder */
-"empty.favorites" = "Suosikkeja ei ole vielä lisätty";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ei hakutuloksia";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Hallitut evästeet";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lisää widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Yksityisyydensuoja otettu käyttöön osoitteessa %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Tapahtui tuntematon virhe.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Automaattisen täydennyksen ehdotus";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Avaa verkkosivusto";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Asetukset";
 

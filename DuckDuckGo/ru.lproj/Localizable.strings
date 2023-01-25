@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Отключено";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Включено";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Скрыть пароль";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Отсутствует содержимое";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Не выбраны настройки во всплывающем окне куки-файлов";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Не загружаются изображения";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Вчера";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Управление окнами выбора куки-файлов";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Нет, спасибо";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Похоже, на этом сайте есть всплывающее окно выбора куки-файлов👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Хотите, чтобы такие окна закрывались автоматически? Мы можем попытаться минимизировать выбор куки-файлов для большей безопасности ваших данных и автоматически закрывать такие окна.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Скрыть подсказки навсегда";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Закладок пока нет";
-
-/* Empty list state placholder */
-"empty.favorites" = "В избранное пока ничего не добавлено";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ничего не найдено";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Настройки куки выбраны";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Добавить виджет";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Защита конфиденциальности на %@ включена";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Произошла неизвестная ошибка.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Предложение для автозаполнения";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Открыть сайт";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Настройки";
 

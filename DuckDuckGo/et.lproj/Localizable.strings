@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Sees";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Keelatud";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Lubatud";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Peida parool";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Sisu puudub";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Küpsise hüpikakent ei hallatud";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Pilte ei laaditud";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Eile";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Halda küpsiste hüpikaknaid";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Ei aitäh";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Paistab, et sellel saidil on küpsiste nõusoleku hüpikaken👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Kas soovid, et ma need sinu eest lahendaksin? Ma võin proovida minimeerida küpsiseid, maksimeerida privaatsust ja sellised hüpikaknad peita.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Peida näpunäited igaveseks";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Järjehoidjaid pole veel lisatud";
-
-/* Empty list state placholder */
-"empty.favorites" = "Lemmikuid pole veel lisatud";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ühtegi vastet ei leitud";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Hallatavad küpsised";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lisa vidin";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "%@ privaatsuse kaitse on lubatud";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Tekkis tundmatu tõrge.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Kasuta ettepaneku automaatteksti";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Ava veebisait";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Seaded";
 

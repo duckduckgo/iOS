@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Til";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Deaktiveret";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Aktiveret";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skjul adgangskode";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Indhold mangler";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Cookie-pop op blev ikke administreret";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Billeder blev ikke indlæst";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "I går";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Administrer cookie pop op-vinduer";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Nej tak.";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Det ser ud til, at dette websted har et pop op-vindue med samtykke til brug af cookies👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Skal jeg tage mig af dem for dig? Jeg kan forsøge at minimere cookies, maksimere privatlivets fred og skjule pop op-vinduer som disse.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Skjul tip for evigt";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bogmærker tilføjet endnu";
-
-/* Empty list state placholder */
-"empty.favorites" = "Ingen favoritter tilføjet endnu";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ingen match fundet";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Administrerede cookies";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Tilføj widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Beskyttelse af privatlivet aktiveret for %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Der opstod en ukendt fejl.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Autoudfyld forslaget";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Åbn websted";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Indstillinger";
 

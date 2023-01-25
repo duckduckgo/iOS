@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "På";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Deaktivert";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Aktivert";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skjul passord";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Innhold mangler";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Popup-vinduet om informasjonskapsler ble ikke håndtert";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Bildene ble ikke lastet inn";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "I går";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Administrer vinduer om informasjonskapsler";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Nei takk";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Det ser ut til at dette nettstedet har et popup-vindu om samtykke til informasjonskapsler👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Skal jeg håndtere dette for deg? Jeg kan prøve å minimere informasjonskapslene, maksimere personvernet og skjule popup-vinduer som dette.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Skjul tips for alltid";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ingen bokmerker lagt til ennå";
-
-/* Empty list state placholder */
-"empty.favorites" = "Ingen favoritter ennå";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Ingen match ble funnet";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Informasjonskapsler administrert";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Legg til widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Personvern er aktivert for %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Det oppstod en ukjent feil.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Forslag fra autofullfør";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Åpne nettsted";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Innstillinger";
 

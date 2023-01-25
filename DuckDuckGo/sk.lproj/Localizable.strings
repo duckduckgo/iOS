@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Zapnuté";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Zakázané";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Zapnuté";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Skryť heslo";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Chýba obsah";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Automaticky otvárané okno pre súbory cookie nebolo spravované";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Obrázky sa nepodarilo načítať";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Včera";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Správa kontextových okien súborov cookie";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Nie, ďakujem";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Zdá sa, že táto stránka má kontextové okno týkajúce sa súhlasu so súbormi cookie👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Chceš, aby som to riešil za teba? Môžem sa pokúsiť minimalizovať súbory cookie, maximalizovať ochranu súkromia a skryť kontextové okná, ako sú tieto.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Navždy skryť tipy";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Zatiaľ neboli pridané žiadne záložky";
-
-/* Empty list state placholder */
-"empty.favorites" = "Zatiaľ neboli pridané žiadne obľúbené položky";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nenašli sa žiadne zhody";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Správa súborov cookie";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pridať miniaplikáciu";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Ochrana súkromia na doméne %@ bola zapnutá";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Vyskytla sa neznáma chyba.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Zobraziť návrhy automatického dopĺňania";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Otvoriť webovú lokalitu";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Nastavenia";
 

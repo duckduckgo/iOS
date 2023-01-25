@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Activat";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Dezactivat";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Activat";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Ascunde parola";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Conținutul lipsește";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Fereastra pop-up privind modulele cookie nu a fost gestionată";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Imaginile nu s-au încărcat";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Ieri";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Gestionare pop-up-uri pentru module cookie";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Nu, mulțumesc";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Se pare că acest site are o fereastră pop-up de solicitare a consimțământului cu privire la modulele cookie👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Vrei să mă ocup de asta pentru tine? Pot să încerc să minimizez numărul de module cookie, să maximizez confidențialitatea și să ascund ferestrele pop-up precum aceasta.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ascunde sfaturile definitiv";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Nu s-a adăugat niciun semn de carte";
-
-/* Empty list state placholder */
-"empty.favorites" = "Nicio preferință adăugată încă";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nu s-au găsit potriviri";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Modulele cookie au fost gestionate";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Adăugare widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Protecția confidențialității este activată pentru %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "A apărut o eroare necunoscută.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Sugestie de completare automată";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Deschide site-ul";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Setări";
 

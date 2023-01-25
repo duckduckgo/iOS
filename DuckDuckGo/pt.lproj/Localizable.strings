@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Ligado";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Desativado";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Ativado";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Ocultar palavra-passe";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Falta conteúdo";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Não foi feita a gestão do pop-up de cookies";
+
+/* Broken Site Category */
 "brokensite.category.images" = "As imagens não carregaram";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Ontem";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Gerir pop-ups de cookies";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Não, obrigado";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Parece que este site tem um pop-up de consentimento de cookies👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Queres que trate disto por ti? Posso tentar minimizar os cookies, maximizar a privacidade e ocultar pop-ups como estes.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Ocultar dicas para sempre";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Ainda não foram adicionados marcadores";
-
-/* Empty list state placholder */
-"empty.favorites" = "Ainda sem favoritos adicionados";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nenhuma correspondência encontrada";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Cookies geridos";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Adicionar widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Proteção de privacidade ativada para %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Ocorreu um erro desconhecido.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Sugestão de preenchimento automático";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Abrir website";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Definições";
 

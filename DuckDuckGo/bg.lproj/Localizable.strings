@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Включено";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Деактивирано";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Активирано";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Скриване на паролата";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Липсва съдържание";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Неуспешно управление на изскачащ прозорец за бисквитки";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Изображенията не се зареждат";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Вчера";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Управление на прозорци за бисквитки";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Не, благодаря";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Изглежда, че този сайт има изскачащ прозорец за съгласие за бисквитки👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Искате ли да се справя с това вместо Вас? Мога да се опитам да намаля бисквитките до минимум, да увелича поверителността и да скрия подобни изскачащи прозорци.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Скрий съветите за постоянно";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Все още няма добавени отметки";
-
-/* Empty list state placholder */
-"empty.favorites" = "Все още няма добавени любими";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Няма намерени съвпадения";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Бисквитките са настроени";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Добави приспособлението";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Активирана защита на поверителността за %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Възникна неизвестна грешка.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Предложение за автоматично довършване";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Отваряне на уебсайта";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Настройки";
 

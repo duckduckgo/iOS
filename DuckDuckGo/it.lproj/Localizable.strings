@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "On";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Disattivato";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Attivato";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Nascondi password";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "Manca il contenuto";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Il pop-up dei cookie non era gestito";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Le immagini non sono state caricate";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Ieri";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Gestione dei popup dei cookie";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "No, grazie";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Sembra che su questo sito sia presente un popup per il consenso ai cookie👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Vuoi che me ne occupi io? Posso cercare di ridurre al minimo i cookie, massimizzare la privacy e nascondere i popup come questo.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "Nascondi suggerimenti per sempre";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Non è ancora stato aggiunto nessun segnalibro";
-
-/* Empty list state placholder */
-"empty.favorites" = "Non è stato ancora aggiunto alcun preferito";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Nessuna corrispondenza trovata";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Cookie gestiti";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Aggiungi widget";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Tutela della privacy attivata per %@";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Si è verificato un errore sconosciuto.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Mostra suggerimenti di completamento automatico";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Apri il sito web";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Impostazioni";
 

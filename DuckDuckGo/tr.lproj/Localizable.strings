@@ -163,6 +163,12 @@
 /* No comment provided by engineer. */
 "autoclear.on" = "Açık";
 
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.disabled" = "Devre Dışı";
+
+/* Autoconsent for Cookie Management Setting state */
+"autoconsent.enabled" = "Etkin";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Parolayı gizle";
 
@@ -449,6 +455,9 @@
 "brokensite.category.content" = "İçerik eksik";
 
 /* Broken Site Category */
+"brokensite.category.cookieprompt" = "Çerez açılır penceresi yönetilemedi";
+
+/* Broken Site Category */
 "brokensite.category.images" = "Resimler yüklenmedi";
 
 /* Broken Site Category */
@@ -483,6 +492,18 @@
 
 /* Title for a section containing only items from yesterday */
 "date.range.yesterday" = "Dün";
+
+/* Button title accepting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.accept" = "Çerez Açılır Pencerelerini Yönetin";
+
+/* Button title rejecting to enable feature to automatically manage cookie popups */
+"dax.cookie-consent.button.reject" = "Hayır Teşekkürler";
+
+/* First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.first" = "Görünüşe göre bu sitede çerez izni için açılır pencere var👇";
+
+/* Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature */
+"dax.cookie-consent.second" = "Bunları sizin yerinize halletmemizi ister misiniz? Çerezleri en aza indirmeyi, gizliliği en üst düzeye çıkarmayı ve bunun gibi açılır pencereleri gizlemeyi deneyebiliriz.";
 
 /* No comment provided by engineer. */
 "dax.hide.button" = "İpuçlarını Sonsuza Kadar Gizle";
@@ -648,9 +669,6 @@
 
 /* Empty list state placholder */
 "empty.bookmarks" = "Henüz yer imi eklenmedi";
-
-/* Empty list state placholder */
-"empty.favorites" = "Henüz hiç favori eklenmedi";
 
 /* Empty search placeholder on bookmarks search */
 "empty.search" = "Eşleşme bulunamadı";
@@ -985,6 +1003,9 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
+/* Text displayed on notification appearing in the address bar */
+"omnibar.notification.cookies-managed" = "Yönetilen çerezler";
+
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget Ekle";
 
@@ -1153,10 +1174,6 @@
 /* Confirmation of an action - populated with a domain name */
 "toast.protection.enabled" = "Gizlilik Koruması %@ için etkinleştirildi";
 
-<<<<<<< HEAD
-/* No comment provided by engineer. */
-"unknown.error.occurred" = "Bilinmeyen bir hata oluştu.";
-
 /* Autocomplete selected suggestion into the Address Bar button accessibility label */
 "voiceover.action.suggestion.autocomplete" = "Otomatik tamamlama önerisi";
 
@@ -1169,8 +1186,6 @@
 /* Open suggested website action accessibility title */
 "voiceover.suggestion.type.website" = "Web sitesini aç";
 
-=======
->>>>>>> develop
 /* No microphone permission alert action button to open the settings app */
 "voiceSearch.alert.no-permission.action.settings" = "Ayarlar";
 

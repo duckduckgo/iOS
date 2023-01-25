@@ -167,7 +167,7 @@
 "autoconsent.enabled" = "Enabled";
 
 /* No comment provided by engineer. */
-"autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups.";
+"autoconsent.info.header" = "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.";
 
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Hide Password";
@@ -1006,8 +1006,11 @@ https://duckduckgo.com/mac";
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Cookies managed";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Pop-Up Hidden";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";

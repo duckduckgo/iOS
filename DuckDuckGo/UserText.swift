@@ -302,7 +302,7 @@ public struct UserText {
     
     public static let autoconsentEnabled = NSLocalizedString("autoconsent.enabled", value: "Enabled", comment: "Autoconsent for Cookie Management Setting state")
     public static let autoconsentDisabled = NSLocalizedString("autoconsent.disabled", value: "Disabled", comment: "Autoconsent for Cookie Management Setting state")
-    public static let autoconsentInfoText = NSLocalizedString("autoconsent.info.header", value: "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups.", comment: "")
+    public static let autoconsentInfoText = NSLocalizedString("autoconsent.info.header", value: "When DuckDuckGo detects cookie consent pop-ups on sites you visit, we can try to automatically set your cookie preferences to minimize cookies and maximize privacy, then close the pop-ups. Some sites don't provide an option to manage cookie preferences, so we can only hide pop-ups like these.", comment: "")
     
     public static let emailBrowsingMenuUseNewDuckAddress = NSLocalizedString("email.browsingMenu.useNewDuckAddress", value: "Generate Private Duck Address", comment: "Email option title in the browsing menu")
     public static let emailBrowsingMenuAlert = NSLocalizedString("email.browsingMenu.alert", value: "New address copied to your clipboard", comment: "Title for the email copy browsing menu alert")
@@ -523,7 +523,8 @@ public struct UserText {
 
     public static let autofillNavigationButtonItemTitleClose = NSLocalizedString("autofill.logins.list.close-title", value:"Close", comment: "Title for close navigation button")
     
-    public static let omnibarNotificationCookiesManaged = NSLocalizedString("omnibar.notification.cookies-managed", value:"Cookies managed", comment: "Text displayed on notification appearing in the address bar")
+    public static let omnibarNotificationCookiesManaged = NSLocalizedString("omnibar.notification.cookies-managed", value:"Cookies managed", comment: "Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it")
+    public static let omnibarNotificationPopupHidden = NSLocalizedString("omnibar.notification.popup-hidden", value:"Pop-Up Hidden", comment: "Text displayed on notification appearing in the address bar when the browser  hides a cookie popup")
     
     public static let daxDialogCookieConsentFirst = NSLocalizedString("dax.cookie-consent.first", value:"Looks like this site has a cookie consent pop-up👇", comment: "First part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature")
     public static let daxDialogCookieConsentSecond = NSLocalizedString("dax.cookie-consent.second", value:"Want me to handle these for you? I can try to minimize cookies, maximize privacy, and hide pop-ups like these.", comment: "Second part of text displayed on Dax dialog for enabling Autoconsent for Cookie Management feature")

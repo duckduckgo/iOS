@@ -134,6 +134,7 @@ extension Pixel {
         case daxDialogsFireEducationShown
         case daxDialogsFireEducationConfirmed
         case daxDialogsFireEducationCancelled
+        case daxDialogsAutoconsentShown
         
         case widgetFavoriteLaunch
         case widgetNewSearch
@@ -497,6 +498,7 @@ extension Pixel.Event {
         case .daxDialogsFireEducationShown: return "m_dx_fe_s"
         case .daxDialogsFireEducationConfirmed: return "m_dx_fe_co"
         case .daxDialogsFireEducationCancelled: return "m_dx_fe_ca"
+        case .daxDialogsAutoconsentShown: return "m_dax_dialog_autoconsent_shown"
             
         case .widgetFavoriteLaunch: return "m_w_fl"
         case .widgetNewSearch: return "m_w_ns"

@@ -2083,6 +2083,8 @@ extension TabViewController: AutoconsentUserScriptDelegate {
             self.dismiss(animated: false)
         })
         
+        Pixel.fire(pixel: .daxDialogsAutoconsentShown)
+        
         showCustomDaxDialog(model: model)
     }
     

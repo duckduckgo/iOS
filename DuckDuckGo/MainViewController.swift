@@ -887,7 +887,7 @@ class MainViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    fileprivate func launchSettings() {
+    func launchSettings() {
         performSegue(withIdentifier: "Settings", sender: self)
     }
     

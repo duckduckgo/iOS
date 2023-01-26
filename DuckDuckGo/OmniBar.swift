@@ -258,7 +258,6 @@ class OmniBar: UIView {
                 self.notificationAnimator.showNotification(type, in: self)
             }
         }
-
     }
 
     fileprivate func refreshState(_ newState: OmniBarState) {

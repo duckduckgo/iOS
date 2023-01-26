@@ -147,7 +147,12 @@ extension PrivacyDashboardViewController: PrivacyDashboardControllerDelegate {
         guard let mainViewController = presentingViewController as? MainViewController else { return }
         
         dismiss(animated: true) {
-            mainViewController.launchCookiePopupManagementSettings()
+            switch target {
+            case "cpm":
+                mainViewController.launchCookiePopupManagementSettings()
+            default:
+                mainViewController.launchSettings()
+            }
         }
     }
 }

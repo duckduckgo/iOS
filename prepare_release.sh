@@ -97,9 +97,7 @@ create_release_branch() {
 	fi
 	eval git pull "$mute"
 	eval git checkout -b "${release_branch}" "$mute"
-	eval git branch --set-upstream-to=origin/"${release_branch}" "$mute"
 	eval git checkout -b "${changes_branch}" "$mute"
-	eval git branch --set-upstream-to=origin/"${changes_branch}" "$mute"
 	echo "✅"
 }
 

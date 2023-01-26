@@ -21,7 +21,7 @@ import UIKit
 import Core
 import os.log
 import Bookmarks
-import CoreData
+import Combine
 
 class HomeViewController: UIViewController {
     
@@ -62,6 +62,7 @@ class HomeViewController: UIViewController {
     
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
+    private var viewModelCancellable: AnyCancellable?
     
     static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -99,17 +100,11 @@ class HomeViewController: UIViewController {
     }
 
     private func registerForBookmarksChanges() {
-        NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave,
-                                               object: nil,
-                                               queue: .main) { [weak self] notification in
-            let notification = notification as NSNotification
-
-            guard let updated = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>, !updated.isEmpty else {
-                return
-            }
-
-            if updated.first(where: { $0 is BookmarkEntity }) != nil {
-                self?.bookmarksDidChange()
+        viewModelCancellable = favoritesViewModel.externalUpdates.sink { [weak self] _ in
+            guard let self = self else { return }
+            self.bookmarksDidChange()
+            if self.favoritesViewModel.favorites.isEmpty {
+                self.delegate?.home(self, didRequestHideLogo: false)
             }
         }
     }

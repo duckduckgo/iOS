@@ -169,6 +169,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Etkin";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "DuckDuckGo ziyaret ettiğiniz sitelerde çerez onayı açılır pencereleri tespit ederse çerez tercihlerinizi çerezleri en aza indirecek ve gizliliği en üst düzeye çıkaracak şekilde otomatik olarak ayarlayabilir ve ardından açılır pencereleri kapatabiliriz. Bazı siteler çerez tercihlerini yönetmek için bir seçenek sunmaz. Bu nedenle yalnızca bu gibi açılır pencereleri gizleyebiliriz.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Parolayı gizle";
 
@@ -1003,8 +1006,11 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Yönetilen çerezler";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Açılır Pencere Gizli";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget Ekle";

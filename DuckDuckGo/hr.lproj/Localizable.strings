@@ -169,6 +169,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Omogućeno";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Kada DuckDuckGo otkrije skočne prozore pristanka na kolačiće na web lokacijama koje posjećuješ, mi možemo pokušati automatski odrediti tvoje postavke kolačića kako bismo minimizirali kolačiće i maksimizirali privatnost, a zatim zatvorili skočne prozore. Neke web lokacije ne nude opciju upravljanja postavkama kolačića, tako da možemo sakriti samo ovakve skočne prozore.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Sakrij lozinku";
 
@@ -1003,8 +1006,11 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Upravlja se kolačićima";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Skočni prozor je sakriven";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Dodaj widget";

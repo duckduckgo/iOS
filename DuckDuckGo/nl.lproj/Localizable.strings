@@ -169,6 +169,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Ingeschakeld";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Wanneer DuckDuckGo pop-ups voor cookietoestemming op bezochte websites detecteert, kunnen we proberen automatisch je cookievoorkeuren in te stellen om het aantal cookies tot een minimum te beperken en je privacy te maximaliseren. De pop-ups worden vervolgens gesloten. Sommige sites bieden geen optie om cookievoorkeuren te beheren, zodat we pop-ups zoals deze alleen kunnen verbergen.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Wachtwoord verbergen";
 
@@ -1003,8 +1006,11 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Beheerde cookies";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Pop-up verborgen";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Widget toevoegen";

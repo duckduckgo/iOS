@@ -169,6 +169,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Įjungta";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Kai „DuckDuckGo“ jūsų lankomose svetainėse aptinka sutikimo su slapukais iškylančiuosius langus, galime automatiškai nustatyti jūsų slapukų nuostatas, kad sumažintume slapukų skaičių, sustiprintume privatumą ir uždarytume iškylančiuosius langus. Kai kuriose svetainėse nėra galimybės tvarkyti slapukų nuostatas, todėl galime tik paslėpti tokius iškylančiuosius langus.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Paslėpti slaptažodį";
 
@@ -1003,8 +1006,11 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Slapukai valdomi";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Iškylantysis langas paslėptas";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Pridėti valdiklį";

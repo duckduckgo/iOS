@@ -169,6 +169,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Ενεργοποιήθηκε";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Όταν το DuckDuckGo εντοπίζει αναδυόμενα παράθυρα συναίνεσης για cookies σε ιστότοπους που επισκέπτεστε, μπορούμε να προσπαθήσουμε να ρυθμίσουμε αυτόματα τις προτιμήσεις σας για τα cookies ώστε να ελαχιστοποιήσετε τα cookies και να μεγιστοποιήσετε το απόρρητο. Έπειτα μπορείτε να κλείσετε τα αναδυόμενα παράθυρα. Ορισμένοι ιστότοποι δεν παρέχουν επιλογή για διαχείριση των προτιμήσεων cookies, οπότε μπορούμε μόνο να αποκρύψουμε αναδυόμενα παράθυρα όπως αυτά.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Απόκρυψη κωδικού πρόσβασης";
 
@@ -1003,8 +1006,11 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Διαχειριζόμενα cookies";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Κρυφό αναδυόμενο παράθυρο";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Προσθήκη γραφικού στοιχείου";

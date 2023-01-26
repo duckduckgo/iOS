@@ -169,6 +169,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Lubatud";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Kui DuckDuckGo tuvastab külastatavatel veebisaitidel küpsiste nõusoleku hüpikaknad, saame proovida automaatselt seadistada sinu küpsise-eelistused selliselt, et minimeerida küpsised ja maksimeerida privaatsust, ning seejärel hüpikaknad sulgeda. Mõned saidid ei paku võimalust küpsise-eelistuste haldamiseks, seega saame sellised hüpikaknad ainult peita.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Peida parool";
 
@@ -1003,8 +1006,11 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Hallatavad küpsised";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Hüpikaken on peidetud";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lisa vidin";

@@ -169,6 +169,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Käytössä";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Kun DuckDuckGo havaitsee evästeiden hallinnan ponnahdusikkunoita vierailemillasi sivustoilla, voimme yrittää määrittää evästeasetuksesi automaattisesti evästeiden minimoimiseksi ja yksityisyyden maksimoimiseksi ja sulkea sitten ponnahdusikkunat. Joillakin sivustoilla evästeiden hallinta ei ole mahdollista, joten voimme vain piilottaa tällaiset ponnahdusikkunat.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Piilota salasana";
 
@@ -1003,8 +1006,11 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Hallitut evästeet";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Ponnahdusikkuna piilotettu";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Lisää widget";

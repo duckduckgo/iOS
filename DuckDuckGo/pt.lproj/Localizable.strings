@@ -169,6 +169,9 @@
 /* Autoconsent for Cookie Management Setting state */
 "autoconsent.enabled" = "Ativado";
 
+/* No comment provided by engineer. */
+"autoconsent.info.header" = "Quando o DuckDuckGo deteta pop-ups de consentimento de cookies nos sites que visitas, podemos tentar definir automaticamente as tuas preferências de cookies para minimizar os cookies e maximizar a privacidade e, em seguida, fechar os pop-ups. Alguns sites não te dão a opção de gerir preferências de cookies, por isso só podemos ocultar pop-ups como estes.";
+
 /* Accessibility title for a Hide Password button replacing displayed password with ***** */
 "autofill.hide-password" = "Ocultar palavra-passe";
 
@@ -1003,8 +1006,11 @@
 /* Do not translate - stringsdict entry */
 "number.of.tabs" = "number.of.tabs";
 
-/* Text displayed on notification appearing in the address bar */
+/* Text displayed on notification appearing in the address bar when the browser  dismissed the cookie popup automatically rejecting it */
 "omnibar.notification.cookies-managed" = "Cookies geridos";
+
+/* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
+"omnibar.notification.popup-hidden" = "Pop-up ocultado";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Adicionar widget";

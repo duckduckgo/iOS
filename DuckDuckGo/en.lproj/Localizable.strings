@@ -1010,7 +1010,7 @@ https://duckduckgo.com/mac";
 "omnibar.notification.cookies-managed" = "Cookies managed";
 
 /* Text displayed on notification appearing in the address bar when the browser  hides a cookie popup */
-"omnibar.notification.popup-hidden" = "Pop-Up Hidden";
+"omnibar.notification.popup-hidden" = "Pop-up Hidden";
 
 /* No comment provided by engineer. */
 "onboarding.widgets.continueButton" = "Add Widget";

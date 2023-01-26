@@ -60,11 +60,11 @@
 		1E8AD1D927C4FEC100ABA377 /* DownloadsListSectioningHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1D827C4FEC100ABA377 /* DownloadsListSectioningHelper.swift */; };
 		1E8AD1DB27C51AE000ABA377 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8AD1DA27C51AE000ABA377 /* TimeIntervalExtension.swift */; };
 		1E8AD1DD27C653F800ABA377 /* Downloads.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E8AD1DC27C653F800ABA377 /* Downloads.xcassets */; };
+		1E908BF129827C480008C8F3 /* AutoconsentUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E908BEE29827C480008C8F3 /* AutoconsentUserScript.swift */; };
+		1E908BF229827C480008C8F3 /* autoconsent-bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 1E908BEF29827C480008C8F3 /* autoconsent-bundle.js */; };
+		1E908BF329827C480008C8F3 /* AutoconsentManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E908BF029827C480008C8F3 /* AutoconsentManagement.swift */; };
 		1EA51376286596A000493C6A /* PrivacyIconLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA51375286596A000493C6A /* PrivacyIconLogic.swift */; };
 		1EA513782866039400493C6A /* TrackerAnimationLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA513772866039400493C6A /* TrackerAnimationLogic.swift */; };
-		1EBE3E80292BBF4000AA62EC /* autoconsent-bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 1EBE3E7D292BBF3F00AA62EC /* autoconsent-bundle.js */; };
-		1EBE3E81292BBF4000AA62EC /* AutoconsentUserScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBE3E7E292BBF3F00AA62EC /* AutoconsentUserScript.swift */; };
-		1EBE3E82292BBF4000AA62EC /* AutoconsentManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBE3E7F292BBF3F00AA62EC /* AutoconsentManagement.swift */; };
 		1EC458462948932500CB2B13 /* UIHostingControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC458452948932500CB2B13 /* UIHostingControllerExtension.swift */; };
 		1EDE39D22705D4A200C99C72 /* FileSizeDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */; };
 		1EE411F12857C3640003FE64 /* TrackerAnimationImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE411F02857C3640003FE64 /* TrackerAnimationImageProvider.swift */; };
@@ -869,11 +869,11 @@
 		1E8AD1D827C4FEC100ABA377 /* DownloadsListSectioningHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsListSectioningHelper.swift; sourceTree = "<group>"; };
 		1E8AD1DA27C51AE000ABA377 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		1E8AD1DC27C653F800ABA377 /* Downloads.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Downloads.xcassets; sourceTree = "<group>"; };
+		1E908BEE29827C480008C8F3 /* AutoconsentUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoconsentUserScript.swift; sourceTree = "<group>"; };
+		1E908BEF29827C480008C8F3 /* autoconsent-bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "autoconsent-bundle.js"; sourceTree = "<group>"; };
+		1E908BF029827C480008C8F3 /* AutoconsentManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoconsentManagement.swift; sourceTree = "<group>"; };
 		1EA51375286596A000493C6A /* PrivacyIconLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyIconLogic.swift; sourceTree = "<group>"; };
 		1EA513772866039400493C6A /* TrackerAnimationLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerAnimationLogic.swift; sourceTree = "<group>"; };
-		1EBE3E7D292BBF3F00AA62EC /* autoconsent-bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "autoconsent-bundle.js"; sourceTree = "<group>"; };
-		1EBE3E7E292BBF3F00AA62EC /* AutoconsentUserScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoconsentUserScript.swift; sourceTree = "<group>"; };
-		1EBE3E7F292BBF3F00AA62EC /* AutoconsentManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoconsentManagement.swift; sourceTree = "<group>"; };
 		1EC458452948932500CB2B13 /* UIHostingControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHostingControllerExtension.swift; sourceTree = "<group>"; };
 		1EC51CD828D8C0DF00E9D05A /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		1EDE39D12705D4A100C99C72 /* FileSizeDebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSizeDebugViewController.swift; sourceTree = "<group>"; };
@@ -2388,14 +2388,14 @@
 			name = Modals;
 			sourceTree = "<group>";
 		};
-		1EBE3E7C292BBEBA00AA62EC /* Autoconsent */ = {
+		1E908BED29827C480008C8F3 /* Autoconsent */ = {
 			isa = PBXGroup;
 			children = (
-				1EBE3E7E292BBF3F00AA62EC /* AutoconsentUserScript.swift */,
-				1EBE3E7D292BBF3F00AA62EC /* autoconsent-bundle.js */,
-				1EBE3E7F292BBF3F00AA62EC /* AutoconsentManagement.swift */,
+				1E908BEE29827C480008C8F3 /* AutoconsentUserScript.swift */,
+				1E908BEF29827C480008C8F3 /* autoconsent-bundle.js */,
+				1E908BF029827C480008C8F3 /* AutoconsentManagement.swift */,
 			);
-			name = Autoconsent;
+			path = Autoconsent;
 			sourceTree = "<group>";
 		};
 		1EE411F42857C5130003FE64 /* PrivacyIconAndTrackers */ = {
@@ -2821,7 +2821,7 @@
 		84E341941E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXGroup;
 			children = (
-				1EBE3E7C292BBEBA00AA62EC /* Autoconsent */,
+				1E908BED29827C480008C8F3 /* Autoconsent */,
 				3157B43627F4C8380042D3D7 /* Favicons */,
 				AA4D6A8023DE4973007E8790 /* AppIcon */,
 				F1C5ECF31E37812900C599A4 /* Application */,
@@ -4714,7 +4714,6 @@
 				AA4D6ABD23DE4D15007E8790 /* AppIconYellow60x60@2x.png in Resources */,
 				1EE411F728587AC50003FE64 /* PrivacyIcon.xcassets in Resources */,
 				8548D96825262C33005AAE49 /* view_highlight.json in Resources */,
-				1EBE3E80292BBF4000AA62EC /* autoconsent-bundle.js in Resources */,
 				AA4D6AD423DE4D27007E8790 /* AppIconPurple40x40@3x.png in Resources */,
 				AA4D6AD123DE4D27007E8790 /* AppIconPurple40x40@2x.png in Resources */,
 				9880723725FA4E450039EF4B /* menu_dark.json in Resources */,
@@ -4789,6 +4788,7 @@
 				AA4D6AE623DE4D33007E8790 /* AppIconGreen60x60@3x.png in Resources */,
 				8565419C224D304D00DF1FB2 /* proximanova-extrabold.otf in Resources */,
 				AA4D6A9323DE49A5007E8790 /* AppIconBlack76x76@2x.png in Resources */,
+				1E908BF229827C480008C8F3 /* autoconsent-bundle.js in Resources */,
 				F143C2B21E49D78C00CFDE3A /* Assets.xcassets in Resources */,
 				AA4D6AA323DE4CC4007E8790 /* AppIconBlue40x40@3x.png in Resources */,
 				1EEF12542851D32B003DDE57 /* trackers-1.json in Resources */,
@@ -5086,6 +5086,7 @@
 				8C4838B5221C8F7F008A6739 /* GestureToolbarButton.swift in Sources */,
 				986C7FA92417ADE700A3557D /* ReportBrokenSiteViewController.swift in Sources */,
 				310ECFDD282A8BB0005029B3 /* EnableAutofillSettingsTableViewCell.swift in Sources */,
+				1E908BF329827C480008C8F3 /* AutoconsentManagement.swift in Sources */,
 				CB9B8739278C8E72001F4906 /* WidgetEducationViewController.swift in Sources */,
 				F4D9C4FA25117A0F00814B71 /* HomeMessageStorage.swift in Sources */,
 				AA3D854523D9942200788410 /* AppIconSettingsViewController.swift in Sources */,
@@ -5122,7 +5123,6 @@
 				F1617C131E572E0300DEDCAF /* TabSwitcherViewController.swift in Sources */,
 				83BE9BC3215D69C1009844D9 /* AppConfigurationFetch.swift in Sources */,
 				1EEC460627A9499600E75FCB /* DownloadsList.swift in Sources */,
-				1EBE3E81292BBF4000AA62EC /* AutoconsentUserScript.swift in Sources */,
 				85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */,
 				98999D5922FDA41500CBBE1B /* BasicAuthenticationAlert.swift in Sources */,
 				F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */,
@@ -5153,7 +5153,6 @@
 				310C4B45281B5A9A00BA79A9 /* AutofillLoginDetailsView.swift in Sources */,
 				1EFDCBC127D2393C00916BC5 /* DownloadsDeleteHelper.swift in Sources */,
 				85374D3C21AC41E700FF5A1E /* FavoritesHomeViewSectionRenderer.swift in Sources */,
-				1EBE3E82292BBF4000AA62EC /* AutoconsentManagement.swift in Sources */,
 				85DFEDF124C7EEA400973FE7 /* LargeOmniBarState.swift in Sources */,
 				9880722A25FA497B0039EF4B /* MenuButton.swift in Sources */,
 				F46FEC5727987A5F0061D9DF /* KeychainItemsDebugViewController.swift in Sources */,
@@ -5241,6 +5240,7 @@
 				9872D205247DCAC100CEF398 /* TabPreviewsSource.swift in Sources */,
 				F130D73A1E5776C500C45811 /* OmniBarDelegate.swift in Sources */,
 				85DFEDEF24C7EA3B00973FE7 /* SmallOmniBarState.swift in Sources */,
+				1E908BF129827C480008C8F3 /* AutoconsentUserScript.swift in Sources */,
 				4B0295192537BC6700E00CEF /* ConfigurationDebugViewController.swift in Sources */,
 				1E7A71192934EC6100B7EA19 /* OmniBarNotificationContainerView.swift in Sources */,
 				984D035C24AE15CD0066CFB8 /* TabSwitcherSettings.swift in Sources */,

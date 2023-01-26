@@ -97,7 +97,9 @@ create_release_branch() {
 	fi
 	eval git pull "$mute"
 	eval git checkout -b "${release_branch}" "$mute"
+	eval git branch --set-upstream-to=origin/"${release_branch}" "$mute"
 	eval git checkout -b "${changes_branch}" "$mute"
+	eval git branch --set-upstream-to=origin/"${changes_branch}" "$mute"
 	echo "✅"
 }
 
@@ -116,8 +118,12 @@ update_build_version() {
 	username="$(git config user.email 2>&1)"
 	bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username"
 	git add DuckDuckGo.xcodeproj/project.pbxproj
-	eval git commit -m \"Update build number\" "$mute"
-	echo "Setting build version ... ✅"
+	if [[ "$(git diff --cached --exit-code)" ]]; then
+		eval git commit -m \"Update build number\" "$mute"
+		echo "Setting build version ... ✅"
+	else
+		printf "\nNo changes to build number ✅\n"
+	fi
 }
 
 update_embedded_files() {
@@ -176,8 +182,6 @@ create_pull_request() {
 	printf '%s' "Creating PR ... "
 	eval git push origin "${release_branch}" "$mute"
 	eval git push origin "${changes_branch}" "$mute"
-	eval git push --set-upstream origin "${release_branch}" "$mute"
-	eval git push --set-upstream origin "${changes_branch}" "$mute"
 	eval gh pr create --title \"Release "${version}"\" --base "${release_branch}" --assignee @me "$mute" --body-file "./scripts/assets/prepare-release-description"
 	eval gh pr view --web "$mute"
 	echo "✅"
@@ -191,7 +195,7 @@ main() {
 	create_release_branch
 	update_marketing_version
 	update_build_version
-	update_embedded_files∂
+	update_embedded_files
 	if [[ -n "${metadata}" ]]; then
 		update_metadata
 	fi

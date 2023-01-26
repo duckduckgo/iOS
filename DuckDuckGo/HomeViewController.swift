@@ -21,6 +21,7 @@ import UIKit
 import Core
 import os.log
 import Bookmarks
+import CoreData
 
 class HomeViewController: UIViewController {
     
@@ -93,6 +94,24 @@ class HomeViewController: UIViewController {
                                                selector: #selector(remoteMessagesDidChange),
                                                name: RemoteMessaging.Notifications.remoteMessagesDidChange,
                                                object: nil)
+
+        registerForBookmarksChanges()
+    }
+
+    private func registerForBookmarksChanges() {
+        NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave,
+                                               object: nil,
+                                               queue: .main) { [weak self] notification in
+            let notification = notification as NSNotification
+
+            guard let updated = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject>, !updated.isEmpty else {
+                return
+            }
+
+            if updated.first(where: { $0 is BookmarkEntity }) != nil {
+                self?.bookmarksDidChange()
+            }
+        }
     }
     
     @objc func bookmarksDidChange() {

@@ -216,13 +216,13 @@ final class AutofillLoginListViewModel: ObservableObject {
 
         if !isSearching {
             newSections.append(.enableAutofill)
+
+            if !accountsToSuggest.isEmpty {
+                let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0, tld: tld) }
+                newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
+            }
         }
 
-        if !accountsToSuggest.isEmpty {
-            let accountItems = accountsToSuggest.map { AutofillLoginListItemViewModel(account: $0, tld: tld) }
-            newSections.append(.credentials(title: UserText.autofillLoginListSuggested, items: accountItems))
-        }
-        
         let viewModelsGroupedByFirstLetter = accounts.autofillLoginListItemViewModelsForAccountsGroupedByFirstLetter(tld: tld)
         let accountSections = viewModelsGroupedByFirstLetter.autofillLoginListSectionsForViewModelsSortedByTitle()
         

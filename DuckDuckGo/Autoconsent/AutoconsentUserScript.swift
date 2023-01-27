@@ -23,6 +23,8 @@ import BrowserServicesKit
 import UserScript
 import PrivacyDashboard
 
+// swiftlint:disable file_length
+
 protocol AutoconsentPreferences {
     var autoconsentPromptSeen: Bool { get set }
     var autoconsentEnabled: Bool { get set }

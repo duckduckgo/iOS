@@ -24,6 +24,4 @@ protocol BookmarksDelegate: AnyObject {
 
     func bookmarksDidSelect(url: URL)
     
-    func bookmarksUpdated()
-    
 }

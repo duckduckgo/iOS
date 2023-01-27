@@ -1684,13 +1684,6 @@ extension MainViewController: BookmarksDelegate {
             loadUrl(url)
         }
     }
-    
-    func bookmarksUpdated() {
-        if homeController != nil {
-            removeHomeScreen()
-            attachHomeScreen()
-        }
-    }
 }
 
 extension MainViewController: TabSwitcherButtonDelegate {

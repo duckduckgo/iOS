@@ -66,6 +66,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private var appSettings: AppSettings
     private let tld: TLD
     private var currentTabUrl: URL?
+    private let secureVault: SecureVault?
     private var cachedDeletedCredentials: SecureVaultModels.WebsiteCredentials?
     
     @Published private (set) var viewState: AutofillLoginListViewModel.ViewState = .authLocked
@@ -87,9 +88,10 @@ final class AutofillLoginListViewModel: ObservableObject {
         }
     }
     
-    init(appSettings: AppSettings, tld: TLD, currentTabUrl: URL? = nil) {
+    init(appSettings: AppSettings, tld: TLD, secureVault: SecureVault?, currentTabUrl: URL? = nil) {
         self.appSettings = appSettings
         self.tld = tld
+        self.secureVault = secureVault
         self.currentTabUrl = currentTabUrl
         updateData()
         authenticationNotRequired = !hasAccountsSaved || AppDependencyProvider.shared.autofillLoginSession.isValidSession
@@ -182,11 +184,10 @@ final class AutofillLoginListViewModel: ObservableObject {
     // MARK: Private Methods
     
     private func fetchAccounts() -> [SecureVaultModels.WebsiteAccount] {
-        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
-            os_log("Failed to make vault")
+        guard let secureVault = secureVault else {
             return []
         }
-        
+
         do {
             return try secureVault.accounts()
         } catch {
@@ -198,8 +199,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     private func fetchSuggestedAccounts() -> [SecureVaultModels.WebsiteAccount] {
         guard let url = currentTabUrl,
               let host = url.host,
-              let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared) else {
-            os_log("Failed to make vault")
+              let secureVault = secureVault else {
             return []
         }
 
@@ -261,10 +261,27 @@ final class AutofillLoginListViewModel: ObservableObject {
             viewState = newViewState
         }
     }
+
+    func tableContentsToDelete(accountId: String?) -> (sectionsToDelete: [Int], rowsToDelete: [IndexPath]) {
+        var sectionsToDelete: [Int] = []
+        var rowsToDelete: [IndexPath] = []
+
+        for (index, section) in sections.enumerated() {
+            if case .credentials(_, let items) = section, items.contains(where: { $0.account.id == accountId }) {
+                if items.count == 1 {
+                    sectionsToDelete.append(index)
+                } else if let rowIndex = items.firstIndex(where: { $0.account.id == accountId }) {
+                    rowsToDelete.append(IndexPath(row: rowIndex, section: index))
+                }
+            }
+        }
+
+        return (sectionsToDelete: sectionsToDelete, rowsToDelete: rowsToDelete)
+    }
     
     @discardableResult
     func delete(_ account: SecureVaultModels.WebsiteAccount) -> Bool {
-        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
+        guard let secureVault = secureVault,
               let accountID = account.id,
               let accountIdInt = Int64(accountID) else { return false }
         
@@ -279,7 +296,7 @@ final class AutofillLoginListViewModel: ObservableObject {
     }
     
     private func undelete(_ account: SecureVaultModels.WebsiteCredentials) {
-        guard let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared),
+        guard let secureVault = secureVault,
               var cachedDeletedCredentials = cachedDeletedCredentials else {
             return
         }

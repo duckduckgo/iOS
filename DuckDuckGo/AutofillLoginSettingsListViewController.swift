@@ -22,6 +22,7 @@ import Combine
 import Core
 import BrowserServicesKit
 import Common
+import os.log
 
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
@@ -94,7 +95,11 @@ final class AutofillLoginSettingsListViewController: UIViewController {
     }()
 
     init(appSettings: AppSettings, currentTabUrl: URL? = nil) {
-        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, currentTabUrl: currentTabUrl)
+        let secureVault = try? SecureVaultFactory.default.makeVault(errorReporter: SecureVaultErrorReporter.shared)
+        if secureVault == nil {
+            os_log("Failed to make vault")
+        }
+        self.viewModel = AutofillLoginListViewModel(appSettings: appSettings, tld: tld, secureVault: secureVault, currentTabUrl: currentTabUrl)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -482,28 +487,17 @@ extension AutofillLoginSettingsListViewController: UITableViewDataSource {
                 let title = items[indexPath.row].title
                 let accountId = items[indexPath.row].account.id
 
-                var sectionsToDelete: [Int] = []
-                var rowsToDelete: [IndexPath] = []
-
-                for (index, section) in viewModel.sections.enumerated() {
-                    if case .credentials(_, let items) = section, items.contains(where: { $0.account.id == accountId }) {
-                        if items.count == 1 {
-                            sectionsToDelete.append(index)
-                        } else if let rowIndex = items.firstIndex(where: { $0.account.id == accountId }) {
-                            rowsToDelete.append(IndexPath(row: rowIndex, section: index))
-                        }
-                    }
-                }
+                let tableContentToDelete = viewModel.tableContentsToDelete(accountId: accountId)
 
                 let deletedSuccessfully = viewModel.delete(at: indexPath)
 
                 if deletedSuccessfully {
                     tableView.beginUpdates()
-                    if !sectionsToDelete.isEmpty {
-                        tableView.deleteSections(IndexSet(sectionsToDelete), with: .automatic)
+                    if !tableContentToDelete.sectionsToDelete.isEmpty {
+                        tableView.deleteSections(IndexSet(tableContentToDelete.sectionsToDelete), with: .automatic)
                     }
-                    if !rowsToDelete.isEmpty {
-                        tableView.deleteRows(at: rowsToDelete, with: .automatic)
+                    if !tableContentToDelete.rowsToDelete.isEmpty {
+                        tableView.deleteRows(at: tableContentToDelete.rowsToDelete, with: .automatic)
                     }
                     tableView.endUpdates()
 

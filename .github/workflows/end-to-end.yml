@@ -4,8 +4,8 @@ on:
   schedule:
     - cron: '0 4 * * *' # run at 4 AM UTC
   workflow_dispatch:
-  push:
-
+  push: 
+  
 jobs:
   end-to-end-tests:
     name: End to end Tests
@@ -28,7 +28,7 @@ jobs:
           -destination "platform=iOS Simulator,name=iPhone 12"
 
     - name: Run tests
-      uses: mobile-dev-inc/action-maestro-cloud@v1.3.1
+      uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
         app-file: DuckDuckGo.app

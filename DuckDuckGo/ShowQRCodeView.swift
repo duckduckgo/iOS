@@ -19,21 +19,6 @@
 
 import SwiftUI
 
-class ShowQRCodeViewModel: ObservableObject {
-
-    @Published var codeToDisplay: String?
-    @Published var codeToShare: String?
-
-    var canShowQRCode: Bool {
-        codeToShare != nil && codeToDisplay != nil
-    }
-
-    func share() {
-    }
-
-}
-
-
 struct ShowQRCodeView: View {
 
     @ObservedObject var model: ShowQRCodeViewModel
@@ -49,14 +34,19 @@ struct ShowQRCodeView: View {
     func qrCodeView() -> some View {
         if model.canShowQRCode {
             VStack {
-                Text("QR Code")
+                Spacer()
+
+                QRCode(string: model.codeToDisplay ?? "")
+
+                Spacer()
+
                 Button {
                     model.share()
                 } label: {
-                    Label("Share", image: "SyncShare")
+                    Label("Share Code", image: "SyncShare")
                 }
-                .buttonStyle(PasteButtonStyle())
-                .padding(.bottom)
+                .buttonStyle(SyncLabelButtonStyle())
+                .padding(.bottom, 20)
             }
         }
     }
@@ -93,6 +83,48 @@ struct ShowQRCodeView: View {
             .navigationTitle("QR Code")
             .modifier(SyncBackButtonModifier())
         }
+    }
+
+}
+
+struct QRCode: View {
+
+    let context = CIContext()
+
+    let string: String
+
+    var body: some View {
+        Image(uiImage: generateQRCode(from: string))
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(maxHeight: 200)
+    }
+
+    func generateQRCode(from text: String) -> UIImage {
+        var qrImage = UIImage(systemName: "xmark.circle") ?? UIImage()
+        let data = Data(text.utf8)
+        let filter = CIFilter.qrCodeGenerator()
+        filter.setValue(data, forKey: "inputMessage")
+
+        let transform = CGAffineTransform(scaleX: 20, y: 20)
+        if let outputImage = filter.outputImage?.transformed(by: transform) {
+            if let image = context.createCGImage(
+                outputImage,
+                from: outputImage.extent) {
+                qrImage = UIImage(cgImage: image)
+            }
+        }
+        return qrImage
+    }
+
+}
+
+extension CIFilter {
+
+    static func qrCodeGenerator() -> CIFilter {
+        CIFilter(name: "CIQRCodeGenerator", parameters: [
+            "inputCorrectionLevel": "H"
+        ])!
     }
 
 }

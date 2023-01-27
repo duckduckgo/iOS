@@ -24,7 +24,7 @@ struct SyncCodeManualEntryView: View {
 
     enum FocusField: Hashable {
         case field
-      }
+    }
 
     @ObservedObject var model: SyncCodeCollectionViewModel
 
@@ -33,22 +33,31 @@ struct SyncCodeManualEntryView: View {
     @ViewBuilder
     func codeEntryField() -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .foregroundColor(.white.opacity(0.09))
 
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(.white.opacity(0.24))
 
-            ZStack(alignment: .topLeading) {
-                CodeEntryView(focused: $isEditingCode, text: $model.manuallyEnteredCode)
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(.white.opacity(0.09))
 
-                if !isEditingCode && model.manuallyEnteredCode == nil {
-                    Text("Recovery Code")
-                        .foregroundColor(.primary.opacity(0.36))
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(.white.opacity(0.24))
+
+                ZStack(alignment: .topLeading) {
+                    CodeEntryView(focused: $isEditingCode, text: $model.manuallyEnteredCode)
+
+                    if !isEditingCode && model.manuallyEnteredCode == nil {
+                        Text("Recovery Code")
+                            .foregroundColor(.primary.opacity(0.36))
+                    }
                 }
+                .padding()
             }
-            .padding()
+            .padding(.horizontal)
+
         }
+        .frame(width: 310, height: 150)
+        .padding()
+
     }
 
     @ViewBuilder
@@ -62,25 +71,18 @@ struct SyncCodeManualEntryView: View {
 
                     Spacer()
 
-                    ZStack {
-
-                        codeEntryField()
-                            .padding(.horizontal)
-
-                    }
-                    .frame(width: 310, height: 150)
-                    .padding()
+                    codeEntryField()
 
                     Spacer()
 
                     Button(action: model.pasteCode) {
                         Label("Paste", image: "SyncPaste")
                     }
-                    .buttonStyle(PasteButtonStyle())
-                    .padding(.bottom)
+                    .buttonStyle(SyncLabelButtonStyle())
+                    .padding(.bottom, 20)
 
                 }
-            }.padding()
+            }.padding(.horizontal)
         }
         .frame(width: size, height: size)
     }
@@ -95,6 +97,7 @@ struct SyncCodeManualEntryView: View {
                     if !isEditingCode {
                         VStack {
                             Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
+                                .multilineTextAlignment(.center)
 
                             Spacer()
 
@@ -119,27 +122,6 @@ struct SyncCodeManualEntryView: View {
                 UIApplication.shared.endEditing()
             }
         }
-    }
-
-}
-
-struct PasteButtonStyle: ButtonStyle {
-
-    private var backgroundColor: Color {
-        .white.opacity(0.18)
-    }
-
-    private var foregroundColor: Color {
-        .primary
-    }
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .foregroundColor(configuration.isPressed ? foregroundColor.opacity(0.7) : foregroundColor.opacity(1))
-            .padding(.horizontal)
-            .frame(height: 40)
-            .background(configuration.isPressed ? backgroundColor.opacity(0.7) : backgroundColor.opacity(1))
-            .cornerRadius(12)
     }
 
 }

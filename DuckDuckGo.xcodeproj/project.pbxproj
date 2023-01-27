@@ -286,6 +286,8 @@
 		85AD4171292287C300610581 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
 		85AE6690209724120014CF04 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AE668F209724120014CF04 /* NotificationView.swift */; };
+		85B713B3297FF285006898A8 /* SyncLabelButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B713B2297FF285006898A8 /* SyncLabelButtonStyle.swift */; };
+		85B713B5297FF31A006898A8 /* ShowQRCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B713B4297FF31A006898A8 /* ShowQRCodeViewModel.swift */; };
 		85B718F51FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85B718F31FD071E50031A14F /* HTTPSUpgrade.xcdatamodeld */; };
 		85B9CB8921AEBDD5009001F1 /* FavoriteHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */; };
 		85BA58551F34F49E00C6E8CA /* AppUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */; };
@@ -1093,6 +1095,8 @@
 		85A9C37820E0E00C00073340 /* HomeRow.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HomeRow.xcassets; sourceTree = "<group>"; };
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		85AE668F209724120014CF04 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		85B713B2297FF285006898A8 /* SyncLabelButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncLabelButtonStyle.swift; sourceTree = "<group>"; };
+		85B713B4297FF31A006898A8 /* ShowQRCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowQRCodeViewModel.swift; sourceTree = "<group>"; };
 		85B718F41FD071E50031A14F /* HTTPSUpgrade.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HTTPSUpgrade.xcdatamodel; sourceTree = "<group>"; };
 		85B9CB8821AEBDD5009001F1 /* FavoriteHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteHomeCell.swift; sourceTree = "<group>"; };
 		85BA58541F34F49E00C6E8CA /* AppUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUserDefaults.swift; sourceTree = "<group>"; };
@@ -3098,6 +3102,7 @@
 				85DD44282976F523005CC388 /* SyncCodeCollectionViewModel.swift */,
 				85F98F93296F447F00742F4A /* SyncManagementViewModel.swift */,
 				85F98F99296F622B00742F4A /* SyncSetupViewModel.swift */,
+				85B713B4297FF31A006898A8 /* ShowQRCodeViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -3113,6 +3118,7 @@
 				85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */,
 				85DD4430297EA400005CC388 /* ShowQRCodeView.swift */,
 				85DD4432297EB86C005CC388 /* SyncBackButtonModifier.swift */,
+				85B713B2297FF285006898A8 /* SyncLabelButtonStyle.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -5056,6 +5062,7 @@
 				F4F6DFB426E6B63700ED7E12 /* BookmarkFolderCell.swift in Sources */,
 				851B12CC22369931004781BC /* AtbAndVariantCleanup.swift in Sources */,
 				85F2FFCF2211F8E5006BB258 /* TabSwitcherViewController+KeyCommands.swift in Sources */,
+				85B713B3297FF285006898A8 /* SyncLabelButtonStyle.swift in Sources */,
 				85F98F9A296F622B00742F4A /* SyncSetupViewModel.swift in Sources */,
 				3157B43327F497E90042D3D7 /* SaveLoginView.swift in Sources */,
 				F17922E01E71BB59006E3D97 /* AutocompleteViewControllerDelegate.swift in Sources */,
@@ -5069,6 +5076,7 @@
 				6AC6DAB328804F97002723C0 /* BarsAnimator.swift in Sources */,
 				B60DFF072872B64B0061E7C2 /* JSAlertController.swift in Sources */,
 				981FED6E22025151008488D7 /* BlankSnapshotViewController.swift in Sources */,
+				85B713B5297FF31A006898A8 /* ShowQRCodeViewModel.swift in Sources */,
 				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
 				851B128822200575004781BC /* Onboarding.swift in Sources */,
 				3151F0EE2735800800226F58 /* VoiceSearchFeedbackView.swift in Sources */,

@@ -35,8 +35,7 @@ final class OmniBarNotificationContainerView: UIView {
         let model = makeNotificationModel(for: type)
         let notificationViewController = UIHostingController(rootView: OmniBarNotification(model: model),
                                                 ignoreSafeArea: true)
-                
-        #warning("pass the VC here")
+        
         window?.rootViewController?.addChild(notificationViewController)
         
         addSubview(notificationViewController.view)

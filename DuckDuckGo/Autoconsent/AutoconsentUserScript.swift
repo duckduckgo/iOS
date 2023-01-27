@@ -419,8 +419,6 @@ extension AutoconsentUserScript {
 
     @MainActor
     func ensurePrompt(callback: @escaping (Bool) -> Void) {
-// TODO: obsolete window: NSWindow parameter
-//    func ensurePrompt(window: NSWindow, callback: @escaping (Bool) -> Void) {
         let now = Date.init()
         guard management.promptLastShown == nil || now > management.promptLastShown!.addingTimeInterval(1) else {
             // user said "not now" recently, don't bother asking

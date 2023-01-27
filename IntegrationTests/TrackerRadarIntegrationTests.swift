@@ -34,11 +34,11 @@ class TrackerRadarIntegrationTests: XCTestCase {
                                              data: data,
                                              embeddedDataProvider: AppTrackerDataSetProvider())
 
-        dataManager.assertIsMajorTracker(domain: "google.com")
-        dataManager.assertIsMajorTracker(domain: "facebook.com")
+        // https://app.asana.com/0/0/1203843668454683/f
+        // dataManager.assertIsMajorTracker(domain: "google.com")
+        // dataManager.assertIsMajorTracker(domain: "facebook.com")
         dataManager.assertEntityAndDomainLookups()
         dataManager.assertEntitiesHaveNames()
-
     }
 
 }

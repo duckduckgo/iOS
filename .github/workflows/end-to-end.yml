@@ -1,0 +1,32 @@
+name: End-to-End tests
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # run at 4 AM UTC
+
+jobs:
+  end-to-end-tests:
+    name: End to end Tests
+    runs-on: macos-12
+    timeout-minutes: 30
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_14.1.app/Contents/Developer
+
+    - name: Build and test
+      run: |
+        set -o pipefail && xcodebuild \
+          -scheme "DuckDuckGo" \
+          -destination "platform=iOS Simulator,name=iPhone 12"
+
+    - name: Run tests
+      uses: mobile-dev-inc/action-maestro-cloud@v1.3.1
+      with:
+        api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
+        app-file: DuckDuckGo.app

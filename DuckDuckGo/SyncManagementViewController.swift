@@ -25,6 +25,8 @@ class SyncManagementViewController: UIHostingController<SyncManagementView> {
 
     convenience init() {
         self.init(rootView: SyncManagementView(model: SyncManagementViewModel()))
+
+        // For some reason, on iOS 14, the viewDidLoad wasn't getting called
         rootView.model.delegate = self
         navigationItem.title = "Sync"
         applyTheme(ThemeManager.shared.currentTheme)
@@ -51,7 +53,7 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         
         let model = SyncSetupViewModel { [weak self] model in
             print(#function, model.state, self?.navigationController?.topViewController.self as Any)
-            // assert(navigationController?.topViewController is DismissibleUIHostingController<SyncSetupView>)
+            assert(self?.navigationController?.visibleViewController is DismissibleUIHostingController<SyncSetupView>)
             self?.navigationController?.topViewController?.dismiss(animated: true)
             self?.rootView.model.setupFinished(model)
         }
@@ -66,23 +68,33 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         }
     }
 
+    func showSyncWithAnotherDevice() {
+        print(#function)
+        collectCode(canShowQRCode: true)
+    }
+
     func showRecoverData() {
+        print(#function)
+        collectCode(canShowQRCode: false)
+    }
+
+    func showDeviceConnected() {
+        print(#function)
+    }
+    
+    func showRecoveryPDF() {
         print(#function)
     }
 
-    func showSyncWithAnotherDevice() {
+    private func collectCode(canShowQRCode: Bool) {
         print(#function)
 
-        let model = SyncCodeCollectionViewModel { [weak self] model in
-            print(#function, model, self?.navigationController?.topViewController.self as Any)
-            // assert(navigationController?.topViewController is DismissibleUIHostingController<SyncSetupView>)
-            self?.navigationController?.topViewController?.dismiss(animated: true)
-            self?.rootView.model.codeCollectionFinished(model)
-        }
+        let model = SyncCodeCollectionViewModel(canShowQRCode: canShowQRCode)
+        model.delegate = self
 
         let controller = DismissibleUIHostingController(rootView: SyncCodeCollectionView(model: model)) { [weak self] in
             print(#function, "onDismiss", model)
-            self?.rootView.model.codeCollectionFinished(model)
+            self?.rootView.model.codeCollectionCancelled()
         }
 
         let navController = UINavigationController(rootViewController: controller)
@@ -92,15 +104,31 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
             print(#function, "completed")
             model.checkCameraPermission()
         }
+    }
+}
 
+extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
+
+    func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String {
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        Task {
+            try await Task.sleep(nanoseconds: 1_000_000_000 * 10)
+            showDeviceConnected()
+        }
+        #warning("This should be the code returned from the server")
+        return "Connect Mode"
     }
 
-    func showDeviceConnected() {
-        print(#function)
+    func handleScannedCode(_ model: SyncCodeCollectionViewModel, code: String) {
+        #warning("Validate the code")
+        showDeviceConnected()
     }
-    
-    func showRecoveryPDF() {
-        print(#function)
+
+    func cancelled(_ model: SyncCodeCollectionViewModel) {
+        print(#function, model, navigationController?.visibleViewController as Any)
+        assert(navigationController?.visibleViewController is DismissibleUIHostingController<SyncCodeCollectionView>)
+        navigationController?.topViewController?.dismiss(animated: true)
+        rootView.model.codeCollectionCancelled()
     }
 
 }

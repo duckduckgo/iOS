@@ -21,7 +21,16 @@ import Foundation
 import AVFoundation
 import UIKit
 
+protocol SyncCodeCollectionViewModelDelegate: AnyObject {
+
+    func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String
+    func handleScannedCode(_ model: SyncCodeCollectionViewModel, code: String)
+    func cancelled(_ model: SyncCodeCollectionViewModel)
+
+}
+
 class SyncCodeCollectionViewModel: ObservableObject {
+
 
     enum VideoPermission {
         case unknown, authorised, denied
@@ -31,18 +40,19 @@ class SyncCodeCollectionViewModel: ObservableObject {
         case showScanner, manualEntry, showQRCode
     }
 
-    @Published var scannedCode: String?
     @Published var showCamera = true
     @Published var videoPermission: VideoPermission = .unknown
     @Published var state = State.showScanner
     @Published var manuallyEnteredCode: String?
 
+    weak var delegate: SyncCodeCollectionViewModelDelegate?
+
     var showQRCodeModel: ShowQRCodeViewModel?
 
-    let finished: (SyncCodeCollectionViewModel) -> Void
+    let canShowQRCode: Bool
 
-    init(finished: @escaping (SyncCodeCollectionViewModel) -> Void) {
-        self.finished = finished
+    init(canShowQRCode: Bool) {
+        self.canShowQRCode = canShowQRCode
     }
 
     func checkCameraPermission() {
@@ -64,7 +74,7 @@ class SyncCodeCollectionViewModel: ObservableObject {
 
     func codeScanned(_ code: String) {
         print(#function, code)
-        scannedCode = code
+        delegate?.handleScannedCode(self, code: code)
     }
 
     func cameraUnavailable() {
@@ -79,20 +89,15 @@ class SyncCodeCollectionViewModel: ObservableObject {
 
     func cancel() {
         print(#function)
-        finished(self)
+        delegate?.cancelled(self)
     }
 
-    func createShowQRCodeViewModel() -> ShowQRCodeViewModel {
-        #warning("should connect to backend and to use the connect mode for generating a QR Code then update this model")
+    func startConnectMode() -> ShowQRCodeViewModel {
         let model = ShowQRCodeViewModel()
         showQRCodeModel = model
-
         Task { @MainActor in
-            try await Task.sleep(nanoseconds: 1_000_000_000)
-            showQRCodeModel?.codeToDisplay = "display code"
-            showQRCodeModel?.codeToShare = "code to share"
+            showQRCodeModel?.code = await delegate?.startConnectMode(self)
         }
-
         return model
     }
 

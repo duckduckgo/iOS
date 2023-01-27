@@ -26,8 +26,10 @@ struct SyncSetupView: View {
     @ViewBuilder
     func header() -> some View {
         HStack {
-            Button("Cancel", action: model.cancel)
-                .foregroundColor(.primary.opacity(0.9))
+            if model.state == .turnOnPrompt {
+                Button("Cancel", action: model.cancel)
+                    .foregroundColor(.primary.opacity(0.9))
+            }
             Spacer()
         }
         .frame(height: 56)

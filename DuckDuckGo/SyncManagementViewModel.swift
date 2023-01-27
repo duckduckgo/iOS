@@ -81,7 +81,7 @@ class SyncManagementViewModel: ObservableObject {
         case .showSyncWithAnotherDevice:
             delegate?.showSyncWithAnotherDevice()
 
-        case .syncWithAnotherDevicePrompt:
+        case .turnOnNow:
             createAccountAndStartSyncing()
 
         default: // Cancelled
@@ -101,12 +101,10 @@ class SyncManagementViewModel: ObservableObject {
         }
     }
 
-    func codeCollectionFinished(_ model: SyncCodeCollectionViewModel) {
-        print(#function, model)
-
-        // check if a valid code was collected
-        // determine what to do next
-        
+    func codeCollectionCancelled() {
+        print(#function)
+        isBusy = false
+        isSyncEnabled = false
     }
 
 }

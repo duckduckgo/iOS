@@ -82,11 +82,12 @@ struct SyncCodeCollectionView: View {
                     Label("Manually Enter Code", image: "SyncKeyboardIcon")
                 }
 
-                #warning("Actually, if this is a new installation there won't be any code to show yet.")
-                NavigationLink {
-                    ShowQRCodeView(model: model.createShowQRCodeViewModel())
-                } label: {
-                    Label("Show QR Code", image: "SyncQRCodeIcon")
+                if model.canShowQRCode {
+                    NavigationLink {
+                        ShowQRCodeView(model: model.startConnectMode())
+                    } label: {
+                        Label("Show QR Code", image: "SyncQRCodeIcon")
+                    }
                 }
             }
             .frame(height: 40)
@@ -151,7 +152,7 @@ struct SyncCodeCollectionView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel", action: model.cancel)
-                    .foregroundColor(Color.white)                    
+                    .foregroundColor(Color.white)
                 }
             }
         }

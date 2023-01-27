@@ -21,12 +21,7 @@ import Foundation
 
 class ShowQRCodeViewModel: ObservableObject {
 
-    @Published var codeToDisplay: String?
-    @Published var codeToShare: String?
-
-    var canShowQRCode: Bool {
-        codeToShare != nil && codeToDisplay != nil
-    }
+    @Published var code: String?
 
     func share() {
     }

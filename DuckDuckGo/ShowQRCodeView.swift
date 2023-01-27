@@ -25,18 +25,18 @@ struct ShowQRCodeView: View {
 
     @ViewBuilder
     func progressView() -> some View {
-        if !model.canShowQRCode {
+        if model.code == nil {
             SwiftUI.ProgressView()
         }
     }
 
     @ViewBuilder
     func qrCodeView() -> some View {
-        if model.canShowQRCode {
+        if let code = model.code {
             VStack {
                 Spacer()
 
-                QRCode(string: model.codeToDisplay ?? "")
+                QRCode(string: code)
 
                 Spacer()
 
@@ -54,7 +54,7 @@ struct ShowQRCodeView: View {
     @ViewBuilder
     func instructions() -> some View {
 
-        if model.canShowQRCode {
+        if model.code != nil {
             Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan the image above to connect instantly.")
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)

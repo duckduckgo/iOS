@@ -5,7 +5,7 @@ on:
     - cron: '0 4 * * *' # run at 4 AM UTC
   workflow_dispatch:
   push: 
-  
+
 jobs:
   end-to-end-tests:
     name: End to end Tests
@@ -25,10 +25,11 @@ jobs:
       run: |
         set -o pipefail && xcodebuild \
           -scheme "DuckDuckGo" \
-          -destination "platform=iOS Simulator,name=iPhone 12"
+          -destination "platform=iOS Simulator,name=iPhone 12" \
+          -derivedDataPath ~/DerivedData
 
     - name: Run tests
       uses: mobile-dev-inc/action-maestro-cloud@v1.2.3
       with:
         api-key: ${{ secrets.MAESTRO_CLOUD_API_KEY }}
-        app-file: DuckDuckGo.app
+        app-file: /Users/runner/DerivedData/Build/Products/Debug-iphonesimulator/DuckDuckGo.app

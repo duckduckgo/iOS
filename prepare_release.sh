@@ -116,7 +116,7 @@ update_build_version() {
 	username="$(git config user.email 2>&1)"
 	bundle exec fastlane increment_build_number_for_version version:"${version}" username:"$username"
 	git add DuckDuckGo.xcodeproj/project.pbxproj
-	if [[ "$(git diff --cached --exit-code)" ]]; then
+	if [[ "$(git diff --cached)" ]]; then
 		eval git commit -m \"Update build number\" "$mute"
 		echo "Setting build version ... ✅"
 	else
@@ -131,7 +131,7 @@ update_embedded_files() {
 		Core/trackerData.json \
 		Core/AppPrivacyConfigurationDataProvider.swift \
 		Core/ios-config.json
-	if [[ "$(git diff --cached --exit-code)" ]]; then
+	if [[ "$(git diff --cached)" ]]; then
 		eval git commit -m \"Update embedded files\" "$mute"
 		echo "✅"
 	else
@@ -154,7 +154,7 @@ update_metadata() {
 	./check_metadata_length.sh
 
 	git add fastlane/metadata
-	if [[ $(git diff --cached --exit-code) ]]; then
+	if [[ $(git diff --cached) ]]; then
 		eval git commit -m \"Update metadata files\" "$mute"
 		echo "✅"
 	else
@@ -168,7 +168,7 @@ update_release_notes() {
 	eval open -a TextEdit "${release_notes_path}" "$mute"
 	read -r -p "Press \`Enter\` when you're done to continue ..."
 	git add "${release_notes_path}"
-	if [[ "$(git diff --cached --exit-code)" ]]; then
+	if [[ "$(git diff --cached)" ]]; then
 		eval git commit -m \"Update release notes\" "$mute"
 		echo "Release notes updated ✅"
 	else

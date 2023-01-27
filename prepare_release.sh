@@ -143,10 +143,11 @@ update_metadata() {
 	echo "Updating metadata files ... "
 	local destination="fastlane/metadata/"
 	if [[ "${metadata}" == *.zip ]]; then
-		mkdir temp_metadata
-		unzip "${metadata}" -d "temp_metadata"
-		rsync -a --delete temp_metadata/*/ "${destination}"
-		rm -rf temp_metadata
+		local tempdir
+		tempdir="$(mktemp -d)"
+		trap 'rm -rf "$tempdir"' EXIT
+		unzip "${metadata}" -d "${tempdir}" -x "__MACOSX/*"
+		rsync -a --delete "${tempdir}"/*/ "${destination}"
 	else
 		rsync -a --delete "${metadata}/" "${destination}"
 	fi

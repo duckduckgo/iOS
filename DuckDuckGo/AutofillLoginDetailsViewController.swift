@@ -104,6 +104,8 @@ class AutofillLoginDetailsViewController: UIViewController {
         super.viewWillDisappear(animated)
         if isMovingFromParent {
             AppDependencyProvider.shared.autofillLoginSession.lastAccessedAccount = nil
+        } else if authenticator.canAuthenticate() {
+            AppDependencyProvider.shared.autofillLoginSession.startSession()
         }
     }
 
@@ -231,7 +233,9 @@ class AutofillLoginDetailsViewController: UIViewController {
 
     private func updateNavigationBarButtons() {
         switch authenticator.state {
-        case .loggedOut, .notAvailable:
+        case .loggedOut:
+            navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = authenticationNotRequired }
+        case .notAvailable:
             navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = false }
         case .loggedIn:
             navigationItem.rightBarButtonItems?.forEach { $0.isEnabled = true }

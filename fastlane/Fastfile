@@ -1,25 +1,123 @@
-fastlane_version "2.150.0"
-
 default_platform :ios
 
-lane :release do 
+before_all do
+  setup_ci if is_ci
+end
 
-  gym(
+#################################################
+# Public lanes
+#################################################
+
+desc 'Fetches and updates certificates and provisioning profiles for App Store distribution'
+lane :sync_signing do |options|
+  do_sync_signing(options)
+end
+
+desc 'Makes App Store release build and uploads it to App Store Connect'
+lane :release_appstore do |options|
+  build_release(options)
+
+  deliver(common_deliver_arguments.merge(options))
+
+  begin
+    upload_metadata(options)
+  rescue => exception
+    UI.user_error! %{Failed to upload metadata: #{exception}
+1. Your build has been successfully uploaded, it's only a problem with App Store metadata.
+2. It's possible that there is a submission for another platform (macOS) in a non-editable state
+  (e.g. Pending Developer Release, Developer Rejected, Rejected or Metadata Rejected).
+3. Before you retry, ensure that the pending macOS release is completed (Ready for Sale) or moved
+  back to "Prepare for Submission". If it can't be done at the moment and you can't wait, you'll need
+  to update metadata manually.
+4. Use upload_metadata lane to only handle metadata (without building the release and uploading a build):
+  $ bundle exec fastlane upload_metadata
+    }
+  end
+end
+
+desc 'Updates App Store metadata'
+lane :upload_metadata do |options|
+  deliver(common_deliver_arguments.merge(options).merge({
+    skip_binary_upload: true,
+    skip_metadata: false
+  }))
+end
+
+desc 'Makes App Store release build and uploads it to TestFlight'
+lane :release_testflight do
+  build_release
+
+  upload_to_testflight(
+    api_key: get_api_key
+  )
+end
+
+desc 'Increment build number based on version in App Store Connect'
+lane :increment_build_number_for_version do |options|
+  increment_build_number({
+    build_number: 
+      latest_testflight_build_number(
+        version: options[:version],
+        app_identifier: "com.duckduckgo.mobile.ios", 
+        initial_build_number: -1,
+        username: options[:username]) + 1,
+    skip_info_plist: "true"
+  })
+end
+
+#################################################
+# Private lanes
+#################################################
+
+private_lane :build_release do |options|
+  sync_signing(options)
+
+  build_app(
     export_method: "app-store",
     scheme: "DuckDuckGo",
     export_options: "appStoreExportOptions.plist"
   )
+end
 
-  deliver(
+private_lane :get_api_key do
+  has_api_key = [
+    "APPLE_API_KEY_ID",
+    "APPLE_API_KEY_ISSUER",
+    "APPLE_API_KEY_BASE64"
+  ].map {|x| ENV.has_key? x}.reduce(&:&)
+
+  if has_api_key
+    app_store_connect_api_key(
+      key_id: ENV["APPLE_API_KEY_ID"],
+      issuer_id: ENV["APPLE_API_KEY_ISSUER"],
+      key_content: ENV["APPLE_API_KEY_BASE64"],
+      is_key_content_base64: true
+    )
+  else
+    nil
+  end
+end
+
+private_lane :do_sync_signing do |options|
+  sync_code_signing(
+    api_key: get_api_key,
+    username: options[:username],
+    readonly: is_ci
+  )
+end
+
+def common_deliver_arguments
+  {
+    api_key: get_api_key,
     submit_for_review: false,
-    automatic_release: false, 
+    automatic_release: false,
     phased_release: true,
     force: true,
     skip_screenshots: true,
+    skip_metadata: true,
     precheck_include_in_app_purchases: false,
     submission_information: {
        add_id_info_uses_idfa: false
     }
-  )
-
+  }
 end

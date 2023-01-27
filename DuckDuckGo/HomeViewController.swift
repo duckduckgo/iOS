@@ -21,6 +21,7 @@ import UIKit
 import Core
 import os.log
 import Bookmarks
+import Combine
 
 class HomeViewController: UIViewController {
     
@@ -61,6 +62,7 @@ class HomeViewController: UIViewController {
     
     private let tabModel: Tab
     private let favoritesViewModel: FavoritesListInteracting
+    private var viewModelCancellable: AnyCancellable?
     
     static func loadFromStoryboard(model: Tab, favoritesViewModel: FavoritesListInteracting) -> HomeViewController {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
@@ -93,6 +95,18 @@ class HomeViewController: UIViewController {
                                                selector: #selector(remoteMessagesDidChange),
                                                name: RemoteMessaging.Notifications.remoteMessagesDidChange,
                                                object: nil)
+
+        registerForBookmarksChanges()
+    }
+
+    private func registerForBookmarksChanges() {
+        viewModelCancellable = favoritesViewModel.externalUpdates.sink { [weak self] _ in
+            guard let self = self else { return }
+            self.bookmarksDidChange()
+            if self.favoritesViewModel.favorites.isEmpty {
+                self.delegate?.home(self, didRequestHideLogo: false)
+            }
+        }
     }
     
     @objc func bookmarksDidChange() {

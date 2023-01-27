@@ -1,0 +1,3 @@
+- [ ] Update and commit metadata (if any changes)
+- [ ] Update and commit release notes
+- [ ] Merge this PR when all GH checks are successful

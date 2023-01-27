@@ -1015,8 +1015,10 @@ extension TabViewController: WKNavigationDelegate {
             guard let webView = self?.webView else { completion(nil); return }
             UIGraphicsBeginImageContextWithOptions(webView.bounds.size, false, UIScreen.main.scale)
             webView.drawHierarchy(in: webView.bounds, afterScreenUpdates: true)
-            self?.jsAlertController.view.drawHierarchy(in: self!.jsAlertController.view.bounds,
-                                                       afterScreenUpdates: false)
+            if let jsAlertController = self?.jsAlertController {
+                jsAlertController.view.drawHierarchy(in: jsAlertController.view.bounds,
+                                                     afterScreenUpdates: false)
+            }
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             completion(image)
@@ -1295,7 +1297,9 @@ extension TabViewController: WKNavigationDelegate {
 
     private func shouldWaitUntilContentBlockingIsLoaded(_ completion: @Sendable @escaping @MainActor () -> Void) -> Bool {
         // Ensure Content Blocking Assets (WKContentRuleList&UserScripts) are installed
-        if userContentController.contentBlockingAssetsInstalled {
+        if userContentController.contentBlockingAssetsInstalled
+            || !ContentBlocking.shared.privacyConfigurationManager.privacyConfig.isEnabled(featureKey: .contentBlocking) {
+
             RulesCompilationMonitor.shared.reportNavigationDidNotWaitForRules()
             return false
         }
@@ -1789,7 +1793,9 @@ extension TabViewController {
         if mostRecentAutoPreviewDownloadID == download.id {
             fileHandler.preview()
         } else {
-            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab)
+            let pixelParameters = [PixelParameters.mimeType: download.mimeType.rawValue,
+                                   PixelParameters.downloadListCount: "\(AppDependencyProvider.shared.downloadManager.downloadList.count)"]
+            Pixel.fire(pixel: .downloadTriedToPresentPreviewWithoutTab, withAdditionalParameters: pixelParameters)
         }
     }
 }
@@ -1983,8 +1989,7 @@ extension TabViewController: UserContentControllerDelegate {
         let tdsKey = DefaultContentBlockerRulesListsSource.Constants.trackerDataSetRulesListName
         let notificationsTriggeringReload = [
             PreserveLogins.Notifications.loginDetectionStateChanged,
-            AppUserDefaults.Notifications.doNotSellStatusChange,
-            AutofillLoginSession.Notifications.devicePasscodeStatusChanged
+            AppUserDefaults.Notifications.doNotSellStatusChange
         ]
         if updateEvent.changes[tdsKey]?.contains(.unprotectedSites) == true
             || notificationsTriggeringReload.contains(where: {

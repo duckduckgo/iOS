@@ -87,40 +87,39 @@ struct SyncCodeManualEntryView: View {
         .frame(width: size, height: size)
     }
 
+    @ViewBuilder
+    func instructionsAndButton() -> some View {
+        VStack {
+            Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
+                .multilineTextAlignment(.center)
+
+            Spacer()
+
+            Button("Submit", action: model.submitAction)
+                .buttonStyle(PrimaryButtonStyle(disabled: !model.canSubmitManualCode))
+                .disabled(!model.canSubmitManualCode)
+
+        }
+        .padding()
+        .padding(.top, 32)
+        .ignoresSafeArea(.keyboard)
+    }
+
     var body: some View {
         GeometryReader { g in
             ZStack {
-                VStack {
-
-                    codeEntrySection(size: g.size.width)
-
-                    if !isEditingCode {
-                        VStack {
-                            Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
-                                .multilineTextAlignment(.center)
-
-                            Spacer()
-
-                            Button("Submit", action: {})
-                                .buttonStyle(PrimaryButtonStyle())
-                        }
-                        .padding()
-                        .padding(.top, 32)
+                ScrollView {
+                    VStack {
+                        codeEntrySection(size: g.size.width)
+                        instructionsAndButton()
                     }
+                    .frame(height: g.size.height)
+                    .ignoresSafeArea(.keyboard)
+                    .navigationTitle("Manually Enter Code")
                 }
-                .navigationTitle("Manually Enter Code")
             }
             .background(Color.white.opacity(0.001))
             .modifier(SyncBackButtonModifier())
-            // This are kinda hacky ways to hide the keyboard
-            .gesture(DragGesture().onChanged({ _ in
-                print("onTapGesture")
-                UIApplication.shared.endEditing()
-            }))
-            .onTapGesture {
-                print("onTapGesture")
-                UIApplication.shared.endEditing()
-            }
         }
     }
 
@@ -179,12 +178,6 @@ struct CodeEntryView: UIViewRepresentable {
 
     }
 
-}
-
-extension UIApplication {
-    func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
 }
 
 extension String {

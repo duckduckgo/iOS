@@ -119,7 +119,7 @@ extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
         return "Connect Mode"
     }
 
-    func handleScannedCode(_ model: SyncCodeCollectionViewModel, code: String) {
+    func handleCode(_ model: SyncCodeCollectionViewModel, code: String) {
         #warning("Validate the code")
         showDeviceConnected()
     }

@@ -20,15 +20,24 @@
 import SwiftUI
 
 public struct PrimaryButtonStyle: ButtonStyle {
-    public init() {}
+
+    let disabled: Bool
+
+    public init(disabled: Bool = false) {
+        self.disabled = disabled
+    }
     
     public func makeBody(configuration: Configuration) -> some View {
+        let standardBackgroundColor = configuration.isPressed ? Color.deprecatedBlue.opacity(Consts.pressedOpacity) : Color.deprecatedBlue.opacity(1)
+        let disabledBackgroundColor = Color.gray50
+        let backgroundColor = disabled ? disabledBackgroundColor : standardBackgroundColor
+
         configuration.label
             .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? .white.opacity(Consts.pressedOpacity) : .white.opacity(1))
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
-            .background(configuration.isPressed ? Color.deprecatedBlue.opacity(Consts.pressedOpacity) : Color.deprecatedBlue.opacity(1))
+            .background(backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
 }

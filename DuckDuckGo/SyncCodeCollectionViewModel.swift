@@ -24,7 +24,7 @@ import UIKit
 protocol SyncCodeCollectionViewModelDelegate: AnyObject {
 
     func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String
-    func handleScannedCode(_ model: SyncCodeCollectionViewModel, code: String)
+    func handleCode(_ model: SyncCodeCollectionViewModel, code: String)
     func cancelled(_ model: SyncCodeCollectionViewModel)
 
 }
@@ -44,6 +44,10 @@ class SyncCodeCollectionViewModel: ObservableObject {
     @Published var videoPermission: VideoPermission = .unknown
     @Published var state = State.showScanner
     @Published var manuallyEnteredCode: String?
+
+    var canSubmitManualCode: Bool {
+        manuallyEnteredCode?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
+    }
 
     weak var delegate: SyncCodeCollectionViewModelDelegate?
 
@@ -74,7 +78,7 @@ class SyncCodeCollectionViewModel: ObservableObject {
 
     func codeScanned(_ code: String) {
         print(#function, code)
-        delegate?.handleScannedCode(self, code: code)
+        delegate?.handleCode(self, code: code)
     }
 
     func cameraUnavailable() {
@@ -90,6 +94,11 @@ class SyncCodeCollectionViewModel: ObservableObject {
     func cancel() {
         print(#function)
         delegate?.cancelled(self)
+    }
+
+    func submitAction() {
+        print(#function)
+        delegate?.handleCode(self, code: manuallyEnteredCode ?? "")
     }
 
     func startConnectMode() -> ShowQRCodeViewModel {

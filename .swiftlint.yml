@@ -53,4 +53,5 @@ type_name:
 excluded:
   - Carthage
   - DuckDuckGo/UserText.swift
+  - vendor
 

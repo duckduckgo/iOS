@@ -1,0 +1,27 @@
+Aplicația DuckDuckGo oferă cea mai cuprinzătoare protecție a confidențialității online, prin simpla apăsare a unui buton. Cu o singură descărcare, obții un nou browser pe care să îl utilizezi în fiecare zi pentru navigarea pe internet, care oferă protecție perfectă în timp ce cauți și navighezi, precum și acces la măsuri de protecție împotriva urmăririi pentru e-mailurile pe care le primești și aplicațiile pe care le utilizezi. Multe dintre aceste măsuri de protecție nu sunt oferite în mod implicit de majoritatea browserelor populare.
+
+CARACTERISTICI PRINCIPALE ALE FUNCȚIEI
+• Caută implicit în mod privat - Private Search (Căutarea privată) oferită de DuckDuckGo este integrată.
+
+• Blochează modulele cookie de urmărire - împiedică majoritatea modulelor cookie terțe să te urmărească în timp ce navighezi de la un site la altul.
+
+• Blochează majoritatea tehnologiilor de urmărire înainte ca acestea să se încarce - Împiedică firmele să colecteze și să utilizeze orice date cu caracter personal de la aceste tehnologii de urmărire ascunse pe site-uri.
+
+• Forțează criptarea - Forțează multe dintre site-urile pe care le vizitezi să utilizeze automat o conexiune criptată (HTTPS).
+
+• Blochează tehnologiile de urmărire prin e-mail (Beta) - Creează-ți propria adresă de e-mail @duck.com și folosește Email Protection (Protecția pentru e-mail) în scopul de a bloca majoritatea tehnologiilor de urmărire a e-mailului, a-ți ascunde adresa existentă și a redirecționa mesajele către inboxul tău. 
+
+• Omite amprentarea - Împiedică firmele să creeze un identificator unic pentru tine.
+
+Oferim numeroase modalități de protecție care nu sunt disponibile în majoritatea browserelor (chiar și în browserele incognito), inclusiv protecția împotriva urmăririi linkurilor, a urmăririi Google AMP și multe altele.
+
+CONTROALE DE CONFIDENȚIALITATE ZILNICE
+• Apasă butonul Foc și arde datele - Șterge rapid filele și datele de navigare cu butonul Foc.
+
+• Semnalează-ți preferințele în materie de confidențialitate cu Controlul global al confidențialității (GPC) Află mai multe la adresa https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/ 
+
+Notă despre protecția noastră împotriva încărcării tehnologiilor de urmărire terțe după ce ai făcut clic pe reclame DuckDuckGo: Protecția noastră împotriva tehnologiilor de urmărire terțe depășește cu mult ceea ce primești în mod implicit de la cele mai populare browsere și lucrăm constant pentru a o face chiar și mai cuprinzătoare. În prezent, dacă un agent de publicitate dorește să detecteze conversiile pe propriul site pentru reclamele noastre private la căutările pe DuckDuckGo, protecția noastră împotriva încărcării tehnologiilor de urmărire terțe nu va opri încărcarea solicitărilor bat.bing.com pe site-ul agenției de publicitate în urma clicurilor pe reclame DuckDuckGo, dar aceste solicitări sunt oprite în toate celelalte contexte. Acest lucru se datorează faptului că reclamele în cazul căutării private DuckDuckGo sunt oferite în parteneriat cu Microsoft. Ca parte a acestui parteneriat, vizualizarea anunțurilor pe DuckDuckGo este anonimă, iar Microsoft s-a angajat să nu profileze clicurile pe anunțuri ale utilizatorilor noștri.
+
+Citește mai multe despre acest lucru și despre instrumentele noastre gratuite de protecție împotriva urmăririi pe https://help.duckduckgo.com/privacy/web-tracking-protections
+
+

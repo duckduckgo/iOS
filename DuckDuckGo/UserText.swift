@@ -522,4 +522,6 @@ public struct UserText {
 
     public static let syncWithAnotherDeviceMessage = "Your bookmarks are backed up! Would you like to sync with a second device now?"
 
+    public static let syncRecoveryPDFMessage = "If you lose access to your devices, you will need a code to recover your synced data. You can save this code to your device as a PDF.\n\nAnyone with access to this code can access your synced data, so please keep it in a safe place."
+    
 }

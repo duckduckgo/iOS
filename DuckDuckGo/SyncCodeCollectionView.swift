@@ -84,7 +84,8 @@ struct SyncCodeCollectionView: View {
 
                 if model.canShowQRCode {
                     NavigationLink {
-                        ShowQRCodeView(model: model.startConnectMode())
+                        // SyncQRCodeView(model: model.startConnectMode())
+                        ShowConnectModeView(model: model)
                     } label: {
                         Label("Show QR Code", image: "SyncQRCodeIcon")
                     }

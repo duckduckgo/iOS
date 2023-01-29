@@ -27,6 +27,7 @@ protocol SyncManagementViewModelDelegate: AnyObject {
     func showSyncWithAnotherDevice()
     func showDeviceConnected()
     func showRecoveryPDF()
+    func createAccountAndStartSyncing()
 
 }
 
@@ -63,6 +64,14 @@ class SyncManagementViewModel: ObservableObject {
         print(Self.self, #function)
     }
 
+    func showDevices() {
+        isBusy = false
+        isSyncEnabled = true
+        devices = [
+            Device(id: UUID().uuidString, name: UIDevice.current.name, isThisDevice: true)
+        ]
+    }
+
     func enableSync() {
         print(#function)
         isBusy = true
@@ -82,22 +91,10 @@ class SyncManagementViewModel: ObservableObject {
             delegate?.showSyncWithAnotherDevice()
 
         case .turnOnNow:
-            createAccountAndStartSyncing()
+            delegate?.createAccountAndStartSyncing()
 
         default: // Cancelled
             isBusy = false
-        }
-    }
-
-    func createAccountAndStartSyncing() {
-        print(#function)
-        Task { @MainActor in
-            try await Task.sleep(nanoseconds: 1_000_000_000 * 2)
-            isBusy = false
-            isSyncEnabled = true
-            devices = [
-                Device(id: UUID().uuidString, name: UIDevice.current.name, isThisDevice: true)
-            ]
         }
     }
 

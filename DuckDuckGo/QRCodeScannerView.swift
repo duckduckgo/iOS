@@ -20,7 +20,6 @@
 import SwiftUI
 import AVFoundation
 
-#warning("see if we can either set the area of interest, or filter by area of interest")
 struct QRCodeScannerView: UIViewRepresentable {
 
     var onQRCodeScanned: (String) -> Void

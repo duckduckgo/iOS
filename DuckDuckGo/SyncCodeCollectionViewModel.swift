@@ -18,10 +18,10 @@
 //
 
 import Foundation
-import AVFoundation
-import UIKit
 
 protocol SyncCodeCollectionViewModelDelegate: AnyObject {
+
+    var pasteboardString: String? { get }
 
     func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String
     func handleCode(_ model: SyncCodeCollectionViewModel, code: String)
@@ -30,7 +30,6 @@ protocol SyncCodeCollectionViewModelDelegate: AnyObject {
 }
 
 class SyncCodeCollectionViewModel: ObservableObject {
-
 
     enum VideoPermission {
         case unknown, authorised, denied
@@ -59,23 +58,6 @@ class SyncCodeCollectionViewModel: ObservableObject {
         self.canShowQRCode = canShowQRCode
     }
 
-    func checkCameraPermission() {
-        let status = AVCaptureDevice.authorizationStatus(for: .video)
-        if status == .notDetermined {
-            Task { @MainActor in
-                _ = await AVCaptureDevice.requestAccess(for: .video)
-                self.checkCameraPermission()
-            }
-            return
-        }
-
-        switch status {
-        case .denied: videoPermission = .denied
-        case .authorized: videoPermission = .authorised
-        default: assertionFailure("Unexpected status \(status)")
-        }
-    }
-
     func codeScanned(_ code: String) {
         print(#function, code)
         delegate?.handleCode(self, code: code)
@@ -87,7 +69,7 @@ class SyncCodeCollectionViewModel: ObservableObject {
     }
 
     func pasteCode() {
-        guard let string = UIPasteboard.general.string else { return }
+        guard let string = delegate?.pasteboardString else { return }
         self.manuallyEnteredCode = string
     }
 

@@ -22,10 +22,6 @@ import DuckUI
 
 struct SyncCodeManualEntryView: View {
 
-    enum FocusField: Hashable {
-        case field
-    }
-
     @ObservedObject var model: SyncCodeCollectionViewModel
 
     @State var isEditingCode = false
@@ -125,7 +121,7 @@ struct SyncCodeManualEntryView: View {
 
 }
 
-struct CodeEntryView: UIViewRepresentable {
+private struct CodeEntryView: UIViewRepresentable {
 
     @Binding var focused: Bool
     @Binding var text: String?
@@ -180,7 +176,7 @@ struct CodeEntryView: UIViewRepresentable {
 
 }
 
-extension String {
+private extension String {
     
     func chunks(ofSize: Int) -> [String] {
         let chunks = stride(from: 0, to: self.count, by: ofSize).map {

@@ -22,8 +22,10 @@ import Foundation
 class ShowQRCodeViewModel: ObservableObject {
 
     @Published var code: String?
+    @Published var shareSheetVisible = false
 
     func share() {
+        shareSheetVisible = true
     }
 
 }

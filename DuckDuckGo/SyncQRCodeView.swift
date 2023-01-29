@@ -47,6 +47,9 @@ struct SyncQRCodeView: View {
                 }
                 .buttonStyle(SyncLabelButtonStyle())
                 .padding(.bottom, 20)
+                .sheet(isPresented: $model.shareSheetVisible) {
+                    ShareSheetView(activityItems: [ model.code ?? "" ])
+                }
             }
         }
     }
@@ -87,7 +90,7 @@ struct SyncQRCodeView: View {
 
 }
 
-struct QRCode: View {
+private struct QRCode: View {
 
     let context = CIContext()
 
@@ -119,7 +122,7 @@ struct QRCode: View {
 
 }
 
-extension CIFilter {
+private extension CIFilter {
 
     static func qrCodeGenerator() -> CIFilter {
         CIFilter(name: "CIQRCodeGenerator", parameters: [
@@ -127,4 +130,18 @@ extension CIFilter {
         ])!
     }
 
+}
+
+private struct ShareSheetView: UIViewControllerRepresentable {
+
+    var activityItems: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        return UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+        let size = uiViewController.preferredContentSize
+        uiViewController.preferredContentSize = CGSize(width: size.width, height: size.height / 2)
+    }
 }

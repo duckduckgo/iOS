@@ -97,8 +97,11 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
 
         let controller = HostingController(rootView: SyncDeviceConnectedView(showDeviceSynced: true))
         navigationController?.present(controller, animated: true) {
+            self.rootView.model.showDevices()
+            self.rootView.model.devices.append(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
             print(#function, "completed")
         }
+
     }
     
     func showRecoveryPDF() {
@@ -168,6 +171,12 @@ extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
         assert(navigationController?.visibleViewController is DismissibleHostingController<SyncCodeCollectionView>)
         navigationController?.topViewController?.dismiss(animated: true)
         rootView.model.codeCollectionCancelled()
+    }
+
+    func gotoSettings(_ model: SyncCodeCollectionViewModel) {
+        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+        }
     }
 
 }

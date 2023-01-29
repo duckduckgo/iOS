@@ -26,6 +26,7 @@ protocol SyncCodeCollectionViewModelDelegate: AnyObject {
     func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String
     func handleCode(_ model: SyncCodeCollectionViewModel, code: String)
     func cancelled(_ model: SyncCodeCollectionViewModel)
+    func gotoSettings(_ model: SyncCodeCollectionViewModel)
 
 }
 
@@ -90,6 +91,10 @@ class SyncCodeCollectionViewModel: ObservableObject {
             showQRCodeModel?.code = await delegate?.startConnectMode(self)
         }
         return model
+    }
+
+    func gotoSettings() {
+        delegate?.gotoSettings(self)
     }
 
 }

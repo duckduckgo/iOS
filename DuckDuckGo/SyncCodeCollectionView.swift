@@ -50,8 +50,31 @@ struct SyncCodeCollectionView: View {
     @ViewBuilder
     func cameraPermissionDenied() -> some View {
         if model.videoPermission == .denied {
-            Text("Camera permission denied")
-                .padding()
+            VStack(spacing: 0) {
+                Image("SyncCameraPermission")
+                    .padding(.top, 40)
+                    .padding(.bottom, 20)
+
+                Text("Camera Permission is Required")
+                    .font(.system(size: 20, weight: .bold))
+                    .padding(.bottom, 8)
+
+                Text("Please go to your device's settings and grant permission for this app to access your camera.")
+                    .font(.system(size: 16, weight: .regular))
+
+                Spacer()
+
+                Button {
+                    model.gotoSettings()
+                } label: {
+                    HStack {
+                        Image("SyncGotoButton")
+                        Text("Go to Settings")
+                    }
+                }
+                .buttonStyle(SyncLabelButtonStyle())
+                .padding(.bottom, 40)
+            }
         }
     }
 
@@ -84,7 +107,6 @@ struct SyncCodeCollectionView: View {
 
                 if model.canShowQRCode {
                     NavigationLink {
-                        // SyncQRCodeView(model: model.startConnectMode())
                         ShowConnectModeView(model: model)
                     } label: {
                         Label("Show QR Code", image: "SyncQRCodeIcon")

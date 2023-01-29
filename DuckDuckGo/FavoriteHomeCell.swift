@@ -40,6 +40,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     var isEditing = false {
         didSet {
             deleteButton.isHidden = !isEditing
+            deleteButton.isEnabled = isEditing
         }
     }
 
@@ -84,6 +85,7 @@ class FavoriteHomeCell: UICollectionViewCell {
     }
 
     @IBAction func onRemoveAction() {
+        guard isEditing else { return }
         self.onRemove?()
     }
 

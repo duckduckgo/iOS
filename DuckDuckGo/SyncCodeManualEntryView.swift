@@ -106,7 +106,7 @@ struct SyncCodeManualEntryView: View {
             ZStack {
                 ScrollView {
                     VStack {
-                        codeEntrySection(size: g.size.width)
+                        codeEntrySection(size: min(g.size.width, 400))
                         instructionsAndButton()
                     }
                     .frame(height: g.size.height)

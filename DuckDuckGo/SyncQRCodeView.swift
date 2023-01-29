@@ -75,7 +75,7 @@ struct SyncQRCodeView: View {
 
                 }
                 .padding()
-                .frame(width: g.size.width, height: g.size.width)
+                .frame(width: g.size.width, height: min(g.size.width, 400))
 
                 instructions()
 

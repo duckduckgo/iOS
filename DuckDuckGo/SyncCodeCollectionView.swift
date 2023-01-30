@@ -88,10 +88,11 @@ struct SyncCodeCollectionView: View {
 
     @ViewBuilder
     func instructions() -> some View {
-        if model.showCamera {
-            Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
-                .multilineTextAlignment(.center)
-        }
+
+        Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
+            .multilineTextAlignment(.center)
+            .padding()
+
     }
 
     @ViewBuilder
@@ -115,7 +116,9 @@ struct SyncCodeCollectionView: View {
             }
             .frame(height: 40)
             .foregroundColor(.primary)
+            .frame(maxWidth: 400)
         }
+
     }
 
     @ViewBuilder
@@ -154,19 +157,29 @@ struct SyncCodeCollectionView: View {
 
                     ZStack {
                         cameraViewPort()
-                            .frame(width: g.size.width, height: min(g.size.width, 400))
+                            .frame(width: g.size.width, height: g.size.width)
+                            .frame(maxHeight: g.size.height - 300)
                         cameraPermissionDenied()
                         cameraUnavailable()
                     }
 
-                    List { // Also acts as the blur for the camera
-                        instructions()
-                        buttons()
+                    ZStack {
+                        Rectangle() // Also acts as the blur for the camera
+                            .fill(.clear)
+                            .modifier(CameraMaskModifier())
+
+                        VStack {
+                            instructions()
+
+                            List {
+                                buttons()
+                            }
+                            .ignoresSafeArea()
+                            .hideScrollContentBackground()
+                            .disableScrolling()
+                            .frame(maxWidth: 400)
+                        }
                     }
-                    .ignoresSafeArea()
-                    .hideScrollContentBackground()
-                    .disableScrolling()
-                    .modifier(CameraMaskModifier())
                 }
                 .padding(.horizontal, 0)
                 .ignoresSafeArea()

@@ -54,4 +54,5 @@ excluded:
   - Carthage
   - DuckDuckGo/UserText.swift
   - vendor
+  - PacketTunnelProvider/ProxyServer
 

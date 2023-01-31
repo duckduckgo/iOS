@@ -71,6 +71,20 @@ extension TabViewController {
         
         let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
+        
+        if FirewallController.shared.status() == .connected {
+            entries.append(BrowsingMenuEntry.regular(name: "Disable AppTP",
+                                                     image: UIImage(named: "MenuRemoveFireproof")!,
+                                                     action: {
+                FirewallController.shared.setState(to: false)
+            }))
+        } else {
+            entries.append(BrowsingMenuEntry.regular(name: "Enable AppTP",
+                                                     image: UIImage(named: "MenuFireproof")!,
+                                                     action: {
+                FirewallController.shared.setState(to: true)
+            }))
+        }
             
         if let domain = self.privacyInfo?.domain {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))

@@ -94,10 +94,23 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         collectCode(canShowQRCode: false)
     }
 
+    func shareRecoveryPDF() {
+        print(#function)
+        guard let view = navigationController?.visibleViewController?.view,
+              let url = Bundle.main.url(forResource: "DuckDuckGo Recovery Document", withExtension: "pdf") else {
+            return
+        }
+
+        navigationController?.visibleViewController?.presentShareSheet(withItems: [url],
+                                                                       fromView: view)
+    }
+
     func showDeviceConnected() {
         print(#function)
 
-        let controller = HostingController(rootView: SyncDeviceConnectedView(showDeviceSynced: true))
+        let controller = HostingController(rootView: SyncDeviceConnectedView {
+            self.shareRecoveryPDF()
+        })
         navigationController?.present(controller, animated: true) {
             self.rootView.model.showDevices()
             self.rootView.model.devices.append(.init(id: UUID().uuidString, name: "Another Device", isThisDevice: false))
@@ -108,7 +121,9 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
     
     func showRecoveryPDF() {
         print(#function)
-        let controller = HostingController(rootView: SyncDeviceConnectedView(showDeviceSynced: false))
+        let controller = HostingController(rootView: SyncRecoveryPDFView {
+            self.shareRecoveryPDF()
+        })
         navigationController?.present(controller, animated: true) {
             print(#function, "completed")
         }

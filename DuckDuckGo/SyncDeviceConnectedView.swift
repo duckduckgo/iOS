@@ -22,7 +22,9 @@ import DuckUI
 
 struct SyncDeviceConnectedView: View {
 
-    @State var showDeviceSynced: Bool
+    let showRecoveryPDFAction: () -> Void
+
+    @State var showRecoveryPDF = false
 
     @ViewBuilder
     func deviceSyncedView() -> some View {
@@ -57,7 +59,7 @@ struct SyncDeviceConnectedView: View {
 
             Button {
                 withAnimation {
-                    showDeviceSynced = false
+                    self.showRecoveryPDF = true
                 }
             } label: {
                 Text("Next")
@@ -66,46 +68,14 @@ struct SyncDeviceConnectedView: View {
         }
     }
 
-    @ViewBuilder
-    func recoveryPDFView() -> some View {
-        VStack {
-            Image("SyncDownloadRecoveryCode")
-                .padding(.bottom, 20)
-
-            Text("Save Recovery PDF?")
-                .font(.system(size: 28, weight: .bold))
-                .padding(.bottom, 24)
-
-            Text(UserText.syncRecoveryPDFMessage)
-                .lineLimit(nil)
-                .multilineTextAlignment(.center)
-
-            Spacer()
-
-            Button {
-
-            } label: {
-                Text("Save Recovery PDF")
-            }
-            .buttonStyle(PrimaryButtonStyle())
-
-            Button {
-
-            } label: {
-                Text("Now Now")
-            }
-            .buttonStyle(SecondaryButtonStyle())
-        }
-    }
-
     var body: some View {
         Group {
-            if showDeviceSynced {
+            if showRecoveryPDF {
+                SyncRecoveryPDFView(showRecoveryPDFAction: showRecoveryPDFAction)
+                    .transition(.move(edge: .trailing))
+            } else {
                 deviceSyncedView()
                     .transition(.move(edge: .leading))
-            } else {
-                recoveryPDFView()
-                    .transition(.move(edge: .trailing))
             }
         }
         /// Should use no-title navigation view instead?

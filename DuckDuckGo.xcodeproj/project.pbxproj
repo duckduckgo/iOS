@@ -237,6 +237,9 @@
 		853B670F2986C6A50013DF07 /* ShowConnectModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853B670E2986C6A50013DF07 /* ShowConnectModeView.swift */; };
 		853B67112986CEDF0013DF07 /* SyncDeviceConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853B67102986CEDF0013DF07 /* SyncDeviceConnectedView.swift */; };
 		853B6713298A87120013DF07 /* SyncUIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853B6712298A87120013DF07 /* SyncUIConstants.swift */; };
+		853B6715298ADCED0013DF07 /* DuckDuckGo Recovery Document.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 853B6714298ADCED0013DF07 /* DuckDuckGo Recovery Document.pdf */; };
+		853B6717298B17CF0013DF07 /* SyncRecoveryPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853B6716298B17CF0013DF07 /* SyncRecoveryPDFView.swift */; };
+		853B6719298B182B0013DF07 /* SyncRecoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853B6718298B182B0013DF07 /* SyncRecoveryViewModel.swift */; };
 		853C5F5B21BFF0AE001F7A05 /* HomeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */; };
 		853C5F6121C277C7001F7A05 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F6021C277C7001F7A05 /* global.swift */; };
 		8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */; };
@@ -1049,6 +1052,9 @@
 		853B670E2986C6A50013DF07 /* ShowConnectModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowConnectModeView.swift; sourceTree = "<group>"; };
 		853B67102986CEDF0013DF07 /* SyncDeviceConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDeviceConnectedView.swift; sourceTree = "<group>"; };
 		853B6712298A87120013DF07 /* SyncUIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncUIConstants.swift; sourceTree = "<group>"; };
+		853B6714298ADCED0013DF07 /* DuckDuckGo Recovery Document.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "DuckDuckGo Recovery Document.pdf"; path = "../../../../Downloads/DuckDuckGo Recovery Document.pdf"; sourceTree = "<group>"; };
+		853B6716298B17CF0013DF07 /* SyncRecoveryPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRecoveryPDFView.swift; sourceTree = "<group>"; };
+		853B6718298B182B0013DF07 /* SyncRecoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncRecoveryViewModel.swift; sourceTree = "<group>"; };
 		853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionView.swift; sourceTree = "<group>"; };
 		853C5F6021C277C7001F7A05 /* global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = global.swift; sourceTree = "<group>"; };
 		8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreserveLoginsWorker.swift; sourceTree = "<group>"; };
@@ -3104,6 +3110,7 @@
 			children = (
 				85E592BE2986C10E0070419D /* Service */,
 				85F98F97296F4CB100742F4A /* SyncAssets.xcassets */,
+				853B6714298ADCED0013DF07 /* DuckDuckGo Recovery Document.pdf */,
 				85DD44232976C7A8005CC388 /* Controllers */,
 				85F98F8D296F0ED900742F4A /* ViewModels */,
 				85F98F8E296F0EE000742F4A /* Views */,
@@ -3114,10 +3121,11 @@
 		85F98F8D296F0ED900742F4A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				85B713B4297FF31A006898A8 /* ShowQRCodeViewModel.swift */,
 				85DD44282976F523005CC388 /* SyncCodeCollectionViewModel.swift */,
 				85F98F93296F447F00742F4A /* SyncManagementViewModel.swift */,
+				853B6718298B182B0013DF07 /* SyncRecoveryViewModel.swift */,
 				85F98F99296F622B00742F4A /* SyncSetupViewModel.swift */,
-				85B713B4297FF31A006898A8 /* ShowQRCodeViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -3134,9 +3142,10 @@
 				85B713B2297FF285006898A8 /* SyncLabelButtonStyle.swift */,
 				85F98F8F296F0EF400742F4A /* SyncManagementView.swift */,
 				85DD4430297EA400005CC388 /* SyncQRCodeView.swift */,
+				853B6716298B17CF0013DF07 /* SyncRecoveryPDFView.swift */,
 				85F98F95296F480A00742F4A /* SyncSetupView.swift */,
-				85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */,
 				853B6712298A87120013DF07 /* SyncUIConstants.swift */,
+				85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -4698,6 +4707,7 @@
 				AA4D6AE723DE4D33007E8790 /* AppIconGreen29x29@2x.png in Resources */,
 				1EE412002858B9300003FE64 /* dark-shield-dot.json in Resources */,
 				1EE412012858B9300003FE64 /* dark-trackers-3.json in Resources */,
+				853B6715298ADCED0013DF07 /* DuckDuckGo Recovery Document.pdf in Resources */,
 				AA4D6ACD23DE4D27007E8790 /* AppIconPurple29x29@3x.png in Resources */,
 				AA4D6A8C23DE49A5007E8790 /* AppIconBlack40x40@2x.png in Resources */,
 				1EEF12462850A923003DDE57 /* trackers-3.json in Resources */,
@@ -5099,6 +5109,7 @@
 				98F3A1DC217B373E0011A0D4 /* DarkTheme.swift in Sources */,
 				851B128822200575004781BC /* Onboarding.swift in Sources */,
 				3151F0EE2735800800226F58 /* VoiceSearchFeedbackView.swift in Sources */,
+				853B6717298B17CF0013DF07 /* SyncRecoveryPDFView.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				311BD1AF2836BB4200AEF6C1 /* AutofillItemsLockedView.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
@@ -5141,6 +5152,7 @@
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,
 				4B6484F127FD1E350050A7A1 /* MacBrowserWaitlistStorage.swift in Sources */,
 				F17922DE1E7192E6006E3D97 /* SuggestionTableViewCell.swift in Sources */,
+				853B6719298B182B0013DF07 /* SyncRecoveryViewModel.swift in Sources */,
 				986C7FA724171C6000A3557D /* BrokenSiteCategories.swift in Sources */,
 				98DA6ECA2181E41F00E65433 /* ThemeManager.swift in Sources */,
 				F1CA3C3B1F045B65005FADB3 /* Authenticator.swift in Sources */,

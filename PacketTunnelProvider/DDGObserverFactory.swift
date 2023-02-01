@@ -18,6 +18,7 @@
 //
 
 import Foundation
+import os
 
 struct BlockedReason: Error {
     var description: String {
@@ -30,7 +31,7 @@ class DDGObserverFactory: ObserverFactory {
     var trackerData: TrackerDataParser?
     
     override func getObserverForProxySocket(_ socket: ProxySocket) -> Observer<ProxySocketEvent>? {
-        return nil
+        return DDGProxySocketObserver(trackerData: trackerData)
     }
     
     override init() {
@@ -53,7 +54,7 @@ class DDGObserverFactory: ObserverFactory {
                 
                 // Check firewall status
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
-                    print("[BLOCKED] \(session.host) on blocklist")
+                    os_log("[AppTP][BLOCKED] \(session.host) on blocklist")
                     socket.forceDisconnect(becauseOf: BlockedReason())
                 }
                 

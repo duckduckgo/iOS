@@ -34,10 +34,10 @@ class FirewallController {
         config.urlCache = nil
         let session = URLSession(configuration: config)
         let url = URL(string: "https://bad_url")
-        let task = session.dataTask(with: url!) { (data, response, error) in
-            print("[INFO] Response from dummy URL while activating VPN")
+        let task = session.dataTask(with: url!) { _, _, _ in
+            print("[AppTP][INFO] Response from dummy URL while activating VPN")
         }
-        print("[INFO] Calling dummy URL to force VPN")
+        print("[AppTP][INFO] Calling dummy URL to force VPN")
         task.resume()
     }
     
@@ -49,12 +49,12 @@ class FirewallController {
         return manager.connection.status
     }
     
-    func refreshManager(completion: @escaping (_ error: Error?) -> Void = {_ in }) {
+    func refreshManager(completion: @escaping (_ error: Error?) -> Void = { _ in }) {
         // get the reference to the latest manager in Settings
         NETunnelProviderManager.loadAllFromPreferences { (managers, error) -> Void in
             if let managers = managers, managers.count > 0 {
-                if (self.manager == managers[0]) {
-                    print("[INFO] Already have a reference to this manager, not replacing it.")
+                if self.manager == managers[0] {
+                    print("[AppTP][INFO] Already have a reference to this manager, not replacing it.")
                     completion(nil)
                     return
                 }
@@ -65,7 +65,7 @@ class FirewallController {
         }
     }
     
-    func setState(to enabled: Bool, completion: @escaping (_ error: Error?) -> Void = {_ in }) {
+    func setState(to enabled: Bool, completion: @escaping (_ error: Error?) -> Void = { _ in }) {
         NETunnelProviderManager.loadAllFromPreferences { [weak self] (managers, error) in
             self?.manager = nil
             if let managers = managers, managers.count > 0 {
@@ -85,35 +85,41 @@ class FirewallController {
             self?.manager?.onDemandRules = [connectRule]
             self?.manager?.saveToPreferences() { error in
                 if let error = error as? NEVPNError {
-                    print("[ERROR] Error setting VPN enabled to \(enabled) \(error)")
+                    print("[AppTP][ERROR] Error setting VPN enabled to \(enabled) \(error)")
                     completion(nil)
-                } else if let error = error {
-                    completion(error)
-                } else {
-                    // Manually activate the tunnel
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        if enabled {
-                            print("[INFO] Starting VPN...")
-                            do {
-                                try self?.manager?.connection.startVPNTunnel()
-                                self?.fireDummyRequest()
-                                print("[INFO] Refreshing manager")
-                                self?.refreshManager() { error in
-                                    if let error = error {
-                                        print("[ERROR] Error while refreshing manager: \(error)")
-                                    } else {
-                                        print("[OK] Refreshed manager")
+                }
+                self?.manager?.loadFromPreferences() { error in
+                    if let error = error as? NEVPNError {
+                        print("[AppTP][ERROR] Error setting VPN enabled to \(enabled) \(error)")
+                        completion(nil)
+                    } else if let error = error {
+                        completion(error)
+                    } else {
+                        // Manually activate the tunnel
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            if enabled {
+                                print("[AppTP][INFO] Starting VPN...")
+                                do {
+                                    try self?.manager?.connection.startVPNTunnel()
+                                    self?.fireDummyRequest()
+                                    print("[AppTP][INFO] Refreshing manager")
+                                    self?.refreshManager() { error in
+                                        if let error = error {
+                                            print("[AppTP][ERROR] Error while refreshing manager: \(error)")
+                                        } else {
+                                            print("[AppTP][OK] Refreshed manager")
+                                        }
+                                        completion(nil)
                                     }
-                                    completion(nil)
+                                    
+                                } catch {
+                                    print("[AppTP][ERROR] Error starting VPN after saving prefs: \(error)")
+                                    completion(error)
                                 }
-                                
-                            } catch {
-                                print("[ERROR] Error starting VPN after saving prefs: \(error.localizedDescription)")
-                                completion(error)
+                            } else {
+                                print("[AppTP][OK] VPN disabled no need to continue.")
+                                completion(nil)
                             }
-                        } else {
-                            print("[OK] VPN disabled no need to continue.")
-                            completion(nil)
                         }
                     }
                 }

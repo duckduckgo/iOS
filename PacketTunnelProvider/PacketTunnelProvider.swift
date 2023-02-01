@@ -18,6 +18,7 @@
 //
 
 import NetworkExtension
+import os
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
 
@@ -26,6 +27,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     var proxyServer: GCDHTTPProxyServer!
     
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+        os_log("[AppTP] Starting tunnel...")
+        
         if proxyServer != nil {
             proxyServer.stop()
         }
@@ -44,6 +47,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         proxySettings.exceptionList = []
         
         // Get blocklist
+        os_log("[AppTP] Loading blocklist")
         let blocked = TrackerDataParser()
         proxySettings.matchDomains = blocked.flatDomainList()
         

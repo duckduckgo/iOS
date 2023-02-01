@@ -53,14 +53,14 @@ class FirewallController {
         // get the reference to the latest manager in Settings
         do {
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
-            if managers.count > 0 {
-                if self.manager == managers[0] {
+            if let manager = managers.first {
+                if self.manager == manager {
                     print("[AppTP][INFO] Already have a reference to this manager, not replacing it.")
                     return
                 }
                 
                 self.manager = nil
-                self.manager = managers[0]
+                self.manager = manager
             }
         } catch {
             print("[AppTP][ERROR] Could not load managers")

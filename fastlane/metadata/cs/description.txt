@@ -1,0 +1,26 @@
+Aplikace DuckDuckGo přináší nejkomplexnější ochranu soukromí na internetu pouhým stisknutím tlačítka. Bezplatným stažením získáš internetový prohlížeč pro každodenní surfování v soukromí se špičkovou ochranou při vyhledávání a prohlížení webu a ochranu před sledováním příchozích e-mailů a používaných aplikací. Většina oblíbených webových prohlížečů mnohé z těchto ochranných prvků ve výchozím nastavení nenabízí.
+
+NEJDŮLEŽITĚJŠÍ FUNKCE
+• Soukromí při vyhledávání jako standard - Stačí použít integrovaný vyhledávač DuckDuckGo Private Search.
+
+• Blokování sledovacích souborů cookie - Zabrání většině externích souborů cookie, aby sledovaly, jaké stránky na internetu sleduješ.
+
+• Zablokování většiny trackerů dřív, než se načtou - Nedovol firmám shromažďovat a používat osobní údaje z těchto trackerů ukrytých na různých webech.
+
+• Vynucované šifrování - Na mnoha navštívených webech si můžeš vyžádat automatické používání šifrovaného připojení (HTTPS).
+
+• Blokování trackerů v e-mailech (beta) - Vytvoř si vlastní e-mailovou adresu @duck.com. Funkce ochrany e-mailu ti pak pomůže zablokovat většinu e-mailových trackerů, skrýt současnou adresu a přeposílat zprávy do nové schránky. 
+
+• Už žádné digitální stopy - Zabraň firmám v tom, aby si vytvářely tvůj jedinečný identifikátor.
+
+• Máme hodně ochranných prvků, kterými většina internetových prohlížečů nedisponuje (často ani v anonymním režimu): třeba ochranu před sledováním odkazů, sledováním Google AMP a další.
+
+KAŽDODENNÍ OCHRANA SOUKROMÍ
+• Stačí klepnout na Fire Button a tvoje data jsou pryč. - Tlačítkem Fire Button smažeš rychle všechny záložky a údaje o prohlížení.
+
+• Ukaž, jak to vidíš se svým soukromím, pomocí Globální kontroly ochrany osobních údajů (GPC). - Další informace najdeš na https://help.duckduckgo.com/duckduckgo-help-pages/privacy/gpc/.
+
+Poznámka k naší ochraně před načítáním trackerů třetích stran po kliknutí na reklamu na DuckDuckGo: Tato naše ochrana jde vysoko nad rámec toho, co běžně nabízí většina oblíbených prohlížečů, ale neustále pracujeme na tom, aby byla ještě komplexnější. Aktuálně je to tak, že když chce inzerent na svých webových stránkách zjišťovat konverze z našich soukromých reklam ve vyhledávání DuckDuckGo, naše ochrana před načítáním trackerů třetích stran nezastaví načítání požadavků bat.bing.com na webových stránkách inzerenta po kliknutí na reklamu na DuckDuckGo, ale na všech ostatních místech tyto požadavky zablokujeme. Je to proto, že soukromé reklamy ve vyhledávání na DuckDuckGo provozujeme ve spolupráci se společností Microsoft. V rámci tohoto partnerství je zobrazování reklam na DuckDuckGo anonymní a společnost Microsoft se zavázala, že naše uživatele nebude po kliknutí na reklamy profilovat.
+
+Další informace o tomto tématu a bezplatné ochraně před trackery si můžeš přečíst na adrese https://help.duckduckgo.com/privacy/web-tracking-protections.
+

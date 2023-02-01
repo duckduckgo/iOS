@@ -59,7 +59,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet var labels: [UILabel]!
     @IBOutlet var accessoryLabels: [UILabel]!
     
-    private let autofillSectionIndex = 1
+    private let internalTestingSection = 1
     private let debugSectionIndex = 7
 
     private lazy var emailManager = EmailManager()
@@ -82,6 +82,14 @@ class SettingsViewController: UITableViewController {
         return featureFlagger.isFeatureOn(.autofill)
     }()
 
+    private lazy var shouldShowSyncCell: Bool = {
+        return featureFlagger.isFeatureOn(.sync)
+    }()
+
+    private lazy var shouldShowInternalTestingSection: Bool = {
+        return shouldShowAutofillCell || shouldShowSyncCell
+    }()
+
     static func loadFromStoryboard() -> UIViewController {
         return UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController()!
     }
@@ -90,6 +98,7 @@ class SettingsViewController: UITableViewController {
         super.viewDidLoad()
 
         configureAutofillCell()
+        configureSyncCell()
         configureThemeCellAccessory()
         configureFireButtonAnimationCellAccessory()
         configureTextSizeCell()
@@ -141,7 +150,11 @@ class SettingsViewController: UITableViewController {
     private func configureAutofillCell() {
         autofillCell.isHidden = !shouldShowAutofillCell
     }
-    
+
+    private func configureSyncCell() {
+        syncCell.isHidden = !shouldShowSyncCell
+    }
+
     private func configureVoiceSearchCell() {
         voiceSearchCell.isHidden = !shouldShowVoiceSearchCell
         voiceSearchToggle.isOn = appSettings.voiceSearchEnabled
@@ -321,7 +334,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if autofillSectionIndex == section && !shouldShowAutofillCell {
+        if internalTestingSection == section && !shouldShowInternalTestingSection {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
@@ -331,7 +344,7 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if autofillSectionIndex == section && !shouldShowAutofillCell {
+        if internalTestingSection == section && !shouldShowInternalTestingSection {
             return CGFloat.leastNonzeroMagnitude
         } else if debugSectionIndex == section && !shouldShowDebugCell {
             return CGFloat.leastNonzeroMagnitude
@@ -342,6 +355,13 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return super.tableView(tableView, titleForFooterInSection: section)
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == internalTestingSection && !shouldShowInternalTestingSection {
+            return nil
+        }        
+        return super.tableView(tableView, titleForHeaderInSection: section)
     }
 
     @IBAction func onVoiceSearchToggled(_ sender: UISwitch) {
@@ -411,16 +431,7 @@ extension SettingsViewController: Themable {
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
-
-        if #available(iOS 15.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.shadowColor = .clear
-            appearance.backgroundColor = theme.backgroundColor
-
-            navigationController?.navigationBar.standardAppearance = appearance
-            navigationController?.navigationBar.scrollEdgeAppearance = appearance
-        }
-
+        
         UIView.transition(with: view,
                           duration: 0.2,
                           options: .transitionCrossDissolve, animations: {

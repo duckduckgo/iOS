@@ -18,7 +18,7 @@
 //
 
 import Foundation
-import os
+import os.log
 
 struct BlockedReason: Error {
     var description: String {
@@ -54,7 +54,8 @@ class DDGObserverFactory: ObserverFactory {
                 
                 // Check firewall status
                 if let trackerData = trackerData, trackerData.shouldBlock(domain: session.host) {
-                    os_log("[AppTP][BLOCKED] \(session.host) on blocklist")
+                    os_log("[AppTP][BLOCKED] %s on blocklist", log: generalLog,
+                           type: .error, session.host)
                     socket.forceDisconnect(becauseOf: BlockedReason())
                 }
                 

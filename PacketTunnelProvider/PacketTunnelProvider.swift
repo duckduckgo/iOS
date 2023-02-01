@@ -18,7 +18,9 @@
 //
 
 import NetworkExtension
-import os
+import os.log
+
+public let generalLog: OSLog = OSLog(subsystem: Bundle.main.bundleIdentifier ?? "DDG AppTP", category: "DDG AppTP")
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
 
@@ -27,7 +29,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     var proxyServer: GCDHTTPProxyServer!
     
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        os_log("[AppTP] Starting tunnel...")
+        os_log("[AppTP] Starting tunnel...", log: generalLog, type: .debug)
         
         if proxyServer != nil {
             proxyServer.stop()
@@ -47,7 +49,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         proxySettings.exceptionList = []
         
         // Get blocklist
-        os_log("[AppTP] Loading blocklist")
+        os_log("[AppTP] Loading blocklist", log: generalLog, type: .debug)
         let blocked = TrackerDataParser()
         proxySettings.matchDomains = blocked.flatDomainList()
         
@@ -63,7 +65,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 try self.proxyServer.start()
                 completionHandler(nil)
             } catch {
-                print("[ERROR] Error starting proxy server \(error)")
+                os_log("[ERROR] Error starting proxy server %s", log: generalLog,
+                       type: .error, error.localizedDescription)
                 completionHandler(error)
             }
         }

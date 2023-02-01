@@ -10,18 +10,13 @@
 		02025664298818B200E694E7 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02025663298818B100E694E7 /* NetworkExtension.framework */; };
 		0202566C298818B200E694E7 /* PacketTunnelProvider.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02025662298818B100E694E7 /* PacketTunnelProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0202569029881ECA00E694E7 /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = 0202568F29881ECA00E694E7 /* CocoaAsyncSocket */; };
-		02025A8D2988229800E694E7 /* RuleParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C7298820F000E694E7 /* RuleParser.swift */; };
-		02025A8E2988229800E694E7 /* AdapterFactoryParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C8298820F000E694E7 /* AdapterFactoryParser.swift */; };
 		02025A8F2988229800E694E7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259C9298820F000E694E7 /* Configuration.swift */; };
 		02025A902988229800E694E7 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599E298820EF00E694E7 /* HMAC.swift */; };
 		02025A912988229800E694E7 /* MD5Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202599F298820EF00E694E7 /* MD5Hash.swift */; };
 		02025A922988229800E694E7 /* CryptoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A0298820EF00E694E7 /* CryptoHelper.swift */; };
-		02025A932988229800E694E7 /* SodiumStreamCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A1298820EF00E694E7 /* SodiumStreamCrypto.swift */; };
 		02025A942988229800E694E7 /* CryptoEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A2298820EF00E694E7 /* CryptoEnum.swift */; };
 		02025A952988229800E694E7 /* StreamCryptoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A3298820EF00E694E7 /* StreamCryptoProtocol.swift */; };
 		02025A962988229800E694E7 /* CCCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A4298820EF00E694E7 /* CCCrypto.swift */; };
-		02025A972988229800E694E7 /* Libsodium.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020259A5298820EF00E694E7 /* Libsodium.swift */; };
-		02025A982988229800E694E7 /* GeoIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02025903298820ED00E694E7 /* GeoIP.swift */; };
 		02025A992988229800E694E7 /* TCPStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EE298820EC00E694E7 /* TCPStack.swift */; };
 		02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258EF298820EC00E694E7 /* TUNInterface.swift */; };
 		02025A9B2988229800E694E7 /* IPStackProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020258F0298820EC00E694E7 /* IPStackProtocol.swift */; };
@@ -937,7 +932,6 @@
 		020258FB298820EC00E694E7 /* IPPacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPPacket.swift; sourceTree = "<group>"; };
 		020258FE298820ED00E694E7 /* QueueFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueFactory.swift; sourceTree = "<group>"; };
 		02025901298820ED00E694E7 /* Tunnel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tunnel.swift; sourceTree = "<group>"; };
-		02025903298820ED00E694E7 /* GeoIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoIP.swift; sourceTree = "<group>"; };
 		02025904298820ED00E694E7 /* Opt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Opt.swift; sourceTree = "<group>"; };
 		0202597C298820EE00E694E7 /* Buffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Buffer.swift; sourceTree = "<group>"; };
 		0202597D298820EE00E694E7 /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
@@ -973,11 +967,9 @@
 		0202599E298820EF00E694E7 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		0202599F298820EF00E694E7 /* MD5Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MD5Hash.swift; sourceTree = "<group>"; };
 		020259A0298820EF00E694E7 /* CryptoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoHelper.swift; sourceTree = "<group>"; };
-		020259A1298820EF00E694E7 /* SodiumStreamCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SodiumStreamCrypto.swift; sourceTree = "<group>"; };
 		020259A2298820EF00E694E7 /* CryptoEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoEnum.swift; sourceTree = "<group>"; };
 		020259A3298820EF00E694E7 /* StreamCryptoProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamCryptoProtocol.swift; sourceTree = "<group>"; };
 		020259A4298820EF00E694E7 /* CCCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CCCrypto.swift; sourceTree = "<group>"; };
-		020259A5298820EF00E694E7 /* Libsodium.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Libsodium.swift; sourceTree = "<group>"; };
 		020259A8298820F000E694E7 /* HTTPAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPAdapter.swift; sourceTree = "<group>"; };
 		020259A9298820F000E694E7 /* SecureHTTPAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureHTTPAdapter.swift; sourceTree = "<group>"; };
 		020259AA298820F000E694E7 /* SpeedAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeedAdapter.swift; sourceTree = "<group>"; };
@@ -1005,8 +997,6 @@
 		020259C3298820F000E694E7 /* SOCKS5ProxySocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SOCKS5ProxySocket.swift; sourceTree = "<group>"; };
 		020259C4298820F000E694E7 /* SocketProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketProtocol.swift; sourceTree = "<group>"; };
 		020259C5298820F000E694E7 /* GlobalIntializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalIntializer.swift; sourceTree = "<group>"; };
-		020259C7298820F000E694E7 /* RuleParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RuleParser.swift; sourceTree = "<group>"; };
-		020259C8298820F000E694E7 /* AdapterFactoryParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterFactoryParser.swift; sourceTree = "<group>"; };
 		020259C9298820F000E694E7 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		020259CA298820F100E694E7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		020259CC298820F100E694E7 /* ConnectSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectSession.swift; sourceTree = "<group>"; };
@@ -2437,7 +2427,6 @@
 			children = (
 				020259C6298820F000E694E7 /* Config */,
 				0202599D298820EF00E694E7 /* Crypto */,
-				02025902298820ED00E694E7 /* GeoIP */,
 				021D30772989C0C000918636 /* Observer */,
 				020258ED298820EC00E694E7 /* IPStack */,
 				020259CB298820F100E694E7 /* Messages */,
@@ -2508,14 +2497,6 @@
 			path = Tunnel;
 			sourceTree = "<group>";
 		};
-		02025902298820ED00E694E7 /* GeoIP */ = {
-			isa = PBXGroup;
-			children = (
-				02025903298820ED00E694E7 /* GeoIP.swift */,
-			);
-			path = GeoIP;
-			sourceTree = "<group>";
-		};
 		0202597B298820EE00E694E7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -2574,11 +2555,9 @@
 				0202599E298820EF00E694E7 /* HMAC.swift */,
 				0202599F298820EF00E694E7 /* MD5Hash.swift */,
 				020259A0298820EF00E694E7 /* CryptoHelper.swift */,
-				020259A1298820EF00E694E7 /* SodiumStreamCrypto.swift */,
 				020259A2298820EF00E694E7 /* CryptoEnum.swift */,
 				020259A3298820EF00E694E7 /* StreamCryptoProtocol.swift */,
 				020259A4298820EF00E694E7 /* CCCrypto.swift */,
-				020259A5298820EF00E694E7 /* Libsodium.swift */,
 			);
 			path = Crypto;
 			sourceTree = "<group>";
@@ -2651,8 +2630,6 @@
 		020259C6298820F000E694E7 /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				020259C7298820F000E694E7 /* RuleParser.swift */,
-				020259C8298820F000E694E7 /* AdapterFactoryParser.swift */,
 				020259C9298820F000E694E7 /* Configuration.swift */,
 			);
 			path = Config;
@@ -5424,18 +5401,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				02025B0D29884D2C00E694E7 /* AppTrackerData.swift in Sources */,
-				02025A8D2988229800E694E7 /* RuleParser.swift in Sources */,
-				02025A8E2988229800E694E7 /* AdapterFactoryParser.swift in Sources */,
 				02025A8F2988229800E694E7 /* Configuration.swift in Sources */,
 				02025A902988229800E694E7 /* HMAC.swift in Sources */,
 				02025A912988229800E694E7 /* MD5Hash.swift in Sources */,
 				02025A922988229800E694E7 /* CryptoHelper.swift in Sources */,
-				02025A932988229800E694E7 /* SodiumStreamCrypto.swift in Sources */,
 				02025A942988229800E694E7 /* CryptoEnum.swift in Sources */,
 				02025A952988229800E694E7 /* StreamCryptoProtocol.swift in Sources */,
 				02025A962988229800E694E7 /* CCCrypto.swift in Sources */,
-				02025A972988229800E694E7 /* Libsodium.swift in Sources */,
-				02025A982988229800E694E7 /* GeoIP.swift in Sources */,
 				02025A992988229800E694E7 /* TCPStack.swift in Sources */,
 				4BEF656C2989C2FC00B650CB /* TunnelEvent.swift in Sources */,
 				02025A9A2988229800E694E7 /* TUNInterface.swift in Sources */,

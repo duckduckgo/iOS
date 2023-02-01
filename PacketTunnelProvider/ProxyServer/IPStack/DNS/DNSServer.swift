@@ -90,7 +90,6 @@ open class DNSServer: DNSResolverDelegate, IPStackProtocol {
             lookupRemotely(session)
         default:
             return
-            // DDLogError("The rule match result should never be .Pass.")
         }
     }
 
@@ -175,7 +174,6 @@ open class DNSServer: DNSResolverDelegate, IPStackProtocol {
             response.answers.append(DNSResource.ARecord(session.requestMessage.queries[0].name, TTL: UInt32(Opt.DNSFakeIPTTL), address: session.fakeIP!))
             session.expireAt = Date().addingTimeInterval(Double(Opt.DNSFakeIPTTL))
             guard response.buildMessage() else {
-                // DDLogError("Failed to build DNS response.")
                 return
             }
 
@@ -235,14 +233,12 @@ open class DNSServer: DNSResolverDelegate, IPStackProtocol {
 
     open func didReceive(rawResponse: Data) {
         guard let message = DNSMessage(payload: rawResponse) else {
-            // DDLogError("Failed to parse response from remote DNS server.")
             return
         }
 
         queue.async {
             guard let session = self.pendingSessions.removeValue(forKey: message.transactionID) else {
                 // this should not be a problem if there are multiple DNS servers or the DNS server is hijacked.
-                // DDLogVerbose("Do not find the corresponding DNS session for the response.")
                 return
             }
 
@@ -265,7 +261,6 @@ open class DNSServer: DNSResolverDelegate, IPStackProtocol {
                 self.outputSession(session)
             default:
                 return
-                // DDLogError("The rule match result should never be .Pass or .Unknown in IP mode.")
             }
         }
     }

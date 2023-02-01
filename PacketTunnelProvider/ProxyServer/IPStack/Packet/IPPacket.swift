@@ -195,7 +195,6 @@ open class IPPacket {
 
         let vhl = scanner.readByte()!
         guard let v = IPVersion(rawValue: vhl >> 4) else {
-            // DDLogError("Got unknown ip packet version \(vhl >> 4)")
             return nil
         }
         version = v
@@ -208,7 +207,6 @@ open class IPPacket {
         tos = scanner.readByte()!
 
         guard totalLength == scanner.read16()! else {
-            // DDLogError("Packet length mismatches from header.")
             return nil
         }
 
@@ -217,7 +215,6 @@ open class IPPacket {
         TTL = scanner.readByte()!
 
         guard let proto = TransportProtocol(rawValue: scanner.readByte()!) else {
-            // DDLogWarn("Get unsupported packet protocol.")
             return nil
         }
         transportProtocol = proto
@@ -231,7 +228,6 @@ open class IPPacket {
             destinationAddress = IPAddress(ipv4InNetworkOrder: CFSwapInt32(scanner.read32()!))
         default:
             // IPv6 is not supported yet.
-            // DDLogWarn("IPv6 is not supported yet.")
             return nil
         }
 
@@ -242,7 +238,6 @@ open class IPPacket {
             }
             self.protocolParser = parser
         default:
-            // DDLogError("Can not parse packet header of type \(String(describing: transportProtocol)) yet")
             return nil
         }
     }

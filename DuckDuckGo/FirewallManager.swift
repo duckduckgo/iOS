@@ -19,6 +19,8 @@
 
 import Foundation
 import NetworkExtension
+import Core
+import os.log
 
 class FirewallController {
     static let shared = FirewallController()
@@ -35,9 +37,9 @@ class FirewallController {
         let session = URLSession(configuration: config)
         let url = URL(string: "https://bad_url")
         let task = session.dataTask(with: url!) { _, _, _ in
-            print("[AppTP][INFO] Response from dummy URL while activating VPN")
+            os_log("[AppTP][INFO] Response from dummy URL while activating VPN", log: generalLog, type: .debug)
         }
-        print("[AppTP][INFO] Calling dummy URL to force VPN")
+        os_log("[AppTP][INFO] Calling dummy URL to force VPN", log: generalLog, type: .debug)
         task.resume()
     }
     
@@ -55,7 +57,8 @@ class FirewallController {
             let managers = try await NETunnelProviderManager.loadAllFromPreferences()
             if let manager = managers.first {
                 if self.manager == manager {
-                    print("[AppTP][INFO] Already have a reference to this manager, not replacing it.")
+                    os_log("[AppTP][INFO] Already have a reference to this manager, not replacing it.",
+                           log: generalLog, type: .debug)
                     return
                 }
                 
@@ -63,7 +66,7 @@ class FirewallController {
                 self.manager = manager
             }
         } catch {
-            print("[AppTP][ERROR] Could not load managers")
+            os_log("[AppTP][ERROR] Could not load managers", log: generalLog, type: .error)
         }
     }
     
@@ -92,7 +95,8 @@ class FirewallController {
             
         } catch {
             if let error = error as? NEVPNError {
-                print("[AppTP][ERROR] Error setting VPN enabled to \(enabled) \(error)")
+                os_log("[AppTP][ERROR] Error setting VPN enabled to %s %s",
+                       log: generalLog, type: .debug, String(enabled), error.localizedDescription)
                 throw error
             }
         }
@@ -101,18 +105,19 @@ class FirewallController {
         guard enabled else { return }
         try await withCheckedThrowingContinuation { continuation in
             Task { @MainActor in
-                print("[AppTP][INFO] Starting VPN...")
+                os_log("[AppTP][INFO] Starting VPN...", log: generalLog, type: .debug)
                 do {
                     try manager?.connection.startVPNTunnel()
                     fireDummyRequest()
-                    print("[AppTP][INFO] Refreshing manager")
+                    os_log("[AppTP][INFO] Refreshing manager", log: generalLog, type: .debug)
                     await refreshManager()
                         
-                    print("[AppTP][OK] Refreshed manager")
+                    os_log("[AppTP][OK] Refreshed manager", log: generalLog, type: .debug)
                     continuation.resume()
                     
                 } catch {
-                    print("[AppTP][ERROR] Error starting VPN after saving prefs: \(error)")
+                    os_log("[AppTP][ERROR] Error starting VPN after saving prefs: %s",
+                           log: generalLog, type: .error, error.localizedDescription)
                     continuation.resume(throwing: error)
                 }
             }

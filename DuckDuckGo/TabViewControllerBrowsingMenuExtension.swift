@@ -23,6 +23,7 @@ import BrowserServicesKit
 import Bookmarks
 import simd
 import WidgetKit
+import os.log
 
 // swiftlint:disable file_length
 extension TabViewController {
@@ -72,31 +73,7 @@ extension TabViewController {
         let linkEntries = buildLinkEntries(with: bookmarksInterface)
         entries.append(contentsOf: linkEntries)
         
-        if FirewallController.shared.status() == .connected {
-            entries.append(BrowsingMenuEntry.regular(name: "Disable AppTP",
-                                                     image: UIImage(named: "MenuRemoveFireproof")!,
-                                                     action: {
-                Task {
-                    do {
-                        try await FirewallController.shared.setState(to: false)
-                    } catch {
-                        
-                    }
-                }
-            }))
-        } else {
-            entries.append(BrowsingMenuEntry.regular(name: "Enable AppTP",
-                                                     image: UIImage(named: "MenuFireproof")!,
-                                                     action: {
-                Task {
-                    do {
-                        try await FirewallController.shared.setState(to: true)
-                    } catch {
-                        
-                    }
-                }
-            }))
-        }
+        entries.append(buildAppTPEntry())
             
         if let domain = self.privacyInfo?.domain {
             entries.append(self.buildToggleProtectionEntry(forDomain: domain))
@@ -132,6 +109,36 @@ extension TabViewController {
         }))
 
         return entries
+    }
+    
+    private func buildAppTPEntry() -> BrowsingMenuEntry {
+        if FirewallController.shared.status() == .connected {
+            return BrowsingMenuEntry.regular(name: "Disable AppTP",
+                                                     image: UIImage(named: "MenuRemoveFireproof")!,
+                                                     action: {
+                Task {
+                    do {
+                        try await FirewallController.shared.setState(to: false)
+                    } catch {
+                        os_log("[AppTP][Error] Could not disable AppTP: %s", log: generalLog,
+                               type: .error, error.localizedDescription)
+                    }
+                }
+            })
+        } else {
+            return BrowsingMenuEntry.regular(name: "Enable AppTP",
+                                                     image: UIImage(named: "MenuFireproof")!,
+                                                     action: {
+                Task {
+                    do {
+                        try await FirewallController.shared.setState(to: true)
+                    } catch {
+                        os_log("[AppTP][Error] Could not enable AppTP: %s", log: generalLog,
+                               type: .error, error.localizedDescription)
+                    }
+                }
+            })
+        }
     }
 
     private func buildLinkEntries(with bookmarksInterface: MenuBookmarksInteracting) -> [BrowsingMenuEntry] {

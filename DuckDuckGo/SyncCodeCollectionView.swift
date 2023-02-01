@@ -116,7 +116,6 @@ struct SyncCodeCollectionView: View {
             }
             .frame(height: 40)
             .foregroundColor(.primary)
-            .frame(maxWidth: 400)
         }
 
     }
@@ -153,12 +152,12 @@ struct SyncCodeCollectionView: View {
                     Rectangle() // Also acts as the blur for the camera
                         .fill(.clear)
                         .frame(height: g.safeAreaInsets.top)
-                        .modifier(CameraMaskModifier())
+                        .regularMaterialBackground()
 
                     ZStack {
                         cameraViewPort()
                             .frame(width: g.size.width, height: g.size.width)
-                            .frame(maxHeight: g.size.height - 300)
+                            .frame(maxHeight: g.size.height - SyncUIConstants.maxCameraHeight)
                         cameraPermissionDenied()
                         cameraUnavailable()
                     }
@@ -166,7 +165,8 @@ struct SyncCodeCollectionView: View {
                     ZStack {
                         Rectangle() // Also acts as the blur for the camera
                             .fill(.clear)
-                            .modifier(CameraMaskModifier())
+                            .regularMaterialBackground()
+
 
                         VStack {
                             instructions()
@@ -177,8 +177,7 @@ struct SyncCodeCollectionView: View {
                             .ignoresSafeArea()
                             .hideScrollContentBackground()
                             .disableScrolling()
-                            .frame(maxWidth: 400)
-                        }
+                        }.frame(maxWidth: SyncUIConstants.maxWidth)
                     }
                 }
                 .padding(.horizontal, 0)
@@ -195,7 +194,7 @@ struct SyncCodeCollectionView: View {
     }
 }
 
-struct RoundedCorner: Shape {
+private struct RoundedCorner: Shape {
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -211,18 +210,6 @@ struct RoundedCorner: Shape {
         path.addLine(to: CGPoint(x: c, y: 0))
 
         return path
-    }
-
-}
-
-struct CameraMaskModifier: ViewModifier {
-
-    func body(content: Content) -> some View {
-        if #available(iOS 15.0, *) {
-            content.background(.regularMaterial)
-        } else {
-            content.background(Rectangle().foregroundColor(.black.opacity(0.9)))
-        }
     }
 
 }

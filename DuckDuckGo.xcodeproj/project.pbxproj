@@ -236,6 +236,7 @@
 		853A717820F645FB00FE60BC /* PixelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853A717720F645FB00FE60BC /* PixelTests.swift */; };
 		853B670F2986C6A50013DF07 /* ShowConnectModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853B670E2986C6A50013DF07 /* ShowConnectModeView.swift */; };
 		853B67112986CEDF0013DF07 /* SyncDeviceConnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853B67102986CEDF0013DF07 /* SyncDeviceConnectedView.swift */; };
+		853B6713298A87120013DF07 /* SyncUIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853B6712298A87120013DF07 /* SyncUIConstants.swift */; };
 		853C5F5B21BFF0AE001F7A05 /* HomeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */; };
 		853C5F6121C277C7001F7A05 /* global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853C5F6021C277C7001F7A05 /* global.swift */; };
 		8540BBA22440857A00017FE4 /* PreserveLoginsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */; };
@@ -1047,6 +1048,7 @@
 		853A717720F645FB00FE60BC /* PixelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTests.swift; sourceTree = "<group>"; };
 		853B670E2986C6A50013DF07 /* ShowConnectModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowConnectModeView.swift; sourceTree = "<group>"; };
 		853B67102986CEDF0013DF07 /* SyncDeviceConnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDeviceConnectedView.swift; sourceTree = "<group>"; };
+		853B6712298A87120013DF07 /* SyncUIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncUIConstants.swift; sourceTree = "<group>"; };
 		853C5F5A21BFF0AE001F7A05 /* HomeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionView.swift; sourceTree = "<group>"; };
 		853C5F6021C277C7001F7A05 /* global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = global.swift; sourceTree = "<group>"; };
 		8540BBA12440857A00017FE4 /* PreserveLoginsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreserveLoginsWorker.swift; sourceTree = "<group>"; };
@@ -3134,6 +3136,7 @@
 				85DD4430297EA400005CC388 /* SyncQRCodeView.swift */,
 				85F98F95296F480A00742F4A /* SyncSetupView.swift */,
 				85DD442E297ADCE6005CC388 /* SyncViewExtensions.swift */,
+				853B6712298A87120013DF07 /* SyncUIConstants.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -5249,6 +5252,7 @@
 				F17922E21E71CD67006E3D97 /* NoSuggestionsTableViewCell.swift in Sources */,
 				985AAE4524899369007A43EC /* HomeScreenTransition.swift in Sources */,
 				85E58C2C28FDA94F006A801A /* FavoritesViewController.swift in Sources */,
+				853B6713298A87120013DF07 /* SyncUIConstants.swift in Sources */,
 				1E8AD1CF27C000A000ABA377 /* CompleteDownloadRow.swift in Sources */,
 				98D98A8F25ED952F00D8E3DF /* BrowsingMenuButton.swift in Sources */,
 				9865DFF922A8220D00D27829 /* FavoritesOverlay.swift in Sources */,

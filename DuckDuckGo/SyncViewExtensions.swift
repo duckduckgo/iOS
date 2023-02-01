@@ -19,6 +19,7 @@
 
 import SwiftUI
 
+/// These extension are a sort of poly-fill for functionality not available in iOS 14/15
 extension View {
 
     @ViewBuilder
@@ -36,6 +37,15 @@ extension View {
             self.scrollDisabled(true)
         } else {
             self
+        }
+    }
+
+    @ViewBuilder
+    func regularMaterialBackground() -> some View {
+        if #available(iOS 15.0, *) {
+            self.background(.regularMaterial)
+        } else {
+            self.background(Rectangle().foregroundColor(.black.opacity(0.9)))
         }
     }
     

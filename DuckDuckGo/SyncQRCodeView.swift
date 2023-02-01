@@ -31,14 +31,11 @@ struct SyncQRCodeView: View {
     }
 
     @ViewBuilder
-    func qrCodeView() -> some View {
+    func qrCodeSection() -> some View {
         if let code = model.code {
-            VStack {
-                Spacer()
-
+            VStack(spacing: 20) {
                 QRCode(string: code)
-
-                Spacer()
+                    .padding()
 
                 Button {
                     model.share()
@@ -67,25 +64,26 @@ struct SyncQRCodeView: View {
     }
 
     var body: some View {
-        GeometryReader { g in
-            VStack {
+        ZStack(alignment: .top) {
+            VStack(spacing: 20) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 8)
-                        .foregroundColor(.white.opacity(0.09))
-
                     progressView()
-                    qrCodeView()
-
+                    qrCodeSection()
                 }
+                .frame(maxWidth: .infinity)
                 .padding()
-                .frame(width: g.size.width, height: min(g.size.width, 400))
+                .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.09)))
 
                 instructions()
 
+                Spacer()
+
             }
-            .navigationTitle("QR Code")
-            .modifier(SyncBackButtonModifier())
+            .padding(.horizontal, 0)
+            .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
         }
+        .navigationTitle("QR Code")
+        .modifier(SyncBackButtonModifier())
     }
 
 }

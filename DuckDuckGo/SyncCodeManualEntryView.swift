@@ -29,94 +29,80 @@ struct SyncCodeManualEntryView: View {
     @ViewBuilder
     func codeEntryField() -> some View {
         ZStack {
-
-
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(.white.opacity(0.09))
-
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(.white.opacity(0.24))
-
-                ZStack(alignment: .topLeading) {
+            ZStack(alignment: .topLeading) {
+                Group {
                     CodeEntryView(focused: $isEditingCode, text: $model.manuallyEnteredCode)
 
                     if !isEditingCode && model.manuallyEnteredCode == nil {
                         Text("Recovery Code")
                             .foregroundColor(.primary.opacity(0.36))
                     }
-                }
-                .padding()
+                }.padding(4)
             }
-            .padding(.horizontal)
+            .background(
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8)
+                        .foregroundColor(.white.opacity(0.09))
 
-        }
-        .frame(width: 310, height: 150)
-        .padding()
-
-    }
-
-    @ViewBuilder
-    func codeEntrySection(size: CGFloat) -> some View {
-        ZStack {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(.white.opacity(0.09))
-
-                VStack {
-
-                    Spacer()
-
-                    codeEntryField()
-
-                    Spacer()
-
-                    Button(action: model.pasteCode) {
-                        Label("Paste", image: "SyncPaste")
-                    }
-                    .buttonStyle(SyncLabelButtonStyle())
-                    .padding(.bottom, 20)
-
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(.white.opacity(0.24))
                 }
-            }.padding(.horizontal)
+            )
         }
-        .frame(width: size, height: size)
+        .padding(.horizontal)
+        .frame(height: 150)
+        .padding()
+
     }
 
     @ViewBuilder
-    func instructionsAndButton() -> some View {
-        VStack {
-            Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
-                .multilineTextAlignment(.center)
+    func codeEntrySection() -> some View {
+        VStack(spacing: 20) {
+            codeEntryField()
+                .padding(.top, 20)
 
-            Spacer()
-
-            Button("Submit", action: model.submitAction)
-                .buttonStyle(PrimaryButtonStyle(disabled: !model.canSubmitManualCode))
-                .disabled(!model.canSubmitManualCode)
+            Button(action: model.pasteCode) {
+                Label("Paste", image: "SyncPaste")
+            }
+            .buttonStyle(SyncLabelButtonStyle())
+            .padding(.bottom, 20)
 
         }
-        .padding()
-        .padding(.top, 32)
-        .ignoresSafeArea(.keyboard)
+        .background(RoundedRectangle(cornerRadius: 8).foregroundColor(.white.opacity(0.09)))
+    }
+
+    @ViewBuilder
+    func instructions() -> some View {
+        Text("Enter the code on your recovery PDF, or connected device, above to recover your synced data.")
+            .lineLimit(nil)
+            .multilineTextAlignment(.center)
+    }
+
+    @ViewBuilder
+    func button() -> some View {
+        Button("Submit", action: model.submitAction)
+            .buttonStyle(PrimaryButtonStyle(disabled: !model.canSubmitManualCode))
+            .disabled(!model.canSubmitManualCode)
+            .padding(.bottom, 20)
     }
 
     var body: some View {
-        GeometryReader { g in
-            ZStack {
-                ScrollView {
-                    VStack {
-                        codeEntrySection(size: min(g.size.width, 400))
-                        instructionsAndButton()
-                    }
-                    .frame(height: g.size.height)
-                    .ignoresSafeArea(.keyboard)
-                    .navigationTitle("Manually Enter Code")
-                }
+        ZStack(alignment: .top) {
+            VStack(spacing: 20) {
+                codeEntrySection()
+
+                instructions()
+
+                Spacer()
+
+                button()
             }
-            .background(Color.white.opacity(0.001))
-            .modifier(SyncBackButtonModifier())
+            .padding(.horizontal, 0)
+            .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
         }
+        .navigationTitle("Manually Enter Code")
+        .modifier(SyncBackButtonModifier())
+
     }
 
 }
@@ -133,8 +119,10 @@ private struct CodeEntryView: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.backgroundColor = .clear
-        textView.font = .monospacedSystemFont(ofSize: 14, weight: .regular)
+        textView.font = .monospacedSystemFont(ofSize: 18, weight: .regular)
+        textView.adjustsFontForContentSizeCategory = true
         textView.delegate = context.coordinator
+        print("*** number of glyphs", textView.layoutManager.numberOfGlyphs)
         return textView
     }
 

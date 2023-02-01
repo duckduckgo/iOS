@@ -26,7 +26,9 @@ struct SyncQRCodeView: View {
     @ViewBuilder
     func progressView() -> some View {
         if model.code == nil {
-            SwiftUI.ProgressView()
+            ZStack {
+                SwiftUI.ProgressView()
+            }.frame(width: 200, height: 200)
         }
     }
 
@@ -58,7 +60,6 @@ struct SyncQRCodeView: View {
             Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan the image above to connect instantly.")
                 .lineLimit(nil)
                 .multilineTextAlignment(.center)
-                .padding()
         }
 
     }
@@ -79,7 +80,7 @@ struct SyncQRCodeView: View {
                 Spacer()
 
             }
-            .padding(.horizontal, 0)
+            .padding(.horizontal, 20)
             .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
         }
         .navigationTitle("QR Code")

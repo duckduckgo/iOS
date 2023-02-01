@@ -97,12 +97,12 @@ struct SyncCodeManualEntryView: View {
 
                 button()
             }
-            .padding(.horizontal, 0)
             .frame(maxWidth: SyncUIConstants.maxWidth, alignment: .center)
+            .padding(.horizontal, 20)
         }
         .navigationTitle("Manually Enter Code")
         .modifier(SyncBackButtonModifier())
-
+        .ignoresSafeArea(.keyboard)
     }
 
 }
@@ -122,7 +122,6 @@ private struct CodeEntryView: UIViewRepresentable {
         textView.font = .monospacedSystemFont(ofSize: 18, weight: .regular)
         textView.adjustsFontForContentSizeCategory = true
         textView.delegate = context.coordinator
-        print("*** number of glyphs", textView.layoutManager.numberOfGlyphs)
         return textView
     }
 
@@ -147,6 +146,14 @@ private struct CodeEntryView: UIViewRepresentable {
         func textViewDidEndEditing(_ textView: UITextView) {
             print(#function)
             view.focused = false
+        }
+
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            guard text.rangeOfCharacter(from: CharacterSet.newlines) == nil else {
+                textView.resignFirstResponder() // uncomment this to close the keyboard when return key is pressed
+                return false
+            }
+            return true
         }
 
         func textViewDidChange(_ textView: UITextView) {

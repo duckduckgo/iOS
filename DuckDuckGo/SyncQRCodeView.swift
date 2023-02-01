@@ -40,15 +40,12 @@ struct SyncQRCodeView: View {
                     .padding()
 
                 Button {
-                    model.share()
+                    model.copy()
                 } label: {
-                    Label("Share Code", image: "SyncShare")
+                    Label("Copy Code", image: "SyncCopy")
                 }
                 .buttonStyle(SyncLabelButtonStyle())
                 .padding(.bottom, 20)
-                .sheet(isPresented: $model.shareSheetVisible) {
-                    ShareSheetView(activityItems: [ model.code ?? "" ])
-                }
             }
         }
     }
@@ -129,18 +126,4 @@ private extension CIFilter {
         ])!
     }
 
-}
-
-private struct ShareSheetView: UIViewControllerRepresentable {
-
-    var activityItems: [Any]
-
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        return UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-    }
-
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
-        let size = uiViewController.preferredContentSize
-        uiViewController.preferredContentSize = CGSize(width: size.width, height: size.height / 2)
-    }
 }

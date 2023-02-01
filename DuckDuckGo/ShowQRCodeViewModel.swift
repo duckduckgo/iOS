@@ -18,14 +18,16 @@
 //
 
 import Foundation
+import UIKit
 
 class ShowQRCodeViewModel: ObservableObject {
 
     @Published var code: String?
-    @Published var shareSheetVisible = false
 
-    func share() {
-        shareSheetVisible = true
+    func copy() {
+        guard let code = code else { return }
+        // When this code is real we probably won't have to do this base64 encoding here
+        UIPasteboard.general.string = code.data(using: .ascii)!.base64EncodedString()
     }
 
 }

@@ -51,7 +51,7 @@ struct SyncCodeManualEntryView: View {
         }
         .padding(.horizontal)
         .frame(height: 150)
-        .padding()
+        .padding(4)
 
     }
 

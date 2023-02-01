@@ -32,6 +32,7 @@ public class Authenticator {
         return canAuthenticate
     }
 
+    @available(*, deprecated, message: "Use async/await")
     public func authenticate(reply: @escaping (Bool, Error?) -> Void) {
         let context = LAContext()
         let reason = UserText.appUnlock
@@ -41,4 +42,12 @@ public class Authenticator {
             }
         }
     }
+
+    public func authenticate(reason: String) async -> Bool {
+        let context = LAContext()
+        let success = try? await context.evaluatePolicy(policy, localizedReason: reason)
+        #warning("Pixel for error?")
+        return success ?? false
+    }
+
 }

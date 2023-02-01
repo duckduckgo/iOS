@@ -23,7 +23,7 @@ protocol SyncCodeCollectionViewModelDelegate: AnyObject {
 
     var pasteboardString: String? { get }
 
-    func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String
+    func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String?
     func handleCode(_ model: SyncCodeCollectionViewModel, code: String)
     func cancelled(_ model: SyncCodeCollectionViewModel)
     func gotoSettings(_ model: SyncCodeCollectionViewModel)
@@ -31,6 +31,10 @@ protocol SyncCodeCollectionViewModelDelegate: AnyObject {
 }
 
 class SyncCodeCollectionViewModel: ObservableObject {
+
+    enum StartConnectModeResult {
+        case authorised(code: String), denied, failed
+    }
 
     enum VideoPermission {
         case unknown, authorised, denied

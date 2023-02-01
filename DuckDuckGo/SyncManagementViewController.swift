@@ -30,6 +30,8 @@ class SyncManagementViewController: HostingController<SyncManagementView> {
 
     let syncService: SyncService = FakeSyncService()
 
+    lazy var authenticator = Authenticator()
+
     convenience init() {
         self.init(rootView: SyncManagementView(model: SyncManagementViewModel()))
 
@@ -157,8 +159,14 @@ extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
         Pasteboard.general.string
     }
 
-    func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String {
-        return await syncService.retrieveConnectCode() ?? ""
+    func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String? {
+        if await authenticator.authenticate(reason: "Generate QRCode to connect to other devices") {
+            return await syncService.retrieveConnectCode()
+        }
+        defer {
+            print(#function, "handle cancel authentication")
+        }
+        return nil
     }
 
     func handleCode(_ model: SyncCodeCollectionViewModel, code: String) {

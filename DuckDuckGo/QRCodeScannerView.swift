@@ -22,7 +22,7 @@ import AVFoundation
 
 struct QRCodeScannerView: UIViewRepresentable {
 
-    var onQRCodeScanned: (String) -> Void
+    var onQRCodeScanned: (String) -> Bool
     var onCameraUnavailable: () -> Void
 
     func makeCoordinator() -> Coordinator {
@@ -91,18 +91,20 @@ struct QRCodeScannerView: UIViewRepresentable {
             }
         }
 
+        // This gets get called on the main queue
         func metadataOutput(_ output: AVCaptureMetadataOutput,
                             didOutput metadataObjects: [AVMetadataObject],
                             from connection: AVCaptureConnection) {
+
+            assert(Thread.isMainThread)
 
             guard metadataObjects.count == 1,
                   let codeObject = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
                   let code = codeObject.stringValue else { return }
 
-            // let rect = previewLayer.layerRectConverted(fromMetadataOutputRect: codeObject.bounds)
-            // print(#function, rect)
-
-            cameraView.onQRCodeScanned(code)
+            if cameraView.onQRCodeScanned(code) {
+                stop()
+            }
         }
 
         deinit {

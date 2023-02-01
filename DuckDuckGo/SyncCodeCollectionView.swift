@@ -51,6 +51,8 @@ struct SyncCodeCollectionView: View {
     func cameraPermissionDenied() -> some View {
         if model.videoPermission == .denied {
             VStack(spacing: 0) {
+                HStack { Spacer() }
+
                 Image("SyncCameraPermission")
                     .padding(.top, 40)
                     .padding(.bottom, 20)
@@ -60,6 +62,8 @@ struct SyncCodeCollectionView: View {
                     .padding(.bottom, 8)
 
                 Text("Please go to your device's settings and grant permission for this app to access your camera.")
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.center)
                     .font(.system(size: 16, weight: .regular))
 
                 Spacer()
@@ -75,14 +79,35 @@ struct SyncCodeCollectionView: View {
                 .buttonStyle(SyncLabelButtonStyle())
                 .padding(.bottom, 40)
             }
+            .padding(.horizontal, SyncUIConstants.hPad)
         }
     }
 
     @ViewBuilder
     func cameraUnavailable() -> some View {
         if model.videoPermission == .authorised && !model.showCamera {
-            Text("Camera unavailable")
-                .padding()
+            VStack(spacing: 0) {
+
+                Image("SyncCameraUnavailable")
+                    .padding(.top, 40)
+                    .padding(.bottom, 20)
+                    .onTapGesture {
+                        #warning("remove this before going live")
+                        model.codeScanned("camera unavailable")
+                    }
+
+                Text("Camera is Unavailable")
+                    .font(.system(size: 20, weight: .bold))
+                    .padding(.bottom, 8)
+
+                Text("There may be a problem with your device's camera.")
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 16, weight: .regular))
+
+                Spacer()
+            }
+            .padding(.horizontal, SyncUIConstants.hPad)
         }
     }
 
@@ -90,8 +115,10 @@ struct SyncCodeCollectionView: View {
     func instructions() -> some View {
 
         Text("Go to Settings > Sync in the **DuckDuckGo App** on a different device and scan supplied code to connect instantly.")
+            .lineLimit(nil)
             .multilineTextAlignment(.center)
-            .padding()
+            .font(.system(size: 16, weight: .regular))
+            .padding(.vertical)
 
     }
 
@@ -158,8 +185,12 @@ struct SyncCodeCollectionView: View {
                         cameraViewPort()
                             .frame(width: g.size.width, height: g.size.width)
                             .frame(maxHeight: g.size.height - SyncUIConstants.maxCameraHeight)
-                        cameraPermissionDenied()
-                        cameraUnavailable()
+
+                        Group {
+                            cameraPermissionDenied()
+                            cameraUnavailable()
+                        }
+                        .padding(.horizontal, 0)
                     }
 
                     ZStack {
@@ -167,9 +198,9 @@ struct SyncCodeCollectionView: View {
                             .fill(.clear)
                             .regularMaterialBackground()
 
-
                         VStack {
                             instructions()
+                                .padding(.horizontal, SyncUIConstants.hPad)
 
                             List {
                                 buttons()
@@ -177,10 +208,10 @@ struct SyncCodeCollectionView: View {
                             .ignoresSafeArea()
                             .hideScrollContentBackground()
                             .disableScrolling()
-                        }.frame(maxWidth: SyncUIConstants.maxWidth)
+                        }
+                        .frame(maxWidth: SyncUIConstants.maxWidth)
                     }
                 }
-                .padding(.horizontal, 0)
                 .ignoresSafeArea()
             }
             .navigationTitle("Scan QR Code")

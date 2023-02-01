@@ -184,9 +184,10 @@ extension SyncManagementViewController: SyncCodeCollectionViewModelDelegate {
         return nil
     }
 
-    func handleCode(_ model: SyncCodeCollectionViewModel, code: String) {
+    func handleCode(_ model: SyncCodeCollectionViewModel, code: String) -> Bool {
         navigationController?.topViewController?.dismiss(animated: true)
         showDeviceConnected()
+        return true
     }
 
     func cancelled(_ model: SyncCodeCollectionViewModel) {

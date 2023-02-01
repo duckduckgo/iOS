@@ -24,7 +24,9 @@ protocol SyncCodeCollectionViewModelDelegate: AnyObject {
     var pasteboardString: String? { get }
 
     func startConnectMode(_ model: SyncCodeCollectionViewModel) async -> String?
-    func handleCode(_ model: SyncCodeCollectionViewModel, code: String)
+
+    /// Returns true if the code is valid format and should stop scanning
+    func handleCode(_ model: SyncCodeCollectionViewModel, code: String) -> Bool
     func cancelled(_ model: SyncCodeCollectionViewModel)
     func gotoSettings(_ model: SyncCodeCollectionViewModel)
 
@@ -63,9 +65,9 @@ class SyncCodeCollectionViewModel: ObservableObject {
         self.canShowQRCode = canShowQRCode
     }
 
-    func codeScanned(_ code: String) {
+    func codeScanned(_ code: String) -> Bool {
         print(#function, code)
-        delegate?.handleCode(self, code: code)
+        return delegate?.handleCode(self, code: code) ?? false
     }
 
     func cameraUnavailable() {

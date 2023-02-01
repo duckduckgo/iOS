@@ -23,5 +23,6 @@ struct SyncUIConstants {
 
     static let maxWidth = 640.0
     static let maxCameraHeight = 300.0
+    static let hPad = 20.0
 
 }

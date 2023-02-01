@@ -76,13 +76,25 @@ extension TabViewController {
             entries.append(BrowsingMenuEntry.regular(name: "Disable AppTP",
                                                      image: UIImage(named: "MenuRemoveFireproof")!,
                                                      action: {
-                FirewallController.shared.setState(to: false)
+                Task {
+                    do {
+                        try await FirewallController.shared.setState(to: false)
+                    } catch {
+                        
+                    }
+                }
             }))
         } else {
             entries.append(BrowsingMenuEntry.regular(name: "Enable AppTP",
                                                      image: UIImage(named: "MenuFireproof")!,
                                                      action: {
-                FirewallController.shared.setState(to: true)
+                Task {
+                    do {
+                        try await FirewallController.shared.setState(to: true)
+                    } catch {
+                        
+                    }
+                }
             }))
         }
             

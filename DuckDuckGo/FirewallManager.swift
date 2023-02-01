@@ -49,79 +49,71 @@ class FirewallController {
         return manager.connection.status
     }
     
-    func refreshManager(completion: @escaping (_ error: Error?) -> Void = { _ in }) {
+    func refreshManager() async {
         // get the reference to the latest manager in Settings
-        NETunnelProviderManager.loadAllFromPreferences { (managers, error) -> Void in
-            if let managers = managers, managers.count > 0 {
+        do {
+            let managers = try await NETunnelProviderManager.loadAllFromPreferences()
+            if managers.count > 0 {
                 if self.manager == managers[0] {
                     print("[AppTP][INFO] Already have a reference to this manager, not replacing it.")
-                    completion(nil)
                     return
                 }
+                
                 self.manager = nil
                 self.manager = managers[0]
             }
-            completion(error)
+        } catch {
+            print("[AppTP][ERROR] Could not load managers")
         }
     }
     
-    func setState(to enabled: Bool, completion: @escaping (_ error: Error?) -> Void = { _ in }) {
-        NETunnelProviderManager.loadAllFromPreferences { [weak self] (managers, error) in
-            self?.manager = nil
-            if let managers = managers, managers.count > 0 {
-                self?.manager = managers.first
-            } else {
-                // create manager instance
-                self?.manager = NETunnelProviderManager()
-                self?.manager?.protocolConfiguration = NETunnelProviderProtocol()
-            }
-            self?.manager?.localizedDescription = "DuckDuckGo AppTP"
-            self?.manager?.protocolConfiguration?.serverAddress = "DuckDuckGo AppTP"
-            self?.manager?.isEnabled = enabled
-            self?.manager?.isOnDemandEnabled = enabled
+    func setState(to enabled: Bool) async throws {
+        let managers = try await NETunnelProviderManager.loadAllFromPreferences()
+        manager = nil
+        if managers.count > 0 {
+            manager = managers.first
+        } else {
+            // create manager instance
+            manager = NETunnelProviderManager()
+            manager?.protocolConfiguration = NETunnelProviderProtocol()
+        }
+        manager?.localizedDescription = "DuckDuckGo AppTP"
+        manager?.protocolConfiguration?.serverAddress = "DuckDuckGo AppTP"
+        manager?.isEnabled = enabled
+        manager?.isOnDemandEnabled = enabled
+        
+        let connectRule = NEOnDemandRuleConnect()
+        connectRule.interfaceTypeMatch = .any
+        manager?.onDemandRules = [connectRule]
+        
+        do {
+            try await manager?.saveToPreferences()
+            try await manager?.loadFromPreferences() // Load again to avoid NEVPNError Code=1
             
-            let connectRule = NEOnDemandRuleConnect()
-            connectRule.interfaceTypeMatch = .any
-            self?.manager?.onDemandRules = [connectRule]
-            self?.manager?.saveToPreferences() { error in
-                if let error = error as? NEVPNError {
-                    print("[AppTP][ERROR] Error setting VPN enabled to \(enabled) \(error)")
-                    completion(nil)
-                }
-                self?.manager?.loadFromPreferences() { error in
-                    if let error = error as? NEVPNError {
-                        print("[AppTP][ERROR] Error setting VPN enabled to \(enabled) \(error)")
-                        completion(nil)
-                    } else if let error = error {
-                        completion(error)
-                    } else {
-                        // Manually activate the tunnel
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            if enabled {
-                                print("[AppTP][INFO] Starting VPN...")
-                                do {
-                                    try self?.manager?.connection.startVPNTunnel()
-                                    self?.fireDummyRequest()
-                                    print("[AppTP][INFO] Refreshing manager")
-                                    self?.refreshManager() { error in
-                                        if let error = error {
-                                            print("[AppTP][ERROR] Error while refreshing manager: \(error)")
-                                        } else {
-                                            print("[AppTP][OK] Refreshed manager")
-                                        }
-                                        completion(nil)
-                                    }
-                                    
-                                } catch {
-                                    print("[AppTP][ERROR] Error starting VPN after saving prefs: \(error)")
-                                    completion(error)
-                                }
-                            } else {
-                                print("[AppTP][OK] VPN disabled no need to continue.")
-                                completion(nil)
-                            }
-                        }
-                    }
+        } catch {
+            if let error = error as? NEVPNError {
+                print("[AppTP][ERROR] Error setting VPN enabled to \(enabled) \(error)")
+                throw error
+            }
+        }
+        
+        // Manually activate the tunnel
+        guard enabled else { return }
+        try await withCheckedThrowingContinuation { continuation in
+            Task { @MainActor in
+                print("[AppTP][INFO] Starting VPN...")
+                do {
+                    try manager?.connection.startVPNTunnel()
+                    fireDummyRequest()
+                    print("[AppTP][INFO] Refreshing manager")
+                    await refreshManager()
+                        
+                    print("[AppTP][OK] Refreshed manager")
+                    continuation.resume()
+                    
+                } catch {
+                    print("[AppTP][ERROR] Error starting VPN after saving prefs: \(error)")
+                    continuation.resume(throwing: error)
                 }
             }
         }

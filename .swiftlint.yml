@@ -55,7 +55,7 @@ type_name:
 file_header:
   required_pattern: |
                     \/\/
-                    \/\/  .*?\.swift
+                    \/\/  SWIFTLINT_CURRENT_FILENAME
                     \/\/  .*?
                     \/\/
                     \/\/  Copyright © \d{4} DuckDuckGo\. All rights reserved\.

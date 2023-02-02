@@ -360,7 +360,7 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == internalTestingSection && !shouldShowInternalTestingSection {
             return nil
-        }        
+        }
         return super.tableView(tableView, titleForHeaderInSection: section)
     }
 
@@ -431,7 +431,7 @@ extension SettingsViewController: Themable {
         
         tableView.backgroundColor = theme.backgroundColor
         tableView.separatorColor = theme.tableCellSeparatorColor
-        
+
         UIView.transition(with: view,
                           duration: 0.2,
                           options: .transitionCrossDissolve, animations: {

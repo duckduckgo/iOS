@@ -22,9 +22,11 @@ import SwiftUI
 public struct PrimaryButtonStyle: ButtonStyle {
 
     let disabled: Bool
+    let compact: Bool
 
-    public init(disabled: Bool = false) {
+    public init(disabled: Bool = false, compact: Bool = false) {
         self.disabled = disabled
+        self.compact = compact
     }
     
     public func makeBody(configuration: Configuration) -> some View {
@@ -36,7 +38,8 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .font(Font(UIFont.boldAppFont(ofSize: Consts.fontSize)))
             .foregroundColor(configuration.isPressed ? .white.opacity(Consts.pressedOpacity) : .white.opacity(1))
             .padding()
-            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
+            .frame(minWidth: 0, maxWidth: .infinity, maxHeight: compact ? Consts.height - 10
+                   : Consts.height)
             .background(backgroundColor)
             .cornerRadius(Consts.cornerRadius)
     }
@@ -60,7 +63,6 @@ public struct SecondaryButtonStyle: ButtonStyle {
             .foregroundColor(configuration.isPressed ? foregroundColor.opacity(Consts.pressedOpacity) : foregroundColor.opacity(1))
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, maxHeight: Consts.height)
-            .background(configuration.isPressed ? backgoundColor.opacity(Consts.pressedOpacity) : backgoundColor.opacity(1))
             .cornerRadius(Consts.cornerRadius)
     }
 }

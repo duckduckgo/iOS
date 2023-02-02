@@ -21,45 +21,41 @@ import Foundation
 
 class SyncSetupViewModel: ObservableObject {
 
-    enum State {
-        case turnOnPrompt, syncWithAnotherDevicePrompt
-        case showRecoverData, showSyncWithAnotherDevice
-        case turnOnNow, cancelled
-    }
-
-    @Published var state: State = .turnOnPrompt
-
     let finished: (SyncSetupViewModel) -> Void
 
     init(finished: @escaping (SyncSetupViewModel) -> Void) {
         self.finished = finished
     }
 
-    func turnOnSyncAction() {
-        print(#function)
-        state = .syncWithAnotherDevicePrompt
+    @Published var state: Result = .doNothing
+
+    enum Result {
+
+        case doNothing, turnOn, syncWithAnotherDevice, recoverData
+
     }
 
-    func recoverDataAction() {
-        print(#function)
-        state = .showRecoverData
-        finished(self)
+    func turnOnSyncAction() {
+        state = .turnOn
     }
 
     func syncWithAnotherDeviceAction() {
-        print(#function)
-        state = .showSyncWithAnotherDevice
+        state = .syncWithAnotherDevice
         finished(self)
     }
 
-    func turnOnSyncNowAction() {
-        state = .turnOnNow
+    func notNowAction() {
         finished(self)
     }
 
-    func cancel() {
-        state = .cancelled
+    func recoverDataAction() {
+        state = .recoverData
         finished(self)
     }
 
+    func cancelAction() {
+        state = .doNothing
+        finished(self)
+    }
+    
 }

@@ -84,16 +84,16 @@ class SyncManagementViewModel: ObservableObject {
 
     func setupFinished(_ model: SyncSetupViewModel) {
         switch model.state {
-        case .showRecoverData:
-            delegate?.showRecoverData()
-
-        case .showSyncWithAnotherDevice:
-            delegate?.showSyncWithAnotherDevice()
-
-        case .turnOnNow:
+        case .turnOn:
             delegate?.createAccountAndStartSyncing()
 
-        default: // Cancelled
+        case .syncWithAnotherDevice:
+            delegate?.showSyncWithAnotherDevice()
+
+        case .recoverData:
+            delegate?.showRecoverData()
+
+        default:
             isBusy = false
         }
     }

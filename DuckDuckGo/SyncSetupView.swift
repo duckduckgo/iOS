@@ -21,25 +21,89 @@ import SwiftUI
 import DuckUI
 
 struct SyncSetupView: View {
+
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
     @ObservedObject var model: SyncSetupViewModel
+    @State var scrollUnder = false
+
+    @State var turnOnSyncNavigation = false
 
     @ViewBuilder
-    func header() -> some View {
-        HStack {
-            if model.state == .turnOnPrompt {
-                Button("Cancel", action: model.cancel)
-                    .foregroundColor(.primary.opacity(0.9))
+    func turnOnSyncView() -> some View {
+        ZStack {
+            NavigationLink(isActive: $turnOnSyncNavigation) {
+                syncWithAnotherDeviceView()
+                    .padding(.top, verticalSizeClass == .compact ? 8 : 56)
+            } label: {
+                EmptyView()
             }
-            Spacer()
+
+            SheetView(imageName: "SyncTurnOnSyncHero",
+                      title: "Turn on Sync?",
+                      message: UserText.syncTurnOnMessage,
+                      primaryButton: "Turn on Sync",
+                      secondaryButton: "Not Now") {
+
+                model.turnOnSyncAction()
+                turnOnSyncNavigation = true
+
+            } secondaryAction: {
+                model.cancelAction()
+            }
         }
-        .frame(height: 56)
-        .padding(.horizontal)
     }
 
     @ViewBuilder
+    func syncWithAnotherDeviceView() -> some View {
+        SheetView(imageName: "SyncWithAnotherDeviceHero",
+                  title: "Sync with Another Device?",
+                  message: UserText.syncWithAnotherDeviceMessage,
+                  primaryButton: "Sync with Another Device",
+                  secondaryButton: "Not Now") {
+            model.syncWithAnotherDeviceAction()
+        } secondaryAction: {
+            model.notNowAction()
+        }
+        .navigationBarBackButtonHidden(true)
+    }
+
+    var body: some View {
+        NavigationView {
+            turnOnSyncView()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            model.cancelAction()
+                        } label: {
+                            Text("Cancel")
+                        }
+                    }
+                }
+        }
+    }
+
+}
+
+private struct SheetView: View {
+
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
+    let imageName: String
+    let title: String
+    let message: String
+    let primaryButton: String
+    let secondaryButton: String
+    let primaryAction: () -> Void
+    let secondaryAction: () -> Void
+
+    @ViewBuilder
     func hero(imageName: String, title: String, text: String) -> some View {
-        VStack(spacing: 24) {
+        VStack(spacing: verticalSizeClass == .compact ? 12 : 24) {
             Image(imageName)
+                .resizable()
+                .frame(width: verticalSizeClass == .compact ? 96 : 128,
+                       height: verticalSizeClass == .compact ? 72 : 96)
 
             Text(title)
                 .font(.system(size: 28, weight: .bold))
@@ -47,7 +111,7 @@ struct SyncSetupView: View {
             Text(text)
         }
         .multilineTextAlignment(.center)
-        .padding(.top, 20)
+        .padding(.top, verticalSizeClass == .compact ? 0 : 20)
         .padding(.horizontal, 30)
     }
 
@@ -56,69 +120,58 @@ struct SyncSetupView: View {
                  secondaryText: String,
                  primaryAction: @escaping () -> Void,
                  secondaryAction: @escaping () -> Void) -> some View {
-        VStack {
+        VStack(spacing: verticalSizeClass == .compact ? 4 : 8) {
             Button(primaryText, action: primaryAction)
                 .buttonStyle(DuckUI.PrimaryButtonStyle())
 
             Button(secondaryText, action: secondaryAction)
                 .buttonStyle(DuckUI.SecondaryButtonStyle())
         }
-        .padding(.horizontal, 20)
-    }
-
-    @ViewBuilder
-    func turnOnSyncView() -> some View {
-        VStack {
-            header()
-            hero(imageName: "SyncTurnOnSyncHero",
-                 title: "Turn on Sync?",
-                 text: UserText.syncTurnOnMessage)
-            Spacer()
-            buttons(primaryText: "Turn on Sync", secondaryText: "Recover your synced data") {
-                withAnimation {
-                    self.model.turnOnSyncAction()
-                }
-            } secondaryAction: {
-                // Show the camera to scan another logged in device
-                model.recoverDataAction()
-            }
-        }
-    }
-
-    @ViewBuilder
-    func syncWithAnotherDeviceView() -> some View {
-        VStack {
-            header()
-            hero(imageName: "SyncWithAnotherDeviceHero",
-                 title: "Sync with another device?",
-                 text: UserText.syncWithAnotherDeviceMessage)
-            Spacer()
-            buttons(primaryText: "Sync Another Device", secondaryText: "Not Now") {
-                // Show the camera to scan a device that isn't logged in yet
-                model.syncWithAnotherDeviceAction()
-            } secondaryAction: {
-                // User wants to create an account and enable sync on this device
-                model.turnOnSyncNowAction()
-            }
-        }
+        .frame(maxWidth: 360)
     }
 
     var body: some View {
-        Group {
-            switch model.state {
-            case .turnOnPrompt, .showRecoverData:
-                turnOnSyncView()
-                    .transition(.move(edge: .leading))
 
-            case .syncWithAnotherDevicePrompt, .showSyncWithAnotherDevice:
-                syncWithAnotherDeviceView()
-                    .transition(.move(edge: .trailing))
+        ZStack {
+            ScrollView {
+                VStack {
+                    hero(imageName: imageName,
+                         title: title,
+                         text: message)
 
-            default: EmptyView()
+                    Spacer()
+                }
+            }
+
+            VStack {
+                Spacer()
+
+                VStack(spacing: verticalSizeClass == .compact ? 4 : 8) {
+                    buttons(primaryText: primaryButton,
+                            secondaryText: secondaryButton,
+                            primaryAction: primaryAction,
+                            secondaryAction: secondaryAction)
+                }
+                .ignoresSafeArea(.container)
+                .frame(maxWidth: .infinity)
+                .padding(.top, 8)
+                .applyBackgroundOnPhone(isCompact: verticalSizeClass == .compact)
             }
         }
-        .lineLimit(nil)
-        .multilineTextAlignment(.center)
+
+    }
+
+}
+
+private extension View {
+
+    @ViewBuilder
+    func applyBackgroundOnPhone(isCompact: Bool) -> some View {
+        if UIDevice.current.userInterfaceIdiom == .phone && isCompact {
+            self.regularMaterialBackground()
+        } else {
+            self
+        }
     }
 
 }

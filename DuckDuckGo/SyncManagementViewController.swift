@@ -79,7 +79,7 @@ extension SyncManagementViewController: SyncManagementViewModelDelegate {
         print(#function)
         
         let model = SyncSetupViewModel { [weak self] model in
-            print(#function, model.state, self?.navigationController?.topViewController.self as Any)
+            print(#function, self?.navigationController?.topViewController.self as Any)
             assert(self?.navigationController?.visibleViewController is DismissibleHostingController<SyncSetupView>)
             self?.navigationController?.topViewController?.dismiss(animated: true)
             self?.rootView.model.setupFinished(model)

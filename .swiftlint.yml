@@ -77,6 +77,6 @@ file_header:
 excluded:
   - Carthage
   - DuckDuckGo/UserText.swift
-  - DuckDuckGo/AtbUITests/SnapshotHelper.swift
+  - DuckDuckGo/iOS/fastlane/SnapshotHelper.swift
   - vendor
   - LocalPackages/DuckUI/Package.swift

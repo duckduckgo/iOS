@@ -10,9 +10,11 @@ opt_in_rules:
   - closure_spacing
   - colon
   - overridden_super_call
-  - unused_import
   - fatal_error_message
   - file_header
+
+analyzer_rules:
+  - unused_import
 
 force_cast: warning
 force_try: warning
@@ -54,7 +56,7 @@ file_header:
   required_pattern: |
                     \/\/
                     \/\/  .*?\.swift
-                    \/\/  .*
+                    \/\/  .*?
                     \/\/
                     \/\/  Copyright © \d{4} DuckDuckGo\. All rights reserved\.
                     \/\/
@@ -75,4 +77,6 @@ file_header:
 excluded:
   - Carthage
   - DuckDuckGo/UserText.swift
+  - DuckDuckGo/AtbUITests/SnapshotHelper.swift
   - vendor
+  - LocalPackages/DuckUI/Package.swift
